@@ -21,11 +21,14 @@ Configuration
 * `test`_
 * `default_locale`_
 * `trusted_proxies`_
+* `csrf_protection`_
+    * enabled
+    * field_name (deprecated)
 * `form`_
     * :ref:`enabled <form-enabled>`
-* `csrf_protection`_
-    * :ref:`enabled <csrf-protection-enabled>`
-    * `field_name`_
+    * csrf_protection
+        * :ref:`enabled <csrf-protection-enabled>`
+        * `field_name`_
 * `session`_
     * `name`_
     * `cookie_lifetime`_
@@ -49,11 +52,17 @@ Configuration
 * `translator`_
     * :ref:`enabled <translator.enabled>`
     * `fallbacks`_
+    * `logging`_
+* `property_accessor`_
+    * `magic_call`_
+    * `throw_exception_on_invalid_index`_
 * `validation`_
     * :ref:`enabled <validation-enabled>`
     * `cache`_
     * `enable_annotations`_
     * `translation_domain`_
+    * `strict_email`_
+    * `api`_
 
 secret
 ~~~~~~
@@ -509,6 +518,10 @@ Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``assets_version`` value
 before each deployment so that the query parameters change.
 
+It's also possible to set the version value on an asset-by-asset basis (instead
+of using the global version - e.g. ``v2`` - set here). See
+:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
+
 You can also control how the query string works via the `assets_version_format`_
 option.
 
@@ -614,6 +627,41 @@ This option is used when the translation key for the current locale wasn't found
 
 For more details, see :doc:`/book/translation`.
 
+.. _reference-framework-translator-logging:
+
+logging
+.......
+
+.. versionadded:: 2.6
+    The ``logging`` option was introduced in Symfony 2.6.
+
+**default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
+
+When ``true``, a log entry is made whenever the translator cannot find a translation
+for a given key. The logs are made to the ``translation`` channel and at the
+``debug`` for level for keys where there is a translation in the fallback
+locale and the ``warning`` level if there is no translation to use at all.
+
+property_accessor
+~~~~~~~~~~~~~~~~~
+
+magic_call
+..........
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __call() method <components-property-access-magic-call>` when
+its ``getValue()`` method is called.
+
+throw_exception_on_invalid_index
+................................
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service throws an exception when you
+try to access an invalid index of an array.
+
 validation
 ~~~~~~~~~~
 
@@ -632,11 +680,8 @@ cache
 
 **type**: ``string``
 
-This value is used to determine the service that is used to persist class
-metadata in a cache. The actual service name is built by prefixing the configured
-value with ``validator.mapping.cache.`` (e.g. if the value is ``apc``, the
-``validator.mapping.cache.apc`` service will be injected). The service has
-to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+The service that is used to persist class metadata in a cache. The service
+has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
 enable_annotations
 ..................
@@ -653,6 +698,45 @@ translation_domain
 The translation domain that is used when translating validation constraint
 error messages.
 
+strict_email
+............
+
+.. versionadded:: 2.5
+    The ``strict_email`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, the `egulias/email-validator`_ library will be
+used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
+the validator uses a simple regular expression to validate email addresses.
+
+api
+...
+
+.. versionadded:: 2.5
+    The ``api`` option was introduced in Symfony 2.5.
+
+**type**: ``string``
+
+Starting with Symfony 2.5, the Validator component introduced a new validation
+API. The ``api`` option is used to switch between the different implementations:
+
+``2.4``
+    Use the vaidation API that is compatible with older Symfony versions.
+
+``2.5``
+    Use the validation API introduced in Symfony 2.5.
+
+``2.5-bc`` or ``auto``
+    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
+    Symfony will use an API implementation that is compatible with both the
+    legacy implementation and the ``2.5`` implementation. You have to use
+    PHP 5.3.9 or higher to be able to use this implementation.
+
+To capture these logs in the ``prod`` environment, configure a
+:doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for
+the ``translation`` channel and set its ``level`` to ``debug``.
+
 Full default Configuration
 --------------------------
 
@@ -668,12 +752,16 @@ Full default Configuration
             test:                 ~
             default_locale:       en
 
+            csrf_protection:
+                enabled:              false
+                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
+
             # form configuration
             form:
                 enabled:              false
-            csrf_protection:
-                enabled:              false
-                field_name:           _token
+                csrf_protection:
+                    enabled:          true
+                    field_name:       ~
 
             # esi configuration
             esi:
@@ -766,6 +854,7 @@ Full default Configuration
             translator:
                 enabled:              false
                 fallbacks:            [en]
+                logging:              "%kernel.debug%"
 
             # validation configuration
             validation:

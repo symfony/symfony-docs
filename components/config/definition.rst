@@ -99,11 +99,9 @@ node definition. Node types are available for:
 
 * scalar (generic type that includes booleans, strings, integers, floats and ``null``)
 * boolean
-* scalar
-* boolean
-* integer (new in 2.2)
-* float (new in 2.2)
-* enum (new in 2.1) (similar to scalar, but it only allows a finite set of values)
+* integer
+* float
+* enum (similar to scalar, but it only allows a finite set of values)
 * array
 * variable (no validation)
 
@@ -112,9 +110,6 @@ and are created with ``node($name, $type)`` or their associated shortcut
 
 Numeric Node Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The numeric (float and integer) nodes were introduced in Symfony 2.2.
 
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
@@ -137,9 +132,6 @@ allowing to validate the value::
 
 Enum Nodes
 ~~~~~~~~~~
-
-.. versionadded:: 2.1
-    The enum node was introduced in Symfony 2.1.
 
 Enum nodes provide a constraint to match the given input against a set of
 values::
@@ -299,12 +291,12 @@ method.
 The info will be printed as a comment when dumping the configuration tree with
 the ``config:dump`` command.
 
+.. versionadded:: 2.6
+    Since Symfony 2.6, the info will also be added to the exception message
+    when an invalid type is given.
+
 Optional Sections
 -----------------
-
-.. versionadded:: 2.2
-    The ``canBeEnabled`` and ``canBeDisabled`` methods were introduced in
-    Symfony 2.2.
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut

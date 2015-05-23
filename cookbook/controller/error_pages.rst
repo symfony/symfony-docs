@@ -42,18 +42,10 @@ flag. While *exception* pages give you a lot of helpful
 information during development, *error* pages are meant to be
 shown to the user in production.
 
-.. sidebar:: Testing Error Pages during Development
+.. tip::
 
-    You should not set ``kernel.debug`` to ``false`` in order to see your
-    *error* pages during development. This will also stop
-    Symfony from recompiling your twig templates, among other things.
-
-    The third-party `WebfactoryExceptionsBundle`_ provides a special
-    test controller that allows you to display your custom error
-    pages for arbitrary HTTP status codes even with
-    ``kernel.debug`` set to ``true``.
-
-.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
+    You can also :ref:`preview your error pages <testing-error-pages>`
+    in ``kernel.debug`` mode.
 
 .. _cookbook-error-pages-by-status-code:
 
@@ -153,6 +145,70 @@ Refer to the previous section for the order in which the
     ``exception.html.twig`` for the standard HTML exception page or
     ``exception.json.twig`` for the JSON exception page.
 
+.. _testing-error-pages:
+
+Testing Error Pages during Development
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default ``ExceptionController`` also allows you to preview your
+*error* pages during development.
+
+.. versionadded:: 2.6
+    This feature was introduced in Symfony 2.6. Before, the third-party
+    `WebfactoryExceptionsBundle`_ could be used for the same purpose.
+
+To use this feature, you need to have a definition in your
+``routing_dev.yml`` file like so:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing_dev.yml
+        _errors:
+            resource: "@TwigBundle/Resources/config/routing/errors.xml"
+            prefix:   /_error
+
+    .. code-block:: xml
+
+        <!-- app/config/routing_dev.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="@TwigBundle/Resources/config/routing/errors.xml"
+                prefix="/_error" />
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing_dev.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            $loader->import('@TwigBundle/Resources/config/routing/errors.xml')
+        );
+        $collection->addPrefix("/_error");
+
+        return $collection;
+
+If you're coming from an older version of Symfony, you might need to
+add this to your ``routing_dev.yml`` file. If you're starting from
+scratch, the `Symfony Standard Edition`_ already contains it for you.
+
+With this route added, you can use URLs like
+
+.. code-block:: text
+
+     http://localhost/app_dev.php/_error/{statusCode}
+     http://localhost/app_dev.php/_error/{statusCode}.{format}
+
+to preview the *error* page for a given status code as HTML or for a
+given status code and format.
+
 .. _custom-exception-controller:
 
 Replacing the Default ExceptionController
@@ -237,6 +293,11 @@ template to be used.
     As of writing, the ``ExceptionController`` is *not* part of the
     Symfony API, so be aware that it might change in following releases.
 
+.. tip::
+
+    The :ref:`error page preview <testing-error-pages>` also works for
+    your own controllers set up this way.
+
 .. _use-kernel-exception-event:
 
 Working with the kernel.exception Event
@@ -287,4 +348,6 @@ several) listeners deal with them.
 
 Good luck!
 
+.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
 .. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php

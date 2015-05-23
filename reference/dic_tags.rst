@@ -12,77 +12,47 @@ section of the Service Container chapter.
 Below is information about all of the tags available inside Symfony. There
 may also be tags in other bundles you use that aren't listed here.
 
-+-----------------------------------+---------------------------------------------------------------------------+
-| Tag Name                          | Usage                                                                     |
-+===================================+===========================================================================+
-| `assetic.asset`_                  | Register an asset to the current asset manager                            |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.factory_worker`_         | Add a factory worker                                                      |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.filter`_                 | Register a filter                                                         |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.formula_loader`_         | Add a formula loader to the current asset manager                         |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.formula_resource`_       | Adds a resource to the current asset manager                              |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.php`_         | Remove this service if PHP templating is disabled                         |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.twig`_        | Remove this service if Twig templating is disabled                        |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `data_collector`_                 | Create a class that collects custom data for the profiler                 |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `doctrine.event_listener`_        | Add a Doctrine event listener                                             |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `doctrine.event_subscriber`_      | Add a Doctrine event subscriber                                           |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `form.type`_                      | Create a custom form field type                                           |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `form.type_extension`_            | Create a custom "form extension"                                          |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `form.type_guesser`_              | Add your own logic for "form type guessing"                               |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `kernel.cache_clearer`_           | Register your service to be called during the cache clearing process      |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `kernel.cache_warmer`_            | Register your service to be called during the cache warming process       |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `kernel.event_listener`_          | Listen to different events/hooks in Symfony                               |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `kernel.fragment_renderer`_       | Add new HTTP content rendering strategies                                 |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `monolog.logger`_                 | Logging with a custom logging channel                                     |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `monolog.processor`_              | Add a custom processor for logging                                        |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `routing.loader`_                 | Register a custom service that loads routes                               |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `security.voter`_                 | Add a custom voter to Symfony's authorization logic                       |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `security.remember_me_aware`_     | To allow remember me authentication                                       |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `swiftmailer.default.plugin`_     | Register a custom SwiftMailer Plugin                                      |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `templating.helper`_              | Make your service available in PHP templates                              |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `translation.loader`_             | Register a custom service that loads translations                         |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `translation.extractor`_          | Register a custom service that extracts translation messages from a file  |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `translation.dumper`_             | Register a custom service that dumps translation messages                 |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `twig.extension`_                 | Register a custom Twig Extension                                          |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `twig.loader`_                    | Register a custom service that loads Twig templates                       |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `validator.constraint_validator`_ | Create your own custom validation constraint                              |
-+-----------------------------------+---------------------------------------------------------------------------+
-| `validator.initializer`_          | Register a service that initializes objects before validation             |
-+-----------------------------------+---------------------------------------------------------------------------+
+========================================  ========================================================================
+Tag Name                                  Usage
+========================================  ========================================================================
+`assetic.asset`_                          Register an asset to the current asset manager
+`assetic.factory_worker`_                 Add a factory worker
+`assetic.filter`_                         Register a filter
+`assetic.formula_loader`_                 Add a formula loader to the current asset manager
+`assetic.formula_resource`_               Adds a resource to the current asset manager
+`assetic.templating.php`_                 Remove this service if PHP templating is disabled
+`assetic.templating.twig`_                Remove this service if Twig templating is disabled
+`console.command`_                        Add a command
+`data_collector`_                         Create a class that collects custom data for the profiler
+`doctrine.event_listener`_                Add a Doctrine event listener
+`doctrine.event_subscriber`_              Add a Doctrine event subscriber
+`form.type`_                              Create a custom form field type
+`form.type_extension`_                    Create a custom "form extension"
+`form.type_guesser`_                      Add your own logic for "form type guessing"
+`kernel.cache_clearer`_                   Register your service to be called during the cache clearing process
+`kernel.cache_warmer`_                    Register your service to be called during the cache warming process
+`kernel.event_listener`_                  Listen to different events/hooks in Symfony
+`kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
+`kernel.fragment_renderer`_               Add new HTTP content rendering strategies
+`monolog.logger`_                         Logging with a custom logging channel
+`monolog.processor`_                      Add a custom processor for logging
+`routing.loader`_                         Register a custom service that loads routes
+`routing.expression_language_provider`_   Register a provider for expression language functions in routing
+`security.expression_language_provider`_  Register a provider for expression language functions in security
+`security.voter`_                         Add a custom voter to Symfony's authorization logic
+`security.remember_me_aware`_             To allow remember me authentication
+`serializer.encoder`_                     Register a new encoder in the ``serializer`` service
+`serializer.normalizer`_                  Register a new normalizer in the ``serializer`` service
+`swiftmailer.default.plugin`_             Register a custom SwiftMailer Plugin
+`templating.helper`_                      Make your service available in PHP templates
+`translation.loader`_                     Register a custom service that loads translations
+`translation.extractor`_                  Register a custom service that extracts translation messages from a file
+`translation.dumper`_                     Register a custom service that dumps translation messages
+`twig.extension`_                         Register a custom Twig Extension
+`twig.loader`_                            Register a custom service that loads Twig templates
+`validator.constraint_validator`_         Create your own custom validation constraint
+`validator.initializer`_                  Register a service that initializes objects before validation
+========================================  ========================================================================
 
 assetic.asset
 -------------
@@ -257,6 +227,14 @@ assetic.templating.twig
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain ``twig``.
 
+console.command
+---------------
+
+**Purpose**: Add a command to the application
+
+For details on registering your own commands in the service container, read
+:ref:`the cookbook article<cookbook-console-dic>`.
+
 data_collector
 --------------
 
@@ -316,7 +294,7 @@ the interface directly::
     class MyFormTypeExtension extends AbstractTypeExtension
     {
         // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), finishView(), setDefaultOptions()
+        // like buildForm(), buildView(), finishView(), configureOptions()
     }
 
 In order for Symfony to know about your form extension and use it, give
@@ -545,9 +523,6 @@ points.
 
 For a full example of this listener, read the :doc:`/cookbook/service_container/event_listener`
 cookbook entry.
-
-For another practical example of a kernel listener, see the cookbook
-article: :doc:`/cookbook/request/mime_type`.
 
 Core Event Listener Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -919,6 +894,34 @@ of your configuration and tag it with ``routing.loader``:
 
 For more information, see :doc:`/cookbook/routing/custom_route_loader`.
 
+routing.expression_language_provider
+------------------------------------
+
+.. versionadded:: 2.6
+    The ``routing.expression_language_provider`` tag was introduced in Symfony
+    2.6.
+
+**Purpose**: Register a provider for expression language functions in routing
+
+This tag is used to automatically register
+:ref:`expression function providers <components-expression-language-provider>`
+for the routing expression component. Using these providers, you can add custom
+functions to the routing expression language.
+
+security.expression_language_provider
+-------------------------------------
+
+.. versionadded:: 2.6
+    The ``security.expression_language_provider`` tag was introduced in Symfony
+    2.6.
+
+**Purpose**: Register a provider for expression language functions in security
+
+This tag is used to automatically register :ref:`expression function providers
+<components-expression-language-provider>` for the security expression
+component. Using these providers, you can add custom functions to the security
+expression language.
+
 security.remember_me_aware
 --------------------------
 
@@ -940,7 +943,7 @@ security.voter
 
 **Purpose**: To add a custom voter to Symfony's authorization logic
 
-When you call ``isGranted`` on Symfony's security context, a system of "voters"
+When you call ``isGranted`` on Symfony's authorization checker, a system of "voters"
 is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
@@ -1112,9 +1115,6 @@ translation.extractor
 **Purpose**: To register a custom service that extracts messages from a
 file
 
-.. versionadded:: 2.1
-   The ability to add message extractors was introduced in Symfony 2.1.
-
 When executing the ``translation:update`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
@@ -1192,9 +1192,6 @@ translation.dumper
 ------------------
 
 **Purpose**: To register a custom service that dumps messages to a file
-
-.. versionadded:: 2.1
-   The ability to add message dumpers was introduced in Symfony 2.1.
 
 After an `Extractor <translation.extractor>`_ has extracted all messages
 from the templates, the dumpers are executed to dump the messages to a
@@ -1363,7 +1360,7 @@ the new loader and tag it with ``twig.loader``:
             acme.demo_bundle.loader.some_twig_loader:
                 class: Acme\DemoBundle\Loader\SomeTwigLoader
                 tags:
-                    - { name: twig.loader }
+                    - { name: twig.loader, priority: 0 }
 
     .. code-block:: xml
 
@@ -1377,7 +1374,7 @@ the new loader and tag it with ``twig.loader``:
                     id="acme.demo_bundle.loader.some_twig_loader"
                     class="Acme\DemoBundle\Loader\SomeTwigLoader">
 
-                    <tag name="twig.loader" />
+                    <tag name="twig.loader" priority="0" />
                 </service>
             </services>
         </container>
@@ -1389,8 +1386,13 @@ the new loader and tag it with ``twig.loader``:
                 'acme.demo_bundle.loader.some_twig_loader',
                 'Acme\DemoBundle\Loader\SomeTwigLoader'
             )
-            ->addTag('twig.loader')
+            ->addTag('twig.loader', array('priority' => 0))
         ;
+
+.. note::
+
+    The ``priority`` value is optional and defaults to ``0``.
+    The higher priority loaders are tried first.
 
 validator.constraint_validator
 ------------------------------
@@ -1420,7 +1422,8 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine
 Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
+.. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
 .. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders
 .. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php

@@ -216,22 +216,25 @@ each event has access to the same basic information:
     Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` or
     ``HttpKernelInterface::SUB_REQUEST``).
 
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+    Checks if it is a master request.
+
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
     Returns the Kernel handling the request.
 
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
     Returns the current ``Request`` being handled.
 
-``getRequestType()``
-....................
+``isMasterRequest()``
+.....................
 
-The ``getRequestType()`` method allows listeners to know the type of the
+The ``isMasterRequest()`` method allows listeners to check the type of the
 request. For instance, if a listener must only be active for master requests,
 add the following code at the beginning of your listener method::
 
     use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-    if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+    if (!$event->isMasterRequest()) {
         // return immediately
         return;
     }
@@ -365,6 +368,19 @@ The FrameworkBundle registers several listeners:
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
 .. index::
+    single: Event; kernel.finish_request
+
+``kernel.finish_request`` Event
+...............................
+
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
+
+The purpose of this event is to handle tasks that should be performed after
+the request has been handled but that do not need to modify the response.
+Event listeners for the ``kernel.finish_request`` event are called in both
+successful and exception cases.
+
+.. index::
    single: Event; kernel.terminate
 
 ``kernel.terminate`` Event
@@ -422,9 +438,12 @@ and set a new ``Exception`` object or do nothing::
 
         return new Response(
             'Error',
-            404 // ignored,
-            array('X-Status-Code' => 200)
+            Response::HTTP_NOT_FOUND, // ignored
+            array('X-Status-Code' => Response::HTTP_OK)
         );
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. seealso::
 

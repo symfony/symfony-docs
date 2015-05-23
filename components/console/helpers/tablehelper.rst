@@ -7,6 +7,13 @@ Table Helper
 .. versionadded:: 2.3
     The ``table`` helper was introduced in Symfony 2.3.
 
+.. caution::
+
+    The Table Helper was deprecated in Symfony 2.5 and will be removed in
+    Symfony 3.0. You should now use the
+    :doc:`Table </components/console/helpers/table>` class instead which is
+    more powerful.
+
 When building a console application it may be useful to display tabular data:
 
 .. image:: /images/components/console/table.png
@@ -32,11 +39,13 @@ table rendering: using named layouts or by customizing rendering options.
 Customize Table Layout using Named Layouts
 ------------------------------------------
 
-The Table helper ships with two preconfigured table layouts:
+The Table helper ships with three preconfigured table layouts:
 
 * ``TableHelper::LAYOUT_DEFAULT``
 
 * ``TableHelper::LAYOUT_BORDERLESS``
+
+* ``TableHelper::LAYOUT_COMPACT``
 
 Layout can be set using :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setLayout` method.
 

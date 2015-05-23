@@ -14,6 +14,7 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 +----------------+---------------------------------------------------------------------------+
 | Options        | - `value`_                                                                |
 |                | - `message`_                                                              |
+|                | - `payload`_                                                              |
 +----------------+---------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`          |
 +----------------+---------------------------------------------------------------------------+
@@ -101,3 +102,5 @@ message
 
 This is the message that will be shown if the value is not greater than
 the comparison value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

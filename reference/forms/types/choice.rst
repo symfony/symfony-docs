@@ -15,7 +15,7 @@ option.
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_list`_                                                             |
-|             | - `empty_value`_                                                             |
+|             | - `placeholder`_                                                             |
 |             | - `expanded`_                                                                |
 |             | - `multiple`_                                                                |
 |             | - `preferred_choices`_                                                       |
@@ -122,7 +122,7 @@ With this option you can also allow float values to be selected as data.
       'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half'))
     ));
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -204,13 +204,13 @@ Field Variables
 +------------------------+--------------+-------------------------------------------------------------------+
 | separator              | ``string``   | The separator to use between choice groups.                       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value            | ``mixed``    | The empty value if not already in the list, otherwise             |
+| placeholder            | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                        |              | ``null``.                                                         |
 +------------------------+--------------+-------------------------------------------------------------------+
 | is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
 |                        |              | and returns whether the choice is in the selected value(s).       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
+| placeholder_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
 +------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::

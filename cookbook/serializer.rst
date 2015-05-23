@@ -101,11 +101,4 @@ Here is an example on how to load the
         $definition->addTag('serializer.normalizer');
         $container->setDefinition('get_set_method_normalizer', $definition);
 
-.. note::
-
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-    is broken by design. As soon as you have a circular object graph, an
-    infinite loop is created when calling the getters. You're encouraged
-    to add your own normalizers that fit your use-case.
-
 .. _JMSSerializerBundle: http://jmsyst.com/bundles/JMSSerializerBundle

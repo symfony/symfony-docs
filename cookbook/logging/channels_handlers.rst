@@ -114,11 +114,6 @@ specified.
 Configure Additional Channels without Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    This feature was introduced to the MonologBundle in version 2.4. This
-    version is compatible with Symfony 2.3, but only MonologBundle 2.3 is
-    installed by default. To use this feature, upgrade your bundle manually.
-
 With MonologBundle 2.4 you can configure additional channels without the
 need to tag your services:
 

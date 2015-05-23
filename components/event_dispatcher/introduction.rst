@@ -212,14 +212,14 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
     and the
     :doc:`DependencyInjection component </components/dependency_injection/introduction>`,
     you can use the
-    :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterListenersPass`
-    from the HttpKernel component to tag services as event listeners::
+    :class:`Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass`
+    to tag services as event listeners::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
+        use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
@@ -489,30 +489,30 @@ which returns a boolean value::
 EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``EventDispatcher`` always injects a reference to itself in the passed event
-object. This means that all listeners have direct access to the
-``EventDispatcher`` object that notified the listener via the passed ``Event``
-object's :method:`Symfony\\Component\\EventDispatcher\\Event::getDispatcher`
-method.
-
-This can lead to some advanced applications of the ``EventDispatcher`` including
-letting listeners dispatch other events, event chaining or even lazy loading of
-more listeners into the dispatcher object. Examples follow:
+The ``EventDispatcher`` always passes the dispatched event, the event's name
+and a reference to itself to the listeners. This can be used in some advanced
+usages of the ``EventDispatcher`` like dispatching other events in listeners,
+event chaining or even lazy loading of more listeners into the dispatcher
+object as shown in the following examples.
 
 Lazy loading listeners::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
     use Acme\StoreBundle\Event\StoreSubscriber;
 
     class Foo
     {
         private $started = false;
 
-        public function myLazyListener(Event $event)
-        {
+        public function myLazyListener(
+            Event $event,
+            $eventName,
+            EventDispatcherInterface $dispatcher
+        ) {
             if (false === $this->started) {
                 $subscriber = new StoreSubscriber();
-                $event->getDispatcher()->addSubscriber($subscriber);
+                $dispatcher->addSubscriber($subscriber);
             }
 
             $this->started = true;
@@ -524,12 +524,16 @@ Lazy loading listeners::
 Dispatching another event from within a listener::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
     class Foo
     {
-        public function myFooListener(Event $event)
-        {
-            $event->getDispatcher()->dispatch('log', $event);
+        public function myFooListener(
+            Event $event,
+            $eventName,
+            EventDispatcherInterface $dispatcher
+        ) {
+            $dispatcher->dispatch('log', $event);
 
             // ... more code
         }
@@ -618,22 +622,21 @@ and so on...
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the ``EventDispatcher`` already knows the name of the event when dispatching
-it, the event name is also injected into the
-:class:`Symfony\\Component\\EventDispatcher\\Event` objects, making it available
-to event listeners via the :method:`Symfony\\Component\\EventDispatcher\\Event::getName`
-method.
+.. versionadded:: 2.4
+    Before Symfony 2.4, the event name and the event dispatcher had to be
+    requested from the ``Event`` instance. These methods are now deprecated.
 
-The event name, (as with any other data in a custom event object) can be used as
-part of the listener's processing logic::
+The ``EventDispatcher`` instance, as well as the name of the event that is
+dispatched, are passed as arguments to the listener::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
     class Foo
     {
-        public function myEventListener(Event $event)
+        public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            echo $event->getName();
+            echo $eventName;
         }
     }
 

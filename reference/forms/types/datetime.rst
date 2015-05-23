@@ -18,9 +18,10 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 | Options              | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
-|                      | - `empty_value`_                                                            |
+|                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `hours`_                                                                  |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
@@ -65,7 +66,7 @@ date_widget
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 format
 ~~~~~~
@@ -79,6 +80,8 @@ by the HTML5 ``datetime`` field. Keeping the default value will cause the
 field to be rendered as an ``input`` field with ``type="datetime"``.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 input
 ~~~~~

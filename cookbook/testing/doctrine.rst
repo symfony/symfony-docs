@@ -17,15 +17,15 @@ Functional Testing
 ------------------
 
 If you need to actually execute a query, you will need to boot the kernel
-to get a valid connection. In this case, you'll extend the ``WebTestCase``,
+to get a valid connection. In this case, you'll extend the ``KernelTestCase``,
 which makes all of this quite easy::
 
     // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
     namespace Acme\StoreBundle\Tests\Entity;
 
-    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-    class ProductRepositoryFunctionalTest extends WebTestCase
+    class ProductRepositoryFunctionalTest extends KernelTestCase
     {
         /**
          * @var \Doctrine\ORM\EntityManager
@@ -37,8 +37,7 @@ which makes all of this quite easy::
          */
         public function setUp()
         {
-            static::$kernel = static::createKernel();
-            static::$kernel->boot();
+            self::bootKernel();
             $this->em = static::$kernel->getContainer()
                 ->get('doctrine')
                 ->getManager()

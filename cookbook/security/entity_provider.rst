@@ -562,9 +562,5 @@ is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
 
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
-    and the ``EquatableInterface`` was introduced in its place.
-
 .. _fixtures: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 .. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle

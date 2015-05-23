@@ -15,6 +15,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
+|             | - `delete_empty`_                                                           |
 |             | - `options`_                                                                |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
@@ -254,6 +255,16 @@ For more information, see :ref:`cookbook-form-collections-remove`.
     to delete it or at least remove its foreign key reference to the main object.
     None of this is handled automatically. For more information, see
     :ref:`cookbook-form-collections-remove`.
+
+delete_empty
+~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you want to explicitly remove entirely empty collection entries from your
+form you have to set this option to true. However, existing collection entries
+will only be deleted if you have the allow_delete_ option enabled. Otherwise
+the empty values will be kept.
 
 options
 ~~~~~~~

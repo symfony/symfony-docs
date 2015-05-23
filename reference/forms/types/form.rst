@@ -24,9 +24,9 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
 |           | - `mapped`_                                                        |
-|           | - `max_length`_                                                    |
+|           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
-|           | - `pattern`_                                                       |
+|           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
 |           | - `read_only`_                                                     |

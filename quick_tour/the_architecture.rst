@@ -294,7 +294,7 @@ The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: bash
 
-    $ php app/console router:debug --help
+    $ php app/console debug:router --help
 
 Final Thoughts
 --------------

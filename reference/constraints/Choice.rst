@@ -18,6 +18,7 @@ an array of items is one of those valid choices.
 |                | - `minMessage`_                                                      |
 |                | - `maxMessage`_                                                      |
 |                | - `strict`_                                                          |
+|                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`          |
 +----------------+----------------------------------------------------------------------+
@@ -350,3 +351,5 @@ strict
 If true, the validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array`
 method when checking to see if a value is in the valid choices array.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

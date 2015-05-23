@@ -17,7 +17,7 @@ The text field represents the most basic input text field.
 |             | - `label`_                                                         |
 |             | - `label_attr`_                                                    |
 |             | - `mapped`_                                                        |
-|             | - `max_length`_                                                    |
+|             | - `max_length`_ (deprecated as of 2.5)                             |
 |             | - `read_only`_                                                     |
 |             | - `required`_                                                      |
 |             | - `trim`_                                                          |

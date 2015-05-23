@@ -4,9 +4,6 @@
 How to Use and Register Namespaced Twig Paths
 =============================================
 
-.. versionadded:: 2.2
-    Namespaced path support was introduced in 2.2.
-
 Usually, when you refer to a template, you'll use the ``MyBundle:Subdir:filename.html.twig``
 format (see :ref:`template-naming-locations`).
 

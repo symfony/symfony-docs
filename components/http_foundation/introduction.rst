@@ -250,9 +250,11 @@ by using the following methods:
 :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`
     Returns the list of accepted charsets ordered by descending quality.
 
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class was
-    introduced in Symfony 2.2.
+:method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
+    Returns the list of accepted encodings ordered by descending quality.
+
+  .. versionadded:: 2.4
+      The ``getEncodings()`` method was introduced in Symfony 2.4.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
@@ -279,6 +281,38 @@ request information. Have a look at
 :class:`the Request API <Symfony\\Component\\HttpFoundation\\Request>`
 for more information about them.
 
+Overriding the Request
+~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Request`` class should not be overridden as it is a data object that
+represents an HTTP message. But when moving from a legacy system, adding
+methods or changing some default behavior might help. In that case, register a
+PHP callable that is able to create an instance of your ``Request`` class::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    Request::setFactory(function (
+        array $query = array(),
+        array $request = array(),
+        array $attributes = array(),
+        array $cookies = array(),
+        array $files = array(),
+        array $server = array(),
+        $content = null
+    ) {
+        return SpecialRequest::create(
+            $query,
+            $request,
+            $attributes,
+            $cookies,
+            $files,
+            $server,
+            $content
+        );
+    });
+
+    $request = Request::createFromGlobals();
+
 .. _component-http-foundation-response:
 
 Response
@@ -293,7 +327,7 @@ code, and an array of HTTP headers::
 
     $response = new Response(
         'Content',
-        200,
+        Response::HTTP_OK,
         array('content-type' => 'text/html')
     );
 
@@ -304,7 +338,7 @@ This information can also be manipulated after the Response object creation::
     // the headers public attribute is a ResponseHeaderBag
     $response->headers->set('Content-Type', 'text/plain');
 
-    $response->setStatusCode(404);
+    $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
 When setting the ``Content-Type`` of the Response, you can set the charset,
 but it is better to set it via the
@@ -451,10 +485,6 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
-    class was introduced in Symfony 2.2.
-
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
@@ -479,6 +509,13 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
         'filename.txt'
     );
+
+.. versionadded:: 2.6
+    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
+
+It is possible to delete the file after the request is sent with the 
+:method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
+Please note that this will not work when the ``X-Sendfile`` header is set.
 
 .. _component-http-foundation-json-response:
 

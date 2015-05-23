@@ -20,6 +20,7 @@ String Constraints
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Ip </reference/constraints/Ip>`
+* :doc:`Uuid</reference/constraints/Uuid>`
 
 Number Constraints
 ~~~~~~~~~~~~~~~~~~
@@ -76,6 +77,7 @@ Other Constraints
 ~~~~~~~~~~~~~~~~~
 
 * :doc:`Callback </reference/constraints/Callback>`
+* :doc:`Expression </reference/constraints/Expression>`
 * :doc:`All </reference/constraints/All>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`Valid </reference/constraints/Valid>`

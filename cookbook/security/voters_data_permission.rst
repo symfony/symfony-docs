@@ -25,8 +25,8 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-security context (i.e. the ``security.context`` service). Each one decides
-if the current user should have access to some resource.
+authorization checker (i.e. the ``security.authorization_checker`` service). Each 
+one decides if the current user should have access to some resource.
 
 Ultimately, Symfony uses one of three different approaches on what to do
 with the feedback from all voters: affirmative, consensus and unanimous.
@@ -54,7 +54,9 @@ Creating the custom Voter
 -------------------------
 
 The goal is to create a voter that checks if a user has access to view or
-edit a particular object. Here's an example implementation::
+edit a particular object. Here's an example implementation:
+
+.. code-block:: php
 
     // src/AppBundle/Security/Authorization/Voter/PostVoter.php
     namespace AppBundle\Security\Authorization\Voter;
@@ -192,7 +194,7 @@ How to Use the Voter in a Controller
 ------------------------------------
 
 The registered voter will then always be asked as soon as the method ``isGranted()``
-from the security context is called.
+from the authorization checker is called.
 
 .. code-block:: php
 
@@ -201,7 +203,6 @@ from the security context is called.
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     class PostController extends Controller
     {
@@ -211,12 +212,25 @@ from the security context is called.
             $post = ...;
 
             // keep in mind, this will call all registered security voters
-            if (false === $this->get('security.context')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorised access!');
-            }
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
+            
+            // the equivalent code without using the denyAccessUnlessGranted() shortcut
+            // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+            //
+            // if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
+            //     throw new AccessDeniedException('Unauthorized access!');
+            // }
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
     }
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+
+.. versionadded:: 2.6
+    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6 as a shortcut.
+    It uses ``security.authorization_checker`` and throws an ``AccessDeniedException`` if needed.
 
 It's that easy!

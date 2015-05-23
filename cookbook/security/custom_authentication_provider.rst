@@ -4,6 +4,15 @@
 How to Create a custom Authentication Provider
 ==============================================
 
+.. tip::
+
+    Creating a custom authentication system is hard, and this entry will walk
+    you through that process. But depending on your needs, you may be able
+    to solve your problem in a simpler way using these documents:
+
+    * :doc:`/cookbook/security/custom_password_authenticator`
+    * :doc:`/cookbook/security/api_key_authentication`
+
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
@@ -87,13 +96,13 @@ provider.
 The Listener
 ------------
 
-Next, you need a listener to listen on the security context. The listener
+Next, you need a listener to listen on the firewall. The listener
 is responsible for fielding requests to the firewall and calling the authentication
 provider. A listener must be an instance of
 :class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`.
 A security listener should handle the
 :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and
-set an authenticated token in the security context if successful.
+set an authenticated token in the token storage if successful.
 
 .. code-block:: php
 
@@ -102,20 +111,20 @@ set an authenticated token in the security context if successful.
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
     use AppBundle\Security\Authentication\Token\WsseUserToken;
 
     class WsseListener implements ListenerInterface
     {
-        protected $securityContext;
+        protected $tokenStorage;
         protected $authenticationManager;
 
-        public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager)
+        public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager)
         {
-            $this->securityContext = $securityContext;
+            $this->tokenStorage = $tokenStorage;
             $this->authenticationManager = $authenticationManager;
         }
 
@@ -137,7 +146,7 @@ set an authenticated token in the security context if successful.
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
-                $this->securityContext->setToken($authToken);
+                $this->tokenStorage->setToken($authToken);
 
                 return;
             } catch (AuthenticationException $failed) {
@@ -145,16 +154,16 @@ set an authenticated token in the security context if successful.
 
                 // To deny the authentication clear the token. This will redirect to the login page.
                 // Make sure to only clear your token, not those of other authentication listeners.
-                // $token = $this->securityContext->getToken();
+                // $token = $this->tokenStorage->getToken();
                 // if ($token instanceof WsseUserToken && $this->providerKey === $token->getProviderKey()) {
-                //     $this->securityContext->setToken(null);
+                //     $this->tokenStorage->setToken(null);
                 // }
                 // return;
             }
 
             // By default deny authorization
             $response = new Response();
-            $response->setStatusCode(403);
+            $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $event->setResponse($response);
         }
     }
@@ -400,7 +409,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
             wsse.security.authentication.listener:
                 class: AppBundle\Security\Firewall\WsseListener
-                arguments: ["@security.context", "@security.authentication.manager"]
+                arguments: ["@security.token_storage", "@security.authentication.manager"]
 
     .. code-block:: xml
 
@@ -418,7 +427,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
                 <service id="wsse.security.authentication.listener"
                     class="AppBundle\Security\Firewall\WsseListener" public="false">
-                    <argument type="service" id="security.context"/>
+                    <argument type="service" id="security.token_storage"/>
                     <argument type="service" id="security.authentication.manager" />
                 </service>
             </services>
@@ -442,7 +451,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         $container->setDefinition('wsse.security.authentication.listener',
             new Definition(
                 'AppBundle\Security\Firewall\WsseListener', array(
-                    new Reference('security.context'),
+                    new Reference('security.token_storage'),
                     new Reference('security.authentication.manager'),
                 )
             )

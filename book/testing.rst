@@ -243,6 +243,10 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
+        use Symfony\Component\HttpFoundation\Response;
+
+        // ...
+
         // Assert that there is at least one h2 tag
         // with the class "subtitle"
         $this->assertGreaterThan(
@@ -282,6 +286,9 @@ document::
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. index::
    single: Tests; Client
@@ -462,7 +469,10 @@ Injection Container::
 
 Be warned that this does not work if you insulate the client or if you use an
 HTTP layer. For a list of services available in your application, use the
-``container:debug`` console task.
+``debug:container`` console task.
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 .. tip::
 
@@ -688,6 +698,11 @@ their type::
 
     // Upload a file
     $form['photo']->upload('/path/to/lucas.jpg');
+
+.. tip::
+
+    If you purposefully want to select "invalid" select/radio values, see
+    :ref:`components-dom-crawler-invalid`.
 
 .. tip::
 

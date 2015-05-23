@@ -339,6 +339,21 @@ portable. Thanks to this helper, you can move the application root directory
 anywhere under your web root directory without changing anything in your
 template's code.
 
+Profiling Templates
+~~~~~~~~~~~~~~~~~~~
+
+By using the ``stopwatch`` helper, you are able to time parts of your template
+and display it on the timeline of the WebProfilerBundle::
+
+    <?php $view['stopwatch']->start('foo') ?>
+    ... things that get timed
+    <?php $view['stopwatch']->stop('foo') ?>
+
+.. tip::
+
+    If you use the same name more than once in your template, the times are
+    grouped on the same line in the timeline.
+
 Output Escaping
 ---------------
 
