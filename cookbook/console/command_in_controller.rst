@@ -4,21 +4,21 @@
 How to Call a Command from a Controller
 =======================================
 
-The :doc:`Console component documentation </components/console/introduction>` covers
-how to create a console command. This cookbook article covers how to use a console command
-directly from your controller. 
+The :doc:`Console component documentation </components/console/introduction>`
+covers how to create a console command. This cookbook article covers how
+to use a console command directly from your controller.
 
-You may have the need to execute some function that is only available in a console command. 
-Usually, you should refactor the command and move some logic into a service that can be 
-reused in the controller. However, when the command is part of a third-party library, you 
-wouldn't want to modify or duplicate their code, but want to directly execute the command 
-instead.
+You may have the need to execute some function that is only available in a
+console command. Usually, you should refactor the command and move some logic
+into a service that can be reused in the controller. However, when the command
+is part of a third-party library, you wouldn't want to modify or duplicate
+their code, but want to directly execute the command instead.
 
 .. caution::
 
-    In comparison with a direct call from the console, calling a command from a controller
-    has a slight performance impact because of the request stack overhead. This way of
-    calling a command is only useful for small tasks.
+    In comparison with a direct call from the console, calling a command from
+    a controller has a slight performance impact because of the request stack
+    overhead. This way of calling a command is only useful for small tasks.
 
 An example of this is sending the emails that Swift Mailer spooled earlier
 :doc:`using the swiftmailer:spool:send command </cookbook/email/spool>`. Symfony
@@ -58,9 +58,9 @@ allows you to directly execute a registered command inside your controller::
 Showing Colorized Command Output
 --------------------------------
 
-By telling the ``StreamOutput`` it is decorated via the third parameter, it will return 
-the Ansi color-coded content. The `SensioLabs AnsiToHtml converter`_ can be required 
-using ``Composer`` and helps you getting colorful HTML::
+By telling the ``StreamOutput`` it is decorated via the third parameter,
+it will return the Ansi color-coded content. The `SensioLabs AnsiToHtml converter`_
+can be required using ``Composer`` and helps you getting colorful HTML::
 
     // src/AppBundle/Controller/SpoolController.php
     namespace AppBundle\Controller;
@@ -79,7 +79,7 @@ using ``Composer`` and helps you getting colorful HTML::
         }
     }
 
-The ``AnsiToHtmlConverter`` can also be registered `as a Twig Extension`_, 
+The ``AnsiToHtmlConverter`` can also be registered `as a Twig Extension`_,
 and supports optional themes.
 
 .. _`SensioLabs AnsiToHtml converter`: https://github.com/sensiolabs/ansi-to-html
