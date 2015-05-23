@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-25T07:33:56Z
+
+@nicolas-grekas for this kind of method listings, we no longer use traditional lists in the documentation but "definition lists". The RST syntax in this case would be:
+
+```
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxDepth`
+    Allows limiting dumps in the depth dimension.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxItemsPerDepth`
+    Limits the number of items per depth level.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withRefHandles`
+    Allows removing internal objects' handles for sparser output (useful for tests).
+    Inlike the previous limits on cloners that remove data on purpose, these can
+    be changed back and forth before dumping since they do not affect the
+    intermediate representation internally.
+```
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-03-25T16:45:17Z
+
+updated
