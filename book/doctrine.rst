@@ -722,6 +722,33 @@ instead of querying for rows on a table (e.g. ``product``).
 When querying in Doctrine, you have two options: writing pure Doctrine queries
 or using Doctrine's Query Builder.
 
+Querying for Objects with DQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of using the ``QueryBuilder``, you can alternatively write the queries
+directly using DQL::
+
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+        'SELECT p
+        FROM AppBundle:Product p
+        WHERE p.price > :price
+        ORDER BY p.price ASC'
+    )->setParameter('price', '19.99');
+
+    $products = $query->getResult();
+
+If you're comfortable with SQL, then DQL should feel very natural. The biggest
+difference is that you need to think in terms of "objects" instead of rows
+in a database. For this reason, you select *from* the ``AppBundle:Product``
+*object* and then alias it as ``p`` (as you see, this is equal to what you
+already did in the previous section).
+
+The DQL syntax is incredibly powerful, allowing you to easily join between
+entities (the topic of :ref:`relations <book-doctrine-relations>` will be
+covered later), group, etc. For more information, see the official
+`Doctrine Query Language`_ documentation.
+
 Querying for Objects Using Doctrine's Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -758,33 +785,6 @@ is no result) or ``getOneOrNullResult()``::
 
 For more information on Doctrine's Query Builder, consult Doctrine's
 `Query Builder`_ documentation.
-
-Querying for Objects with DQL
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of using the ``QueryBuilder``, you can alternatively write the queries
-directly using DQL::
-
-    $em = $this->getDoctrine()->getManager();
-    $query = $em->createQuery(
-        'SELECT p
-        FROM AppBundle:Product p
-        WHERE p.price > :price
-        ORDER BY p.price ASC'
-    )->setParameter('price', '19.99');
-
-    $products = $query->getResult();
-
-If you're comfortable with SQL, then DQL should feel very natural. The biggest
-difference is that you need to think in terms of "objects" instead of rows
-in a database. For this reason, you select *from* the ``AppBundle:Product``
-*object* and then alias it as ``p`` (as you see, this is equal to what you
-already did in the previous section).
-
-The DQL syntax is incredibly powerful, allowing you to easily join between
-entities (the topic of :ref:`relations <book-doctrine-relations>` will be
-covered later), group, etc. For more information, see the official
-`Doctrine Query Language`_ documentation.
 
 .. _book-doctrine-custom-repository-classes:
 
