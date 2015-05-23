@@ -102,7 +102,7 @@ file.
     
 .. caution::
 
-   If you use the getUploadRootDir() method, be aware that this will save 
+   If you use the ``getUploadRootDir()`` method, be aware that this will save 
    the file inside the document root, which can be accessed by everyone. 
    Consider placing it out of the document root and adding custom viewing 
    logic when you need to secure the files.
