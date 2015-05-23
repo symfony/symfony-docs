@@ -111,29 +111,96 @@ for converting to and from the issue number and the ``Issue`` object::
 Using the Transformer
 ---------------------
 
-Now that you have the transformer built, you just need to add it to your
-issue field in some form.
+As seen above our transformer requires an instance of an object manager. While for most
+use-cases using the default manager is fine we will let you pick the manager by it's name.
+In order to achieve this we will add a factory:
+
+    // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformerFactory.php
+    namespace Acme\TaskBundle\Form\DataTransformer;
+
+    use Symfony\Bridge\Doctrine\ManagerRegistry;
+
+    class IssueToNumberTransformerFactory
+    {
+        /** @var ManagerRegistry */
+        private $registry;
+
+        public function __construct(ManagerRegistry $registry)
+        {
+            $this->registry = $registry;
+        }
+
+        public function create($om)
+        {
+            return new IssueToNumberTransformer($this->registry->getManager($om));
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.factory.issue_transformer:
+                class: Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory
+                arguments: ["@doctrine"]
+                
+            acme_demo.type.task:
+                class: Acme\TaskBundle\Form\TaskType
+                arguments: ["@acme_demo.factory.issue_transformer"]
+
+    .. code-block:: xml
+
+        <service id="acme_demo.factory.issue_transformer" class="Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory">
+            <argument type="service" id="doctrine"/>
+        </service>
+        
+        <service id="acme_demo.type.task" class="Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory">
+            <argument type="service" id="acme_demo.factory.issue_transformer"/>
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->setDefinition('acme_demo.factory.issue_transformer', array(
+                new Reference('doctrine'),
+            ))
+        ;
+        
+        $container
+            ->setDefinition('acme_demo.type.task', array(
+                new Reference('acme_demo.factory.issue_transformer'),
+            ))
+        ;
+    
+Now that you have capability to build the transformer with the desired object manager, you
+just need to create it from your issue field in some form.
 
 You can also use transformers without creating a new custom form type
 by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
 `Model and View Transformers`_) on any field builder::
 
+    // src/Acme/TaskBundle/Form/TaskType.php
+    namespace Acme\TaskBundle\Form;
+
+    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class TaskType extends AbstractType
     {
+        /** @var IssueToNumberTransformerFactory */
+        private $factory;
+
+        public function __construct(IssueToNumberTransformerFactory $factory)
+        {
+            $this->factory = $factory;
+        }
+
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            // ...
+            $transformer = $this->factory->create($options['om']);
 
-            // the "em" is an option that you pass when creating your form. Check out
-            // the 3rd argument to createForm in the next code block to see how this
-            // is passed to the form (also see setDefaultOptions).
-            $entityManager = $options['em'];
-            $transformer = new IssueToNumberTransformer($entityManager);
-
-            // add a normal text field, but add your transformer to it
             $builder->add(
                 $builder->create('issue', 'text')
                     ->addModelTransformer($transformer)
@@ -146,25 +213,18 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
                 ->setDefaults(array(
                     'data_class' => 'Acme\TaskBundle\Entity\Task',
                 ))
-                ->setRequired(array(
-                    'em',
-                ))
-                ->setAllowedTypes(array(
-                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                ));
-
-            // ...
+                ->setRequired(array('om'))
+            ;
         }
-
-        // ...
     }
 
 This example requires that you pass in the entity manager as an option
 when creating your form. Later, you'll learn how you could create a custom
 ``issue`` field type to avoid needing to do this in your controller::
 
-    $taskForm = $this->createForm(new TaskType(), $task, array(
-        'em' => $this->getDoctrine()->getManager(),
+    $taskType = $this->get('acme_demo.type.task');
+    $taskForm = $this->createForm($taskType, $task, array(
+        'om' => 'default',
     ));
 
 Cool, you're done! Your user will be able to enter an issue number into the
@@ -257,30 +317,23 @@ First, create the custom field type class::
     // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
     namespace Acme\TaskBundle\Form\Type;
 
+    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class IssueSelectorType extends AbstractType
     {
-        /**
-         * @var ObjectManager
-         */
-        private $om;
-
-        /**
-         * @param ObjectManager $om
-         */
-        public function __construct(ObjectManager $om)
+        private $factory;
+        
+        public function __construct(IssueToNumberTransformerFactory $factory)
         {
-            $this->om = $om;
+            $this->factory = $factory;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $transformer = new IssueToNumberTransformer($this->om);
+            $transformer = $this->factory->create($options['om']);
             $builder->addModelTransformer($transformer);
         }
 
@@ -288,6 +341,7 @@ First, create the custom field type class::
         {
             $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',
+                'om' => 'default'
             ));
         }
 
