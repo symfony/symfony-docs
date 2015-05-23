@@ -290,8 +290,10 @@ a ``security.authentication.failure`` event is dispatched.  You
 could listen on the ``security.authentication.failure`` event, for example,
 in order to log failed login attempts.
 
-It is important to remember that one authentication event is always triggered
-when a request points to a secured area.
+.. tip::
+
+    One of the authentication events is always triggered when a request points
+    to a secured area.
 
 Security Events
 ~~~~~~~~~~~~~~~
