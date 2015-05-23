@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-03T07:54:39Z
+
+Maybe it's also worth to create a cookbook entry elaborating the different possibilities a bit more. What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-05T18:47:07Z
+
+@xabbuh Is this a bit different than the `mapped => false` situation? With `mapped => false`, you still have a field, so you can still get the data via `$form->getData()`. But I *believe* that this new option exists so that if you bind data to your form and there is no field for a specific key on that data, it won't throw the validation error. But, you also won't be able to access the data via `$form->getData()`, since there was no form field for it.
+
+I would think that we need to doc this probably only on the `form.rst.inc` reference page. But, if you have a few ideas that you'd like to all wrap together in a cookbook entry, that would be interesting also. Let me know how that entry might look.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T06:30:51Z
+
+@weaverryan You might be true. I didn't really think about that. I will build a small form and try it out. I will then either update the code or let you know that everything works as I expected. :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-18T19:35:24Z
+
+Ping @xabbuh!
+
+And yes, when you figure out how things work, we might need an example somewhere showing different possibilities of:
+
+* `mapped`
+* `allow_extra_fields`
+* `property_path`
+
+Because these have different, but somewhat related uses. Just an idea!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-18T13:58:29Z
+
+Ping @xabbuh could you please get this ready before the stable release?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-20T22:01:49Z
+
+@WouterJ @xabbuh As you're moving through the docs, if you happen to see any issues that we need for 2.6, make sure they have the 2.6 milestone. We can really make those a priority over the next 10 days.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-20T22:09:18Z
+
+@weaverryan @WouterJ I haven't forgotten this one. I hope to find some time to investigate it further this weekend. I'm really sorry for the delay.
+
+By the way'I think so issues for 2.6 have already been tagged with that milestone.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-20T22:13:39Z
+
+I've also tagged some PRs with the milestone now
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-28T15:27:18Z
+
+ping :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-15T12:50:28Z
+
+@xabbuh, as you know there will be a sprint day soon :wink:. Do you have time to update this PR before/during that day or should I put it on the list?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-17T06:45:53Z
+
+Sorry for the long delay. I updated the section and also moved it to the "Validation" part of the Form chapter (I think it better fits in that context).
