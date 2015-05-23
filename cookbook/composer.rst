@@ -24,7 +24,7 @@ To install Composer on Linux or Mac OS X, execute the following two commands:
 .. note::
 
     If you don't have ``curl`` installed, you can also just download the
-    ``installer`` file manually at http://getcomposer.org/installer and
+    ``installer`` file manually at https://getcomposer.org/installer and
     then run:
 
     .. code-block:: bash

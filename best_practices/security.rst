@@ -221,6 +221,10 @@ more advanced use-case, you can always do the same security check in PHP:
 
 .. code-block:: php
 
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    // ...
+
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
@@ -234,7 +238,7 @@ more advanced use-case, you can always do the same security check in PHP:
         }
 
         if (!$post->isAuthor($this->getUser())) {
-            throw $this->createAccessDeniedException();
+            throw new AccessDeniedException();
         }
 
         // ...
@@ -322,6 +326,10 @@ You can also use this directly with the ``security.authorization_checker`` servi
 via the even easier shortcut in a controller:
 
 .. code-block:: php
+
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    // ...
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
