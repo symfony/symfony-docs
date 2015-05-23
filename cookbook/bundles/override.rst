@@ -198,5 +198,4 @@ can override the translations from any translation file, as long as it is in
 
     The file that always wins is the one that is placed in
     ``app/Resources/translations``, as those files are always loaded last.
-
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
