@@ -195,7 +195,7 @@ can override the translations from any translation file, as long as it is in
     unaware of their parent. If you want to override translations from the
     parent bundle, be sure that the parent bundle is loaded before the child
     bundle in the ``AppKernel`` class.
-    
+
     The file that always wins is the one that is placed in
     ``app/Resources/translations``, as those files are always loaded last.
 
