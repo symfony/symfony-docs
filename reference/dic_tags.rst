@@ -543,7 +543,7 @@ kernel.event_listener
 This tag allows you to hook your own classes into Symfony's process at different
 points.
 
-For a full example of this listener, read the :doc:`/cookbook/service_container/event_listener`
+For a full example of this listener, read the :doc:`/cookbook/event_dispatcher/event_listener`
 cookbook entry.
 
 For another practical example of a kernel listener, see the cookbook
