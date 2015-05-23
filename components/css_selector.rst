@@ -51,7 +51,7 @@ equivalents::
 
     use Symfony\Component\CssSelector\CssSelector;
 
-    print CssSelector::toXPath('div.item > h4 > a');
+    dump(CssSelector::toXPath('div.item > h4 > a'));
 
 This gives the following output:
 

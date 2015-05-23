@@ -50,7 +50,7 @@ method::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
 
-    print_r(ClassMapGenerator::createMap(__DIR__.'/library'));
+    dump(ClassMapGenerator::createMap(__DIR__.'/library'));
 
 Given the files and class from the table above, you should see an output like
 this:
