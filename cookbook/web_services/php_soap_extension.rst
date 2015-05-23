@@ -193,4 +193,4 @@ An example WSDL is below.
 .. _`PHP SOAP`: http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`: http://sourceforge.net/projects/nusoap
 .. _`output buffering`: http://php.net/manual/en/book.outcontrol.php
-.. _`Zend SOAP`: http://framework.zend.com/manual/en/zend.soap.server.html
+.. _`Zend SOAP`: http://framework.zend.com/manual/current/en/modules/zend.soap.server.html

@@ -29,17 +29,13 @@ The ``file`` type represents a file input in your form.
 Basic Usage
 -----------
 
-Say you have this form definition:
-
-.. code-block:: php
+Say you have this form definition::
 
     $builder->add('attachment', 'file');
 
-When the form is submitted, the ``attachment`` field will be an instance of
-:class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can be
-used to move the ``attachment`` file to a permanent location:
-
-.. code-block:: php
+When the form is submitted, the ``attachment`` field will be an instance
+of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can
+be used to move the ``attachment`` file to a permanent location::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -77,8 +73,8 @@ could have been manipulated by the end-user. Moreover, it can contain
 characters that are not allowed in file names. You should sanitize the name
 before using it directly.
 
-Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example of
-how to manage a file upload associated with a Doctrine entity.
+Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example
+of how to manage a file upload associated with a Doctrine entity.
 
 Field Options
 -------------
@@ -96,7 +92,8 @@ When set to true, the user will be able to upload multiple files at the same tim
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 

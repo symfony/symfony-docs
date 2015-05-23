@@ -60,8 +60,6 @@ The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
 * Modify the data given during pre-population;
 * Modify a form depending on the pre-populated data (adding or removing fields dynamically).
 
-:ref:`Form Events Information Table<component-form-event-table>`
-
 ===============  ========
 Data Type        Value
 ===============  ========
@@ -69,6 +67,11 @@ Model data       ``null``
 Normalized data  ``null``
 View data        ``null``
 ===============  ========
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
 
 .. caution::
 
@@ -95,8 +98,6 @@ The ``FormEvents::POST_SET_DATA`` event is dispatched at the end of the
 method. This event is mostly here for reading data after having pre-populated
 the form.
 
-:ref:`Form Events Information Table<component-form-event-table>`
-
 ===============  ====================================================
 Data Type        Value
 ===============  ====================================================
@@ -104,6 +105,11 @@ Model data       Model data injected into ``setData()``
 Normalized data  Model data transformed using a model transformer
 View data        Normalized data transformed using a view transformer
 ===============  ====================================================
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
 
 .. sidebar:: ``FormEvents::POST_SET_DATA`` in the Form component
 
@@ -138,8 +144,6 @@ It can be used to:
 * Change data from the request, before submitting the data to the form;
 * Add or remove form fields, before submitting the data to the form.
 
-:ref:`Form Events Information Table<component-form-event-table>`
-
 ===============  ========================================
 Data Type        Value
 ===============  ========================================
@@ -147,6 +151,11 @@ Model data       Same as in ``FormEvents::POST_SET_DATA``
 Normalized data  Same as in ``FormEvents::POST_SET_DATA``
 View data        Same as in ``FormEvents::POST_SET_DATA``
 ===============  ========================================
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
 
 .. sidebar:: ``FormEvents::PRE_SUBMIT`` in the Form component
 
@@ -166,8 +175,6 @@ transforms back the normalized data to the model and view data.
 
 It can be used to change data from the normalized representation of the data.
 
-:ref:`Form Events Information Table<component-form-event-table>`
-
 ===============  ===================================================================================
 Data Type        Value
 ===============  ===================================================================================
@@ -175,6 +182,11 @@ Model data       Same as in ``FormEvents::POST_SET_DATA``
 Normalized data  Data from the request reverse-transformed from the request using a view transformer
 View data        Same as in ``FormEvents::POST_SET_DATA``
 ===============  ===================================================================================
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
 
 .. caution::
 
@@ -196,15 +208,18 @@ model and view data have been denormalized.
 
 It can be used to fetch data after denormalization.
 
-:ref:`Form Events Information Table<component-form-event-table>`
-
 ===============  =============================================================
 Data Type        Value
 ===============  =============================================================
 Model data       Normalized data reverse-transformed using a model transformer
-Normalized data  Same as in ``FormEvents::POST_SUBMIT``
+Normalized data  Same as in ``FormEvents::SUBMIT``
 View data        Normalized data transformed using a view transformer
 ===============  =============================================================
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
 
 .. caution::
 
@@ -220,21 +235,21 @@ View data        Normalized data transformed using a view transformer
     information about the forms.
     The ``Symfony\Component\Form\Extension\Validator\EventListener\ValidationListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
-    automatically validate the denormalized object, and update the normalized
-    as well as the view's representations.
+    automatically validate the denormalized object and to update the normalized
+    representation as well as the view representations.
 
 Registering Event Listeners or Event Subscribers
 ------------------------------------------------
 
 In order to be able to use Form events, you need to create an event listener
-or an event subscriber, and register it to an event.
+or an event subscriber and register it to an event.
 
 The name of each of the "form" events is defined as a constant on the
 :class:`Symfony\\Component\\Form\\FormEvents` class.
 Additionally, each event callback (listener or subscriber method) is passed a
 single argument, which is an instance of
 :class:`Symfony\\Component\\Form\\FormEvent`. The event object contains a
-reference to the current state of the form, and the current data being
+reference to the current state of the form and the current data being
 processed.
 
 .. _component-form-event-table:

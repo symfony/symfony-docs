@@ -119,7 +119,7 @@ the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <!-- app/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
@@ -133,7 +133,7 @@ Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- src/AppBundle/Resources/views/layout.html.php -->
+    <!-- app/Resources/views/layout.html.php -->
     <?php $view->extend('::base.html.php') ?>
 
     <h1>Hello Application</h1>
@@ -181,7 +181,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
 .. code-block:: html+php
 
-    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <!-- app/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
@@ -223,14 +223,14 @@ Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- src/AppBundle/Resources/views/Hello/hello.html.php -->
+    <!-- app/Resources/views/Hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <!-- app/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
     <?php echo $view->render('AppBundle:Hello:hello.html.php', array('name' => $name)) ?>
@@ -253,7 +253,7 @@ If you create a ``fancy`` action, and want to include it into the
 
 .. code-block:: html+php
 
-    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <!-- app/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference('AppBundle:Hello:fancy', array(
             'name'  => $name,

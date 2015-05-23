@@ -102,7 +102,7 @@ And then register it as a tagged service:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="acme.my_worker" class="MyWorker>
+                <service id="acme.my_worker" class="MyWorker">
                     <tag name="assetic.factory_worker" />
                 </service>
             </services>
@@ -527,83 +527,8 @@ cookbook entry.
 Core Event Listener Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When adding your own listeners, it might be useful to know about the other
-core Symfony listeners and their priorities.
-
-.. note::
-
-    All listeners listed here may not be listening depending on your environment,
-    settings and bundles. Additionally, third-party bundles will bring in
-    additional listeners not listed here.
-
-kernel.request
-..............
-
-+-------------------------------------------------------------------------------------------+-----------+
-| Listener Class Name                                                                       | Priority  |
-+===========================================================================================+===========+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 1024      |
-+-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | 192       |
-+-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`                 | 128       |
-+-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`                    | 32        |
-+-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`                    | 16        |
-+-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 8         |
-+-------------------------------------------------------------------------------------------+-----------+
-
-kernel.controller
-.................
-
-+-------------------------------------------------------------------------------------------+----------+
-| Listener Class Name                                                                       | Priority |
-+===========================================================================================+==========+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`            | 0        |
-+-------------------------------------------------------------------------------------------+----------+
-
-kernel.response
-...............
-
-+-------------------------------------------------------------------------------------------+----------+
-| Listener Class Name                                                                       | Priority |
-+===========================================================================================+==========+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`                       | 0        |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`                  | 0        |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Bundle\\SecurityBundle\\EventListener\\ResponseListener`                 | 0        |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | -100     |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | -128     |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`       | -128     |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`          | -1024    |
-+-------------------------------------------------------------------------------------------+----------+
-
-kernel.exception
-................
-
-+-------------------------------------------------------------------------------------------+----------+
-| Listener Class Name                                                                       | Priority |
-+===========================================================================================+==========+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 0        |
-+-------------------------------------------------------------------------------------------+----------+
-| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
-+-------------------------------------------------------------------------------------------+----------+
-
-kernel.terminate
-................
-
-+-------------------------------------------------------------------------------------------+----------+
-| Listener Class Name                                                                       | Priority |
-+===========================================================================================+==========+
-| `EmailSenderListener`_                                                                    | 0        |
-+-------------------------------------------------------------------------------------------+----------+
+For the reference of Event Listeners associated with each kernel event, see the
+:doc:`Symfony Events Reference </reference/events>`.
 
 .. _dic-tags-kernel-event-subscriber:
 
@@ -1421,4 +1346,3 @@ Bridge.
 .. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
 .. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders
-.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php

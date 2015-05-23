@@ -88,7 +88,8 @@ The actual default value of this option depends on other field options:
 * If ``data_class`` is set and ``required`` is ``false``, then ``null``;
 * If ``data_class`` is not set and ``compound`` is ``true``, then ``array()``
   (empty array);
-* If ``data_class`` is not set and ``compound`` is ``false``, then ``''`` (empty string).
+* If ``data_class`` is not set and ``compound`` is ``false``, then ``''``
+  (empty string).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
