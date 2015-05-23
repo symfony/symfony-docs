@@ -1,0 +1,153 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-06T12:31:18Z
+
+@Rvanlaak thanks for submitting this nice new cookbook!
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-06T12:33:31Z
+
+Was thinking about adding [more information about the Theming and a code sample about the Twig extension](https://github.com/sensiolabs/ansi-to-html#twig-integration), but seems like that is too much info for the cookbook article. What do you think @javiereguiluz ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-06T15:10:30Z
+
+@Rvanlaak I agree with you: it looks like too much information for this cookbook. I personally love short and straight-to-the-point cookbooks, so I really like your tutorial as it is now. Thanks.
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-06T15:21:01Z
+
+Another thing, where can I find new decisions the such as the one you mentioned about not using acme examples? Could not find anything on http://symfony.com/doc/current/contributing/documentation/index.html and probably such decisions are made in the Google Groups, but we can not follow that the entire day :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-06T15:41:23Z
+
+I don't really know where we decided this, because I talk with doc maintainers via email, IRC and GitHub :(  In any case, the #4740 PR is the one which made the biggest recent change to remove `acme`, `demo`, `foo` and nonsenses like those.
+
+I'm going to check if we can add something about this in the formal document that you linked. Thanks for your comments.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-06T18:01:20Z
+
+@Rvanlaak we don't use the Google Groups and you sure don't have to watch them in order to contribute something (these reviews are just to help you adding amazing content to the docs, it doesn't matter if your PR isn't 100% correct at first).
+
+Decisions like this aren't really strict standards or decisions. As an important rule, it is always better using real-world examples than foobaring your examples. While being more clear, it also works as an advertisement for the framework ("wow, can I also create X with this?").
+
+Since the best practices, we are updating the docs to follow them. One of the most important changes is to no longer recommend using multiple bundles, but just one bundle: AppBundle. We are still in the process of it, as it's a very hard task to do nicely.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-07T15:55:46Z
+
+Thank you for creating the pull request, @Rvanlaak. It's nice work. However, I think we should start the text with a short introduction to show use cases when you might want to call a command from a controller.
+
+I was thinking about something like:
+
+> You may have the need to execute some function that is only available in a console command. Usually, you should refactor the command and move some logic into a service that can be reused in the controller. However, when the command is part of a third-party library, you wouldn't want to modify or duplicate their code, but want to directly execute the command instead.
+
+What do you think?
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-08T10:38:34Z
+
+Agree with you @xabbuh , so I've updated the example to a real world use case, eg. sending the SwiftMailer spool directly from the controller. Let me know if it's fine now, so I can squash the commits into one.
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-12T08:30:55Z
+
+Rebased the latest changes @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-12T08:49:21Z
+
+@Rvanlaak awesome! Thanks for working on this and for your infinite patience with our comments and suggestions.
+
+@xabbuh this nice PR is now ready to be labeled as *finished*, don't you think?
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-12T08:53:52Z
+
+No problem, great way of getting known with the community guidelines :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-12T17:51:13Z
+
+@Rvanlaak Sorry for nitpicking. You are doing a really great job!
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2015-03-13T08:43:33Z
+
+:+1:  It would be nice if we add a note about  performance hit and saying that this only useful for small task.
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-17T08:34:57Z
+
+@aitboudad the performance hit is in the loading of the DIC, or in the Request part? What do you think about the caution I've added ?
+
+https://github.com/symfony/symfony-docs/pull/5062/files#diff-7974dfc29d3c634c9e202e7ca2ce741cR17
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-27T11:29:39Z
+
+ping @xabbuh @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-04-09T09:29:02Z
+
+Fixed the outstanding issues. Let me know if the commits are ready for a rebase :+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-09T09:37:03Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-12T08:00:36Z
+
+:+1: Great work @Rvanlaak!
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-04-13T10:13:56Z
+
+Completed the rebase, squased all commits into https://github.com/Rvanlaak/symfony-docs/commit/62ae7c37a1e6c8b34b52023b33cc65435ca66626
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-05-05T09:49:26Z
+
+@xabbuh anything I've got to change for this PR?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-06T06:58:49Z
+
+@Rvanlaak I left two minor comments. After that I think it's finished.
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-05-06T07:06:21Z
+
+@xabbuh nice pick, fixed and rebased it!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-06T07:09:21Z
+
+:+1:
