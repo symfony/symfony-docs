@@ -396,9 +396,9 @@ is created from the form factory.
             ->add('dueDate', 'date')
             ->getForm();
 
-        echo $twig->render('new.html.twig', array(
+        dump($twig->render('new.html.twig', array(
             'form' => $form->createView(),
-        ));
+        )));
 
     .. code-block:: php-symfony
 

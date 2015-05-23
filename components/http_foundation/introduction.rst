@@ -415,10 +415,10 @@ represented by a PHP callable instead of a string::
 
     $response = new StreamedResponse();
     $response->setCallback(function () {
-        echo 'Hello World';
+        dump('Hello World');
         flush();
         sleep(2);
-        echo 'Hello World';
+        dump('Hello World');
         flush();
     });
     $response->send();
