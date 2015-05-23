@@ -31,6 +31,7 @@ Run this command from inside your controller via::
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Console\Input\ArrayInput;
     use Symfony\Component\Console\Output\BufferedOutput;
+    use Symfony\Component\HttpFoundation\Response;
 
     class SpoolController extends Controller
     {
@@ -66,7 +67,7 @@ First, require the package:
 
 .. code-block:: bash
 
-    composer require sensiolabs/ansi-to-html
+    $ composer require sensiolabs/ansi-to-html
 
 Now, use it in your controller::
 
@@ -76,6 +77,7 @@ Now, use it in your controller::
     use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
     use Symfony\Component\Console\Output\BufferedOutput;
     use Symfony\Component\Console\Output\OutputInterface;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     class SpoolController extends Controller
