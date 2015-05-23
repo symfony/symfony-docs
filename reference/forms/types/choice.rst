@@ -43,8 +43,8 @@ option.
 Example Usage
 -------------
 
-The easiest way to use this field is to specify the choices directly via the
-``choices`` option. The key of the array becomes the value that's actually
+The easiest way to use this field is to specify the choices directly via
+the ``choices`` option. The key of the array becomes the value that's actually
 set on your underlying object (e.g. ``m``), while the value is what the
 user sees on the form (e.g. ``Male``).
 
@@ -57,9 +57,7 @@ user sees on the form (e.g. ``Male``).
 
 By setting ``multiple`` to true, you can allow the user to choose multiple
 values. The widget will be rendered as a multiple ``select`` tag or a series
-of checkboxes depending on the ``expanded`` option:
-
-.. code-block:: php
+of checkboxes depending on the ``expanded`` option::
 
     $builder->add('availability', 'choice', array(
         'choices' => array(
@@ -70,8 +68,8 @@ of checkboxes depending on the ``expanded`` option:
         'multiple' => true,
     ));
 
-You can also use the ``choice_list`` option, which takes an object that can
-specify the choices for your widget.
+You can also use the ``choice_list`` option, which takes an object that
+can specify the choices for your widget.
 
 .. _forms-reference-choice-tags:
 
@@ -95,11 +93,11 @@ is the item value and the array value is the item's label::
 
 .. tip::
 
-    When the values to choose from are not integers or strings (but e.g. floats
-    or booleans), you should use the `choice_list`_ option instead. With this
-    option you are able to keep the original data format which is important
-    to ensure that the user input is validated properly and useless database
-    updates caused by a data type mismatch are avoided.
+    When the values to choose from are not integers or strings (but e.g.
+    floats or booleans), you should use the `choice_list`_ option instead.
+    With this option you are able to keep the original data format which
+    is important to ensure that the user input is validated properly and
+    useless database updates caused by a data type mismatch are avoided.
 
 choice_list
 ~~~~~~~~~~~
@@ -164,7 +162,8 @@ the parent field (the form in most cases).
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
@@ -215,5 +214,5 @@ Field Variables
 
 .. tip::
 
-    It's significantly faster to use the :ref:`form-twig-selectedchoice` test
-    instead when using Twig.
+    It's significantly faster to use the :ref:`form-twig-selectedchoice`
+    test instead when using Twig.

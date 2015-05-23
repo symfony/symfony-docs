@@ -110,7 +110,7 @@ Glossary
         The *Kernel* is the core of Symfony. The Kernel object handles HTTP
         requests using all the bundles and libraries registered to it. See
         :ref:`The Architecture: The Application Directory <the-app-dir>` and the
-        :doc:`/book/internals` chapter.
+        :doc:`Internal Events Reference </reference/events>`.
 
    Firewall
         In Symfony, a *Firewall* doesn't have to do with networking. Instead,

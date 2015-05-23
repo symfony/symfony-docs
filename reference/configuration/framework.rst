@@ -721,17 +721,17 @@ api
 Starting with Symfony 2.5, the Validator component introduced a new validation
 API. The ``api`` option is used to switch between the different implementations:
 
-``2.4``
-    Use the vaidation API that is compatible with older Symfony versions.
-
 ``2.5``
     Use the validation API introduced in Symfony 2.5.
 
 ``2.5-bc`` or ``auto``
     If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
     Symfony will use an API implementation that is compatible with both the
-    legacy implementation and the ``2.5`` implementation. You have to use
-    PHP 5.3.9 or higher to be able to use this implementation.
+    legacy ``2.4`` implementation and the ``2.5`` implementation.
+
+.. note::
+
+    The support for the native 2.4 API has been dropped since Symfony 2.7.
 
 To capture these logs in the ``prod`` environment, configure a
 :doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for

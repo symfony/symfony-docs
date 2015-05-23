@@ -106,6 +106,16 @@ directory of the application and add just the following content:
 
     web: bin/heroku-php-apache2 web/
 
+.. note::
+
+    If you prefer to use Nginx, which is also available on Heroku, you can create
+    a configuration file for it and point to it from your Procfile as described
+    in the `Heroku documentation`_:
+
+    .. code-block:: text
+
+        web: bin/heroku-php-nginx -C nginx_app.conf web/
+
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
@@ -301,7 +311,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
 
     .. code-block:: bash
 
-        $ heroku buildpack:set https://github.com/ddollar/heroku-buildpack-multi.git
+        $ heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git
 
     Next, add a ``.buildpacks`` file to your project, listing the buildpacks you need:
 
@@ -329,3 +339,4 @@ This is also very useful to build assets on the production system, e.g. with Ass
 .. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi.git
 .. _`Grunt`: http://gruntjs.com
 .. _`gulp`: http://gulpjs.com
+.. _`Heroku documentation`: https://devcenter.heroku.com/articles/custom-php-settings#nginx

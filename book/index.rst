@@ -21,6 +21,5 @@ The Book
     translation
     service_container
     performance
-    internals
 
 .. include:: /book/map.rst.inc

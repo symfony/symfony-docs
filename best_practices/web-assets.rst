@@ -29,8 +29,8 @@ much more concise:
 .. note::
 
     Keep in mind that ``web/`` is a public directory and that anything stored
-    here will be publicly accessible. For that reason, you should put your
-    compiled web assets here, but not their source files (e.g. SASS files).
+    here will be publicly accessible, including all the original asset files
+    (e.g. Sass, LESS and CoffeScript files).
 
 Using Assetic
 -------------
@@ -51,16 +51,15 @@ tools like GruntJS.
 
 :doc:`Assetic </cookbook/assetic/asset_management>` is an asset manager capable
 of compiling assets developed with a lot of different frontend technologies
-like LESS, Sass and CoffeeScript.
-Combining all your assets with Assetic is a matter of wrapping all the assets
-with a single Twig tag:
+like LESS, Sass and CoffeeScript. Combining all your assets with Assetic is a
+matter of wrapping all the assets with a single Twig tag:
 
 .. code-block:: html+jinja
 
     {% stylesheets
         'css/bootstrap.min.css'
         'css/main.css'
-        filter='cssrewrite' output='css/compiled/all.css' %}
+        filter='cssrewrite' output='css/compiled/app.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
@@ -69,7 +68,7 @@ with a single Twig tag:
     {% javascripts
         'js/jquery.min.js'
         'js/bootstrap.min.js'
-        output='js/compiled/all.js' %}
+        output='js/compiled/app.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

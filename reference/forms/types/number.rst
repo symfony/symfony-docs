@@ -5,8 +5,8 @@ number Field Type
 =================
 
 Renders an input text field and specializes in handling number input. This
-type offers different options for the scale, rounding and grouping that you
-want to use for your number.
+type offers different options for the scale, rounding and grouping
+that you want to use for your number.
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
@@ -72,7 +72,8 @@ option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\D
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
