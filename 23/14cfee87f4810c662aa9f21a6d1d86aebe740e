@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by amansilla at 2015-05-19T16:15:03Z
+
+The documentation for version 2.4 is also affected by this error. Do anybody knows if I need to create a different pull request for the fix in the version 2.4?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-19T17:30:40Z
+
+@amansilla it won't be necessary to create a PR for Smyfony 2.4, because we no longer update that version. We only keep updating the active Symfony versions, which right now are 2.3, 2.6, 2.7, 2.8 and master.
+
+---------------------------------------------------------------------------
+
+by amansilla at 2015-05-19T18:39:49Z
+
+@javiereguiluz thanks for the info, now tests are passing on travis. Is there anything to do yet?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-19T18:44:36Z
+
+@amansilla Thank you so much for catching this error and for providing a perfect pull request! It will be merged as soon as one of our mergers has some time.
+
+@weaverryan @WouterJ Please remember to revert this commit after merging when merging it up into the `2.6` branch.
