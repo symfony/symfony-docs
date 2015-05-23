@@ -1,0 +1,85 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-22T16:59:51Z
+
+`components/http_kernel/introduction` already has an overview of all these events. Internal listeners are listed there and a full list in `reference/dic_tags#kernel-event-listener`.
+
+So we basically already have this info, we maybe just have to group them on a bit more logical place (the list in full dic_tags isn't a very nice location imo).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-22T17:01:53Z
+
+@WouterJ considering your comments, maybe the best thing is to actually create that new reference document to group all events.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-23T08:38:44Z
+
+Should the redirection map be updated to avoid having a 404 on this URL ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-23T09:00:34Z
+
+@stof Good idea! I've just added a redirection to the new events reference document.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-31T16:58:42Z
+
+Great job @javiereguiluz! This really shows that rewritting the docs and removing things can bring the docs to a higher level.
+
+I think we should add a table listing all priorities used by framework listeners (just move it from the dic_tags reference). This would make it very easy to determine which priority you should use for a custom listener.
+
+Btw, there also seems to be a build failure.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-02T16:29:22Z
+
+As suggested, I've moved the tables about built-in event listeners from DIC Tags reference to the new Events reference.
+
+Do you have any other suggestions or can we consider this PR as *finished*? Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-02T17:00:48Z
+
+You have to remove the reference to the stable API chapter from the `/book/index.rst` file.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-02T17:09:56Z
+
+@xabbuh done!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-02T21:17:47Z
+
+The same also applies to `/book/map.rst.inc`.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-03T09:22:29Z
+
+@xabbuh done! I'm sorry for not doing it right at first :(
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-22T15:58:05Z
+
+Hi @javiereguiluz. Can you please rebase?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-22T16:09:18Z
+
+@WouterJ done. Let's see if conflicts are gone now.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-22T17:33:08Z
+
+:+1:
