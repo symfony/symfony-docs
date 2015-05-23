@@ -70,16 +70,16 @@ A typical project that returns HTML and JSON pages, might look like this:
 .. code-block:: text
 
     app/
-    ├─ Resources/
-    │  └─ TwigBundle/
-    │     └─ views/
-    │        └─ Exception/
-    │           ├─ error404.html.twig
-    │           ├─ error403.html.twig
-    │           ├─ error.html.twig      # All other HTML errors (including 500)
-    │           ├─ error404.json.twig
-    │           ├─ error403.json.twig
-    │           ├─ error.json.twig      # All other JSON errors (including 500)
+    └─ Resources/
+       └─ TwigBundle/
+          └─ views/
+             └─ Exception/
+                ├─ error404.html.twig
+                ├─ error403.html.twig
+                ├─ error.html.twig      # All other HTML errors (including 500)
+                ├─ error404.json.twig
+                ├─ error403.json.twig
+                ├─ error.json.twig      # All other JSON errors (including 500)
 
 Example 404 Error Template
 --------------------------
@@ -144,9 +144,6 @@ is undefined. The solution is to add the following check before using this funct
 
 Testing Error Pages during Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Symfony shows the big *exception* page instead of your customized error page
-when you're in the development environem
 
 While you're in the development environment, Symfony shows the big *exception*
 page instead of your shiny new customized error page. So, how can you see
