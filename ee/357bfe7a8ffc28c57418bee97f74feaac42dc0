@@ -1,0 +1,72 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-16T16:06:00Z
+
+I agree with you, I see no benefit of a custom routing loader.
+
+Some changes in this PR might conflict with #4740. Could you please check that and remove the ones that will conflict?
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-16T17:17:21Z
+
+@WouterJ The file `cookbook/routing/custom_route_loader.rst` is not part of #4740, isn't it?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-16T17:22:31Z
+
+Indeed, my bad. I thought it changed all cookbook articles.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-19T16:28:18Z
+
+@xelaris this looks great - nice work! But you're right - the first 2 paragraphs (especially the first) is terrible! I think we should mention FOSRestBundle as we do now, and make a new intro centered around it as one example.
+
+Also, it's out of scope, but I think we should just show the class extending `Loader` in the first example. That's much easier and more powerful. Then we can have a note that says that you can simply implement `LoaderInterface` instead of extending `Loader` if you want.
+
+@xelaris Can you at least take a shot at updating the first paragraph for us?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T09:50:55Z
+
+ping @xelaris :)
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-03-09T22:20:29Z
+
+Thank you for the ping @xabbuh. I will try to go on with this on the weekend.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-03-29T21:21:30Z
+
+@weaverryan Thank you for the feedback. I have changed the first two paragraphs and tried to make it more clear.
+In addition I have changed the code example to extend from `Loader` as you suggested.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-04-28T20:09:36Z
+
+ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-04-29T18:55:33Z
+
+Thanks @xabbuh. I have added filename comments to all the php code blocks.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-22T15:44:53Z
+
+I don't think anything is missing here. Flagged it with Finished :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-22T15:51:10Z
+
+I agree :+1:
