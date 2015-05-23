@@ -281,7 +281,7 @@ First, create the custom field type class::
             $builder->addModelTransformer($transformer);
         }
 
-        public function configureOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',
