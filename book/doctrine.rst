@@ -725,8 +725,9 @@ or using Doctrine's Query Builder.
 Querying for Objects with DQL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using the ``QueryBuilder``, you can alternatively write the queries
-directly using DQL::
+Imagine that you want to query for products, but only return products that
+cost more than ``19.99``, ordered from cheapest to most expensive. You can use
+Doctrine's native SQL-like language called DQL to do query for this::
 
     $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
@@ -752,9 +753,8 @@ covered later), group, etc. For more information, see the official
 Querying for Objects Using Doctrine's Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Imagine that you want to query for products, but only return products that
-cost more than ``19.99``, ordered from cheapest to most expensive. You can use
-Doctrine's ``QueryBuilder`` for this::
+Instead of writing a DQL string, you can alternatively use a helpful object called
+the ``QueryBuilder`` to build that string for you::
 
     $repository = $this->getDoctrine()
         ->getRepository('AppBundle:Product');
