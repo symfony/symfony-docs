@@ -35,13 +35,6 @@ value and then a User object is created::
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
-        protected $userProvider;
-
-        public function __construct(ApiKeyUserProvider $userProvider)
-        {
-            $this->userProvider = $userProvider;
-        }
-
         public function createToken(Request $request, $providerKey)
         {
             // look for an apikey query parameter
@@ -66,8 +59,17 @@ value and then a User object is created::
 
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
+            if (!$userProvider instanceof ApiKeyUserProvider) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'The user provider must be an instance of ApiKeyUserProvider (%s was given).',
+                        get_class($userProvider)
+                    )
+                );
+            }
+
             $apiKey = $token->getCredentials();
-            $username = $this->userProvider->getUsernameForApiKey($apiKey);
+            $username = $userProvider->getUsernameForApiKey($apiKey);
 
             if (!$username) {
                 throw new AuthenticationException(
@@ -75,7 +77,7 @@ value and then a User object is created::
                 );
             }
 
-            $user = $this->userProvider->loadUserByUsername($username);
+            $user = $userProvider->loadUserByUsername($username);
 
             return new PreAuthenticatedToken(
                 $user,
@@ -192,7 +194,7 @@ The ``$userProvider`` might look something like this::
         }
     }
 
-Now register your user provider as service:
+Now register your user provider as a service:
 
 .. configuration-block::
 
@@ -258,7 +260,7 @@ exception in ``refreshUser()``.
 Handling Authentication Failure
 -------------------------------
 
-In order for your ``ApiKeyAuthentication`` to correctly display a 403
+In order for your ``ApiKeyAuthenticator`` to correctly display a 403
 http status when either bad credentials or authentication fails you will
 need to implement the :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface` on your
 Authenticator. This will provide a method ``onAuthenticationFailure`` which
@@ -290,11 +292,9 @@ you can use to create an error ``Response``.
 Configuration
 -------------
 
-Once you have your ``ApiKeyAuthentication`` all setup, you need to register
+Once you have your ``ApiKeyAuthenticator`` all setup, you need to register
 it as a service and use it in your security configuration (e.g. ``security.yml``).
-First, register it as a service. This assumes that you have already setup
-your custom user provider as a service called ``your_api_key_user_provider``
-(see :doc:`/cookbook/security/custom_provider`).
+First, register it as a service.
 
 .. configuration-block::
 
@@ -305,8 +305,8 @@ your custom user provider as a service called ``your_api_key_user_provider``
             # ...
 
             apikey_authenticator:
-                class:     AppBundle\Security\ApiKeyAuthenticator
-                arguments: ["@api_key_user_provider"]
+                class:  AppBundle\Security\ApiKeyAuthenticator
+                public: false
 
     .. code-block:: xml
 
@@ -321,9 +321,7 @@ your custom user provider as a service called ``your_api_key_user_provider``
 
                 <service id="apikey_authenticator"
                     class="AppBundle\Security\ApiKeyAuthenticator"
-                >
-                    <argument type="service" id="api_key_user_provider" />
-                </service>
+                    public="false" />
             </services>
         </container>
 
@@ -335,13 +333,13 @@ your custom user provider as a service called ``your_api_key_user_provider``
 
         // ...
 
-        $container->setDefinition('apikey_authenticator', new Definition(
-            'AppBundle\Security\ApiKeyAuthenticator',
-            array(new Reference('api_key_user_provider'))
-        ));
+        $definition = new Definition('AppBundle\Security\ApiKeyAuthenticator');
+        $definition->setPublic(false);
+        $container->setDefinition('apikey_authenticator', $definition);
 
-Now, activate it in the ``firewalls`` section of your security configuration
-using the ``simple_preauth`` key:
+Now, activate it and your custom user provider (see :doc:`/cookbook/security/custom_provider`)
+in the ``firewalls`` section of your security configuration
+using the ``simple_preauth`` and ``provider`` keys respectively:
 
 .. configuration-block::
 
@@ -357,6 +355,7 @@ using the ``simple_preauth`` key:
                     stateless: true
                     simple_preauth:
                         authenticator: apikey_authenticator
+                    provider: api_key_user_provider
 
             providers:
                 api_key_user_provider:
@@ -377,6 +376,7 @@ using the ``simple_preauth`` key:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     stateless="true"
+                    provider="api_key_user_provider"
                 >
                     <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
@@ -399,6 +399,7 @@ using the ``simple_preauth`` key:
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
                     ),
+                    'provider' => 'api_key_user_provider',
                 ),
             ),
             'providers' => array(
@@ -408,7 +409,7 @@ using the ``simple_preauth`` key:
             ),
         ));
 
-That's it! Now, your ``ApiKeyAuthentication`` should be called at the beginning
+That's it! Now, your ``ApiKeyAuthenticator`` should be called at the beginning
 of each request and your authentication process will take place.
 
 The ``stateless`` configuration parameter prevents Symfony from trying to
@@ -444,6 +445,7 @@ configuration or set it to ``false``:
                     stateless: false
                     simple_preauth:
                         authenticator: apikey_authenticator
+                    provider: api_key_user_provider
 
             providers:
                 api_key_user_provider:
@@ -464,6 +466,7 @@ configuration or set it to ``false``:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     stateless="false"
+                    provider="api_key_user_provider"
                 >
                     <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
@@ -485,6 +488,7 @@ configuration or set it to ``false``:
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
                     ),
+                    'provider' => 'api_key_user_provider',
                 ),
             ),
             'providers' => array(
@@ -507,8 +511,17 @@ to see if the stored token has a valid User object that can be used::
         // ...
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
+            if (!$userProvider instanceof ApiKeyUserProvider) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'The user provider must be an instance of ApiKeyUserProvider (%s was given).',
+                        get_class($userProvider)
+                    )
+                );
+            }
+
             $apiKey = $token->getCredentials();
-            $username = $this->userProvider->getUsernameForApiKey($apiKey);
+            $username = $userProvider->getUsernameForApiKey($apiKey);
 
             // User is the Entity which represents your user
             $user = $token->getUser();
@@ -527,7 +540,7 @@ to see if the stored token has a valid User object that can be used::
                 );
             }
 
-            $user = $this->userProvider->loadUserByUsername($username);
+            $user = $userProvider->loadUserByUsername($username);
 
             return new PreAuthenticatedToken(
                 $user,
@@ -601,13 +614,10 @@ current URL is before creating the token in ``createToken()``::
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
-        protected $userProvider;
-
         protected $httpUtils;
 
-        public function __construct(UserProviderInterface $userProvider, HttpUtils $httpUtils)
+        public function __construct(HttpUtils $httpUtils)
         {
-            $this->userProvider = $userProvider;
             $this->httpUtils = $httpUtils;
         }
 
@@ -642,7 +652,8 @@ service:
 
             apikey_authenticator:
                 class:     AppBundle\Security\ApiKeyAuthenticator
-                arguments: ["@api_key_user_provider", "@security.http_utils"]
+                arguments: ["@security.http_utils"]
+                public:    false
 
     .. code-block:: xml
 
@@ -657,8 +668,8 @@ service:
 
                 <service id="apikey_authenticator"
                     class="AppBundle\Security\ApiKeyAuthenticator"
+                    public="false"
                 >
-                    <argument type="service" id="api_key_user_provider" />
                     <argument type="service" id="security.http_utils" />
                 </service>
             </services>
@@ -672,12 +683,13 @@ service:
 
         // ...
 
-        $container->setDefinition('apikey_authenticator', new Definition(
+        $definition = new Definition(
             'AppBundle\Security\ApiKeyAuthenticator',
             array(
-                new Reference('api_key_user_provider'),
                 new Reference('security.http_utils')
             )
-        ));
+        );
+        $definition->setPublic(false);
+        $container->setDefinition('apikey_authenticator', $definition);
 
 That's it! Have fun!
