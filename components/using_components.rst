@@ -77,5 +77,5 @@ documentation to find out more about how to use it.
 
 And have fun!
 
-.. _Composer: http://getcomposer.org
-.. _Install composer: http://getcomposer.org/download/
+.. _Composer: https://getcomposer.org
+.. _Install composer: https://getcomposer.org/download/

@@ -364,6 +364,6 @@ In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
-.. _`Composer`: http://getcomposer.org
+.. _`Composer`: https://getcomposer.org
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
-.. _`the Composer documentation`: http://getcomposer.org/doc/04-schema.md#autoload
+.. _`the Composer documentation`: https://getcomposer.org/doc/04-schema.md#autoload
