@@ -26,3 +26,5 @@
 /components/templating /components/templating/introduction
 /cookbook/upgrading /cookbook/upgrade/index
 /cookbook/security/voters_data_permission /cookbook/security/voters
+/cookbook/configuration/pdo_session_storage /cookbook/doctrine/pdo_session_storage
+/cookbook/service_container/event_listener /cookbook/event_dispatcher/event_listener

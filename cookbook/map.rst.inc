@@ -34,7 +34,7 @@
   * :doc:`/cookbook/configuration/using_parameters_in_dic`
   * :doc:`/cookbook/configuration/front_controllers_and_kernel`
   * :doc:`/cookbook/configuration/external_parameters`
-  * :doc:`/cookbook/configuration/pdo_session_storage`
+  * :doc:`/cookbook/doctrine/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
   * :doc:`/cookbook/configuration/configuration_organization`
@@ -78,7 +78,7 @@
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
   * :doc:`/cookbook/doctrine/console`
-  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
+  * (configuration) :doc:`/cookbook/doctrine/pdo_session_storage`
 
 * :doc:`/cookbook/email/index`
 
@@ -94,7 +94,7 @@
   * :doc:`/cookbook/event_dispatcher/before_after_filters`
   * :doc:`/cookbook/event_dispatcher/class_extension`
   * :doc:`/cookbook/event_dispatcher/method_behavior`
-  * (service container) :doc:`/cookbook/service_container/event_listener`
+  * (service container) :doc:`/cookbook/event_dispatcher/event_listener`
 
 * :doc:`/cookbook/form/index`
 
@@ -179,7 +179,7 @@
 
 * :doc:`/cookbook/service_container/index`
 
-  * :doc:`/cookbook/service_container/event_listener`
+  * :doc:`/cookbook/event_dispatcher/event_listener`
   * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/service_container/compiler_passes`
 
@@ -189,7 +189,7 @@
   * :doc:`/cookbook/session/locale_sticky_session`
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
-  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
+  * (configuration) :doc:`/cookbook/doctrine/pdo_session_storage`
   * (configuration) :doc:`/cookbook/configuration/mongodb_session_storage`
   * :doc:`/cookbook/session/avoid_session_start`
 
