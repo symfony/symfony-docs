@@ -122,7 +122,9 @@ In order to achieve this we will add a factory:
 
     class IssueToNumberTransformerFactory
     {
-        /** @var ManagerRegistry */
+        /** 
+         * @var ManagerRegistry 
+         */
         private $registry;
 
         public function __construct(ManagerRegistry $registry)
@@ -189,7 +191,9 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
 
     class TaskType extends AbstractType
     {
-        /** @var IssueToNumberTransformerFactory */
+        /** 
+         * @var IssueToNumberTransformerFactory 
+         */
         private $factory;
 
         public function __construct(IssueToNumberTransformerFactory $factory)
