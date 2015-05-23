@@ -32,7 +32,8 @@ Read about the input search field at `DiveIntoHTML5.info`_
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 

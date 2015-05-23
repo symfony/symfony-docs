@@ -18,6 +18,7 @@ The Cookbook
     event_dispatcher/index
     expression/index
     form/index
+    frontend/index
     logging/index
     profiler/index
     request/index
