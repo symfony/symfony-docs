@@ -221,7 +221,7 @@ this name is not needed, but later it'll be useful for linking pages.
 
 Considering all this, the ``@Route("/app/example", name="homepage")`` annotation
 creates a new route called ``homepage`` which makes Symfony execute the
-``index`` action of the ``Default`` controller when the user browses the 
+``index`` action of the ``Default`` controller when the user browses the
 ``/app/example`` path of the application.
 
 .. tip::
@@ -349,5 +349,5 @@ If you are eager to learn more about Symfony, dive into the next section:
 ":doc:`The View <the_view>`".
 
 .. _Composer: https://getcomposer.org/
-.. _executable installer: http://getcomposer.org/download
+.. _executable installer: https://getcomposer.org/download
 .. _Twig: http://twig.sensiolabs.org/

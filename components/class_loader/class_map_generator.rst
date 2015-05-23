@@ -122,4 +122,4 @@ the same as in the example above)::
 
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4
-.. _`Composer`: http://getcomposer.org
+.. _`Composer`: https://getcomposer.org
