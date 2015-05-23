@@ -4,29 +4,61 @@
 FrameworkBundle Configuration ("framework")
 ===========================================
 
-This reference document is a work in progress. It should be accurate, but
-all options are not yet fully covered.
-
 The FrameworkBundle contains most of the "base" framework functionality
-and can be configured under the ``framework`` key in your application configuration.
+and can be configured under the ``framework`` key in your application
+configuration. When using XML, you must use the
+``http://symfony.com/schema/dic/symfony`` namespace.
+
 This includes settings related to sessions, translation, forms, validation,
 routing and more.
+
+.. tip::
+
+   The XSD schema is available at
+   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``.
 
 Configuration
 -------------
 
 * `secret`_
 * `http_method_override`_
+* `trusted_proxies`_
 * `ide`_
 * `test`_
 * `default_locale`_
-* `trusted_proxies`_
-* `form`_
-    * :ref:`enabled <form-enabled>`
+* `trusted_hosts`_
+* :ref:`form <reference-framework-form>`
+    * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
-    * :ref:`enabled <csrf-protection-enabled>`
+    * :ref:`enabled <reference-csrf_protection-enabled>`
     * `field_name`_
+* `esi`_
+    * :ref:`enabled <reference-esi-enabled>`
+* `fragments`_
+    * :ref:`enabled <reference-fragments-enabled>`
+    * :ref:`path <reference-fragments-path>`
+* `profiler`_
+    * :ref:`enabled <reference-profiler-enabled>`
+    * `collect`_
+    * `only_exceptions`_
+    * `only_master_requests`_
+    * `dsn`_
+    * `username`_
+    * `password`_
+    * `lifetime`_
+    * `matcher`_
+        * `ip`_
+        * :ref:`path <reference-profiler-matcher-path>`
+        * `service`_
+* `router`_
+    * `resource`_
+    * `type`_
+    * `http_port`_
+    * `https_port`_
+    * `strict_requirements`_
 * `session`_
+    * `storage_id`_
+    * `handler_id`_
     * `name`_
     * `cookie_lifetime`_
     * `cookie_path`_
@@ -37,23 +69,33 @@ Configuration
     * `gc_probability`_
     * `gc_maxlifetime`_
     * `save_path`_
-* `serializer`_
-    * :ref:`enabled<serializer.enabled>`
 * `templating`_
-    * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
-* `profiler`_
-    * `collect`_
-    * :ref:`enabled <profiler.enabled>`
+    * `hinclude_default_template`_
+    * :ref:`form <reference-templating-form>`
+        * `resources`_
+    * `assets_base_urls`_
+        * http
+        * ssl
+    * :ref:`cache <reference-templating-cache>`
+    * `engines`_
+    * `loaders`_
+    * `packages`_
 * `translator`_
-    * :ref:`enabled <translator.enabled>`
+    * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
 * `validation`_
-    * :ref:`enabled <validation-enabled>`
-    * `cache`_
+    * :ref:`enabled <reference-validation-enabled>`
+    * :ref:`cache <reference-validation-cache>`
     * `enable_annotations`_
     * `translation_domain`_
+* `annotations`_
+    * :ref:`cache <reference-annotations-cache>`
+    * `file_cache_dir`_
+    * `debug`_
+* `serializer`_
+    * :ref:`enabled <reference-serializer-enabled>`
 
 secret
 ~~~~~~
@@ -93,8 +135,11 @@ This determines whether the ``_method`` request parameter is used as the intende
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
 method gets called automatically. It becomes the service container parameter
-named ``kernel.http_method_override``. For more information, see
-:doc:`/cookbook/routing/method_parameters`.
+named ``kernel.http_method_override``.
+
+.. seealso::
+
+    For more information, see :doc:`/cookbook/routing/method_parameters`.
 
 .. caution::
 
@@ -135,8 +180,8 @@ using the following keys:
     The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if you
-have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
+signs (``%``) must be doubled to escape that character. For example, if you use
+PHPstorm on the Mac OS platform, you will do something like:
 
 .. configuration-block::
 
@@ -144,7 +189,7 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
         # app/config/config.yml
         framework:
-            ide: "pstorm://%%f:%%l"
+            ide: "phpstorm://open?file=%%f&line=%%l"
 
     .. code-block:: xml
 
@@ -156,15 +201,20 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="pstorm://%%f:%%l" />
+            <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'ide' => 'pstorm://%%f:%%l',
+            'ide' => 'phpstorm://open?file=%%f&line=%%l',
         ));
+
+.. tip::
+
+    If you're on a Windows PC, you can install the `PhpStormOpener`_ to be able
+    to use this.
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
@@ -178,12 +228,14 @@ test
 
 **type**: ``boolean``
 
-If this configuration parameter is present (and not ``false``), then the
-services related to testing your application (e.g. ``test.client``) are loaded.
-This setting should be present in your ``test`` environment (usually via
-``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
+If this configuration setting is present (and not ``false``), then the services
+related to testing your application (e.g. ``test.client``) are loaded. This
+setting should be present in your ``test`` environment (usually via
+``app/config/config_test.yml``).
 
-.. _reference-framework-trusted-proxies:
+.. seealso::
+
+    For more information, see :doc:`/book/testing`.
 
 default_locale
 ~~~~~~~~~~~~~~
@@ -191,10 +243,88 @@ default_locale
 **type**: ``string`` **default**: ``en``
 
 The default locale is used if no ``_locale`` routing parameter has been set. It
-becomes the service container parameter named ``kernel.default_locale`` and it
-is also available with the
+is available with the
 :method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
 method.
+
+.. seealso::
+
+    You can read more information about the default locale in
+    :ref:`book-translation-default-locale`.
+
+trusted_hosts
+~~~~~~~~~~~~~
+
+**type**: ``array`` | ``string`` **default**: ``array()``
+
+A lot of different attacks have been discovered relying on inconsistencies in
+handling the ``Host`` header by various software (web servers, reverse proxies,
+web frameworks, etc.). Basically, everytime the framework is generating an
+absolute URL (when sending an email to reset a password for instance), the host
+might have been manipulated by an attacker.
+
+.. seealso::
+
+    You can read "`HTTP Host header attacks`_" for more information about these
+    kinds of attacks.
+
+The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request:getHost>`
+method might be vulnerable to some of these attacks because it depends on the
+configuration of your web server. One simple solution to avoid these attacks is
+to whitelist the hosts that your Symfony application can respond to. That's the
+purpose of this ``trusted_hosts`` option. If the incoming request's hostname
+doesn't match one in this list, the application won't respond and the user will
+receive a 500 response.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            trusted_hosts:  ['acme.com', 'acme.org']
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <trusted-host>acme.com</trusted-host>
+                <trusted-host>acme.org</trusted-host>
+                <!-- ... -->
+            </framework>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'trusted_hosts' => array('acme.com', 'acme.org'),
+        ));
+
+Hosts can also be configured using regular expressions (e.g.  ``.*\.?acme.com$``),
+which make it easier to respond to any subdomain.
+
+In addition, you can also set the trusted hosts in the front controller using
+the ``Request::setTrustedHosts()`` method::
+
+    // web/app.php
+    Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
+
+The default value for this option is an empty array, meaning that the application
+can respond to any given host.
+
+.. seealso::
+
+    Read more about this in the `Security Advisory Blog post`_.
+
+.. _reference-framework-trusted-proxies:
 
 trusted_proxies
 ~~~~~~~~~~~~~~~
@@ -241,25 +371,36 @@ see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 form
 ~~~~
 
-.. _form-enabled:
+.. _reference-form-enabled:
 
 enabled
 .......
 
 **type**: ``boolean`` **default**: ``false``
 
-Whether or not to enable support for the Form component.
-
-If you don't use forms, setting this to ``false`` may increase your application's
+Whether to enable the form services or not in the service container. If you
+don't use forms, setting this to ``false`` may increase your application's
 performance because less services will be loaded into the container.
 
-If this is activated, the :ref:`validation system <validation-enabled>`
-is also enabled automatically.
+This option will automatically be set to ``true`` when one of the child
+settings is configured.
+
+.. note::
+
+    This will automatically enable the validation.
+
+.. seealso::
+
+    For more details, see :doc:`/book/forms`.
 
 csrf_protection
 ~~~~~~~~~~~~~~~
 
-.. _csrf-protection-enabled:
+.. seealso::
+
+    For more information about CSRF protection in forms, see :ref:`forms-csrf`.
+
+.. _reference-csrf_protection-enabled:
 
 enabled
 .......
@@ -281,26 +422,131 @@ field_name
 
 The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
 
+esi
+~~~
+
+.. seealso::
+
+    You can read more about Edge Side Includes (ESI) in :ref:`edge-side-includes`.
+
+.. _reference-esi-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the edge side includes support in the framework.
+
+You can also set ``esi`` to ``true`` to enable it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            esi: true
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <esi />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'esi' => true,
+        ));
+
+fragments
+~~~~~~~~~
+
+.. seealso::
+
+    Learn more about fragments in the
+    :ref:`HTTP Cache article <book-http_cache-fragments>`.
+
+.. _reference-fragments-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the fragment listener or not. The fragment listener is used
+to render ESI fragments independently of the rest of the page.
+
+This setting is automatically set to ``true`` when one of the child settings is
+configured.
+
+.. _reference-fragments-path:
+
+path
+....
+
+**type**: ``string`` **default**: ``'/_fragment'``
+
+The path prefix for fragments. The fragment listener will only be executed
+when the request starts with this path.
+
 session
 ~~~~~~~
+
+handler_id
+..........
+
+**type**: ``string`` **default**: ``'session.handler.native_file'``
+
+The service id used for session storage. The ``session.handler`` service alias
+will be set to this service id.
+
+You can also set it to ``null``, to default to the handler of your PHP
+installation.
+
+.. seealso::
+
+    You can see an example of the usage of this in
+    :doc:`/cookbook/configuration/pdo_session_storage`.
+
+storage_id
+..........
+
+**type**: ``string`` **default**: ``'session.storage.native'``
+
+The service id used for session storage. The ``session.storage`` service alias
+will be set to this service id. This class has to implement
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
 name
 ....
 
 **type**: ``string`` **default**: ``null``
 
-This specifies the name of the session cookie. By default it will use the cookie
-name which is defined in the ``php.ini`` with the ``session.name`` directive.
+This specifies the name of the session cookie. By default it will use the
+cookie name which is defined in the ``php.ini`` with the ``session.name``
+directive.
 
 cookie_lifetime
 ...............
 
 **type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. It will use ``null`` by
-default, which means ``session.cookie_lifetime`` value from ``php.ini`` will be used.
-Setting this value to ``0`` means the cookie is valid for the length of the browser
-session.
+This determines the lifetime of the session - in seconds. It will use ``null``
+by default, which means ``session.cookie_lifetime`` value from ``php.ini`` will
+be used. Setting this value to ``0`` means the cookie is valid for the length
+of the browser session.
 
 cookie_path
 ...........
@@ -380,7 +626,7 @@ the value to ``null``:
         # app/config/config.yml
         framework:
             session:
-                save_path: null
+                save_path: ~
 
     .. code-block:: xml
 
@@ -411,7 +657,7 @@ the value to ``null``:
 serializer
 ~~~~~~~~~~
 
-.. _serializer.enabled:
+.. _reference-serializer-enabled:
 
 enabled
 .......
@@ -425,6 +671,8 @@ For more details, see :doc:`/cookbook/serializer`.
 templating
 ~~~~~~~~~~
 
+.. _reference-templating-base-urls:
+
 assets_base_urls
 ................
 
@@ -432,16 +680,119 @@ assets_base_urls
 
 This option allows you to define base URLs to be used for assets referenced
 from ``http`` and ``ssl`` (``https``) pages. A string value may be provided in
-lieu of a single-element array. If multiple base URLs are provided, Symfony
+lieu of a single-element array. If multiple base URLs are provided, Symfony2
 will select one from the collection each time it generates an asset's path.
 
 For your convenience, ``assets_base_urls`` can be set directly with a string or
 array of strings, which will be automatically organized into collections of base
 URLs for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
-is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
+is `protocol-relative`_ (i.e. starts with ``//``), it will be added to both
 collections. URLs starting with ``http://`` will only be added to the
 ``http`` collection.
 
+.. _reference-templating-cache:
+
+cache
+.....
+
+**type**: ``string``
+
+The path to the cache directory for templates. When this is not set, caching is
+disabled.
+
+engines
+.......
+
+**type**: ``string[]`` / ``string`` **required**
+
+The Templating Engine to use. This can either be a string (when only one engine
+is configured) or an array of engines.
+
+At least one engine is required.
+
+loaders
+.......
+
+**type**: ``string[]``
+
+An array (or a string when configuring just one loader) of service ids for
+templating loaders. Templating loaders are used to find and load templates from
+a resource (e.g. a filesystem or database). Templating loaders must implement
+:class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
+
+packages
+........
+
+You can group assets into packages, to specify different base URLs for them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:
+                packages:
+                    avatars:
+                        base_urls: 'http://static_cdn.example.com/avatars'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+
+                <framework:templating>
+
+                    <framework:package
+                        name="avatars"
+                        base-url="http://static_cdn.example.com/avatars">
+
+                </framework:templating>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating' => array(
+                'packages' => array(
+                    'avatars' => array(
+                        'base_urls' => 'http://static_cdn.example.com/avatars',
+                    ),
+                ),
+            ),
+        ));
+
+Now you can use the ``avatars`` package in your templates:
+
+.. configuration-block:: php
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('...', 'avatars') }}">
+
+    .. code-block:: html+php
+
+        <img src="<?php echo $view['assets']->getUrl('...', 'avatars') ?>">
+
+Each package can configure the following options:
+
+* :ref:`base_urls <reference-templating-base-urls>`
+* :ref:`version <reference-framework-assets-version>`
+* :ref:`version_format <reference-templating-version-format>`
+
+.. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
 
 assets_version
@@ -512,16 +863,24 @@ before each deployment so that the query parameters change.
 You can also control how the query string works via the `assets_version_format`_
 option.
 
+.. tip::
+
+    As with all settings, you can use a parameter as value for the
+    ``assets_version``. This makes it easier to increment the cache on each
+    deployment.
+
+.. _reference-templating-version-format:
+
 assets_version_format
 .....................
 
 **type**: ``string`` **default**: ``%%s?%%s``
 
-This specifies a :phpfunction:`sprintf` pattern that will be used with the `assets_version`_
-option to construct an asset's path. By default, the pattern adds the asset's
-version as a query string. For example, if ``assets_version_format`` is set to
-``%%s?version=%%s`` and ``assets_version`` is set to ``5``, the asset's path
-would be ``/images/logo.png?version=5``.
+This specifies a :phpfunction:`sprintf` pattern that will be used with the
+`assets_version`_ option to construct an asset's path. By default, the pattern
+adds the asset's version as a query string. For example, if
+``assets_version_format`` is set to ``%%s?version=%%s`` and ``assets_version``
+is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
 .. note::
 
@@ -547,10 +906,97 @@ would be ``/images/logo.png?version=5``.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
+hinclude_default_template
+.........................
+
+**type**: ``string`` **default**: ``null``
+
+Sets the content shown during the loading of the fragment or when JavaScript is
+disabled. This can be either a template name or the content itself.
+
+.. seealso::
+
+    See :ref:`book-templating-hinclude` for more information about hinclude.
+
+.. _reference-templating-form:
+
+form
+....
+
+resources
+"""""""""
+
+**type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
+
+A list of all resources for form theming in PHP. This setting is not required
+if you're using the Twig format for your templates, in that case refer to
+:ref:`the form book chapter <book-forms-theming-twig>`.
+
+Assume you have custom global form themes in
+``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            templating:
+                form:
+                    resources:
+                        - 'WebsiteBundle:Form'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+
+                <framework:templating>
+
+                    <framework:form>
+
+                        <framework:resource>WebsiteBundle:Form</framework:resource>
+
+                    </framework:form>
+
+                </framework:templating>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'WebsiteBundle:Form'
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    The default form templates from ``FrameworkBundle:Form`` will always be
+    included in the form resources.
+
+.. seealso::
+
+    See :ref:`book-forms-theming-global` for more information.
+
 profiler
 ~~~~~~~~
 
-.. _profiler.enabled:
+.. _reference-profiler-enabled:
 
 enabled
 .......
@@ -562,9 +1008,15 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
-The profiler can be enabled by setting this key to ``true``. When you are
+The profiler can be enabled by setting this option to ``true``. When you are
 using the Symfony Standard Edition, the profiler is enabled in the ``dev``
 and ``test`` environments.
+
+.. note::
+
+    The profiler works independently from the Web Developer Toolbar, see the
+    :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
+    on how to disable/enable the toolbar.
 
 collect
 .......
@@ -578,16 +1030,158 @@ collect
 **type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
-to ``true``, the profiler collects data for all requests. If you want to only
-collect information on-demand, you can set the ``collect`` flag to ``false``
-and activate the data collectors by hand::
+to ``true``, the profiler collects data for all requests (unless you configure
+otherwise, like a custom `matcher`_). If you want to only collect information
+on-demand, you can set the ``collect`` flag to ``false`` and activate the data
+collectors manually::
 
     $profiler->enable();
+
+only_exceptions
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+When this is set to ``true``, the profiler will only be enabled when an
+exception is thrown during the handling of the request.
+
+only_master_requests
+....................
+
+**type**: ``boolean`` **default**: ``false``
+
+When this is set to ``true``, the profiler will only be enabled on the master
+requests (and not on the subrequests).
+
+dsn
+...
+
+**type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
+
+The DSN where to store the profiling information.
+
+.. seealso::
+
+    See :doc:`/cookbook/profiler/storage` for more information about the
+    profiler storage.
+
+username
+........
+
+**type**: ``string`` **default**: ``''``
+
+When needed, the username for the profiling storage.
+
+password
+........
+
+**type**: ``string`` **default**: ``''``
+
+When needed, the password for the profiling storage.
+
+lifetime
+........
+
+**type**: ``integer`` **default**: ``86400``
+
+The lifetime of the profiling storage in seconds. The data will be deleted when
+the lifetime is expired.
+
+matcher
+.......
+
+Matcher options are configured to dynamically enable the profiler. For
+instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
+
+.. seealso::
+
+    See :doc:`/cookbook/profiler/matchers` for more information about using
+    matchers to enable/disable the profiler.
+
+ip
+""
+
+**type**: ``string``
+
+If set, the profiler will only be enabled when the current IP address matches.
+
+.. _reference-profiler-matcher-path:
+
+path
+""""
+
+**type**: ``string``
+
+If set, the profiler will only be enabled when the current path matches.
+
+service
+"""""""
+
+**type**: ``string``
+
+This setting contains the service id of a custom matcher.
+
+router
+~~~~~~
+
+resource
+........
+
+**type**: ``string`` **required**
+
+The path the main routing resource (e.g. a YAML file) that contains the routes
+and imports the router should load.
+
+type
+....
+
+**type**: ``string``
+
+The type of the resource to hint the loaders about the format. This isn't
+needed when you use the default routers with the expected file extensions
+(``.xml``, ``.yml`` / ``.yaml``, ``.php``).
+
+http_port
+.........
+
+**type**: ``integer`` **default**: ``80``
+
+The port for normal http requests (this is used when matching the scheme).
+
+https_port
+..........
+
+**type**: ``integer`` **default**: ``443``
+
+The port for https requests (this is used when matching the scheme).
+
+strict_requirements
+...................
+
+**type**: ``mixed`` **default**: ``true``
+
+Determines the routing generator behaviour. When generating a route that has
+specific :ref:`requirements <book-routing-requirements>`, the generator can
+behave differently in case the used parameters do not meet these requirements.
+
+The value can be one of:
+
+``true``
+    Throw an exception when the requirements are not met;
+``false``
+    Disable exceptions when the requirements are not met and return ``null``
+    instead;
+``null``
+    Disable checking the requirements (thus, match the route even when the
+    requirements don't match).
+
+``true`` is recommended in the development environment, while ``false`` or
+``null`` might be preferred in production.
 
 translator
 ~~~~~~~~~~
 
-.. _translator.enabled:
+.. _reference-translator-enabled:
 
 enabled
 .......
@@ -612,20 +1206,27 @@ fallbacks
 
 This option is used when the translation key for the current locale wasn't found.
 
-For more details, see :doc:`/book/translation`.
+.. seealso::
+
+    For more details, see :doc:`/book/translation`.
 
 validation
 ~~~~~~~~~~
 
-.. _validation-enabled:
+.. _reference-validation-enabled:
 
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``true`` if :ref:`form support is enabled <form-enabled>`,
+**type**: ``boolean`` **default**: ``true`` if :ref:`form support is enabled <reference-form-enabled>`,
 ``false`` otherwise
 
 Whether or not to enable validation support.
+
+This option will automatically be set to ``true`` when one of the child
+settings is configured.
+
+.. _reference-validation-cache:
 
 cache
 .....
@@ -652,6 +1253,44 @@ translation_domain
 
 The translation domain that is used when translating validation constraint
 error messages.
+
+annotations
+~~~~~~~~~~~
+
+.. _reference-annotations-cache:
+
+cache
+.....
+
+**type**: ``string`` **default**: ``'file'``
+
+This option can be one of the following values:
+
+file
+    Use the filesystem to cache annotations
+none
+    Disable the caching of annotations
+a service id
+    A service id referencing a `Doctrine Cache`_ implementation
+
+file_cache_dir
+..............
+
+**type**: ``string`` **default**: ``'%kernel.cache_dir%/annotations'``
+
+The directory to store cache files for annotations, in case
+``annotations.cache`` is set to ``'file'``.
+
+debug
+.....
+
+**type**: ``boolean`` **default**: ``%kernel.debug%``
+
+Whether to enable debug mode for caching. If enabled, the cache will
+automatically update when the original file is changed (both with code and
+annotation changes). For performance reasons, it is recommended to disable
+debug mode in production, which will happen automatically if you use the
+default value.
 
 Full default Configuration
 --------------------------
@@ -781,5 +1420,7 @@ Full default Configuration
                 debug:                "%kernel.debug%"
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
+.. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
+.. _`Security Advisory Blog post`: http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
+.. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
-.. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
