@@ -57,6 +57,8 @@ with this command:
 
     c:\> php symfony.phar
 
+If you do not see output from this command, confirm that phar support is enabled in your php.ini file
+
 Creating your First Symfony Project
 -----------------------------------
 
