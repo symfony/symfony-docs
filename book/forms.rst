@@ -1595,12 +1595,16 @@ override the default error rendering for *all* fields, copy and customize the
 .. index::
    single: Forms; Global Theming
 
+.. _book-forms-theming-global:
+
 Global Form Theming
 ~~~~~~~~~~~~~~~~~~~
 
 In the above example, you used the ``form_theme`` helper (in Twig) to "import"
 the custom form fragments into *just* that form. You can also tell Symfony
 to import form customizations across your entire project.
+
+.. _book-forms-theming-twig:
 
 Twig
 ....

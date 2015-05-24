@@ -543,6 +543,8 @@ URL          Route     Parameters
 .. index::
    single: Routing; Requirements
 
+.. _book-routing-requirements:
+
 Adding Requirements
 ~~~~~~~~~~~~~~~~~~~
 
