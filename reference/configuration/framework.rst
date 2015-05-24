@@ -387,7 +387,7 @@ settings is configured.
 
 .. note::
 
-    This will automatically enable the validation.
+    This will automatically enable the `validation`_.
 
 .. seealso::
 
@@ -543,10 +543,10 @@ cookie_lifetime
 
 **type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. It will use ``null``
-by default, which means ``session.cookie_lifetime`` value from ``php.ini`` will
-be used. Setting this value to ``0`` means the cookie is valid for the length
-of the browser session.
+This determines the lifetime of the session - in seconds. The default value -
+``null`` - means that the ``sesssion.cookie_lifetime`` value from ``php.ini``
+will be used. Setting this value to ``0`` means the cookie is valid for the
+length of the browser session.
 
 cookie_path
 ...........
@@ -679,16 +679,108 @@ assets_base_urls
 **default**: ``{ http: [], ssl: [] }``
 
 This option allows you to define base URLs to be used for assets referenced
-from ``http`` and ``ssl`` (``https``) pages. A string value may be provided in
-lieu of a single-element array. If multiple base URLs are provided, Symfony2
-will select one from the collection each time it generates an asset's path.
+from ``http`` and ``ssl`` (``https``) pages. If multiple base URLs are
+provided, Symfony will select one from the collection each time it generates
+an asset's path:
 
-For your convenience, ``assets_base_urls`` can be set directly with a string or
-array of strings, which will be automatically organized into collections of base
-URLs for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
-is `protocol-relative`_ (i.e. starts with ``//``), it will be added to both
-collections. URLs starting with ``http://`` will only be added to the
-``http`` collection.
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:
+                assets_base_urls:
+                    http:
+                        - "http://cdn.example.com/"
+                # you can also pass just a string:
+                # assets_base_urls:
+                #     http: "//cdn.example.com/"
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+
+            <framework:config>
+                <!-- ... -->
+
+                <framework:templating>
+                    <framework:assets-base-url>
+                        <framework:http>http://cdn.example.com/</framework:http>
+                    </framework:assets-base-url>
+                </framework:templating>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating' => array(
+                'assets_base_urls' => array(
+                    'http' => array(
+                        'http://cdn.example.com/',
+                    ),
+                ),
+                // you can also pass just a string:
+                // 'assets_base_urls' => array(
+                //     'http' => '//cdn.example.com/',
+                // ),
+            ),
+        ));
+
+For your convenience, you can pass a string or array of strings to
+``assets_base_urls`` directly. This will automatically be organized into the
+``http`` and ``ssl`` base urls (``https://`` and `protocol-relative`_ URLs will
+be added to both collections and ``http://`` only to the ``http`` collection):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:
+                assets_base_urls:
+                    - "//cdn.example.com/"
+                # you can also pass just a string:
+                # assets_base_urls: "//cdn.example.com/"
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+
+            <framework:config>
+                <!-- ... -->
+
+                <framework:templating>
+                    <framework:assets-base-url>//cdn.example.com/</framework:assets-base-url>
+                </framework:templating>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating' => array(
+                'assets_base_urls' => array(
+                    '//cdn.example.com/',
+                ),
+                // you can also pass just a string:
+                // 'assets_base_urls' => '//cdn.example.com/',
+            ),
+        ));
 
 .. _reference-templating-cache:
 
@@ -699,6 +791,11 @@ cache
 
 The path to the cache directory for templates. When this is not set, caching is
 disabled.
+
+.. note::
+
+    When using Twig templating, the caching is already handled by the
+    TwigBundle and doesn't need to be enabled for the FrameworkBundle.
 
 engines
 .......
