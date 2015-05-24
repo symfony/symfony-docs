@@ -221,10 +221,6 @@ more advanced use-case, you can always do the same security check in PHP:
 
 .. code-block:: php
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-    // ...
-
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
@@ -238,7 +234,16 @@ more advanced use-case, you can always do the same security check in PHP:
         }
 
         if (!$post->isAuthor($this->getUser())) {
-            throw new AccessDeniedException();
+            $this->denyAccessUnlessGranted('edit', $post);
+
+	    // or without the shortcut:
+	    //
+	    // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+	    // ...
+	    //
+	    // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+	    //    throw $this->createAccessDeniedException();
+	    // }
         }
 
         // ...
@@ -327,10 +332,6 @@ via the even easier shortcut in a controller:
 
 .. code-block:: php
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-    // ...
-
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
@@ -341,6 +342,9 @@ via the even easier shortcut in a controller:
         $this->denyAccessUnlessGranted('edit', $post);
 
         // or without the shortcut:
+        //
+        // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // ...
         //
         // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
         //    throw $this->createAccessDeniedException();

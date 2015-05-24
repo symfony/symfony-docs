@@ -58,12 +58,12 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
         ));
 
 The :doc:`HttpKernel component </components/http_kernel/introduction>` currently
-supports the following profiler storage implementations:
+supports the following profiler storage drivers:
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\FileProfilerStorage`
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\MemcachedProfilerStorage`
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\MemcacheProfilerStorage`
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\MongoDbProfilerStorage`
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\MysqlProfilerStorage`
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\RedisProfilerStorage`
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\SqliteProfilerStorage`
+* file
+* sqlite
+* mysql
+* mongodb
+* memcache
+* memcached
+* redis
