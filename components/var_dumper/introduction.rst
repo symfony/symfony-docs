@@ -104,6 +104,11 @@ original value. You can configure the limits in terms of:
 * maximum number of items to dump,
 * maximum string length before truncation.
 
+Since dumping into the toolbar is not always possible - e.g. when working on a
+JSON API - you can have an alternate output destination for dumps. This is
+configurable with the ``debug.dump_destination`` option, that you can typically
+set to ``php://stderr``.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -111,6 +116,7 @@ original value. You can configure the limits in terms of:
         debug:
            max_items: 250
            max_string_length: -1
+           dump_destination: ~
 
     .. code-block:: xml
 
@@ -119,8 +125,16 @@ original value. You can configure the limits in terms of:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/debug http://symfony.com/schema/dic/debug/debug-1.0.xsd">
 
-            <config max-items="250" max-string-length="-1" />
+            <config max-items="250" max-string-length="-1" dump-destination="null" />
         </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('debug', array(
+           'max_items' => 250,
+           'max_string_length' => -1,
+           'dump_destination' => null,
+        ));
 
 Dump Examples and Output
 ------------------------
