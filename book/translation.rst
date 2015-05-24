@@ -532,7 +532,9 @@ in your application.
 .. index::
    single: Translations; Fallback and default locale
 
-Setting a default Locale
+.. _book-translation-default-locale:
+
+Setting a Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 What if the user's locale hasn't been determined? You can guarantee that a
