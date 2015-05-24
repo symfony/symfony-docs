@@ -102,24 +102,25 @@ secret
 
 **type**: ``string`` **required**
 
-This is a string that should be unique to your application and it's commonly used
-to add more entropy to security related operations. Its value should be a series of
-characters, numbers and symbols chosen randomly and the recommended length is
-around 32 characters.
+This is a string that should be unique to your application and it's commonly
+used to add more entropy to security related operations. Its value should
+be a series of characters, numbers and symbols chosen randomly and the
+recommended length is around 32 characters.
 
-In practice, Symfony uses this value for generating the :ref:`CSRF tokens <forms-csrf>`,
-for encrypting the cookies used in the :doc:`remember me functionality </cookbook/security/remember_me>`
-and for creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>` .
+In practice, Symfony uses this value for generating the
+:ref:`CSRF tokens <forms-csrf>`, for encrypting the cookies used in the
+:doc:`remember me functionality </cookbook/security/remember_me>` and for
+creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
 
 This option becomes the service container parameter named ``kernel.secret``,
 which you can use whenever the application needs an immutable random string
 to add more entropy.
 
-As with any other security-related parameter, it is a good practice to change this
-value from time to time. However, keep in mind that changing this value will
-invalidate all signed URIs and Remember Me cookies. That's why, after changing
-this value, you should regenerate the application cache and log out all the
-application users.
+As with any other security-related parameter, it is a good practice to change
+this value from time to time. However, keep in mind that changing this value
+will invalidate all signed URIs and Remember Me cookies. That's why, after
+changing this value, you should regenerate the application cache and log
+out all the application users.
 
 .. _configuration-framework-http_method_override:
 
@@ -131,8 +132,8 @@ http_method_override
 
 **type**: ``boolean`` **default**: ``true``
 
-This determines whether the ``_method`` request parameter is used as the intended
-HTTP method on POST requests. If enabled, the
+This determines whether the ``_method`` request parameter is used as the
+intended HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
 method gets called automatically. It becomes the service container parameter
 named ``kernel.http_method_override``.
@@ -180,8 +181,8 @@ using the following keys:
     The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if you use
-PHPstorm on the Mac OS platform, you will do something like:
+signs (``%``) must be doubled to escape that character. For example, if
+you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. configuration-block::
 
@@ -213,13 +214,13 @@ PHPstorm on the Mac OS platform, you will do something like:
 
 .. tip::
 
-    If you're on a Windows PC, you can install the `PhpStormOpener`_ to be able
-    to use this.
+    If you're on a Windows PC, you can install the `PhpStormOpener`_ to
+    be able to use this.
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-in the ``php.ini`` configuration to the url string. If this configuration value
-is set, then the ``ide`` option will be ignored.
+in the ``php.ini`` configuration to the url string. If this configuration
+value is set, then the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -242,8 +243,8 @@ default_locale
 
 **type**: ``string`` **default**: ``en``
 
-The default locale is used if no ``_locale`` routing parameter has been set. It
-is available with the
+The default locale is used if no ``_locale`` routing parameter has been
+set. It is available with the
 :method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
 method.
 
@@ -257,24 +258,24 @@ trusted_hosts
 
 **type**: ``array`` | ``string`` **default**: ``array()``
 
-A lot of different attacks have been discovered relying on inconsistencies in
-handling the ``Host`` header by various software (web servers, reverse proxies,
-web frameworks, etc.). Basically, everytime the framework is generating an
-absolute URL (when sending an email to reset a password for instance), the host
-might have been manipulated by an attacker.
+A lot of different attacks have been discovered relying on inconsistencies
+in handling the ``Host`` header by various software (web servers, reverse
+proxies, web frameworks, etc.). Basically, everytime the framework is
+generating an absolute URL (when sending an email to reset a password for
+instance), the host might have been manipulated by an attacker.
 
 .. seealso::
 
-    You can read "`HTTP Host header attacks`_" for more information about these
-    kinds of attacks.
+    You can read "`HTTP Host header attacks`_" for more information about
+    these kinds of attacks.
 
 The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request:getHost>`
-method might be vulnerable to some of these attacks because it depends on the
-configuration of your web server. One simple solution to avoid these attacks is
-to whitelist the hosts that your Symfony application can respond to. That's the
-purpose of this ``trusted_hosts`` option. If the incoming request's hostname
-doesn't match one in this list, the application won't respond and the user will
-receive a 500 response.
+method might be vulnerable to some of these attacks because it depends on
+the configuration of your web server. One simple solution to avoid these
+attacks is to whitelist the hosts that your Symfony application can respond
+to. That's the purpose of this ``trusted_hosts`` option. If the incoming
+request's hostname doesn't match one in this list, the application won't
+respond and the user will receive a 500 response.
 
 .. configuration-block::
 
@@ -311,8 +312,8 @@ receive a 500 response.
 Hosts can also be configured using regular expressions (e.g.  ``.*\.?acme.com$``),
 which make it easier to respond to any subdomain.
 
-In addition, you can also set the trusted hosts in the front controller using
-the ``Request::setTrustedHosts()`` method::
+In addition, you can also set the trusted hosts in the front controller
+using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
     Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
@@ -331,12 +332,12 @@ trusted_proxies
 
 **type**: ``array``
 
-Configures the IP addresses that should be trusted as proxies. For more details,
-see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
+Configures the IP addresses that should be trusted as proxies. For more
+details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 
 .. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
-    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
+    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
 
@@ -378,8 +379,8 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
-Whether to enable the form services or not in the service container. If you
-don't use forms, setting this to ``false`` may increase your application's
+Whether to enable the form services or not in the service container. If
+you don't use forms, setting this to ``false`` may increase your application's
 performance because less services will be loaded into the container.
 
 This option will automatically be set to ``true`` when one of the child
@@ -485,11 +486,11 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
-Whether to enable the fragment listener or not. The fragment listener is used
-to render ESI fragments independently of the rest of the page.
+Whether to enable the fragment listener or not. The fragment listener is
+used to render ESI fragments independently of the rest of the page.
 
-This setting is automatically set to ``true`` when one of the child settings is
-configured.
+This setting is automatically set to ``true`` when one of the child settings
+is configured.
 
 .. _reference-fragments-path:
 
@@ -509,8 +510,8 @@ handler_id
 
 **type**: ``string`` **default**: ``'session.handler.native_file'``
 
-The service id used for session storage. The ``session.handler`` service alias
-will be set to this service id.
+The service id used for session storage. The ``session.handler`` service
+alias will be set to this service id.
 
 You can also set it to ``null``, to default to the handler of your PHP
 installation.
@@ -525,8 +526,8 @@ storage_id
 
 **type**: ``string`` **default**: ``'session.storage.native'``
 
-The service id used for session storage. The ``session.storage`` service alias
-will be set to this service id. This class has to implement
+The service id used for session storage. The ``session.storage`` service
+alias will be set to this service id. This class has to implement
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
 name
@@ -543,25 +544,26 @@ cookie_lifetime
 
 **type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. The default value -
-``null`` - means that the ``sesssion.cookie_lifetime`` value from ``php.ini``
-will be used. Setting this value to ``0`` means the cookie is valid for the
-length of the browser session.
+This determines the lifetime of the session - in seconds. The default value
+- ``null`` - means that the ``sesssion.cookie_lifetime`` value from ``php.ini``
+will be used. Setting this value to ``0`` means the cookie is valid for
+the length of the browser session.
 
 cookie_path
 ...........
 
 **type**: ``string`` **default**: ``/``
 
-This determines the path to set in the session cookie. By default it will use ``/``.
+This determines the path to set in the session cookie. By default it will
+use ``/``.
 
 cookie_domain
 .............
 
 **type**: ``string`` **default**: ``''``
 
-This determines the domain to set in the session cookie. By default it's blank,
-meaning the host name of the server which generated the cookie according
+This determines the domain to set in the session cookie. By default it's
+blank, meaning the host name of the server which generated the cookie according
 to the cookie specification.
 
 cookie_secure
@@ -576,20 +578,20 @@ cookie_httponly
 
 **type**: ``boolean`` **default**: ``false``
 
-This determines whether cookies should only be accessible through the HTTP protocol.
-This means that the cookie won't be accessible by scripting languages, such
-as JavaScript. This setting can effectively help to reduce identity theft
-through XSS attacks.
+This determines whether cookies should only be accessible through the HTTP
+protocol. This means that the cookie won't be accessible by scripting
+languages, such as JavaScript. This setting can effectively help to reduce
+identity theft through XSS attacks.
 
 gc_probability
 ..............
 
 **type**: ``integer`` **default**: ``1``
 
-This defines the probability that the garbage collector (GC) process is started
-on every session initialization. The probability is calculated by using
-``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1% chance
-that the GC process will start on each request.
+This defines the probability that the garbage collector (GC) process is
+started on every session initialization. The probability is calculated by
+using ``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1%
+chance that the GC process will start on each request.
 
 gc_divisor
 ..........
@@ -604,8 +606,8 @@ gc_maxlifetime
 **type**: ``integer`` **default**: ``1440``
 
 This determines the number of seconds after which data will be seen as "garbage"
-and potentially cleaned up. Garbage collection may occur during session start
-and depends on `gc_divisor`_ and `gc_probability`_.
+and potentially cleaned up. Garbage collection may occur during session
+start and depends on `gc_divisor`_ and `gc_probability`_.
 
 save_path
 .........
@@ -616,8 +618,8 @@ This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
 For more information, see :doc:`/cookbook/session/sessions_directory`.
 
-You can also set this value to the ``save_path`` of your ``php.ini`` by setting
-the value to ``null``:
+You can also set this value to the ``save_path`` of your ``php.ini`` by
+setting the value to ``null``:
 
 .. configuration-block::
 
@@ -735,9 +737,10 @@ an asset's path:
         ));
 
 For your convenience, you can pass a string or array of strings to
-``assets_base_urls`` directly. This will automatically be organized into the
-``http`` and ``ssl`` base urls (``https://`` and `protocol-relative`_ URLs will
-be added to both collections and ``http://`` only to the ``http`` collection):
+``assets_base_urls`` directly. This will automatically be organized into
+the ``http`` and ``ssl`` base urls (``https://`` and `protocol-relative`_
+URLs will be added to both collections and ``http://`` only to the ``http``
+collection):
 
 .. configuration-block::
 
@@ -789,8 +792,8 @@ cache
 
 **type**: ``string``
 
-The path to the cache directory for templates. When this is not set, caching is
-disabled.
+The path to the cache directory for templates. When this is not set, caching
+is disabled.
 
 .. note::
 
@@ -802,8 +805,8 @@ engines
 
 **type**: ``string[]`` / ``string`` **required**
 
-The Templating Engine to use. This can either be a string (when only one engine
-is configured) or an array of engines.
+The Templating Engine to use. This can either be a string (when only one
+engine is configured) or an array of engines.
 
 At least one engine is required.
 
@@ -813,9 +816,9 @@ loaders
 **type**: ``string[]``
 
 An array (or a string when configuring just one loader) of service ids for
-templating loaders. Templating loaders are used to find and load templates from
-a resource (e.g. a filesystem or database). Templating loaders must implement
-:class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
+templating loaders. Templating loaders are used to find and load templates
+from a resource (e.g. a filesystem or database). Templating loaders must
+implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
 packages
 ........
@@ -899,8 +902,8 @@ assets_version
 
 This option is used to *bust* the cache on assets by globally adding a query
 parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
-applies only to assets rendered via the Twig ``asset`` function (or PHP equivalent)
-as well as assets rendered with Assetic.
+applies only to assets rendered via the Twig ``asset`` function (or PHP
+equivalent) as well as assets rendered with Assetic.
 
 For example, suppose you have the following:
 
@@ -981,35 +984,37 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
 .. note::
 
-    All percentage signs (``%``) in the format string must be doubled to escape
-    the character. Without escaping, values might inadvertently be interpreted
-    as :ref:`book-service-container-parameters`.
+    All percentage signs (``%``) in the format string must be doubled to
+    escape the character. Without escaping, values might inadvertently be
+    interpreted as :ref:`book-service-container-parameters`.
 
 .. tip::
 
-    Some CDN's do not support cache-busting via query strings, so injecting the
-    version into the actual file path is necessary. Thankfully, ``assets_version_format``
-    is not limited to producing versioned query strings.
+    Some CDN's do not support cache-busting via query strings, so injecting
+    the version into the actual file path is necessary. Thankfully,
+    ``assets_version_format`` is not limited to producing versioned query
+    strings.
 
-    The pattern receives the asset's original path and version as its first and
-    second parameters, respectively. Since the asset's path is one parameter, you
-    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, you can
-    prefix the asset's path using a pattern of ``version-%%2$s/%%1$s``, which
-    would result in the path ``version-5/images/logo.png``.
+    The pattern receives the asset's original path and version as its first
+    and second parameters, respectively. Since the asset's path is one
+    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
+    however, you can prefix the asset's path using a pattern of
+    ``version-%%2$s/%%1$s``, which would result in the path
+    ``version-5/images/logo.png``.
 
-    URL rewrite rules could then be used to disregard the version prefix before
-    serving the asset. Alternatively, you could copy assets to the appropriate
-    version path as part of your deployment process and forgot any URL rewriting.
-    The latter option is useful if you would like older asset versions to remain
-    accessible at their original URL.
+    URL rewrite rules could then be used to disregard the version prefix
+    before serving the asset. Alternatively, you could copy assets to the
+    appropriate version path as part of your deployment process and forgot
+    any URL rewriting. The latter option is useful if you would like older
+    asset versions to remain accessible at their original URL.
 
 hinclude_default_template
 .........................
 
 **type**: ``string`` **default**: ``null``
 
-Sets the content shown during the loading of the fragment or when JavaScript is
-disabled. This can be either a template name or the content itself.
+Sets the content shown during the loading of the fragment or when JavaScript
+is disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
@@ -1083,8 +1088,8 @@ Assume you have custom global form themes in
 
 .. note::
 
-    The default form templates from ``FrameworkBundle:Form`` will always be
-    included in the form resources.
+    The default form templates from ``FrameworkBundle:Form`` will always
+    be included in the form resources.
 
 .. seealso::
 
@@ -1105,14 +1110,14 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
-The profiler can be enabled by setting this option to ``true``. When you are
-using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+The profiler can be enabled by setting this option to ``true``. When you
+are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
 and ``test`` environments.
 
 .. note::
 
-    The profiler works independently from the Web Developer Toolbar, see the
-    :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
+    The profiler works independently from the Web Developer Toolbar, see
+    the :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
     on how to disable/enable the toolbar.
 
 collect
@@ -1126,11 +1131,11 @@ collect
 
 **type**: ``boolean`` **default**: ``true``
 
-This option configures the way the profiler behaves when it is enabled. If set
-to ``true``, the profiler collects data for all requests (unless you configure
-otherwise, like a custom `matcher`_). If you want to only collect information
-on-demand, you can set the ``collect`` flag to ``false`` and activate the data
-collectors manually::
+This option configures the way the profiler behaves when it is enabled.
+If set to ``true``, the profiler collects data for all requests (unless
+you configure otherwise, like a custom `matcher`_). If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false``
+and activate the data collectors manually::
 
     $profiler->enable();
 
@@ -1181,8 +1186,8 @@ lifetime
 
 **type**: ``integer`` **default**: ``86400``
 
-The lifetime of the profiling storage in seconds. The data will be deleted when
-the lifetime is expired.
+The lifetime of the profiling storage in seconds. The data will be deleted
+when the lifetime is expired.
 
 matcher
 .......
@@ -1226,8 +1231,8 @@ resource
 
 **type**: ``string`` **required**
 
-The path the main routing resource (e.g. a YAML file) that contains the routes
-and imports the router should load.
+The path the main routing resource (e.g. a YAML file) that contains the
+routes and imports the router should load.
 
 type
 ....
@@ -1257,9 +1262,9 @@ strict_requirements
 
 **type**: ``mixed`` **default**: ``true``
 
-Determines the routing generator behaviour. When generating a route that has
-specific :ref:`requirements <book-routing-requirements>`, the generator can
-behave differently in case the used parameters do not meet these requirements.
+Determines the routing generator behaviour. When generating a route that
+has specific :ref:`requirements <book-routing-requirements>`, the generator
+can behave differently in case the used parameters do not meet these requirements.
 
 The value can be one of:
 
@@ -1272,8 +1277,8 @@ The value can be one of:
     Disable checking the requirements (thus, match the route even when the
     requirements don't match).
 
-``true`` is recommended in the development environment, while ``false`` or
-``null`` might be preferred in production.
+``true`` is recommended in the development environment, while ``false``
+or ``null`` might be preferred in production.
 
 translator
 ~~~~~~~~~~
@@ -1297,11 +1302,11 @@ fallbacks
 .. versionadded:: 2.3.25
     The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
     to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
-    language defined as a string.
-    Please note that you can still use the old ``fallback`` option if you want
-    define only one fallback.
+    language defined as a string. Please note that you can still use the
+    old ``fallback`` option if you want define only one fallback.
 
-This option is used when the translation key for the current locale wasn't found.
+This option is used when the translation key for the current locale wasn't
+found.
 
 .. seealso::
 
@@ -1389,7 +1394,7 @@ annotation changes). For performance reasons, it is recommended to disable
 debug mode in production, which will happen automatically if you use the
 default value.
 
-Full default Configuration
+Full Default Configuration
 --------------------------
 
 .. configuration-block::
@@ -1444,10 +1449,14 @@ Full default Configuration
                 http_port:            80
                 https_port:           443
 
-                # set to true to throw an exception when a parameter does not match the requirements
-                # set to false to disable exceptions when a parameter does not match the requirements (and return null instead)
-                # set to null to disable parameter checks against requirements
-                # 'true' is the preferred configuration in development mode, while 'false' or 'null' might be preferred in production
+                # * set to true to throw an exception when a parameter does not
+                #   match the requirements
+                # * set to false to disable exceptions when a parameter does not
+                #   match the requirements (and return null instead)
+                # * set to null to disable parameter checks against requirements
+                #
+                # 'true' is the preferred configuration in development mode, while
+                # 'false' or 'null' might be preferred in production
                 strict_requirements:  true
 
             # session configuration
