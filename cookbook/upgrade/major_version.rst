@@ -24,23 +24,21 @@ There are a couple of steps to upgrading a major version:
 ----------------------------------
 
 During the lifecycle of a major release, new features are added and method
-signatures and public API usages are changed. However, minor versions should
-not contain any backwards compatibility changes. It is made sure that there is
-a so-called *backwards compatibility layer* (or BC layer). This means that the
-old API will still work, while the new feature is used internally. This BC
-layer is then marked as *deprecated*, indicating that it will be
-removed/changed in the future.
+signatures and public API usages are changed. However,
+:doc:`minor versions </cookbook/upgrade/minor_version` should not contain any
+backwards compatibility changes. To accomplish this, the "old" (e.g. functions,
+classes, etc) code still works, but is marked as *deprecated*, indicating that
+it will be removed/changed in the future and that you should stop using it.
 
-The major version is the only time all existing BC layers are removed. However,
-if you make sure you've fixed all deprecated usages in the last version of the
-previous major version, you should be able to upgrade to the new major version
-without problems. To help you with this, the last minor releases will trigger
-deprecated notices. For example, 2.7 and 2.8 trigger deprecated notices and if
-you do not have any notice while using 2.8, you can savely upgrade to 3.0.
+When the major version is released (e.g. 3.0.0), all deprecated features and
+functionality are removed. So, as long as you've updated your code to stop
+using these deprecated features in the last version before the major (e.g.
+2.8.*), you should be able to upgrade without a problem.
 
-When visiting your application in the
-:doc:`dev environment </cookbook/configuration/environments>` in your browser,
-these notices are shown in the web dev toolbar:
+To help you with this, the last minor releases will trigger deprecated notices.
+For example, 2.7 and 2.8 trigger deprecated notices. When visiting your
+application in the :doc:`dev environment </cookbook/configuration/environments>`
+in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /images/cookbook/deprecations-in-profiler.png
 
@@ -107,7 +105,7 @@ Next, use Composer to download new versions of the libraries:
 3) Update your Code to Work with the New Version
 ------------------------------------------------
 
-There is a high chance that you're done now! However, the next major version
+There is a good chance that you're done now! However, the next major version
 *may* also contain new BC breaks as a BC layer is not always a possibility.
 Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
 included in the Symfony repository for any BC break that you need to be aware

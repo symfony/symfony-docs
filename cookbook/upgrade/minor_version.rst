@@ -53,11 +53,12 @@ to your code to get everything working. Additionally, some features you're
 using might still work, but might now be deprecated. While that's just fine,
 if you know about these deprecations, you can start to fix them over time.
 
-Every version of Symfony comes with an UPGRADE file included in the Symfony
-directory that describes these changes. If you follow the instructions in the
-document and update your code accordingly, it should be save to update in the
-future.
+Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-2.7.md`_)
+included in the Symfony directory that describes these changes. If you follow
+the instructions in the document and update your code accordingly, it should be
+safe to update in the future.
 
 These documents can also be found in the `Symfony Repository`_.
 
 .. _`Symfony Repository`: https://github.com/symfony/symfony
+.. _`UPGRADE-2.7.md`: https://github.com/symfony/symfony/blob/2.7/UPGRADE-2.7.md
