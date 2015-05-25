@@ -14,8 +14,7 @@ The ``file`` type represents a file input in your form.
 |             | - `empty_data`_                                                     |
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                       |
-| options     | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
+| options     | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
@@ -45,8 +44,8 @@ empty_data
 
 **default**: ``null``
 
-This option is set to ``null`` automatically because it is not used by the
-renderd field widget.
+This option determines what value the field will return when the submitted
+value is empty.
 
 Basic Usage
 -----------
@@ -110,9 +109,6 @@ type:
     :end-before: DEFAULT_PLACEHOLDER
 
 The default value is ``null``.
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
