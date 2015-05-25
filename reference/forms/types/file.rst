@@ -105,9 +105,6 @@ type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
-
 The default value is ``null``.
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
