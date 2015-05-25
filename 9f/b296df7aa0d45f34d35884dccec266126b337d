@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-07T16:29:01Z
+
+Why did you make it specific for `prod` config?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-08T19:01:51Z
+
+@WouterJ because the standard edition (and my real projects) only have a monolog config key in config_dev and config_prod, so this seems more realistic. But now that you mention it, if you have this specific logging use-case (eg log all security messages to this special file), you *will* probably want this logged consistently across environments.
+
+So now I agree with you - I'll update it :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T17:03:56Z
+
+ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-21T13:47:52Z
+
+@weaverryan can you please finish/merge this one or put it on the list for saturday? Thanks!
