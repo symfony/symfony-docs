@@ -23,6 +23,8 @@ sys.path.append(os.path.abspath('_exts'))
 # adding PhpLexer
 from sphinx.highlighting import lexers
 from pygments.lexers.compiled import CLexer
+from pygments.lexers.special import TextLexer
+from pygments.lexers.text import RstLexer
 from pygments.lexers.web import PhpLexer
 
 # -- General configuration -----------------------------------------------------
@@ -97,14 +99,18 @@ pygments_style = 'sphinx'
 # -- Settings for symfony doc extension ---------------------------------------------------
 
 # enable highlighting for PHP code not between ``<?php ... ?>`` by default
+lexers['markdown'] = TextLexer()
 lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
+lexers['rst'] = RstLexer()
 lexers['varnish3'] = CLexer()
 lexers['varnish4'] = CLexer()
 
 config_block = {
+    'markdown': 'Markdown',
+    'rst': 'reStructuredText',
     'varnish3': 'Varnish 3',
     'varnish4': 'Varnish 4'
 }
