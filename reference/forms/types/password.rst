@@ -24,7 +24,6 @@ The ``password`` field renders an input password text box.
 |             | - `max_length`_                                                        |
 |             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
-|             | - `trim`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`text </reference/forms/types/text>`                              |
 +-------------+------------------------------------------------------------------------+
@@ -92,13 +91,3 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
-
-trim
-~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-If true, the whitespace of the submitted string value will be stripped
-via the :phpfunction:`trim` function when the data is bound. This guarantees
-that if a value is submitted with extra whitespace, it will be removed before
-the value is merged back onto the underlying object.
