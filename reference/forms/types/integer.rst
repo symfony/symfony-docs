@@ -16,6 +16,9 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``number`` field                                            |
 +-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| Options     |                                                                       |
++-------------+-----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                         |
 |             | - `precision`_                                                        |
 |             | - `rounding_mode`_                                                    |
@@ -37,6 +40,11 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------

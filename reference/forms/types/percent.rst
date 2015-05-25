@@ -15,6 +15,9 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| Options     |                                                                       |
++-------------+-----------------------------------------------------------------------+
 | Options     | - `precision`_                                                        |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
@@ -35,6 +38,11 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------
