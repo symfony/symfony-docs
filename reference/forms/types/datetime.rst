@@ -15,6 +15,11 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
+| Overridden Options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
+|                      | - `error_bubbling`_                                                         |
++----------------------+-----------------------------------------------------------------------------+
 | Options              | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
@@ -45,6 +50,25 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
 
 Field Options
 -------------

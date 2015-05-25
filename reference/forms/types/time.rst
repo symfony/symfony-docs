@@ -143,14 +143,7 @@ The ``DateTime`` classes are treated as immutable objects.
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
-data_class
-~~~~~~~~~~
-
-**default**: ``null``
-
-The internal normalized representation of this type is an array, not a ``\DateTime``
-object. Therefore, the ``data_class`` option is initialized to ``null`` to avoid
-the ``FormType`` object from initializing it to ``\DateTime``.
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~
