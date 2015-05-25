@@ -225,15 +225,14 @@ easily. Your formatter must implement
 How to Rotate your Log Files
 ----------------------------
 
-Beware that log file sizes can grow very rapidly, leading to disk space exhaustion.
-This is specially true in the ``dev`` environment, where a simple request can
-generate hundreds of log lines. Consider using tools like the `logrotate`_
-Linux command to rotate log files before they become a problem.
+Over time, log files can grow to be *huge*, both while developing and on
+production. One best-practice solution is to use a tool like the `logrotate`_
+Linux command to rotate log files before they become too large.
 
-In case you cannot use a dedicated tool for rotating log files, consider using
-the special ``rotating_file`` handler defined by Monolog. This handler creates
-a new log file every day and can also remove old files automatically. To use
-it, just set the ``type`` option of your handler to ``rotating_file``:
+Another option is to have Monolog rotate the files for you by using the
+``rotating_file`` handler. This handler creates a new log file every day
+and can also remove old files automatically. To use it, just set the ``type``
+option of your handler to ``rotating_file``:
 
 .. configuration-block::
 
