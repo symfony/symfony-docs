@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-08T06:54:16Z
+
+@WouterJ nice work and very important articles. Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-09T08:32:27Z
+
+Thanks @javiereguiluz! I've applied your suggestions and added the missing screenshot.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-14T10:11:23Z
+
+Thanks @xabbuh! I've applied most of your suggestions. I'm going to ask Fabien about the 2.8 release, as I think it's quite logical if it'll always be the case and exceptions would make this doc harder to understand.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T08:25:52Z
+
+Thanks everyone. I've now updated this PR
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:40:37Z
+
+We just need to find a consensus on whether or not to do the split (see #5186).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-23T18:09:17Z
+
+@WouterJ I suggested some changes. I don't feel strongly, but my preference is to have an install *and* an upgrade section, mostly because upgrade is *so* important (install is actually less important, people will generally go elsewhere - e.g. symfony.com/download - to install) that I don't want to have to hide it under a "Install and Upgrade" section.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-24T22:02:58Z
+
+Thanks @weaverryan. I've fixed them. I also think we should have a seperate upgrade section.
