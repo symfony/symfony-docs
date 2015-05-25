@@ -28,13 +28,13 @@ Creating the Transformer
 First, create an ``IssueToNumberTransformer`` class - this class will be responsible
 for converting to and from the issue number and the ``Issue`` object::
 
-    // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformer.php
-    namespace Acme\TaskBundle\Form\DataTransformer;
+    // src/AppBundle/Form/DataTransformer/IssueToNumberTransformer.php
+    namespace AppBundle\Form\DataTransformer;
 
+    use AppBundle\Entity\Issue;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\DataTransformerInterface;
     use Symfony\Component\Form\Exception\TransformationFailedException;
-    use Doctrine\Common\Persistence\ObjectManager;
-    use Acme\TaskBundle\Entity\Issue;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
@@ -60,7 +60,7 @@ for converting to and from the issue number and the ``Issue`` object::
         public function transform($issue)
         {
             if (null === $issue) {
-                return "";
+                return '';
             }
 
             return $issue->getNumber();
@@ -70,9 +70,7 @@ for converting to and from the issue number and the ``Issue`` object::
          * Transforms a string (number) to an object (issue).
          *
          * @param  string $number
-         *
          * @return Issue|null
-         *
          * @throws TransformationFailedException if object (issue) is not found.
          */
         public function reverseTransform($number)
@@ -82,7 +80,7 @@ for converting to and from the issue number and the ``Issue`` object::
             }
 
             $issue = $this->om
-                ->getRepository('AcmeTaskBundle:Issue')
+                ->getRepository('AppBundle:Issue')
                 ->findOneBy(array('number' => $number))
             ;
 
@@ -112,13 +110,13 @@ Using the Transformer
 ---------------------
 
 As seen above our transformer requires an instance of an object manager. While for most
-use-cases using the default manager is fine we will let you pick the manager by it's name.
-In order to achieve this we will add a factory::
+use-cases it is sufficient to use the default entity manager, you will sometimes need
+to explicitly choose the one to use. To achieve this, you can use a factory::
 
-    // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformerFactory.php
-    namespace Acme\TaskBundle\Form\DataTransformer;
+    // src/AppBundle/Form/DataTransformer/IssueToNumberTransformerFactory.php
+    namespace AppBundle\Form\DataTransformer;
 
-    use Symfony\Bridge\Doctrine\ManagerRegistry;
+    use Doctrine\Common\Persistence\ManagerRegistry;
 
     class IssueToNumberTransformerFactory
     {
@@ -143,49 +141,65 @@ In order to achieve this we will add a factory::
     .. code-block:: yaml
 
         services:
-            acme_demo.factory.issue_transformer:
-                class: Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory
+            app.issue_transformer_factory:
+                class: AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory
                 arguments: ["@doctrine"]
+                public: false
                 
-            acme_demo.type.task:
-                class: Acme\TaskBundle\Form\TaskType
-                arguments: ["@acme_demo.factory.issue_transformer"]
+            app.type.task:
+                class: AppBundle\Form\TaskType
+                arguments: ["@app.issue_transformer_factory"]
+                tag:
+                  - { name: form.type, alias: app_task }
 
     .. code-block:: xml
 
-        <service id="acme_demo.factory.issue_transformer" class="Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory">
+        <service id="app.issue_transformer_factory"
+            class="AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory" public="false">
             <argument type="service" id="doctrine"/>
         </service>
         
-        <service id="acme_demo.type.task" class="Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory">
-            <argument type="service" id="acme_demo.factory.issue_transformer"/>
+        <service id="app.type.task"
+            class="AppBundle\Form\TaskType">
+            <argument type="service" id="app.issue_transformer_factory"/>
+            <tag name="form.type" alias="app_task"/>
         </service>
 
     .. code-block:: php
 
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+        // ...
+
         $container
-            ->setDefinition('acme_demo.factory.issue_transformer', array(
+            ->setDefinition('app.issue_transformer_factory', new Definition(
+                'AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory'
+                ), array(
                 new Reference('doctrine'),
             ))
+            ->setPublic(false)
         ;
         
         $container
-            ->setDefinition('acme_demo.type.task', array(
-                new Reference('acme_demo.factory.issue_transformer'),
+            ->setDefinition('app.type.task', new Definition(
+                'AppBundle\Form\TaskType'
+                ), array(
+                new Reference('app.issue_transformer_factory'),
             ))
+            ->addTag('form.type', array('alias' => 'app_task'))
         ;
     
-Now that you have capability to build the transformer with the desired object manager, you
+Now that you have the capability to build the transformer with the desired object manager, you
 just need to create it from your issue field in some form.
 
 You can also use transformers without creating a new custom form type
 by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
 `Model and View Transformers`_) on any field builder::
 
-    // src/Acme/TaskBundle/Form/TaskType.php
-    namespace Acme\TaskBundle\Form;
+    // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form;
 
-    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory;
+    use AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -215,7 +229,7 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
         {
             $resolver
                 ->setDefaults(array(
-                    'data_class' => 'Acme\TaskBundle\Entity\Task',
+                    'data_class' => 'AppBundle\Entity\Task',
                 ))
                 ->setRequired(array('om'))
             ;
@@ -226,8 +240,7 @@ This example requires that you pass in the entity manager as an option
 when creating your form. Later, you'll learn how you could create a custom
 ``issue`` field type to avoid needing to do this in your controller::
 
-    $taskType = $this->get('acme_demo.type.task');
-    $taskForm = $this->createForm($taskType, $task, array(
+    $taskForm = $this->createForm('app_task', $task, array(
         'om' => 'default',
     ));
 
@@ -318,10 +331,10 @@ a form that uses the transformer.
 Because of these, you may choose to :doc:`create a custom field type </cookbook/form/create_custom_field_type>`.
 First, create the custom field type class::
 
-    // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
-    namespace Acme\TaskBundle\Form\Type;
+    // src/AppBundle/Form/IssueSelectorType.php
+    namespace AppBundle\Form;
 
-    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformerFactory;
+    use AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -368,24 +381,49 @@ it's recognized as a custom field type:
     .. code-block:: yaml
 
         services:
-            acme_demo.type.issue_selector:
-                class: Acme\TaskBundle\Form\Type\IssueSelectorType
-                arguments: ["@doctrine.orm.entity_manager"]
+            app.issue_transformer_factory:
+                class: AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory
+                arguments: ["@doctrine"]
+                public: false
+            app.type.issue_selector:
+                class: AppBundle\Form\IssueSelectorType
+                arguments: ["@app.issue_transformer_factory"]
                 tags:
                     - { name: form.type, alias: issue_selector }
 
     .. code-block:: xml
 
-        <service id="acme_demo.type.issue_selector" class="Acme\TaskBundle\Form\Type\IssueSelectorType">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
+        <service id="app.issue_transformer_factory"
+            class="AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory" public="false">
+            <argument type="service" id="doctrine"/>
+        </service>
+        
+        <service id="app.type.issue_selector"
+            class="AppBundle\Form\IssueSelectorType">
+            <argument type="service" id="app.issue_transformer_factory"/>
             <tag name="form.type" alias="issue_selector" />
         </service>
 
     .. code-block:: php
 
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+        // ...
+    
         $container
-            ->setDefinition('acme_demo.type.issue_selector', array(
-                new Reference('doctrine.orm.entity_manager'),
+            ->setDefinition('app.issue_transformer_factory', new Definition(
+                'AppBundle\Form\DataTransformer\IssueToNumberTransformerFactory'
+                ), array(
+                new Reference('doctrine'),
+            ))
+            ->setPublic(false)
+        ;
+        
+        $container
+            ->setDefinition('app.type.issue_selector', new Definition(
+                'AppBundle\Form\IssueSelectorType'
+                ), array(
+                new Reference('app.issue_transformer_factory'),
             ))
             ->addTag('form.type', array(
                 'alias' => 'issue_selector',
@@ -395,8 +433,8 @@ it's recognized as a custom field type:
 Now, whenever you need to use your special ``issue_selector`` field type,
 it's quite easy::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
-    namespace Acme\TaskBundle\Form\Type;
+    // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
