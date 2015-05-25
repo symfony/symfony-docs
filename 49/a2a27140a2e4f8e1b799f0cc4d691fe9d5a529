@@ -1,0 +1,94 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2015-03-31T08:47:32Z
+
+this is good ;)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-03-31T21:33:00Z
+
+updated
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-04-01T07:21:05Z
+
+updated
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-02T12:49:54Z
+
+Just looked at the code PR. Shouldn't we document the abstract testcase class too?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-04-02T13:06:59Z
+
+The abstract test class is useless once you have PHP 5.4 or more. I added it for the poor guys, but in the doc I'd tell only about the trait...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-02T13:08:22Z
+
+If we don't add it, people won't notice it exists. So the poor guys then think "Blah, why can't I use this?". Just one little sentence is enough: "If you still use PHP 5.3, you can extend the `VarDumperTestCase` class instead."
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-04-02T13:11:22Z
+
+done
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-02T13:19:19Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-03T21:41:33Z
+
+@nicolas-grekas can you give a usage example of each? It sounds cool, but I'm not actually sure how this works yet (since, as a user of VarDumper, I know it dumps out in a "big colored format", so it's not clear how being able to assert that something looks like that is useful).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-05-04T17:04:13Z
+
+Here is an example:
+https://github.com/symfony/symfony/blob/2.7/src/Symfony/Component/VarDumper/Tests/Caster/ReflectionCasterTest.php
+
+I'm away for a few days but I'll update the doc when I'll be back.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:35:06Z
+
+ping @nicolas-grekas
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-05-23T18:39:26Z
+
+Example just added!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-24T07:09:58Z
+
+@nicolas-grekas Just one minor capitalisation issue. After that it should be ready to get merged.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-05-24T19:14:45Z
+
+Fixed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-25T08:41:32Z
+
+:+1:
