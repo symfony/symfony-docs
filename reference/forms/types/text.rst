@@ -33,14 +33,7 @@ The text field represents the most basic input text field.
 Overridden Options
 ------------------
 
-compound
-~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-This option specifies if the type is compound. This is independent of whether
-the type actually has children. A type can be compound but not have any
-children at all.
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------
