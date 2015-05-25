@@ -9,6 +9,10 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                       |
+| Options     | - `data_class`_                                                     |
+|             | - `empty_data`_                                                     |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                       |
 | options     | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
@@ -23,6 +27,26 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+data_class
+~~~~~~~~~~
+
+**default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
+
+This option sets the appropriate file-realted data mapper to be used by the type.
+
+empty_data
+~~~~~~~~~~
+
+**default**: ``null``
+
+This option is set to ``null`` automatically because it is not used by the
+renderd field widget.
 
 Basic Usage
 -----------
