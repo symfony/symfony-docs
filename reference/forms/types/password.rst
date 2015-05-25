@@ -9,6 +9,9 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
 +-------------+------------------------------------------------------------------------+
+| Overridden  | - `trim`_                                                              |
+| Options     |                                                                        |
++-------------+------------------------------------------------------------------------+
 | Options     | - `always_empty`_                                                      |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                          |
@@ -27,6 +30,19 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+trim
+~~~~
+
+**default**: ``false``
+
+Unlike the rest of form types, the ``password`` type doesn't apply the
+phpfunction:`trim` function to the value submitted by the user. This ensures that
+the password is merged back onto the underlying object exactly as it was typed
+by the user.
 
 Field Options
 -------------
