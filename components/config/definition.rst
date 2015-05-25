@@ -200,25 +200,58 @@ Array Node Options
 
 Before defining the children of an array node, you can provide options like:
 
-``useAttributeAsKey()``
-    Provide the name of a child node, whose value should be used as the key in the resulting array.
-``requiresAtLeastOneElement()``
-    There should be at least one element in the array (works only when ``isRequired()`` is also
-    called).
 ``addDefaultsIfNotSet()``
-    If any child nodes have default values, use them if explicit values haven't been provided.
+    If any child nodes have default values, use them if explicit values haven't
+    been provided.
+``requiresAtLeastOneElement()``
+    There should be at least one element in the array (works only when
+    ``isRequired()`` is also called).
+``useAttributeAsKey()``
+    Provide the name of a child node, whose value should be used as the key in
+    the resulting array. This method also defines the way config array keys are
+    treated, as explained in the following example.
 
-An example of this::
+When the ``useAttributeAsKey()`` method is not used, the names of the array
+elements (i.e. the array keys) are ignored when parsing the configuration.
+Consider this example::
 
     $rootNode
         ->children()
             ->arrayNode('parameters')
-                ->isRequired()
-                ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('name')
                 ->prototype('array')
                     ->children()
-                        ->scalarNode('value')->isRequired()->end()
+                        ->scalarNode('parameter1')->end()
+                        ->scalarNode('parameter2')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+In YAML, the configuration might look like this:
+
+.. code-block:: yaml
+
+    database:
+        parameters: [ 'value1', 'value2' ]
+
+In XML, the configuration might look like this:
+
+.. code-block:: xml
+
+    ...
+
+However, if the ``useAttributeAsKey()`` method is set, the parsed configuration
+will be completely different::
+
+    $rootNode
+        ->children()
+            ->arrayNode('parameters')
+                ->useAttributeAsKey('value')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('parameter1')->end()
+                        ->scalarNode('parameter2')->end()
                     ->end()
                 ->end()
             ->end()
@@ -231,12 +264,19 @@ In YAML, the configuration might look like this:
 
     database:
         parameters:
-            param1: { value: param1val }
+            parameter1: { value: 'value1' }
+            parameter2: { value: 'value2' }
 
-In XML, each ``parameters`` node would have a ``name`` attribute (along with
+In XML, the configuration might look like this:
+
+.. code-block:: xml
+
+    ...
+
+In XML, each ``parameters`` node has a ``value`` attribute (along with
 ``value``), which would be removed and used as the key for that element in
-the final array. The ``useAttributeAsKey`` is useful for normalizing how
-arrays are specified between different formats like XML and YAML.
+the final array. The ``useAttributeAsKey()`` method is useful for normalizing
+how arrays are specified between different formats like XML and YAML.
 
 Default and required Values
 ---------------------------
