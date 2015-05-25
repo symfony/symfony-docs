@@ -9,6 +9,9 @@ The text field represents the most basic input text field.
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                      |
+| Options     |                                                                    |
++-------------+--------------------------------------------------------------------+
 | Inherited   | - `data`_                                                          |
 | options     | - `disabled`_                                                      |
 |             | - `empty_data`_                                                    |
@@ -27,6 +30,17 @@ The text field represents the most basic input text field.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
 +-------------+--------------------------------------------------------------------+
 
+Overridden Options
+------------------
+
+compound
+~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+This option specifies if the type is compound. This is independent of whether
+the type actually has children. A type can be compound but not have any
+children at all.
 
 Inherited Options
 -----------------
