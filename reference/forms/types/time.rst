@@ -26,7 +26,7 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden Options   | - `by_reference`_                                                           |
+| Overridden options   | - `by_reference`_                                                           |
 |                      | - `compound`_                                                               |
 |                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |

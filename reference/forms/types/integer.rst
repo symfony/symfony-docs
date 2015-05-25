@@ -17,7 +17,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 | Rendered as | ``input`` ``number`` field                                            |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
-| Options     |                                                                       |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                         |
 |             | - `precision`_                                                        |

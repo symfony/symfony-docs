@@ -29,7 +29,7 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `widget`_                                                                 |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden Options   | - `by_reference`_                                                           |
+| Overridden options   | - `by_reference`_                                                           |
 |                      | - `compound`_                                                               |
 |                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |

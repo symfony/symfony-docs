@@ -15,7 +15,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden Options   | - `by_reference`_                                                           |
+| Overridden options   | - `by_reference`_                                                           |
 |                      | - `compound`_                                                               |
 |                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |

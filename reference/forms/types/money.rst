@@ -15,7 +15,7 @@ how the input and output of the data is handled.
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
-| Options     |                                                                     |
+| options     |                                                                     |
 +-------------+---------------------------------------------------------------------+
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |

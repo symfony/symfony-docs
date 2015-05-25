@@ -10,7 +10,7 @@ The text field represents the most basic input text field.
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                      |
-| Options     |                                                                    |
+| options     |                                                                    |
 +-------------+--------------------------------------------------------------------+
 | Inherited   | - `data`_                                                          |
 | options     | - `disabled`_                                                      |

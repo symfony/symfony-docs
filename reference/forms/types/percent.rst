@@ -16,7 +16,7 @@ This field adds a percentage sign "``%``" after the input box.
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
-| Options     |                                                                       |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `precision`_                                                        |
 |             | - `type`_                                                             |

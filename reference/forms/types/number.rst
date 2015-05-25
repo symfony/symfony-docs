@@ -12,7 +12,7 @@ that you want to use for your number.
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                        |
-| Options     |                                                                      |
+| options     |                                                                      |
 +-------------+----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                        |
 |             | - `precision`_                                                       |

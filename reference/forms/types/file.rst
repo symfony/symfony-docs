@@ -10,7 +10,7 @@ The ``file`` type represents a file input in your form.
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
-| Options     | - `data_class`_                                                     |
+| options     | - `data_class`_                                                     |
 |             | - `empty_data`_                                                     |
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                       |
