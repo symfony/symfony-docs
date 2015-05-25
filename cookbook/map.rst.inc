@@ -207,9 +207,11 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
-* **Upgrading**
+* :doc:`/cookbook/upgrade/index`
 
-  * :doc:`/cookbook/upgrading`
+  * :doc:`/cookbook/upgrade/patch_version`
+  * :doc:`/cookbook/upgrade/minor_version`
+  * :doc:`/cookbook/upgrade/major_version`
 
 * :doc:`/cookbook/validation/index`
 
