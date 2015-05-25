@@ -27,6 +27,8 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_seconds`_                                                           |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
@@ -138,6 +140,17 @@ by_reference
 **default**: ``false``
 
 The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+data_class
+~~~~~~~~~~
+
+**default**: ``null``
+
+The internal normalized representation of this type is an array, not a ``\DateTime``
+object. Therefore, the ``data_class`` option is initialized to ``null`` to avoid
+the ``FormType`` object from initializing it to ``\DateTime``.
 
 error_bubbling
 ~~~~~~~~~~~~~~
