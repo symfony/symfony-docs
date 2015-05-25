@@ -146,7 +146,7 @@ class name is ``Acme\BlogBundle\Controller\ContentController``.
 All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible, like
-Commands, Helpers, Listeners, and Controllers.
+Commands, Helpers, Listeners and Controllers.
 
 Classes that connect to the event dispatcher should be suffixed with
 ``Listener``.
@@ -159,7 +159,7 @@ Vendors
 A bundle must not embed third-party PHP libraries. It should rely on the
 standard Symfony autoloading instead.
 
-A bundle should not embed third-party libraries written in JavaScript, CSS, or
+A bundle should not embed third-party libraries written in JavaScript, CSS or
 any other language.
 
 Tests
@@ -175,6 +175,7 @@ the ``Tests/`` directory. Tests should follow the following principles:
 * The tests should cover at least 95% of the code base.
 
 .. note::
+
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
    existence of a ``phpunit.xml.dist`` file.
 
