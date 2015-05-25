@@ -105,8 +105,6 @@ type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-The default value is ``null``.
-
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc

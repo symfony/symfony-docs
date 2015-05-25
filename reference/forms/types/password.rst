@@ -39,7 +39,7 @@ trim
 **default**: ``false``
 
 Unlike the rest of form types, the ``password`` type doesn't apply the
-phpfunction:`trim` function to the value submitted by the user. This ensures that
+:phpfunction:`trim` function to the value submitted by the user. This ensures that
 the password is merged back onto the underlying object exactly as it was typed
 by the user.
 
