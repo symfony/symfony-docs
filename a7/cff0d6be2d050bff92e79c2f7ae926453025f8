@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:09:06Z
+
+@WouterJ Though I am not sure if this can merged as is due to the changes to the `conf.py` file.
+
+@javiereguiluz What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-23T08:19:14Z
+
+I think this is great! Thanks @xabbuh
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:22:02Z
+
+@javiereguiluz I mean, will this work with the current config of the build server? Or do we need to wait for an update of the config before being able to merge this?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-23T08:35:31Z
+
+I've just created a pull request in the private Sphinx parser to replicate the changes you made on this PR. I think Fabien will merge them soon and then, the server will be ready to process these changes.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:37:40Z
+
+Thank you @javiereguiluz.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-25T06:41:14Z
+
+:+1: (and IIRC, the PR on symfony.com was merged?)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-25T06:42:38Z
+
+@WouterJ yes, it was merged on Saturday morning, so things should be ready by now.
