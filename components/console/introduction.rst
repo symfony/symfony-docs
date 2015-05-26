@@ -111,7 +111,7 @@ This prints::
     HELLO FABIEN
 
 Command Lifecycle
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 Commands have 3 lifecycle methods:
 
@@ -119,7 +119,7 @@ Commands have 3 lifecycle methods:
     2. interact($input, $output)
     3. execute($input, $output)
 
-Explications:
+Explanations:
 
     initialize($input, $output)
 
@@ -138,7 +138,8 @@ ask the user for those values.
 This method is executed after interact() and initialize(). It usually
 contains the logic to execute to complete this command task.
 
-Note that ``initialize($input, $output)`` and ``interact($input, $output)``
+Note that ``execute($input, $output)`` is the only required method of the three.
+``initialize($input, $output)`` and ``interact($input, $output)``
 methods are completely optional.
 
 .. _components-console-coloring:
