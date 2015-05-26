@@ -110,6 +110,37 @@ This prints::
 
     HELLO FABIEN
 
+Command Lifecycle
+~~~~~~~~~~~~~~~~
+
+Commands have 3 lifecycle methods:
+
+    1. initialize($input, $output)
+    2. interact($input, $output)
+    3. execute($input, $output)
+
+Explications:
+
+    initialize($input, $output)
+
+This method is executed before the interact() and the execute() methods.
+It's main purpose is to initialize the variables used in the rest of
+the command methods.
+
+    interact($input, $output)
+
+This method is executed after initialize() and before execute(). Its purpose
+is to check if some of the options/arguments are missing and interactively
+ask the user for those values.
+
+    execute($input, $output)
+
+This method is executed after interact() and initialize(). It usually
+contains the logic to execute to complete this command task.
+
+Note that ``initialize($input, $output)`` and ``interact($input, $output)``
+methods are completely optional.
+
 .. _components-console-coloring:
 
 Coloring the Output
