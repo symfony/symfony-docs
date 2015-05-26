@@ -242,7 +242,7 @@ The processed configuration is::
         [1] => 'sqlite'
     )
 
-A more complex example would be to define a prototyped array with children:
+A more complex example would be to define a prototyped array with children::
 
     $node
         ->fixXmlConfig('connection')
