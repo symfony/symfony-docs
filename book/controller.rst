@@ -803,6 +803,18 @@ Just like when creating a controller for a route, the order of the arguments of
 order of the arguments, Symfony will still pass the correct value to each
 variable.
 
+Checking the Validity of a CSRF Token
+-------------------------------------
+
+Sometimes you want to use CSRF protection in an action where you don't want to use a
+Symfony form.
+
+If, for example, you're doing a DELETE action, you can use ``isCsrfTokenValid()``::
+
+    if ($this->isCsrfTokenValid('token_id', 'TOKEN')) {
+        // ... do something, like deleting an object
+    }
+
 Final Thoughts
 --------------
 
