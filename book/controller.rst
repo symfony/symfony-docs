@@ -811,9 +811,18 @@ Symfony form.
 
 If, for example, you're doing a DELETE action, you can use ``isCsrfTokenValid()``::
 
-    if ($this->isCsrfTokenValid('token_id', 'TOKEN')) {
+    if ($this->isCsrfTokenValid('token_id', $submittedToken)) {
         // ... do something, like deleting an object
     }
+
+.. versionadded:: 2.6
+    The ``isCsrfTokenValid()`` shortcut method was added in Symfony 2.6.
+
+Previously you would use::
+
+    use Symfony\Component\Security\Csrf\CsrfToken;
+
+    $this->get('security.csrf.token_manager')->isTokenValid(new CsrfToken('token_id', 'TOKEN'));
 
 Final Thoughts
 --------------
