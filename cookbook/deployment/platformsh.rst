@@ -100,8 +100,8 @@ following file::
     // app/config/parameters_platform.php
     <?php
     $relationships = getenv("PLATFORM_RELATIONSHIPS");
-        if (!$relationships) {
-            return;
+    if (!$relationships) {
+        return;
     }
 
     $relationships = json_decode(base64_decode($relationships), true);
