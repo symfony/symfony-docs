@@ -210,7 +210,7 @@ submitting your documentation, follow these steps:
 
 * Install Sphinx_;
 * Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
-* Run ``make html`` and view the generated HTML in the ``build/`` directory.
+* Run ``make html`` and view the generated HTML in the ``_build/html`` directory.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/
