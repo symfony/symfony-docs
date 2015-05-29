@@ -92,7 +92,7 @@ Configuration
 * `validation`_
     * :ref:`enabled <reference-validation-enabled>`
     * :ref:`cache <reference-validation-cache>`
-    * `enable_annotations`_
+    * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
     * `api`_
@@ -102,6 +102,8 @@ Configuration
     * `debug`_
 * `serializer`_
     * :ref:`enabled <reference-serializer-enabled>`
+    * :ref:`cache <reference-serializer-cache>`
+    * :ref:`enable_annotations <reference-serializer-enable_annotations>`
 
 secret
 ~~~~~~
@@ -1372,6 +1374,8 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+.. _reference-validation-enable_annotations:
+
 enable_annotations
 ..................
 
@@ -1478,7 +1482,32 @@ enabled
 
 Whether to enable the ``serializer`` service or not in the service container.
 
-For more details, see :doc:`/cookbook/serializer`.
+.. _reference-serializer-cache:
+
+cache
+.....
+
+**type**: ``string``
+
+The service that is used to persist class metadata in a cache. The service
+has to implement the :class:`Doctrine\\Common\\Cache\\Cache` interface.
+
+.. seealso::
+
+    For more information, see :ref:`cookbook-serializer-enabling-metadata-cache`.
+
+.. _reference-serializer-enable_annotations:
+
+enable_annotations
+..................
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is enabled, serialization groups can be defined using annotations.
+
+.. seealso::
+
+    For more information, see :ref:`cookbook-serializer-using-serialization-groups-annotations`.
 
 Full Default Configuration
 --------------------------
