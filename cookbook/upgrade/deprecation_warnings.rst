@@ -40,16 +40,15 @@ How can I Fix the Warnings?
 Of course ultimately, you want to stop using the deprecated functionality.
 Sometimes, this is easy: the warning might tell you exactly what to change.
 
-But other times, the warning might be un-clear: a setting somewhere might
-cause a class deeper to trigger the warning. In this case, the core team
-does its best to give a clear message, but you may need to research that
-warning further.
+But other times, the warning might be unclear: a setting somewhere might
+cause a class deeper to trigger the warning. In this case, Symfony does its
+best to give a clear message, but you may need to research that warning further.
 
 And sometimes, the warning may come from a third-party library or bundle
 that you're using. If that's true, there's a good chance that those deprecations
 have already been updated. In that case, upgrade the library to fix them.
 
-Once all the deprecation warnings are gone, you can upgrade without a lot
+Once all the deprecation warnings are gone, you can upgrade with a lot
 more confidence.
 
 .. _`phpunit-bridge`: https://github.com/symfony/phpunit-bridge
