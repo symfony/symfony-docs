@@ -41,6 +41,8 @@ Next, use Composer to download new versions of the libraries:
 
     $ composer update symfony/symfony
 
+.. include:: /cookbook/upgrade/_update_dep_errors.rst.inc
+
 .. include:: /cookbook/upgrade/_update_all_packages.rst.inc
 
 .. _`upgrade-minor-symfony-code`:
