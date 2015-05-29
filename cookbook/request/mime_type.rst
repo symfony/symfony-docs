@@ -34,7 +34,7 @@ project::
 
     class RequestListener
     {
-        public function registerMimeType(GetResponseEvent $event)
+        public function onKernelRequest(GetResponseEvent $event)
         {
             $event->getRequest()->setFormat('jsonp', 'application/javascript');
         }
@@ -55,7 +55,7 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
             app.listener.request:
                 class: AppBundle\EventListener\RequestListener
                 tags:
-                    - { name: kernel.event_listener, event: kernel.request, method: registerMimeType }
+                    - { name: kernel.event_listener, event: kernel.request }
 
     .. code-block:: xml
 
@@ -67,10 +67,7 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
             <services>
                 <service id="app.listener.request"
                     class="AppBundle\EventListener\RequestListener">
-                    <tag name="kernel.event_listener"
-                        event="kernel.request"
-                        method="registerMimeType"
-                    />
+                    <tag name="kernel.event_listener" event="kernel.request" />
                 </service>
             </services>
         </container>
@@ -80,8 +77,7 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
         # app/config/services.php
         $definition = new Definition('AppBundle\EventListener\RequestListener');
         $definition->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.request',
-            'method' => 'registerMimeType',
+            'event' => 'kernel.request',
         ));
         $container->setDefinition('app.listener.request', $definition);
 

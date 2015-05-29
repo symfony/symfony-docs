@@ -76,13 +76,13 @@ using a special "tag":
             kernel.listener.your_listener_name:
                 class: AppBundle\EventListener\AcmeExceptionListener
                 tags:
-                    - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+                    - { name: kernel.event_listener, event: kernel.exception }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <service id="kernel.listener.your_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
-            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+            <tag name="kernel.event_listener" event="kernel.exception" />
         </service>
 
     .. code-block:: php
@@ -90,8 +90,44 @@ using a special "tag":
         // app/config/services.php
         $container
             ->register('kernel.listener.your_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
-            ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
+            ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
+
+.. note::
+
+    By default, when a listener is executed by a dispatched event, Symfony executes
+    the ``'on'.camelize($eventName)`` method of your listener. In the example above,
+    the event is named ``kernel.exception``, so the method to execute is
+    ``onKernelException()``.
+
+    In case you want to define more semantic method names, configure the method
+    name with the ``method`` option:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/services.yml
+            services:
+                kernel.listener.your_listener_name:
+                    class: AppBundle\EventListener\AcmeExceptionListener
+                    tags:
+                        - { name: kernel.event_listener, event: kernel.exception, method: handleErrors }
+
+        .. code-block:: xml
+
+            <!-- app/config/services.xml -->
+            <service id="kernel.listener.your_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
+                <tag name="kernel.event_listener" event="kernel.exception" method="handleErrors" />
+            </service>
+
+        .. code-block:: php
+
+            // app/config/services.php
+            $container
+                ->register('kernel.listener.your_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
+                ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'handleErrors'))
+            ;
 
 .. note::
 
