@@ -31,7 +31,7 @@ automatically, but you need at least version 2.3.14 or 3.0.21 of the
 
 .. code-block:: bash
 
-    composer update sensio/distribution-bundle
+    $ composer update sensio/distribution-bundle
 
 Once you've updated, the ``bootstrap.php.cache`` file is rebuilt automatically.
 At the top, you should see a line adding ``~E_USER_DEPRECATED``.
