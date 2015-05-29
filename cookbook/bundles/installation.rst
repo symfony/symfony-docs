@@ -44,7 +44,7 @@ version, include it as the second argument of the `composer require`_ command:
 
 .. code-block:: bash
 
-    $ composer require friendsofsymfony/user-bundle "~2.0@dev"
+    $ composer require friendsofsymfony/user-bundle "~2.0"
 
 B) Enable the Bundle
 --------------------
