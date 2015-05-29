@@ -344,6 +344,8 @@ method on the normalizer definition::
     $serializer = new Serializer(array($normalizer), array($encoder));
     $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsman":false}
 
+.. _component-serializer-converting-property-names-when-serializing-and-deserializing:
+
 Converting Property Names when Serializing and Deserializing
 ------------------------------------------------------------
 
