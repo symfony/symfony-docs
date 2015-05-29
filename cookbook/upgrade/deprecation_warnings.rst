@@ -12,8 +12,12 @@ like this::
 
 This is great, because you can check your logs to know what needs to change
 before you upgrade. In the Symfony Framework, the number of deprecated calls
-shows up in the web debug toolbar. And if you install the `phpunit-bridge`_,
-you can get a report of deprecated calls after running your tests.
+shows up in the web debug toolbar.
+
+.. image:: /images/cookbook/deprecations-in-profiler.png
+
+And if you install the `phpunit-bridge`_, you can get a report of deprecated
+calls after running your tests. Find out more by reading :ref:`deprecations-phpunit-bridge`.
 
 How can I Silence the Warnings?
 -------------------------------
