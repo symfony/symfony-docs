@@ -224,6 +224,7 @@
   * :doc:`/cookbook/upgrade/patch_version`
   * :doc:`/cookbook/upgrade/minor_version`
   * :doc:`/cookbook/upgrade/major_version`
+  * :doc:`/cookbook/upgrade/deprecation_warnings`
 
 * :doc:`/cookbook/validation/index`
 
