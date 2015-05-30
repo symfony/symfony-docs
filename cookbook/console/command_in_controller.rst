@@ -51,7 +51,8 @@ Run this command from inside your controller via::
 
             // return the output, don't use if you used NullOutput()
             $content = $output->fetch();
-
+            
+            // return new Response(""), if you used NullOutput()
             return new Response($content);
         }
     }
