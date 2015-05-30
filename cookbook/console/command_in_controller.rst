@@ -49,7 +49,7 @@ Run this command from inside your controller via::
             $output = new BufferedOutput();
             $application->run($input, $output);
 
-            // return the output
+            // return the output, don't use if you used NullOutput()
             $content = $output->fetch();
 
             return new Response($content);
