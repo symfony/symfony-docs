@@ -440,7 +440,7 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
     }
 
 .. versionadded:: 2.6
-    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
+    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
     could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
 
 Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
@@ -809,14 +809,15 @@ Checking the Validity of a CSRF Token
 Sometimes you want to use CSRF protection in an action where you don't want to use a
 Symfony form.
 
-If, for example, you're doing a DELETE action, you can use ``isCsrfTokenValid()``::
+If, for example, you're doing a DELETE action, you can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isCsrfTokenValid`
+method to check the CSRF token::
 
     if ($this->isCsrfTokenValid('token_id', $submittedToken)) {
         // ... do something, like deleting an object
     }
 
 .. versionadded:: 2.6
-    The ``isCsrfTokenValid()`` shortcut method was added in Symfony 2.6.
+    The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
 
 Previously you would use::
 
