@@ -45,7 +45,7 @@ Run this command from inside your controller via::
                'command' => 'swiftmailer:spool:send',
                '--message-limit' => $messages,
             ));
-            // our use NullOutput() if you don't need the outpu
+            // our use NullOutput() if you don't need the output
             $output = new BufferedOutput();
             $application->run($input, $output);
 
