@@ -950,7 +950,7 @@ Now you can use the ``avatars`` package in your templates:
 Each package can configure the following options:
 
 * :ref:`base_urls <reference-assets-base-urls>`
-* :ref:`version <reference-assets-assets-version>`
+* :ref:`version <reference-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
 
 .. _reference-framework-assets-version:
