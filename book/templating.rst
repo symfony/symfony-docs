@@ -135,7 +135,7 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
-    sandboxing, automatic HTML escaping, manual contextual output escaping, 
+    sandboxing, automatic HTML escaping, manual contextual output escaping,
     and the inclusion of custom functions and filters that only affect templates.
     Twig contains little features that make writing templates easier and more concise.
     Take the following example, which combines a loop with a logical ``if``
@@ -1021,46 +1021,12 @@ assets won't be cached when deployed. For example, ``/images/logo.png`` might
 look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
 configuration option.
 
-.. _`book-templating-version-by-asset`:
+If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
+as follows:
 
-If you need to set a version for a specific asset, you can set the fourth
-argument (or the ``version`` argument) to the desired version:
+.. code-block:: html+jinja
 
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('images/logo.png', version='3.0') }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            false,
-            '3.0'
-        ) ?>" alt="Symfony!" />
-
-If you don't give a version or pass ``null``, the default package version
-(from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
-versioned URL will be deactivated for this asset.
-
-If you need absolute URLs for assets, you can set the third argument (or the
-``absolute`` argument) to ``true``:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('images/logo.png', absolute=true) }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            true
-        ) ?>" alt="Symfony!" />
+    <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts
@@ -1218,7 +1184,7 @@ automatically:
 
 .. versionadded:: 2.6
     The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user`` 
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
     (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
     instead.
 
