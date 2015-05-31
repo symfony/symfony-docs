@@ -160,6 +160,48 @@ named ``kernel.http_method_override``.
         $request = Request::createFromGlobals();
         // ...
 
+.. _reference-framework-trusted-proxies:
+
+trusted_proxies
+~~~~~~~~~~~~~~~
+
+**type**: ``array``
+
+Configures the IP addresses that should be trusted as proxies. For more
+details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
+
+.. versionadded:: 2.3
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
+    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
+        ));
+
 ide
 ~~~
 
@@ -325,48 +367,6 @@ can respond to any given host.
 
     Read more about this in the `Security Advisory Blog post`_.
 
-.. _reference-framework-trusted-proxies:
-
-trusted_proxies
-~~~~~~~~~~~~~~~
-
-**type**: ``array``
-
-Configures the IP addresses that should be trusted as proxies. For more
-details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
-
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
-    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
-        ));
-
 .. _reference-framework-form:
 
 form
@@ -502,8 +502,202 @@ path
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
 
+profiler
+~~~~~~~~
+
+.. _reference-profiler-enabled:
+
+enabled
+.......
+
+.. versionadded:: 2.2
+    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
+    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
+    configuration entirely.
+
+**type**: ``boolean`` **default**: ``false``
+
+The profiler can be enabled by setting this option to ``true``. When you
+are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+and ``test`` environments.
+
+.. note::
+
+    The profiler works independently from the Web Developer Toolbar, see
+    the :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
+    on how to disable/enable the toolbar.
+
+collect
+.......
+
+.. versionadded:: 2.3
+    The ``collect`` option was introduced in Symfony 2.3. Previously, when
+    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
+    but the collectors were disabled. Now, the profiler and the collectors
+    can be controlled independently.
+
+**type**: ``boolean`` **default**: ``true``
+
+This option configures the way the profiler behaves when it is enabled.
+If set to ``true``, the profiler collects data for all requests (unless
+you configure otherwise, like a custom `matcher`_). If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false``
+and activate the data collectors manually::
+
+    $profiler->enable();
+
+only_exceptions
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+When this is set to ``true``, the profiler will only be enabled when an
+exception is thrown during the handling of the request.
+
+only_master_requests
+....................
+
+**type**: ``boolean`` **default**: ``false``
+
+When this is set to ``true``, the profiler will only be enabled on the master
+requests (and not on the subrequests).
+
+dsn
+...
+
+**type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
+
+The DSN where to store the profiling information.
+
+.. seealso::
+
+    See :doc:`/cookbook/profiler/storage` for more information about the
+    profiler storage.
+
+username
+........
+
+**type**: ``string`` **default**: ``''``
+
+When needed, the username for the profiling storage.
+
+password
+........
+
+**type**: ``string`` **default**: ``''``
+
+When needed, the password for the profiling storage.
+
+lifetime
+........
+
+**type**: ``integer`` **default**: ``86400``
+
+The lifetime of the profiling storage in seconds. The data will be deleted
+when the lifetime is expired.
+
+matcher
+.......
+
+Matcher options are configured to dynamically enable the profiler. For
+instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
+
+.. seealso::
+
+    See :doc:`/cookbook/profiler/matchers` for more information about using
+    matchers to enable/disable the profiler.
+
+ip
+""
+
+**type**: ``string``
+
+If set, the profiler will only be enabled when the current IP address matches.
+
+.. _reference-profiler-matcher-path:
+
+path
+""""
+
+**type**: ``string``
+
+If set, the profiler will only be enabled when the current path matches.
+
+service
+"""""""
+
+**type**: ``string``
+
+This setting contains the service id of a custom matcher.
+
+router
+~~~~~~
+
+resource
+........
+
+**type**: ``string`` **required**
+
+The path the main routing resource (e.g. a YAML file) that contains the
+routes and imports the router should load.
+
+type
+....
+
+**type**: ``string``
+
+The type of the resource to hint the loaders about the format. This isn't
+needed when you use the default routers with the expected file extensions
+(``.xml``, ``.yml`` / ``.yaml``, ``.php``).
+
+http_port
+.........
+
+**type**: ``integer`` **default**: ``80``
+
+The port for normal http requests (this is used when matching the scheme).
+
+https_port
+..........
+
+**type**: ``integer`` **default**: ``443``
+
+The port for https requests (this is used when matching the scheme).
+
+strict_requirements
+...................
+
+**type**: ``mixed`` **default**: ``true``
+
+Determines the routing generator behaviour. When generating a route that
+has specific :ref:`requirements <book-routing-requirements>`, the generator
+can behave differently in case the used parameters do not meet these requirements.
+
+The value can be one of:
+
+``true``
+    Throw an exception when the requirements are not met;
+``false``
+    Disable exceptions when the requirements are not met and return ``null``
+    instead;
+``null``
+    Disable checking the requirements (thus, match the route even when the
+    requirements don't match).
+
+``true`` is recommended in the development environment, while ``false``
+or ``null`` might be preferred in production.
+
 session
 ~~~~~~~
+
+storage_id
+..........
+
+**type**: ``string`` **default**: ``'session.storage.native'``
+
+The service id used for session storage. The ``session.storage`` service
+alias will be set to this service id. This class has to implement
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
 handler_id
 ..........
@@ -520,15 +714,6 @@ installation.
 
     You can see an example of the usage of this in
     :doc:`/cookbook/configuration/pdo_session_storage`.
-
-storage_id
-..........
-
-**type**: ``string`` **default**: ``'session.storage.native'``
-
-The service id used for session storage. The ``session.storage`` service
-alias will be set to this service id. This class has to implement
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
 name
 ....
@@ -583,6 +768,13 @@ protocol. This means that the cookie won't be accessible by scripting
 languages, such as JavaScript. This setting can effectively help to reduce
 identity theft through XSS attacks.
 
+gc_divisor
+..........
+
+**type**: ``integer`` **default**: ``100``
+
+See `gc_probability`_.
+
 gc_probability
 ..............
 
@@ -592,13 +784,6 @@ This defines the probability that the garbage collector (GC) process is
 started on every session initialization. The probability is calculated by
 using ``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1%
 chance that the GC process will start on each request.
-
-gc_divisor
-..........
-
-**type**: ``integer`` **default**: ``100``
-
-See `gc_probability`_.
 
 gc_maxlifetime
 ..............
@@ -654,24 +839,211 @@ setting the value to ``null``:
             ),
         ));
 
-.. _configuration-framework-serializer:
-
-serializer
-~~~~~~~~~~
-
-.. _reference-serializer-enabled:
-
-enabled
-.......
-
-**type**: ``boolean`` **default**: ``false``
-
-Whether to enable the ``serializer`` service or not in the service container.
-
-For more details, see :doc:`/cookbook/serializer`.
-
 templating
 ~~~~~~~~~~
+
+.. _reference-framework-assets-version:
+.. _ref-framework-assets-version:
+
+assets_version
+..............
+
+**type**: ``string``
+
+This option is used to *bust* the cache on assets by globally adding a query
+parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
+applies only to assets rendered via the Twig ``asset`` function (or PHP
+equivalent) as well as assets rendered with Assetic.
+
+For example, suppose you have the following:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
+
+    .. code-block:: php
+
+        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
+
+By default, this will render a path to your image such as ``/images/logo.png``.
+Now, activate the ``assets_version`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating: { engines: ['twig'], assets_version: v2 }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:templating assets-version="v2">
+                <!-- ... -->
+                <framework:engine>twig</framework:engine>
+            </framework:templating>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating'      => array(
+                'engines'        => array('twig'),
+                'assets_version' => 'v2',
+            ),
+        ));
+
+Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
+this feature, you **must** manually increment the ``assets_version`` value
+before each deployment so that the query parameters change.
+
+You can also control how the query string works via the `assets_version_format`_
+option.
+
+.. tip::
+
+    As with all settings, you can use a parameter as value for the
+    ``assets_version``. This makes it easier to increment the cache on each
+    deployment.
+
+.. _reference-templating-version-format:
+
+assets_version_format
+.....................
+
+**type**: ``string`` **default**: ``%%s?%%s``
+
+This specifies a :phpfunction:`sprintf` pattern that will be used with the
+`assets_version`_ option to construct an asset's path. By default, the pattern
+adds the asset's version as a query string. For example, if
+``assets_version_format`` is set to ``%%s?version=%%s`` and ``assets_version``
+is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
+
+.. note::
+
+    All percentage signs (``%``) in the format string must be doubled to
+    escape the character. Without escaping, values might inadvertently be
+    interpreted as :ref:`book-service-container-parameters`.
+
+.. tip::
+
+    Some CDN's do not support cache-busting via query strings, so injecting
+    the version into the actual file path is necessary. Thankfully,
+    ``assets_version_format`` is not limited to producing versioned query
+    strings.
+
+    The pattern receives the asset's original path and version as its first
+    and second parameters, respectively. Since the asset's path is one
+    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
+    however, you can prefix the asset's path using a pattern of
+    ``version-%%2$s/%%1$s``, which would result in the path
+    ``version-5/images/logo.png``.
+
+    URL rewrite rules could then be used to disregard the version prefix
+    before serving the asset. Alternatively, you could copy assets to the
+    appropriate version path as part of your deployment process and forgot
+    any URL rewriting. The latter option is useful if you would like older
+    asset versions to remain accessible at their original URL.
+
+hinclude_default_template
+.........................
+
+**type**: ``string`` **default**: ``null``
+
+Sets the content shown during the loading of the fragment or when JavaScript
+is disabled. This can be either a template name or the content itself.
+
+.. seealso::
+
+    See :ref:`book-templating-hinclude` for more information about hinclude.
+
+.. _reference-templating-form:
+
+form
+....
+
+resources
+"""""""""
+
+**type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
+
+A list of all resources for form theming in PHP. This setting is not required
+if you're using the Twig format for your templates, in that case refer to
+:ref:`the form book chapter <book-forms-theming-twig>`.
+
+Assume you have custom global form themes in
+``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            templating:
+                form:
+                    resources:
+                        - 'WebsiteBundle:Form'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+
+                <framework:templating>
+
+                    <framework:form>
+
+                        <framework:resource>WebsiteBundle:Form</framework:resource>
+
+                    </framework:form>
+
+                </framework:templating>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'WebsiteBundle:Form'
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    The default form templates from ``FrameworkBundle:Form`` will always
+    be included in the form resources.
+
+.. seealso::
+
+    See :ref:`book-forms-theming-global` for more information.
 
 .. _reference-templating-base-urls:
 
@@ -892,394 +1264,6 @@ Each package can configure the following options:
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-templating-version-format>`
 
-.. _reference-framework-assets-version:
-.. _ref-framework-assets-version:
-
-assets_version
-..............
-
-**type**: ``string``
-
-This option is used to *bust* the cache on assets by globally adding a query
-parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
-applies only to assets rendered via the Twig ``asset`` function (or PHP
-equivalent) as well as assets rendered with Assetic.
-
-For example, suppose you have the following:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
-
-    .. code-block:: php
-
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
-
-By default, this will render a path to your image such as ``/images/logo.png``.
-Now, activate the ``assets_version`` option:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating: { engines: ['twig'], assets_version: v2 }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:templating assets-version="v2">
-                <!-- ... -->
-                <framework:engine>twig</framework:engine>
-            </framework:templating>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating'      => array(
-                'engines'        => array('twig'),
-                'assets_version' => 'v2',
-            ),
-        ));
-
-Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
-this feature, you **must** manually increment the ``assets_version`` value
-before each deployment so that the query parameters change.
-
-You can also control how the query string works via the `assets_version_format`_
-option.
-
-.. tip::
-
-    As with all settings, you can use a parameter as value for the
-    ``assets_version``. This makes it easier to increment the cache on each
-    deployment.
-
-.. _reference-templating-version-format:
-
-assets_version_format
-.....................
-
-**type**: ``string`` **default**: ``%%s?%%s``
-
-This specifies a :phpfunction:`sprintf` pattern that will be used with the
-`assets_version`_ option to construct an asset's path. By default, the pattern
-adds the asset's version as a query string. For example, if
-``assets_version_format`` is set to ``%%s?version=%%s`` and ``assets_version``
-is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
-
-.. note::
-
-    All percentage signs (``%``) in the format string must be doubled to
-    escape the character. Without escaping, values might inadvertently be
-    interpreted as :ref:`book-service-container-parameters`.
-
-.. tip::
-
-    Some CDN's do not support cache-busting via query strings, so injecting
-    the version into the actual file path is necessary. Thankfully,
-    ``assets_version_format`` is not limited to producing versioned query
-    strings.
-
-    The pattern receives the asset's original path and version as its first
-    and second parameters, respectively. Since the asset's path is one
-    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
-    however, you can prefix the asset's path using a pattern of
-    ``version-%%2$s/%%1$s``, which would result in the path
-    ``version-5/images/logo.png``.
-
-    URL rewrite rules could then be used to disregard the version prefix
-    before serving the asset. Alternatively, you could copy assets to the
-    appropriate version path as part of your deployment process and forgot
-    any URL rewriting. The latter option is useful if you would like older
-    asset versions to remain accessible at their original URL.
-
-hinclude_default_template
-.........................
-
-**type**: ``string`` **default**: ``null``
-
-Sets the content shown during the loading of the fragment or when JavaScript
-is disabled. This can be either a template name or the content itself.
-
-.. seealso::
-
-    See :ref:`book-templating-hinclude` for more information about hinclude.
-
-.. _reference-templating-form:
-
-form
-....
-
-resources
-"""""""""
-
-**type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
-
-A list of all resources for form theming in PHP. This setting is not required
-if you're using the Twig format for your templates, in that case refer to
-:ref:`the form book chapter <book-forms-theming-twig>`.
-
-Assume you have custom global form themes in
-``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            templating:
-                form:
-                    resources:
-                        - 'WebsiteBundle:Form'
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-
-                <framework:templating>
-
-                    <framework:form>
-
-                        <framework:resource>WebsiteBundle:Form</framework:resource>
-
-                    </framework:form>
-
-                </framework:templating>
-
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'templating' => array(
-                'form' => array(
-                    'resources' => array(
-                        'WebsiteBundle:Form'
-                    ),
-                ),
-            ),
-        ));
-
-.. note::
-
-    The default form templates from ``FrameworkBundle:Form`` will always
-    be included in the form resources.
-
-.. seealso::
-
-    See :ref:`book-forms-theming-global` for more information.
-
-profiler
-~~~~~~~~
-
-.. _reference-profiler-enabled:
-
-enabled
-.......
-
-.. versionadded:: 2.2
-    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
-    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
-    configuration entirely.
-
-**type**: ``boolean`` **default**: ``false``
-
-The profiler can be enabled by setting this option to ``true``. When you
-are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
-and ``test`` environments.
-
-.. note::
-
-    The profiler works independently from the Web Developer Toolbar, see
-    the :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
-    on how to disable/enable the toolbar.
-
-collect
-.......
-
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
-
-**type**: ``boolean`` **default**: ``true``
-
-This option configures the way the profiler behaves when it is enabled.
-If set to ``true``, the profiler collects data for all requests (unless
-you configure otherwise, like a custom `matcher`_). If you want to only
-collect information on-demand, you can set the ``collect`` flag to ``false``
-and activate the data collectors manually::
-
-    $profiler->enable();
-
-only_exceptions
-...............
-
-**type**: ``boolean`` **default**: ``false``
-
-When this is set to ``true``, the profiler will only be enabled when an
-exception is thrown during the handling of the request.
-
-only_master_requests
-....................
-
-**type**: ``boolean`` **default**: ``false``
-
-When this is set to ``true``, the profiler will only be enabled on the master
-requests (and not on the subrequests).
-
-dsn
-...
-
-**type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
-
-The DSN where to store the profiling information.
-
-.. seealso::
-
-    See :doc:`/cookbook/profiler/storage` for more information about the
-    profiler storage.
-
-username
-........
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the username for the profiling storage.
-
-password
-........
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the password for the profiling storage.
-
-lifetime
-........
-
-**type**: ``integer`` **default**: ``86400``
-
-The lifetime of the profiling storage in seconds. The data will be deleted
-when the lifetime is expired.
-
-matcher
-.......
-
-Matcher options are configured to dynamically enable the profiler. For
-instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
-
-.. seealso::
-
-    See :doc:`/cookbook/profiler/matchers` for more information about using
-    matchers to enable/disable the profiler.
-
-ip
-""
-
-**type**: ``string``
-
-If set, the profiler will only be enabled when the current IP address matches.
-
-.. _reference-profiler-matcher-path:
-
-path
-""""
-
-**type**: ``string``
-
-If set, the profiler will only be enabled when the current path matches.
-
-service
-"""""""
-
-**type**: ``string``
-
-This setting contains the service id of a custom matcher.
-
-router
-~~~~~~
-
-resource
-........
-
-**type**: ``string`` **required**
-
-The path the main routing resource (e.g. a YAML file) that contains the
-routes and imports the router should load.
-
-type
-....
-
-**type**: ``string``
-
-The type of the resource to hint the loaders about the format. This isn't
-needed when you use the default routers with the expected file extensions
-(``.xml``, ``.yml`` / ``.yaml``, ``.php``).
-
-http_port
-.........
-
-**type**: ``integer`` **default**: ``80``
-
-The port for normal http requests (this is used when matching the scheme).
-
-https_port
-..........
-
-**type**: ``integer`` **default**: ``443``
-
-The port for https requests (this is used when matching the scheme).
-
-strict_requirements
-...................
-
-**type**: ``mixed`` **default**: ``true``
-
-Determines the routing generator behaviour. When generating a route that
-has specific :ref:`requirements <book-routing-requirements>`, the generator
-can behave differently in case the used parameters do not meet these requirements.
-
-The value can be one of:
-
-``true``
-    Throw an exception when the requirements are not met;
-``false``
-    Disable exceptions when the requirements are not met and return ``null``
-    instead;
-``null``
-    Disable checking the requirements (thus, match the route even when the
-    requirements don't match).
-
-``true`` is recommended in the development environment, while ``false``
-or ``null`` might be preferred in production.
-
 translator
 ~~~~~~~~~~
 
@@ -1393,6 +1377,22 @@ automatically update when the original file is changed (both with code and
 annotation changes). For performance reasons, it is recommended to disable
 debug mode in production, which will happen automatically if you use the
 default value.
+
+.. _configuration-framework-serializer:
+
+serializer
+~~~~~~~~~~
+
+.. _reference-serializer-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the ``serializer`` service or not in the service container.
+
+For more details, see :doc:`/cookbook/serializer`.
 
 Full Default Configuration
 --------------------------
