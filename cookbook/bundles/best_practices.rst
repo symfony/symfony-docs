@@ -233,8 +233,8 @@ following standardized instructions in your ``README.md`` file.
         Step 2: Enable the Bundle
         -------------------------
 
-        Then, enable the bundle by adding the following line in the `app/AppKernel.php`
-        file of your project:
+        Then, enable the bundle by adding it to the list of registered bundles
+        in the `app/AppKernel.php` file of your project:
 
         ```php
         <?php
@@ -279,8 +279,8 @@ following standardized instructions in your ``README.md`` file.
         Step 2: Enable the Bundle
         -------------------------
 
-        Then, enable the bundle by adding the following line in the ``app/AppKernel.php``
-        file of your project:
+        Then, enable the bundle by adding it to the list of registered bundles
+        in the ``app/AppKernel.php`` file of your project:
 
         .. code-block:: php
 
