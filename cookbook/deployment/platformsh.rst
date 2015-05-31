@@ -79,7 +79,8 @@ your Git repository which contains the following files:
     # .platform/routes.yaml
     "http://{default}/":
         type: upstream
-        upstream: "php:php"
+        # the first part should be your project name
+        upstream: "myphpproject:php"
 
 .. code-block:: yaml
 
@@ -95,7 +96,7 @@ Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Platform.sh overrides your database specific configuration via importing the
-following file::
+following file (it's your role to add this file to your code base)::
 
     // app/config/parameters_platform.php
     <?php
