@@ -792,7 +792,8 @@ Checking the Validity of a CSRF Token
 Sometimes you want to use CSRF protection in an action where you don't want to use a
 Symfony form.
 
-If, for example, you're doing a DELETE action, you can use the :method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderAdapter::isTokenValid`
+If, for example, you're doing a DELETE action, you can use the
+:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderAdapter::isTokenValid`
 method to check the CSRF token::
 
     use Symfony\Component\Security\Csrf\CsrfToken;
