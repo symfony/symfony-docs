@@ -96,6 +96,7 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
+* May 26, 2015: `CVE-2015-4050: ESI unauthorized access <http://symfony.com/blog/cve-2015-4050-esi-unauthorized-access>`_ (Symfony 2.3.29, 2.5.12 and 2.6.8)
 * April 1, 2015: `CVE-2015-2309: Unsafe methods in the Request class <http://symfony.com/blog/cve-2015-2309-unsafe-methods-in-the-request-class>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
 * April 1, 2015: `CVE-2015-2308: Esi Code Injection <http://symfony.com/blog/cve-2015-2308-esi-code-injection>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
 * September 3, 2014: `CVE-2014-6072: CSRF vulnerability in the Web Profiler <http://symfony.com/blog/cve-2014-6072-csrf-vulnerability-in-the-web-profiler>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
