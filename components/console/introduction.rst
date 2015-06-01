@@ -113,34 +113,27 @@ This prints::
 Command Lifecycle
 ~~~~~~~~~~~~~~~~~
 
-Commands have 3 lifecycle methods:
+Commands have three lifecycle methods:
 
-    1. initialize($input, $output)
-    2. interact($input, $output)
-    3. execute($input, $output)
+:method:`Symfony\\Component\\Console\\Command\\Command::initialize`
 
-Explanations:
+    This method is executed before the ``interact()`` and the ``execute()``
+    methods. It's main purpose is to initialize the variables used in the
+    rest of the command methods.
 
-    initialize($input, $output)
+:method:`Symfony\\Component\\Console\\Command\\Command::interact`
 
-This method is executed before the interact() and the execute() methods.
-It's main purpose is to initialize the variables used in the rest of
-the command methods.
+    This method is executed after ``initialize()`` and before ``execute()``.
+    Its purpose is to check if some of the options/arguments are missing
+    and interactively ask the user for those values.
 
-    interact($input, $output)
+:method:`Symfony\\Component\\Console\\Command\\Command::execute`
 
-This method is executed after initialize() and before execute(). Its purpose
-is to check if some of the options/arguments are missing and interactively
-ask the user for those values.
+    This method is executed after ``interact()`` and ``initialize()``. It
+    usually contains the logic to execute to complete this command task.
 
-    execute($input, $output)
-
-This method is executed after interact() and initialize(). It usually
-contains the logic to execute to complete this command task.
-
-Note that ``execute($input, $output)`` is the only required method of the three.
-``initialize($input, $output)`` and ``interact($input, $output)``
-methods are completely optional.
+    Note that ``execute()`` is the only required method of the three. The
+    ``initialize()`` and ``interact()`` methods are completely optional.
 
 .. _components-console-coloring:
 
