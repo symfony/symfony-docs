@@ -23,11 +23,11 @@ Starting the Web Server
 -----------------------
 
 Running a Symfony application using PHP's built-in web server is as easy as
-executing the ``server:start`` command:
+executing the ``server:run`` command:
 
 .. code-block:: bash
 
-    $ php app/console server:start
+    $ php app/console server:run
 
 This starts the web server at ``localhost:8000`` in the background that serves
 your Symfony application.
