@@ -116,24 +116,24 @@ Command Lifecycle
 Commands have three lifecycle methods:
 
 :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
-
     This method is executed before the ``interact()`` and the ``execute()``
     methods. It's main purpose is to initialize the variables used in the
     rest of the command methods.
 
 :method:`Symfony\\Component\\Console\\Command\\Command::interact`
-
     This method is executed after ``initialize()`` and before ``execute()``.
     Its purpose is to check if some of the options/arguments are missing
-    and interactively ask the user for those values.
+    and interactively ask the user for those values. This is the last place
+    where you can ask for missing options/arguments otherwise the command
+    will throw an error.
 
 :method:`Symfony\\Component\\Console\\Command\\Command::execute`
+    This method is executed after ``interact()`` and ``initialize()``.
+    It contains the logic you want the command executes.
 
-    This method is executed after ``interact()`` and ``initialize()``. It
-    usually contains the logic to execute to complete this command task.
+Note that ``execute()`` is the only required method of the three.
 
-    Note that ``execute()`` is the only required method of the three. The
-    ``initialize()`` and ``interact()`` methods are completely optional.
+The ``initialize()`` and ``interact()`` methods are completely optional.
 
 .. _components-console-coloring:
 
