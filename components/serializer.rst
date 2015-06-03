@@ -573,6 +573,52 @@ having unique identifiers::
     echo $serializer->serialize($org, 'json');
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
+Handling Arrays
+---------------
+
+The serializer component is capable of handling arrays of objects as well.
+Serializing such an array works just like serializing a single object:
+
+.. code-block:: php
+
+    $person1 = new Acme\Person();
+    $person1->setName('foo');
+    $person1->setAge(99);
+    $person1->setSportsman(false);
+
+    $person2 = new Acme\Person();
+    $person2->setName('bar');
+    $person2->setAge(33);
+    $person2->setSportsman(true);
+
+    $jsonContent = $serializer->serialize(array($person1, $person2), 'json');
+
+    // $jsonContent contains [{"name":"foo","age":99,"sportsman":false},{"name":"bar","age":33,"sportsman":true}]
+
+If you want to deserialize such a structure, you need to add the :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+to the set of normalizers. By appending ``[]`` to the type parameter of the
+:method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
+you indicate that you're expecting an array instead of a single object.
+
+.. versionadded:: 2.8
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+    class was added in 2.8. In previous versions, only the serialization of
+    arrays is supported.
+
+.. code-block:: php
+
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $serializer = new Serializer(
+        array(new GetSetMethodNormalizer, new ArrayDenormalizer),
+        array(new JsonEncoder)
+    );
+
+    $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
+
 .. seealso::
 
     A popular alternative to the Symfony Serializer Component is the third-party
