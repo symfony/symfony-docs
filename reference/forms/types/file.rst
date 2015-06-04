@@ -35,14 +35,14 @@ Overridden Options
 data_class
 ~~~~~~~~~~
 
-**default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
+**type**: ``string`` **default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
 
 This option sets the appropriate file-realted data mapper to be used by the type.
 
 empty_data
 ~~~~~~~~~~
 
-**default**: ``null``
+**type**: ``mixed`` **default**: ``null``
 
 This option determines what value the field will return when the submitted
 value is empty.

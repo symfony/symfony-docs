@@ -52,7 +52,7 @@ Overridden Options
 trim
 ~~~~
 
-**default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 Unlike the rest of form types, the ``password`` type doesn't apply the
 :phpfunction:`trim` function to the value submitted by the user. This ensures that
