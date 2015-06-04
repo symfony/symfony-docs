@@ -9,10 +9,10 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
 +-------------+------------------------------------------------------------------------+
+| Options     | - `always_empty`_                                                      |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `trim`_                                                              |
 | options     |                                                                        |
-+-------------+------------------------------------------------------------------------+
-| Options     | - `always_empty`_                                                      |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -30,19 +30,6 @@ The ``password`` field renders an input password text box.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
 
-Overridden Options
-------------------
-
-trim
-~~~~
-
-**default**: ``false``
-
-Unlike the rest of form types, the ``password`` type doesn't apply the
-:phpfunction:`trim` function to the value submitted by the user. This ensures that
-the password is merged back onto the underlying object exactly as it was typed
-by the user.
-
 Field Options
 -------------
 
@@ -59,6 +46,18 @@ Put simply, if for some reason you want to render your password field
 *with* the password value already entered into the box, set this to false
 and submit the form.
 
+Overridden Options
+------------------
+
+trim
+~~~~
+
+**default**: ``false``
+
+Unlike the rest of form types, the ``password`` type doesn't apply the
+:phpfunction:`trim` function to the value submitted by the user. This ensures that
+the password is merged back onto the underlying object exactly as it was typed
+by the user.
 
 Inherited Options
 -----------------
