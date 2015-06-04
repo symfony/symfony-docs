@@ -110,7 +110,7 @@ pass ``lts`` as the second argument of the ``new`` command:
     $ symfony new my_project_name lts
 
     # Windows
-    c:\projects\> php symfony.phar new my_project_name lts
+    c:\projects\> php symfony new my_project_name lts
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
@@ -303,6 +303,30 @@ Depending on the complexity of your project, this update process can take up to
 several minutes to complete.
 
 .. _installing-a-symfony2-distribution:
+
+Installing the Symfony Demo application
+---------------------------------------
+
+The Symfony Demo application is a fully-functional application that shows in
+practice the recommended way to develop Symfony applications. The application
+has been conceived as a learning tool for Symfony newcomers and its source code
+contains tons of comments and helpful notes.
+
+In order to download the Symfony Demo application, execute the ``demo`` command
+of the Symfony Installer anywhere in your system:
+
+.. code-block:: bash
+
+    # Linux, Mac OS X
+    $ symfony demo
+
+    # Windows
+    c:\projects\> php symfony demo
+
+Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
+built-in web server executing the ``php app/console server:run`` command. Access
+to the ``http://localhost:8000`` URL in your browser to start using the Symfony
+Demo application.
 
 Installing a Symfony Distribution
 ---------------------------------
