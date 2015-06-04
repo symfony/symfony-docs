@@ -15,11 +15,6 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden options   | - `by_reference`_                                                           |
-|                      | - `compound`_                                                               |
-|                      | - `data_class`_                                                             |
-|                      | - `error_bubbling`_                                                         |
-+----------------------+-----------------------------------------------------------------------------+
 | Options              | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
@@ -38,6 +33,11 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_seconds`_                                                           |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
+| Overridden options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
+|                      | - `error_bubbling`_                                                         |
++----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
 | options              | - `disabled`_                                                               |
 |                      | - `inherit_data`_                                                           |
@@ -50,25 +50,6 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
-
-Overridden Options
-------------------
-
-by_reference
-~~~~~~~~~~~~
-
-**default**: ``false``
-
-The ``DateTime`` classes are treated as immutable objects.
-
-.. include:: /reference/forms/types/options/compound_type.rst.inc
-
-.. include:: /reference/forms/types/options/data_class_date.rst.inc
-
-error_bubbling
-~~~~~~~~~~~~~~
-
-**default**: ``false``
 
 Field Options
 -------------
@@ -154,6 +135,25 @@ with the `date_widget`_ and `time_widget`_ options.
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
 
 .. include:: /reference/forms/types/options/years.rst.inc
+
+Overridden Options
+------------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
 
 Inherited Options
 -----------------
