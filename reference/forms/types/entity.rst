@@ -19,8 +19,8 @@ objects from the database.
 |             | - `property`_                                                    |
 |             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                     |
-| options     | - `choice_list`_                                                 |
+| Overridden  | - `choice_list`_                                                 |
+| options     | - `choices`_                                                     |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
