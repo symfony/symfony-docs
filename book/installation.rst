@@ -304,7 +304,7 @@ several minutes to complete.
 
 .. _installing-a-symfony2-distribution:
 
-Installing the Symfony Demo application
+Installing the Symfony Demo Application
 ---------------------------------------
 
 The Symfony Demo application is a fully-functional application that shows in
