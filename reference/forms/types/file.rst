@@ -37,7 +37,7 @@ data_class
 
 **type**: ``string`` **default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
 
-This option sets the appropriate file-realted data mapper to be used by the type.
+This option sets the appropriate file-related data mapper to be used by the type.
 
 empty_data
 ~~~~~~~~~~
