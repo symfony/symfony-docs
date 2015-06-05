@@ -151,3 +151,63 @@ setting:
                 ),
             ),
         ));
+        
+Events
+------
+
+The firewall dispatches the ``security.switch_user`` event right after the impersonation
+is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
+passed to the listener, and you can use this to get the user that you are now impersonating.
+
+The cookbook article about
+:doc:`Making the Locale "Sticky" during a User's Session </cookbook/session/locale_sticky_session>`
+does not update the locale when you impersonate a user. The following code sample will show
+how to change the sticky locale:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.switch_user_listener:
+                class: AppBundle\EventListener\SwitchUserListener
+                tags:
+                    - { name: kernel.event_listener, event: security.switch_user, method: onSwitchUser }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <service id="app.switch_user_listener" class="AppBundle\EventListener\SwitchUserListener">
+            <tag name="kernel.event_listener" event="security.switch_user" method="onSwitchUser" />
+        </service>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('app.switch_user_listener', 'AppBundle\EventListener\SwitchUserListener')
+            ->addTag('kernel.event_listener', array('event' => 'security.switch_user', 'method' => 'onSwitchUser'))
+        ;
+
+.. caution::
+
+    The listener implementation assumes your ``User`` entity has a ``getLocale()`` method.
+
+.. code-block:: php
+
+        // src/AppBundle/EventListener/SwitchUserListener.pnp
+        namespace AppBundle\EventListener;
+
+        use Symfony\Component\Security\Http\Event\SwitchUserEvent;
+        
+        class SwitchUserListener
+        {
+            public function onSwitchUser(SwitchUserEvent $event)
+            {
+                $event->getRequest()->getSession()->set(
+                    '_locale', 
+                    $event->getTargetUser()->getLocale()
+                );
+            }
+        }
