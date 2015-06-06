@@ -1352,6 +1352,13 @@ FriendsOfPHP organization.
     any of your dependencies is affected by a known security vulnerability.
     Therefore, you can easily integrate it in your build process.
 
+    To enable the ``security:check`` command, you need to add the
+    `sensio distribution bundle`_ in your composer dependencies.
+
+.. code-block:: bash
+
+    $ composer require 'sensio/distribution-bundle:~3'
+
 Final Words
 -----------
 
@@ -1381,3 +1388,4 @@ Learn More from the Cookbook
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`sensio distribution bundle`: https://packagist.org/packages/sensio/distribution-bundle
