@@ -302,15 +302,13 @@ them all at once:
 Depending on the complexity of your project, this update process can take up to
 several minutes to complete.
 
-.. _installing-a-symfony2-distribution:
-
 Installing the Symfony Demo Application
 ---------------------------------------
 
-The Symfony Demo application is a fully-functional application that shows in
-practice the recommended way to develop Symfony applications. The application
-has been conceived as a learning tool for Symfony newcomers and its source code
-contains tons of comments and helpful notes.
+The Symfony Demo application is a fully-functional application that shows the
+recommended way to develop Symfony applications. The application has been
+conceived as a learning tool for Symfony newcomers and its source code contains
+tons of comments and helpful notes.
 
 In order to download the Symfony Demo application, execute the ``demo`` command
 of the Symfony Installer anywhere in your system:
@@ -327,6 +325,8 @@ Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
 built-in web server executing the ``php app/console server:run`` command. Access
 to the ``http://localhost:8000`` URL in your browser to start using the Symfony
 Demo application.
+
+.. _installing-a-symfony2-distribution:
 
 Installing a Symfony Distribution
 ---------------------------------
