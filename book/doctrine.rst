@@ -392,7 +392,7 @@ a regular PHP class, you need to create getter and setter methods (e.g. ``getNam
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle/Entity/Product
+    $ php app/console doctrine:generate:entities AppBundle:Product
 
 This command makes sure that all the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
