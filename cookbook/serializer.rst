@@ -74,16 +74,16 @@ Here is an example on how to load the
 
     .. code-block:: yaml
 
-       # app/config/config.yml
-       services:
-          get_set_method_normalizer:
-             class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-             tags:
-                - { name: serializer.normalizer }
+        # app/config/services.yml
+        services:
+            get_set_method_normalizer:
+                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+                tags:
+                    - { name: serializer.normalizer }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
                 <tag name="serializer.normalizer" />
@@ -92,7 +92,7 @@ Here is an example on how to load the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition(

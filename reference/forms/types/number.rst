@@ -5,8 +5,8 @@ number Field Type
 =================
 
 Renders an input text field and specializes in handling number input. This
-type offers different options for the precision, rounding, and grouping that
-you want to use for your number.
+type offers different options for the precision, rounding and grouping
+that you want to use for your number.
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
@@ -47,36 +47,38 @@ rounding_mode
 
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
-option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
+option is a constant on the
+:class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
-    round towards zero.
+* ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
+  round towards zero.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
-    round towards negative infinity.
+* ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
+  round towards negative infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round
-    away from zero.
+* ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round
+  away from zero.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
-    to round towards positive infinity.
+* ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
+  to round towards positive infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_HALFDOWN`` Rounding mode
-    to round towards "nearest neighbor" unless both neighbors are equidistant,
-    in which case round down.
+* ``IntegerToLocalizedStringTransformer::ROUND_HALFDOWN`` Rounding mode
+  to round towards "nearest neighbor" unless both neighbors are equidistant,
+  in which case round down.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_HALFEVEN`` Rounding mode
-    to round towards the "nearest neighbor" unless both neighbors are equidistant,
-    in which case, round towards the even neighbor.
+* ``IntegerToLocalizedStringTransformer::ROUND_HALFEVEN`` Rounding mode
+  to round towards the "nearest neighbor" unless both neighbors are equidistant,
+  in which case, round towards the even neighbor.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_HALFUP`` Rounding mode to
-    round towards "nearest neighbor" unless both neighbors are equidistant,
-    in which case round up.
+* ``IntegerToLocalizedStringTransformer::ROUND_HALFUP`` Rounding mode
+  to round towards "nearest neighbor" unless both neighbors are equidistant,
+  in which case round up.
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

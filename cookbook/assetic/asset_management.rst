@@ -73,9 +73,9 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. note::
 
-    If you're using the default block names from the Symfony Standard Edition,
-    the ``javascripts`` tag will most commonly live in the ``javascripts``
-    block:
+    If your application templates use the default block names from the Symfony
+    Standard Edition, the ``javascripts`` tag will most commonly live in the
+    ``javascripts`` block:
 
     .. code-block:: html+jinja
 
@@ -89,7 +89,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. tip::
 
-    You can also include CSS Stylesheets: see :ref:`cookbook-assetic-including-css`.
+    You can also include CSS stylesheets: see :ref:`cookbook-assetic-including-css`.
 
 In this example, all of the files in the ``Resources/public/js/`` directory
 of the AppBundle will be loaded and served from a different location.
@@ -108,8 +108,8 @@ that reference images by their relative path. See :ref:`cookbook-assetic-cssrewr
 Including CSS Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To bring in CSS stylesheets, you can use the same methodologies seen
-above, except with the ``stylesheets`` tag:
+To bring in CSS stylesheets, you can use the same technique explained above,
+except with the ``stylesheets`` tag:
 
 .. configuration-block::
 
@@ -130,9 +130,9 @@ above, except with the ``stylesheets`` tag:
 
 .. note::
 
-    If you're using the default block names from the Symfony Standard Edition,
-    the ``stylesheets`` tag will most commonly live in the ``stylesheets``
-    block:
+    If your application templates use the default block names from the Symfony
+    Standard Edition, the ``stylesheets`` tag will most commonly live in the
+    ``stylesheets`` block:
 
     .. code-block:: html+jinja
 
@@ -155,7 +155,7 @@ the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
     but that in this example, you referred to the CSS files using their actual,
     publicly-accessible path: ``bundles/app/css``. You can use either, except
     that there is a known issue that causes the ``cssrewrite`` filter to fail
-    when using the ``@AppBundle`` syntax for CSS Stylesheets.
+    when using the ``@AppBundle`` syntax for CSS stylesheets.
 
 .. _cookbook-assetic-including-image:
 
@@ -204,7 +204,7 @@ Combining Assets
 ~~~~~~~~~~~~~~~~
 
 One feature of Assetic is that it will combine many files into one. This helps
-to reduce the number of HTTP requests, which is great for front end performance.
+to reduce the number of HTTP requests, which is great for front-end performance.
 It also allows you to maintain the files more easily by splitting them into
 manageable parts. This can help with re-usability as you can easily split
 project-specific files from those which can be used in other applications,
@@ -350,7 +350,7 @@ Filters
 
 Once they're managed by Assetic, you can apply filters to your assets before
 they are served. This includes filters that compress the output of your assets
-for smaller file sizes (and better front-end optimization). Other filters
+for smaller file sizes (and better frontend optimization). Other filters
 can compile JavaScript file from CoffeeScript files and process SASS into CSS.
 In fact, Assetic has a long list of available filters.
 
@@ -366,8 +366,8 @@ To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
 available to use (you'll use the filter below).
 
-For example to use the UglifyJS JavaScript minifier the following config should
-be added:
+For example to use the UglifyJS JavaScript minifier the following configuration
+should be defined:
 
 .. configuration-block::
 
@@ -489,8 +489,8 @@ environment is just too slow.
 
 .. _cookbook-assetic-dump-prod:
 
-Instead, each time you use your app in the ``prod`` environment (and therefore,
-each time you deploy), you should run the following task:
+Instead, each time you use your application in the ``prod`` environment (and therefore,
+each time you deploy), you should run the following command:
 
 .. code-block:: bash
 
@@ -532,7 +532,7 @@ the following change in your ``config_dev.yml`` file:
         ));
 
 Next, since Symfony is no longer generating these assets for you, you'll
-need to dump them manually. To do so, run the following:
+need to dump them manually. To do so, run the following command:
 
 .. code-block:: bash
 
@@ -540,12 +540,16 @@ need to dump them manually. To do so, run the following:
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
-you update an asset. Fortunately, by passing the ``--watch`` option, the
-command will automatically regenerate assets *as they change*:
+you update an asset. Fortunately, by using the ``assetic:watch`` command,
+assets will be regenerated automatically *as they change*:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --watch
+    $ php app/console assetic:watch
+
+The ``assetic:watch`` command was introduced in AsseticBundle 2.4. In prior
+versions, you had to use the ``--watch`` option of the ``assetic:dump``
+command for the same behavior.
 
 Since running this command in the ``dev`` environment may generate a bunch
 of files, it's usually a good idea to point your generated asset files to

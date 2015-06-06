@@ -1,4 +1,4 @@
-Our backwards Compatibility Promise
+Our Backwards Compatibility Promise
 ===================================
 
 Ensuring smooth upgrades of your projects is our first priority. That's why

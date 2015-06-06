@@ -42,6 +42,7 @@
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
+  * :doc:`/cookbook/console/command_in_controller`
   * :doc:`/cookbook/console/sending_emails`
   * :doc:`/cookbook/console/logging`
 
@@ -107,6 +108,10 @@
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
+* :doc:`/cookbook/frontend/index`
+
+  * :doc:`/cookbook/frontend/bower`
+
 * :doc:`/cookbook/logging/index`
 
   * :doc:`/cookbook/logging/monolog`
@@ -119,6 +124,7 @@
   * :doc:`/cookbook/profiler/data_collector`
   * :doc:`/cookbook/profiler/matchers`
   * :doc:`/cookbook/profiler/storage`
+  * :doc:`/cookbook/profiler/profiling_data`
 
 * :doc:`/cookbook/request/index`
 
@@ -201,9 +207,11 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
-* **Upgrading**
+* :doc:`/cookbook/upgrade/index`
 
-  * :doc:`/cookbook/upgrading`
+  * :doc:`/cookbook/upgrade/patch_version`
+  * :doc:`/cookbook/upgrade/minor_version`
+  * :doc:`/cookbook/upgrade/major_version`
 
 * :doc:`/cookbook/validation/index`
 

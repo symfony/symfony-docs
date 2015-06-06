@@ -39,15 +39,6 @@ method returns **false**:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
-            getters:
-                stateInvalid:
-                    - 'False':
-                        message: You've entered an invalid state.
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -67,6 +58,15 @@ method returns **false**:
                 // ...
              }
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author
+            getters:
+                stateInvalid:
+                    - 'False':
+                        message: You've entered an invalid state.
 
     .. code-block:: xml
 
@@ -104,7 +104,7 @@ method returns **false**:
 .. caution::
 
     When using YAML, be sure to surround ``False`` with quotes (``'False'``)
-    or else YAML will convert this into a ``false`` Boolean value.
+    or else YAML will convert this into a ``false`` boolean value.
 
 Options
 -------

@@ -36,7 +36,8 @@ file.
 
 .. tip::
 
-    Code coverage can be generated with the ``--coverage-html`` option.
+    Code coverage can be generated with the ``--coverage-*`` options, see the
+    help information that is shown when using ``--help`` for more information.
 
 .. index::
    single: Tests; Unit tests
@@ -44,15 +45,16 @@ file.
 Unit Tests
 ----------
 
-A unit test is usually a test against a specific PHP class. If you want to
-test the overall behavior of your application, see the section about `Functional Tests`_.
+A unit test is a test against a single PHP class, also called a *unit*. If you
+want to test the overall behavior of your application, see the section about
+`Functional Tests`_.
 
 Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
-called ``Calculator`` in the ``Utility/`` directory of your bundle::
+called ``Calculator`` in the ``Util/`` directory of the app bundle::
 
-    // src/Acme/DemoBundle/Utility/Calculator.php
-    namespace Acme\DemoBundle\Utility;
+    // src/AppBundle/Util/Calculator.php
+    namespace AppBundle\Util;
 
     class Calculator
     {
@@ -62,13 +64,13 @@ called ``Calculator`` in the ``Utility/`` directory of your bundle::
         }
     }
 
-To test this, create a ``CalculatorTest`` file in the ``Tests/Utility`` directory
+To test this, create a ``CalculatorTest`` file in the ``Tests/Util`` directory
 of your bundle::
 
-    // src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
-    namespace Acme\DemoBundle\Tests\Utility;
+    // src/AppBundle/Tests/Util/CalculatorTest.php
+    namespace AppBundle\Tests\Util;
 
-    use Acme\DemoBundle\Utility\Calculator;
+    use AppBundle\Util\Calculator;
 
     class CalculatorTest extends \PHPUnit_Framework_TestCase
     {
@@ -85,8 +87,9 @@ of your bundle::
 .. note::
 
     By convention, the ``Tests/`` sub-directory should replicate the directory
-    of your bundle. So, if you're testing a class in your bundle's ``Utility/``
-    directory, put the test in the ``Tests/Utility/`` directory.
+    of your bundle for unit tests. So, if you're testing a class in your
+    bundle's ``Util/`` directory, put the test in the ``Tests/Util/``
+    directory.
 
 Just like in your real application - autoloading is automatically enabled
 via the ``bootstrap.php.cache`` file (as configured by default in the
@@ -96,14 +99,17 @@ Running tests for a given file or directory is also very easy:
 
 .. code-block:: bash
 
-    # run all tests in the Utility directory
-    $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/
+    # run all tests of the application
+    $ phpunit -c app
+
+    # run all tests in the Util directory
+    $ phpunit -c app src/AppBundle/Tests/Util
 
     # run tests for the Calculator class
-    $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
+    $ phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit -c app src/Acme/DemoBundle/
+    $ phpunit -c app src/AppBundle/
 
 .. index::
    single: Tests; Functional tests
@@ -126,28 +132,27 @@ Your First Functional Test
 
 Functional tests are simple PHP files that typically live in the ``Tests/Controller``
 directory of your bundle. If you want to test the pages handled by your
-``DemoController`` class, start by creating a new ``DemoControllerTest.php``
+``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
-For example, the Symfony Standard Edition provides a simple functional test
-for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
+As an example, a test could look like this::
 
-    // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
-    namespace Acme\DemoBundle\Tests\Controller;
+    // src/AppBundle/Tests/Controller/PostControllerTest.php
+    namespace AppBundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class DemoControllerTest extends WebTestCase
+    class PostControllerTest extends WebTestCase
     {
-        public function testIndex()
+        public function testShowPost()
         {
             $client = static::createClient();
 
-            $crawler = $client->request('GET', '/demo/hello/Fabien');
+            $crawler = $client->request('GET', '/post/hello-world');
 
             $this->assertGreaterThan(
                 0,
-                $crawler->filter('html:contains("Hello Fabien")')->count()
+                $crawler->filter('html:contains("Hello World")')->count()
             );
         }
     }
@@ -157,13 +162,13 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
     To run your functional tests, the ``WebTestCase`` class bootstraps the
     kernel of your application. In most cases, this happens automatically.
     However, if your kernel is in a non-standard directory, you'll need
-    to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR`` environment
-    variable to the directory of your kernel:
+    to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR``
+    environment variable to the directory of your kernel:
 
     .. code-block:: xml
 
+        <?xml version="1.0" charset="utf-8" ?>
         <phpunit>
-            <!-- ... -->
             <php>
                 <server name="KERNEL_DIR" value="/path/to/your/app/" />
             </php>
@@ -173,28 +178,31 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 The ``createClient()`` method returns a client, which is like a browser that
 you'll use to crawl your site::
 
-    $crawler = $client->request('GET', '/demo/hello/Fabien');
+    $crawler = $client->request('GET', '/post/hello-world');
 
-The ``request()`` method (see :ref:`more about the request method <book-testing-request-method-sidebar>`)
+The ``request()`` method (read
+:ref:`more about the request method <book-testing-request-method-sidebar>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
-be used to select elements in the Response, click on links, and submit forms.
+be used to select elements in the response, click on links and submit forms.
 
 .. tip::
 
-    The Crawler only works when the response is an XML or an HTML document.
+    The ``Crawler`` only works when the response is an XML or an HTML document.
     To get the raw content response, call ``$client->getResponse()->getContent()``.
 
-Click on a link by first selecting it with the Crawler using either an XPath
-expression or a CSS selector, then use the Client to click on it. For example,
-the following code finds all links with the text ``Greet``, then selects
-the second one, and ultimately clicks on it::
+Click on a link by first selecting it with the crawler using either an XPath
+expression or a CSS selector, then use the client to click on it. For example::
 
-    $link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
+    $link = $crawler
+        ->filter('a:contains("Greet")') // find all links with the text "Greet"
+        ->eq(1) // select the second link in the list
+        ->link() // and click it
+    ;
 
     $crawler = $client->click($link);
 
-Submitting a form is very similar; select a form button, optionally override
-some form values, and submit the corresponding form::
+Submitting a form is very similar: select a form button, optionally override
+some form values and submit the corresponding form::
 
     $form = $crawler->selectButton('submit')->form();
 
@@ -218,47 +226,14 @@ on the DOM::
     // Assert that the response matches a given CSS selector.
     $this->assertGreaterThan(0, $crawler->filter('h1')->count());
 
-Or, test against the Response content directly if you just want to assert that
-the content contains some text, or if the Response is not an XML/HTML
+Or test against the response content directly if you just want to assert that
+the content contains some text or in case that the response is not an XML/HTML
 document::
 
-    $this->assertRegExp(
-        '/Hello Fabien/',
+    $this->assertContains(
+        'Hello World',
         $client->getResponse()->getContent()
     );
-
-.. _book-testing-request-method-sidebar:
-
-.. sidebar:: More about the ``request()`` Method:
-
-    The full signature of the ``request()`` method is::
-
-        request(
-            $method,
-            $uri,
-            array $parameters = array(),
-            array $files = array(),
-            array $server = array(),
-            $content = null,
-            $changeHistory = true
-        )
-
-    The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
-    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
-    the ``HTTP_`` prefix for non standard headers)::
-
-        $client->request(
-            'GET',
-            '/demo/hello/Fabien',
-            array(),
-            array(),
-            array(
-                'CONTENT_TYPE'          => 'application/json',
-                'HTTP_REFERER'          => '/foo/bar',
-                'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            )
-        );
 
 .. index::
    single: Tests; Assertions
@@ -286,8 +261,10 @@ document::
             )
         );
 
-        // Assert that the response content matches a regexp.
-        $this->assertRegExp('/foo/', $client->getResponse()->getContent());
+        // Assert that the response content contains a string
+        $this->assertContains('foo', $client->getResponse()->getContent());
+        // ...or matches a regex
+        $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
 
         // Assert that the response status code is 2xx
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -295,7 +272,7 @@ document::
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
         $this->assertEquals(
-            200,
+            200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
             $client->getResponse()->getStatusCode()
         );
 
@@ -303,19 +280,19 @@ document::
         $this->assertTrue(
             $client->getResponse()->isRedirect('/demo/contact')
         );
-        // or simply check that the response is a redirect to any URL
+        // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
 .. index::
    single: Tests; Client
 
 Working with the Test Client
------------------------------
+----------------------------
 
-The Test Client simulates an HTTP client like a browser and makes requests
+The test client simulates an HTTP client like a browser and makes requests
 into your Symfony application::
 
-    $crawler = $client->request('GET', '/hello/Fabien');
+    $crawler = $client->request('GET', '/post/hello-world');
 
 The ``request()`` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
@@ -326,7 +303,40 @@ returns a ``Crawler`` instance.
     test generates URLs using the Symfony router, it won't detect any change
     made to the application URLs which may impact the end users.
 
-Use the Crawler to find DOM elements in the Response. These elements can then
+.. _book-testing-request-method-sidebar:
+
+.. sidebar:: More about the ``request()`` Method:
+
+    The full signature of the ``request()`` method is::
+
+        request(
+            $method,
+            $uri,
+            array $parameters = array(),
+            array $files = array(),
+            array $server = array(),
+            $content = null,
+            $changeHistory = true
+        )
+
+    The ``server`` array is the raw values that you'd expect to normally
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
+    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    the ``HTTP_`` prefix for non standard headers)::
+
+        $client->request(
+            'GET',
+            '/post/hello-world',
+            array(),
+            array(),
+            array(
+                'CONTENT_TYPE'          => 'application/json',
+                'HTTP_REFERER'          => '/foo/bar',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            )
+        );
+
+Use the crawler to find DOM elements in the response. These elements can then
 be used to click on links and submit forms::
 
     $link = $crawler->selectLink('Go elsewhere...')->link();
@@ -346,7 +356,7 @@ giving you a nice API for uploading files.
     :ref:`Crawler <book-testing-crawler>` section below.
 
 The ``request`` method can also be used to simulate form submissions directly
-or perform more complex requests::
+or perform more complex requests. Some useful examples::
 
     // Directly submit a form (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
@@ -377,7 +387,7 @@ or perform more complex requests::
         array('photo' => $photo)
     );
 
-    // Perform a DELETE requests, and pass HTTP headers
+    // Perform a DELETE request and pass HTTP headers
     $client->request(
         'DELETE',
         '/post/12',
@@ -404,7 +414,7 @@ The Client supports many operations that can be done in a real browser::
     // Clears all cookies and the history
     $client->restart();
 
-Accessing internal Objects
+Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
@@ -415,16 +425,16 @@ Accessing internal Objects
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
-    $history   = $client->getHistory();
+    $history = $client->getHistory();
     $cookieJar = $client->getCookieJar();
 
 You can also get the objects related to the latest request::
 
     // the HttpKernel request instance
-    $request  = $client->getRequest();
+    $request = $client->getRequest();
 
     // the BrowserKit request instance
-    $request  = $client->getInternalRequest();
+    $request = $client->getInternalRequest();
 
     // the HttpKernel response instance
     $response = $client->getResponse();
@@ -432,21 +442,21 @@ You can also get the objects related to the latest request::
     // the BrowserKit response instance
     $response = $client->getInternalResponse();
 
-    $crawler  = $client->getCrawler();
+    $crawler = $client->getCrawler();
 
 If your requests are not insulated, you can also access the ``Container`` and
 the ``Kernel``::
 
     $container = $client->getContainer();
-    $kernel    = $client->getKernel();
+    $kernel = $client->getKernel();
 
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 It's highly recommended that a functional test only tests the Response. But
 under certain very rare circumstances, you might want to access some internal
-objects to write assertions. In such cases, you can access the dependency
-injection container::
+objects to write assertions. In such cases, you can access the Dependency
+Injection Container::
 
     $container = $client->getContainer();
 
@@ -612,7 +622,8 @@ and pass it a ``Link`` object::
 Forms
 ~~~~~
 
-Just like links, you select forms with the ``selectButton()`` method::
+Forms can be selected using their buttons, which can be selected with the
+``selectButton()`` method, just like links::
 
     $buttonCrawlerNode = $crawler->selectButton('submit');
 
@@ -626,9 +637,7 @@ The ``selectButton()`` method can select ``button`` tags and submit ``input``
 tags. It uses several parts of the buttons to find them:
 
 * The ``value`` attribute value;
-
 * The ``id`` or ``alt`` attribute value for images;
-
 * The ``id`` or ``name`` attribute value for ``button`` tags.
 
 Once you have a Crawler representing a button, call the ``form()`` method
@@ -847,6 +856,7 @@ section:
 Learn more
 ----------
 
+* The :doc:`chapter about tests in the Symfony Framework Best Practices </best_practices/tests>`
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`
 * :doc:`/cookbook/testing/http_authentication`
@@ -854,6 +864,5 @@ Learn more
 * :doc:`/cookbook/testing/profiling`
 * :doc:`/cookbook/testing/bootstrap`
 
-.. _`DemoControllerTest`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Resources/skeleton/acme-demo-bundle/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
 .. _`documentation`: http://phpunit.de/manual/current/en/

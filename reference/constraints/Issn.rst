@@ -4,7 +4,8 @@ Issn
 .. versionadded:: 2.3
     The Issn constraint was introduced in Symfony 2.3.
 
-Validates that a value is a valid `International Standard Serial Number (ISSN)`_.
+Validates that a value is a valid
+`International Standard Serial Number (ISSN)`_.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
@@ -23,14 +24,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/JournalBundle/Resources/config/validation.yml
-        Acme\JournalBundle\Entity\Journal:
-            properties:
-                issn:
-                    - Issn: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/JournalBundle/Entity/Journal.php
@@ -45,6 +38,14 @@ Basic Usage
              */
              protected $issn;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/JournalBundle/Resources/config/validation.yml
+        Acme\JournalBundle\Entity\Journal:
+            properties:
+                issn:
+                    - Issn: ~
 
     .. code-block:: xml
 

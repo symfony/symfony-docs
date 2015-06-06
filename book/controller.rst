@@ -5,7 +5,7 @@ Controller
 ==========
 
 A controller is a PHP callable you create that takes information from the
-HTTP request and constructs and returns an HTTP response (as a Symfony
+HTTP request and creates and returns an HTTP response (as a Symfony
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
@@ -34,7 +34,7 @@ common examples:
   for the homepage of the site.
 
 * *Controller B* reads the ``slug`` parameter from the request to load a
-  blog entry from the database and create a ``Response`` object displaying
+  blog entry from the database and creates a ``Response`` object displaying
   that blog. If the ``slug`` can't be found in the database, it creates and
   returns a ``Response`` object with a 404 status code.
 
@@ -116,7 +116,7 @@ Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony takes advantage of PHP's namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 
@@ -201,7 +201,7 @@ to the controller:
 
         return $collection;
 
-Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/app_dev.php/hello/ryan``
+Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
 if you're using the :doc:`built-in web server </cookbook/web_server/built_in>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
@@ -471,14 +471,16 @@ If you're serving HTML, you'll want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
-    // renders app/Resources/views/Hello/index.html.twig
-    return $this->render('Hello/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/index.html.twig
+    return $this->render('hello/index.html.twig', array('name' => $name));
 
 You can also put templates in deeper sub-directories. Just try to avoid creating
 unnecessarily deep structures::
 
-    // renders app/Resources/views/Hello/Greetings/index.html.twig
-    return $this->render('Hello/Greetings/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/greetings/index.html.twig
+    return $this->render('hello/greetings/index.html.twig', array(
+        'name' => $name
+    ));
 
 The Symfony templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.
@@ -513,7 +515,7 @@ via the ``get()`` method. Here are several common services you might need::
 
     $mailer = $this->get('mailer');
 
-What other services exist? You can list all services, use the ``container:debug``
+What other services exist? To list all services, use the ``container:debug``
 console command:
 
 .. code-block:: bash

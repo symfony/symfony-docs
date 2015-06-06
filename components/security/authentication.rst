@@ -71,7 +71,7 @@ The default authentication manager is an instance of
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
-    // instances of Symfony\Component\Security\Core\Authentication\AuthenticationProviderInterface
+    // instances of Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface
     $providers = array(...);
 
     $authenticationManager = new AuthenticationProviderManager($providers);
@@ -207,6 +207,7 @@ own, it just needs to follow these rules:
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`
    method for this check::
 
+       use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
        use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
        class FoobarEncoder extends BasePasswordEncoder

@@ -25,20 +25,9 @@ Basic Usage
 -----------
 
 To use the ``Isbn`` validator, simply apply it to a property or method
-on an  object that will contain a ISBN number.
+on an object that will contain a ISBN number.
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BookcaseBundle/Resources/config/validation.yml
-        Acme\BookcaseBundle\Entity\Book:
-            properties:
-                isbn:
-                    - Isbn:
-                        isbn10: true
-                        isbn13: true
-                        bothIsbnMessage: This value is neither a valid ISBN-10 nor a valid ISBN-13.
 
     .. code-block:: php-annotations
 
@@ -59,6 +48,17 @@ on an  object that will contain a ISBN number.
             protected $isbn;
         }
 
+    .. code-block:: yaml
+
+        # src/Acme/BookcaseBundle/Resources/config/validation.yml
+        Acme\BookcaseBundle\Entity\Book:
+            properties:
+                isbn:
+                    - Isbn:
+                        isbn10: true
+                        isbn13: true
+                        bothIsbnMessage: This value is neither a valid ISBN-10 nor a valid ISBN-13.
+
     .. code-block:: xml
 
         <!-- src/Acme/BookcaseBundle/Resources/config/validation.xml -->
@@ -72,7 +72,9 @@ on an  object that will contain a ISBN number.
                     <constraint name="Isbn">
                         <option name="isbn10">true</option>
                         <option name="isbn13">true</option>
-                        <option name="bothIsbnMessage">This value is neither a valid ISBN-10 nor a valid ISBN-13.</option>
+                        <option name="bothIsbnMessage">
+                            This value is neither a valid ISBN-10 nor a valid ISBN-13.
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -106,18 +108,18 @@ Available Options
 isbn10
 ~~~~~~
 
-**type**: ``boolean``
+**type**: ``boolean`` **default**: ``false``
 
-If this required option is set to ``true`` the constraint will check if the
-code is a valid ISBN-10 code.
+If this required option is set to ``true`` the constraint will check if
+the code is a valid ISBN-10 code.
 
 isbn13
 ~~~~~~
 
-**type**: ``boolean``
+**type**: ``boolean`` **default**: ``false``
 
-If this required option is set to ``true`` the constraint will check if the
-code is a valid ISBN-13 code.
+If this required option is set to ``true`` the constraint will check if
+the code is a valid ISBN-13 code.
 
 isbn10Message
 ~~~~~~~~~~~~~

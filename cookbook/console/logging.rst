@@ -14,13 +14,14 @@ output and process it. This can be especially handful if you already have
 some existing setup for aggregating and analyzing Symfony logs.
 
 There are basically two logging cases you would need:
- * Manually logging some information from your command;
- * Logging uncaught Exceptions.
+
+* Manually logging some information from your command;
+* Logging uncaught exceptions.
 
 Manually Logging from a Console Command
 ---------------------------------------
 
-This one is really simple. When you create a console command within the full
+This one is really simple. When you create a console command within the full-stack
 framework as described in ":doc:`/cookbook/console/console_command`", your command
 extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`.
 This means that you can simply access the standard logger service through the

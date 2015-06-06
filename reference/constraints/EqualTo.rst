@@ -4,8 +4,8 @@ EqualTo
 .. versionadded:: 2.3
     The ``EqualTo`` constraint was introduced in Symfony 2.3.
 
-Validates that a value is equal to another value, defined in the options. To
-force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualTo`.
+Validates that a value is equal to another value, defined in the options.
+To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualTo`.
 
 .. caution::
 
@@ -32,15 +32,6 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - EqualTo:
-                        value: 20
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -57,6 +48,15 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - EqualTo:
+                        value: 20
 
     .. code-block:: xml
 

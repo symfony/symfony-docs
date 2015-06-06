@@ -40,7 +40,7 @@ when executing the command.
     The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods
     were introduced in Symfony 2.2.
 
-The ``getOutput()`` method always return the whole content of the standard
+The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`

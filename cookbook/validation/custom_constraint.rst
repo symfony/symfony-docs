@@ -89,15 +89,6 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\AcmeEntity:
-            properties:
-                name:
-                    - NotBlank: ~
-                    - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
-
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/AcmeEntity.php
@@ -116,6 +107,15 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
             // ...
         }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\AcmeEntity:
+            properties:
+                name:
+                    - NotBlank: ~
+                    - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: xml
 
@@ -159,8 +159,8 @@ Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the dependency injection
-container. This service must include the ``validator.constraint_validator``
+it will need to be configured as a service in the Dependency Injection
+Container. This service must include the ``validator.constraint_validator``
 tag and an ``alias`` attribute:
 
 .. configuration-block::
@@ -237,13 +237,6 @@ not to the property:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\AcmeEntity:
-            constraints:
-                - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
-
     .. code-block:: php-annotations
 
         /**
@@ -253,6 +246,13 @@ not to the property:
         {
             // ...
         }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\AcmeEntity:
+            constraints:
+                - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: xml
 

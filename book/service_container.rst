@@ -461,7 +461,7 @@ In other words, a service container extension configures the services for
 a bundle on your behalf. And as you'll see in a moment, the extension provides
 a sensible, high-level interface for configuring the bundle.
 
-Take the FrameworkBundle - the core Symfony framework bundle - as an
+Take the FrameworkBundle - the core Symfony Framework bundle - as an
 example. The presence of the following code in your application configuration
 invokes the service container extension inside the FrameworkBundle:
 
@@ -516,7 +516,7 @@ can handle the ``framework`` configuration directive. The extension in question,
 which lives in the FrameworkBundle, is invoked and the service configuration
 for the FrameworkBundle is loaded. If you remove the ``framework`` key
 from your application configuration file entirely, the core Symfony services
-won't be loaded. The point is that you're in control: the Symfony framework
+won't be loaded. The point is that you're in control: the Symfony Framework
 doesn't contain any magic or perform any actions that you don't have control
 over.
 
@@ -817,7 +817,7 @@ Core Symfony and Third-Party Bundle Services
 Since Symfony and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
 services. To keep things simple, Symfony by default does not require that
-controllers be defined as services. Furthermore, Symfony injects the entire
+controllers must be defined as services. Furthermore, Symfony injects the entire
 service container into your controller. For example, to handle the storage of
 information on a user's session, Symfony provides a ``session`` service,
 which you can access inside a standard controller as follows::

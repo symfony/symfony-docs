@@ -3,9 +3,10 @@ Locale
 
 Validates that a value is a valid locale.
 
-The "value" for each locale is either the two letter `ISO 639-1`_ *language* code
-(e.g. ``fr``), or the language code followed by an underscore (``_``), then
-the `ISO 3166-1 alpha-2`_ *country* code (e.g. ``fr_FR`` for French/France).
+The "value" for each locale is either the two letter `ISO 639-1`_ *language*
+code (e.g. ``fr``), or the language code followed by an underscore (``_``),
+then the `ISO 3166-1 alpha-2`_ *country* code (e.g. ``fr_FR`` for
+French/France).
 
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
@@ -22,14 +23,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                locale:
-                    - Locale: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
@@ -44,6 +37,14 @@ Basic Usage
              */
              protected $locale;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                locale:
+                    - Locale: ~
 
     .. code-block:: xml
 

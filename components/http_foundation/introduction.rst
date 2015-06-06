@@ -173,7 +173,7 @@ in the request, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
-on how this is used in the Symfony framework, see
+on how this is used in the Symfony Framework, see
 :ref:`the Symfony book <book-fundamentals-attributes>`.
 
 Finally, the raw data sent with the request body can be accessed using
@@ -439,7 +439,7 @@ Serving Files
 When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
-:method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
+:method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::makeDisposition`
 abstracts the hard work behind a simple API::
 
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;

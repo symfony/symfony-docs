@@ -7,7 +7,7 @@ How to Generate URLs and Send Emails from the Console
 
 Unfortunately, the command line context does not know about your VirtualHost
 or domain name. This means that if you generate absolute URLs within a
-Console Command you'll probably end up with something like ``http://localhost/foo/bar``
+console command you'll probably end up with something like ``http://localhost/foo/bar``
 which is not very useful.
 
 To fix this, you need to configure the "request context", which is a fancy

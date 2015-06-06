@@ -19,14 +19,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioUrl:
-                    - Url: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -41,6 +33,14 @@ Basic Usage
              */
              protected $bioUrl;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
 
     .. code-block:: xml
 
@@ -90,4 +90,4 @@ protocols
 
 The protocols that will be considered to be valid. For example, if you also
 needed ``ftp://`` type URLs to be valid, you'd redefine the ``protocols``
-array, listing ``http``, ``https``, and also ``ftp``.
+array, listing ``http``, ``https`` and also ``ftp``.

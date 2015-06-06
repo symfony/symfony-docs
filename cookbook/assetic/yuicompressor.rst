@@ -4,19 +4,15 @@
 How to Minify JavaScripts and Stylesheets with YUI Compressor
 =============================================================
 
+.. caution::
+
+    The YUI Compressor is `no longer maintained by Yahoo`_. That's why you are
+    **strongly advised to avoid using YUI utilities** unless strictly necessary.
+    Read :doc:`/cookbook/assetic/uglifyjs` for a modern and up-to-date alternative.
+
 Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
-
-.. caution::
-
-    The YUI Compressor is `no longer maintained by Yahoo`_ but by an independent
-    volunteer. Moreover, Yahoo has decided to `stop all new development on YUI`_
-    and to move to other modern alternatives such as Node.js.
-
-    That's why you are **strongly advised** to avoid using YUI utilities unless
-    strictly necessary. Read :doc:`/cookbook/assetic/uglifyjs` for a modern and
-    up-to-date alternative.
 
 Download the YUI Compressor JAR
 -------------------------------
@@ -135,7 +131,7 @@ can be repeated to minify your stylesheets.
 Disable Minification in Debug Mode
 ----------------------------------
 
-Minified JavaScripts and Stylesheets are very difficult to read, let alone
+Minified JavaScripts and stylesheets are very difficult to read, let alone
 debug. Because of this, Assetic lets you disable a certain filter when your
 application is in debug mode. You can do this by prefixing the filter name
 in your template with a question mark: ``?``. This tells Assetic to only
@@ -170,4 +166,3 @@ apply this filter when debug mode is off.
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
 .. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
 .. _`no longer maintained by Yahoo`: http://www.yuiblog.com/blog/2013/01/24/yui-compressor-has-a-new-owner/
-.. _`stop all new development on YUI`: http://yahooeng.tumblr.com/post/96098168666/important-announcement-regarding-yui

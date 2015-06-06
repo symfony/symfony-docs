@@ -23,22 +23,12 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an AcmeUserBundle bundle with a ``User`` entity that has an
-``email`` field. You can use the ``UniqueEntity`` constraint to guarantee that
-the ``email`` field remains unique between all of the constraints in your user
-table:
+Suppose you have an AcmeUserBundle bundle with a ``User`` entity that has
+an ``email`` field. You can use the ``UniqueEntity`` constraint to guarantee
+that the ``email`` field remains unique between all of the constraints in
+your user table:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\Author:
-            constraints:
-                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
-            properties:
-                email:
-                    - Email: ~
 
     .. code-block:: php-annotations
 
@@ -67,6 +57,16 @@ table:
 
             // ...
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\Author:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+            properties:
+                email:
+                    - Email: ~
 
     .. code-block:: xml
 
@@ -139,19 +139,19 @@ em
 
 **type**: ``string``
 
-The name of the entity manager to use for making the query to determine the
-uniqueness. If it's left blank, the correct entity manager will be determined
-for this class. For that reason, this option should probably not need to be
-used.
+The name of the entity manager to use for making the query to determine
+the uniqueness. If it's left blank, the correct entity manager will be
+determined for this class. For that reason, this option should probably
+not need to be used.
 
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``findBy``
 
-The name of the repository method to use for making the query to determine the
-uniqueness. If it's left blank, the ``findBy`` method will be used. This
-method should return a countable result.
+The name of the repository method to use for making the query to determine
+the uniqueness. If it's left blank, the ``findBy`` method will be used.
+This method should return a countable result.
 
 errorPath
 ~~~~~~~~~
@@ -161,23 +161,13 @@ errorPath
 .. versionadded:: 2.1
     The ``errorPath`` option was introduced in Symfony 2.1.
 
-If the entity violates the constraint the error message is bound to the first
-field in `fields`_. If there is more than one field, you may want to map
-the error message to another field.
+If the entity violates the constraint the error message is bound to the
+first field in `fields`_. If there is more than one field, you may want
+to map the error message to another field.
 
 Consider this example:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/AdministrationBundle/Resources/config/validation.yml
-        Acme\AdministrationBundle\Entity\Service:
-            constraints:
-                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-                    fields: [host, port]
-                    errorPath: port
-                    message: 'This port is already in use on that host.'
 
     .. code-block:: php-annotations
 
@@ -207,6 +197,16 @@ Consider this example:
              */
             public $port;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/AdministrationBundle/Resources/config/validation.yml
+        Acme\AdministrationBundle\Entity\Service:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: [host, port]
+                    errorPath: port
+                    message: 'This port is already in use on that host.'
 
     .. code-block:: xml
 

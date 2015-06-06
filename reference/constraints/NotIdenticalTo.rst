@@ -4,15 +4,15 @@ NotIdenticalTo
 .. versionadded:: 2.3
     The ``NotIdenticalTo`` constraint was introduced in Symfony 2.3.
 
-Validates that a value is **not** identical to another value, defined in the
-options. To force that a value is identical, see
+Validates that a value is **not** identical to another value, defined in
+the options. To force that a value is identical, see
 :doc:`/reference/constraints/IdenticalTo`.
 
 .. caution::
 
     This constraint compares using ``!==``, so ``3`` and ``"3"`` are
-    considered not equal. Use :doc:`/reference/constraints/NotEqualTo` to compare
-    with ``!=``.
+    considered not equal. Use :doc:`/reference/constraints/NotEqualTo` to
+    compare with ``!=``.
 
 +----------------+-----------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                       |
@@ -28,19 +28,10 @@ options. To force that a value is identical, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is *not* equal to
-``15`` and *not* an integer, you could do the following:
+If you want to ensure that the ``age`` of a ``Person`` class is *not* equal
+to ``15`` and *not* an integer, you could do the following:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - NotIdenticalTo:
-                        value: 15
 
     .. code-block:: php-annotations
 
@@ -58,6 +49,15 @@ If you want to ensure that the ``age`` of a ``Person`` class is *not* equal to
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - NotIdenticalTo:
+                        value: 15
 
     .. code-block:: xml
 

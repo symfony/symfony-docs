@@ -194,7 +194,7 @@ Start by creating a simple class which represents the "registration"::
 
         public function setTermsAccepted($termsAccepted)
         {
-            $this->termsAccepted = (Boolean) $termsAccepted;
+            $this->termsAccepted = (bool) $termsAccepted;
         }
     }
 

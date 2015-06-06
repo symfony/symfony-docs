@@ -152,15 +152,6 @@ rules::
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Document:
-            properties:
-                file:
-                    - File:
-                        maxSize: 6000000
-
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/Document.php
@@ -179,9 +170,18 @@ rules::
             // ...
         }
 
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Document:
+            properties:
+                file:
+                    - File:
+                        maxSize: 6000000
+
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.yml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <class name="AppBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">

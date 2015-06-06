@@ -4,8 +4,8 @@ LessThanOrEqual
 .. versionadded:: 2.3
     The ``LessThanOrEqual`` constraint was introduced in Symfony 2.3.
 
-Validates that a value is less than or equal to another value, defined in the
-options. To force that a value is less than another value, see
+Validates that a value is less than or equal to another value, defined in
+the options. To force that a value is less than another value, see
 :doc:`/reference/constraints/LessThan`.
 
 +----------------+-------------------------------------------------------------------------------+
@@ -22,19 +22,10 @@ options. To force that a value is less than another value, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is less than or
-equal to ``80``, you could do the following:
+If you want to ensure that the ``age`` of a ``Person`` class is less than
+or equal to ``80``, you could do the following:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThanOrEqual:
-                        value: 80
 
     .. code-block:: php-annotations
 
@@ -52,6 +43,15 @@ equal to ``80``, you could do the following:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThanOrEqual:
+                        value: 80
 
     .. code-block:: xml
 
@@ -98,5 +98,5 @@ message
 
 **type**: ``string`` **default**: ``This value should be less than or equal to {{ compared_value }}.``
 
-This is the message that will be shown if the value is not less than or equal
-to the comparison value.
+This is the message that will be shown if the value is not less than or
+equal to the comparison value.

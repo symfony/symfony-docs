@@ -96,7 +96,7 @@ from inside a controller::
                 ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
-            return $this->render('Default/new.html.twig', array(
+            return $this->render('default/new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -144,14 +144,14 @@ helper functions:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ form_end(form) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/new.html.php -->
+        <!-- app/Resources/views/default/new.html.php -->
         <?php echo $view['form']->start($form) ?>
         <?php echo $view['form']->widget($form) ?>
         <?php echo $view['form']->end($form) ?>
@@ -198,7 +198,7 @@ it into a format that's suitable for being rendered in an HTML form.
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
    "setter" method so that the Form component can get and put data onto the
-   property. For a Boolean property, you can use an "isser" or "hasser" method
+   property. For a boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
 
@@ -344,17 +344,6 @@ object.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Task:
-            properties:
-                task:
-                    - NotBlank: ~
-                dueDate:
-                    - NotBlank: ~
-                    - Type: \DateTime
-
     .. code-block:: php-annotations
 
         // AppBundle/Entity/Task.php
@@ -373,6 +362,17 @@ object.
              */
             protected $dueDate;
         }
+
+    .. code-block:: yaml
+
+        # AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Task:
+            properties:
+                task:
+                    - NotBlank: ~
+                dueDate:
+                    - NotBlank: ~
+                    - Type: \DateTime
 
     .. code-block:: xml
 
@@ -442,12 +442,12 @@ corresponding errors printed out with the form.
 
        .. code-block:: html+jinja
 
-           {# app/Resources/views/Default/new.html.twig #}
+           {# app/Resources/views/default/new.html.twig #}
            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
        .. code-block:: html+php
 
-           <!-- app/Resources/views/Default/new.html.php -->
+           <!-- app/Resources/views/default/new.html.php -->
            <?php echo $view['form']->form($form, array(
                'attr' => array('novalidate' => 'novalidate'),
            )) ?>
@@ -784,7 +784,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
@@ -794,7 +794,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/newAction.html.php -->
+        <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
@@ -1002,12 +1002,12 @@ to the ``form()`` or the ``form_start()`` helper:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/newAction.html.php -->
+        <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
             'action' => $view['router']->generate('target_route'),
             'method' => 'GET',
@@ -1057,9 +1057,16 @@ that will house the logic for building the task form::
         }
     }
 
-This new class contains all the directions needed to create the task form
-(note that the ``getName()`` method should return a unique identifier for this
-form "type"). It can be used to quickly build a form object in the controller::
+.. caution::
+
+    The ``getName()`` method returns the identifier of this form "type". These
+    identifiers must be unique in the application. Unless you want to override
+    a built-in type, they should be different from the default Symfony types
+    and from any type defined by a third-party bundle installed in your application.
+    Consider prefixing your types with ``app_`` to avoid identifier collisions.
+
+This new class contains all the directions needed to create the task form. It can
+be used to quickly build a form object in the controller::
 
     // src/AppBundle/Controller/DefaultController.php
 
@@ -1437,7 +1444,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Form/fields.html.twig #}
+        {# app/Resources/views/form/fields.html.twig #}
         {% block form_row %}
         {% spaceless %}
             <div class="form_row">
@@ -1450,7 +1457,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Form/form_row.html.php -->
+        <!-- app/Resources/views/form/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -1466,19 +1473,19 @@ renders the form:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
-        {% form_theme form 'Form/fields.html.twig' %}
+        {# app/Resources/views/default/new.html.twig #}
+        {% form_theme form 'form/fields.html.twig' %}
 
-        {% form_theme form 'Form/fields.html.twig' 'Form/fields2.html.twig' %}
+        {% form_theme form 'form/fields.html.twig' 'Form/fields2.html.twig' %}
 
         {# ... render the form #}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/new.html.php -->
-        <?php $view['form']->setTheme($form, array('Form')) ?>
+        <!-- app/Resources/views/default/new.html.php -->
+        <?php $view['form']->setTheme($form, array('form')) ?>
 
-        <?php $view['form']->setTheme($form, array('Form', 'Form2')) ?>
+        <?php $view['form']->setTheme($form, array('form', 'form2')) ?>
 
         <!-- ... render the form -->
 
@@ -1519,7 +1526,7 @@ file, you can see every block needed to render a form and every default field
 type.
 
 In PHP, the fragments are individual template files. By default they are located in
-the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
+the ``Resources/views/Form`` directory of the FrameworkBundle (`view on GitHub`_).
 
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
@@ -1584,12 +1591,16 @@ override the default error rendering for *all* fields, copy and customize the
 .. index::
    single: Forms; Global Theming
 
+.. _book-forms-theming-global:
+
 Global Form Theming
 ~~~~~~~~~~~~~~~~~~~
 
 In the above example, you used the ``form_theme`` helper (in Twig) to "import"
 the custom form fragments into *just* that form. You can also tell Symfony
 to import form customizations across your entire project.
+
+.. _book-forms-theming-twig:
 
 Twig
 ....
@@ -1606,7 +1617,7 @@ file:
         twig:
             form:
                 resources:
-                    - 'Form/fields.html.twig'
+                    - 'form/fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -1621,7 +1632,7 @@ file:
 
             <twig:config>
                 <twig:form>
-                    <twig:resource>Form/fields.html.twig</twig:resource>
+                    <twig:resource>form/fields.html.twig</twig:resource>
                 </twig:form>
                 <!-- ... -->
             </twig:config>
@@ -1633,7 +1644,7 @@ file:
         $container->loadFromExtension('twig', array(
             'form' => array(
                 'resources' => array(
-                    'Form/fields.html.twig',
+                    'form/fields.html.twig',
                 ),
             ),
             // ...
@@ -1781,6 +1792,8 @@ The CSRF token can be customized on a form-by-form basis. For example::
         // ...
     }
 
+.. _form-disable-csrf:
+
 To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
 see the :ref:`form configuration reference <reference-framework-form>`
@@ -1858,7 +1871,7 @@ an array.
 
     Be advised, however, that in most cases using the ``getData()`` method is
     a better choice, since it returns the data (usually an object) after
-    it's been transformed by the form framework.
+    it's been transformed by the Form component.
 
 Adding Validation
 ~~~~~~~~~~~~~~~~~

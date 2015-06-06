@@ -96,6 +96,7 @@ Each part will be explained in the next section.
                     entity:
                         class:              SecurityBundle:User
                         property:           username
+                        # name of a non-default entity manager
                         manager_name:       ~
 
                 # Example custom provider

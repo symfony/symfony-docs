@@ -95,13 +95,15 @@ Node Type
 ~~~~~~~~~
 
 It is possible to validate the type of a provided value by using the appropriate
-node definition. Node type are available for:
+node definition. Node types are available for:
 
+* scalar (generic type that includes booleans, strings, integers, floats and ``null``)
+* boolean
 * scalar
 * boolean
 * integer (new in 2.2)
 * float (new in 2.2)
-* enum (new in 2.1)
+* enum (new in 2.1) (similar to scalar, but it only allows a finite set of values)
 * array
 * variable (no validation)
 
@@ -294,7 +296,8 @@ All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
 method.
 
-The info will be printed as a comment when dumping the configuration tree.
+The info will be printed as a comment when dumping the configuration tree with
+the ``config:dump`` command.
 
 Optional Sections
 -----------------

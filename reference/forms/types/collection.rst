@@ -4,11 +4,12 @@
 collection Field Type
 =====================
 
-This field type is used to render a "collection" of some field or form. In
-the easiest sense, it could be an array of ``text`` fields that populate
+This field type is used to render a "collection" of some field or form.
+In the easiest sense, it could be an array of ``text`` fields that populate
 an array ``emails`` field. In more complex examples, you can embed entire
-forms, which is useful when creating forms that expose one-to-many relationships
-(e.g. a product from where you can manage many related product photos).
+forms, which is useful when creating forms that expose one-to-many
+relationships (e.g. a product from where you can manage many related product
+photos).
 
 +-------------+-----------------------------------------------------------------------------+
 | Rendered as | depends on the `type`_ option                                               |
@@ -45,8 +46,8 @@ forms, which is useful when creating forms that expose one-to-many relationships
 Basic Usage
 -----------
 
-This type is used when you want to manage a collection of similar items in
-a form. For example, suppose you have an ``emails`` field that corresponds
+This type is used when you want to manage a collection of similar items
+in a form. For example, suppose you have an ``emails`` field that corresponds
 to an array of email addresses. In the form, you want to expose each email
 address as its own input text box::
 
@@ -104,8 +105,8 @@ A much more flexible method would look like this:
         <?php endforeach ?>
         </ul>
 
-In both cases, no input fields would render unless your ``emails`` data array
-already contained some emails.
+In both cases, no input fields would render unless your ``emails`` data
+array already contained some emails.
 
 In this simple example, it's still impossible to add new addresses or remove
 existing addresses. Adding new addresses is possible by using the `allow_add`_
@@ -141,7 +142,11 @@ will look like this:
 
 .. code-block:: html
 
-    <input type="email" id="form_emails___name__" name="form[emails][__name__]" value="" />
+    <input type="email"
+        id="form_emails___name__"
+        name="form[emails][__name__]"
+        value=""
+    />
 
 By replacing ``__name__`` with some unique value (e.g. ``2``),
 you can build and insert new HTML fields into your form.
@@ -160,7 +165,8 @@ you need is the JavaScript:
             {# ... #}
 
             {# store the prototype on the data-prototype attribute #}
-            <ul id="email-fields-list" data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
+            <ul id="email-fields-list"
+                data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
             {% for emailField in form.emails %}
                 <li>
                     {{ form_errors(emailField) }}
@@ -203,10 +209,10 @@ you need is the JavaScript:
 
     If you're rendering the entire collection at once, then the prototype
     is automatically available on the ``data-prototype`` attribute of the
-    element (e.g. ``div`` or ``table``) that surrounds your collection. The
-    only difference is that the entire "form row" is rendered for you, meaning
-    you wouldn't have to wrap it in any container element as it was done
-    above.
+    element (e.g. ``div`` or ``table``) that surrounds your collection.
+    The only difference is that the entire "form row" is rendered for you,
+    meaning you wouldn't have to wrap it in any container element as it
+    was done above.
 
 Field Options
 -------------
@@ -222,8 +228,9 @@ items as well as the new item that was in the submitted data. See the above
 example for more details.
 
 The `prototype`_ option can be used to help render a prototype item that
-can be used - with JavaScript - to create new form items dynamically on the
-client side. For more information, see the above example and :ref:`cookbook-form-collections-new-prototype`.
+can be used - with JavaScript - to create new form items dynamically on
+the client side. For more information, see the above example and
+:ref:`cookbook-form-collections-new-prototype`.
 
 .. caution::
 
@@ -249,11 +256,11 @@ For more information, see :ref:`cookbook-form-collections-remove`.
 
     Be careful when using this option when you're embedding a collection
     of objects. In this case, if any embedded forms are removed, they *will*
-    correctly be missing from the final array of objects. However, depending on
-    your application logic, when one of those objects is removed, you may want
-    to delete it or at least remove its foreign key reference to the main object.
-    None of this is handled automatically. For more information, see
-    :ref:`cookbook-form-collections-remove`.
+    correctly be missing from the final array of objects. However, depending
+    on your application logic, when one of those objects is removed, you
+    may want to delete it or at least remove its foreign key reference to
+    the main object. None of this is handled automatically. For more
+    information, see :ref:`cookbook-form-collections-remove`.
 
 options
 ~~~~~~~
@@ -262,8 +269,9 @@ options
 
 This is the array that's passed to the form type specified in the `type`_
 option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
-type as your `type`_ option (e.g. for a collection of drop-down menus), then
-you'd need to at least pass the ``choices`` option to the underlying type::
+type as your `type`_ option (e.g. for a collection of drop-down menus),
+then you'd need to at least pass the ``choices`` option to the underlying
+type::
 
     $builder->add('favorite_cities', 'collection', array(
         'type'   => 'choice',
@@ -283,13 +291,13 @@ prototype
 **type**: ``boolean`` **default**: ``true``
 
 This option is useful when using the `allow_add`_ option. If ``true`` (and
-if `allow_add`_ is also ``true``), a special "prototype" attribute will be
-available so that you can render a "template" example on your page of what
-a new element should look like. The ``name`` attribute given to this element
-is ``__name__``. This allows you to add a "add another" button via JavaScript
-which reads the prototype, replaces ``__name__`` with some unique name or
-number, and render it inside your form. When submitted, it will be added
-to your underlying array due to the `allow_add`_ option.
+if `allow_add`_ is also ``true``), a special "prototype" attribute will
+be available so that you can render a "template" example on your page of
+what a new element should look like. The ``name`` attribute given to this
+element is ``__name__``. This allows you to add a "add another" button via
+JavaScript which reads the prototype, replaces ``__name__`` with some unique
+name or number and render it inside your form. When submitted, it will
+be added to your underlying array due to the `allow_add`_ option.
 
 The prototype field can be rendered via the ``prototype`` variable in the
 collection field:
@@ -313,8 +321,8 @@ rendering your form, having the entire "form row" may be easier for you.
     form row is automatically available on the ``data-prototype`` attribute
     of the element (e.g. ``div`` or ``table``) that surrounds your collection.
 
-For details on how to actually use this option, see the above example as well
-as :ref:`cookbook-form-collections-new-prototype`.
+For details on how to actually use this option, see the above example as
+well as :ref:`cookbook-form-collections-new-prototype`.
 
 prototype_name
 ~~~~~~~~~~~~~~
@@ -322,25 +330,26 @@ prototype_name
 **type**: ``string`` **default**: ``__name__``
 
 If you have several collections in your form, or worse, nested collections
-you may want to change the placeholder so that unrelated placeholders are not
-replaced with the same value.
+you may want to change the placeholder so that unrelated placeholders are
+not replaced with the same value.
 
 type
 ~~~~
 
 **type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
 
-This is the field type for each item in this collection (e.g. ``text``, ``choice``,
-etc). For example, if you have an array of email addresses, you'd use the
-:doc:`email </reference/forms/types/email>` type. If you want to embed
-a collection of some other form, create a new instance of your form type
-and pass it as this option.
+This is the field type for each item in this collection (e.g. ``text``,
+``choice``, etc). For example, if you have an array of email addresses,
+you'd use the :doc:`email </reference/forms/types/email>` type. If you want
+to embed a collection of some other form, create a new instance of your
+form type and pass it as this option.
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type.
-Not all options are listed here - only the most applicable to this type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type. Not all options are listed here - only the most applicable to this
+type:
 
 .. _reference-form-types-by-reference:
 

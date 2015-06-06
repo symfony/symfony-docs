@@ -156,7 +156,7 @@ your listener to be called just before any controller is executed.
         # app/config/services.yml
         services:
             app.tokens.action_listener:
-                class: AappBundle\EventListener\TokenListener
+                class: AppBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
@@ -240,7 +240,7 @@ if it's found::
         $response->headers->set('X-CONTENT-HASH', $hash);
     }
 
-Finally, a second "tag" is needed on the service definition to notify Symfony
+Finally, a second "tag" is needed in the service definition to notify Symfony
 that the ``onKernelResponse`` event should be notified for the ``kernel.response``
 event:
 

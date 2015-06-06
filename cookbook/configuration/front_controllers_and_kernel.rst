@@ -58,7 +58,7 @@ As you can see, this URL contains the PHP script to be used as the front
 controller. You can use that to easily switch the front controller or use
 a custom one by placing it in the ``web/`` directory (e.g. ``app_cache.php``).
 
-When using Apache and the `RewriteRule shipped with the Standard Edition`_,
+When using Apache and the `RewriteRule shipped with the Symfony Standard Edition`_,
 you can omit the filename from the URL and the RewriteRule will use ``app.php``
 as the default one.
 
@@ -94,12 +94,10 @@ There are two methods declared in the
 left unimplemented in :class:`Symfony\\Component\\HttpKernel\\Kernel`
 and thus serve as `template methods`_:
 
-* :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerBundles`,
-  which must return an array of all bundles needed to run the
-  application;
-
-* :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`,
-  which loads the application configuration.
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerBundles`
+    It must return an array of all bundles needed to run the application.
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
+    It loads the application configuration.
 
 To fill these (small) blanks, your application needs to subclass the
 Kernel and implement these methods. The resulting class is conventionally
@@ -124,12 +122,11 @@ controller to make use of the new kernel.
     it might therefore make sense to add additional sub-directories,
     for example ``app/admin/AdminKernel.php`` and
     ``app/api/ApiKernel.php``. All that matters is that your front
-    controller is able to create an instance of the appropriate
-    kernel.
+    controller is able to create an instance of the appropriate kernel.
 
 Having different ``AppKernels`` might be useful to enable different front
 controllers (on potentially different servers) to run parts of your application
-independently (for example, the admin UI, the frontend UI and database migrations).
+independently (for example, the admin UI, the front-end UI and database migrations).
 
 .. note::
 
@@ -148,7 +145,7 @@ configuration from the right *environment*.
 
 Environments have been covered extensively
 :doc:`in the previous chapter </cookbook/configuration/environments>`,
-and you probably remember that the Standard Edition comes with three
+and you probably remember that the Symfony Standard Edition comes with three
 of them - ``dev``, ``prod`` and ``test``.
 
 More technically, these names are nothing more than strings passed from the
@@ -156,7 +153,7 @@ front controller to the ``AppKernel``'s constructor. This name can then be
 used in the :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
 method to decide which configuration files to load.
 
-The Standard Edition's `AppKernel`_ class implements this method by simply
+The Symfony Standard Edition's `AppKernel`_ class implements this method by simply
 loading the ``app/config/config_*environment*.yml`` file. You are, of course,
 free to implement this method differently if you need a more sophisticated
 way of loading your configuration.
@@ -168,5 +165,5 @@ way of loading your configuration.
 .. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
 .. _decorate: http://en.wikipedia.org/wiki/Decorator_pattern
-.. _RewriteRule shipped with the Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
+.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
 .. _template methods: http://en.wikipedia.org/wiki/Template_method_pattern

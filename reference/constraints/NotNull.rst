@@ -18,18 +18,10 @@ constraint.
 Basic Usage
 -----------
 
-If you wanted to ensure that the ``firstName`` property of an ``Author`` class
-were not strictly equal to ``null``, you would:
+If you wanted to ensure that the ``firstName`` property of an ``Author``
+class were not strictly equal to ``null``, you would:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                firstName:
-                    - NotNull: ~
 
     .. code-block:: php-annotations
 
@@ -45,6 +37,14 @@ were not strictly equal to ``null``, you would:
              */
             protected $firstName;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - NotNull: ~
 
     .. code-block:: xml
 

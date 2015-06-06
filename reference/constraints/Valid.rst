@@ -2,8 +2,8 @@ Valid
 =====
 
 This constraint is used to enable validation on objects that are embedded
-as properties on an object being validated. This allows you to validate an
-object and all sub-objects associated with it.
+as properties on an object being validated. This allows you to validate
+an object and all sub-objects associated with it.
 
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
@@ -20,8 +20,8 @@ Basic Usage
 -----------
 
 In the following example, create two classes ``Author`` and ``Address``
-that both have constraints on their properties. Furthermore, ``Author`` stores
-an ``Address`` instance in the ``$address`` property.
+that both have constraints on their properties. Furthermore, ``Author``
+stores an ``Address`` instance in the ``$address`` property.
 
 .. code-block:: php
 
@@ -47,27 +47,6 @@ an ``Address`` instance in the ``$address`` property.
     }
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Entity\Address:
-            properties:
-                street:
-                    - NotBlank: ~
-                zipCode:
-                    - NotBlank: ~
-                    - Length:
-                        max: 5
-
-        Acme\HelloBundle\Entity\Author:
-            properties:
-                firstName:
-                    - NotBlank: ~
-                    - Length:
-                        min: 4
-                lastName:
-                    - NotBlank: ~
 
     .. code-block:: php-annotations
 
@@ -110,6 +89,27 @@ an ``Address`` instance in the ``$address`` property.
 
             protected $address;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Entity\Address:
+            properties:
+                street:
+                    - NotBlank: ~
+                zipCode:
+                    - NotBlank: ~
+                    - Length:
+                        max: 5
+
+        Acme\HelloBundle\Entity\Author:
+            properties:
+                firstName:
+                    - NotBlank: ~
+                    - Length:
+                        min: 4
+                lastName:
+                    - NotBlank: ~
 
     .. code-block:: xml
 
@@ -185,19 +185,11 @@ an ``Address`` instance in the ``$address`` property.
             }
         }
 
-With this mapping, it is possible to successfully validate an author with an
-invalid address. To prevent that, add the ``Valid`` constraint to the ``$address``
-property.
+With this mapping, it is possible to successfully validate an author with
+an invalid address. To prevent that, add the ``Valid`` constraint to the
+``$address`` property.
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Entity\Author:
-            properties:
-                address:
-                    - Valid: ~
 
     .. code-block:: php-annotations
 
@@ -213,6 +205,14 @@ property.
              */
             protected $address;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Entity\Author:
+            properties:
+                address:
+                    - Valid: ~
 
     .. code-block:: xml
 
@@ -247,8 +247,8 @@ property.
             }
         }
 
-If you validate an author with an invalid address now, you can see that the
-validation of the ``Address`` fields failed.
+If you validate an author with an invalid address now, you can see that
+the validation of the ``Address`` fields failed.
 
 .. code-block:: text
 
@@ -264,8 +264,8 @@ traverse
 **type**: ``boolean`` **default**: ``true``
 
 If this constraint is applied to a property that holds an array of objects,
-then each object in that array will be validated only if this option is set
-to ``true``.
+then each object in that array will be validated only if this option is
+set to ``true``.
 
 deep
 ~~~~
@@ -273,5 +273,5 @@ deep
 **type**: ``boolean`` **default**: ``false``
 
 If this constraint is applied to a property that holds an array of objects,
-then each object in that array will be validated recursively if this option is set
-to ``true``.
+then each object in that array will be validated recursively if this option
+is set to ``true``.

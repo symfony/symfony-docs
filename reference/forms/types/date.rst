@@ -12,7 +12,7 @@ a string, a timestamp or an array. As long as the `input`_ option is set
 correctly, the field will take care of all of the details.
 
 The field can be rendered as a single text box, three text boxes (month,
-day, and year) or three select boxes (see the `widget`_ option).
+day and year) or three select boxes (see the `widget`_ option).
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
@@ -54,9 +54,7 @@ options are ``input`` and ``widget``.
 
 Suppose that you have a ``publishedAt`` field whose underlying date is a
 ``DateTime`` object. The following configures the ``date`` type for that
-field as three different choice fields:
-
-.. code-block:: php
+field as three different choice fields::
 
     $builder->add('publishedAt', 'date', array(
         'input'  => 'datetime',
@@ -64,10 +62,8 @@ field as three different choice fields:
     ));
 
 The ``input`` option *must* be changed to match the type of the underlying
-date data. For example, if the ``publishedAt`` field's data were a unix timestamp,
-you'd need to set ``input`` to ``timestamp``:
-
-.. code-block:: php
+date data. For example, if the ``publishedAt`` field's data were a unix
+timestamp, you'd need to set ``input`` to ``timestamp``::
 
     $builder->add('publishedAt', 'date', array(
         'input'  => 'timestamp',
@@ -88,8 +84,8 @@ empty_value
 **type**: ``string`` or ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. The ``empty_value`` option can be used to
-add a "blank" entry to the top of each select box::
+as a series of ``select`` boxes. The ``empty_value`` option can be used
+to add a "blank" entry to the top of each select box::
 
     $builder->add('dueDate', 'date', array(
         'empty_value' => '',
@@ -137,7 +133,8 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

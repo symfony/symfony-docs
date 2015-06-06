@@ -5,13 +5,13 @@ currency Field Type
 ===================
 
 The ``currency`` type is a subset of the
-:doc:`choice type </reference/forms/types/choice>` that allows the user to
-select from a large list of `3-letter ISO 4217`_ currencies.
+:doc:`choice type </reference/forms/types/choice>` that allows the user
+to select from a large list of `3-letter ISO 4217`_ currencies.
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
-``choice_list`` option as the field type automatically uses a large list of
-currencies. You *can* specify either of these options manually, but then you
-should just use the ``choice`` type directly.
+``choice_list`` option as the field type automatically uses a large list
+of currencies. You *can* specify either of these options manually, but then
+you should just use the ``choice`` type directly.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
@@ -56,7 +56,8 @@ The choices option defaults to all currencies.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice</reference/forms/types/choice>`
+type:
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
@@ -68,7 +69,8 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-These options inherit from the :doc:`form</reference/forms/types/form>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

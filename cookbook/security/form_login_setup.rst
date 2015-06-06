@@ -76,23 +76,19 @@ First, enable form login under your firewall:
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form ``/login``. Implementing this login form
 visually is your job. First, create a new ``SecurityController`` inside a
-bundle with an empty ``loginAction``::
+bundle::
 
     // src/AppBundle/Controller/SecurityController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
 
     class SecurityController extends Controller
     {
-        public function loginAction(Request $request)
-        {
-            // todo...
-        }
     }
 
-Next, create two routes: one for each of the paths your configured earlier
+Next, create two routes: one for each of the paths you configured earlier
 under your ``form_login`` configuration (``/login`` and ``/login_check``):
 
 .. configuration-block::
@@ -100,7 +96,9 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/SecurityController.php
+
         // ...
+        use Symfony\Component\HttpFoundation\Request;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         class SecurityController extends Controller
@@ -110,7 +108,6 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
              */
             public function loginAction(Request $request)
             {
-                // todo ...
             }
 
             /**
@@ -118,6 +115,8 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
              */
             public function loginCheckAction()
             {
+                // this controller will not be executed,
+                // as the route is handled by the Security system
             }
         }
 
@@ -129,6 +128,8 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
             defaults: { _controller: AppBundle:Security:login }
         login_check:
             path: /login_check
+            # no controller is bound to this route
+            # as it's handled by the Security system
 
     .. code-block:: xml
 
@@ -144,6 +145,8 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
             </route>
 
             <route id="login_check" path="/login_check" />
+            <!-- no controller is bound to this route
+                 as it's handled by the Security system -->
         </routes>
 
     ..  code-block:: php
@@ -157,6 +160,8 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
             '_controller' => 'AppBundle:Security:login',
         )));
         $collection->add('login_check', new Route('/login_check', array()));
+        // no controller is bound to this route
+        // as it's handled by the Security system
 
         return $collection;
 
@@ -164,20 +169,18 @@ Great! Next, add the logic to ``loginAction`` that will display the login
 form::
 
     // src/AppBundle/Controller/SecurityController.php
-    // ...
 
-    // ADD THIS use STATEMENT above your class
+    // ...
     use Symfony\Component\Security\Core\SecurityContextInterface;
 
+    // ...
     public function loginAction(Request $request)
     {
         $session = $request->getSession();
 
         // get the login error if there is one
         if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                SecurityContextInterface::AUTHENTICATION_ERROR
-            );
+            $error = $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
         } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
             $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
             $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
@@ -218,7 +221,7 @@ Finally, create the template:
         {# ... you will probably extends your base template, like base.html.twig #}
 
         {% if error %}
-            <div>{{ error.messageKey|trans(error.messageData) }}</div>
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
         <form action="{{ path('login_check') }}" method="post">

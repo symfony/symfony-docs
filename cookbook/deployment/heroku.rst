@@ -69,14 +69,20 @@ You are now ready to deploy the application as explained in the next section.
 Deploying your Application on Heroku
 ------------------------------------
 
-To deploy your application to Heroku, you must first create a ``Procfile``,
-which tells Heroku what command to use to launch the web server with the
-correct document root. After that, you will ensure that your Symfony application
-runs the ``prod`` environment, and then you'll be ready to ``git push`` to
-Heroku for your first deploy!
+Before your first deploy, you need to do just three more things, which are explained
+below:
 
-Creating a Procfile
-~~~~~~~~~~~~~~~~~~~
+#. :ref:`Create a Procfile <heroku-procfile>`
+
+#. :ref:`Set the Environment to prod <heroku-setting-env-to-prod>`
+
+#. :ref:`Push your Code to Heroku <heroku-push-code>`
+
+.. _heroku-procfile:
+.. _creating-a-procfile:
+
+1) Create a Procfile
+~~~~~~~~~~~~~~~~~~~~
 
 By default, Heroku will launch an Apache web server together with PHP to serve
 applications. However, two special circumstances apply to Symfony applications:
@@ -100,6 +106,16 @@ directory of the application and add just the following content:
 
     web: bin/heroku-php-apache2 web/
 
+.. note::
+
+    If you prefer to use Nginx, which is also available on Heroku, you can create
+    a configuration file for it and point to it from your Procfile as described
+    in the `Heroku documentation`_:
+
+    .. code-block:: text
+
+        web: bin/heroku-php-nginx -C nginx_app.conf web/
+
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
@@ -111,8 +127,11 @@ create the ``Procfile`` file and to add it to the repository:
     [master 35075db] Procfile for Apache and PHP
      1 file changed, 1 insertion(+)
 
-Setting the ``prod`` Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _heroku-setting-env-to-prod:
+.. _setting-the-prod-environment:
+
+2) Set the Environment to prod
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During a deploy, Heroku runs ``composer install --no-dev`` to install all of the
 dependencies your application requires. However, typical `post-install-commands`_
@@ -132,8 +151,18 @@ variables, you can issue a single command to prepare your app for a deployment:
 
     $ heroku config:set SYMFONY_ENV=prod
 
-Pushing to Heroku
-~~~~~~~~~~~~~~~~~
+.. caution::
+
+    Be aware that dependencies from ``composer.json`` listed in the ``require-dev``
+    section are never installed during a deploy on Heroku. This may cause problems
+    if your Symfony environment relies on such packages. The solution is to move these
+    packages from ``require-dev`` to the ``require`` section.
+
+.. _heroku-push-code:
+.. _pushing-to-heroku:
+
+3) Push your Code to Heroku
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next up, it's finally time to deploy your application to Heroku. If you are
 doing this for the very first time, you may see a message such as the following:
@@ -208,6 +237,93 @@ application will respond:
 
 You should be seeing your Symfony application in your browser.
 
+.. caution::
+
+    If you take your first steps on Heroku using a fresh installation of
+    the Symfony Standard Edition, you may run into a 404 page not found error.
+    This is because the route for ``/`` is defined by the AcmeDemoBundle, but the
+    AcmeDemoBundle is only loaded in the dev environment (check out your
+    ``AppKernel`` class). Try opening ``/app/example`` from the AppBundle.
+
+Custom Compile Steps
+~~~~~~~~~~~~~~~~~~~~
+
+If you wish to execute additional custom commands during a build, you can leverage
+Heroku's `custom compile steps`_. Imagine you want to remove the ``dev`` front controller
+from your production environment on Heroku in order to avoid a potential vulnerability.
+Adding a command to remove ``web/app_dev.php`` to Composer's `post-install-commands`_ would
+work, but it also removes the controller in your local development environment on each
+``composer install`` or ``composer update`` respectively. Instead, you can add a
+`custom Composer command`_ named ``compile`` (this key name is a Heroku convention) to the
+``scripts`` section of your ``composer.json``. The listed commands hook into Heroku's deploy
+process:
+
+.. code-block:: json
+
+    {
+        "scripts": {
+            "compile": [
+                "rm web/app_dev.php"
+            ]
+        }
+    }
+
+This is also very useful to build assets on the production system, e.g. with Assetic:
+
+.. code-block:: json
+
+    {
+        "scripts": {
+            "compile": [
+                "app/console assetic:dump"
+            ]
+        }
+    }
+
+.. sidebar:: Node.js Dependencies
+
+    Building assets may depend on node packages, e.g. ``uglifyjs`` or ``uglifycss``
+    for asset minification. Installing node packages during the deploy requires a node
+    installation. But currently, Heroku compiles your app using the PHP buildpack, which
+    is auto-detected by the presence of a ``composer.json`` file, and does not include a
+    node installation. Because the Node.js buildpack has a higher precedence than the PHP
+    buildpack (see `Heroku buildpacks`_), adding a ``package.json`` listing your node
+    dependencies makes Heroku opt for the Node.js buildpack instead:
+
+    .. code-block:: json
+
+        {
+            "name": "myApp",
+            "engines": {
+                "node": "0.12.x"
+            },
+            "dependencies": {
+                "uglifycss": "*",
+                "uglify-js": "*"
+            }
+        }
+
+    With the next deploy, Heroku compiles your app using the Node.js buildpack and
+    your npm packages become installed. On the other hand, your ``composer.json`` is
+    now ignored. To compile your app with both buildpacks, Node.js *and* PHP, you can
+    use a special `multiple buildpack`_. To override buildpack auto-detection, you
+    need to explicitly set the buildpack URL:
+
+    .. code-block:: bash
+
+        $ heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git
+
+    Next, add a ``.buildpacks`` file to your project, listing the buildpacks you need:
+
+    .. code-block:: text
+
+        https://github.com/heroku/heroku-buildpack-nodejs.git
+        https://github.com/heroku/heroku-buildpack-php.git
+
+    With the next deploy, you can benefit from both buildpacks. This setup also enables
+    your Heroku environment to make use of node based automatic build tools like
+    `Grunt`_ or `gulp`_.
+
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
 .. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
@@ -217,3 +333,10 @@ You should be seeing your Symfony application in your browser.
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
 .. _`post-install-commands`: https://getcomposer.org/doc/articles/scripts.md
 .. _`config vars`: https://devcenter.heroku.com/articles/config-vars
+.. _`custom compile steps`: https://devcenter.heroku.com/articles/php-support#custom-compile-step
+.. _`custom Composer command`: https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands
+.. _`Heroku buildpacks`: https://devcenter.heroku.com/articles/buildpacks
+.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi.git
+.. _`Grunt`: http://gruntjs.com
+.. _`gulp`: http://gulpjs.com
+.. _`Heroku documentation`: https://devcenter.heroku.com/articles/custom-php-settings#nginx

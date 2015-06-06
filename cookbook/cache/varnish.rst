@@ -15,25 +15,31 @@ cached content fast and including support for :ref:`Edge Side Includes <edge-sid
 Make Symfony Trust the Reverse Proxy
 ------------------------------------
 
-For ESI to work correctly and for the :ref:`X-FORWARDED <varnish-x-forwarded-headers>`
-headers to be used, you need to configure Varnish as a
-:doc:`trusted proxy </cookbook/request/load_balancer_reverse_proxy>`.
+Varnish automatically forwards the IP as ``X-Forwarded-For`` and leaves the
+``X-Forwarded-Proto`` header in the request. If you do not configure Varnish as
+trusted proxy, Symfony will see all requests as coming through insecure HTTP
+connections from the Varnish host instead of the real client.
+
+Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
+in the Symfony configuration so that Varnish is seen as a trusted proxy and the
+:ref:`X-Forwarded <varnish-x-forwarded-headers>` headers are used.
 
 .. _varnish-x-forwarded-headers:
 
 Routing and X-FORWARDED Headers
 -------------------------------
 
-To ensure that the Symfony Router generates URLs correctly with Varnish,
-a ``X-Forwarded-Port`` header must be present for Symfony to use the
-correct port number.
+If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
+the port where the PHP application is running when generating absolute URLs,
+e.g. ``http://example.com:8080/my/path``. To ensure that the Symfony router
+generates URLs correctly with Varnish, add the correct port number in the
+``X-Forwarded-Port`` header. This port depends on your setup.
 
-This port depends on your setup. Lets say that external connections come in
-on the default HTTP port 80. For HTTPS connections, there is another proxy
-(as Varnish does not do HTTPS itself) on the default HTTPS port 443 that
-handles the SSL termination and forwards the requests as HTTP requests to
-Varnish with a ``X-Forwarded-Proto`` header. In this case, you need to add
-the following configuration snippet:
+Suppose that external connections come in on the default HTTP port 80. For HTTPS
+connections, there is another proxy (as Varnish does not do HTTPS itself) on the
+default HTTPS port 443 that handles the SSL termination and forwards the requests
+as HTTP requests to Varnish with a ``X-Forwarded-Proto`` header. In this case,
+add the following to your Varnish configuration:
 
 .. code-block:: varnish4
 
@@ -45,46 +51,30 @@ the following configuration snippet:
         }
     }
 
-.. note::
-
-    Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
-    in the Symfony configuration so that Varnish is seen as a trusted proxy
-    and the ``X-Forwarded-*`` headers are used.
-
-    Varnish automatically forwards the IP as ``X-Forwarded-For`` and leaves
-    the ``X-Forwarded-Proto`` header in the request. If you do not configure
-    Varnish as trusted proxy, Symfony will see all requests as coming through
-    insecure HTTP connections from the Varnish host instead of the real client.
-
-If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
-the port where the PHP application is running when generating absolute URLs,
-e.g. ``http://example.com:8080/my/path``.
-
 Cookies and Caching
 -------------------
 
 By default, a sane caching proxy does not cache anything when a request is sent
-with :ref:`cookies or a basic authentication header<http-cache-introduction>`.
+with :ref:`cookies or a basic authentication header <http-cache-introduction>`.
 This is because the content of the page is supposed to depend on the cookie
 value or authentication header.
 
 If you know for sure that the backend never uses sessions or basic
-authentication, have varnish remove the corresponding header from requests to
+authentication, have Varnish remove the corresponding header from requests to
 prevent clients from bypassing the cache. In practice, you will need sessions
 at least for some parts of the site, e.g. when using forms with
-:ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to only
-start a session when actually needed, and clear the session when it is no
-longer needed. Alternatively, you can look into :doc:`../cache/form_csrf_caching`.
+:ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to
+:doc:`only start a session when actually needed </cookbook/session/avoid_session_start>`
+and clear the session when it is no longer needed. Alternatively, you can look
+into :doc:`/cookbook/cache/form_csrf_caching`.
 
-.. todo link "only start a session when actually needed" to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
-
-Cookies created in Javascript and used only in the frontend, e.g. when using
-Google analytics are nonetheless sent to the server. These cookies are not
+Cookies created in JavaScript and used only in the frontend, e.g. when using
+Google Analytics, are nonetheless sent to the server. These cookies are not
 relevant for the backend and should not affect the caching decision. Configure
 your Varnish cache to `clean the cookies header`_. You want to keep the
 session cookie, if there is one, and get rid of all other cookies so that pages
 are cached if there is no active session. Unless you changed the default
-configuration of PHP, your session cookie has the name PHPSESSID:
+configuration of PHP, your session cookie has the name ``PHPSESSID``:
 
 .. code-block:: varnish4
 
@@ -111,8 +101,8 @@ configuration of PHP, your session cookie has the name PHPSESSID:
     implemented and explained by the FOSHttpCacheBundle_ under the name
     `User Context`_.
 
-Ensure Consistent Caching Behaviour
------------------------------------
+Ensure Consistent Caching Behavior
+----------------------------------
 
 Varnish uses the cache headers sent by your application to determine how
 to cache content. However, versions prior to Varnish 4 did not respect
@@ -144,7 +134,7 @@ using Varnish 3:
 Enable Edge Side Includes (ESI)
 -------------------------------
 
-As explained in the :ref:`Edge Side Includes section<edge-side-includes>`,
+As explained in the :ref:`Edge Side Includes section <edge-side-includes>`,
 Symfony detects whether it talks to a reverse proxy that understands ESI or
 not. When you use the Symfony reverse proxy, you don't need to do anything.
 But to make Varnish instead of Symfony resolve the ESI tags, you need some
@@ -169,10 +159,11 @@ application:
 
 .. note::
 
-    The ``abc`` part of the header isn't important unless you have multiple "surrogates"
-    that need to advertise their capabilities. See `Surrogate-Capability Header`_ for details.
+    The ``abc`` part of the header isn't important unless you have multiple
+    "surrogates" that need to advertise their capabilities. See
+    `Surrogate-Capability Header`_ for details.
 
-Then, optimize Varnish so that it only parses the Response contents when there
+Then, optimize Varnish so that it only parses the response contents when there
 is at least one ESI tag by checking the ``Surrogate-Control`` header that
 Symfony adds automatically:
 

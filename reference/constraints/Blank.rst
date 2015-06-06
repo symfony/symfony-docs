@@ -3,18 +3,18 @@ Blank
 
 Validates that a value is blank, defined as equal to a blank string or equal
 to ``null``. To force that a value strictly be equal to ``null``, see the
-:doc:`/reference/constraints/Null` constraint. To force that a value is *not*
-blank, see :doc:`/reference/constraints/NotBlank`.
+:doc:`/reference/constraints/Null` constraint. To force that a value is
+*not* blank, see :doc:`/reference/constraints/NotBlank`.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `message`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Blank`            |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\BlankValidator`   |
-+----------------+-----------------------------------------------------------------------+
++----------------+---------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`              |
++----------------+---------------------------------------------------------------------+
+| Options        | - `message`_                                                        |
++----------------+---------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Blank`          |
++----------------+---------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\BlankValidator` |
++----------------+---------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -23,14 +23,6 @@ If, for some reason, you wanted to ensure that the ``firstName`` property
 of an ``Author`` class were blank, you could do the following:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                firstName:
-                    - Blank: ~
 
     .. code-block:: php-annotations
 
@@ -46,6 +38,14 @@ of an ``Author`` class were blank, you could do the following:
              */
             protected $firstName;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - Blank: ~
 
     .. code-block:: xml
 

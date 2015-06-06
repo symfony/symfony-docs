@@ -10,7 +10,7 @@ component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\Kerne
 
 To hook into an event and add your own custom logic, you have to create
 a service that will act as an event listener on that event. In this entry,
-you will create a service that will act as an Exception Listener, allowing
+you will create a service that will act as an exception listener, allowing
 you to modify how exceptions are shown by your application. The ``KernelEvents::EXCEPTION``
 event is just one of the core kernel events::
 
@@ -96,9 +96,8 @@ using a special "tag":
 .. note::
 
     There is an additional tag option ``priority`` that is optional and defaults
-    to 0. This value can be from -255 to 255, and the listeners will be executed
-    in the order of their priority (highest to lowest). This is useful when
-    you need to guarantee that one listener is executed before another.
+    to 0. The listeners will be executed in the order of their priority (highest to lowest).
+    This is useful when you need to guarantee that one listener is executed before another.
 
 Request Events, Checking Types
 ------------------------------

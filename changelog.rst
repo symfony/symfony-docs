@@ -13,6 +13,182 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+April, 2015
+-----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `387ebc0 <https://github.com/symfony/symfony-docs/commit/387ebc0b84cb813f45f76161f3cfb81c38f9a6fa>`_ #5109 Improved the explanation about the "secret" configuration parameter (javiereguiluz)
+- `cac0a9c <https://github.com/symfony/symfony-docs/commit/cac0a9cbf50e4d77822e792a5276a16b40f0ca3b>`_ #5207 Updated the cookbook about Composer installation (javiereguiluz)
+- `99e2034 <https://github.com/symfony/symfony-docs/commit/99e2034d4272fe4921c3627c0d494b9b1df85e7f>`_ #5195 Add missing caching drivers (mhor)
+- `b90c7cb <https://github.com/symfony/symfony-docs/commit/b90c7cbffda822f54b33d91e1da4c6b844bfe872>`_ #5078 [Cookbook] Add warning about Composer dev deps on Heroku (bicpi)
+- `55730c4 <https://github.com/symfony/symfony-docs/commit/55730c4c0e619c3918d131c6cb910bd17ccc9a0b>`_ #5021 Explained the "Remember Me" firewall options (javiereguiluz)
+- `45ba71b <https://github.com/symfony/symfony-docs/commit/45ba71b2b3eef0ab544b33888d47e19787552fa6>`_ #4811 Simplified some Symfony installation instructions (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `6641b4b <https://github.com/symfony/symfony-docs/commit/6641b4bea913d2e9ea24acb720bb3e52e3793341>`_ #5202 added missing tab (martinbertinat)
+- `49f6b2a <https://github.com/symfony/symfony-docs/commit/49f6b2ac35be86ac5cbc215570362c0b7be9db2b>`_ #5211 Rebase #5182 (Balamung)
+- `318bb8a <https://github.com/symfony/symfony-docs/commit/318bb8af38f5f1824295af1e2c2bafa01b35f438>`_ #5187 Fixing a bad bcrypt string using http://www.bcrypt-generator.com/ (weaverryan)
+- `6fb2eea <https://github.com/symfony/symfony-docs/commit/6fb2eeae5abdf4f401c58755681f63232c104419>`_ #5162 Fix misplelled XliffFileLoader class in the Using Domains (Nicola Pietroluongo)
+- `8fc3d6c <https://github.com/symfony/symfony-docs/commit/8fc3d6c9bc33563fabe17230e600281d47b547e6>`_ #5149 Fixed loadUserByUsername method coding errors (Linas Merkevicius)
+- `2a1d2bb <https://github.com/symfony/symfony-docs/commit/2a1d2bb3b3a97e5add310509ab38dd638caf177d>`_ #5153 [Book] app_dev with php built-in web server (manelselles)
+- `c6e6d28 <https://github.com/symfony/symfony-docs/commit/c6e6d28659e7ae3f7b1ef5c50653b7f0cb8b7bf1>`_ #5061 Trim default is false in password field (raziel057)
+- `65c1669 <https://github.com/symfony/symfony-docs/commit/65c166967a148cdd45a6f305c8cb68f2dd452eae>`_ #5124 #3412 correct overridden option name of timezone (alexandr-kalenyuk)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `c6dc4ea <https://github.com/symfony/symfony-docs/commit/c6dc4eac507c4aa89f9df2ec119e5b8e75d38ff2>`_ #5200 Added missing link in "Sections" (sfdumi)
+- `8b25e6e <https://github.com/symfony/symfony-docs/commit/8b25e6e03d580447ece793572744be7e7243c355>`_ #5198 Link twig constant function (davidfuhr)
+- `2d6d78c <https://github.com/symfony/symfony-docs/commit/2d6d78ccdfbe4584fa167c2d8f05bf1fe0ea756c>`_ #5194 Fix priority range values for event listeners. (chtipepere)
+- `914345a <https://github.com/symfony/symfony-docs/commit/914345a2d767e2457ce34679cc17d0d09bd5ba0f>`_ #5191 Fixed inconsistency (jperovic)
+- `c2d1f3d <https://github.com/symfony/symfony-docs/commit/c2d1f3db6ebf83e69d2eb47fa70ab6e2041d368a>`_ #5190 Change '.xliff' extensions to '.xlf' (xelaris)
+- `32b874a <https://github.com/symfony/symfony-docs/commit/32b874aa2ba9fbcacfb416f6622964a51377bb58>`_ #5189 [Quick Tour] Fixed things found by the docbot (WouterJ)
+- `20ac2a6 <https://github.com/symfony/symfony-docs/commit/20ac2a688c868fdf45c20ffe670bee9f196c4b3e>`_ #5174 [CookBook] [configuration_organization] Use $this->getRootDir() instead of __DIR__ (manelselles)
+- `eacb71b <https://github.com/symfony/symfony-docs/commit/eacb71bef91b582c86871273335cd906ad1185ea>`_ #5173 Use $this->getRootDir() instead of __DIR__ (manelselles)
+- `16e0849 <https://github.com/symfony/symfony-docs/commit/16e08492d4a5f51f67bd3f1db60a1c4cd1f48fa6>`_ #5184 Removing a section about Roles that I think has no real use-case (weaverryan)
+- `2948d6e <https://github.com/symfony/symfony-docs/commit/2948d6ec3a18afc953ca7db8f54bf86e42784790>`_ #5185 Fix broken link in security chapter (iboved)
+- `a4f290e <https://github.com/symfony/symfony-docs/commit/a4f290e060fce19f1837861b38c6956fbf839a78>`_ #5172 [Contributing][Code] add missing security advisories (xabbuh)
+- `2b7ddcd <https://github.com/symfony/symfony-docs/commit/2b7ddcdc47cf304d43b22ccba4b4a54c559a485b>`_ #5167 Add version 2.8 to the release roadmap (Maks3w)
+- `404d0b3 <https://github.com/symfony/symfony-docs/commit/404d0b3ae674c300b334276e8612ea1efe789a10>`_ #5161 Use correct Session namespace (JhonnyL)
+- `c778178 <https://github.com/symfony/symfony-docs/commit/c778178707e8e3bce5a613c84ce01efc2407b678>`_ #5098 Reviewed Configuration cookbook articles (javiereguiluz)
+- `d9e1690 <https://github.com/symfony/symfony-docs/commit/d9e169015d1a102165ced03efc36ea72c5abf011>`_ #5096 Reviewed Cache cookbook articles (javiereguiluz)
+- `c40b618 <https://github.com/symfony/symfony-docs/commit/c40b6181812d23a32f6155c83066e6fa405b0747>`_ #5065 [Reference] fix code block order (xabbuh)
+- `73ccc8b <https://github.com/symfony/symfony-docs/commit/73ccc8b4044b9b892ff70e8782a68eaeeab09573>`_ #5160 Update process.rst (sfdumi)
+- `0dc6204 <https://github.com/symfony/symfony-docs/commit/0dc620420293c8d969ca5f0a1e83ca02a80e7b25>`_ #5143 Rebased #4747 (ifdattic)
+- `b467e23 <https://github.com/symfony/symfony-docs/commit/b467e23847b6340a14d5e3589431984f9d78a211>`_ #5147 Add missing word in bundles best practice description (jbafford)
+- `bf1e44b <https://github.com/symfony/symfony-docs/commit/bf1e44bec5178dfbdea2a87d7af3fd50369f08a1>`_ #5150 [Cookbook] Update serializer.rst (xelaris)
+- `bec695a <https://github.com/symfony/symfony-docs/commit/bec695a0b079ed2936e782495f008640dd44a37c>`_ #5144 [Cookbook][Deployment] fix references to Platform.sh documentation (xabbuh)
+- `b73346a <https://github.com/symfony/symfony-docs/commit/b73346a3c5b1f04781641f65c896950cf37f0967>`_ #5145 Update introduction.rst (cafferata)
+- `7f39e87 <https://github.com/symfony/symfony-docs/commit/7f39e87e9a1cdd1998eddb36920f04f5ebeff962>`_ #5073 [Cookbook] Add note about possible 404 error on Heroku (bicpi)
+- `fbdc177 <https://github.com/symfony/symfony-docs/commit/fbdc17780920ce0862171359547485be7feddd70>`_ #5057 Add a link to Multiple User Providers (thePanz)
+- `b19ded6 <https://github.com/symfony/symfony-docs/commit/b19ded62ce04d8a00b3c8619545bf7cde8476392>`_ #5130 [Cookbook][Security] Fiyed typo in entity_provider.rst (althaus)
+
+March, 2015
+-----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `8ac6fed <https://github.com/symfony/symfony-docs/commit/8ac6fedb4223e2e0d1ace5085dac9c8afacc1d1b>`_ #5093 Added a new best practices for custom form field types (javiereguiluz)
+- `50cd620 <https://github.com/symfony/symfony-docs/commit/50cd62050e752cc6a0d8e52b36c8c58dd73fc652>`_ #4892 Add possible values for widget_type (XitasoChris)
+- `ade7ba4 <https://github.com/symfony/symfony-docs/commit/ade7ba4af112c9c7d7ee34e3cc2f09de01d5d578>`_ #4842 Add meaning of yellow icon for number of queries (XitasoChris)
+- `fa10f1c <https://github.com/symfony/symfony-docs/commit/fa10f1c695b233bb072ee54e4aab2c19a25eb56c>`_ #5083 Proofreading and updating entity_provider for readability (weaverryan)
+- `e36faec <https://github.com/symfony/symfony-docs/commit/e36faeca4f4a23a9196162ec44fcee4432908cfa>`_ #5099 Rebase of #4989 (solazs, weaverryan)
+- `65dd03b <https://github.com/symfony/symfony-docs/commit/65dd03bd60665b2c9305d5306427842c16c4696e>`_ #5056   [Reference] Add missing option delivery_whitelist (TerjeBr)
+- `b138a50 <https://github.com/symfony/symfony-docs/commit/b138a50ef1b6d57baab912e8161ffcbf20a69ed0>`_ #5032 Minor improvement for symfony-installer with LTS (94noni)
+- `5261e79 <https://github.com/symfony/symfony-docs/commit/5261e79f47ed3c3cf6d0d2f04a179b30978e83a8>`_ #5033 adding table for controller as a service (dbu)
+- `ccabc95 <https://github.com/symfony/symfony-docs/commit/ccabc95e3571785445822498ebf13c7b5a0811e4>`_ #5023 Added a note about data transformers not being applied with inherit_data option set (javiereguiluz)
+- `65a33c0 <https://github.com/symfony/symfony-docs/commit/65a33c0b7020067bd82a78339e2b3682e5e1b898>`_ #5020 Added a commented config useful when you use symlinks (javiereguiluz)
+- `1dbed80 <https://github.com/symfony/symfony-docs/commit/1dbed80d4672b545280637c65f5e589963469d89>`_ #5017 Added a note about the server_version DBAL option (javiereguiluz)
+- `86abdde <https://github.com/symfony/symfony-docs/commit/86abddea8a0e320666d184b50f9b082027c8fa1d>`_ #5015 Added an example about how to get the impersonating user object (javiereguiluz)
+- `c6db525 <https://github.com/symfony/symfony-docs/commit/c6db525b0a28cf79bef7175b609388250787a7be>`_ #5010 Added a note about the Symfony versions affected by ICU problems (javiereguiluz)
+- `3c76623 <https://github.com/symfony/symfony-docs/commit/3c76623bd1053503f70d14c68a24daf1455af2c8>`_ #5008 Added a note about how to enable http_method_override for caching kernels (javiereguiluz)
+- `d76f046 <https://github.com/symfony/symfony-docs/commit/d76f04610db35e97fd7820a2eae11884da158b82>`_ #4875 Added chapter about the locale based on the user entity (peterrehm)
+- `0d1e97e <https://github.com/symfony/symfony-docs/commit/0d1e97e502ff3de6467dbce387928589f0f010dd>`_ #4834 [translator] use the new fallbacks option. (aitboudad)
+- `9846d97 <https://github.com/symfony/symfony-docs/commit/9846d9780d8d825857b6f675d4b20728f4e559bd>`_ #5001 Best practices template names (WouterJ)
+- `8e93786 <https://github.com/symfony/symfony-docs/commit/8e93786b1a1c2f9d6e49773afd0a1e15d9dcba12>`_ #4779 Update book to comply with best practices, round 3 (WouterJ)
+- `24c4f42 <https://github.com/symfony/symfony-docs/commit/24c4f429728a0f2f00a1804035d08c30d1d1e0dc>`_ #4732 [Reference] add missing reference options and descriptions (xabbuh)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `6ba6ffd <https://github.com/symfony/symfony-docs/commit/6ba6ffdd75a36b4e1072e1a01d3765a590a06249>`_ #5058 Fix: assets_version instead of asset_version (sebastianblum)
+- `206e613 <https://github.com/symfony/symfony-docs/commit/206e6131f0618971f99aac18a4e434b2485a056f>`_ #4304 [DX] Suggest a hint to any auth-check (larsborn)
+- `893ffad <https://github.com/symfony/symfony-docs/commit/893ffadf7d769ac8a7557a1ddad484537423364a>`_ #5041 Fixed variable name in : Reference -> validation constraints -> count -> PHP (aminemat)
+- `42ba278 <https://github.com/symfony/symfony-docs/commit/42ba278d89c2a4b19384814a468d1c4b282ece80>`_ #5037 Finish 4644: Update the_controller.rst (teggen, WouterJ)
+- `e9b9376 <https://github.com/symfony/symfony-docs/commit/e9b9376b8dc9dd78b9b7d61885681eee95bb02bb>`_ #5009 Reworded the explanation about optional command options (javiereguiluz)
+- `f9901d5 <https://github.com/symfony/symfony-docs/commit/f9901d5eb1e9c0dcdcd87bb7ba0adf0605e13a8c>`_ #5000 Fixed case where service definition is actually an alias (Xavier Coureau)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `e7cdb2b <https://github.com/symfony/symfony-docs/commit/e7cdb2b0501591a14856676b12fd4e902c7b7d53>`_ #5121 As per twigphp/Twig#472, automatic escaping is not yet available (Ocramius)
+- `bce3f04 <https://github.com/symfony/symfony-docs/commit/bce3f04450b81782869009e7570f7ac4c3a94ba1>`_ #5114 [Cookbook][Templating] Use best practice to put templates in app/ dir (WouterJ)
+- `d43b845 <https://github.com/symfony/symfony-docs/commit/d43b84572a7eab5ccc4fef0a8164b42b6b3c9b0a>`_ #5116 Fixes for 2.3 branch (ifdattic)
+- `eef413b <https://github.com/symfony/symfony-docs/commit/eef413b927f976bda959fed33d113eeff0da0262>`_ #5090 Quick review of the Security book chapter (WouterJ)
+- `b07c0f4 <https://github.com/symfony/symfony-docs/commit/b07c0f4f5086cfd96a3f67dc07b909e75da39b80>`_ #5102 Removed duplicate "long"s in length constraint (ByStones)
+- `c19598a <https://github.com/symfony/symfony-docs/commit/c19598a17ed049af2d77a67aa39e6edcb5459c25>`_ #5101 [Cookbook][Deployment] some tweaks to #4601 (xabbuh)
+- `7e669c1 <https://github.com/symfony/symfony-docs/commit/7e669c1d868037e36dda49bf08d0114bd79aca85>`_ #5105 added Jakub as a merger for the DomCrawler component (fabpot)
+- `2c3513e <https://github.com/symfony/symfony-docs/commit/2c3513ea6f84fc143b4cbd9ad44ee0f9e9ab4bbb>`_ #5097 added xabbuh to the list of the Symfony core team member (fabpot)
+- `6b96470 <https://github.com/symfony/symfony-docs/commit/6b964703304f183541f80523a775c3d92d0cea77>`_ #5076 Better explain that form types should be unique in the application (javiereguiluz)
+- `cdb9350 <https://github.com/symfony/symfony-docs/commit/cdb93506f59c173f1735eddb448cf940a073e085>`_ #5086 Use AppBundle instead of AcmeDemoBundle for consistency (snamor)
+- `6719802 <https://github.com/symfony/symfony-docs/commit/67198022232f864cc7b23e3322105d9b4abe5d4b>`_ #5108 [Components][HttpKernel] fix typo in event flow diagrams (xabbuh)
+- `17a6863 <https://github.com/symfony/symfony-docs/commit/17a6863091250184bb0dd9ea1bdf254d359216d6>`_ #5094 Reviewed the Assetic cookbook articles (javiereguiluz)
+- `ac9ba97 <https://github.com/symfony/symfony-docs/commit/ac9ba977659ba9a3ff5007cb38bc7e7f1aacaff4>`_ #4909 Remove horizontal scrollbar and other fixes (ifdattic)
+- `51af15d <https://github.com/symfony/symfony-docs/commit/51af15de75b1104353abb285266fc534632bf002>`_ #5087 added Abdellatif as a core team member (fabpot)
+- `a801d57 <https://github.com/symfony/symfony-docs/commit/a801d573aa418dcd8605441378d72b624602a6b0>`_ #4601 [Heroku] A few more tweaks to outline the steps (weaverryan)
+- `b76ffad <https://github.com/symfony/symfony-docs/commit/b76ffad6df2f45fcdcc2238ed0289e610acd3f0e>`_ #4464 [BestPractices Removing micro-optimization note about @Template (weaverryan)
+- `b3e204c <https://github.com/symfony/symfony-docs/commit/b3e204ce429303a06edecba0b0dc42e1cf1f0e9e>`_ #5079 [Contributing][Code] link to deciders' GitHub profiles (xabbuh)
+- `4307190 <https://github.com/symfony/symfony-docs/commit/43071905ea90448d44245fa64b1d9868db08d618>`_ #5072 Add missing use statement in Building Login Form doc (ockcyp)
+- `9468b9a <https://github.com/symfony/symfony-docs/commit/9468b9a00b4de5f0ff339e69ee6432eb66bf066f>`_ #5071 Fixed incorrect plural form (Katharina Störmer)
+- `63f1ca3 <https://github.com/symfony/symfony-docs/commit/63f1ca3fd137f0bfc18cc6856d7151d6c199de38>`_ #5066 [Reference] enclose data type with double backticks (xabbuh)
+- `dc01076 <https://github.com/symfony/symfony-docs/commit/dc010766dff6e4e8d13f2b50b3aeda539f9b0559>`_ #5064 Updated documentation standards (code examples and English use) (javiereguiluz)
+- `2fe8f76 <https://github.com/symfony/symfony-docs/commit/2fe8f761106bf633c46f6530a3bdadb409278f04>`_ #5044 Minor improvement in the node types explanation (javiereguiluz)
+- `9b1f5f1 <https://github.com/symfony/symfony-docs/commit/9b1f5f13e7a3e3724c58968b651e97fba6437420>`_ #5043 Switched the first example to a static constructor method (kix)
+- `ce19196 <https://github.com/symfony/symfony-docs/commit/ce19196432bb6dfcebcb97c292599b62b1442add>`_ #5042 added some more components for Tobion as a merger (fabpot)
+- `b8a11e1 <https://github.com/symfony/symfony-docs/commit/b8a11e11339b4df0dafa8d49219a264f10799f80>`_ #5036 A very quick reread of the Form Login article (WouterJ)
+- `e94ec09 <https://github.com/symfony/symfony-docs/commit/e94ec09dd133175f02d041d7dae2d38e81435470>`_ #5035 reword to serves (cordoval)
+- `5eb52e3 <https://github.com/symfony/symfony-docs/commit/5eb52e3f7c3b156ed29c119d7a0ef628d92ca74b>`_ #5031 Reworded the note about Windows console and output coloring (javiereguiluz)
+- `df72862 <https://github.com/symfony/symfony-docs/commit/df7286242f31f9ca6ed85b8d29aa83d369086342>`_ #5030 Finish #4586: Update routing.rst (guangle)
+- `93387bf <https://github.com/symfony/symfony-docs/commit/93387bf5b75bc19e5fae5de802673f6268569e4e>`_ #5029 Finish #4370: add a note about apc for php recent versions (ip512, WouterJ)
+- `66cf990 <https://github.com/symfony/symfony-docs/commit/66cf9909e7dd9a5e9f68dcd594f102d9f074c555>`_ #5018 Added a note about the class option of the services defined via factories (javiereguiluz)
+- `a89448d <https://github.com/symfony/symfony-docs/commit/a89448dcc649b8fa4465600f9cb486c38888d0e3>`_ #5012 #4032 improved comments about em option (raulfraile)
+- `1c50386 <https://github.com/symfony/symfony-docs/commit/1c50386dd15653e79b3cf603eb7d9bbaeceb32bc>`_ #5011 tip for mapping definition (SrgSteak)
+- `ce8744d <https://github.com/symfony/symfony-docs/commit/ce8744d6222dcc9693cffe401995177b2e209af6>`_ #5081 [Cookbook][Session] some language tweaks (xabbuh)
+- `1ee04ba <https://github.com/symfony/symfony-docs/commit/1ee04ba48386318c0ebfe1616ffa56741315b149>`_ #5006 Added a note about log file sizes and the use of logrotate (javiereguiluz)
+- `3be0081 <https://github.com/symfony/symfony-docs/commit/3be00819b3300d6ead36fa6793d93874173a4db3>`_ #4976 Improved sentence (edsonmedina)
+- `a444220 <https://github.com/symfony/symfony-docs/commit/a4442209686f612f353b713cc1153a3e17383d25>`_ #4885 Fix typos (ifdattic)
+- `482502d <https://github.com/symfony/symfony-docs/commit/482502d02b838a7c9bbd31df9e2244e9876ec3ed>`_ #4793 [Contributing] Several tweaks (xelaris)
+- `6b66f03 <https://github.com/symfony/symfony-docs/commit/6b66f034e2efbf488ac2192c3666e32998badc6d>`_ #5003 Updated the generic Deployment article (javiereguiluz)
+- `39a1487 <https://github.com/symfony/symfony-docs/commit/39a14875ad1ed8b4681bcb27288fc802d162c300>`_ #4999 Fixed semantic error (beni0888)
+
+February, 2015
+--------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `a25da10 <https://github.com/symfony/symfony-docs/commit/a25da10d010fbd547239099b0fe1accd0fc9f6ca>`_ #4966 [#4231] Clarify that only the main command triggers events (riperez)
+- `9cce63c <https://github.com/symfony/symfony-docs/commit/9cce63cbe3d2899bab00da14ce29a998e87cd14d>`_ #4924 [swiftmailer] Document whitelist option to email redirect (TerjeBr)
+- `f5ff45e <https://github.com/symfony/symfony-docs/commit/f5ff45eba45bb4d87f5b49959eb6b9f7051157c0>`_ #4712 Provide full test example (ifdattic)
+- `5e83045 <https://github.com/symfony/symfony-docs/commit/5e83045ad129e0139ca01c3339717ebad4ee6acb>`_ #4657 Update assetic watch command (xtreamwayz)
+- `d447b12 <https://github.com/symfony/symfony-docs/commit/d447b12d6eeb44db0befa8d30ebd2ba67a1880e9>`_ #4556 Updated twig reference with optimizations and paths (jzawadzki)
+- `018cf3f <https://github.com/symfony/symfony-docs/commit/018cf3fc6558f6b85993be8eacff9ba008eb9bb4>`_ #4661 Added a short cookbook about avoiding the automatic start of the sessions (javiereguiluz)
+- `2305066 <https://github.com/symfony/symfony-docs/commit/23050662fa728edf3c6971bbeef15b2dd6339111>`_ #4902 Removed the Stable API chapter from the Symfony book (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `b0d9c5c <https://github.com/symfony/symfony-docs/commit/b0d9c5c639ef520076491aa9e688e9b4184a263e>`_ #4978 fix wrong header-line syntax (sstok)
+- `6d65564 <https://github.com/symfony/symfony-docs/commit/6d655649d78b810cf3e459035a04671d40659791>`_ #4954 Fixed some syntax issues in Twig Reference (javiereguiluz)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `f75bc2b <https://github.com/symfony/symfony-docs/commit/f75bc2bf6d52a5480ba056af06c59844ec8934ba>`_ #4972 Fix typos (ifdattic)
+- `9fab10b <https://github.com/symfony/symfony-docs/commit/9fab10bde02daae0af6f2848eb5888fa95026e76>`_ #4854 Removed no longer needed information about PHP 5.3 (WouterJ)
+- `1726054 <https://github.com/symfony/symfony-docs/commit/1726054212bda98d4d63edb7f1364472fe91c7fe>`_ #4500 Link to standard edition  (harikt)
+- `91ff6f8 <https://github.com/symfony/symfony-docs/commit/91ff6f8198d17eda5f837c5f1c1725b8030862a1>`_ #4329 ensure consistency with the note (greg0ire)
+- `e5dbd49 <https://github.com/symfony/symfony-docs/commit/e5dbd49deb1cc6d25d4b89c4967a6511192a22ec>`_ #4977 Unnecessary comma (edsonmedina)
+- `5d44987 <https://github.com/symfony/symfony-docs/commit/5d4498707f7fc72653fc135a3e3caee675901ee9>`_ #4991 Fixed typo and tweaked syntax. (cdvrooman)
+- `3845c9c <https://github.com/symfony/symfony-docs/commit/3845c9c7ad4c23f76f2f1ba26bc650df72baf84d>`_ #4979 require_once path fixed (mvanmeerbeck)
+- `96770aa <https://github.com/symfony/symfony-docs/commit/96770aa48406f139986f987ccc0bd277501bc4e2>`_ #4969 Add typehint (piotrantosik)
+- `f97d01f <https://github.com/symfony/symfony-docs/commit/f97d01f26dabbbb11e4a6e8a0adc865e791dea0a>`_ #4995 [#4965] file extension fix (hansstevens)
+- `c5647dd <https://github.com/symfony/symfony-docs/commit/c5647ddad3a13d32e1591e5fc08d9c9b70ed4239>`_ #4968 Fix typo (ifdattic)
+- `c3218fc <https://github.com/symfony/symfony-docs/commit/c3218fced746bfd40c27aa75c5332eacb977fb4e>`_ #4962 cookbok/security/acl.rst (DaliusK)
+- `72489a4 <https://github.com/symfony/symfony-docs/commit/72489a414f40fefca9553d0ffd8fabebbccf8d9e>`_ #4963 Normalize excluded_404s in monolog cookbook (jbafford)
+- `0adb6f6 <https://github.com/symfony/symfony-docs/commit/0adb6f6a62625c9875be57d102c814721c5b83c8>`_ #4964 link to the cookbook article on avoiding to start a session (dbu)
+- `5d8456f <https://github.com/symfony/symfony-docs/commit/5d8456fe3ca6f6bd30cf13d6317e0776c629ed0c>`_ #4955 Fixed wrong API link (dosten)
+- `0a85053 <https://github.com/symfony/symfony-docs/commit/0a85053cb7344e4b0c1950a46c51e7f9a9683ac0>`_ #4950 Fixes for 2.3 branch (ifdattic)
+- `d3d96e1 <https://github.com/symfony/symfony-docs/commit/d3d96e104dea4b670e873543f189b18f3c93d4c6>`_ #4951 fix characters in backported patch (xabbuh)
+- `208904a <https://github.com/symfony/symfony-docs/commit/208904acc6d82b7e602360dbea66ea35d81d15c5>`_ #4949 Fixes for 2.3 branch (ifdattic)
+- `42b44c4 <https://github.com/symfony/symfony-docs/commit/42b44c4eb75d7a53cf094fe8cef4f2a847ec83c1>`_ #4929 Remove block which doesn't make sense after best practices (ifdattic)
+- `6f8b145 <https://github.com/symfony/symfony-docs/commit/6f8b14558aa8dceb1030f49b9fb47164ccd4b8ff>`_ #4904 Added a reference about including JS and CSS files in PHP templates (javiereguiluz)
+
 January, 2015
 -------------
 

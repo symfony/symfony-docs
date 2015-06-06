@@ -4,8 +4,8 @@
 timezone Field Type
 ===================
 
-The ``timezone`` type is a subset of the ``ChoiceType`` that allows the user
-to select from all possible timezones.
+The ``timezone`` type is a subset of the ``ChoiceType`` that allows the
+user to select from all possible timezones.
 
 The "value" for each timezone is the full timezone name, such as ``America/Chicago``
 or ``Europe/Istanbul``.
@@ -18,7 +18,7 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Overridden  | - `choice_list`_                                                       |
+| Overridden  | - `choices`_                                                           |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
@@ -49,18 +49,19 @@ you should just use the ``choice`` type directly.
 Overridden Options
 ------------------
 
-choice_list
-~~~~~~~~~~~
+choices
+~~~~~~~
 
 **default**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\TimezoneChoiceList`
 
-The Timezone type defaults the choice_list to all timezones returned by
+The Timezone type defaults the choices to all timezones returned by
 :phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>`
+type:
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
@@ -70,7 +71,8 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

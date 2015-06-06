@@ -29,10 +29,9 @@ Bundle Name
 -----------
 
 A bundle is also a PHP namespace. The namespace must follow the technical
-interoperability `standards`_ for PHP 5.3 namespaces and class names: it
-starts with a vendor segment, followed by zero or more category segments, and
-it ends with the namespace short name, which must end with a ``Bundle``
-suffix.
+interoperability `standards`_ for PHP namespaces and class names: it starts
+with a vendor segment, followed by zero or more category segments, and it ends
+with the namespace short name, which must end with a ``Bundle`` suffix.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
@@ -167,7 +166,7 @@ Commands, Helpers, Listeners, and Controllers.
 Classes that connect to the event dispatcher should be suffixed with
 ``Listener``.
 
-Exceptions classes should be stored in an ``Exception`` sub-namespace.
+Exception classes should be stored in an ``Exception`` sub-namespace.
 
 Vendors
 -------
@@ -210,52 +209,102 @@ Installation Instructions
 In order to ease the installation of third-party bundles, consider using the
 following standardized instructions in your ``README.md`` file.
 
-.. code-block:: text
+.. configuration-block::
 
-    Installation
-    ============
+    .. code-block:: markdown
 
-    Step 1: Download the Bundle
-    ---------------------------
+        Installation
+        ============
 
-    Open a command console, enter your project directory and execute the
-    following command to download the latest stable version of this bundle:
+        Step 1: Download the Bundle
+        ---------------------------
 
-    ```bash
-    $ composer require <package-name> "~1"
-    ```
+        Open a command console, enter your project directory and execute the
+        following command to download the latest stable version of this bundle:
 
-    This command requires you to have Composer installed globally, as explained
-    in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-    of the Composer documentation.
+        ```bash
+        $ composer require <package-name> "~1"
+        ```
 
-    Step 2: Enable the Bundle
-    -------------------------
+        This command requires you to have Composer installed globally, as explained
+        in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
+        of the Composer documentation.
 
-    Then, enable the bundle by adding the following line in the `app/AppKernel.php`
-    file of your project:
+        Step 2: Enable the Bundle
+        -------------------------
 
-    ```php
-    <?php
-    // app/AppKernel.php
+        Then, enable the bundle by adding the following line in the `app/AppKernel.php`
+        file of your project:
 
-    // ...
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
+        ```php
+        <?php
+        // app/AppKernel.php
+
+        // ...
+        class AppKernel extends Kernel
         {
-            $bundles = array(
-                // ...
+            public function registerBundles()
+            {
+                $bundles = array(
+                    // ...
 
-                new <vendor>\<bundle-name>\<bundle-long-name>(),
-            );
+                    new <vendor>\<bundle-name>\<bundle-long-name>(),
+                );
+
+                // ...
+            }
 
             // ...
         }
+        ```
 
-        // ...
-    }
-    ```
+    .. code-block:: rst
+
+        Installation
+        ============
+
+        Step 1: Download the Bundle
+        ---------------------------
+
+        Open a command console, enter your project directory and execute the
+        following command to download the latest stable version of this bundle:
+
+        .. code-block:: bash
+
+            $ composer require <package-name> "~1"
+
+        This command requires you to have Composer installed globally, as explained
+        in the `installation chapter`_ of the Composer documentation.
+
+        Step 2: Enable the Bundle
+        -------------------------
+
+        Then, enable the bundle by adding the following line in the ``app/AppKernel.php``
+        file of your project:
+
+        .. code-block:: php
+
+            <?php
+            // app/AppKernel.php
+
+            // ...
+            class AppKernel extends Kernel
+            {
+                public function registerBundles()
+                {
+                    $bundles = array(
+                        // ...
+
+                        new <vendor>\<bundle-name>\<bundle-long-name>(),
+                    );
+
+                    // ...
+                }
+
+                // ...
+            }
+
+        .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
 
 This template assumes that your bundle is in its ``1.x`` version. If not, change
 the ``"~1"`` installation version accordingly (``"~2"``, ``"~3"``, etc.)
@@ -343,4 +392,4 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/bundles/extension`
 
-.. _standards: http://www.php-fig.org/psr/psr-0/
+.. _standards: http://www.php-fig.org/psr/psr-4/

@@ -266,7 +266,7 @@ the user is connecting via a secured connection (i.e. HTTPS).
 
     The Request class also has a public ``attributes`` property, which holds
     special data related to how the application works internally. For the
-    Symfony framework, the ``attributes`` holds the values returned by the
+    Symfony Framework, the ``attributes`` holds the values returned by the
     matched route, like ``_controller``, ``id`` (if you have an ``{id}``
     wildcard), and even the name of the matched route (``_route``). The
     ``attributes`` property exists entirely to be a place where you can
@@ -460,7 +460,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
-the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
+the ``AppBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/AppBundle/Controller/MainController.php
@@ -500,7 +500,7 @@ emails, validating user input and handling security.
 The good news is that none of these problems is unique. Symfony provides
 a framework full of tools that allow you to build your application, not your
 tools. With Symfony, nothing is imposed on you: you're free to use the full
-Symfony framework, or just one piece of Symfony all by itself.
+Symfony Framework, or just one piece of Symfony all by itself.
 
 .. index::
    single: Symfony Components
@@ -542,9 +542,9 @@ regardless of how your project is developed. To name a few:
 :doc:`Translation </components/translation/introduction>`
     A framework for translating strings in your application.
 
-Each one of these components is decoupled and can be used in *any*
-PHP project, regardless of whether or not you use the Symfony framework.
-Every part is made to be used if needed and replaced when necessary.
+Each one of these components is decoupled and can be used in *any* PHP project,
+regardless of whether or not you use the Symfony Framework. Every part is
+made to be used if needed and replaced when necessary.
 
 .. _the-full-solution-the-symfony2-framework:
 
