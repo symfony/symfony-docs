@@ -77,8 +77,8 @@ from inside a controller::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use AppBundle\Entity\Task;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
@@ -546,7 +546,7 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a ``Closure``::
 
-    use Acme\AcmeBundle\Entity\Client;
+    use AppBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -554,8 +554,9 @@ You can also define whole logic inline by using a ``Closure``::
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
+
                 if (Client::TYPE_PERSON == $data->getType()) {
                     return array('person');
                 }
@@ -569,7 +570,7 @@ Using the ``validation_groups`` option overrides the default validation
 group which is being used. If you want to validate the default constraints
 of the entity as well you have to adjust the option as follows::
 
-    use Acme\AcmeBundle\Entity\Client;
+    use AppBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -577,8 +578,9 @@ of the entity as well you have to adjust the option as follows::
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
+
                 if (Client::TYPE_PERSON == $data->getType()) {
                     return array('Default', 'person');
                 }
@@ -1052,7 +1054,8 @@ that will house the logic for building the task form::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', 'submit');
+                ->add('save', 'submit')
+            ;
         }
 
         public function getName()
@@ -1127,7 +1130,8 @@ the choice is ultimately up to you.
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('mapped' => false))
-                ->add('save', 'submit');
+                ->add('save', 'submit')
+            ;
         }
 
     Additionally, if there are any fields on the form that aren't included in
@@ -1159,7 +1163,7 @@ easy to use in your application.
 
         # src/AppBundle/Resources/config/services.yml
         services:
-            acme_demo.form.type.task:
+            app.form.type.task:
                 class: AppBundle\Form\Type\TaskType
                 tags:
                     - { name: form.type, alias: task }
@@ -1173,10 +1177,7 @@ easy to use in your application.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service
-                    id="acme_demo.form.type.task"
-                    class="AppBundle\Form\Type\TaskType">
-
+                <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
                     <tag name="form.type" alias="task" />
                 </service>
             </services>
@@ -1187,7 +1188,7 @@ easy to use in your application.
         // src/AppBundle/Resources/config/services.php
         $container
             ->register(
-                'acme_demo.form.type.task',
+                'app.form.type.task',
                 'AppBundle\Form\Type\TaskType'
             )
             ->addTag('form.type', array(
@@ -1480,6 +1481,7 @@ renders the form:
         {# app/Resources/views/default/new.html.twig #}
         {% form_theme form 'form/fields.html.twig' %}
 
+        {# or if you want to use multiple themes #}
         {% form_theme form 'form/fields.html.twig' 'form/fields2.html.twig' %}
 
         {# ... render the form #}
@@ -1489,6 +1491,7 @@ renders the form:
         <!-- app/Resources/views/default/new.html.php -->
         <?php $view['form']->setTheme($form, array('form')) ?>
 
+        <!-- or if you want to use multiple themes -->
         <?php $view['form']->setTheme($form, array('form', 'form2')) ?>
 
         <!-- ... render the form -->
@@ -1735,7 +1738,7 @@ file:
                         'Form',
                     ),
                 ),
-            )
+            ),
             // ...
         ));
 

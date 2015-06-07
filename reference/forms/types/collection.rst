@@ -338,7 +338,7 @@ well as :ref:`cookbook-form-collections-new-prototype`.
 prototype_name
 ~~~~~~~~~~~~~~
 
-**type**: ``String`` **default**: ``__name__``
+**type**: ``string`` **default**: ``__name__``
 
 If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are
