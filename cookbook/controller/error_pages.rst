@@ -46,7 +46,7 @@ is used to render a Twig template to show the user.
 
 .. _cookbook-error-pages-by-status-code:
 
-This controller uses the HTTP status code, request format and the following
+This controller uses the HTTP status code, the request format and the following
 logic to determine the template filename:
 
 #. Look for a template for the given format and status code (like ``error404.json.twig``
@@ -79,7 +79,7 @@ A typical project that returns HTML and JSON pages, might look like this:
                 ├─ error.html.twig      # All other HTML errors (including 500)
                 ├─ error404.json.twig
                 ├─ error403.json.twig
-                ├─ error.json.twig      # All other JSON errors (including 500)
+                └─ error.json.twig      # All other JSON errors (including 500)
 
 Example 404 Error Template
 --------------------------

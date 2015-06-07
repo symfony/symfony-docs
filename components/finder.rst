@@ -111,7 +111,7 @@ And it also works with user-defined streams::
     use Symfony\Component\Finder\Finder;
 
     $s3 = new \Zend_Service_Amazon_S3($key, $secret);
-    $s3->registerStreamWrapper("s3");
+    $s3->registerStreamWrapper('s3');
 
     $finder = new Finder();
     $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');

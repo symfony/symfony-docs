@@ -138,7 +138,7 @@ above snippet and make sure that nobody except your web server can access
 the secret.
 
 Internally, this extension will automatically add a hidden field to every
-form (called ``__token`` by default) whose value is automatically generated
+form (called ``_token`` by default) whose value is automatically generated
 and validated when binding the form.
 
 .. tip::
@@ -480,11 +480,11 @@ helper functions:
 
 .. code-block:: html+jinja
 
-    <form action="#" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         {{ form_widget(form) }}
 
         <input type="submit" />
-    </form>
+    {{ form_end(form) }}
 
 .. image:: /images/book/form-simple.png
     :align: center
