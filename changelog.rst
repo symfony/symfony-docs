@@ -24,10 +24,12 @@ New Documentation
 * `#5137 <https://github.com/symfony/symfony-docs/pull/5137>`_ Added a note about the rotating_file monolog handler (javiereguiluz)
 * `#5283 <https://github.com/symfony/symfony-docs/pull/5283>`_ [BestPractices] restructured text format for the installation instructions template (xabbuh)
 * `#5298 <https://github.com/symfony/symfony-docs/pull/5298>`_ Completed framework config (WouterJ)
+* `#5255 <https://github.com/symfony/symfony-docs/pull/5255>`_ [Cookbook] Use configured user provider instead of injection (mvar)
 * `#5216 <https://github.com/symfony/symfony-docs/pull/5216>`_ [Cookbook] [Deployment] Added note about Nginx (phansys)
 * `#5117 <https://github.com/symfony/symfony-docs/pull/5117>`_ Complete review of the "Customize Error Pages" cookbook article (javiereguiluz)
 * `#5115 <https://github.com/symfony/symfony-docs/pull/5115>`_ Flesh out twig-template for custom data-collector (Darien Hager)
 * `#4728 <https://github.com/symfony/symfony-docs/pull/4728>`_ Add Session Cache Limiting section for NativeSessionStorage (mrclay)
+* `#4084 <https://github.com/symfony/symfony-docs/pull/4084>`_ [Book][Forms] describe the allow_extra_fields form option (xabbuh)
 * `#5294 <https://github.com/symfony/symfony-docs/pull/5294>`_ Tweaks to bower entry - specifically committing deps (weaverryan)
 * `#5062 <https://github.com/symfony/symfony-docs/pull/5062>`_ Cookbook about Command in Application with AnsiToHtml (Rvanlaak)
 * `#4901 <https://github.com/symfony/symfony-docs/pull/4901>`_ Removed the Internals chapter from the Symfony book (javiereguiluz)
@@ -42,7 +44,9 @@ Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 * `#5324 <https://github.com/symfony/symfony-docs/pull/5324>`_ 5259 improve 'Testing Documentation' in contributing guide  (snoek09)
+* `#5305 <https://github.com/symfony/symfony-docs/pull/5305>`_ [BestPractices][Security] revert #5271 on the 2.6 branch (xabbuh)
 * `#5251 <https://github.com/symfony/symfony-docs/pull/5251>`_ [Cookbook][Controller] replace docs for removed `forward()` method (xabbuh)
+* `#5237 <https://github.com/symfony/symfony-docs/pull/5237>`_ Update authentication.rst (taavit)
 * `#5299 <https://github.com/symfony/symfony-docs/pull/5299>`_ Command controller tweaks to #5062 (weaverryan)
 * `#5297 <https://github.com/symfony/symfony-docs/pull/5297>`_ Kernel Events Proofreading after #4901 (weaverryan)
 * `#5296 <https://github.com/symfony/symfony-docs/pull/5296>`_ Fix link to Zend Soap (peterkokot)
@@ -52,6 +56,7 @@ Fixed Documentation
 * `#5249 <https://github.com/symfony/symfony-docs/pull/5249>`_ [security][form login] fix translations for the security messages. (aitboudad)
 * `#5220 <https://github.com/symfony/symfony-docs/pull/5220>`_ Fix example namespace (lepiaf)
 * `#5203 <https://github.com/symfony/symfony-docs/pull/5203>`_ Order has one param without spaces (carlosbuenosvinos)
+* `#4273 <https://github.com/symfony/symfony-docs/pull/4273>`_ - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +69,7 @@ Minor Documentation Changes
 * `#5338 <https://github.com/symfony/symfony-docs/pull/5338>`_ Text in index.html.twig for The Big Picture wrong (BT643)
 * `#5341 <https://github.com/symfony/symfony-docs/pull/5341>`_ fixed typo and added additional hit for NullOutput() (kuldipem)
 * `#5302 <https://github.com/symfony/symfony-docs/pull/5302>`_ Place DQL in front of QueryBuilder (alfonsomga)
+* `#5276 <https://github.com/symfony/symfony-docs/pull/5276>`_ Better illustrate what the "user mistake" is. (diamondsea)
 * `#5304 <https://github.com/symfony/symfony-docs/pull/5304>`_ Proofreading Javier's excellent updates - in some places, shortening some things (weaverryan)
 * `#5263 <https://github.com/symfony/symfony-docs/pull/5263>`_ Let docbot review the form docs (WouterJ)
 * `#5280 <https://github.com/symfony/symfony-docs/pull/5280>`_ Rebase #4633 (seangallavan)
@@ -76,13 +82,16 @@ Minor Documentation Changes
 * `#5277 <https://github.com/symfony/symfony-docs/pull/5277>`_ always refer to getcomposer.org through HTTPS (xabbuh)
 * `#4671 <https://github.com/symfony/symfony-docs/pull/4671>`_ consistent spelling (xabbuh)
 * `#4255 <https://github.com/symfony/symfony-docs/pull/4255>`_ Updated autoload standard to PSR-4. (phansys)
+* `#5278 <https://github.com/symfony/symfony-docs/pull/5278>`_ remove unnecessary code (karion)
 * `#5262 <https://github.com/symfony/symfony-docs/pull/5262>`_ Update Routes in the Getting Started documentation (BT643)
+* `#5178 <https://github.com/symfony/symfony-docs/pull/5178>`_ Usage of denyAccessUnlessGranted in the controller (94noni)
 * `#5229 <https://github.com/symfony/symfony-docs/pull/5229>`_ Remove mention of \*.class parameters from conventions (jvasseur)
 * `#5250 <https://github.com/symfony/symfony-docs/pull/5250>`_ [Cookbook][Logging] use straightforward instead of straigt forward (xabbuh)
 * `#5257 <https://github.com/symfony/symfony-docs/pull/5257>`_ Let docbot review the constraint docs (WouterJ)
 * `#5222 <https://github.com/symfony/symfony-docs/pull/5222>`_ Update service_container.rst (assoum891)
 * `#5221 <https://github.com/symfony/symfony-docs/pull/5221>`_ Update Uglifyjs.rst (assoum891)
 * `#5219 <https://github.com/symfony/symfony-docs/pull/5219>`_ Fix contradicting merging policy rules (lscholten)
+* `#5217 <https://github.com/symfony/symfony-docs/pull/5217>`_ Update _payload-option.rst.inc (bvleur)
 * `#5226 <https://github.com/symfony/symfony-docs/pull/5226>`_ Update http_cache.rst (assoum891)
 * `#5238 <https://github.com/symfony/symfony-docs/pull/5238>`_ Fixed typo and removed outdated imports (nomack84)
 * `#5240 <https://github.com/symfony/symfony-docs/pull/5240>`_ [Cookbook][Email] revert #4808 (xabbuh)
