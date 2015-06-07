@@ -1357,9 +1357,9 @@ FriendsOfPHP organization.
     To enable the ``security:check`` command, you need to add the
     `sensio distribution bundle`_ in your composer dependencies.
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    $ composer require 'sensio/distribution-bundle'
+        $ composer require 'sensio/distribution-bundle'
 
 Final Words
 -----------
