@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-02T20:57:02Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-06T15:29:47Z
+
+I don't think it's a real CS fix. We use both quotes throughout the source and docs afaik.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-06-06T21:27:04Z
+
+@WouterJ in the code, we use double quotes only when they are necessary to be able to use escape sequences (strings containing ``\n`` most of the time). Otherwise, the rule is to use single quotes everywhere (and PHP-CS-Fixer is fixing it for us in most places)
