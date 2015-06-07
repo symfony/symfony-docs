@@ -123,11 +123,11 @@ following example can help you get started:
         {% set text %}
         <div class="sf-toolbar-info-piece">
             <b>Quick piece of data</b>
-            <span>100 units</div>
+            <span>100 units</span>
         </div>
         <div class="sf-toolbar-info-piece">
             <b>Another quick thing</b>
-            <span>300 units</div>
+            <span>300 units</span>
         </div>
         {% endset %}
 

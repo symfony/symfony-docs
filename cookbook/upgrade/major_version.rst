@@ -15,8 +15,8 @@ actually released. This is called making your code *future compatible*.
 There are a couple of steps to upgrading a major version:
 
 #. :ref:`Make your code deprecation free <upgrade-major-symfony-deprecations>`;
-#. :ref:`Update to the new major version via Composer <upgrade-major-symfony-composer>`.
-#. :ref:`Update your code to work with the new version <upgrade-major-symfony-after>`
+#. :ref:`Update to the new major version via Composer <upgrade-major-symfony-composer>`;
+#. :ref:`Update your code to work with the new version <upgrade-major-symfony-after>`.
 
 .. _upgrade-major-symfony-deprecations:
 

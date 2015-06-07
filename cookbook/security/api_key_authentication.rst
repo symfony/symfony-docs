@@ -634,7 +634,7 @@ current URL is before creating the token in ``createToken()``::
 This uses the handy :class:`Symfony\\Component\\Security\\Http\\HttpUtils`
 class to check if the current URL matches the URL you're looking for. In this
 case, the URL (``/login/check``) has been hardcoded in the class, but you
-could also inject it as the third constructor argument.
+could also inject it as the second constructor argument.
 
 Next, just update your service configuration to inject the ``security.http_utils``
 service:
