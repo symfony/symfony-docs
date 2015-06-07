@@ -1,0 +1,73 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-20T22:21:43Z
+
+@oldskool Actually I think we should better change the URL to be `http://localhost:8000/app_dev.php/` instead. Otherwise, you won't see the same as what is shown in the screenshot (for example, the web debug toolbar is not present in the prod environment).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-20T23:03:43Z
+
+@xabbuh the built-in server is used, which will always be in dev env unless you use `--env=prod`
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-20T23:14:20Z
+
+@WouterJ Hm, yes you're right. But why should it be needed at all then to manually install assets?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-20T23:16:21Z
+
+@xabbuh I need to do it quite often too. Most of the time, because the composer scripts fail at clearing the cache on installation, the script that installs the assets is then no longer executed.
+
+---------------------------------------------------------------------------
+
+by oldskool at 2015-02-20T23:25:23Z
+
+@xabbuh I tried that as well, but that didn't render the assets either. In this part of the docs, the PHP built-in webserver is still used, so it seems that @WouterJ is right about the dev environment already being used.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-20T23:35:36Z
+
+Any idea why this is failing on some systems?
+
+---------------------------------------------------------------------------
+
+by oldskool at 2015-02-21T00:55:32Z
+
+No clue, running this PHP version on Windows 7 if it's of any help:
+
+> $ php -v
+PHP 5.5.11 (cli) (built: Apr  8 2014 15:07:14)
+Copyright (c) 1997-2014 The PHP Group
+Zend Engine v2.5.0, Copyright (c) 1998-2014 Zend Technologies
+    with Xdebug v2.2.3, Copyright (c) 2002-2013, by Derick Rethans
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:25:17Z
+
+Then let's merge this imo. It does not hurt and it may help people.
+
+@oldskool Can you please rebase your PR?
+
+---------------------------------------------------------------------------
+
+by oldskool at 2015-05-24T22:09:01Z
+
+@xabbuh Done.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-25T08:34:56Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by oldskool at 2015-06-01T10:34:35Z
+
+@WouterJ Done.
