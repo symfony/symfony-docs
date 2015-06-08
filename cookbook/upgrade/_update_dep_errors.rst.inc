@@ -1,12 +1,14 @@
 Dependency Errors
 ~~~~~~~~~~~~~~~~~
 
-If you get a dependency error, it may just mean that you *also* need to upgrade
-that package too. For example, Symfony 2.7 requires a higher version of Twig,
-so just upgrading ``symfony/symfony`` alone may give you an error. In this
-case, try adding the package in question to the ``update`` statement:
+If you get a dependency error, it may simply mean that you need to upgrade
+other Symfony dependencies too. In that case, try the following command:
 
-    $ composer update symfony/symfony twig/twig
+    $ composer update symfony/symfony --with-dependencies
+
+This updates ``symfony/symfony`` and *all* packages that it depends on,
+will include several other packages. By using tight version constraints in
+``composer.json``, you can control what versions each library upgrades to.
 
 If this still doesn't work, your ``composer.json`` file may specify a version
 for a library that is not compatible with the newer Symfony version. In that
