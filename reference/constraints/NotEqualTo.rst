@@ -19,6 +19,7 @@ options. To force that a value is equal, see
 +----------------+-------------------------------------------------------------------------+
 | Options        | - `value`_                                                              |
 |                | - `message`_                                                            |
+|                | - `payload`_                                                            |
 +----------------+-------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualTo`         |
 +----------------+-------------------------------------------------------------------------+
@@ -28,19 +29,10 @@ options. To force that a value is equal, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is not equal to
-``15``, you could do the following:
+If you want to ensure that the ``age`` of a ``Person`` class is not equal
+to ``15``, you could do the following:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - NotEqualTo:
-                        value: 15
 
     .. code-block:: php-annotations
 
@@ -58,6 +50,15 @@ If you want to ensure that the ``age`` of a ``Person`` class is not equal to
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - NotEqualTo:
+                        value: 15
 
     .. code-block:: xml
 
@@ -105,3 +106,5 @@ message
 **type**: ``string`` **default**: ``This value should not be equal to {{ compared_value }}.``
 
 This is the message that will be shown if the value is equal.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

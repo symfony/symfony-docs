@@ -152,15 +152,6 @@ rules::
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Document:
-            properties:
-                file:
-                    - File:
-                        maxSize: 6000000
-
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/Document.php
@@ -179,9 +170,18 @@ rules::
             // ...
         }
 
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Document:
+            properties:
+                file:
+                    - File:
+                        maxSize: 6000000
+
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.yml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <class name="AppBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">
@@ -244,7 +244,7 @@ The following controller shows you how to handle the entire process::
             $em->persist($document);
             $em->flush();
 
-            return $this->redirect($this->generateUrl(...));
+            return $this->redirectToRoute(...);
         }
 
         return array('form' => $form->createView());
@@ -267,7 +267,7 @@ in a moment to handle the file upload::
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect(...);
+        return $this->redirectToRoute(...);
     }
 
 The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
@@ -432,7 +432,7 @@ call to ``$document->upload()`` should be removed from the controller::
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect(...);
+        return $this->redirectToRoute(...);
     }
 
 .. note::

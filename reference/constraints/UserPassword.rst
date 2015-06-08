@@ -2,18 +2,19 @@ UserPassword
 ============
 
 This validates that an input value is equal to the current authenticated
-user's password. This is useful in a form where a user can change their password,
-but needs to enter their old password for security.
+user's password. This is useful in a form where a user can change their
+password, but needs to enter their old password for security.
 
 .. note::
 
-    This should **not** be used to validate a login form, since this is done
-    automatically by the security system.
+    This should **not** be used to validate a login form, since this is
+    done automatically by the security system.
 
 +----------------+--------------------------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                                     |
 +----------------+--------------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                               |
+|                | - `payload`_                                                                               |
 +----------------+--------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`          |
 +----------------+--------------------------------------------------------------------------------------------+
@@ -23,21 +24,12 @@ but needs to enter their old password for security.
 Basic Usage
 -----------
 
-Suppose you have a `PasswordChange` class, that's used in a form where the
-user can change their password by entering their old password and a new password.
-This constraint will validate that the old password matches the user's current
-password:
+Suppose you have a ``PasswordChange`` class, that's used in a form where
+the user can change their password by entering their old password and a
+new password. This constraint will validate that the old password matches
+the user's current password:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Form\Model\ChangePassword:
-            properties:
-                oldPassword:
-                    - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
-                        message: "Wrong value for your current password"
 
     .. code-block:: php-annotations
 
@@ -56,6 +48,15 @@ password:
              protected $oldPassword;
         }
 
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Form\Model\ChangePassword:
+            properties:
+                oldPassword:
+                    - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
+                        message: "Wrong value for your current password"
+
     .. code-block:: xml
 
         <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
@@ -66,7 +67,9 @@ password:
 
             <class name="Acme\UserBundle\Form\Model\ChangePassword">
                 <property name="oldPassword">
-                    <constraint name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword">
+                    <constraint
+                        name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword"
+                    >
                         <option name="message">Wrong value for your current password</option>
                     </constraint>
                 </property>
@@ -85,9 +88,12 @@ password:
         {
             public static function loadValidatorData(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('oldPassword', new SecurityAssert\UserPassword(array(
-                    'message' => 'Wrong value for your current password',
-                )));
+                $metadata->addPropertyConstraint(
+                    'oldPassword',
+                    new SecurityAssert\UserPassword(array(
+                        'message' => 'Wrong value for your current password',
+                    ))
+                );
             }
         }
 
@@ -101,3 +107,5 @@ message
 
 This is the message that's displayed when the underlying string does *not*
 match the current user's password.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

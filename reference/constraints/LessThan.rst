@@ -4,8 +4,8 @@ LessThan
 .. versionadded:: 2.3
     The ``LessThan`` constraint was introduced in Symfony 2.3.
 
-Validates that a value is less than another value, defined in the options. To
-force that a value is less than or equal to another value, see
+Validates that a value is less than another value, defined in the options.
+To force that a value is less than or equal to another value, see
 :doc:`/reference/constraints/LessThanOrEqual`. To force a value is greater
 than another value, see :doc:`/reference/constraints/GreaterThan`.
 
@@ -14,6 +14,7 @@ than another value, see :doc:`/reference/constraints/GreaterThan`.
 +----------------+------------------------------------------------------------------------+
 | Options        | - `value`_                                                             |
 |                | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\LessThan`          |
 +----------------+------------------------------------------------------------------------+
@@ -27,15 +28,6 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
 ``80``, you could do the following:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThan:
-                        value: 80
 
     .. code-block:: php-annotations
 
@@ -53,6 +45,15 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThan:
+                        value: 80
 
     .. code-block:: xml
 
@@ -101,3 +102,5 @@ message
 
 This is the message that will be shown if the value is not less than the
 comparison value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

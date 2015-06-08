@@ -1,11 +1,11 @@
 The Architecture
 ================
 
-You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. Because it
-makes Symfony stand apart from the framework crowd, let's dive into the
-architecture now.
+You are my hero! Who would have thought that you would still be here after
+the first three parts? Your efforts will be well rewarded soon. The first
+three parts didn't look too deeply at the architecture of the framework.
+Because it makes Symfony stand apart from the framework crowd, let's dive
+into the architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
@@ -26,7 +26,7 @@ The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
-stylesheets, and JavaScript files. It is also where each :term:`front controller`
+stylesheets and JavaScript files. It is also where each :term:`front controller`
 lives, such as the production controller shown here::
 
     // web/app.php
@@ -57,8 +57,8 @@ configuration and as such, it is stored in the ``app/`` directory.
 This class must implement two methods:
 
 ``registerBundles()``
-    Must return an array of all bundles needed to run the application, as explained
-    in the next section.
+    Must return an array of all bundles needed to run the application, as
+    explained in the next section.
 ``registerContainerConfiguration()``
     Loads the application configuration (more on this later).
 
@@ -74,24 +74,25 @@ Understanding the Bundle System
 This section introduces one of the greatest and most powerful features of
 Symfony, the :term:`bundle` system.
 
-A bundle is kind of like a plugin in other software. So why is it called a
-*bundle* and not a *plugin*? This is because *everything* is a bundle in
-Symfony, from the core framework features to the code you write for your
-application.
+A bundle is kind of like a plugin in other software. So why is it
+called a *bundle* and not a *plugin*? This is because *everything* is a
+bundle in Symfony, from the core framework features to the code you write
+for your application.
 
-All the code you write for your application is organized in bundles. In Symfony
-speak, a bundle is a structured set of files (PHP files, stylesheets, JavaScripts,
-images, ...) that implements a single feature (a blog, a forum, ...) and which
-can be easily shared with other developers.
+All the code you write for your application is organized in bundles. In
+Symfony speak, a bundle is a structured set of files (PHP files, stylesheets,
+JavaScripts, images, ...) that implements a single feature (a blog, a forum,
+...) and which can be easily shared with other developers.
 
 Bundles are first-class citizens in Symfony. This gives you the flexibility
-to use pre-built features packaged in third-party bundles or to distribute your
-own bundles. It makes it easy to pick and choose which features to enable in
-your application and optimize them the way you want. And at the end of the day,
-your application code is just as *important* as the core framework itself.
+to use pre-built features packaged in third-party bundles or to distribute
+your own bundles. It makes it easy to pick and choose which features to
+enable in your application and optimize them the way you want. And at the
+end of the day, your application code is just as *important* as the core
+framework itself.
 
-Symfony already includes an AppBundle that you may use to start developing your
-application. Then, if you need to split the application into reusable
+Symfony already includes an AppBundle that you may use to start developing
+your application. Then, if you need to split the application into reusable
 components, you can create your own bundles.
 
 Registering a Bundle
@@ -125,15 +126,15 @@ a single Bundle class that describes it::
         return $bundles;
     }
 
-In addition to the AppBundle that was already talked about, notice that the
-kernel also enables other bundles that are part of Symfony, such as FrameworkBundle,
-DoctrineBundle, SwiftmailerBundle and AsseticBundle.
+In addition to the AppBundle that was already talked about, notice that
+the kernel also enables other bundles that are part of Symfony, such as
+FrameworkBundle, DoctrineBundle, SwiftmailerBundle and AsseticBundle.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
 
-Each bundle can be customized via configuration files written in YAML, XML, or
-PHP. Have a look at this sample of the default Symfony configuration:
+Each bundle can be customized via configuration files written in YAML, XML,
+or PHP. Have a look at this sample of the default Symfony configuration:
 
 .. code-block:: yaml
 
@@ -145,7 +146,7 @@ PHP. Have a look at this sample of the default Symfony configuration:
 
     framework:
         #esi:             ~
-        #translator:      { fallback: "%locale%" }
+        #translator:      { fallbacks: ["%locale%"] }
         secret:          "%secret%"
         router:
             resource: "%kernel.root_dir%/config/routing.yml"
@@ -173,14 +174,15 @@ PHP. Have a look at this sample of the default Symfony configuration:
 
     # ...
 
-Each first level entry like ``framework``, ``twig`` and ``swiftmailer`` defines
-the configuration for a specific bundle. For example, ``framework`` configures
-the FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
+Each first level entry like ``framework``, ``twig`` and ``swiftmailer``
+defines the configuration for a specific bundle. For example, ``framework``
+configures the FrameworkBundle while ``swiftmailer`` configures the
+SwiftmailerBundle.
 
-Each :term:`environment` can override the default configuration by providing a
-specific configuration file. For example, the ``dev`` environment loads the
-``config_dev.yml`` file, which loads the main configuration (i.e. ``config.yml``)
-and then modifies it to add some debugging tools:
+Each :term:`environment` can override the default configuration by providing
+a specific configuration file. For example, the ``dev`` environment loads
+the ``config_dev.yml`` file, which loads the main configuration (i.e.
+``config.yml``) and then modifies it to add some debugging tools:
 
 .. code-block:: yaml
 
@@ -202,8 +204,9 @@ Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
 
 In addition to being a nice way to organize and configure your code, a bundle
-can extend another bundle. Bundle inheritance allows you to override any existing
-bundle in order to customize its controllers, templates, or any of its files.
+can extend another bundle. Bundle inheritance allows you to override any
+existing bundle in order to customize its controllers, templates, or any
+of its files.
 
 Logical File Names
 ..................
@@ -226,13 +229,14 @@ For controllers, you need to reference actions using the format
 Extending Bundles
 .................
 
-If you follow these conventions, then you can use :doc:`bundle inheritance </cookbook/bundles/inheritance>`
-to override files, controllers or templates. For example, you can create
-a bundle - NewBundle - and specify that it overrides AppBundle.
-When Symfony loads the ``AppBundle:Default:index`` controller, it will
-first look for the ``DefaultController`` class in NewBundle and, if
-it doesn't exist, then look inside AppBundle. This means that one bundle
-can override almost any part of another bundle!
+If you follow these conventions, then you can use
+:doc:`bundle inheritance </cookbook/bundles/inheritance>` to override files,
+controllers or templates. For example, you can create a bundle - NewBundle
+- and specify that it overrides AppBundle. When Symfony loads the
+``AppBundle:Default:index`` controller, it will first look for the
+``DefaultController`` class in NewBundle and, if it doesn't exist, then
+look inside AppBundle. This means that one bundle can override almost any
+part of another bundle!
 
 Do you understand now why Symfony is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
@@ -245,37 +249,40 @@ Using Vendors
 Odds are that your application will depend on third-party libraries. Those
 should be stored in the ``vendor/`` directory. You should never touch anything
 in this directory, because it is exclusively managed by Composer. This directory
-already contains the Symfony libraries, the SwiftMailer library, the Doctrine ORM,
-the Twig templating system and some other third party libraries and bundles.
+already contains the Symfony libraries, the SwiftMailer library, the Doctrine
+ORM, the Twig templating system and some other third party libraries and
+bundles.
 
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony applications can contain several configuration files defined in several
-formats (YAML, XML, PHP, etc.) Instead of parsing and combining all those files
-for each request, Symfony uses its own cache system. In fact, the application
-configuration is only parsed for the very first request and then compiled down
-to plain PHP code stored in the ``app/cache/`` directory.
+Symfony applications can contain several configuration files defined in
+several formats (YAML, XML, PHP, etc.) Instead of parsing and combining
+all those files for each request, Symfony uses its own cache system. In
+fact, the application configuration is only parsed for the very first request
+and then compiled down to plain PHP code stored in the ``app/cache/``
+directory.
 
-In the development environment, Symfony is smart enough to update the cache when
-you change a file. But in the production environment, to speed things up, it is
-your responsibility to clear the cache when you update your code or change its
-configuration. Execute this command to clear the cache in the ``prod`` environment:
+In the development environment, Symfony is smart enough to update the cache
+when you change a file. But in the production environment, to speed things
+up, it is your responsibility to clear the cache when you update your code
+or change its configuration. Execute this command to clear the cache in
+the ``prod`` environment:
 
 .. code-block:: bash
 
     $ php app/console cache:clear --env=prod
 
-When developing a web application, things can go wrong in many ways. The log
-files in the ``app/logs/`` directory tell you everything about the requests
+When developing a web application, things can go wrong in many ways. The
+log files in the ``app/logs/`` directory tell you everything about the requests
 and help you fix the problem quickly.
 
 Using the Command Line Interface
 --------------------------------
 
 Each application comes with a command line interface tool (``app/console``)
-that helps you maintain your application. It provides commands that boost your
-productivity by automating tedious and repetitive tasks.
+that helps you maintain your application. It provides commands that boost
+your productivity by automating tedious and repetitive tasks.
 
 Run it without any arguments to learn more about its capabilities:
 
@@ -299,7 +306,7 @@ around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony master. Ready to dig into these
-topics now? Look no further - go to the official :doc:`/book/index` and pick
-any topic you want.
+topics now? Look no further - go to the official :doc:`/book/index` and
+pick any topic you want.
 
-.. _Composer:   http://getcomposer.org
+.. _Composer:   https://getcomposer.org

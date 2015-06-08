@@ -6,7 +6,7 @@ Databases and Doctrine
 
 One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Although
-the Symfony full-stack framework doesn't integrate any ORM by default,
+the Symfony full-stack Framework doesn't integrate any ORM by default,
 the Symfony Standard Edition, which is the most widely used distribution,
 comes integrated with `Doctrine`_, a library whose sole goal is to give
 you powerful tools to make this easy. In this chapter, you'll learn the
@@ -141,8 +141,13 @@ for you:
     .. code-block:: ini
 
         [mysqld]
-        collation-server = utf8_general_ci
-        character-set-server = utf8
+        # Version 5.5.3 introduced "utf8mb4", which is recommended
+        collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+        character-set-server = utf8mb4            # Replaces utf8
+
+    We recommend against MySQL's ``utf8`` character set, since it does not
+    support 4-byte unicode characters, and strings containing them will be
+    truncated. This is fixed by the `newer utf8mb4 character set`_.
 
 .. note::
 
@@ -646,6 +651,9 @@ to easily fetch objects based on multiple conditions::
 
     If you click the icon, the profiler will open, showing you the exact
     queries that were made.
+    
+    The icon will turn yellow if there were more than 50 queries on the
+    page. This could indicate that something is not correct.
 
 Updating an Object
 ~~~~~~~~~~~~~~~~~~
@@ -667,7 +675,7 @@ you have a route that maps a product id to an update action in a controller::
         $product->setName('New product name!');
         $em->flush();
 
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
     }
 
 Updating an object involves just three steps:
@@ -714,48 +722,12 @@ instead of querying for rows on a table (e.g. ``product``).
 When querying in Doctrine, you have two options: writing pure Doctrine queries
 or using Doctrine's Query Builder.
 
-Querying for Objects Using Doctrine's Query Builder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Imagine that you want to query for products, but only return products that
-cost more than ``19.99``, ordered from cheapest to most expensive. You can use
-Doctrine's ``QueryBuilder`` for this::
-
-    $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
-
-    $query = $repository->createQueryBuilder('p')
-        ->where('p.price > :price')
-        ->setParameter('price', '19.99')
-        ->orderBy('p.price', 'ASC')
-        ->getQuery();
-
-    $products = $query->getResult();
-
-The ``QueryBuilder`` object contains every method necessary to build your
-query. By calling the ``getQuery()`` method, the query builder returns a
-normal ``Query`` object, which can be used to get the result of the query.
-
-.. tip::
-
-    Take note of the ``setParameter()`` method. When working with Doctrine,
-    it's always a good idea to set any external values as "placeholders"
-    (``:price`` in the example above) as it prevents SQL injection attacks.
-
-The ``getResult()`` method returns an array of results. To get only one
-result, you can use ``getSingleResult()`` (which throws an exception if there
-is no result) or ``getOneOrNullResult()``::
-
-    $product = $query->getOneOrNullResult();
-
-For more information on Doctrine's Query Builder, consult Doctrine's
-`Query Builder`_ documentation.
-
 Querying for Objects with DQL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using the ``QueryBuilder``, you can alternatively write the queries
-directly using DQL::
+Imagine that you want to query for products, but only return products that
+cost more than ``19.99``, ordered from cheapest to most expensive. You can use
+Doctrine's native SQL-like language called DQL to make a query for this::
 
     $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
@@ -766,17 +738,60 @@ directly using DQL::
     )->setParameter('price', '19.99');
 
     $products = $query->getResult();
+    // to get just one result:
+    // $product = $query->setMaxResults(1)->getOneOrNullResult();
 
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
 difference is that you need to think in terms of "objects" instead of rows
 in a database. For this reason, you select *from* the ``AppBundle:Product``
-*object* and then alias it as ``p`` (as you see, this is equal to what you
-already did in the previous section).
+*object* (an optional shortcut for ``AppBundle\Entity\Product``) and then
+alias it as ``p``.
+
+.. tip::
+
+    Take note of the ``setParameter()`` method. When working with Doctrine,
+    it's always a good idea to set any external values as "placeholders"
+    (``:price`` in the example above) as it prevents SQL injection attacks.
+
+The ``getResult()`` method returns an array of results. To get only one
+result, you can use ``getOneOrNullResult()``::
+
+    $product = $query->setMaxResults(1)->getOneOrNullResult();
 
 The DQL syntax is incredibly powerful, allowing you to easily join between
 entities (the topic of :ref:`relations <book-doctrine-relations>` will be
 covered later), group, etc. For more information, see the official
 `Doctrine Query Language`_ documentation.
+
+Querying for Objects Using Doctrine's Query Builder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of writing a DQL string, you can alternatively use a helpful object called
+the ``QueryBuilder`` to build that string for you::
+
+    $repository = $this->getDoctrine()
+        ->getRepository('AppBundle:Product');
+
+    // createQueryBuilder automatically selects FROM AppBundle:Product
+    // and aliases it to "p"
+    $query = $repository->createQueryBuilder('p')
+        ->where('p.price > :price')
+        ->setParameter('price', '19.99')
+        ->orderBy('p.price', 'ASC')
+        ->getQuery();
+
+    $products = $query->getResult();
+    // to get just one result:
+    // $product = $query->setMaxResults(1)->getOneOrNullResult();
+
+The ``QueryBuilder`` object contains every method necessary to build your
+query. By calling the ``getQuery()`` method, the query builder returns a
+normal ``Query`` object, which can be used to get the result of the query.
+
+For more information on Doctrine's Query Builder, consult Doctrine's
+`Query Builder`_ documentation.
+
+.. _book-doctrine-custom-repository-classes:
 
 Custom Repository Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1417,3 +1432,4 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`migrations`: http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
 .. _`DoctrineFixturesBundle`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html

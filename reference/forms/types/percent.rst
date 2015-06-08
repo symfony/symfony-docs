@@ -15,7 +15,7 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - `precision`_                                                        |
+| Options     | - `scale`_                                                            |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
@@ -39,13 +39,17 @@ This field adds a percentage sign "``%``" after the input box.
 Field Options
 -------------
 
-precision
-~~~~~~~~~
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``0``
 
-By default, the input numbers are rounded. To allow for more decimal
-places, use this option.
+By default, the input numbers are rounded. To allow for more decimal places,
+use this option.
 
 type
 ~~~~
@@ -70,11 +74,13 @@ object. The two "types" handle these two cases:
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
 

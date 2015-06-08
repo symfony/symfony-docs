@@ -9,6 +9,7 @@ constraint.
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotNull`          |
 +----------------+-----------------------------------------------------------------------+
@@ -18,18 +19,10 @@ constraint.
 Basic Usage
 -----------
 
-If you wanted to ensure that the ``firstName`` property of an ``Author`` class
-were not strictly equal to ``null``, you would:
+If you wanted to ensure that the ``firstName`` property of an ``Author``
+class were not strictly equal to ``null``, you would:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                firstName:
-                    - NotNull: ~
 
     .. code-block:: php-annotations
 
@@ -45,6 +38,14 @@ were not strictly equal to ``null``, you would:
              */
             protected $firstName;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - NotNull: ~
 
     .. code-block:: xml
 
@@ -86,3 +87,5 @@ message
 **type**: ``string`` **default**: ``This value should not be null.``
 
 This is the message that will be shown if the value is ``null``.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

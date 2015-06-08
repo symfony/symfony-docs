@@ -4,11 +4,6 @@
 Using a Factory to Create Services
 ==================================
 
-.. versionadded:: 2.6
-    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
-    method was introduced in Symfony 2.6. Refer to older versions for the
-    syntax for factories prior to 2.6.
-
 Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this
@@ -16,6 +11,11 @@ will not provide you with everything you need to construct your objects.
 For this situation, you can use a factory to create the object and tell the
 service container to call a method on the factory rather than directly instantiating
 the class.
+
+.. versionadded:: 2.6
+    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
+    method was introduced in Symfony 2.6. Refer to older versions for the
+    syntax for factories prior to 2.6.
 
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object::
@@ -68,6 +68,14 @@ configure the service container to use the
         $definition->setFactory(array('NewsletterManagerFactory', 'createNewsletterManager'));
 
         $container->setDefinition('newsletter_manager', $definition);
+
+.. note::
+
+    When using a factory to create services, the value chosen for the ``class``
+    option has no effect on the resulting service. The actual class name only
+    depends on the object that is returned by the factory. However, the configured
+    class name may be used by compiler passes and therefore should be set to a
+    sensible value.
 
 Now, the method will be called statically. If the factory class itself should
 be instantiated and the resulting object's method called, configure the factory

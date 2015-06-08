@@ -48,7 +48,8 @@ Suppose the class you want to test looks like this::
 
         public function calculateTotalSalary($id)
         {
-            $employeeRepository = $this->entityManager->getRepository('AppBundle::Employee');
+            $employeeRepository = $this->entityManager
+                ->getRepository('AppBundle:Employee');
             $employee = $employeeRepository->find($id);
 
             return $employee->getSalary() + $employee->getBonus();
@@ -74,7 +75,8 @@ it's easy to pass a mock object within a test::
                 ->will($this->returnValue(1100));
 
             // Now, mock the repository so it returns the mock of the employee
-            $employeeRepository = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
+            $employeeRepository = $this
+                ->getMockBuilder('\Doctrine\ORM\EntityRepository')
                 ->disableOriginalConstructor()
                 ->getMock();
             $employeeRepository->expects($this->once())
@@ -82,7 +84,8 @@ it's easy to pass a mock object within a test::
                 ->will($this->returnValue($employee));
 
             // Last, mock the EntityManager to return the mock of the repository
-            $entityManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
+            $entityManager = $this
+                ->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                 ->disableOriginalConstructor()
                 ->getMock();
             $entityManager->expects($this->once())

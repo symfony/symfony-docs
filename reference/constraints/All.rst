@@ -4,34 +4,24 @@ All
 When applied to an array (or Traversable object), this constraint allows
 you to apply a collection of constraints to each element of the array.
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - `constraints`_                                                       |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\All`               |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\AllValidator`      |
-+----------------+------------------------------------------------------------------------+
++----------------+-------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`            |
++----------------+-------------------------------------------------------------------+
+| Options        | - `constraints`_                                                  |
+|                | - `payload`_                                                      |
++----------------+-------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\All`          |
++----------------+-------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\AllValidator` |
++----------------+-------------------------------------------------------------------+
 
 Basic Usage
 -----------
 
-Suppose that you have an array of strings, and you want to validate each
+Suppose that you have an array of strings and you want to validate each
 entry in that array:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                favoriteColors:
-                    - All:
-                        - NotBlank:  ~
-                        - Length:
-                            min: 5
 
     .. code-block:: php-annotations
 
@@ -50,6 +40,17 @@ entry in that array:
              */
              protected $favoriteColors = array();
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                favoriteColors:
+                    - All:
+                        - NotBlank:  ~
+                        - Length:
+                            min: 5
 
     .. code-block:: xml
 
@@ -107,3 +108,5 @@ constraints
 
 This required option is the array of validation constraints that you want
 to apply to each element of the underlying array.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

@@ -27,7 +27,7 @@ into the language of the user::
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
 In this chapter, you'll learn how to use the Translation component in the
-Symfony framework. You can read the
+Symfony Framework. You can read the
 :doc:`Translation component documentation </components/translation/usage>`
 to learn even more. Overall, the process has several steps:
 
@@ -59,7 +59,7 @@ enable the ``translator`` in your configuration:
 
         # app/config/config.yml
         framework:
-            translator: { fallback: en }
+            translator: { fallbacks: [en] }
 
     .. code-block:: xml
 
@@ -74,7 +74,9 @@ enable the ``translator`` in your configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:translator fallback="en" />
+                <framework:translator>
+                    <framework:fallback>en</framework:fallback>
+                </framework:translator>
             </framework:config>
         </container>
 
@@ -82,10 +84,10 @@ enable the ``translator`` in your configuration:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'translator' => array('fallback' => 'en'),
+            'translator' => array('fallbacks' => array('en')),
         ));
 
-See :ref:`book-translation-fallback` for details on the ``fallback`` key
+See :ref:`book-translation-fallback` for details on the ``fallbacks`` key
 and what Symfony does when it doesn't find a translation.
 
 The locale used in translations is the one stored on the request. This is
@@ -125,7 +127,7 @@ different formats, XLIFF being the recommended format:
 
     .. code-block:: xml
 
-        <!-- messages.fr.xliff -->
+        <!-- messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -233,7 +235,7 @@ help with message translation of *static blocks of text*:
     {% trans %}Hello %name%{% endtrans %}
 
     {% transchoice count %}
-        {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples
     {% endtranschoice %}
 
 The ``transchoice`` tag automatically gets the ``%count%`` variable from
@@ -259,7 +261,7 @@ You can also specify the message domain and pass some additional variables:
     {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
 
     {% transchoice count with {'%name%': 'Fabien'} from "app" %}
-        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf] %name%, there are %count% apples
+        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
 
 .. _book-translation-filters:
@@ -354,18 +356,18 @@ must be named according to the following path: ``domain.locale.loader``:
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
-* **loader**: How Symfony should load and parse the file (e.g. ``xliff``,
+* **loader**: How Symfony should load and parse the file (e.g. ``xlf``,
   ``php``, ``yml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
 provides many loaders, including:
 
-* ``xliff``: XLIFF file;
+* ``xlf``: XLIFF file;
 * ``php``: PHP file;
 * ``yml``: YAML file.
 
 The choice of which loader to use is entirely up to you and is a matter of
-taste. The recommended option is to use ``xliff`` for translations.
+taste. The recommended option is to use ``xlf`` for translations.
 For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
@@ -395,12 +397,12 @@ key ``Symfony is great``. To find the French translation, Symfony actually
 checks translation resources for several locales:
 
 #. First, Symfony looks for the translation in a ``fr_FR`` translation resource
-   (e.g. ``messages.fr_FR.xliff``);
+   (e.g. ``messages.fr_FR.xlf``);
 
 #. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
-   resource (e.g. ``messages.fr.xliff``);
+   resource (e.g. ``messages.fr.xlf``);
 
-#. If the translation still isn't found, Symfony uses the ``fallback`` configuration
+#. If the translation still isn't found, Symfony uses the ``fallbacks`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
 
 .. versionadded:: 2.6
@@ -408,8 +410,8 @@ checks translation resources for several locales:
 
 .. note::
 
-    When Symfony doesn't find a translation in the given locale, it will
-    add the missing translation to the log file. For details,
+    When Symfony doesn't find a translation in the given locale, it will 
+    add the missing translation to the log file. For details, 
     see :ref:`reference-framework-translator-logging`.
 
 .. _book-translation-user-locale:
@@ -425,17 +427,28 @@ via the ``request`` object::
     public function indexAction(Request $request)
     {
         $locale = $request->getLocale();
-
-        $request->setLocale('en_US');
     }
 
-.. tip::
+To set the user's locale, you may want to create a custom event listener
+so that it's set before any other parts of the system (i.e. the translator)
+need it::
 
-    Read :doc:`/cookbook/session/locale_sticky_session` to learn how to store
-    the user's locale in the session.
+        public function onKernelRequest(GetResponseEvent $event)
+        {
+            $request = $event->getRequest();
 
-.. index::
-   single: Translations; Fallback and default locale
+            // some logic to determine the $locale
+            $request->getSession()->set('_locale', $locale);
+        }
+
+Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
+
+.. note::
+
+    Setting the locale using ``$request->setLocale()`` in the controller
+    is too late to affect the translator. Either set the locale via a listener
+    (like above), the URL (see next) or call ``setLocale()`` directly on
+    the ``translator`` service.
 
 See the :ref:`book-translation-locale-url` section below about setting the
 locale via routing.
@@ -516,7 +529,12 @@ in your application.
     Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
     avoid hardcoding the ``_locale`` requirement in all your routes.
 
-Setting a default Locale
+.. index::
+   single: Translations; Fallback and default locale
+
+.. _book-translation-default-locale:
+
+Setting a Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 What if the user's locale hasn't been determined? You can guarantee that a
@@ -558,7 +576,7 @@ the framework:
 Translating Constraint Messages
 -------------------------------
 
-If you're using validation constraints with the form framework, then translating
+If you're using validation constraints with the Form component, then translating
 the error messages is easy: simply create a translation resource for the
 ``validators`` :ref:`domain <using-message-domains>`.
 
@@ -646,7 +664,7 @@ bundle.
 
     .. code-block:: xml
 
-        <!-- validators.en.xliff -->
+        <!-- validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -675,8 +693,8 @@ Translating Database Content
 ----------------------------
 
 The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_ or the `Translatable Behavior`_. For more information,
-see the documentation for these libraries.
+the `Translatable Extension`_ or the `Translatable Behavior`_ (PHP 5.4+).
+For more information, see the documentation for these libraries.
 
 Debugging Translations
 ----------------------

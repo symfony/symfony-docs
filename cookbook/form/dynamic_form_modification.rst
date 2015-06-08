@@ -77,7 +77,7 @@ or if an existing product is being edited (e.g. a product fetched from the datab
 
 Suppose now, that you don't want the user to be able to change the ``name`` value
 once the object has been created. To do this, you can rely on Symfony's
-:doc:`EventDispatcher </components/event_dispatcher/introduction>`
+:doc:`EventDispatcher component </components/event_dispatcher/introduction>`
 system to analyze the data on the object and modify the form based on the
 Product object's data. In this entry, you'll learn how to add this level of
 flexibility to your forms.
@@ -627,7 +627,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+jinja
 
-        {# src/AppBundle/Resources/views/Meetup/create.html.twig #}
+        {# app/Resources/views/Meetup/create.html.twig #}
         {{ form_start(form) }}
             {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
             {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
@@ -662,7 +662,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Meetup/create.html.php -->
+        <!-- app/Resources/views/Meetup/create.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
             <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->
@@ -708,7 +708,7 @@ To suppress form validation you can use the ``POST_SUBMIT`` event and prevent
 the :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
 from being called.
 
-The reason for needing to do this is that even if you set ``group_validation``
+The reason for needing to do this is that even if you set ``validation_groups``
 to ``false`` there  are still some integrity checks executed. For example
 an uploaded file will still be checked to see if it is too large and the form
 will still check to see if non-existing fields were submitted. To disable
@@ -716,10 +716,11 @@ all of this, use a listener::
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\Form\FormEvent;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function ($event) {
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
             $event->stopPropagation();
         }, 900); // Always set a higher priority than ValidationListener
 

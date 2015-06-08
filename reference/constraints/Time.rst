@@ -9,6 +9,7 @@ a valid "HH:MM:SS" format.
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Time`              |
 +----------------+------------------------------------------------------------------------+
@@ -22,14 +23,6 @@ Suppose you have an Event class, with a ``startAt`` field that is the time
 of the day when the event starts:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Event:
-            properties:
-                startsAt:
-                    - Time: ~
 
     .. code-block:: php-annotations
 
@@ -45,6 +38,14 @@ of the day when the event starts:
              */
              protected $startsAt;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Event:
+            properties:
+                startsAt:
+                    - Time: ~
 
     .. code-block:: xml
 
@@ -86,3 +87,5 @@ message
 **type**: ``string`` **default**: ``This value is not a valid time.``
 
 This message is shown if the underlying data is not a valid time.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

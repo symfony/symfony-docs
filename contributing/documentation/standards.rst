@@ -8,7 +8,8 @@ Sphinx
 ------
 
 * The following characters are chosen for different heading levels: level 1
-  is ``=``, level 2 ``-``, level 3 ``~``, level 4 ``.`` and level 5 ``"``;
+  is ``=`` (equal sign), level 2 ``-`` (dash), level 3 ``~`` (tilde), level 4
+  ``.`` (dot) and level 5 ``"`` (double quote);
 * Each line should break approximately after the first word that crosses the
   72nd character (so most lines end up being 72-78 characters);
 * The ``::`` shorthand is *preferred* over ``.. code-block:: php`` to begin a PHP
@@ -50,6 +51,12 @@ Code Examples
 
 * The code follows the :doc:`Symfony Coding Standards </contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
+* The code examples should look real for a web application context. Avoid abstract
+  or trivial examples (``foo``, ``bar``, ``demo``, etc.);
+* The code should follow the :doc:`Symfony Best Practices </best_practices/introduction>`.
+  Unless the example requires a custom bundle, make sure to always use the
+  ``AppBundle`` bundle to store your code;
+* Use ``Acme`` when the code requires a vendor name;
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
   correctly if it crosses the 85th character;
 * When you fold one or more lines of code, place ``...`` in a comment at the point
@@ -58,8 +65,10 @@ Code Examples
 * When you fold a part of a line, e.g. a variable value, put ``...`` (without comment)
   at the place of the fold;
 * Description of the folded code: (optional)
-  If you fold several lines: the description of the fold can be placed after the ``...``
-  If you fold only part of a line: the description can be placed before the line;
+
+  * If you fold several lines: the description of the fold can be placed after the ``...``;
+  * If you fold only part of a line: the description can be placed before the line;
+
 * If useful to the reader, a PHP code example should start with the namespace
   declaration;
 * When referencing classes, be sure to show the ``use`` statements at the
@@ -77,8 +86,9 @@ Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
 (and their orders) are:
 
-* **Configuration** (including services and routing): YAML, XML, PHP
-* **Validation**: YAML, Annotations, XML, PHP
+* **Configuration** (including services): YAML, XML, PHP
+* **Routing**: Annotations, YAML, XML, PHP
+* **Validation**: Annotations, YAML, XML, PHP
 * **Doctrine Mapping**: Annotations, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
 
@@ -137,8 +147,12 @@ Files and Directories
 English Language Standards
 --------------------------
 
-* **English Dialect**: use the United States English dialect, commonly called
-  `American English`_.
+Symfony documentation uses the United States English dialect, commonly called
+`American English`_. The `American English Oxford Dictionary`_ is used as the
+vocabulary reference.
+
+In addition, documentation follows these rules:
+
 * **Section titles**: use a variant of the title case, where the first
   word is always capitalized and all other words are capitalized, except for
   the closed-class words (read Wikipedia article about `headings and titles`_).
@@ -151,6 +165,7 @@ English Language Standards
 * **Gender-neutral language**: when referencing a hypothetical person, such as
   *"a user with a session cookie"*, use gender-neutral pronouns (they/their/them).
   For example, instead of:
+
   * he or she, use they
   * him or her, use them
   * his or her, use their
@@ -160,6 +175,7 @@ English Language Standards
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
 .. _`American English`: http://en.wikipedia.org/wiki/American_English
+.. _`American English Oxford Dictionary`: http://www.oxforddictionaries.com/definition/american_english/
 .. _`headings and titles`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma
 .. _`nosism`: http://en.wikipedia.org/wiki/Nosism

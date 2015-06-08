@@ -155,13 +155,22 @@ kernel::
     $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
     $kernel = new AppCache($kernel);
+
     $request = Request::createFromGlobals();
+
     $response = $kernel->handle($request);
     $response->send();
+
     $kernel->terminate($request, $response);
 
 The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.
+
+.. caution::
+
+    If you're using the :ref:`framework.http_method_override <configuration-framework-http_method_override>`
+    option to read the HTTP method from a ``_method`` parameter, see the
+    above link for a tweak you need to make.
 
 .. tip::
 
@@ -375,7 +384,7 @@ This has two very reasonable consequences:
 
 * You should *never* change the state of your application when responding
   to a GET or HEAD request. Even if you don't use a gateway cache, the presence
-  of proxy caches mean that any GET or HEAD request may or may not actually
+  of proxy caches means that any GET or HEAD request may or may not actually
   hit your server;
 
 * Don't expect PUT, POST or DELETE methods to cache. These methods are meant
@@ -576,16 +585,22 @@ each ``ETag`` must be unique across all representations of the same resource.
 
 To see a simple implementation, generate the ETag as the md5 of the content::
 
+    // src/AppBundle/Controller/DefaultController.php
+    namespace AppBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request)
+    class DefaultController extends Controller
     {
-        $response = $this->render('MyBundle:Main:index.html.twig');
-        $response->setETag(md5($response->getContent()));
-        $response->setPublic(); // make sure the response is public/cacheable
-        $response->isNotModified($request);
+        public function homepageAction(Request $request)
+        {
+            $response = $this->render('static/homepage.html.twig');
+            $response->setETag(md5($response->getContent()));
+            $response->setPublic(); // make sure the response is public/cacheable
+            $response->isNotModified($request);
 
-        return $response;
+            return $response;
+        }
     }
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
@@ -632,28 +647,36 @@ For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
 header value::
 
+    // src/AppBundle/Controller/ArticleController.php
+    namespace AppBundle\Controller;
+
+    // ...
     use Symfony\Component\HttpFoundation\Request;
+    use AppBundle\Entity\Article;
 
-    public function showAction($articleSlug, Request $request)
+    class ArticleController extends Controller
     {
-        // ...
+        public function showAction(Article $article, Request $request)
+        {
+            $author = $article->getAuthor();
 
-        $articleDate = new \DateTime($article->getUpdatedAt());
-        $authorDate = new \DateTime($author->getUpdatedAt());
+            $articleDate = new \DateTime($article->getUpdatedAt());
+            $authorDate = new \DateTime($author->getUpdatedAt());
 
-        $date = $authorDate > $articleDate ? $authorDate : $articleDate;
+            $date = $authorDate > $articleDate ? $authorDate : $articleDate;
 
-        $response->setLastModified($date);
-        // Set response as public. Otherwise it will be private by default.
-        $response->setPublic();
+            $response->setLastModified($date);
+            // Set response as public. Otherwise it will be private by default.
+            $response->setPublic();
 
-        if ($response->isNotModified($request)) {
+            if ($response->isNotModified($request)) {
+                return $response;
+            }
+
+            // ... do more work to populate the response with the full content
+
             return $response;
         }
-
-        // ... do more work to populate the response with the full content
-
-        return $response;
     }
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
@@ -682,40 +705,46 @@ Put another way, the less you do in your application to return a 304 response,
 the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
 
+    // src/AppBundle/Controller/ArticleController.php
+    namespace AppBundle\Controller;
+
+    // ...
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
 
-    public function showAction($articleSlug, Request $request)
+    class ArticleController extends Controller
     {
-        // Get the minimum information to compute
-        // the ETag or the Last-Modified value
-        // (based on the Request, data is retrieved from
-        // a database or a key-value store for instance)
-        $article = ...;
+        public function showAction($articleSlug, Request $request)
+        {
+            // Get the minimum information to compute
+            // the ETag or the Last-Modified value
+            // (based on the Request, data is retrieved from
+            // a database or a key-value store for instance)
+            $article = ...;
 
-        // create a Response with an ETag and/or a Last-Modified header
-        $response = new Response();
-        $response->setETag($article->computeETag());
-        $response->setLastModified($article->getPublishedAt());
+            // create a Response with an ETag and/or a Last-Modified header
+            $response = new Response();
+            $response->setETag($article->computeETag());
+            $response->setLastModified($article->getPublishedAt());
 
-        // Set response as public. Otherwise it will be private by default.
-        $response->setPublic();
+            // Set response as public. Otherwise it will be private by default.
+            $response->setPublic();
 
-        // Check that the Response is not modified for the given Request
-        if ($response->isNotModified($request)) {
-            // return the 304 Response immediately
-            return $response;
+            // Check that the Response is not modified for the given Request
+            if ($response->isNotModified($request)) {
+                // return the 304 Response immediately
+                return $response;
+            }
+
+            // do more work here - like retrieving more data
+            $comments = ...;
+
+            // or render a template with the $response you've already started
+            return $this->render('article/show.html.twig', array(
+                'article' => $article,
+                'comments' => $comments
+            ), $response);
         }
-
-        // do more work here - like retrieving more data
-        $comments = ...;
-
-        // or render a template with the $response you've already started
-        return $this->render(
-            'MyBundle:MyController:article.html.twig',
-            array('article' => $article, 'comments' => $comments),
-            $response
-        );
     }
 
 When the ``Response`` is not modified, the ``isNotModified()`` automatically sets
@@ -865,10 +894,10 @@ Here is how you can configure the Symfony reverse proxy to support the
 
     // app/AppCache.php
 
-    // ...
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+    // ...
 
     class AppCache extends HttpCache
     {
@@ -930,7 +959,7 @@ have one limitation: they can only cache whole pages. If you can't cache
 whole pages or if parts of a page has "more" dynamic parts, you are out of
 luck. Fortunately, Symfony provides a solution for these cases, based on a
 technology called `ESI`_, or Edge Side Includes. Akamai wrote this specification
-almost 10 years ago, and it allows specific parts of a page to have a different
+almost 10 years ago and it allows specific parts of a page to have a different
 caching strategy than the main page.
 
 The ESI specification describes tags you can embed in your pages to communicate
@@ -1017,13 +1046,19 @@ independent of the rest of the page.
 
 .. code-block:: php
 
-    public function indexAction()
-    {
-        $response = $this->render('MyBundle:MyController:index.html.twig');
-        // set the shared max age - which also marks the response as public
-        $response->setSharedMaxAge(600);
+    // src/AppBundle/Controller/DefaultController.php
 
-        return $response;
+    // ...
+    class DefaultController extends Controller
+    {
+        public function aboutAction()
+        {
+            $response = $this->render('static/about.html.twig');
+            // set the shared max age - which also marks the response as public
+            $response->setSharedMaxAge(600);
+
+            return $response;
+        }
     }
 
 In this example, the full-page cache has a lifetime of ten minutes.
@@ -1038,21 +1073,36 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
+        {# app/Resources/views/static/about.html.twig #}
+
         {# you can use a controller reference #}
-        {{ render_esi(controller('...:news', { 'maxPerPage': 5 })) }}
+        {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
 
         {# ... or a URL #}
         {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
 
     .. code-block:: html+php
 
-        <?php echo $view['actions']->render(
-            new \Symfony\Component\HttpKernel\Controller\ControllerReference('...:news', array('maxPerPage' => 5)),
-            array('strategy' => 'esi'))
-        ?>
+        <!-- app/Resources/views/static/about.html.php -->
 
+        // you can use a controller reference
+        use Symfony\Component\HttpKernel\Controller\ControllerReference;
         <?php echo $view['actions']->render(
-            $view['router']->generate('latest_news', array('maxPerPage' => 5), true),
+            new ControllerReference(
+                'AppBundle:News:latest',
+                array('maxPerPage' => 5)
+            ),
+            array('strategy' => 'esi')
+        ) ?>
+
+        // ... or a URL
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        <?php echo $view['actions']->render(
+            $view['router']->generate(
+                'latest_news',
+                array('maxPerPage' => 5),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
             array('strategy' => 'esi'),
         ) ?>
 
@@ -1072,7 +1122,7 @@ if there is no gateway cache installed.
 When using the default ``render`` function (or setting the renderer to
 ``inline``), Symfony merges the included page content into the main one
 before sending the response to the client. But if you use the ``esi`` renderer
-(i.e. call ``render_esi``), *and* if Symfony detects that it's talking to a
+(i.e. call ``render_esi``) *and* if Symfony detects that it's talking to a
 gateway cache that supports ESI, it generates an ESI include tag. But if there
 is no gateway cache or if it does not support ESI, Symfony will just merge
 the included page content within the main one as it would have done if you had
@@ -1089,15 +1139,25 @@ of the master page.
 
 .. code-block:: php
 
-    public function newsAction($maxPerPage)
-    {
-        // ...
+    // src/AppBundle/Controller/NewsController.php
+    namespace AppBundle\Controller;
 
-        $response->setSharedMaxAge(60);
+    // ...
+    class NewsController extends Controller
+    {
+        public function latestAction($maxPerPage)
+        {
+            // ...
+            $response->setSharedMaxAge(60);
+
+            return $response;
+        }
     }
 
 With ESI, the full page cache will be valid for 600 seconds, but the news
 component cache will only last for 60 seconds.
+
+.. _book-http_cache-fragments:
 
 When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of

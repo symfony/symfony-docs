@@ -1,7 +1,7 @@
 by_reference
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 In most cases, if you have a ``name`` field, then you expect ``setName()``
 to be called on the underlying object. In some cases, however, ``setName()``
@@ -40,6 +40,7 @@ So, all that ``by_reference=false`` really does is force the framework to
 call the setter on the parent object.
 
 Similarly, if you're using the :doc:`collection</reference/forms/types/collection>`
-form type where your underlying collection data is an object (like with Doctrine's
-``ArrayCollection``), then ``by_reference`` must be set to ``false`` if you
-need the adder and remover (e.g. ``addAuthor()`` and ``removeAuthor()``) to be called.
+form type where your underlying collection data is an object (like with
+Doctrine's ``ArrayCollection``), then ``by_reference`` must be set to ``false``
+if you need the adder and remover (e.g. ``addAuthor()`` and ``removeAuthor()``)
+to be called.

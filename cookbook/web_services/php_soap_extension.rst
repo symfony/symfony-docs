@@ -51,7 +51,7 @@ In this case, the SOAP service will allow the client to call a method called
     }
 
 Next, you can train Symfony to be able to create an instance of this class.
-Since the class sends an e-mail, it's been designed to accept a ``Swift_Mailer``
+Since the class sends an email, it's been designed to accept a ``Swift_Mailer``
 instance. Using the Service Container, you can configure Symfony to construct
 a ``HelloService`` object properly:
 
@@ -193,4 +193,4 @@ An example WSDL is below.
 .. _`PHP SOAP`: http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`: http://sourceforge.net/projects/nusoap
 .. _`output buffering`: http://php.net/manual/en/book.outcontrol.php
-.. _`Zend SOAP`: http://framework.zend.com/manual/en/zend.soap.server.html
+.. _`Zend SOAP`: http://framework.zend.com/manual/current/en/modules/zend.soap.server.html

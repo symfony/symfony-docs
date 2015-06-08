@@ -3,8 +3,9 @@ empty_data
 
 **type**: ``mixed``
 
-.. This file should only be included with start-after or end-before that's set to
-   this placeholder value. Its purpose is to let us include only part of this file.
+.. This file should only be included with start-after or end-before that's
+   set to this placeholder value. Its purpose is to let us include only
+   part of this file.
 
 DEFAULT_PLACEHOLDER
 
@@ -13,9 +14,7 @@ value is empty.
 
 But you can customize this to your needs. For example, if you want the
 ``gender`` choice field to be explicitly set to ``null`` when no value is
-selected, you can do it like this:
-
-.. code-block:: php
+selected, you can do it like this::
 
     $builder->add('gender', 'choice', array(
         'choices' => array(

@@ -22,6 +22,7 @@ is either a valid ISBN-10 or a valid ISBN-13.
 |                | - `isbn10Message`_                                                   |
 |                | - `isbn13Message`_                                                   |
 |                | - `bothIsbnMessage`_                                                 |
+|                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`            |
 +----------------+----------------------------------------------------------------------+
@@ -32,19 +33,9 @@ Basic Usage
 -----------
 
 To use the ``Isbn`` validator, simply apply it to a property or method
-on an  object that will contain an ISBN.
+on an object that will contain an ISBN.
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BookcaseBundle/Resources/config/validation.yml
-        Acme\BookcaseBundle\Entity\Book:
-            properties:
-                isbn:
-                    - Isbn:
-                        type: isbn10
-                        message: This value is not  valid.
 
     .. code-block:: php-annotations
 
@@ -63,6 +54,17 @@ on an  object that will contain an ISBN.
              */
             protected $isbn;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BookcaseBundle/Resources/config/validation.yml
+        Acme\BookcaseBundle\Entity\Book:
+            properties:
+                isbn:
+                    - Isbn:
+                        type: isbn10
+                        message: This value is not  valid.
+
 
     .. code-block:: xml
 
@@ -111,16 +113,16 @@ type
 
 **type**: ``string`` **default**: ``null``
 
-The type of ISBN to validate against.
-Valid values are ``isbn10``, ``isbn13`` and ``null`` to accept any kind of ISBN.
+The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
+and ``null`` to accept any kind of ISBN.
 
 message
 ~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
-The message that will be shown if the value is not valid.
-If not ``null``, this message has priority over all the other messages.
+The message that will be shown if the value is not valid. If not ``null``,
+this message has priority over all the other messages.
 
 isbn10Message
 ~~~~~~~~~~~~~
@@ -145,5 +147,7 @@ bothIsbnMessage
 
 The message that will be shown if the `type`_ option is ``null`` and the given
 value does not pass any of the ISBN checks.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Standard Book Number (ISBN)`: http://en.wikipedia.org/wiki/Isbn

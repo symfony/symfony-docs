@@ -5,41 +5,34 @@
 How to Secure any Service or Method in your Application
 =======================================================
 
-In the security chapter, you can see how to :ref:`secure a controller <book-security-securing-controller>`
-by requesting the ``security.authorization_checker`` service from the Service Container
-and checking the current user's role::
+In the security chapter, you can see how to
+:ref:`secure a controller <book-security-securing-controller>` by requesting
+the ``security.authorization_checker`` service from the Service Container and
+checking the current user's role::
 
     // ...
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
-You can also secure *any* service in a similar way by injecting the ``security.authorization_checker``
+You can also secure *any* service by injecting the ``security.authorization_checker``
 service into it. For a general introduction to injecting dependencies into
 services see the :doc:`/book/service_container` chapter of the book. For
 example, suppose you have a ``NewsletterManager`` class that sends out emails
-and you want to restrict its use to only users who have some ``ROLE_NEWSLETTER_ADMIN``
-role. Before you add security, the class looks something like this:
-
-.. code-block:: php
+and you want to restrict its use to only users who have some
+``ROLE_NEWSLETTER_ADMIN`` role. Before you add security, the class looks
+something like this::
 
     // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;
 
     class NewsletterManager
     {
-
         public function sendNewsletter()
         {
             // ... where you actually do the work
@@ -55,8 +48,9 @@ check, this is an ideal candidate for constructor injection, which guarantees
 that the authorization checker object will be available inside the ``NewsletterManager``
 class::
 
-    namespace AppBundle\Newsletter;
+    // src/AppBundle/Newsletter/NewsletterManager.php
 
+    // ...
     use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
     class NewsletterManager

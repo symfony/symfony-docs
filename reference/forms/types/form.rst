@@ -9,6 +9,7 @@ on all types for which ``form`` is the parent type.
 
 +-----------+--------------------------------------------------------------------+
 | Options   | - `action`_                                                        |
+|           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
 |           | - `cascade_validation`_                                            |
 |           | - `compound`_                                                      |
@@ -52,6 +53,20 @@ Field Options
 
 .. include:: /reference/forms/types/options/action.rst.inc
 
+allow_extra_fields
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``allow_extra_fields`` option was introduced in Symfony 2.6.
+
+**type**: ``boolean`` **default**: ``false``
+
+Usually, if you submit extra fields that aren't configured in your form,
+you'll get a "This form should not contain extra fields." validation error.
+
+You can silence this validation error by enabling the ``allow_extra_fields``
+option on the form.
+
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/cascade_validation.rst.inc
@@ -73,7 +88,8 @@ The actual default value of this option depends on other field options:
 * If ``data_class`` is set and ``required`` is ``false``, then ``null``;
 * If ``data_class`` is not set and ``compound`` is ``true``, then ``array()``
   (empty array);
-* If ``data_class`` is not set and ``compound`` is ``false``, then ``''`` (empty string).
+* If ``data_class`` is not set and ``compound`` is ``false``, then ``''``
+  (empty string).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER

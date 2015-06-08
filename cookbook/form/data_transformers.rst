@@ -17,6 +17,11 @@ You could try to do this in your controller, but it's not the best solution.
 It would be better if this issue were automatically converted to an Issue object.
 This is where Data Transformers come into play.
 
+.. caution::
+
+    When a form field has the ``inherit_data`` option set, Data Transformers
+    won't be applied to that field.
+
 Creating the Transformer
 ------------------------
 
@@ -123,7 +128,9 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
         {
             // ...
 
-            // this assumes that the entity manager was passed in as an option
+            // the "em" is an option that you pass when creating your form. Check out
+            // the 3rd argument to createForm in the next code block to see how this
+            // is passed to the form (see also configureOptions).
             $entityManager = $options['em'];
             $transformer = new IssueToNumberTransformer($entityManager);
 
@@ -140,12 +147,8 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
                 ->setDefaults(array(
                     'data_class' => 'Acme\TaskBundle\Entity\Task',
                 ))
-                ->setRequired(array(
-                    'em',
-                ))
-                ->setAllowedTypes(array(
-                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                ));
+                ->setRequired(array('em'))
+                ->setAllowedTypes('em', 'Doctrine\Common\Persistence\ObjectManager')
 
             // ...
         }
@@ -163,8 +166,8 @@ when creating your form. Later, you'll learn how you could create a custom
 
 Cool, you're done! Your user will be able to enter an issue number into the
 text field and it will be transformed back into an Issue object. This means
-that, after a successful submission, the Form framework will pass a real Issue
-object to ``Task::setIssue()`` instead of the issue number.
+that, after a successful submission, the Form component will pass a real
+``Issue`` object to ``Task::setIssue()`` instead of the issue number.
 
 If the issue isn't found, a form error will be created for that field and
 its error message can be controlled with the ``invalid_message`` field option.
@@ -278,7 +281,7 @@ First, create the custom field type class::
             $builder->addModelTransformer($transformer);
         }
 
-        public function configureOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',

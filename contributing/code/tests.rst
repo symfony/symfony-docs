@@ -95,4 +95,4 @@ browser.
     dependencies installed.
 
 .. _install PHPUnit: https://phpunit.de/manual/current/en/installation.html
-.. _`Composer`: http://getcomposer.org/
+.. _`Composer`: https://getcomposer.org/

@@ -186,13 +186,13 @@ organization, translations were split into three different domains:
 loaded like this::
 
     // ...
-    $translator->addLoader('xliff', new XliffLoader());
+    $translator->addLoader('xlf', new XliffFileLoader());
 
-    $translator->addResource('xliff', 'messages.fr.xliff', 'fr_FR');
-    $translator->addResource('xliff', 'admin.fr.xliff', 'fr_FR', 'admin');
+    $translator->addResource('xlf', 'messages.fr.xlf', 'fr_FR');
+    $translator->addResource('xlf', 'admin.fr.xlf', 'fr_FR', 'admin');
     $translator->addResource(
-        'xliff',
-        'navigation.fr.xliff',
+        'xlf',
+        'navigation.fr.xlf',
         'fr_FR',
         'navigation'
     );

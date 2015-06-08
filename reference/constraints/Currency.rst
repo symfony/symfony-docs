@@ -10,6 +10,7 @@ Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 | Applies to     | :ref:`property or method<validation-property-target>`                     |
 +----------------+---------------------------------------------------------------------------+
 | Options        | - `message`_                                                              |
+|                | - `payload`_                                                              |
 +----------------+---------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Currency`             |
 +----------------+---------------------------------------------------------------------------+
@@ -19,18 +20,10 @@ Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 Basic Usage
 -----------
 
-If you want to ensure that the ``currency`` property of an ``Order`` is a valid
-currency, you could do the following:
+If you want to ensure that the ``currency`` property of an ``Order`` is
+a valid currency, you could do the following:
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/EcommerceBundle/Resources/config/validation.yml
-        Acme\EcommerceBundle\Entity\Order:
-            properties:
-                currency:
-                    - Currency: ~
 
     .. code-block:: php-annotations
 
@@ -46,6 +39,14 @@ currency, you could do the following:
              */
             protected $currency;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EcommerceBundle/Resources/config/validation.yml
+        Acme\EcommerceBundle\Entity\Order:
+            properties:
+                currency:
+                    - Currency: ~
 
     .. code-block:: xml
 
@@ -87,5 +88,7 @@ message
 **type**: ``string`` **default**: ``This value is not a valid currency.``
 
 This is the message that will be shown if the value is not a valid currency.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`3-letter ISO 4217`: http://en.wikipedia.org/wiki/ISO_4217

@@ -17,7 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
-|             | - `precision`_                                                      |
+|             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `data`_                                                           |
 | options     | - `disabled`_                                                       |
@@ -50,8 +50,8 @@ the currency symbol that should be shown by the text box. Depending on
 the currency - the currency symbol may be shown before or after the input
 text field.
 
-This can be any `3 letter ISO 4217 code`_. You can also set this to false to
-hide the currency symbol.
+This can be any `3 letter ISO 4217 code`_. You can also set this to false
+to hide the currency symbol.
 
 divisor
 ~~~~~~~
@@ -73,20 +73,25 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-precision
-~~~~~~~~~
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``2``
 
-For some reason, if you need some precision other than 2 decimal places,
+For some reason, if you need some scale other than 2 decimal places,
 you can modify this value. You probably won't need to do this unless,
-for example, you want to round to the nearest dollar (set the precision
+for example, you want to round to the nearest dollar (set the scale
 to ``0``).
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

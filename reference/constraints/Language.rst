@@ -8,6 +8,7 @@ Validates that a value is a valid language *Unicode language identifier*
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Language`          |
 +----------------+------------------------------------------------------------------------+
@@ -18,14 +19,6 @@ Basic Usage
 -----------
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                preferredLanguage:
-                    - Language: ~
 
     .. code-block:: php-annotations
 
@@ -41,6 +34,14 @@ Basic Usage
              */
              protected $preferredLanguage;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                preferredLanguage:
+                    - Language: ~
 
     .. code-block:: xml
 
@@ -82,3 +83,5 @@ message
 **type**: ``string`` **default**: ``This value is not a valid language.``
 
 This message is shown if the string is not a valid language code.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

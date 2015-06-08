@@ -74,16 +74,16 @@ Here is an example on how to load the
 
     .. code-block:: yaml
 
-       # app/config/config.yml
-       services:
-          get_set_method_normalizer:
-             class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-             tags:
-                - { name: serializer.normalizer }
+        # app/config/services.yml
+        services:
+            get_set_method_normalizer:
+                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+                tags:
+                    - { name: serializer.normalizer }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
                 <tag name="serializer.normalizer" />
@@ -92,7 +92,7 @@ Here is an example on how to load the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition(
@@ -100,12 +100,5 @@ Here is an example on how to load the
         ));
         $definition->addTag('serializer.normalizer');
         $container->setDefinition('get_set_method_normalizer', $definition);
-
-.. note::
-
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-    is broken by design. As soon as you have a circular object graph, an
-    infinite loop is created when calling the getters. You're encouraged
-    to add your own normalizers that fit your use-case.
 
 .. _JMSSerializerBundle: http://jmsyst.com/bundles/JMSSerializerBundle

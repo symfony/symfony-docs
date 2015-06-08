@@ -194,7 +194,7 @@ Start by creating a simple class which represents the "registration"::
 
         public function setTermsAccepted($termsAccepted)
         {
-            $this->termsAccepted = (Boolean) $termsAccepted;
+            $this->termsAccepted = (bool) $termsAccepted;
         }
     }
 
@@ -287,7 +287,7 @@ the validation and saves the data into the database::
             $em->persist($registration->getUser());
             $em->flush();
 
-            return $this->redirect(...);
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(

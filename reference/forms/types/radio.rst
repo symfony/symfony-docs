@@ -4,18 +4,19 @@
 radio Field Type
 ================
 
-Creates a single radio button. If the radio button is selected, the field will
-be set to the specified value. Radio buttons cannot be unchecked - the value only
-changes when another radio button with the same name gets checked.
+Creates a single radio button. If the radio button is selected, the field
+will be set to the specified value. Radio buttons cannot be unchecked -
+the value only changes when another radio button with the same name gets
+checked.
 
 The ``radio`` type isn't usually used directly. More commonly it's used
 internally by other types such as :doc:`choice </reference/forms/types/choice>`.
-If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/checkbox>`.
+If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/checkbox>`.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | from  the :doc:`checkbox </reference/forms/types/checkbox>` type:   |
+| Inherited   | from the :doc:`checkbox </reference/forms/types/checkbox>` type:    |
 | options     |                                                                     |
 |             | - `value`_                                                          |
 |             |                                                                     |
@@ -45,7 +46,8 @@ type:
 
 .. include:: /reference/forms/types/options/value.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

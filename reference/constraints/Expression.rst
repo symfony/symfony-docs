@@ -11,6 +11,7 @@ gives you similar flexibility.
 +----------------+-----------------------------------------------------------------------------------------------+
 | Options        | - :ref:`expression <reference-constraint-expression-option>`                                  |
 |                | - `message`_                                                                                  |
+|                | - `payload`_                                                                                  |
 +----------------+-----------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Expression`                               |
 +----------------+-----------------------------------------------------------------------------------------------+
@@ -255,3 +256,5 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 The default message supplied when the expression evaluates to false.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

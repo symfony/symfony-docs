@@ -42,6 +42,7 @@
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
+  * :doc:`/cookbook/console/command_in_controller`
   * :doc:`/cookbook/console/sending_emails`
   * :doc:`/cookbook/console/logging`
   * :doc:`/cookbook/console/commands_as_services`
@@ -112,6 +113,10 @@
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
+* :doc:`/cookbook/frontend/index`
+
+  * :doc:`/cookbook/frontend/bower`
+
 * :doc:`/cookbook/logging/index`
 
   * :doc:`/cookbook/logging/monolog`
@@ -125,6 +130,7 @@
   * :doc:`/cookbook/profiler/data_collector`
   * :doc:`/cookbook/profiler/matchers`
   * :doc:`/cookbook/profiler/storage`
+  * :doc:`/cookbook/profiler/profiling_data`
 
 * :doc:`/cookbook/request/index`
 
@@ -187,6 +193,7 @@
   * :doc:`/cookbook/session/php_bridge`
   * :doc:`/cookbook/session/limit_metadata_writes`
   * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
+  * :doc:`/cookbook/session/avoid_session_start`
 
 * **symfony1**
 
@@ -212,13 +219,17 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
-* **Upgrading**
+* :doc:`/cookbook/upgrade/index`
 
-  * :doc:`/cookbook/upgrading`
+  * :doc:`/cookbook/upgrade/patch_version`
+  * :doc:`/cookbook/upgrade/minor_version`
+  * :doc:`/cookbook/upgrade/major_version`
+  * :doc:`/cookbook/upgrade/deprecation_warnings`
 
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
+  * :doc:`/cookbook/validation/severity`
 
 * :doc:`/cookbook/web_server/index`
 

@@ -9,11 +9,11 @@ placeholder
     Since Symfony 2.3, empty values are also supported if the ``expanded``
     option is set to true.
 
-**type**: ``string`` or ``Boolean``
+**type**: ``string`` or ``boolean``
 
-This option determines whether or not a special "empty" option (e.g. "Choose an option")
-will appear at the top of a select widget. This option only applies if the
-``multiple`` option is set to false.
+This option determines whether or not a special "empty" option (e.g. "Choose
+an option") will appear at the top of a select widget. This option only
+applies if the ``multiple`` option is set to false.
 
 * Add an empty value with "Choose an option" as the text::
 

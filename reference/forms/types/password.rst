@@ -34,7 +34,7 @@ Field Options
 always_empty
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If set to true, the field will *always* render blank, even if the corresponding
 field has a value. When set to false, the password field will be rendered
@@ -48,7 +48,8 @@ and submit the form.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -76,4 +77,12 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
-.. include:: /reference/forms/types/options/trim.rst.inc
+trim
+~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If true, the whitespace of the submitted string value will be stripped
+via the :phpfunction:`trim` function when the data is bound. This guarantees
+that if a value is submitted with extra whitespace, it will be removed before
+the value is merged back onto the underlying object.

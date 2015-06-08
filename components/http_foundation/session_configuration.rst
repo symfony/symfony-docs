@@ -189,6 +189,36 @@ experience, for example, by displaying a message.
 Symfony records some basic metadata about each session to give you complete
 freedom in this area.
 
+Session Cache Limiting
+~~~~~~~~~~~~~~~~~~~~~~
+
+To avoid users seeing stale data, it's common for session-enabled resources to be
+sent with headers that disable caching. For this purpose PHP Sessions has the
+``sessions.cache_limiter`` option, which determines which headers, if any, will be
+sent with the response when the session in started.
+
+Upon construction,
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+sets this global option to ``""`` (send no headers) in case the developer wishes to
+use a :class:`Symfony\\Component\\HttpFoundation\\Response` object to manage
+response headers.
+
+.. caution::
+
+    If you rely on PHP Sessions to manage HTTP caching, you *must* manually set the
+    ``cache_limiter`` option in
+    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+    to a non-empty value.
+
+    For example, you may set it to PHP's default value during construction:
+
+    Example usage::
+
+        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+        $options['cache_limiter'] = session_cache_limiter();
+        $storage = new NativeSessionStorage($options);
+
 Session Metadata
 ~~~~~~~~~~~~~~~~
 
@@ -217,6 +247,23 @@ particular cookie by reading the ``getLifetime()`` method::
 
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
+
+PHP 5.4 Compatibility
+~~~~~~~~~~~~~~~~~~~~~
+
+Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface`
+are available. Symfony provides forward compatibility for the :phpclass:`SessionHandlerInterface`
+so it can be used under PHP 5.3. This greatly improves interoperability with other
+libraries.
+
+:phpclass:`SessionHandler` is a special PHP internal class which exposes native save
+handlers to PHP user-space.
+
+In order to provide a solution for those using PHP 5.4, Symfony has a special
+class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSessionHandler`
+which under PHP 5.4, extends from ``\SessionHandler`` and under PHP 5.3 is just a
+empty base class. This provides some interesting opportunities to leverage
+PHP 5.4 functionality if it is available.
 
 Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~

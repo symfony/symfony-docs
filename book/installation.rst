@@ -6,15 +6,21 @@ Installing and Configuring Symfony
 
 The goal of this chapter is to get you up and running with a working application
 built on top of Symfony. In order to simplify the process of creating new
-applications, Symfony provides an installer that must be installed before
-creating the first application.
+applications, Symfony provides an installer application.
 
 Installing the Symfony Installer
 --------------------------------
 
-Using the Symfony Installer is the only recommended way to create new Symfony
-applications. This installer is a PHP application that has to be installed
-only once and then it can create any number of Symfony applications.
+Using the **Symfony Installer** is the only recommended way to create new Symfony
+applications. This installer is a PHP application that has to be installed in your
+system only once and then it can create any number of Symfony applications.
+
+.. note::
+
+    The installer requires PHP 5.4 or higher. If you still use the legacy
+    PHP 5.3 version, you cannot use the Symfony Installer. Read the
+    :ref:`book-creating-applications-without-the-installer` section to learn how
+    to proceed.
 
 Depending on your operating system, the installer must be installed in different
 ways.
@@ -22,16 +28,14 @@ ways.
 Linux and Mac OS X Systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Open your command console and execute the following three commands:
+Open your command console and execute the following commands:
 
 .. code-block:: bash
 
-    $ curl -LsS http://symfony.com/installer > symfony.phar
-    $ sudo mv symfony.phar /usr/local/bin/symfony
-    $ chmod a+x /usr/local/bin/symfony
+    $ sudo curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
+    $ sudo chmod a+x /usr/local/bin/symfony
 
-This will create a global ``symfony`` command in your system that will be used
-to create new Symfony applications.
+This will create a global ``symfony`` command in your system.
 
 Windows Systems
 ~~~~~~~~~~~~~~~
@@ -40,21 +44,21 @@ Open your command console and execute the following command:
 
 .. code-block:: bash
 
-    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
+    c:\> php -r "readfile('http://symfony.com/installer');" > symfony
 
-Then, move the downloaded ``symfony.phar`` file to your projects directory and
+Then, move the downloaded ``symfony`` file to your project's directory and
 execute it as follows:
 
 .. code-block:: bash
 
-    c:\> move symfony.phar c:\projects
-    c:\projects\> php symfony.phar
+    c:\> move symfony c:\projects
+    c:\projects\> php symfony
 
 Creating the Symfony Application
 --------------------------------
 
-Once the Symfony Installer is ready, create your first Symfony application with
-the ``new`` command:
+Once the Symfony Installer is available, create your first Symfony application
+with the ``new`` command:
 
 .. code-block:: bash
 
@@ -63,7 +67,7 @@ the ``new`` command:
 
     # Windows
     c:\> cd projects/
-    c:\projects\> php symfony.phar new my_project_name
+    c:\projects\> php symfony new my_project_name
 
 This command creates a new directory called ``my_project_name`` that contains a
 fresh new project based on the most recent stable Symfony version available. In
@@ -80,16 +84,33 @@ to meet those requirements.
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your project needs to be based on a specific Symfony version, pass the version
-number as the second argument of the ``new`` command:
+In case your project needs to be based on a specific Symfony version, use the
+optional second argument of the ``new`` command:
+
+.. code-block:: bash
+
+    # use the most recent version in any Symfony branch
+    $ symfony new my_project_name 2.3
+    $ symfony new my_project_name 2.5
+    $ symfony new my_project_name 2.6
+
+    # use a specific Symfony version
+    $ symfony new my_project_name 2.3.26
+    $ symfony new my_project_name 2.6.5
+
+    # use the most recent LTS (Long Term Support) version
+    $ symfony new my_project_name lts
+
+If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
+pass ``lts`` as the second argument of the ``new`` command:
 
 .. code-block:: bash
 
     # Linux, Mac OS X
-    $ symfony new my_project_name 2.3.23
+    $ symfony new my_project_name lts
 
     # Windows
-    c:\projects\> php symfony.phar new my_project_name 2.3.23
+    c:\projects\> php symfony.phar new my_project_name lts
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
@@ -100,11 +121,12 @@ to use for your projects.
 Creating Symfony Applications without the Installer
 ---------------------------------------------------
 
-If you can't execute the installer for any reason, you can create Symfony
-applications using the alternative installation method based on `Composer`_.
+If you still use PHP 5.3, or if you can't execute the installer for any reason,
+you can create Symfony applications using the alternative installation method
+based on `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
-also be used to create new applications based on the Symfony framework. If you
+also be used to create new applications based on the Symfony Framework. If you
 don't have installed it globally, start by reading the next section.
 
 Installing Composer Globally
@@ -159,6 +181,12 @@ This is caused by a directory permission misconfiguration. There are several
 possible solutions depending on your operating system. All of them are
 explained in the :ref:`Setting up Permissions <book-installation-permissions>`
 section.
+
+.. note::
+
+    PHP's internal web server is available in PHP 5.4 or higher versions. If you
+    still use the legacy PHP 5.3 version, you'll have to configure a *virtual host*
+    in your web server.
 
 The ``server:run`` command is only suitable while developing the application. In
 order to run Symfony applications on production servers, you'll have to configure
@@ -277,7 +305,7 @@ several minutes to complete.
 .. tip::
 
     Symfony provides a command to check whether your project's dependencies
-    contain any know security vulnerability:
+    contain any known security vulnerability:
 
     .. code-block:: bash
 
@@ -305,7 +333,7 @@ applications:
 * The `Symfony CMF Standard Edition`_ is the best distribution to get started
   with the `Symfony CMF`_ project, which is a project that makes it easier for
   developers to add CMS functionality to applications built with the Symfony
-  framework.
+  Framework.
 * The `Symfony REST Edition`_ shows how to build an application that provides a
   RESTful API using the FOSRestBundle and several other related bundles.
 
@@ -363,7 +391,7 @@ a wide variety of articles about solving specific problems with Symfony.
     at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 .. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
-.. _`Composer`: http://getcomposer.org/
+.. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony

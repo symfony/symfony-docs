@@ -32,6 +32,7 @@ Configuration
     * `threshold`_
     * `sleep`_
 * `delivery_address`_
+* `delivery_whitelist`_
 * `disable_delivery`_
 * `logging`_
 
@@ -156,10 +157,19 @@ emails sent during development go to a single account.
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 
+delivery_whitelist
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``array``
+
+Used in combination with ``delivery_address``. If set, emails matching any of these
+patterns will be delivered like normal, instead of being sent to ``delivery_address``.
+For details, see :ref:`the cookbook entry. <sending-to-a-specified-address-but-with-exceptions>`
+
 disable_delivery
 ~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, the ``transport`` will automatically be set to ``null``, and no
 emails will actually be delivered.
@@ -167,7 +177,7 @@ emails will actually be delivered.
 logging
 ~~~~~~~
 
-**type**: ``Boolean`` **default**: ``%kernel.debug%``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If true, Symfony's data collector will be activated for Swift Mailer and the
 information will be available in the profiler.

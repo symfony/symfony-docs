@@ -27,7 +27,7 @@ Configuration
 
 .. tip::
 
-    If you are working with the full-stack Symfony framework, the Form component
+    If you are working with the full-stack Symfony Framework, the Form component
     is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
 
 In Symfony, forms are represented by objects and these objects are built
@@ -138,7 +138,7 @@ above snippet and make sure that nobody except your web server can access
 the secret.
 
 Internally, this extension will automatically add a hidden field to every
-form (called ``__token`` by default) whose value is automatically generated
+form (called ``_token`` by default) whose value is automatically generated
 and validated when binding the form.
 
 .. tip::
@@ -375,7 +375,7 @@ Creating a simple Form
 
 .. tip::
 
-    If you're using the Symfony framework, then the form factory is available
+    If you're using the Symfony Framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder``
@@ -480,11 +480,11 @@ helper functions:
 
 .. code-block:: html+jinja
 
-    <form action="#" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         {{ form_widget(form) }}
 
         <input type="submit" />
-    </form>
+    {{ form_end(form) }}
 
 .. image:: /images/book/form-simple.png
     :align: center
@@ -587,7 +587,7 @@ method:
 
                 // ... perform some action, such as saving the data to the database
 
-                return $this->redirect($this->generateUrl('task_success'));
+                return $this->redirectToRoute('task_success');
             }
 
             // ...

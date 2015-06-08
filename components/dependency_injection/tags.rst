@@ -133,11 +133,11 @@ custom tag::
     {
         public function process(ContainerBuilder $container)
         {
-            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
+            if (!$container->has('acme_mailer.transport_chain')) {
                 return;
             }
 
-            $definition = $container->getDefinition(
+            $definition = $container->findDefinition(
                 'acme_mailer.transport_chain'
             );
 
@@ -173,9 +173,9 @@ run when the container is compiled::
 
 .. note::
 
-    Compiler passes are registered differently if you are using the full
-    stack framework. See :doc:`/cookbook/service_container/compiler_passes`
-    for more details.
+    Compiler passes are registered differently if you are using the full-stack
+    framework. See :doc:`/cookbook/service_container/compiler_passes` for
+    more details.
 
 Adding additional Attributes on Tags
 ------------------------------------

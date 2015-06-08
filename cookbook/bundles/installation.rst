@@ -111,7 +111,7 @@ Other Setup
 At this point, check the ``README`` file of your brand new bundle to see
 what to do next. Have fun!
 
-.. _their documentation: http://getcomposer.org/doc/00-intro.md
+.. _their documentation: https://getcomposer.org/doc/00-intro.md
 .. _Packagist.org:       https://packagist.org
 .. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _KnpBundles.com:      http://knpbundles.com/

@@ -45,7 +45,7 @@ The basic handler is the ``StreamHandler`` which writes logs in a stream
 Monolog comes also with a powerful built-in handler for the logging in
 prod environment: ``FingersCrossedHandler``. It allows you to store the
 messages in a buffer and to log them only if a message reaches the
-action level (``error`` in the configuration provided in the Standard
+action level (``error`` in the configuration provided in the Symfony Standard
 Edition) by forwarding the messages to another handler.
 
 Using several Handlers
@@ -221,6 +221,68 @@ easily. Your formatter must implement
             ),
         ));
 
+How to Rotate your Log Files
+----------------------------
+
+Over time, log files can grow to be *huge*, both while developing and on
+production. One best-practice solution is to use a tool like the `logrotate`_
+Linux command to rotate log files before they become too large.
+
+Another option is to have Monolog rotate the files for you by using the
+``rotating_file`` handler. This handler creates a new log file every day
+and can also remove old files automatically. To use it, just set the ``type``
+option of your handler to ``rotating_file``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        monolog:
+            handlers:
+                main:
+                    type:  rotating_file
+                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
+                    # max number of log files to keep
+                    # defaults to zero, which means infinite files
+                    max_files: 10
+
+    .. code-block:: xml
+
+        <!-- app/config/config_dev.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns=''http://symfony.com/schema/dic/services"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog">
+
+            <monolog:config>
+                <monolog:handler name="main"
+                    type="rotating_file"
+                    path="%kernel.logs_dir%/%kernel.environment%.log"
+                    level="debug"
+                    <!-- max number of log files to keep
+                         defaults to zero, which means infinite files -->
+                    max_files="10"
+                />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config_dev.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main' => array(
+                    'type'  => 'rotating_file',
+                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                    'level' => 'debug',
+                    // max number of log files to keep
+                    // defaults to zero, which means infinite files
+                    'max_files' => 10,
+                ),
+            ),
+        ));
+
 Adding some extra Data in the Log Messages
 ------------------------------------------
 
@@ -229,7 +291,6 @@ extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 
 A processor is simply a callable receiving the record as its first argument.
-
 Processors are configured using the ``monolog.processor`` DIC tag. See the
 :ref:`reference about it <dic_tags-monolog-processor>`.
 
@@ -474,3 +535,4 @@ the ``monolog.processor`` tag:
 
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
+.. _`logrotate`: https://fedorahosted.org/logrotate/

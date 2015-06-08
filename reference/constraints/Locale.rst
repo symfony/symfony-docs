@@ -3,14 +3,16 @@ Locale
 
 Validates that a value is a valid locale.
 
-The "value" for each locale is either the two letter `ISO 639-1`_ *language* code
-(e.g. ``fr``), or the language code followed by an underscore (``_``), then
-the `ISO 3166-1 alpha-2`_ *country* code (e.g. ``fr_FR`` for French/France).
+The "value" for each locale is either the two letter `ISO 639-1`_ *language*
+code (e.g. ``fr``), or the language code followed by an underscore (``_``),
+then the `ISO 3166-1 alpha-2`_ *country* code (e.g. ``fr_FR`` for
+French/France).
 
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Locale`            |
 +----------------+------------------------------------------------------------------------+
@@ -21,14 +23,6 @@ Basic Usage
 -----------
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                locale:
-                    - Locale: ~
 
     .. code-block:: php-annotations
 
@@ -44,6 +38,14 @@ Basic Usage
              */
              protected $locale;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                locale:
+                    - Locale: ~
 
     .. code-block:: xml
 
@@ -85,6 +87,8 @@ message
 **type**: ``string`` **default**: ``This value is not a valid locale.``
 
 This message is shown if the string is not a valid locale.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`ISO 639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`ISO 3166-1 alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

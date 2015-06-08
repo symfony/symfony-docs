@@ -5,7 +5,7 @@ Controller
 ==========
 
 A controller is a PHP callable you create that takes information from the
-HTTP request and constructs and returns an HTTP response (as a Symfony
+HTTP request and creates and returns an HTTP response (as a Symfony
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
@@ -34,7 +34,7 @@ common examples:
   for the homepage of the site.
 
 * *Controller B* reads the ``slug`` parameter from the request to load a
-  blog entry from the database and create a ``Response`` object displaying
+  blog entry from the database and creates a ``Response`` object displaying
   that blog. If the ``slug`` can't be found in the database, it creates and
   returns a ``Response`` object with a 404 status code.
 
@@ -201,7 +201,7 @@ to the controller:
 
         return $collection;
 
-Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/app_dev.php/hello/ryan``
+Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
 if you're using the :doc:`built-in web server </cookbook/web_server/built_in>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
@@ -429,35 +429,47 @@ A great way to see the core functionality in action is to look in the
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-method::
+If you want to redirect the user to another page, use the ``redirectToRoute()`` method::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is equivalent to using redirect() and generateUrl() together:
+        // return $this->redirect($this->generateUrl('homepage'), 301);
     }
 
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
+.. versionadded:: 2.6
+    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
 
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
-perform a 301 (permanent) redirect, modify the second argument::
+Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'), 301);
+        return $this->redirect('http://symfony.com/doc');
+    }
+
+By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
+perform a 301 (permanent) redirect, modify the third argument::
+
+    public function indexAction()
+    {
+        return $this->redirectToRoute('homepage', array(), 301);
     }
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to::
+    The ``redirectToRoute()`` method is simply a shortcut that creates a
+    ``Response`` object that specializes in redirecting the user. It's
+    equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
-        return new RedirectResponse($this->generateUrl('homepage'));
+        public function indexAction()
+        {
+            return new RedirectResponse($this->generateUrl('homepage'));
+        }
 
 .. index::
    single: Controller; Rendering templates
@@ -471,14 +483,16 @@ If you're serving HTML, you'll want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
-    // renders app/Resources/views/Hello/index.html.twig
-    return $this->render('Hello/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/index.html.twig
+    return $this->render('hello/index.html.twig', array('name' => $name));
 
 You can also put templates in deeper sub-directories. Just try to avoid creating
 unnecessarily deep structures::
 
-    // renders app/Resources/views/Hello/Greetings/index.html.twig
-    return $this->render('Hello/Greetings/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/greetings/index.html.twig
+    return $this->render('hello/greetings/index.html.twig', array(
+        'name' => $name
+    ));
 
 The Symfony templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.
@@ -513,7 +527,7 @@ via the ``get()`` method. Here are several common services you might need::
 
     $mailer = $this->get('mailer');
 
-What other services exist? You can list all services, use the ``debug:container``
+What other services exist? To list all services, use the ``debug:container``
 console command:
 
 .. code-block:: bash
@@ -623,12 +637,14 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl(...));
+            // $this->addFlash is equivalent to $this->get('session')->getFlashBag()->add
+
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(...);
@@ -638,8 +654,8 @@ After processing the request, the controller sets a ``notice`` flash message
 in the session and then redirects. The name (``notice``) isn't significant -
 it's just something you invent and reference next.
 
-In the template of the next page (or even better, in your base layout template),
-the following code will render the ``notice`` message:
+In the template of the next action, the following code could be used to render
+the ``notice`` message:
 
 .. configuration-block::
 

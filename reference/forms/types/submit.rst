@@ -25,9 +25,10 @@ A submit button.
 +----------------------+----------------------------------------------------------------------+
 
 The Submit button has an additional method
-:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` that lets you
-check whether this button was used to submit the form. This is especially
-useful when :ref:`a form has multiple submit buttons <book-form-submitting-multiple-buttons>`::
+:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` that lets
+you check whether this button was used to submit the form. This is especially
+useful when :ref:`a form has multiple submit buttons
+<book-form-submitting-multiple-buttons>`::
 
     if ($form->get('save')->isClicked()) {
         // ...
@@ -79,5 +80,5 @@ Form Variables
 ========  ===========  ==============================================================
 Variable  Type         Usage
 ========  ===========  ==============================================================
-clicked   ``Boolean``  Whether the button is clicked or not.
+clicked   ``boolean``  Whether the button is clicked or not.
 ========  ===========  ==============================================================

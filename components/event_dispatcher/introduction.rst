@@ -12,7 +12,7 @@ The EventDispatcher Component
 Introduction
 ------------
 
-Object Oriented code has gone a long way to ensuring code extensibility. By
+Object-oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
 behaviors. But if they want to share the changes with other developers who have
@@ -212,14 +212,14 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
     and the
     :doc:`DependencyInjection component </components/dependency_injection/introduction>`,
     you can use the
-    :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterListenersPass`
-    from the HttpKernel component to tag services as event listeners::
+    :class:`Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass`
+    to tag services as event listeners::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
+        use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
@@ -595,8 +595,8 @@ specifically pass one::
 
     $dispatcher->dispatch('foo.event');
 
-Moreover, the EventDispatcher always returns whichever event object that was
-dispatched, i.e. either the event that was passed or the event that was
+Moreover, the event dispatcher always returns whichever event object that
+was dispatched, i.e. either the event that was passed or the event that was
 created internally by the dispatcher. This allows for nice shortcuts::
 
     if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {

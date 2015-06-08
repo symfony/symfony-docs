@@ -1,4 +1,5 @@
 /book/stable_api /contributing/code/bc
+/book/internals /reference/events
 /cookbook/deployment-tools /cookbook/deployment/tools
 /cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
 /cookbook/doctrine/doctrine_fixtures /bundles/DoctrineFixturesBundle/index
@@ -46,3 +47,4 @@
 /cmf/cookbook/creating_a_cms/make-homepage /cmf/tutorial/make-homepage
 /cmf/cookbook/creating_a_cms/sonata-admin /cmf/tutorial/sonata-admin
 /cmf/cookbook/creating_a_cms/the-frontend /cmf/tutorial/the-frontend
+/cookbook/upgrading /cookbook/upgrade/index

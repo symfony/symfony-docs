@@ -11,6 +11,7 @@ reStructuredText
 reStructuredText is a plaintext markup syntax similar to Markdown, but much
 stricter with its syntax. If you are new to reStructuredText, take some time to
 familiarize with this format by reading the existing `Symfony documentation`_
+source code.
 
 If you want to learn more about this format, check out the `reStructuredText Primer`_
 tutorial and the `reStructuredText Reference`_.
@@ -182,7 +183,7 @@ Symfony, you should precede your description of the change with a
     You can also ask a question and hide the response. This is particularly [...]
 
 If you're documenting a behavior change, it may be helpful to *briefly* describe
-how the behavior has changed.
+how the behavior has changed:
 
 .. code-block:: rst
 
@@ -209,7 +210,7 @@ submitting your documentation, follow these steps:
 
 * Install Sphinx_;
 * Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
-* Run ``make html`` and view the generated HTML in the ``build/`` directory.
+* Run ``make html`` and view the generated HTML in the ``_build/html`` directory.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/

@@ -19,8 +19,8 @@ objects from the database.
 |             | - `property`_                                                    |
 |             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                     |
-| Options     | - `choice_list`_                                                 |
+| Overriden   | - `choice_list`_                                                 |
+| options     | - `choices`_                                                     |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
@@ -58,25 +58,25 @@ be listed inside the choice field::
         'property' => 'username',
     ));
 
-In this case, all ``User`` objects will be loaded from the database and rendered
-as either a ``select`` tag, a set or radio buttons or a series of checkboxes
-(this depends on the ``multiple`` and ``expanded`` values).
-If the entity object does not have a ``__toString()`` method the ``property`` option
-is needed.
+In this case, all ``User`` objects will be loaded from the database and
+rendered as either a ``select`` tag, a set or radio buttons or a series
+of checkboxes (this depends on the ``multiple`` and ``expanded`` values).
+If the entity object does not have a ``__toString()`` method the ``property``
+option is needed.
 
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to specify a custom query to use when fetching the entities (e.g.
-you only want to return some entities, or need to order them), use the ``query_builder``
-option. The easiest way to use the option is as follows::
+If you need to specify a custom query to use when fetching the entities
+(e.g. you only want to return some entities, or need to order them), use
+the ``query_builder`` option. The easiest way to use the option is as follows::
 
     use Doctrine\ORM\EntityRepository;
     // ...
 
     $builder->add('users', 'entity', array(
         'class' => 'AcmeHelloBundle:User',
-        'query_builder' => function(EntityRepository $er) {
+        'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
@@ -129,9 +129,9 @@ group_by
 
 This is a property path (e.g. ``author.name``) used to organize the
 available choices in groups. It only works when rendered as a select tag
-and does so by adding ``optgroup`` elements around options. Choices that do not
-return a value for this property path are rendered directly under the
-select tag, without a surrounding optgroup.
+and does so by adding ``optgroup`` elements around options. Choices that
+do not return a value for this property path are rendered directly under
+the select tag, without a surrounding optgroup.
 
 property
 ~~~~~~~~
@@ -144,12 +144,12 @@ cast into a string and so must have a ``__toString()`` method.
 
 .. note::
 
-    The ``property`` option is the property path used to display the option. So you
-    can use anything supported by the
+    The ``property`` option is the property path used to display the option.
+    So you can use anything supported by the
     :doc:`PropertyAccessor component </components/property_access/introduction>`
 
-    For example, if the translations property is actually an associative array of
-    objects, each with a name property, then you could do this::
+    For example, if the translations property is actually an associative
+    array of objects, each with a name property, then you could do this::
 
         $builder->add('gender', 'entity', array(
            'class' => 'MyBundle:Gender',
@@ -165,7 +165,7 @@ If specified, this is used to query the subset of options (and their
 order) that should be used for the field. The value of this option can
 either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
-the entity.
+the entity and return an instance of ``QueryBuilder``.
 
 Overridden Options
 ------------------
@@ -183,7 +183,7 @@ directly.
 choices
 ~~~~~~~
 
-**type**:  array | ``\Traversable`` **default**: ``null``
+**type**:  ``array`` | ``\Traversable`` **default**: ``null``
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
@@ -192,7 +192,8 @@ See :ref:`reference-forms-entity-choices`.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>`
+type:
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
@@ -202,19 +203,21 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 
 .. note::
 
-    If you are working with a collection of Doctrine entities, it will be helpful
-    to read the documentation for the :doc:`/reference/forms/types/collection`
-    as well. In addition, there is a complete example in the cookbook article
+    If you are working with a collection of Doctrine entities, it will be
+    helpful to read the documentation for the
+    :doc:`/reference/forms/types/collection` as well. In addition, there
+    is a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. note::
 
-    This option expects an array of entity objects, unlike the ``choice`` field
-    that requires an array of keys.
+    This option expects an array of entity objects, unlike the ``choice``
+    field that requires an array of keys.
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

@@ -45,7 +45,7 @@ The route is simple:
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{slug}")
+             * @Route("/blog/{slug}", name="blog_show")
              */
             public function showAction($slug)
             {
@@ -542,6 +542,8 @@ URL          Route     Parameters
 
 .. index::
    single: Routing; Requirements
+
+.. _book-routing-requirements:
 
 Adding Requirements
 ~~~~~~~~~~~~~~~~~~~
@@ -1495,7 +1497,7 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 
 .. tip::
 
-    If the frontend of your application uses Ajax requests, you might want
+    If the front-end of your application uses Ajax requests, you might want
     to be able to generate URLs in JavaScript based on your routing configuration.
     By using the `FOSJsRoutingBundle`_, you can do exactly that:
 

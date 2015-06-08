@@ -435,7 +435,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.5.*"
+            "symfony/symfony": "2.6.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -646,7 +646,7 @@ A routing configuration map provides this information in a readable format:
 
 Now that Symfony is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
-it once it's created (and if you use a Symfony distribution, you won't
+it once it's created (and if you use a `Symfony distribution`_, you won't
 even need to create it!)::
 
     // web/app.php
@@ -710,7 +710,7 @@ for example, the list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# app/Resources/views/Blog/list.html.twig #}
+    {# app/Resources/views/blog/list.html.twig #}
     {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}
@@ -754,10 +754,11 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download Composer`: http://getcomposer.org/download/
+.. _`download Composer`: https://getcomposer.org/download/
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`PHPUnit`: http://www.phpunit.de
+.. _`Symfony distribution`: https://github.com/symfony/symfony-standard

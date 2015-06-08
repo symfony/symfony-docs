@@ -50,28 +50,33 @@ corresponding Data object could represent only a subset of the cloned variable.
 Before calling :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::cloneVar`,
 you can configure these limits:
 
-* :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
-  configures the maximum number of items that will be cloned
-  *past the first nesting level*. Items are counted using a breadth-first
-  algorithm so that lower level items have higher priority than deeply nested
-  items;
-* :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
-  configures the maximum number of characters that will be cloned before
-  cutting overlong strings;
-* in both cases, specifying `-1` removes any limit.
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
+    configures the maximum number of items that will be cloned
+    *past the first nesting level*. Items are counted using a breadth-first
+    algorithm so that lower level items have higher priority than deeply nested
+    items;
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
+    configures the maximum number of characters that will be cloned before
+    cutting overlong strings;
+
+In both cases, specifying ``-1`` removes any limit.
 
 Before dumping it, you can further limit the resulting
-:class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object by calling its
-:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::getLimitedClone`
-method:
+:class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object using the following methods:
 
-* the first ``$maxDepth`` argument allows limiting dumps in the depth dimension,
-* the second ``$maxItemsPerDepth`` limits the number of items per depth level,
-* and the last ``$useRefHandles`` defaults to ``true``, but allows removing
-  internal objects' handles for sparser output,
-* but unlike the previous limits on cloners that remove data on purpose,
-  these can be changed back and forth before dumping since they do not affect
-  the intermediate representation internally.
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxDepth`
+    Allows limiting dumps in the depth dimension.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxItemsPerDepth`
+    Limits the number of items per depth level.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withRefHandles`
+    Allows removing internal objects' handles for sparser output (useful for tests).
+
+Unlike the previous limits on cloners that remove data on purpose, these can
+be changed back and forth before dumping since they do not affect the
+intermediate representation internally.
 
 .. note::
 
@@ -145,8 +150,7 @@ Another option for doing the same could be::
     $output = fopen('php://memory', 'r+b');
 
     $dumper->dump($cloner->cloneVar($variable), $output);
-    rewind($output);
-    $output = stream_get_contents($output);
+    $output = stream_get_contents($output, -1, 0);
 
     // $output is now populated with the dump representation of $variable
 

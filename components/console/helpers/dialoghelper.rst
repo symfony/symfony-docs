@@ -96,7 +96,7 @@ convenient for passwords::
     When you ask for a hidden response, Symfony will use either a binary, change
     stty mode or use another trick to hide the response. If none is available,
     it will fallback and allow the response to be visible unless you pass ``false``
-    as the third argument like in the example above. In this case, a RuntimeException
+    as the third argument like in the example above. In this case, a ``RuntimeException``
     would be thrown.
 
 Validating the Answer

@@ -8,35 +8,15 @@ In the past, Symfony projects were created with `Composer`_, the dependency mana
 for PHP applications. However, the current recommendation is to use the **Symfony
 Installer**, which has to be installed before creating your first project.
 
-Linux and Mac OS X Systems
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. best-practice::
 
-Open your command console and execute the following:
+    Use the Symfony Installer to create new Symfony-based projects.
 
-.. code-block:: bash
+Read the :doc:`installation chapter </book/installation>` of the Symfony Book to
+learn how to install and use the Symfony Installer.
 
-    $ curl -LsS http://symfony.com/installer > symfony.phar
-    $ sudo mv symfony.phar /usr/local/bin/symfony
-    $ chmod a+x /usr/local/bin/symfony
-
-Now you can execute the Symfony Installer as a global system command called
-``symfony``.
-
-Windows Systems
-~~~~~~~~~~~~~~~
-
-Open your command console and execute the following:
-
-.. code-block:: bash
-
-    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
-
-Then, move the downloaded ``symfony.phar`` file to your projects directory and
-execute it as follows:
-
-.. code-block:: bash
-
-    c:\> php symfony.phar
+.. _linux-and-mac-os-x-systems:
+.. _windows-systems:
 
 Creating the Blog Application
 -----------------------------
@@ -114,7 +94,7 @@ ProductBundle, InvoiceBundle, etc.
 
 But a bundle is *meant* to be something that can be reused as a stand-alone
 piece of software. If UserBundle cannot be used *"as is"* in other Symfony
-apps, then it shouldn't be its own bundle. Moreover InvoiceBundle depends on
+apps, then it shouldn't be its own bundle. Moreover, if InvoiceBundle depends on
 ProductBundle, then there's no advantage to having two separate bundles.
 
 .. best-practice::
