@@ -96,11 +96,11 @@ delete a specific blog entry, for example:
 
 .. note::
 
-    There are actually nine HTTP methods defined by the HTTP specification,
-    but many of them are not widely used or supported. In reality, many modern
-    browsers only support ``POST`` and ``GET`` in HTML forms.
-    The methods ``PUT`` and ``DELETE`` are supported in XMLHttpRequests,
-    which are commonly used in AJAX calls.
+    There are actually nine HTTP methods (also known as verbs) defined by
+    the HTTP specification, but many of them are not widely used or supported.
+    In reality, many modern browsers only support ``POST`` and ``GET`` in 
+    HTML forms. Various others are however supported in XMLHttpRequests,
+    as well as by Symfony's router.  
 
 In addition to the first line, an HTTP request invariably contains other
 lines of information called request headers. The headers can supply a wide
