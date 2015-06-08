@@ -1,6 +1,8 @@
 Security
 ========
 
+* Authentication
+
 .. toctree::
     :maxdepth: 2
 
@@ -8,17 +10,24 @@ Security
     entity_provider
     remember_me
     impersonating_user
-    voters
-    voters_data_permission
-    acl
-    acl_advanced
-    force_https
     form_login
-    securing_services
     custom_provider
     custom_authentication_provider
     pre_authenticated
     target_path
     csrf_in_login_form
-    access_control
     multiple_user_providers
+
+
+* Authorization
+
+.. toctree::
+    :maxdepth: 2
+
+    voters
+    voters_data_permission
+    acl
+    acl_advanced
+    force_https
+    securing_services
+    access_control
