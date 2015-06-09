@@ -41,13 +41,13 @@ in the ``AppKernel`` class of you application::
 
         public function getCacheDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/cache';
+            return $this->rootDir.'/cache/'.$this->environment;
         }
     }
 
 ``$this->rootDir`` is the absolute path to the ``app`` directory and ``$this->environment``
 is the current environment (i.e. ``dev``). In this case you have changed
-the location of the cache directory to ``app/{environment}/cache``.
+the location of the cache directory to ``app/cache/{environment}``.
 
 .. caution::
 
