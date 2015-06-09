@@ -2,27 +2,25 @@
    single: Page creation
 
 .. _creating-pages-in-symfony2:
+.. _creating-pages-in-symfony:
 
-Creating Pages in Symfony
-=========================
+Create your First Page in Symfony
+=================================
 
-Creating a new page in Symfony is a simple two-step process:
+Creating a new page - whether it's an HTML page or a JSON endpoint - is a
+simple two-step process:
 
-* *Create a route*: A route defines the URL (e.g. ``/about``) to your page
-  and specifies a controller (which is a PHP function) that Symfony should
-  execute when the URL of an incoming request matches the route path;
+#. *Create a route*: A route is the URL (e.g. ``/about``) to your page and
+   points to a controller;
 
-* *Create a controller*: A controller is a PHP function that takes the incoming
-  request and transforms it into the Symfony ``Response`` object that's
-  returned to the user.
+#. *Create a controller*: A controller is the function you write that builds
+   the page. You take the incoming request information and use it to create
+   a Symfony ``Response``, which could hold HTML content, a JSON string or
+   anything else.
 
-This simple approach is beautiful because it matches the way that the Web works.
-Every interaction on the Web is initiated by an HTTP request. The job of
-your application is simply to interpret the request and return the appropriate
+Just like on the web, every interaction is initiated by an HTTP request.
+Your job is pure and simple: understand that request and return the appropriate
 HTTP response.
-
-Symfony follows this philosophy and provides you with tools and conventions
-to keep your application organized as it grows in users and complexity.
 
 .. index::
    single: Page creation; Environments & Front Controllers
