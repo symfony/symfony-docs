@@ -576,17 +576,17 @@ having unique identifiers::
 Handling Arrays
 ---------------
 
-The serializer component is capable of handling arrays of objects as well.
-Serializing such an array works just like serializing a single object:
+The Serializer component is capable of handling arrays of objects as well.
+Serializing arrays works just like serializing a single object::
 
-.. code-block:: php
+    use Acme\Person;
 
-    $person1 = new Acme\Person();
+    $person1 = new Person();
     $person1->setName('foo');
     $person1->setAge(99);
     $person1->setSportsman(false);
 
-    $person2 = new Acme\Person();
+    $person2 = new Person();
     $person2->setName('bar');
     $person2->setAge(33);
     $person2->setSportsman(true);
@@ -602,7 +602,7 @@ you indicate that you're expecting an array instead of a single object.
 
 .. versionadded:: 2.8
     The :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
-    class was added in 2.8. In previous versions, only the serialization of
+    class was introduced in 2.8. Prior to Symfony 2.8, only the serialization of
     arrays is supported.
 
 .. code-block:: php
@@ -613,8 +613,8 @@ you indicate that you're expecting an array instead of a single object.
     use Symfony\Component\Serializer\Serializer;
 
     $serializer = new Serializer(
-        array(new GetSetMethodNormalizer, new ArrayDenormalizer),
-        array(new JsonEncoder)
+        array(new GetSetMethodNormalizer(), new ArrayDenormalizer()),
+        array(new JsonEncoder())
     );
 
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
