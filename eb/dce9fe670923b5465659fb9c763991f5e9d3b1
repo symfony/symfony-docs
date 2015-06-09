@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-23T08:26:55Z
+
+I've just fixed the conflicts of this PR. I think it's ready to be merged, because Wouter's concerns are taken into account (the first example removes the version number because of how we explain things and there is a note explaining that ... the second example shows a `@dev` version as an example of using advanced version constraints, so it's not unsafe to do that).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-29T07:23:24Z
+
+I've made all the proposed changes and I've fixed all the conflicts. Please, review it for the last time, label it as `finished` and consider merging it. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-30T06:58:20Z
+
+:+1:
