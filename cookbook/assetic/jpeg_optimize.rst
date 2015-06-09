@@ -250,4 +250,10 @@ file:
             ),
         ));
 
+.. tip::
+
+    Instead of using Assetic and Jpegoptim, you can also compress and manipulate
+    images before serving them using the `LiipImagineBundle`_ community bundle.
+
 .. _`Jpegoptim`: http://www.kokkonen.net/tjko/projects.html
+.. _`LiipImagineBundle`: http://knpbundles.com/liip/LiipImagineBundle

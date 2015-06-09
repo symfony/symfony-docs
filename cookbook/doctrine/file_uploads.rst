@@ -4,6 +4,13 @@
 How to Handle File Uploads with Doctrine
 ========================================
 
+.. note::
+
+    Instead of handling file uploading yourself, you may consider using the
+    `VichUploaderBundle`_ community bundle. This bundle provides all the common
+    operations (such as file renaming, saving and deleting) and it's tightly
+    integratd with Doctrine ORm, ODM, PHPCR ODM and Propel.
+
 Handling file uploads with Doctrine entities is no different than handling
 any other file upload. In other words, you're free to move the file in your
 controller after handling a form submission. For examples of how to do this,
@@ -557,3 +564,4 @@ order to remove the file. Before it's removed, you must store the file path
 from the database, you can safely delete the file (in ``PostRemove``).
 
 .. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
+.. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle
