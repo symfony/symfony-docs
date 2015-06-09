@@ -579,4 +579,4 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
-.. _`LiipImagineBundle`: http://knpbundles.com/liip/LiipImagineBundle
+.. _`LiipImagineBundle`: https://github.com/liip/LiipImagineBundle
