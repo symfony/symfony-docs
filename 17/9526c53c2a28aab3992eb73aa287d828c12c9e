@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-31T12:26:08Z
+
+Also fixed the introduction as noted by @WouterJ in https://github.com/symfony/symfony-docs/pull/4855#issuecomment-70304427.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-02-10T15:18:44Z
+
+:+1: (this page linking to the new location was added at the time symfony.com was not handling per-branch redirection maps)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-16T10:44:51Z
+
+:+1: thanks @xabbuh. I think that this PR looks ready to be merged.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-02-24T03:53:48Z
+
+@xabbuh I think there is just one issue: there is only one `redirection_map`, which is shared by all versions (https://github.com/symfony/symfony-docs/issues/2846#issuecomment-21369936). So, even though I think it's not very important, this would kill the `/components/class_loader/debug_class_loader` page on 2.3, I believe - as it would redirect to `/components/debug/class_loader`, which would 404.
+
+What do you think? I'm trying to think of a good solution, while not having to keep around too much old stuff around.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-24T07:12:39Z
+
+IIRC and like @stof said, the redirection maps are now branch specific.
+
+@javiereguiluz Can you help us?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-26T08:40:32Z
+
+We should settle the redirection issue first. After that we can also think about merging #4855 instead (depending on the outcome of the former discussion in #5045).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-13T17:59:08Z
+
+ping @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-22T15:59:17Z
+
+@xabbuh let's just finish this PR and add a placeholder article. We can always remove it once redirection is fixed.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:51:55Z
+
+@WouterJ What kind of placeholder article do you have in mind?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T09:32:14Z
+
+@xabbuh readding the article again (but not to the map and indices) and then point to the new location. This way, we don't have to redirect and we don't have 404 errors.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-24T07:26:56Z
+
+I updated here.
