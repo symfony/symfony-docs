@@ -71,11 +71,11 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
         }
     }
 
-By default, Symfony bundles are registered in all the application
-:doc:`execution environments </cookbook/configuration/environments>`. If the bundle
-is meant to be used only in some environment, register it within an ``if`` statement,
-like the following example, where the FOSUserBundle is only enabled for the
-``dev`` and ``test`` environments::
+In a few rare cases, you may want a bundle to be *only* enabled in the development
+:doc:`environment </cookbook/configuration/environments>`. For example,
+the DoctrineFixturesBundle helps load dummy data - something you probably
+only want to do while developing. To only load this bundle in the ``dev``
+and ``test`` environments, register the bundle in this way::
 
     // app/AppKernel.php
 
@@ -91,7 +91,7 @@ like the following example, where the FOSUserBundle is only enabled for the
             );
 
             if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-                $bundles[] = new FOS\UserBundle\FOSUserBundle();
+                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             }
 
             // ...

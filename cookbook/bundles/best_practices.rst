@@ -306,7 +306,7 @@ following standardized instructions in your ``README.md`` file.
 The example above assumes that you are installing the latest stable version of
 the bundle, where you don't have to provide the package version number
 (e.g. ``composer require friendsofsymfony/user-bundle``). If the installation
-instructions refer to some past bundle version or to some inestable version,
+instructions refer to some past bundle version or to some unstable version,
 include the version constraint (e.g. ``composer require friendsofsymfony/user-bundle "~2.0@dev"``).
 
 Optionally, you can add more installation steps (*Step 3*, *Step 4*, etc.) to
