@@ -12,16 +12,16 @@ things like controllers, templates, and other files in a bundle's
 
 For example, suppose that you're installing the `FOSUserBundle`_, but you
 want to override its base ``layout.html.twig`` template, as well as one of
-its controllers. Suppose also that you have your own AcmeUserBundle
-where you want the overridden files to live. Start by registering the FOSUserBundle
-as the "parent" of your bundle::
+its controllers. Suppose also that you have your own UserBundle where you want
+the overridden files to live. Start by registering the FOSUserBundle as the
+"parent" of your bundle::
 
-    // src/Acme/UserBundle/AcmeUserBundle.php
-    namespace Acme\UserBundle;
+    // src/UserBundle/UserBundle.php
+    namespace UserBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-    class AcmeUserBundle extends Bundle
+    class UserBundle extends Bundle
     {
         public function getParent()
         {
@@ -45,8 +45,8 @@ Suppose you want to add some functionality to the ``registerAction`` of a
 just create your own ``RegistrationController.php`` file, override the bundle's
 original method, and change its functionality::
 
-    // src/Acme/UserBundle/Controller/RegistrationController.php
-    namespace Acme\UserBundle\Controller;
+    // src/UserBundle/Controller/RegistrationController.php
+    namespace UserBundle\Controller;
 
     use FOS\UserBundle\Controller\RegistrationController as BaseController;
 
@@ -82,9 +82,9 @@ location as your parent bundle.
 For example, it's very common to need to override the FOSUserBundle's
 ``layout.html.twig`` template so that it uses your application's base layout.
 Since the file lives at ``Resources/views/layout.html.twig`` in the FOSUserBundle,
-you can create your own file in the same location of AcmeUserBundle.
-Symfony will ignore the file that lives inside the FOSUserBundle entirely,
-and use your file instead.
+you can create your own file in the same location of UserBundle. Symfony will
+ignore the file that lives inside the FOSUserBundle entirely, and use your file
+instead.
 
 The same goes for routing files and some other resources.
 
@@ -92,7 +92,7 @@ The same goes for routing files and some other resources.
 
     The overriding of resources only works when you refer to resources with
     the ``@FOSUserBundle/Resources/config/routing/security.xml`` method.
-    If you refer to resources without using the @BundleName shortcut, they
+    If you refer to resources without using the ``@BundleName`` shortcut, they
     can't be overridden in this way.
 
 .. caution::
