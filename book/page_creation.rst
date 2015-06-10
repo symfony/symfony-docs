@@ -137,7 +137,7 @@ Step 1: Create the Route
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the routing configuration file in a Symfony application is
-located at ``app/config/routing.yml``. Like all configuration in Symfony,
+located at ``app/config/routing_dev.yml``. Like all configuration in Symfony,
 you can also choose to use XML or PHP out of the box to configure routes.
 
 If you look at the main routing file, you'll see that Symfony already added an
