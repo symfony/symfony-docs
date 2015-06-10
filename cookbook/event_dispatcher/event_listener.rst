@@ -6,23 +6,25 @@ How to Create Event Listeners and Subscribers
 =============================================
 
 Symfony has various events and hooks that can be used to trigger custom
-behavior in your application. Those events are thrown by the HttpKernel
-component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class.
+actions in your application. Those events are thrown by the HttpKernel
+component and they are defined in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
+class.
 
-To hook into an event and add your own custom logic, you have to create
-a service that listens to that event. You can do that in two different ways,
-creating an event listener or an event subscriber instead. In this entry,
-you will see the two ways of creating a service that will act as an exception
-listener, allowing you to modify how exceptions are shown by your application.
-The ``KernelEvents::EXCEPTION`` event is just one of the core kernel events.
+To hook into an event and execute your own custom logic, you have to create
+a service that listens to that event. As explained in this article, you can do
+that in two different ways: creating an event listener or an event subscriber.
+
+The examples of this article only use the ``KernelEvents::EXCEPTION`` event for
+consistency purposes. In your own application you can use any event and even mix
+several of them in the same subscriber.
 
 Creating an Event Listener
 --------------------------
 
-The most common way to listen to an event is to register an event listener::
+The most common way to listen to an event is to register an **event listener**::
 
-    // src/AppBundle/EventListener/ExceptionListener.php
-    namespace AppBundle\EventListener;
+    // src/AppBundle/Listener/ExceptionListener.php
+    namespace AppBundle\Listener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -78,44 +80,50 @@ using a special "tag":
         # app/config/config.yml
         services:
             kernel.listener.your_listener_name:
-                class: AppBundle\EventListener\AcmeExceptionListener
+                class: AppBundle\Listener\ExceptionListener
                 tags:
-                    - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+                    - { name: kernel.event_listener, event: kernel.exception }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <service id="kernel.listener.your_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
-            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        <service id="kernel.listener.your_listener_name" class="AppBundle\Listener\ExceptionListener">
+            <tag name="kernel.event_listener" event="kernel.exception" />
         </service>
 
     .. code-block:: php
 
         // app/config/config.php
         $container
-            ->register('kernel.listener.your_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
-            ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
+            ->register('kernel.listener.your_listener_name', 'AppBundle\Listener\ExceptionListener')
+            ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
 
 .. note::
 
-    There is an additional tag option ``priority`` that is optional and defaults
-    to 0. This value can be from -255 to 255, and the listeners will be executed
-    in the order of their priority (highest to lowest). This is useful when
-    you need to guarantee that one listener is executed before another.
+    There is an optional tag option called ``method`` which defines which method
+    to execute when the event is triggered. By default the name of the method is
+    ``on`` + "camel-cased event name". If the event is ``kernel.exception`` the
+    method executed by default is ``onKernelException()``.
+
+    The other optional tag option is called  ``priority`` and it defaults to ``0``.
+    This value ranges from ``-255`` to ``255`` and it controls the order in which
+    listeners are executed (the highest the priority, the earlier a listener is
+    executed). This is useful when you need to guarantee that one listener is
+    executed before another.
 
 Creating an Event Subscriber
 ----------------------------
 
-Another way to listen to events is via an event subscriber. An event subscriber
-can define one or various methods that listen to one or various events,
-and can set a priority for each method. The higher the priority, the earlier
-the method is called. To learn more about event subscribers, see :doc:`/components/event_dispatcher/introduction`.
-The following example shows a subscriber that subscribes various methods
-to the ``kernel.exception`` event::
+Another way to listen to events is via an **event subscriber**, which is a class
+that can define one or more methods that listen to one or various events. The
+event priority can be defined for each method (the higher the priority, the earlier
+the method is called). To learn more about event subscribers, read :doc:`/components/event_dispatcher/introduction`.
+The following example shows an event subscriber that defines several methods which
+listen to the same ``kernel.exception`` event::
 
-    // src/AppBundle/EventListener/ExceptionSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/AppBundle/Subscriber/ExceptionSubscriber.php
+    namespace AppBundle\Subscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -126,45 +134,27 @@ to the ``kernel.exception`` event::
     {
         public static function getSubscribedEvents()
         {
-            // Return the events it is subscribed to, the methods that listen each event and the
-            // priority of each method
+            // return the subscribed events, their methods and priorities
             return array(
                'kernel.exception' => array(
-                   array('onKernelExceptionPre', 10),
-                   array('onKernelExceptionMid', 5),
-                   array('onKernelExceptionPost', 0),
+                   array('processException', 10),
+                   array('logException', 0),
+                   array('notifyException', -10),
                )
             );
         }
 
-        public function onKernelExceptionPre(GetResponseForExceptionEvent $event)
-        {
-            $exception = $event->getException();
-            $message = sprintf(
-                'My Error says: %s with code: %s',
-                $exception->getMessage(),
-                $exception->getCode()
-            );
-
-            $response = new Response();
-            $response->setContent($message);
-
-            if ($exception instanceof HttpExceptionInterface) {
-                $response->setStatusCode($exception->getStatusCode());
-                $response->headers->replace($exception->getHeaders());
-            } else {
-                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-
-            $event->setResponse($response);
-        }
-
-        public function onKernerlExceptionMid(GetResponseForExceptionEvent $event)
+        public function processException(GetResponseForExceptionEvent $event)
         {
             // ...
         }
 
-        public function onKernerlExceptionPost(GetResponseForExceptionEvent $event)
+        public function logException(GetResponseForExceptionEvent $event)
+        {
+            // ...
+        }
+
+        public function notifyException(GetResponseForExceptionEvent $event)
         {
             // ...
         }
@@ -180,7 +170,7 @@ is an event subscriber:
         # app/config/config.yml
         services:
             kernel.listener.your_subscriber_name:
-                class: AppBundle\EventSubscriber\AcmeExceptionSubscriber
+                class: AppBundle\Subscriber\ExceptionSubscriber
                 tags:
                     - { name: kernel.event_subscriber }
 
@@ -192,7 +182,7 @@ is an event subscriber:
 
             <services>
                 <service id="acme_exception_subscriber"
-                    class="AppBundle\EventSubscriber\AcmeExceptionSubscriber">
+                    class="AppBundle\Subscriber\ExceptionSubscriber">
 
                     <tag name="kernel.event_subscriber"/>
 
@@ -206,7 +196,7 @@ is an event subscriber:
         $container
             ->register(
                 'acme_exception_subscriber',
-                'AppBundle\EventSubscriber\AcmeExceptionSubscriber'
+                'AppBundle\Subscriber\ExceptionSubscriber'
             )
             ->addTag('kernel.event_subscriber')
         ;
@@ -223,13 +213,13 @@ sub-requests), which is why when working with the ``KernelEvents::REQUEST``
 event, you might need to check the type of the request. This can be easily
 done as follow::
 
-    // src/AppBundle/EventListener/AcmeRequestListener.php
-    namespace AppBundle\EventListener;
+    // src/AppBundle/Listener/RequestListener.php
+    namespace AppBundle\Listener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\HttpKernel;
 
-    class AcmeRequestListener
+    class RequestListener
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
