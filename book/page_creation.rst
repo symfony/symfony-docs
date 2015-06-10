@@ -496,7 +496,7 @@ the same basic and recommended directory structure:
     This directory contains the application configuration.
 
 ``src/``
-    All the project PHP code is stored under this directory.
+    All the project-specific PHP code and template files are stored under this directory.
 
 ``vendor/``
     Any vendor libraries are placed here by convention.
