@@ -277,7 +277,7 @@ But who can you login as? Where do users come from?
 
 .. tip::
 
-    If your application logs in users via a third-party service such as Google,
+    If your application logs users in via a third-party service such as Google,
     Facebook or Twitter, check out the `HWIOAuthBundle`_ community bundle.
 
 .. _security-user-providers:
