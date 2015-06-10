@@ -16,7 +16,6 @@ If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
 +-------------+---------------------------------------------------------------------+
-<<<<<<< HEAD
 | Inherited   | from the :doc:`checkbox </reference/forms/types/checkbox>` type:    |
 | options     |                                                                     |
 |             | - `value`_                                                          |
@@ -24,15 +23,6 @@ If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/
 |             | from the :doc:`form </reference/forms/types/form>` type:            |
 |             |                                                                     |
 |             | - `data`_                                                           |
-=======
-| Inherited   | - `value`_                                                          |
-| options     | - `data`_                                                           |
-|             | - `empty_data`_                                                     |
-|             | - `required`_                                                       |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `read_only`_ (deprecated as of 2.6)                               |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `disabled`_                                                       |
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
@@ -40,7 +30,7 @@ If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.8)                                                       |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`checkbox </reference/forms/types/checkbox>`                   |

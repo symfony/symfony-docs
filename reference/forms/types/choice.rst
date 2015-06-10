@@ -24,23 +24,15 @@ option.
 | options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
 +-------------+------------------------------------------------------------------------------+
-<<<<<<< HEAD
 | Inherited   | - `by_reference`_                                                            |
 | options     | - `data`_                                                                    |
-=======
-| Inherited   | - `required`_                                                                |
-| options     | - `label`_                                                                   |
-|             | - `label_attr`_                                                              |
-|             | - `data`_                                                                    |
-|             | - `read_only`_ (deprecated as of 2.6)                                        |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `disabled`_                                                                |
 |             | - `error_mapping`_                                                           |
 |             | - `inherit_data`_                                                            |
 |             | - `label`_                                                                   |
 |             | - `label_attr`_                                                              |
 |             | - `mapped`_                                                                  |
-|             | - `read_only`_                                                               |
+|             | - `read_only`_ (deprecated as of 2.8)                                                                 |
 |             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                    |

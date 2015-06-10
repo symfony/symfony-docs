@@ -13,22 +13,13 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                          |
 | options     | - `empty_data`_                                                        |
-<<<<<<< HEAD
-=======
-|             | - `required`_                                                          |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `trim`_                                                              |
-|             | - `read_only`_ (deprecated as of 2.6)                                  |
-|             | - `disabled`_                                                          |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
 |             | - `max_length`_ (deprecated as of 2.5)                                 |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.8)                                                          |
 |             | - `required`_                                                          |
 |             | - `trim`_                                                              |
 +-------------+------------------------------------------------------------------------+
@@ -43,22 +34,7 @@ Field Options
 always_empty
 ~~~~~~~~~~~~
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **type**: ``boolean`` **default**: ``true``
-=======
-.. caution::
-
-    The ``_always_empty`` option has been deprecated and will be removed in 3.0.
-    Instead, use the ``reset_on_submit`` option.
-
-reset_on_submit
-~~~~~~~~~~~~
-
-=======
->>>>>>> Revert "[Form] Fix #9325"
-**type**: ``Boolean`` **default**: ``true``
->>>>>>> [Form] Fix #9325
 
 If set to true, the field will *always* render blank, even if the corresponding
 field has a value. When set to false, the password field will be rendered

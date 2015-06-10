@@ -30,24 +30,14 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
-<<<<<<< HEAD
 | Inherited            | - `data`_                                                                   |
 | Options              | - `disabled`_                                                               |
-=======
-| Inherited            | - `invalid_message`_                                                        |
-| options              | - `invalid_message_parameters`_                                             |
-|                      | - `data`_                                                                   |
-|                      | - `read_only`_ (deprecated as of 2.6)                                       |
-|                      | - `disabled`_                                                               |
-|                      | - `mapped`_                                                                 |
-|                      | - `inherit_data`_                                                           |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |                      | - `error_mapping`_                                                          |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_                                                              |
+|                      | - `read_only`_ (deprecated as of 2.8)                                                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+

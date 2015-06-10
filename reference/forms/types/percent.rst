@@ -18,19 +18,9 @@ This field adds a percentage sign "``%``" after the input box.
 | Options     | - `scale`_                                                            |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
-<<<<<<< HEAD
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
 |             | - `empty_data`_                                                       |
-=======
-| Inherited   | - `empty_data`_                                                       |
-| options     | - `required`_                                                         |
-|             | - `label`_                                                            |
-|             | - `label_attr`_                                                       |
-|             | - `data`_                                                             |
-|             | - `read_only`_ (deprecated as of 2.6)                                 |
-|             | - `disabled`_                                                         |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                   |
 |             | - `error_mapping`_                                                    |
 |             | - `invalid_message`_                                                  |
@@ -38,7 +28,7 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.8)                                                         |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                             |

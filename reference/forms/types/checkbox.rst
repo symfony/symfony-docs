@@ -17,21 +17,13 @@ if the box is unchecked, the value will be set to false.
 | options     | - `empty_data`_                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `data`_                                                              |
-<<<<<<< HEAD
 | options     | - `disabled`_                                                          |
-=======
-| options     | - `required`_                                                          |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `read_only`_ (deprecated as of 2.6)                                  |
-|             | - `disabled`_                                                          |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.8)                                                           |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                              |

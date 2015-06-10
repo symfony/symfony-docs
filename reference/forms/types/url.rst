@@ -13,28 +13,16 @@ have a protocol.
 +-------------+-------------------------------------------------------------------+
 | Options     | - `default_protocol`_                                             |
 +-------------+-------------------------------------------------------------------+
-<<<<<<< HEAD
 | Inherited   | - `data`_                                                         |
 | options     | - `disabled`_                                                     |
 |             | - `empty_data`_                                                   |
-=======
-| Inherited   | - `max_length`_ (deprecated as of 2.5)                            |
-| options     | - `empty_data`_                                                   |
-|             | - `required`_                                                     |
-|             | - `label`_                                                        |
-|             | - `label_attr`_                                                   |
-|             | - `data`_                                                         |
-|             | - `trim`_                                                         |
-|             | - `read_only`_ (deprecated as of 2.6)                             |
-|             | - `disabled`_                                                     |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                               |
 |             | - `error_mapping`_                                                |
 |             | - `label`_                                                        |
 |             | - `label_attr`_                                                   |
 |             | - `mapped`_                                                       |
 |             | - `max_length`_ (deprecated as of 2.5)                            |
-|             | - `read_only`_                                                    |
+|             | - `read_only`_ (deprecated as of 2.8)                                                     |
 |             | - `required`_                                                     |
 |             | - `trim`_                                                         |
 +-------------+-------------------------------------------------------------------+

@@ -32,10 +32,6 @@ objects from the database.
 |             | from the :doc:`form </reference/forms/types/form>` type:         |
 |             |                                                                  |
 |             | - `data`_                                                        |
-<<<<<<< HEAD
-=======
-|             | - `read_only`_ (deprecated as of 2.6)                            |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `disabled`_                                                    |
 |             | - `empty_data`_                                                  |
 |             | - `error_bubbling`_                                              |
@@ -43,7 +39,7 @@ objects from the database.
 |             | - `label`_                                                       |
 |             | - `label_attr`_                                                  |
 |             | - `mapped`_                                                      |
-|             | - `read_only`_                                                   |
+|             | - `read_only`_ (deprecated as of 2.8)                                                    |
 |             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                    |

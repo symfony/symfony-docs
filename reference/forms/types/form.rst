@@ -17,19 +17,6 @@ on all types for which ``form`` is the parent type.
 |           | - `data`_                                                          |
 |           | - `data_class`_                                                    |
 |           | - `empty_data`_                                                    |
-<<<<<<< HEAD
-=======
-|           | - `required`_                                                      |
-|           | - `label_attr`_                                                    |
-|           | - `constraints`_                                                   |
-|           | - `cascade_validation`_                                            |
-|           | - `read_only`_ (deprecated as of 2.6)                              |
-|           | - `trim`_                                                          |
-|           | - `mapped`_                                                        |
-|           | - `property_path`_                                                 |
-|           | - `max_length`_ (deprecated as of 2.5)                             |
-|           | - `by_reference`_                                                  |
->>>>>>> [WCM][Form] Deprecate "read_only" option
 |           | - `error_bubbling`_                                                |
 |           | - `error_mapping`_                                                 |
 |           | - `extra_fields_message`_                                          |
@@ -43,7 +30,7 @@ on all types for which ``form`` is the parent type.
 |           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
-|           | - `read_only`_                                                     |
+|           | - `read_only`_ (deprecated as of 2.8)                                                      |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
 +-----------+--------------------------------------------------------------------+
