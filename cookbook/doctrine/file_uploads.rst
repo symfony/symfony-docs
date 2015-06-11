@@ -99,6 +99,13 @@ file.
     If you're using annotations to specify your validation rules (as shown
     in this example), be sure that you've enabled validation by annotation
     (see :ref:`validation configuration <book-validation-configuration>`).
+    
+.. caution::
+
+   If you use the ``getUploadRootDir()`` method, be aware that this will save 
+   the file inside the document root, which can be accessed by everyone. 
+   Consider placing it out of the document root and adding custom viewing 
+   logic when you need to secure the files.
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might
