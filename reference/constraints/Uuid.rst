@@ -1,9 +1,6 @@
 Uuid
 ====
 
-.. versionadded:: 2.5
-    The Uuid constraint was introduced in Symfony 2.5.
-
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
 By default, this will validate the format according to the RFC's guidelines, but this can
 be relaxed to accept non-standard UUIDs that other systems (like PostgreSQL) accept.

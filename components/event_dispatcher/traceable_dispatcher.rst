@@ -5,10 +5,6 @@
 The Traceable Event Dispatcher
 ==============================
 
-.. versionadded:: 2.5
-    The ``TraceableEventDispatcher`` class was moved to the EventDispatcher
-    component in Symfony 2.5. Before, it was located in the HttpKernel component.
-
 The :class:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcher`
 is an event dispatcher that wraps any other event dispatcher and can then
 be used to determine which event listeners have been called by the dispatcher.

@@ -4,10 +4,6 @@
 Progress Bar
 ============
 
-.. versionadded:: 2.5
-    The Progress Bar feature was introduced in Symfony 2.5 as a replacement for
-    the :doc:`Progress Helper </components/console/helpers/progresshelper>`.
-
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 

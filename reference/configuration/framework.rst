@@ -331,7 +331,7 @@ respond and the user will receive a 500 response.
 
         # app/config/config.yml
         framework:
-            trusted_hosts:  ['acme.com', 'acme.org']
+            trusted_hosts:  ['example.com', 'example.org']
 
     .. code-block:: xml
 
@@ -344,8 +344,8 @@ respond and the user will receive a 500 response.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <trusted-host>acme.com</trusted-host>
-                <trusted-host>acme.org</trusted-host>
+                <trusted-host>example.com</trusted-host>
+                <trusted-host>example.org</trusted-host>
                 <!-- ... -->
             </framework>
         </container>
@@ -354,17 +354,17 @@ respond and the user will receive a 500 response.
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'trusted_hosts' => array('acme.com', 'acme.org'),
+            'trusted_hosts' => array('example.com', 'example.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``.*\.?acme.com$``),
+Hosts can also be configured using regular expressions (e.g.  ``.*\.?example.com$``),
 which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
+    Request::setTrustedHosts(array('.*\.?example.com$', '.*\.?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
@@ -1410,17 +1410,17 @@ api
 Starting with Symfony 2.5, the Validator component introduced a new validation
 API. The ``api`` option is used to switch between the different implementations:
 
-``2.4``
-    Use the vaidation API that is compatible with older Symfony versions.
-
 ``2.5``
     Use the validation API introduced in Symfony 2.5.
 
 ``2.5-bc`` or ``auto``
     If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
     Symfony will use an API implementation that is compatible with both the
-    legacy implementation and the ``2.5`` implementation. You have to use
-    PHP 5.3.9 or higher to be able to use this implementation.
+    legacy ``2.4`` implementation and the ``2.5`` implementation.
+
+.. note::
+
+    The support for the native 2.4 API has been dropped since Symfony 2.7.
 
 To capture these logs in the ``prod`` environment, configure a
 :doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for

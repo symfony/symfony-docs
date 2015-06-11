@@ -4,10 +4,6 @@
 Using the Logger
 ================
 
-.. versionadded:: 2.5
-    The :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger` was
-    introduced in Symfony 2.5.
-
 The Console component comes with a standalone logger complying with the
 `PSR-3`_ standard. Depending on the verbosity setting, log messages will
 be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`

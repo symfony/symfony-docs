@@ -82,9 +82,6 @@ Field Options
 multiple
 ~~~~~~~~
 
-.. versionadded:: 2.5
-    The ``multiple`` option was introduced in Symfony 2.5.
-
 **type**: ``Boolean`` **default**: ``false``
 
 When set to true, the user will be able to upload multiple files at the same time.

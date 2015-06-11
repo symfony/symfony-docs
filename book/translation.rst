@@ -699,9 +699,6 @@ For more information, see the documentation for these libraries.
 Debugging Translations
 ----------------------
 
-.. versionadded:: 2.5
-    The ``debug:translation`` command was introduced in Symfony 2.5.
-
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``translation:debug``.
 

@@ -122,6 +122,53 @@ original value. You can configure the limits in terms of:
             <config max-items="250" max-string-length="-1" />
         </container>
 
+Using the VarDumper Component in your PHPUnit Test Suite
+--------------------------------------------------------
+
+.. versionadded:: 2.7
+    The :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` was
+    introduced in Symfony 2.7.
+
+The VarDumper component provides
+:class:`a trait <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait>`
+that can help writing some of your tests for PHPUnit.
+
+This will provide you with two new assertions:
+
+:method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals`
+    verifies that the dump of the variable given as the second argument matches
+    the expected dump provided as a string in the first argument.
+
+:method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpMatchesFormat`
+    is like the previous method but accepts placeholders in the expected dump,
+    based on the ``assertStringMatchesFormat`` method provided by PHPUnit.
+
+Example::
+
+    class ExampleTest extends \PHPUnit_Framework_TestCase
+    {
+        use \Symfony\Component\VarDumper\Test\VarDumperTestTrait;
+
+        public function testWithDumpEquals()
+        {
+            $testedVar = array(123, 'foo');
+
+            $expectedDump = <<<EOTXT
+    array:2 [
+      0 => 123
+      1 => "foo"
+    ]
+    EOTXT;
+
+            $this->assertDumpEquals($expectedDump, $testedVar);
+        }
+    }
+
+.. tip::
+
+    If you still use PHP 5.3, you can extend the
+    :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestClass` instead.
+
 Dump Examples and Output
 ------------------------
 

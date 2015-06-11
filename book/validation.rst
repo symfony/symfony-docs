@@ -103,6 +103,11 @@ following:
     Protected and private properties can also be validated, as well as "getter"
     methods (see :ref:`validator-constraint-targets`).
 
+.. versionadded:: 2.7
+    As of Symfony 2.7, XML and Yaml constraint files located in the
+    ``Resources/config/validation`` sub-directory of a bundle are loaded. Prior
+    to 2.7, only ``Resources/config/validation.yml`` (or ``.xml``) were loaded.
+
 .. index::
    single: Validation; Using the validator
 
@@ -606,9 +611,6 @@ Constraints can also be applied to the return value of a method. Symfony
 allows you to add a constraint to any public method whose name starts with
 "get", "is" or "has". In this guide, these types of methods are referred to
 as "getters".
-
-.. versionadded:: 2.5
-    Support for methods starting with ``has`` was introduced in Symfony 2.5.
 
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field

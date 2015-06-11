@@ -5,14 +5,14 @@ number Field Type
 =================
 
 Renders an input text field and specializes in handling number input. This
-type offers different options for the precision, rounding and grouping
+type offers different options for the scale, rounding and grouping
 that you want to use for your number.
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                        |
-|             | - `precision`_                                                       |
+|             | - `scale`_                                                           |
 |             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                            |
@@ -38,14 +38,14 @@ Field Options
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-.. include:: /reference/forms/types/options/precision.rst.inc
+.. include:: /reference/forms/types/options/scale.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALFUP``
 
-If a submitted number needs to be rounded (based on the ``precision``
+If a submitted number needs to be rounded (based on the `scale`_
 option), you have several configurable options for that rounding. Each
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
     
