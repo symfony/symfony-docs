@@ -171,3 +171,5 @@ As you move through the book, you'll learn how to persist objects to a database,
 create and validate forms, create translations for your application, write
 tests and much more. Each of these has their own place and role within the
 bundle.
+
+_`third-party bundles`: http://knpbundles.com
