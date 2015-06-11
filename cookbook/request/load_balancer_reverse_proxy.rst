@@ -7,7 +7,7 @@ an AWS Elastic Load Balancer) or a reverse proxy (e.g. Varnish for
 
 For the most part, this doesn't cause any problems with Symfony. But, when
 a request passes through a proxy, certain request information is sent using
-either the standard ``Forwarded`` header or non standard special ``X-Forwarded-*``
+either the standard ``Forwarded`` header or non-standard special ``X-Forwarded-*``
 headers. For example, instead of reading the ``REMOTE_ADDR`` header (which
 will now be the IP address of your reverse proxy), the user's true IP will be
 stored in a standard ``Forwarded: for="..."`` header or a non standard
@@ -95,12 +95,12 @@ other information.
 My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 ------------------------------------------------------------
 
-Although `rfc7239`_ recently defined a standard ``Forwarded`` header to disclose
-all proxy information, most reverse proxies store information on non standard
+Although `RFC 7239`_ recently defined a standard ``Forwarded`` header to disclose
+all proxy information, most reverse proxies store information on non-standard
 ``X-Forwarded-*`` headers.
 But if your reverse proxy uses other non-standard header names, you can configure
 these (see ":doc:`/components/http_foundation/trusting_proxies`").
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
 .. _`security groups`: http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-elb-security-groups.html
-.. _`rfc7239`: http://tools.ietf.org/html/rfc7239
+.. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
