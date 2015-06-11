@@ -18,6 +18,20 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
+
+.. code-block:: json
+
+    {
+        "require": {
+            "symfony/console": "2.5.*",
+        },
+        "autoload": {
+            "psr-0": {"": "src/" }
+        }
+    
+    }
+
+
 * Use the official Git repository (https://github.com/symfony/Console).
 
 Creating a basic Command
@@ -26,6 +40,7 @@ Creating a basic Command
 To make a console command that greets you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
+    // src/Acme/Console/Command/GreetCommand.php
     namespace Acme\Console\Command;
 
     use Symfony\Component\Console\Command\Command;
@@ -78,6 +93,8 @@ an ``Application`` and adds commands to it::
     #!/usr/bin/env php
     <?php
     // application.php
+    
+    require_once './vendor/autoload.php';
 
     require __DIR__.'/vendor/autoload.php';
 
