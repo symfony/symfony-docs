@@ -13,10 +13,12 @@ into the language of the user::
 
     // text will *always* print out in English
     dump('Hello World');
+    die();
 
     // text can be translated into the end-user's language or
     // default to English
     dump($translator->trans('Hello World'));
+    die();
 
 .. note::
 

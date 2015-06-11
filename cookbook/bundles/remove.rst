@@ -80,6 +80,7 @@ can remove the ``Acme`` directory as well.
     to get the path of the bundle::
 
         dump($this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath());
+        die();
 
 3.1 Remove Bundle Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~
