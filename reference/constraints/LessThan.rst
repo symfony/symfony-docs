@@ -57,13 +57,19 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
     .. code-block:: xml
 
         <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
-        <class name="Acme\SocialBundle\Entity\Person">
-            <property name="age">
-                <constraint name="LessThan">
-                    <option name="value">80</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SocialBundle\Entity\Person">
+                <property name="age">
+                    <constraint name="LessThan">
+                        <option name="value">80</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -86,6 +92,9 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
 Comparing Dates
 ---------------
 
+.. versionadded:: 2.6
+    The feature to compare dates was added in Symfony 2.6.
+
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check
 that a date must be in the past like this:
@@ -97,7 +106,7 @@ that a date must be in the past like this:
         # src/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
-                age:
+                dateOfBirth:
                     - LessThan: today
 
     .. code-block:: php-annotations
@@ -112,17 +121,23 @@ that a date must be in the past like this:
             /**
              * @Assert\LessThan("today")
              */
-            protected $age;
+            protected $dateOfBirth;
         }
 
     .. code-block:: xml
 
         <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
-        <class name="Acme\SocialBundle\Entity\Person">
-            <property name="age">
-                <constraint name="LessThan">today</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SocialBundle\Entity\Person">
+                <property name="dateOfBirth">
+                    <constraint name="LessThan">today</constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -136,7 +151,7 @@ that a date must be in the past like this:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('age', new Assert\LessThan('today'));
+                $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThan('today'));
             }
         }
 
@@ -150,7 +165,7 @@ dates. If you want to fix the timezone, append it to the date string:
         # src/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
-                age:
+                dateOfBirth:
                     - LessThan: today UTC
 
     .. code-block:: php-annotations
@@ -165,17 +180,23 @@ dates. If you want to fix the timezone, append it to the date string:
             /**
              * @Assert\LessThan("today UTC")
              */
-            protected $age;
+            protected $dateOfBirth;
         }
 
     .. code-block:: xml
 
         <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
-        <class name="Acme\SocialBundle\Entity\Person">
-            <property name="age">
-                <constraint name="GreaterThan">today UTC</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SocialBundle\Entity\Person">
+                <property name="dateOfBirth">
+                    <constraint name="LessThan">today UTC</constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -203,7 +224,7 @@ can check that a person must be at least 18 years old like this:
         # src/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
-                age:
+                dateOfBirth:
                     - LessThan: -18 years
 
     .. code-block:: php-annotations
@@ -218,17 +239,23 @@ can check that a person must be at least 18 years old like this:
             /**
              * @Assert\LessThan("-18 years")
              */
-            protected $age;
+            protected $dateOfBirth;
         }
 
     .. code-block:: xml
 
         <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
-        <class name="Acme\SocialBundle\Entity\Person">
-            <property name="age">
-                <constraint name="LessThan">-18 years</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SocialBundle\Entity\Person">
+                <property name="dateOfBirth">
+                    <constraint name="LessThan">-18 years</constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -242,7 +269,7 @@ can check that a person must be at least 18 years old like this:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('age', new Assert\LessThan('-18 years'));
+                $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThan('-18 years'));
             }
         }
 
