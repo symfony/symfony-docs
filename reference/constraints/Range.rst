@@ -140,18 +140,24 @@ date must lie within the current year like this:
     .. code-block:: xml
 
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
-        <class name="Acme\EventBundle\Entity\Event">
-            <property name="startDate">
-                <constraint name="Range">
-                    <option name="min">first day of January</option>
-                    <option name="max">first day of January next year</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Event">
+                <property name="startDate">
+                    <constraint name="Range">
+                        <option name="min">first day of January</option>
+                        <option name="max">first day of January next year</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
-        // src/Acme/EventBundle/Entity/Person.php
+        // src/Acme/EventBundle/Entity/Event.php
         namespace Acme\EventBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -204,14 +210,20 @@ dates. If you want to fix the timezone, append it to the date string:
     .. code-block:: xml
 
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
-        <class name="Acme\EventBundle\Entity\Event">
-            <property name="startDate">
-                <constraint name="Range">
-                    <option name="min">first day of January UTC</option>
-                    <option name="max">first day of January next year UTC</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Event">
+                <property name="startDate">
+                    <constraint name="Range">
+                        <option name="min">first day of January UTC</option>
+                        <option name="max">first day of January next year UTC</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -268,14 +280,20 @@ can check that a delivery date starts within the next five hours like this:
     .. code-block:: xml
 
         <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
-        <class name="Acme\OrderBundle\Entity\Order">
-            <property name="deliveryDate">
-                <constraint name="Range">
-                    <option name="min">now</option>
-                    <option name="max">+5 hours</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\OrderBundle\Entity\Order">
+                <property name="deliveryDate">
+                    <constraint name="Range">
+                        <option name="min">now</option>
+                        <option name="max">+5 hours</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
