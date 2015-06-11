@@ -34,6 +34,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Yaml).
 
+.. include:: /components/require_autoload.rst.inc
+
 Why?
 ----
 

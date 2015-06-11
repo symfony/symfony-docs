@@ -36,5 +36,7 @@ You can install the component in 2 different ways:
   on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/ClassLoader).
 
+.. include:: /components/require_autoload.rst.inc
+
 .. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader
