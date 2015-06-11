@@ -591,19 +591,21 @@ Serializing arrays works just like serializing a single object::
     $person2->setAge(33);
     $person2->setSportsman(true);
 
-    $jsonContent = $serializer->serialize(array($person1, $person2), 'json');
+    $persons = array($person1, $person2);
+    $data = $serializer->serialize($persons, 'json');
 
-    // $jsonContent contains [{"name":"foo","age":99,"sportsman":false},{"name":"bar","age":33,"sportsman":true}]
-
-If you want to deserialize such a structure, you need to add the :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
-to the set of normalizers. By appending ``[]`` to the type parameter of the
-:method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
-you indicate that you're expecting an array instead of a single object.
+    // $data contains [{"name":"foo","age":99,"sportsman":false},{"name":"bar","age":33,"sportsman":true}]
 
 .. versionadded:: 2.8
     The :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
     class was introduced in 2.8. Prior to Symfony 2.8, only the serialization of
     arrays is supported.
+
+If you want to deserialize such a structure, you need to add the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+to the set of normalizers. By appending ``[]`` to the type parameter of the
+:method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
+you indicate that you're expecting an array instead of a single object.
 
 .. code-block:: php
 
@@ -617,6 +619,7 @@ you indicate that you're expecting an array instead of a single object.
         array(new JsonEncoder())
     );
 
+    $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
 .. seealso::
