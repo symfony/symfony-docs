@@ -5,8 +5,8 @@
 How to Create Event Listeners and Subscribers
 =============================================
 
-Symfony has various events and hooks that can be used to trigger custom
-actions in your application. Those events are thrown by the HttpKernel
+Symfony has various events and hooks that can be used to perform custom
+actions in your application. Those events are triggered by the HttpKernel
 component and they are defined in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
 class.
 
@@ -15,7 +15,7 @@ a service that listens to that event. As explained in this article, you can do
 that in two different ways: creating an event listener or an event subscriber.
 
 The examples of this article only use the ``KernelEvents::EXCEPTION`` event for
-consistency purposes. In your own application you can use any event and even mix
+consistency purposes. In your own application, you can use any event and even mix
 several of them in the same subscriber.
 
 Creating an Event Listener
@@ -52,16 +52,13 @@ The most common way to listen to an event is to register an **event listener**::
                 $response->setStatusCode($exception->getStatusCode());
                 $response->headers->replace($exception->getHeaders());
             } else {
-                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+                $response->setStatusCode(500);
             }
 
             // Send the modified response object to the event
             $event->setResponse($response);
         }
     }
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. tip::
 
@@ -77,7 +74,7 @@ using a special "tag":
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             kernel.listener.your_listener_name:
                 class: AppBundle\Listener\ExceptionListener
@@ -86,14 +83,14 @@ using a special "tag":
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <service id="kernel.listener.your_listener_name" class="AppBundle\Listener\ExceptionListener">
             <tag name="kernel.event_listener" event="kernel.exception" />
         </service>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         $container
             ->register('kernel.listener.your_listener_name', 'AppBundle\Listener\ExceptionListener')
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
@@ -101,12 +98,12 @@ using a special "tag":
 
 .. note::
 
-    There is an optional tag option called ``method`` which defines which method
+    There is an optional tag attribute called ``method`` which defines which method
     to execute when the event is triggered. By default the name of the method is
     ``on`` + "camel-cased event name". If the event is ``kernel.exception`` the
     method executed by default is ``onKernelException()``.
 
-    The other optional tag option is called  ``priority`` and it defaults to ``0``.
+    The other optional tag attribute is called  ``priority`` which defaults to ``0``.
     This value ranges from ``-255`` to ``255`` and it controls the order in which
     listeners are executed (the highest the priority, the earlier a listener is
     executed). This is useful when you need to guarantee that one listener is
@@ -126,8 +123,8 @@ listen to the same ``kernel.exception`` event::
     namespace AppBundle\Subscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
     class ExceptionSubscriber implements EventSubscriberInterface
@@ -169,7 +166,7 @@ is an event subscriber:
 
         # app/config/config.yml
         services:
-            kernel.listener.your_subscriber_name:
+            app.exception_subscriber:
                 class: AppBundle\Subscriber\ExceptionSubscriber
                 tags:
                     - { name: kernel.event_subscriber }
@@ -181,7 +178,7 @@ is an event subscriber:
         <container xmlns="http://symfony.com/schema/dic/services">
 
             <services>
-                <service id="acme_exception_subscriber"
+                <service id="app.exception_subscriber"
                     class="AppBundle\Subscriber\ExceptionSubscriber">
 
                     <tag name="kernel.event_subscriber"/>
@@ -195,7 +192,7 @@ is an event subscriber:
         // app/config/config.php
         $container
             ->register(
-                'acme_exception_subscriber',
+                'app.exception_subscriber',
                 'AppBundle\Subscriber\ExceptionSubscriber'
             )
             ->addTag('kernel.event_subscriber')
@@ -203,10 +200,6 @@ is an event subscriber:
 
 Request Events, Checking Types
 ------------------------------
-
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
 
 A single page can make several requests (one master request, and then multiple
 sub-requests), which is why when working with the ``KernelEvents::REQUEST``
@@ -218,12 +211,13 @@ done as follow::
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\HttpKernel;
+    use Symfony\Component\HttpKernel\HttpKernelInterface;
 
     class RequestListener
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
-            if (!$event->isMasterRequest()) {
+            if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
                 // don't do anything if it's not the master request
                 return;
             }
@@ -237,5 +231,3 @@ done as follow::
     Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
     interface: ``HttpKernelInterface::MASTER_REQUEST`` and
     ``HttpKernelInterface::SUB_REQUEST``.
-
-.. _`The EventDispatcher component`: http://symfony.com/doc/current/components/event_dispatcher/index.html
