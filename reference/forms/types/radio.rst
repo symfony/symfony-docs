@@ -30,7 +30,7 @@ If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_ (deprecated as of 2.8)                                                       |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`checkbox </reference/forms/types/checkbox>`                   |

@@ -39,7 +39,7 @@ objects from the database.
 |             | - `label`_                                                       |
 |             | - `label_attr`_                                                  |
 |             | - `mapped`_                                                      |
-|             | - `read_only`_ (deprecated as of 2.8)                                                    |
+|             | - `read_only`_ (deprecated as of 2.8)                            |
 |             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                    |

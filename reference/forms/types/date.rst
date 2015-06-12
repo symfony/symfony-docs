@@ -40,7 +40,7 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_ (deprecated as of 2.8)                                                               |
+|                      | - `read_only`_ (deprecated as of 2.8)                                       |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form </reference/forms/types/form>`                                   |
 +----------------------+-----------------------------------------------------------------------------+

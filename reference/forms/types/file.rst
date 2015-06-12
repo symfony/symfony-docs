@@ -18,7 +18,7 @@ The ``file`` type represents a file input in your form.
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_ (deprecated as of 2.8)                                                       |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                           |

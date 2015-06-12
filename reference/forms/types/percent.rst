@@ -28,7 +28,7 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_ (deprecated as of 2.8)                                                         |
+|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                             |
