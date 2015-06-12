@@ -71,6 +71,9 @@ directory:
             );
         ));
 
+.. versionadded:: 2.8
+    Prior to Symfony 2.8, these paths were not warmed during cache warming.
+
 The registered namespace is called ``foo_bar``, which refers to the
 ``vendor/acme/foo-bar/templates`` directory. Assuming there's a file
 called ``sidebar.twig`` in that directory, you can use it easily:
