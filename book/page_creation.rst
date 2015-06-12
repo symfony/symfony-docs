@@ -68,7 +68,7 @@ Before diving into this, test it out!
 
     If you setup a proper virtual host in :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
     replace ``http://localhost:8000`` with your host name - like
-    ``http://symfony.local/app_dev.php/lucky/number``.
+    ``http://symfony.dev/app_dev.php/lucky/number``.
 
 If you see a lucky number being printed back to you, congratulations! But
 before you run off to play the lottery, check out how this works.
@@ -407,7 +407,7 @@ in your controller.
 
 The ``{% extends 'base.html.twig' %}`` points to a layout file that lives
 at `app/Resources/views/base.html.twig`_ and came with your new project.
-It's *really* basic (an unstyled HTML structure) and it's your's to customize.
+It's *really* basic (an unstyled HTML structure) and it's yours to customize.
 The ``{% block body %}`` part uses Twig's :ref:`inheritance system <twig-inheritance>`
 to put the content into the middle of the ``base.html.twig`` layout.
 
@@ -549,9 +549,9 @@ is ``app/config/config.yml``:
         // ...
 
 The ``framework`` key configures FrameworkBundle, the ``twig`` key configures
-TwigBundle and so on. A *lot* of behavior in Symfony can be controlled.
-To find out how, see the :doc:`Configuration Reference </reference/index>`
-section.
+TwigBundle and so on. A *lot* of behavior in Symfony can be controlled just
+by changing one option in this configuration file. To find out how, see the
+:doc:`Configuration Reference </reference/index>` section.
 
 Or, to get a big example dump of all of the valid configuration under a key,
 use the handy ``app/console`` command:
@@ -561,7 +561,7 @@ use the handy ``app/console`` command:
     $ app/console config:dump-reference framework
 
 There's a lot more power behind Symfony's configuration system, including
-environment, imports and parameters. To learn all of it, see the
+environments, imports and parameters. To learn all of it, see the
 :doc:`Configuration </book/configuration>` chapter.
 
 What's Next?

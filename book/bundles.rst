@@ -23,12 +23,12 @@ A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a BlogBundle, a ForumBundle or
 a bundle for user management (many of these exist already as open source
 bundles). Each directory contains everything related to that feature, including
-PHP files, templates, stylesheets, JavaScripts, tests and anything else.
+PHP files, templates, stylesheets, JavaScript files, tests and anything else.
 Every aspect of a feature exists in a bundle and every feature lives in a
 bundle.
 
-An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``AppKernel`` class::
+Bundles used in your applications must be enabled by registering them in
+the ``registerBundles()`` method of the ``AppKernel`` class::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -42,10 +42,10 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new AppBundle\AppBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
@@ -124,7 +124,7 @@ generating a basic bundle skeleton:
 
     $ php app/console generate:bundle --namespace=Acme/TestBundle
 
-The bundle skeleton generates with a basic controller, template and routing
+The bundle skeleton generates a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony's command-line
 tools later.
 
