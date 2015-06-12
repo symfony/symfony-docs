@@ -83,8 +83,6 @@ and is where you build the page. The only rule is that a controller *must*
 return a Symfony :ref:`Response <component-http-foundation-response>` object
 (and you'll even learn to bend this rule eventually).
 
-.. _book-page-creation-prod-cache-clear:
-
 .. sidebar:: What's the ``app_dev.php`` in the URL?
 
     Great question! By including ``app_dev.php`` in the URL, you're executing
