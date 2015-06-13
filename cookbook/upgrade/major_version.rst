@@ -59,17 +59,17 @@ more confidence.
 Deprecations in PHPUnit
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, PHPUnit will handle deprecation notices as real errors. This means
-that all tests are aborted because it uses a BC layer.
+When you run your tests using PHPUnit, no deprecation notices are shown.
+To help you here, Symfony provides a PHPUnit bridge. This bridge will show
+you a nice summary of all deprecation notices at the end of the test report.
 
-To make sure this doesn't happen, you can install the PHPUnit bridge:
+All you need to do is install the PHPUnit bridge:
 
 .. code-block:: bash
 
     $ composer require --dev symfony/phpunit-bridge
 
-Now, your tests execute normally and a nice summary of the deprecation notices
-is displayed at the end of the test report:
+Now, you can start fixing the notices:
 
 .. code-block:: text
 
@@ -87,12 +87,36 @@ is displayed at the end of the test report:
         2x in PageAdminTest::testPageList from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
         1x in PageAdminTest::testPageEdit from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
 
+Once you fixed them all, the command ends with ``0`` (success) and you're
+done!
+
+.. sidebar:: Using the Weak Deprecations Mode
+
+    Sometimes, you can't fix all deprecations (e.g. something was deprecated
+    in 2.6 and you still need to support 2.3). In these cases, you can still
+    use the bridge to fix as many deprecations as possible and then switch
+    to the weak test mode to make your tests pass again. You can do this by
+    using the ``SYMFONY_DEPRECATIONS_HELPER`` env variable:
+
+    .. code-block:: xml
+
+        <!-- phpunit.xml.dist -->
+        <phpunit>
+            <!-- ... -->
+
+            <php>
+                <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+            </php>
+        </phpunit>
+
+    (you can also execute the command like ``SYMFONY_DEPRECATIONS_HELPER=weak phpunit``).
+
 .. _upgrade-major-symfony-composer:
 
 2) Update to the New Major Version via Composer
 -----------------------------------------------
 
-If your code is deprecation free, you can update the Symfony library via
+Once your code is deprecation free, you can update the Symfony library via
 Composer by modifying your ``composer.json`` file:
 
 .. code-block:: json
@@ -103,14 +127,14 @@ Composer by modifying your ``composer.json`` file:
         "require": {
             "symfony/symfony": "3.0.*",
         },
-        "...": "...",
+        "...": "..."
     }
 
 Next, use Composer to download new versions of the libraries:
 
 .. code-block:: bash
 
-    $ composer update symfony/symfony
+    $ composer update --with-dependencies symfony/symfony
 
 .. include:: /cookbook/upgrade/_update_dep_errors.rst.inc
 
