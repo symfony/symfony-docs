@@ -34,7 +34,7 @@ Creating a Page: Route and Controller
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a
 lucky (well, random) number and prints it. To do that, create a class and
-a method inside of it that will be executed when someone goes to ``/lucky/random``::
+a method inside of it that will be executed when someone goes to ``/lucky/number``::
 
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
@@ -59,8 +59,6 @@ a method inside of it that will be executed when someone goes to ``/lucky/random
     }
 
 Before diving into this, test it out!
-
-.. code-block:: text
 
     http://localhost:8000/app_dev.php/lucky/number
 
@@ -128,8 +126,6 @@ Just add a second method to ``LuckyController``::
     }
 
 Try this out in your browser:
-
-.. code-block:: text
 
     http://localhost:8000/app_dev.php/api/lucky/number
 
@@ -251,8 +247,6 @@ The best part is that you can access this value and use it in your controller::
     }
 
 Try it by going to ``/lucky/number/XX`` - replacing XX with *any* number:
-
-.. code-block:: text
 
     http://localhost:8000/app_dev.php/lucky/number/7
 
@@ -410,8 +404,6 @@ The ``{% block body %}`` part uses Twig's :ref:`inheritance system <twig-inherit
 to put the content into the middle of the ``base.html.twig`` layout.
 
 Refresh to see your template in action!
-
-.. code-block:: text
 
     http://localhost:8000/app_dev.php/lucky/number/9
 

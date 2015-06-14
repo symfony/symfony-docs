@@ -4,7 +4,7 @@
 .. _page-creation-bundles:
 
 The Bundle System
------------------
+=================
 
 A bundle is similar to a plugin in other software, but even better. The key
 difference is that *everything* is a bundle in Symfony, including both the
@@ -63,7 +63,7 @@ are used by your application (including the core Symfony bundles).
    autoloader configured at ``app/autoload.php``).
 
 Creating a Bundle
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The Symfony Standard Edition comes with a handy task that creates a fully-functional
 bundle for you. Of course, creating a bundle by hand is pretty easy as well.
@@ -135,7 +135,7 @@ tools later.
    the ``generate:bundle`` command, this is done for you.
 
 Bundle Directory Structure
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
