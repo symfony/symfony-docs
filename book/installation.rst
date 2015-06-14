@@ -169,7 +169,8 @@ browsing the project directory and executing this command:
     $ cd my_project_name/
     $ php app/console server:run
 
-Then, open your browser and access the ``http://localhost:8000`` URL to see the
+Then, open your browser and access the ``http://localhost:8000/app/example``
+URL to see the
 Welcome page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png
