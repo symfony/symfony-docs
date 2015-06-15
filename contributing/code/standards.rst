@@ -167,6 +167,29 @@ Service Naming Conventions
 
 * A group name uses the underscore notation.
 
+.. _contributing-code-standards-comparisons:
+
+Comparisons
+-----------
+
+Use `identical comparison`_ when the expected value must match a specific type:
+
+instead of:
+
+.. code-block:: php
+
+    if (1 == $integerExpected) {
+        // ...
+    }
+
+it should be:
+
+.. code-block:: php
+
+    if (1 === $integerExpected) {
+        // ...
+    }
+
 Documentation
 -------------
 
@@ -186,3 +209,4 @@ License
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php

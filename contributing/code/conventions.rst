@@ -77,29 +77,6 @@ must be used instead (where ``XXX`` is the name of the related thing):
     "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
     key is passed to "replaceXXX" it must throw an exception.
 
-.. _contributing-code-conventions-comparisons:
-
-Comparisons
------------
-
-Use `identical comparison`_ when the expected value must match a specific type:
-
-instead of:
-
-.. code-block:: php
-
-    if (1 == $integerExpected) {
-        // ...
-    }
-
-it should be:
-
-.. code-block:: php
-
-    if (1 === $integerExpected) {
-        // ...
-    }
-
 .. _contributing-code-conventions-deprecations:
 
 Deprecations
@@ -127,5 +104,3 @@ the migration starting one or two minor versions before the version where the
 feature will be removed (depending on the criticality of the removal)::
 
     trigger_error('XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.', E_USER_DEPRECATED);
-
-.. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php
