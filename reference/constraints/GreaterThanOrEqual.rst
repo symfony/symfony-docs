@@ -27,15 +27,6 @@ or equal to ``18``, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - GreaterThanOrEqual:
-                        value: 18
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -52,6 +43,15 @@ or equal to ``18``, you could do the following:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - GreaterThanOrEqual:
+                        value: 18
 
     .. code-block:: xml
 
@@ -100,14 +100,6 @@ that a date must at least be the current day:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
-            properties:
-                deliveryDate:
-                    - GreaterThanOrEqual: today
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Order.php
@@ -122,6 +114,14 @@ that a date must at least be the current day:
              */
             protected $deliveryDate;
         }
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThanOrEqual: today
 
     .. code-block:: xml
 
@@ -159,14 +159,6 @@ dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
-            properties:
-                deliveryDate:
-                    - GreaterThanOrEqual: today UTC
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Order.php
@@ -181,6 +173,14 @@ dates. If you want to fix the timezone, append it to the date string:
              */
             protected $deliveryDate;
         }
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThanOrEqual: today UTC
 
     .. code-block:: xml
 
@@ -219,14 +219,6 @@ current time:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
-            properties:
-                deliveryDate:
-                    - GreaterThanOrEqual: +5 hours
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Order.php
@@ -241,6 +233,14 @@ current time:
              */
             protected $deliveryDate;
         }
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThanOrEqual: +5 hours
 
     .. code-block:: xml
 
