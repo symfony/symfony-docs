@@ -27,15 +27,6 @@ equal to ``80``, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThanOrEqual:
-                        value: 80
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -52,6 +43,15 @@ equal to ``80``, you could do the following:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThanOrEqual:
+                        value: 80
 
     .. code-block:: xml
 
@@ -100,14 +100,6 @@ that a date must be today or in the past like this:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThanOrEqual: today
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -122,6 +114,14 @@ that a date must be today or in the past like this:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThanOrEqual: today
 
     .. code-block:: xml
 
@@ -159,14 +159,6 @@ dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThanOrEqual: today UTC
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -181,6 +173,14 @@ dates. If you want to fix the timezone, append it to the date string:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThanOrEqual: today UTC
 
     .. code-block:: xml
 
@@ -218,14 +218,6 @@ can check that a person must be at least 18 years old like this:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThanOrEqual: -18 years
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -240,6 +232,14 @@ can check that a person must be at least 18 years old like this:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThanOrEqual: -18 years
 
     .. code-block:: xml
 
