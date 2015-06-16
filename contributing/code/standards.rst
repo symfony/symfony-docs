@@ -174,19 +174,15 @@ Comparisons
 
 Always use `identical comparison`_ unless you need type juggling:
 
-instead of:
-
 .. code-block:: php
 
-    if (1 == $integerExpected) {
+    // use
+    if (1 === $integerExpected) {
         // ...
     }
 
-it should be:
-
-.. code-block:: php
-
-    if (1 === $integerExpected) {
+    // instead of
+    if (1 == $integerExpected) {
         // ...
     }
 
