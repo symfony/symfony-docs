@@ -109,16 +109,6 @@ date must lie within the current year like this:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Event:
-            properties:
-                startDate:
-                    - Range:
-                        min: first day of January
-                        max: first day of January next year
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Event.php
@@ -136,6 +126,16 @@ date must lie within the current year like this:
              */
             protected $startDate;
         }
+
+    .. code-block:: yaml
+
+        # src/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Event:
+            properties:
+                startDate:
+                    - Range:
+                        min: first day of January
+                        max: first day of January next year
 
     .. code-block:: xml
 
@@ -179,16 +179,6 @@ dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Event:
-            properties:
-                startDate:
-                    - Range:
-                        min: first day of January UTC
-                        max: first day of January next year UTC
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Event.php
@@ -206,6 +196,16 @@ dates. If you want to fix the timezone, append it to the date string:
              */
             protected $startDate;
         }
+
+    .. code-block:: yaml
+
+        # src/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Event:
+            properties:
+                startDate:
+                    - Range:
+                        min: first day of January UTC
+                        max: first day of January next year UTC
 
     .. code-block:: xml
 
@@ -249,16 +249,6 @@ can check that a delivery date starts within the next five hours like this:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
-            properties:
-                deliveryDate:
-                    - Range:
-                        min: now
-                        max: +5 hours
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Order.php
@@ -276,6 +266,16 @@ can check that a delivery date starts within the next five hours like this:
              */
             protected $deliveryDate;
         }
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - Range:
+                        min: now
+                        max: +5 hours
 
     .. code-block:: xml
 
