@@ -29,7 +29,7 @@ or equal to ``18``, you could do the following:
 
     .. code-block:: yaml
 
-        # src/SocialBundle/Resources/config/validation.yml
+        # src/Acme/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
                 age:
@@ -92,7 +92,7 @@ Comparing Dates
 ---------------
 
 .. versionadded:: 2.6
-    The feature to compare dates was added in Symfony 2.6.
+    The feature to compare dates was introduced in Symfony 2.6.
 
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check
