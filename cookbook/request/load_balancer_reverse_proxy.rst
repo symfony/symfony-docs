@@ -96,10 +96,12 @@ My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 ------------------------------------------------------------
 
 Although `RFC 7239`_ recently defined a standard ``Forwarded`` header to disclose
-all proxy information, most reverse proxies store information on non-standard
+all proxy information, most reverse proxies store information in non-standard
 ``X-Forwarded-*`` headers.
+
 But if your reverse proxy uses other non-standard header names, you can configure
 these (see ":doc:`/components/http_foundation/trusting_proxies`").
+
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
 .. _`security groups`: http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-elb-security-groups.html
