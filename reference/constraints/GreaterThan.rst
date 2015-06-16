@@ -14,6 +14,7 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 +----------------+---------------------------------------------------------------------------+
 | Options        | - `value`_                                                                |
 |                | - `message`_                                                              |
+|                | - `payload`_                                                              |
 +----------------+---------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`          |
 +----------------+---------------------------------------------------------------------------+
@@ -30,7 +31,7 @@ If you want to ensure that the ``age`` of a ``Person`` class is greater than
 
     .. code-block:: yaml
 
-        # src/SocialBundle/Resources/config/validation.yml
+        # src/Acme/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
                 age:
@@ -93,7 +94,7 @@ Comparing Dates
 ---------------
 
 .. versionadded:: 2.6
-    The feature to compare dates was added in Symfony 2.6.
+    The feature to compare dates was introduced in Symfony 2.6.
 
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check
@@ -286,5 +287,7 @@ message
 
 This is the message that will be shown if the value is not greater than the
 comparison value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
