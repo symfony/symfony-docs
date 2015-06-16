@@ -172,9 +172,7 @@ Service Naming Conventions
 Comparisons
 -----------
 
-Always use `identical comparison`_ unless you need type juggling:
-
-.. code-block:: php
+Always use `identical comparison`_ unless you need type juggling::
 
     // use
     if (1 === $integerExpected) {
