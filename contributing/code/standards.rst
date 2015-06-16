@@ -172,7 +172,7 @@ Service Naming Conventions
 Comparisons
 -----------
 
-Use `identical comparison`_ when the expected value must match a specific type:
+Always use `identical comparison`_ unless you need type juggling:
 
 instead of:
 
