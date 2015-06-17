@@ -164,7 +164,7 @@ is an event subscriber:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             app.exception_subscriber:
                 class: AppBundle\Subscriber\ExceptionSubscriber
@@ -173,7 +173,7 @@ is an event subscriber:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services">
 
@@ -189,7 +189,7 @@ is an event subscriber:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         $container
             ->register(
                 'app.exception_subscriber',
