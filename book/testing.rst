@@ -280,9 +280,9 @@ document::
             $client->getResponse()->getStatusCode()
         );
 
-        // Assert that the response is a redirect to /demo/contact
+        // Assert that the response is a redirect to http://localhost/demo/contact
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact')
+            $client->getResponse()->isRedirect('http://localhost/demo/contact')
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
