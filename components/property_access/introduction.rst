@@ -68,8 +68,8 @@ You can also use multi dimensional arrays::
         )
     );
 
-    dump($accessor->getValue($persons, '[0][first_name]')); // 'Wouter'
-    dump($accessor->getValue($persons, '[1][first_name]')); // 'Ryan'
+    var_dump($accessor->getValue($persons, '[0][first_name]')); // 'Wouter'
+    var_dump($accessor->getValue($persons, '[1][first_name]')); // 'Ryan'
 
 Reading from Objects
 --------------------
