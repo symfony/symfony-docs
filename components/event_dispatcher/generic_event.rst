@@ -75,7 +75,7 @@ the event arguments::
     );
     $dispatcher->dispatch('foo', $event);
 
-    dump($event['counter']);
+    var_dump($event['counter']);
 
     class FooListener
     {
@@ -96,7 +96,7 @@ Filtering data::
     $event = new GenericEvent($subject, array('data' => 'Foo'));
     $dispatcher->dispatch('foo', $event);
 
-    dump($event['data']);
+    var_dump($event['data']);
 
     class FooListener
     {

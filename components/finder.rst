@@ -31,13 +31,13 @@ directories::
 
     foreach ($finder as $file) {
         // Dump the absolute path
-        dump($file->getRealpath());
+        var_dump($file->getRealpath());
 
         // Dump the relative path to the file, omitting the filename
-        dump($file->getRelativePath());
+        var_dump($file->getRelativePath());
 
         // Dump the relative path to the file
-        dump($file->getRelativePathname());
+        var_dump($file->getRelativePathname());
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`

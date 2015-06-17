@@ -47,7 +47,7 @@ traverse easily::
     $crawler = new Crawler($html);
 
     foreach ($crawler as $domElement) {
-        dump($domElement->nodeName);
+        var_dump($domElement->nodeName);
     }
 
 Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and

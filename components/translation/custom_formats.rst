@@ -63,7 +63,7 @@ Once created, it can be used as any other loader::
 
     $translator->addResource('my_format', __DIR__.'/translations/messages.txt', 'fr_FR');
 
-    dump($translator->trans('welcome'));
+    var_dump($translator->trans('welcome'));
 
 It will print *"accueil"*.
 
