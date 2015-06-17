@@ -42,7 +42,7 @@ to JavaScript::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    dump($language->evaluate(
+    var_dump($language->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,
@@ -72,7 +72,7 @@ JavaScript::
 
     $robot = new Robot();
 
-    dump($language->evaluate(
+    var_dump($language->evaluate(
         'robot.sayHi(3)',
         array(
             'robot' => $robot,
@@ -93,7 +93,7 @@ constant::
 
     define('DB_USER', 'root');
 
-    dump($language->evaluate(
+    var_dump($language->evaluate(
         'constant("DB_USER")'
     ));
 
@@ -114,7 +114,7 @@ array keys, similar to JavaScript::
 
     $data = array('life' => 10, 'universe' => 10, 'everything' => 22);
 
-    dump($language->evaluate(
+    var_dump($language->evaluate(
         'data["life"] + data["universe"] + data["everything"]',
         array(
             'data' => $data,
@@ -230,7 +230,7 @@ String Operators
 
 For example::
 
-    dump($language->evaluate(
+    var_dump($language->evaluate(
         'firstName~" "~lastName',
         array(
             'firstName' => 'Arthur',

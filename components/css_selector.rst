@@ -49,7 +49,7 @@ equivalents::
 
     use Symfony\Component\CssSelector\CssSelector;
 
-    dump(CssSelector::toXPath('div.item > h4 > a'));
+    var_dump(CssSelector::toXPath('div.item > h4 > a'));
 
 This gives the following output:
 

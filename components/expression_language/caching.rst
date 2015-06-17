@@ -56,7 +56,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
     // the parse() method returns a ParsedExpression
     $expression = $language->parse('1 + 4', array());
 
-    dump($language->evaluate($expression)); // prints 5
+    var_dump($language->evaluate($expression)); // prints 5
 
 .. code-block:: php
 
@@ -68,7 +68,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
         serialize($language->parse('1 + 4', array()))
     );
 
-    dump($language->evaluate($expression)); // prints 5
+    var_dump($language->evaluate($expression)); // prints 5
 
 .. _DoctrineBridge: https://github.com/symfony/DoctrineBridge
 .. _`doctrine cache library`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html

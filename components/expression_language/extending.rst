@@ -44,7 +44,7 @@ This method has 3 arguments:
         return strtolower($str);
     });
 
-    dump($language->evaluate('lowercase("HELLO")'));
+    var_dump($language->evaluate('lowercase("HELLO")'));
 
 This will print ``hello``. Both the **compiler** and **evaluator** are passed
 an ``arguments`` variable as their first argument, which is equal to the

@@ -45,8 +45,8 @@ method. This is done using the index notation that is used in PHP::
         'first_name' => 'Wouter',
     );
 
-    dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
-    dump($accessor->getValue($person, '[age]')); // null
+    var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
+    var_dump($accessor->getValue($person, '[age]')); // null
 
 As you can see, the method will return ``null`` if the index does not exists.
 
@@ -80,13 +80,13 @@ To read from properties, use the "dot" notation::
     $person = new Person();
     $person->firstName = 'Wouter';
 
-    dump($accessor->getValue($person, 'firstName')); // 'Wouter'
+    var_dump($accessor->getValue($person, 'firstName')); // 'Wouter'
 
     $child = new Person();
     $child->firstName = 'Bar';
     $person->children = array($child);
 
-    dump($accessor->getValue($person, 'children[0].firstName')); // 'Bar'
+    var_dump($accessor->getValue($person, 'children[0].firstName')); // 'Bar'
 
 .. caution::
 
@@ -116,7 +116,7 @@ property name (``first_name`` becomes ``FirstName``) and prefixes it with
 
     $person = new Person();
 
-    dump($accessor->getValue($person, 'first_name')); // 'Wouter'
+    var_dump($accessor->getValue($person, 'first_name')); // 'Wouter'
 
 Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
@@ -145,10 +145,10 @@ getters, this means that you can do something like this::
     $person = new Person();
 
     if ($accessor->getValue($person, 'author')) {
-        dump('He is an author');
+        var_dump('He is an author');
     }
     if ($accessor->getValue($person, 'children')) {
-        dump('He has children');
+        var_dump('He has children');
     }
 
 This will produce: ``He is an author``
@@ -173,7 +173,7 @@ The ``getValue`` method can also use the magic ``__get`` method::
 
     $person = new Person();
 
-    dump($accessor->getValue($person, 'Wouter')); // array(...)
+    var_dump($accessor->getValue($person, 'Wouter')); // array(...)
 
 .. _components-property-access-magic-call:
 
@@ -211,7 +211,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    dump($accessor->getValue($person, 'wouter')); // array(...)
+    var_dump($accessor->getValue($person, 'wouter')); // array(...)
 
 .. versionadded:: 2.3
     The use of magic ``__call()`` method was introduced in Symfony 2.3.
@@ -235,9 +235,9 @@ method::
 
     $accessor->setValue($person, '[first_name]', 'Wouter');
 
-    dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
+    var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
     // or
-    // dump($person['first_name']); // 'Wouter'
+    // var_dump($person['first_name']); // 'Wouter'
 
 Writing to Objects
 ------------------
@@ -271,9 +271,9 @@ can use setters, the magic ``__set`` method or properties to set values::
     $accessor->setValue($person, 'lastName', 'de Jong');
     $accessor->setValue($person, 'children', array(new Person()));
 
-    dump($person->firstName); // 'Wouter'
-    dump($person->getLastName()); // 'de Jong'
-    dump($person->children); // array(Person());
+    var_dump($person->firstName); // 'Wouter'
+    var_dump($person->getLastName()); // 'de Jong'
+    var_dump($person->children); // array(Person());
 
 You can also use ``__call`` to set values but you need to enable the feature,
 see `Enable other Features`_.
@@ -309,7 +309,7 @@ see `Enable other Features`_.
 
     $accessor->setValue($person, 'wouter', array(...));
 
-    dump($person->getWouter()); // array(...)
+    var_dump($person->getWouter()); // array(...)
 
 Checking Property Paths
 -----------------------
@@ -374,7 +374,7 @@ You can also mix objects and arrays::
     $accessor->setValue($person, 'children[0].firstName', 'Wouter');
     // equal to $person->getChildren()[0]->firstName = 'Wouter'
 
-    dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
+    var_dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
 
 Enable other Features
