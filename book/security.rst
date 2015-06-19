@@ -371,7 +371,7 @@ probably only need one. If you *do* have multiple, you can configure which
 Try to login using username ``admin`` and password ``kitten``. You should
 see an error!
 
-    No encoder has been configured for account "Symfony\Component\Security\Core\User\User"
+    No encoder has been configured for account "Symfony\\Component\\Security\\Core\\User\\User"
 
 To fix this, add an ``encoders`` key:
 
