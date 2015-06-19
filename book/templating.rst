@@ -177,6 +177,8 @@ regenerate. Remember to do this when deploying your application.
 .. index::
    single: Templating; Inheritance
 
+.. _twig-inheritance:
+
 Template Inheritance and Layouts
 --------------------------------
 
