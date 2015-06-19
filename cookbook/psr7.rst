@@ -18,7 +18,7 @@ You can install the component in 2 different ways:
 
 The bridge also needs a PSR-7 implementation to allow converting HttpFoundation
 objects to PSR-7 objects. It provides native support for _`Zend Diactoros`_.
-Use Composer (``zendframework/zend-diactoros`` on `Packagist`_) or refers to
+Use Composer (``zendframework/zend-diactoros`` on `Packagist`_) or refer to
 the project documentation to install it.
 
 Usage
