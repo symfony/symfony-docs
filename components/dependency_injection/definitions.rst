@@ -125,3 +125,15 @@ You can also replace any existing method calls with an array of new ones with::
     the container is compiled. Once the container is compiled you cannot
     manipulate service definitions further. To learn more about compiling
     the container see :doc:`/components/dependency_injection/compilation`.
+
+Requiring Files
+~~~~~~~~~~~~~~~
+
+There might be use cases when you need to include another file just before
+the service itself gets loaded. To do so, you can use the
+:method:`Symfony\\Component\\DependencyInjection\\Definition::setFile` method::
+
+    $definition->setFile('/src/path/to/file/foo.php');
+
+Notice that Symfony will internally call the PHP statement ``require_once``,
+which means that your file will be included only once per request.
