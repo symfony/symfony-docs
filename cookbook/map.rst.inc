@@ -195,6 +195,10 @@
   * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/session/avoid_session_start`
 
+* **PSR-7**
+
+  * :doc:`/cookbook/psr7`
+
 * **symfony1**
 
   * :doc:`/cookbook/symfony1`
