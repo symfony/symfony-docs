@@ -135,7 +135,7 @@ inject the ``command.default_name`` parameter:
         services:
             app.command.my_command:
                 class: AppBundle\Command\MyCommand
-                arguments: ['%command.default_name%']
+                arguments: ["%command.default_name%"]
                 tags:
                     -  { name: console.command }
 
@@ -155,6 +155,7 @@ inject the ``command.default_name`` parameter:
             <services>
                 <service id="app.command.my_command"
                     class="AppBundle\Command\MyCommand">
+                    <argument>%command.default_name%</argument>
                     <tag name="console.command" />
                 </service>
             </services>
@@ -168,8 +169,9 @@ inject the ``command.default_name`` parameter:
         $container
             ->register(
                 'app.command.my_command',
-                'AppBundle\Command\MyCommand'
+                'AppBundle\Command\MyCommand',
             )
+            ->setArguments(array('%command.default_name%'))
             ->addTag('console.command')
         ;
 
