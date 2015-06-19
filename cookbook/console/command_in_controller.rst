@@ -30,7 +30,7 @@ Run this command from inside your controller via::
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Console\Input\ArrayInput;
-    use Symfony\Component\Console\Output\StreamOutput;
+    use Symfony\Component\Console\Output\BufferedOutput;
     use Symfony\Component\HttpFoundation\Response;
 
     class SpoolController extends Controller
@@ -46,14 +46,12 @@ Run this command from inside your controller via::
                '--message-limit' => $messages,
             ));
             // You can use NullOutput() if you don't need the output
-            $output = new StreamOutput(tmpfile(), StreamOutput::VERBOSITY_NORMAL);
+            $output = new BufferedOutput();
             $application->run($input, $output);
 
             // return the output, don't use if you used NullOutput()
-            rewind($output->getStream());
-            $content = stream_get_contents($output->getStream());
-            fclose($output->getStream());
-
+            $content = $output->fetch();
+            
             // return new Response(""), if you used NullOutput()
             return new Response($content);
         }
@@ -62,7 +60,7 @@ Run this command from inside your controller via::
 Showing Colorized Command Output
 --------------------------------
 
-By telling the ``StreamOutput`` it is decorated via the third parameter,
+By telling the ``BufferedOutput`` it is decorated via the second parameter,
 it will return the Ansi color-coded content. The `SensioLabs AnsiToHtml converter`_
 can be used to convert this to colorful HTML.
 
@@ -78,8 +76,8 @@ Now, use it in your controller::
     namespace AppBundle\Controller;
 
     use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
+    use Symfony\Component\Console\Output\BufferedOutput;
     use Symfony\Component\Console\Output\OutputInterface;
-    use Symfony\Component\Console\Output\StreamOutput;
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
@@ -88,14 +86,15 @@ Now, use it in your controller::
         public function sendSpoolAction($messages = 10)
         {
             // ...
-            $output = new StreamOutput(tmpfile(), StreamOutput::VERBOSITY_NORMAL, true);
+            $output = new BufferedOutput(
+                OutputInterface::VERBOSITY_NORMAL,
+                true // true for decorated
+            );
             // ...
 
             // return the output
             $converter = new AnsiToHtmlConverter();
-            rewind($output->getStream());
-            $content = stream_get_contents($output->getStream());
-            fclose($output->getStream());
+            $content = $output->fetch();
 
             return new Response($converter->convert($content));
         }
