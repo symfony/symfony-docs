@@ -1,0 +1,101 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T20:50:31Z
+
+The content of the ``caution`` directive needs to be indented by four spaces.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-20T21:10:12Z
+
+Sure, my bad. Just fixed.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T21:17:36Z
+
+That's also true for the other two ``caution`` directives. :)
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-21T06:41:18Z
+
+Args. Fixed.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-29T15:32:05Z
+
+I've give this the "on hold" label and a `[WCM]` prefix since it's waiting on the referenced code PR. If I'm mis-reading something, let me know - I rarely find things mis-labeled, so it's making me second-guess myself :)
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-29T16:58:38Z
+
+All right. It's just prepared for the mentioned PR.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-02T12:37:01Z
+
+btw, this needs a rebase
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-11-02T19:43:06Z
+
+Reference added and rebased.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-11-04T06:57:06Z
+
+Fixed.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-11-06T12:54:33Z
+
+Even though I have fixed it the build still fails.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-06T13:28:29Z
+
+I don't understand why this is failing. The error message doesn't match the actual code. I also ran your pull request locally and it built successfully. If nobody else knows the source of the build failure, I think this can be merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-06T18:54:36Z
+
+I restarted travis and now the build passes :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-06T20:30:18Z
+
+@WouterJ That's funny because I also tried that yesterday without any effect. :D Thank you!
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-11-06T21:30:17Z
+
+Thanks! However I guess it is still on hold as the corresponding PR is not yet merged.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-06T21:31:44Z
+
+@peterrehm Uh, thanks for pointing this out.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-18T12:43:37Z
+
+The PR is now merged. @peterrehm can you please rebase this PR once again?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-06-19T01:05:32Z
+
+@WouterJ Has just been updated. I assume this applies now to 2.8.
