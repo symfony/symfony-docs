@@ -16,6 +16,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Finder).
 
+.. include:: /components/require_autoload.rst.inc
+
 Usage
 -----
 
@@ -302,7 +304,7 @@ The contents of returned files can be read with
 
     foreach ($finder as $file) {
         $contents = $file->getContents();
-        
+
         // ...
     }
 
