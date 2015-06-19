@@ -4,7 +4,7 @@
 Best Practices for Reusable Bundles
 ===================================
 
-There are 2 types of bundles:
+There are two types of bundles:
 
 * Application-specific bundles: only used to build your application;
 * Reusable bundles: meant to be shared across many projects.
@@ -13,12 +13,8 @@ This article is all about how to structure your **reusable bundles** so that
 they're easy to configure and extend. Many of these recommendations do not
 apply to application bundles because you'll want to keep those as simple
 as possible. For application bundles, just follow the practices shown throughout
-the book and cookbook.
-
-.. seealso::
-
-    The best practices for application-specific bundles are discussed in
-    :doc:`/best_practices/introduction`.
+the :doc:`book </book/index>`, the :doc:`cookbook </cookbook/index>` and the
+:doc:`best practices </best_practices/index>` book.
 
 .. index::
    pair: Bundle; Naming conventions
@@ -38,7 +34,7 @@ bundle class name must follow these simple rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a CamelCased name;
-* Use a descriptive and short name (no more than 2 words);
+* Use a descriptive and short name (no more than two words);
 * Prefix the name with the concatenation of the vendor (and optionally the
   category namespaces);
 * Suffix the name with ``Bundle``.
@@ -112,7 +108,7 @@ The following files are mandatory:
     structure to work.
 
 The depth of sub-directories should be kept to the minimal for most used
-classes and files (2 levels at a maximum). More levels can be defined for
+classes and files (two levels at a maximum). More levels can be defined for
 non-strategic, less-used files.
 
 The bundle directory is read-only. If you need to write temporary files, store
@@ -158,7 +154,7 @@ instance, a ``HelloController`` controller is stored in
 ``Bundle/HelloBundle/Controller/HelloController.php`` and the fully qualified
 class name is ``Bundle\HelloBundle\Controller\HelloController``.
 
-All classes and files must follow the Symfony coding :doc:`standards </contributing/code/standards>`.
+All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible, like
 Commands, Helpers, Listeners, and Controllers.
@@ -181,7 +177,7 @@ Tests
 -----
 
 A bundle should come with a test suite written with PHPUnit and stored under
-the ``Tests/`` directory. Tests should follow the following principles:
+the ``Tests/`` directory. Tests should follow these principles:
 
 * The test suite must be executable with a simple ``phpunit`` command run from
   a sample application;
@@ -190,13 +186,14 @@ the ``Tests/`` directory. Tests should follow the following principles:
 * The tests should cover at least 95% of the code base.
 
 .. note::
+
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
    existence of a ``phpunit.xml.dist`` file.
 
 Documentation
 -------------
 
-All classes and functions must come with full PHPDoc.
+All classes and functions must be fully documented using `PHPDoc`_ tags.
 
 Extensive documentation should also be provided in the
 :doc:`reStructuredText </contributing/documentation/format>` format, under
@@ -233,8 +230,8 @@ following standardized instructions in your ``README.md`` file.
         Step 2: Enable the Bundle
         -------------------------
 
-        Then, enable the bundle by adding the following line in the `app/AppKernel.php`
-        file of your project:
+        Then, enable the bundle by adding it to the list of registered bundles
+        in the `app/AppKernel.php` file of your project:
 
         ```php
         <?php
@@ -279,8 +276,8 @@ following standardized instructions in your ``README.md`` file.
         Step 2: Enable the Bundle
         -------------------------
 
-        Then, enable the bundle by adding the following line in the ``app/AppKernel.php``
-        file of your project:
+        Then, enable the bundle by adding it to the list of registered bundles
+        in the ``app/AppKernel.php`` file of your project:
 
         .. code-block:: php
 
@@ -306,8 +303,11 @@ following standardized instructions in your ``README.md`` file.
 
         .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
 
-This template assumes that your bundle is in its ``1.x`` version. If not, change
-the ``"~1"`` installation version accordingly (``"~2"``, ``"~3"``, etc.)
+The example above assumes that you are installing the latest stable version of
+the bundle, where you don't have to provide the package version number
+(e.g. ``composer require friendsofsymfony/user-bundle``). If the installation
+instructions refer to some past bundle version or to some unstable version,
+include the version constraint (e.g. ``composer require friendsofsymfony/user-bundle "~2.0@dev"``).
 
 Optionally, you can add more installation steps (*Step 3*, *Step 4*, etc.) to
 explain other required installation tasks, such as registering routes or
@@ -330,7 +330,8 @@ Translation Files
 -----------------
 
 If a bundle provides message translations, they must be defined in the XLIFF
-format; the domain should be named after the bundle name (``bundle.hello``).
+format; the :ref:`translation domain <using-message-domains>` should be named
+after the bundle name (``bundle.hello``).
 
 A bundle must not override existing messages from another bundle.
 
@@ -369,18 +370,12 @@ The end user can provide values in any configuration file:
         // app/config/config.php
         $container->setParameter('acme_hello.email.from', 'fabien@example.com');
 
-    .. code-block:: ini
-
-        ; app/config/config.ini
-        [parameters]
-        acme_hello.email.from = fabien@example.com
-
 Retrieve the configuration parameters in your code from the container::
 
     $container->getParameter('acme_hello.email.from');
 
 Even if this mechanism is simple enough, you are highly encouraged to use the
-semantic configuration described in the cookbook.
+:doc:`semantic bundle configuration </cookbook/bundles/extension>` instead.
 
 .. note::
 
@@ -442,3 +437,4 @@ Learn more from the Cookbook
 * :doc:`/cookbook/bundles/extension`
 
 .. _standards: http://www.php-fig.org/psr/psr-4/
+.. _`PHPDoc`: https://en.wikipedia.org/wiki/PHPDoc

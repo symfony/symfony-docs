@@ -183,6 +183,12 @@ To include an image you can use the ``image`` tag.
 You can also use Assetic for image optimization. More information in
 :doc:`/cookbook/assetic/jpeg_optimize`.
 
+.. tip::
+
+    Instead of using Assetic to include images, you may consider using the
+    `LiipImagineBundle`_ community bundle, which allows to compress and
+    manipulate images (rotate, resize, watermark, etc.) before serving them.
+
 .. _cookbook-assetic-cssrewrite:
 
 Fixing CSS Paths with the ``cssrewrite`` Filter
@@ -572,3 +578,5 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
+
+.. _`LiipImagineBundle`: https://github.com/liip/LiipImagineBundle

@@ -6,7 +6,7 @@ How to Load Service Configuration inside a Bundle
 =================================================
 
 In Symfony, you'll find yourself using many services. These services can be
-registered in the `app/config` directory of your application. But when you
+registered in the ``app/config/`` directory of your application. But when you
 want to decouple the bundle for use in other projects, you want to include the
 service configuration in the bundle itself. This article will teach you how to
 do that.
@@ -15,7 +15,7 @@ Creating an Extension Class
 ---------------------------
 
 In order to load service configuration, you have to create a Dependency
-Injection Extension for your bundle. This class has some conventions in order
+Injection (DI) Extension for your bundle. This class has some conventions in order
 to be detected automatically. But you'll later see how you can change it to
 your own preferences. By default, the Extension has to comply with the
 following conventions:
