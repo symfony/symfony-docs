@@ -275,6 +275,11 @@ But who can you login as? Where do users come from?
     What other methods are supported? See the :doc:`Configuration Reference </reference/configuration/security>`
     or :doc:`build your own </cookbook/security/custom_authentication_provider>`.
 
+.. tip::
+
+    If your application logs users in via a third-party service such as Google,
+    Facebook or Twitter, check out the `HWIOAuthBundle`_ community bundle.
+
 .. _security-user-providers:
 .. _where-do-users-come-from-user-providers:
 
@@ -480,7 +485,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
                 <encoder class="Symfony\Component\Security\Core\User\User"
                     algorithm="bcrypt"
                     cost="12" />
-                
+
                 <!-- ... -->
             </config>
         </srv:container>
@@ -1283,3 +1288,4 @@ Learn More from the Cookbook
 
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

@@ -4,6 +4,13 @@
 How to Create a custom Authentication Provider
 ==============================================
 
+.. note::
+
+    If you want to authenticate users via OAuth using a third-party service
+    such as Google, Facebook or Twitter, there is no need to create your own
+    authentication provider. In those cases, use the `HWIOAuthBundle`_ community
+    bundle.
+
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
@@ -280,7 +287,7 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. note::
 
-    The comparsion of the expected and the provided digests uses a constant
+    The comparison of the expected and the provided digests uses a constant
     time comparison provided by the
     :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
     method of the ``StringUtils`` class. It is used to mitigate possible
@@ -615,6 +622,7 @@ set to any desirable value per firewall.
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.
 
+.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: http://en.wikipedia.org/wiki/Cryptographic_nonce
 .. _`timing attacks`: http://en.wikipedia.org/wiki/Timing_attack
