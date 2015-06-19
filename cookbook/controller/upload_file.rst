@@ -49,13 +49,14 @@ in the ``Product`` entity::
 Note that the type of the ``brochure`` column is ``string`` instead of ``binary``
 or ``blob`` because it just stores the PDF file name instead of the file contents.
 
-Then, add a new ``brochure`` field to the form that manages ``Product`` entities::
+Then, add a new ``brochure`` field to the form that manage the ``Product`` entity::
 
     // src/AppBundle/Form/ProductType.php
     namespace AppBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class ProductType extends AbstractType
     {
@@ -68,7 +69,17 @@ Then, add a new ``brochure`` field to the form that manages ``Product`` entities
             ;
         }
 
-        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults(array(
+                'data_class' => 'AppBundle\Entity\Product',
+            ));
+        }
+
+        public function getName()
+        {
+            return 'product';
+        }
     }
 
 Now, update the template that renders the form to display the new ``brochure``
@@ -91,10 +102,11 @@ Finally, you need to update the code of the controller that handles the form::
     // src/AppBundle/Controller/ProductController.php
     namespace AppBundle\ProductController;
 
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use AppBundle\Entity\Product;
+    use AppBundle\Form\ProductType;
 
     class ProductController extends Controller
     {
@@ -103,10 +115,13 @@ Finally, you need to update the code of the controller that handles the form::
          */
         public function newAction(Request $request)
         {
-            //...
+            $product = new Product();
+            $form = $this->createForm(new ProductType(), $product);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 // $file stores the uploaded PDF file
+                /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
                 $file = $product->getBrochure()
 
                 // Generate a unique name for the file before saving it
@@ -116,10 +131,11 @@ Finally, you need to update the code of the controller that handles the form::
                 $brochuresDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/brochures';
                 $file->move($brochuresDir, $fileName);
 
-                // Update the 'brochure' property to store the PDF file name instead of its contents
+                // Update the 'brochure' property to store the PDF file name
+                // instead of its contents
                 $product->setBrochure($filename);
 
-                // ...
+                // persist the $product variable or any other work...
 
                 return $this->redirect($this->generateUrl('app_product_list'));
             }
