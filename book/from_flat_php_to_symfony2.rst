@@ -681,7 +681,7 @@ at how migrating the blog from flat PHP to Symfony has improved life:
   allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading <autoloading-introduction-sidebar>`,
+  to develop or maintain low-level utilities** such as autoloading,
   :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
 
 * Symfony gives you **access to open source tools** such as Doctrine and the
