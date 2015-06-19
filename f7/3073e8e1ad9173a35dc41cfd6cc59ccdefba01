@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-29T11:27:57Z
+
+I think it's better to just have a new cookbook section about PSR-7 and how to use it in your application (instead of creating a new section)
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-06-09T06:39:01Z
+
+Moved to a cookbook entry.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-06-15T05:27:50Z
+
+@xabbuh done
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-15T06:19:29Z
+
+We also need an entry for the new document in the toctree in `/cookbook/index.rst`.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-06-17T06:43:43Z
+
+Should be ok now.
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-18T03:15:17Z
+
+I have a question : Does Symfony 3.0 http foundation will make use of psr-7 or it will be using the bridge itself ?
+
+I have noticed some issues regarding splitting of the session component from http foundation etc.
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-19T16:21:11Z
+
+@harikt 3.0 will not use psr-7 (so you'd use the bridge like now). We need to protect backwards compatibility - but we are discussing the best (and most responsible way) to move towards psr-7.
