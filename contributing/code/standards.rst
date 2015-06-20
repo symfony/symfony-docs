@@ -30,10 +30,16 @@ example containing most features described below:
 
     namespace Acme;
 
+    use AVendor\B;
+    use BVendor\Abstract;
+    use BVendor\AbstractNamespace\Z;
+    use BVendor\AbstractUtil\A;
+    use CVendor\B;
+
     /**
      * Coding standards demonstration.
      */
-    class FooBar
+    class FooBar extends Abstract
     {
         const SOME_CONST = 42;
 
@@ -65,7 +71,8 @@ example containing most features described below:
                 $options
             );
 
-            if (true === $dummy) {
+            $classWithoutConstructorArgs = new Z();
+            if (true === $dummy || $classWithoutConstructorArgs->someMethod() === $dummy) {
                 return;
             }
 
@@ -108,6 +115,9 @@ Structure
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
+
+* Sort ``use`` declarations in alphabetical descending order regardless its
+  hierarchical structure;
 
 * Define one class per file - this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not
