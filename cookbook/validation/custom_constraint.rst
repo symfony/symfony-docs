@@ -64,7 +64,7 @@ The validator class is also simple, and only has one required method ``validate(
     {
         public function validate($value, Constraint $constraint)
         {
-            if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
+            if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
                 $this->context->addViolation(
                     $constraint->message,
                     array('%string%' => $value)
