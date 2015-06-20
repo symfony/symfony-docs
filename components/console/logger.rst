@@ -85,6 +85,8 @@ through the second parameter of the :class:`Symfony\\Component\\Console\\Console
 constructor::
 
     // ...
+    use Psr\Log\LogLevel;
+    // ...
     $verbosityLevelMap = array(
         LogLevel::NOTICE => OutputInterface::VERBOSITY_NORMAL,
         LogLevel::INFO   => OutputInterface::VERBOSITY_NORMAL,
