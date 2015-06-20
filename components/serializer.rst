@@ -185,7 +185,7 @@ like the following::
 
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     // For annotations
-    usr Doctrine\Common\Annotations\AnnotationReader;
+    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
     // For XML
     // use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
