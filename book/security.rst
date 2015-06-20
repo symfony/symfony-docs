@@ -123,9 +123,9 @@ A) Configuring how your Users will Authenticate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The main job of a firewall is to configure *how* your users will authenticate.
-Will they use a login form? Http Basic? An API token? All of the above?
+Will they use a login form? HTTP basic authentication? An API token? All of the above?
 
-Let's start with Http Basic (the old-school pop-up) and work up from there.
+Let's start with HTTP basic authentication (the old-school prompt) and work up from there.
 To activate this, add the ``http_basic`` key under your firewall:
 
 .. configuration-block::
@@ -260,7 +260,7 @@ user to be logged in to access this URL:
     You'll learn more about this ``ROLE_ADMIN`` thing and denying access
     later in the :ref:`security-authorization` section.
 
-Great! Now, if you go to ``/admin``, you'll see the HTTP Basic popup:
+Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
 
 .. image:: /images/book/security_http_basic_popup.png
    :align: center
@@ -590,8 +590,8 @@ before inserting them into the database? Don't worry, see
 D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Congratulations! You now have a working authentication system that uses Http
-Basic and loads users right from the ``security.yml`` file.
+Congratulations! You now have a working authentication system that uses HTTP
+basic auth and loads users right from the ``security.yml`` file.
 
 Your next steps depend on your setup:
 
