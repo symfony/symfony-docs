@@ -33,6 +33,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Serializer).
 
+.. include:: /components/require_autoload.rst.inc
+
 Usage
 -----
 
@@ -185,7 +187,7 @@ like the following::
 
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     // For annotations
-    usr Doctrine\Common\Annotations\AnnotationReader;
+    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
     // For XML
     // use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
