@@ -393,7 +393,6 @@ convert many commits to one commit. To do this, use the rebase command:
 .. code-block:: bash
 
     $ git rebase -i upstream/master
-    $ git push --force origin BRANCH_NAME
 
 After you type this command, an editor will popup showing a list of commits:
 
@@ -407,7 +406,29 @@ To squash all commits into the first one, remove the word ``pick`` before the
 second and the last commits, and replace it by the word ``squash`` or just
 ``s``. When you save, Git will start rebasing, and if successful, will ask
 you to edit the commit message, which by default is a listing of the commit
-messages of all the commits. When you are finished, execute the push command.
+messages of all the commits.
+
+Examples for "squashing" the first and the second commit into one commit:
+
+.. code-block:: text
+
+    squash 1a31be6 first commit
+    squash 7fc64b4 second commit
+    pick 7d33018 third commit
+    
+or
+
+.. code-block:: text
+
+    s 1a31be6 first commit
+    s 7fc64b4 second commit
+    pick 7d33018 third commit
+
+When you are finished, execute the following push command:
+
+.. code-block:: bash
+
+    $ git push --force origin BRANCH_NAME
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
