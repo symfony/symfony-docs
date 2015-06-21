@@ -223,7 +223,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 .. caution::
 
     The ``__call`` feature is disabled by default, you can enable it by calling
-    :method:`PropertyAccessorBuilder::enableMagicCallEnabled<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCallEnabled>`
+    :method:`PropertyAccessorBuilder::enableMagicCall<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall>`
     see `Enable other Features`_.
 
 Writing to Arrays
