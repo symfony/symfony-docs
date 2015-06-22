@@ -14,7 +14,7 @@ languages, there is even a standard like `WSGI`_ in Python or `Rack`_ in Ruby.
 
 As there is no standard for PHP, we are going to use a well-known design
 pattern, the *Observer*, to allow any kind of behaviors to be attached to our
-framework; the Symfony2 EventDispatcher Component implements a lightweight
+framework; the Symfony EventDispatcher Component implements a lightweight
 version of this pattern:
 
 .. code-block:: bash
@@ -32,8 +32,6 @@ Analytics code to all responses.
 
 To make it work, the framework must dispatch an event just before returning
 the Response instance::
-
-    <?php
 
     // example.com/src/Simplex/Framework.php
 
@@ -86,8 +84,6 @@ the Response instance::
 Each time the framework handles a Request, a ``ResponseEvent`` event is
 now dispatched::
 
-    <?php
-
     // example.com/src/Simplex/ResponseEvent.php
 
     namespace Simplex;
@@ -120,8 +116,6 @@ now dispatched::
 
 The last step is the creation of the dispatcher in the front controller and
 the registration of a listener for the ``response`` event::
-
-    <?php
 
     // example.com/web/front.php
 
@@ -202,8 +196,6 @@ the priority to ``-255``::
 
 Let's refactor the code a bit by moving the Google listener to its own class::
 
-    <?php
-
     // example.com/src/Simplex/GoogleListener.php
 
     namespace Simplex;
@@ -226,8 +218,6 @@ Let's refactor the code a bit by moving the Google listener to its own class::
     }
 
 And do the same with the other listener::
-
-    <?php
 
     // example.com/src/Simplex/ContentLengthListener.php
 
@@ -268,8 +258,6 @@ A subscriber knows about all the events it is interested in and pass this
 information to the dispatcher via the ``getSubscribedEvents()`` method. Have a
 look at the new version of the ``GoogleListener``::
 
-    <?php
-
     // example.com/src/Simplex/GoogleListener.php
 
     namespace Simplex;
@@ -287,8 +275,6 @@ look at the new version of the ``GoogleListener``::
     }
 
 And here is the new version of ``ContentLengthListener``::
-
-    <?php
 
     // example.com/src/Simplex/ContentLengthListener.php
 

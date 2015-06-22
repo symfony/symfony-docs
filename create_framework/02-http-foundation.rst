@@ -5,7 +5,7 @@ Before diving into the framework creation process, let's first step back and
 let's take a look at why you would like to use a framework instead of keeping
 your plain-old PHP applications as is. Why using a framework is actually a good
 idea, even for the simplest snippet of code and why creating your framework on
-top of the Symfony2 components is better than creating a framework from scratch.
+top of the Symfony components is better than creating a framework from scratch.
 
 .. note::
 
@@ -17,8 +17,6 @@ top of the Symfony2 components is better than creating a framework from scratch.
 Even if the "application" we wrote in the previous chapter was simple enough,
 it suffers from a few problems::
 
-    <?php
-
     // framework/index.php
 
     $input = $_GET['name'];
@@ -27,8 +25,6 @@ it suffers from a few problems::
 
 First, if the ``name`` query parameter is not defined in the URL query string,
 you will get a PHP warning; so let's fix it::
-
-    <?php
 
     // framework/index.php
 
@@ -39,8 +35,6 @@ you will get a PHP warning; so let's fix it::
 Then, this *application is not secure*. Can you believe it? Even this simple
 snippet of PHP code is vulnerable to one of the most widespread Internet
 security issue, XSS (Cross-Site Scripting). Here is a more secure version::
-
-    <?php
 
     $input = isset($_GET['name']) ? $_GET['name'] : 'World';
 
@@ -65,8 +59,6 @@ much to test, it strikes me that writing unit tests for the simplest possible
 snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
 
-    <?php
-
     // framework/test.php
 
     class IndexTest extends \PHPUnit_Framework_TestCase
@@ -86,8 +78,8 @@ unit test for the above code::
 .. note::
 
     If our application were just slightly bigger, we would have been able to
-    find even more problems. If you are curious about them, read the `Symfony2
-    versus Flat PHP`_ chapter of the Symfony2 documentation.
+    find even more problems. If you are curious about them, read the `Symfony
+    versus Flat PHP`_ chapter of the Symfony documentation.
 
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
@@ -117,7 +109,7 @@ In PHP, the request is represented by global variables (``$_GET``, ``$_POST``,
 functions (``echo``, ``header``, ``setcookie``, ...).
 
 The first step towards better code is probably to use an Object-Oriented
-approach; that's the main goal of the Symfony2 HttpFoundation component:
+approach; that's the main goal of the Symfony HttpFoundation component:
 replacing the default PHP global variables and functions by an Object-Oriented
 layer.
 
@@ -140,8 +132,6 @@ HttpFoundation component and install it under the ``vendor/`` directory.
 
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
-
-    <?php
 
     // framework/index.php
 
@@ -184,8 +174,6 @@ charge of sending the response whenever you see fit.
 With the ``Request`` class, you have all the request information at your
 fingertips thanks to a nice and simple API::
 
-    <?php
-
     // the URI being requested (e.g. /about) minus any query parameters
     $request->getPathInfo();
 
@@ -215,8 +203,6 @@ You can also simulate a request::
 
 With the ``Response`` class, you can easily tweak the response::
 
-    <?php
-
     $response = new Response();
 
     $response->setContent('Hello world!');
@@ -240,8 +226,6 @@ framework?
 
 Even something as simple as getting the client IP address can be insecure::
 
-    <?php
-
     if ($myIp == $_SERVER['REMOTE_ADDR']) {
         // the client is a known one, so give it some more privilege
     }
@@ -251,8 +235,6 @@ production servers; at this point, you will have to change your code to make
 it work on both your development machine (where you don't have a proxy) and
 your servers::
 
-    <?php
-
     if ($myIp == $_SERVER['HTTP_X_FORWARDED_FOR'] || $myIp == $_SERVER['REMOTE_ADDR']) {
         // the client is a known one, so give it some more privilege
     }
@@ -260,8 +242,6 @@ your servers::
 Using the ``Request::getClientIp()`` method would have given you the right
 behavior from day one (and it would have covered the case where you have
 chained proxies)::
-
-    <?php
 
     $request = Request::createFromGlobals();
 
@@ -275,8 +255,6 @@ manipulated by the end user when there is no proxy. So, if you are using this
 code in production without a proxy, it becomes trivially easy to abuse your
 system. That's not the case with the ``getClientIp()`` method as you must
 explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
-
-    <?php
 
     Request::setTrustedProxies(array('10.0.0.1'));
 
@@ -297,7 +275,7 @@ cases by yourself. Why not using a technology that already works?
     its dedicated :doc:`documentation </components/http_foundation/index>`.
 
 Believe or not but we have our first framework. You can stop now if you want.
-Using just the Symfony2 HttpFoundation component already allows you to write
+Using just the Symfony HttpFoundation component already allows you to write
 better and more testable code. It also allows you to write code faster as many
 day-to-day problems have already been solved for you.
 
@@ -307,14 +285,14 @@ the wheel.
 
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
-applications using it (like `Symfony2`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
+applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 5`_, `Laravel`_, `Silex`_, and `more`_).
 
 .. _`Twig`: http://twig.sensiolabs.com/
-.. _`Symfony2 versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
+.. _`Symfony versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
 .. _`audited`: http://symfony.com/blog/symfony2-security-audit
-.. _`Symfony2`: http://symfony.com/
+.. _`Symfony`: http://symfony.com/
 .. _`Drupal 8`: http://drupal.org/
 .. _`phpBB 4`: http://www.phpbb.com/
 .. _`ezPublish 5`: http://ez.no/

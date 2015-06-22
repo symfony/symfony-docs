@@ -14,8 +14,6 @@ information conveyed by the client's Request.*
 
 Change the template rendering part of the framework to read as follows::
 
-    <?php
-
     // example.com/web/front.php
 
     // ...
@@ -102,8 +100,6 @@ you can even pass additional arguments to the template::
 
 Here is the updated and improved version of our framework::
 
-    <?php
-
     // example.com/web/front.php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -146,8 +142,6 @@ says whether a given year is a leap year or not. When calling
 also specify a year like in ``/is_leap_year/2009``. Being generic, the
 framework does not need to be modified in any way, just create a new
 ``app.php`` file::
-
-    <?php
 
     // example.com/src/app.php
 

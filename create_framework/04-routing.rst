@@ -4,8 +4,6 @@ The Routing Component
 Before we start diving into the Routing component, let's refactor our current
 framework just a little to make templates even more readable::
 
-    <?php
-
     // example.com/web/front.php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -53,7 +51,7 @@ instead of relying on a query string:
     # After
     /hello/Fabien
 
-To support this feature, add the Symfony2 Routing component as a dependency:
+To support this feature, add the Symfony Routing component as a dependency:
 
 .. code-block:: bash
 
@@ -131,8 +129,6 @@ The URL matcher throws an exception when none of the routes match::
 
 With this knowledge in mind, let's write the new version of our framework::
 
-    <?php
-
     // example.com/web/front.php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -177,8 +173,6 @@ There are a few new things in the code::
 * Route configuration has been moved to its own file:
 
   .. code-block:: php
-
-      <?php
 
       // example.com/src/app.php
 

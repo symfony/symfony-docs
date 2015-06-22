@@ -22,8 +22,6 @@ feedback when a problem arises.
 
 Here is the new framework code::
 
-    <?php
-
     // example.com/src/Simplex/Framework.php
 
     namespace Simplex;
@@ -35,8 +33,6 @@ Here is the new framework code::
     }
 
 And the new front controller::
-
-    <?php
 
     // example.com/web/front.php
 
@@ -88,8 +84,6 @@ ErrorController class instead of using a Closure::
 
 The error controller reads as follows::
 
-    <?php
-
     // example.com/src/Calendar/Controller/ErrorController.php
 
     namespace Calendar\Controller;
@@ -128,7 +122,7 @@ And in your controller, return a ``StreamedResponse`` instance instead of a
 
 .. tip::
 
-    Read the `Internals`_ chapter of the Symfony2 documentation to learn more
+    Read the `Internals`_ chapter of the Symfony documentation to learn more
     about the events dispatched by HttpKernel and how they allow you to change
     the flow of a request.
 
@@ -152,8 +146,6 @@ To implement this feature, we are going to listen to the ``kernel.view``
 event, which is triggered just after the controller has been called. Its goal
 is to convert the controller return value to a proper Response instance, but
 only if needed::
-
-    <?php
 
     // example.com/src/Simplex/StringResponseListener.php
 
@@ -203,7 +195,7 @@ Hopefully, you now have a better understanding of why the simple looking
 ``HttpKernelInterface`` is so powerful. Its default implementation,
 ``HttpKernel``, gives you access to a lot of cool features, ready to be used
 out of the box, with no efforts. And because HttpKernel is actually the code
-that powers the Symfony2 and Silex frameworks, you have the best of both
+that powers the Symfony and Silex frameworks, you have the best of both
 worlds: a custom framework, tailored to your needs, but based on a rock-solid
 and well maintained low-level architecture that has been proven to work for
 many websites; a code that has been audited for security issues and that has

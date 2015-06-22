@@ -2,7 +2,7 @@ The HttpKernel Component: HttpKernelInterface
 =============================================
 
 In the conclusion of the second chapter of this book, I've talked about one
-great benefit of using the Symfony2 components: the *interoperability* between
+great benefit of using the Symfony components: the *interoperability* between
 all frameworks and applications using them. Let's do a big step towards this
 goal by making our framework implement ``HttpKernelInterface``::
 
@@ -22,8 +22,6 @@ this interface are fully interoperable. Moreover, a lot of great features will
 come with it for free.
 
 Update your framework so that it implements this interface::
-
-    <?php
 
     // example.com/src/Framework.php
 
@@ -92,7 +90,7 @@ content and check that the number only changes every 10 seconds::
 
 .. note::
 
-    When deploying to your production environment, keep using the Symfony2
+    When deploying to your production environment, keep using the Symfony
     reverse proxy (great for shared hosting) or even better, switch to a more
     efficient reverse proxy like `Varnish`_.
 
@@ -100,7 +98,7 @@ Using HTTP cache headers to manage your application cache is very powerful and
 allows you to tune finely your caching strategy as you can use both the
 expiration and the validation models of the HTTP specification. If you are not
 comfortable with these concepts, read the `HTTP caching`_ chapter of the
-Symfony2 documentation.
+Symfony documentation.
 
 The Response class contains many other methods that let you configure the
 HTTP cache very easily. One of the most powerful is ``setCache()`` as it
@@ -161,7 +159,7 @@ sub-requests to convert them to their proper content::
 .. note::
 
     For ESI to work, you need to use a reverse proxy that supports it like the
-    Symfony2 implementation. `Varnish`_ is the best alternative and it is
+    Symfony implementation. `Varnish`_ is the best alternative and it is
     Open-Source.
 
 When using complex HTTP caching strategies and/or many ESI include tags, it

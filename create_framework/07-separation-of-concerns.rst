@@ -15,8 +15,6 @@ Request.
 Let's create our very own namespace for our framework: ``Simplex``. Move the
 request handling logic into its own ``Simplex\\Framework`` class::
 
-    <?php
-
     // example.com/src/Simplex/Framework.php
 
     namespace Simplex;
@@ -59,8 +57,6 @@ request handling logic into its own ``Simplex\\Framework`` class::
 
 And update ``example.com/web/front.php`` accordingly::
 
-    <?php
-
     // example.com/web/front.php
 
     // ...
@@ -102,8 +98,6 @@ be autoloaded, update the ``composer.json`` file:
 
 Move the controller to ``Calendar\\Controller\\LeapYearController``::
 
-    <?php
-
     // example.com/src/Calendar/Controller/LeapYearController.php
 
     namespace Calendar\Controller;
@@ -126,8 +120,6 @@ Move the controller to ``Calendar\\Controller\\LeapYearController``::
     }
 
 And move the ``is_leap_year()`` function to its own class too::
-
-    <?php
 
     // example.com/src/Calendar/Model/LeapYear.php
 

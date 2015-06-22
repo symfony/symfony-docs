@@ -6,8 +6,6 @@ extending the ``HttpKernel`` class from the eponymous component. Seeing this
 empty class, you might be tempted to move some code from the front controller
 to it::
 
-    <?php
-
     // example.com/src/Simplex/Framework.php
 
     namespace Simplex;
@@ -33,8 +31,6 @@ to it::
     }
 
 The front controller code would become more concise::
-
-    <?php
 
     // example.com/web/front.php
 
@@ -88,7 +84,7 @@ framework so that we had total control of its creation and configuration).
 Does it mean that we have to make a choice between flexibility, customization,
 ease of testing and not to copy and paste the same code into each application
 front controller? As you might expect, there is a solution. We can solve all
-these issues and some more by using the Symfony2 dependency injection
+these issues and some more by using the Symfony dependency injection
 container:
 
 .. code-block:: bash
@@ -96,8 +92,6 @@ container:
     $ composer require symfony/dependency-injection
 
 Create a new file to host the dependency injection container configuration::
-
-    <?php
 
     // example.com/src/container.php
 
@@ -152,8 +146,6 @@ it in other object definitions.
 
 The front controller is now only about wiring everything together::
 
-    <?php
-
     // example.com/web/front.php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -171,8 +163,6 @@ The front controller is now only about wiring everything together::
 
 As all the objects are now created in the dependency injection container, the
 framework code should be the previous simple version::
-
-    <?php
 
     // example.com/src/Simplex/Framework.php
 
@@ -238,9 +228,9 @@ your framework. If you don't like it, don't use it. It's your framework, not
 mine.
 
 This is (already) the last chapter of this book on creating a framework on top
-of the Symfony2 components. I'm aware that many topics have not been covered
+of the Symfony components. I'm aware that many topics have not been covered
 in great details, but hopefully it gives you enough information to get started
-on your own and to better understand how the Symfony2 framework works
+on your own and to better understand how the Symfony framework works
 internally.
 
 If you want to learn more, read the source code of the `Silex`_

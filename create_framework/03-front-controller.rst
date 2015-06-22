@@ -5,8 +5,6 @@ Up until now, our application is simplistic as there is only one page. To
 spice things up a little bit, let's go crazy and add another page that says
 goodbye::
 
-    <?php
-
     // framework/bye.php
 
     require_once __DIR__.'/vendor/autoload.php';
@@ -27,8 +25,6 @@ our first "real" framework!
 The PHP way of doing the refactoring would probably be the creation of an
 include file::
 
-    <?php
-
     // framework/init.php
 
     require_once __DIR__.'/vendor/autoload.php';
@@ -41,8 +37,6 @@ include file::
 
 Let's see it in action::
 
-    <?php
-
     // framework/index.php
 
     require_once __DIR__.'/init.php';
@@ -53,8 +47,6 @@ Let's see it in action::
     $response->send();
 
 And for the "Goodbye" page::
-
-    <?php
 
     // framework/bye.php
 
@@ -83,8 +75,6 @@ routing all client requests to a single PHP script.
 
 Such a script might look like the following::
 
-    <?php
-
     // framework/front.php
 
     require_once __DIR__.'/vendor/autoload.php';
@@ -111,8 +101,6 @@ Such a script might look like the following::
     $response->send();
 
 And here is for instance the new ``hello.php`` script::
-
-    <?php
 
     // framework/hello.php
 
@@ -185,8 +173,6 @@ The last thing that is repeated in each page is the call to ``setContent()``.
 We can convert all pages to "templates" by just echoing the content and calling
 the ``setContent()`` directly from the front controller script::
 
-    <?php
-
     // example.com/web/front.php
 
     // ...
@@ -212,8 +198,6 @@ And the ``hello.php`` script can now be converted to a template::
     Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
 We have the first version of our framework::
-
-    <?php
 
     // example.com/web/front.php
 

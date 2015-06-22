@@ -40,11 +40,9 @@ stored under the ``example.com/tests/`` directory.
 Now, let's write a test for "not found" resources. To avoid the creation of
 all dependencies when writing tests and to really just unit-test what we want,
 we are going to use `test doubles`_. Test doubles are easier to create when we
-rely on interfaces instead of concrete classes. Fortunately, Symfony2 provides
+rely on interfaces instead of concrete classes. Fortunately, Symfony provides
 such interfaces for core objects like the URL matcher and the controller
 resolver. Modify the framework to make use of them::
-
-    <?php
 
     // example.com/src/Simplex/Framework.php
 
@@ -70,8 +68,6 @@ resolver. Modify the framework to make use of them::
     }
 
 We are now ready to write our first test::
-
-    <?php
 
     // example.com/tests/Simplex/Tests/FrameworkTest.php
 
@@ -119,7 +115,7 @@ Executing this test is as simple as running ``phpunit`` from the
 
 .. note::
 
-    If you don't understand what the hell is going on in the code, read
+    If you don't understand what the hell is going on in the code, read the
     PHPUnit documentation on `test doubles`_.
 
 After the test ran, you should see a green bar. If not, you have a bug
@@ -184,7 +180,7 @@ been visited when the tests were executed).
 Thanks to the simple object-oriented code that we have written so far, we have
 been able to write unit-tests to cover all possible use cases of our
 framework; test doubles ensured that we were actually testing our code and not
-Symfony2 code.
+Symfony code.
 
 Now that we are confident (again) about the code we have written, we can
 safely think about the next batch of features we want to add to our framework.
