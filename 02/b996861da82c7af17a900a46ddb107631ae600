@@ -1,0 +1,81 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-29T19:35:34Z
+
+Note: Meant to be merged into 2.3
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-29T22:42:12Z
+
+Isn't this quite strange? Composer update should trigger a partial update afaik, which means it should also update twig/twig if a newer version is required. Are we sure Symfony has the correct version constraint for twig?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-30T06:35:10Z
+
+Yeah, that sounds weird.
+
+@weaverryan Do you remember what required you to use a newer Twig version than the one you had installed?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-30T08:05:38Z
+
+In my case I didn't have problems with Twig but with some Doctrine dependencies. I know that you won't agree but I believe that when you perform a "brutal update" (like updating Symfony version) you should always execute `composer update` instead of updating just a minor set of packages.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-30T11:35:06Z
+
+@xabbuh: yes, symfony/symfony required a newer version of twig/twig than I had installed. I have no twig/twig in *my* composer.json. So I also thought that Composer would be smart enough to update twig, even though it's not an arg in my update command, but that's not the case.
+
+So what should we do? The error - and getting it working- is confusing. But the brutal update (with no args) really means people need to have great version constraints.
+
+@javiereguiluz - was your error with doctrine/common? I'm wondering because maybe this is solved (or mostly solved) if you update symfony/symfony + whatever libs it depends on directly.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-30T12:04:46Z
+
+Maybe @Seldaek can give us some clues if this behaviour is the expected one (`composer update symfony/symfony` only updating symfony/symfony and *not* its dependencies) and we should document how to work around it or if this is actually a bug in Composer?
+
+From a usage point of view, the current behaviour seems rather strange/hard to use.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-30T12:41:47Z
+
+@weaverryan in my case it was a problem with Doctrine fixtures ... but it only happened in one project. I'm afraid that there are so many different constraints configurations, that for a lot of developers doing `composer update symfony/symfony` won't work :(
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-30T14:04:54Z
+
+@weaverryan @javiereguiluz I'm curious. Could you please show how your `composer.json`  file looked like before the update?
+
+---------------------------------------------------------------------------
+
+by Seldaek at 2015-05-30T19:18:47Z
+
+Composer used to be smart enough as you say and update dependencies as well when you did a partial update, but then for some packages you end up updating half the project, so it's not so great. Either you have to whitelist all the deps yourself or you can use `composer update --with-dependencies symfony/symfony` and then it'll include the deps automatically but it might end up updating more than you'd like it to.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-31T10:46:43Z
+
+Thanks for the information @Seldaek. So I think we should change the instructions to `composer update --with-dependencies symfony/symfony` as it seems to be at least a bit safer than `composer update` for people that don't have the knowledge to write good version constraints.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-08T18:42:49Z
+
+I just updated this with `--with-dependencies` - it has indeed helped a lot of people to use that for the 2.7 upgrade.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-09T19:31:30Z
+
+:+1:
