@@ -1,0 +1,111 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T09:27:17Z
+
+@richardudovich if I'm right, this is your first contribution to Symfony docs. Therefore, thank you for helping us improve the doc :)
+
+@xabbuh is one of the Symfony doc managers and made two comments about your pull request. As you can see, you should only remove two blank lines and add one word. After those changes, your pull request will be ready to be merged.
+
+If you have any trouble making these changes or if you have any other question/doubt about the contribution process, please ask us. We're here to help you. Thanks!
+
+---------------------------------------------------------------------------
+
+by richardudovich at 2015-06-22T11:49:01Z
+
+Thanks for getting back to me. I actually wasn't sure that I was suppose to
+do something sorry.
+In any case I have removed the two lines, but i am not sure about what word
+i should add...
+
+Regards
+Richard
+
+On Mon, Jun 22, 2015 at 7:27 PM, Javier Eguiluz <notifications@github.com>
+wrote:
+
+> @richardudovich <https://github.com/richardudovich> if I'm right, this is
+> your first contribution to Symfony docs. Therefore, thank you for helping
+> us improve the doc :)
+>
+> @xabbuh <https://github.com/xabbuh> is one of the Symfony doc managers
+> and made two comments about your pull request. As you can see, you should
+> only remove two blank lines and add one word. After those changes, your
+> pull request will be ready to be merged.
+>
+> If you have any trouble making these changes or if you have any other
+> question/doubt about the contribution process, please ask us. We're here to
+> help you. Thanks!
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/5383#issuecomment-114049702>
+> .
+>
+
+--
+Regards
+
+*This e-mail and any attachments may contain confidential and privileged
+information. If you are not the intended recipient, please notify the
+sender immediately by return e-mail, delete this e-mail and destroy any
+copies. Any dissemination or use of this information by a person other than
+the intended recipient is unauthorized and may be illegal. *
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T14:00:06Z
+
+@richard sorry for not explaining myself properly. In the line 283 of the `book/service_container.rst` file you have the following:
+
+```
+[...] Read on to learn about both methods.
+```
+
+However, @xabbuh proposes you to slightly change it by the following:
+
+```
+[...] Read on to learn more about both methods.
+```
+
+---------------------------------------------------------------------------
+
+by richardudovich at 2015-06-22T14:34:22Z
+
+Thanks for your help Javier
+
+On Tue, Jun 23, 2015 at 12:00 AM, Javier Eguiluz <notifications@github.com>
+wrote:
+
+> @richard <https://github.com/richard> sorry for not explaining myself
+> properly. In the line 283 of the book/service_container.rst file you have
+> the following:
+>
+> [...] Read on to learn about both methods.
+>
+> However, @xabbuh <https://github.com/xabbuh> proposes you to slightly
+> change it by the following:
+>
+> [...] Read on to learn more about both methods.
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/5383#issuecomment-114112990>
+> .
+>
+
+--
+Regards
+
+*This e-mail and any attachments may contain confidential and privileged
+information. If you are not the intended recipient, please notify the
+sender immediately by return e-mail, delete this e-mail and destroy any
+copies. Any dissemination or use of this information by a person other than
+the intended recipient is unauthorized and may be illegal. *
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T15:53:11Z
+
+Thank you for your great work @richardudovich. This reads very well to me. Please apologise if my comments where not clear enough. I sadly didn't recognize that you didn't contribute to the docs before.
+
+Our native speaker @weaverryan will have a look at the and proofread them (and hopefully just merge them :)).
