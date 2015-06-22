@@ -449,6 +449,8 @@ method::
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
 
+.. _calling-existing-command:
+
 Calling an Existing Command
 ---------------------------
 
@@ -478,15 +480,25 @@ Calling a command from another one is straightforward::
     }
 
 First, you :method:`Symfony\\Component\\Console\\Application::find` the
-command you want to execute by passing the command name.
-
-Then, you need to create a new
-:class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the arguments and
-options you want to pass to the command.
+command you want to execute by passing the command name. Then, you need to create
+a new :class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the arguments
+and options you want to pass to the command.
 
 Eventually, calling the ``run()`` method actually executes the command and
 returns the returned code from the command (return value from command's
 ``execute()`` method).
+
+.. tip::
+
+    If you want to suppress the output of the executed command, pass a :class:`Symfony\\Component\\Console\\Output\\NullOutput`
+    as the second argument to ``$command->execute()``.
+
+.. caution::
+
+    Note that all the commands will run in the same process, and some of Symfony's
+    built-in commands may not work well this way. For instance, ``cache:clear``
+    and ``cache:warmup`` commands change some class definitions, so running something
+    after them is likely to break.
 
 .. note::
 

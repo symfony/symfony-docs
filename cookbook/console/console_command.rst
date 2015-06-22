@@ -153,36 +153,8 @@ see :doc:`/cookbook/service_container/scopes`.
 Invoking Other Commands
 -----------------------
 
-If you need to implement a command that runs other dependent commands, you can fetch 
-these commands using the :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`'s ``find`` method. 
-
-Also note that you'll have to pass :class:`Symfony\\Component\\Console\\Input\\InputInterface` and :class:`Symfony\\Component\\Console\\Output\\OutputInterface` 
-as arguments to the command's ``execute`` method. This can be easily implemented 
-with :class:`Symfony\\Component\\Console\\Input\\ArrayInput`::
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $command = $this->getApplication()->find('some:command');
-        $command->execute(
-            new ArrayInput(array(
-                'foo' => 'foo', 
-                '--bar' => 'foobar',
-            )), 
-            $output
-        );
-    }
-
-.. tip::
-
-    If you want to suppress the output of the executed command, pass a :class:`Symfony\\Component\\Console\\Output\\NullOutput`
-    as the second argument to ``$command->execute()``.
-
-.. caution::
-
-    Note that all these commands will run in the same process, and some of Symfony's 
-    built-in commands may not work well this way. For instance, ``cache:clear`` and ``cache:warmup`` 
-    commands change some class definitions, so running something 
-    after them is likely to break.
+See :ref:`calling-existing-command` if you need to implement a command that runs
+other dependent commands.
 
 Testing Commands
 ----------------
