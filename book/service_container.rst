@@ -282,8 +282,6 @@ created - is via the ``imports`` directive. The second method, although slightly
 complex offers more flexibility and is commonly used to import third-party bundle 
 configuration. Read on to learn about both methods.
 
-
-
 .. index::
    single: Service Container; Imports
 
