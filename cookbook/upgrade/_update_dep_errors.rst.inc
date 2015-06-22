@@ -6,8 +6,8 @@ other Symfony dependencies too. In that case, try the following command:
 
     $ composer update symfony/symfony --with-dependencies
 
-This updates ``symfony/symfony`` and *all* packages that it depends on,
-will include several other packages. By using tight version constraints in
+This updates ``symfony/symfony`` and *all* packages that it depends on, which will
+include several other packages. By using tight version constraints in
 ``composer.json``, you can control what versions each library upgrades to.
 
 If this still doesn't work, your ``composer.json`` file may specify a version
