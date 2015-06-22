@@ -140,7 +140,7 @@ Arithmetic Operators
 
 For example::
 
-    dump($language->evaluate(
+    var_dump($language->evaluate(
         'life + universe + everything',
         array(
             'life' => 10,
