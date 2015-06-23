@@ -132,6 +132,10 @@ The ``status`` field created by the code above will be rendered as:
         <option value="2">Almost empty</option>
     </select>
 
+But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1`` will
+be returned in your form. If ``Almost empty`` is selected (value ``2`` in HTML),
+``0.1`` will be returned.
+
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
