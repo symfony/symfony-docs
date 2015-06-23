@@ -150,7 +150,7 @@ before translating contents::
 However for other services the solution might be more complex. For more details,
 see :doc:`/cookbook/service_container/scopes`.
 
-Invoking Other Commands
+Invoking other Commands
 -----------------------
 
 See :ref:`calling-existing-command` if you need to implement a command that runs

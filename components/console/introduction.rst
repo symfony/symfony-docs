@@ -490,15 +490,16 @@ returns the returned code from the command (return value from command's
 
 .. tip::
 
-    If you want to suppress the output of the executed command, pass a :class:`Symfony\\Component\\Console\\Output\\NullOutput`
-    as the second argument to ``$command->execute()``.
+    If you want to suppress the output of the executed command, pass a
+    :class:`Symfony\\Component\\Console\\Output\\NullOutput` as the second
+    argument to ``$command->execute()``.
 
 .. caution::
 
-    Note that all the commands will run in the same process, and some of Symfony's
-    built-in commands may not work well this way. For instance, ``cache:clear``
-    and ``cache:warmup`` commands change some class definitions, so running something
-    after them is likely to break.
+    Note that all the commands will run in the same process and some of Symfony's
+    built-in commands may not work well this way. For instance, the ``cache:clear``
+    and ``cache:warmup`` commands change some class definitions, so running
+    something after them is likely to break.
 
 .. note::
 
