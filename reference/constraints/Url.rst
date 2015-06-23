@@ -27,8 +27,73 @@ Basic Usage
             properties:
                 bioUrl:
                     - Url: ~
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Url()
+             */
+             protected $bioUrl;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url" />
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
+            }
+        }
+
+Options
+-------
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value is not a valid URL.``
+
+This message is shown if the URL is invalid.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
                         message: The url "{{ value }}" is not a valid url.
-                        protocols: [http, https]
 
     .. code-block:: php-annotations
 
@@ -42,7 +107,6 @@ Basic Usage
             /**
              * @Assert\Url(
              *    message = "The url '{{ value }}' is not a valid url",
-             *    protocols = {"http", "https"}
              * )
              */
              protected $bioUrl;
@@ -60,10 +124,6 @@ Basic Usage
                 <property name="bioUrl">
                     <constraint name="Url">
                         <option name="message">The url "{{ value }}" is not a valid url.</option>
-                        <option name="protocols">
-                            <value>http</value>
-                            <value>https</value>
-                        </option>
                     </constraint>
                 </property>
             </class>
@@ -83,29 +143,85 @@ Basic Usage
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
                     'message' => 'The url "{{ value }}" is not a valid url.',
-                    'protocols' => array('http', 'https'),
                 )));
             }
         }
-
-Options
--------
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value is not a valid URL.``
-
-This message is shown if the URL is invalid.
 
 protocols
 ~~~~~~~~~
 
 **type**: ``array`` **default**: ``array('http', 'https')``
 
-The protocols that will be considered to be valid. For example, if you also
-needed ``ftp://`` type URLs to be valid, you'd redefine the ``protocols``
-array, listing ``http``, ``https``, and also ``ftp``.
+The protocols considered to be valid for the URL. For example, if you also consider
+the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
+``http``, ``https``, and also ``ftp``.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
+                        protocols: [http, https, ftp]
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Url(
+             *    protocols = {"http", "https", "ftp"}
+             * )
+             */
+             protected $bioUrl;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url">
+                        <option name="protocols">
+                            <value>http</value>
+                            <value>https</value>
+                            <value>ftp</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'protocols' => array('http', 'https', 'ftp'),
+                )));
+            }
+        }
 
 checkDNS
 ~~~~~~~~
