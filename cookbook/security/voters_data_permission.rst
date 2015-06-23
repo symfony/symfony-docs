@@ -117,13 +117,13 @@ To recap, here's what's expected from the three abstract methods:
 
 :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
     It tells Symfony that your voter should be called whenever an object of one
-    of the given classes is passed to ``isGranted()``  For example, if you return
+    of the given classes is passed to ``isGranted()``. For example, if you return
     ``array('AppBundle\Model\Product')``, Symfony will call your voter when a
     ``Product`` object is passed to ``isGranted()``.
 
 :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedAttributes`
     It tells Symfony that your voter should be called whenever one of these
-    strings is passes as the first argument to ``isGranted()``. For example, if
+    strings is passed as the first argument to ``isGranted()``. For example, if
     you return ``array('CREATE', 'READ')``, then Symfony will call your voter
     when one of these is passed to ``isGranted()``.
 

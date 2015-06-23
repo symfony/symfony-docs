@@ -92,7 +92,6 @@ the security layer. This can be done easily through the service container.
     methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
     if your voter does not support the class or attribute.
 
-
 .. tip::
 
     An
@@ -204,8 +203,8 @@ application configuration file with the following code.
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
 
-Note that the voters are only called, if any access is actually checked. So 
-you need at least something like 
+Note that the voters are only called, if any access is actually checked. So
+you need at least something like
 
 .. configuration-block::
 
