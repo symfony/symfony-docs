@@ -189,45 +189,6 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-The Tools
----------
-
-`Capifony`_:
-
-    This tool provides a specialized set of tools on top of Capistrano, tailored
-    specifically to symfony and Symfony projects.
-
-`sf2debpkg`_:
-
-    This tool helps you build a native Debian package for your Symfony project.
-
-`Magallanes`_:
-
-    This Capistrano-like deployment tool is built in PHP, and may be easier
-    for PHP developers to extend for their needs.
-
-Bundles:
-
-    There are many `bundles that add deployment features`_ directly into your
-    Symfony console.
-
-Basic scripting:
-
-    You can of course use shell, `Ant`_, or any other build tool to script
-    the deploying of your project.
-
-Platform as a Service Providers:
-
-    PaaS is a relatively new way to deploy your application. Typically, a PaaS
-    will use a single configuration file in your project's root directory to
-    determine how to build an environment on the fly that supports your software.
-    One provider with confirmed Symfony support is `PagodaBox`_.
-
-.. tip::
-
-    Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony
-    (on freenode) for more information.
-
 .. _`Capifony`: http://capifony.org/
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
