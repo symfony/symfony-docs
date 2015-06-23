@@ -57,8 +57,6 @@ There are two steps to upgrading:
 :ref:`upgrade-minor-symfony-composer`;
 :ref:`upgrade-minor-symfony-code`
 
-.. _`upgrade-minor-symfony-composer`:
-
 1) Update the Symfony Library via Composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -95,8 +93,6 @@ this safely by running:
 But beware. If you have some bad `version constraints`_ in your ``composer.json``,
 (e.g. ``dev-master``), then this could upgrade some non-Symfony libraries
 to new versions that contain backwards-compatibility breaking changes.
-
-.. _`upgrade-minor-symfony-code`:
 
 2) Updating Your Code to Work with the new Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
