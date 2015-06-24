@@ -388,19 +388,24 @@ Composer Metadata
 
 The ``composer.json`` file should include at least the following metadata:
 
-* ``name``, which includes the vendor and the short bundle name. If you are
-  releasing the bundle on your own instead of on behalf of a company, use your
-  personal name (e.g. ``johnsmith/blog-bundle``). The bundle short name excludes
-  the vendor name and separates each word with an hyphen. For example:
-  ``AcmeBlogBundle`` is transformed into ``blog-bundle`` and ``AcmeSocialConnectBundle``
-  is transformed into ``social-connect-bundle``;
-* ``description``, a brief explanation of the purpose of the bundle;
-* ``type``, use the ``symfony-bundle`` value;
-* ``license``, ``MIT`` is the preferred license for Symfony bundles, but you
-  can use any other value.
-* ``autoload``, this information is used by Symfony to load the classes of the
-  bundle. The `PSR-4`_ autoload standard is recommended for modern bundles, but
-  `PSR-0`_ standard is also supported.
+``name``
+    Consists of the vendor and the short bundle name. If you are releasing the
+    bundle on your own instead of on behalf of a company, use your personal name
+    (e.g. ``johnsmith/blog-bundle``). The bundle short name excludes the vendor
+    name and separates each word with an hyphen. For example: ``AcmeBlogBundle``
+    is transformed into ``blog-bundle`` and ``AcmeSocialConnectBundle`` is
+    transformed into ``social-connect-bundle``.
+``description``
+    A brief explanation of the purpose of the bundle.
+``type``
+    Use the ``symfony-bundle`` value.
+``license``
+    ``MIT`` is the preferred license for Symfony bundles, but you can use any
+    other license.
+``autoload``
+    This information is used by Symfony to load the classes of the bundle. The
+    `PSR-4`_ autoload standard is recommended for modern bundles, but `PSR-0`_
+    standard is also supported.
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
