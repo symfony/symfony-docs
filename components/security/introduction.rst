@@ -27,11 +27,14 @@ sub-components which can be used separately:
 ``symfony/security-core``
     It provides all the common security features, from authentication to
     authorization and from encoding passwords to loading users.
+
 ``symfony/security-http``
-  It integrates the core sub-component with the HTTP protocol to handle HTTP
-  requests and responses.
+    It integrates the core sub-component with the HTTP protocol to handle HTTP
+    requests and responses.
+
 ``symfony/security-csrf``
     It provides protection against `CSRF attacks`_.
+
 ``symfony/security-acl``
     It provides a fine grained permissions mechanism based on Access Control Lists.
 
