@@ -177,9 +177,6 @@ in mind the following:
 * Do atomic and logically separate commits (use the power of ``git rebase`` to
   have a clean and logical history);
 
-* Squash irrelevant commits that are just about fixing coding standards or
-  fixing typos in your own code;
-
 * Never fix coding standards in some existing code as it makes the code review
   more difficult;
 
@@ -387,27 +384,10 @@ patch. Before re-submitting the patch, rebase with ``upstream/master`` or
     to avoid messing other branches in the repo (``--force`` tells Git that
     you really want to mess with things so do it carefully).
 
-Often, moderators will ask you to "squash" your commits. This means you will
-convert many commits to one commit. To do this, use the rebase command:
-
-.. code-block:: bash
-
-    $ git rebase -i upstream/master
-    $ git push --force origin BRANCH_NAME
-
-After you type this command, an editor will popup showing a list of commits:
-
-.. code-block:: text
-
-    pick 1a31be6 first commit
-    pick 7fc64b4 second commit
-    pick 7d33018 third commit
-
-To squash all commits into the first one, remove the word ``pick`` before the
-second and the last commits, and replace it by the word ``squash`` or just
-``s``. When you save, Git will start rebasing, and if successful, will ask
-you to edit the commit message, which by default is a listing of the commit
-messages of all the commits. When you are finished, execute the push command.
+Moderators earlier asked you to "squash" your commits. This means you will
+convert many commits to one commit. This is no longer necessary today, because
+Symfony project uses a proprietary tool which automatically squashes all commits
+before merging.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
