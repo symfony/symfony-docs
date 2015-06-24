@@ -94,9 +94,8 @@ the security layer. This can be done easily through the service container.
 
 .. tip::
 
-    An
-    :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`
-    is provided to cover the common use cases when implementing security voters.
+    An :doc:`AbstractVoter </cookbook/security/voters_data_permission>` is
+    provided to cover the common use cases when implementing security voters.
 
 Declaring the Voter as a Service
 --------------------------------
