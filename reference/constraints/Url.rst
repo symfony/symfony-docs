@@ -8,6 +8,7 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
+|                | - `payload`_                                                        |
 |                | - `checkDNS`_                                                       |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
@@ -222,6 +223,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
                 )));
             }
         }
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 checkDNS
 ~~~~~~~~
