@@ -395,13 +395,17 @@ The ``composer.json`` file should include at least the following metadata:
     name and separates each word with an hyphen. For example: ``AcmeBlogBundle``
     is transformed into ``blog-bundle`` and ``AcmeSocialConnectBundle`` is
     transformed into ``social-connect-bundle``.
+
 ``description``
     A brief explanation of the purpose of the bundle.
+
 ``type``
     Use the ``symfony-bundle`` value.
+
 ``license``
     ``MIT`` is the preferred license for Symfony bundles, but you can use any
     other license.
+
 ``autoload``
     This information is used by Symfony to load the classes of the bundle. The
     `PSR-4`_ autoload standard is recommended for modern bundles, but `PSR-0`_
