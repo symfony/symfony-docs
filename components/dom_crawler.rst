@@ -233,6 +233,7 @@ and :phpclass:`DOMNode` objects:
         $html = $crawler->html();
 
     The ``html`` method is new in Symfony 2.3.
+    In PHP < 5.3.6 it might return html entities which are not properly decoded.
 
 Links
 ~~~~~
