@@ -226,7 +226,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 checkDNS
 ~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 By default, this constraint just validates the syntax of the given URL. If you
 also need to check whether the associated host exists, set the ``checkDNS``
