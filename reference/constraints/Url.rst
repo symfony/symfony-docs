@@ -85,15 +85,6 @@ This message is shown if the URL is invalid.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioUrl:
-                    - Url: ~
-                        message: The url "{{ value }}" is not a valid url.
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -110,6 +101,15 @@ This message is shown if the URL is invalid.
              */
              protected $bioUrl;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
+                        message: The url "{{ value }}" is not a valid url.
 
     .. code-block:: xml
 
@@ -157,15 +157,6 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioUrl:
-                    - Url: ~
-                        protocols: [http, https, ftp]
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -182,6 +173,15 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
              */
              protected $bioUrl;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
+                        protocols: [http, https, ftp]
 
     .. code-block:: xml
 
