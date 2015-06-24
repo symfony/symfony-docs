@@ -194,55 +194,108 @@ Installation Instructions
 In order to ease the installation of third-party bundles, consider using the
 following standardized instructions in your ``README.md`` file.
 
-.. code-block:: text
+.. configuration-block::
 
-    Installation
-    ============
+    .. code-block:: markdown
 
-    Step 1: Download the Bundle
-    ---------------------------
+        Installation
+        ============
 
-    Open a command console, enter your project directory and execute the
-    following command to download the latest stable version of this bundle:
+        Step 1: Download the Bundle
+        ---------------------------
 
-    ```bash
-    $ composer require <package-name> "~1"
-    ```
+        Open a command console, enter your project directory and execute the
+        following command to download the latest stable version of this bundle:
 
-    This command requires you to have Composer installed globally, as explained
-    in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-    of the Composer documentation.
+        ```bash
+        $ composer require <package-name> "~1"
+        ```
 
-    Step 2: Enable the Bundle
-    -------------------------
+        This command requires you to have Composer installed globally, as explained
+        in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
+        of the Composer documentation.
 
-    Then, enable the bundle by adding the following in the `app/AppKernel.php`
-    file of your project:
+        Step 2: Enable the Bundle
+        -------------------------
 
-    ```php
-    <?php
-    // app/AppKernel.php
+        Then, enable the bundle by adding it to the list of registered bundles
+        in the `app/AppKernel.php` file of your project:
 
-    // ...
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
+        ```php
+        <?php
+        // app/AppKernel.php
+
+        // ...
+        class AppKernel extends Kernel
         {
-            $bundles = array(
-                // ...
+            public function registerBundles()
+            {
+                $bundles = array(
+                    // ...
 
-                new <vendor>\<bundle-name>\<bundle-long-name>(),
-            );
+                    new <vendor>\<bundle-name>\<bundle-long-name>(),
+                );
+
+                // ...
+            }
 
             // ...
         }
+        ```
 
-        // ...
-    }
-    ```
+    .. code-block:: rst
 
-This template assumes that your bundle is in its ``1.x`` version. If not, change
-the ``"~1"`` installation version accordingly (``"~2"``, ``"~3"``, etc.)
+        Installation
+        ============
+
+        Step 1: Download the Bundle
+        ---------------------------
+
+        Open a command console, enter your project directory and execute the
+        following command to download the latest stable version of this bundle:
+
+        .. code-block:: bash
+
+            $ composer require <package-name> "~1"
+
+        This command requires you to have Composer installed globally, as explained
+        in the `installation chapter`_ of the Composer documentation.
+
+        Step 2: Enable the Bundle
+        -------------------------
+
+        Then, enable the bundle by adding it to the list of registered bundles
+        in the ``app/AppKernel.php`` file of your project:
+
+        .. code-block:: php
+
+            <?php
+            // app/AppKernel.php
+
+            // ...
+            class AppKernel extends Kernel
+            {
+                public function registerBundles()
+                {
+                    $bundles = array(
+                        // ...
+
+                        new <vendor>\<bundle-name>\<bundle-long-name>(),
+                    );
+
+                    // ...
+                }
+
+                // ...
+            }
+
+        .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
+
+The example above assumes that you are installing the latest stable version of
+the bundle, where you don't have to provide the package version number
+(e.g. ``composer require friendsofsymfony/user-bundle``). If the installation
+instructions refer to some past bundle version or to some unstable version,
+include the version constraint (e.g. ``composer require friendsofsymfony/user-bundle "~2.0@dev"``).
 
 Optionally, you can add more installation steps (*Step 3*, *Step 4*, etc.) to
 explain other required installation tasks, such as registering routes or
