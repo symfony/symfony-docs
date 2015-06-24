@@ -159,14 +159,14 @@ your listener to be called just before any controller is executed.
                 class: AppBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
-                    - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+                    - { name: kernel.event_listener, event: kernel.controller }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
             <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" />
         </service>
 
     .. code-block:: php
@@ -176,8 +176,7 @@ your listener to be called just before any controller is executed.
 
         $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
+            'event' => 'kernel.controller',
         ));
         $container->setDefinition('app.tokens.action_listener', $listener);
 
@@ -254,16 +253,16 @@ event:
                 class: AppBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
-                    - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-                    - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+                    - { name: kernel.event_listener, event: kernel.controller }
+                    - { name: kernel.event_listener, event: kernel.response }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
             <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+            <tag name="kernel.event_listener" event="kernel.controller" />
+            <tag name="kernel.event_listener" event="kernel.response" />
         </service>
 
     .. code-block:: php
@@ -273,12 +272,10 @@ event:
 
         $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
+            'event' => 'kernel.controller',
         ));
         $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.response',
-            'method' => 'onKernelResponse'
+            'event' => 'kernel.response',
         ));
         $container->setDefinition('app.tokens.action_listener', $listener);
 

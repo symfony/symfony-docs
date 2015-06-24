@@ -16,7 +16,7 @@ easily be added. This document will show how you can add the ``jsonp`` format
 and corresponding MIME type.
 
 Create a ``kernel.request`` Listener
--------------------------------------
+------------------------------------
 
 The key to defining a new MIME type is to create a class that will "listen" to
 the ``kernel.request`` event dispatched by the Symfony kernel. The
@@ -55,7 +55,7 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
             app.listener.request:
                 class: AppBundle\EventListener\RequestListener
                 tags:
-                    - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+                    - { name: kernel.event_listener, event: kernel.request }
 
     .. code-block:: xml
 
@@ -67,10 +67,7 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
             <services>
                 <service id="app.listener.request"
                     class="AppBundle\EventListener\RequestListener">
-                    <tag name="kernel.event_listener"
-                        event="kernel.request"
-                        method="onKernelRequest"
-                    />
+                    <tag name="kernel.event_listener" event="kernel.request" />
                 </service>
             </services>
         </container>
@@ -80,8 +77,7 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
         # app/config/services.php
         $definition = new Definition('AppBundle\EventListener\RequestListener');
         $definition->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.request',
-            'method' => 'onKernelRequest',
+            'event' => 'kernel.request',
         ));
         $container->setDefinition('app.listener.request', $definition);
 

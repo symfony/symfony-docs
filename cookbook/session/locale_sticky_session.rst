@@ -151,7 +151,7 @@ event:
         /**
          * @param InteractiveLoginEvent $event
          */
-        public function onInteractiveLogin(InteractiveLoginEvent $event)
+        public function setLocale(InteractiveLoginEvent $event)
         {
             $user = $event->getAuthenticationToken()->getUser();
 
@@ -173,7 +173,7 @@ Then register the listener:
                 class: AppBundle\EventListener\UserLocaleListener
                 arguments: [@session]
                 tags:
-                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
+                    - { name: kernel.event_listener, event: security.interactive_login, method: onKernelRequest }
 
     .. code-block:: xml
 
@@ -192,7 +192,7 @@ Then register the listener:
 
                     <tag name="kernel.event_listener"
                         event="security.interactive_login"
-                        method="onInteractiveLogin" />
+                        method="onKernelRequest" />
                 </service>
             </services>
         </container>
@@ -205,7 +205,7 @@ Then register the listener:
             ->addArgument('session')
             ->addTag(
                 'kernel.event_listener',
-                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin'
+                array('event' => 'security.interactive_login', 'method' => 'onKernelRequest'
             );
 
 .. caution::
