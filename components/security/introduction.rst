@@ -21,6 +21,17 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+Starting from Symfony 2.4, the Security component is divided into four smaller
+sub-components which can be used separately:
+
+* ``symfony/security-acl``, it provides a fine grained permissions mechanism
+  based on Access Control Lists.
+* ``symfony/security-core``, it provides all the common security features, from
+  authentication to authorization and from encoding passwords to loading users.
+* ``symfony/security-csrf``, it provides protection against `CSRF attacks`_.
+* ``symfony/security-http"``, it integrates the core sub-component with the
+  HTTP protocol to handle HTTP requests and responses.
+
 Sections
 --------
 
@@ -30,3 +41,4 @@ Sections
 * :doc:`/components/security/secure_tools`
 
 .. _Packagist: https://packagist.org/packages/symfony/security
+.. _`CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
