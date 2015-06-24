@@ -24,13 +24,16 @@ You can install the component in 2 different ways:
 Starting from Symfony 2.4, the Security component is divided into four smaller
 sub-components which can be used separately:
 
-* ``symfony/security-acl``, it provides a fine grained permissions mechanism
-  based on Access Control Lists.
-* ``symfony/security-core``, it provides all the common security features, from
-  authentication to authorization and from encoding passwords to loading users.
-* ``symfony/security-csrf``, it provides protection against `CSRF attacks`_.
-* ``symfony/security-http"``, it integrates the core sub-component with the
-  HTTP protocol to handle HTTP requests and responses.
+``symfony/security-core``
+    It provides all the common security features, from authentication to
+    authorization and from encoding passwords to loading users.
+``symfony/security-http``
+  It integrates the core sub-component with the HTTP protocol to handle HTTP
+  requests and responses.
+``symfony/security-csrf``
+    It provides protection against `CSRF attacks`_.
+``symfony/security-acl``
+    It provides a fine grained permissions mechanism based on Access Control Lists.
 
 Sections
 --------
