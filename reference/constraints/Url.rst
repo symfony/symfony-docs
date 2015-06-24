@@ -8,6 +8,11 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
+<<<<<<< HEAD
+=======
+|                | - `payload`_                                                        |
+|                | - `checkDNS`_                                                       |
+>>>>>>> Added the "payload" option back (was removed by mistake)
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
