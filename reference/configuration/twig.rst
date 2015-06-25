@@ -55,7 +55,15 @@ TwigBundle Configuration ("twig")
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-            <twig:config auto-reload="%kernel.debug%" autoescape="true" base-template-class="Twig_Template" cache="%kernel.cache_dir%/twig" charset="%kernel.charset%" debug="%kernel.debug%" strict-variables="false" optimizations="true">
+            <twig:config auto-reload="%kernel.debug%"
+                autoescape="true"
+                base-template-class="Twig_Template"
+                cache="%kernel.cache_dir%/twig"
+                charset="%kernel.charset%"
+                debug="%kernel.debug%"
+                strict-variables="false"
+                optimizations="true"
+            >
                 <twig:form>
                     <twig:resource>MyBundle::form.html.twig</twig:resource>
                 </twig:form>
@@ -98,7 +106,7 @@ Configuration
 .. _config-twig-exception-controller:
 
 exception_controller
-....................
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``twig.controller.exception:showAction``
 

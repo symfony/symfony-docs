@@ -552,8 +552,8 @@ article: :doc:`/cookbook/request/mime_type`.
 Core Event Listener Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the reference of Event Listeners associated with each kernel event, see the
-:doc:`Symfony Events Reference </reference/events>`.
+For the reference of Event Listeners associated with each kernel event,
+see the :doc:`Symfony Events Reference </reference/events>`.
 
 .. _dic-tags-kernel-event-subscriber:
 
