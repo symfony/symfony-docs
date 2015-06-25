@@ -42,6 +42,11 @@ in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /images/cookbook/deprecations-in-profiler.png
 
+For more information about these deprecated warnings, see
+:doc:`/cookbook/upgrade/deprecation_warnings`.
+
+.. _deprecations-phpunit-bridge:
+
 Deprecations in PHPUnit
 ~~~~~~~~~~~~~~~~~~~~~~~
 
