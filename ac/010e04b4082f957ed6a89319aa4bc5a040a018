@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T08:12:03Z
+
+@harikt thanks for seding this improvement. I have several questions myself:
+
+1) You imported `Psr\Log\LogLevel` but the examples use more classes (for instance, `OutputInterface`). Should we import all used classes to make the examples complete or is that too much?
+
+2) Regarding the output, I think the article explains the situation well: *"Depending on the verbosity level that the command is run, messages may or may not be sent to the OutputInterface instance."*  Anyway, maybe we should be more clear about which verbosity level starts sending the logs to the console output?
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-22T08:42:50Z
+
+Hey @javiereguiluz ,
+
+Thank you for your questions. I will try to quote and reply back.
+
+> You imported Psr\Log\LogLevel but the examples use more classes (for instance, OutputInterface). Should we import all used classes to make the examples complete or is that too much?
+
+What normally try to do is follow the tutorial code I guess. In that we already have imported the `OutputInterface` or they can even do a search for `OutputInterface` in case they need.
+
+But the `LogLevel` was entirely missing and even I know about psr-3 logger I never had a look at that class. So was wondering from where it was coming until I have to search.
+
+> 2) Regarding the output, I think the article explains the situation well: "Depending on the verbosity level that the command is run, messages may or may not be sent to the OutputInterface instance." Anyway, maybe we should be more clear about which verbosity level starts sending the logs to the console output?
+
+Ya, but the explanation is after the example that makes people debugging it as I did ;) .
+
+May be it need to be moved up before the example.
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T15:44:13Z
+
+For the rest, I agree with @harikt. The change at all makes sense to me. :+1:
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-23T01:59:34Z
+
+@xabbuh I have fixed it.
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-23T05:21:47Z
+
+:+1:
