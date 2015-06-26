@@ -22,6 +22,7 @@ Tag Name                                  Usage
 `assetic.formula_resource`_               Adds a resource to the current asset manager
 `assetic.templating.php`_                 Remove this service if PHP templating is disabled
 `assetic.templating.twig`_                Remove this service if Twig templating is disabled
+`auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
@@ -226,6 +227,105 @@ assetic.templating.twig
 
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain ``twig``.
+
+auto_alias
+----------
+
+**Purpose**: Define aliases based on the value of container parameters
+
+Consider the following configuration that defines three different but related
+services:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            app.mysql_lock:
+                class: AppBundle\Lock\MysqlLock
+            app.postgresql_lock:
+                class: AppBundle\Lock\PostgresqlLock
+            app.sqlite_lock:
+                class: AppBundle\Lock\SqliteLock
+
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.mysql_lock" class="AppBundle\Lock\MysqlLock" />
+                <service id="app.postgresql_lock" class="AppBundle\Lock\PostgresqlLock" />
+                <service id="app.sqlite_lock" class="AppBundle\Lock\SqliteLock" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container
+            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')
+            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')
+            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')
+        ;
+
+Instead of dealing with these three services, your application needs a generic
+``app.lock`` service. This service must be an alias to any of the other services.
+Thanks to the ``auto_alias`` option, you can automatically create that alias
+based on the value of a configuration parameter.
+
+Considering that a configuration parameter called ``database_type`` exists,
+the generic ``app.lock`` service can be defined as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            app.mysql_lock:
+                class: AppBundle\Lock\MysqlLock
+            app.postgresql_lock:
+                class: AppBundle\Lock\PostgresqlLock
+            app.sqlite_lock:
+                class: AppBundle\Lock\SqliteLock
+            app.lock:
+                tags:
+                    - { name: auto_alias, format: "%database_type%.lock" }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.mysql_lock" class="AppBundle\Lock\MysqlLock" />
+                <service id="app.postgresql_lock" class="AppBundle\Lock\PostgresqlLock" />
+                <service id="app.sqlite_lock" class="AppBundle\Lock\SqliteLock" />
+
+                <service id="app.lock">
+                    <tag name="auto_alias" format="%database_type%.lock" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container
+            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')
+            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')
+            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')
+
+            ->register('app.lock')
+            ->addTag('auto_alias', array('format' => '%database_type%.lock'))
+        ;
+
+The ``format`` parameter defines the expression used to construct the name of
+the service to alias. This expression can use any container parameter (as usual,
+wrapping their names with ``%`` characters).
 
 console.command
 ---------------
