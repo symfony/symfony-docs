@@ -173,22 +173,18 @@ Verbosity Levels
    The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
    in version 2.3
 
-The console has 5 levels of verbosity. These are defined in the
+The console has five levels of verbosity. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
-=======================================  ==================================
-Mode                                     Value
-=======================================  ==================================
-OutputInterface::VERBOSITY_QUIET         Do not output any messages
-OutputInterface::VERBOSITY_NORMAL        The default verbosity level
-OutputInterface::VERBOSITY_VERBOSE       Increased verbosity of messages
-OutputInterface::VERBOSITY_VERY_VERBOSE  Informative non essential messages
-OutputInterface::VERBOSITY_DEBUG         Debug messages
-=======================================  ==================================
-
-You can specify the quiet verbosity level with the ``--quiet`` or ``-q``
-option. The ``--verbose`` or ``-v`` option is used when you want an increased
-level of verbosity.
+===========================================  ==================================  =====================
+Value                                        Meaning                             Console option
+===========================================  ==================================  =====================
+``OutputInterface::VERBOSITY_QUIET``         Do not output any messages          ``-q`` or ``--quiet``
+``OutputInterface::VERBOSITY_NORMAL``        The default verbosity level         (none)
+``OutputInterface::VERBOSITY_VERBOSE``       Increased verbosity of messages     ``-v``
+``OutputInterface::VERBOSITY_VERY_VERBOSE``  Informative non essential messages  ``-vv``
+``OutputInterface::VERBOSITY_DEBUG``         Debug messages                      ``-vvv``
+===========================================  ==================================  ======================
 
 .. tip::
 
@@ -198,7 +194,7 @@ level of verbosity.
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
 
-    if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
+    if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
         $output->writeln(...);
     }
 
