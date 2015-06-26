@@ -476,14 +476,11 @@ kernel.event_listener
 
 **Purpose**: To listen to different events/hooks in Symfony
 
-This tag allows you to hook your own classes into Symfony's process at different
-points.
+During the execution of a Symfony application, different events are triggered.
+This tag allows you to *hook* your own classes into any of those events.
 
 For a full example of this listener, read the :doc:`/cookbook/event_dispatcher/event_listener`
 cookbook entry.
-
-For another practical example of a kernel listener, see the cookbook
-article: :doc:`/cookbook/request/mime_type`.
 
 Core Event Listener Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
