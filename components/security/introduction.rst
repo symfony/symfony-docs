@@ -21,8 +21,8 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-Starting from Symfony 2.4, the Security component is divided into four smaller
-sub-components which can be used separately:
+The Security component is divided into four smaller sub-components which can be
+used separately:
 
 ``symfony/security-core``
     It provides all the common security features, from authentication to
