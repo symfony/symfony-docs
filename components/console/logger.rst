@@ -84,6 +84,7 @@ The association between the log level and the verbosity can be configured
 through the second parameter of the :class:`Symfony\\Component\\Console\\ConsoleLogger`
 constructor::
 
+    use Psr\Log\LogLevel;
     // ...
     $verbosityLevelMap = array(
         LogLevel::NOTICE => OutputInterface::VERBOSITY_NORMAL,
