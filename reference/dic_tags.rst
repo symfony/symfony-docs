@@ -251,7 +251,6 @@ services:
             app.sqlite_lock:
                 class: AppBundle\Lock\SqliteLock
 
-
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
