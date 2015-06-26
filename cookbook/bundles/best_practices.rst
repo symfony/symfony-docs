@@ -98,7 +98,7 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
 that automated tools can rely on:
 
 * ``AcmeBlogBundle.php``: This is the class that transforms a plain directory
-  into a Symfony bundle;
+  into a Symfony bundle (change this to your bundle's name);
 * ``README.md``: This file contains the basic description of the bundle and it
   usually shows some basic examples and links to its full documentation (it
   can use any of the markup formats supported by GitHub, such as ``README.rst``);
@@ -151,7 +151,7 @@ Commands, Helpers, Listeners, and Controllers.
 Classes that connect to the event dispatcher should be suffixed with
 ``Listener``.
 
-Exceptions classes should be stored in an ``Exception`` sub-namespace.
+Exception classes should be stored in an ``Exception`` sub-namespace.
 
 Vendors
 -------
