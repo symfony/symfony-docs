@@ -110,7 +110,7 @@ This message is shown if the URL is invalid.
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: ~
+                    - Url:
                         message: The url "{{ value }}" is not a valid url.
 
     .. code-block:: xml
@@ -182,8 +182,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: ~
-                        protocols: [http, https, ftp]
+                    - Url: { protocols: [http, https, ftp] }
 
     .. code-block:: xml
 
@@ -248,8 +247,6 @@ option to ``true``:
         {
             /**
              * @Assert\Url(
-             *    message = "The url '{{ value }}' is not a valid url",
-             *    protocols = {"http", "https"}
              *    checkDNS = true
              * )
              */
@@ -262,10 +259,7 @@ option to ``true``:
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: ~
-                        message: The url "{{ value }}" is not a valid url.
-                        protocols: [http, https]
-                        checkDNS: true
+                    - Url: { checkDNS: true }
 
     .. code-block:: xml
 
@@ -278,11 +272,6 @@ option to ``true``:
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
-                        <option name="message">The url "{{ value }}" is not a valid url.</option>
-                        <option name="protocols">
-                            <value>http</value>
-                            <value>https</value>
-                        </option>
                         <option name="checkDNS">true</option>
                     </constraint>
                 </property>
@@ -302,9 +291,7 @@ option to ``true``:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
-                    'message' => 'The url "{{ value }}" is not a valid url.',
-                    'protocols' => array('http', 'https'),
-                    'checkDNS' => true,
+                    'checkDNS'  => true,
                 )));
             }
         }
