@@ -1,0 +1,62 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-19T10:56:06Z
+
+@WouterJ thanks for your review. I've fixed everything.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-21T21:52:50Z
+
+The PR has been updated with all your suggestions.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-22T14:13:17Z
+
+Maybe we should add something about the `symfony-bundle` Composer package type?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-03T08:59:50Z
+
+@WouterJ I've added a new section with suggestions for Composer and I've rebased the PR.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-03-03T10:45:17Z
+
+Other best practices for shared bundles IMO:
+
+- following semver
+- being registered on Packagist
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-02T09:46:35Z
+
+This also fixes https://github.com/symfony/symfony-docs/issues/4335
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-23T15:06:53Z
+
+I've implemented all the changes suggested by reviewers and I've rebased it. I hope this PR can be finally ready to be merged. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-23T17:48:53Z
+
+@javiereguiluz There is one minor issue with the list syntax and it seems that the installation instructions for the rst format got lost when rebasing. Besides these two things the PR looks great! :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-24T07:04:44Z
+
+@xabbuh I'm really sorry for having lost some information during the rebase :(  I really wish I haven't lost anything else during the rebase. Thanks for your help!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T15:08:41Z
+
+:+1:
