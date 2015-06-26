@@ -288,13 +288,16 @@ the generic ``app.lock`` service can be defined as follows:
         services:
             app.mysql_lock:
                 class: AppBundle\Lock\MysqlLock
+                public: false
             app.postgresql_lock:
                 class: AppBundle\Lock\PostgresqlLock
+                public: false
             app.sqlite_lock:
                 class: AppBundle\Lock\SqliteLock
+                public: false
             app.lock:
                 tags:
-                    - { name: auto_alias, format: "%database_type%.lock" }
+                    - { name: auto_alias, format: "app.%database_type%.lock" }
 
     .. code-block:: xml
 
@@ -304,12 +307,15 @@ the generic ``app.lock`` service can be defined as follows:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mysql_lock" class="AppBundle\Lock\MysqlLock" />
-                <service id="app.postgresql_lock" class="AppBundle\Lock\PostgresqlLock" />
-                <service id="app.sqlite_lock" class="AppBundle\Lock\SqliteLock" />
+                <service id="app.mysql_lock" public="false"
+                         class="AppBundle\Lock\MysqlLock" />
+                <service id="app.postgresql_lock" public="false"
+                         class="AppBundle\Lock\PostgresqlLock" />
+                <service id="app.sqlite_lock" public="false"
+                         class="AppBundle\Lock\SqliteLock" />
 
                 <service id="app.lock">
-                    <tag name="auto_alias" format="%database_type%.lock" />
+                    <tag name="auto_alias" format="app.%database_type%.lock" />
                 </service>
             </services>
         </container>
@@ -317,17 +323,24 @@ the generic ``app.lock`` service can be defined as follows:
     .. code-block:: php
 
         $container
-            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')
-            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')
-            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')
+            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')->setPublic(false)
+            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')->setPublic(false)
+            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')->setPublic(false)
 
             ->register('app.lock')
-            ->addTag('auto_alias', array('format' => '%database_type%.lock'))
+            ->addTag('auto_alias', array('format' => 'app.%database_type%.lock'))
         ;
 
 The ``format`` parameter defines the expression used to construct the name of
 the service to alias. This expression can use any container parameter (as usual,
 wrapping their names with ``%`` characters).
+
+.. note::
+
+    When using the ``auto_alias`` tag is not mandatory to define the aliased
+    services as private. However, doing that (like in the above example) makes
+    sense most of the times to prevent accessing those services directly instead
+    of using the generic service.
 
 console.command
 ---------------
