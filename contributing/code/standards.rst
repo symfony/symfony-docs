@@ -100,6 +100,8 @@ Structure
 
 * Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
+* Always use `identical comparison`_ unless you need type juggling;
+
 * Add a comma after each array item in a multi-line array, even after the
   last one;
 
@@ -166,23 +168,6 @@ Service Naming Conventions
 * Use lowercase letters for service and parameter names;
 
 * A group name uses the underscore notation.
-
-.. _contributing-code-standards-comparisons:
-
-Comparisons
------------
-
-Always use `identical comparison`_ unless you need type juggling::
-
-    // use
-    if (1 === $integerExpected) {
-        // ...
-    }
-
-    // instead of
-    if (1 == $integerExpected) {
-        // ...
-    }
 
 Documentation
 -------------
