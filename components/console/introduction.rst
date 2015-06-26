@@ -173,7 +173,7 @@ Verbosity Levels
    The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
    in version 2.3
 
-The console has five levels of verbosity. These are defined in the
+The console has five verbosity levels. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
 ===========================================  ==================================  =====================
