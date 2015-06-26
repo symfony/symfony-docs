@@ -8,11 +8,6 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
-<<<<<<< HEAD
-=======
-|                | - `payload`_                                                        |
-|                | - `checkDNS`_                                                       |
->>>>>>> Added the "payload" option back (was removed by mistake)
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -113,7 +108,7 @@ This message is shown if the URL is invalid.
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: ~
+                    - Url:
                         message: The url "{{ value }}" is not a valid url.
 
     .. code-block:: xml
@@ -185,8 +180,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: ~
-                        protocols: [http, https, ftp]
+                    - Url: { protocols: [http, https, ftp] }
 
     .. code-block:: xml
 
