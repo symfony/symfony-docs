@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-08T15:24:26Z
+
+@OskarStark thanks for adding this tip about squashing commits.
+
+However, I'd like to propose to not merge this PR and even to remove any reference to commit squashing. Why? Because Symfony project uses a proprietary tool which automatically squashes all commits before merging. That's why on `symfony` and `symfony-doc` we no longer ask users to squash their commits.
+
+The less hurdles we define for collaborating with Symfony, the better.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-06-08T15:43:54Z
+
+Hey @javiereguiluz
+
+thanks for the detailed answer. I agree with you , but then I would write down explicitly so.
+
+@hurdeless: :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-08T15:47:05Z
+
+@OskarStark if the Symfony doc managers agree on removing any reference to squashing commits, I agree with you about explaining that we no longer require squashing. Thanks.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-06-08T15:57:43Z
+
+:+1:  lets see, what they say! :smiley:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-09T19:41:55Z
+
+For me, that's okay. But I leave the final word to @weaverryan and @WouterJ who do the actual merges.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-19T18:13:40Z
+
++1 - let's remove everything about squashing. Thanks @OskarStark for bringing attention on this - let's make things easier!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:37:40Z
+
+@OskarStark Can you please remove all the squashing stuff then? :)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-06-24T07:24:12Z
+
+New PR here: #5432
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T15:14:30Z
+
+closing in favor of #5432 then
