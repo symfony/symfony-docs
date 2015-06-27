@@ -223,20 +223,30 @@ It's that easy!
 
 .. _security-voters-change-strategy:
 
-Changing the Access Decision Strategy
--------------------------------------
+Changing the Decision Strategy
+------------------------------
 
-In order for the new voter to take effect, you need to change the default access
-decision strategy, which, by default, grants access if *any* voter grants
-access.
+Imagine you have multiple voters for one action for an object. For instance,
+you have one voter that checks if the user is a member of the site and a second
+one checking if the user is older than 18.
 
-In this case, choose the ``unanimous`` strategy. Unlike the ``affirmative``
-strategy (the default), with the ``unanimous`` strategy, if only one voter
-denies access (e.g. the ``ClientIpVoter``), access is not granted to the
-end user.
+To handle these cases, the access decision manager uses a decision strategy.
+You can configure this to suite your needs. There are three strategies
+available:
 
-To do that, override the default ``access_decision_manager`` section of your
-application configuration file with the following code.
+``affirmative`` (default)
+    This grants access as soon as there is *one* voter granting access;
+
+``consensus``
+    This grants access if there are more voters granting access than denying;
+
+``unanimous``
+    This only grants access once *all* voters grant access.
+
+In the above scenario, both voters should grant access in order to grant access
+to the user to read the post. In this case, the default strategy is no longer
+valid and ``unanimous`` should be used instead. You can set this in the
+security configuration:
 
 .. configuration-block::
 
@@ -245,60 +255,30 @@ application configuration file with the following code.
         # app/config/security.yml
         security:
             access_decision_manager:
-                # strategy can be: affirmative, unanimous or consensus
                 strategy: unanimous
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <!-- strategy can be: affirmative, unanimous or consensus -->
-            <access-decision-manager strategy="unanimous">
-        </config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                http://symfony.com/schema/dic/security/security-1.0.xsd"
+        >
+            <config>
+                <access-decision-manager strategy="unanimous">
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.xml
+        // app/config/security.php
         $container->loadFromExtension('security', array(
-            // strategy can be: affirmative, unanimous or consensus
             'access_decision_manager' => array(
                 'strategy' => 'unanimous',
             ),
         ));
-
-That's it! Now, when deciding whether or not a user should have access,
-the new voter will deny access to any user in the list of blacklisted IPs.
-
-Note that the voters are only called, if any access is actually checked. So 
-you need at least something like 
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            access_control:
-                - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <access-control>
-               <rule path="^/" role="IS_AUTHENTICATED_ANONYMOUSLY" />
-            </access-control>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.xml
-        $container->loadFromExtension('security', array(
-            'access_control' => array(
-               array('path' => '^/', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
-            ),
-         ));
-
-.. seealso::
-
-    For a more advanced usage see :ref:`components-security-access-decision-manager`.
