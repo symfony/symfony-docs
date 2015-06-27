@@ -18,7 +18,7 @@ some scenarios:
 * If you want to simplify application deployment.
 
 In this article, you'll learn how to combine and minimize CSS and JavaScript files
-and how to compile Sass files using PHP only libraries with Assetic.
+and how to compile Sass files using PHP-only libraries with Assetic.
 
 Installing the Third-Party Compression Libraries
 ------------------------------------------------
@@ -39,10 +39,9 @@ dependency because the most recent stable version is not compatible with Assetic
 Organizing your Web Asset Files
 -------------------------------
 
-This example shows the common scenario of using the Bootstrap framework, the
-jQuery library, the FontAwesome icon fonts and some regular CSS and JavaScript
-application files (called ``main.css`` and ``main.js``). The recommended directory
-structure for this set-up is the following:
+This example will include a setup using the Bootstrap CSS framework, jQuery, FontAwesome
+and some regular CSS and and JavaScript application files (called ``main.css`` and
+``main.js``). The recommended directory structure for this set-up looks like this:
 
 .. code-block:: text
 
@@ -74,7 +73,7 @@ structure for this set-up is the following:
 Combining and Minimizing CSS Files and Compiling SCSS Files
 -----------------------------------------------------------
 
-First, configure a new ``scssphp`` Assetic filter as follows:
+First, configure a new ``scssphp`` Assetic filter:
 
 .. configuration-block::
 
@@ -114,11 +113,10 @@ First, configure a new ``scssphp`` Assetic filter as follows:
 
 The value of the ``formatter`` option is the fully qualified class name of the
 formatter used by the filter to produce the compiled CSS file. Using the
-compressed formatter allows to minimize the resulting file, no matter if the
-original files are regular CSS files or SCSS files.
+compressed formatter will minimize the the resulting file, regardless of whether
+the original files are regular CSS files or SCSS files.
 
-Then, update the code of your Twig template to add the ``{% stylesheets %}`` tag
-defined by Assetic:
+Next, your Twig template to add the ``{% stylesheets %}`` tag defined by Assetic:
 
 .. code-block:: html+jinja
 
@@ -178,7 +176,7 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
             ),
         ));
 
-Then, update the code of your Twig template to add the ``{% javascripts %}`` tag
+Next, update the code of your Twig template to add the ``{% javascripts %}`` tag
 defined by Assetic:
 
 .. code-block:: html+jinja
@@ -200,6 +198,6 @@ This simple configuration combines all the JavaScript files, minimizes the conte
 and saves the output in the ``web/js/app.js`` file, which is the one that is
 served to your visitors.
 
-The leading ``?`` character in the ``jsqueeze`` filter name indicates that it must
-be applied only when the ``debug`` mode is disabled in the application, which
-usually occurs in the production environment.
+The leading ``?`` character in the ``jsqueeze`` filter name tells Assetic to only
+apply the filter when *not* in ``debug`` mode. In practice, this means that you'll
+see unminified files while developing and minimized files in the ``prod`` environment.
