@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-11T08:52:36Z
+
+@greg0ire as you may know, the source code of Symfony uses this style of coding. However, in this particular case, I totally agree with you. The non-Yoda conditional is much easier to understand. Let's see what others think about this.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-06-11T08:55:46Z
+
+This is perfectly fine here. This is comparing a constant and the return value of a method call, so the Yoda condition does not add benefit here.
+The benefit applies only when one side of the comparison is a variable (which should then be on the right). We don't apply it in the source code in other cases than that (we don't enforce it at least. There might still be occurences)
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2015-06-11T08:56:42Z
+
+@stof : this PR *removes* the yodaism, not the other way around.
+
+> This is perfectly fine here
+
+Does "here" mean before or after the P.R. ? It feels like you mean before…
+
+---------------------------------------------------------------------------
+
+by stof at 2015-06-11T09:21:49Z
+
+I mean the change is fine here (i.e. in this kind of code snippet). Sorry for being unclear. My vote is a :+1:
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2015-06-11T09:26:13Z
+
+No problem, thanks for your support!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-11T09:31:17Z
+
+:+1: Fine for me.
