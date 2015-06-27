@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-04-13T14:51:26Z
+
+As mentioned in https://github.com/symfony/symfony-docs/pull/5166#discussion_r28228404 What about compiling a file that is managed by a package manager?
+
+The example I'd like to be clear is: [the scss files from FontAwesome](https://github.com/FortAwesome/Font-Awesome/tree/master/scss) can be managed using `Bower`, and can be compiled using `scssphp`. They even can be imported in the project's scss files right?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-13T14:54:58Z
+
+@Rvanlaak let me explain the purpose of this article: the idea is to explain how to do the usual web asset stuff WITHOUT using any JavaScript tool or technology (Bower, Gulp, Grunt, ...).
+
+This article shows how can you achieve everything with Assetic and two PHP libraries while setting up everything in just a few minutes. So the FontAwesome files, as long as Bootstrap and jQuery files, should be committed to the repository and stored in the `web/assets/` directory, as explained in the article.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-13T14:56:30Z
+
+i think this article should include packages such as robloach component or other bundles that bring in third party stuff. The path should be adaptable to point to those things without needing to persist the assets into the repository which is a very bad practice.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-13T15:01:11Z
+
+@cordoval I'm afraid that adding JavaScript stuff or third-party bundles into this article can't be possible.
+
+The intro of the article says: *"using JavaScript for doing this stuff is the best way to do it"* and provides a link to that solution. But if you can't or don't want to use JavaScript, then you have this article which explains the simple and pragmatic way to do it using only PHP.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-13T15:06:20Z
+
+I think you are not understanding what i am saying. Let me rephrase it and reiterate it to make it plain.
+
+I mentioned @robloach's component only in the sense to bring css in, it has php packages that bring assets and js as well. Notice there is no js involved here. Repeating for emphasis here, they are not the js method to bring assets in. These are purely php. That said I hope is clear up to this point. I was never talking about js way of bringing assets here, which I am afraid you misunderstood.
+
+That said, there is no need then to persist these things into the repository, or at least there is no need to persist them all. It can be done right with php as well, or the most right way with only php.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-13T15:11:15Z
+
+@cordoval I understand you know. Thanks for explaining it in detail.
+
+However, I still think it's not necessary. In this case, I don't consider a bad practice to persist assets in the repository. If your application is complex, use Bower and JS-stuff to continuosly update those assets. But if you application is simple enough, it's better to not update them continuously: things can break and you don't have time/money to solve those problems. So it's better to add those assets to the repo and treat them like regular assets, without updating them continuously.
+
+Anyway, we could add a very short note about the existence of pure PHP tools to manage assets similarly to JS-stuff.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-13T15:12:45Z
+
+I meant to put just a note, not even a full paragraph, to avoid saying this is the only way as there are the ways i just explained.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-13T15:13:27Z
+
+@cordoval I agree. We'll do that.
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-04-13T15:14:06Z
+
+:+1: for not using any JS tooling in the article, but following a PHP approach. Did get that, but did want to discuss the gray areas where developers could make a decision to use a slight other approach. The use of bower is only one example of that ;) I don't see any other areas atm, so adding a note/link to @WouterJ 's Bower article is fine ;)
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-13T15:16:57Z
+
+@Rvanlaak i think @javiereguiluz understood what i meant. PHP approach is not just one approach is manyfold. I think this article is saying this is the best way, but if you are going to do it plainly bare bones here are the ways people approach it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-13T19:09:26Z
+
+This article overlaps in a way with the articles from the *Assetic* cookbook section. We should find a way not to document thing more than once.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-13T20:47:02Z
+
+Imo, as this is about Assetic, we should move this one to `cookbook/assetic`. I've created `cookbook/frontend` exactly to have front-end docs that are *not* about Assetic (as we only had Assetic docs until now). The frontend section is a help for the frontend developers that are unsure how to combine their regular tools with the Symfony framework (and also to learn the backend devs about the exciting world of frontend tooling).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-14T11:31:48Z
+
+@WouterJ I think you are right and this article should be moved back to the Assetic cookbook section instead of adding it to the new Frontend section. I've just changed it. Thanks.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-23T15:37:14Z
+
+This PR seems to be finished. I've addressed every comment and implemented every suggestion. Can we label it as "finished"? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T14:18:17Z
+
+looks good :+1:
