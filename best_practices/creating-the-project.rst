@@ -114,9 +114,7 @@ Symfony documentation uses the AppBundle name.
 .. note::
     
     Another reason to create a new bundle is when you're overriding something 
-    in a vendor's bundle. For instance, if you have to override an action of 
-    the FOSUserBundle, then you should create a UserBundle that would be used 
-    only for this purpose. 
+    in a vendor's bundle (e.g. a controller). See :doc:`/cookbook/bundles/inheritance`.
 
 All in all, this is the typical directory structure of a Symfony application
 that follows these best practices:
