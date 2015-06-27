@@ -1,0 +1,63 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-17T07:55:17Z
+
+nice trick about router.request_context.base_url :+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2015-04-17T15:34:05Z
+
+@javiereguiluz configuring ``router.request_context.base_url`` is necessary only for using the router in the CLI, just like other router parameters (during the handling of a request, all these settings are overwritten based on the Request anyway). so the right place to document this parameter is in the existing cookbook article about these parameters (it is probably missing because of the fact that it was introduced later than other parameters)
+
+---------------------------------------------------------------------------
+
+by stof at 2015-04-17T15:35:49Z
+
+don't forget to add the old URL of the upgrading article in the redirection map
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-17T21:58:52Z
+
+I propose to instead of mixing upgrading and installing, just have a section about installing (created by this PR) and one about upgrading (created by #5155).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-19T11:45:44Z
+
+I've added all the suggestions made by reviewers.
+
+Regarding the proposal made by @WouterJ, I don't agree with it because I think installing and upgrading Symfony are closely related topics. Moreover, splitting this small section would produce two very tiny sections.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-23T08:04:07Z
+
+Can we considered this PR finished?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:40:17Z
+
+We just need to find a consensus on whether or not to do the split (see #5155).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-23T18:09:52Z
+
+FWIW - my vote is to keep these as 2 sections: https://github.com/symfony/symfony-docs/pull/5155#issuecomment-104933684
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-23T15:54:52Z
+
+I've just fixed the last issues of this PR. The only remaining issue is the split suggested by Ryan. I don't mind doing that split, but I don't like doing that in this PR because it's already complex enough. Could we reorder the contents in a further separate PR? Thanks.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-25T13:37:33Z
+
+I'm sorry, but why is the split too complex? You added one article in this PR and all you need to do is remove the changes related to the `upgrade` -> `install/upgrade` move you also added in this PR. It would make this PR less complex.
+
+Merging this PR in the current state makes things really weird, as the `upgrade` article is already moved to its own `upgrading` section.
