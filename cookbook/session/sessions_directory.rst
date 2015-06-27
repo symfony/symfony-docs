@@ -94,7 +94,7 @@ that your current sessions aren't lost when you clear Symfony's cache.
     method of session management available within Symfony. See
     :doc:`/components/http_foundation/session_configuration` for a
     discussion of session save handlers. There is also an entry in the cookbook
-    about storing sessions in the :doc:`database </cookbook/configuration/pdo_session_storage>`.
+    about storing sessions in the :doc:`database </cookbook/doctrine/pdo_session_storage>`.
 
 To change the directory in which Symfony saves session data, you only need
 change the framework configuration. In this example, you will change the
