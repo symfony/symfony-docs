@@ -699,6 +699,13 @@ method to access the list of errors. It returns a
     This is useful, for example, if you want to use PHP's ``array_`` function
     on the form errors.
 
+Clearing Form Errors
+~~~~~~~~~~~~~~~~~~~~
+
+Any errors can be manually cleared using the :method:`Symfony\\Component\\Form\\FormInterface::clearErrors`
+method. This is useful when you'd like to validate the form without showing validation errors to the user
+(i.e. during a partial AJAX submission or :doc:`dynamic form modification </cookbook/form/dynamic_form_modification>`).
+
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html
