@@ -12,11 +12,13 @@ wrapping each with a function capable of translating the text (or "message")
 into the language of the user::
 
     // text will *always* print out in English
-    var_dump('Hello World');
+    dump('Hello World');
+    die();
 
     // text can be translated into the end-user's language or
     // default to English
-    var_dump($translator->trans('Hello World'));
+    dump($translator->trans('Hello World'));
+    die();
 
 .. note::
 
