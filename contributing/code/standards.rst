@@ -100,6 +100,9 @@ Structure
 
 * Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
+* Use `Yoda conditions`_ when checking a variable against an expression to avoid
+  an accidental assignment inside the condition statement;
+
 * Add a comma after each array item in a multi-line array, even after the
   last one;
 
@@ -186,3 +189,4 @@ License
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions
