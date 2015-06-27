@@ -638,7 +638,7 @@ dispatched, are passed as arguments to the listener::
     {
         public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            echo $eventName;
+            // ... do something with the event name
         }
     }
 

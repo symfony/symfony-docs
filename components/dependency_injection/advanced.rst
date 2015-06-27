@@ -4,6 +4,8 @@
 Advanced Container Configuration
 ================================
 
+.. _container-private-services:
+
 Marking Services as public / private
 ------------------------------------
 
