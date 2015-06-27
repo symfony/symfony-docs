@@ -25,3 +25,4 @@
 /components/yaml /components/yaml/introduction
 /components/templating /components/templating/introduction
 /cookbook/upgrading /cookbook/upgrade/index
+/cookbook/security/voters_data_permission /cookbook/security/voters
