@@ -191,10 +191,10 @@ can override the translations from any translation file, as long as it is in
     The last translation file always wins. That means that you need to make
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
-    Translation files are not aware of the inheritance tree and therefore
-    unaware of their parent. If you want to override translations from the
-    parent bundle, be sure that the parent bundle is loaded before the child
-    bundle in the ``AppKernel`` class.
+
+    Translation files are also not aware of :doc:`bundle inheritance </cookbook/bundles/inheritance>`.
+    If you want to override translations from the parent bundle, be sure that the
+    parent bundle is loaded before the child bundle in the ``AppKernel`` class.
 
     The file that always wins is the one that is placed in
     ``app/Resources/translations``, as those files are always loaded last.
