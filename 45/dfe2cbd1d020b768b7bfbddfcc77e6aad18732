@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T08:07:08Z
+
+:+1: thanks @bocharsky-bw
+
+A note for doc mergers: this change should also be merged in 2.3 branch ([see PropertyAccessorBuilder 2.3 API](http://api.symfony.com/2.3/Symfony/Component/PropertyAccess/PropertyAccessorBuilder.html))
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:18:17Z
+
+:+1: good catch
