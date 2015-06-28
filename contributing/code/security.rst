@@ -9,9 +9,9 @@ Reporting a Security Issue
 --------------------------
 
 If you think that you have found a security issue in Symfony, don't use the
-mailing-list or the bug tracker and don't publish it publicly. Instead, all
-security issues must be sent to **security [at] symfony.com**. Emails sent to
-this address are forwarded to the Symfony core-team private mailing-list.
+bug tracker and don't publish it publicly. Instead, all security issues must
+be sent to **security [at] symfony.com**. Emails sent to this address are
+forwarded to the Symfony core-team private mailing-list.
 
 Resolving Process
 -----------------
