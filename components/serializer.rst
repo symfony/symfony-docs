@@ -147,6 +147,8 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
+.. _component-serializer-attributes-groups:
+
 Attributes Groups
 -----------------
 
