@@ -504,7 +504,7 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     This normalizer leverages the :doc:`PropertyAccess Component </components/property_access/index>`
     to read and write in the object. It means that it can access to properties
-    directly and trough getters, setters, hassers, adders and removers. It supports
+    directly and through getters, setters, hassers, adders and removers. It supports
     calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names (method name stripped of
