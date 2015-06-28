@@ -1,6 +1,7 @@
 * :doc:`/cookbook/assetic/index`
 
   * :doc:`/cookbook/assetic/asset_management`
+  * :doc:`/cookbook/assetic/php`
   * :doc:`/cookbook/assetic/uglifyjs`
   * :doc:`/cookbook/assetic/yuicompressor`
   * :doc:`/cookbook/assetic/jpeg_optimize`
@@ -117,6 +118,10 @@
 * :doc:`/cookbook/frontend/index`
 
   * :doc:`/cookbook/frontend/bower`
+
+* :doc:`/cookbook/install/index`
+
+  * :doc:`/cookbook/install/unstable_versions`
 
 * :doc:`/cookbook/logging/index`
 

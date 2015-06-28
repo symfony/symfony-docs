@@ -136,7 +136,7 @@ The cause of this problem is that routing is done before security. If a 404 erro
 occurs, the security layer isn't loaded and thus, the ``is_granted()`` function
 is undefined. The solution is to add the following check before using this function:
 
-.. code-block:: twig
+.. code-block:: jinja
 
     {% if app.user and is_granted('...') %}
         {# ... #}

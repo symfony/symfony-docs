@@ -572,7 +572,7 @@ having unique identifiers::
     });
 
     $serializer = new Serializer(array($normalizer), array($encoder));
-    echo $serializer->serialize($org, 'json');
+    var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
 .. seealso::

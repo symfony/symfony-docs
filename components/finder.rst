@@ -30,14 +30,14 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
-        // Print the absolute path
-        print $file->getRealpath()."\n";
+        // Dump the absolute path
+        var_dump($file->getRealpath());
 
-        // Print the relative path to the file, omitting the filename
-        print $file->getRelativePath()."\n";
+        // Dump the relative path to the file, omitting the filename
+        var_dump($file->getRelativePath());
 
-        // Print the relative path to the file
-        print $file->getRelativePathname()."\n";
+        // Dump the relative path to the file
+        var_dump($file->getRelativePathname());
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
@@ -118,9 +118,7 @@ And it also works with user-defined streams::
     $finder = new Finder();
     $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');
     foreach ($finder->in('s3://bucket-name') as $file) {
-        // ... do something
-
-        print $file->getFilename()."\n";
+        // ... do something with the file
     }
 
 .. note::

@@ -192,7 +192,10 @@ can override the translations from any translation file, as long as it is in
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
 
+    Translation files are also not aware of :doc:`bundle inheritance </cookbook/bundles/inheritance>`.
+    If you want to override translations from the parent bundle, be sure that the
+    parent bundle is loaded before the child bundle in the ``AppKernel`` class.
+
     The file that always wins is the one that is placed in
     ``app/Resources/translations``, as those files are always loaded last.
-
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides

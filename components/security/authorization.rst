@@ -191,8 +191,8 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will echo 'ROLE_ADMIN'
-    echo $role->getRole();
+    // will show 'ROLE_ADMIN'
+    var_dump($role->getRole());
 
 .. note::
 
@@ -253,3 +253,4 @@ decision manager::
     if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+

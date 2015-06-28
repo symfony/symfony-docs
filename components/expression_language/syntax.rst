@@ -42,12 +42,12 @@ to JavaScript::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,
         )
-    );
+    ));
 
 This will print out ``Honeycrisp``.
 
@@ -72,12 +72,12 @@ JavaScript::
 
     $robot = new Robot();
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'robot.sayHi(3)',
         array(
             'robot' => $robot,
         )
-    );
+    ));
 
 This will print out ``Hi Hi Hi!``.
 
@@ -93,9 +93,9 @@ constant::
 
     define('DB_USER', 'root');
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'constant("DB_USER")'
-    );
+    ));
 
 This will print out ``root``.
 
@@ -114,12 +114,12 @@ array keys, similar to JavaScript::
 
     $data = array('life' => 10, 'universe' => 10, 'everything' => 22);
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'data["life"] + data["universe"] + data["everything"]',
         array(
             'data' => $data,
         )
-    );
+    ));
 
 This will print out ``42``.
 
@@ -140,14 +140,14 @@ Arithmetic Operators
 
 For example::
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'life + universe + everything',
         array(
             'life' => 10,
             'universe' => 10,
             'everything' => 22,
         )
-    );
+    ));
 
 This will print out ``42``.
 
@@ -230,13 +230,13 @@ String Operators
 
 For example::
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'firstName~" "~lastName',
         array(
             'firstName' => 'Arthur',
             'lastName' => 'Dent',
         )
-    );
+    ));
 
 This would print out ``Arthur Dent``.
 

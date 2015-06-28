@@ -47,7 +47,7 @@ traverse easily::
     $crawler = new Crawler($html);
 
     foreach ($crawler as $domElement) {
-        print $domElement->nodeName;
+        var_dump($domElement->nodeName);
     }
 
 Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
@@ -300,6 +300,12 @@ and :phpclass:`DOMNode` objects:
         $html = $crawler->html();
 
     The ``html`` method is new in Symfony 2.3.
+
+    .. caution::
+
+        Due to an issue in PHP, the ``html()`` method returns wrongly decoded HTML
+        entities in PHP versions lower than 5.3.6 (for example, it returns ``•``
+        instead of ``&bull;``).
 
 Links
 ~~~~~
