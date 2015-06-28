@@ -29,26 +29,6 @@ The ``file`` type represents a file input in your form.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
 
-Overridden Options
-------------------
-
-.. include:: /reference/forms/types/options/compound_type.rst.inc
-
-data_class
-~~~~~~~~~~
-
-**type**: ``string`` **default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
-
-This option sets the appropriate file-related data mapper to be used by the type.
-
-empty_data
-~~~~~~~~~~
-
-**type**: ``mixed`` **default**: ``null``
-
-This option determines what value the field will return when the submitted
-value is empty.
-
 Basic Usage
 -----------
 
@@ -111,6 +91,26 @@ multiple
 **type**: ``Boolean`` **default**: ``false``
 
 When set to true, the user will be able to upload multiple files at the same time.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+data_class
+~~~~~~~~~~
+
+**type**: ``string`` **default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
+
+This option sets the appropriate file-related data mapper to be used by the type.
+
+empty_data
+~~~~~~~~~~
+
+**type**: ``mixed`` **default**: ``null``
+
+This option determines what value the field will return when the submitted
+value is empty.
 
 Inherited Options
 -----------------
