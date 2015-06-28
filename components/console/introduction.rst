@@ -200,7 +200,7 @@ level of verbosity.
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
 
-    if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
+    if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
         $output->writeln(...);
     }
 

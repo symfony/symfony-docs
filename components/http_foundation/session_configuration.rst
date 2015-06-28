@@ -274,18 +274,18 @@ further creates an extension point from where custom logic can be added that
 works independently of which handler is being wrapped inside.
 
 There are two kinds of save handler class proxies which inherit from
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractProxy`:
-they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
-and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\AbstractProxy`:
+they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\NativeProxy`
+and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy`.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
 automatically injects storage handlers into a save handler proxy unless already
 wrapped by one.
 
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\NativeProxy`
 is used automatically under PHP 5.3 when internal PHP save handlers are specified
 using the ``Native*SessionHandler`` classes, while
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy`
 will be used to wrap any custom save handlers, that implement :phpclass:`SessionHandlerInterface`.
 
 From PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`

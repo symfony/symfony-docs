@@ -340,8 +340,6 @@ object:
 +------------------------+-------------------------------------------------------------------------------------+
 | ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute). |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field.                         |
-+------------------------+-------------------------------------------------------------------------------------+
 | ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |

@@ -18,15 +18,17 @@ The text field represents the most basic input text field.
 |             | - `label_attr`_                                                    |
 |             | - `mapped`_                                                        |
 |             | - `max_length`_ (deprecated as of 2.5)                             |
-|             | - `read_only`_                                                     |
+|             | - `read_only`_ (deprecated as of 2.8)                              |
 |             | - `required`_                                                      |
 |             | - `trim`_                                                          |
++-------------+--------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                      |
+| options     |                                                                    |
 +-------------+--------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                          |
 +-------------+--------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
 +-------------+--------------------------------------------------------------------+
-
 
 Inherited Options
 -----------------
@@ -63,3 +65,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc

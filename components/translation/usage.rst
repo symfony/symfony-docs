@@ -15,7 +15,7 @@ Imagine you want to translate the string *"Symfony is great"* into French::
         'Symfony is great!' => 'J\'aime Symfony!',
     ), 'fr_FR');
 
-    echo $translator->trans('Symfony is great!');
+    var_dump($translator->trans('Symfony is great!'));
 
 In this example, the message *"Symfony is great!"* will be translated into
 the locale set in the constructor (``fr_FR``) if the message exists in one of
@@ -31,7 +31,7 @@ Sometimes, a message containing a variable needs to be translated::
     // ...
     $translated = $translator->trans('Hello '.$name);
 
-    echo $translated;
+    var_dump($translated);
 
 However, creating a translation for this string is impossible since the translator
 will try to look up the exact message, including the variable portions
@@ -45,7 +45,7 @@ variable with a "placeholder"::
         array('%name%' => $name)
     );
 
-    echo $translated;
+    var_dump($translated);
 
 Symfony will now look for a translation of the raw message (``Hello %name%``)
 and *then* replace the placeholders with their values. Creating a translation
