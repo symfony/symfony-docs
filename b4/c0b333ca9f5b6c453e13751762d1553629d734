@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-06-10T07:53:23Z
+
+ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-06-22T08:18:13Z
+
+@xabbuh revised the documentation based on your comments :+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-22T21:53:07Z
+
+@Rvanlaak I just left a few comments - but if you can make those changes, then a big :+1: from me!
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-06-23T07:07:51Z
+
+Fixed it @weaverryan , but this PR should be merged first because right now on exit the user isn't fresh https://github.com/symfony/symfony/pull/14931
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-23T18:20:28Z
+
+:+1:
