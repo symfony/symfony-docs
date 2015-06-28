@@ -30,7 +30,9 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `widget`_                                                                 |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden Options   | - `by_reference`_                                                           |
+| Overridden options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
@@ -131,6 +133,10 @@ by_reference
 **default**: ``false``
 
 The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~

@@ -15,6 +15,9 @@ that you want to use for your number.
 |             | - `scale`_                                                           |
 |             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                        |
+| options     |                                                                      |
++-------------+----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                            |
 | options     | - `disabled`_                                                        |
 |             | - `empty_data`_                                                      |
@@ -68,6 +71,11 @@ option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\D
 
 * ``NumberToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
   "nearest neighbor". If both neighbors are equidistant, round up.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------
