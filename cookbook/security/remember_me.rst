@@ -25,15 +25,24 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <remember-me
-                    key      = "%secret%"
-                    lifetime = "604800" <!-- 1 week in seconds -->
-                    path     = "/"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="utf-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall>
+                    <!-- lifetime: 604800 seconds = 1 week -->
+                    <remember-me
+                        key="%secret%"
+                        lifetime="604800"
+                        path="/"
+                    />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -52,7 +61,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``key`` (default value: ``null``)
+``key`` (**required**)
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
@@ -167,15 +176,18 @@ The Security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY`` - automatically assigned to a user who is
-  in a firewall protected part of the site but who has not actually logged in.
-  This is only possible if anonymous access has been allowed.
+``IS_AUTHENTICATED_ANONYMOUSLY``
+    Automatically assigned to a user who is in a firewall protected part of the
+    site but who has not actually logged in. This is only possible if anonymous
+    access has been allowed.
 
-* ``IS_AUTHENTICATED_REMEMBERED`` - automatically assigned to a user who
-  was authenticated via a remember me cookie.
+``IS_AUTHENTICATED_REMEMBERED``
+    Automatically assigned to a user who was authenticated via a remember me
+    cookie.
 
-* ``IS_AUTHENTICATED_FULLY`` - automatically assigned to a user that has
-  provided their login details during the current session.
+``IS_AUTHENTICATED_FULLY``
+    Automatically assigned to a user that has provided their login details
+    during the current session.
 
 You can use these to control access beyond the explicitly assigned roles.
 
@@ -201,6 +213,7 @@ In the following example, the action is only allowed if the user has the
     // ...
     use Symfony\Component\Security\Core\Exception\AccessDeniedException
 
+    // ...
     public function editAction()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

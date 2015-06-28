@@ -19,6 +19,7 @@ The Cookbook
     expression/index
     form/index
     frontend/index
+    install/index
     logging/index
     profiler/index
     request/index
