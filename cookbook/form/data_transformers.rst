@@ -100,8 +100,8 @@ in your code.
     :class:`Symfony\\Component\\Form\\DataTransformerInterface` - so you can create
     your own classes, instead of putting all the logic in the form (see the next section).
 
-Harder Examle: Transforming an Issue Number into an Issue Entity
-----------------------------------------------------------------
+Harder Example: Transforming an Issue Number into an Issue Entity
+-----------------------------------------------------------------
 
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
 Task has an optional foreign key to its related Issue). Adding a listbox with all
