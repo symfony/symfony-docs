@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T08:24:26Z
+
+:+1: thanks @King2500
+
+This looks like a quick win without any real drawback. Maybe @WouterJ, who is one of the doc managers and uses Windows, can verify that `PhpStormProtocol` works flawlessly for him.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:24:49Z
+
+@WouterJ tried something like this himself in 90c9ac0cae1b2036dc3078e092c77fd0eb76d642. So I guess this is ready to be merged (dunno what went wrong there).
+
+Thank you for keeping the docs up-to-date @King2500!
