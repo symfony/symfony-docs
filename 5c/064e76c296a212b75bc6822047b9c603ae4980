@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-14T11:49:02Z
+
+Looks like the ordering of the different formats needs to be fixed (we switched to show annotations, YAML, XML, PHP).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-16T14:27:36Z
+
+@xabbuh I've just fixed all the issues that you reported and I've also changed he order of the configuration block sot show annotations first.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-16T18:45:26Z
+
+@javiereguiluz Seems like the `payload` option would still be removed in the `LessThanOrEqual`, `LessThan` and `GreaterThanOrEqual` constraints.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-16T18:46:30Z
+
+Oh, and the code format ordering is wrong the `Range` constraint.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-16T20:28:16Z
+
+@xabbuh sorry for these issues! Everything should be fixed now.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-26T07:44:28Z
+
+I think we can now consider this issue as `finished`. Thanks.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-27T09:59:07Z
+
+Just a thought (I'm happy to apply it after merging), what about showing one example (the first one) and then doing something like?
+
+```rst
+Be aware that PHP will use the server's configured timezone to interpret these
+dates. If you want to fix the timezone, append it to the date string (e.g. ``today UTC``).
+You can also use relative dates or times. For example, you can check that the
+above delivery date starts at least five hours after the current time using ``+5 hours``
+instead of ``today``.
+```
+
+This will make the section quite a bit shorter, which is a good thing imo (it's a nice feature, but not so important to take almost 200 lines).
