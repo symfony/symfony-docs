@@ -22,8 +22,11 @@ Simple Example: Sanitizing HTML on User Input
 Suppose you have a Task form with a description ``textarea`` type::
 
     // src/AppBundle/Form/TaskType.php
-    // ...
 
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    // ...
     class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -45,7 +48,7 @@ Suppose you have a Task form with a description ``textarea`` type::
 But, there are two complications:
 
 #. Your users are allowed to use *some* HTML tags, but not others: you need a way
-   to call :phpfunction:`striptags` after the form is submitted.
+   to call :phpfunction:`striptags` after the form is submitted;
 
 #. To be friendly, you want to convert ``<br/>`` tags into line breaks (``\n``) before
    rendering the field so the text is easier to edit.
@@ -108,8 +111,8 @@ issue number.
 Start by setting up the text field like normal::
 
     // src/AppBundle/Form/TaskType.php
-    // ...
 
+    // ...
     class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -134,7 +137,7 @@ property would be a string (e.g. "55"). How can you transform this into an ``Iss
 entity on submit?
 
 Creating the Transformer
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 You could use the ``CallbackTransformer`` like earlier. But since this is a bit more
 complex, creating a new transformer class will keep the ``TaskType`` form class simpler.
@@ -146,17 +149,17 @@ to and from the issue number and the ``Issue`` object::
     namespace AppBundle\Form\DataTransformer;
 
     use AppBundle\Entity\Issue;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Common\Persistence\EntityManager;
     use Symfony\Component\Form\DataTransformerInterface;
     use Symfony\Component\Form\Exception\TransformationFailedException;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(ObjectManager $em)
+        public function __construct(EntityManager $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
         /**
@@ -185,10 +188,10 @@ to and from the issue number and the ``Issue`` object::
         {
             // no issue number? It's optional, so that's ok
             if (!$issueNumber) {
-                return null;
+                return;
             }
 
-            $issue = $this->em
+            $issue = $this->entityManager
                 ->getRepository('AppBundle:Issue')
                 // query for the issue with this id
                 ->find($issueNumber)
@@ -225,7 +228,7 @@ that message with the ``invalid_message`` option (see below).
     an empty string, 0 for integers or 0.0 for floats).
 
 Using the Transformer
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Next, you need to instantiate the ``IssueToNumberTransformer`` class from inside
 ``TaskType`` and add it to the ``issue`` field. But to do that, you'll need an instance
@@ -235,16 +238,18 @@ No problem! Just add a ``__construct()`` function to ``TaskType`` and force this
 to be passed in. Then, you can easily create and add the transformer::
 
     // src/AppBundle/Form/TaskType.php
-    use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\Common\Persistence\ObjectManager;
 
+    use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Doctrine\Common\Persistence\EntityManager;
+
+    // ...
     class TaskType extends AbstractType
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(ObjectManager $em)
+        public function __construct(EntityManager $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -259,7 +264,7 @@ to be passed in. Then, you can easily create and add the transformer::
             // ...
 
             $builder->get('issue')
-                ->addModelTransformer(new IssueToNumberTransformer($this->em));
+                ->addModelTransformer(new IssueToNumberTransformer($this->entityManager));
         }
 
         // ...
@@ -268,8 +273,8 @@ to be passed in. Then, you can easily create and add the transformer::
 Now, when you create your ``TaskType``, you'll need to pass in the entity manager::
 
     // e.g. in a controller somewhere
-    $em = $this->getDoctrine()->getManager();
-    $form = $this->createForm(new TaskType($em), $task);
+    $entityManager = $this->getDoctrine()->getManager();
+    $form = $this->createForm(new TaskType($entityManager), $task);
 
     // ...
 
@@ -312,23 +317,23 @@ First, create the custom field type class::
     namespace AppBundle\Form;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class IssueSelectorType extends AbstractType
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(ObjectManager $em)
+        public function __construct(EntityManager $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $transformer = new IssueToNumberTransformer($this->em);
+            $transformer = new IssueToNumberTransformer($this->entityManager);
             $builder->addModelTransformer($transformer);
         }
 
@@ -423,15 +428,15 @@ types of underlying data.
 
 In any form, the three different types of data are:
 
-1) **Model data** - This is the data in the format used in your application
-   (e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
+#. **Model data** - This is the data in the format used in your application
+   (e.g. an ``Issue`` object). If you call ``Form::getData()`` or ``Form::setData()``,
    you're dealing with the "model" data.
 
-2) **Norm Data** - This is a normalized version of your data, and is commonly
+#. **Norm Data** - This is a normalized version of your data and is commonly
    the same as your "model" data (though not in our example). It's not commonly
    used directly.
 
-3) **View Data** - This is the format that's used to fill in the form fields
+#. **View Data** - This is the format that's used to fill in the form fields
    themselves. It's also the format in which the user will submit the data. When
    you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
 
@@ -463,3 +468,7 @@ The difference between the transformers is subtle and you should always think
 about what the "norm" data for a field should really be. For example, the
 "norm" data for a ``text`` field is a string, but is a ``DateTime`` object
 for a ``date`` field.
+
+.. tip::
+
+    As a general rule, the normalized data should contain as much information as possible.
