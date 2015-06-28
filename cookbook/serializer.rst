@@ -76,7 +76,7 @@ Adding Normalizers and Encoders
 
 .. versionadded:: 2.7
     The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    is enabled by default in Symfony 2.7. In prior versions, you need to load
+    is enabled by default in Symfony 2.7. In prior versions, you needed to load
     your own normalizer.
 
 Once enabled, the ``serializer`` service will be available in the container
@@ -160,6 +160,15 @@ with the following configuration:
                 'enable_annotations' => true,
             ),
         ));
+
+Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
+to your class and choose which groups to use when serializing::
+
+    $serializer = $this->get('serializer');
+    $json = $serializer->serialize(
+        $someObject,
+        'json', array('groups' => array('group1')
+    );
 
 Enabling the Metadata Cache
 ---------------------------

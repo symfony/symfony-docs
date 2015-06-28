@@ -202,6 +202,8 @@ like the following::
     // For YAML
     // $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yml'));
 
+.. _component-serializer-attributes-groups-annotations:
+
 Then, create your groups definition:
 
 .. configuration-block::
