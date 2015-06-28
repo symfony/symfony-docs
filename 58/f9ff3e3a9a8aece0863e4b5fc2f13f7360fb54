@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-06-15T15:46:49Z
+
+This is part of the coding standards actually (and I'm quite sure it is already documented)
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-06-15T15:53:11Z
+
+I didn't see any entry about this @stof: https://symfony.com/doc/current/contributing/code/standards.html
+
+---------------------------------------------------------------------------
+
+by stof at 2015-06-15T16:00:24Z
+
+I thought it was mentioned. Can you update your PR to mention it on this page instead then ?
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-06-15T16:12:41Z
+
+@stof, updated.
+
+---------------------------------------------------------------------------
+
+by Soullivaneuh at 2015-06-22T08:05:28Z
+
+@stof @phansys BTW, having a little more explanation of why this choice on the docs would be useful for non adept developers. :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T08:30:06Z
+
+:+1: I think this PR is now ready to be labeled as `finished` and to be merged soon. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:21:24Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by Soullivaneuh at 2015-06-22T18:08:39Z
+
+Regarding to [WordPress coding style](https://make.wordpress.org/core/handbook/coding-standards/php/#yoda-conditions) from where Yoda condition from (AFAIK):
+
+> Yoda conditions for <, >, <= or >= are significantly more difficult to read and are best avoided.
+
+Is I understand well, Yoda condition **should** be avoided for `<`, `>`, `<=` or `>=`, isn't it?
+
+If yes, it should be clearly specified on this doc too.
