@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-13T10:28:11Z
+
+:+1:
+
+For your information, 2.6 is still maintained, so it's going to be merged in that branch. However, you don't have to worry about it as we have a nice tool that makes it really easy to patch PRs into other branches.
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-13T16:46:08Z
+
+Hey thank you @WouterJ . So any further PR's should go to 2.6 ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-14T12:37:41Z
+
+@harikt Actually that depends on the affected versions. But the general rule is to open a PR for the lowest affected version (higher versions will get the changes when branches are merged up). Currently, supported versions are 2.3, 2.6 and 2.7.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-14T12:42:36Z
+
+By the way: :+1: :)
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-14T13:31:52Z
+
+@xabbuh ,
+
+Is there a way to find the supported versions ? So people can understand easily to where the PR need to be initialized ?
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-14T15:25:30Z
+
+@harikt You can have a look at http://symfony.com/roadmap or http://symfony.com/doc/current/contributing/community/releases.html.
