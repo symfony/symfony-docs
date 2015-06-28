@@ -14,13 +14,13 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                       |
-| options     |                                                                     |
-+-------------+---------------------------------------------------------------------+
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
 |             | - `precision`_                                                      |
++-------------+---------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                       |
+| options     |                                                                     |
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `data`_                                                           |
 | options     | - `disabled`_                                                       |
@@ -39,11 +39,6 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
-
-Overridden Options
-------------------
-
-.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------
@@ -90,6 +85,11 @@ For some reason, if you need some precision other than 2 decimal places,
 you can modify this value. You probably won't need to do this unless,
 for example, you want to round to the nearest dollar (set the precision
 to ``0``).
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------

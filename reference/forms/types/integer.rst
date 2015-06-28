@@ -16,12 +16,12 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``number`` field                                            |
 +-------------+-----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                         |
-| options     |                                                                       |
-+-------------+-----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                         |
 |             | - `precision`_                                                        |
 |             | - `rounding_mode`_                                                    |
++-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
@@ -40,11 +40,6 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
-
-Overridden Options
-------------------
-
-.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------
@@ -73,6 +68,11 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 
 *   ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
     to round towards positive infinity.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------

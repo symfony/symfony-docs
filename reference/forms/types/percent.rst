@@ -15,11 +15,11 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                         |
-| options     |                                                                       |
-+-------------+-----------------------------------------------------------------------+
 | Options     | - `precision`_                                                        |
 |             | - `type`_                                                             |
++-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
@@ -38,11 +38,6 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
-
-Overridden Options
-------------------
-
-.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------
@@ -74,6 +69,11 @@ object. The two "types" handle these two cases:
     If your data is stored as an integer (e.g. 55), then use this option.
     The raw value (``55``) is shown to the user and stored on your object.
     Note that this only works for integer values.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------
