@@ -103,7 +103,8 @@ Structure
 * Always use `identical comparison`_ unless you need type juggling;
 
 * Use `Yoda conditions`_ when checking a variable against an expression to avoid
-  an accidental assignment inside the condition statement;
+  an accidental assignment inside the condition statement (this applies to ``==``,
+  ``!=``, ``===``, and ``!==``);
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
