@@ -23,7 +23,7 @@ you should just use the ``choice`` type directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)          |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                          |
-| Options     |                                                                       |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type           |
 | options     |                                                                       |
