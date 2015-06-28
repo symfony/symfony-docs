@@ -9,6 +9,9 @@ The text field represents the most basic input text field.
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                      |
+| options     |                                                                    |
++-------------+--------------------------------------------------------------------+
 | Inherited   | - `data`_                                                          |
 | options     | - `disabled`_                                                      |
 |             | - `empty_data`_                                                    |
@@ -27,6 +30,10 @@ The text field represents the most basic input text field.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
 +-------------+--------------------------------------------------------------------+
 
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------

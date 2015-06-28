@@ -26,7 +26,9 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden Options   | - `by_reference`_                                                           |
+| Overridden options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
@@ -138,6 +140,10 @@ by_reference
 **default**: ``false``
 
 The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~

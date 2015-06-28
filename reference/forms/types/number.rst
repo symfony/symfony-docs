@@ -11,6 +11,9 @@ that you want to use for your number.
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                        |
+| options     |                                                                      |
++-------------+----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                        |
 |             | - `precision`_                                                       |
 |             | - `rounding_mode`_                                                   |
@@ -32,6 +35,11 @@ that you want to use for your number.
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------

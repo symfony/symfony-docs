@@ -14,6 +14,9 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                       |
+| options     |                                                                     |
++-------------+---------------------------------------------------------------------+
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
@@ -36,6 +39,11 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Field Options
 -------------

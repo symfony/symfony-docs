@@ -9,9 +9,12 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                       |
+| options     | - `data_class`_                                                     |
+|             | - `empty_data`_                                                     |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                       |
-| options     | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
+| options     | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
@@ -23,6 +26,26 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+data_class
+~~~~~~~~~~
+
+**type**: ``string`` **default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
+
+This option sets the appropriate file-related data mapper to be used by the type.
+
+empty_data
+~~~~~~~~~~
+
+**type**: ``mixed`` **default**: ``null``
+
+This option determines what value the field will return when the submitted
+value is empty.
 
 Basic Usage
 -----------
@@ -81,14 +104,6 @@ These options inherit from the :doc:`form </reference/forms/types/form>`
 type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
-
-The default value is ``null``.
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
