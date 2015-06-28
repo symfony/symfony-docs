@@ -262,7 +262,7 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. tip::
 
-    If you're on a Windows PC, you can install the `PhpStormOpener`_ to
+    If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
     be able to use this.
 
 Of course, since every developer uses a different IDE, it's better to set
@@ -1372,6 +1372,13 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+.. versionadded:: 2.8
+    The ``validator.mapping.cache.doctrine.apc`` service was introduced in
+    Symfony 2.8.
+
+Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
+cache provide from the Doctrine project.
+
 enable_annotations
 ..................
 
@@ -1620,5 +1627,5 @@ Full Default Configuration
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
-.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
+.. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
