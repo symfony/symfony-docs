@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-25T09:35:13Z
+
+On the first question: Yes, you don't have to use includes. It's just to avoid duplication. If there still is a lot of copy/past, you can decide to use placeholders like in [`empty_value.rst.inc`](https://github.com/symfony/symfony-docs/blob/2.7/reference/forms/types/options/empty_data.rst.inc) or seperate it like `_error_bubbling_body.rst.inc` and `_error_bubbling_hint.rst.inc`.
+
+For the side note, it already has an issue: https://github.com/symfony/symfony-docs/issues/5213
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-25T11:12:21Z
+
+This PR is now ready to be reviewed. Thanks.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-29T06:45:11Z
+
+I've updated the description of the `compound` option. This PR is now ready for the final review. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-31T11:23:36Z
+
+@javiereguiluz I left you some last minor comments. After that, this looks ready to be merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-31T11:28:00Z
+
+@xabbuh didn't we remove types from the overriden options? (as it's more about documenting the new value and why than actually documenting the option)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-31T11:49:58Z
+
+@WouterJ At least, we are not consistent with this rule then: http://symfony.com/doc/current/reference/forms/types/entity.html#choice-list, http://symfony.com/doc/current/reference/forms/types/choice.html#compound
+
+By the way, does it really make sense to leave out the type? I would then always have to look the type up in the parent type. That's not really comfortable, is it?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-04T07:09:39Z
+
+@xabbuh I've fixed all the issues that you found and I've rebased the PR. I guess this is now ready to be merged. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-05T06:42:25Z
+
+:+1: Looks great now!
