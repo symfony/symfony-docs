@@ -365,19 +365,20 @@ it's recognized as a custom field type:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
             app.type.issue_selector:
                 class: AppBundle\Form\IssueSelectorType
-                arguments: ["@doctrine.orm.default_entity_manager"]
+                arguments: ["@doctrine.orm.entity_manager"]
                 tags:
                     - { name: form.type, alias: issue_selector }
 
 
     .. code-block:: xml
-        
+
         <service id="app.type.issue_selector"
             class="AppBundle\Form\IssueSelectorType">
-            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="form.type" alias="issue_selector" />
         </service>
 
@@ -391,7 +392,7 @@ it's recognized as a custom field type:
             ->setDefinition('app.type.issue_selector', new Definition(
                 'AppBundle\Form\IssueSelectorType'
                 ), array(
-                new Reference('doctrine.orm.default_entity_manager'),
+                new Reference('doctrine.orm.entity_manager'),
             ))
             ->addTag('form.type', array(
                 'alias' => 'issue_selector',
