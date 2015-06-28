@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-06-15T16:01:44Z
+
+I think this should be better placed in the coding standards page.
+
+the conventions page is mostly about naming conventions
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-06-15T16:09:40Z
+
+@stof, done.
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-06-16T19:21:21Z
+
+Updated message to enforce always to use strict comparison.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-17T06:38:48Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-26T22:47:32Z
+
++1 from my side (not 100% sure if *"Always use ... unless ..."* is better or worse than *"Unless ..., always use ..."*, but I'll let our native speakers decide on that one :wink: )
