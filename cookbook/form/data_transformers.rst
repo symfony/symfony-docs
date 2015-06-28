@@ -60,6 +60,7 @@ class::
     // src/AppBundle/Form/TaskType.php
 
     use Symfony\Component\Form\CallbackTransformer;
+    use Symfony\Component\Form\FormBuilderInterface;
     // ...
 
     class TaskType extends AbstractType
