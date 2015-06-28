@@ -114,6 +114,13 @@ fragment needed to render every part of a form:
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
 
+.. caution::
+
+  If you use the Bootstrap form theme and want to render the parts of 
+  a checkbox field individually, do not use the Twig function {{ form_label() }}. 
+  Otherwise, it will render nothing.
+
+
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
 
