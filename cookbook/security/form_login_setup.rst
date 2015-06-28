@@ -462,8 +462,8 @@ firewall matches *all* URLs, including ``/login_check``). If ``/login_check``
 doesn't match any firewall, you'll receive a ``Unable to find the controller
 for path "/login_check"`` exception.
 
-4. Multiple Firewalls Don't Share Security Context
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4. Multiple Firewalls Don't Share the same Security Context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using multiple firewalls and you authenticate against one firewall,
 you will *not* be authenticated against any other firewalls automatically.
