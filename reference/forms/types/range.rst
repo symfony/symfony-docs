@@ -8,7 +8,7 @@ The ``range`` field is a slider that is rendered using the HTML5
 ``<input type="range" />`` tag.
 
 +-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``range`` field (slider in html5 supported browser)                              |
+| Rendered as | ``input`` ``range`` field (slider in HTML5 supported browser)       |
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `data`_                                                           |
 | options     | - `disabled`_                                                       |
@@ -18,8 +18,7 @@ The ``range`` field is a slider that is rendered using the HTML5
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `max`_                                                           |
-|             | - `min`_                                                           |
+|             | - `attr`_                                                           |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`text </reference/forms/types/text>`                           |
@@ -30,6 +29,12 @@ The ``range`` field is a slider that is rendered using the HTML5
 Basic Usage
 -----------
 
+    $builder->add('name', 'range', array(
+        'attr' => array(
+            'min' => 5,
+            'max' => 50
+        )
+    ));
 
 Inherited Options
 -----------------
