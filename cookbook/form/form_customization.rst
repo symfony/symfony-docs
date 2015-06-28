@@ -116,10 +116,9 @@ fragment needed to render every part of a form:
 
 .. caution::
 
-  If you use the Bootstrap form theme and want to render the parts of 
-  a checkbox field individually, do not use the Twig function {{ form_label() }}. 
-  Otherwise, it will render nothing.
-
+    When you use the Bootstrap form themes and render the fields manually,
+    calling ``form_label()`` for a checkbox/radio field doesn't show anything.
+    Due to Bootstrap internals, the label is already shown by ``form_widget()``.
 
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
