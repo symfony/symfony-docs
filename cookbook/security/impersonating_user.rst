@@ -93,9 +93,10 @@ over the user's roles until you find one that a ``SwitchUserRole`` object::
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
     $authChecker = $this->get('security.authorization_checker');
+    $tokenStorage = $this->get('security.token_storage');
 
     if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
-        foreach ($authChecker->getToken()->getRoles() as $role) {
+        foreach ($tokenStorage->getToken()->getRoles() as $role) {
             if ($role instanceof SwitchUserRole) {
                 $impersonatingUser = $role->getSource()->getUser();
                 break;

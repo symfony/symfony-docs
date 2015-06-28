@@ -68,9 +68,9 @@ The main class of the component is
 
     $language = new ExpressionLanguage();
 
-    echo $language->evaluate('1 + 2'); // displays 3
+    var_dump($language->evaluate('1 + 2')); // displays 3
 
-    echo $language->compile('1 + 2'); // displays (1 + 2)
+    var_dump($language->compile('1 + 2')); // displays (1 + 2)
 
 Expression Syntax
 -----------------
@@ -96,12 +96,12 @@ PHP type (including objects)::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,
         )
-    );
+    ));
 
 This will print "Honeycrisp". For more information, see the :doc:`/components/expression_language/syntax`
 entry, especially :ref:`component-expression-objects` and :ref:`component-expression-arrays`.

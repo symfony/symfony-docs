@@ -110,6 +110,11 @@ Symfony documentation uses the AppBundle name.
     There is no need to prefix the AppBundle with your own vendor (e.g.
     AcmeAppBundle), because this application bundle is never going to be
     shared.
+    
+.. note::
+    
+    Another reason to create a new bundle is when you're overriding something 
+    in a vendor's bundle (e.g. a controller). See :doc:`/cookbook/bundles/inheritance`.
 
 All in all, this is the typical directory structure of a Symfony application
 that follows these best practices:

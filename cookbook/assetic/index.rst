@@ -5,6 +5,7 @@ Assetic
     :maxdepth: 2
 
     asset_management
+    php
     uglifyjs
     yuicompressor
     jpeg_optimize

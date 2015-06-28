@@ -100,6 +100,8 @@ Structure
 
 * Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
+* Always use `identical comparison`_ unless you need type juggling;
+
 * Add a comma after each array item in a multi-line array, even after the
   last one;
 
@@ -186,3 +188,4 @@ License
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php
