@@ -116,7 +116,8 @@ formatter used by the filter to produce the compiled CSS file. Using the
 compressed formatter will minimize the the resulting file, regardless of whether
 the original files are regular CSS files or SCSS files.
 
-Next, your Twig template to add the ``{% stylesheets %}`` tag defined by Assetic:
+Next, update your Twig template to add the ``{% stylesheets %}`` tag defined
+by Assetic:
 
 .. code-block:: html+jinja
 
