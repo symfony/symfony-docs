@@ -114,6 +114,12 @@ fragment needed to render every part of a form:
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
 
+.. caution::
+
+    When you use the Bootstrap form themes and render the fields manually,
+    calling ``form_label()`` for a checkbox/radio field doesn't show anything.
+    Due to Bootstrap internals, the label is already shown by ``form_widget()``.
+
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
 
