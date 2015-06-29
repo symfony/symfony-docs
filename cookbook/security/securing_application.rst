@@ -37,8 +37,8 @@ option as explained in :doc:`this article </cookbook/security/force_https>`.
 If you prefer to protect some specific routes, define the ``schemes`` route option
 for all those routes as explained in :doc:`this article </cookbook/routing/scheme>`.
 
-Enable or Disabled the CSRF Protection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enable or Disable the CSRF Protection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, Symfony forms include a protection against `CSRF attacks`_. In case
 you need to :ref:`disable this protection for some form <forms-csrf>`, use the
