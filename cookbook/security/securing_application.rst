@@ -15,7 +15,7 @@ Configure the ``secret`` Option
 
 The value of this option is used to increase the entropy in several security
 related operations. Make sure to change its default value (usually defined in
-the ``app/config/parameters.yml`` file). It's even recommended to change its
+the ``app/config/parameters.yml`` file). It's also recommended to change its
 value from time to time.
 
 Read the :ref:`framework.secret documentation <configuration-framework-secret>`
@@ -31,17 +31,17 @@ Make your Application HTTPS-only
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your application defines some protected areas under the ``access_control``
-configuration option in ``app/config/security.yml``, use the ``requires_channel``
-option as explained in :doc:`this article </cookbook/security/force_https>`.
+option in ``app/config/security.yml``, use the ``requires_channel`` option as
+explained in :doc:`this article </cookbook/security/force_https>`.
 
-If you prefer to protect some specific routes, define the ``schemes`` route option
-for all those routes as explained in :doc:`this article </cookbook/routing/scheme>`.
+If you prefer to protect some specific routes, define their ``schemes`` routing
+option as explained in :doc:`this article </cookbook/routing/scheme>`.
 
 Enable or Disable the CSRF Protection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, Symfony forms include a protection against `CSRF attacks`_. In case
-you need to :ref:`disable this protection for some form <forms-csrf>`, use the
+you need to :ref:`disable this protection for some forms <forms-csrf>`, use the
 ``csrf_protection`` option. You can even :ref:`disable CSRF protection <reference-csrf_protection-enabled>`
 application-wide.
 
@@ -115,8 +115,7 @@ Documentation
 
 * :doc:`SecurityBundle Configuration Reference </reference/configuration/security>`.
 * :doc:`Framework Configuration Reference </reference/configuration/framework>`
-  (it describes the purpose of security-related options such as ``secret`` and
-  ``csrf_protection``).
+  (it explains security-related options such as ``secret`` and ``csrf_protection``).
 * :doc:`Symfony Security Tutorials </cookbook/security/index>`.
 
 .. _`Bcrypt`: https://en.wikipedia.org/wiki/Bcrypt
