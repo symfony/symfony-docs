@@ -218,11 +218,6 @@ Of course, there's nothing wrong with having multiple applications in your
 project, that's entirely up to you. A second application would mean a new
 directory, e.g. ``my_app/``, with the same basic setup as the ``app/`` directory.
 
-.. tip::
-
-    Read the definition of a :term:`Project`, an :term:`Application`, and a
-    :term:`Bundle` in the glossary.
-
 Bundles and Plugins
 -------------------
 
