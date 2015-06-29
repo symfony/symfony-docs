@@ -113,8 +113,8 @@ Community Bundles
 Documentation
 ~~~~~~~~~~~~~
 
-* :doc:`SecurityBundle Configuration Reference </reference/configuration/security>`_.
-* :doc:`Framework Configuration Reference </reference/configuration/framework>`_
+* :doc:`SecurityBundle Configuration Reference </reference/configuration/security>`.
+* :doc:`Framework Configuration Reference </reference/configuration/framework>`
   (it describes the purpose of security-related options such as ``secret`` and
   ``csrf_protection``).
 * :doc:`Symfony Security Tutorials </cookbook/security/index>`.
