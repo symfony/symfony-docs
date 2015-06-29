@@ -169,6 +169,7 @@
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/access_control`
   * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/securing_application`
 
 * **Serializer**
 
