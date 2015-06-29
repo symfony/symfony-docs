@@ -9,9 +9,9 @@ In Symfony applications, all errors are treated as exceptions, no matter if they
 are just a 404 Not Found error or a fatal error triggered by throwing some
 exception in your code.
 
-In the `development environment`_, Symfony catches all the exceptions and displays
-a special **exception page** with lots of debug information to help you quickly
-discover the root problem:
+In the :doc:`development environment </cookbook/configuration/environments>`,
+Symfony catches all the exceptions and displays a special **exception page**
+with lots of debug information to help you quickly discover the root problem:
 
 .. image:: /images/cookbook/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in the development environment
@@ -259,5 +259,4 @@ time and again, you can have just one (or several) listeners deal with them.
     and takes measures like redirecting the user to the login page, logging them
     out and other things.
 
-.. _`development environment`: http://symfony.com/doc/current/cookbook/configuration/environments.html
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle

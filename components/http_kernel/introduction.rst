@@ -708,7 +708,7 @@ look like this::
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`Create your own framework... on top of the Symfony2 Components`: http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
 .. _`PHP FPM`: http://php.net/manual/en/install.fpm.php
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`@ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
+.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
 .. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php

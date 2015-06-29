@@ -435,7 +435,7 @@ mapping information) of a bundle or an entire namespace:
 
     # generates all entities in the AppBundle
     $ php app/console doctrine:generate:entities AppBundle
-    
+
     # generates all entities of bundles in the Acme namespace
     $ php app/console doctrine:generate:entities Acme
 
@@ -651,7 +651,7 @@ to easily fetch objects based on multiple conditions::
 
     If you click the icon, the profiler will open, showing you the exact
     queries that were made.
-    
+
     The icon will turn yellow if there were more than 50 queries on the
     page. This could indicate that something is not correct.
 
@@ -1428,8 +1428,8 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
 .. _`Persistent classes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes
-.. _`DoctrineMongoDBBundle`: http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`migrations`: http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
-.. _`DoctrineFixturesBundle`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
-.. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`DoctrineMongoDBBundle`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+.. _`migrations`: https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
+.. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
+.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html

@@ -364,4 +364,4 @@ object to the database. The extra ``terms`` checkbox on the ``Registration``
 model class is used during validation, but not actually used afterwards when
 saving the User to the database.
 
-.. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
+.. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
