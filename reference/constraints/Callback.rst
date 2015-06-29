@@ -236,7 +236,7 @@ being validated (e.g. ``Author``) as well as the ``ExecutionContextInterface``::
 
     If you specify your ``Callback`` constraint via PHP, then you also have the
     option to make your callback either a PHP closure or a non-static callback.
-    It is *not* currently possible, however, to specify a :term:`service` as a
+    It is *not* currently possible, however, to specify a service as a
     constraint. To validate using a service, you should :doc:`create a custom
-    validation constraint </cookbook/validation/custom_constraint>` and add that
-    new constraint to your class.
+    validation constraint </cookbook/validation/custom_constraint>` and add
+    that new constraint to your class.

@@ -199,10 +199,10 @@ environments**.
 What is an Environment?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-An :term:`environment` represents a group of configurations that's used
-to run your application. Symfony defines two environments by default: ``dev``
-(suited for when developing the application locally) and ``prod`` (optimized
-for when executing the application on production).
+An environment represents a group of configurations that's used to run your
+application. Symfony defines two environments by default: ``dev`` (suited for
+when developing the application locally) and ``prod`` (optimized for when
+executing the application on production).
 
 When you visit the ``http://localhost:8000`` URL in your browser, you're
 executing your Symfony application in the ``dev`` environment. To visit
