@@ -117,9 +117,10 @@ it is broken down.
 
 The ``mail`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
-It then logs everything including messages below the action level. The
-``critical`` level is only triggered for 5xx HTTP code errors. The ``handler``
-setting means that the output is then passed onto the ``buffered`` handler.
+The ``critical`` level is only triggered for 5xx HTTP code errors. If this level
+is reached once, the ``fingers_crossed`` handler will log all messages
+regardless of their level. The ``handler`` setting means that the output
+is then passed onto the ``buffered`` handler.
 
 .. tip::
 
