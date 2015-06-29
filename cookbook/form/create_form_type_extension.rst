@@ -12,6 +12,13 @@ But sometimes, you don't really need to add new field types - you want
 to add features on top of existing types. This is where form type
 extensions come in.
 
+Form type extensions have 2 main use-cases:
+
+#. You want to add a **specific feature to a single type** (such
+   as adding a "download" feature to the "file" field type);
+#. You want to add a **generic feature to several types** (such as
+   adding a "help" text to every "input text"-like type).
+
 It might be possible to achieve your goal with custom form rendering, or custom
 form field types. But using form type extensions can be cleaner (by limiting the
 amount of business logic in templates) and more flexible (you can add several
@@ -315,11 +322,14 @@ with an image, you will see it displayed next to the file input.
 Generic Form Type Extensions
 ----------------------------
 
-Although it is not possible to have a form type extension applying to all form
-types, **most** form types natively available in Symfony
-(:doc:`/reference/forms/types`) inherit from the ``form`` form type. Thus, a
-form type extension applying to ``form`` would apply to all of these.
+You can modify several form types at once by specifying their common parent
+(:doc:`/reference/forms/types`). For example, several form types natively
+available in Symfony inherit from the ``text`` form type (such as ``email``,
+``search``, ``url``, etc.). A form type extension applying to ``text`` would
+apply to all of these form types.
 
-A notable exception are the ``button`` from types. Plus, keep in mind that a custom
-form type which doesn't inherit neither ``form`` nor ``button`` could always be
-created.
+In the same way, since **most** form types natively available in Symfony inherit
+from the ``form`` form type, a form type extension applying to ``form`` would
+apply to all of these.  A notable exception are the ``button`` form types. Plus,
+keep in mind that a custom form type which inherit neither ``form`` nor
+``button`` could always be created.
