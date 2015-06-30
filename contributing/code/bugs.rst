@@ -35,6 +35,6 @@ If your problem definitely looks like a bug, report it using the official bug
 * *(optional)* Attach a :doc:`patch <patches>`.
 
 .. _`Stack Overflow`: http://stackoverflow.com/questions/tagged/symfony2
-.. _IRC channel: http://symfony.com/irc
+.. _IRC channel: https://symfony.com/irc
 .. _tracker: https://github.com/symfony/symfony/issues
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard/
