@@ -94,17 +94,23 @@ edit a particular object. Here's an example implementation:
                 return false;
             }
 
-            // the data object could have for example a method isPrivate()
-            // which checks the Boolean attribute $private
-            if ($attribute == self::VIEW && !$post->isPrivate()) {
-                return true;
-            }
+            switch($attribute) {
+                case self::VIEW:
+                    // the data object could have for example a method isPrivate()
+                    // which checks the Boolean attribute $private
+                    if (!$post->isPrivate()) {
+                        return true;
+                    }
 
-            // we assume that our data object has a method getOwner() to
-            // get the current owner user entity for this data object
-            if ($attribute == self::EDIT && $user->getId() === $post->getOwner()->getId()) {
-                return true;
-            }
+                    break;
+                case self::EDIT:
+                    // we assume that our data object has a method getOwner() to
+                    // get the current owner user entity for this data object
+                    if ($user->getId() === $post->getOwner()->getId()) {
+                        return true;
+                    }
+
+                    break;
 
             return false;
         }
@@ -195,7 +201,6 @@ from the authorization checker is called.
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     class PostController extends Controller
     {
@@ -204,9 +209,10 @@ from the authorization checker is called.
             // get a Post instance
             $post = ...;
 
-            // keep in mind, this will call all registered security voters
-            if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorised access!');
+            $authChecker = $this->get('security.authorization_checker');
+
+            if (false === $authChecker->isGranted('view', $post)) {
+                throw $this->createAccessDeniedException('Unauthorized access!');
             }
 
             return new Response('<h1>'.$post->getName().'</h1>');
