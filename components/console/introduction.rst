@@ -225,10 +225,10 @@ verbosity levels::
 
 .. note::
 
-    For backwards compatibility reasons, these semantic methods do not exist in
-    the ``OutputInterface`` class until Symfony 3.0. They are defined in the
-    different implementations of the interface
-    (e.g. :class:`Symfony\\Component\\Console\\Output\\Output`).
+    These semantic methods are defined in the ``OutputInterface`` starting from
+    Symfony 3.0. In previous Symfony versions they are defined in the different
+    implementations of the interface (e.g. :class:`Symfony\\Component\\Console\\Output\\Output`)
+    in order to keep backwards compatibility.
 
 When the quiet level is used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
