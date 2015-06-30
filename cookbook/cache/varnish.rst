@@ -191,7 +191,7 @@ Symfony adds automatically:
 .. tip::
 
     If you followed the advice about ensuring a consistent caching
-    behaviour, those VCL functions already exist. Just append the code
+    behavior, those VCL functions already exist. Just append the code
     to the end of the function, they won't interfere with each other.
 
 .. index::
