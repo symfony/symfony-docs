@@ -1287,5 +1287,5 @@ Learn More from the Cookbook
 * :doc:`/cookbook/security/multiple_user_providers`
 
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
-.. _`frameworkextrabundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
