@@ -44,7 +44,7 @@ Example
 
         echo 'You cannot use the :: shortcut here';
 
-    .. _`Symfony Documentation`: http://symfony.com/doc
+    .. _`Symfony Documentation`: https://symfony.com/doc
 
 Code Examples
 -------------

@@ -149,7 +149,7 @@ to explicitly choose the one to use. To achieve this, you can use a factory::
             app.type.task:
                 class: AppBundle\Form\TaskType
                 arguments: ["@app.issue_transformer_factory"]
-                tag:
+                tags:
                   - { name: form.type, alias: app_task }
 
     .. code-block:: xml

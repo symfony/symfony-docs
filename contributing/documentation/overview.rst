@@ -320,7 +320,7 @@ definitely don't want you to waste your time!
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _GitHub: https://github.com/
 .. _`fork the repository`: https://help.github.com/articles/fork-a-repo
-.. _`Symfony Documentation Contributors`: http://symfony.com/contributors/doc
+.. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
 .. _SensioLabsConnect: https://connect.sensiolabs.com/
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
