@@ -240,7 +240,7 @@ the username and then check the password (more on passwords in a moment):
             <firewall name="default" pattern="^/" provider="our_db_provider">
                 <http-basic />
             </firewall>
-            
+
             <!-- ... -->
         </config>
 
@@ -474,7 +474,7 @@ For more details on these methods, see :class:`Symfony\\Component\\Security\\Cor
 
 .. tip::
 
-    Don't forget to add the repository class to the 
+    Don't forget to add the repository class to the
     :ref:`mapping definition of your entity <book-doctrine-custom-repository-classes>`.
 
 To finish this, just remove the ``property`` key from the user provider in
@@ -562,5 +562,5 @@ is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
 
-.. _fixtures: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
+.. _fixtures: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 .. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle
