@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-19T13:53:32Z
+
+We can still inject the repository and do the work in `initialize`, which won't be executed by the list command IIRC. This would actually show a good use for this method
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-19T14:25:43Z
+
+@WouterJ You're totally right. But I also think `initialize()` doesn't suffer from the same problem as configure (i.e. not having access to the container via `ContainerAwareCommand`). So I'm leaning towards keeping it
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-06-20T19:32:41Z
+
+Like the PR, because a parameter is much simpler than handling with a repository (for beginners)!
+
+So i mean in general, but HOW we do should do this, i'm not sure.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:35:33Z
+
+:+1: Makes sense the way it is now.
