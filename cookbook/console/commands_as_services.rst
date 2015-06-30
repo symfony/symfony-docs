@@ -27,8 +27,8 @@ with ``console.command``:
 
         # app/config/config.yml
         services:
-            acme_hello.command.my_command:
-                class: Acme\HelloBundle\Command\MyCommand
+            app.command.my_command:
+                class: AppBundle\Command\MyCommand
                 tags:
                     -  { name: console.command }
 
@@ -42,9 +42,8 @@ with ``console.command``:
             http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="acme_hello.command.my_command"
-                    class="Acme\HelloBundle\Command\MyCommand">
-
+                <service id="app.command.my_command"
+                    class="AppBundle\Command\MyCommand">
                     <tag name="console.command" />
                 </service>
             </services>
@@ -55,8 +54,8 @@ with ``console.command``:
         // app/config/config.php
         $container
             ->register(
-                'acme_hello.command.my_command',
-                'Acme\HelloBundle\Command\MyCommand'
+                'app.command.my_command',
+                'AppBundle\Command\MyCommand'
             )
             ->addTag('console.command')
         ;
@@ -74,12 +73,11 @@ pass one of the following as the 5th argument of ``addOption()``:
 By extending ``ContainerAwareCommand``, only the first is possible, because you
 can't access the container inside the ``configure()`` method. Instead, inject
 any parameter or service you need into the constructor. For example, suppose you
-have some ``NameRepository`` service that you'll use to get your default value::
+store the default value in some ``%command.default_name%`` parameter::
 
-    // src/Acme/DemoBundle/Command/GreetCommand.php
-    namespace Acme\DemoBundle\Command;
+    // src/AppBundle/Command/GreetCommand.php
+    namespace AppBundle\Command;
 
-    use Acme\DemoBundle\Entity\NameRepository;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
@@ -87,18 +85,20 @@ have some ``NameRepository`` service that you'll use to get your default value::
 
     class GreetCommand extends Command
     {
-        protected $nameRepository;
+        protected $defaultName;
 
-        public function __construct(NameRepository $nameRepository)
+        public function __construct($defaultName)
         {
-            $this->nameRepository = $nameRepository;
+            $this->defaultName = $defaultName;
             
             parent::__construct();
         }
 
         protected function configure()
         {
-            $defaultName = $this->nameRepository->findLastOne();
+            // try to avoid work here (e.g. database query)
+            // this method is *always* called - see warning below
+            $defaultName = $this->defaultName;
 
             $this
                 ->setName('demo:greet')
@@ -122,7 +122,60 @@ have some ``NameRepository`` service that you'll use to get your default value::
     }
 
 Now, just update the arguments of your service configuration like normal to
-inject the ``NameRepository``. Great, you now have a dynamic default value!
+inject the ``command.default_name`` parameter:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        parameters:
+            command.default_name: Javier
+
+        services:
+            app.command.my_command:
+                class: AppBundle\Command\MyCommand
+                arguments: ["%command.default_name%"]
+                tags:
+                    -  { name: console.command }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="command.default_name">Javier</parameter>
+            </parameters>
+
+            <services>
+                <service id="app.command.my_command"
+                    class="AppBundle\Command\MyCommand">
+                    <argument>%command.default_name%</argument>
+                    <tag name="console.command" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->setParameter('command.default_name', 'Javier');
+
+        $container
+            ->register(
+                'app.command.my_command',
+                'AppBundle\Command\MyCommand',
+            )
+            ->setArguments(array('%command.default_name%'))
+            ->addTag('console.command')
+        ;
+
+Great, you now have a dynamic default value!
 
 .. caution::
 
