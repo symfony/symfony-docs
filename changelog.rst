@@ -20,6 +20,7 @@ New Documentation
 ~~~~~~~~~~~~~~~~~
 
 * `#5423 <https://github.com/symfony/symfony-docs/pull/5423>`_ [Security] add & update doc entries on AbstractVoter implementation (Inoryy, javiereguiluz)
+* `#5409 <https://github.com/symfony/symfony-docs/pull/5409>`_ [Reference] document new Doctrine APC cache service (xabbuh)
 * `#5401 <https://github.com/symfony/symfony-docs/pull/5401>`_ Added some more docs about the remember me feature (WouterJ)
 * `#5384 <https://github.com/symfony/symfony-docs/pull/5384>`_ Added information about the new date handling in the comparison constraints and Range (webmozart, javiereguiluz)
 * `#5382 <https://github.com/symfony/symfony-docs/pull/5382>`_ Added support for standard Forwarded header (tony-co, javiereguiluz)
@@ -27,6 +28,7 @@ New Documentation
 * `#5332 <https://github.com/symfony/symfony-docs/pull/5332>`_ [Serializer] ObjectNormalizer, object_to_populate doc. Minor enhancements. (dunglas)
 * `#5335 <https://github.com/symfony/symfony-docs/pull/5335>`_ [Serializer] Updated the cookbook. (dunglas)
 * `#5313 <https://github.com/symfony/symfony-docs/pull/5313>`_ Documented the overridden form options (javiereguiluz)
+* `#5360 <https://github.com/symfony/symfony-docs/pull/5360>`_ [Serializer] Array Denormalization (derrabus)
 * `#5307 <https://github.com/symfony/symfony-docs/pull/5307>`_ Update data_transformers.rst (zebba)
 * `#5186 <https://github.com/symfony/symfony-docs/pull/5186>`_ Added a new article about using/installing unstable Symfony versions (javiereguiluz)
 * `#5166 <https://github.com/symfony/symfony-docs/pull/5166>`_ Proposed a new article about using pure PHP libraries with Assetic (javiereguiluz)
@@ -42,6 +44,7 @@ New Documentation
 * `#5355 <https://github.com/symfony/symfony-docs/pull/5355>`_ Added a mention to the Symfony Demo application (javiereguiluz)
 * `#5331 <https://github.com/symfony/symfony-docs/pull/5331>`_ [PSR-7] Bridge documentation (dunglas)
 * `#5373 <https://github.com/symfony/symfony-docs/pull/5373>`_ Added mentions to some popular (and useful) Symfony bundles (javiereguiluz)
+* `#4354 <https://github.com/symfony/symfony-docs/pull/4354>`_ [WCM] Added depreciation note for the cascade_validation constraint (peterrehm)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -88,6 +91,7 @@ Minor Documentation Changes
 * `#5381 <https://github.com/symfony/symfony-docs/pull/5381>`_ remove Yoda condition (greg0ire)
 * `#5452 <https://github.com/symfony/symfony-docs/pull/5452>`_ [#5388] change echo and print in examples (snoek09)
 * `#5451 <https://github.com/symfony/symfony-docs/pull/5451>`_ [#5388] change echo and print in examples (snoek09)
+* `#3782 <https://github.com/symfony/symfony-docs/pull/3782>`_ [Form] Deprecate read_only option (snoob)
 * `#5432 <https://github.com/symfony/symfony-docs/pull/5432>`_ removed squashing stuff. fixes #5368 (OskarStark)
 * `#5383 <https://github.com/symfony/symfony-docs/pull/5383>`_ Reword a paragraph about service configurations (richardudovich)
 * `#5389 <https://github.com/symfony/symfony-docs/pull/5389>`_ Updates to security.rst (HexTitan)
