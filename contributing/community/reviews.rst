@@ -12,7 +12,7 @@ Community reviews are essential for the development of the Symfony framework,
 since there are many more pull requests and bug reports than there are members
 in the Symfony core team to review, fix and merge them.
 
-On the `Symfony issue tracker`_, you can find many items in a "Needs review"
+On the `Symfony issue tracker`_, you can find many items in a "Needs Review"
 status:
 
 * **Bug Reports**: Bug reports primarily need to be checked for completeness.
