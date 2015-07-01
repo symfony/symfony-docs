@@ -13,6 +13,95 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+June, 2015
+----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#5423 <https://github.com/symfony/symfony-docs/pull/5423>`_ [Security] add & update doc entries on AbstractVoter implementation (Inoryy, javiereguiluz)
+* `#5401 <https://github.com/symfony/symfony-docs/pull/5401>`_ Added some more docs about the remember me feature (WouterJ)
+* `#5384 <https://github.com/symfony/symfony-docs/pull/5384>`_ Added information about the new date handling in the comparison constraints and Range (webmozart, javiereguiluz)
+* `#5382 <https://github.com/symfony/symfony-docs/pull/5382>`_ Added support for standard Forwarded header (tony-co, javiereguiluz)
+* `#5361 <https://github.com/symfony/symfony-docs/pull/5361>`_ Document security.switch_user event (Rvanlaak)
+* `#5313 <https://github.com/symfony/symfony-docs/pull/5313>`_ Documented the overridden form options (javiereguiluz)
+* `#5307 <https://github.com/symfony/symfony-docs/pull/5307>`_ Update data_transformers.rst (zebba)
+* `#5186 <https://github.com/symfony/symfony-docs/pull/5186>`_ Added a new article about using/installing unstable Symfony versions (javiereguiluz)
+* `#5166 <https://github.com/symfony/symfony-docs/pull/5166>`_ Proposed a new article about using pure PHP libraries with Assetic (javiereguiluz)
+* `#5014 <https://github.com/symfony/symfony-docs/pull/5014>`_ Updated the best practices article for reusable bundles (javiereguiluz)
+* `#5435 <https://github.com/symfony/symfony-docs/pull/5435>`_ Added information about the four sub-components of Security component (javiereguiluz)
+* `#5368 <https://github.com/symfony/symfony-docs/pull/5368>`_ added examples for squashing (OskarStark)
+* `#5428 <https://github.com/symfony/symfony-docs/pull/5428>`_ Improved description of choice_list option (adamziel, javiereguiluz)
+* `#5336 <https://github.com/symfony/symfony-docs/pull/5336>`_ Adding a paragraph about updating multiple packages during an update (weaverryan)
+* `#5375 <https://github.com/symfony/symfony-docs/pull/5375>`_ Added a new cookbook about file uploading (javiereguiluz)
+* `#5385 <https://github.com/symfony/symfony-docs/pull/5385>`_ Added a note about the need to require Composer's autoload file (javiereguiluz)
+* `#5386 <https://github.com/symfony/symfony-docs/pull/5386>`_ Re-write of Page Creation (weaverryan)
+* `#5355 <https://github.com/symfony/symfony-docs/pull/5355>`_ Added a mention to the Symfony Demo application (javiereguiluz)
+* `#5373 <https://github.com/symfony/symfony-docs/pull/5373>`_ Added mentions to some popular (and useful) Symfony bundles (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5415 <https://github.com/symfony/symfony-docs/pull/5415>`_ Updating for AppBundle and purposefully \*not\* doing work on configure (weaverryan)
+* `#5407 <https://github.com/symfony/symfony-docs/pull/5407>`_ Change PhpStormOpener to PhpStormProtocol (King2500)
+* `#5450 <https://github.com/symfony/symfony-docs/pull/5450>`_ Fixing "Undefined method" error in code example (nebkam)
+* `#5454 <https://github.com/symfony/symfony-docs/pull/5454>`_ Changed dump() to var_dump() (WouterJ)
+* `#5417 <https://github.com/symfony/symfony-docs/pull/5417>`_ Add use statement for InputDefinition (harikt)
+* `#5420 <https://github.com/symfony/symfony-docs/pull/5420>`_ Fix invalid method name (bocharsky-bw)
+* `#5431 <https://github.com/symfony/symfony-docs/pull/5431>`_ Updated the code to display flash messages (aykin, javiereguiluz)
+* `#5418 <https://github.com/symfony/symfony-docs/pull/5418>`_ Import Psr LogLevel (harikt)
+* `#5438 <https://github.com/symfony/symfony-docs/pull/5438>`_ Fixed 404 at Configuring Sessions and Save Handlers (2.3 branch) (suzuki)
+* `#5397 <https://github.com/symfony/symfony-docs/pull/5397>`_ Escape backslash in error message (WouterJ)
+* `#5379 <https://github.com/symfony/symfony-docs/pull/5379>`_ [Cookbook][Console] don't use BufferedOutput on Symfony 2.3 (xabbuh)
+* `#5350 <https://github.com/symfony/symfony-docs/pull/5350>`_ [Form][2.3] fix `validation_groups` typos (craue)
+* `#5358 <https://github.com/symfony/symfony-docs/pull/5358>`_ Fix typo in description (martyshka)
+* `#5356 <https://github.com/symfony/symfony-docs/pull/5356>`_ [Form] Fixed typo about _token field name for CSRF protection (JMLamodiere)
+* `#5362 <https://github.com/symfony/symfony-docs/pull/5362>`_ Fix invalid endtag (norkunas)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#5467 <https://github.com/symfony/symfony-docs/pull/5467>`_ use HTTPS for links to symfony.com (xabbuh)
+* `#5466 <https://github.com/symfony/symfony-docs/pull/5466>`_ data transformers cookbook service definition typo (intrepion)
+* `#5414 <https://github.com/symfony/symfony-docs/pull/5414>`_ Rewrite sentence about fingers crossed handler action level (snoek09)
+* `#5402 <https://github.com/symfony/symfony-docs/pull/5402>`_ [Contributing] [Standards] Added entry for Yoda conditions (phansys)
+* `#5369 <https://github.com/symfony/symfony-docs/pull/5369>`_ Remove the Propel book chapter and explain why we do that (javiereguiluz)
+* `#5460 <https://github.com/symfony/symfony-docs/pull/5460>`_ Finish #5291: Bootstrap form theme and checkboxes (anacicconi, WouterJ)
+* `#5457 <https://github.com/symfony/symfony-docs/pull/5457>`_ [Cookbook][Assetic] complete a sentence (xabbuh)
+* `#5398 <https://github.com/symfony/symfony-docs/pull/5398>`_ Quick review of the remember me article (WouterJ)
+* `#5399 <https://github.com/symfony/symfony-docs/pull/5399>`_ Quick review of Form login chapter (WouterJ)
+* `#5403 <https://github.com/symfony/symfony-docs/pull/5403>`_ [Contributing] [Standards] Added entry for identical comparison (phansys)
+* `#5392 <https://github.com/symfony/symfony-docs/pull/5392>`_ Wrap the table creation inside the class extending Command, so users … (harikt)
+* `#5378 <https://github.com/symfony/symfony-docs/pull/5378>`_ [Cookbook][Controller] use the jinja lexer to render Twig code (xabbuh)
+* `#5421 <https://github.com/symfony/symfony-docs/pull/5421>`_ Update the name of the branch for new BC features (Restless-ET)
+* `#5441 <https://github.com/symfony/symfony-docs/pull/5441>`_ [Contributing] remove mailing list and forum references (xabbuh)
+* `#5433 <https://github.com/symfony/symfony-docs/pull/5433>`_ Warn users of older PHP versions Crawler might not decode HTML entities properly (jakzal, javiereguiluz)
+* `#5293 <https://github.com/symfony/symfony-docs/pull/5293>`_ [Translation] Add note about how to override translation in chi… (zebba)
+* `#5290 <https://github.com/symfony/symfony-docs/pull/5290>`_ Overriding 3rd party bundles (anacicconi)
+* `#5242 <https://github.com/symfony/symfony-docs/pull/5242>`_ Update load_balancer_reverse_proxy.rst (urg)
+* `#5381 <https://github.com/symfony/symfony-docs/pull/5381>`_ remove Yoda condition (greg0ire)
+* `#5452 <https://github.com/symfony/symfony-docs/pull/5452>`_ [#5388] change echo and print in examples (snoek09)
+* `#5451 <https://github.com/symfony/symfony-docs/pull/5451>`_ [#5388] change echo and print in examples (snoek09)
+* `#5432 <https://github.com/symfony/symfony-docs/pull/5432>`_ removed squashing stuff. fixes #5368 (OskarStark)
+* `#5383 <https://github.com/symfony/symfony-docs/pull/5383>`_ Reword a paragraph about service configurations (richardudovich)
+* `#5389 <https://github.com/symfony/symfony-docs/pull/5389>`_ Updates to security.rst (HexTitan)
+* `#5408 <https://github.com/symfony/symfony-docs/pull/5408>`_ typo (larsborn)
+* `#5406 <https://github.com/symfony/symfony-docs/pull/5406>`_ Update yaml_format.rst (marcel-burkhard)
+* `#5396 <https://github.com/symfony/symfony-docs/pull/5396>`_ [Cookbook][Bundles] fix a typo (xabbuh)
+* `#5288 <https://github.com/symfony/symfony-docs/pull/5288>`_ Constraints - empty strings and null values (anacicconi)
+* `#5284 <https://github.com/symfony/symfony-docs/pull/5284>`_ Split advanced container configuration article (WouterJ)
+* `#5342 <https://github.com/symfony/symfony-docs/pull/5342>`_ [Cookbook][Bundles] clarify bundle installation instructions (xabbuh)
+* `#5095 <https://github.com/symfony/symfony-docs/pull/5095>`_ Reviewed the Bundles cookbook articles (javiereguiluz)
+* `#4947 <https://github.com/symfony/symfony-docs/pull/4947>`_ [Components][ClassLoader] remove DebugClassLoader (xabbuh)
+* `#5365 <https://github.com/symfony/symfony-docs/pull/5365>`_ Finish #4967: Code style standardization on form type options (mimol91)
+* `#5034 <https://github.com/symfony/symfony-docs/pull/5034>`_ Update the_big_picture.rst (oldskool)
+* `#5351 <https://github.com/symfony/symfony-docs/pull/5351>`_ [Finder] minor CS fix (dunglas)
+* `#5344 <https://github.com/symfony/symfony-docs/pull/5344>`_ [Book] Finish #4776 and #4782 (ifdattic)
+* `#5348 <https://github.com/symfony/symfony-docs/pull/5348>`_ Fix list format (bicpi)
+* `#5357 <https://github.com/symfony/symfony-docs/pull/5357>`_ [Form] Replace deprecated form_enctype by form_start (JMLamodiere)
+* `#5359 <https://github.com/symfony/symfony-docs/pull/5359>`_ Bumped version of proxy manager to stable release (peterrehm)
+
+
 May, 2015
 ---------
 
