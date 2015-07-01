@@ -44,7 +44,7 @@ The Bug Report Review Process
 -----------------------------
 
 A good way to get started with reviewing is to pick a bug report from the
-`bug reports in need of review queue`_.
+`bug reports in need of review`_.
 
 The steps for the review are:
 
@@ -103,7 +103,7 @@ out whether the implementation is complete.
 It is okay to do partial reviews. If you do a partial review, post how far you
 got and leave the PR in "Needs Review" state.
 
-The steps for the review are:
+Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
 1. **Is the PR Complete**?
 
@@ -183,7 +183,8 @@ The steps for the review are:
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
 .. _create a GitHub account: https://help.github.com/articles/signing-up-for-a-new-github-account/
 .. _forking: https://help.github.com/articles/fork-a-repo/
-.. _bug reports in need of review queue: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22Bug%22+label%3A%22Status%3A+Needs+Review%22+
+.. _bug reports in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22Bug%22+label%3A%22Status%3A+Needs+Review%22+
+.. _PRs in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Apr+label%3A%22Status%3A+Needs+Review%22+
 .. _Contribution Guidelines: https://github.com/symfony/symfony/blob/master/CONTRIBUTING.md
 .. _Symfony's Release Schedule: http://symfony.com/doc/current/contributing/community/releases.html#schedule
 .. _Symfony Roadmap: https://symfony.com/roadmap
