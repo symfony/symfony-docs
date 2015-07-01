@@ -172,9 +172,9 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
     .. code-block:: text
 
-        Thank you @weaverryan for working on this feature! It seems that test
-        cases are missing for the cases that the counter is zero or smaller.
-        Could you add them please?
+        Thank you @weaverryan for working on this! It seems that your test
+        cases don't cover the cases when the counter is zero or smaller.
+        Could you add some tests for that?
 
         Status: Needs Work
 
