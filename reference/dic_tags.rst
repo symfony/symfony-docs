@@ -337,7 +337,7 @@ wrapping their names with ``%`` characters).
 
 .. note::
 
-    When using the ``auto_alias`` tag it's not mandatory to define the aliased
+    When using the ``auto_alias`` tag, it's not mandatory to define the aliased
     services as private. However, doing that (like in the above example) makes
     sense most of the times to prevent accessing those services directly instead
     of using the generic service alias.
