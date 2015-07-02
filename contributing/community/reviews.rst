@@ -133,7 +133,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
    Read the code of the pull request and check it against some common criteria:
 
-   * Does the code address the issue the PR is intended to fix/add?
+   * Does the code address the issue the PR is intended to fix/implement?
    * Does the PR stay within scope to address *only* that issue?
    * Does the PR contain automated tests? Do those tests cover all relevant
      edge cases?
