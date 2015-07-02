@@ -123,13 +123,13 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    * New features should always be added to the current development version.
      Check the `Symfony Roadmap`_ to find the current development version.
 
-2. **Reproduce the Problem**
+3. **Reproduce the Problem**
 
    Read the issue that the pull request is supposed to fix. Reproduce the
    problem on a clean `Symfony Standard Edition`_ project and try to understand
    why it exists.
 
-3. **Review the Code**
+4. **Review the Code**
 
    Read the code of the pull request and check it against some common criteria:
 
@@ -147,13 +147,13 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
      latest UPGRADE-X.X.md file? Do those explanations contain "Before"/"After"
      with a clear upgrade path?
 
-4. **Test the Code**
+5. **Test the Code**
 
    Take your project from step 2 and test whether the PR works properly.
 
    TODO: precise steps
 
-5. **Update the PR Status**
+6. **Update the PR Status**
 
    At last, add a comment and update the status of the PR. **Thank the
    contributor for working on the PR**. Include the line ``Status: <status>`` in
