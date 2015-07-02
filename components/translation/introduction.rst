@@ -170,10 +170,10 @@ example, assume you're trying to translate into the ``fr_FR`` locale:
    fallback locales set explicitly on the translator.
 
 For (3), the fallback locales can be set by calling
-:method:`Symfony\\Component\\Translation\\Translator::setFallbackLocale`::
+:method:`Symfony\\Component\\Translation\\Translator::setFallbackLocales`::
 
     // ...
-    $translator->setFallbackLocale(array('en'));
+    $translator->setFallbackLocales(array('en'));
 
 .. _using-message-domains:
 
