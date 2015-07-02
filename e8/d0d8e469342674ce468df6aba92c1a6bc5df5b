@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2015-06-22T15:56:10Z
+
+I agree that changing the we to you would be great, but merging this PR fast would be even better. There is quite a lof of traffic on this tutorial on my blog and as it becomes more outdated by the day, I would really like to redirect people in the official Symfony docs instead.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:00:37Z
+
+I would be fine with merging this in the short-term if we could get rid of the numbers in the filenames. That way we could later discuss if the structure will stay the same or if we need/want to split contents further without having weird/misleading URLs (the FOSRestBundle had something similar recently when splitting a chapter).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-22T16:06:35Z
+
+@xabbuh I've just removed the numbers from the file names. I'm also willing to do any other big change that you consider necessary before merging this tutorial (except for the mentioned `we -> you` change).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-22T16:26:51Z
+
+@javiereguiluz Seems that some internal references need to be updated too.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-07-02T06:34:51Z
+
+I agree about merging this. However, changing we -> you should still be done as a separate PR to keep consistency in the doc. So if you don't do it yourselves, please open an issue to tell people about it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-02T07:19:45Z
+
+@weaverryan @WouterJ What do you think about merging this as is and tweak in subsequent pull requests?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2015-07-02T07:22:12Z
+
+Let's do it :)
+
+---------------------------------------------------------------------------
+
+by dupuchba at 2015-07-02T11:03:57Z
+
+That's really cool :-) :+1:
