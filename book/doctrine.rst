@@ -1185,7 +1185,7 @@ You can also query in the other direction::
         // ...
     }
 
-In this case, the same things occurs: you first query out for a single ``Category``
+In this case, the same things occur: you first query out for a single ``Category``
 object, and then Doctrine makes a second query to retrieve the related ``Product``
 objects, but only once/if you ask for them (i.e. when you call ``->getProducts()``).
 The ``$products`` variable is an array of all ``Product`` objects that relate
