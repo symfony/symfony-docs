@@ -1094,7 +1094,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
 .. note::
 
-    This task should only be really used during development. For a more robust
+    This command should only be used during development. For a more robust
     method of systematically updating your production database, read about
     `migrations`_.
 
