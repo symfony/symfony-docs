@@ -54,7 +54,14 @@ to work correctly. Just pass a file name to enable it::
 
 .. note::
 
-    If you're using the Symfony Framework, you can access a secure random
-    instance directly from the container: its name is ``security.secure_random``.
+    If you're using the Symfony Framework, you can get a secure random number
+    generator via the ``security.secure_random`` service.
+
+.. tip::
+
+    The ``nextBytes()`` method returns a binary string which may contain the
+    ``\0`` character. If you store this value in a database or include it as
+    part of the URL, make sure to hash the value returned by ``nextBytes()``
+    (to do that, you can use a simple ``md5()`` PHP function).
 
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
