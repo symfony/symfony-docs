@@ -88,3 +88,15 @@ Contribute to Symfony:
     contributing/index
 
 .. include:: /contributing/map.rst.inc
+
+Create your Own Framework
+-------------------------
+
+Want to create your own framework based on Symfony?
+
+.. toctree::
+    :hidden:
+
+    create_framework/index
+
+.. include:: /create_framework/map.rst.inc
