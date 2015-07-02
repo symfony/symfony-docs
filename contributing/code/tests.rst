@@ -45,7 +45,7 @@ the follow command:
 
 .. code-block:: bash
 
-    $ composer --dev update
+    $ composer update
 
 Running
 -------
