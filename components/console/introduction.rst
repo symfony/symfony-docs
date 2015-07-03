@@ -194,7 +194,7 @@ Value                                        Meaning                            
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
 
-    if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+    if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
         $output->writeln(...);
     }
 
