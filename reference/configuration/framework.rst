@@ -262,7 +262,7 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. tip::
 
-    If you're on a Windows PC, you can install the `PhpStormOpener`_ to
+    If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
     be able to use this.
 
 Of course, since every developer uses a different IDE, it's better to set
@@ -331,7 +331,7 @@ respond and the user will receive a 500 response.
 
         # app/config/config.yml
         framework:
-            trusted_hosts:  ['acme.com', 'acme.org']
+            trusted_hosts:  ['example.com', 'example.org']
 
     .. code-block:: xml
 
@@ -344,8 +344,8 @@ respond and the user will receive a 500 response.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <trusted-host>acme.com</trusted-host>
-                <trusted-host>acme.org</trusted-host>
+                <trusted-host>example.com</trusted-host>
+                <trusted-host>example.org</trusted-host>
                 <!-- ... -->
             </framework>
         </container>
@@ -354,17 +354,17 @@ respond and the user will receive a 500 response.
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'trusted_hosts' => array('acme.com', 'acme.org'),
+            'trusted_hosts' => array('example.com', 'example.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``.*\.?acme.com$``),
+Hosts can also be configured using regular expressions (e.g.  ``.*\.?example.com$``),
 which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
+    Request::setTrustedHosts(array('.*\.?example.com$', '.*\.?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
@@ -1372,6 +1372,13 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+.. versionadded:: 2.8
+    The ``validator.mapping.cache.doctrine.apc`` service was introduced in
+    Symfony 2.8.
+
+Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
+cache provide from the Doctrine project.
+
 enable_annotations
 ..................
 
@@ -1618,7 +1625,7 @@ Full Default Configuration
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
-.. _`Security Advisory Blog post`: http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
+.. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
-.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
+.. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol

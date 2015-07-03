@@ -20,6 +20,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Console).
 
+.. include:: /components/require_autoload.rst.inc
+
 Creating a basic Command
 ------------------------
 
@@ -198,7 +200,7 @@ level of verbosity.
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
 
-    if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
+    if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
         $output->writeln(...);
     }
 

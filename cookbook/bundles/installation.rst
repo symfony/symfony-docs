@@ -15,16 +15,16 @@ A) Add Composer Dependencies
 ----------------------------
 
 Dependencies are managed with Composer, so if Composer is new to you, learn
-some basics in `their documentation`_. This has 2 steps:
+some basics in `their documentation`_. This involves two steps:
 
 1) Find out the Name of the Bundle on Packagist
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The README for a bundle (e.g. `FOSUserBundle`_) usually tells you its name
 (e.g. ``friendsofsymfony/user-bundle``). If it doesn't, you can search for
-the library on the `Packagist.org`_ site.
+the bundle on the `Packagist.org`_ site.
 
-.. note::
+.. tip::
 
     Looking for bundles? Try searching at `KnpBundles.com`_: the unofficial
     archive of Symfony Bundles.
@@ -39,9 +39,12 @@ Now that you know the package name, you can install it via Composer:
     $ composer require friendsofsymfony/user-bundle
 
 This will choose the best version for your project, add it to ``composer.json``
-and download the library into the ``vendor/`` directory. If you need a specific
-version, add a ``:`` and the version right after the library name (see
-`composer require`_).
+and download its code into the ``vendor/`` directory. If you need a specific
+version, include it as the second argument of the `composer require`_ command:
+
+.. code-block:: bash
+
+    $ composer require friendsofsymfony/user-bundle "~2.0"
 
 B) Enable the Bundle
 --------------------
@@ -60,9 +63,36 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
         public function registerBundles()
         {
             $bundles = array(
-                // ...,
+                // ...
                 new FOS\UserBundle\FOSUserBundle(),
             );
+
+            // ...
+        }
+    }
+
+In a few rare cases, you may want a bundle to be *only* enabled in the development
+:doc:`environment </cookbook/configuration/environments>`. For example,
+the DoctrineFixturesBundle helps to load dummy data - something you probably
+only want to do while developing. To only load this bundle in the ``dev``
+and ``test`` environments, register the bundle in this way::
+
+    // app/AppKernel.php
+
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+            );
+
+            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            }
 
             // ...
         }
@@ -73,17 +103,15 @@ C) Configure the Bundle
 
 It's pretty common for a bundle to need some additional setup or configuration
 in ``app/config/config.yml``. The bundle's documentation will tell you about
-the configuration, but you can also get a reference of the bundle's config
-via the ``config:dump-reference`` command.
-
-For instance, in order to look the reference of the ``assetic`` config you
-can use this:
+the configuration, but you can also get a reference of the bundle's configuration
+via the ``config:dump-reference`` command:
 
 .. code-block:: bash
 
     $ app/console config:dump-reference AsseticBundle
 
-or this:
+Instead of the full bundle name, you can also pass the short name used as the root
+of the bundle's configuration:
 
 .. code-block:: bash
 

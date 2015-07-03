@@ -17,7 +17,7 @@ you should just use the ``choice`` type directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| Options     |                                                                        |
+| options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
 | options     |                                                                        |
@@ -35,7 +35,7 @@ you should just use the ``choice`` type directly.
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                          |

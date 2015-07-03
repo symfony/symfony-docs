@@ -250,4 +250,10 @@ file:
             ),
         ));
 
+.. tip::
+
+    For uploaded images, you can compress and manipulate them using the
+    `LiipImagineBundle`_ community bundle.
+
 .. _`Jpegoptim`: http://www.kokkonen.net/tjko/projects.html
+.. _`LiipImagineBundle`: http://knpbundles.com/liip/LiipImagineBundle

@@ -9,9 +9,9 @@ Reporting a Security Issue
 --------------------------
 
 If you think that you have found a security issue in Symfony, don't use the
-mailing-list or the bug tracker and don't publish it publicly. Instead, all
-security issues must be sent to **security [at] symfony.com**. Emails sent to
-this address are forwarded to the Symfony core-team private mailing-list.
+bug tracker and don't publish it publicly. Instead, all security issues must
+be sent to **security [at] symfony.com**. Emails sent to this address are
+forwarded to the Symfony core-team private mailing-list.
 
 Resolving Process
 -----------------
@@ -103,37 +103,37 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
-* May 26, 2015: `CVE-2015-4050: ESI unauthorized access <http://symfony.com/blog/cve-2015-4050-esi-unauthorized-access>`_ (Symfony 2.3.29, 2.5.12 and 2.6.8)
-* April 1, 2015: `CVE-2015-2309: Unsafe methods in the Request class <http://symfony.com/blog/cve-2015-2309-unsafe-methods-in-the-request-class>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
-* April 1, 2015: `CVE-2015-2308: Esi Code Injection <http://symfony.com/blog/cve-2015-2308-esi-code-injection>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
-* September 3, 2014: `CVE-2014-6072: CSRF vulnerability in the Web Profiler <http://symfony.com/blog/cve-2014-6072-csrf-vulnerability-in-the-web-profiler>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
-* September 3, 2014: `CVE-2014-6061: Security issue when parsing the Authorization header <http://symfony.com/blog/cve-2014-6061-security-issue-when-parsing-the-authorization-header>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
-* September 3, 2014: `CVE-2014-5245: Direct access of ESI URLs behind a trusted proxy <http://symfony.com/blog/cve-2014-5245-direct-access-of-esi-urls-behind-a-trusted-proxy>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
-* September 3, 2014: `CVE-2014-5244: Denial of service with a malicious HTTP Host header <http://symfony.com/blog/cve-2014-5244-denial-of-service-with-a-malicious-http-host-header>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
-* July 15, 2014: `Security releases: Symfony 2.3.18, 2.4.8, and 2.5.2 released <http://symfony.com/blog/security-releases-cve-2014-4931-symfony-2-3-18-2-4-8-and-2-5-2-released>`_ (`CVE-2014-4931 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4931>`_)
-* October 10, 2013: `Security releases: Symfony 2.0.25, 2.1.13, 2.2.9, and 2.3.6 released <http://symfony.com/blog/security-releases-cve-2013-5958-symfony-2-0-25-2-1-13-2-2-9-and-2-3-6-released>`_ (`CVE-2013-5958 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5958>`_)
-* August 7, 2013: `Security releases: Symfony 2.0.24, 2.1.12, 2.2.5, and 2.3.3 released <http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released>`_ (`CVE-2013-4751 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4751>`_ and `CVE-2013-4752 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4752>`_)
-* January 17, 2013: `Security release: Symfony 2.0.22 and 2.1.7 released <http://symfony.com/blog/security-release-symfony-2-0-22-and-2-1-7-released>`_ (`CVE-2013-1348 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1348>`_ and `CVE-2013-1397 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1397>`_)
-* December 20, 2012: `Security release: Symfony 2.0.20 and 2.1.5 <http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released>`_  (`CVE-2012-6431 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6431>`_ and `CVE-2012-6432 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6432>`_)
-* November 29, 2012: `Security release: Symfony 2.0.19 and 2.1.4 <http://symfony.com/blog/security-release-symfony-2-0-19-and-2-1-4>`_
-* November 25, 2012: `Security release: symfony 1.4.20 released  <http://symfony.com/blog/security-release-symfony-1-4-20-released>`_ (`CVE-2012-5574 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5574>`_)
-* August 28, 2012: `Security Release: Symfony 2.0.17 released <http://symfony.com/blog/security-release-symfony-2-0-17-released>`_
-* May 30, 2012: `Security Release: symfony 1.4.18 released <http://symfony.com/blog/security-release-symfony-1-4-18-released>`_ (`CVE-2012-2667 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2667>`_)
-* February 24, 2012: `Security Release: Symfony 2.0.11 released <http://symfony.com/blog/security-release-symfony-2-0-11-released>`_
-* November 16, 2011: `Security Release: Symfony 2.0.6 <http://symfony.com/blog/security-release-symfony-2-0-6>`_
-* March 21, 2011: `symfony 1.3.10 and 1.4.10: security releases <http://symfony.com/blog/symfony-1-3-10-and-1-4-10-security-releases>`_
-* June 29, 2010: `Security Release: symfony 1.3.6 and 1.4.6 <http://symfony.com/blog/security-release-symfony-1-3-6-and-1-4-6>`_
-* May 31, 2010: `symfony 1.3.5 and 1.4.5 <http://symfony.com/blog/symfony-1-3-5-and-1-4-5>`_
-* February 25, 2010: `Security Release: 1.2.12, 1.3.3 and 1.4.3 <http://symfony.com/blog/security-release-1-2-12-1-3-3-and-1-4-3>`_
-* February 13, 2010: `symfony 1.3.2 and 1.4.2 <http://symfony.com/blog/symfony-1-3-2-and-1-4-2>`_
-* April 27, 2009: `symfony 1.2.6: Security fix <http://symfony.com/blog/symfony-1-2-6-security-fix>`_
-* October 03, 2008: `symfony 1.1.4 released: Security fix <http://symfony.com/blog/symfony-1-1-4-released-security-fix>`_
-* May 14, 2008: `symfony 1.0.16 is out  <http://symfony.com/blog/symfony-1-0-16-is-out>`_
-* April 01, 2008: `symfony 1.0.13 is out  <http://symfony.com/blog/symfony-1-0-13-is-out>`_
-* March 21, 2008: `symfony 1.0.12 is (finally) out ! <http://symfony.com/blog/symfony-1-0-12-is-finally-out>`_
-* June 25, 2007: `symfony 1.0.5 released (security fix) <http://symfony.com/blog/symfony-1-0-5-released-security-fix>`_
+* May 26, 2015: `CVE-2015-4050: ESI unauthorized access <https://symfony.com/blog/cve-2015-4050-esi-unauthorized-access>`_ (Symfony 2.3.29, 2.5.12 and 2.6.8)
+* April 1, 2015: `CVE-2015-2309: Unsafe methods in the Request class <https://symfony.com/blog/cve-2015-2309-unsafe-methods-in-the-request-class>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
+* April 1, 2015: `CVE-2015-2308: Esi Code Injection <https://symfony.com/blog/cve-2015-2308-esi-code-injection>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
+* September 3, 2014: `CVE-2014-6072: CSRF vulnerability in the Web Profiler <https://symfony.com/blog/cve-2014-6072-csrf-vulnerability-in-the-web-profiler>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
+* September 3, 2014: `CVE-2014-6061: Security issue when parsing the Authorization header <https://symfony.com/blog/cve-2014-6061-security-issue-when-parsing-the-authorization-header>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
+* September 3, 2014: `CVE-2014-5245: Direct access of ESI URLs behind a trusted proxy <https://symfony.com/blog/cve-2014-5245-direct-access-of-esi-urls-behind-a-trusted-proxy>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
+* September 3, 2014: `CVE-2014-5244: Denial of service with a malicious HTTP Host header <https://symfony.com/blog/cve-2014-5244-denial-of-service-with-a-malicious-http-host-header>`_ (Symfony 2.3.19, 2.4.9 and 2.5.4)
+* July 15, 2014: `Security releases: Symfony 2.3.18, 2.4.8, and 2.5.2 released <https://symfony.com/blog/security-releases-cve-2014-4931-symfony-2-3-18-2-4-8-and-2-5-2-released>`_ (`CVE-2014-4931 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4931>`_)
+* October 10, 2013: `Security releases: Symfony 2.0.25, 2.1.13, 2.2.9, and 2.3.6 released <https://symfony.com/blog/security-releases-cve-2013-5958-symfony-2-0-25-2-1-13-2-2-9-and-2-3-6-released>`_ (`CVE-2013-5958 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5958>`_)
+* August 7, 2013: `Security releases: Symfony 2.0.24, 2.1.12, 2.2.5, and 2.3.3 released <https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released>`_ (`CVE-2013-4751 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4751>`_ and `CVE-2013-4752 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4752>`_)
+* January 17, 2013: `Security release: Symfony 2.0.22 and 2.1.7 released <https://symfony.com/blog/security-release-symfony-2-0-22-and-2-1-7-released>`_ (`CVE-2013-1348 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1348>`_ and `CVE-2013-1397 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1397>`_)
+* December 20, 2012: `Security release: Symfony 2.0.20 and 2.1.5 <https://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released>`_  (`CVE-2012-6431 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6431>`_ and `CVE-2012-6432 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6432>`_)
+* November 29, 2012: `Security release: Symfony 2.0.19 and 2.1.4 <https://symfony.com/blog/security-release-symfony-2-0-19-and-2-1-4>`_
+* November 25, 2012: `Security release: symfony 1.4.20 released  <https://symfony.com/blog/security-release-symfony-1-4-20-released>`_ (`CVE-2012-5574 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5574>`_)
+* August 28, 2012: `Security Release: Symfony 2.0.17 released <https://symfony.com/blog/security-release-symfony-2-0-17-released>`_
+* May 30, 2012: `Security Release: symfony 1.4.18 released <https://symfony.com/blog/security-release-symfony-1-4-18-released>`_ (`CVE-2012-2667 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2667>`_)
+* February 24, 2012: `Security Release: Symfony 2.0.11 released <https://symfony.com/blog/security-release-symfony-2-0-11-released>`_
+* November 16, 2011: `Security Release: Symfony 2.0.6 <https://symfony.com/blog/security-release-symfony-2-0-6>`_
+* March 21, 2011: `symfony 1.3.10 and 1.4.10: security releases <https://symfony.com/blog/symfony-1-3-10-and-1-4-10-security-releases>`_
+* June 29, 2010: `Security Release: symfony 1.3.6 and 1.4.6 <https://symfony.com/blog/security-release-symfony-1-3-6-and-1-4-6>`_
+* May 31, 2010: `symfony 1.3.5 and 1.4.5 <https://symfony.com/blog/symfony-1-3-5-and-1-4-5>`_
+* February 25, 2010: `Security Release: 1.2.12, 1.3.3 and 1.4.3 <https://symfony.com/blog/security-release-1-2-12-1-3-3-and-1-4-3>`_
+* February 13, 2010: `symfony 1.3.2 and 1.4.2 <https://symfony.com/blog/symfony-1-3-2-and-1-4-2>`_
+* April 27, 2009: `symfony 1.2.6: Security fix <https://symfony.com/blog/symfony-1-2-6-security-fix>`_
+* October 03, 2008: `symfony 1.1.4 released: Security fix <https://symfony.com/blog/symfony-1-1-4-released-security-fix>`_
+* May 14, 2008: `symfony 1.0.16 is out  <https://symfony.com/blog/symfony-1-0-16-is-out>`_
+* April 01, 2008: `symfony 1.0.13 is out  <https://symfony.com/blog/symfony-1-0-13-is-out>`_
+* March 21, 2008: `symfony 1.0.12 is (finally) out ! <https://symfony.com/blog/symfony-1-0-12-is-finally-out>`_
+* June 25, 2007: `symfony 1.0.5 released (security fix) <https://symfony.com/blog/symfony-1-0-5-released-security-fix>`_
 
 .. _Git repository: https://github.com/symfony/symfony
-.. _blog: http://symfony.com/blog/
-.. _Security Advisories: http://symfony.com/blog/category/security-advisories
+.. _blog: https://symfony.com/blog/
+.. _Security Advisories: https://symfony.com/blog/category/security-advisories
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories

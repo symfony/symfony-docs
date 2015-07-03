@@ -56,6 +56,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/EventDispatcher).
 
+.. include:: /components/require_autoload.rst.inc
+
 Usage
 -----
 
@@ -636,7 +638,7 @@ dispatched, are passed as arguments to the listener::
     {
         public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            echo $eventName;
+            // ... do something with the event name
         }
     }
 

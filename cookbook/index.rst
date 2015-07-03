@@ -19,6 +19,7 @@ The Cookbook
     expression/index
     form/index
     frontend/index
+    install/index
     logging/index
     profiler/index
     request/index
@@ -27,6 +28,7 @@ The Cookbook
     serializer
     service_container/index
     session/index
+    psr7
     symfony1
     templating/index
     testing/index

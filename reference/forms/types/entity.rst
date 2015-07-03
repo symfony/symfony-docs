@@ -19,7 +19,7 @@ objects from the database.
 |             | - `property`_                                                    |
 |             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overriden   | - `choice_list`_                                                 |
+| Overridden  | - `choice_list`_                                                 |
 | options     | - `choices`_                                                     |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
@@ -39,7 +39,7 @@ objects from the database.
 |             | - `label`_                                                       |
 |             | - `label_attr`_                                                  |
 |             | - `mapped`_                                                      |
-|             | - `read_only`_                                                   |
+|             | - `read_only`_ (deprecated as of 2.8)                            |
 |             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                    |

@@ -103,4 +103,4 @@ practices**. The reasons for not doing it are various:
   your tests or adding features that provide real value to the end users.
 
 .. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
-.. _`download and install`: http://symfony.com/download
+.. _`download and install`: https://symfony.com/download

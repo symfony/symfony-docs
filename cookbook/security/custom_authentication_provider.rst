@@ -8,10 +8,12 @@ How to Create a custom Authentication Provider
 
     Creating a custom authentication system is hard, and this entry will walk
     you through that process. But depending on your needs, you may be able
-    to solve your problem in a simpler way using these documents:
+    to solve your problem in a simpler, or via a community bundle:
 
     * :doc:`/cookbook/security/custom_password_authenticator`
     * :doc:`/cookbook/security/api_key_authentication`
+    * To authenticate via OAuth using a third-party service such as Google, Facebook
+      or Twitter, try using the `HWIOAuthBundle`_ community bundle.
 
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony makes between authentication and authorization in the
@@ -289,7 +291,7 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. note::
 
-    The comparsion of the expected and the provided digests uses a constant
+    The comparison of the expected and the provided digests uses a constant
     time comparison provided by the
     :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
     method of the ``StringUtils`` class. It is used to mitigate possible
@@ -624,6 +626,7 @@ set to any desirable value per firewall.
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.
 
+.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: http://en.wikipedia.org/wiki/Cryptographic_nonce
 .. _`timing attacks`: http://en.wikipedia.org/wiki/Timing_attack

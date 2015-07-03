@@ -24,6 +24,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/HttpFoundation).
 
+.. include:: /components/require_autoload.rst.inc
+
 .. _component-http-foundation-request:
 
 Request
@@ -447,10 +449,10 @@ represented by a PHP callable instead of a string::
 
     $response = new StreamedResponse();
     $response->setCallback(function () {
-        echo 'Hello World';
+        var_dump('Hello World');
         flush();
         sleep(2);
-        echo 'Hello World';
+        var_dump('Hello World');
         flush();
     });
     $response->send();

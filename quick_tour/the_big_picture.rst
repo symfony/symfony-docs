@@ -89,7 +89,7 @@ the project directory and executing this command:
     $ cd myproject/
     $ php app/console server:run
 
-Open your browser and access the ``http://localhost:8000`` URL to see the
+Open your browser and access the ``http://localhost:8000/app/example`` URL to see the
 welcome page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png

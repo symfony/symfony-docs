@@ -16,6 +16,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/translation`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Translation).
 
+.. include:: /components/require_autoload.rst.inc
+
 Constructing the Translator
 ---------------------------
 
@@ -166,10 +168,10 @@ example, assume you're trying to translate into the ``fr_FR`` locale:
    fallback locales set explicitly on the translator.
 
 For (3), the fallback locales can be set by calling
-:method:`Symfony\\Component\\Translation\\Translator::setFallbackLocale`::
+:method:`Symfony\\Component\\Translation\\Translator::setFallbackLocales`::
 
     // ...
-    $translator->setFallbackLocale(array('en'));
+    $translator->setFallbackLocales(array('en'));
 
 .. _using-message-domains:
 

@@ -9,9 +9,9 @@ In Symfony applications, all errors are treated as exceptions, no matter if they
 are just a 404 Not Found error or a fatal error triggered by throwing some
 exception in your code.
 
-In the `development environment`_, Symfony catches all the exceptions and displays
-a special **exception page** with lots of debug information to help you quickly
-discover the root problem:
+In the :doc:`development environment </cookbook/configuration/environments>`,
+Symfony catches all the exceptions and displays a special **exception page**
+with lots of debug information to help you quickly discover the root problem:
 
 .. image:: /images/cookbook/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in the development environment
@@ -136,7 +136,7 @@ The cause of this problem is that routing is done before security. If a 404 erro
 occurs, the security layer isn't loaded and thus, the ``is_granted()`` function
 is undefined. The solution is to add the following check before using this function:
 
-.. code-block:: twig
+.. code-block:: jinja
 
     {% if app.user and is_granted('...') %}
         {# ... #}

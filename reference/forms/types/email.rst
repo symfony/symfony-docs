@@ -19,7 +19,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
 |             | - `max_length`_ (deprecated as of 2.5)                              |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 |             | - `trim`_                                                           |
 +-------------+---------------------------------------------------------------------+

@@ -5,6 +5,8 @@
 * :doc:`/book/controller`
 * :doc:`/book/routing`
 * :doc:`/book/templating`
+* :doc:`/book/configuration`
+* :doc:`/book/bundles`
 * :doc:`/book/doctrine`
 * :doc:`/book/propel`
 * :doc:`/book/testing`

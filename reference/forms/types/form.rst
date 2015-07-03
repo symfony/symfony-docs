@@ -11,7 +11,7 @@ on all types for which ``form`` is the parent type.
 | Options   | - `action`_                                                        |
 |           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
-|           | - `cascade_validation`_                                            |
+|           | - `cascade_validation`_ (deprecated as of 2.8)                     |
 |           | - `compound`_                                                      |
 |           | - `constraints`_                                                   |
 |           | - `data`_                                                          |
@@ -30,7 +30,7 @@ on all types for which ``form`` is the parent type.
 |           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
-|           | - `read_only`_                                                     |
+|           | - `read_only`_ (deprecated as of 2.8)                              |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
 +-----------+--------------------------------------------------------------------+

@@ -128,9 +128,9 @@ A) Configuring how your Users will Authenticate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The main job of a firewall is to configure *how* your users will authenticate.
-Will they use a login form? Http Basic? An API token? All of the above?
+Will they use a login form? HTTP basic authentication? An API token? All of the above?
 
-Let's start with Http Basic (the old-school pop-up) and work up from there.
+Let's start with HTTP basic authentication (the old-school prompt) and work up from there.
 To activate this, add the ``http_basic`` key under your firewall:
 
 .. configuration-block::
@@ -265,7 +265,7 @@ user to be logged in to access this URL:
     You'll learn more about this ``ROLE_ADMIN`` thing and denying access
     later in the :ref:`security-authorization` section.
 
-Great! Now, if you go to ``/admin``, you'll see the HTTP Basic popup:
+Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
 
 .. image:: /images/book/security_http_basic_popup.png
    :align: center
@@ -279,6 +279,11 @@ But who can you login as? Where do users come from?
     Want to use a traditional login form? Great! See :doc:`/cookbook/security/form_login_setup`.
     What other methods are supported? See the :doc:`Configuration Reference </reference/configuration/security>`
     or :doc:`build your own </cookbook/security/custom_authentication_provider>`.
+
+.. tip::
+
+    If your application logs users in via a third-party service such as Google,
+    Facebook or Twitter, check out the `HWIOAuthBundle`_ community bundle.
 
 .. _security-user-providers:
 .. _where-do-users-come-from-user-providers:
@@ -371,7 +376,7 @@ probably only need one. If you *do* have multiple, you can configure which
 Try to login using username ``admin`` and password ``kitten``. You should
 see an error!
 
-    No encoder has been configured for account "Symfony\Component\Security\Core\User\User"
+    No encoder has been configured for account "Symfony\\Component\\Security\\Core\\User\\User"
 
 To fix this, add an ``encoders`` key:
 
@@ -485,7 +490,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
                 <encoder class="Symfony\Component\Security\Core\User\User"
                     algorithm="bcrypt"
                     cost="12" />
-                
+
                 <!-- ... -->
             </config>
         </srv:container>
@@ -593,8 +598,8 @@ before inserting them into the database? Don't worry, see
 D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Congratulations! You now have a working authentication system that uses Http
-Basic and loads users right from the ``security.yml`` file.
+Congratulations! You now have a working authentication system that uses HTTP
+basic auth and loads users right from the ``security.yml`` file.
 
 Your next steps depend on your setup:
 
@@ -1379,5 +1384,6 @@ Learn More from the Cookbook
 * :doc:`/cookbook/security/multiple_user_providers`
 
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
-.. _`frameworkextrabundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

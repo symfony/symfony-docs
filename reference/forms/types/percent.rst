@@ -18,6 +18,9 @@ This field adds a percentage sign "``%``" after the input box.
 | Options     | - `scale`_                                                            |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| options     |                                                                       |
++-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
 |             | - `empty_data`_                                                       |
@@ -28,7 +31,7 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                             |
@@ -70,6 +73,11 @@ object. The two "types" handle these two cases:
     If your data is stored as an integer (e.g. 55), then use this option.
     The raw value (``55``) is shown to the user and stored on your object.
     Note that this only works for integer values.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------

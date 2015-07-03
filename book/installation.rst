@@ -110,7 +110,7 @@ pass ``lts`` as the second argument of the ``new`` command:
     $ symfony new my_project_name lts
 
     # Windows
-    c:\projects\> php symfony.phar new my_project_name lts
+    c:\projects\> php symfony new my_project_name lts
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
@@ -169,7 +169,8 @@ browsing the project directory and executing this command:
     $ cd my_project_name/
     $ php app/console server:run
 
-Then, open your browser and access the ``http://localhost:8000`` URL to see the
+Then, open your browser and access the ``http://localhost:8000/app/example``
+URL to see the
 Welcome page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png
@@ -313,6 +314,30 @@ several minutes to complete.
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
+
+Installing the Symfony Demo Application
+---------------------------------------
+
+The Symfony Demo application is a fully-functional application that shows the
+recommended way to develop Symfony applications. The application has been
+conceived as a learning tool for Symfony newcomers and its source code contains
+tons of comments and helpful notes.
+
+In order to download the Symfony Demo application, execute the ``demo`` command
+of the Symfony Installer anywhere in your system:
+
+.. code-block:: bash
+
+    # Linux, Mac OS X
+    $ symfony demo
+
+    # Windows
+    c:\projects\> php symfony demo
+
+Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
+built-in web server executing the ``php app/console server:run`` command. Access
+to the ``http://localhost:8000`` URL in your browser to start using the Symfony
+Demo application.
 
 .. _installing-a-symfony2-distribution:
 

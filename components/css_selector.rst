@@ -15,6 +15,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/CssSelector).
 
+.. include:: /components/require_autoload.rst.inc
+
 Usage
 -----
 
@@ -49,7 +51,7 @@ equivalents::
 
     use Symfony\Component\CssSelector\CssSelector;
 
-    print CssSelector::toXPath('div.item > h4 > a');
+    var_dump(CssSelector::toXPath('div.item > h4 > a'));
 
 This gives the following output:
 

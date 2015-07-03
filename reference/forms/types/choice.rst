@@ -32,7 +32,7 @@ option.
 |             | - `label`_                                                                   |
 |             | - `label_attr`_                                                              |
 |             | - `mapped`_                                                                  |
-|             | - `read_only`_                                                               |
+|             | - `read_only`_ (deprecated as of 2.8)                                        |
 |             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                    |
@@ -109,7 +109,7 @@ The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
-With this option you can also allow float values to be selected as data.
+With this option you can also allow float values to be selected as data. For example:
 
 .. code-block:: php
 
@@ -117,8 +117,22 @@ With this option you can also allow float values to be selected as data.
 
     // ...
     $builder->add('status', 'choice', array(
-      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half'))
+      'choice_list' => new ChoiceList(array(1, 0.5, 0.1), array('Full', 'Half', 'Almost empty'))
     ));
+
+The ``status`` field created by the code above will be rendered as:
+
+.. code-block:: html
+
+    <select name="status">
+        <option value="0">Full</option>
+        <option value="1">Half</option>
+        <option value="2">Almost empty</option>
+    </select>
+
+But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1`` will
+be returned in your form. If ``Almost empty`` is selected (value ``2`` in HTML),
+``0.1`` will be returned.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 

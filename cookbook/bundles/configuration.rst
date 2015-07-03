@@ -6,13 +6,13 @@ How to Create Friendly Configuration for a Bundle
 =================================================
 
 If you open your application configuration file (usually ``app/config/config.yml``),
-you'll see a number of different configuration "namespaces", such as ``framework``,
+you'll see a number of different configuration sections, such as ``framework``,
 ``twig`` and ``doctrine``. Each of these configures a specific bundle, allowing
-you to configure things at a high level and then let the bundle make all the
+you to define options at a high level and then let the bundle make all the
 low-level, complex changes based on your settings.
 
-For example, the following tells the FrameworkBundle to enable the form
-integration, which involves the definition of quite a few services as well
+For example, the following configuration tells the FrameworkBundle to enable the
+form integration, which involves the definition of quite a few services as well
 as integration of other related components:
 
 .. configuration-block::

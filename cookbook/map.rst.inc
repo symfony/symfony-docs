@@ -1,6 +1,7 @@
 * :doc:`/cookbook/assetic/index`
 
   * :doc:`/cookbook/assetic/asset_management`
+  * :doc:`/cookbook/assetic/php`
   * :doc:`/cookbook/assetic/uglifyjs`
   * :doc:`/cookbook/assetic/yuicompressor`
   * :doc:`/cookbook/assetic/jpeg_optimize`
@@ -51,6 +52,7 @@
 
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
+  * :doc:`/cookbook/controller/upload_file`
 
 * **Debugging**
 
@@ -116,6 +118,10 @@
 * :doc:`/cookbook/frontend/index`
 
   * :doc:`/cookbook/frontend/bower`
+
+* :doc:`/cookbook/install/index`
+
+  * :doc:`/cookbook/install/unstable_versions`
 
 * :doc:`/cookbook/logging/index`
 
@@ -194,6 +200,10 @@
   * :doc:`/cookbook/session/limit_metadata_writes`
   * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/session/avoid_session_start`
+
+* **PSR-7**
+
+  * :doc:`/cookbook/psr7`
 
 * **symfony1**
 

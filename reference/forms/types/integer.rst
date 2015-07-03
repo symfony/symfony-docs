@@ -20,6 +20,9 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `scale`_                                                            |
 |             | - `rounding_mode`_                                                    |
 +-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| options     |                                                                       |
++-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
 |             | - `empty_data`_                                                       |
@@ -30,7 +33,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                             |
@@ -73,6 +76,11 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 
 * ``IntegerToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
   "nearest neighbor". If both neighbors are equidistant, round up.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------
