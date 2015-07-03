@@ -38,6 +38,7 @@
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
   * :doc:`/cookbook/configuration/configuration_organization`
+  * :doc:`/cookbook/configuration/mongodb_session_storage`
 
 * :doc:`/cookbook/console/index`
 
