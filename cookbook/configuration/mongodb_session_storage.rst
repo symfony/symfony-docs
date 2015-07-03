@@ -9,7 +9,7 @@ in a multi-webserver environment.
 Symfony has a built-in solution for NoSQL database session storage called
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`.
 MongoDB is an open-source document database that provides high performance,
-high availability, and automatic scaling. This article assumes that you have
+high availability and automatic scaling. This article assumes that you have
 already `installed and configured a MongoDB server`_. To use it, you just
 need to change/add some parameters in the main configuration file:
 
@@ -132,6 +132,7 @@ need to change/add some parameters in the main configuration file:
 
 Setting Up the MongoDB Collection
 ---------------------------------
+
 Because MongoDB uses dynamic collection schemas, you do not need to do anything to initialize your
 session collection.
 
