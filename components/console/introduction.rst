@@ -184,7 +184,7 @@ Value                                        Meaning                            
 ``OutputInterface::VERBOSITY_VERBOSE``       Increased verbosity of messages     ``-v``
 ``OutputInterface::VERBOSITY_VERY_VERBOSE``  Informative non essential messages  ``-vv``
 ``OutputInterface::VERBOSITY_DEBUG``         Debug messages                      ``-vvv``
-===========================================  ==================================  ======================
+===========================================  ==================================  =====================
 
 .. tip::
 
