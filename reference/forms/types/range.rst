@@ -10,16 +10,17 @@ The ``range`` field is a slider that is rendered using the HTML5
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``range`` field (slider in HTML5 supported browser)       |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `data`_                                                           |
-| options     | - `disabled`_                                                       |
+| Inherited   | - `attr`_                                                           |
+| options     | - `data`_                                                           |
+|             | - `disabled`_                                                       |
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `attr`_                                                           |
 |             | - `required`_                                                       |
+|             | - `trim`_                                                           |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`text </reference/forms/types/text>`                           |
 +-------------+---------------------------------------------------------------------+
@@ -28,6 +29,8 @@ The ``range`` field is a slider that is rendered using the HTML5
 
 Basic Usage
 -----------
+
+.. code-block:: php
 
     $builder->add('name', 'range', array(
         'attr' => array(
@@ -44,7 +47,17 @@ type:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 
+.. include:: /reference/forms/types/options/data.rst.inc
+
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -52,10 +65,8 @@ type:
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
