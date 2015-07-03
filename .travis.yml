@@ -6,10 +6,10 @@ sudo: false
 
 cache:
     directories:
-        - $HOME/.pip-cache/
+        - $HOME/.cache/pip
         - _build
 
-install: pip install --download-cache $HOME/.pip-cache sphinx==1.1.3
+install: pip install sphinx==1.1.3
 
 script: sphinx-build -nW -b html -d _build/doctrees . _build/html
 
