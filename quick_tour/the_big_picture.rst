@@ -135,14 +135,14 @@ of database calls, HTML tags and other PHP code in the same script. To achieve
 this goal with Symfony, you'll first need to learn a few fundamental concepts.
 
 When developing a Symfony application, your responsibility as a developer
-is to write the code that maps the user's *request* (e.g.  ``http://localhost:8000/``)
-to the *resource* associated with it (the ``Welcome to Symfony!`` HTML page).
+is to write the code that maps the user's *request* (e.g.  ``http://localhost:8000/app/example``)
+to the *resource* associated with it (the ``Homepage.`` HTML page).
 
 The code to execute is defined in **actions** and **controllers**. The mapping
 between user's requests and that code is defined via the **routing** configuration.
 And the contents displayed in the browser are usually rendered using **templates**.
 
-When you browsed ``http://localhost:8000/`` earlier, Symfony executed the
+When you browsed ``http://localhost:8000/app/example`` earlier, Symfony executed the
 controller defined in the ``src/AppBundle/Controller/DefaultController.php``
 file and rendered the ``app/Resources/views/default/index.html.twig`` template.
 In the following sections you'll learn in detail the inner workings of Symfony
@@ -308,11 +308,11 @@ to run your application. Symfony defines two environments by default: ``dev``
 (suited for when developing the application locally) and ``prod`` (optimized
 for when executing the application on production).
 
-When you visit the ``http://localhost:8000`` URL in your browser, you're
+When you visit the ``http://localhost:8000/app/example`` URL in your browser, you're
 executing your Symfony application in the ``dev`` environment. To visit
-your application in the ``prod`` environment, visit the ``http://localhost:8000/app.php``
+your application in the ``prod`` environment, visit the ``http://localhost:8000/app.php/app/example``
 URL instead. If you prefer to always show the ``dev`` environment in the
-URL, you can visit ``http://localhost:8000/app_dev.php`` URL.
+URL, you can visit ``http://localhost:8000/app_dev.php/app/example`` URL.
 
 The main difference between environments is that ``dev`` is optimized to
 provide lots of information to the developer, which means worse application
