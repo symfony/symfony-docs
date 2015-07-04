@@ -248,11 +248,11 @@ Look at the ``form_label`` as an example:
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|transchoice(translation_count, {"count": translation_count}, translation_domain) }}</label>
     {% endblock form_label %}
 
 This block makes use of several variables: ``compound``, ``label_attr``, ``required``,
-``label``, ``name`` and ``translation_domain``.
+``label``, ``name``, ``translation_count`` and ``translation_domain``.
 These variables are made available by the form rendering system. But more
 importantly, these are the variables that you can override when calling ``form_label``
 (since in this example, you're rendering the label).
@@ -364,6 +364,8 @@ object:
 |                        | (for example, a ``choice`` field, which is actually a group of checkboxes.          |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``block_prefixes``     | An array of all the names of the parent types.                                      |
++------------------------+-------------------------------------------------------------------------------------+
+| ``translation_count``  | The integer that is passed to ``transchoice`` to allow the pluralization of labels. |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``translation_domain`` | The domain of the translations for this form.                                       |
 +------------------------+-------------------------------------------------------------------------------------+

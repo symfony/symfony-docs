@@ -39,6 +39,7 @@ on all types for which ``form`` is the parent type.
 |           | - `block_name`_                                                    |
 |           | - `disabled`_                                                      |
 |           | - `label`_                                                         |
+|           | - `translation_count`_                                             |
 |           | - `translation_domain`_                                            |
 +-----------+--------------------------------------------------------------------+
 | Parent    | none                                                               |
@@ -154,5 +155,7 @@ of the form type tree (i.e. it can not be used as a form type on its own).
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/translation_count.rst.inc
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
