@@ -25,15 +25,6 @@ need to change/add some parameters in the main configuration file:
                 cookie_lifetime: 2592000 # optional, it is set to 30 days here
                 gc_maxlifetime: 2592000 # optional, it is set to 30 days here
 
-        parameters:
-            # ...
-            mongo.session.options:
-                database: session_db # your MongoDB database name
-                collection: session  # your MongoDB collection name
-            mongodb_host: 1.2.3.4 # your MongoDB server's IP
-            mongodb_username: my_username
-            mongodb_password: my_password
-
         services:
             # ...
             mongo_client:
@@ -68,19 +59,6 @@ need to change/add some parameters in the main configuration file:
                 />
             </framework:config>
 
-            <parameters>
-                <parameter key="mongo.session.options" type="collection">
-                    <!-- your MongoDB database name -->
-                    <parameter key="database">session_db</parameter>
-                    <!-- your MongoDB collection name -->
-                    <parameter key="collection">session</parameter>
-                </parameter>
-                <!-- your MongoDB server's IP -->
-                <parameter key="mongodb_host">1.2.3.4</parameter>
-                <parameter key="mongodb_username">my_username</parameter>
-                <parameter key="mongodb_password">my_password</parameter>
-            </parameters>
-
             <services>
                 <service id="mongo_client" class="MongoClient">
                     <!-- if using a username and password -->
@@ -110,14 +88,6 @@ need to change/add some parameters in the main configuration file:
             ),
         ));
 
-        $container->setParameter('mongo.session.options', array(
-            'database'   => 'session_db', // your MongoDB database name
-            'collection' => 'session',  // your MongoDB collection name
-        ));
-        $container->setParameter('mongodb_host', '1.2.3.4'); // your MongoDB server's IP
-        $container->setParameter('mongodb_username', 'my_username');
-        $container->setParameter('mongodb_password', 'my_password');
-
         $container->setDefinition('mongo_client', new Definition('MongoClient', array(
             // if using a username and password
             array('mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017'),
@@ -129,6 +99,61 @@ need to change/add some parameters in the main configuration file:
             'Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler',
             array(new Reference('mongo_client'), '%mongo.session.options%')
         ));
+
+The parameters used above should be defined somewhere in your application, often in your main
+parameters configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/parameters.yml
+        parameters:
+            # ...
+            mongo.session.options:
+                database: session_db # your MongoDB database name
+                collection: session  # your MongoDB collection name
+            mongodb_host: 1.2.3.4 # your MongoDB server's IP
+            mongodb_username: my_username
+            mongodb_password: my_password
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <parameters>
+                <parameter key="mongo.session.options" type="collection">
+                    <!-- your MongoDB database name -->
+                    <parameter key="database">session_db</parameter>
+                    <!-- your MongoDB collection name -->
+                    <parameter key="collection">session</parameter>
+                </parameter>
+                <!-- your MongoDB server's IP -->
+                <parameter key="mongodb_host">1.2.3.4</parameter>
+                <parameter key="mongodb_username">my_username</parameter>
+                <parameter key="mongodb_password">my_password</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->setParameter('mongo.session.options', array(
+            'database'   => 'session_db', // your MongoDB database name
+            'collection' => 'session',  // your MongoDB collection name
+        ));
+        $container->setParameter('mongodb_host', '1.2.3.4'); // your MongoDB server's IP
+        $container->setParameter('mongodb_username', 'my_username');
+        $container->setParameter('mongodb_password', 'my_password');
 
 Setting Up the MongoDB Collection
 ---------------------------------
