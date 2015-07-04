@@ -13,7 +13,7 @@ Symfony. If not, welcome to a whole new way of developing web applications.
 Installing Symfony
 ------------------
 
-See the Installtion Manual. :doc:`/book/installtion`.
+See the Installtion Manual. :doc:`/book/installation`.
 
 After you have successfully run the welcome page, read the follows.
 
