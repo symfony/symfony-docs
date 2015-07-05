@@ -4,6 +4,7 @@ The Cookbook
 .. toctree::
     :hidden:
 
+    asset/index
     assetic/index
     bundles/index
     cache/index

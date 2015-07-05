@@ -93,6 +93,8 @@ Returns an instance of ``ControllerReference`` to be used with functions
 like :ref:`render() <reference-twig-function-render>` and
 :ref:`render_esi() <reference-twig-function-render-esi>`.
 
+.. _reference-twig-function-asset:
+
 asset
 ~~~~~
 
