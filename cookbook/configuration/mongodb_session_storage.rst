@@ -159,6 +159,13 @@ Setting Up the MongoDB Collection
 ---------------------------------
 
 Because MongoDB uses dynamic collection schemas, you do not need to do anything to initialize your
-session collection.
+session collection. However, you may want to add an index to improve garbage collection performance.
+From the `MongoDB shell`_:
+
+.. code-block:: sql
+
+    use session_db
+    db.session.ensureIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
 
 .. _installed and configured a MongoDB server: http://docs.mongodb.org/manual/installation/
+.. _MongoDB shell: http://docs.mongodb.org/v2.2/tutorial/getting-started-with-the-mongo-shell/
