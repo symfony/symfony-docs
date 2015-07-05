@@ -96,6 +96,11 @@ We are now ready to write our first test::
                 ->method('match')
                 ->will($this->throwException($exception))
             ;
+            $matcher
+                ->expects($this->once())
+                ->method('getContext')
+                ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
+            ;
             $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
             return new Framework($matcher, $resolver);
