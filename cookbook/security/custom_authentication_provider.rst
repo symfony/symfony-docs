@@ -399,19 +399,24 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             wsse.security.authentication.provider:
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
-                arguments: ["", "%kernel.cache_dir%/security/nonces"]
+                arguments:
+                    - "" # User Provider
+                    - "%kernel.cache_dir%/security/nonces"
+                public: false
 
             wsse.security.authentication.listener:
                 class: AppBundle\Security\Firewall\WsseListener
                 arguments: ["@security.context", "@security.authentication.manager"]
+                public: false
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -424,8 +429,10 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                 </service>
 
                 <service id="wsse.security.authentication.listener"
-                    class="AppBundle\Security\Firewall\WsseListener" public="false">
-                    <argument type="service" id="security.context"/>
+                    class="AppBundle\Security\Firewall\WsseListener"
+                    public="false">
+
+                    <argument type="service" id="security.context" />
                     <argument type="service" id="security.authentication.manager" />
                 </service>
             </services>
@@ -433,27 +440,33 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: php
 
-        // src/AppBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('wsse.security.authentication.provider',
-            new Definition(
-                'AppBundle\Security\Authentication\Provider\WsseProvider', array(
-                    '',
-                    '%kernel.cache_dir%/security/nonces',
+        $container
+            ->setDefinition('wsse.security.authentication.provider',
+                new Definition(
+                    'AppBundle\Security\Authentication\Provider\WsseProvider', array(
+                        '', // User Provider
+                        '%kernel.cache_dir%/security/nonces',
+                    )
                 )
             )
-        );
+            ->setPublic(false)
+        ;
 
-        $container->setDefinition('wsse.security.authentication.listener',
-            new Definition(
-                'AppBundle\Security\Firewall\WsseListener', array(
-                    new Reference('security.context'),
-                    new Reference('security.authentication.manager'),
+        $container
+            ->setDefinition('wsse.security.authentication.listener',
+                new Definition(
+                    'AppBundle\Security\Firewall\WsseListener', array(
+                        new Reference('security.context'),
+                        new Reference('security.authentication.manager'),
+                    )
                 )
             )
-        );
+            ->setPublic(false)
+        ;
 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
@@ -484,30 +497,48 @@ You are finished! You can now define parts of your app as under WSSE protection.
 
     .. code-block:: yaml
 
+        # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 wsse_secured:
-                    pattern:   /api/.*
+                    pattern:   ^/api/
                     stateless: true
                     wsse:      true
 
     .. code-block:: xml
 
-        <config>
-            <firewall name="wsse_secured" pattern="/api/.*">
-                <stateless />
-                <wsse />
-            </firewall>
-        </config>
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall
+                    name="wsse_secured"
+                    pattern="^/api/"
+                    stateless="true"
+                    wsse="true" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
+        // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'wsse_secured' => array(
-                    'pattern' => '/api/.*',
-                    'stateless'    => true,
-                    'wsse'    => true,
+                    'pattern'   => '^/api/',
+                    'stateless' => true,
+                    'wsse'      => true,
                 ),
             ),
         ));
@@ -587,32 +618,46 @@ set to any desirable value per firewall.
 
     .. code-block:: yaml
 
+        # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 wsse_secured:
-                    pattern:   /api/.*
+                    pattern:   ^/api/
                     stateless: true
                     wsse:      { lifetime: 30 }
 
     .. code-block:: xml
 
-        <config>
-            <firewall name="wsse_secured"
-                pattern="/api/.*"
-            >
-                <stateless />
-                <wsse lifetime="30" />
-            </firewall>
-        </config>
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="wsse_secured" pattern="^/api/" stateless="true">
+                    <wsse lifetime="30" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
+        // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'wsse_secured' => array(
-                    'pattern' => '/api/.*',
+                    'pattern'   => '^/api/',
                     'stateless' => true,
-                    'wsse'    => array(
+                    'wsse'      => array(
                         'lifetime' => 30,
                     ),
                 ),
