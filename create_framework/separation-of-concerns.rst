@@ -150,6 +150,7 @@ To sum up, here is the new file layout:
 
     example.com
     ├── composer.json
+    ├── composer.lock    
     │   src
     │   ├── app.php
     │   └── Simplex
@@ -160,6 +161,7 @@ To sum up, here is the new file layout:
     │       └── Model
     │           └── LeapYear.php
     ├── vendor
+    │   └── autoload.php
     └── web
         └── front.php
 
