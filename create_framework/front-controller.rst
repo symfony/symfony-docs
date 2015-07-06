@@ -144,13 +144,15 @@ web root directory:
 
 .. code-block:: text
 
-    example.com
+    framework
     ├── composer.json
+    ├── composer.lock    
     │   src
     │   └── pages
     │       ├── hello.php
     │       └── bye.php
     ├── vendor
+    │   └── autoload.php
     └── web
         └── front.php
 
