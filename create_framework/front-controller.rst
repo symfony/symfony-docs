@@ -144,7 +144,7 @@ web root directory:
 
 .. code-block:: text
 
-    framework
+    example.com
     ├── composer.json
     ├── composer.lock    
     │   src
