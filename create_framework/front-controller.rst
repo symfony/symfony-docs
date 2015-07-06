@@ -146,11 +146,13 @@ web root directory:
 
     example.com
     ├── composer.json
+    ├── composer.lock    
     │   src
     │   └── pages
     │       ├── hello.php
     │       └── bye.php
     ├── vendor
+    │   └── autoload.php
     └── web
         └── front.php
 
