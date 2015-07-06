@@ -169,7 +169,7 @@ and tag it with ``security.voter``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
-                <service id="security.access.post_document_voter"
+                <service id="security.access.post_voter"
                     class="AppBundle\Security\Authorization\Voter\PostVoter"
                     public="false">
                     <tag name="security.voter" />
@@ -182,9 +182,10 @@ and tag it with ``security.voter``:
         // src/AppBundle/Resources/config/services.php
         $container
             ->register(
-                    'security.access.post_document_voter',
+                    'security.access.post_voter',
                     'AppBundle\Security\Authorization\Voter\PostVoter'
             )
+            ->setPublic(false)
             ->addTag('security.voter')
         ;
 
