@@ -124,6 +124,8 @@ Here is an example on how to load the
         $definition->addTag('serializer.normalizer');
         $container->setDefinition('get_set_method_normalizer', $definition);
 
+.. _cookbook-serializer-using-serialization-groups-annotations:
+
 Using Serialization Groups Annotations
 --------------------------------------
 
@@ -169,6 +171,8 @@ to your class and choose which groups to use when serializing::
         $someObject,
         'json', array('groups' => array('group1')
     );
+
+.. _cookbook-serializer-enabling-metadata-cache:
 
 Enabling the Metadata Cache
 ---------------------------
