@@ -9,5 +9,3 @@ Sessions
     sessions_directory
     php_bridge
     avoid_session_start
-    /cookbook/configuration/pdo_session_storage
-    /cookbook/configuration/mongodb_session_storage
