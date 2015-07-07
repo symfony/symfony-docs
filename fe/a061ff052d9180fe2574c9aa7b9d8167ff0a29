@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T14:35:36Z
+
+@javiereguiluz I left just one minor comment.
+
+Though unfortunately you need to do another rebase (the `payload` option was lost and the order of the code blocks needs to be fixed).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-24T14:41:36Z
+
+@xabbuh I've added the `payload` option removed by mistake (I don't know what could I do without your reviews!!! Thanks a lot). And the examples have also been sorted as annotation - yaml -xml - php.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T14:44:09Z
+
+Perfect! :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-26T07:33:18Z
+
+I've fixed all the reported issues. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-26T07:38:18Z
+
+Now for some reason the order of the code blocks in the first example changes again.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-26T07:47:01Z
+
+@xabbuh sorry for that! Fixed now. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-26T16:41:55Z
+
+:+1:
