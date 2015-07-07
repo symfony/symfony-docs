@@ -149,7 +149,7 @@
   * :doc:`/cookbook/routing/redirect_trailing_slash`
   * :doc:`/cookbook/routing/extra_information`
 
-* :doc:`Authentication </cookbook/security/index>`
+* :doc:`Security Authentication (Identifying/Logging in the User) </cookbook/security/index>`
 
   * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
@@ -163,7 +163,7 @@
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/multiple_user_providers`
 
-* :doc:`Authorization </cookbook/security/index>`
+* :doc:`Security Authorization (Denying Access) </cookbook/security/index>`
 
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/voters_data_permission`

@@ -1,8 +1,8 @@
 Security
 ========
 
-Authentication
---------------
+Authentication (Identifying/Logging in the User)
+------------------------------------------------
 
 .. toctree::
     :maxdepth: 2
@@ -19,8 +19,8 @@ Authentication
     csrf_in_login_form
     multiple_user_providers
 
-Authorization
--------------
+Authorization (Denying Access)
+------------------------------
 
 .. toctree::
     :maxdepth: 2
