@@ -97,6 +97,8 @@ Configuration
 * `serializer`_
     * :ref:`enabled <reference-serializer-enabled>`
 
+.. _configuration-framework-secret:
+
 secret
 ~~~~~~
 
