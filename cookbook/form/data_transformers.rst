@@ -100,6 +100,14 @@ in your code.
     :class:`Symfony\\Component\\Form\\DataTransformerInterface` - so you can create
     your own classes, instead of putting all the logic in the form (see the next section).
 
+You can also add the transformer, right when adding the field by changing the format
+slightly::
+
+    $builder->add(
+        $builder->create('description', 'textarea')
+            ->addModelTransformer(...)
+    );
+
 Harder Example: Transforming an Issue Number into an Issue Entity
 -----------------------------------------------------------------
 
