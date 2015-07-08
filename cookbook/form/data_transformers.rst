@@ -24,7 +24,7 @@ Suppose you have a Task form with a description ``textarea`` type::
     // src/AppBundle/Form/TaskType.php
 
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
     class TaskType extends AbstractType
@@ -35,7 +35,7 @@ Suppose you have a Task form with a description ``textarea`` type::
                 ->add('description', 'textarea');
         }
         
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Task'
@@ -131,7 +131,7 @@ Start by setting up the text field like normal::
                 ->add('issue', 'text');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Task'
