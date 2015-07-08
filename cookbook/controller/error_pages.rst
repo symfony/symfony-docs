@@ -250,6 +250,127 @@ This approach allows you to create centralized and layered error handling:
 instead of catching (and handling) the same exceptions in various controllers
 time and again, you can have just one (or several) listeners deal with them.
 
+A centralized error handling that also allows to log exceptions might look like this::
+
+    // src/AppBundle/EventListener/AcmeExceptionListener.php
+    namespace AppBundle\EventListener;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+    use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+
+    class AcmeExceptionListener
+    {
+        private $logger;
+
+        public function __construct(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
+        }
+
+        public function onKernelException(GetResponseForExceptionEvent $event)
+        {
+            // Get the exception object from the received event
+            $exception = $event->getException();
+            $message = sprintf(
+                'Error: %s. Code: %s',
+                $exception->getMessage(),
+                $exception->getCode()
+            );
+
+            // Log the exception to the acme.log file
+            $this->logger->error($message);
+
+            // Customize the response object to display the exception details
+            $response = new Response();
+            $response->setContent($message);
+
+            // HttpExceptionInterface is a special type of exception that
+            // holds status code and header details
+            if ($exception instanceof HttpExceptionInterface) {
+                $response->setStatusCode($exception->getStatusCode());
+                $response->headers->replace($exception->getHeaders());
+            } else {
+                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            // Send the modified response object to the event
+            $event->setResponse($response);
+        }
+    }
+
+Now, we need to register our listener:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            kernel.listener.your_exception_listener_name:
+                class: AppBundle\EventListener\AcmeExceptionListener
+                arguments: ["@logger"]
+                tags:
+                    - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <service id="kernel.listener.your_exception_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
+            <argument type="service" id="logger" />
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        </service>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('kernel.listener.your_exception_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
+            ->addArgument(new Reference('logger'))
+            ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
+        ;
+
+Finally, we need to add a new handler that will log the exceptions to the acme.log file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        monolog:
+            handlers:
+                acmelog:
+                    type: stream
+                    path: /path/to/acme.log
+                    level: error
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+            <monolog:config>
+                <monolog:handler
+                    name="acmelog"
+                    type="stream"
+                    path="/path/to/acme.log"
+                    level="error"
+                />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'acmelog' => array(
+                    'type'  => 'stream',
+                    'path'  => '/path/to/acme.log',
+                    'level' => 'error',
+                ),
+            ),
+        ));
+
 .. tip::
 
     See :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener`
