@@ -1145,6 +1145,8 @@ the choice is ultimately up to you.
 
         $form->get('dueDate')->setData(new \DateTime());
 
+.. _form-as-services:
+
 Defining your Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
