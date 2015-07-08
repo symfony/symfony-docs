@@ -8,123 +8,14 @@ quickly by showing you a simple project in action.
 If you've used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications.
 
-The only technical requisite to follow this tutorial is to have **PHP 5.4
-or higher installed on your computer**. If you use a packaged PHP solution
-such as WAMP, XAMP or MAMP, check out that they are using PHP 5.4 or a more
-recent version. You can also execute the following command in your terminal
-or command console to display the installed PHP version:
-
-.. code-block:: bash
-
-    $ php --version
-
 .. _installing-symfony2:
 
 Installing Symfony
 ------------------
 
-In the past, Symfony had to be installed manually for each new project.
-Now you can use the **Symfony Installer**, which has to be installed the
-very first time you use Symfony on a computer.
+See the Installtion Manual. :doc:`/book/installation`.
 
-On **Linux** and **Mac OS X** systems, execute the following console commands:
-
-.. code-block:: bash
-
-    $ curl -LsS http://symfony.com/installer > symfony.phar
-    $ sudo mv symfony.phar /usr/local/bin/symfony
-    $ chmod a+x /usr/local/bin/symfony
-
-After installing the Symfony installer, you'll have to open a new console
-window to be able to execute the new ``symfony`` command:
-
-.. code-block:: bash
-
-    $ symfony
-
-On **Windows** systems, execute the following console command:
-
-.. code-block:: bash
-
-    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
-
-This command downloads a file called ``symfony.phar`` which contains the
-Symfony installer. Save or move that file to the directory where you create
-the Symfony projects and then, execute the Symfony installer right away
-with this command:
-
-.. code-block:: bash
-
-    c:\> php symfony.phar
-
-Creating your First Symfony Project
------------------------------------
-
-Once the Symfony Installer is set up, use the ``new`` command to create
-new Symfony projects. Let's create a new project called ``myproject``:
-
-.. code-block:: bash
-
-    # Linux and Mac OS X
-    $ symfony new myproject
-
-    # Windows
-    c:\> php symfony.phar new myproject
-
-This command downloads the latest Symfony stable version and creates an
-empty project in the ``myproject/`` directory so you can start developing
-your application right away.
-
-.. _running-symfony2:
-
-Running Symfony
----------------
-
-This tutorial leverages the internal web server provided by PHP to run Symfony
-applications. Therefore, running a Symfony application is a matter of browsing
-the project directory and executing this command:
-
-.. code-block:: bash
-
-    $ cd myproject/
-    $ php app/console server:run
-
-Open your browser and access the ``http://localhost:8000/app/example`` URL to see the
-welcome page of Symfony:
-
-.. image:: /images/quick_tour/welcome.png
-   :align: center
-   :alt: Symfony Welcome Page
-
-Congratulations! Your first Symfony project is up and running!
-
-.. note::
-
-    Instead of the welcome page, you may see a blank page or an error page.
-    This is caused by a directory permission misconfiguration. There are
-    several possible solutions depending on your operating system. All of
-    them are explained in the
-    :ref:`Setting up Permissions <book-installation-permissions>` section
-    of the official book.
-    
-    If the welcome page does not seem to be rendering CSS or image assets,
-    install them first:
-    
-    .. code-block:: bash
-    
-        $ php app/console assets:install
-
-When you are finished working on your Symfony application, you can stop
-the server with the ``server:stop`` command:
-
-.. code-block:: bash
-
-    $ php app/console server:stop
-
-.. tip::
-
-    If you prefer a traditional web server such as Apache or Nginx, read
-    the :doc:`/cookbook/configuration/web_server_configuration` article.
+After you have successfully run the welcome page, read the follows.
 
 Understanding the Fundamentals
 ------------------------------
