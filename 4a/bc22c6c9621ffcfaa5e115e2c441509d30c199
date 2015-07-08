@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-06-28T09:49:00Z
+
+great work!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-28T10:47:11Z
+
+I like the rewrite, as data transformers are awesome things and pretty underrated by Form component users.
+
+However, as you probably noticed, I don't like the "simple" example. It's showing a bad practices imo. As I don't want to just be negative, I'm trying to come up with a better alternative. A quite common simple example is using `number_format` to transform between `1.000,00` and `1,000.00`
