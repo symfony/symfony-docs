@@ -279,7 +279,7 @@ A centralized error handling that also allows to log exceptions might look like 
                 $exception->getCode()
             );
 
-            // Log the exception to the acme.log file
+            // Log the exception to the configured log file (i.e. acme.log)
             $this->logger->error($message);
 
             // Customize the response object to display the exception details
@@ -308,7 +308,7 @@ Now, we need to register our listener:
 
         # app/config/services.yml
         services:
-            kernel.listener.your_exception_listener_name:
+            app.exception_listener:
                 class: AppBundle\EventListener\AcmeExceptionListener
                 arguments: ["@logger"]
                 tags:
@@ -331,7 +331,7 @@ Now, we need to register our listener:
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
         ;
 
-Finally, we need to add a new handler that will log the exceptions to the acme.log file:
+Finally, we need to add a new handler that will log the exceptions to the configured log file (acme.log):
 
 .. configuration-block::
 
@@ -340,7 +340,7 @@ Finally, we need to add a new handler that will log the exceptions to the acme.l
         # app/config/config.yml
         monolog:
             handlers:
-                acmelog:
+                applog:
                     type: stream
                     path: /path/to/acme.log
                     level: error
@@ -350,7 +350,7 @@ Finally, we need to add a new handler that will log the exceptions to the acme.l
         <!-- app/config/config.xml -->
             <monolog:config>
                 <monolog:handler
-                    name="acmelog"
+                    name="applog"
                     type="stream"
                     path="/path/to/acme.log"
                     level="error"
@@ -363,7 +363,7 @@ Finally, we need to add a new handler that will log the exceptions to the acme.l
         // app/config/config.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
-                'acmelog' => array(
+                'applog' => array(
                     'type'  => 'stream',
                     'path'  => '/path/to/acme.log',
                     'level' => 'error',
