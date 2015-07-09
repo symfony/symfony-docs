@@ -192,7 +192,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // the path to TwigBridge so Twig can locate the
     // form_div_layout.html.twig file
     $vendorTwigBridgeDir =
-        $vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig';
+        $vendorDir.'/symfony/twig-bridge';
     // the path to your other templates
     $viewsDir = realpath(__DIR__.'/../views');
 
