@@ -89,7 +89,7 @@ class::
         // ...
     }
 
-The ``CallbackTransformer`` takes to callback functions as arguments. The first transforms
+The ``CallbackTransformer`` takes two callback functions as arguments. The first transforms
 the original value into a format that'll be used to render the field. The second
 does the reverse: it transforms the submitted value back into the format you'll use
 in your code.
