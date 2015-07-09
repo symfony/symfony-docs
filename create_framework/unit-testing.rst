@@ -7,6 +7,8 @@ must be sure that it behaves as advertised. If not, all the applications based
 on it will exhibit the same bugs. The good news is that whenever you fix a
 bug, you are fixing a bunch of applications too.
 
+HERE
+
 Today's mission is to write unit tests for the framework we have created by
 using `PHPUnit`_. Create a PHPUnit configuration file in
 ``example.com/phpunit.xml.dist``:
