@@ -691,7 +691,7 @@ can be used to figure out if the current request is a "master" or "sub" request.
 For example, a listener that only needs to act on the master request may
 look like this::
 
-    use Symfony\Component\HttpKernel\HttpKernelInterface;
+    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     // ...
 
     public function onKernelRequest(GetResponseEvent $event)
