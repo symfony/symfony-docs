@@ -17,7 +17,7 @@ You can install the component in 2 different ways:
 * Use the official Git repository (https://github.com/symfony/psr-http-message-bridge).
 
 The bridge also needs a PSR-7 implementation to allow converting HttpFoundation
-objects to PSR-7 objects. It provides native support for _`Zend Diactoros`_.
+objects to PSR-7 objects. It provides native support for `Zend Diactoros`_.
 Use Composer (``zendframework/zend-diactoros`` on `Packagist`_) or refer to
 the project documentation to install it.
 
@@ -86,3 +86,4 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
 
 .. _`PSR-7`: http://www.php-fig.org/psr/psr-7/
 .. _Packagist: https://packagist.org/packages/symfony/psr-http-message-bridge
+.. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
