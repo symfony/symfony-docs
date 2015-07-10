@@ -60,8 +60,9 @@ to work correctly. Just pass a file name to enable it::
 .. tip::
 
     The ``nextBytes()`` method returns a binary string which may contain the
-    ``\0`` character. If you store this value in a database or include it as
-    part of the URL, make sure to hash the value returned by ``nextBytes()``
-    (to do that, you can use a simple ``md5()`` PHP function).
+    ``\0`` character. This can cause troubles in lots of common scenarios, such
+    as storing this value in a database or including it as part of the URL. The
+    solution is to hash the value returned by ``nextBytes()`` (to do that, you
+    can use a simple ``md5()`` PHP function).
 
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
