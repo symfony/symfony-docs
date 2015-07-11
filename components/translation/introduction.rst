@@ -200,7 +200,7 @@ loaded like this::
     );
 
 When translating strings that are not in the default domain (``messages``),
-you must specify the domain as the third argument of ``trans()``::
+you must specify the domain as the fourth argument of ``trans()``::
 
     $translator->trans('Symfony is great', array(), 'admin');
 
