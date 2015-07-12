@@ -6,14 +6,14 @@ Deploying to Microsoft Azure Website Cloud
 
 This step by step cookbook describes how to deploy a small Symfony web
 application to the Microsoft Azure Website cloud platform. It will explain how
-to setup a new Azure website including configuring the right PHP version and
+to set up a new Azure website including configuring the right PHP version and
 global environment variables. The document also shows how to you can leverage
 Git and Composer to deploy your Symfony application to the cloud.
 
 Setting up the Azure Website
 ----------------------------
 
-To setup a new Microsoft Azure Website, first `signup with Azure`_ or sign in
+To set up a new Microsoft Azure Website, first `sign up with Azure`_ or sign in
 with your credentials. Once you're connected to your `Azure Portal`_ interface,
 scroll down to the bottom and select the **New** panel. On this panel, click
 **Web Site** and choose **Custom Create**:
@@ -41,7 +41,7 @@ next step.
 Step 2: New MySQL Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On this step, you will be prompted to setup your MySQL database storage with a
+On this step, you will be prompted to set up your MySQL database storage with a
 database name and a region. The MySQL database storage is provided by Microsoft
 in partnership with ClearDB. Choose the same region you selected for the hosting
 plan configuration in the previous step.
@@ -114,7 +114,7 @@ the web server.
     Choosing a more recent PHP version can greatly improve runtime performance.
     PHP 5.5 ships with a new built-in PHP accelerator called OPCache that
     replaces APC. On an Azure Website, OPCache is already enabled and there
-    is no need to install and setup APC.
+    is no need to install and set up APC.
 
     The following screenshot shows the output of a :phpfunction:`phpinfo` script
     run from an Azure Website to verify that PHP 5.5 is running with
@@ -171,7 +171,7 @@ this file just needs to be moved into the custom website extension directory.
     longer be necessary.
 
 To get the ``php_intl.dll`` file under your ``site/wwwroot`` directory, simply
-access the online **Kudu** tool by browsing to the following url:
+access the online **Kudu** tool by browsing to the following URL:
 
 .. code-block:: text
 
@@ -342,7 +342,7 @@ credentials, CSRF token protection, etc. These parameters come from the
 .. image:: /images/cookbook/deployment/azure-website/step-16.png
    :alt: Configuring Symfony global parameters
 
-The most important thing in this cookbook is to correctly setup your database
+The most important thing in this cookbook is to correctly set up your database
 settings. You can get your MySQL database settings on the right sidebar of the
 **Azure Website Dashboard** panel. Simply click on the
 **View Connection Strings** link to make them appear in a pop-in.
@@ -395,7 +395,7 @@ Symfony application is more complex than a basic Symfony Standard Edition, you
 may have additional commands to execute for setup (see :doc:`/cookbook/deployment/tools`).
 
 Make sure that your application is running by browsing the ``app.php`` front
-controller with your web browser and the following url:
+controller with your web browser and the following URL:
 
 .. code-block:: bash
 
@@ -408,7 +408,7 @@ Configure the Web Server
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 At this point, the Symfony application has been deployed and works perfectly on
-the Azure Website. However, the ``web`` folder is still part of the url, which
+the Azure Website. However, the ``web`` folder is still part of the URL, which
 you definitely don't want. But don't worry! You can easily configure the web
 server to point to the ``web`` folder and remove the ``web`` in the URL (and
 guarantee that nobody can access files outside of the ``web`` directory.)
@@ -453,9 +453,9 @@ application, configure it with the following content:
     </configuration>
 
 As you can see, the latest rule ``RewriteRequestsToPublic`` is responsible for
-rewriting any urls to the ``web/app.php`` front controller which allows you to
+rewriting any URLs to the ``web/app.php`` front controller which allows you to
 skip the ``web/`` folder in the URL. The first rule called ``BlockAccessToPublic``
-matches all url patterns that contain the ``web/`` folder and serves a
+matches all URL patterns that contain the ``web/`` folder and serves a
 ``403 Forbidden`` HTTP response instead. This example is based on Benjamin
 Eberlei's sample you can find on GitHub in the `SymfonyAzureEdition`_ bundle.
 
@@ -471,7 +471,7 @@ and executed on a Microsoft IIS web server. The process is simple and easy
 to implement. And as a bonus, Microsoft is continuing to reduce the number
 of steps needed so that deployment becomes even easier.
 
-.. _`signup with Azure`: https://signup.live.com/signup.aspx
+.. _`sign up with Azure`: https://signup.live.com/signup.aspx
 .. _`Azure Portal`: https://manage.windowsazure.com
 .. _`PHP MSDN documentation`: http://blogs.msdn.com/b/silverlining/archive/2012/07/10/configuring-php-in-windows-azure-websites-with-user-ini-files.aspx
 .. _`git-scm.com`: http://git-scm.com/download
