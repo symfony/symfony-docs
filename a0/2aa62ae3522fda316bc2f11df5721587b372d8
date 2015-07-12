@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-03T19:19:22Z
+
+We should probably explain that all modern browsers support these methods in XHR, but that HTML forms still can only use GET and POST.
+
+---------------------------------------------------------------------------
+
+by wouthoekstra at 2015-06-04T09:03:33Z
+
+You're right. I'll get on to it :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-05T11:03:13Z
+
+Oh, and we also have a part talking about this at http://symfony.com/doc/current/cookbook/routing/method_parameters.html#faking-the-method-with-method. Could you please address that section too?
+
+---------------------------------------------------------------------------
+
+by 1emming at 2015-06-05T12:01:36Z
+
+:+1: @wouthoekstra for taking care of this :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-09T06:54:25Z
+
+This looks good! :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-09T06:55:32Z
+
+@wouthoekstra By the way, we don't receive notifications when new commits are pushed to a pull request (I just discovered your update "accidentally"). So next time it's better to leave a comment after you did some changes. :)
+
+---------------------------------------------------------------------------
+
+by wouthoekstra at 2015-07-09T11:10:03Z
+
+Ah thx for the tip xabbuh, didn't know that! Glad the alterations are okay :)
