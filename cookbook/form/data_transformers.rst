@@ -22,6 +22,7 @@ Simple Example: Sanitizing HTML on User Input
 Suppose you have a Task form with a description ``textarea`` type::
 
     // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,14 +32,13 @@ Suppose you have a Task form with a description ``textarea`` type::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder
-                ->add('description', 'textarea');
+            $builder->add('description', 'textarea');
         }
-        
+
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task'
+                'data_class' => 'AppBundle\Entity\Task',
             ));
         }
 
@@ -58,6 +58,7 @@ field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\
 class::
 
     // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\CallbackTransformer;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -67,8 +68,7 @@ class::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder
-                ->add('description', 'textarea');
+            $builder->add('description', 'textarea');
 
             $builder->get('description')
                 ->addModelTransformer(new CallbackTransformer(
@@ -83,13 +83,14 @@ class::
                         // transform any \n to real <br/>
                         return str_replace("\n", '<br/>', $cleaned);
                     }
-                ));
+                ))
+            ;
         }
 
         // ...
     }
 
-The ``CallbackTransformer`` takes to callback functions as arguments. The first transforms
+The ``CallbackTransformer`` takes two callback functions as arguments. The first transforms
 the original value into a format that'll be used to render the field. The second
 does the reverse: it transforms the submitted value back into the format you'll use
 in your code.
@@ -120,6 +121,7 @@ issue number.
 Start by setting up the text field like normal::
 
     // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form\Type;
 
     // ...
     class TaskType extends AbstractType
@@ -128,7 +130,8 @@ Start by setting up the text field like normal::
         {
             $builder
                 ->add('description', 'textarea')
-                ->add('issue', 'text');
+                ->add('issue', 'text')
+            ;
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -247,6 +250,7 @@ No problem! Just add a ``__construct()`` function to ``TaskType`` and force this
 to be passed in. Then, you can easily create and add the transformer::
 
     // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\EntityManager;
@@ -267,7 +271,7 @@ to be passed in. Then, you can easily create and add the transformer::
                 ->add('description', 'textarea')
                 ->add('issue', 'text', array(
                     // validation message if the data transformer fails
-                    'invalid_message' => 'That is not a valid issue number'
+                    'invalid_message' => 'That is not a valid issue number',
                 ));
 
             // ...
@@ -311,6 +315,8 @@ its error message can be controlled with the ``invalid_message`` field option.
         $builder->add('issue', 'text')
             ->addModelTransformer($transformer);
 
+.. _using-transformers-in-a-custom-field-type:
+
 Creating a Reusable issue_selector Field
 ----------------------------------------
 
@@ -322,7 +328,6 @@ that does this automatically.
 First, create the custom field type class::
 
     // src/AppBundle/Form/IssueSelectorType.php
-
     namespace AppBundle\Form;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
@@ -385,24 +390,37 @@ it's recognized as a custom field type:
 
     .. code-block:: xml
 
-        <service id="app.type.issue_selector"
-            class="AppBundle\Form\IssueSelectorType">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <tag name="form.type" alias="issue_selector" />
-        </service>
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.type.issue_selector"
+                    class="AppBundle\Form\IssueSelectorType">
+                    <argument type="service" id="doctrine.orm.entity_manager"/>
+                    <tag name="form.type" alias="issue_selector" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...
 
         $container
             ->setDefinition('app.type.issue_selector', new Definition(
-                'AppBundle\Form\IssueSelectorType'
-                ), array(
-                new Reference('doctrine.orm.entity_manager'),
-            ))
+                    'AppBundle\Form\IssueSelectorType'
+                ),
+                array(
+                    new Reference('doctrine.orm.entity_manager'),
+                )
+            )
             ->addTag('form.type', array(
                 'alias' => 'issue_selector',
             ))
@@ -412,7 +430,10 @@ Now, whenever you need to use your special ``issue_selector`` field type,
 it's quite easy::
 
     // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form\Type;
+
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
+    // ...
 
     class TaskType extends AbstractType
     {
@@ -420,11 +441,14 @@ it's quite easy::
         {
             $builder
                 ->add('description', 'textarea')
-                ->add('issue', 'issue_selector');
+                ->add('issue', 'issue_selector')
+            ;
         }
 
         // ...
     }
+
+.. _model-and-view-transformers:
 
 About Model and View Transformers
 ---------------------------------
