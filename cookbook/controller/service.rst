@@ -11,11 +11,11 @@ this works fine, controllers can also be specified as services.
 
 .. note::
 
-    Specifying a controller as a service takes a little bit more work. The
+    Specifying a controller as a service takes a bit more work. The
     primary advantage is that the entire controller or any services passed to
     the controller can be modified via the service container configuration.
     This is especially useful when developing an open-source bundle or any
-    bundle that will be used in many different projects.
+    bundle that will be used in different projects.
 
     A second advantage is that your controllers are more "sandboxed". By
     looking at the constructor arguments, it's easy to see what types of things
