@@ -189,10 +189,10 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     $defaultFormTheme = 'form_div_layout.html.twig';
 
     $vendorDir = realpath(__DIR__.'/../vendor');
-    // the path to TwigBridge so Twig can locate the
+    // the path to TwigBridge library so Twig can locate the
     // form_div_layout.html.twig file
-    $vendorTwigBridgeDir =
-        $vendorDir.'/symfony/twig-bridge';
+    $appVariableReflection = new \ReflectionClass( '\Symfony\Bridge\Twig\AppVariable' );
+    $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
     // the path to your other templates
     $viewsDir = realpath(__DIR__.'/../views');
 
