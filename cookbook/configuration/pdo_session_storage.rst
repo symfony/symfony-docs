@@ -7,7 +7,7 @@ How to Use PdoSessionHandler to Store Sessions in the Database
 The default Symfony session storage writes the session information to files.
 Most medium to large websites use a database to store the session values
 instead of files, because databases are easier to use and scale in a
-multi webserver environment.
+multiple web server environment.
 
 Symfony has a built-in solution for database session storage called
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
@@ -172,14 +172,17 @@ of your project's data, you can use the connection settings from the
             '%database_password%',
         ));
 
-Example SQL Statements
-----------------------
+.. example-sql-statements::
+
+Preparing the Database to Store Sessions
+----------------------------------------
+
+Before storing sessions in the database, you must create the table that stores
+the information. The following sections contain some examples of the SQL statements
+you may use for your specific database engine.
 
 MySQL
 ~~~~~
-
-The SQL statement for creating the needed database table might look like the
-following (MySQL):
 
 .. code-block:: sql
 
@@ -193,8 +196,6 @@ following (MySQL):
 PostgreSQL
 ~~~~~~~~~~
 
-For PostgreSQL, the statement should look like this:
-
 .. code-block:: sql
 
     CREATE TABLE session (
@@ -206,8 +207,6 @@ For PostgreSQL, the statement should look like this:
 
 Microsoft SQL Server
 ~~~~~~~~~~~~~~~~~~~~
-
-For MSSQL, the statement might look like the following:
 
 .. code-block:: sql
 
@@ -225,3 +224,16 @@ For MSSQL, the statement might look like the following:
             ALLOW_PAGE_LOCKS  = ON
         ) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+.. note::
+
+    If the session data doesn't fit in the data column, it might get truncated
+    by the database engine. To make matters worse, when the session data gets
+    corrupted, PHP ignores the data without giving a warning.
+
+    If the application stores large amounts of session data, this problem can
+    be solved by increasing the column size (use ``BLOB`` or even ``MEDIUMBLOB``).
+    When using MySQL as the database engine, you can also enable the `strict SQL mode`_
+    to get noticed when such an error happens.
+
+.. _`strict SQL mode`: https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html
