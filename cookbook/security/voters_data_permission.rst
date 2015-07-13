@@ -61,6 +61,12 @@ does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``
 Creating the custom Voter
 -------------------------
 
+.. tip::
+
+    You can extends the
+    :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`
+    to ease the implementation of your custom Voter.
+
 The goal is to create a voter that checks if a user has access to view or
 edit a particular object. Here's an example implementation:
 
