@@ -127,7 +127,7 @@ based on `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
 also be used to create new applications based on the Symfony Framework. If you
-don't have installed it globally, start by reading the next section.
+don't have it installed globally, start by reading the next section.
 
 Installing Composer Globally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
