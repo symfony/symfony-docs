@@ -172,7 +172,7 @@ of your project's data, you can use the connection settings from the
             '%database_password%',
         ));
 
-.. example-sql-statements::
+.. _example-sql-statements:
 
 Preparing the Database to Store Sessions
 ----------------------------------------
@@ -236,4 +236,4 @@ Microsoft SQL Server
     When using MySQL as the database engine, you can also enable the `strict SQL mode`_
     to get noticed when such an error happens.
 
-.. _`strict SQL mode`: https://dev.mysql.com/doc/refman/5.0/en/sql-mode.html
+.. _`strict SQL mode`: https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
