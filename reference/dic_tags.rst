@@ -297,7 +297,7 @@ the generic ``app.lock`` service can be defined as follows:
                 public: false
             app.lock:
                 tags:
-                    - { name: auto_alias, format: "app.%database_type%.lock" }
+                    - { name: auto_alias, format: "app.%database_type%_lock" }
 
     .. code-block:: xml
 
@@ -315,7 +315,7 @@ the generic ``app.lock`` service can be defined as follows:
                          class="AppBundle\Lock\SqliteLock" />
 
                 <service id="app.lock">
-                    <tag name="auto_alias" format="app.%database_type%.lock" />
+                    <tag name="auto_alias" format="app.%database_type%_lock" />
                 </service>
             </services>
         </container>
@@ -328,7 +328,7 @@ the generic ``app.lock`` service can be defined as follows:
             ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')->setPublic(false)
 
             ->register('app.lock')
-            ->addTag('auto_alias', array('format' => 'app.%database_type%.lock'))
+            ->addTag('auto_alias', array('format' => 'app.%database_type%_lock'))
         ;
 
 The ``format`` parameter defines the expression used to construct the name of
