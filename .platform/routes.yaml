@@ -13,4 +13,4 @@ http://{default}/:
   ssi:
     enabled: false
   type: upstream
-  upstream: php:php
+  upstream: symfonydocs:php
