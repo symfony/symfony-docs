@@ -169,7 +169,7 @@ to your class and choose which groups to use when serializing::
     $serializer = $this->get('serializer');
     $json = $serializer->serialize(
         $someObject,
-        'json', array('groups' => array('group1')
+        'json', array('groups' => array('group1'))
     );
 
 .. _cookbook-serializer-enabling-metadata-cache:
