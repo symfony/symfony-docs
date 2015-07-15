@@ -248,6 +248,27 @@ steps to contribute to the Symfony documentation, which you can use as a
 
 You guessed right: after all this hard work, it's **time to celebrate again!**
 
+
+Review your changes
+-------------------
+
+Every GitHub Pull Request is automatically built and deployed by `Platform.sh`_
+on a single environment that you can access on your browser to review your 
+changes.
+
+.. image:: /images/contributing/docs-pull-request-platformsh.png
+   :align: center
+   :alt:   Platform.sh Pull Request Deployment
+
+To access the `Platform.sh`_ environment URL, simply go to your Pull Request 
+page on GitHub and click on ``Details``.
+
+.. note::
+
+    The specific configuration files at the root of the Git repository: 
+    ``.platform.app.yaml``, ``.platform/services.yaml`` and 
+    ``.platform/routes.yaml`` allow `Platform.sh`_ to build Pull Requests.
+
 Minor Changes (e.g. Typos)
 --------------------------
 
@@ -324,3 +345,4 @@ definitely don't want you to waste your time!
 .. _SensioLabsConnect: https://connect.sensiolabs.com/
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
+.. _`Platform.sh`: https://platform.sh
