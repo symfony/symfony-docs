@@ -1,0 +1,55 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+
+# The name of this app. Must be unique within a project.
+name: symfonydocs
+
+# The toolstack used to build the application.
+type: "php"
+
+build:
+    flavor: "composer"
+
+# The configuration of app when it is exposed to the web.
+web:
+    # The public directory of the app, relative to its root.
+    document_root: "/_build/html"
+    index_files:
+      - index.html
+    whitelist:
+      - \.html$
+      - \.txt$
+
+      # CSS and Javascript.
+      - \.css$
+      - \.js$
+      - \.hbs$
+
+      # image/* types.
+      - \.gif$
+      - \.png$
+      - \.ico$
+      - \.svgz?$
+
+      # fonts types.
+      - \.ttf$
+      - \.eot$
+      - \.woff$
+      - \.otf$
+
+      # robots.txt.
+      - /robots\.txt$
+
+# The size of the persistent disk of the application (in MB).
+disk: 512
+
+# Build time dependencies.
+dependencies:
+  python:
+    sphinx: ">=1"
+
+# The hooks that will be performed when the package is deployed.
+hooks:
+    build: |
+      pip install git+https://github.com/fabpot/sphinx-php.git
+      make html
