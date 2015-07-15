@@ -62,6 +62,7 @@ edit a particular object. Here's an example implementation::
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use AppBundle\Entity\User;
 
     class PostVoter implements VoterInterface
     {
@@ -116,6 +117,13 @@ edit a particular object. Here's an example implementation::
             // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
                 return VoterInterface::ACCESS_DENIED;
+            }
+
+            // double-check that our User object is the entity we expect.
+            // It always will be, unless we've configured our security system
+            // in some other way.
+            if (!$user instanceof User) {
+                throw new \LogicException('The user is somehow not our User class!');
             }
 
             switch($attribute) {
