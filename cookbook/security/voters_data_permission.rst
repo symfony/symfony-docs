@@ -111,7 +111,8 @@ edit a particular object. Here's an example implementation:
                     }
 
                     break;
-
+            }
+            
             return false;
         }
     }
