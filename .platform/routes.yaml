@@ -1,0 +1,16 @@
+http://www.{default}/:
+  to: http://{default}/
+  type: redirect
+http://{default}/:
+  cache:
+    cookies:
+    - '*'
+    default_ttl: 0
+    enabled: true
+    headers:
+    - Accept
+    - Accept-Language
+  ssi:
+    enabled: false
+  type: upstream
+  upstream: symfonydocs:php
