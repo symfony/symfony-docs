@@ -24,8 +24,9 @@ All voters are called each time you use the ``isGranted()`` method on Symfony's
 security context (i.e. the ``security.context`` service). Each one decides
 if the current user should have access to some resource.
 
-Ultimately, Symfony uses one of three different approaches on what to do
-with the feedback from all voters: affirmative, consensus and unanimous.
+Ultimately, Symfony takes the responses from all voters and makes the final
+decission (to allow or deny access to the resource) according to the strategy defined
+in the application, which can be: affirmative, consensus or unanimous.
 
 For more information take a look at
 :ref:`the section about access decision managers <components-security-access-decision-manager>`.
@@ -49,7 +50,7 @@ method is used to check if the voter supports the given user attribute (i.e:
 a role like ``ROLE_USER``, an ACL ``EDIT``, etc.).
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass`
-method is used to check if the voter supports the class of the object whose
+method checks whether the voter supports the class of the object whose
 access is being checked.
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::vote`
@@ -87,10 +88,7 @@ edit a particular object. Here's an example implementation::
 
         public function supportsAttribute($attribute)
         {
-            return in_array($attribute, array(
-                self::VIEW,
-                self::EDIT,
-            ));
+            return in_array($attribute, array(self::VIEW, self::EDIT));
         }
 
         public function supportsClass($class)
@@ -229,7 +227,7 @@ from the security context is called.
 
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorised access!');
+                throw new AccessDeniedException('Unauthorized access!');
             }
 
             return new Response('<h1>'.$post->getName().'</h1>');
