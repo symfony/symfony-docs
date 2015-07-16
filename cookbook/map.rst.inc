@@ -166,7 +166,6 @@
 * :doc:`Security Authorization (Denying Access) </cookbook/security/index>`
 
   * :doc:`/cookbook/security/voters`
-  * :doc:`/cookbook/security/voters_data_permission`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
