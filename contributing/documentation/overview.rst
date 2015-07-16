@@ -268,7 +268,8 @@ The specific configuration files at the root of the Git repository:
 allow `Platform.sh`_ to build Pull Requests.
 
 .. note::
-    Only the following branches are supported for building Pull Requests: 2.3 (LTS), 2.6, 2.7, 2.8.
+    Only the following branches are supported for building Pull Requests: 2.3 (LTS), 
+    2.6, 2.7, 2.8.
 
 Minor Changes (e.g. Typos)
 --------------------------
