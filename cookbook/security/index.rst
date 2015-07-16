@@ -31,7 +31,6 @@ Authorization (Denying Access)
     :maxdepth: 2
 
     voters
-    voters_data_permission
     acl
     acl_advanced
     force_https
