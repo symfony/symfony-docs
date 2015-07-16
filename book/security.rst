@@ -994,10 +994,10 @@ other users. Also, as the admin user, you yourself want to be able to edit
 
 To accomplish this you have 2 options:
 
-* :doc:`Voters </cookbook/security/voters_data_permission>` allow you to
-  use business logic (e.g. the user can edit this post because they were
-  the creator) to determine access. You'll probably want this option - it's
-  flexible enough to solve the above situation.
+* :doc:`Voters </cookbook/security/voters>` allow you to use business logic
+  (e.g. the user can edit this post because they were the creator) to determine
+  access. You'll probably want this option - it's flexible enough to solve the
+  above situation.
 
 * :doc:`ACLs </cookbook/security/acl>` allow you to create a database structure
   where you can assign *any* arbitrary user *any* access (e.g. EDIT, VIEW)
@@ -1383,7 +1383,7 @@ Learn More from the Cookbook
 
 * :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
 * :doc:`Impersonating a User </cookbook/security/impersonating_user>`
-* :doc:`/cookbook/security/voters_data_permission`
+* :doc:`/cookbook/security/voters`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 * :doc:`/cookbook/security/multiple_user_providers`

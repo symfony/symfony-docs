@@ -48,3 +48,4 @@
 /cmf/cookbook/creating_a_cms/sonata-admin /cmf/tutorial/sonata-admin
 /cmf/cookbook/creating_a_cms/the-frontend /cmf/tutorial/the-frontend
 /cookbook/upgrading /cookbook/upgrade/index
+/cookbook/security/voters_data_permission /cookbook/security/voters
