@@ -66,9 +66,10 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`Capifony`_
-    This Ruby-based tool provides a specialized set of tools on top of
-    `Capistrano`_, tailored specifically to Symfony projects.
+`Capistrano`_/`symphony`_
+    `Capistrano`_ is a remote server automation and deployment tool written in Ruby. 
+    `symphony`_ is a plugin to ease symphony related tasks, inspired by `Capifony`_
+    (works only with Capistrano 2 )
 
 `sf2debpkg`_
     Helps you build a native Debian package for your Symfony project.
@@ -198,3 +199,4 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
+.. _`symfony`: https://github.com/capistrano/symfony/
