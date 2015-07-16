@@ -157,6 +157,11 @@ Response::
                 }
             )))
         ;
+        $matcher
+            ->expects($this->once())
+            ->method('getContext')
+            ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
+        ;
         $resolver = new ControllerResolver();
 
         $framework = new Framework($matcher, $resolver);
