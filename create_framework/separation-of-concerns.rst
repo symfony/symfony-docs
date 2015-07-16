@@ -151,7 +151,7 @@ To sum up, here is the new file layout:
     example.com
     ├── composer.json
     ├── composer.lock    
-    │   src
+    ├── src
     │   ├── app.php
     │   └── Simplex
     │       └── Framework.php
