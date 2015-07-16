@@ -6,11 +6,11 @@ How to Use the Serializer
 
 Serializing and deserializing to and from objects and different formats (e.g.
 JSON or XML) is a very complex topic. Symfony comes with a
-:doc:`Serializer Component</components/serializer>`, which gives you some
+:doc:`Serializer Component </components/serializer>`, which gives you some
 tools that you can leverage for your solution.
 
 In fact, before you start, get familiar with the serializer, normalizers
-and encoders by reading the :doc:`Serializer Component</components/serializer>`.
+and encoders by reading the :doc:`Serializer Component </components/serializer>`.
 
 Activating the Serializer
 -------------------------
@@ -80,7 +80,7 @@ Adding Normalizers and Encoders
     your own normalizer.
 
 Once enabled, the ``serializer`` service will be available in the container
-and will be loaded with two :ref:`encoders<component-serializer-encoders>`
+and will be loaded with two :ref:`encoders <component-serializer-encoders>`
 (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` and
 :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`) and the
 :ref:`ObjectNormalizer normalizer <component-serializer-normalizers>`.
@@ -123,6 +123,8 @@ Here is an example on how to load the
         ));
         $definition->addTag('serializer.normalizer');
         $container->setDefinition('get_set_method_normalizer', $definition);
+
+.. _cookbook-serializer-using-serialization-groups-annotations:
 
 Using Serialization Groups Annotations
 --------------------------------------
@@ -167,8 +169,10 @@ to your class and choose which groups to use when serializing::
     $serializer = $this->get('serializer');
     $json = $serializer->serialize(
         $someObject,
-        'json', array('groups' => array('group1')
+        'json', array('groups' => array('group1'))
     );
+
+.. _cookbook-serializer-enabling-metadata-cache:
 
 Enabling the Metadata Cache
 ---------------------------

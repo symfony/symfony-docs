@@ -156,8 +156,14 @@ before translating contents::
         }
     }
 
-However for other services the solution might be more complex. For more details,
+However, for other services the solution might be more complex. For more details,
 see :doc:`/cookbook/service_container/scopes`.
+
+Invoking other Commands
+-----------------------
+
+See :ref:`calling-existing-command` if you need to implement a command that runs
+other dependent commands.
 
 Testing Commands
 ----------------

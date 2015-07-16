@@ -175,22 +175,18 @@ Verbosity Levels
    The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
    in version 2.3
 
-The console has 5 levels of verbosity. These are defined in the
+The console has five verbosity levels. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
-=======================================  ==================================
-Mode                                     Value
-=======================================  ==================================
-OutputInterface::VERBOSITY_QUIET         Do not output any messages
-OutputInterface::VERBOSITY_NORMAL        The default verbosity level
-OutputInterface::VERBOSITY_VERBOSE       Increased verbosity of messages
-OutputInterface::VERBOSITY_VERY_VERBOSE  Informative non essential messages
-OutputInterface::VERBOSITY_DEBUG         Debug messages
-=======================================  ==================================
-
-You can specify the quiet verbosity level with the ``--quiet`` or ``-q``
-option. The ``--verbose`` or ``-v`` option is used when you want an increased
-level of verbosity.
+===========================================  ==================================  =====================
+Value                                        Meaning                             Console option
+===========================================  ==================================  =====================
+``OutputInterface::VERBOSITY_QUIET``         Do not output any messages          ``-q`` or ``--quiet``
+``OutputInterface::VERBOSITY_NORMAL``        The default verbosity level         (none)
+``OutputInterface::VERBOSITY_VERBOSE``       Increased verbosity of messages     ``-v``
+``OutputInterface::VERBOSITY_VERY_VERBOSE``  Informative non essential messages  ``-vv``
+``OutputInterface::VERBOSITY_DEBUG``         Debug messages                      ``-vvv``
+===========================================  ==================================  =====================
 
 .. tip::
 
@@ -222,6 +218,13 @@ verbosity levels::
     if ($output->isDebug()) {
         // ...
     }
+
+.. note::
+
+    These semantic methods are defined in the ``OutputInterface`` starting from
+    Symfony 3.0. In previous Symfony versions they are defined in the different
+    implementations of the interface (e.g. :class:`Symfony\\Component\\Console\\Output\\Output`)
+    in order to keep backwards compatibility.
 
 When the quiet level is used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
@@ -477,6 +480,8 @@ method::
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
 
+.. _calling-existing-command:
+
 Calling an Existing Command
 ---------------------------
 
@@ -506,15 +511,26 @@ Calling a command from another one is straightforward::
     }
 
 First, you :method:`Symfony\\Component\\Console\\Application::find` the
-command you want to execute by passing the command name.
-
-Then, you need to create a new
-:class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the arguments and
-options you want to pass to the command.
+command you want to execute by passing the command name. Then, you need to create
+a new :class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the arguments
+and options you want to pass to the command.
 
 Eventually, calling the ``run()`` method actually executes the command and
 returns the returned code from the command (return value from command's
 ``execute()`` method).
+
+.. tip::
+
+    If you want to suppress the output of the executed command, pass a
+    :class:`Symfony\\Component\\Console\\Output\\NullOutput` as the second
+    argument to ``$command->execute()``.
+
+.. caution::
+
+    Note that all the commands will run in the same process and some of Symfony's
+    built-in commands may not work well this way. For instance, the ``cache:clear``
+    and ``cache:warmup`` commands change some class definitions, so running
+    something after them is likely to break.
 
 .. note::
 

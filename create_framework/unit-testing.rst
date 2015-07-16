@@ -96,6 +96,11 @@ We are now ready to write our first test::
                 ->method('match')
                 ->will($this->throwException($exception))
             ;
+            $matcher
+                ->expects($this->once())
+                ->method('getContext')
+                ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
+            ;
             $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
             return new Framework($matcher, $resolver);
@@ -185,6 +190,6 @@ Symfony code.
 Now that we are confident (again) about the code we have written, we can
 safely think about the next batch of features we want to add to our framework.
 
-.. _`PHPUnit`: http://www.phpunit.de/manual/current/en/index.html
-.. _`test doubles`: http://www.phpunit.de/manual/current/en/test-doubles.html
+.. _`PHPUnit`: http://phpunit.de/manual/current/en/index.html
+.. _`test doubles`: http://phpunit.de/manual/current/en/test-doubles.html
 .. _`XDebug`: http://xdebug.org/

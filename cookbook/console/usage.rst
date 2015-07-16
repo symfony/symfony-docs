@@ -56,7 +56,7 @@ When using the shell you can choose to run each command in a separate process:
     $ php app/console -s --process-isolation
 
 When you do this, the output will not be colorized and interactivity is not
-supported so you will need to pass all command params explicitly.
+supported so you will need to pass all command parameters explicitly.
 
 .. note::
 
