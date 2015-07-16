@@ -1,0 +1,125 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-23T18:30:57Z
+
+I like this, but I'd actually like to solve it in an easier way: add a commented-out example in the previous section:
+
+```yml
+contact_process:
+    path:     /contact
+    defaults: { _controller: AppBundle:Main:processContact }
+    methods:  [POST]
+    # or to match GET *or* POST methods
+    # methods: [GET, POST]
+```
+
+What do you think @xelaris?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-24T07:49:54Z
+
+I usually prefer concise explanations, as proposed by @weaverryan. But in this case, I think it could be better to show a verbose explanation as proposed by @xelaris. Adding a comment is not clear enough for me. Let's ask @xabbuh and @WouterJ for their opinion about this. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T15:11:04Z
+
+I would have said that the example proposed by @weaverryan would be clear enough.
+
+@javiereguiluz Do you think from your experience about talking with beginners that this is something not so obvious (even with commented out example)?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-24T15:29:42Z
+
+@xabbuh I don't know which would be the opinion of newcomers. It was just a personal comment. Let me show you a pair of screenshots explainig why I said that.
+
+We have this:
+
+![before1](https://cloud.githubusercontent.com/assets/73419/8334066/3aef5700-1a96-11e5-98d4-91b42ef8ada6.png)
+
+And Ryan proposes to add a comment:
+
+![after1](https://cloud.githubusercontent.com/assets/73419/8334071/44426018-1a96-11e5-8cef-6e2b62aa8dec.png)
+
+It's not a bad idea at all. But my concern is ... what would happen with the other 3 config formats? For example, consider the case of "annotations":
+
+Before:
+
+![before2](https://cloud.githubusercontent.com/assets/73419/8334085/55ca4ba2-1a96-11e5-84c2-474216508a9b.png)
+
+After:
+
+![after2](https://cloud.githubusercontent.com/assets/73419/8334086/56cf759a-1a96-11e5-92d8-008db7eca043.png)
+
+But I think we could find a solution: what if we use `GET` for `contactAction ()` and `GET` + `POST` for `processContactAction()`?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-25T21:28:38Z
+
+I hadn't thought about the annotations format, so I agree with Javier. But making the process handle get or post might be confusing since it has the same URL as the above, and so will never match in GET. I'm in favor of actually merging as is, after making all this fuss (the additions actually small - mostly code block).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-25T21:31:37Z
+
+What about using `[POST, PUT]` (for instance) for processContactForm?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-25T21:33:58Z
+
+Oh, that's a cool idea - I can't believe I didn't think of that! +1 for making the previous example use Post and Put instead of this new section. @xelaris can you make that change?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-25T21:43:17Z
+
+Oh yeah, that's indeed a great idea @WouterJ.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-07-05T19:15:54Z
+
+I like the idea of changing the existing example to demonstrate how to match multiple methods and I changed the PR as suggested by @WouterJ. But I have two points about the current state of this PR:
+* I noticed that the example doesn't work well with the best practices, as it uses two actions to display and process the form. This was actually a reason for the first version of this PR.
+* I'm in doubt if `PUT` is a suitable method to send a contact form.
+
+I'm +1 with @javiereguiluz suggestion to change the `processContactAction()` method to match `GET` and `POST`. This would kill two birds with one stone: Demonstrate how to match multiple routes and fulfill the best practise.
+To make the example more consistent then, I suggest to rename `processContactAction` to `contactFormAction` and use a comment like `// ... display and process a contact form` and to change `contactAction` to `newsAction` with route `/news` or something and use a comment like `// ... display your news`.
+
+What are your opinion about this?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-07T07:45:54Z
+
+@xelaris Good point with the best practices. But wouldn't we then don't have an example with only one allowed method when choosing your solution?
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-07-07T09:22:49Z
+
+@xabbuh The `newsAction` with route `/news`would match only `GET`.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-07T09:45:52Z
+
+Good point, looks like a good idea then.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-07-15T20:52:04Z
+
+I have changed the PR to apply the latest proposal. What do you think about it?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-15T21:09:27Z
+
+:+1: from me
