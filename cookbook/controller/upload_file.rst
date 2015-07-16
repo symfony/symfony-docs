@@ -156,14 +156,14 @@ There are some important things to consider in the code of the above controller:
    provides methods for the most common operations when dealing with uploaded files.
 #. A well-known security best practice is to never trust the input provided by
    users. This also applies to the files uploaded by your visitors. The ``Uploaded``
-   class provides methods to get the original file extension (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension()`),
-   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize()`)
-   and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName()`).
+   class provides methods to get the original file extension (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension`),
+   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`)
+   and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`).
    However, they are considered *not safe* because a malicious user could tamper
    that information. That's why it's always better to generate a unique name and
-   use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension()`
+   use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type.
-#. The ``UploadedFile`` class also provides a :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::move()`
+#. The ``UploadedFile`` class also provides a :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::move`
    method to store the file in its intended directory. Defining this directory
    path as an application configuration option is considered a good practice that
    simplifies the code: ``$this->container->getParameter('brochures_dir')``.
@@ -172,6 +172,6 @@ You can now use the following code to link to the PDF brochure of an product:
 
 .. code-block:: html+jinja
 
-    <a href="{{ asset('uploads/brochures' ~ product.brochure) }}">View brochure (PDF)</a>
+    <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
 
 .. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle

@@ -113,7 +113,7 @@ First, configure a new ``scssphp`` Assetic filter:
 
 The value of the ``formatter`` option is the fully qualified class name of the
 formatter used by the filter to produce the compiled CSS file. Using the
-compressed formatter will minimize the the resulting file, regardless of whether
+compressed formatter will minimize the resulting file, regardless of whether
 the original files are regular CSS files or SCSS files.
 
 Next, update your Twig template to add the ``{% stylesheets %}`` tag defined
