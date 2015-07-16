@@ -1,0 +1,67 @@
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-28T11:03:46Z
+
+Hey @xabbuh ,
+
+Thanks for all the comments. What about the examples ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-28T11:07:46Z
+
+I think a simple example showing how to configure the `min` and `max` attributes should be enough (see, for example, the test cases in the code pull request: https://github.com/symfony/symfony/pull/12067/files#diff-e11656489f1e01413320bd5edff0f0c7R1350).
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-06-28T14:18:10Z
+
+Hey @xabbuh ,
+
+May be I didn't explained better regarding  what I was referencing to.
+
+Basically if you check the markdown of http://symfony.com/doc/current/reference/forms/types/number.html ( https://raw.githubusercontent.com/harikt/symfony-docs/range/reference/forms/types/number.rst ) , you can see the `number` was not having the correct examples. It refers to `hidden`, `choice` fields etc for `data`, `empty_data` etc .
+
+I will make the changes and get back.
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-06-29T15:05:58Z
+
+The new range documentation isn't included anywhere yet.
+Please add it to the list in `/reference/forms/types.rst`
+
+I found these small issues by testing the documentation first on my local machine:
+http://symfony.com/doc/current/contributing/documentation/format.html#testing-documentation
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-07-03T11:44:17Z
+
+@xabbuh @snoek09 thank you guys for your time and review.
+
+Have updated the changes.
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-04T06:25:18Z
+
+Very great @harikt. I left you one minor comment. After that I think this looks ready to be merged.
+
+---------------------------------------------------------------------------
+
+by harikt at 2015-07-04T06:34:40Z
+
+@xabbuh done :+1:  .
+
+Thank you.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-04T06:37:03Z
+
+:+1:
