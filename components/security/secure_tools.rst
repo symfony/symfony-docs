@@ -50,7 +50,9 @@ to work correctly. Just pass a file name to enable it::
     use Symfony\Component\Security\Core\Util\SecureRandom;
 
     $generator = new SecureRandom('/some/path/to/store/the/seed.txt');
+
     $random = $generator->nextBytes(10);
+    $hashedRandom = md5($random); // see tip below
 
 .. note::
 
@@ -60,7 +62,7 @@ to work correctly. Just pass a file name to enable it::
 .. tip::
 
     The ``nextBytes()`` method returns a binary string which may contain the
-    ``\0`` character. This can cause troubles in lots of common scenarios, such
+    ``\0`` character. This can cause trouble in several common scenarios, such
     as storing this value in a database or including it as part of the URL. The
     solution is to hash the value returned by ``nextBytes()`` (to do that, you
     can use a simple ``md5()`` PHP function).
