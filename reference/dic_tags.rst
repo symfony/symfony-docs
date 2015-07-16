@@ -246,10 +246,13 @@ services:
         services:
             app.mysql_lock:
                 class: AppBundle\Lock\MysqlLock
+                public: false
             app.postgresql_lock:
                 class: AppBundle\Lock\PostgresqlLock
+                public: false
             app.sqlite_lock:
                 class: AppBundle\Lock\SqliteLock
+                public: false
 
     .. code-block:: xml
 
@@ -259,26 +262,29 @@ services:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mysql_lock" class="AppBundle\Lock\MysqlLock" />
-                <service id="app.postgresql_lock" class="AppBundle\Lock\PostgresqlLock" />
-                <service id="app.sqlite_lock" class="AppBundle\Lock\SqliteLock" />
+                <service id="app.mysql_lock" public="false"
+                         class="AppBundle\Lock\MysqlLock" />
+                <service id="app.postgresql_lock" public="false"
+                         class="AppBundle\Lock\PostgresqlLock" />
+                <service id="app.sqlite_lock" public="false"
+                         class="AppBundle\Lock\SqliteLock" />
             </services>
         </container>
 
     .. code-block:: php
 
         $container
-            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')
-            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')
-            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')
+            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')->setPublic(false)
+            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')->setPublic(false)
+            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')->setPublic(false)
         ;
 
 Instead of dealing with these three services, your application needs a generic
-``app.lock`` service. This service must be an alias to any of the other services.
-Thanks to the ``auto_alias`` option, you can automatically create that alias
-based on the value of a configuration parameter.
+``app.lock`` service that will be an alias to one of these services, depending on
+some configuration. Thanks to the ``auto_alias`` option, you can automatically create
+that alias based on the value of a configuration parameter.
 
-Considering that a configuration parameter called ``database_type`` exists,
+Considering that a configuration parameter called ``database_type`` exists. Then,
 the generic ``app.lock`` service can be defined as follows:
 
 .. configuration-block::
@@ -287,14 +293,11 @@ the generic ``app.lock`` service can be defined as follows:
 
         services:
             app.mysql_lock:
-                class: AppBundle\Lock\MysqlLock
-                public: false
+                # ...
             app.postgresql_lock:
-                class: AppBundle\Lock\PostgresqlLock
-                public: false
+                # ...
             app.sqlite_lock:
-                class: AppBundle\Lock\SqliteLock
-                public: false
+                # ...
             app.lock:
                 tags:
                     - { name: auto_alias, format: "app.%database_type%_lock" }
@@ -331,8 +334,8 @@ the generic ``app.lock`` service can be defined as follows:
             ->addTag('auto_alias', array('format' => 'app.%database_type%_lock'))
         ;
 
-The ``format`` parameter defines the expression used to construct the name of
-the service to alias. This expression can use any container parameter (as usual,
+The ``format`` option defines the expression used to construct the name of the service
+to alias. This expression can use any container parameter (as usual,
 wrapping their names with ``%`` characters).
 
 .. note::
