@@ -130,7 +130,7 @@ template might look something like this:
     {# app/Resources/views/Emails/registration.html.twig #}
     <h3>You did it! You registered!</h3>
 
-    {# example, assuming you have a route named "login" $}
+    {# example, assuming you have a route named "login" #}
     To login, go to: <a href="{{ url('login') }}">...</a>.
 
     Thanks!
