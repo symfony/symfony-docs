@@ -170,7 +170,7 @@ line to your ``composer.json`` file:
 
     {
         "require": {
-            "symfony/twig-bridge": "2.3.*"
+            "symfony/twig-bridge": "~2.3"
         }
     }
 
@@ -250,8 +250,8 @@ of each of these by adding the following to your ``composer.json`` file:
 
     {
         "require": {
-            "symfony/translation": "2.3.*",
-            "symfony/config": "2.3.*"
+            "symfony/translation": "~2.3",
+            "symfony/config": "~2.3"
         }
     }
 
@@ -301,7 +301,7 @@ install the latest 2.3 version, add this to your ``composer.json``:
 
     {
         "require": {
-            "symfony/validator": "2.3.*"
+            "symfony/validator": "~2.3"
         }
     }
 

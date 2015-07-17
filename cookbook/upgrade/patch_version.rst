@@ -15,7 +15,7 @@ version is *really* easy:
 That's it! You should not encounter any backwards-compatibility breaks or
 need to change anything else in your code. That's because when you started
 your project, your ``composer.json`` included Symfony using a constraint
-like ``2.6.*``, where only the *last* version number will change when you
+like ``~2.6.0``, where only the *last* version number will change when you
 update.
 
 .. tip::

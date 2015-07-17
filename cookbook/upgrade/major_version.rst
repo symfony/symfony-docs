@@ -33,7 +33,7 @@ it will be removed/changed in the future and that you should stop using it.
 When the major version is released (e.g. 3.0.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
-2.8.*), you should be able to upgrade without a problem.
+~2.8), you should be able to upgrade without a problem.
 
 To help you with this, the last minor releases will trigger deprecated notices.
 For example, 2.7 and 2.8 trigger deprecated notices. When visiting your
@@ -87,7 +87,7 @@ Composer by modifying your ``composer.json`` file:
         "...": "...",
 
         "require": {
-            "symfony/symfony": "3.0.*",
+            "symfony/symfony": "~3.0",
         },
         "...": "...",
     }

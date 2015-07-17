@@ -14,7 +14,7 @@ execute the following command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=dev
+    $ composer create-project symfony/framework-standard-edition my_project "~2.7" --stability=dev
 
 Once the command finishes its execution, you'll have a new Symfony project created
 in the ``my_project/`` directory and based on the most recent code found in the
@@ -25,7 +25,7 @@ option:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=beta
+    $ composer create-project symfony/framework-standard-edition my_project "~2.7" --stability=beta
 
 Upgrading your Project to an Unstable Symfony Version
 -----------------------------------------------------
@@ -42,7 +42,7 @@ dependency as follows:
     {
         "require": {
             // ...
-            "symfony/symfony" : "2.7.*@dev"
+            "symfony/symfony" : "~2.7@dev"
         }
     }
 
@@ -53,8 +53,8 @@ following command to update your project dependencies:
 
     $ composer update symfony/symfony
 
-If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constraint
-by ``"2.7.0-beta1"`` to install a specific beta number or ``2.7.*@beta`` to get
+If you prefer to test a Symfony beta version, replace the ``"~2.7@dev"`` constraint
+by ``"2.7.0-beta1"`` to install a specific beta number or ``~2.7@beta`` to get
 the most recent beta version.
 
 After upgrading the Symfony version, read the :doc:`Symfony Upgrading Guide </cookbook/upgrade/index>`

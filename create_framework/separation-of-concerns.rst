@@ -83,9 +83,9 @@ be autoloaded, update the ``composer.json`` file:
 
     {
         "require": {
-            "symfony/http-foundation": "2.5.*",
-            "symfony/routing": "2.5.*",
-            "symfony/http-kernel": "2.5.*"
+            "symfony/http-foundation": "~2.5",
+            "symfony/routing": "~2.5",
+            "symfony/http-kernel": "~2.5"
         },
         "autoload": {
             "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
