@@ -247,6 +247,8 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push --force origin BRANCH_NAME
 
+.. _contributing-code-pull-request:
+
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
 
