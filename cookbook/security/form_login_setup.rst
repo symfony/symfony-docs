@@ -456,6 +456,7 @@ for the login page:
                 <firewall name="login_firewall" pattern="^/login$">
                     <anonymous />
                 </firewall>
+
                 <firewall name="secured_area" pattern="^/">
                     <form-login />
                 </firewall>

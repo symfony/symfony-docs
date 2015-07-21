@@ -423,15 +423,17 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
             <services>
                 <service id="wsse.security.authentication.provider"
-                    class="AppBundle\Security\Authentication\Provider\WsseProvider" public="false">
+                    class="AppBundle\Security\Authentication\Provider\WsseProvider"
+                    public="false"
+                >
                     <argument /> <!-- User Provider -->
                     <argument>%kernel.cache_dir%/security/nonces</argument>
                 </service>
 
                 <service id="wsse.security.authentication.listener"
                     class="AppBundle\Security\Firewall\WsseListener"
-                    public="false">
-
+                    public="false"
+                >
                     <argument type="service" id="security.context" />
                     <argument type="service" id="security.authentication.manager" />
                 </service>
@@ -444,29 +446,25 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container
-            ->setDefinition('wsse.security.authentication.provider',
-                new Definition(
-                    'AppBundle\Security\Authentication\Provider\WsseProvider', array(
-                        '', // User Provider
-                        '%kernel.cache_dir%/security/nonces',
-                    )
-                )
+        $definition = new Definition(
+            'AppBundle\Security\Authentication\Provider\WsseProvider',
+            array(
+                '', // User Provider
+                '%kernel.cache_dir%/security/nonces',
             )
-            ->setPublic(false)
-        ;
+        );
+        $definition->setPublic(false);
+        $container->setDefinition('wsse.security.authentication.provider', $definition)
 
-        $container
-            ->setDefinition('wsse.security.authentication.listener',
-                new Definition(
-                    'AppBundle\Security\Firewall\WsseListener', array(
-                        new Reference('security.context'),
-                        new Reference('security.authentication.manager'),
-                    )
-                )
+        $definition = new Definition(
+            'AppBundle\Security\Firewall\WsseListener',
+            array(
+                new Reference('security.context'),
+                new Reference('security.authentication.manager'),
             )
-            ->setPublic(false)
-        ;
+        );
+        $definition->setPublic(false);
+        $container->setDefinition('wsse.security.authentication.listener', $definition);
 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
@@ -524,7 +522,8 @@ You are finished! You can now define parts of your app as under WSSE protection.
                     name="wsse_secured"
                     pattern="^/api/"
                     stateless="true"
-                    wsse="true" />
+                    wsse="true"
+                />
             </config>
         </srv:container>
 

@@ -191,9 +191,23 @@ how to change the sticky locale:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.switch_user_listener" class="AppBundle\EventListener\SwitchUserListener">
-            <tag name="kernel.event_listener" event="security.switch_user" method="onSwitchUser" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="app.switch_user_listener"
+                    class="AppBundle\EventListener\SwitchUserListener"
+                >
+                    <tag name="kernel.event_listener"
+                        event="security.switch_user"
+                        method="onSwitchUser"
+                    />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

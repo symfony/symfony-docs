@@ -41,11 +41,13 @@ a new provider that chains the two together:
                         <provider>user_db</provider>
                     </chain>
                 </provider>
+
                 <provider name="in_memory">
                     <memory>
                         <user name="foo" password="test" />
                     </memory>
                 </provider>
+
                 <provider name="user_db">
                     <entity class="Acme\UserBundle\Entity\User" property="username" />
                 </provider>

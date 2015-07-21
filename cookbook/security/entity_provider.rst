@@ -239,8 +239,8 @@ the username and then check the password (more on passwords in a moment):
                 <!-- ... -->
 
                 <provider name="our_db_provider">
-                    <!-- if you're using multiple entity managers -->
-                    <!-- manager-name="customer" -->
+                    <!-- if you're using multiple entity managers, add:
+                         manager-name="customer" -->
                     <entity class="AppBundle:User" property="username" />
                 </provider>
 

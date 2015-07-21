@@ -193,7 +193,9 @@ pattern so that it is only accessible by requests from the local server itself:
                 <!-- ... -->
                 <rule path="^/internal"
                     role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    ips="127.0.0.1, ::1" />
+                    ips="127.0.0.1, ::1"
+                />
+
                 <rule path="^/internal" role="ROLE_NO_ACCESS" />
             </config>
         </srv:container>
@@ -269,7 +271,8 @@ the user will be redirected to ``https``:
 
             <rule path="^/cart/checkout"
                 role="IS_AUTHENTICATED_ANONYMOUSLY"
-                requires-channel="https" />
+                requires-channel="https"
+            />
         </srv:container>
 
     .. code-block:: php

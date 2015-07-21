@@ -86,7 +86,7 @@ Then in your service configuration, you can inject the service:
 
             <services>
                 <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                    <argument type="service" id="security.context"/>
+                    <argument type="service" id="security.context" />
                 </service>
             </services>
         </container>
@@ -241,7 +241,8 @@ documentation.
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:jms-security-extra="http://example.org/schema/dic/jms_security_extra"
-                xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <!-- ... -->
                 <jms-security-extra:config secure-all-services="true" />

@@ -191,7 +191,8 @@ Now you make the user provider available as a service:
 
             <services>
                 <service id="webservice_user_provider"
-                    class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider" />
+                    class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider"
+                />
             </services>
         </container>
 
@@ -294,7 +295,8 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
                 <!-- ... -->
 
                 <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
-                    algorithm="sha512" />
+                    algorithm="sha512"
+                />
             </config>
         </srv:container>
 
@@ -366,7 +368,8 @@ options, the password may be encoded multiple times and encoded to base64.
                     <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
                         algorithm="sha512"
                         encode-as-base64="false"
-                        iterations="1" />
+                        iterations="1"
+                    />
                 </config>
             </srv:container>
 

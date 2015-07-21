@@ -59,49 +59,49 @@ role:
 
 .. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            # app/config/security.yml
+        # app/config/security.yml
+        security:
+            # ...
 
-            security:
-                # ...
+            access_control:
+                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
-                access_control:
-                    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    .. code-block:: xml
 
-        .. code-block:: xml
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <!-- app/config/security.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <config>
+                <!-- ... -->
 
-                <config>
-                    <!-- ... -->
+                <rule path="^/login"
+                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    requires_channel="https"
+                />
+            </config>
+        </srv:container>
 
-                    <rule path="^/login"
-                        role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires_channel="https" />
-                </config>
-            </srv:container>
+    .. code-block:: php
 
-        .. code-block:: php
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
 
-            // app/config/security.php
-            $container->loadFromExtension('security', array(
-                // ...
-
-                'access_control' => array(
-                    array(
-                        'path'             => '^/login',
-                        'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                        'requires_channel' => 'https',
-                    ),
+            'access_control' => array(
+                array(
+                    'path'             => '^/login',
+                    'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'requires_channel' => 'https',
                 ),
-            ));
+            ),
+        ));
 
 It is also possible to specify using HTTPS in the routing configuration,
 see :doc:`/cookbook/routing/scheme` for more details.

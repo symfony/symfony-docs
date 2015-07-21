@@ -198,13 +198,15 @@ and tag it with ``security.voter``:
     .. code-block:: php
 
         // app/config/services.php
-        $container
-            ->register(
-                    'security.access.post_voter',
-                    'AppBundle\Security\Authorization\Voter\PostVoter'
-            )
+        use Symfony\Component\DependencyInjection\Definition;
+        
+        $definition = new Definition('AppBundle\Security\Authorization\Voter\PostVoter');
+        $definition
+            ->setPublic(false)
             ->addTag('security.voter')
         ;
+
+        $container->setDefinition('security.access.post_voter', $definition);
 
 How to Use the Voter in a Controller
 ------------------------------------
@@ -283,10 +285,9 @@ security configuration:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                http://symfony.com/schema/dic/security/security-1.0.xsd"
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
+
             <config>
                 <access-decision-manager strategy="unanimous">
             </config>

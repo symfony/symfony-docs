@@ -156,7 +156,8 @@ After this, you have protected your login form against CSRF attacks.
                     <firewall name="secured_area">
                         <!-- ... -->
                         <form-login csrf-parameter="_csrf_security_token"
-                            intention="a_private_string" />
+                            intention="a_private_string"
+                        />
                     </firewall>
                 </config>
             </srv:container>

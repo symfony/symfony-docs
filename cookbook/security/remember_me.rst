@@ -48,9 +48,9 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
                     <!-- 604800 is 1 week in seconds -->
                     <remember-me
-                        key      = "%secret%"
-                        lifetime = "604800"
-                        path     = "/" />
+                        key="%secret%"
+                        lifetime="604800"
+                        path="/" />
                     <!-- by default, the feature is enabled by checking a checkbox
                          in the login form (see below), add always-remember-me="true"
                          to always enable it. -->
