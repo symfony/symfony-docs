@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-07-21T14:37:31Z
+
+:+1: nice changes! I'm curious: did your bot fix all these?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-21T14:40:40Z
+
+The bot only identifies at the moment, it does not provide patches.
+
+(Please note that I'm not destroying my time by fixing all these things by hand either, so most changes are fixed by vim macro's)
