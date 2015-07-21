@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
    single: DependencyInjection; Injection types
 
 Types of Injection
@@ -242,3 +242,4 @@ to setter injection but with these additional important problems:
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
 as in a third party library, which uses public properties for its dependencies.
+

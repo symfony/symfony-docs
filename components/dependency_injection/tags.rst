@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
    single: DependencyInjection; Tags
 
 Working with Tagged Services
@@ -296,3 +296,4 @@ The double loop may be confusing. This is because a service can have more
 than one tag. You tag a service twice or more with the ``acme_mailer.transport``
 tag. The second foreach loop iterates over the ``acme_mailer.transport``
 tags set for the current service and gives you the attributes.
+

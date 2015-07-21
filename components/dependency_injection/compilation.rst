@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
     single: DependencyInjection; Compilation
 
 Compiling the Container
@@ -523,3 +523,4 @@ have the cache will be considered stale.
 
     In the full-stack framework the compilation and caching of the container
     is taken care of for you.
+

@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
     single: DependencyInjection; Service definitions
 
 Working with Container Service Definitions
@@ -139,3 +139,4 @@ the service itself gets loaded. To do so, you can use the
 
 Notice that Symfony will internally call the PHP statement ``require_once``,
 which means that your file will be included only once per request.
+

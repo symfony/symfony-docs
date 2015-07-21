@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
     single: DependencyInjection
     single: Components; DependencyInjection
 
@@ -285,3 +285,4 @@ config files:
             ->addMethodCall('setMailer', array(new Reference('mailer')));
 
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection
+
