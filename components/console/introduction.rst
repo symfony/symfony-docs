@@ -140,6 +140,9 @@ output. For example::
     // white text on a red background
     $output->writeln('<error>foo</error>');
 
+The closing tag can be replaced by just ``</>``. This makes the component to
+stop applying any style defined by the immediately previous open tag.
+
 It is possible to define your own styles using the class
 :class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`::
 
@@ -148,23 +151,26 @@ It is possible to define your own styles using the class
     // ...
     $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
     $output->getFormatter()->setStyle('fire', $style);
-    $output->writeln('<fire>foo</fire>');
+    $output->writeln('<fire>foo</>');
 
 Available foreground and background colors are: ``black``, ``red``, ``green``,
 ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
 
-And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and ``conceal``.
+And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
+(enables the "reverse video" mode where the background and foreground colors
+are swapped) and ``conceal`` (the text will be hidden; commonly used to ask
+the user to type sensitive information).
 
 You can also set these colors and options inside the tagname::
 
     // green text
-    $output->writeln('<fg=green>foo</fg=green>');
+    $output->writeln('<fg=green>foo</>');
 
     // black text on a cyan background
-    $output->writeln('<fg=black;bg=cyan>foo</fg=black;bg=cyan>');
+    $output->writeln('<fg=black;bg=cyan>foo</>');
 
     // bold text on a yellow background
-    $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
+    $output->writeln('<bg=yellow;options=bold>foo</>');
 
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
@@ -261,15 +267,15 @@ You can access the ``names`` argument as an array::
         $text .= ' '.implode(', ', $names);
     }
 
-There are 3 argument variants you can use:
+There are three argument variants you can use:
 
-===========================  ===============================================================================================================
+===========================  ===========================================================================================================
 Mode                         Value
-===========================  ===============================================================================================================
-InputArgument::REQUIRED      The argument is required
-InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
-InputArgument::IS_ARRAY      The argument can contain an indefinite number of arguments and must be used at the end of the argument list
-===========================  ===============================================================================================================
+===========================  ===========================================================================================================
+``InputArgument::REQUIRED``  The argument is required
+``InputArgument::OPTIONAL``  The argument is optional and therefore can be omitted
+``InputArgument::IS_ARRAY``  The argument can contain an indefinite number of arguments and must be used at the end of the argument list
+===========================  ===========================================================================================================
 
 You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
 
@@ -342,14 +348,14 @@ will work:
 
 There are 4 option variants you can use:
 
-===========================  =====================================================================================
-Option                       Value
-===========================  =====================================================================================
-InputOption::VALUE_IS_ARRAY  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
-InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
-InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), the option itself is still optional
-InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``--yell`` or ``--yell=loud``)
-===========================  =====================================================================================
+===============================  =====================================================================================
+Option                           Value
+===============================  =====================================================================================
+``InputOption::VALUE_IS_ARRAY``  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
+``InputOption::VALUE_NONE``      Do not accept input for this option (e.g. ``--yell``)
+``InputOption::VALUE_REQUIRED``  This value is required (e.g. ``--iterations=5``), the option itself is still optional
+``InputOption::VALUE_OPTIONAL``  This option may or may not have a value (e.g. ``--yell`` or ``--yell=loud``)
+===============================  =====================================================================================
 
 You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:
 
