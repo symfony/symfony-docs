@@ -168,25 +168,28 @@ and tag it with ``security.voter``:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             security.access.post_voter:
                 class:      AppBundle\Security\Authorization\Voter\PostVoter
                 public:     false
                 tags:
-                   - { name: security.voter }
+                    - { name: security.voter }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
                 <service id="security.access.post_voter"
                     class="AppBundle\Security\Authorization\Voter\PostVoter"
                     public="false">
+
                     <tag name="security.voter" />
                 </service>
             </services>
@@ -194,7 +197,7 @@ and tag it with ``security.voter``:
 
     .. code-block:: php
 
-        // src/AppBundle/Resources/config/services.php
+        // app/config/services.php
         $container
             ->register(
                     'security.access.post_voter',

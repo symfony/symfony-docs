@@ -132,6 +132,7 @@ the first provider is always used:
                     'provider' => 'user_db',
                     'http_basic' => array(
                         // ...
+                        'realm' => 'Secured Demo Area',
                         'provider' => 'in_memory',
                     ),
                     'form_login' => array(),
