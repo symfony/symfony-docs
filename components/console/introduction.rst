@@ -140,8 +140,8 @@ output. For example::
     // white text on a red background
     $output->writeln('<error>foo</error>');
 
-The closing tag can be replaced by just ``</>``. This makes the component to
-stop applying any style defined by the immediately previous open tag.
+The closing tag can be replaced by ``</>`` which revokes all formatting options
+established by the last opened tag.
 
 It is possible to define your own styles using the class
 :class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`::
