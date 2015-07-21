@@ -11,8 +11,9 @@ options, see `Full Default Configuration`_
 The ``swiftmailer`` key configures Symfony's integration with Swift Mailer,
 which is responsible for creating and delivering email messages.
 
-The following section lists all options that are available to configure a
-mailer. It is also possible to configure several mailers (see `Using Multiple Mailers`_).
+The following section lists all options that are available to configure
+a mailer. It is also possible to configure several mailers (see
+`Using Multiple Mailers`_).
 
 Configuration
 -------------
@@ -121,9 +122,9 @@ sender_address
 
 **type**: ``string``
 
-If set, all messages will be delivered with this address as the "return path"
-address, which is where bounced messages should go. This is handled internally
-by Swift Mailer's ``Swift_Plugins_ImpersonatePlugin`` class.
+If set, all messages will be delivered with this address as the "return
+path" address, which is where bounced messages should go. This is handled
+internally by Swift Mailer's ``Swift_Plugins_ImpersonatePlugin`` class.
 
 antiflood
 ~~~~~~~~~
@@ -149,10 +150,10 @@ delivery_address
 
 **type**: ``string``
 
-If set, all email messages will be sent to this address instead of being sent
-to their actual recipients. This is often useful when developing. For example,
-by setting this in the ``config_dev.yml`` file, you can guarantee that all
-emails sent during development go to a single account.
+If set, all email messages will be sent to this address instead of being
+sent to their actual recipients. This is often useful when developing. For
+example, by setting this in the ``config_dev.yml`` file, you can guarantee
+that all emails sent during development go to a single account.
 
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
@@ -162,16 +163,17 @@ delivery_whitelist
 
 **type**: ``array``
 
-Used in combination with ``delivery_address``. If set, emails matching any of these
-patterns will be delivered like normal, instead of being sent to ``delivery_address``.
-For details, see :ref:`the cookbook entry. <sending-to-a-specified-address-but-with-exceptions>`
+Used in combination with ``delivery_address``. If set, emails matching any
+of these patterns will be delivered like normal, instead of being sent to
+``delivery_address``. For details, see
+:ref:`the cookbook entry <sending-to-a-specified-address-but-with-exceptions>`.
 
 disable_delivery
 ~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
-If true, the ``transport`` will automatically be set to ``null``, and no
+If true, the ``transport`` will automatically be set to ``null`` and no
 emails will actually be delivered.
 
 logging
@@ -179,10 +181,10 @@ logging
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
-If true, Symfony's data collector will be activated for Swift Mailer and the
-information will be available in the profiler.
+If true, Symfony's data collector will be activated for Swift Mailer and
+the information will be available in the profiler.
 
-Full default Configuration
+Full Default Configuration
 --------------------------
 
 .. configuration-block::
@@ -240,7 +242,7 @@ Full default Configuration
             </swiftmailer:config>
         </container>
 
-Using multiple Mailers
+Using Multiple Mailers
 ----------------------
 
 You can configure multiple mailers by grouping them under the ``mailers``
