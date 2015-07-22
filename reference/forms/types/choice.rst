@@ -105,7 +105,7 @@ choice_list
 .. caution::
 
     The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
-    You should use ``choices_as_values`` or ``choice_loader`` now.
+    You should use ``choices`` or ``choice_loader`` now.
 
 **type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
 
