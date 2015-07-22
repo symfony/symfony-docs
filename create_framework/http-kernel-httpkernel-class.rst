@@ -122,9 +122,9 @@ And in your controller, return a ``StreamedResponse`` instance instead of a
 
 .. tip::
 
-    Read the `Internals`_ chapter of the Symfony documentation to learn more
-    about the events dispatched by HttpKernel and how they allow you to change
-    the flow of a request.
+    Read the :doc:`/reference/events` reference to learn more about the events
+    dispatched by HttpKernel and how they allow you to change the flow of a
+    request.
 
 Now, let's create a listener, one that allows a controller to return a string
 instead of a full Response object::
@@ -200,5 +200,3 @@ worlds: a custom framework, tailored to your needs, but based on a rock-solid
 and well maintained low-level architecture that has been proven to work for
 many websites; a code that has been audited for security issues and that has
 proven to scale well.
-
-.. _`Internals`: http://symfony.com/doc/current/book/internals.html#events

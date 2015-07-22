@@ -78,8 +78,8 @@ unit test for the above code::
 .. note::
 
     If our application were just slightly bigger, we would have been able to
-    find even more problems. If you are curious about them, read the `Symfony
-    versus Flat PHP`_ chapter of the Symfony documentation.
+    find even more problems. If you are curious about them, read the
+    :doc:`/book/from_flat_php_to_symfony2` chapter of the book.
 
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
@@ -302,7 +302,6 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 5`_, `Laravel`_, `Silex`_, and `more`_).
 
 .. _`Twig`: http://twig.sensiolabs.org/
-.. _`Symfony versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
 .. _`audited`: http://symfony.com/blog/symfony2-security-audit
 .. _`Symfony`: http://symfony.com/
