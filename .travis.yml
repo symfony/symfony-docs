@@ -5,10 +5,10 @@ php: 5.6
 sudo: false
 
 cache:
-    directories:
+  directories:
     - "$HOME/.composer/cache"
-        - $HOME/.cache/pip
-        - _build
+    - $HOME/.cache/pip
+    - _build
 
 before_install:
   - python --version
@@ -20,7 +20,7 @@ install:
 script:
   - sphinx-build -nW -b html -d _build/doctrees . _build/html
     #- ./vendor/bin/docbot lint best_practice book components contributing cookbook quick_tour reference
-  - ./vendor/bin/docbot lint reference/forms reference/constraints
+  - ./vendor/bin/docbot lint reference
 
 branches:
   except:
