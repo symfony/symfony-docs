@@ -469,8 +469,8 @@ Calling a command from another one is straightforward::
             '--yell'  => true,
         );
 
-        $input = new ArrayInput($arguments);
-        $returnCode = $command->run($input, $output);
+        $greetInput = new ArrayInput($arguments);
+        $returnCode = $command->run($greetInput, $output);
 
         // ...
     }
