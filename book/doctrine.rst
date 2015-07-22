@@ -1420,7 +1420,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 * `DoctrineMongoDBBundle`_
 
 .. _`Doctrine`: http://www.doctrine-project.org/
-.. _`MongoDB`: http://www.mongodb.org/
+.. _`MongoDB`: https://www.mongodb.org/
 .. _`Basic Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html

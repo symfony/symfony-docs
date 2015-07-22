@@ -512,5 +512,5 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             ),
         ));
 
-.. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+.. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

@@ -1640,12 +1640,12 @@ Learn more from the Cookbook
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`KnpBundles.com`: http://knpbundles.com
-.. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`Cross Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`hinclude.js`: http://mnot.github.com/hinclude/
+.. _`hinclude.js`: http://mnot.github.io/hinclude/
 .. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html

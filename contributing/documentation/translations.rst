@@ -89,4 +89,4 @@ repository and apply changes to the translated documents as soon as possible.
     repositories as obsolete documentation is dangerous.
 
 .. _`an ongoing discussion`: https://github.com/symfony/symfony-docs/issues/4078
-.. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs
+.. _Symfony docs mailing-list: https://groups.google.com/forum/#!forum/symfony-docs

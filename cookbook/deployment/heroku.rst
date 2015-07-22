@@ -336,7 +336,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
 .. _`custom compile steps`: https://devcenter.heroku.com/articles/php-support#custom-compile-step
 .. _`custom Composer command`: https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands
 .. _`Heroku buildpacks`: https://devcenter.heroku.com/articles/buildpacks
-.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi.git
+.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi
 .. _`Grunt`: http://gruntjs.com
 .. _`gulp`: http://gulpjs.com
 .. _`Heroku documentation`: https://devcenter.heroku.com/articles/custom-php-settings#nginx

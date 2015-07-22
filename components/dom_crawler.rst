@@ -385,5 +385,5 @@ directly::
     // submit that form
     $crawler = $client->submit($form);
 
-.. _`Goutte`:  https://github.com/fabpot/goutte
+.. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
 .. _Packagist: https://packagist.org/packages/symfony/dom-crawler

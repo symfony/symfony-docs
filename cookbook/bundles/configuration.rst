@@ -396,5 +396,5 @@ Assume the XSD file is called ``hello-1.0.xsd``, the schema location will be
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
-.. _`XML namespace`: http://en.wikipedia.org/wiki/XML_namespace
-.. _`XML schema`: http://en.wikipedia.org/wiki/XML_schema
+.. _`XML namespace`: https://en.wikipedia.org/wiki/XML_namespace
+.. _`XML schema`: https://en.wikipedia.org/wiki/XML_schema

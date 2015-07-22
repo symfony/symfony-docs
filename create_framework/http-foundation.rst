@@ -306,8 +306,8 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
 .. _`audited`: http://symfony.com/blog/symfony2-security-audit
 .. _`Symfony`: http://symfony.com/
-.. _`Drupal 8`: http://drupal.org/
-.. _`phpBB 4`: http://www.phpbb.com/
+.. _`Drupal 8`: https://drupal.org/
+.. _`phpBB 4`: https://www.phpbb.com/
 .. _`ezPublish 5`: http://ez.no/
 .. _`Laravel`: http://laravel.com/
 .. _`Silex`: http://silex.sensiolabs.org/

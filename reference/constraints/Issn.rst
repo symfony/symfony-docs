@@ -104,5 +104,4 @@ requireHyphen
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
 
-.. _`International Standard Serial Number (ISSN)`: http://en.wikipedia.org/wiki/Issn
-
+.. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

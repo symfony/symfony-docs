@@ -1244,7 +1244,7 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/cache/varnish`
 
-.. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
+.. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy

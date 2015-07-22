@@ -265,7 +265,7 @@ You can access the `pid`_ of a running process with the
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
-.. _`exec`: http://en.wikipedia.org/wiki/Exec_(operating_system)
-.. _`pid`: http://en.wikipedia.org/wiki/Process_identifier
+.. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
+.. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process

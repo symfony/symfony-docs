@@ -195,5 +195,5 @@ License
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
-.. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php
+.. _`identical comparison`: http://php.net/manual/en/language.operators.comparison.php
 .. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions
