@@ -1,0 +1,87 @@
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-03T02:32:50Z
+
+This is my first contribution so please let me know if anything needs to be changed.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-07-03T15:01:39Z
+
+@stevenmusumeche thanks for this proposal and congratulations on your first contribution!
+
+Right now there is a minor technical issue which is the reason why [the latest doc build](https://travis-ci.org/symfony/symfony-docs/builds/69383540) throwed this error:
+
+    Warning, treated as error:
+    /home/travis/build/symfony/symfony-docs/cookbook/configuration/mongodb_session_storage.rst::
+    WARNING: document isn't included in any toctree
+
+To solve this issue, you need to edit the `cookbook/map.rst.inc` file and add a link to your article. The syntax is the same that you'll find for the other articles in the `config` section of the cookbook. If you have any question, please ask.
+
+Lastly, regarding the article itself, I like it and it's very easy to read! The only thing I didn't like is how convoluted is the configuration to use Mongo for storing sessions. But of course this is not a problem of this article.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-03T15:13:22Z
+
+Actually, the build error shown by @javiereguiluz is not fixed by updating `map.rst.inc` (while you should update that article as well). The error is fixed by adding this document to the list of documents in `cookbook/configuration/index.rst`.
+
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-03T18:00:49Z
+
+@WouterJ thank you for the XML and PHP code blocks, I have added them to the PR.
+
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-03T19:11:50Z
+
+@javiereguiluz looks like the build passed this time, ready to be merged
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-04T06:41:35Z
+
+I suggest to also add a reference to the new article in the session section (we do the same with the PDO session handler).
+
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-04T15:45:09Z
+
+@xabbuh good idea, I added that and reworded the existing tip
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-04T20:26:21Z
+
+@stevenmusumeche Good catch, I actually didn't remember that we had a notice in `/cookbook/session/sessions_directory.rst` too. Could you also add a reference to `/cookbook/session/index.rst` (that's file I initially had in mind).
+
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-05T15:46:57Z
+
+I don't see a reference to PDO session handler on this page (http://symfony.com/doc/current/cookbook/session/index.html). Is that what you are referring to?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-05T16:59:46Z
+
+I'm sorry cause I pointed you to the wrong file. The reference Im talking about is in the Session section of the `/cookbook/map.rst.inc` file.
+
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-06T16:03:37Z
+
+@xabbuh, just updated
+
+---------------------------------------------------------------------------
+
+by stevenmusumeche at 2015-07-13T01:03:36Z
+
+@xabbuh anything else need to be done?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-14T18:52:21Z
+
+:+1:
