@@ -35,10 +35,10 @@
   * :doc:`/cookbook/configuration/front_controllers_and_kernel`
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/configuration/pdo_session_storage`
+  * (session) :doc:`/cookbook/session/mongodb_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
   * :doc:`/cookbook/configuration/configuration_organization`
-  * :doc:`/cookbook/configuration/mongodb_session_storage`
 
 * :doc:`/cookbook/console/index`
 
@@ -190,7 +190,7 @@
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
   * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
-  * (configuration) :doc:`/cookbook/configuration/mongodb_session_storage`
+  * :doc:`/cookbook/session/mongodb_session_storage`
   * :doc:`/cookbook/session/avoid_session_start`
 
 * **symfony1**
