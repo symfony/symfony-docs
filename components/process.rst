@@ -129,7 +129,8 @@ are done doing other stuff::
     
 .. caution::
     
-    You need to call `$process->isRunning()` once, after the process has finished. Otherwise the child may show up in the process list as zombie ([php] <defunct>)
+    You need to call ``$process->isRunning()`` once, after the process has finished. 
+    Otherwise the child may show up in the process list as zombie ([php] <defunct>).
 
 Stopping a Process
 ------------------
