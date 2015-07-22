@@ -74,4 +74,4 @@ you have to pass the correct location using the ``--docroot`` option:
     $ php app/console server:run --docroot=public_html
 
 .. _`built-in web server`: http://www.php.net/manual/en/features.commandline.webserver.php
-.. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-401
+.. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-411

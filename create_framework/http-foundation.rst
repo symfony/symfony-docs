@@ -301,7 +301,7 @@ component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 5`_, `Laravel`_, `Silex`_, and `more`_).
 
-.. _`Twig`: http://twig.sensiolabs.com/
+.. _`Twig`: http://twig.sensiolabs.org/
 .. _`Symfony versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
 .. _`audited`: http://symfony.com/blog/symfony2-security-audit

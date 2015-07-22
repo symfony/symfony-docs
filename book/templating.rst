@@ -1025,9 +1025,9 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
         <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" />
 
 The ``asset`` function's main purpose is to make your application more portable.
-If your application lives at the root of your host (e.g. http://example.com),
+If your application lives at the root of your host (e.g. ``http://example.com``),
 then the rendered paths should be ``/images/logo.png``. But if your application
-lives in a subdirectory (e.g. http://example.com/my_app), each asset path
+lives in a subdirectory (e.g. ``http://example.com/my_app``), each asset path
 should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
