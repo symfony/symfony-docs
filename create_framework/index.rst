@@ -1,5 +1,5 @@
-Create your PHP Framework
-=========================
+Create your own PHP Framework
+=============================
 
 .. toctree::
 

@@ -60,11 +60,22 @@ TwigBundle Configuration ("twig")
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-            <twig:config auto-reload="%kernel.debug%" autoescape="true" base-template-class="Twig_Template" cache="%kernel.cache_dir%/twig" charset="%kernel.charset%" debug="%kernel.debug%" strict-variables="false" optimizations="true">
+            <twig:config
+                auto-reload="%kernel.debug%"
+                autoescape="true"
+                base-template-class="Twig_Template"
+                cache="%kernel.cache_dir%/twig"
+                charset="%kernel.charset%"
+                debug="%kernel.debug%"
+                strict-variables="false"
+                optimizations="true"
+            >
                 <twig:form-theme>form_div_layout.html.twig</twig:form-theme> <!-- Default -->
                 <twig:form-theme>MyBundle::form.html.twig</twig:form-theme>
+
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
+
                 <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
                 <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
@@ -107,7 +118,7 @@ Configuration
 .. _config-twig-exception-controller:
 
 exception_controller
-....................
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``twig.controller.exception:showAction``
 

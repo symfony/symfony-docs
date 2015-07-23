@@ -121,6 +121,19 @@ To use this component, add it as a dependency of the project:
 
 Running this command will also automatically download the Symfony
 HttpFoundation component and install it under the ``vendor/`` directory.
+A ``composer.json`` and a ``composer.lock`` file will be generated as well,
+containing the new requirement:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "symfony/http-foundation": "^2.7"
+        }
+    }
+
+The code block shows the content of the ``composer.json`` file (the actual
+version may vary).
 
 .. sidebar:: Class Autoloading
 
@@ -221,7 +234,7 @@ Last but not the least, these classes, like every other class in the Symfony
 code, have been `audited`_ for security issues by an independent company. And
 being an Open-Source project also means that many other developers around the
 world have read the code and have already fixed potential security problems.
-When was the last you ordered a professional security audit for your home-made
+When was the last time you ordered a professional security audit for your home-made
 framework?
 
 Even something as simple as getting the client IP address can be insecure::
