@@ -102,6 +102,11 @@ is the item value and the array value is the item's label::
 choice_list
 ~~~~~~~~~~~
 
+.. caution::
+
+    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
+    You should use ``choices`` or ``choice_loader`` now.
+
 **type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
 
 This is one way of specifying the options to be used for this field.
