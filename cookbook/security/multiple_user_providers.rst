@@ -41,11 +41,13 @@ a new provider that chains the two together:
                         <provider>user_db</provider>
                     </chain>
                 </provider>
+
                 <provider name="in_memory">
                     <memory>
                         <user name="foo" password="test" />
                     </memory>
                 </provider>
+
                 <provider name="user_db">
                     <entity class="Acme\UserBundle\Entity\User" property="username" />
                 </provider>
@@ -132,6 +134,7 @@ the first provider is always used:
                     'provider' => 'user_db',
                     'http_basic' => array(
                         // ...
+                        'realm' => 'Secured Demo Area',
                         'provider' => 'in_memory',
                     ),
                     'form_login' => array(),

@@ -54,12 +54,10 @@ Take the following ``access_control`` entries as an example:
 
             <config>
                 <!-- ... -->
-                <access-control>
-                    <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
-                    <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
-                    <rule path="^/admin" role="ROLE_USER_METHOD" method="POST, PUT" />
-                    <rule path="^/admin" role="ROLE_USER" />
-                </access-control>
+                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
+                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
+                <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT" />
+                <rule path="^/admin" role="ROLE_USER" />
             </config>
         </srv:container>
 
@@ -82,7 +80,7 @@ Take the following ``access_control`` entries as an example:
                 array(
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_METHOD',
-                    'method' => 'POST, PUT',
+                    'methods' => 'POST, PUT',
                 ),
                 array(
                     'path' => '^/admin',
@@ -195,11 +193,12 @@ pattern so that it is only accessible by requests from the local server itself:
 
             <config>
                 <!-- ... -->
-                <access-control>
-                    <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        ips="127.0.0.1, ::1" />
-                    <rule path="^/esi" role="ROLE_NO_ACCESS" />
-                </access-control>
+                <rule path="^/internal"
+                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    ips="127.0.0.1, ::1"
+                />
+
+                <rule path="^/internal" role="ROLE_NO_ACCESS" />
             </config>
         </srv:container>
 
@@ -210,12 +209,12 @@ pattern so that it is only accessible by requests from the local server itself:
             // ...
             'access_control' => array(
                 array(
-                    'path' => '^/esi',
+                    'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     'ips' => '127.0.0.1, ::1'
                 ),
                 array(
-                    'path' => '^/esi',
+                    'path' => '^/internal',
                     'role' => 'ROLE_NO_ACCESS'
                 ),
             ),
@@ -321,11 +320,10 @@ the user will be redirected to ``https``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <access-control>
-                <rule path="^/cart/checkout"
-                    role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    requires-channel="https" />
-            </access-control>
+            <rule path="^/cart/checkout"
+                role="IS_AUTHENTICATED_ANONYMOUSLY"
+                requires-channel="https"
+            />
         </srv:container>
 
     .. code-block:: php
