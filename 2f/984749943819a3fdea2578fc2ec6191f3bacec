@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-15T10:35:24Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-07-23T10:16:33Z
+
+@xabbuh why is this platfomsh check failing?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-23T10:30:38Z
+
+@OskarStark it's because these PRs don't contain the platform.sh configuration (as they were created before the configuration was added to the repository). When rebasing, they'll pass.
