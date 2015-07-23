@@ -38,6 +38,7 @@
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
   * :doc:`/cookbook/configuration/configuration_organization`
+  * :doc:`/cookbook/configuration/mongodb_session_storage`
 
 * :doc:`/cookbook/console/index`
 
@@ -201,6 +202,7 @@
   * :doc:`/cookbook/session/php_bridge`
   * :doc:`/cookbook/session/limit_metadata_writes`
   * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
+  * (configuration) :doc:`/cookbook/configuration/mongodb_session_storage`
   * :doc:`/cookbook/session/avoid_session_start`
 
 * **PSR-7**
