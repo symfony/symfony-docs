@@ -153,7 +153,7 @@ sub-requests to convert them to their proper content::
     $framework = new HttpKernel\HttpCache\HttpCache(
         $framework,
         new HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
-        new HttpKernel\HttpCache\ESI()
+        new HttpKernel\HttpCache\Esi()
     );
 
 .. note::
@@ -166,7 +166,7 @@ When using complex HTTP caching strategies and/or many ESI include tags, it
 can be hard to understand why and when a resource should be cached or not. To
 ease debugging, you can enable the debug mode::
 
-    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'), new ESI(), array('debug' => true));
+    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'), new Esi(), array('debug' => true));
 
 The debug mode adds a ``X-Symfony-Cache`` header to each response that
 describes what the cache layer did:
