@@ -13,7 +13,7 @@ needs. Many software have a similar concept like Drupal or Wordpress. In some
 languages, there is even a standard like `WSGI`_ in Python or `Rack`_ in Ruby.
 
 As there is no standard for PHP, we are going to use a well-known design
-pattern, the *Observer*, to allow any kind of behaviors to be attached to our
+pattern, the *Mediator*, to allow any kind of behaviors to be attached to our
 framework; the Symfony EventDispatcher Component implements a lightweight
 version of this pattern:
 

@@ -178,7 +178,7 @@ coverage feature (you need to enable `XDebug`_ first):
 
     $ phpunit --coverage-html=cov/
 
-Open ``example.com/cov/src_Simplex_Framework.php.html`` in a browser and check
+Open ``example.com/cov/src/Simplex/Framework.php.html`` in a browser and check
 that all the lines for the Framework class are green (it means that they have
 been visited when the tests were executed).
 

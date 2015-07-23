@@ -175,21 +175,30 @@ Now you make the user provider available as a service:
 
     .. code-block:: yaml
 
-        # src/Acme/WebserviceUserBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             webservice_user_provider:
                 class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
 
     .. code-block:: xml
 
-        <!-- src/Acme/WebserviceUserBundle/Resources/config/services.xml -->
-        <services>
-            <service id="webservice_user_provider" class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider" />
-        </services>
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="webservice_user_provider"
+                    class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider"
+                />
+            </services>
+        </container>
 
     .. code-block:: php
 
-        // src/Acme/WebserviceUserBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setDefinition(
@@ -221,6 +230,8 @@ to the list of providers in the "security" section. Choose a name for the user p
 
         # app/config/security.yml
         security:
+            # ...
+
             providers:
                 webservice:
                     id: webservice_user_provider
@@ -228,14 +239,26 @@ to the list of providers in the "security" section. Choose a name for the user p
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <provider name="webservice" id="webservice_user_provider" />
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="webservice" id="webservice_user_provider" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'providers' => array(
                 'webservice' => array(
                     'id' => 'webservice_user_provider',
@@ -253,20 +276,36 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
         # app/config/security.yml
         security:
+            # ...
+
             encoders:
                 Acme\WebserviceUserBundle\Security\User\WebserviceUser: sha512
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser">sha512</encoder>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
+                    algorithm="sha512"
+                />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'encoders' => array(
                 'Acme\WebserviceUserBundle\Security\User\WebserviceUser' => 'sha512',
             ),
@@ -305,6 +344,8 @@ options, the password may be encoded multiple times and encoded to base64.
 
             # app/config/security.yml
             security:
+                # ...
+
                 encoders:
                     Acme\WebserviceUserBundle\Security\User\WebserviceUser:
                         algorithm: sha512
@@ -314,18 +355,30 @@ options, the password may be encoded multiple times and encoded to base64.
         .. code-block:: xml
 
             <!-- app/config/security.xml -->
-            <config>
-                <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
-                    algorithm="sha512"
-                    encode-as-base64="false"
-                    iterations="1"
-                />
-            </config>
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <config>
+                    <!-- ... -->
+
+                    <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
+                        algorithm="sha512"
+                        encode-as-base64="false"
+                        iterations="1"
+                    />
+                </config>
+            </srv:container>
 
         .. code-block:: php
 
             // app/config/security.php
             $container->loadFromExtension('security', array(
+                // ...
+
                 'encoders' => array(
                     'Acme\WebserviceUserBundle\Security\User\WebserviceUser' => array(
                         'algorithm'         => 'sha512',

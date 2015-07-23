@@ -15,6 +15,8 @@ done by activating the ``switch_user`` firewall listener:
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     # ...
@@ -29,8 +31,11 @@ done by activating the ``switch_user`` firewall listener:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <config>
-                <firewall>
+                <!-- ... -->
+
+                <firewall name="main">
                     <!-- ... -->
                     <switch-user />
                 </firewall>
@@ -41,10 +46,12 @@ done by activating the ``switch_user`` firewall listener:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main'=> array(
                     // ...
-                    'switch_user' => true
+                    'switch_user' => true,
                 ),
             ),
         ));
@@ -116,6 +123,8 @@ setting:
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     # ...
@@ -131,7 +140,9 @@ setting:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <config>
-                <firewall>
+                <!-- ... -->
+
+                <firewall name="main">
                     <!-- ... -->
                     <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user" />
                 </firewall>
@@ -142,6 +153,8 @@ setting:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main'=> array(
                     // ...
@@ -152,7 +165,7 @@ setting:
                 ),
             ),
         ));
-        
+
 Events
 ------
 
@@ -179,9 +192,23 @@ how to change the sticky locale:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.switch_user_listener" class="AppBundle\EventListener\SwitchUserListener">
-            <tag name="kernel.event_listener" event="security.switch_user" method="onSwitchUser" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="app.switch_user_listener"
+                    class="AppBundle\EventListener\SwitchUserListener"
+                >
+                    <tag name="kernel.event_listener"
+                        event="security.switch_user"
+                        method="onSwitchUser"
+                    />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -201,13 +228,13 @@ how to change the sticky locale:
         namespace AppBundle\EventListener;
 
         use Symfony\Component\Security\Http\Event\SwitchUserEvent;
-        
+
         class SwitchUserListener
         {
             public function onSwitchUser(SwitchUserEvent $event)
             {
                 $event->getRequest()->getSession()->set(
-                    '_locale', 
+                    '_locale',
                     $event->getTargetUser()->getLocale()
                 );
             }
