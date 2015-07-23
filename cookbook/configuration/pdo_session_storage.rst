@@ -225,7 +225,7 @@ Microsoft SQL Server
         ) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
-.. note::
+.. caution::
 
     If the session data doesn't fit in the data column, it might get truncated
     by the database engine. To make matters worse, when the session data gets
