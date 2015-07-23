@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-21T13:09:51Z
+
+:+1:
+
+(there are 2 minor spacing issues: one space too much before `)` and one new line too much at the end of the file, but we'll take care of these issues while merging).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-21T19:51:11Z
+
+Do we really want to dismiss Capifony? Why don't we promote both?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-21T19:56:24Z
+
+@xabbuh http://williamdurand.fr/2015/04/11/on-capifony-and-its-future/ suggests that Capifony is there only for backwards compability and new projects should use either Capistrano v3 or other tools (like Docker). As this message is written by the maintainers of Capifony, I think it's better to no longer mention it (and btw, there still is a mention of Capifony).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-21T20:05:02Z
+
+indeed, I should have thought about it :+1:
