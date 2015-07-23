@@ -106,6 +106,10 @@ Field Options
 choice_label
 ~~~~~~~~~~~~
 
+.. versionadded:: 2.7
+    The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, it was called ``property`` (which has the same functionality).
+
 **type**: ``string``
 
 This is the property that should be used for displaying the entities
