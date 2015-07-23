@@ -140,7 +140,7 @@ output. For example::
     // white text on a red background
     $output->writeln('<error>foo</error>');
 
-The closing tag can be replaced by ``</>`` which revokes all formatting options
+The closing tag can be replaced by ``</>``, which revokes all formatting options
 established by the last opened tag.
 
 It is possible to define your own styles using the class
@@ -158,8 +158,9 @@ Available foreground and background colors are: ``black``, ``red``, ``green``,
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors
-are swapped) and ``conceal`` (the text will be hidden; commonly used to ask
-the user to type sensitive information).
+are swapped) and ``conceal`` (sets the foreground color to transparent, making
+the typed text invisible - although it can be selected and copied; this option is
+commonly used when asking the user to type sensitive information).
 
 You can also set these colors and options inside the tagname::
 
