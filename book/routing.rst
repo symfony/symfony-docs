@@ -635,7 +635,7 @@ to the ``{page}`` parameter.
 URL                     Route     Parameters
 ======================  ========  ===============================
 ``/blog/2``             ``blog``  ``{page}`` = ``2``
-``/blog/my-blog-post``  ``blog``  ``{page}`` = ``"my-blog-post"``
+``/blog/my-blog-post``  ``blog``  ``{slug}`` = ``"my-blog-post"``
 ======================  ========  ===============================
 
 The answer to the problem is to add route *requirements* or route *conditions*
