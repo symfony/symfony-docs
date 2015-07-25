@@ -112,6 +112,9 @@ Structure
 * Add a blank line before ``return`` statements, unless the return is alone
   inside a statement-group (like an ``if`` statement);
 
+* Use just ``return;`` instead of ``return null;`` when a function must return void
+  early;
+
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
 
