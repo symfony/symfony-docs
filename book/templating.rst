@@ -584,9 +584,9 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
-.. versionadded:: 2.2
+.. versionadded:: 2.3
     The `include() function`_ is a new Twig feature that's available in Symfony
-    2.2. Prior, the `{% include %} tag`_ tag was used.
+    2.3. Prior, the `{% include %} tag`_ tag was used.
 
 .. index::
    single: Templating; Embedding action
