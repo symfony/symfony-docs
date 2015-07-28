@@ -26,7 +26,7 @@ There are a couple of steps to upgrading a major version:
 During the lifecycle of a major release, new features are added and method
 signatures and public API usages are changed. However,
 :doc:`minor versions </cookbook/upgrade/minor_version>` should not contain any
-backwards compatibility changes. To accomplish this, the "old" (e.g. functions,
+backwards incompatible changes. To accomplish this, the "old" (e.g. functions,
 classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
 
@@ -35,12 +35,26 @@ functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
 2.8.*), you should be able to upgrade without a problem.
 
-To help you with this, the last minor releases will trigger deprecated notices.
-For example, 2.7 and 2.8 trigger deprecated notices. When visiting your
-application in the :doc:`dev environment </cookbook/configuration/environments>`
+To help you with this, deprecation notices are triggered whenever you end up
+using a deprecated feature. When visiting your application in the
+:doc:`dev environment </cookbook/configuration/environments>`
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /images/cookbook/deprecations-in-profiler.png
+
+Of course ultimately, you want to stop using the deprecated functionality.
+Sometimes, this is easy: the warning might tell you exactly what to change.
+
+But other times, the warning might be unclear: a setting somewhere might
+cause a class deeper to trigger the warning. In this case, Symfony does its
+best to give a clear message, but you may need to research that warning further.
+
+And sometimes, the warning may come from a third-party library or bundle
+that you're using. If that's true, there's a good chance that those deprecations
+have already been updated. In that case, upgrade the library to fix them.
+
+Once all the deprecation warnings are gone, you can upgrade with a lot
+more confidence.
 
 Deprecations in PHPUnit
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,7 +66,7 @@ To make sure this doesn't happen, you can install the PHPUnit bridge:
 
 .. code-block:: bash
 
-    $ composer require symfony/phpunit-bridge
+    $ composer require --dev symfony/phpunit-bridge
 
 Now, your tests execute normally and a nice summary of the deprecation notices
 is displayed at the end of the test report:
