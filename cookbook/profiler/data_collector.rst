@@ -131,15 +131,15 @@ following example can help you get started:
         </div>
         {% endset %}
 
-        {# Set the "link" value to false if you do not have a big "panel" 
+        {# Set the "link" value to false if you do not have a big "panel"
            section that you want to direct the user to. #}
-        {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': true } %}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
 
     {% endblock %}
 
     {% block head %}
-        {# Optional, if you need your own JS or CSS files. #} 
-        {{ parent() }} {# Use parent() to keep the default styles #}        
+        {# Optional, if you need your own JS or CSS files. #}
+        {{ parent() }} {# Use parent() to keep the default styles #}
     {% endblock %}
 
     {% block menu %}
@@ -151,7 +151,7 @@ following example can help you get started:
     {% endblock %}
 
     {% block panel %}
-        {# Optional, for showing the most details. #} 
+        {# Optional, for showing the most details. #}
         <h2>Example</h2>
         <p>
             <em>Major information goes here</em>
