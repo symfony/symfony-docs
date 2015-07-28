@@ -12,4 +12,3 @@ Configuration
     apache_router
     web_server_configuration
     configuration_organization
-    mongodb_session_storage
