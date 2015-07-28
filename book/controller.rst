@@ -806,8 +806,8 @@ variable.
 Checking the Validity of a CSRF Token
 -------------------------------------
 
-Sometimes you want to use CSRF protection in an action where you don't want to use a
-Symfony form.
+Sometimes you want to use CSRF protection in an action where you don't want to use the
+Symfony Form component.
 
 If, for example, you're doing a DELETE action, you can use the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isCsrfTokenValid`
@@ -820,7 +820,7 @@ method to check the CSRF token::
 .. versionadded:: 2.6
     The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
 
-Previously you would use::
+It is equivalent to executing the following code::
 
     use Symfony\Component\Security\Csrf\CsrfToken;
 
