@@ -50,6 +50,7 @@ a Request object. All controller resolvers implement the following interface::
 
     namespace Symfony\Component\HttpKernel\Controller;
 
+    // ...
     interface ControllerResolverInterface
     {
         function getController(Request $request);
@@ -151,7 +152,6 @@ method is not defined, an argument has no matching attribute, ...).
 Let's conclude with the new version of our framework::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;

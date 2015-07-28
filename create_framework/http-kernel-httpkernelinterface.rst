@@ -8,12 +8,18 @@ goal by making our framework implement ``HttpKernelInterface``::
 
     namespace Symfony\Component\HttpKernel;
 
+    // ...
+
     interface HttpKernelInterface
     {
         /**
          * @return Response A Response instance
          */
-        function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true);
+        public function handle(
+            Request $request,
+            $type = self::MASTER_REQUEST,
+            $catch = true
+        );
     }
 
 ``HttpKernelInterface`` is probably the most important piece of code in the
@@ -26,15 +32,17 @@ Update your framework so that it implements this interface::
     // example.com/src/Framework.php
 
     // ...
-
     use Symfony\Component\HttpKernel\HttpKernelInterface;
 
     class Framework implements HttpKernelInterface
     {
         // ...
 
-        public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
-        {
+        public function handle(
+            Request $request,
+            $type = HttpKernelInterface::MASTER_REQUEST,
+            $catch = true
+        ) {
             // ...
         }
     }
@@ -47,9 +55,11 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
 ``HttpKernelInterface`` instance::
 
     // example.com/web/front.php
-
     $framework = new Simplex\Framework($dispatcher, $matcher, $resolver);
-    $framework = new HttpKernel\HttpCache\HttpCache($framework, new HttpKernel\HttpCache\Store(__DIR__.'/../cache'));
+    $framework = new HttpKernel\HttpCache\HttpCache(
+        $framework,
+        new HttpKernel\HttpCache\Store(__DIR__.'/../cache')
+    );
 
     $framework->handle($request)->send();
 
@@ -61,6 +71,7 @@ to cache a response for 10 seconds, use the ``Response::setTtl()`` method::
 
     // example.com/src/Calendar/Controller/LeapYearController.php
 
+    // ...
     public function indexAction(Request $request, $year)
     {
         $leapyear = new LeapYear();
@@ -130,6 +141,7 @@ early as possible::
     if ($response->isNotModified($request)) {
         return $response;
     }
+
     $response->setContent('The computed content of the response');
 
     return $response;
@@ -138,7 +150,9 @@ Using HTTP caching is great, but what if you cannot cache the whole page? What
 if you can cache everything but some sidebar that is more dynamic that the
 rest of the content? Edge Side Includes (`ESI`_) to the rescue! Instead of
 generating the whole content in one go, ESI allows you to mark a region of a
-page as being the content of a sub-request call::
+page as being the content of a sub-request call:
+
+.. code-block:: text
 
     This is the content of your page
 
@@ -166,7 +180,12 @@ When using complex HTTP caching strategies and/or many ESI include tags, it
 can be hard to understand why and when a resource should be cached or not. To
 ease debugging, you can enable the debug mode::
 
-    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'), new Esi(), array('debug' => true));
+    $framework = new HttpKernel\HttpCache\HttpCache(
+        $framework,
+        new HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
+        new HttpKernel\HttpCache\Esi(),
+        array('debug' => true)
+    );
 
 The debug mode adds a ``X-Symfony-Cache`` header to each response that
 describes what the cache layer did:
