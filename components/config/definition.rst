@@ -8,12 +8,13 @@ Validating Configuration Values
 -------------------------------
 
 After loading configuration values from all kinds of resources, the values
-and their structure can be validated using the "Definition" part of the Config
-Component. Configuration values are usually expected to show some kind of
-hierarchy. Also, values should be of a certain type, be restricted in number
-or be one of a given set of values. For example, the following configuration
-(in YAML) shows a clear hierarchy and some validation rules that should be
-applied to it (like: "the value for ``auto_connect`` must be a boolean value"):
+and their structure can be validated using the "Definition" part of the
+Config Component. Configuration values are usually expected to show some
+kind of hierarchy. Also, values should be of a certain type, be restricted
+in number or be one of a given set of values. For example, the following
+configuration (in YAML) shows a clear hierarchy and some validation rules
+that should be applied to it (like: "the value for ``auto_connect`` must
+be a boolean value"):
 
 .. code-block:: yaml
 
@@ -44,9 +45,9 @@ Defining a Hierarchy of Configuration Values Using the TreeBuilder
 All the rules concerning configuration values can be defined using the
 :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`.
 
-A :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder` instance
-should be returned from a custom ``Configuration`` class which implements the
-:class:`Symfony\\Component\\Config\\Definition\\ConfigurationInterface`::
+A :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`
+instance should be returned from a custom ``Configuration`` class which
+implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInterface`::
 
     namespace Acme\DatabaseConfiguration;
 
@@ -89,7 +90,8 @@ reflect the real structure of the configuration values::
 
 The root node itself is an array node, and has children, like the boolean
 node ``auto_connect`` and the scalar node ``default_connection``. In general:
-after defining a node, a call to ``end()`` takes you one step up in the hierarchy.
+after defining a node, a call to ``end()`` takes you one step up in the
+hierarchy.
 
 Node Type
 ~~~~~~~~~
@@ -97,7 +99,8 @@ Node Type
 It is possible to validate the type of a provided value by using the appropriate
 node definition. Node types are available for:
 
-* scalar (generic type that includes booleans, strings, integers, floats and ``null``)
+* scalar (generic type that includes booleans, strings, integers, floats
+  and ``null``)
 * boolean
 * integer
 * float
@@ -193,12 +196,14 @@ Array Node Options
 Before defining the children of an array node, you can provide options like:
 
 ``useAttributeAsKey()``
-    Provide the name of a child node, whose value should be used as the key in the resulting array.
+    Provide the name of a child node, whose value should be used as the
+    key in the resulting array.
 ``requiresAtLeastOneElement()``
-    There should be at least one element in the array (works only when ``isRequired()`` is also
-    called).
+    There should be at least one element in the array (works only when
+    ``isRequired()`` is also called).
 ``addDefaultsIfNotSet()``
-    If any child nodes have default values, use them if explicit values haven't been provided.
+    If any child nodes have default values, use them if explicit values
+    haven't been provided.
 
 An example of this::
 
@@ -225,12 +230,12 @@ In YAML, the configuration might look like this:
         parameters:
             param1: { value: param1val }
 
-In XML, each ``parameters`` node would have a ``name`` attribute (along with
-``value``), which would be removed and used as the key for that element in
-the final array. The ``useAttributeAsKey`` is useful for normalizing how
-arrays are specified between different formats like XML and YAML.
+In XML, each ``parameters`` node would have a ``name`` attribute (along
+with ``value``), which would be removed and used as the key for that element
+in the final array. The ``useAttributeAsKey`` is useful for normalizing
+how arrays are specified between different formats like XML and YAML.
 
-Default and required Values
+Default and Required Values
 ---------------------------
 
 For all node types, it is possible to define default values and replacement
@@ -246,7 +251,8 @@ has a certain value:
 ``default*()``
     (``null``, ``true``, ``false``), shortcut for ``defaultValue()``
 ``treat*Like()``
-    (``null``, ``true``, ``false``), provide a replacement value in case the value is ``*.``
+    (``null``, ``true``, ``false``), provide a replacement value in case
+    the value is ``*.``
 
 .. code-block:: php
 
@@ -288,8 +294,8 @@ All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
 method.
 
-The info will be printed as a comment when dumping the configuration tree with
-the ``config:dump`` command.
+The info will be printed as a comment when dumping the configuration tree
+with the ``config:dump`` command.
 
 .. versionadded:: 2.6
     Since Symfony 2.6, the info will also be added to the exception message
@@ -300,8 +306,10 @@ Optional Sections
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut
-:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled` and
-:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeDisabled` methods::
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled`
+and
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeDisabled`
+methods::
 
     $arrayNode
         ->canBeEnabled()
@@ -327,21 +335,22 @@ Merging Options
 Extra options concerning the merge process may be provided. For arrays:
 
 ``performNoDeepMerging()``
-    When the value is also defined in a second configuration array, don’t
+    When the value is also defined in a second configuration array, don't
     try to merge an array, but overwrite it entirely
 
 For all nodes:
 
 ``cannotBeOverwritten()``
-    don’t let other configuration arrays overwrite an existing value for this node
+    don't let other configuration arrays overwrite an existing value for
+    this node
 
 Appending Sections
 ------------------
 
 If you have a complex configuration to validate then the tree can grow to
-be large and you may want to split it up into sections. You can do this by
-making a section a separate node and then appending it into the main tree
-with ``append()``::
+be large and you may want to split it up into sections. You can do this
+by making a section a separate node and then appending it into the main
+tree with ``append()``::
 
     public function getConfigTreeBuilder()
     {
@@ -405,9 +414,9 @@ and finally the tree is used to validate the resulting array. The normalization
 process is used to remove some of the differences that result from different
 configuration formats, mainly the differences between YAML and XML.
 
-The separator used in keys is typically ``_`` in YAML and ``-`` in XML. For
-example, ``auto_connect`` in YAML and ``auto-connect`` in XML.
-The normalization would make both of these ``auto_connect``.
+The separator used in keys is typically ``_`` in YAML and ``-`` in XML.
+For example, ``auto_connect`` in YAML and ``auto-connect`` in XML. The
+normalization would make both of these ``auto_connect``.
 
 .. caution::
 
@@ -432,8 +441,8 @@ and in XML:
     </twig:config>
 
 This difference can be removed in normalization by pluralizing the key used
-in XML. You can specify that you want a key to be pluralized in this way with
-``fixXmlConfig()``::
+in XML. You can specify that you want a key to be pluralized in this way
+with ``fixXmlConfig()``::
 
     $rootNode
         ->fixXmlConfig('extension')
@@ -475,9 +484,9 @@ in the second making it difficult to validate. You can ensure it is always
 an array with ``fixXmlConfig``.
 
 You can further control the normalization process if you need to. For example,
-you may want to allow a string to be set and used as a particular key or several
-keys to be set explicitly. So that, if everything apart from ``name`` is optional
-in this config:
+you may want to allow a string to be set and used as a particular key or
+several keys to be set explicitly. So that, if everything apart from ``name``
+is optional in this config:
 
 .. code-block:: yaml
 
@@ -535,8 +544,8 @@ The builder is used for adding advanced validation rules to node definitions, li
         ->end()
     ;
 
-A validation rule always has an "if" part. You can specify this part in the
-following ways:
+A validation rule always has an "if" part. You can specify this part in
+the following ways:
 
 - ``ifTrue()``
 - ``ifString()``
@@ -560,19 +569,24 @@ of the node's original value.
 Processing Configuration Values
 -------------------------------
 
-The :class:`Symfony\\Component\\Config\\Definition\\Processor` uses the tree
-as it was built using the :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`
-to process multiple arrays of configuration values that should be merged.
-If any value is not of the expected type, is mandatory and yet undefined,
-or could not be validated in some other way, an exception will be thrown.
+The :class:`Symfony\\Component\\Config\\Definition\\Processor` uses the
+tree as it was built using the
+:class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder` to
+process multiple arrays of configuration values that should be merged. If
+any value is not of the expected type, is mandatory and yet undefined, or
+could not be validated in some other way, an exception will be thrown.
 Otherwise the result is a clean array of configuration values::
 
     use Symfony\Component\Yaml\Yaml;
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config.yml'));
-    $config2 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml'));
+    $config1 = Yaml::parse(
+        file_get_contents(__DIR__.'/src/Matthias/config/config.yml')
+    );
+    $config2 = Yaml::parse(
+        file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml')
+    );
 
     $configs = array($config1, $config2);
 
