@@ -30,7 +30,7 @@ to use the new version:
         "...": "...",
 
         "require": {
-            "symfony/symfony": "2.6.*",
+            "symfony/symfony": "~2.6",
         },
         "...": "...",
     }
