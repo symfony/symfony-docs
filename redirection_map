@@ -29,3 +29,12 @@
 /cookbook/configuration/pdo_session_storage /cookbook/doctrine/pdo_session_storage
 /cookbook/configuration/mongodb_session_storage /cookbook/doctrine/mongodb_session_storage
 /cookbook/service_container/event_listener /cookbook/event_dispatcher/event_listener
+/create_framework/http_foundation /create_framework/http-foundation
+/create_framework/front_controller /create_framework/front-controller
+/create_framework/http_kernel_controller_resolver /create_framework/http-kernel-controller-resolver
+/create_framework/separation_of_concerns /create_framework/separation-of-concerns
+/create_framework/unit_testing /create_framework/unit-testing
+/create_framework/event_dispatcher /create_framework/event-dispatcher
+/create_framework/http_kernel_httpkernelinterface /create_framework/http-kernel-httpkernelinterface
+/create_framework/http_kernel_httpkernel_class /create_framework/http-kernel-httpkernel-class
+/create_framework/dependency_injection /create_framework/dependency-injection
