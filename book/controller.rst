@@ -803,8 +803,8 @@ Just like when creating a controller for a route, the order of the arguments of
 order of the arguments, Symfony will still pass the correct value to each
 variable.
 
-Checking the Validity of a CSRF Token
--------------------------------------
+Validating a CSRF Token
+-----------------------
 
 Sometimes you want to use CSRF protection in an action where you don't want to use the
 Symfony Form component.
@@ -819,8 +819,7 @@ method to check the CSRF token::
 
 .. versionadded:: 2.6
     The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
-
-It is equivalent to executing the following code::
+    It is equivalent to executing the following code::
 
     use Symfony\Component\Security\Csrf\CsrfToken;
 
