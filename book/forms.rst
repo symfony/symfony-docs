@@ -97,7 +97,7 @@ from inside a controller::
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
-                'form' => $form->createView(),
+                'form' => $form->createView()
             ));
         }
     }
