@@ -371,7 +371,7 @@ When working with template inheritance, here are some tips to keep in mind:
       {% endblock %}
 
 * Blocks can be nested. For better overview, you can add the block name to the
-  ``{% endblock %}`` tag like so:
+  ``{% endblock %}`` tag like this:
 
   .. code-block:: html+jinja
 
