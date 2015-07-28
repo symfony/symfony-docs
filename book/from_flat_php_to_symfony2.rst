@@ -266,7 +266,7 @@ an individual blog result based on a given id::
         $link = open_database_connection();
 
         $id = intval($id);
-        $query = 'SELECT created_date, title, body FROM post WHERE id = '.$id;
+        $query = 'SELECT created_at, title, body FROM post WHERE id = '.$id;
         $result = mysql_query($query);
         $row = mysql_fetch_assoc($result);
 
@@ -297,7 +297,7 @@ the individual blog post:
     <?php ob_start() ?>
         <h1><?php echo $post['title'] ?></h1>
 
-        <div class="date"><?php echo $post['created_date'] ?></div>
+        <div class="date"><?php echo $post['created_at'] ?></div>
         <div class="body">
             <?php echo $post['body'] ?>
         </div>
