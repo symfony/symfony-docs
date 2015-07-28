@@ -679,9 +679,12 @@ the documentation for each type.
     The most common option is the ``required`` option, which can be applied to
     any field. By default, the ``required`` option is set to ``true``, meaning
     that HTML5-ready browsers will apply client-side validation if the field
-    is left blank. If you don't want this behavior, either set the ``required``
-    option on your field to ``false`` or
-    :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`.
+    is left blank. If you don't want this behavior, either
+    :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
+    or set the ``required`` option on your field to ``false``:
+    
+      ->add('dueDate', 'date', array('widget' => 'single_text',
+      'required' => false))
 
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
