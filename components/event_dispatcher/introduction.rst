@@ -632,13 +632,8 @@ Event Name Introspection
     Before Symfony 2.4, the event name and the event dispatcher had to be
     requested from the ``Event`` instance. These methods are now deprecated.
 
-<<<<<<< HEAD
-The ``EventDispatcher`` instance, as well as the name of the event that is
-dispatched, are passed as arguments to the listener::
-=======
-The event name, (as with any other data in a custom event object) can be
-used as part of the listener's processing logic::
->>>>>>> 2.3
+The ``EventDispatcher`` instance, as well as the name of the event that
+is dispatched, are passed as arguments to the listener::
 
     use Symfony\Component\EventDispatcher\Event;
     use Symfony\Component\EventDispatcher\EventDispatcherInterface;
