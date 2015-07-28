@@ -627,7 +627,7 @@ doing so much work.
 
     Symfony also supports weak ETags by passing ``true`` as the second
     argument to the
-    :method:`Symfony\\Component\\HttpFoundation\\Response::setETag` method.
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
 
 .. index::
    single: Cache; Last-Modified header

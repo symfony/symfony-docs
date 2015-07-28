@@ -353,7 +353,7 @@ In order to use the schema, the XML configuration file must provide an
 ``xsi:schemaLocation`` attribute pointing to the XSD file for a certain XML
 namespace. This location always starts with the XML namespace. This XML
 namespace is then replaced with the XSD validation base path returned from
-:method:`Extension::getXsdValidationBasePath() <Symfony\\Component\\DependencyInjection\\ExtensionInterface::getXsdValidationBasePath>`
+:method:`Extension::getXsdValidationBasePath() <Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface::getXsdValidationBasePath>`
 method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 

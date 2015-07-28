@@ -158,7 +158,7 @@ To make your code work better on all platforms, you might want to use the
     method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
-:method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
+:method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
 the generated process commands.
 
 The following example will generate two process commands for a tar binary
@@ -194,7 +194,7 @@ timeout (in seconds)::
     $process->run();
 
 If the timeout is reached, a
-:class:`Symfony\\Process\\Exception\\RuntimeException` is thrown.
+:class:`Symfony\\Component\\Process\\Exception\\RuntimeException` is thrown.
 
 For long running commands, it is your responsibility to perform the timeout
 check regularly::
