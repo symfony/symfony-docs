@@ -14,9 +14,8 @@ Loading Resources
 Locating Resources
 ------------------
 
-Loading the configuration normally starts with a search for resources –
-in most cases: files. This can be done with the
-:class:`Symfony\\Component\\Config\\FileLocator`::
+Loading the configuration normally starts with a search for resources, mostly
+files. This can be done with the :class:`Symfony\\Component\\Config\\FileLocator`::
 
     use Symfony\Component\Config\FileLocator;
 

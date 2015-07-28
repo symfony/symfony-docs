@@ -42,9 +42,9 @@ is straightforward::
     The autoloader is automatically registered in a Symfony application
     (see ``app/autoload.php``).
 
-Use the :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix`
-or :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefixes` methods
-to register your classes::
+Use :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix` or
+:method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefixes` to register
+your classes::
 
     // register a single namespaces
     $loader->addPrefix('Symfony', __DIR__.'/vendor/symfony/symfony/src');

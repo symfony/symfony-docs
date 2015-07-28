@@ -99,7 +99,7 @@ The Extension must specify a ``getAlias`` method to implement the interface::
         }
     }
 
-For YAML configuration files specifying the alias for the Extension as a
+For YAML configuration files specifying the alias for the extension as a
 key will mean that those values are passed to the Extension's ``load`` method:
 
 .. code-block:: yaml
