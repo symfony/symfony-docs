@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-10T07:21:30Z
+
+@norkunas thanks for fixing this error! I see that you committed these changes to the `master` branch. However, changes should always be submitted to *"the oldest maintained branch which needs that change"*. This usually means to use the `2.3` branch, except for the new features, that usually go to `2.6` or `2.7`.
+
+In this case, the change should be made in the `2.7` branch, but don't worry because our doc maintainers will change the branch when merging it. But for complex pull requests is better to target the right branch. Thanks!
+
+---------------------------------------------------------------------------
+
+by norkunas at 2015-06-10T07:25:50Z
+
+I thought that if these params are available then it should be documented, that's why i commited to master. Thanks for clarifying :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T21:09:33Z
+
+I agree with you, @norkunas. These should be merged into master (and maybe just `(deprecated)` in the parameter list on the 2.7 branch).
+
+:+1:
