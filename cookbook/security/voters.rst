@@ -105,8 +105,8 @@ edit a particular object. Here's an example implementation:
 
                     break;
                 case self::EDIT:
-                    // we assume that our data object has a method getOwner() to
-                    // get the current owner user entity for this data object
+                    // this assumes that the data object has a getOwner() method
+                    // to get the entity of the user who owns this data object
                     if ($user->getId() === $post->getOwner()->getId()) {
                         return true;
                     }
@@ -218,9 +218,7 @@ from the authorization checker is called.
 
             $authChecker = $this->get('security.authorization_checker');
 
-            if (false === $authChecker->isGranted('view', $post)) {
-                throw $this->createAccessDeniedException('Unauthorized access!');
-            }
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }

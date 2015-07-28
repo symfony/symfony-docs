@@ -1,19 +1,19 @@
 .. index::
-   single: DependencyInjection; Advanced configuration
+    single: DependencyInjection; Advanced configuration
 
 Advanced Container Configuration
 ================================
 
 .. _container-private-services:
 
-Marking Services as public / private
+Marking Services as Public / Private
 ------------------------------------
 
 When defining services, you'll usually want to be able to access these definitions
-within your application code. These services are called ``public``. For example,
-the ``doctrine`` service registered with the container when using the DoctrineBundle
-is a public service. This means that you can fetch it from the container
-using the ``get()`` method::
+within your application code. These services are called ``public``. For
+example, the ``doctrine`` service registered with the container when using
+the DoctrineBundle is a public service. This means that you can fetch it
+from the container using the ``get()`` method::
 
    $doctrine = $container->get('doctrine');
 
@@ -68,8 +68,8 @@ This *may or may not work*, depending on if the service could be inlined.
 Simply said: A service can be marked as private if you do not want to access
 it directly from your code.
 
-However, if a service has been marked as private, you can still alias it (see
-below) to access this service (via the alias).
+However, if a service has been marked as private, you can still alias it
+(see below) to access this service (via the alias).
 
 .. note::
 
