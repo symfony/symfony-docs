@@ -1,5 +1,5 @@
-﻿.. index::
-   single: DependencyInjection; Service definitions
+.. index::
+    single: DependencyInjection; Service definitions
 
 Working with Container Service Definitions
 ==========================================
@@ -13,7 +13,8 @@ To find out if there is a definition for a service id::
 
     $container->hasDefinition($serviceId);
 
-This is useful if you only want to do something if a particular definition exists.
+This is useful if you only want to do something if a particular definition
+exists.
 
 You can retrieve a definition with::
 
@@ -36,7 +37,7 @@ it to the container using::
 Working with a Definition
 -------------------------
 
-Creating a new Definition
+Creating a New Definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create a new definition rather than manipulate one retrieved
@@ -104,11 +105,12 @@ Add a method call with::
 
    $definition->addMethodCall($method, $arguments);
 
-Where ``$method`` is the method name and ``$arguments`` is an array of the arguments
-to call the method with. The arguments can be strings, arrays, parameters or
-service ids as with the constructor arguments.
+Where ``$method`` is the method name and ``$arguments`` is an array of the
+arguments to call the method with. The arguments can be strings, arrays,
+parameters or service ids as with the constructor arguments.
 
-You can also replace any existing method calls with an array of new ones with::
+You can also replace any existing method calls with an array of new ones
+with::
 
     $definition->setMethodCalls($methodCalls);
 
@@ -137,3 +139,4 @@ the service itself gets loaded. To do so, you can use the
 
 Notice that Symfony will internally call the PHP statement ``require_once``,
 which means that your file will be included only once per request.
+

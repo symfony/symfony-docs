@@ -11,11 +11,12 @@ Usage
 -----
 
 Whenever you reference a class that has not been required or included yet,
-PHP uses the `autoloading mechanism`_ to delegate the loading of a file defining
-the class. Symfony provides two autoloaders, which are able to load your classes:
+PHP uses the `autoloading mechanism`_ to delegate the loading of a file
+defining the class. Symfony provides two autoloaders, which are able to
+load your classes:
 
 * :doc:`/components/class_loader/class_loader`: loads classes that follow
-  the `PSR-0` class naming standard;
+  the `PSR-0`_ class naming standard;
 
 * :doc:`/components/class_loader/map_class_loader`: loads classes using
   a static map from class name to file path.
@@ -38,5 +39,6 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+.. _PSR-0: http://www.php-fig.org/psr/psr-0/
 .. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader

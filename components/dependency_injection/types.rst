@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
    single: DependencyInjection; Injection types
 
 Types of Injection
@@ -9,8 +9,8 @@ into it is a good way of making a class more reusable, testable and decoupled
 from others.
 
 There are several ways that the dependencies can be injected. Each injection
-point has advantages and disadvantages to consider, as well as different ways
-of working with them when using the service container.
+point has advantages and disadvantages to consider, as well as different
+ways of working with them when using the service container.
 
 Constructor Injection
 ---------------------
@@ -89,19 +89,20 @@ There are several advantages to using constructor injection:
   then injecting it via the constructor ensures it is present when the class
   is used as the class cannot be constructed without it.
 
-* The constructor is only ever called once when the object is created, so you
-  can be sure that the dependency will not change during the object's lifetime.
+* The constructor is only ever called once when the object is created, so
+  you can be sure that the dependency will not change during the object's
+  lifetime.
 
-These advantages do mean that constructor injection is not suitable for working
-with optional dependencies. It is also more difficult to use in combination
-with class hierarchies: if a class uses constructor injection then extending it
-and overriding the constructor becomes problematic.
+These advantages do mean that constructor injection is not suitable for
+working with optional dependencies. It is also more difficult to use in
+combination with class hierarchies: if a class uses constructor injection
+then extending it and overriding the constructor becomes problematic.
 
 Setter Injection
 ----------------
 
-Another possible injection point into a class is by adding a setter method that
-accepts the dependency::
+Another possible injection point into a class is by adding a setter method
+that accepts the dependency::
 
     class NewsletterManager
     {
@@ -159,19 +160,19 @@ accepts the dependency::
 
 This time the advantages are:
 
-* Setter injection works well with optional dependencies. If you do not need
-  the dependency, then just do not call the setter.
+* Setter injection works well with optional dependencies. If you do not
+  need the dependency, then just do not call the setter.
 
-* You can call the setter multiple times. This is particularly useful if the
-  method adds the dependency to a collection. You can then have a variable number
-  of dependencies.
+* You can call the setter multiple times. This is particularly useful if
+  the method adds the dependency to a collection. You can then have a variable
+  number of dependencies.
 
 The disadvantages of setter injection are:
 
 * The setter can be called more than just at the time of construction so
-  you cannot be sure the dependency is not replaced during the lifetime of the
-  object (except by explicitly writing the setter method to check if it has already
-  been called).
+  you cannot be sure the dependency is not replaced during the lifetime
+  of the object (except by explicitly writing the setter method to check
+  if it has already been called).
 
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.
@@ -241,3 +242,4 @@ to setter injection but with these additional important problems:
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
 as in a third party library, which uses public properties for its dependencies.
+

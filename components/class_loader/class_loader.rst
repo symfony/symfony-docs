@@ -7,14 +7,14 @@ The PSR-0 Class Loader
 .. versionadded:: 2.1
     The ``ClassLoader`` class was introduced in Symfony 2.1.
 
-If your classes and third-party libraries follow the `PSR-0`_ standard, you
-can use the :class:`Symfony\\Component\\ClassLoader\\ClassLoader` class to
-load all of your project's classes.
+If your classes and third-party libraries follow the `PSR-0`_ standard,
+you can use the :class:`Symfony\\Component\\ClassLoader\\ClassLoader` class
+to load all of your project's classes.
 
 .. tip::
 
-    You can use both the ``ApcClassLoader`` and the ``XcacheClassLoader`` to
-    :doc:`cache </components/class_loader/cache_class_loader>` a ``ClassLoader``
+    You can use both the ``ApcClassLoader`` and the ``XcacheClassLoader``
+    to :doc:`cache </components/class_loader/cache_class_loader>` a ``ClassLoader``
     instance or the ``DebugClassLoader`` to :doc:`debug </components/class_loader/debug_class_loader>`
     it.
 
@@ -39,12 +39,12 @@ is straightforward::
 
 .. note::
 
-    The autoloader is automatically registered in a Symfony application (see
-    ``app/autoload.php``).
+    The autoloader is automatically registered in a Symfony application
+    (see ``app/autoload.php``).
 
-Use the :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix` or
-:method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefixes` methods to
-register your classes::
+Use :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix` or
+:method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefixes` to register
+your classes::
 
     // register a single namespaces
     $loader->addPrefix('Symfony', __DIR__.'/vendor/symfony/symfony/src');
@@ -63,9 +63,9 @@ register your classes::
         'Twig_'  => __DIR__.'/vendor/twig/twig/lib',
     ));
 
-Classes from a sub-namespace or a sub-hierarchy of `PEAR`_ classes can be looked
-for in a location list to ease the vendoring of a sub-set of classes for large
-projects::
+Classes from a sub-namespace or a sub-hierarchy of `PEAR`_ classes can be
+looked for in a location list to ease the vendoring of a sub-set of classes
+for large projects::
 
     $loader->addPrefixes(array(
         'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/common/lib',
@@ -75,10 +75,10 @@ projects::
     ));
 
 In this example, if you try to use a class in the ``Doctrine\Common`` namespace
-or one of its children, the autoloader will first look for the class under the
-``doctrine-common`` directory. If not found, it will then fallback to the default
-``Doctrine`` directory (the last one configured) before giving up. The order
-of the prefix registrations is significant in this case.
+or one of its children, the autoloader will first look for the class under
+the ``doctrine-common`` directory. If not found, it will then fallback to
+the default ``Doctrine`` directory (the last one configured) before giving
+up. The order of the prefix registrations is significant in this case.
 
 .. _PEAR:  http://pear.php.net/manual/en/standards.naming.php
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/

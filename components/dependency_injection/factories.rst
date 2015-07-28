@@ -8,9 +8,9 @@ Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this
 will not provide you with everything you need to construct your objects.
-For this situation, you can use a factory to create the object and tell the
-service container to call a method on the factory rather than directly instantiating
-the class.
+For this situation, you can use a factory to create the object and tell
+the service container to call a method on the factory rather than directly
+instantiating the class.
 
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object::
@@ -28,8 +28,8 @@ object::
     }
 
 To make the ``NewsletterManager`` object available as a service, you can
-configure the service container to use the ``NewsletterManagerFactory`` factory
-class:
+configure the service container to use the ``NewsletterManagerFactory``
+factory class:
 
 .. configuration-block::
 
@@ -71,16 +71,16 @@ class:
 .. note::
 
     When using a factory to create services, the value chosen for the ``class``
-    option has no effect on the resulting service. The actual class name only
-    depends on the object that is returned by the factory. However, the configured
-    class name may be used by compiler passes and therefore should be set to a
-    sensible value.
+    option has no effect on the resulting service. The actual class name
+    only depends on the object that is returned by the factory. However,
+    the configured class name may be used by compiler passes and therefore
+    should be set to a sensible value.
 
 When you specify the class to use for the factory (via ``factory_class``)
 the method will be called statically. If the factory itself should be instantiated
-and the resulting object's method called, configure the factory itself as a service.
-In this case, the method (e.g. ``createNewsletterManager``) should be changed
-to be non-static:
+and the resulting object's method called, configure the factory itself
+as a service. In this case, the method (e.g. ``createNewsletterManager``)
+should be changed to be non-static:
 
 .. configuration-block::
 
@@ -129,9 +129,9 @@ to be non-static:
 
 .. note::
 
-   The factory service is specified by its id name and not a reference to
-   the service itself. So, you do not need to use the @ syntax for this in
-   YAML configurations.
+    The factory service is specified by its id name and not a reference
+    to the service itself. So, you do not need to use the ``@`` syntax for
+    this in YAML configurations.
 
 Passing Arguments to the Factory Method
 ---------------------------------------
