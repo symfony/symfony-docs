@@ -33,13 +33,8 @@ object::
     }
 
 To make the ``NewsletterManager`` object available as a service, you can
-<<<<<<< HEAD
 configure the service container to use the
 ``NewsletterFactory::createNewsletterManager()`` factory method:
-=======
-configure the service container to use the ``NewsletterManagerFactory``
-factory class:
->>>>>>> 2.3
 
 .. configuration-block::
 
@@ -82,18 +77,10 @@ factory class:
     the configured class name may be used by compiler passes and therefore
     should be set to a sensible value.
 
-<<<<<<< HEAD
 Now, the method will be called statically. If the factory class itself should
 be instantiated and the resulting object's method called, configure the factory
 itself as a service. In this case, the method (e.g. get) should be changed to
 be non-static.
-=======
-When you specify the class to use for the factory (via ``factory_class``)
-the method will be called statically. If the factory itself should be instantiated
-and the resulting object's method called, configure the factory itself
-as a service. In this case, the method (e.g. ``createNewsletterManager``)
-should be changed to be non-static:
->>>>>>> 2.3
 
 .. configuration-block::
 
@@ -130,18 +117,12 @@ should be changed to be non-static:
         // ...
         $container->register('newsletter_manager.factory', 'NewsletterManagerFactory');
 
-<<<<<<< HEAD
         $newsletterManager = new Definition();
         $newsletterManager->setFactory(array(
             new Reference('newsletter_manager.factory'),
             'createNewsletterManager'
         ));
         $container->setDefinition('newsletter_manager', $newsletterManager);
-=======
-    The factory service is specified by its id name and not a reference
-    to the service itself. So, you do not need to use the ``@`` syntax for
-    this in YAML configurations.
->>>>>>> 2.3
 
 Passing Arguments to the Factory Method
 ---------------------------------------
