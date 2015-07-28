@@ -171,7 +171,7 @@ Then register the listener:
         services:
             app.user_locale_listener:
                 class: AppBundle\EventListener\UserLocaleListener
-                arguments: [@session]
+                arguments: ["@session"]
                 tags:
                     - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
 
