@@ -42,8 +42,8 @@ to register event listeners and dispatch events::
 
 After your application has been processed, you can use the
 :method:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface::getCalledListeners`
-method to retrieve an array of event listeners that have been called in your
-application. Similarly, the
+method to retrieve an array of event listeners that have been called in
+your application. Similarly, the
 :method:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface::getNotCalledListeners`
 method returns an array of event listeners that have not been called::
 

@@ -29,8 +29,8 @@ and set a parameter in the container with::
 
     The used ``.`` notation is just a
     :ref:`Symfony convention <service-naming-conventions>` to make parameters
-    easier to read. Parameters are just flat key-value elements, they can't be
-    organized into a nested array
+    easier to read. Parameters are just flat key-value elements, they can't
+    be organized into a nested array
 
 .. note::
 
@@ -67,14 +67,15 @@ You can also use the ``parameters`` section of a config file to set parameters:
         $container->setParameter('mailer.transport', 'sendmail');
 
 As well as retrieving the parameter values directly from the container you
-can use them in the config files. You can refer to parameters elsewhere by
-surrounding them with percent (``%``) signs, e.g. ``%mailer.transport%``.
+can use them in the config files. You can refer to parameters elsewhere
+by surrounding them with percent (``%``) signs, e.g. ``%mailer.transport%``.
 One use for this is to inject the values into your services. This allows
-you to configure different versions of services between applications or multiple
-services based on the same class but configured differently within a single
-application. You could inject the choice of mail transport into the ``Mailer``
-class directly. But declaring it as a parameter makes it easier to change
-rather than being tied up and hidden with the service definition:
+you to configure different versions of services between applications or
+multiple services based on the same class but configured differently
+within a single application. You could inject the choice of mail transport
+into the ``Mailer`` class directly. But declaring it as a parameter makes
+it easier to change rather than being tied up and hidden with the service
+definition:
 
 .. configuration-block::
 
@@ -118,8 +119,8 @@ rather than being tied up and hidden with the service definition:
 
 .. caution::
 
-    The values between ``parameter`` tags in XML configuration files are not
-    trimmed.
+    The values between ``parameter`` tags in XML configuration files are
+    not trimmed.
 
     This means that the following configuration sample will have the value
     ``\n    sendmail\n``:
@@ -130,8 +131,9 @@ rather than being tied up and hidden with the service definition:
             sendmail
         </parameter>
 
-    In some cases (for constants or class names), this could throw errors. In
-    order to prevent this, you must always inline your parameters as follow:
+    In some cases (for constants or class names), this could throw errors.
+    In order to prevent this, you must always inline your parameters as
+    follow:
 
     .. code-block:: xml
 
@@ -142,8 +144,8 @@ the parameter value in one place if needed.
 
 .. note::
 
-    The percent sign inside a parameter or argument, as part of the string, must
-    be escaped with another percent sign:
+    The percent sign inside a parameter or argument, as part of the string,
+    must be escaped with another percent sign:
 
     .. configuration-block::
 
@@ -165,8 +167,8 @@ Array Parameters
 ----------------
 
 Parameters do not need to be flat strings, they can also contain array values.
-For the XML format, you need to use the ``type="collection"`` attribute for
-all parameters that are arrays.
+For the XML format, you need to use the ``type="collection"`` attribute
+for all parameters that are arrays.
 
 .. configuration-block::
 
@@ -224,9 +226,9 @@ all parameters that are arrays.
 Constants as Parameters
 -----------------------
 
-The container also has support for setting PHP constants as parameters. To
-take advantage of this feature, map the name of your constant to a parameter
-key, and define the type as ``constant``.
+The container also has support for setting PHP constants as parameters.
+To take advantage of this feature, map the name of your constant to a parameter
+key and define the type as ``constant``.
 
 .. configuration-block::
 
@@ -261,8 +263,8 @@ key, and define the type as ``constant``.
 PHP Keywords in XML
 -------------------
 
-By default, ``true``, ``false`` and ``null`` in XML are converted to the PHP
-keywords (respectively ``true``, ``false`` and ``null``):
+By default, ``true``, ``false`` and ``null`` in XML are converted to the
+PHP keywords (respectively ``true``, ``false`` and ``null``):
 
 .. code-block:: xml
 

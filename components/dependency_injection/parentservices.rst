@@ -1,12 +1,13 @@
 .. index::
-   single: DependencyInjection; Parent services
+    single: DependencyInjection; Parent services
 
-Managing common Dependencies with parent Services
+Managing Common Dependencies with Parent Services
 =================================================
 
-As you add more functionality to your application, you may well start to have
-related classes that share some of the same dependencies. For example you
-may have a Newsletter Manager which uses setter injection to set its dependencies::
+As you add more functionality to your application, you may well start to
+have related classes that share some of the same dependencies. For example,
+you may have a Newsletter Manager which uses setter injection to set its
+dependencies::
 
     class NewsletterManager
     {
@@ -136,12 +137,13 @@ The service config for these classes would look something like this:
             ))
         ;
 
-There is a lot of repetition in both the classes and the configuration. This
-means that if you changed, for example, the ``Mailer`` of ``EmailFormatter``
-classes to be injected via the constructor, you would need to update the config
-in two places. Likewise if you needed to make changes to the setter methods
-you would need to do this in both classes. The typical way to deal with the
-common methods of these related classes would be to extract them to a super class::
+There is a lot of repetition in both the classes and the configuration.
+This means that if you changed, for example, the ``Mailer`` of
+``EmailFormatter`` classes to be injected via the constructor, you would
+need to update the config in two places. Likewise if you needed to make
+changes to the setter methods you would need to do this in both classes.
+The typical way to deal with the common methods of these related classes
+would be to extract them to a super class::
 
     abstract class MailManager
     {
@@ -260,10 +262,10 @@ a parent for a service.
         $greetingCardManager->setClass('GreetingCardManager');
         $container->setDefinition('greeting_card_manager', $greetingCardManager);
 
-In this context, having a ``parent`` service implies that the arguments and
-method calls of the parent service should be used for the child services.
-Specifically, the setter methods defined for the parent service will be called
-when the child services are instantiated.
+In this context, having a ``parent`` service implies that the arguments
+and method calls of the parent service should be used for the child services.
+Specifically, the setter methods defined for the parent service will be
+called when the child services are instantiated.
 
 .. note::
 
@@ -275,19 +277,19 @@ when the child services are instantiated.
 
 .. caution::
 
-   The ``scope``, ``abstract`` and ``tags`` attributes are always taken from
-   the child service.
+   The ``scope``, ``abstract`` and ``tags`` attributes are always taken
+   from the child service.
 
-The parent service is abstract as it should not be directly retrieved from the
-container or passed into another service. It exists merely as a "template" that
-other services can use. This is why it can have no ``class`` configured which
-would cause an exception to be raised for a non-abstract service.
+The parent service is abstract as it should not be directly retrieved from
+the container or passed into another service. It exists merely as a "template"
+that other services can use. This is why it can have no ``class`` configured
+which would cause an exception to be raised for a non-abstract service.
 
 .. note::
 
-   In order for parent dependencies to resolve, the ``ContainerBuilder`` must
-   first be compiled. See :doc:`/components/dependency_injection/compilation`
-   for more details.
+   In order for parent dependencies to resolve, the ``ContainerBuilder``
+   must first be compiled. See
+   :doc:`/components/dependency_injection/compilation` for more details.
 
 .. tip::
 
@@ -296,7 +298,7 @@ would cause an exception to be raised for a non-abstract service.
     You can just extract common parts of similar service definitions into
     a parent service without also extending a parent class in PHP.
 
-Overriding parent Dependencies
+Overriding Parent Dependencies
 ------------------------------
 
 There may be times where you want to override what class is passed in for
@@ -411,10 +413,10 @@ instead of the ``my_mailer`` service.
 
 .. caution::
 
-    You can't override method calls. When you defined new method calls in the child
-    service, it'll be added to the current set of configured method calls. This means
-    it works perfectly when the setter overrides the current property, but it doesn't
-    work as expected when the setter appends it to the existing data (e.g. an
-    ``addFilters()`` method).
-    In those cases, the only solution is to *not* extend the parent service and configuring
+    You can't override method calls. When you defined new method calls in
+    the child service, it'll be added to the current set of configured method
+    calls. This means it works perfectly when the setter overrides the current
+    property, but it doesn't work as expected when the setter appends it
+    to the existing data (e.g. an ``addFilters()`` method). In those cases,
+    the only solution is to *not* extend the parent service and configuring
     the service just like you did before knowing this feature.
