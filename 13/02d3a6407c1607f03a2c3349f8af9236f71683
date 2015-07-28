@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-07-23T12:31:11Z
+
+:+1:  you are right
+
+```php
+<?php
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Symfony\Component\HttpKernel\HttpCache;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+
+/**
+ * Esi implements the ESI capabilities to Request and Response instances.
+ *
+ * For more information, read the following W3C notes:
+ *
+ *  * ESI Language Specification 1.0 (http://www.w3.org/TR/esi-lang)
+ *
+ *  * Edge Architecture Specification (http://www.w3.org/TR/edge-arch)
+ *
+ * @author Fabien Potencier <fabien@symfony.com>
+ */
+class Esi implements SurrogateInterface
+{
+    private $contentTypes;
+...
+```
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-07-23T14:56:32Z
+
+:+1:
