@@ -64,7 +64,14 @@ want to extend the AppBundle to greet you from the command line, create
         }
     }
 
-This command will now automatically be available to run:
+In the console file, you need to add the new command file path into it and add a line of code "$application->add(new Commands\GiftUpdateCommand());" after the new application object is created, so that the console file knows that you added a new command. It should look as below.
+  //other code in the console file
+  $kernel = new AppKernel($env, $debug);
+  $application = new Application($kernel);
+  $application->add(new Command\GiftUpdateCommand()); // the newly added code
+  $application->run($input);
+
+This command will now be available to run:
 
 .. code-block:: bash
 
