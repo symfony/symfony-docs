@@ -263,11 +263,13 @@ changes.
 To access the `Platform.sh`_ environment URL, simply go to your Pull Request 
 page on GitHub and click on ``Details``.
 
-.. note::
+The specific configuration files at the root of the Git repository: 
+``.platform.app.yaml``, ``.platform/services.yaml`` and ``.platform/routes.yaml`` 
+allow `Platform.sh`_ to build Pull Requests.
 
-    The specific configuration files at the root of the Git repository: 
-    ``.platform.app.yaml``, ``.platform/services.yaml`` and 
-    ``.platform/routes.yaml`` allow `Platform.sh`_ to build Pull Requests.
+.. note::
+    Only the following branches are supported for building Pull Requests: 2.3 (LTS), 
+    2.6, 2.7, 2.8.
 
 Minor Changes (e.g. Typos)
 --------------------------
