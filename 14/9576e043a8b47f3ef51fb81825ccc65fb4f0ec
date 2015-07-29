@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-24T20:13:49Z
+
+Fixes https://github.com/symfony/symfony-docs/issues/5275
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-24T20:14:40Z
+
+Don't we have the PHP config format? And I believe this should be added to the config reference too.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-05-25T17:06:22Z
+
+Comments addressed
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-07-28T13:46:51Z
+
+Comments addressed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-28T18:54:52Z
+
+:+1:
