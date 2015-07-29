@@ -923,7 +923,7 @@ specify it:
 
 Some field types have additional rendering options that can be passed
 to the widget. These options are documented with each type, but one common
-options is ``attr``, which allows you to modify attributes on the form element.
+option is ``attr``, which allows you to modify attributes on the form element.
 The following would add the ``task_field`` class to the rendered input text
 field:
 
