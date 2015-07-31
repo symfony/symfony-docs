@@ -190,10 +190,6 @@ Get all the child or parent nodes::
 Accessing Node Values
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The :method:`Symfony\\Component\\DomCrawler\\Crawler::nodeName`
-    method was introduced in Symfony 2.6.
-
 Access the node name (HTML tag name) of the first node of the current selection (eg. "p" or "div")::
 
     // will return the node name (HTML tag name) of the first child element under <body>

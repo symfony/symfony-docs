@@ -23,12 +23,6 @@ register the mappings for your model classes.
     compiler pass since the `CouchDB Mapping Compiler Pass pull request`_
     was merged.
 
-.. versionadded:: 2.6
-    Support for defining namespace aliases was introduced in Symfony 2.6.
-    It is safe to define the aliases with older versions of Symfony as
-    the aliases are the last argument to ``createXmlMappingDriver`` and
-    are ignored by PHP if that argument doesn't exist.
-
 In your bundle class, write the following code to register the compiler pass.
 This one is written for the CmfRoutingBundle, so parts of it will need to
 be adapted for your case::

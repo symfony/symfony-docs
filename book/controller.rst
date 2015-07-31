@@ -441,10 +441,6 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
         // return $this->redirect($this->generateUrl('homepage'), 301);
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
-
 Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
 
     public function indexAction()
@@ -535,9 +531,6 @@ console command:
 .. code-block:: bash
 
     $ php app/console debug:container
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 For more information, see the :doc:`/book/service_container` chapter.
 
@@ -825,16 +818,10 @@ method to check the CSRF token::
         // ... do something, like deleting an object
     }
 
-.. versionadded:: 2.6
-    The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
-    It is equivalent to executing the following code:
-
-    .. code-block:: php
-
-        use Symfony\Component\Security\Csrf\CsrfToken;
-
-        $this->get('security.csrf.token_manager')
-            ->isTokenValid(new CsrfToken('token_id', 'TOKEN'));
+    // isCsrfTokenValid() is equivalent to:
+    // $this->get('security.csrf.token_manager')->isTokenValid()
+    //     new \Symfony\Component\Security\Csrf\CsrfToken\CsrfToken('token_id', $token)
+    // );
 
 Final Thoughts
 --------------

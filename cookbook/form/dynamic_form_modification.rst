@@ -333,11 +333,6 @@ and fill in the listener logic::
         // ...
     }
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface` was
-    introduced in Symfony 2.6. Prior, you had to use the ``getToken()`` method of
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 .. note::
 
     The ``multiple`` and ``expanded`` form options will default to false
@@ -464,10 +459,6 @@ sport like this::
 
         // ...
     }
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
-    ``empty_value``, which is available prior to 2.6.
 
 When you're building this form to display to the user for the first time,
 then this example works perfectly.

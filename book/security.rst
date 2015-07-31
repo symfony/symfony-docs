@@ -846,15 +846,6 @@ You can easily deny access from inside a controller::
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
-    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
-    in the example above).
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 In both cases, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
@@ -1018,10 +1009,6 @@ shown above.
 
 Retrieving the User Object
 --------------------------
-
-.. versionadded:: 2.6
-     The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
-     to Symfony 2.6, you had to use the ``getToken()`` method of the ``security.context`` service.
 
 After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
@@ -1222,9 +1209,6 @@ in the following way from a controller::
     $encoded = $encoder->encodePassword($user, $plainPassword);
 
     $user->setPassword($encoded);
-
-.. versionadded:: 2.6
-    The ``security.password_encoder`` service was introduced in Symfony 2.6.
 
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``

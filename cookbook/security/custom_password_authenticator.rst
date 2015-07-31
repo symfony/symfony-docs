@@ -10,16 +10,11 @@ How to Create a Custom Form Password Authenticator
     flexible way to accomplish custom authentication tasks like this.
 
 Imagine you want to allow access to your website only between 2pm and 4pm
-UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
-and provider. In this entry, you'll learn how to do this for a login form
-(i.e. where your user submits their username and password).
-Before Symfony 2.6, you had to use the password encoder to authenticate the user password.
+UTC. In this entry, you'll learn how to do this for a login form (i.e. where
+your user submits their username and password).
 
 The Password Authenticator
 --------------------------
-
-.. versionadded:: 2.6
-    The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
 
 .. versionadded:: 2.8
     The ``SimpleFormAuthenticatorInterface`` interface was moved to the
