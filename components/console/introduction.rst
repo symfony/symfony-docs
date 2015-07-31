@@ -178,10 +178,6 @@ You can also set these colors and options inside the tagname::
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-   The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
-   in version 2.3
-
 The console has five verbosity levels. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
@@ -225,13 +221,6 @@ verbosity levels::
     if ($output->isDebug()) {
         // ...
     }
-
-.. note::
-
-    These semantic methods are defined in the ``OutputInterface`` starting from
-    Symfony 3.0. In previous Symfony versions they are defined in the different
-    implementations of the interface (e.g. :class:`Symfony\\Component\\Console\\Output\\Output`)
-    in order to keep backwards compatibility.
 
 When the quiet level is used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns

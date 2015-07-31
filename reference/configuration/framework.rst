@@ -31,7 +31,6 @@ Configuration
     * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
     * :ref:`enabled <reference-csrf_protection-enabled>`
-    * `field_name`_ (deprecated as of 2.4)
 * `esi`_
     * :ref:`enabled <reference-esi-enabled>`
 * `fragments`_
@@ -135,9 +134,6 @@ out all the application users.
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``http_method_override`` option was introduced in Symfony 2.3.
-
 **type**: ``boolean`` **default**: ``true``
 
 This determines whether the ``_method`` request parameter is used as the
@@ -177,10 +173,6 @@ trusted_proxies
 
 Configures the IP addresses that should be trusted as proxies. For more
 details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
-
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
-    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
 
@@ -226,9 +218,6 @@ using the following keys:
 * ``macvim``
 * ``emacs``
 * ``sublime``
-
-.. versionadded:: 2.3.14
-    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
 signs (``%``) must be doubled to escape that character. For example, if
@@ -424,18 +413,6 @@ If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
-field_name
-..........
-
-.. caution::
-
-    The ``framework.csrf_protection.field_name`` setting is deprecated as
-    of Symfony 2.4, use ``framework.form.csrf_protection.field_name`` instead.
-
-**type**: ``string`` **default**: ``"_token"``
-
-The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
-
 esi
 ~~~
 
@@ -523,11 +500,6 @@ profiler
 enabled
 .......
 
-.. versionadded:: 2.2
-    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
-    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
-    configuration entirely.
-
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this option to ``true``. When you
@@ -542,12 +514,6 @@ and ``test`` environments.
 
 collect
 .......
-
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -1300,12 +1266,6 @@ fallbacks
 
 **type**: ``string|array`` **default**: ``array('en')``
 
-.. versionadded:: 2.3.25
-    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
-    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
-    language defined as a string. Please note that you can still use the
-    old ``fallback`` option if you want define only one fallback.
-
 This option is used when the translation key for the current locale wasn't
 found.
 
@@ -1374,10 +1334,6 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
-.. versionadded:: 2.8
-    The ``validator.mapping.cache.doctrine.apc`` service was introduced in
-    Symfony 2.8.
-
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
 cache provide from the Doctrine project.
 
@@ -1401,9 +1357,6 @@ error messages.
 strict_email
 ............
 
-.. versionadded:: 2.5
-    The ``strict_email`` option was introduced in Symfony 2.5.
-
 **type**: ``Boolean`` **default**: ``false``
 
 If this option is enabled, the `egulias/email-validator`_ library will be
@@ -1412,9 +1365,6 @@ the validator uses a simple regular expression to validate email addresses.
 
 api
 ...
-
-.. versionadded:: 2.5
-    The ``api`` option was introduced in Symfony 2.5.
 
 **type**: ``string``
 
@@ -1533,7 +1483,6 @@ Full Default Configuration
 
             csrf_protection:
                 enabled:              false
-                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
 
             # form configuration
             form:

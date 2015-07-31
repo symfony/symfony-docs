@@ -168,20 +168,6 @@ Renders the HTML end tag of a form together with all fields that have not
 been rendered yet, more information in
 :ref:`the Twig Form reference <reference-forms-twig-end>`.
 
-form_enctype
-~~~~~~~~~~~~
-
-.. code-block:: jinja
-
-    {{ form_enctype(view) }}
-
-``view``
-    **type**: ``FormView``
-
-Renders the required ``enctype="multipart/form-data"`` attribute if the
-form contains at least one file upload field, more information in
-:ref:`the Twig Form reference <reference-forms-twig-enctype>`.
-
 form_widget
 ~~~~~~~~~~~
 

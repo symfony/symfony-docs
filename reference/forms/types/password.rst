@@ -21,8 +21,6 @@ The ``password`` field renders an input password text box.
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
-|             | - `max_length`_ (deprecated as of 2.5)                                 |
-|             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`text </reference/forms/types/text>`                              |
@@ -84,9 +82,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

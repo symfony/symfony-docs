@@ -23,8 +23,7 @@ photos).
 |             | - `type`_                                                                   |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
-| options     | - `cascade_validation`_                                                     |
-|             | - `empty_data`_                                                             |
+| options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
 |             | - `label`_                                                                  |
@@ -365,8 +364,6 @@ type:
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER

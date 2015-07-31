@@ -1,9 +1,6 @@
 GreaterThan
 ===========
 
-.. versionadded:: 2.3
-    The ``GreaterThan`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is greater than another value, defined in the options. To
 force that a value is greater than or equal to another value, see
 :doc:`/reference/constraints/GreaterThanOrEqual`. To force a value is less

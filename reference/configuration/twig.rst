@@ -106,12 +106,6 @@ TwigBundle Configuration ("twig")
              ),
         ));
 
-.. caution::
-
-    The ``twig.form`` (``<twig:form />`` tag for xml) configuration key
-    has been deprecated and will be removed in 3.0. Instead, use the ``twig.form_themes``
-    option.
-
 Configuration
 -------------
 

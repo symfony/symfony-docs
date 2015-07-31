@@ -11,7 +11,6 @@ on all types for which ``form`` is the parent type.
 | Options   | - `action`_                                                        |
 |           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
-|           | - `cascade_validation`_ (deprecated as of 2.8)                     |
 |           | - `compound`_                                                      |
 |           | - `constraints`_                                                   |
 |           | - `data`_                                                          |
@@ -25,12 +24,9 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
 |           | - `mapped`_                                                        |
-|           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
-|           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
-|           | - `read_only`_ (deprecated as of 2.8)                              |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
 +-----------+--------------------------------------------------------------------+
@@ -68,8 +64,6 @@ You can silence this validation error by enabling the ``allow_extra_fields``
 option on the form.
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
 
 .. include:: /reference/forms/types/options/compound.rst.inc
 
@@ -112,23 +106,13 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. _reference-form-option-max_length:
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
 .. _form-option-method:
 
 .. include:: /reference/forms/types/options/method.rst.inc
 
-.. _reference-form-option-pattern:
-
-.. include:: /reference/forms/types/options/pattern.rst.inc
-
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
 
 .. include:: /reference/forms/types/options/property_path.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. _reference-form-option-required:
 

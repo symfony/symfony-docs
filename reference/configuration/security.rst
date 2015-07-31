@@ -13,10 +13,6 @@ Full Default Configuration
 The following is the full default configuration for the security system.
 Each part will be explained in the next section.
 
-.. versionadded:: 2.5
-    Support for restricting security firewalls to specific http methods was introduced in
-    Symfony 2.5.
-
 .. configuration-block::
 
     .. code-block:: yaml

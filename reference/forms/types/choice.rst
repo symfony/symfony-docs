@@ -32,7 +32,6 @@ option.
 |             | - `label`_                                                                   |
 |             | - `label_attr`_                                                              |
 |             | - `mapped`_                                                                  |
-|             | - `read_only`_ (deprecated as of 2.8)                                        |
 |             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                    |
@@ -201,8 +200,6 @@ type:
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

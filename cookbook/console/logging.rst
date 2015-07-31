@@ -73,9 +73,6 @@ Enabling automatic Exceptions Logging
 To get your console application to automatically log uncaught exceptions for
 all of your commands, you can use :doc:`console events</components/console/events>`.
 
-.. versionadded:: 2.3
-    Console events were introduced in Symfony 2.3.
-
 First configure a listener for console exception events in the service container:
 
 .. configuration-block::

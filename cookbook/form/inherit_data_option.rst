@@ -4,10 +4,6 @@
 How to Reduce Code Duplication with "inherit_data"
 ==================================================
 
-.. versionadded:: 2.3
-    This ``inherit_data`` option was introduced in Symfony 2.3. Before, it
-    was known as ``virtual``.
-
 The ``inherit_data`` form field option can be very useful when you have some
 duplicated fields in different entities. For example, imagine you have two
 entities, a ``Company`` and a ``Customer``::
