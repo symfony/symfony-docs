@@ -4,9 +4,6 @@
 Lazy Services
 =============
 
-.. versionadded:: 2.3
-   Lazy services were introduced in Symfony 2.3.
-
 Why Lazy Services?
 ------------------
 

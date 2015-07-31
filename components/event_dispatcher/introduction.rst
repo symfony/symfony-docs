@@ -628,10 +628,6 @@ and so on...
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    Before Symfony 2.4, the event name and the event dispatcher had to be
-    requested from the ``Event`` instance. These methods are now deprecated.
-
 The ``EventDispatcher`` instance, as well as the name of the event that
 is dispatched, are passed as arguments to the listener::
 
