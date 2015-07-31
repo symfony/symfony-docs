@@ -116,7 +116,7 @@ files are going to be part of the repository.
 The following classes and files have specific emplacements:
 
 ===============================  ============================= ================
-Type                             Directory                     Relationship
+Type                             Directory                     Location
 ===============================  ============================= ================
 Commands                         ``Command/``                  Mandatory
 Controllers                      ``Controller/``               Mandatory
@@ -127,7 +127,7 @@ Configuration                    ``Resources/config/``         Mandatory
 Web Resources (CSS, JS, images)  ``Resources/public/``         Mandatory
 Translation files                ``Resources/translations/``   Mandatory
 Templates                        ``Resources/views/``          Mandatory
-Unit and Functional Tests        ``Tests/``                    Convention
+Unit and Functional Tests        ``Tests/``                    Mandatory
 ===============================  ============================= ================
 
 [1] See :doc:`/cookbook/doctrine/mapping_model_classes` for how to handle the
