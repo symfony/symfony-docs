@@ -10,8 +10,3 @@ ClassLoader
     map_class_loader
     cache_class_loader
     class_map_generator
-
-.. toctree::
-    :hidden:
-
-    debug_class_loader

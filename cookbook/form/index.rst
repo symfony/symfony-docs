@@ -14,8 +14,3 @@ Form
     unit_testing
     use_empty_data
     direct_submit
-
-.. toctree::
-    :hidden:
-
-    use_virtuals_forms
