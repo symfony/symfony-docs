@@ -212,7 +212,7 @@ Handling Form Submissions
 
 The second job of a form is to translate user-submitted data back to the
 properties of an object. To make this happen, the submitted data from the
-user must be written into the form. Add the following functionality to your
+user must be written into ``$form``. Add the following functionality to your
 controller::
 
     // ...
