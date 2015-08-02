@@ -35,9 +35,9 @@ Third party bundles cannot be ran standalone, they need an application.
 It is possible to create a minimalistic ``AppKernel`` inside the bundle for testing
 and showcase purposes, instead of:
 
-1. creating a separate application
-2. install the bundle in it
-3. then check how things turn out
+# Creating a separate application;
+# Install the bundle in it;
+# Then check how things turn out.
 
 If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could look like this::
 
@@ -70,18 +70,20 @@ If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could loo
 
 In its minimum state ``AppKernel`` requires only one configuration parameter, ``secret``:
 
-.. config-block:: yaml
+.. configuration-block::
 
-    # Tests/app/config.yml
-    framework:
-        secret: Th1s1sS3cr3t!
+    .. code-block:: yaml
+
+        # Tests/app/config.yml
+        framework:
+            secret: Th1s1sS3cr3t!
 
 Symfony applications generate cache and logs directories, which can be ignored by
 adding those lines to ``.gitignore``:
 
 .. code-block::
 
-    # File: .gitignore
+    # .gitignore
     /Tests/app/cache
     /Tests/app/logs
     /vendor
@@ -133,7 +135,7 @@ similar to the one that can be found in Symfony's Standard Edition::
     $application = new Application($kernel);
     $application->run();
 
-With this it becomes possible to run manually the command:
+With this it becomes possible to run manually the console:
 
 .. code-block:: bash
 
@@ -155,25 +157,38 @@ The first step is to install a test framework like PHPUnit:
 
     The steps should be similar with other tests frameworks.
 
-Then the second one is to configure it to use composer's autoloading:
+Then the second one is to configure it to use Composer's autoloading:
 
-.. config-block:: xml
+.. configuration-block::
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    .. code-block:: xml
 
-    <!-- http://phpunit.de/manual/4.3/en/appendixes.configuration.html -->
-    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.3/phpunit.xsd"
-        backupGlobals="false"
-        colors="true"
-        bootstrap="./vendor/autoload.php"
-    >
-        <testsuites>
-            <testsuite name="Test Suite">
-                <directory>./Tests/</directory>
-            </testsuite>
-        </testsuites>
-    </phpunit>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!-- phpunit.xml.dist -->
+
+        <!-- http://phpunit.de/manual/4.3/en/appendixes.configuration.html -->
+        <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.3/phpunit.xsd"
+            backupGlobals="false"
+            colors="true"
+            bootstrap="./vendor/autoload.php"
+        >
+            <testsuites>
+                <testsuite name="Test Suite">
+                    <directory>./Tests/</directory>
+                </testsuite>
+            </testsuites>
+
+            <filter>
+                <whitelist>
+                    <directory>.</directory>
+                    <exclude>
+                        <directory>./Resources</directory>
+                        <directory>./Tests</directory>
+                    </exclude>
+                </whitelist>
+            </filter>
+        </phpunit>
 
 With these two simple steps it becomes possible to run the test suite with the following command:
 
@@ -252,9 +267,45 @@ commands can be done by simply checking the exit code::
         }
     }
 
+Service Definition Tests
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is possible to check that a service is correctly defined using a test::
+
+    // Tests/ServiceDefinition/DemoServiceDefinitionTest.php
+    namespace Acme\MyBundle\Tests\ServiceDefinition;
+
+    use Acme\MyBundle\Tests\AppKernel;
+
+    class DemoServiceDefinitionTest extends \PHPUnit_Framework_TestCase
+    {
+        private $container;
+
+        protected function setUp()
+        {
+            $app = new AppKernel('test', false);
+            $app->boot();
+            $this->container = $app->getContainer();
+        }
+
+        public function testItIsDefinedCorrectly()
+        {
+            $demo = $this->container->get('app.demo');
+
+            $this->assertInstanceOf('Acme\Service\Demo', $demo);
+        }
+    }
+
+.. tip::
+
+    Matthias Noback's library, `SymfonyServiceDefinitioValidator`_, is also
+    a good way to check service definitions.
+
 Conclusion
 ----------
 
 By creating a minimal ``AppKernel`` in a third party bundle it becomes possible
 to run it on its own which can be useful for showcases, but most importantly: It
 makes it possible to write automated tests.
+
+.. _SymfonyServiceDefinitioValidator: https://github.com/matthiasnoback/symfony-service-definition-validator
