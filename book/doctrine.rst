@@ -904,7 +904,7 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entity \
+    $ php app/console doctrine:generate:entity --no-interaction \
         --entity="AppBundle:Category" \
         --fields="name:string(255)"
 
