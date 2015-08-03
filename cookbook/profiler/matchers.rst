@@ -7,14 +7,13 @@ How to Use Matchers to Enable the Profiler Conditionally
 The Symfony profiler is only activated in the development environment to not hurt
 your application performance. However, sometimes it may be useful to conditionally
 enable the profiler in the production environment to assist you in hard to debug
-issues. This behavior is implemented with the **Request Matchers** defined by
-Symfony.
+issues. This behavior is implemented with the **Request Matchers**.
 
 Using the built-in Matcher
 --------------------------
 
-A Request Matcher is a class that compares a pre-defined set of checks against a
-given ``Request`` instance. Symfony provides a built-in
+A Request Matcher is a class that checks whether a given ``Request`` instance
+matches a set of conditions. Symfony provides a
 :class:`built-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
 which matches paths and IPs. For example, if you want to only show the profiler
 when accessing the page with the ``168.0.0.1`` IP, then you can use this
@@ -92,7 +91,7 @@ matcher::
         }
     }
 
-Then, configure the service and set it as ``private`` because the application
+Then, configure a new service and set it as ``private`` because the application
 won't use it directly:
 
 .. configuration-block::
