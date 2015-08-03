@@ -176,7 +176,11 @@ block and set the value of two variables called ``icon`` and ``text``:
 
     .. code-block:: jinja
 
+<<<<<<< HEAD
         {{ include('@App/data_collector/icon.svg') }}
+=======
+        {{ include('@WebProfiler/Icon/my_collector.svg') }}
+>>>>>>> Implemented all suggestions
 
     You are encouraged to use the latter technique for your own toolbar panels.
 
@@ -200,14 +204,23 @@ must also define additional blocks:
         {% endset %}
 
         {# the 'link' value is now set to 'true', which allows the user to click
+<<<<<<< HEAD
            on it to access the web profiler panel. Since 'true' is the default
+=======
+           on it to access to the web profiler panel. Since 'true' is the default
+>>>>>>> Implemented all suggestions
            value, you can omit the 'link' parameter entirely #}
         {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
     {% endblock %}
 
     {% block head %}
+<<<<<<< HEAD
         {# Optional, you can here link to or define your own CSS and JS contents #}
         {# {{ parent() }} to keep the default styles #}
+=======
+        {# Optional, here you can link to or define your own CSS and JS contents #}
+        {# Use {{ parent() }} to keep the default styles #}
+>>>>>>> Implemented all suggestions
     {% endblock %}
 
     {% block menu %}
