@@ -104,12 +104,12 @@ edit a particular object. Here's an example implementation::
          */
         public function vote(TokenInterface $token, $post, array $attributes)
         {
-            // check if class of this object is supported by this voter
+            // check if the class of this object is supported by this voter
             if (!$this->supportsClass(get_class($post))) {
                 return VoterInterface::ACCESS_ABSTAIN;
             }
 
-            // check if the voter is used correct, only allow one attribute
+            // check if the voter is used correctly, only allow one attribute
             // this isn't a requirement, it's just one easy way for you to
             // design your voter
             if (1 !== count($attributes)) {
@@ -134,9 +134,8 @@ edit a particular object. Here's an example implementation::
                 return VoterInterface::ACCESS_DENIED;
             }
 
-            // double-check that the User object is the expected entity.
-            // It always will be, unless there is some misconfiguration of the
-            // security system.
+            // double-check that the User object is the expected entity (this
+            // only happens when you did not configure the security system properly)
             if (!$user instanceof User) {
                 throw new \LogicException('The user is somehow not our User class!');
             }
@@ -196,7 +195,8 @@ and tag it with ``security.voter``:
             <services>
                 <service id="security.access.post_voter"
                     class="AppBundle\Security\Authorization\Voter\PostVoter"
-                    public="false">
+                    public="false"
+                >
 
                     <tag name="security.voter" />
                 </service>
@@ -238,7 +238,7 @@ from the security context is called.
             // get a Post instance
             $post = ...;
 
-            // keep in mind, this will call all registered security voters
+            // keep in mind that this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorized access!');
             }
