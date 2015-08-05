@@ -1224,7 +1224,7 @@ automatically:
 
 .. versionadded:: 2.6
     The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user`` 
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
     (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
     instead.
 
@@ -1595,16 +1595,16 @@ is ``true``. By default this means that the variables will be dumped in the
 Syntax Checking
 ---------------
 
-You can check for syntax errors in Twig templates using the ``twig:lint``
+You can check for syntax errors in Twig templates using the ``lint:twig``
 console command:
 
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/article/recent_list.html.twig
+    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console twig:lint app/Resources/views
+    $ php app/console lint:twig app/Resources/views
 
 .. _template-formats:
 
