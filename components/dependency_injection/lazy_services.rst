@@ -40,7 +40,7 @@ the `ProxyManager bridge`_:
 
     .. code-block:: bash
 
-        $ php composer.phar require ocramius/proxy-manager:~1.0
+        $ composer require ocramius/proxy-manager:~1.0
 
     Afterwards compile your container and check to make sure that you get
     a proxy for your lazy services.
