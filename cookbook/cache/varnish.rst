@@ -77,41 +77,41 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
 
 .. configuration-block::
 
-  .. code-block:: varnish4
+    .. code-block:: varnish4
   
-      sub vcl_backend_response {
-          // Remove all cookies except the session ID.
-          if (req.http.Cookie) {
-              set req.http.Cookie = ";" + req.http.Cookie;
-              set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-              set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
-              set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-              set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-  
-              if (req.http.Cookie == "") {
-                  // If there are no more cookies, remove the header to get page cached.
-                  unset req.http.Cookie;
-              }
-          }
-      }
+        sub vcl_backend_response {
+            // Remove all cookies except the session ID.
+            if (req.http.Cookie) {
+                set req.http.Cookie = ";" + req.http.Cookie;
+                set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+                set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+    
+                if (req.http.Cookie == "") {
+                    // If there are no more cookies, remove the header to get page cached.
+                    unset req.http.Cookie;
+                }
+            }
+        }
       
-  .. code-block:: varnish3
-      
-      sub vcl_fetch {
-          // Remove all cookies except the session ID.
-          if (req.http.Cookie) {
-              set req.http.Cookie = ";" + req.http.Cookie;
-              set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-              set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
-              set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-              set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-  
-              if (req.http.Cookie == "") {
-                  // If there are no more cookies, remove the header to get page cached.
-                  remove req.http.Cookie;
-              }
-          }
-      }
+    .. code-block:: varnish3
+        
+        sub vcl_fetch {
+            // Remove all cookies except the session ID.
+            if (req.http.Cookie) {
+                set req.http.Cookie = ";" + req.http.Cookie;
+                set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+                set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+    
+                if (req.http.Cookie == "") {
+                    // If there are no more cookies, remove the header to get page cached.
+                    remove req.http.Cookie;
+                }
+            }
+        }
 
 .. tip::
 
