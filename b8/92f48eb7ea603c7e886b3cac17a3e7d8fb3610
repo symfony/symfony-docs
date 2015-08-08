@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T17:23:48Z
+
+Thank you @yceruto! I've labelled it as finished, although I'm not sure if it's correct (I don't know much about the logic behind these file upload chapters). So I let other doc maintainers decide whether to merge it or not.
+
+Please also note that this article is likely to be removed soon: https://github.com/symfony/symfony-docs/issues/2346#issuecomment-115739439
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-28T20:06:23Z
+
+I remember that we recently had an issue/pull request were someone requested a similar change. Unfortunately, I cannot find it anymore.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2015-08-05T15:44:27Z
+
+the problem lies in this commit https://github.com/symfony/symfony-docs/commit/15ccf24a60db0491bacba9886d8329efe87e20cb
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-05T21:06:55Z
+
+:+1: We really need to facelift the article, but this change should at least fix the issue described in #5448.
