@@ -104,6 +104,10 @@ asset
     **type**: ``string``
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
+``absolute`` (deprecated as of 2.7)
+    **type**: ``boolean`` **default**: ``false``
+``version`` (deprecated as of 2.7)
+    **type**: ``string`` **default** ``null``
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
