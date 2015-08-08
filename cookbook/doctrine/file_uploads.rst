@@ -494,6 +494,7 @@ property, instead of the actual filename::
             if (is_file($this->getAbsolutePath())) {
                 // store the old name to delete after the update
                 $this->temp = $this->getAbsolutePath();
+                $this->path = null;
             } else {
                 $this->path = 'initial';
             }
