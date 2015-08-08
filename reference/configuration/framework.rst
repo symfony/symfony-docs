@@ -726,7 +726,7 @@ installation.
 .. seealso::
 
     You can see an example of the usage of this in
-    :doc:`/cookbook/configuration/pdo_session_storage`.
+    :doc:`/cookbook/doctrine/pdo_session_storage`.
 
 name
 ....

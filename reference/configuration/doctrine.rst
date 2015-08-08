@@ -601,7 +601,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                         # ...
                         SomeEntityNamespace:
                             type: annotation
-                            dir: %kernel.root_dir%/../src/Entity
+                            dir: "%kernel.root_dir%/../src/Entity"
                             is_bundle: false
                             prefix: App\Entity
                             alias: App
