@@ -1,38 +1,51 @@
 .. index::
-   single: Forms; Fields; email
+   single: Forms; Fields; range
 
-email Field Type
+range Field Type
 ================
 
-The ``email`` field is a text field that is rendered using the HTML5
-``<input type="email" />`` tag.
+The ``range`` field is a slider that is rendered using the HTML5
+``<input type="range" />`` tag.
 
 +-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``email`` field (a text box)                              |
+| Rendered as | ``input`` ``range`` field (slider in HTML5 supported browser)       |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `data`_                                                           |
-| options     | - `disabled`_                                                       |
+| Inherited   | - `attr`_                                                           |
+| options     | - `data`_                                                           |
+|             | - `disabled`_                                                       |
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `max_length`_ (deprecated as of 2.5)                              |
-|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 |             | - `trim`_                                                           |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`text </reference/forms/types/text>`                           |
 +-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |
 +-------------+---------------------------------------------------------------------+
+
+Basic Usage
+-----------
+
+.. code-block:: php
+
+    $builder->add('name', 'range', array(
+        'attr' => array(
+            'min' => 5,
+            'max' => 50
+        )
+    ));
 
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>`
 type:
+
+.. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -55,10 +68,6 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

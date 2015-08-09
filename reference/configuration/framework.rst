@@ -1374,6 +1374,13 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+.. versionadded:: 2.8
+    The ``validator.mapping.cache.doctrine.apc`` service was introduced in
+    Symfony 2.8.
+
+Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
+cache provide from the Doctrine project.
+
 .. _reference-validation-enable_annotations:
 
 enable_annotations

@@ -11,6 +11,7 @@ Text Fields
 * :doc:`percent </reference/forms/types/percent>`
 * :doc:`search </reference/forms/types/search>`
 * :doc:`url </reference/forms/types/url>`
+* :doc:`range </reference/forms/types/range>`
 
 Choice Fields
 ~~~~~~~~~~~~~
