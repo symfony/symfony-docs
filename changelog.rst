@@ -13,6 +13,76 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+July, 2015
+----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#5533 <https://github.com/symfony/symfony-docs/pull/5533>`_ Replace Capifony with Capistrano/symfony (mojzis)
+* `#5516 <https://github.com/symfony/symfony-docs/pull/5516>`_ Added a note about session data size in PdoSessionHandler (javiereguiluz)
+* `#5491 <https://github.com/symfony/symfony-docs/pull/5491>`_ added composer info (OskarStark)
+* `#5478 <https://github.com/symfony/symfony-docs/pull/5478>`_ Add cookbook article for using MongoDB to store session data (stevenmusumeche)
+* `#5472 <https://github.com/symfony/symfony-docs/pull/5472>`_ Added a tip about hashing the result of nextBytes() (javiereguiluz)
+* `#5453 <https://github.com/symfony/symfony-docs/pull/5453>`_ Cleanup security voters cookbook recipes (WouterJ)
+* `#5201 <https://github.com/symfony/symfony-docs/pull/5201>`_ [Book][Routing] Add example about how to match multiple methods (xelaris)
+* `#5430 <https://github.com/symfony/symfony-docs/pull/5430>`_ Pr/5085 (sjagr, javiereguiluz)
+* `#5456 <https://github.com/symfony/symfony-docs/pull/5456>`_ Completely re-reading the data transformers chapter (weaverryan)
+* `#5426 <https://github.com/symfony/symfony-docs/pull/5426>`_ Documented the checkDNS option of the Url validator (saro0h, javiereguiluz)
+* `#5424 <https://github.com/symfony/symfony-docs/pull/5424>`_ Integrate the "Create your own framework" tutorial (fabpot, lyrixx, jdreesen, catchamonkey, gnugat, andreia, Arnaud Kleinpeter, willdurand, amitayh, nanocom, hrbonz, Pedro Gimenez, ubick, dirkaholic, bamarni, revollat, javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5567 <https://github.com/symfony/symfony-docs/pull/5567>`_ Change Sql Field name because it's reserved (rmed19)
+* `#5528 <https://github.com/symfony/symfony-docs/pull/5528>`_ [reate_framework] Fix mock $matcher (kenjis)
+* `#5501 <https://github.com/symfony/symfony-docs/pull/5501>`_ Fix typo in url for PHPUnit test coverage report (TrueGit)
+* `#5461 <https://github.com/symfony/symfony-docs/pull/5461>`_ Rework quick tour big picture (smatejic, DQNEO, xabbuh)
+* `#5488 <https://github.com/symfony/symfony-docs/pull/5488>`_ fix #5487 (emillosanti)
+* `#5496 <https://github.com/symfony/symfony-docs/pull/5496>`_ Security voters fixes (german.bortoli)
+* `#5424 <https://github.com/symfony/symfony-docs/pull/5424>`_ Integrate the "Create your own framework" tutorial (fabpot, lyrixx, jdreesen, catchamonkey, gnugat, andreia, Arnaud Kleinpeter, willdurand, amitayh, nanocom, hrbonz, Pedro Gimenez, ubick, dirkaholic, bamarni, revollat, javiereguiluz)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#5575 <https://github.com/symfony/symfony-docs/pull/5575>`_ Move some articles from wrong sections (sylvaincombes, WouterJ)
+* `#5580 <https://github.com/symfony/symfony-docs/pull/5580>`_ Additional User check in voter class (weaverryan)
+* `#5573 <https://github.com/symfony/symfony-docs/pull/5573>`_ fix YAML syntax highlighting (xabbuh)
+* `#5564 <https://github.com/symfony/symfony-docs/pull/5564>`_ Improve and simplify the contributing instructions about tests (javiereguiluz)
+* `#5550 <https://github.com/symfony/symfony-docs/pull/5550>`_ [docbot] Reviewed some component chapters (WouterJ)
+* `#5556 <https://github.com/symfony/symfony-docs/pull/5556>`_ Fix typo Esi in part create framework (nicolasdewez)
+* `#5568 <https://github.com/symfony/symfony-docs/pull/5568>`_ [Create Framework] Fix extract calls (replaces #5522) (kenjis)
+* `#5548 <https://github.com/symfony/symfony-docs/pull/5548>`_ use the include() Twig function instead of the tag (xabbuh)
+* `#5557 <https://github.com/symfony/symfony-docs/pull/5557>`_ [2.3] [Contributing] Added note about empty returns (phansys)
+* `#5492 <https://github.com/symfony/symfony-docs/pull/5492>`_ updated tree for front controller (OskarStark)
+* `#5536 <https://github.com/symfony/symfony-docs/pull/5536>`_ Removed reference to remove HTTPS off from nginx configuration (wjzijderveld)
+* `#5545 <https://github.com/symfony/symfony-docs/pull/5545>`_ Misc. improvements in the Console component introduction (javiereguiluz)
+* `#5512 <https://github.com/symfony/symfony-docs/pull/5512>`_ [Cookbook] Backport PSR-7 bridge docs to 2.3 (dunglas, weaverryan)
+* `#5494 <https://github.com/symfony/symfony-docs/pull/5494>`_ updated tree (OskarStark)
+* `#5490 <https://github.com/symfony/symfony-docs/pull/5490>`_ changed headline (OskarStark)
+* `#5479 <https://github.com/symfony/symfony-docs/pull/5479>`_ Update http-foundation.rst (jezemery)
+* `#5552 <https://github.com/symfony/symfony-docs/pull/5552>`_ rename $input to $greetInput (Xosofox)
+* `#5537 <https://github.com/symfony/symfony-docs/pull/5537>`_ Update design patter of Event Dispatcher (almacbe)
+* `#5546 <https://github.com/symfony/symfony-docs/pull/5546>`_ A bunch of doc fixes again (WouterJ)
+* `#5486 <https://github.com/symfony/symfony-docs/pull/5486>`_ review all Security code blocks (xabbuh)
+* `#5529 <https://github.com/symfony/symfony-docs/pull/5529>`_ [Cookbook][upload_file] Fix :methods: to remove doubled braces (bicpi)
+* `#5455 <https://github.com/symfony/symfony-docs/pull/5455>`_ Improve travis build speed (WouterJ)
+* `#5442 <https://github.com/symfony/symfony-docs/pull/5442>`_ Improved the explanation about the verbosity levels of the console (javiereguiluz)
+* `#5519 <https://github.com/symfony/symfony-docs/pull/5519>`_ Prepare Platform.sh configuration files. (GuGuss)
+* `#5518 <https://github.com/symfony/symfony-docs/pull/5518>`_ Minor grammar fix. (maxolasersquad)
+* `#5427 <https://github.com/symfony/symfony-docs/pull/5427>`_ Cookbook grammar and style fixes (frne, javiereguiluz)
+* `#5505 <https://github.com/symfony/symfony-docs/pull/5505>`_ [Cookbook][Form] some tweaks to the data transformers chapter (xabbuh)
+* `#5352 <https://github.com/symfony/symfony-docs/pull/5352>`_ Update http_fundamentals.rst (wouthoekstra)
+* `#5471 <https://github.com/symfony/symfony-docs/pull/5471>`_ Updated the Symfony Versions Roadmap image (javiereguiluz)
+* `#5511 <https://github.com/symfony/symfony-docs/pull/5511>`_ [HttpKernel] Fix use statement (dunglas)
+* `#5506 <https://github.com/symfony/symfony-docs/pull/5506>`_ Fixes small typo in data transformers cookbook (catchamonkey)
+* `#5425 <https://github.com/symfony/symfony-docs/pull/5425>`_ Added a caution note about invoking other commands (kix, javiereguiluz)
+* `#5367 <https://github.com/symfony/symfony-docs/pull/5367>`_ Split Security into Authentication & Authorization (iltar)
+* `#5485 <https://github.com/symfony/symfony-docs/pull/5485>`_ Fix invalid phpunit URLs (norkunas)
+* `#5473 <https://github.com/symfony/symfony-docs/pull/5473>`_ --dev is default and causes a warning (DQNEO)
+* `#5474 <https://github.com/symfony/symfony-docs/pull/5474>`_ typo in components/translation/instruction.rst (beesofts)
+
+
 June, 2015
 ----------
 
