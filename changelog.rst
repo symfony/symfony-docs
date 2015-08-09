@@ -19,6 +19,7 @@ July, 2015
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#5374 <https://github.com/symfony/symfony-docs/pull/5374>`_ Remove deprecated parameters (norkunas)
 * `#5533 <https://github.com/symfony/symfony-docs/pull/5533>`_ Replace Capifony with Capistrano/symfony (mojzis)
 * `#5543 <https://github.com/symfony/symfony-docs/pull/5543>`_ Add deprecation notice to "choice_list" option of ChoiceType (XitasoChris)
 * `#5521 <https://github.com/symfony/symfony-docs/pull/5521>`_ [Cookbook][WebServer] #5504 add a tip for the --force option (vincentaubert)
