@@ -59,7 +59,7 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
 
 Before diving into this, test it out!
 
-    http://localhost:8000/app_dev.php/lucky/number
+    http://localhost:8000/lucky/number
 
 .. tip::
 
@@ -86,9 +86,15 @@ return a Symfony :ref:`Response <component-http-foundation-response>` object
     Symfony through a file - ``web/app_dev.php`` - that boots it in the ``dev``
     environment. This enables great debugging tools and rebuilds cached
     files automatically. For production, you'll use clean URLs - like
-    ``http://localhost:8000/lucky/number`` - that execute a different file -
-    ``app.php`` - that's optimized for speed. To learn more about this and
-    environments, see :ref:`book-page-creation-prod-cache-clear`.
+    ``http://symfony.dev/lucky/number`` - that execute a different file -
+    ``app.php`` - that's optimized for speed.
+
+    When you visit the ``http://localhost:8000`` URL in your browser, you're
+    executing your Symfony application in the ``dev`` environment. To visit
+    your application in the ``prod`` environment, visit the ``http://localhost:8000/app.php``
+    URL instead.
+
+    To learn more about this and environments, see :ref:`book-page-creation-prod-cache-clear`.
 
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
