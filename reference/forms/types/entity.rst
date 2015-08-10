@@ -133,7 +133,7 @@ cast into a string and so must have a ``__toString()`` method.
         ));
 
 choice_translation_domain
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.7
     The ``choice_translation_domain`` option was introduced in Symfony 2.7.
@@ -143,7 +143,7 @@ choice_translation_domain
 This option determines whether the translation of the data obtained will be informed domain ``translation_domain``.
 
 translation_domain
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.7
     The ``translation_domain`` option was introduced in Symfony 2.7.
