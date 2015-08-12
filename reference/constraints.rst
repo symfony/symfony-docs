@@ -50,6 +50,7 @@ Validation Constraints Reference
    constraints/Currency
    constraints/Luhn
    constraints/Iban
+   constraints/Bic
    constraints/Isbn
    constraints/Issn
 
