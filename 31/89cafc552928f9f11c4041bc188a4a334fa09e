@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-04T21:04:49Z
+
+This change looks right to me, but honestly I haven't used this command for a long time.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-11T10:09:13Z
+
+you are right @alexwybraniec
+
+i tested it
+
+**not working**
+![bildschirmfoto 2015-08-11 um 12 07 41](https://cloud.githubusercontent.com/assets/995707/9195247/aef05fc2-4021-11e5-9adf-73f9f6ee6443.png)
+
+**working**
+![bildschirmfoto 2015-08-11 um 12 07 57](https://cloud.githubusercontent.com/assets/995707/9195251/b7de9c2a-4021-11e5-8315-db425f623ead.png)
+
+so this PR can be merged as it is
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-11T10:14:52Z
+
+:+1:
