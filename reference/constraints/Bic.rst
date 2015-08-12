@@ -6,7 +6,7 @@ Bic
 
 This constraint is used to ensure that a value has the proper format of an
 `Business Identifier Code (BIC)`. BIC is an internationally agreed means to
-uniquely identify both financial and non-financiel institutions.
+uniquely identify both financial and non-financial institutions.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
