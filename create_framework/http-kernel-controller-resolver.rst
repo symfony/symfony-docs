@@ -91,7 +91,7 @@ introspects the controller signature to determine which arguments to pass to
 it by using the native PHP `reflection`_.
 
 The ``indexAction()`` method needs the Request object as an argument.
-```getArguments()`` knows when to inject it properly if it is type-hinted
+``getArguments()`` knows when to inject it properly if it is type-hinted
 correctly::
 
     public function indexAction(Request $request)

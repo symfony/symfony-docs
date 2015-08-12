@@ -217,7 +217,7 @@ The ``validator`` service can be used at any time to validate any object.
 In reality, however, you'll usually work with the ``validator`` indirectly
 when working with forms. Symfony's form library uses the ``validator`` service
 internally to validate the underlying object after values have been submitted.
-The constraint violations on the object are converted into ``FieldError``
+The constraint violations on the object are converted into ``FormError``
 objects that can easily be displayed with your form. The typical form submission
 workflow looks like the following from inside a controller::
 
