@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-11T15:08:43Z
+
+The UPGRADE guide doesn't say anything about this change: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md :confused:
+
+---------------------------------------------------------------------------
+
+by issei-m at 2015-08-12T01:39:41Z
+
+@javiereguiluz I'm not sure where this PR should be merged to, but FieldError class is not found in Symfony project anywhere.
+But I'm guessing this class had been introduced in a early stage of development, thereafter renamed.
+
+---------------------------------------------------------------------------
+
+by issei-m at 2015-08-12T01:41:54Z
+
+ping @webmozart
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-12T08:43:03Z
+
+This change is 100% correct and a left-over from way before Symfony 2.0.0: https://github.com/symfony/Form/commit/889a1600e6aa878331be8da65a4dac0210801dcb
+
+So big :+1: and thanks @issei-m for finding & fixing this very old issue.
