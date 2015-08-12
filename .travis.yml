@@ -1,17 +1,26 @@
-language: python
+language: php
 
-python: "2.7"
+php: 5.6
 
 sudo: false
 
 cache:
-    directories:
-        - $HOME/.cache/pip
-        - _build
+  directories:
+    - "$HOME/.composer/cache"
+    - $HOME/.cache/pip
+    - _build
 
-install: pip install sphinx==1.1.3
+before_install:
+  - python --version
 
-script: sphinx-build -nW -b html -d _build/doctrees . _build/html
+install:
+  - pip install --user sphinx==1.1.3
+  - composer require wouterj/docbot:~0.2@dev
+
+script:
+  - sphinx-build -nW -b html -d _build/doctrees . _build/html
+    #- ./vendor/bin/docbot lint best_practice book components contributing cookbook quick_tour reference
+  - ./vendor/bin/docbot lint reference
 
 branches:
   except:
