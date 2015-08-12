@@ -149,5 +149,5 @@ key in the ``remote_user`` firewall configuration.
 .. note::
 
     Just like for X509 authentication, you will need to configure a "user provider".
-    See :ref:`the note previous note <cookbook-security-pre-authenticated-user-provider-note>`
+    See :ref:`the previous note <cookbook-security-pre-authenticated-user-provider-note>`
     for more information.
