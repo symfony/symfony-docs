@@ -1,0 +1,107 @@
+Bic
+===
+
+.. versionadded:: 2.8
+    The Bic constraint was introduced in Symfony 2.8.
+
+This constraint is used to ensure that a value has the proper format of an
+`Business Identifier Code (BIC)`. BIC is an internationally agreed means to
+uniquely identify both financial and non-financiel institutions.
+
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                 |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Bic`              |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\BicValidator`     |
++----------------+-----------------------------------------------------------------------+
+
+Basic Usage
+-----------
+
+To use the Bic validator, simply apply it to a property on an object that
+will contain a Business Identifier Code.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            /**
+             * @Assert\Bic(
+             *     message="This is not a valid Business Identifier Code (BIC)."
+             * )
+             */
+            protected $businessIdentifierCode;
+        }
+
+    .. code-block:: yaml
+
+        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
+        Acme\SubscriptionBundle\Entity\Transaction:
+            properties:
+                businessIdentifierCode:
+                    - Bic:
+                        message: This is not a valid Business Identifier Code (BIC).
+
+    .. code-block:: xml
+
+        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+                <property name="businessIdentifierCode">
+                    <constraint name="Bic">
+                        <option name="message">
+                            This is not a valid Business Identifier Code (BIC).
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            protected $businessIdentifierCode;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('businessIdentifierCode', new Assert\Bic(array(
+                    'message' => 'This is not a valid Business Identifier Code (BIC).',
+                )));
+            }
+        }
+
+Available Options
+-----------------
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This is not a valid Business Identifier Code (BIC).``
+
+The default message supplied when the value does not pass the Bic check.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code
