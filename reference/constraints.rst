@@ -50,9 +50,9 @@ Validation Constraints Reference
    constraints/Currency
    constraints/Luhn
    constraints/Iban
+   constraints/Bic
    constraints/Isbn
    constraints/Issn
-   constraints/Bic
 
    constraints/Callback
    constraints/Expression
