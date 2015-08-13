@@ -23,7 +23,7 @@ or the equivalent:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear -e prod
+    $ php app/console cache:clear -e=prod
 
 In addition to changing the environment, you can also choose to disable debug mode.
 This can be useful where you want to run commands in the ``dev`` environment
