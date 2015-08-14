@@ -5,7 +5,7 @@ Bic
     The Bic constraint was introduced in Symfony 2.8.
 
 This constraint is used to ensure that a value has the proper format of an
-`Business Identifier Code (BIC)`. BIC is an internationally agreed means to
+`Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
 uniquely identify both financial and non-financial institutions.
 
 +----------------+-----------------------------------------------------------------------+
@@ -23,14 +23,14 @@ Basic Usage
 -----------
 
 To use the Bic validator, simply apply it to a property on an object that
-will contain a Business Identifier Code.
+will contain a Business Identifier Code (BIC).
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity;
+        // src/Acme/AppBundle/Entity/Transaction.php
+        namespace Acme\AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,8 +46,8 @@ will contain a Business Identifier Code.
 
     .. code-block:: yaml
 
-        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
-        Acme\SubscriptionBundle\Entity\Transaction:
+        # src/Acme/AppBundle/Resources/config/validation.yml
+        Acme\AppBundle\Entity\Transaction:
             properties:
                 businessIdentifierCode:
                     - Bic:
@@ -55,13 +55,13 @@ will contain a Business Identifier Code.
 
     .. code-block:: xml
 
-        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
+        <!-- src/Acme/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+            <class name="Acme\AppBundle\Entity\Transaction">
                 <property name="businessIdentifierCode">
                     <constraint name="Bic">
                         <option name="message">
@@ -74,8 +74,8 @@ will contain a Business Identifier Code.
 
     .. code-block:: php
 
-        // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity;
+        // src/Acme/AppBundle/Entity/Transaction.php
+        namespace Acme\AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -100,7 +100,7 @@ message
 
 **type**: ``string`` **default**: ``This is not a valid Business Identifier Code (BIC).``
 
-The default message supplied when the value does not pass the Bic check.
+The default message supplied when the value does not pass the BIC check.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
