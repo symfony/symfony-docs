@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-31T11:41:31Z
+
+Thank you for starting this @94noni. However, I think we should use a definition list for this:
+
+```rst
+Commands have three lifecycle methods:
+
+:method:`Symfony\\Component\\Console\\Command\\Command::initialize`
+
+    This method is executed before the ``interact()`` and the ``execute()``
+    methods. It's main purpose is to initialize the variables used in the
+    rest of the command methods.
+
+:method:`Symfony\\Component\\Console\\Command\\Command::interact`
+
+    This method is executed after ``initialize()`` and before ``execute()``.
+    Its purpose is to check if some of the options/arguments are missing
+    and interactively ask the user for those values.
+
+:method:`Symfony\\Component\\Console\\Command\\Command::execute`
+
+    This method is executed after ``interact()`` and ``initialize()``. It
+    usually contains the logic to execute to complete this command task.
+
+    Note that ``execute()`` is the only required method of the three. The
+    ``initialize()`` and ``interact()`` methods are completely optional.
+```
+
+What do you think?
+
+---------------------------------------------------------------------------
+
+by 94noni at 2015-05-31T18:17:04Z
+
+As you wish for formating
+I can replace my pr by your code if its ok
+Or close this and you open a new one
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-31T18:24:28Z
+
+@94noni you can edit your branch in your fork to automatically update this PR.  As you were the one starting this - and we are just maintainers - we would very much like it to have your name attached to these changes, so if you can update, please do so :)
+
+---------------------------------------------------------------------------
+
+by 94noni at 2015-06-01T06:37:51Z
+
+Changes are done, ping @WouterJ :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-26T08:39:03Z
+
+@94noni :+1: thanks for this addition!  I've left some minor comments. They can probably be addressed by the documentation merger, so there is no need for you to update this PR. Thanks!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-12T12:56:15Z
+
+@javiereguiluz so we can add the ```Finished```-Label here?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-14T09:23:42Z
+
+@OskarStark I don't know. Labeling issues is done only by our doc managers (@WouterJ and @xabbuh).
