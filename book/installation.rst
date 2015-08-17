@@ -98,9 +98,6 @@ optional second argument of the ``new`` command:
     $ symfony new my_project_name 2.3.26
     $ symfony new my_project_name 2.6.5
 
-    # use the most recent LTS (Long Term Support) version
-    $ symfony new my_project_name lts
-
 If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
 pass ``lts`` as the second argument of the ``new`` command:
 
@@ -169,9 +166,8 @@ browsing the project directory and executing this command:
     $ cd my_project_name/
     $ php app/console server:run
 
-Then, open your browser and access the ``http://localhost:8000/app/example``
-URL to see the
-Welcome page of Symfony:
+Then, open your browser and access the ``http://localhost:8000/`` URL to see the
+Welcome Page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png
    :align: center
@@ -397,11 +393,6 @@ need in your new application.
 
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
-
-.. note::
-
-    If you want to remove the sample code from your distribution, take a look
-    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 .. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
 .. _`Composer`: https://getcomposer.org/
