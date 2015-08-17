@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-11T15:07:13Z
+
+At first I was divided about this change. It "complicates" the code for no apparent reason (the user will have a real page instead of using the `Response()` directly).
+
+However, later in the same chapter we tell the reader:
+
+```
+If you refresh now, you'll be logged in! The web debug toolbar even tells you who
+you are and what roles you have:
+```
+
+Since the toolbar doesn't show up if you don't have a closing `</body>` tag, I think this change is the right thing to do. So now I'm :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-17T20:28:40Z
+
+:+1:
