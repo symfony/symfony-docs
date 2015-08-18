@@ -19,7 +19,7 @@ import sys, os
 #sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.append(os.path.abspath('_exts'))
-sys.path.append(os.path.abspath('.platform/_exts'))
+sys.path.append(os.path.abspath('_theme/_exts'))
 
 # adding PhpLexer
 from sphinx.highlighting import lexers
@@ -42,7 +42,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['.platform/_templates']
+templates_path = ['_theme/_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -78,7 +78,7 @@ copyright = ''
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-# exclude_patterns = ['_build', 'bundles']
+exclude_patterns = ['_theme']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
