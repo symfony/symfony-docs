@@ -4,12 +4,12 @@ Bic
 .. versionadded:: 2.8
     The Bic constraint was introduced in Symfony 2.8.
 
-This constraint is used to ensure that a value has the proper format of an
+This constraint is used to ensure that a value has the proper format of a
 `Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
 uniquely identify both financial and non-financial institutions.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 |                | - `payload`_                                                          |
@@ -37,9 +37,7 @@ will contain a Business Identifier Code (BIC).
         class Transaction
         {
             /**
-             * @Assert\Bic(
-             *     message="This is not a valid Business Identifier Code (BIC)."
-             * )
+             * @Assert\Bic()
              */
             protected $businessIdentifierCode;
         }
