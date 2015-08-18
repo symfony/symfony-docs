@@ -83,9 +83,8 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
     ├─ AcmeBlogBundle.php
     ├─ Controller/
     ├─ README.md
+    ├─ LICENSE
     ├─ Resources/
-    │   ├─ meta/
-    │   │  └─ LICENSE
     │   ├─ config/
     │   ├─ doc/
     │   │  └─ index.rst
@@ -102,9 +101,8 @@ that automated tools can rely on:
 * ``README.md``: This file contains the basic description of the bundle and it
   usually shows some basic examples and links to its full documentation (it
   can use any of the markup formats supported by GitHub, such as ``README.rst``);
-* ``Resources/meta/LICENSE``: The full license for the code. The license file
-  can also be stored in the bundle's root directory to follow the generic
-  conventions about packages;
+* ``LICENSE``: The full contents of the license used by the code. Most third-party
+  bundles are published under the MIT license, but you can `choose any license`_;
 * ``Resources/doc/index.rst``: The root file for the Bundle documentation.
 
 The depth of sub-directories should be kept to the minimum for most used
@@ -424,3 +422,4 @@ Learn more from the Cookbook
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
 .. _`Semantic Versioning Standard`: http://semver.org/
 .. _`Packagist`: https://packagist.org/
+.. _`choose any license`: http://choosealicense.com/
