@@ -397,42 +397,44 @@ of the config that are repeated in different places.
 
 The example results in the following:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    database:
-        connection:
-            driver:               ~ # Required
-            host:                 localhost
-            username:             ~
-            password:             ~
-            memory:               false
-            parameters:           # Required
-    
-                # Prototype
-                name:
-                    value:                ~ # Required
+    .. code-block:: yaml
 
-.. code-block:: xml
+        database:
+            connection:
+                driver:               ~ # Required
+                host:                 localhost
+                username:             ~
+                password:             ~
+                memory:               false
+                parameters:           # Required
 
-    <database>
-        <!-- driver: Required -->
-        <connection
-            driver=""
-            host="localhost"
-            username=""
-            password=""
-            memory="false"
-        >
+                    # Prototype
+                    name:
+                        value:                ~ # Required
 
-            <!-- prototype -->
-            <!-- value: Required -->
-            <parameters
-                name="parameters name"
-                value=""
-            />
+    .. code-block:: xml
 
-        </connection>
-    </database>
+        <database>
+            <!-- driver: Required -->
+            <connection
+                driver=""
+                host="localhost"
+                username=""
+                password=""
+                memory="false"
+            >
+
+                <!-- prototype -->
+                <!-- value: Required -->
+                <parameters
+                    name="parameters name"
+                    value=""
+                />
+
+            </connection>
+        </database>
 
 .. _component-config-normalization:
 
