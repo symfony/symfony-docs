@@ -198,7 +198,7 @@ example, if you use annotations, create something like this::
          */
         public function adminAction()
         {
-            return new Response('Admin page!');
+            return new Response('<html><body>Admin page!</body></html>');
         }
     }
 
