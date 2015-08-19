@@ -13,6 +13,13 @@
 <style>
 .highlight .k { font-weight: normal; }
 .doc { background: none; }
+#demo-warning {
+    border: 3px dashed #c00;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+#demo-warning h4 { font-size: 1.7em;font-weight: bold; }
+#demo-warning p { margin-bottom: 0; }
 </style>
 {% endblock %}
 
@@ -27,11 +34,17 @@
         {%- if render_sidebar %}
         <div id="sidebar" class="col-sm-3">
             <div id="sidebar-content">
-            {%- include "globaltoc.html" %}
+                <div id="demo-warning">
+                    <h4>This is a demo</h4>
+                    <p>This is a demo provided by platform.sh.<br>
+                    <a href="http://symfony.com/doc/current/{{ pagename }}">Visit on symfony.com</a>.</p>
+                </div>
+                
+                {%- include "globaltoc.html" %}
 
-            {% if not isIndex %}
-                {%- include "localtoc.html" %}
-            {% endif %}
+                {% if not isIndex %}
+                    {%- include "localtoc.html" %}
+                {% endif %}
             </div>
         </div>
         {%- endif %}
@@ -59,6 +72,10 @@
                 <a href="{{ next.link|e }}">{{ next.title|striptags|e }} »</a>
             </div>
             {% endif %}
+            
+            <div id="license">
+                <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Unported <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License</a>.</p>
+            </div>
         </div>
     </div>
 </div>
