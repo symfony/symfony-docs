@@ -604,8 +604,8 @@ session.
 Flash Messages
 ~~~~~~~~~~~~~~
 
-You can also store small messages that will be stored on the user's session
-for exactly one additional request. This is useful when processing a form:
+You can also store small messages that will be stored on the user's session.
+This is useful when processing a form:
 you want to redirect and have a special message shown on the *next* page.
 These types of messages are called "flash" messages.
 
@@ -658,9 +658,17 @@ the following code will render the ``notice`` message:
             </div>
         <?php endforeach ?>
 
-By design, flash messages are meant to live for exactly one request (they're
-"gone in a flash"). They're designed to be used across redirects exactly as
-you've done in this example.
+.. tip::
+
+    By design, flash messages are meant to be processed exactly once. This means
+    that they vanish from the session automatically when they are retrieved from
+    the flash bag by calling the ``get()`` method.
+
+.. tip::
+
+    You can use the
+    :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek()`
+    method instead to retrieve the message while keeping it in the bag.
 
 .. index::
    single: Controller; Response object
