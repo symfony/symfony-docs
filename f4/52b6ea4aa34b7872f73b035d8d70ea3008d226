@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-17T19:48:06Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T18:14:26Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T18:18:51Z
+
+Actually, the 2.3 did not have a new release since this change was merged. So things will be a bit weird for people reading the 2.3 docs. But well, who is reading the 2.3 installation docs now that the 2.7 LTS is already released?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-19T18:25:58Z
+
+Which feature do you mean?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T19:32:25Z
+
+@xabbuh the new SE homepage (and the existence of the `/` route rather than the `/app/example` route)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-19T19:46:10Z
+
+A new 2.3 version will be released "soon" and most newcomers start with 2.7 anyway, so I guess we can safely merge it as it is now.
