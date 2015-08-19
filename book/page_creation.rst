@@ -566,9 +566,9 @@ Ok, time to finish mastering the fundamentals by reading these chapters:
 * :doc:`/book/routing`
 * :doc:`/book/templating`
 
-Then, learn about Symfony's :doc:`service container </book/service_container>`
+Then, in the :doc:`Symfony Book </book/index>`, learn about the :doc:`service container </book/service_container>`,
 the :doc:`form system </book/forms>`, using :doc:`Doctrine </book/doctrine>`
-if you need to query a database and more. in the :doc:`Symfony Book </book/index>`.
+(if you need to query a database) and more!
 
 There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
 "how to" articles to solve *a lot* of problems.
