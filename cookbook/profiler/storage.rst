@@ -57,7 +57,7 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
             ),
         ));
 
-The :doc:`HttpKernel component </components/http_kernel/introduction>` currently
+The :doc:`Profiler component </components/profiler/introduction>` currently
 supports the following profiler storage drivers:
 
 * file

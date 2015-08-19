@@ -115,6 +115,10 @@
 
   * :doc:`/components/process`
 
+* :doc:`/components/profiler/index`
+
+    * :doc:`/components/profiler/introduction`
+
 * :doc:`/components/property_access/index`
 
   * :doc:`/components/property_access/introduction`
