@@ -39,7 +39,7 @@ Platform.sh how to deploy your application (read more about
     name: myphpproject
     
     # The type of the application to build.
-    type: php:5.4
+    type: php:5.6
     build:
       flavor: symfony
 
