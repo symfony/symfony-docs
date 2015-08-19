@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-08-19T13:30:20Z
+
+This is documented here: https://docs.platform.sh/user_guide/reference/platform-app-yaml.html#type-and-build.
+
+Platform.sh can currently build 3 of the following PHP versions: 5.4, 5.5, 5.6.
+
+Thanks for the review guys!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T14:29:58Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-19T18:08:06Z
+
+:+1:
