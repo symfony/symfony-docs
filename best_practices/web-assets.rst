@@ -30,7 +30,7 @@ much more concise:
 
     Keep in mind that ``web/`` is a public directory and that anything stored
     here will be publicly accessible, including all the original asset files
-    (e.g. Sass, LESS and CoffeScript files).
+    (e.g. Sass, LESS and CoffeeScript files).
 
 Using Assetic
 -------------

@@ -43,7 +43,7 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
 
-    class LuckyController
+    class LuckyController extends Controller
     {
         /**
          * @Route("/lucky/number")
