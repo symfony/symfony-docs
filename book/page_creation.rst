@@ -181,7 +181,7 @@ at the end:
             }
 
             // ...
-        }        
+        }
 
     .. code-block:: yaml
 
@@ -272,7 +272,7 @@ easy, powerful and actually quite fun.
 So far, ``LuckyController`` doesn't extend any base class. The easiest way
 to use Twig - or many other tools in Symfony - is to extend Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
-    
+
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
