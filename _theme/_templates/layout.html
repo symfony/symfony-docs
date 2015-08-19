@@ -11,7 +11,16 @@
 
 {# pygment's styles are still loaded, undo some unwanted styles #}
 <style>
-.highlight .k { font-weight: normal; }
+.highlight .k, .highlight .gh, .highlight .gp,
+.highlight .gu, .highlight .kc, .highlight .kd,
+.highlight .kn, .highlight .kr, .highlight .nc,
+.highlight .nd, .highlight .ni, .highlight .nl,
+.highlight .nn, .highlight .nt, .highlight .ow,
+.highlight .se { font-weight: normal; }
+
+.highlight .c, .highlight .cm, .highlight .c1,
+.highlight .sd, .highlight .si { font-style: normal; }
+
 .doc { background: none; }
 #demo-warning {
     border: 3px dashed #c00;
