@@ -6,13 +6,13 @@ How to Use Matchers to Enable the Profiler Conditionally
 
 The Symfony profiler is only activated in the development environment to not hurt
 your application performance. However, sometimes it may be useful to conditionally
-enable the profiler in the production environment to assist you in hard to debug
+enable the profiler in the production environment to assist you in debugging
 issues. This behavior is implemented with the **Request Matchers**.
 
 Using the built-in Matcher
 --------------------------
 
-A Request Matcher is a class that checks whether a given ``Request`` instance
+A request matcher is a class that checks whether a given ``Request`` instance
 matches a set of conditions. Symfony provides a
 :class:`built-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
 which matches paths and IPs. For example, if you want to only show the profiler
@@ -33,16 +33,27 @@ configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:profiler
-                ip="168.0.0.1"
-            />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+
+            <framework:config>
+                <!-- ... -->
+                <framework:profiler ip="168.0.0.1" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
+            // ...
             'profiler' => array(
                 'ip' => '168.0.0.1',
             ),
@@ -145,12 +156,21 @@ profiler to use this service as the matcher:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:profiler
-                service="app.super_admin_matcher"
-            />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+
+            <framework:config>
+                <!-- ... -->
+                <framework:profiler service="app.super_admin_matcher" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
