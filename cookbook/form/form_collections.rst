@@ -262,7 +262,7 @@ great, your user can't actually add any new tags yet.
 .. _cookbook-form-collections-new-prototype:
 
 Allowing "new" Tags with the "Prototype"
------------------------------------------
+----------------------------------------
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
@@ -416,6 +416,11 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
+
+.. seealso::
+
+    If you want to customize the HTML code in the prototype, read
+    :ref:`cookbook-form-custom-prototype`.
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
@@ -728,76 +733,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     you'll need to do extra work to make sure that the relationship is properly
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
-
-.. _cookbook-form-collections-custom-prototype:
-
-Rendering a Custom Prototype
-----------------------------
-
-Most of the time the provided prototype will be sufficient for your needs
-and does not need to be changed. But if you are in the situation were you
-need to have a complete custom prototype, you can render it yourself.
-
-The Form component automatically looks for a block whose name follows a certain
-schema to decide how to render each entry of the form type collection. For
-example, if your form field is named ``tasks``, you will be able to change
-the widget for each task as follows:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        {% form_theme form _self %}
-
-        {% block _tasks_entry_widget %}
-            <tr>
-                <td>{{ form_widget(task.task) }}</td>
-                <td>{{ form_widget(task.dueDate) }}</td>
-            </tr>
-        {% endblock %}
-
-    .. code-block:: html+php
-
-        <!-- src/AppBundle/Resources/views/Form/_tasks_entry_widget.html.php -->
-        <tr>
-            <td><?php echo $view['form']->widget($form->task) ?></td>
-            <td><?php echo $view['form']->widget($form->dueDate) ?></td>
-        </tr>
-
-Not only can you override the rendered widget, but you can also change the
-complete form row or the label as well. For the ``tasks`` field given above,
-the block names would be the following:
-
-================  =======================
-Part of the Form  Block Name
-================  =======================
-``label``         ``_tasks_entry_label``
-``widget``        ``_tasks_entry_widget``
-``row``           ``_tasks_entry_row``
-================  =======================
-
-Then, you only have to ensure to render the collection type's ``data-prototype``
-property with the proper prototype so that new entries will be rendered the
-same way as existing ones:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        {% form_theme form _self %}
-
-        {% block _tasks_widget %}
-            {% set attr = attr|merge({ 'data-prototype': form_row(prototype) }) %}
-            <table {{ block('widget_container_attributes') }}>
-                {% for child in form %}
-                    {{ form_row(child) }}
-                {% endfor %}
-            </table>
-        {% endblock %}
-
-    .. code-block:: html+php
-
-        <!-- src/AppBundle/Resources/views/Form/_tasks_widget.html.php -->
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
