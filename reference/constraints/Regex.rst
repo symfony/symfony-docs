@@ -28,8 +28,8 @@ more word characters at the beginning of your string:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -43,21 +43,21 @@ more word characters at the beginning of your string:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             properties:
                 description:
                     - Regex: '/^\w+/'
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="description">
                     <constraint name="Regex">
                         <option name="pattern">/^\w+/</option>
@@ -68,8 +68,8 @@ more word characters at the beginning of your string:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -93,8 +93,8 @@ it a custom message:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -112,8 +112,8 @@ it a custom message:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             properties:
                 firstName:
                     - Regex:
@@ -123,13 +123,13 @@ it a custom message:
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="firstName">
                     <constraint name="Regex">
                         <option name="pattern">/\d/</option>
@@ -142,8 +142,8 @@ it a custom message:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -197,8 +197,8 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -215,8 +215,8 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             properties:
                 name:
                     - Regex:
@@ -225,13 +225,13 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="name">
                     <constraint name="Regex">
                         <option name="pattern">/^[a-z]+$/i</option>
@@ -243,8 +243,8 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

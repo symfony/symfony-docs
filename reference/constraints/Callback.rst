@@ -34,8 +34,8 @@ Setup
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,21 +48,21 @@ Setup
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             constraints:
                 - Callback:
                     methods:   [isAuthorValid]
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <constraint name="Callback">
                     <option name="methods">
                         <value>isAuthorValid</value>
@@ -73,8 +73,8 @@ Setup
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -147,12 +147,12 @@ process. Each method can be one of the following formats:
 
         .. code-block:: php-annotations
 
-            // src/Acme/BlogBundle/Entity/Author.php
+            // src/AppBundle/Entity/Author.php
             use Symfony\Component\Validator\Constraints as Assert;
 
             /**
              * @Assert\Callback(methods={
-             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid" }
+             *     { "AppBundle\MyStaticValidatorClass", "isAuthorValid" }
              * })
              */
             class Author
@@ -161,26 +161,26 @@ process. Each method can be one of the following formats:
 
         .. code-block:: yaml
 
-            # src/Acme/BlogBundle/Resources/config/validation.yml
-            Acme\BlogBundle\Entity\Author:
+            # src/AppBundle/Resources/config/validation.yml
+            AppBundle\Entity\Author:
                 constraints:
                     - Callback:
                         methods:
-                            -    [Acme\BlogBundle\MyStaticValidatorClass, isAuthorValid]
+                            -    [AppBundle\MyStaticValidatorClass, isAuthorValid]
 
         .. code-block:: xml
 
-            <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+            <!-- src/AppBundle/Resources/config/validation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-                <class name="Acme\BlogBundle\Entity\Author">
+                <class name="AppBundle\Entity\Author">
                     <constraint name="Callback">
                         <option name="methods">
                             <value>
-                                <value>Acme\BlogBundle\MyStaticValidatorClass</value>
+                                <value>AppBundle\MyStaticValidatorClass</value>
                                 <value>isAuthorValid</value>
                             </value>
                         </option>
@@ -190,7 +190,7 @@ process. Each method can be one of the following formats:
 
         .. code-block:: php
 
-            // src/Acme/BlogBundle/Entity/Author.php
+            // src/AppBundle/Entity/Author.php
 
             use Symfony\Component\Validator\Mapping\ClassMetadata;
             use Symfony\Component\Validator\Constraints\Callback;
@@ -204,7 +204,7 @@ process. Each method can be one of the following formats:
                     $metadata->addConstraint(new Callback(array(
                         'methods' => array(
                             array(
-                                'Acme\BlogBundle\MyStaticValidatorClass',
+                                'AppBundle\MyStaticValidatorClass',
                                 'isAuthorValid',
                             ),
                         ),
@@ -213,14 +213,14 @@ process. Each method can be one of the following formats:
             }
 
     In this case, the static method ``isAuthorValid`` will be called on
-    the ``Acme\BlogBundle\MyStaticValidatorClass`` class. It's passed both
+    the ``AppBundle\MyStaticValidatorClass`` class. It's passed both
     the original object being validated (e.g. ``Author``) as well as the
     ``ExecutionContextInterface``::
 
-        namespace Acme\BlogBundle;
+        namespace AppBundle;
 
         use Symfony\Component\Validator\ExecutionContextInterface;
-        use Acme\BlogBundle\Entity\Author;
+        use AppBundle\Entity\Author;
 
         class MyStaticValidatorClass
         {

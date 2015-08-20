@@ -38,8 +38,8 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,8 +53,8 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             properties:
                 gender:
                     - Choice:
@@ -63,13 +63,13 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="gender">
                     <constraint name="Choice">
                         <option name="choices">
@@ -84,8 +84,8 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/EntityAuthor.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/EntityAuthor.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -113,8 +113,8 @@ form element.
 
 .. code-block:: php
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
 
     class Author
     {
@@ -131,8 +131,8 @@ constraint.
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -146,21 +146,21 @@ constraint.
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             properties:
                 gender:
                     - Choice: { callback: getGenders }
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="gender">
                     <constraint name="Choice">
                         <option name="callback">getGenders</option>
@@ -171,8 +171,8 @@ constraint.
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/EntityAuthor.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/EntityAuthor.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -196,8 +196,8 @@ you can pass the class name and the method as an array.
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -211,21 +211,21 @@ you can pass the class name and the method as an array.
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             properties:
                 gender:
                     - Choice: { callback: [Util, getGenders] }
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="gender">
                     <constraint name="Choice">
                         <option name="callback">
@@ -239,8 +239,8 @@ you can pass the class name and the method as an array.
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/EntityAuthor.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/EntityAuthor.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
