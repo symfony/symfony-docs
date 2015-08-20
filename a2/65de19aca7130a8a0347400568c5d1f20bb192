@@ -1,0 +1,42 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-07-15T13:49:57Z
+
+@kenjis :+1: thanks for reporting this error.
+
+I can confirm this is an error. In [the original article](http://fabien.potencier.org/create-your-own-framework-on-top-of-the-symfony2-components-part-4.html) at Fabien's website, the `EXTR_SKIP` argument was present:
+
+![extr_skip_argument](https://cloud.githubusercontent.com/assets/73419/8699910/1956abba-2b09-11e5-80fe-bb9b404e6cd9.png)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-15T18:02:28Z
+
+@javiereguiluz The page that @kenjis changed is actual [part 6](http://fabien.potencier.org/create-your-own-framework-on-top-of-the-symfony2-components-part-6.html), but I agree that it should be fixed here (using `extract()` might generally not be the best idea though).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-15T18:05:09Z
+
+Hm, actually I think it's right to not specify an argument here. The reason this was done in the previos chapters is that the default behaviour of `extract()` is to overwrite any existing variables with the same name. However, this is not a good idea in the global context as we might lose our very own framework variables. But this isn't issue anymore in the present code as the `extract()` call is wrapped in the `render_template()` function.
+
+---------------------------------------------------------------------------
+
+by kenjis at 2015-07-15T21:54:23Z
+
+@xabbuh the `extract()` has moved into a function on prev page: http://symfony.com/doc/2.3/create_framework/templating.html
+So if we remove `EXTR_SKIP`, we should do on prev page and add why.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-15T22:00:47Z
+
+@kenjis Yeah, I agree that it should simply be removed on the previous page.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T13:22:54Z
+
+Hi @kenjis! Thanks for the original fix and the discussion that came with it. As we concluded that the better fix would be to remove the argument from the templating guide, I've taken your commit and changed it so it can be merged: https://github.com/symfony/symfony-docs/pull/5568
+
+So I'm closing this PR, but you still get all the credits!
