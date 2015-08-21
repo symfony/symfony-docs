@@ -1,0 +1,114 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-17T21:10:06Z
+
+Could we run this with the `CodeBlock` class from the Sphinx core until the related pull request is merged?
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-08-18T09:51:14Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-18T11:10:41Z
+
+Let's try :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-18T11:23:11Z
+
+Deployment failed, is there any way to see why /cc @GuGuss ?
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-08-18T12:45:56Z
+
+The exact error message is:
+````
+Extension error:
+    Could not import extension symfonycom.sphinx (exception: No module named symfonycom.sphinx)
+    make: *** [html] Error 1
+
+  E: Unknown error in the toolstack: CalledProcessError: Command 'pip install git+https://github.com/fabpot/sphinx-php.git
+  make html
+  ' returned non-zero exit status 2
+
+E: Error building the project: Unable to build project, aborting deployment.
+````
+
+@WouterJ I'll add you as an administrator to the Platform.sh project so you can see build results directly.
+
+---------------------------------------------------------------------------
+
+by damz at 2015-08-18T12:58:48Z
+
+@WouterJ You cannot put files in `.platform` and expect them to be available during the build process.
+
+Platform.sh supports multiple applications in the same repository. The first step of the build process is to split the repository into multiple application trees, each application being defined as a folder containing a `.platform.app.yaml`, excluding any subfolder itself containing a `.platform.app.yaml`.
+
+Technically, `.platform/` is a global folder, it is not part of the tree of any of the applications that you have in your repository, so it will not be available during the build process of any application.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-18T18:41:47Z
+
+So things seem to work now! Thanks for the detailed information @damz.
+
+In case anyone wonders why some code blocks do have line numbers, without the customized codeblock from the sphinx-php package, line numbers are only shown when the `:linenums:` flag is passed. Quite a few code blocks have this flag.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-18T19:20:56Z
+
+Wow!!! Great work, Wouter! :fireworks:
+
+---------------------------------------------------------------------------
+
+by damz at 2015-08-18T19:50:25Z
+
+And that looks pretty awesome. :+1:
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-08-19T13:14:08Z
+
+Looking better and better :+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T20:32:43Z
+
+And now, the last remaining piece is also added: Numbered code block
+
+@weaverryan this is ready to merge
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-19T20:38:41Z
+
+For some reason this failed on platform.sh. Are you able to see the reason @WouterJ?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T20:39:32Z
+
+ > E: Error building the project: Error checking out submodule 1b7c4b794d75f7b0eb6749cadccc58f87e3158a0.
+
+Not sure why it can't check out that commit...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T21:25:09Z
+
+And everything really works now. Thanks for the help everyone!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-08-21T00:30:01Z
+
+Wow wow wow! This looks amazing! Seriously - this is so cool :).
+
+I'll happily merge this!
