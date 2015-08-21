@@ -160,7 +160,7 @@ Let's conclude with the new version of our framework::
 
     function render_template(Request $request)
     {
-        extract($request->attributes->all());
+        extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
         include sprintf(__DIR__.'/../src/pages/%s.php', $_route);
 

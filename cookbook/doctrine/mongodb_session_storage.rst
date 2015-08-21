@@ -165,7 +165,7 @@ From the `MongoDB shell`_:
 .. code-block:: sql
 
     use session_db
-    db.session.ensureIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
+    db.session.ensureIndex( { "expires_at": 1 }, { expireAfterSeconds: 0 } )
 
 .. _installed and configured a MongoDB server: http://docs.mongodb.org/manual/installation/
 .. _MongoDB shell: http://docs.mongodb.org/v2.2/tutorial/getting-started-with-the-mongo-shell/
