@@ -13,7 +13,7 @@ helper set, which you can get by calling
 
 The Question Helper has a single method
 :method:`Symfony\\Component\\Console\\Command\\Command::ask` that needs an
-:class:`Symfony\\Component\\Console\\Output\\InputInterface` instance as the
+:class:`Symfony\\Component\\Console\\Input\\InputInterface` instance as the
 first argument, an :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance as the second argument and a
 :class:`Symfony\\Component\\Console\\Question\\Question` as last argument.
@@ -68,6 +68,7 @@ if you want to know a bundle name, you can add this to your command::
     use Symfony\Component\Console\Question\Question;
     // ...
 
+    $helper = $this->getHelper('question');
     $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
     $bundle = $helper->ask($input, $output, $question);
@@ -148,6 +149,8 @@ will be autocompleted as the user types::
     use Symfony\Component\Console\Question\Question;
     // ...
 
+    $helper = $this->getHelper('question');
+
     $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
     $question = new Question('Please enter the name of a bundle', 'FooBundle');
     $question->setAutocompleterValues($bundles);
@@ -162,6 +165,8 @@ convenient for passwords::
 
     use Symfony\Component\Console\Question\Question;
     // ...
+
+    $helper = $this->getHelper('question');
 
     $question = new Question('What is the database password?');
     $question->setHidden(true);
@@ -190,6 +195,8 @@ method::
 
     use Symfony\Component\Console\Question\Question;
     // ...
+
+    $helper = $this->getHelper('question');
 
     $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
     $question->setValidator(function ($answer) {
@@ -276,6 +283,6 @@ from the command line, you need to set the helper input stream::
     }
 
 By setting the input stream of the ``QuestionHelper``, you imitate what the
-console would do internally with all user input through the cli. This way
+console would do internally with all user input through the CLI. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
