@@ -1,0 +1,20 @@
+<div class=submenu>
+    {% set menu = [ 
+        ('The Book', 'book/index'),
+        ('The Cookbook', 'cookbook/index'),
+        ('The Components', 'components/index'),
+        ('The Best Practices', 'best_practices/index'),
+        ('The Quick Tour', 'quick_tour/index'),
+        ('Reference', 'reference/index'),
+        ('Index', 'genindex'),
+        ('Contributing', 'contributing/index')
+    ] %}
+    
+    <ul class="list_submenu list-unstyled">
+    {% for name, doc in menu %}
+        <li {% if loop.first %}class="first"{% endif %}>
+            <a href="{{ pathto(doc) }}">{{ name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
