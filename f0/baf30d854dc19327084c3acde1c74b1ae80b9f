@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-01T09:41:54Z
+
+:+1: Technically,we would not merge this into the `2.6` branch anymore as it is not supported as of today. However, I think we should not be too strict and merge it nonetheless.
+
+@WouterJ @weaverryan @javiereguiluz What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-20T08:55:18Z
+
+ping @weaverryan @javiereguiluz
+
+I think we should merge this into the 2.7 branch now 19 days have past :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-08-20T22:00:29Z
+
+Sorry for no reply! I say 2.7, but I agree with you @xabbuh, we don't need to be strict on the rules in the docs. :thumbsup:
