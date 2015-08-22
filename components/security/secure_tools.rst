@@ -9,8 +9,8 @@ Comparing Strings
 ~~~~~~~~~~~~~~~~~
 
 The time it takes to compare two strings depends on their differences. This
-can be used by an attacker when the two strings represent a password for
-instance; it is known as a `Timing attack`_.
+can be used by an attacker when the two strings represent a hash of a password
+for instance; it is known as a `Timing attack`_.
 
 Internally, when comparing two passwords, Symfony uses a constant-time
 algorithm; you can use the same strategy in your own code thanks to the
@@ -18,13 +18,19 @@ algorithm; you can use the same strategy in your own code thanks to the
 
     use Symfony\Component\Security\Core\Util\StringUtils;
 
-    // is some known string (e.g. password) equal to some user input?
-    $bool = StringUtils::equals($knownString, $userInput);
+    // is some known string (e.g. password hash) equal to another string
+    // (e.g. hash ofsome user input)?
+    $bool = StringUtils::equals($knownString, $anotherString);
 
 .. caution::
 
-    To avoid timing attacks, the known string must be the first argument
-    and the user-entered string the second.
+    Both arguments must be of the same length to be compared successfully. When
+    arguments of differing length are supplied, `false` can be returned immediately and
+    the length of the known string may be leaked in case of a timing attack.
+    The known string must be the first argument and the string based on the user-entered
+    content the second.
+    This method is more reliable with PHP 5.6 and superior because it internally uses
+    the native :phpfunction:`hash_equals <hash_equals>` PHP function.
 
 Generating a Secure random Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
