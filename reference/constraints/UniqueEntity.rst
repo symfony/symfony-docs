@@ -23,7 +23,7 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an AcmeUserBundle bundle with a ``User`` entity that has
+Suppose you have an AppBundle bundle with a ``User`` entity that has
 an ``email`` field. You can use the ``UniqueEntity`` constraint to guarantee
 that the ``email`` field remains unique between all of the constraints in
 your user table:
@@ -32,8 +32,8 @@ your user table:
 
     .. code-block:: php-annotations
 
-        // Acme/UserBundle/Entity/Author.php
-        namespace Acme\UserBundle\Entity;
+        // AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
@@ -60,8 +60,8 @@ your user table:
 
     .. code-block:: yaml
 
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
             properties:
@@ -70,13 +70,13 @@ your user table:
 
     .. code-block:: xml
 
-        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\UserBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">email</option>
                 </constraint>
@@ -89,8 +89,8 @@ your user table:
     .. code-block:: php
 
 
-        // Acme/UserBundle/Entity/User.php
-        namespace Acme\UserBundle\Entity;
+        // AppBundle/Entity/User.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -171,8 +171,8 @@ Consider this example:
 
     .. code-block:: php-annotations
 
-        // src/Acme/AdministrationBundle/Entity/Service.php
-        namespace Acme\AdministrationBundle\Entity;
+        // src/AppBundle/Entity/Service.php
+        namespace AppBundle\Entity;
 
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -200,8 +200,8 @@ Consider this example:
 
     .. code-block:: yaml
 
-        # src/Acme/AdministrationBundle/Resources/config/validation.yml
-        Acme\AdministrationBundle\Entity\Service:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Service:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
                     fields: [host, port]
@@ -210,13 +210,13 @@ Consider this example:
 
     .. code-block:: xml
 
-        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\AdministrationBundle\Entity\Service">
+            <class name="AppBundle\Entity\Service">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">
                         <value>host</value>
@@ -231,8 +231,8 @@ Consider this example:
 
     .. code-block:: php
 
-        // src/Acme/AdministrationBundle/Entity/Service.php
-        namespace Acme\AdministrationBundle\Entity;
+        // src/AppBundle/Entity/Service.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;

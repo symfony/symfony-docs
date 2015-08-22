@@ -29,8 +29,8 @@ on an object that will contain a credit card number.
 
     .. code-block:: php-annotations
 
-        // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        // src/AppBundle/Entity/Transaction.php
+        namespace AppBundle\Entity\Transaction;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -47,8 +47,8 @@ on an object that will contain a credit card number.
 
     .. code-block:: yaml
 
-        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
-        Acme\SubscriptionBundle\Entity\Transaction:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Transaction:
             properties:
                 cardNumber:
                     - CardScheme:
@@ -57,13 +57,13 @@ on an object that will contain a credit card number.
 
     .. code-block:: xml
 
-        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+            <class name="AppBundle\Entity\Transaction">
                 <property name="cardNumber">
                     <constraint name="CardScheme">
                         <option name="schemes">
@@ -77,8 +77,8 @@ on an object that will contain a credit card number.
 
     .. code-block:: php
 
-        // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        // src/AppBundle/Entity/Transaction.php
+        namespace AppBundle\Entity\Transaction;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

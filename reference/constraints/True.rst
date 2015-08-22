@@ -25,8 +25,8 @@ on a registration model) or to a "getter" method. It's most powerful in
 the latter case, where you can assert that a method returns a true value.
 For example, suppose you have the following method::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
 
     class Author
     {
@@ -44,8 +44,8 @@ Then you can constrain this method with ``True``.
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -64,8 +64,8 @@ Then you can constrain this method with ``True``.
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             getters:
                 tokenValid:
                     - 'True':
@@ -79,7 +79,7 @@ Then you can constrain this method with ``True``.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <getter property="tokenValid">
                     <constraint name="True">
                         <option name="message">The token is invalid.</option>
@@ -90,8 +90,8 @@ Then you can constrain this method with ``True``.
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\True;
