@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-19T20:02:53Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2015-08-19T20:11:50Z
+
+Thanks for help with text tweaking!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-19T20:22:09Z
+
+Nice! It's always good to explain when to use which option.
+
+However, the section isn't really a versus anymore, it just explains the use-cases for the QueryBuilder. What about merging it with the first paragraph of the QB section?
+
+```diff
+-Instead of writing a DQL string, you can alternatively use a helpful object called
+-the ``QueryBuilder`` to build that string for you::
++Instead of writing a DQL string, you can use a helpful object called the
++``QueryBuilder`` to build that string for you. This is usefull when the actual query
++depends on dynamic conditions, as your code soon becomes hard to read with
++DQL as you start to concatenate strings.
++
++.. code-block:: php
+```
+(I also removed "atlernatively" in the first sentence, as it was redundant because of "Instead of" at the start of the sentence)
+
+Ideally, we would show an example that shows dynamic query building, but that hasn't to be changed in this PR.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-19T20:25:40Z
+
+Ah indeed, I missed the fact that we have that paragraph. The suggested change really fits better.
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2015-08-19T20:51:46Z
+
+@WouterJ I applied your comment
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-21T06:21:38Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-21T07:08:23Z
+
+:+1:
