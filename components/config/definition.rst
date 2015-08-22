@@ -102,8 +102,6 @@ node definition. Node types are available for:
 * scalar (generic type that includes booleans, strings, integers, floats
   and ``null``)
 * boolean
-* scalar
-* boolean
 * integer (new in 2.2)
 * float (new in 2.2)
 * enum (new in 2.1) (similar to scalar, but it only allows a finite set
@@ -304,7 +302,7 @@ All options can be documented using the
 method.
 
 The info will be printed as a comment when dumping the configuration tree
-with the ``config:dump`` command.
+with the ``config:dump-reference`` command.
 
 Optional Sections
 -----------------
