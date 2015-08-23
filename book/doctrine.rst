@@ -766,8 +766,10 @@ covered later), group, etc. For more information, see the official
 Querying for Objects Using Doctrine's Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of writing a DQL string, you can alternatively use a helpful object called
-the ``QueryBuilder`` to build that string for you::
+Instead of writing a DQL string, you can use a helpful object called the
+``QueryBuilder`` to build that string for you. This is useful when the actual query
+depends on dynamic conditions, as your code soon becomes hard to read with
+DQL as you start to concatenate strings::
 
     $repository = $this->getDoctrine()
         ->getRepository('AppBundle:Product');
