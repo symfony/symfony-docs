@@ -35,8 +35,8 @@ Configuration
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -56,28 +56,28 @@ Configuration
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
             constraints:
                 - Callback: [validate]
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <constraint name="Callback">validate</constraint>
             </class>
         </constraint-mapping>
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -185,13 +185,13 @@ You can then use the following configuration to invoke this validator:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
-         * @Assert\Callback({"Vendor\Package\Validator", "validate"})
+         * @Assert\Callback({"AppBundle\MyStaticValidatorClass", "isAuthorValid"})
          */
         class Author
         {
@@ -199,43 +199,55 @@ You can then use the following configuration to invoke this validator:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [Vendor\Package\Validator, validate]
+	# src/AppBundle/Resources/config/validation.yml
+	AppBundle\Entity\Author:
+	    constraints:
+		- Callback:
+		    methods:
+			-    [AppBundle\MyStaticValidatorClass, isAuthorValid]
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+	<!-- src/AppBundle/Resources/config/validation.xml -->
+	<?xml version="1.0" encoding="UTF-8" ?>
+	<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
-                <constraint name="Callback">
-                    <value>Vendor\Package\Validator</value>
-                    <value>validate</value>
-                </constraint>
-            </class>
-        </constraint-mapping>
+	    <class name="AppBundle\Entity\Author">
+		<constraint name="Callback">
+		    <option name="methods">
+			<value>
+			    <value>AppBundle\MyStaticValidatorClass</value>
+			    <value>isAuthorValid</value>
+			</value>
+		    </option>
+		</constraint>
+	    </class>
+	</constraint-mapping>
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+	// src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
+	    public $name;
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addConstraint(new Assert\Callback(array(
-                    'Vendor\Package\Validator',
-                    'validate',
-                )));
+		$metadata->addConstraint(new Callback(array(
+		    'methods' => array(
+			array(
+			    'AppBundle\MyStaticValidatorClass',
+			    'isAuthorValid',
+			),
+		    ),
+		)));
             }
         }
 
@@ -250,8 +262,11 @@ You can then use the following configuration to invoke this validator:
 When configuring the constraint via PHP, you can also pass a closure to the
 constructor of the Callback constraint::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
+
+    use Symfony\Component\Validator\ExecutionContextInterface;
+    use AppBundle\Entity\Author;
 
     use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints as Assert;

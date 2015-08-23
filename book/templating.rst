@@ -1191,7 +1191,7 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security``
+``app.security`` (deprecated as of 2.6)
     The security context.
 ``app.user``
     The current user object.
