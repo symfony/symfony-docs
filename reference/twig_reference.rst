@@ -418,7 +418,12 @@ humanize
     **type**: ``string``
 
 Makes a technical name human readable (i.e. replaces underscores by spaces
-and capitalizes the string).
+or transforms camelCase text like ``helloWorld`` to ``hello world``
+and then capitalizes the string).
+
+.. versionadded:: 2.3
+    Transforming camelCase text into human readable text was introduced in
+    Symfony 2.3.
 
 trans
 ~~~~~

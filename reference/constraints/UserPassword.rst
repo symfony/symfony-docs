@@ -33,8 +33,8 @@ the user's current password:
 
     .. code-block:: php-annotations
 
-        // src/Acme/UserBundle/Form/Model/ChangePassword.php
-        namespace Acme\UserBundle\Form\Model;
+        // src/AppBundle/Form/Model/ChangePassword.php
+        namespace AppBundle\Form\Model;
 
         use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
@@ -50,8 +50,8 @@ the user's current password:
 
     .. code-block:: yaml
 
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Form\Model\ChangePassword:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Form\Model\ChangePassword:
             properties:
                 oldPassword:
                     - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
@@ -59,13 +59,13 @@ the user's current password:
 
     .. code-block:: xml
 
-        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\UserBundle\Form\Model\ChangePassword">
+            <class name="AppBundle\Form\Model\ChangePassword">
                 <property name="oldPassword">
                     <constraint
                         name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword"
@@ -78,8 +78,8 @@ the user's current password:
 
     .. code-block:: php
 
-        // src/Acme/UserBundle/Form/Model/ChangePassword.php
-        namespace Acme\UserBundle\Form\Model;
+        // src/AppBundle/Form/Model/ChangePassword.php
+        namespace AppBundle\Form\Model;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;

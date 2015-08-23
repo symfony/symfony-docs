@@ -15,7 +15,7 @@ the channel).
 .. note::
 
     Each channel corresponds to a logger service (``monolog.logger.XXX``)
-    in the container (use the ``container:debug`` command to see a full list)
+    in the container (use the ``debug:container`` command to see a full list)
     and those are injected into different services.
 
 .. _logging-channel-handler:
