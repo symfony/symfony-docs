@@ -343,7 +343,7 @@ using a processor.
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
                 arguments:
-                    - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n"
+                    - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
 
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
@@ -375,7 +375,7 @@ using a processor.
                 <service id="monolog.formatter.session_request"
                     class="Monolog\Formatter\LineFormatter">
 
-                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%&#xA;</argument>
+                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%&#xA;</argument>
                 </service>
 
                 <service id="monolog.processor.session_request"
@@ -405,7 +405,7 @@ using a processor.
                 'monolog.formatter.session_request',
                 'Monolog\Formatter\LineFormatter'
             )
-            ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n');
+            ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n');
 
         $container
             ->register(
