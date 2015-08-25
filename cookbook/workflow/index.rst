@@ -6,3 +6,4 @@ Workflow
 
     new_project_git
     new_project_svn
+    homestead
