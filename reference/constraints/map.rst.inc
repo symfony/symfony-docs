@@ -66,7 +66,7 @@ File Constraints
 Financial and other Number Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* :doc:`Bic` </reference/constraints/Bic>`
+* :doc:`Bic </reference/constraints/Bic>`
 * :doc:`CardScheme </reference/constraints/CardScheme>`
 * :doc:`Currency </reference/constraints/Currency>`
 * :doc:`Luhn </reference/constraints/Luhn>`
