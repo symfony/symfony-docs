@@ -75,6 +75,8 @@ your JavaScripts:
                 uglifyjs2:
                     # the path to the uglifyjs executable
                     bin: /usr/local/bin/uglifyjs
+                    # on Windows with a local setup
+                    bin: ./node_modules/uglify-js/bin/uglifyjs
 
     .. code-block:: xml
 
@@ -84,6 +86,8 @@ your JavaScripts:
             <assetic:filter
                 name="uglifyjs2"
                 bin="/usr/local/bin/uglifyjs" />
+                <!-- on Windows with a local setup -->
+                bin="./node_modules/uglify-js/bin/uglifyjs"
         </assetic:config>
 
     .. code-block:: php
@@ -94,6 +98,8 @@ your JavaScripts:
                 'uglifyjs2' => array(
                     // the path to the uglifyjs executable
                     'bin' => '/usr/local/bin/uglifyjs',
+                    // on Windows with a local setup
+                    'bin' => './node_modules/uglify-js/bin/uglifyjs',
                 ),
             ),
         ));
@@ -249,6 +255,9 @@ Next, add the configuration for this filter:
             filters:
                 uglifycss:
                     bin: /usr/local/bin/uglifycss
+                    # on Windows with a local setup
+                    bin: ./node_modules/uglifycss/uglifycss
+                    #
 
     .. code-block:: xml
 
@@ -256,7 +265,10 @@ Next, add the configuration for this filter:
         <assetic:config>
             <assetic:filter
                 name="uglifycss"
-                bin="/usr/local/bin/uglifycss" />
+                bin="/usr/local/bin/uglifycss"
+                <!-- on Windows with a local setup -->
+                bin="./node_modules/uglifycss/uglifycss"
+            />
         </assetic:config>
 
     .. code-block:: php
@@ -266,6 +278,8 @@ Next, add the configuration for this filter:
             'filters' => array(
                 'uglifycss' => array(
                     'bin' => '/usr/local/bin/uglifycss',
+                    // on Windows with a local setup
+                    'bin' => './node_modules/uglifycss/uglifycss',
                 ),
             ),
         ));
