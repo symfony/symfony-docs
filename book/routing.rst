@@ -833,36 +833,36 @@ be accomplished with the following route configuration:
         class MainController extends Controller
         {
             /**
-             * @Route("/news")
+             * @Route("/contact")
              * @Method("GET")
              */
-            public function newsAction()
+            public function contactFormDisplayAction()
             {
-                // ... display your news
+                // ... display a contact form
             }
 
             /**
              * @Route("/contact")
-             * @Method({"GET", "POST"})
+             * @Method("POST")
              */
-            public function contactFormAction()
+            public function contactFormProcessAction()
             {
-                // ... display and process a contact form
+                // ... process the contact form we previously displayed
             }
         }
 
     .. code-block:: yaml
 
         # app/config/routing.yml
-        news:
-            path:     /news
-            defaults: { _controller: AppBundle:Main:news }
+        contact_form_display:
+            path:     /contact
+            defaults: { _controller: AppBundle:Main:contactFormDisplay }
             methods:  [GET]
 
-        contact_form:
+        contact_form_process:
             path:     /contact
-            defaults: { _controller: AppBundle:Main:contactForm }
-            methods:  [GET, POST]
+            defaults: { _controller: AppBundle:Main:contactFormProcess }
+            methods:  [POST]
 
     .. code-block:: xml
 
@@ -873,12 +873,12 @@ be accomplished with the following route configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="news" path="/news" methods="GET">
-                <default key="_controller">AppBundle:Main:news</default>
+            <route id="contact_form_display" path="/contact" methods="GET">
+                <default key="_controller">AppBundle:Main:contactFormDisplay</default>
             </route>
 
-            <route id="contact_form" path="/contact" methods="GET|POST">
-                <default key="_controller">AppBundle:Main:contactForm</default>
+            <route id="contact_form_process" path="/contact" methods="POST">
+                <default key="_controller">AppBundle:Main:contactFormProcess</default>
             </route>
         </routes>
 
@@ -889,13 +889,13 @@ be accomplished with the following route configuration:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('news', new Route('/news', array(
-            '_controller' => 'AppBundle:Main:contact',
+        $collection->add('contact_form_display', new Route('/contact', array(
+            '_controller' => 'AppBundle:Main:contactFormDisplay',
         ), array(), array(), '', array(), array('GET')));
 
-        $collection->add('contact_form', new Route('/contact', array(
-            '_controller' => 'AppBundle:Main:contactForm',
-        ), array(), array(), '', array(), array('GET', 'POST')));
+        $collection->add('contact_form_process', new Route('/contact', array(
+            '_controller' => 'AppBundle:Main:contactFormProcess',
+        ), array(), array(), '', array(), array('POST')));
 
         return $collection;
 
