@@ -73,10 +73,8 @@ your JavaScripts:
         assetic:
             filters:
                 uglifyjs2:
-                    # the path to the uglifyjs executable
-                    bin: /usr/local/bin/uglifyjs
-                    # on Windows with a local setup
-                    bin: ./node_modules/uglify-js/bin/uglifyjs
+                    # the path to the uglifyjs Node module
+                    bin: ./app/Resources/node_modules/uglify-js/bin/uglifyjs
 
     .. code-block:: xml
 
@@ -85,9 +83,8 @@ your JavaScripts:
             <!-- bin: the path to the uglifyjs executable -->
             <assetic:filter
                 name="uglifyjs2"
-                bin="/usr/local/bin/uglifyjs" />
-                <!-- on Windows with a local setup -->
-                bin="./node_modules/uglify-js/bin/uglifyjs"
+                <!-- the path to the uglifyjs Node module -->
+                bin="./app/Resources/node_modules/uglify-js/bin/uglifyjs"
         </assetic:config>
 
     .. code-block:: php
@@ -96,10 +93,8 @@ your JavaScripts:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'uglifyjs2' => array(
-                    // the path to the uglifyjs executable
-                    'bin' => '/usr/local/bin/uglifyjs',
-                    // on Windows with a local setup
-                    'bin' => './node_modules/uglify-js/bin/uglifyjs',
+                    // the path to the uglifyjs Node module
+                    'bin' => './app/Resources/node_modules/uglify-js/bin/uglifyjs'
                 ),
             ),
         ));
@@ -137,8 +132,7 @@ can configure its location using the ``node`` key:
             node: /usr/bin/nodejs
             filters:
                 uglifyjs2:
-                    # the path to the uglifyjs executable
-                    bin: /usr/local/bin/uglifyjs
+                    bin: ./app/Resources/node_modules/uglify-js/bin/uglifyjs
 
     .. code-block:: xml
 
@@ -147,7 +141,7 @@ can configure its location using the ``node`` key:
             node="/usr/bin/nodejs" >
             <assetic:filter
                 name="uglifyjs2"
-                bin="/usr/local/bin/uglifyjs" />
+                bin="./app/Resources/node_modules/uglify-js/bin/uglifyjs" />
         </assetic:config>
 
     .. code-block:: php
@@ -156,8 +150,7 @@ can configure its location using the ``node`` key:
         $container->loadFromExtension('assetic', array(
             'node' => '/usr/bin/nodejs',
             'uglifyjs2' => array(
-                    // the path to the uglifyjs executable
-                    'bin' => '/usr/local/bin/uglifyjs',
+                    'bin' => './app/Resources/node_modules/uglify-js/bin/uglifyjs'
                 ),
         ));
 
@@ -254,10 +247,8 @@ Next, add the configuration for this filter:
         assetic:
             filters:
                 uglifycss:
-                    bin: /usr/local/bin/uglifycss
-                    # on Windows with a local setup
-                    bin: ./node_modules/uglifycss/uglifycss
-                    #
+                    # the path to the uglifyjs Node module
+                    bin: ./app/Resources/node_modules/uglifycss/uglifycss
 
     .. code-block:: xml
 
@@ -265,9 +256,8 @@ Next, add the configuration for this filter:
         <assetic:config>
             <assetic:filter
                 name="uglifycss"
-                bin="/usr/local/bin/uglifycss"
-                <!-- on Windows with a local setup -->
-                bin="./node_modules/uglifycss/uglifycss"
+                <!-- the path to the uglifyjs Node module -->
+                bin="./app/Resources/node_modules/uglifycss/uglifycss"
             />
         </assetic:config>
 
@@ -277,9 +267,8 @@ Next, add the configuration for this filter:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'uglifycss' => array(
-                    'bin' => '/usr/local/bin/uglifycss',
-                    // on Windows with a local setup
-                    'bin' => './node_modules/uglifycss/uglifycss',
+                    // the path to the uglifyjs Node module
+                    'bin' => './app/Resources/node_modules/uglifycss/uglifycss'
                 ),
             ),
         ));
