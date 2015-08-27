@@ -154,8 +154,16 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 #. **Test the Code**
 
    Take your project from step 3 and test whether the PR works properly.
+   Replace the Symfony vendor by the code in the PR by running the following Git
+   commands. Insert the PR ID for the ``<ID>`` placeholders:
 
-   TODO: precise steps
+   .. code-block:: text
+
+       $ cd vendor/symfony/symfony
+       $ git fetch origin pull/<ID>/head:pr<ID>
+       $ git checkout pr<ID>
+
+   Now you can test the project against the code in the PR.
 
 #. **Update the PR Status**
 
