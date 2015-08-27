@@ -247,7 +247,7 @@ Next, add the configuration for this filter:
         assetic:
             filters:
                 uglifycss:
-                    # the path to the uglifyjs Node module
+                    # the path to the uglifycss Node module
                     bin: ./app/Resources/node_modules/uglifycss/uglifycss
 
     .. code-block:: xml
@@ -256,7 +256,7 @@ Next, add the configuration for this filter:
         <assetic:config>
             <assetic:filter
                 name="uglifycss"
-                <!-- the path to the uglifyjs Node module -->
+                <!-- the path to the uglifycss Node module -->
                 bin="./app/Resources/node_modules/uglifycss/uglifycss"
             />
         </assetic:config>
@@ -267,7 +267,7 @@ Next, add the configuration for this filter:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'uglifycss' => array(
-                    // the path to the uglifyjs Node module
+                    // the path to the uglifycss Node module
                     'bin' => './app/Resources/node_modules/uglifycss/uglifycss'
                 ),
             ),
