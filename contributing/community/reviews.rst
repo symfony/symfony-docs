@@ -157,14 +157,21 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
    Take your project from step 3 and test whether the PR works properly.
    Replace the Symfony project in the ``vendor`` directory by the code in the
-   PR by running the following Git commands. Insert the PR ID for the ``<ID>``
-   placeholders:
+   PR by running the following Git commands. Insert the PR ID (that's the number
+   after the ``#`` in the PR title) for the ``<ID>`` placeholders:
 
    .. code-block:: text
 
        $ cd vendor/symfony/symfony
        $ git fetch origin pull/<ID>/head:pr<ID>
        $ git checkout pr<ID>
+
+   For example:
+
+   .. code-block:: text
+
+       $ git fetch origin pull/15723/head:pr15723
+       $ git checkout pr15723
 
    Now you can test the project against the code in the PR.
 
