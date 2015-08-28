@@ -60,18 +60,16 @@ The steps for the review are:
 
    Download the reproduction project and test whether the bug can be reproduced
    on your system. If the reporter did not provide a reproduction project,
-   create one by forking_ the `Symfony Standard Edition`_. Reproduce the bug
-   with the instructions given by the reporter.
+   create one by forking_ the `Symfony Standard Edition`_.
 
 #. **Update the Issue Status**
 
    At last, add a comment to the bug report. **Thank the reporter for reporting
-   the bug**. Include the line ``Status: <status>`` in your comment to update
-   the status of the ticket. This line will trigger our `Carson Bot`_ which
-   updates the labels of the issue accordingly. You can set the status to one of
-   the following:
+   the bug**. Include the line ``Status: <status>`` in your comment to trigger
+   our `Carson Bot`_ which updates the status label of the issue. You can set
+   the status to one of the following:
 
-   **Needs Work** If the bug does not contain enough information to be
+   **Needs Work** If the bug *does not* contain enough information to be
    reproduced, explain what information is missing and move the report to this
    status.
 
@@ -98,12 +96,12 @@ The steps for the review are:
 The Pull Request Review Process
 -------------------------------
 
-The process for reviewing pull requests (PRs) is similar to doing a review of a
-bug report. Reviews of pull requests usually take a little longer since you need
-to understand the functionality that has been fixed or implemented and then find
-out whether the implementation is complete.
+The process for reviewing pull requests (PRs) is similar to the one for bug
+reports. Reviews of pull requests usually take a little longer since you need
+to understand the functionality that has been fixed or added and find out
+whether the implementation is complete.
 
-It is okay to do partial reviews. If you do a partial review, comment how far
+It is okay to do partial reviews! If you do a partial review, comment how far
 you got and leave the PR in "Needs Review" state.
 
 Pick a pull request from the `PRs in need of review`_ and follow these steps:
@@ -130,7 +128,8 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
    Read the issue that the pull request is supposed to fix. Reproduce the
    problem on a clean `Symfony Standard Edition`_ project and try to understand
-   why it exists.
+   why it exists. If the linked issue already contains such a project, install
+   it and run it on your system.
 
 #. **Review the Code**
 
@@ -150,13 +149,16 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
      latest UPGRADE-X.X.md file? Do those explanations contain "Before"/"After"
      examples with clear upgrade instructions?
 
-   Eventually, some of these aspects will be checked automatically.
+   .. note::
+
+       Eventually, some of these aspects will be checked automatically.
 
 #. **Test the Code**
 
    Take your project from step 3 and test whether the PR works properly.
-   Replace the Symfony vendor by the code in the PR by running the following Git
-   commands. Insert the PR ID for the ``<ID>`` placeholders:
+   Replace the Symfony project in the ``vendor`` directory by the code in the
+   PR by running the following Git commands. Insert the PR ID for the ``<ID>``
+   placeholders:
 
    .. code-block:: text
 
@@ -169,10 +171,9 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 #. **Update the PR Status**
 
    At last, add a comment to the PR. **Thank the contributor for working on the
-   PR**. Include the line ``Status: <status>`` in your comment to update the
-   status of the ticket. This line will trigger our `Carson Bot`_ which updates
-   the labels of the issue accordingly. You can set the status to one of the
-   following:
+   PR**. Include the line ``Status: <status>`` in your comment to trigger our
+   `Carson Bot`_ which updates the status label of the issue. You can set the
+   status to one of the following:
 
    **Needs Work** If the PR is not yet ready to be merged, explain the issues
    that you found and move it to this status.
