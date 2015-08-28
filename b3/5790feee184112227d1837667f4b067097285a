@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-04T07:07:04Z
+
+Thanks Bernhard. I left some small comments, but overall I think this is a great document to help people contributing. :+1:
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2015-07-17T21:26:42Z
+
+Looks like a good step towards reducing the work for core developers and providing a breeding ground for new core developers!
+
+---------------------------------------------------------------------------
+
+by webmozart at 2015-07-20T11:50:12Z
+
+Thanks for the feedback! I updated the PR now.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-07-28T12:47:07Z
+
+There's one little `TODO` line floating in there that needs to be removed. But :+1: from me. @webmozart if you're ready for this to be merged - just say so, I can easily remove that TODO line for you.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-08-03T17:14:57Z
+
+@webmozart could you finish this one ? It would be great to have this merged and a blog post published so that the experiment could start for real
+
+---------------------------------------------------------------------------
+
+by webmozart at 2015-08-27T16:08:51Z
+
+I just added the test instructions. It wasn't much after all. If everything is fine by you, this is ready to merge.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2015-08-27T23:08:21Z
+
+This might be a useful resource, also for a more generic guide for contributing patches: http://hoa-project.net/En/Literature/Contributor/Guide.html#Testing_a_patch
