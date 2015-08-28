@@ -3,7 +3,8 @@ Community Reviews
 
 Symfony is an open-source project driven by a large community. If you don't feel
 ready to contribute code or patches, reviewing issues and pull requests (PRs)
-can be a great start to get involved and give back.
+can be a great start to get involved and give back. In fact, people who "triage"
+issues are the backbone to Symfony's success!
 
 Why Reviewing Is Important
 --------------------------
@@ -12,11 +13,11 @@ Community reviews are essential for the development of the Symfony framework,
 since there are many more pull requests and bug reports than there are members
 in the Symfony core team to review, fix and merge them.
 
-On the `Symfony issue tracker`_, you can find many items in a "Needs Review"
+On the `Symfony issue tracker`_, you can find many items in a `Needs Review`_
 status:
 
-* **Bug Reports**: Bug reports primarily need to be checked for completeness.
-  Is any important information missing? Can the bug be easily reproduced?
+* **Bug Reports**: Bug reports need to be checked for completeness.
+  Is any important information missing? Can the bug be *easily* reproduced?
 
 * **Pull Requests**: Pull requests contain code that fixes a bug or implements
   new functionality. Reviews of pull requests ensure that they are implemented
@@ -203,3 +204,4 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 .. _Symfony's Release Schedule: http://symfony.com/doc/current/contributing/community/releases.html#schedule
 .. _Symfony Roadmap: https://symfony.com/roadmap
 .. _Carson Bot: https://github.com/carsonbot/carsonbot
+.. _`Needs Review`: https://github.com/symfony/symfony/labels/Status%3A%20Needs%20Review
