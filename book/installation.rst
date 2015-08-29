@@ -90,13 +90,12 @@ optional second argument of the ``new`` command:
 .. code-block:: bash
 
     # use the most recent version in any Symfony branch
-    $ symfony new my_project_name 2.3
-    $ symfony new my_project_name 2.5
     $ symfony new my_project_name 2.6
+    $ symfony new my_project_name 2.7
 
     # use a specific Symfony version
-    $ symfony new my_project_name 2.3.26
     $ symfony new my_project_name 2.6.5
+    $ symfony new my_project_name 2.7.3
 
 If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
 pass ``lts`` as the second argument of the ``new`` command:
@@ -146,7 +145,7 @@ version as the second argument of the ``create-project`` command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.3.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "2.7.*"
 
 .. tip::
 
