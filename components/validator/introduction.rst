@@ -6,7 +6,11 @@ The Validator Component
 =======================
 
     The Validator component provides tools to validate values following the
-    `JSR-303 Bean Validation specification`_.
+    `JSR-303 Bean Validation specification`_. With the component, this is done in two parts:
+    * ``Contraints``: a constraint describes a rule that need to be validated
+    * ``Validators``: a list of classes that implement the validation logic for common usages
+
+
 
 Installation
 ------------
@@ -15,6 +19,8 @@ You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/validator`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Validator).
+
+Then, require the vendor/autoload.php file to enable the autoloading mechanism provided by Composer. Otherwise, your application won't be able to find the classes of this Symfony component.
 
 Usage
 -----
@@ -42,7 +48,7 @@ Retrieving a Validator Instance
 
 The :class:`Symfony\\Component\\Validator\\Validator` class is the main access
 point of the Validator component. To create a new instance of this class, it
-is recommended to use the :class:`Symfony\\Component\Validator\Validation`
+is recommended to use the :class:`Symfony\\Component\\Validator\\Validation`
 class.
 
 You can get a very basic ``Validator`` by calling 
