@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-07-22T19:37:37Z
+
+Is it possible to make this link checker run on Travis ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-07-22T20:10:40Z
+
+:+1: thanks a lot for fixing all these errors!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-22T20:25:02Z
+
+@stof it is possible (it's quite easy, as it's a built-in sphinx builder). However, I don't think it's worth it, as there are many URLs in the Symfony documentation (so running this builder takes some minutes) and not a lot of PRs add new external references. I want to provide a PR status to the contributor as quick as possible, so I don't think making the travis build longer is really needed here.
+
+I thought about only including it in push Travis builds (and not PRs updates). However, we don't get emails about failing builds (and least, I don't get them) and I don't think we'll regularly check Travis to see the status of the branch.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-07-23T00:50:10Z
+
+@WouterJ for push builds, the one receiving the email is the dev doing the push, which means the one doing the merge of the PR.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T14:57:57Z
+
+Reverted the removal of all API method links to protected methods, I agree that it should be fixed in the API generator instead.
+
+Ready to merge imo
+
+(fyi, @stof, we decided against adding this to the build during the doc meeting).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-22T09:20:05Z
+
+I've removed the mailing list link in 185dfbf, as noticed by @fabpot. /cc @weaverryan @xabbuh can you please review & vote?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-08-22T14:04:40Z
+
+I just scanned through - looks like all good stuff to me! :+1:
