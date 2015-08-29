@@ -77,7 +77,10 @@ Sections
 --------
 
 * :doc:`/components/validator/resources`
-* :doc:`/components/validator/validating_values`
+* :doc:`/components/validator/builtin_validators`
+* :doc:`/components/validator/validation_groups`
+* :doc:`/components/validator/internationalization`
+* :doc:`/components/validator/custom_validation`
 
 .. _`JSR-303 Bean Validation specification`: http://jcp.org/en/jsr/detail?id=303
 .. _Packagist: https://packagist.org/packages/symfony/validator
