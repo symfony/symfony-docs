@@ -6,6 +6,7 @@ Validator
 
     introduction
     resources
+    metadata
     builtin_validators
     validation_groups
     custom_validation
