@@ -6,3 +6,7 @@ Validator
 
     introduction
     resources
+    builtin_validators
+    validation_groups
+    custom_validation
+    internationalization
