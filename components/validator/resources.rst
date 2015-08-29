@@ -34,7 +34,25 @@ method of the Validator builder::
         ->getValidator();
 
 Now, the retrieved ``Validator`` tries to find the ``loadValidatorMetadata()``
-method of the class to validate to load its metadata.
+method of the class to validate to load its metadata::
+
+    use Symfony\Component\Validator\Mapping\ClassMetadata;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+    use Symfony\Component\Validator\Constraints\Length;
+
+    class User
+    {
+        protected $name;
+
+        public static function loadValidatorMatadata(ClassMetadata $metadata)
+        {
+            $metadata->addPropertyConstraint('name', new NotBlank());
+            $metadata->addPropertyConstraint('name', new Length(array(
+                'min' => 5,
+                'max' => 20,
+            )));
+        }
+    }
 
 .. tip::
 
