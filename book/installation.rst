@@ -394,7 +394,7 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
-.. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
+.. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot

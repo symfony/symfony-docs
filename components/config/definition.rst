@@ -119,9 +119,9 @@ Numeric Node Constraints
     The numeric (float and integer) nodes were introduced in Symfony 2.2.
 
 Numeric nodes (float and integer) provide two extra constraints -
-:method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
-:method:`Symfony\\Component\\Config\\Definition\\Builder::max` -
-allowing to validate the value::
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\IntegerNodeDefinition::min`
+and :method:`Symfony\\Component\\Config\\Definition\\Builder\\IntegerNodeDefinition::max`
+- allowing to validate the value::
 
     $rootNode
         ->children()

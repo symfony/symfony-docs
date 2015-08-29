@@ -297,6 +297,6 @@ not in debug mode.
 
 .. _`UglifyJS`: https://github.com/mishoo/UglifyJS
 .. _`UglifyCSS`: https://github.com/fmarcia/UglifyCSS
-.. _`Node.js`: http://nodejs.org/
-.. _`install Node.js`: http://nodejs.org/
-.. _`package.json`: http://package.json.nodejitsu.com/
+.. _`Node.js`: https://nodejs.org/
+.. _`install Node.js`: https://nodejs.org/
+.. _`package.json`: http://browsenpm.org/package.json

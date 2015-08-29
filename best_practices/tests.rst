@@ -121,4 +121,4 @@ for your test fixtures.
 .. _`PhpUnit`: https://phpunit.de/
 .. _`PhpSpec`: http://www.phpspec.net/
 .. _`Mink`: http://mink.behat.org
-.. _`smoke testing`: http://en.wikipedia.org/wiki/Smoke_testing_(software)
+.. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)

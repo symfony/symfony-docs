@@ -145,4 +145,4 @@ bothIsbnMessage
 The message that will be shown if both the `isbn10`_ and `isbn13`_ options
 are true and the given value does not pass the ISBN-13 nor the ISBN-13 check.
 
-.. _`International Standard Book Number (ISBN)`: http://en.wikipedia.org/wiki/Isbn
+.. _`International Standard Book Number (ISBN)`: https://en.wikipedia.org/wiki/Isbn

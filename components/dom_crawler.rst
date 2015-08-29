@@ -188,7 +188,7 @@ The crawler supports multiple ways of adding the content::
 .. note::
 
     When dealing with character sets other than ISO-8859-1, always add HTML
-    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHTMLContent`
+    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHtmlContent`
     method where you can specify the second parameter to be your target character
     set.
 
@@ -385,5 +385,5 @@ directly::
     // submit that form
     $crawler = $client->submit($form);
 
-.. _`Goutte`:  https://github.com/fabpot/goutte
+.. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
 .. _Packagist: https://packagist.org/packages/symfony/dom-crawler

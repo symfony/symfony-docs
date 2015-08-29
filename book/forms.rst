@@ -1963,5 +1963,5 @@ Learn more from the Cookbook
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/2.3/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.3/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`view on GitHub`: https://github.com/symfony/symfony/tree/2.3/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form

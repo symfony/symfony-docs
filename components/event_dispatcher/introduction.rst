@@ -652,7 +652,7 @@ with 2 other dispatchers:
 * :doc:`/components/event_dispatcher/container_aware_dispatcher`
 * :doc:`/components/event_dispatcher/immutable_dispatcher`
 
-.. _Mediator: http://en.wikipedia.org/wiki/Mediator_pattern
+.. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
 .. _Packagist: https://packagist.org/packages/symfony/event-dispatcher

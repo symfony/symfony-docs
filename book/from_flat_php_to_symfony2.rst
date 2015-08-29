@@ -320,6 +320,8 @@ As it stands now, that code would need to be added to every controller file.
 If you forget to include something in one file, hopefully it doesn't relate
 to security...
 
+.. _book-from_flat_php-front-controller:
+
 A "Front Controller" to the Rescue
 ----------------------------------
 

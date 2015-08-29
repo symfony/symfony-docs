@@ -48,7 +48,7 @@ Suppose you have a Task form with a description ``textarea`` type::
 But, there are two complications:
 
 #. Your users are allowed to use *some* HTML tags, but not others: you need a way
-   to call :phpfunction:`striptags` after the form is submitted;
+   to call :phpfunction:`strip_tags` after the form is submitted;
 
 #. To be friendly, you want to convert ``<br/>`` tags into line breaks (``\n``) before
    rendering the field so the text is easier to edit.
