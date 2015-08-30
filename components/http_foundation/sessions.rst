@@ -18,6 +18,10 @@ implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionIn
     class. If you have a legacy session system that starts your session, see
     :doc:`Legacy Sessions </components/http_foundation/session_php_bridge>`.
 
+.. caution::
+
+    The Session is started automatically as soon as a form using :doc:`CSRF protection </book/forms.html#csrf-protection>` is rendered.
+
 Quick example::
 
     use Symfony\Component\HttpFoundation\Session\Session;
