@@ -1783,6 +1783,11 @@ The ``_token`` field is a hidden field and will be automatically rendered
 if you include the ``form_end()`` function in your template, which ensures
 that all un-rendered fields are output.
 
+.. caution::
+
+    Since the token is stored in the session, a session is started automatically
+    as soon as you render a form with CSRF protection.
+
 The CSRF token can be customized on a form-by-form basis. For example::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
