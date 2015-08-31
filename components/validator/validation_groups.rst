@@ -1,5 +1,5 @@
 .. index::
-    single: Validator; Validation groups
+    single: Validator; Validation Groups
 
-Validation groups
+Validation Groups
 =================

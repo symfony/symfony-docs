@@ -1,7 +1,7 @@
 .. index::
-    single: Validator; Built In validators
+    single: Validator; Built In Validators
 
-Built In validators
+Built In Validators
 ===================
 
 For each validation rule, the component ships a Constraint class and its associated Validator class.

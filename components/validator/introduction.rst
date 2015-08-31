@@ -10,8 +10,6 @@ The Validator Component
     * ``Contraints``: a constraint describes a rule that need to be validated
     * ``Validators``: a list of classes that implement the validation logic for common usages
 
-
-
 Installation
 ------------
 
@@ -20,7 +18,7 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/validator`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Validator).
 
-Then, require the vendor/autoload.php file to enable the autoloading mechanism provided by Composer. Otherwise, your application won't be able to find the classes of this Symfony component.
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -51,7 +49,7 @@ point of the Validator component. To create a new instance of this class, it
 is recommended to use the :class:`Symfony\\Component\\Validator\\Validation`
 class.
 
-You can get a very basic ``Validator`` by calling 
+You can get a very basic ``Validator`` by calling
 :method:`Validation::createValidator() <Symfony\\Component\\Validator\\Validation::createValidator>`::
 
     use Symfony\Component\Validator\Validation;
@@ -71,7 +69,7 @@ method::
         // ... build a custom instance of the Validator
         ->getValidator();
 
-What things you can configure will be documented in the following sections.
+In the next sections, you'll learn about all things you can configure in the Validator.
 
 Sections
 --------
