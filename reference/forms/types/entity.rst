@@ -184,9 +184,9 @@ choice_translation_domain
 .. versionadded:: 2.7
     The ``choice_translation_domain`` option was introduced in Symfony 2.7.
 
-**type**: ``boolean``
+**type**: ``boolean`` | ``null`` | ``string``
 
-This option determines whether the translation of the data obtained will be informed domain ``translation_domain``.
+If specified ``null`` value, corresponds to parents translation_domain or default domain (messages). If the value is ``string``, corresponds to explicit domain(e.g. ``AcmeStoreBundle``). If the value is ``true``, reuse current ``translation_domain`` and ``false`` to disabled.
 
 translation_domain
 ~~~~~~~~~~~~~~~~~~
