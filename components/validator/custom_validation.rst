@@ -1,5 +1,5 @@
 .. index::
-    single: Validator; Custom validation
+    single: Validator; Custom Validation
 
-Custom validation
+Custom Validation
 =================

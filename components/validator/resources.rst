@@ -37,8 +37,7 @@ Now, the retrieved ``Validator`` tries to find the ``loadValidatorMetadata()``
 method of the class to validate to load its metadata::
 
     use Symfony\Component\Validator\Mapping\ClassMetadata;
-    use Symfony\Component\Validator\Constraints\NotBlank;
-    use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     class User
     {
@@ -46,8 +45,8 @@ method of the class to validate to load its metadata::
 
         public static function loadValidatorMatadata(ClassMetadata $metadata)
         {
-            $metadata->addPropertyConstraint('name', new NotBlank());
-            $metadata->addPropertyConstraint('name', new Length(array(
+            $metadata->addPropertyConstraint('name', new Assert\NotBlank());
+            $metadata->addPropertyConstraint('name', new Asert\Length(array(
                 'min' => 5,
                 'max' => 20,
             )));
@@ -65,7 +64,7 @@ The FileLoaders
 ---------------
 
 The component also provides 2 file loaders, one to load Yaml files and one to
-load XML files. Use 
+load XML files. Use
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addYamlMapping` or
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addXmlMapping` to
 configure the locations of these files::
@@ -76,9 +75,14 @@ configure the locations of these files::
         ->addYamlMapping('config/validation.yml')
         ->getValidator();
 
+.. note::
+
+    If you want to load YAML mapping files then you will also need to install
+    :doc:`the Yaml component </components/yaml/introduction>`.
+
 .. tip::
 
-    Just like with the method mappings, you can also use 
+    Just like with the method mappings, you can also use
     :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addYamlMappings` and
     :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addXmlMappings`
     to configure an array of file paths.
@@ -89,9 +93,9 @@ The AnnotationLoader
 At last, the component provides an
 :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AnnotationLoader`.
 This loader uses an annotation reader to parse the annotations of a class.
-Annotations are placed in doc block comments (`/** ... */`) and start with an
+Annotations are placed in doc block comments (``/** ... */``) and start with an
 ``@``. For instance::
-
+    use Symfony\Component\Validator\Constraints as Assert;
     // ...
 
     /**
@@ -99,7 +103,7 @@ Annotations are placed in doc block comments (`/** ... */`) and start with an
      */
     protected $name;
 
-To enable the annotation loader, call the 
+To enable the annotation loader, call the
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping`
 method. It takes an optional annotation reader instance, which defaults to
 ``Doctrine\Common\Annotations\AnnotationReader``::
@@ -116,12 +120,12 @@ To disable the annotation loader after it was enabled, call
 .. note::
 
     In order to use the annotation loader, you should have installed the
-    ``doctrine/annotations`` and ``doctrine/cache`` packages from Packagist.
+    ``doctrine/annotations`` and ``doctrine/cache`` packages from _Packagist.
 
 Using Multiple Loaders
 ----------------------
 
-The component provides a 
+The component provides a
 :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\LoaderChain` class to
 chain multiple loaders. This means you can configure as many loaders as you
 want at the same time.
@@ -144,10 +148,10 @@ Using many loaders to load metadata from different places is very easy when
 creating the metadata, but it can easily slow down your application since each
 file needs to be parsed, validated and converted to a
 :class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata` instance. To
-solve this problems, you can configure a cacher which will be used to cache
+solve this problem, you can configure a cacher which will be used to cache
 the ``ClassMetadata`` after it was loaded.
 
-The Validator component comes with a
+The Validator component comes with an
 :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\ApcCache`
 implementation. You can easily create other cachers by creating a class which
 implements :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
@@ -183,7 +187,7 @@ configured resources.
 You can also use a custom metadata factory implementation by creating a class
 which implements
 :class:`Symfony\\Component\\Validator\\MetadataFactoryInterface`. You can set
-this custom implementation using 
+this custom implementation using
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMetadataFactory`::
 
     use Acme\Validation\CustomMetadataFactory;
@@ -198,3 +202,5 @@ this custom implementation using
     Since you are using a custom metadata factory, you can't configure loaders
     and cachers using the ``add*Mapping()`` methods anymore. You now have to
     inject them into your custom metadata factory yourself.
+
+.. _Packagist: https://packagist.org
