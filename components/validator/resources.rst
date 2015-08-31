@@ -95,6 +95,7 @@ At last, the component provides an
 This loader uses an annotation reader to parse the annotations of a class.
 Annotations are placed in doc block comments (``/** ... */``) and start with an
 ``@``. For instance::
+
     use Symfony\Component\Validator\Constraints as Assert;
     // ...
 
