@@ -186,7 +186,7 @@ choice_translation_domain
 
 **type**: ``boolean`` | ``null`` | ``string``
 
-If specified ``null`` value, corresponds to parents translation_domain or default domain (messages). If the value is ``string``, corresponds to explicit domain(e.g. ``AcmeStoreBundle``). If the value is ``true``, reuse current ``translation_domain`` and ``false`` to disabled.
+If specified ``null`` value, corresponds to parents ``translation_domain`` or default domain (messages). If the value is ``string``, corresponds to explicit domain(e.g. ``AcmeStoreBundle``). If the value is ``true``, reuse current ``translation_domain`` and ``false`` to disabled.
 
 translation_domain
 ~~~~~~~~~~~~~~~~~~
@@ -196,7 +196,7 @@ translation_domain
 
 **type**: ``string``
 
-If specified, use translations of informed domain(e.g. ``AcmeStoreBundle`` to ``Acme\StoreBundle\Resources\translation`` files).
+When ``choice_translation_domain`` is ``true`` or ``null``, use translations of informed domain(e.g. ``AcmeStoreBundle`` to ``Acme\StoreBundle\Resources\translation`` files).
 
 
 Overridden Options
