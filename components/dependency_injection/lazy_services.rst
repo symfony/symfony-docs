@@ -115,5 +115,5 @@ in the `documentation of ProxyManager`_.
 
 
 .. _`ProxyManager bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/ProxyManager
-.. _`proxy`: http://en.wikipedia.org/wiki/Proxy_pattern
+.. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
 .. _`documentation of ProxyManager`: https://github.com/Ocramius/ProxyManager/blob/master/docs/lazy-loading-value-holder.md

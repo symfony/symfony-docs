@@ -156,8 +156,9 @@ There are some important things to consider in the code of the above controller:
    provides methods for the most common operations when dealing with uploaded files.
 #. A well-known security best practice is to never trust the input provided by
    users. This also applies to the files uploaded by your visitors. The ``Uploaded``
-   class provides methods to get the original file extension (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension`),
-   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`)
+   class provides methods to get the original file extension
+   (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension`),
+   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`)
    and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`).
    However, they are considered *not safe* because a malicious user could tamper
    that information. That's why it's always better to generate a unique name and

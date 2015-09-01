@@ -131,4 +131,4 @@ The message shown when the value does not pass the ``CardScheme`` check.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`Wikipedia: Issuer identification number (IIN)`: http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29
+.. _`Wikipedia: Issuer identification number (IIN)`: https://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29

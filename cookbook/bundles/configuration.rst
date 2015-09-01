@@ -353,7 +353,7 @@ In order to use the schema, the XML configuration file must provide an
 ``xsi:schemaLocation`` attribute pointing to the XSD file for a certain XML
 namespace. This location always starts with the XML namespace. This XML
 namespace is then replaced with the XSD validation base path returned from
-:method:`Extension::getXsdValidationBasePath() <Symfony\\Component\\DependencyInjection\\ExtensionInterface::getXsdValidationBasePath>`
+:method:`Extension::getXsdValidationBasePath() <Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface::getXsdValidationBasePath>`
 method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 
@@ -396,5 +396,5 @@ Assume the XSD file is called ``hello-1.0.xsd``, the schema location will be
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
-.. _`XML namespace`: http://en.wikipedia.org/wiki/XML_namespace
-.. _`XML schema`: http://en.wikipedia.org/wiki/XML_schema
+.. _`XML namespace`: https://en.wikipedia.org/wiki/XML_namespace
+.. _`XML schema`: https://en.wikipedia.org/wiki/XML_schema

@@ -118,11 +118,11 @@ See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 For general information on adding listeners to the events below, see
 :ref:`http-kernel-creating-listener`.
 
-.. tip::
+.. seealso::
 
-    Fabien Potencier also wrote a wonderful series on using the HttpKernel
-    component and other Symfony components to create your own framework. See
-    `Create your own framework... on top of the Symfony2 Components`_.
+    There is a wonderful tutorial series on using the HttpKernel component and
+    other Symfony components to create your own framework. See
+    :doc:`/create_framework/introduction`.
 
 .. _component-http-kernel-kernel-request:
 

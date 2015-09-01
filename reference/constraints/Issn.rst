@@ -107,5 +107,4 @@ this to ``true``, the validator requires a hyphenated ISSN value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`International Standard Serial Number (ISSN)`: http://en.wikipedia.org/wiki/Issn
-
+.. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

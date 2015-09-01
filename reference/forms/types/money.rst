@@ -140,4 +140,4 @@ Variable       Type        Usage
 money_pattern  ``string``  The format to use to display the money, including the currency.
 =============  ==========  ===============================================================
 
-.. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217
+.. _`3 letter ISO 4217 code`: https://en.wikipedia.org/wiki/ISO_4217

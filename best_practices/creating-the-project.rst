@@ -177,4 +177,4 @@ the Symfony directory structure.
 .. _`Get Started`: https://getcomposer.org/doc/00-intro.md
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
-.. _`these steps`: http://fabien.potencier.org/article/73/signing-project-releases
+.. _`these steps`: http://fabien.potencier.org/signing-project-releases.html

@@ -97,4 +97,4 @@ The default message supplied when the value does not pass the Luhn check.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`Luhn algorithm`: http://en.wikipedia.org/wiki/Luhn_algorithm
+.. _`Luhn algorithm`: https://en.wikipedia.org/wiki/Luhn_algorithm

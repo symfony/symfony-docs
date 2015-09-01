@@ -672,5 +672,5 @@ in the factory and consumed or passed to the other classes in the container.
 
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
-.. _`nonce`: http://en.wikipedia.org/wiki/Cryptographic_nonce
-.. _`timing attacks`: http://en.wikipedia.org/wiki/Timing_attack
+.. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce
+.. _`timing attacks`: https://en.wikipedia.org/wiki/Timing_attack

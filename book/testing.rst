@@ -881,4 +881,4 @@ Learn more
 * :doc:`/cookbook/testing/bootstrap`
 
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
-.. _`documentation`: http://phpunit.de/manual/current/en/
+.. _`documentation`: https://phpunit.de/manual/current/en/

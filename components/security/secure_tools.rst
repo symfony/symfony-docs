@@ -67,4 +67,4 @@ to work correctly. Just pass a file name to enable it::
     solution is to hash the value returned by ``nextBytes()`` (to do that, you
     can use a simple ``md5()`` PHP function).
 
-.. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
+.. _`Timing attack`: https://en.wikipedia.org/wiki/Timing_attack
