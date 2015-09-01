@@ -28,6 +28,7 @@ Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 * `#5589 <https://github.com/symfony/symfony-docs/pull/5589>`_ [Cookbook][Session] fix default expiry field name (xabbuh)
+* `#5607 <https://github.com/symfony/symfony-docs/pull/5607>`_ Fix (sebastianbergmann)
 * `#5608 <https://github.com/symfony/symfony-docs/pull/5608>`_ updated validation.rst (issei-m)
 * `#5449 <https://github.com/symfony/symfony-docs/pull/5449>`_ Ensure that the entity is updated. (yceruto)
 
@@ -38,6 +39,7 @@ Minor Documentation Changes
 * `#5650 <https://github.com/symfony/symfony-docs/pull/5650>`_ [RFR] fixing typo and removing duplicated lines in Config component doc  (salahm)
 * `#5635 <https://github.com/symfony/symfony-docs/pull/5635>`_ Fix minor problems in book/page_creation.rst (fabschurt)
 * `#5647 <https://github.com/symfony/symfony-docs/pull/5647>`_ don't ignore the _exts directory anymore (xabbuh)
+* `#5587 <https://github.com/symfony/symfony-docs/pull/5587>`_ [2.6] Don't use deprecated features (WouterJ)
 * `#5637 <https://github.com/symfony/symfony-docs/pull/5637>`_ Add QueryBuilder vs DQL section (bocharsky-bw)
 * `#5645 <https://github.com/symfony/symfony-docs/pull/5645>`_ Updated Constraint reference with best practices (WouterJ)
 * `#5646 <https://github.com/symfony/symfony-docs/pull/5646>`_ Moved comment to the right place (mickaelandrieu)
@@ -55,10 +57,12 @@ Minor Documentation Changes
 * `#5617 <https://github.com/symfony/symfony-docs/pull/5617>`_ Add Body tag to see the web debug toolbar (rmed19)
 * `#5594 <https://github.com/symfony/symfony-docs/pull/5594>`_ Missing --no-interaction flag? (alexwybraniec)
 * `#5613 <https://github.com/symfony/symfony-docs/pull/5613>`_ Remove unneeded backtick (fabschurt)
+* `#5622 <https://github.com/symfony/symfony-docs/pull/5622>`_ typo fix in pre authenticated (Maxime Douailin)
 * `#5624 <https://github.com/symfony/symfony-docs/pull/5624>`_ the_architecture: Fix syntax error (kainjow)
 * `#5609 <https://github.com/symfony/symfony-docs/pull/5609>`_ Add a missing backtick (fabschurt)
 * `#5312 <https://github.com/symfony/symfony-docs/pull/5312>`_ Some fixes for bundle best practices (WouterJ)
 * `#5601 <https://github.com/symfony/symfony-docs/pull/5601>`_ Update lazy_services.rst (baziak3)
+* `#5591 <https://github.com/symfony/symfony-docs/pull/5591>`_ Update templating.rst: lint:twig instead of twig:lint in 2.7 (alexwybraniec)
 
 
 July, 2015
