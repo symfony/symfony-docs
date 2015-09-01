@@ -13,6 +13,54 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+August, 2015
+------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#5480 <https://github.com/symfony/symfony-docs/pull/5480>`_ Added page "Community Reviews" (webmozart)
+* `#5595 <https://github.com/symfony/symfony-docs/pull/5595>`_ Improve humanize filter documentation (bocharsky-bw)
+* `#5319 <https://github.com/symfony/symfony-docs/pull/5319>`_ [Console] Command Lifecycle explications (94noni)
+* `#5394 <https://github.com/symfony/symfony-docs/pull/5394>`_ Fix Major upgrade article for 2.7.1 changes (WouterJ)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5589 <https://github.com/symfony/symfony-docs/pull/5589>`_ [Cookbook][Session] fix default expiry field name (xabbuh)
+* `#5608 <https://github.com/symfony/symfony-docs/pull/5608>`_ updated validation.rst (issei-m)
+* `#5449 <https://github.com/symfony/symfony-docs/pull/5449>`_ Ensure that the entity is updated. (yceruto)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#5553 <https://github.com/symfony/symfony-docs/pull/5553>`_ Fix all broken links/permanent redirects/removed anchors (WouterJ)
+* `#5650 <https://github.com/symfony/symfony-docs/pull/5650>`_ [RFR] fixing typo and removing duplicated lines in Config component doc  (salahm)
+* `#5635 <https://github.com/symfony/symfony-docs/pull/5635>`_ Fix minor problems in book/page_creation.rst (fabschurt)
+* `#5647 <https://github.com/symfony/symfony-docs/pull/5647>`_ don't ignore the _exts directory anymore (xabbuh)
+* `#5637 <https://github.com/symfony/symfony-docs/pull/5637>`_ Add QueryBuilder vs DQL section (bocharsky-bw)
+* `#5645 <https://github.com/symfony/symfony-docs/pull/5645>`_ Updated Constraint reference with best practices (WouterJ)
+* `#5646 <https://github.com/symfony/symfony-docs/pull/5646>`_ Moved comment to the right place (mickaelandrieu)
+* `#5649 <https://github.com/symfony/symfony-docs/pull/5649>`_ [RFR] Fixing typo in Symfony version for ButtonType (salahm)
+* `#5606 <https://github.com/symfony/symfony-docs/pull/5606>`_ Use symfony.com theme on Platform.sh builds (WouterJ)
+* `#5644 <https://github.com/symfony/symfony-docs/pull/5644>`_ Update page_creation.rst (jeromenadaud)
+* `#5593 <https://github.com/symfony/symfony-docs/pull/5593>`_ Updated the profiler matchers article (javiereguiluz)
+* `#5522 <https://github.com/symfony/symfony-docs/pull/5522>`_ [create_framework] Add missing extract() 2nd arg (kenjis)
+* `#5597 <https://github.com/symfony/symfony-docs/pull/5597>`_ [CreateFramework] don't override existing variables (xabbuh)
+* `#5628 <https://github.com/symfony/symfony-docs/pull/5628>`_ Updated the installation chapter (javiereguiluz)
+* `#5638 <https://github.com/symfony/symfony-docs/pull/5638>`_ Update page_creation.rst (jeromenadaud)
+* `#5636 <https://github.com/symfony/symfony-docs/pull/5636>`_ Fixed typo in web-assets.rst (nielsvermaut)
+* `#5633 <https://github.com/symfony/symfony-docs/pull/5633>`_ Upgrade Platform.sh configuration snippet. (GuGuss)
+* `#5620 <https://github.com/symfony/symfony-docs/pull/5620>`_ Changed the recommendation about the LICENSE file for third-party bundles (javiereguiluz)
+* `#5617 <https://github.com/symfony/symfony-docs/pull/5617>`_ Add Body tag to see the web debug toolbar (rmed19)
+* `#5594 <https://github.com/symfony/symfony-docs/pull/5594>`_ Missing --no-interaction flag? (alexwybraniec)
+* `#5613 <https://github.com/symfony/symfony-docs/pull/5613>`_ Remove unneeded backtick (fabschurt)
+* `#5624 <https://github.com/symfony/symfony-docs/pull/5624>`_ the_architecture: Fix syntax error (kainjow)
+* `#5609 <https://github.com/symfony/symfony-docs/pull/5609>`_ Add a missing backtick (fabschurt)
+* `#5312 <https://github.com/symfony/symfony-docs/pull/5312>`_ Some fixes for bundle best practices (WouterJ)
+* `#5601 <https://github.com/symfony/symfony-docs/pull/5601>`_ Update lazy_services.rst (baziak3)
+
+
 July, 2015
 ----------
 
