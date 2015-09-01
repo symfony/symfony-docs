@@ -38,6 +38,7 @@ Minor Documentation Changes
 * `#5553 <https://github.com/symfony/symfony-docs/pull/5553>`_ Fix all broken links/permanent redirects/removed anchors (WouterJ)
 * `#5650 <https://github.com/symfony/symfony-docs/pull/5650>`_ [RFR] fixing typo and removing duplicated lines in Config component doc  (salahm)
 * `#5635 <https://github.com/symfony/symfony-docs/pull/5635>`_ Fix minor problems in book/page_creation.rst (fabschurt)
+* `#5579 <https://github.com/symfony/symfony-docs/pull/5579>`_ [3.0] Remove mentions of Symfony1 (WouterJ)
 * `#5647 <https://github.com/symfony/symfony-docs/pull/5647>`_ don't ignore the _exts directory anymore (xabbuh)
 * `#5587 <https://github.com/symfony/symfony-docs/pull/5587>`_ [2.6] Don't use deprecated features (WouterJ)
 * `#5637 <https://github.com/symfony/symfony-docs/pull/5637>`_ Add QueryBuilder vs DQL section (bocharsky-bw)
