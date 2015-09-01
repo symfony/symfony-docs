@@ -142,7 +142,8 @@ method is not defined, an argument has no matching attribute, ...).
     With the great flexibility of the default controller resolver, you might
     wonder why someone would want to create another one (why would there be an
     interface if not?). Two examples: in Symfony, ``getController()`` is
-    enhanced to support `controllers as services`_; and in
+    enhanced to support
+    :doc:`controllers as services </cookbook/controller/service>`; and in
     `FrameworkExtraBundle`_, ``getArguments()`` is enhanced to support
     parameter converters, where request attributes are converted to objects
     automatically.

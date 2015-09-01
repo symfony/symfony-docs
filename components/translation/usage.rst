@@ -369,9 +369,6 @@ use for translation::
         'fr_FR'
     );
 
-.. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
-.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
-
 Retrieving the Message Catalogue
 --------------------------------
 
@@ -392,3 +389,6 @@ The ``$messages`` variable will have the following structure::
             'Value is too long' => 'Valeur est trop long',
         ),
     );
+
+.. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
+.. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals

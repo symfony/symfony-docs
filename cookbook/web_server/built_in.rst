@@ -117,4 +117,4 @@ when the web server listens to another IP address or to another port:
     $ php app/console server:stop 192.168.0.1:8080
 
 .. _`built-in web server`: http://www.php.net/manual/en/features.commandline.webserver.php
-.. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-401
+.. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-411

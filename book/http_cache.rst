@@ -627,7 +627,7 @@ doing so much work.
 
     Symfony also supports weak ETags by passing ``true`` as the second
     argument to the
-    :method:`Symfony\\Component\\HttpFoundation\\Response::setETag` method.
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
 
 .. index::
    single: Cache; Last-Modified header
@@ -1244,7 +1244,7 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/cache/varnish`
 
-.. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
+.. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy

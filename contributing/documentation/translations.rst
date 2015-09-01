@@ -16,9 +16,6 @@ Contributing
 First, become familiar with the :doc:`markup language </contributing/documentation/format>`
 used by the documentation.
 
-Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
-there.
-
 Finally, find the *master* repository for the language you want to contribute
 for. Here is the list of the official *master* repositories:
 
@@ -39,7 +36,6 @@ Joining the Translation Team
 If you want to help translating some documents for your language or fix some
 bugs, consider joining us; it's a very easy process:
 
-* Introduce yourself on the `Symfony docs mailing-list`_;
 * *(optional)* Ask which documents you can work on;
 * Fork the *master* repository for your language (click the "Fork" button on
   the GitHub page);
@@ -59,8 +55,8 @@ Adding a new Language
 This section gives some guidelines for starting the translation of the
 Symfony documentation for a new language.
 
-As starting a translation is a lot of work, talk about your plan on the
-`Symfony docs mailing-list`_ and try to find motivated people willing to help.
+As starting a translation is a lot of work,  try to find motivated people
+willing to help.
 
 When the team is ready, nominate a team manager; they will be responsible for
 the *master* repository.
@@ -89,4 +85,3 @@ repository and apply changes to the translated documents as soon as possible.
     repositories as obsolete documentation is dangerous.
 
 .. _`an ongoing discussion`: https://github.com/symfony/symfony-docs/issues/4078
-.. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs
