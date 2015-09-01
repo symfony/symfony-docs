@@ -368,4 +368,4 @@ instance, to output something in a JavaScript script, use the ``js`` context::
 
     <?php echo $view->escape($var, 'js') ?>
 
-.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view`
+.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view

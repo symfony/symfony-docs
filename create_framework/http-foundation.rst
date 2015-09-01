@@ -78,8 +78,8 @@ unit test for the above code::
 .. note::
 
     If our application were just slightly bigger, we would have been able to
-    find even more problems. If you are curious about them, read the `Symfony
-    versus Flat PHP`_ chapter of the Symfony documentation.
+    find even more problems. If you are curious about them, read the
+    :doc:`/book/from_flat_php_to_symfony2` chapter of the book.
 
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
@@ -301,13 +301,12 @@ component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 5`_, `Laravel`_, `Silex`_, and `more`_).
 
-.. _`Twig`: http://twig.sensiolabs.com/
-.. _`Symfony versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
+.. _`Twig`: http://twig.sensiolabs.org/
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
 .. _`audited`: http://symfony.com/blog/symfony2-security-audit
 .. _`Symfony`: http://symfony.com/
-.. _`Drupal 8`: http://drupal.org/
-.. _`phpBB 4`: http://www.phpbb.com/
+.. _`Drupal 8`: https://drupal.org/
+.. _`phpBB 4`: https://www.phpbb.com/
 .. _`ezPublish 5`: http://ez.no/
 .. _`Laravel`: http://laravel.com/
 .. _`Silex`: http://silex.sensiolabs.org/

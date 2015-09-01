@@ -226,9 +226,6 @@ has a simple API
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
     Returns true if the attribute exists.
 
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::keys`
-    Returns an array of stored attribute keys.
-
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
     Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
 

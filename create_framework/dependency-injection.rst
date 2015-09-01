@@ -239,5 +239,5 @@ micro-framework, and especially its `Application`_ class.
 Have fun!
 
 .. _`Pimple`: https://github.com/fabpot/Pimple
-.. _`Silex`: https://silex.sensiolabs.org/
+.. _`Silex`: http://silex.sensiolabs.org/
 .. _`Application`: https://github.com/fabpot/Silex/blob/master/src/Silex/Application.php

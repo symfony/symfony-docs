@@ -180,5 +180,5 @@ After this, you have protected your login form against CSRF attacks.
                 ),
             ));
 
-.. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`Forging Login Requests`: http://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
+.. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`Forging Login Requests`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests

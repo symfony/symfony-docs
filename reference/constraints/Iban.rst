@@ -105,4 +105,4 @@ The default message supplied when the value does not pass the Iban check.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`International Bank Account Number (IBAN)`: http://en.wikipedia.org/wiki/International_Bank_Account_Number
+.. _`International Bank Account Number (IBAN)`: https://en.wikipedia.org/wiki/International_Bank_Account_Number

@@ -362,7 +362,7 @@ see the :ref:`book-doctrine-field-types` section.
     `Reserved SQL keywords documentation`_ on how to properly escape these
     names. Alternatively, if you're free to choose your database schema,
     simply map to a different table name or column name. See Doctrine's
-    `Persistent classes`_ and `Property Mapping`_ documentation.
+    `Creating Classes for the Database`_ and `Property Mapping`_ documentation.
 
 .. note::
 
@@ -1421,7 +1421,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 * `DoctrineMongoDBBundle`_
 
 .. _`Doctrine`: http://www.doctrine-project.org/
-.. _`MongoDB`: http://www.mongodb.org/
+.. _`MongoDB`: https://www.mongodb.org/
 .. _`Basic Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
@@ -1430,7 +1430,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
 .. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
-.. _`Persistent classes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes
+.. _`Creating Classes for the Database`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#creating-classes-for-the-database
 .. _`DoctrineMongoDBBundle`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
 .. _`migrations`: https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
 .. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html

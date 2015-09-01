@@ -263,4 +263,4 @@ easily testing against multiple sets of data.
 You can also pass another argument, such as a boolean if the form has to
 be synchronized with the given set of data or not etc.
 
-.. _`data providers`: http://www.phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers
+.. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers

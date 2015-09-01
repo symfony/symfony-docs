@@ -63,7 +63,7 @@ factory.
 
 .. tip::
 
-    For a working example, see https://github.com/bschussek/standalone-forms
+    For a working example, see https://github.com/webmozart/standalone-forms
 
 Request Handling
 ~~~~~~~~~~~~~~~~
@@ -700,5 +700,5 @@ method to access the list of errors. It returns a
     on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
-.. _Twig:      http://twig.sensiolabs.org
+.. _Twig: http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html

@@ -21,16 +21,16 @@ The mock storage drivers do not read or write the system globals
 ``session_id()`` or ``session_name()``. Methods are provided to simulate this if
 required:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getId`: Gets the
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface::getId`: Gets the
   session ID.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::setId`: Sets the
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface::setId`: Sets the
   session ID.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getName`: Gets the
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface::getName`: Gets the
   session name.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::setName`: Sets the
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface::setName`: Sets the
   session name.
 
 Unit Testing

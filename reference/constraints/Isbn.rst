@@ -150,4 +150,4 @@ value does not pass any of the ISBN checks.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`International Standard Book Number (ISBN)`: http://en.wikipedia.org/wiki/Isbn
+.. _`International Standard Book Number (ISBN)`: https://en.wikipedia.org/wiki/Isbn

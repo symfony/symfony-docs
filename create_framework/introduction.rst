@@ -121,6 +121,5 @@ In the next chapter, we are going to introduce the HttpFoundation Component
 and see what it brings us.
 
 .. _`Symfony`: http://symfony.com/
-.. _`documentation`: http://symfony.com/doc
 .. _`Silex`: http://silex.sensiolabs.org/
 .. _`Composer`: http://packagist.org/about-composer
