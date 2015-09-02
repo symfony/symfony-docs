@@ -5,18 +5,18 @@
 How to Create Event Listeners and Subscribers
 =============================================
 
-Symfony has various events and hooks that can be used to perform custom
-actions in your application. Those events are triggered by the HttpKernel
-component and they are defined in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
-class.
+During the execution of a Symfony application, lots of event notifications are
+triggered. Your application can listen to these notifications and respond to
+them by executing any piece of code.
 
-To hook into an event and execute your own custom logic, you have to create
-a service that listens to that event. As explained in this article, you can do
-that in two different ways: creating an event listener or an event subscriber.
+Internal events provided by Symfony itself are defined in the
+:class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Third-party bundles
+and libraries also trigger lots of events and your own application can trigger
+:doc:`custom events </components/event_dispatcher/index>`.
 
-The examples of this article only use the ``KernelEvents::EXCEPTION`` event for
-consistency purposes. In your own application, you can use any event and even mix
-several of them in the same subscriber.
+All the examples shown in this article use the same ``KernelEvents::EXCEPTION``
+event for consistency purposes. In your own application, you can use any event
+and even mix several of them in the same subscriber.
 
 Creating an Event Listener
 --------------------------
@@ -107,8 +107,8 @@ using a special "tag":
     ``0`` and it controls the order in which listeners are executed (the highest
     the priority, the earlier a listener is executed). This is useful when you
     need to guarantee that one listener is executed before another. The priorities
-    of the internal Symfony events range from ``-255`` to ``255`` but your own
-    events can use any positive or negative integer.
+    of the internal Symfony listeners usually range from ``-255`` to ``255`` but
+    your own listeners can use any positive or negative integer.
 
 Creating an Event Subscriber
 ----------------------------
@@ -182,14 +182,15 @@ is an event subscriber:
 
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services">
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.exception_subscriber"
                     class="AppBundle\Subscriber\ExceptionSubscriber">
 
                     <tag name="kernel.event_subscriber"/>
-
                 </service>
             </services>
         </container>
