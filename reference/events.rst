@@ -217,7 +217,7 @@ and set a new ``Exception`` object, or do nothing::
 
         $response = new Response(
             'Error',
-            404 // this status code will be ignored,
+            404, // this status code will be ignored
             array(
                 'X-Status-Code' => 200 // this status code will actually be sent to the client
             )
