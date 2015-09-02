@@ -131,18 +131,18 @@ of database calls, HTML tags and other PHP code in the same script. To achieve
 this goal with Symfony, you'll first need to learn a few fundamental concepts.
 
 When developing a Symfony application, your responsibility as a developer
-is to write the code that maps the user's *request* (e.g.  ``http://localhost:8000/``)
+is to write the code that maps the user's *request* (e.g. ``http://localhost:8000/``)
 to the *resource* associated with it (the ``Homepage`` HTML page).
 
 The code to execute is defined in **actions** and **controllers**. The mapping
 between user's requests and that code is defined via the **routing** configuration.
 And the contents displayed in the browser are usually rendered using **templates**.
 
-When you browsed ``http://localhost:8000/`` earlier, Symfony executed the controller
-defined in the ``src/AppBundle/Controller/DefaultController.php`` file and rendered
-the ``app/Resources/views/default/index.html.twig`` template. In the following
-sections you'll learn in detail the inner workings of Symfony controllers, routes
-and templates.
+When you browsed ``http://localhost:8000/app/example`` earlier, Symfony executed
+the controller defined in the ``src/AppBundle/Controller/DefaultController.php``
+file and rendered the ``app/Resources/views/default/index.html.twig`` template.
+In the following sections you'll learn in detail the inner workings of Symfony
+controllers, routes and templates.
 
 Actions and Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,7 +155,6 @@ because that will be explained in the next section)::
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
     {
@@ -198,7 +197,6 @@ at the three lines of code above the ``indexAction`` method::
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
     {
@@ -260,7 +258,7 @@ you'll see the following code:
     {% block body %}
         <h1>Welcome to Symfony</h1>
 
-        ...
+        {# ... #}
     {% endblock %}
 
 This template is created with `Twig`_, a template engine created for modern PHP
