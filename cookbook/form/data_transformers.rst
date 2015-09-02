@@ -161,7 +161,7 @@ to and from the issue number and the ``Issue`` object::
     namespace AppBundle\Form\DataTransformer;
 
     use AppBundle\Entity\Issue;
-    use Doctrine\Common\Persistence\EntityManager;
+    use Doctrine\ORM\EntityManager;
     use Symfony\Component\Form\DataTransformerInterface;
     use Symfony\Component\Form\Exception\TransformationFailedException;
 
