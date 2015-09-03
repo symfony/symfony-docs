@@ -169,6 +169,10 @@ Add type hint to an argument                    No
 Remove type hint of an argument                 No
 Change argument type                            No
 Change return type                              No
+**Constants**
+Add constant                                    Yes
+Remove constant                                 No
+Change value of a constant                      Yes [1]_ [5]_
 ==============================================  ==============
 
 Changing Classes
@@ -253,6 +257,10 @@ Change return type                                  Yes
 **Static Methods**
 Turn non static into static                         No
 Turn static into non static                         No
+**Constants**
+Add constant                                        Yes
+Remove constant                                     No
+Change value of a constant                          Yes [1]_ [5]_
 ==================================================  ==============
 
 .. [1] Should be avoided. When done, this change must be documented in the
@@ -266,6 +274,13 @@ Turn static into non static                         No
 
 .. [4] When changing the parent class, the original parent class must remain an
        ancestor of the class.
+
+.. [5] The value of a constant may only be changed when the constants aren't
+       used in configuration (e.g. Yaml and XML files), as these do not support
+       constants and have to hardcode the value. For instance, event name
+       constants can't change the value without introducing a BC break.
+       Additionally, if a constant will likely be used in objects that are
+       serialized, the value of a constant should not be changed.
 
 .. _Semantic Versioning: http://semver.org/
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
