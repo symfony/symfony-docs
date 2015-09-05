@@ -26,7 +26,7 @@ of database calls, HTML tags and other PHP code in the same script. To achieve
 this goal with Symfony, you'll first need to learn a few fundamental concepts.
 
 When developing a Symfony application, your responsibility as a developer
-is to write the code that maps the user's *request* (e.g.  ``http://localhost:8000/app/example``)
+is to write the code that maps the user's *request* (e.g. ``http://localhost:8000/``)
 to the *resource* associated with it (the ``Homepage`` HTML page).
 
 The code to execute is defined in **actions** and **controllers**. The mapping
@@ -54,7 +54,7 @@ because that will be explained in the next section)::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/app/example", name="homepage")
+         * @Route("/", name="homepage")
          */
         public function indexAction()
         {
@@ -96,7 +96,7 @@ at the three lines of code above the ``indexAction`` method::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/app/example", name="homepage")
+         * @Route("/", name="homepage")
          */
         public function indexAction()
         {
@@ -112,15 +112,14 @@ start with ``/**``, whereas regular PHP comments start with ``/*``.
 The first value of ``@Route()`` defines the URL that will trigger the execution
 of the action. As you don't have to add the host of your application to
 the URL (e.g. ```http://example.com``), these URLs are always relative and
-they are usually called *paths*. In this case, the ``/app/example`` path
-refers to the application homepage. The second value of ``@Route()`` (e.g.
-``name="homepage"``) is optional and sets the name of this route. For now
-this name is not needed, but later it'll be useful for linking pages.
+they are usually called *paths*. In this case, the ``/`` path refers to the
+application homepage. The second value of ``@Route()`` (e.g. ``name="homepage"``)
+is optional and sets the name of this route. For now this name is not needed,
+but later it'll be useful for linking pages.
 
-Considering all this, the ``@Route("/app/example", name="homepage")`` annotation
-creates a new route called ``homepage`` which makes Symfony execute the
-``index`` action of the ``Default`` controller when the user browses the
-``/app/example`` path of the application.
+Considering all this, the ``@Route("/", name="homepage")`` annotation creates a
+new route called ``homepage`` which makes Symfony execute the ``index`` action
+of the ``Default`` controller when the user browses the ``/`` path of the application.
 
 .. tip::
 
@@ -152,13 +151,14 @@ you'll see the following code:
     {% extends 'base.html.twig' %}
 
     {% block body %}
-        Homepage.
+        <h1>Welcome to Symfony</h1>
+
+        {# ... #}
     {% endblock %}
 
-This template is created with `Twig`_, a new template engine created for
-modern PHP applications. The
-:doc:`second part of this tutorial </quick_tour/the_view>` will introduce
-how templates work in Symfony.
+This template is created with `Twig`_, a template engine created for modern PHP
+applications. The :doc:`second part of this tutorial </quick_tour/the_view>`
+explains how templates work in Symfony.
 
 .. _quick-tour-big-picture-environments:
 
