@@ -173,7 +173,8 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
        $ git fetch origin pull/15723/head:pr15723
        $ git checkout pr15723
 
-   Now you can test the project against the code in the PR.
+   Now you can :doc:`test the project </contributing/code/tests>` against
+   the code in the PR.
 
 #. **Update the PR Status**
 
