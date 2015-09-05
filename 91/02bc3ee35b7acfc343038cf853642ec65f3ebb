@@ -1,0 +1,149 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-21T08:04:28Z
+
+-1 on adding `$helper = ...` in all code-blocks, the first code blocks show the helper and all other code blocks include `// ...`, indicating that this is an extension of the previous code block.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-21T08:13:40Z
+
+To be honest, I find this article great and "awful" at the same time. If you are using the Console component inside a Symfony application, this article is great. You can copy+paste the examples and everything works perfectly.
+
+However, if you are using this outside Symfony, this article is "awful", because you copy/paste the examples and nothing works. Sometimes the `$this->getHelper()` instruction is missing, other times you realize that `$this->getHelper()` doesn't work at all and you need `$helper = new ...` and my favorite: `$input` and `$output` are "magic" variables which are available nowhere and they don't explain you what to do to create them outside Symfony.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-21T08:18:56Z
+
+What do you mean with "outside Symfony"? When using Console component standalone, things still work as documented.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-21T08:25:52Z
+
+Imagine that I want to make a Symfony Console command to ask information to the user. I read this article and I copy/paste the following:
+
+![ask_information](https://cloud.githubusercontent.com/assets/73419/9404316/e2da0c14-47ee-11e5-8642-c95a82a178b8.png)
+
+Nothing works :sob:
+
+This is the real code that I must use:
+
+```php
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+$helper = new QuestionHelper();
+$question = new Question('Enter the name of the bundle: ', '');
+$bundle = $helper->ask(new ArgvInput(), new ConsoleOutput(), $question);
+```
+
+Please note that I'm trying to use Symfony Console as a component in my non-Symfony application.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-21T08:38:22Z
+
+Yeah, what we actually need is to wrap at least the first example in a class + execute() method and the following examples in an execute() method.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-21T08:39:10Z
+
+On the other hand, when you're trying to use symfony console standalone, you first read the introduction and you'll learn about the execute method. So it's quite obvious that the code shown here shouldn't live somewhere random in a php script
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-21T08:48:50Z
+
+Wouter, when someone uses Symfony Console component, they Google for "symfony console ask user" or something like that and they arrive at this page. People don't follow the logical path, they just use Google or StackOverflow.
+
+-----
+
+What would you think about completing the Symfony Components docs as follows:
+
+![sf_framework](https://cloud.githubusercontent.com/assets/73419/9404715/1be24c62-47f2-11e5-841f-d765a927b7cd.png)
+
+![sf_component](https://cloud.githubusercontent.com/assets/73419/9404717/1e73f5a2-47f2-11e5-9be2-b62dedafc427.png)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-21T11:55:26Z
+
+:+1: nice idea @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-21T12:01:44Z
+
+If you use Symfony console standalone, you'll end up doing exact the same as using Symfony Console inside a symfony full-stack. the only difference is that you have to create your own front controller and have to register commands yourself doing `$app->add(new XyzCommand())`.
+
+The only time you'll end up having to instantiate ArgvInput and ConsoleOutput yourself is when using the console component beyond normal usage, not using the Command class or the simple callback functions.
+
+If you end up using it that way, which is btw not documented at all, you must have enough experience with the Console component to find out what `$input` and `$output` mean.
+
+---
+
+Now, what I propose is to emphasize the Command usage. In the first example on the page, show the full class definition:
+```php
+// ...
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+
+class YourCommand extends Command
+{
+    // ...
+
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Continue with this action?', false);
+
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
+    }
+}
+```
+
+And in the other examples, only add the method definition:
+```php
+use Symfony\Component\Console\Question\Question;
+
+// ...
+public function execute(InputInterface $input, OutputInterface $output)
+{
+    // ...
+    $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
+
+    $bundle = $helper->ask($input, $output, $question);
+}
+```
+
+This gives enough context to the code example to avoid confusion.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-21T12:59:39Z
+
+@WouterJ I think you are right. The use case that I exposed was too advanced. You always use this code inside a console command, being a Symfony app or not.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-02T14:21:31Z
+
+I've made the changes proposed by @WouterJ. This is ready for the final ewview. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-02T20:32:00Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-09-05T09:27:57Z
+
+:+1:
