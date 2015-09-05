@@ -23,8 +23,8 @@ Creating an Event Listener
 
 The most common way to listen to an event is to register an **event listener**::
 
-    // src/AppBundle/Listener/ExceptionListener.php
-    namespace AppBundle\Listener;
+    // src/AppBundle/EventListener/ExceptionListener.php
+    namespace AppBundle\EventListener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -76,23 +76,33 @@ using a special "tag":
 
         # app/config/services.yml
         services:
-            kernel.listener.your_listener_name:
-                class: AppBundle\Listener\ExceptionListener
+            app.exception_listener:
+                class: AppBundle\EventListener\ExceptionListener
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="kernel.listener.your_listener_name" class="AppBundle\Listener\ExceptionListener">
-            <tag name="kernel.event_listener" event="kernel.exception" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.exception_listener"
+                    class="AppBundle\EventListener\ExceptionListener">
+
+                    <tag name="kernel.event_listener" event="kernel.exception" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
         $container
-            ->register('kernel.listener.your_listener_name', 'AppBundle\Listener\ExceptionListener')
+            ->register('app.exception_listener', 'AppBundle\EventListener\ExceptionListener')
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
 
@@ -126,8 +136,8 @@ about event subscribers, read :doc:`/components/event_dispatcher/introduction`.
 The following example shows an event subscriber that defines several methods which
 listen to the same ``kernel.exception`` event::
 
-    // src/AppBundle/Subscriber/ExceptionSubscriber.php
-    namespace AppBundle\Subscriber;
+    // src/AppBundle/EventSubscriber/ExceptionSubscriber.php
+    namespace AppBundle\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Response;
@@ -164,8 +174,8 @@ listen to the same ``kernel.exception`` event::
         }
     }
 
-Now, you just need to register the class as a service and notify Symfony that it
-is an event subscriber:
+Now, you just need to register the class as a service and add the
+``kernel.event_subscriber`` tag to tell Symfony that this is an event subscriber:
 
 .. configuration-block::
 
@@ -174,7 +184,7 @@ is an event subscriber:
         # app/config/services.yml
         services:
             app.exception_subscriber:
-                class: AppBundle\Subscriber\ExceptionSubscriber
+                class: AppBundle\EventSubscriber\ExceptionSubscriber
                 tags:
                     - { name: kernel.event_subscriber }
 
@@ -188,7 +198,7 @@ is an event subscriber:
 
             <services>
                 <service id="app.exception_subscriber"
-                    class="AppBundle\Subscriber\ExceptionSubscriber">
+                    class="AppBundle\EventSubscriber\ExceptionSubscriber">
 
                     <tag name="kernel.event_subscriber"/>
                 </service>
@@ -201,7 +211,7 @@ is an event subscriber:
         $container
             ->register(
                 'app.exception_subscriber',
-                'AppBundle\Subscriber\ExceptionSubscriber'
+                'AppBundle\EventSubscriber\ExceptionSubscriber'
             )
             ->addTag('kernel.event_subscriber')
         ;
@@ -214,8 +224,8 @@ sub-requests), which is why when working with the ``KernelEvents::REQUEST``
 event, you might need to check the type of the request. This can be easily
 done as follow::
 
-    // src/AppBundle/Listener/RequestListener.php
-    namespace AppBundle\Listener;
+    // src/AppBundle/EventListener/RequestListener.php
+    namespace AppBundle\EventListener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\HttpKernel;
