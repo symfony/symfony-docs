@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-09T17:55:23Z
+
+Good catch @carlosreig. However, I think we should do better than hardcoding paths in the `vendor` directory.
+
+What about using reflection here to determine the path to the `TwigEngine` class which reside in the top level directory of the TwigBridge?
+
+---------------------------------------------------------------------------
+
+by carlosreig at 2015-07-10T13:21:26Z
+
+Cool! Good idea. I will work on it.
+
+---------------------------------------------------------------------------
+
+by carlosreig at 2015-07-13T09:43:55Z
+
+Changed the hardcoded path by a ReflectionClass of the AppVariable class located in the TwigBridge library.
+Used AppVariable instead of TwigEngine because TwigEngine has dependencies on the Templating component that is not needed if using the Form component outside Symfony framework.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-29T16:02:47Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by carlosreig at 2015-08-31T05:47:38Z
+
+Done! The spaces around the parameter are removed.
