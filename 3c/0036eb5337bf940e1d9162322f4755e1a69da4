@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-02T10:19:53Z
+
+@JhonnyL thanks for reporting this issue. Although your solution works, this other solution is also possible:
+
+```php
+use Doctrine\Common\Persistence\ObjectManager;
+```
+
+And of course, change the typehint from `EntityManager` to `ObjectManager` in the method. What do you think?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-09-02T10:43:21Z
+
+and I think the current buggy code comes from a failed attempt at migrating from the ORM-specific typehint to the common interface.
+
+---------------------------------------------------------------------------
+
+by JhonnyL at 2015-09-02T10:48:00Z
+
+It was changed from ```ObjectManager``` to ```EntityManager``` in https://github.com/symfony/symfony-docs/pull/5456.
+
+---------------------------------------------------------------------------
+
+by JhonnyL at 2015-09-02T11:56:32Z
+
+@javiereguiluz @stof It was changed to ```EntityManger``` in a previous commit cause of inconsistency with the variable name.
+
+Typehinting the ```ObjectManger``` is probably better, but then I should also change the variable name to ```$manager```. What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-02T14:02:21Z
+
+@JhonnyL to me it makes sense to rename it to `$manager`
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-05T08:22:59Z
+
+:+1:
