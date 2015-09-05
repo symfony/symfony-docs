@@ -161,17 +161,17 @@ to and from the issue number and the ``Issue`` object::
     namespace AppBundle\Form\DataTransformer;
 
     use AppBundle\Entity\Issue;
-    use Doctrine\Common\Persistence\EntityManager;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\DataTransformerInterface;
     use Symfony\Component\Form\Exception\TransformationFailedException;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        private $entityManager;
+        private $manager;
 
-        public function __construct(EntityManager $entityManager)
+        public function __construct(ObjectManager $manager)
         {
-            $this->entityManager = $entityManager;
+            $this->manager = $manager;
         }
 
         /**
@@ -203,7 +203,7 @@ to and from the issue number and the ``Issue`` object::
                 return;
             }
 
-            $issue = $this->entityManager
+            $issue = $this->manager
                 ->getRepository('AppBundle:Issue')
                 // query for the issue with this id
                 ->find($issueNumber)
@@ -253,16 +253,16 @@ to be passed in. Then, you can easily create and add the transformer::
     namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\Common\Persistence\EntityManager;
+    use Doctrine\Common\Persistence\ObjectManager;
 
     // ...
     class TaskType extends AbstractType
     {
-        private $entityManager;
+        private $manager;
 
-        public function __construct(EntityManager $entityManager)
+        public function __construct(ObjectManager $manager)
         {
-            $this->entityManager = $entityManager;
+            $this->manager = $manager;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -277,7 +277,7 @@ to be passed in. Then, you can easily create and add the transformer::
             // ...
 
             $builder->get('issue')
-                ->addModelTransformer(new IssueToNumberTransformer($this->entityManager));
+                ->addModelTransformer(new IssueToNumberTransformer($this->manager));
         }
 
         // ...
@@ -286,8 +286,8 @@ to be passed in. Then, you can easily create and add the transformer::
 Now, when you create your ``TaskType``, you'll need to pass in the entity manager::
 
     // e.g. in a controller somewhere
-    $entityManager = $this->getDoctrine()->getManager();
-    $form = $this->createForm(new TaskType($entityManager), $task);
+    $manager = $this->getDoctrine()->getManager();
+    $form = $this->createForm(new TaskType($manager), $task);
 
     // ...
 
@@ -331,23 +331,23 @@ First, create the custom field type class::
     namespace AppBundle\Form;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\ORM\EntityManager;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class IssueSelectorType extends AbstractType
     {
-        private $entityManager;
+        private $manager;
 
-        public function __construct(EntityManager $entityManager)
+        public function __construct(ObjectManager $manager)
         {
-            $this->entityManager = $entityManager;
+            $this->manager = $manager;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $transformer = new IssueToNumberTransformer($this->entityManager);
+            $transformer = new IssueToNumberTransformer($this->manager);
             $builder->addModelTransformer($transformer);
         }
 

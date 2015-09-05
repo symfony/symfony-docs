@@ -651,6 +651,7 @@ header value::
     namespace AppBundle\Controller;
 
     // ...
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
     use AppBundle\Entity\Article;
 
@@ -665,6 +666,7 @@ header value::
 
             $date = $authorDate > $articleDate ? $authorDate : $articleDate;
 
+            $response = new Response();
             $response->setLastModified($date);
             // Set response as public. Otherwise it will be private by default.
             $response->setPublic();
