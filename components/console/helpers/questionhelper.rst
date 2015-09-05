@@ -13,7 +13,7 @@ helper set, which you can get by calling
 
 The Question Helper has a single method
 :method:`Symfony\\Component\\Console\\Command\\Command::ask` that needs an
-:class:`Symfony\\Component\\Console\\Output\\InputInterface` instance as the
+:class:`Symfony\\Component\\Console\\Input\\InputInterface` instance as the
 first argument, an :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance as the second argument and a
 :class:`Symfony\\Component\\Console\\Question\\Question` as last argument.
@@ -24,14 +24,24 @@ Asking the User for Confirmation
 Suppose you want to confirm an action before actually executing it. Add
 the following to your command::
 
-    use Symfony\Component\Console\Question\ConfirmationQuestion;
     // ...
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+    use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-    $helper = $this->getHelper('question');
-    $question = new ConfirmationQuestion('Continue with this action?', false);
+    class YourCommand extends Command
+    {
+        // ...
 
-    if (!$helper->ask($input, $output, $question)) {
-        return;
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            $helper = $this->getHelper('question');
+            $question = new ConfirmationQuestion('Continue with this action?', false);
+
+            if (!$helper->ask($input, $output, $question)) {
+                return;
+            }
+        }
     }
 
 In this case, the user will be asked "Continue with this action?". If the user
@@ -66,11 +76,15 @@ You can also ask a question with more than a simple yes/no answer. For instance,
 if you want to know a bundle name, you can add this to your command::
 
     use Symfony\Component\Console\Question\Question;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
-    $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-
-    $bundle = $helper->ask($input, $output, $question);
+        $bundle = $helper->ask($input, $output, $question);
+    }
 
 The user will be asked "Please enter the name of the bundle". They can type
 some name which will be returned by the
@@ -86,20 +100,24 @@ which makes sure that the user can only enter a valid string
 from a predefined list::
 
     use Symfony\Component\Console\Question\ChoiceQuestion;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'Please select your favorite color (defaults to red)',
+            array('red', 'blue', 'yellow'),
+            0
+        );
+        $question->setErrorMessage('Color %s is invalid.');
 
-    $helper = $this->getHelper('question');
-    $question = new ChoiceQuestion(
-        'Please select your favorite color (defaults to red)',
-        array('red', 'blue', 'yellow'),
-        0
-    );
-    $question->setErrorMessage('Color %s is invalid.');
+        $color = $helper->ask($input, $output, $question);
+        $output->writeln('You have just selected: '.$color);
 
-    $color = $helper->ask($input, $output, $question);
-    $output->writeln('You have just selected: '.$color);
-
-    // ... do something with the color
+        // ... do something with the color
+    }
 
 The option which should be selected by default is provided with the third
 argument of the constructor. The default is ``null``, which means that no
@@ -120,18 +138,22 @@ feature using comma separated values. This is disabled by default, to enable
 this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMultiselect`::
 
     use Symfony\Component\Console\Question\ChoiceQuestion;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'Please select your favorite colors (defaults to red and blue)',
+            array('red', 'blue', 'yellow'),
+            '0,1'
+        );
+        $question->setMultiselect(true);
 
-    $helper = $this->getHelper('question');
-    $question = new ChoiceQuestion(
-        'Please select your favorite colors (defaults to red and blue)',
-        array('red', 'blue', 'yellow'),
-        '0,1'
-    );
-    $question->setMultiselect(true);
-
-    $colors = $helper->ask($input, $output, $question);
-    $output->writeln('You have just selected: ' . implode(', ', $colors));
+        $colors = $helper->ask($input, $output, $question);
+        $output->writeln('You have just selected: ' . implode(', ', $colors));
+    }
 
 Now, when the user enters ``1,2``, the result will be:
 ``You have just selected: blue, yellow``.
@@ -146,13 +168,17 @@ You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
 
     use Symfony\Component\Console\Question\Question;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
+        $question = new Question('Please enter the name of a bundle', 'FooBundle');
+        $question->setAutocompleterValues($bundles);
 
-    $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
-    $question = new Question('Please enter the name of a bundle', 'FooBundle');
-    $question->setAutocompleterValues($bundles);
-
-    $name = $helper->ask($input, $output, $question);
+        $name = $helper->ask($input, $output, $question);
+    }
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,13 +187,17 @@ You can also ask a question and hide the response. This is particularly
 convenient for passwords::
 
     use Symfony\Component\Console\Question\Question;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $question = new Question('What is the database password?');
+        $question->setHidden(true);
+        $question->setHiddenFallback(false);
 
-    $question = new Question('What is the database password?');
-    $question->setHidden(true);
-    $question->setHiddenFallback(false);
-
-    $password = $helper->ask($input, $output, $question);
+        $password = $helper->ask($input, $output, $question);
+    }
 
 .. caution::
 
@@ -189,20 +219,24 @@ be suffixed with ``Bundle``. You can validate that by using the
 method::
 
     use Symfony\Component\Console\Question\Question;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
+        $question->setValidator(function ($answer) {
+            if ('Bundle' !== substr($answer, -6)) {
+                throw new \RuntimeException(
+                    'The name of the bundle should be suffixed with \'Bundle\''
+                );
+            }
+            return $answer;
+        });
+        $question->setMaxAttempts(2);
 
-    $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-    $question->setValidator(function ($answer) {
-        if ('Bundle' !== substr($answer, -6)) {
-            throw new \RuntimeException(
-                'The name of the bundle should be suffixed with \'Bundle\''
-            );
-        }
-        return $answer;
-    });
-    $question->setMaxAttempts(2);
-
-    $name = $helper->ask($input, $output, $question);
+        $name = $helper->ask($input, $output, $question);
+    }
 
 The ``$validator`` is a callback which handles the validation. It should
 throw an exception if there is something wrong. The exception message is displayed
@@ -222,23 +256,26 @@ Validating a Hidden Response
 You can also use a validator with a hidden question::
 
     use Symfony\Component\Console\Question\Question;
+
     // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
 
-    $helper = $this->getHelper('question');
+        $question = new Question('Please enter your password');
+        $question->setValidator(function ($value) {
+            if (trim($value) == '') {
+                throw new \Exception('The password can not be empty');
+            }
 
-    $question = new Question('Please enter your password');
-    $question->setValidator(function ($value) {
-        if (trim($value) == '') {
-            throw new \Exception('The password can not be empty');
-        }
+            return $value;
+        });
+        $question->setHidden(true);
+        $question->setMaxAttempts(20);
 
-        return $value;
-    });
-    $question->setHidden(true);
-    $question->setMaxAttempts(20);
-
-    $password = $helper->ask($input, $output, $question);
-
+        $password = $helper->ask($input, $output, $question);
+    }
 
 Testing a Command that Expects Input
 ------------------------------------
@@ -276,6 +313,6 @@ from the command line, you need to set the helper input stream::
     }
 
 By setting the input stream of the ``QuestionHelper``, you imitate what the
-console would do internally with all user input through the cli. This way
+console would do internally with all user input through the CLI. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.

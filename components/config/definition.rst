@@ -404,6 +404,47 @@ tree with ``append()``::
 This is also useful to help you avoid repeating yourself if you have sections
 of the config that are repeated in different places.
 
+The example results in the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        database:
+            connection:
+                driver:               ~ # Required
+                host:                 localhost
+                username:             ~
+                password:             ~
+                memory:               false
+                parameters:           # Required
+
+                    # Prototype
+                    name:
+                        value:                ~ # Required
+
+    .. code-block:: xml
+
+        <database>
+            <!-- driver: Required -->
+            <connection
+                driver=""
+                host="localhost"
+                username=""
+                password=""
+                memory="false"
+            >
+
+                <!-- prototype -->
+                <!-- value: Required -->
+                <parameters
+                    name="parameters name"
+                    value=""
+                />
+
+            </connection>
+        </database>
+
 .. _component-config-normalization:
 
 Normalization

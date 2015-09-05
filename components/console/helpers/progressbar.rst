@@ -48,13 +48,17 @@ you can also set the current progress by calling the
     Prior to version 2.6, the progress bar only works if your platform
     supports ANSI codes; on other platforms, no output is generated.
 
-.. versionadded:: 2.6
+.. tip::
+
     If your platform doesn't support ANSI codes, updates to the progress
     bar are added as new lines. To prevent the output from being flooded,
     adjust the
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
     accordingly. By default, when using a ``max``, the redraw frequency
     is set to *10%* of your ``max``.
+
+    .. versionadded:: 2.6
+        The ``setRedrawFrequency()`` method was introduced in Symfony 2.6.
 
 If you don't know the number of steps in advance, just omit the steps argument
 when creating the :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
