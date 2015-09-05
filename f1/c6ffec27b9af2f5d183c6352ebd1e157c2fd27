@@ -1,0 +1,87 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T14:24:01Z
+
+Shouldn't we also add an XML example? (we can help with creating the example if you need help)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-07-30T06:12:58Z
+
+Will do after holiday
+
+Greetings from turkey ;)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-10T11:39:24Z
+
+done @WouterJ
+
+btw. why is ```database```-key not used in the xml??
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-11T12:23:42Z
+
+done @WouterJ
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-12T12:48:55Z
+
+if i could do anything else, please let me know.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-17T20:41:52Z
+
+Is there a reason not to wrap the two code blocks in a configuration block?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-18T06:27:03Z
+
+i did this because of the different highlighting.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-18T07:29:57Z
+
+What do you mean with different highlighting? I mean we should not put both examples in one `code-block` directive, but we can wrap both code blocks in one configuration block like this:
+
+```rst
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- ... -->
+```
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-18T07:31:52Z
+
+oh nice, will have a look at it :+1:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-18T07:36:35Z
+
+updated @xabbuh
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-18T19:17:05Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-09-05T09:15:27Z
+
+:+1:
