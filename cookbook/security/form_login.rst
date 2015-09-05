@@ -229,7 +229,7 @@ redirect to the URL defined by some ``account`` route, use the following:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+        {# src/AppBundle/Resources/views/Security/login.html.twig #}
         {% if error %}
             <div>{{ error.message }}</div>
         {% endif %}
@@ -248,7 +248,7 @@ redirect to the URL defined by some ``account`` route, use the following:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>

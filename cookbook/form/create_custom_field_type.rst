@@ -303,7 +303,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
 
         # src/AppBundle/Resources/config/services.yml
         services:
-            acme_demo.form.type.gender:
+            app.form.type.gender:
                 class: AppBundle\Form\Type\GenderType
                 arguments:
                     - "%genders%"
@@ -313,7 +313,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/services.xml -->
-        <service id="acme_demo.form.type.gender" class="AppBundle\Form\Type\GenderType">
+        <service id="app.form.type.gender" class="AppBundle\Form\Type\GenderType">
             <argument>%genders%</argument>
             <tag name="form.type" alias="gender" />
         </service>
@@ -324,7 +324,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->setDefinition('acme_demo.form.type.gender', new Definition(
+            ->setDefinition('app.form.type.gender', new Definition(
                 'AppBundle\Form\Type\GenderType',
                 array('%genders%')
             ))
