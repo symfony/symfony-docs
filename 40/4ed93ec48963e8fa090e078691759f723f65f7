@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-05T11:10:27Z
+
+@weaverryan It seems like you did that initial change. Do you know why `$_SERVER['REQUEST_URI']` was used instead of `/`?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-09-06T20:28:23Z
+
+:thumbs: I agree - I think I just made a quick mistake - I can't remember anything specific related to this
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-08T17:56:38Z
+
+:+1:
