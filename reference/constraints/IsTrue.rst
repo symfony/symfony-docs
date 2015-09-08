@@ -1,16 +1,11 @@
-True
-====
-
-.. caution::
-
-    The ``True`` constraint is deprecated since Symfony 2.7
-    and will be removed in Symfony 3.0. Use the ``IsTrue`` constraint instead.
+IsTrue
+======
 
 Validates that a value is ``true``. Specifically, this checks to see if
 the value is exactly ``true``, exactly the integer ``1``, or exactly the
 string "``1``".
 
-Also see :doc:`False <False>`.
+Also see :doc:`IsFalse <IsFalse>`.
 
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
@@ -43,7 +38,7 @@ For example, suppose you have the following method::
         }
     }
 
-Then you can constrain this method with ``True``.
+Then you can constrain this method with ``IsTrue``.
 
 .. configuration-block::
 
@@ -59,7 +54,7 @@ Then you can constrain this method with ``True``.
             protected $token;
 
             /**
-             * @Assert\True(message = "The token is invalid")
+             * @Assert\IsTrue(message = "The token is invalid")
              */
             public function isTokenValid()
             {
@@ -73,7 +68,7 @@ Then you can constrain this method with ``True``.
         AppBundle\Entity\Author:
             getters:
                 tokenValid:
-                    - 'True':
+                    - 'IsTrue':
                         message: The token is invalid.
 
     .. code-block:: xml
@@ -86,7 +81,7 @@ Then you can constrain this method with ``True``.
 
             <class name="AppBundle\Entity\Author">
                 <getter property="tokenValid">
-                    <constraint name="True">
+                    <constraint name="IsTrue">
                         <option name="message">The token is invalid.</option>
                     </constraint>
                 </getter>
@@ -99,7 +94,7 @@ Then you can constrain this method with ``True``.
         namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\True;
+        use Symfony\Component\Validator\Constraints\IsTrue;
 
         class Author
         {
@@ -107,7 +102,7 @@ Then you can constrain this method with ``True``.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('tokenValid', new True(array(
+                $metadata->addGetterConstraint('tokenValid', new IsTrue(array(
                     'message' => 'The token is invalid.',
                 )));
             }
@@ -119,11 +114,6 @@ Then you can constrain this method with ``True``.
         }
 
 If the ``isTokenValid()`` returns false, the validation will fail.
-
-.. caution::
-
-    When using YAML, be sure to surround ``True`` with quotes (``'True'``)
-    or else YAML will convert this into a ``true`` boolean value.
 
 Options
 -------

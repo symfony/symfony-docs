@@ -1,31 +1,26 @@
-False
-=====
-
-.. caution::
-
-    The ``False`` constraint is deprecated since Symfony 2.7
-    and will be removed in Symfony 3.0. Use the ``IsFalse`` constraint instead.
+IsFalse
+=======
 
 Validates that a value is ``false``. Specifically, this checks to see if
 the value is exactly ``false``, exactly the integer ``0``, or exactly the
 string "``0``".
 
-Also see :doc:`True <True>`.
+Also see :doc:`IsTrue <IsTrue>`.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\False`          |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FalseValidator` |
-+----------------+---------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `message`_                                                          |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsFalse`          |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsFalseValidator` |
++----------------+-----------------------------------------------------------------------+
 
 Basic Usage
 -----------
 
-The ``False`` constraint can be applied to a property or a "getter" method,
+The ``IsFalse`` constraint can be applied to a property or a "getter" method,
 but is most commonly useful in the latter case. For example, suppose that
 you want to guarantee that some ``state`` property is *not* in a dynamic
 ``invalidStates`` array. First, you'd create a "getter" method::
@@ -54,7 +49,7 @@ method returns **false**:
         class Author
         {
             /**
-             * @Assert\False(
+             * @Assert\IsFalse(
              *     message = "You've entered an invalid state."
              * )
              */
@@ -70,7 +65,7 @@ method returns **false**:
         AppBundle\Entity\Author
             getters:
                 stateInvalid:
-                    - 'False':
+                    - 'IsFalse':
                         message: You've entered an invalid state.
 
     .. code-block:: xml
@@ -83,7 +78,7 @@ method returns **false**:
 
             <class name="AppBundle\Entity\Author">
                 <getter property="stateInvalid">
-                    <constraint name="False">
+                    <constraint name="IsFalse">
                         <option name="message">You've entered an invalid state.</option>
                     </constraint>
                 </getter>
@@ -102,14 +97,9 @@ method returns **false**:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('stateInvalid', new Assert\False());
+                $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse());
             }
         }
-
-.. caution::
-
-    When using YAML, be sure to surround ``False`` with quotes (``'False'``)
-    or else YAML will convert this into a ``false`` boolean value.
 
 Options
 -------
