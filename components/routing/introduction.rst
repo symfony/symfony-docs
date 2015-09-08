@@ -48,9 +48,8 @@ your autoloader to load the Routing component::
 
 .. note::
 
-    Be careful when using ``$_SERVER['REQUEST_URI']``, as it may include
-    any query parameters on the URL, which will cause problems with route
-    matching. An easy way to solve this is to use the HttpFoundation component
+    Althought to populate parameters for :class: Symfony\\Component\\Routing\\RequestContext
+    you can use variables from ``$_SERVER``, easier way is to use HttpFoundation component
     as explained :ref:`below <components-routing-http-foundation>`.
 
 You can add as many routes as you like to a
