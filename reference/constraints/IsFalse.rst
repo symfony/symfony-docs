@@ -1,6 +1,11 @@
 False
 =====
 
+.. caution::
+
+    The ``False`` constraint is deprecated since Symfony 2.7
+    and will be removed in Symfony 3.0. Use the ``IsFalse`` constraint instead.
+
 Validates that a value is ``false``. Specifically, this checks to see if
 the value is exactly ``false``, exactly the integer ``0``, or exactly the
 string "``0``".
