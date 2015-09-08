@@ -1,6 +1,11 @@
 Null
 ====
 
+.. caution::
+
+    The ``Null`` constraint is deprecated since Symfony 2.7
+    and will be removed in Symfony 3.0. Use the ``IsNull`` constraint instead.
+
 Validates that a value is exactly equal to ``null``. To force that a property
 is simply blank (blank string or ``null``), see the  :doc:`/reference/constraints/Blank`
 constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.

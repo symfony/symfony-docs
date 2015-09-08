@@ -1,6 +1,11 @@
 True
 ====
 
+.. caution::
+
+    The ``True`` constraint is deprecated since Symfony 2.7
+    and will be removed in Symfony 3.0. Use the ``IsTrue`` constraint instead.
+
 Validates that a value is ``true``. Specifically, this checks to see if
 the value is exactly ``true``, exactly the integer ``1``, or exactly the
 string "``1``".
