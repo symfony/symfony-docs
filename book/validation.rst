@@ -630,7 +630,7 @@ this method must return ``true``:
         class Author
         {
             /**
-             * @Assert\True(message = "The password cannot match your first name")
+             * @Assert\IsTrue(message = "The password cannot match your first name")
              */
             public function isPasswordLegal()
             {
@@ -675,7 +675,7 @@ this method must return ``true``:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
+                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                 )));
             }
@@ -937,7 +937,7 @@ username and the password are different only if all other validation passes
             private $password;
 
             /**
-             * @Assert\True(message="The password cannot match your username", groups={"Strict"})
+             * @Assert\IsTrue(message="The password cannot match your username", groups={"Strict"})
              */
             public function isPasswordLegal()
             {
@@ -1011,7 +1011,7 @@ username and the password are different only if all other validation passes
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('password', new Assert\NotBlank());
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
+                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                     'groups'  => array('Strict'),
                 )));
