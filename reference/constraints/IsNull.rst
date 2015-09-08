@@ -1,14 +1,11 @@
-Null
-====
-
-.. caution::
-
-    The ``Null`` constraint is deprecated since Symfony 2.7
-    and will be removed in Symfony 3.0. Use the ``IsNull`` constraint instead.
+IsNull
+======
 
 Validates that a value is exactly equal to ``null``. To force that a property
 is simply blank (blank string or ``null``), see the  :doc:`/reference/constraints/Blank`
 constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.
+
+Also see :doc:`NotNull <NotNull>`.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
@@ -16,9 +13,9 @@ constraint. To ensure that a property is not null, see :doc:`/reference/constrai
 | Options        | - `message`_                                                          |
 |                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Null`             |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsNull`           |
 +----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\NullValidator`    |
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsNullValidator`  |
 +----------------+-----------------------------------------------------------------------+
 
 Basic Usage
@@ -39,7 +36,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         class Author
         {
             /**
-             * @Assert\Null()
+             * @Assert\IsNull()
              */
             protected $firstName;
         }
@@ -50,7 +47,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         AppBundle\Entity\Author:
             properties:
                 firstName:
-                    - 'Null': ~
+                    - 'IsNull': ~
 
     .. code-block:: xml
 
@@ -62,7 +59,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
             <class name="AppBundle\Entity\Author">
                 <property name="firstName">
-                    <constraint name="Null" />
+                    <constraint name="IsNull" />
                 </property>
             </class>
         </constraint-mapping>
@@ -79,14 +76,9 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('firstName', Assert\Null());
+                $metadata->addPropertyConstraint('firstName', Assert\IsNull());
             }
         }
-
-.. caution::
-
-    When using YAML, be sure to surround ``Null`` with quotes (``'Null'``)
-    or else YAML will convert this into a ``null`` value.
 
 Options
 -------
