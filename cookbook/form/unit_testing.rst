@@ -137,6 +137,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
         protected function getExtensions()
         {
             $childType = new TestChildType();
+
             return array(new PreloadedExtension(array(
                 $childType->getName() => $childType,
             ), array()));
@@ -165,7 +166,7 @@ It often happens that you use some options that are added by
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
-on other extensions. You need add those extensions to the factory object::
+on other extensions. You need to add those extensions to the factory object::
 
     // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
     namespace AppBundle\Tests\Form\Type;
