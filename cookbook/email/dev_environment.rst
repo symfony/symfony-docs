@@ -140,11 +140,11 @@ by adding the ``delivery_whitelist`` option:
             delivery_whitelist:
                # all email addresses matching this regex will *not* be
                # redirected to dev@example.com
-               - "/@specialdomain.com$/"
+               - "/@specialdomain\.com$/"
 
                # all emails sent to admin@mydomain.com won't
                # be redirected to dev@example.com too
-               - "/^admin@mydomain.com$/"
+               - "/^admin@mydomain\.com$/"
 
     .. code-block:: xml
 
@@ -156,10 +156,10 @@ by adding the ``delivery_whitelist`` option:
 
         <swiftmailer:config delivery-address="dev@example.com">
             <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
-            <swiftmailer:delivery-whitelist-pattern>/@specialdomain.com$/</swiftmailer:delivery-whitelist-pattern>
+            <swiftmailer:delivery-whitelist-pattern>/@specialdomain\.com$/</swiftmailer:delivery-whitelist-pattern>
 
             <!-- all emails sent to admin@mydomain.com won't be redirected to dev@example.com too -->
-            <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain.com$/</swiftmailer:delivery-whitelist-pattern>
+            <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain\.com$/</swiftmailer:delivery-whitelist-pattern>
         </swiftmailer:config>
 
     .. code-block:: php
@@ -170,11 +170,11 @@ by adding the ``delivery_whitelist`` option:
             'delivery_whitelist' => array(
                 // all email addresses matching this regex will *not* be
                 // redirected to dev@example.com
-                '/@specialdomain.com$/',
+                '/@specialdomain\.com$/',
 
                 // all emails sent to admin@mydomain.com won't be
                 // redirected to dev@example.com too
-                '/^admin@mydomain.com$/',
+                '/^admin@mydomain\.com$/',
             ),
         ));
 
