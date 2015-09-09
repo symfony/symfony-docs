@@ -27,7 +27,7 @@ service is injected into the container from within the ``Kernel`` class::
 The ``kernel`` service is called a synthetic service. This service has to
 be configured in the container, so the container knows the service does
 exist during compilation (otherwise, services depending on this ``kernel``
-service will get a "service does not exists" error).
+service will get a "service does not exist" error).
 
 In order to do so, you have to use
 :method:`Definition::setSynthetic() <Symfony\\Component\\DependencyInjection\\Definition::setSynthetic>`::
