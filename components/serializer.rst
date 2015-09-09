@@ -632,6 +632,55 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
+Handling Arrays
+---------------
+
+The Serializer component is capable of handling arrays of objects as well.
+Serializing arrays works just like serializing a single object::
+
+    use Acme\Person;
+
+    $person1 = new Person();
+    $person1->setName('foo');
+    $person1->setAge(99);
+    $person1->setSportsman(false);
+
+    $person2 = new Person();
+    $person2->setName('bar');
+    $person2->setAge(33);
+    $person2->setSportsman(true);
+
+    $persons = array($person1, $person2);
+    $data = $serializer->serialize($persons, 'json');
+
+    // $data contains [{"name":"foo","age":99,"sportsman":false},{"name":"bar","age":33,"sportsman":true}]
+
+.. versionadded:: 2.8
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+    class was introduced in 2.8. Prior to Symfony 2.8, only the serialization of
+    arrays is supported.
+
+If you want to deserialize such a structure, you need to add the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+to the set of normalizers. By appending ``[]`` to the type parameter of the
+:method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
+you indicate that you're expecting an array instead of a single object.
+
+.. code-block:: php
+
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $serializer = new Serializer(
+        array(new GetSetMethodNormalizer(), new ArrayDenormalizer()),
+        array(new JsonEncoder())
+    );
+
+    $data = ...; // The serialized data from the previous example
+    $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
+
 .. seealso::
 
     A popular alternative to the Symfony Serializer Component is the third-party

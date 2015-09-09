@@ -18,6 +18,7 @@ Form Types Reference
    types/percent
    types/search
    types/url
+   types/range
 
    types/choice
    types/entity

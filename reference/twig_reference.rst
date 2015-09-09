@@ -98,16 +98,19 @@ asset
 
 .. code-block:: jinja
 
-    {{ asset(path, packageName, absolute = false, version = null) }}
+    {{ asset(path, packageName = null) }}
 
 ``path``
     **type**: ``string``
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
+<<<<<<< HEAD
 ``absolute`` (deprecated as of 2.7)
     **type**: ``boolean`` **default**: ``false``
 ``version`` (deprecated as of 2.7)
     **type**: ``string`` **default** ``null``
+=======
+>>>>>>> Remove deprecated parameters
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
