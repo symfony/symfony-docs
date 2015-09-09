@@ -1,5 +1,5 @@
 .. index::
-   single: Emails; In development
+single: Emails; In development
 
 How to Work with Emails during Development
 ==========================================
