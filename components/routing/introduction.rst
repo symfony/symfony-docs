@@ -48,9 +48,9 @@ your autoloader to load the Routing component::
 
 .. note::
 
-    Althought to populate parameters for :class: Symfony\\Component\\Routing\\RequestContext
-    you can use variables from ``$_SERVER``, easier way is to use HttpFoundation component
-    as explained :ref:`below <components-routing-http-foundation>`.
+    The :class:`Symfony\\Component\\Routing\\RequestContext` parameters can be populated
+    with the values stored in ``$_SERVER``, but it's easier to use the HttpFoundation
+    component as explained :ref:`below <components-routing-http-foundation>`.
 
 You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
