@@ -17,7 +17,7 @@ code. This is perfectly fine if you don't need to reuse the form somewhere else.
 But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
-    namespace AppBundle\Form;
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -51,7 +51,7 @@ form in its own PHP class::
 
 To use the class, use ``createForm`` and instantiate the new class::
 
-    use AppBundle\Form\PostType;
+    use AppBundle\Form\Type\PostType;
     // ...
 
     public function newAction(Request $request)
@@ -113,7 +113,7 @@ some developers configure form buttons in the controller::
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use AppBundle\Entity\Post;
-    use AppBundle\Form\PostType;
+    use AppBundle\Form\Type\PostType;
 
     class PostController extends Controller
     {
