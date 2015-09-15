@@ -226,7 +226,7 @@ from the authorization checker is called.
 
             $authChecker = $this->get('security.authorization_checker');
 
-            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
+            $authChecker->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
