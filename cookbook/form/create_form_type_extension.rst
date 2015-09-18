@@ -325,8 +325,9 @@ Generic Form Type Extensions
 You can modify several form types at once by specifying their common parent
 (:doc:`/reference/forms/types`). For example, several form types natively
 available in Symfony inherit from the ``text`` form type (such as ``email``,
-``search``, ``url``, etc.). A form type extension applying to ``text`` would
-apply to all of these form types.
+``search``, ``url``, etc.). A form type extension applying to ``text``
+(i.e. whose ``getExtendedType`` method returns ``text``) would apply to all of
+these form types.
 
 In the same way, since **most** form types natively available in Symfony inherit
 from the ``form`` form type, a form type extension applying to ``form`` would
