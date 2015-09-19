@@ -64,8 +64,8 @@ Full Default Configuration
         <assetic:config
             debug="%kernel.debug%"
             use-controller="%kernel.debug%"
-            read-from="%kernel.root_dir%/../web"
-            write-to="%assetic.read_from%"
+            read-from="%assetic.read_from%"
+            write-to="%kernel.root_dir%/../web"
             java="/usr/bin/java"
             node="/usr/bin/node"
             sass="/usr/bin/sass"
