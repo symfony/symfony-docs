@@ -119,6 +119,10 @@
 
   * :doc:`/components/property_access/introduction`
 
+* **PropertyInfo**
+
+  * :doc:`/components/property_info`
+
 * :doc:`/components/routing/index`
 
   * :doc:`/components/routing/introduction`
