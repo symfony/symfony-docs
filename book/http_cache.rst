@@ -230,7 +230,7 @@ Here is a list of the main options:
 ``allow_revalidate``
     Specifies whether the client can force a cache revalidate by including a
     ``Cache-Control`` "max-age=0" directive in the request. Set it to ``true`` for
-    compliance with RFC 2616 (default: false).
+    compliance with RFC 2616 (default: ``false``).
 
 ``stale_while_revalidate``
     Specifies the default number of seconds (the granularity is the second as the
