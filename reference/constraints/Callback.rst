@@ -150,10 +150,12 @@ have access to the object instance, they receive the object as the first argumen
             ;
 
             // If you're using the old 2.4 validation API
+            /*
             $context->addViolationAt(
                 'firstName',
                 'This name sounds totally fake!'
             );
+            */
         }
     }
 
