@@ -431,7 +431,7 @@ represented by a PHP callable instead of a string::
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
     server might also buffer based on its configuration. What's more, if you
-    use fastcgi, buffering can't be disabled at all.
+    use FastCGI, buffering can't be disabled at all.
 
 .. _component-http-foundation-serving-files:
 
