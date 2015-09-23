@@ -13,7 +13,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/CssSelector).
+* Use the official Git repository (https://github.com/symfony/css-selector).
 
 .. include:: /components/require_autoload.rst.inc
 
