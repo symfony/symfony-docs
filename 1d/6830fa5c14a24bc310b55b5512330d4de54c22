@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-24T07:46:56Z
+
+This pull request looks ready to be merged.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-24T15:13:51Z
+
+@lukey78 I just left you one last minor comment. Sorry for reacting so lately, but unfortunately we are not notified when someone pushes additional commits to a pull request.
+
+@dbu Would you mind having a look at this change please? You do have much more expertise with Varnish than me. :)
+
+---------------------------------------------------------------------------
+
+by dbu at 2015-06-24T15:18:45Z
+
+according to the [varnish changelog](https://www.varnish-cache.org/trac/browser/doc/changes.rst) remove was indeed replaced by unset in varnish 4. the wiki page where this [example comes from](https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies) seems to not be updated...
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-11T13:17:28Z
+
+This PR can be labeled as finished because @dbu verified the proposed changes and the reamining blank line can be removed during the merge process. Thanks
