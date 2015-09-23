@@ -1953,7 +1953,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/security/csrf_in_login_form`
 * :doc:`/cookbook/cache/form_csrf_caching`
 
-.. _`Symfony Form component`: https://github.com/symfony/Form
+.. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

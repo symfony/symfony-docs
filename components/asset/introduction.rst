@@ -45,7 +45,7 @@ Installation
 You can install the component in two different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/asset`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Asset).
+* Use the official Git repository (https://github.com/symfony/asset).
 
 Usage
 -----

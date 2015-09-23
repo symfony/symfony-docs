@@ -40,7 +40,7 @@ You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/class-loader``
   on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/ClassLoader).
+* Use the official Git repository (https://github.com/symfony/class-loader).
 
 .. include:: /components/require_autoload.rst.inc
 

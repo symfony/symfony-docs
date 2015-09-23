@@ -236,4 +236,4 @@ Listener Class Name                                                        Prior
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`  -128
 =========================================================================  ========
 
-.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php
+.. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php
