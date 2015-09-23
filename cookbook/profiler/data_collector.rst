@@ -246,7 +246,7 @@ the ``data_collector`` tag in your service configuration:
                         name:     data_collector
                         template: 'data_collector/template.html.twig'
                         id:       'app.my_collector'
-                        public:   false
+                public: false
 
     .. code-block:: xml
 
@@ -258,8 +258,8 @@ the ``data_collector`` tag in your service configuration:
                 http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
             <services>
-                <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector">
-                    <tag name="data_collector" template="data_collector/template.html.twig" id="app.my_collector" public="false" />
+                <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector" public="false">
+                    <tag name="data_collector" template="data_collector/template.html.twig" id="app.my_collector" />
                 </service>
             </services>
         </container>
@@ -293,7 +293,7 @@ want your collector to be displayed before them, use a higher value:
             app.my_collector:
                 class: AppBundle\DataCollector\MyCollector
                 tags:
-                    - { name: data_collector, template: '...', id: '...', priority: '300' }
+                    - { name: data_collector, template: '...', id: '...', priority: 300 }
 
     .. code-block:: xml
 
