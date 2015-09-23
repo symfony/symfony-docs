@@ -112,7 +112,6 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
                 }
             }
         }
-    
 
 .. tip::
 
