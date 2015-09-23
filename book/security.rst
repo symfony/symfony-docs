@@ -512,7 +512,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
 
 .. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
-Of course, your user's passwords now need to be encoded with this exact algorithm.
+Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, you can use an `online tool`_, which will give you something
 like this:
 
