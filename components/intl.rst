@@ -23,7 +23,7 @@ Installation
 You can install the component in two different ways:
 
 * :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
-* Using the official Git repository (https://github.com/symfony/Intl).
+* Using the official Git repository (https://github.com/symfony/intl).
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is

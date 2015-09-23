@@ -18,7 +18,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Console).
+* Use the official Git repository (https://github.com/symfony/console).
 
 .. include:: /components/require_autoload.rst.inc
 
