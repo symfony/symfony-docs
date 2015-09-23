@@ -113,7 +113,7 @@ fragment needed to render every part of a form:
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
-* `foundation_layout.html.twig`_, wraps each form field inside a ``<div>`` element
+* `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
   with the appropriate CSS classes to apply the default `Foundation CSS framework`_
   styles.
 
@@ -1090,5 +1090,5 @@ more details about this concept in Twig, see :ref:`twig-reference-form-variables
 .. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`Bootstrap 3 CSS framework`: http://getbootstrap.com/
-.. _`foundation_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_layout.html.twig
+.. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
 .. _`Foundation CSS framework`: http://foundation.zurb.com/
