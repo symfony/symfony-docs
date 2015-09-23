@@ -882,8 +882,8 @@ that data from its cache.
 
     If you want to use cache invalidation, have a look at the
     `FOSHttpCacheBundle`_. This bundle provides services to help with various
-    cache invalidation concepts, and also documents the configuration for the
-    a couple of common caching proxies.
+    cache invalidation concepts, and also documents the configuration for a
+    couple of common caching proxies.
 
 If one content corresponds to one URL, the ``PURGE`` model works well.
 You send a request to the cache proxy with the HTTP method ``PURGE`` (using
