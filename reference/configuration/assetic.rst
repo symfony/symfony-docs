@@ -16,8 +16,8 @@ Full Default Configuration
             use_controller:
                 enabled:              "%kernel.debug%"
                 profiler:             false
-            read_from:            "%kernel.root_dir%/../web"
-            write_to:             "%assetic.read_from%"
+            read_from:            "%assetic.read_from%"
+            write_to:             "%kernel.root_dir%/../web"
             java:                 /usr/bin/java
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby
