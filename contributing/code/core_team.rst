@@ -153,7 +153,7 @@ discretion of the **Project Leader**.
 .. _Config: https://github.com/symfony/config
 .. _Console: https://github.com/symfony/console
 .. _Debug: https://github.com/symfony/debug
-.. _DependencyInjection: https://github.com/symfony/dependencyinjection
+.. _DependencyInjection: https://github.com/symfony/dependency-injection
 .. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _EventDispatcher: https://github.com/symfony/event-dispatcher
 .. _DomCrawler: https://github.com/symfony/dom-crawler
