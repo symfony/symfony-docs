@@ -15,8 +15,8 @@ The simple User Model
 
 You have a simple ``User`` entity mapped to the database::
 
-    // src/Acme/AccountBundle/Entity/User.php
-    namespace Acme\AccountBundle\Entity;
+    // src/AppBundle/Entity/User.php
+    namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -106,8 +106,8 @@ Create a Form for the Model
 
 Next, create the form for the ``User`` model::
 
-    // src/Acme/AccountBundle/Form/Type/UserType.php
-    namespace Acme\AccountBundle\Form\Type;
+    // src/AppBundle/Form/Type/UserType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -128,7 +128,7 @@ Next, create the form for the ``User`` model::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\AccountBundle\Entity\User'
+                'data_class' => 'AppBundle\Entity\User'
             ));
         }
 
@@ -156,17 +156,17 @@ be stored in the database.
 
 Start by creating a simple class which represents the "registration"::
 
-    // src/Acme/AccountBundle/Form/Model/Registration.php
-    namespace Acme\AccountBundle\Form\Model;
+    // src/AppBundle/Form/Model/Registration.php
+    namespace AppBundle\Form\Model;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
-    use Acme\AccountBundle\Entity\User;
+    use AppBundle\Entity\User;
 
     class Registration
     {
         /**
-         * @Assert\Type(type="Acme\AccountBundle\Entity\User")
+         * @Assert\Type(type="AppBundle\Entity\User")
          * @Assert\Valid()
          */
         protected $user;
@@ -200,8 +200,8 @@ Start by creating a simple class which represents the "registration"::
 
 Next, create the form for this ``Registration`` model::
 
-    // src/Acme/AccountBundle/Form/Type/RegistrationType.php
-    namespace Acme\AccountBundle\Form\Type;
+    // src/AppBundle/Form/Type/RegistrationType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -236,13 +236,13 @@ Handling the Form Submission
 Next, you need a controller to handle the form. Start by creating a simple
 controller for displaying the registration form::
 
-    // src/Acme/AccountBundle/Controller/AccountController.php
-    namespace Acme\AccountBundle\Controller;
+    // src/AppBundle/Controller/AccountController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    use Acme\AccountBundle\Form\Type\RegistrationType;
-    use Acme\AccountBundle\Form\Model\Registration;
+    use AppBundle\Form\Type\RegistrationType;
+    use AppBundle\Form\Model\Registration;
 
     class AccountController extends Controller
     {
@@ -254,7 +254,7 @@ controller for displaying the registration form::
             ));
 
             return $this->render(
-                'AcmeAccountBundle:Account:register.html.twig',
+                'AppBundle:Account:register.html.twig',
                 array('form' => $form->createView())
             );
         }
@@ -264,7 +264,7 @@ And its template:
 
 .. code-block:: html+jinja
 
-    {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
+    {# src/AppBundle/Resources/views/Account/register.html.twig #}
     {{ form(form) }}
 
 Next, create the controller which handles the form submission. This performs
@@ -291,7 +291,7 @@ the validation and saves the data into the database::
         }
 
         return $this->render(
-            'AcmeAccountBundle:Account:register.html.twig',
+            'AppBundle:Account:register.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -307,44 +307,44 @@ Next, update your routes. If you're placing your routes inside your bundle
 
     .. code-block:: yaml
 
-        # src/Acme/AccountBundle/Resources/config/routing.yml
+        # src/AppBundle/Resources/config/routing.yml
         account_register:
             path:     /register
-            defaults: { _controller: AcmeAccountBundle:Account:register }
+            defaults: { _controller: AppBundle:Account:register }
 
         account_create:
             path:     /register/create
-            defaults: { _controller: AcmeAccountBundle:Account:create }
+            defaults: { _controller: AppBundle:Account:create }
 
     .. code-block:: xml
 
-        <!-- src/Acme/AccountBundle/Resources/config/routing.xml -->
+        <!-- src/AppBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="account_register" path="/register">
-                <default key="_controller">AcmeAccountBundle:Account:register</default>
+                <default key="_controller">AppBundle:Account:register</default>
             </route>
 
             <route id="account_create" path="/register/create">
-                <default key="_controller">AcmeAccountBundle:Account:create</default>
+                <default key="_controller">AppBundle:Account:create</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Acme/AccountBundle/Resources/config/routing.php
+        // src/AppBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('account_register', new Route('/register', array(
-            '_controller' => 'AcmeAccountBundle:Account:register',
+            '_controller' => 'AppBundle:Account:register',
         )));
         $collection->add('account_create', new Route('/register/create', array(
-            '_controller' => 'AcmeAccountBundle:Account:create',
+            '_controller' => 'AppBundle:Account:create',
         )));
 
         return $collection;

@@ -136,7 +136,7 @@ template might look something like this:
     Thanks!
 
     {# Makes an absolute URL to the /images/logo.png file #}
-    <img src="{{ absolute_url(asset('images/logo.png')) }}"
+    <img src="{{ absolute_url(asset('images/logo.png')) }}">
 
 .. versionadded:: 2.7
     The ``absolute_url()`` function was introduced in Symfony 2.7. Prior

@@ -28,7 +28,7 @@ submissions::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+        return $this->render('AppBundle:Default:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -70,7 +70,7 @@ method, pass the submitted data directly to
             }
         }
 
-        return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+        return $this->render('AppBundle:Default:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -115,7 +115,7 @@ a convenient shortcut to the previous example::
             }
         }
 
-        return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+        return $this->render('AppBundle:Default:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }

@@ -207,7 +207,7 @@ rules::
     .. code-block:: php
 
         // src/AppBundle/Entity/Document.php
-        namespace Acme\DemoBundle\Entity;
+        namespace AppBundle\Entity;
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;

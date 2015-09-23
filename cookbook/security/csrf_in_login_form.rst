@@ -89,7 +89,7 @@ using the login form:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+        {# src/AppBundle/Resources/views/Security/login.html.twig #}
 
         {# ... #}
         <form action="{{ path('login_check') }}" method="post">
@@ -104,7 +104,7 @@ using the login form:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">

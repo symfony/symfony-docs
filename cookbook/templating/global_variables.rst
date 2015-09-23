@@ -106,14 +106,14 @@ This should feel familiar, as it's the same syntax you use in service configurat
         twig:
             # ...
             globals:
-                user_management: "@acme_user.user_management"
+                user_management: "@app.user_management"
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
             <!-- ... -->
-            <twig:global key="user_management">@acme_user.user_management</twig:global>
+            <twig:global key="user_management">@app.user_management</twig:global>
         </twig:config>
 
     .. code-block:: php
@@ -122,7 +122,7 @@ This should feel familiar, as it's the same syntax you use in service configurat
         $container->loadFromExtension('twig', array(
              // ...
              'globals' => array(
-                 'user_management' => '@acme_user.user_management',
+                 'user_management' => '@app.user_management',
              ),
         ));
 
