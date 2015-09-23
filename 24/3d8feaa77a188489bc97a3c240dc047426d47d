@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-09T18:32:05Z
+
+To me, the way it is shown is totally fine. :+1:
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-09-10T08:35:57Z
+
+thanks @xabbuh for your review.
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-09-18T09:25:42Z
+
+:+1:
+@xabbuh Hi, any idea when that'll be merged? Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-23T20:17:18Z
+
+@weaverryan @WouterJ @javiereguiluz Any opinion on this one?
+
+@GuGuss I would like to a :+1: from another docs team member before merging here.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-23T20:23:26Z
+
+I like the reworded message and I think it's fair to add the link to platform.sh. My only concern is about the "Visit the page on symfony.com" message. I'm not sure if its intention is clear enough and by the way, it won't work when the page is new (which I know it's not a very frequent scenario).
+
+Anyway, my concern can be also applied to the original message, so I'm :+1: about merging these changes.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-23T20:45:54Z
+
+I agree that we can handle this in a different pull request if we feel the need to do so.
