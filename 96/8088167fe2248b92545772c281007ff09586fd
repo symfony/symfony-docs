@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-06-11T14:46:18Z
+
+It's been more than a month, any news?
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-06-15T13:11:10Z
+
+I fixed the typo mentioned by @xabbuh. If you have any other feedback to provide, I'd be glad to hear it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-15T13:15:02Z
+
+@lemoinem Can you please change that everywhere in the parts you modified (the same by the way also applies to "Form Type").
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-06-15T13:26:43Z
+
+@xabbuh Done! (:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-23T18:25:09Z
+
+@lemoinem This looks great now! Could you do another rebase please (sorry for that, but we had some activity on the repo the last days)?
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-06-23T18:35:19Z
+
+@xabbuh Thanks for the feedback!
+
+Here is the rebase. Enjoy!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-23T20:06:00Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-24T07:53:42Z
+
+:+1: thanks for this @lemoinem Reducing doc duplication is a big plus for us!
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-06-29T19:28:51Z
+
+@weaverryan : Thanks for the feedback. Here is a new tentative version with a more positive wording.
+
+Let me know what you think about it. Once we all agree on a better version, I will squash the commits and rebase.
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-09-14T16:48:51Z
+
+@weaverryan @xabbuh
+It's been a bit more than 2 months since the last modification regarding this PR. Any feedback? Is the last wording appropriate? If so, Should I squash the commits so it could all be merged?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-09-17T18:48:12Z
+
+Thanks for the ping! I just left one small comment - but a :+1: from me! A merger can even add that small change of we get to it first :) (unfortunately I'm on my phone now!)
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2015-09-18T14:36:02Z
+
+@weaverryan
+I added a mention regarding `getExtendedType`. A more detailed code block seemed redundant with the rest of the article (especially with the Defining a Form Type Extension section).
+
+If everything is OK, I'll squash it all and rebase.
