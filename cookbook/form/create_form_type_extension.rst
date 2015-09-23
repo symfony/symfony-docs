@@ -14,16 +14,15 @@ extensions come in.
 
 Form type extensions have 2 main use-cases:
 
-#. You want to add a **generic feature to several types** (such as
-   adding a "help" text to every field type);
 #. You want to add a **specific feature to a single type** (such
-   as adding a "download" feature to the "file" field type).
+   as adding a "download" feature to the "file" field type);
+#. You want to add a **generic feature to several types** (such as
+   adding a "help" text to every "input text"-like type).
 
-In both those cases, it might be possible to achieve your goal with custom
-form rendering, or custom form field types. But using form type extensions
-can be cleaner (by limiting the amount of business logic in templates)
-and more flexible (you can add several type extensions to a single form
-type).
+It might be possible to achieve your goal with custom form rendering, or custom
+form field types. But using form type extensions can be cleaner (by limiting the
+amount of business logic in templates) and more flexible (you can add several
+type extensions to a single form type).
 
 Form type extensions can achieve most of what custom field types can do,
 but instead of being field types of their own, **they plug into existing types**.
@@ -319,3 +318,19 @@ next to the file field. For example::
 
 When displaying the form, if the underlying model has already been associated
 with an image, you will see it displayed next to the file input.
+
+Generic Form Type Extensions
+----------------------------
+
+You can modify several form types at once by specifying their common parent
+(:doc:`/reference/forms/types`). For example, several form types natively
+available in Symfony inherit from the ``text`` form type (such as ``email``,
+``search``, ``url``, etc.). A form type extension applying to ``text``
+(i.e. whose ``getExtendedType`` method returns ``text``) would apply to all of
+these form types.
+
+In the same way, since **most** form types natively available in Symfony inherit
+from the ``form`` form type, a form type extension applying to ``form`` would
+apply to all of these.  A notable exception are the ``button`` form types. Plus,
+keep in mind that a custom form type which inherit neither ``form`` nor
+``button`` could always be created.
