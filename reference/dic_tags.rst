@@ -392,72 +392,8 @@ form.type_extension
 
 **Purpose**: Create a custom "form extension"
 
-Form type extensions are a way for you took "hook into" the creation of
-any field in your form. For example, the addition of the CSRF token is done
-via a form type extension
-(:class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\FormTypeCsrfExtension`).
-
-A form type extension can modify any part of any field in your form. To
-create a form type extension, first create a class that implements the
-:class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface.
-For simplicity, you'll often extend an
-:class:`Symfony\\Component\\Form\\AbstractTypeExtension` class instead of
-the interface directly::
-
-    // src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php
-    namespace Acme\MainBundle\Form\Type;
-
-    use Symfony\Component\Form\AbstractTypeExtension;
-
-    class MyFormTypeExtension extends AbstractTypeExtension
-    {
-        // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), finishView(), configureOptions()
-    }
-
-In order for Symfony to know about your form extension and use it, give
-it the ``form.type_extension`` tag:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            main.form.type.my_form_type_extension:
-                class: Acme\MainBundle\Form\Type\MyFormTypeExtension
-                tags:
-                    - { name: form.type_extension, alias: field }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service
-                    id="main.form.type.my_form_type_extension"
-                    class="Acme\MainBundle\Form\Type\MyFormTypeExtension">
-
-                    <tag name="form.type_extension" alias="field" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        $container
-            ->register(
-                'main.form.type.my_form_type_extension',
-                'Acme\MainBundle\Form\Type\MyFormTypeExtension'
-            )
-            ->addTag('form.type_extension', array('alias' => 'field'))
-        ;
-
-The ``alias`` key of the tag is the type of field that this extension should
-be applied to. For example, to apply the extension to any form/field, use
-the "form" value.
+For details on creating Form type extensions, read the cookbook article:
+:doc:`/cookbook/form/create_form_type_extension`
 
 .. _reference-dic-type_guesser:
 

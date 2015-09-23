@@ -42,15 +42,15 @@ managers that use this connection.
 
         services:
             my.listener:
-                class: Acme\SearchBundle\EventListener\SearchIndexer
+                class: AppBundle\EventListener\SearchIndexer
                 tags:
                     - { name: doctrine.event_listener, event: postPersist }
             my.listener2:
-                class: Acme\SearchBundle\EventListener\SearchIndexer2
+                class: AppBundle\EventListener\SearchIndexer2
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, connection: default }
             my.subscriber:
-                class: Acme\SearchBundle\EventListener\SearchIndexerSubscriber
+                class: AppBundle\EventListener\SearchIndexerSubscriber
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -67,13 +67,13 @@ managers that use this connection.
             </doctrine:config>
 
             <services>
-                <service id="my.listener" class="Acme\SearchBundle\EventListener\SearchIndexer">
+                <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
-                <service id="my.listener2" class="Acme\SearchBundle\EventListener\SearchIndexer2">
+                <service id="my.listener2" class="AppBundle\EventListener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
-                <service id="my.subscriber" class="Acme\SearchBundle\EventListener\SearchIndexerSubscriber">
+                <service id="my.subscriber" class="AppBundle\EventListener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
@@ -98,21 +98,21 @@ managers that use this connection.
         $container
             ->setDefinition(
                 'my.listener',
-                new Definition('Acme\SearchBundle\EventListener\SearchIndexer')
+                new Definition('AppBundle\EventListener\SearchIndexer')
             )
             ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
         ;
         $container
             ->setDefinition(
                 'my.listener2',
-                new Definition('Acme\SearchBundle\EventListener\SearchIndexer2')
+                new Definition('AppBundle\EventListener\SearchIndexer2')
             )
             ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'connection' => 'default'))
         ;
         $container
             ->setDefinition(
                 'my.subscriber',
-                new Definition('Acme\SearchBundle\EventListener\SearchIndexerSubscriber')
+                new Definition('AppBundle\EventListener\SearchIndexerSubscriber')
             )
             ->addTag('doctrine.event_subscriber', array('connection' => 'default'))
         ;
@@ -124,11 +124,11 @@ In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postPersist``. The class behind that service must have
 a ``postPersist`` method, which will be called when the event is dispatched::
 
-    // src/Acme/SearchBundle/EventListener/SearchIndexer.php
-    namespace Acme\SearchBundle\EventListener;
+    // src/AppBundle/EventListener/SearchIndexer.php
+    namespace AppBundle\EventListener;
 
     use Doctrine\ORM\Event\LifecycleEventArgs;
-    use Acme\StoreBundle\Entity\Product;
+    use AppBundle\Entity\Product;
 
     class SearchIndexer
     {
@@ -166,13 +166,13 @@ Creating the Subscriber Class
 A Doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
 interface and have an event method for each event it subscribes to::
 
-    // src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php
-    namespace Acme\SearchBundle\EventListener;
+    // src/AppBundle/EventListener/SearchIndexerSubscriber.php
+    namespace AppBundle\EventListener;
 
     use Doctrine\Common\EventSubscriber;
     use Doctrine\ORM\Event\LifecycleEventArgs;
     // for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-    use Acme\StoreBundle\Entity\Product;
+    use AppBundle\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
     {

@@ -39,7 +39,7 @@ your autoloader to load the Routing component::
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
-    $context = new RequestContext($_SERVER['REQUEST_URI']);
+    $context = new RequestContext('/');
 
     $matcher = new UrlMatcher($routes, $context);
 
@@ -203,7 +203,7 @@ a certain route::
     $routes = new RouteCollection();
     $routes->add('show_post', new Route('/show/{slug}'));
 
-    $context = new RequestContext($_SERVER['REQUEST_URI']);
+    $context = new RequestContext('/');
 
     $generator = new UrlGenerator($routes, $context);
 
@@ -323,7 +323,7 @@ automatically in the background if you want to use it. A basic example of the
 :class:`Symfony\\Component\\Routing\\Router` class would look like::
 
     $locator = new FileLocator(array(__DIR__));
-    $requestContext = new RequestContext($_SERVER['REQUEST_URI']);
+    $requestContext = new RequestContext('/');
 
     $router = new Router(
         new YamlFileLoader($locator),
