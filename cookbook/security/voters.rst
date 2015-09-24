@@ -224,14 +224,8 @@ from the authorization checker is called.
             // get a Post instance
             $post = ...;
 
-<<<<<<< HEAD
-            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
-=======
             // keep in mind that this will call all registered security voters
-            if (false === $this->get('security.context')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorized access!');
-            }
->>>>>>> 2.3
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
