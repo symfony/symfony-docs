@@ -303,3 +303,9 @@ Each mailer is registered as a service::
 
     // returns the second mailer
     $container->get('swiftmailer.mailer.second_mailer');
+
+.. caution::
+
+    The configuration in the ``swiftmailer`` key (see above) is a shortcut
+    syntax for the default mailer. If you use multiple mailers, you need to
+    set options like ``disable_delivery`` separately for the additional mailers.
