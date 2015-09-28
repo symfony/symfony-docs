@@ -52,6 +52,7 @@ form in its own PHP class::
 
 To use the class, use ``createForm`` and instantiate the new class::
 
+    // src/AppBundle/Controller/PostController.php
     use AppBundle\Form\Type\PostType;
     // ...
 
@@ -110,7 +111,8 @@ This form *may* have been designed for creating posts, but if you wanted
 to reuse it for editing posts, the button label would be wrong. Instead,
 some developers configure form buttons in the controller::
 
-    namespace AppBundle\Controller\Admin;
+    // src/AppBundle/Controller/PostController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -141,6 +143,7 @@ view layer:
 
 .. code-block:: html+jinja
 
+    {# src/AppBundle/Resources/views/Post/new.html.twig #}
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
@@ -161,6 +164,7 @@ fields:
 
 .. code-block:: html+jinja
 
+    {# src/AppBundle/Resources/views/Post/new.html.twig #}
     {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
@@ -178,6 +182,7 @@ Handling a form submit usually follows a similar template:
 
 .. code-block:: php
 
+    // src/AppBundle/Controller/PostController.php
     public function newAction(Request $request)
     {
         // build the form ...
