@@ -17,6 +17,7 @@ code. This is perfectly fine if you don't need to reuse the form somewhere else.
 But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
+    // src/AppBundle/Form/Type/PostType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -91,6 +92,7 @@ directly in your form class, this would effectively limit the scope of that form
 
 .. code-block:: php
 
+    // src/AppBundle/Form/Type/PostType.php
     class PostType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
