@@ -170,7 +170,7 @@ of your project's data, you can use the connection settings from the
     .. code-block:: xml
 
         <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-            <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</agruement>
+            <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
             <argument type="collection">
                 <argument key="db_username">%database_user%</argument>
                 <argument key="db_password">%database_password%</argument>
