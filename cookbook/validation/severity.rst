@@ -38,17 +38,17 @@ Use the ``payload`` option to configure the error level for each constraint:
         class User
         {
             /**
-             * @Assert\NotBlank(payload = {severity = "error"})
+             * @Assert\NotBlank(payload = {"severity" = "error"})
              */
             protected $username;
 
             /**
-             * @Assert\NotBlank(payload = {severity = "error"})
+             * @Assert\NotBlank(payload = {"severity" = "error"})
              */
             protected $password;
 
             /**
-             * @Assert\Iban(payload = {severity = "warning"})
+             * @Assert\Iban(payload = {"severity" = "warning"})
              */
             protected $bankAccountNumber;
         }
