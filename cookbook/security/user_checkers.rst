@@ -5,11 +5,11 @@ How to Create and Enable Custom User Checkers
 =============================================
 
 During the authentication of a user, additional checks might be required to verify
-if the identified user is allowed to log in. By defining custom user checkers, you
-can define per firewall which checkers should be used.
+if the identified user is allowed to log in. By defining a custom user checker, you
+can define per firewall which checker should be used.
 
 .. versionadded:: 2.8
-Adding custom user checkers was introduced in Symfony 2.8.
+    Defining a custom user checker was introduced in Symfony 2.8.
 
 
 Creating a Custom User Checker
@@ -80,8 +80,7 @@ other service:
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.user_checker" class="App\Security\UserChecker">
-                </service>
+                <service id="app.user_checker" class="App\Security\UserChecker" />
             </services>
         </container>
 
@@ -107,7 +106,7 @@ is the service id of your user checker:
             firewalls:
                 secured_area:
                     pattern: ^/
-                    user_checkers: ["app.user_checker"]
+                    user_checker: app.user_checker
                     # ...
 
     .. code-block:: xml
@@ -123,7 +122,7 @@ is the service id of your user checker:
             <config>
                 <!-- ... -->
                 <firewall name="secured_area" pattern="^/">
-                    <user-checkers>app.user_checker</user-checkers>
+                    <user-checker>app.user_checker</user-checker>
                     <!-- ... -->
                 </firewall>
             </config>
@@ -138,7 +137,7 @@ is the service id of your user checker:
             'firewalls' => array(
                 'secured_area' => array(
                     'pattern' => '^/',
-                    'user_checkers' => array('app.user_checker'),
+                    'user_checker' => 'app.user_checker',
                     // ...
                 ),
             ),
@@ -148,10 +147,7 @@ is the service id of your user checker:
 Additional Configurations
 -------------------------
 
-It's possible to add multiple user checkers to one firewall while
-configuring only one user checker for another firewall. When adding
-multiple user checkers, they are executed in the same sequence as
-defined in your configuration.
+It's possible to have a different user checker per firewall.
 
 .. configuration-block::
 
@@ -164,11 +160,11 @@ defined in your configuration.
             firewalls:
                 admin:
                     pattern: ^/admin
-                    user_checkers: ["app.user_checker", "app.admin_checker"]
+                    user_checker: app.admin_user_checker
                     # ...
                 secured_area:
                     pattern: ^/
-                    user_checkers: ["app.user_checker"]
+                    user_checker: app.user_checker
 
     .. code-block:: xml
 
@@ -183,12 +179,11 @@ defined in your configuration.
             <config>
                 <!-- ... -->
                 <firewall name="admin" pattern="^/admin">
-                    <user-checkers>app.user_checker</user-checkers>
-                    <user-checkers>app.admin_checker</user-checkers>
+                    <user-checker>app.admin_user_checker</user-checker>
                     <!-- ... -->
                 </firewall>
                 <firewall name="secured_area" pattern="^/">
-                    <user-checkers>app.user_checker</user-checkers>
+                    <user-checker>app.user_checker</user-checker>
                     <!-- ... -->
                 </firewall>
             </config>
@@ -203,16 +198,18 @@ defined in your configuration.
             'firewalls' => array(
                 'admin' => array(
                     'pattern' => '^/admin',
-                    'user_checkers' => array(
-                        'app.user_checker',
-                        'app.admin_checker',
-                    ),
+                    'user_checkers' => 'app.admin_user_checker'
                     // ...
                 ),
                 'secured_area' => array(
                     'pattern' => '^/',
-                    'user_checkers' => array('app.user_checker'),
+                    'user_checker' => 'app.user_checker',
                     // ...
                 ),
             ),
         ));
+
+.. note::
+
+    Internally the user checkers are aliased per firewall. For `secured_area` the alias
+    `security.user_checker.secured_area` would point to `app.user_checker`.
