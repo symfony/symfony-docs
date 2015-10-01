@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by lbayerl at 2015-10-01T13:28:40Z
+
+Q | A
+--- | ---
+Doc fix? | yes
+New docs? | no
+Applies to | >=2.6
+Fixed tickets |
+
+see http://stackoverflow.com/questions/31701947/how-to-use-symfony-2-6-validations-payload-with-annotation/32826742#comment53602501_32826742 for details
