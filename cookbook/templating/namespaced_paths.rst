@@ -71,6 +71,13 @@ directory:
             );
         ));
 
+.. caution::
+
+    Prior to 2.8, templates in custom namespaces are not pre-compiled by
+    Symfony's cache warmup process. They are compiled on demand. This may
+    cause problems if two simultaneous requests are trying to use the
+    template for the first time.
+
 The registered namespace is called ``foo_bar``, which refers to the
 ``vendor/acme/foo-bar/templates`` directory. Assuming there's a file
 called ``sidebar.twig`` in that directory, you can use it easily:
