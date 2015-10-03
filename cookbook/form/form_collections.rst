@@ -262,7 +262,7 @@ great, your user can't actually add any new tags yet.
 .. _cookbook-form-collections-new-prototype:
 
 Allowing "new" Tags with the "Prototype"
------------------------------------------
+----------------------------------------
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
@@ -416,6 +416,11 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
+
+.. seealso::
+
+    If you want to customize the HTML code in the prototype, read
+    :ref:`cookbook-form-custom-prototype`.
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
