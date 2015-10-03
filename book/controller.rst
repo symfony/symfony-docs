@@ -658,7 +658,7 @@ the following code will render the ``notice`` message:
             </div>
         <?php endforeach ?>
 
-.. tip::
+.. note::
 
     By design, flash messages are meant to be processed exactly once. This means
     that they vanish from the session automatically when they are retrieved from
@@ -667,7 +667,7 @@ the following code will render the ``notice`` message:
 .. tip::
 
     You can use the
-    :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek()`
+    :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
     method instead to retrieve the message while keeping it in the bag.
 
 .. index::
