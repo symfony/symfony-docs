@@ -269,6 +269,11 @@ page on GitHub and click on ``Details``.
     ``.platform.app.yaml``, ``.platform/services.yaml`` and 
     ``.platform/routes.yaml`` allow `Platform.sh`_ to build Pull Requests.
 
+.. note::
+
+    Only Pull Requests to maintained branches are automatically built by
+    Platform.sh. Check the `roadmap`_ for maintained branches.
+
 Minor Changes (e.g. Typos)
 --------------------------
 
@@ -346,3 +351,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh
+.. _`roadmap`: https://symfony.com/roadmap

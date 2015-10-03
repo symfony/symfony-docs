@@ -232,13 +232,21 @@ controller::
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // perform some action, such as saving the task to the database
+            // ... perform some action, such as saving the task to the database
 
             return $this->redirectToRoute('task_success');
         }
 
-        // ...
+        return $this->render('default/new.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
+    
+.. caution::
+
+    Be aware that the ``createView()`` method should be called *after* ``handleRequest``
+    is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
+    view (like validation errors).
 
 .. versionadded:: 2.3
     The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method

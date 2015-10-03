@@ -20,6 +20,9 @@ TwigBundle Configuration ("twig")
                 - bootstrap_3_layout.html.twig
                 - bootstrap_3_horizontal_layout.html.twig
 
+                # Foundation
+                - foundation_5_layout.html.twig
+
                 # Example:
                 - MyBundle::form.html.twig
 

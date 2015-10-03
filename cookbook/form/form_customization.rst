@@ -113,6 +113,9 @@ fragment needed to render every part of a form:
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
+* `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
+  with the appropriate CSS classes to apply the default `Foundation CSS framework`_
+  styles.
 
 .. caution::
 
@@ -739,6 +742,49 @@ You can also override the markup for an entire field row using the same method:
             <?php echo $view['form']->widget($form) ?>
         </div>
 
+.. _cookbook-form-custom-prototype:
+
+How to Customize a Collection Prototype
+---------------------------------------
+
+When using a :doc:`collection of forms </cookbook/form/form_collections>`,
+the prototype can be overridden with a completely custom prototype by
+overriding a block. For example, if your form field is named ``tasks``, you
+will be able to change the widget for each task as follows:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% form_theme form _self %}
+
+        {% block _tasks_entry_widget %}
+            <tr>
+                <td>{{ form_widget(task.task) }}</td>
+                <td>{{ form_widget(task.dueDate) }}</td>
+            </tr>
+        {% endblock %}
+
+    .. code-block:: html+php
+
+        <!-- src/AppBundle/Resources/views/Form/_tasks_entry_widget.html.php -->
+        <tr>
+            <td><?php echo $view['form']->widget($form->task) ?></td>
+            <td><?php echo $view['form']->widget($form->dueDate) ?></td>
+        </tr>
+
+Not only can you override the rendered widget, but you can also change the
+complete form row or the label as well. For the ``tasks`` field given above,
+the block names would be the following:
+
+================  =======================
+Part of the Form  Block Name
+================  =======================
+``label``         ``_tasks_entry_label``
+``widget``        ``_tasks_entry_widget``
+``row``           ``_tasks_entry_row``
+================  =======================
+
 Other common Customizations
 ---------------------------
 
@@ -1087,3 +1133,5 @@ more details about this concept in Twig, see :ref:`twig-reference-form-variables
 .. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`Bootstrap 3 CSS framework`: http://getbootstrap.com/
+.. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
+.. _`Foundation CSS framework`: http://foundation.zurb.com/

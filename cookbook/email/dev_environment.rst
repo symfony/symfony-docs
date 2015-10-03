@@ -33,14 +33,15 @@ will not be sent when you run tests, but will continue to be sent in the
     .. code-block:: xml
 
         <!-- app/config/config_test.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config
-            disable-delivery="true" />
+            <swiftmailer:config disable-delivery="true" />
+        </container>
 
     .. code-block:: php
 
@@ -70,13 +71,15 @@ via the ``delivery_address`` option:
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config delivery-address="dev@example.com" />
+            <swiftmailer:config delivery-address="dev@example.com" />
+        </container>
 
     .. code-block:: php
 
@@ -140,27 +143,32 @@ by adding the ``delivery_whitelist`` option:
             delivery_whitelist:
                # all email addresses matching this regex will *not* be
                # redirected to dev@example.com
-               - "/@specialdomain.com$/"
+               - '/@specialdomain\.com$/'
 
                # all emails sent to admin@mydomain.com won't
                # be redirected to dev@example.com too
-               - "/^admin@mydomain.com$/"
+               - '/^admin@mydomain\.com$/'
 
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
 
         <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config delivery-address="dev@example.com">
-            <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
-            <swiftmailer:delivery-whitelist-pattern>/@specialdomain.com$/</swiftmailer:delivery-whitelist-pattern>
+            <swiftmailer:config delivery-address="dev@example.com">
+                <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
+                <swiftmailer:delivery-whitelist-pattern>/@specialdomain\.com$/</swiftmailer:delivery-whitelist-pattern>
 
-            <!-- all emails sent to admin@mydomain.com won't be redirected to dev@example.com too -->
-            <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain.com$/</swiftmailer:delivery-whitelist-pattern>
-        </swiftmailer:config>
+                <!-- all emails sent to admin@mydomain.com won't be redirected to dev@example.com too -->
+                <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain\.com$/</swiftmailer:delivery-whitelist-pattern>
+            </swiftmailer:config>
+        </container>
 
     .. code-block:: php
 
@@ -170,11 +178,11 @@ by adding the ``delivery_whitelist`` option:
             'delivery_whitelist' => array(
                 // all email addresses matching this regex will *not* be
                 // redirected to dev@example.com
-                '/@specialdomain.com$/',
+                '/@specialdomain\.com$/',
 
                 // all emails sent to admin@mydomain.com won't be
                 // redirected to dev@example.com too
-                '/^admin@mydomain.com$/',
+                '/^admin@mydomain\.com$/',
             ),
         ));
 
