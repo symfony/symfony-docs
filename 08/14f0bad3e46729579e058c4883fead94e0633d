@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-27T09:53:28Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2015-09-27T13:09:51Z
+
+The code has actually been merged in the 2.3 branch, so this now applies to 2.3+
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-29T17:25:41Z
+
+@stof Should we wait here until sebastianbergmann/environment#11 gets merged or split this into two pull requests?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-09-29T17:38:53Z
+
+Well, actually, you already get colors when running tests in Mintty now if you use the ``./phpunit`` script for that (see #5654), because it passes ``--colors=always`` instead of letting PHPUnit check whether colors are supported. So no need to wait
