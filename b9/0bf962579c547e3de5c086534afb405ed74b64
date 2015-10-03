@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-10-02T07:54:12Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-02T11:12:54Z
+
+I don't see any differences between symfony.com and the platform.sh build, but :+1: anyway it makes sense.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-02T11:15:44Z
+
+I don't understand this change. I think we always use the double quotes for YAML strings.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-02T11:16:36Z
+
+@WouterJ @javiereguiluz You have to look at the `2.3` branch on symfony.com. I did not merge branches up as I wanted to fix this first.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-02T11:17:26Z
+
+@javiereguiluz double quotes means escape sequences in Yaml. So `\.` is seen as an escape sequence instead of `\.` as a string. Single quotes don't use escape sequences in Yaml, so `\.` is seen as the string `\.`, exactly what we want.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-02T11:19:14Z
+
+@WouterJ thanks for the explanation. I understand it now :)  Would it make sense to change all double quotes by single quotes then?
