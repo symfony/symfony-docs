@@ -12,6 +12,7 @@ Reference Documents
     configuration/twig
     configuration/monolog
     configuration/web_profiler
+    configuration/debug
 
     configuration/kernel
 
