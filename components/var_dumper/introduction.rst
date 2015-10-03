@@ -99,7 +99,7 @@ Choosing between both is mostly a matter of personal taste, still:
   be suited to your use case (e.g. you shouldn't use it in an HTML
   attribute or a ``<script>`` tag).
 
-This behaviour can be changed by configuring the ``dump.dump_destination``
+This behavior can be changed by configuring the ``dump.dump_destination``
 option. Read more about this and other options in
 :doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
