@@ -143,11 +143,11 @@ by adding the ``delivery_whitelist`` option:
             delivery_whitelist:
                # all email addresses matching this regex will *not* be
                # redirected to dev@example.com
-               - "/@specialdomain\.com$/"
+               - '/@specialdomain\.com$/'
 
                # all emails sent to admin@mydomain.com won't
                # be redirected to dev@example.com too
-               - "/^admin@mydomain\.com$/"
+               - '/^admin@mydomain\.com$/'
 
     .. code-block:: xml
 
