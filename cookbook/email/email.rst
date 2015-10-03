@@ -41,17 +41,20 @@ already included:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config
-            transport="%mailer_transport%"
-            host="%mailer_host%"
-            username="%mailer_user%"
-            password="%mailer_password%" />
+            <swiftmailer:config
+                transport="%mailer_transport%"
+                host="%mailer_host%"
+                username="%mailer_user%"
+                password="%mailer_password%"
+            />
+        </container>
 
     .. code-block:: php
 
