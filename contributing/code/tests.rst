@@ -51,8 +51,9 @@ what's going on and if the tests are broken because of the new code.
 
 .. tip::
 
-    On Windows, install the `ConEmu`_ or `ANSICON`_ free applications to see
-    colored test results.
+    On Windows, install the `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
+    to see colored test results.
 
 .. _ConEmu: https://code.google.com/p/conemu-maximus5/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _Mintty: https://mintty.github.io/
