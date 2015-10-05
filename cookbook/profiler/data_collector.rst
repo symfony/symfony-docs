@@ -4,7 +4,7 @@
 How to Create a custom Data Collector
 =====================================
 
-:doc:`The Symfony Profiler </cookbook/profiler/index>` delegates data collecting to
+:doc:`The Symfony Profiler </components/profiler/index>` delegates data collecting to
 data collectors. Symfony comes bundled with a few of them, but you can easily
 create your own.
 
@@ -12,64 +12,117 @@ Creating a custom Data Collector
 --------------------------------
 
 Creating a custom data collector is as simple as implementing the
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface`::
+:class:`Symfony\\Component\\Profiler\\DataCollector\\DataCollectorInterface`::
 
     interface DataCollectorInterface
     {
         /**
-         * Collects data for the given Request and Response.
+         * Returns the collected data.
          *
-         * @param Request    $request   A Request instance
-         * @param Response   $response  A Response instance
-         * @param \Exception $exception An Exception instance
+         * @return ProfileDataInterface
+         *
+         * @todo introduce in 3.0
          */
-        function collect(Request $request, Response $response, \Exception $exception = null);
+        public function getCollectedData();
+    }
 
-        /**
-         * Returns the name of the collector.
-         *
-         * @return string The collector name
-         */
-        function getName();
+if the data should be collected just prior to the Profile being saved add the :class:`Symfony\\Component\\Profiler\\DataCollector\\LateDataCollectorInterface`::
+
+    interface LateDataCollectorInterface
+    {
+    }
+
+The ``getCollectedData()`` method is responsible for storing the data it wants to give
+access to in a :class:`Symfony\\Component\\Profiler\\ProfileData\\ProfileDataInterface`::
+
+    interface ProfileDataInterface extends \Serializable
+    {
+        public function getName();
     }
 
 The ``getName()`` method must return a unique name. This is used to access the
 information later on (see :doc:`/cookbook/testing/profiling` for
 instance).
 
-The ``collect()`` method is responsible for storing the data it wants to give
-access to in local properties.
-
 .. caution::
 
-    As the profiler serializes data collector instances, you should not
+    As the profiler serializes ProfileData instances, you should not
     store objects that cannot be serialized (like PDO objects), or you need
     to provide your own ``serialize()`` method.
 
-Most of the time, it is convenient to extend
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
-populate the ``$this->data`` property (it takes care of serializing the
-``$this->data`` property)::
+Example DataCollector::
 
-    class MemoryDataCollector extends DataCollector
+    class MemoryDataCollector extends AbstractDataCollector implements LateDataCollectorInterface
     {
-        public function collect(Request $request, Response $response, \Exception $exception = null)
+        private $memoryLimit;
+
+        /**
+         * Constructor.
+         */
+        public function __construct()
         {
-            $this->data = array(
-                'memory' => memory_get_peak_usage(true),
-            );
+            $this->memoryLimit = ini_get('memory_limit');
         }
 
-        public function getMemory()
+        /**
+         * {@inheritdoc}
+         */
+        public function lateCollect()
         {
-            return $this->data['memory'];
+            return new MemoryData(memory_get_peak_usage(true), $this->memoryLimit);
+        }
+    }
+
+    class MemoryData implements ProfileDataInterface
+    {
+        private $memory;
+        private $memoryLimit;
+
+        /**
+         * Constructor.
+         *
+         * @param int $memory       The current used memory.
+         * @param int $memoryLimit  The memory limit.
+         */
+        public function __construct($memory, $memoryLimit)
+        {
+            $this->memory = $memory;
+            $this->memoryLimit = $this->convertToBytes($memoryLimit);
         }
 
+        /**
+         * {@inheritdoc}
+         */
         public function getName()
         {
             return 'memory';
         }
+
+        /**
+         * Returns the memory.
+         *
+         * @return int The memory
+         */
+        public function getMemory()
+        {
+            return $this->memory;
+        }
+
+        /**
+         * Returns the PHP memory limit.
+         *
+         * @return int The memory limit
+         */
+        public function getMemoryLimit()
+        {
+            return $this->memoryLimit;
+        }
+
+        //...
     }
+
+
+
 
 .. _data_collector_tag:
 

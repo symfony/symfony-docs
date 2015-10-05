@@ -23,6 +23,7 @@ The Components
     intl
     options_resolver
     process
+    profiler/index
     property_access/index
     routing/index
     security/index
