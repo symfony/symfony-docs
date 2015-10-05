@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-01T17:53:01Z
+
+Can we add a `versionadded` directive for the `formatCatalogue()` method?
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2015-10-01T17:59:46Z
+
+done
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-01T19:50:59Z
+
+Hm, actually I am not very satisfied with this approach too. What if tried a totally different approach and add a sidebar that is talking about the `formatCatalgoue()` method and also contains this tip?
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2015-10-02T10:48:09Z
+
+@xabbuh can you look now ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-02T11:08:12Z
+
+:+1: Yeah, I like that much more. :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-04T20:00:13Z
+
+:+1: thanks @aitboudad
