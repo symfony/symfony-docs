@@ -214,10 +214,93 @@ will be passed two parameters:
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
     instance which may be ``null`` in some circumstances.
 
+Extending from the Default ExceptionController Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Instead of creating a new exception controller from scratch you can, of course,
 also extend the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
 In that case, you might want to override one or both of the ``showAction()`` and
 ``findTemplate()`` methods. The latter one locates the template to be used.
+
+To create your own controller logic extending from the ExceptionController, simply
+create a controller with the specified method you want to override. In this
+example, we gonna override the showAction method::
+        
+  # src/AppBundle/Controller/ExceptionController.php
+  
+  namespace AppBundle\Controller;
+  
+  use Symfony\Component\HttpFoundation\Request;
+  use Symfony\Component\HttpKernel\Exception\FlattenException;
+  use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+  use Symfony\Component\HttpFoundation\Response;
+  
+  class ExceptionController extends \Symfony\Bundle\TwigBundle\Controller\ExceptionController
+  {
+      public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
+      {
+          $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
+          $showException = $request->attributes->get('showException', $this->debug); // As opposed to an additional parameter, this maintains BC
+  
+          // $code = $exception->getStatusCode();
+          $code = 500; // Route exceptions will throw status code 500
+  
+          return new Response($this->twig->render(
+              (string) $this->findTemplate($request, $request->getRequestFormat(), $code, $showException),
+              array(
+                  'status_code' => $code,
+                  'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
+                  'exception' => $exception,
+                  'logger' => $logger,
+                  'currentContent' => $currentContent,
+              )
+          ));
+      }
+  }
+  
+To use the custom controller, we need to load the Twig service in the class, as
+the original class does. To do it, add the service pointing to the controller
+and set the arguments to load the specific needed services::
+  
+  # app/config/services.yml
+  appbundle.twig.controller.exception:
+      class: AppBundle\Controller\ExceptionController
+      arguments: [@twig, %kernel.debug%]
+        
+To finally enable the custom exception controller, set the :ref:`twig.exception_controller 
+<config-twig-exception-controller>` configuration option to point to the service controller.
+  
+  .. configuration-block::
+  
+      .. code-block:: yaml
+  
+          # app/config/config.yml
+          twig:
+              exception_controller:  appbundle.twig.controller.exception:showAction
+  
+      .. code-block:: xml
+  
+          <!-- app/config/config.xml -->
+          <?xml version="1.0" encoding="UTF-8" ?>
+          <container xmlns="http://symfony.com/schema/dic/services"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:twig="http://symfony.com/schema/dic/twig"
+              xsi:schemaLocation="http://symfony.com/schema/dic/services
+                  http://symfony.com/schema/dic/services/services-1.0.xsd
+                  http://symfony.com/schema/dic/twig
+                  http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+  
+              <twig:config>
+                  <twig:exception-controller>appbundle.twig.controller.exception:showAction</twig:exception-controller>
+              </twig:config>
+          </container>
+  
+      .. code-block:: php
+  
+          // app/config/config.php
+          $container->loadFromExtension('twig', array(
+              'exception_controller' => 'appbundle.twig.controller.exception:showAction',
+              // ...
+          ));
 
 .. _use-kernel-exception-event:
 
