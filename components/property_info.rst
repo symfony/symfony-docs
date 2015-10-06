@@ -65,19 +65,19 @@ class::
         array($reflectionExtractor)
     );
 
-An array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyListRetrieverInterface`
+An array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface`
 must be passed as first parameter. These extractors are responsible of extracting
 the list of properties of a class.
 
-An array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeInfoInterface`
+An array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`
 must be passed as second parameter. These extractors are responsible of extracting
 types of a property.
 
-An array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionInfoInterface`
+An array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface`
 must be passed as third parameter. These extractors are responsible of extracting
 short and long DocBlock description of a property.
 
-Finaly, an array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyAccessInfoInterface`
+Finally, an array of implementations of :class:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface`
 must be passed as fourth parameter. These extractors are responsible of guessing
 if a property is readable or writable.
 
@@ -181,8 +181,8 @@ The ``DoctrineExtractor``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Doctrine extractor reuse metadata of the Doctrine ORM to extract the
-list of properties and their type. It implements ``PropertyListRetrieverInterface``
-and ``PropertyTypeInfoInterface`` interfaces.
+list of properties and their type. It implements ``PropertyListExtractorInterface``
+and ``PropertyTypeExtractorInterface`` interfaces.
 
 Instantiate it::
 
@@ -290,5 +290,6 @@ Usage::
     }
     */
 
+.. _`Packagist`: https://packagist.org/packages/symfony/property-info
 .. _`phpDocumentator Reflection`: https://github.com/phpDocumentor/Reflection
 .. _`Doctrine ORM`: http://www.doctrine-project.org/projects/orm.html
