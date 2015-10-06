@@ -236,6 +236,21 @@ isAbsolutePath
     // return false
     $fs->isAbsolutePath('../dir');
 
+tempnam
+~~~~~~~
+
+.. versionadded:: 2.7
+    The ``tempnam()`` function was introduced in Symfony 2.7.
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::tempnam` is a drop-in
+replacement for PHP's builtin :phpfunction:`tempnam` function which allows 
+you to create a temporary file on a stream if the stream is writable. It 
+returns false on failure.
+
+    $tmpFile = $fs->tempnam('ftp://example.com/tmp', 'FOO');
+
+``$tmpFile`` will be the name of the temporary file or false.
+
 dumpFile
 ~~~~~~~~
 
