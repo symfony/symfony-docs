@@ -269,7 +269,7 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            # symlink
+            # symlink issue with PHP-FPM and OPcache. Symlink may not be refreshed, so it's necessary to use a real path (eg. after a deployment with Capifony which uses the current symlink to point towards a release directory, you may notice that PHP-FPM displays old pages or freezes) :
             fastcgi_param DOCUMENT_ROOT $realpath_root;
         }
         # PROD
@@ -278,7 +278,7 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            # symlink
+            # symlink issue with PHP-FPM and OPcache. Symlink may not be refreshed, so it's necessary to use a real path (eg. after a deployment with Capifony which uses the current symlink to point towards a release directory, you may notice that PHP-FPM displays old pages or freezes) :
             fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
             # http://domain.tld/app.php/some-path
