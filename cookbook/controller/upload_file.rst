@@ -49,7 +49,7 @@ in the ``Product`` entity::
 Note that the type of the ``brochure`` column is ``string`` instead of ``binary``
 or ``blob`` because it just stores the PDF file name instead of the file contents.
 
-Then, add a new ``brochure`` field to the form that manage the ``Product`` entity::
+Then, add a new ``brochure`` field to the form that manages the ``Product`` entity::
 
     // src/AppBundle/Form/ProductType.php
     namespace AppBundle\Form;
@@ -133,7 +133,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                 // Update the 'brochure' property to store the PDF file name
                 // instead of its contents
-                $product->setBrochure($filename);
+                $product->setBrochure($fileName);
 
                 // ... persist the $product variable or any other work
 
