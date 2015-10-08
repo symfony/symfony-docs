@@ -29,7 +29,6 @@ First, enable form login under your firewall:
             firewalls:
                 default:
                     anonymous: ~
-                    http_basic: ~
                     form_login:
                         login_path: /login
                         check_path: /login_check
@@ -47,7 +46,6 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="default">
                     <anonymous />
-                    <http-basic />
                     <form-login login-path="/login" check-path="/login_check" />
                 </firewall>
             </config>
@@ -60,7 +58,6 @@ First, enable form login under your firewall:
             'firewalls' => array(
                 'default' => array(
                     'anonymous'  => null,
-                    'http_basic' => null,
                     'form_login' => array(
                         'login_path' => '/login',
                         'check_path' => '/login_check',
