@@ -180,7 +180,7 @@ Each part will be explained in the next section.
 
                     remember_me:
                         token_provider: name
-                        key: someS3cretKey
+                        secret: someS3cretKey
                         name: NameOfTheCookie
                         lifetime: 3600 # in seconds
                         path: /foo
@@ -227,7 +227,7 @@ Each part will be explained in the next section.
                                 domain:               ~
                         handlers:             []
                     anonymous:
-                        key:                  4f954a0667e01
+                        secret:               4f954a0667e01
                     switch_user:
                         provider:             ~
                         parameter:            _switch_user

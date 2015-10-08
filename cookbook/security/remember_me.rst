@@ -22,7 +22,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 default:
                     # ...
                     remember_me:
-                        key:      "%secret%"
+                        secret:   "%secret%"
                         lifetime: 604800 # 1 week in seconds
                         path:     /
                         # by default, the feature is enabled by checking a
@@ -48,7 +48,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
                     <!-- 604800 is 1 week in seconds -->
                     <remember-me
-                        key="%secret%"
+                        secret="%secret%"
                         lifetime="604800"
                         path="/" />
                     <!-- by default, the feature is enabled by checking a checkbox
@@ -68,7 +68,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 'default' => array(
                     // ...
                     'remember_me' => array(
-                        'key'      => '%secret%',
+                        'secret'   => '%secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
                         // by default, the feature is enabled by checking a
@@ -82,7 +82,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``key`` (**required**)
+``secret`` (**required**)
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
