@@ -427,6 +427,8 @@ that, you can write normalizers. Normalizers are executed after validating an
 option. You can configure a normalizer by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`::
 
+    use Symfony\Component\OptionsResolver\Options;
+
     // ...
     class Mailer
     {
@@ -436,7 +438,7 @@ option. You can configure a normalizer by calling
         {
             // ...
 
-            $resolver->setNormalizer('host', function ($options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, $value) {
                 if ('http://' !== substr($value, 0, 7)) {
                     $value = 'http://'.$value;
                 }
@@ -462,7 +464,7 @@ if you need to use other options during normalization::
         public function configureOptions(OptionsResolver $resolver)
         {
             // ...
-            $resolver->setNormalizer('host', function ($options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, $value) {
                 if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
