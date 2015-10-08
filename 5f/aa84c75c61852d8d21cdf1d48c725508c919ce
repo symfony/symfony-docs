@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-06T15:10:41Z
+
+:+1: Thank you for this change @SongoQ.
+
+Could you please check if we can update other files too?
+
+---------------------------------------------------------------------------
+
+by SongoQ at 2015-10-06T21:42:56Z
+
+@xabbuh ok :)
+
+---------------------------------------------------------------------------
+
+by SongoQ at 2015-10-07T09:15:46Z
+
+@xabbuh I checked and corrected all files
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-07T18:45:38Z
+
+:+1: looks good
+
+I am just wondering if we should also mention that the name of the option has changed (for users who upgrade existing applications).
+
+@weaverryan @WouterJ @javiereguiluz What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-07T18:49:11Z
+
+:+1: for merging this PR and adding a versionadded afterwards (or add it in this PR, if @SongoQ wants to do it).
