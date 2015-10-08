@@ -268,8 +268,14 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            # symlink issue with PHP-FPM and OPcache. Symlink may not be refreshed, so it's necessary to use a real path (eg. after a deployment with Capifony which uses the current symlink to point towards a release directory, you may notice that PHP-FPM displays old pages or freezes) :
+            # When you are using symlinks to link the document root to the
+            # current version of your application, you should pass the real
+            # application path instead of the path to the symlink to PHP
+            # FPM.
+            # Otherwise, PHP's OPcache may not properly detect changes to
+            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+            # for more information).
+            fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
             fastcgi_param DOCUMENT_ROOT $realpath_root;
         }
         # PROD
@@ -277,8 +283,14 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            # symlink issue with PHP-FPM and OPcache. Symlink may not be refreshed, so it's necessary to use a real path (eg. after a deployment with Capifony which uses the current symlink to point towards a release directory, you may notice that PHP-FPM displays old pages or freezes) :
+            # When you are using symlinks to link the document root to the
+            # current version of your application, you should pass the real
+            # application path instead of the path to the symlink to PHP
+            # FPM.
+            # Otherwise, PHP's OPcache may not properly detect changes to
+            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+            # for more information).
+            fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
             fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
             # http://domain.tld/app.php/some-path
