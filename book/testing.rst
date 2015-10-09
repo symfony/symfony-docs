@@ -277,7 +277,7 @@ document::
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
         $this->assertEquals(
-            200,
+            200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
             $client->getResponse()->getStatusCode()
         );
 
