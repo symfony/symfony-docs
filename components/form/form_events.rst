@@ -113,6 +113,9 @@ View data        Normalized data transformed using a view transformer
 
 .. sidebar:: ``FormEvents::POST_SET_DATA`` in the Form component
 
+    .. versionadded:: 2.4
+        The data collector extension was introduced in Symfony 2.4.
+
     The ``Symfony\Component\Form\Extension\DataCollector\EventListener\DataCollectorListener``
     class is subscribed to listen to the ``FormEvents::POST_SET_DATA`` event
     in order to collect information about the forms from the denormalized
@@ -223,6 +226,9 @@ View data        Normalized data transformed using a view transformer
     At this point, you cannot add or remove fields to the form.
 
 .. sidebar:: ``FormEvents::POST_SUBMIT`` in the Form component
+
+    .. versionadded:: 2.4
+        The data collector extension was introduced in Symfony 2.4.
 
     The ``Symfony\Component\Form\Extension\DataCollector\EventListener\DataCollectorListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to collect

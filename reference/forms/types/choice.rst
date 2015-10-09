@@ -15,7 +15,7 @@ option.
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_list`_                                                             |
-|             | - `empty_value`_                                                             |
+|             | - `placeholder`_                                                             |
 |             | - `expanded`_                                                                |
 |             | - `multiple`_                                                                |
 |             | - `preferred_choices`_                                                       |
@@ -102,6 +102,11 @@ is the item value and the array value is the item's label::
 choice_list
 ~~~~~~~~~~~
 
+.. caution::
+
+    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
+    You should use ``choices`` or ``choice_loader`` now.
+
 **type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
 
 This is one way of specifying the options to be used for this field.
@@ -136,7 +141,7 @@ But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
 will be returned in your form. If ``Almost empty`` is selected (value ``2``
 in HTML), ``0.1`` will be returned.
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -219,13 +224,13 @@ Field Variables
 +------------------------+--------------+-------------------------------------------------------------------+
 | separator              | ``string``   | The separator to use between choice groups.                       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value            | ``mixed``    | The empty value if not already in the list, otherwise             |
+| placeholder            | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                        |              | ``null``.                                                         |
 +------------------------+--------------+-------------------------------------------------------------------+
 | is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
 |                        |              | and returns whether the choice is in the selected value(s).       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
+| placeholder_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
 +------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::

@@ -379,11 +379,6 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
-.. versionadded:: 2.2
-    Namespaced path support was introduced in 2.2, allowing for template names
-    like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
-    for more details.
-
 By default, templates can live in two different locations:
 
 ``app/Resources/views/``
@@ -695,9 +690,6 @@ that as much code as possible lives in reusable :doc:`services </book/service_co
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    hinclude.js support was introduced in Symfony 2.1
-
 Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
 Symfony uses a version of the standard ``render`` function to configure ``hinclude``
@@ -804,9 +796,6 @@ in your application configuration:
                 ),
             ),
         ));
-
-.. versionadded:: 2.2
-    Default templates per render function was introduced in Symfony 2.2
 
 You can define default templates per ``render`` function (which will override
 any global default template that is defined):
@@ -1038,6 +1027,47 @@ assets won't be cached when deployed. For example, ``/images/logo.png`` might
 look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
 configuration option.
 
+.. _`book-templating-version-by-asset`:
+
+If you need to set a version for a specific asset, you can set the fourth
+argument (or the ``version`` argument) to the desired version:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('images/logo.png', version='3.0') }}" alt="Symfony!" />
+
+    .. code-block:: html+php
+
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            false,
+            '3.0'
+        ) ?>" alt="Symfony!" />
+
+If you don't give a version or pass ``null``, the default package version
+(from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
+versioned URL will be deactivated for this asset.
+
+If you need absolute URLs for assets, you can set the third argument (or the
+``absolute`` argument) to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('images/logo.png', absolute=true) }}" alt="Symfony!" />
+
+    .. code-block:: html+php
+
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            true
+        ) ?>" alt="Symfony!" />
+
 .. index::
    single: Templating; Including stylesheets and JavaScripts
    single: Stylesheets; Including stylesheets
@@ -1161,7 +1191,7 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security``
+``app.security`` (deprecated as of 2.6)
     The security context.
 ``app.user``
     The current user object.
@@ -1191,6 +1221,12 @@ automatically:
             <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif ?>
+
+.. versionadded:: 2.6
+    The global ``app.security`` variable (or the ``$app->getSecurity()``
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
+    (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
+    instead.
 
 .. tip::
 
@@ -1513,12 +1549,33 @@ in a JavaScript string, use the ``js`` context:
 Debugging
 ---------
 
-When using PHP, you can use :phpfunction:`var_dump` if you need to quickly find
-the value of a variable passed. This is useful, for example, inside your
-controller. The same can be achieved when using Twig thanks to the Debug
-extension.
+When using PHP, you can use the
+:ref:`dump() function from the VarDumper component <components-var-dumper-dump>`
+if you need to quickly find the value of a variable passed. This is useful,
+for example, inside your controller::
 
-Template parameters can then be dumped using the ``dump`` function:
+    // src/AppBundle/Controller/ArticleController.php
+    namespace AppBundle\Controller;
+
+    // ...
+
+    class ArticleController extends Controller
+    {
+        public function recentListAction()
+        {
+            $articles = ...;
+            dump($articles);
+
+            // ...
+        }
+    }
+
+.. note::
+
+    The output of the ``dump()`` function is then rendered in the web developer
+    toolbar.
+
+The same mechanism can be used in Twig templates thanks to ``dump`` function:
 
 .. code-block:: html+jinja
 
@@ -1538,16 +1595,16 @@ is ``true``. By default this means that the variables will be dumped in the
 Syntax Checking
 ---------------
 
-You can check for syntax errors in Twig templates using the ``twig:lint``
+You can check for syntax errors in Twig templates using the ``lint:twig``
 console command:
 
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/article/recent_list.html.twig
+    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console twig:lint app/Resources/views
+    $ php app/console lint:twig app/Resources/views
 
 .. _template-formats:
 

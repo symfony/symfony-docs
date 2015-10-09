@@ -246,25 +246,20 @@ In the following example, the action is only allowed if the user has the
     // ...
     public function editAction()
     {
-        $isFullyAuthenticated = $this->get('security.context')
-            ->isGranted('IS_AUTHENTICATED_FULLY');
-
-        if (!$isFullyAuthenticated) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
 
-You can also choose to install and use the optional JMSSecurityExtraBundle_,
-which can secure your controller using annotations::
+If your application is based on the Symfony Standard Edition, you can also secure
+your controller using annotations:
 
-    // ...
-    use JMS\SecurityExtraBundle\Annotation\Secure;
-    // ...
+.. code-block:: php
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Secure(roles="IS_AUTHENTICATED_FULLY")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function editAction($name)
     {
@@ -293,5 +288,3 @@ which can secure your controller using annotations::
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.
-
-.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle

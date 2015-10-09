@@ -87,10 +87,6 @@ The route is simple:
 
         return $collection;
 
-.. versionadded:: 2.2
-    The ``path`` option was introduced in Symfony 2.2, ``pattern`` is used
-    in older versions.
-
 The path defined by the ``blog_show`` route acts like ``/blog/*`` where
 the wildcard is given the name ``slug``. For the URL ``/blog/my-blog-post``,
 the ``slug`` variable gets a value of ``my-blog-post``, which is available
@@ -642,10 +638,11 @@ URL                     Route     Parameters
 ``/blog/my-blog-post``  ``blog``  ``{page}`` = ``"my-blog-post"``
 ======================  ========  ===============================
 
-The answer to the problem is to add route *requirements*. The routes in this
-example would work perfectly if the ``/blog/{page}`` path *only* matched
-URLs where the ``{page}`` portion is an integer. Fortunately, regular expression
-requirements can easily be added for each parameter. For example:
+The answer to the problem is to add route *requirements* or route *conditions*
+(see :ref:`book-routing-conditions`). The routes in this example would work
+perfectly if the ``/blog/{page}`` path *only* matched URLs where the ``{page}``
+portion is an integer. Fortunately, regular expression requirements can easily
+be added for each parameter. For example:
 
 .. configuration-block::
 
@@ -899,10 +896,6 @@ be accomplished with the following route configuration:
 
         return $collection;
 
-.. versionadded:: 2.2
-    The ``methods`` option was introduced in Symfony 2.2. Use the ``_method``
-    requirement in older versions.
-
 Despite the fact that these two routes have identical paths (``/contact``),
 the first route will match only GET requests and the second route will match
 only POST requests. This means that you can display the form and submit the
@@ -915,12 +908,95 @@ form via the same URL, while using distinct controllers for the two actions.
 Adding a Host Requirement
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.2
-    Host matching support was introduced in Symfony 2.2
-
 You can also match on the HTTP *host* of the incoming request. For more
 information, see :doc:`/components/routing/hostname_pattern` in the Routing
 component documentation.
+
+.. _book-routing-conditions:
+
+Completely Customized Route Matching with Conditions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As you've seen, a route can be made to match only certain routing wildcards
+(via regular expressions), HTTP methods, or host names. But the routing system
+can be extended to have an almost infinite flexibility using ``conditions``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        contact:
+            path:     /contact
+            defaults: { _controller: AcmeDemoBundle:Main:contact }
+            condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/contact">
+                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+                <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('contact', new Route(
+            '/contact', array(
+                '_controller' => 'AcmeDemoBundle:Main:contact',
+            ),
+            array(),
+            array(),
+            '',
+            array(),
+            array(),
+            'context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"'
+        ));
+
+        return $collection;
+
+The ``condition`` is an expression, and you can learn more about its syntax
+here: :doc:`/components/expression_language/syntax`. With this, the route
+won't match unless the HTTP method is either GET or HEAD *and* if the ``User-Agent``
+header matches ``firefox``.
+
+You can do any complex logic you need in the expression by leveraging two
+variables that are passed into the expression:
+
+``context``
+    An instance of :class:`Symfony\\Component\\Routing\\RequestContext`, which
+    holds the most fundamental information about the route being matched.
+``request``
+    The Symfony :class:`Symfony\\Component\\HttpFoundation\\Request` object
+    (see :ref:`component-http-foundation-request`).
+
+.. caution::
+
+    Conditions are *not* taken into account when generating a URL.
+
+.. sidebar:: Expressions are Compiled to PHP
+
+    Behind the scenes, expressions are compiled down to raw PHP. Our example
+    would generate the following PHP in the cache directory::
+
+        if (rtrim($pathinfo, '/contact') === '' && (
+            in_array($context->getMethod(), array(0 => "GET", 1 => "HEAD"))
+            && preg_match("/firefox/i", $request->headers->get("User-Agent"))
+        )) {
+            // ...
+        }
+
+    Because of this, using the ``condition`` key causes no extra overhead
+    beyond the time it takes for the underlying PHP to execute.
 
 .. index::
    single: Routing; Advanced example
@@ -1102,7 +1178,7 @@ Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
 
 You could also refer to this controller using its fully-qualified class name
-and method: ``Acme\BlogBundle\Controller\BlogController::showAction``.
+and method: ``AppBundle\Controller\BlogController::showAction``.
 But if you follow some simple conventions, the logical name is more concise
 and allows more flexibility.
 
@@ -1301,9 +1377,6 @@ be prefixed with the string ``/site``.
 Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.2
-    Host matching support was introduced in Symfony 2.2
-
 You can set the host regex on imported routes. For more information, see
 :ref:`component-routing-host-imported`.
 
@@ -1315,12 +1388,15 @@ Visualizing & Debugging Routes
 
 While adding and customizing routes, it's helpful to be able to visualize
 and get detailed information about your routes. A great way to see every route
-in your application is via the ``router:debug`` console command. Execute
+in your application is via the ``debug:router`` console command. Execute
 the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php app/console router:debug
+    $ php app/console debug:router
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``router:debug``.
 
 This command will print a helpful list of *all* the configured routes in
 your application:
@@ -1339,7 +1415,7 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php app/console router:debug article_show
+    $ php app/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:

@@ -65,22 +65,28 @@ The validator class is also simple, and only has one required method ``validate(
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
+                // If you're using the new 2.5 validation API (you probably are!)
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
+
+                // If you're using the old 2.4 validation API
+                /*
                 $this->context->addViolation(
                     $constraint->message,
                     array('%string%' => $value)
                 );
+                */
             }
         }
     }
 
-.. note::
-
-    The ``validate`` method does not return a value; instead, it adds violations
-    to the validator's ``context`` property with an ``addViolation`` method
-    call if there are validation failures. Therefore, a value could be considered
-    as being valid if it causes no violations to be added to the context.
-    The first parameter of the ``addViolation`` call is the error message to
-    use for that violation.
+Inside ``validate``, you don't need to return a value. Instead, you add violations
+to the validator's ``context`` property and a value will be considered valid
+if it causes no violations. The ``buildViolation`` method takes the error
+message as its argument and returns an instance of
+:class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
+The ``addViolation`` method call finally adds the violation to the context.
 
 Using the new Validator
 -----------------------
@@ -222,12 +228,20 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
+                // If you're using the new 2.5 validation API (you probably are!)
+                $this->context->buildViolation($constraint->message)
+                    ->atPath('foo')
+                    ->addViolation();
+
+                // If you're using the old 2.4 validation API
+                /*
                 $this->context->addViolationAt(
                     'foo',
                     $constraint->message,
                     array(),
                     null
                 );
+                */
             }
         }
     }

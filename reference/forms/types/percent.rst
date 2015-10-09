@@ -15,7 +15,7 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - `precision`_                                                        |
+| Options     | - `scale`_                                                            |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
@@ -42,13 +42,17 @@ This field adds a percentage sign "``%``" after the input box.
 Field Options
 -------------
 
-precision
-~~~~~~~~~
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``0``
 
-By default, the input numbers are rounded. To allow for more decimal
-places, use this option.
+By default, the input numbers are rounded. To allow for more decimal places,
+use this option.
 
 type
 ~~~~

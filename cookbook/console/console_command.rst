@@ -70,6 +70,15 @@ This command will now automatically be available to run:
 
     $ php app/console demo:greet Fabien
 
+.. _cookbook-console-dic:
+
+Register Commands in the Service Container
+-------------------------------------------
+
+Just like controllers, commands can be declared as services. See the
+:doc:`dedicated cookbook entry </cookbook/console/commands_as_services>`
+for details.
+
 Getting Services from the Service Container
 -------------------------------------------
 
@@ -180,7 +189,6 @@ should be used instead of
             $commandTester = new CommandTester($command);
             $commandTester->execute(
                 array(
-                    'command' => $command->getName(),
                     'name'    => 'Fabien',
                     '--yell'  => true,
                 )
@@ -200,14 +208,14 @@ should be used instead of
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
-:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`::
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
     use AppBundle\Command\GreetCommand;
 
-    class ListCommandTest extends WebTestCase
+    class ListCommandTest extends KernelTestCase
     {
         public function testExecute()
         {
@@ -221,7 +229,6 @@ you can extend your test from
             $commandTester = new CommandTester($command);
             $commandTester->execute(
                 array(
-                    'command' => $command->getName(),
                     'name'    => 'Fabien',
                     '--yell'  => true,
                 )

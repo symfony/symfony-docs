@@ -437,7 +437,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.3.*"
+            "symfony/symfony": "2.6.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -480,7 +480,7 @@ the HTTP response being returned. Use them to improve the blog:
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
-        $response = new Response($html, 404);
+        $response = new Response($html, Response::HTTP_NOT_FOUND);
     }
 
     // echo the headers and send the response

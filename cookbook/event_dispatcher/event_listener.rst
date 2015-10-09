@@ -43,7 +43,7 @@ event is just one of the core kernel events::
                 $response->setStatusCode($exception->getStatusCode());
                 $response->headers->replace($exception->getHeaders());
             } else {
-                $response->setStatusCode(500);
+                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             // Send the modified response object to the event
@@ -117,7 +117,7 @@ done as follow::
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
-            if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
+            if (!$event->isMasterRequest()) {
                 // don't do anything if it's not the master request
                 return;
             }
@@ -131,3 +131,23 @@ done as follow::
     Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
     interface: ``HttpKernelInterface::MASTER_REQUEST`` and
     ``HttpKernelInterface::SUB_REQUEST``.
+
+Debugging Event Listeners
+-------------------------
+
+.. versionadded:: 2.6
+    The ``debug:event-dispatcher`` command was introduced in Symfony 2.6.
+
+You can find out what listeners are registered in the event dispatcher
+using the console. To show all events and their listeners, run:
+
+.. code-block:: bash
+
+    $ php app/console debug:event-dispatcher
+
+You can get registered listeners for a particular event by specifying
+its name:
+
+.. code-block:: bash
+
+    $ php app/console debug:event-dispatcher kernel.exception

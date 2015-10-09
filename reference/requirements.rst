@@ -21,16 +21,15 @@ Below is the list of required and optional requirements.
 Required
 --------
 
-* PHP needs to be a minimum version of PHP 5.3.3
+* PHP needs to be a minimum version of PHP 5.3.9
 * JSON needs to be enabled
 * ctype needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
 
 .. caution::
 
-    Be aware that Symfony has some known limitations when using a PHP version
-    less than 5.3.8 or equal to 5.3.16. For more information see the
-    `Requirements section of the README`_.
+    Be aware that Symfony has some known limitations when using PHP 5.3.16.
+    For more information see the `Requirements section of the README`_.
 
 Optional
 --------

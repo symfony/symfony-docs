@@ -5,14 +5,14 @@ number Field Type
 =================
 
 Renders an input text field and specializes in handling number input. This
-type offers different options for the precision, rounding and grouping
+type offers different options for the scale, rounding and grouping
 that you want to use for your number.
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                        |
-|             | - `precision`_                                                       |
+|             | - `scale`_                                                           |
 |             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                        |
@@ -41,41 +41,36 @@ Field Options
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-.. include:: /reference/forms/types/options/precision.rst.inc
+.. include:: /reference/forms/types/options/scale.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_HALFUP``
+**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALFUP``
 
-If a submitted number needs to be rounded (based on the ``precision``
+If a submitted number needs to be rounded (based on the `scale`_
 option), you have several configurable options for that rounding. Each
-option is a constant on the
-:class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
+option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
+    
+* ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
-  round towards zero.
+* ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
+  infinity.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
-  round towards negative infinity.
+* ``NumberToLocalizedStringTransformer::ROUND_UP`` Round away from zero.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round
-  away from zero.
+* ``NumberToLocalizedStringTransformer::ROUND_CEILING`` Round towards
+  positive infinity.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
-  to round towards positive infinity.
+* ``NumberToLocalizedStringTransformer::ROUND_HALF_DOWN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round down.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_HALFDOWN`` Rounding mode
-  to round towards "nearest neighbor" unless both neighbors are equidistant,
-  in which case round down.
+* ``NumberToLocalizedStringTransformer::ROUND_HALF_EVEN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round towards the
+  even neighbor.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_HALFEVEN`` Rounding mode
-  to round towards the "nearest neighbor" unless both neighbors are equidistant,
-  in which case, round towards the even neighbor.
-
-* ``IntegerToLocalizedStringTransformer::ROUND_HALFUP`` Rounding mode
-  to round towards "nearest neighbor" unless both neighbors are equidistant,
-  in which case round up.
+* ``NumberToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round up.
 
 Overridden Options
 ------------------

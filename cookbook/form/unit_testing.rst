@@ -185,7 +185,7 @@ on other extensions. You need to add those extensions to the factory object::
         {
             parent::setUp();
 
-            $validator = $this->getMock('\Symfony\Component\Validator\ValidatorInterface');
+            $validator = $this->getMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
             $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
             $this->factory = Forms::createFormFactoryBuilder()

@@ -25,7 +25,7 @@ option defaults to 120 years ago to the current year.
 | Inherited options    | from the :doc:`date </reference/forms/types/date>` type:                      |
 |                      |                                                                               |
 |                      | - `days`_                                                                     |
-|                      | - `empty_value`_                                                              |
+|                      | - `placeholder`_                                                              |
 |                      | - `format`_                                                                   |
 |                      | - `input`_                                                                    |
 |                      | - `model_timezone`_                                                           |
@@ -67,7 +67,7 @@ type:
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 

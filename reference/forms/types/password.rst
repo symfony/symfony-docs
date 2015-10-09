@@ -21,7 +21,7 @@ The ``password`` field renders an input password text box.
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
-|             | - `max_length`_                                                        |
+|             | - `max_length`_ (deprecated as of 2.5)                                 |
 |             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+

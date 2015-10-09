@@ -592,16 +592,17 @@ each event has their own event object:
 
 .. _component-http-kernel-event-table:
 
-=================  ============================  ===================================================================================
-Name               ``KernelEvents`` Constant     Argument Passed to the Listener
-=================  ============================  ===================================================================================
-kernel.request     ``KernelEvents::REQUEST``     :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
-kernel.controller  ``KernelEvents::CONTROLLER``  :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
-kernel.view        ``KernelEvents::VIEW``        :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
-kernel.response    ``KernelEvents::RESPONSE``    :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
-kernel.terminate   ``KernelEvents::TERMINATE``   :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
-kernel.exception   ``KernelEvents::EXCEPTION``   :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
-=================  ============================  ===================================================================================
+=====================  ================================  ===================================================================================
+Name                   ``KernelEvents`` Constant         Argument passed to the listener
+=====================  ================================  ===================================================================================
+kernel.request         ``KernelEvents::REQUEST``         :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    
+kernel.controller      ``KernelEvents::CONTROLLER``      :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
+kernel.view            ``KernelEvents::VIEW``            :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
+kernel.response        ``KernelEvents::RESPONSE``        :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
+kernel.finish_request  ``KernelEvents::FINISH_REQUEST``  :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
+kernel.terminate       ``KernelEvents::TERMINATE``       :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
+kernel.exception       ``KernelEvents::EXCEPTION``       :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
+=====================  ================================  ===================================================================================
 
 .. _http-kernel-working-example:
 
@@ -685,8 +686,8 @@ This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
 listeners (e.g. security) may only act upon the master request. Each listener
 is passed some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
-whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-can be used to figure out if the current request is a "master" or "sub" request.
+whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+can be used to check if the current request is a "master" or "sub" request.
 
 For example, a listener that only needs to act on the master request may
 look like this::
@@ -696,7 +697,7 @@ look like this::
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 

@@ -283,7 +283,7 @@ interface to construct the response that needs to be returned to the client::
     $response = new Response();
 
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
-    $response->setStatusCode(200);
+    $response->setStatusCode(Response::HTTP_OK);
     $response->headers->set('Content-Type', 'text/html');
 
     // prints the HTTP headers followed by the content
@@ -378,7 +378,7 @@ on that value. This can get ugly quickly::
     } elseif ('/contact' === $path) {
         $response = new Response('Contact us');
     } else {
-        $response = new Response('Page not found.', 404);
+        $response = new Response('Page not found.', Response::HTTP_NOT_FOUND);
     }
     $response->send();
 

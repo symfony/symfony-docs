@@ -8,6 +8,8 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
+|                | - `payload`_                                                        |
+|                | - `checkDNS`_                                                       |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -220,3 +222,82 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
                 )));
             }
         }
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+checkDNS
+~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``checkDNS`` option was introduced in Symfony 2.7.
+
+**type**: ``boolean`` **default**: ``false``
+
+By default, this constraint just validates the syntax of the given URL. If you
+also need to check whether the associated host exists, set the ``checkDNS``
+option to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Url(
+             *    checkDNS = true
+             * )
+             */
+             protected $bioUrl;
+        }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: { checkDNS: true }
+
+    .. code-block:: xml
+
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="AppBundle\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url">
+                        <option name="checkDNS">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'checkDNS'  => true,
+                )));
+            }
+        }
+
+This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
+of the ``ANY`` DNS record corresponding to the host associated with the given URL.

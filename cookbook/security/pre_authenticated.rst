@@ -75,6 +75,8 @@ the user provider, and sets the ``SSL_CLIENT_S_DN`` as credentials in the
 You can override these by setting the ``user`` and the ``credentials`` keys
 in the x509 firewall configuration respectively.
 
+.. _cookbook-security-pre-authenticated-user-provider-note:
+
 .. note::
 
     An authentication provider will only inform the user provider of the username
@@ -86,3 +88,66 @@ in the x509 firewall configuration respectively.
 
     * :doc:`/cookbook/security/custom_provider`
     * :doc:`/cookbook/security/entity_provider`
+
+REMOTE_USER Based Authentication
+--------------------------------
+
+.. versionadded:: 2.6
+    REMOTE_USER pre authenticated firewall was introduced in Symfony 2.6.
+
+A lot of authentication modules, like ``auth_kerb`` for Apache provide the username
+using the ``REMOTE_USER`` environment variable. This variable can be trusted by
+the application since the authentication happened before the request reached it.
+
+To configure Symfony using the ``REMOTE_USER`` environment variable, simply enable the
+corresponding firewall in your security configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            firewalls:
+                secured_area:
+                    pattern: ^/
+                    remote_user:
+                        provider: your_user_provider
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services">
+
+            <config>
+                <firewall name="secured_area" pattern="^/">
+                    <remote-user provider="your_user_provider"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'secured_area' => array(
+                    'pattern'     => '^/'
+                    'remote_user' => array(
+                        'provider' => 'your_user_provider',
+                    ),
+                ),
+            ),
+        ));
+
+The firewall will then provide the ``REMOTE_USER`` environment variable to
+your user provider. You can change the variable name used by setting the ``user``
+key in the ``remote_user`` firewall configuration.
+
+.. note::
+
+    Just like for X509 authentication, you will need to configure a "user provider".
+    See :ref:`the previous note <cookbook-security-pre-authenticated-user-provider-note>`
+    for more information.

@@ -11,6 +11,7 @@ Also see :doc:`False <False>`.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\True`           |
 +----------------+---------------------------------------------------------------------+
@@ -73,7 +74,7 @@ Then you can constrain this method with ``True``.
 
     .. code-block:: xml
 
-        <!-- src/Acme/Blogbundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -129,3 +130,5 @@ message
 **type**: ``string`` **default**: ``This value should be true.``
 
 This message is shown if the underlying data is not true.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

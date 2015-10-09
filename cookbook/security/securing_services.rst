@@ -5,28 +5,28 @@
 How to Secure any Service or Method in your Application
 =======================================================
 
-In the security chapter, you can see how to :ref:`secure a controller <book-security-securing-controller>`
-by requesting the ``security.context`` service from the Service Container
-and checking the current user's role::
+In the security chapter, you can see how to
+:ref:`secure a controller <book-security-securing-controller>` by requesting
+the ``security.authorization_checker`` service from the Service Container and
+checking the current user's role::
 
     // ...
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // ...
     }
 
-You can also secure *any* service in a similar way by injecting the ``security.context``
+You can also secure *any* service by injecting the ``security.authorization_checker``
 service into it. For a general introduction to injecting dependencies into
 services see the :doc:`/book/service_container` chapter of the book. For
 example, suppose you have a ``NewsletterManager`` class that sends out emails
-and you want to restrict its use to only users who have some ``ROLE_NEWSLETTER_ADMIN``
-role. Before you add security, the class looks something like this::
+and you want to restrict its use to only users who have some
+``ROLE_NEWSLETTER_ADMIN`` role. Before you add security, the class looks
+something like this::
 
     // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;
@@ -42,22 +42,24 @@ role. Before you add security, the class looks something like this::
     }
 
 Your goal is to check the user's role when the ``sendNewsletter()`` method is
-called. The first step towards this is to inject the ``security.context``
+called. The first step towards this is to inject the ``security.authorization_checker``
 service into the object. Since it won't make sense *not* to perform the security
 check, this is an ideal candidate for constructor injection, which guarantees
-that the security context object will be available inside the ``NewsletterManager``
+that the authorization checker object will be available inside the ``NewsletterManager``
 class::
 
+    // src/AppBundle/Newsletter/NewsletterManager.php
+
     // ...
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
     class NewsletterManager
     {
-        protected $securityContext;
+        protected $authorizationChecker;
 
-        public function __construct(SecurityContextInterface $securityContext)
+        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
         {
-            $this->securityContext = $securityContext;
+            $this->authorizationChecker = $authorizationChecker;
         }
 
         // ...
@@ -72,8 +74,8 @@ Then in your service configuration, you can inject the service:
         # app/config/services.yml
         services:
             newsletter_manager:
-                class:     AppBundle\Newsletter\NewsletterManager
-                arguments: ["@security.context"]
+                class:     "AppBundle\Newsletter\NewsletterManager"
+                arguments: ["@security.authorization_checker"]
 
     .. code-block:: xml
 
@@ -86,7 +88,7 @@ Then in your service configuration, you can inject the service:
 
             <services>
                 <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                    <argument type="service" id="security.context" />
+                    <argument type="service" id="security.authorization_checker"/>
                 </service>
             </services>
         </container>
@@ -99,27 +101,30 @@ Then in your service configuration, you can inject the service:
 
         $container->setDefinition('newsletter_manager', new Definition(
             'AppBundle\Newsletter\NewsletterManager',
-            array(new Reference('security.context'))
+            array(new Reference('security.authorization_checker'))
         ));
 
 The injected service can then be used to perform the security check when the
 ``sendNewsletter()`` method is called::
 
+    namespace AppBundle\Newsletter;
+
+    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     // ...
-    use Symfony\Component\Security\Core\SecurityContextInterface;
 
     class NewsletterManager
     {
-        protected $securityContext;
+        protected $authorizationChecker;
 
-        public function __construct(SecurityContextInterface $securityContext)
+        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
         {
-            $this->securityContext = $securityContext;
+            $this->authorizationChecker = $authorizationChecker;
         }
 
         public function sendNewsletter()
         {
-            if (false === $this->securityContext->isGranted('ROLE_NEWSLETTER_ADMIN')) {
+            if (false === $this->authorizationChecker->isGranted('ROLE_NEWSLETTER_ADMIN')) {
                 throw new AccessDeniedException();
             }
 
@@ -179,7 +184,7 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
         $definition = new Definition(
             'AppBundle\Newsletter\NewsletterManager',
-            array(new Reference('security.context'))
+            // ...
         ));
         $definition->addTag('security.secure_service');
         $container->setDefinition('newsletter_manager', $definition);

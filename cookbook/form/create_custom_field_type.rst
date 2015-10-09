@@ -24,11 +24,11 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class GenderType extends AbstractType
     {
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => array(
@@ -72,7 +72,11 @@ important:
     set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
     for more details.
 
-``setDefaultOptions()``
+.. versionadded:: 2.7
+    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
+    the method was called ``setDefaultOptions()``.
+
+``configureOptions()``
     This defines options for your form type that
     can be used in ``buildForm()`` and ``buildView()``. There are a lot of
     options common to all fields (see :doc:`/reference/forms/types/form`),
@@ -162,27 +166,22 @@ link for details), create a ``gender_widget`` block to handle this:
 
             # app/config/config.yml
             twig:
-                form:
-                    resources:
-                        - 'AppBundle:Form:fields.html.twig'
+                form_themes:
+                    - 'AppBundle:Form:fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
-                <twig:form>
-                    <twig:resource>AppBundle:Form:fields.html.twig</twig:resource>
-                </twig:form>
+                <twig:form-theme>AppBundle:Form:fields.html.twig</twig:form-theme>
             </twig:config>
 
         .. code-block:: php
 
             // app/config/config.php
             $container->loadFromExtension('twig', array(
-                'form' => array(
-                    'resources' => array(
-                        'AppBundle:Form:fields.html.twig',
-                    ),
+                'form_themes' => array(
+                    'AppBundle:Form:fields.html.twig',
                 ),
             ));
 
@@ -248,7 +247,7 @@ new instance of the type in one of your forms::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', new GenderType(), array(
-                'empty_value' => 'Choose a gender',
+                'placeholder' => 'Choose a gender',
             ));
         }
     }
@@ -256,6 +255,10 @@ new instance of the type in one of your forms::
 But this only works because the ``GenderType()`` is very simple. What if
 the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    ``empty_value``, which is available prior to 2.6.
 
 .. _form-cookbook-form-field-service:
 
@@ -346,7 +349,7 @@ method to ``GenderType``, which receives the gender configuration::
     // src/AppBundle/Form/Type/GenderType.php
     namespace AppBundle\Form\Type;
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
 
@@ -360,7 +363,7 @@ method to ``GenderType``, which receives the gender configuration::
             $this->genderChoices = $genderChoices;
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => $this->genderChoices,
@@ -386,7 +389,7 @@ configuration, using the field is now much easier::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', 'gender', array(
-                'empty_value' => 'Choose a gender',
+                'placeholder' => 'Choose a gender',
             ));
         }
     }

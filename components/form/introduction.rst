@@ -589,7 +589,7 @@ method:
 
                 // ... perform some action, such as saving the data to the database
 
-                return $this->redirect($this->generateUrl('task_success'));
+                return $this->redirectToRoute('task_success');
             }
 
             // ...
@@ -666,30 +666,38 @@ Accessing Form Errors
 ~~~~~~~~~~~~~~~~~~~~~
 
 You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
-method to access the list of errors. Each element is a :class:`Symfony\\Component\\Form\\FormError`
-object::
+method to access the list of errors. It returns a
+:class:`Symfony\\Component\\Form\\FormErrorIterator` instance::
 
     $form = ...;
 
     // ...
 
-    // an array of FormError objects, but only errors attached to this
+    // a FormErrorIterator instance, but only errors attached to this
     // form level (e.g. "global errors)
     $errors = $form->getErrors();
 
-    // an array of FormError objects, but only errors attached to the
+    // a FormErrorIterator instance, but only errors attached to the
     // "firstName" field
     $errors = $form['firstName']->getErrors();
 
-    // a string representation of all errors of the whole form tree
-    $errors = $form->getErrorsAsString();
+    // a FormErrorIterator instance in a flattened structure
+    // use getOrigin() to determine the form causing the error
+    $errors = $form->getErrors(true);
 
-.. note::
+    // a FormErrorIterator instance representing the form tree structure
+    $errors = $form->getErrors(true, false);
 
-    If you enable the :ref:`error_bubbling <reference-form-option-error-bubbling>`
-    option on a field, calling ``getErrors()`` on the parent form will include
-    errors from that field. However, there is no way to determine which field
-    an error was originally attached to.
+.. tip::
+
+    In older Symfony versions, ``getErrors()`` returned an array. To use the
+    errors the same way in Symfony 2.5 or newer, you have to pass them to
+    PHP's :phpfunction:`iterator_to_array` function::
+
+        $errorsAsArray = iterator_to_array($form->getErrors());
+
+    This is useful, for example, if you want to use PHP's ``array_`` function
+    on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org

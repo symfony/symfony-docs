@@ -17,7 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
-|             | - `precision`_                                                      |
+|             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
 | options     |                                                                     |
@@ -76,14 +76,18 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-precision
-~~~~~~~~~
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``2``
 
-For some reason, if you need some precision other than 2 decimal places,
+For some reason, if you need some scale other than 2 decimal places,
 you can modify this value. You probably won't need to do this unless,
-for example, you want to round to the nearest dollar (set the precision
+for example, you want to round to the nearest dollar (set the scale
 to ``0``).
 
 Overridden Options

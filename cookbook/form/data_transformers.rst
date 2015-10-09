@@ -25,7 +25,7 @@ Suppose you have a Task form with a description ``textarea`` type::
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
     class TaskType extends AbstractType
@@ -35,7 +35,7 @@ Suppose you have a Task form with a description ``textarea`` type::
             $builder->add('description', 'textarea');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Task',
@@ -134,7 +134,7 @@ Start by setting up the text field like normal::
             ;
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Task'
@@ -334,7 +334,7 @@ First, create the custom field type class::
     use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class IssueSelectorType extends AbstractType
     {
@@ -351,7 +351,7 @@ First, create the custom field type class::
             $builder->addModelTransformer($transformer);
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',

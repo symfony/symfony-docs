@@ -675,7 +675,7 @@ you have a route that maps a product id to an update action in a controller::
         $product->setName('New product name!');
         $em->flush();
 
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
     }
 
 Updating an object involves just three steps:
@@ -1206,7 +1206,8 @@ to the given ``Category`` object via their ``category_id`` value.
         $category = $product->getCategory();
 
         // prints "Proxies\AppBundleEntityCategoryProxy"
-        var_dump(get_class($category));
+        dump(get_class($category));
+        die();
 
     This proxy object extends the true ``Category`` object, and looks and
     acts exactly like it. The difference is that, by using a proxy object,

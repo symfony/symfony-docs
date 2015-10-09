@@ -15,8 +15,9 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `empty_value`_                                                            |
+| Options              | - `placeholder`_                                                            |
 |                      | - `hours`_                                                                  |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
@@ -75,9 +76,11 @@ values.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/hours.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 input
 ~~~~~

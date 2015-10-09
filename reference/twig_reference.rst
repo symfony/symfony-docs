@@ -28,10 +28,6 @@ Functions
 render
 ~~~~~~
 
-.. versionadded:: 2.2
-    The ``render()`` function was introduced in Symfony 2.2. Prior, the
-    ``{% render %}`` tag was used and had a different signature.
-
 .. code-block:: jinja
 
     {{ render(uri, options) }}
@@ -82,9 +78,6 @@ Generates an ESI tag when possible or falls back to the behavior of
 controller
 ~~~~~~~~~~
 
-.. versionadded:: 2.2
-    The ``controller()`` function was introduced in Symfony 2.2.
-
 .. code-block:: jinja
 
     {{ controller(controller, attributes, query) }}
@@ -105,16 +98,20 @@ asset
 
 .. code-block:: jinja
 
-    {{ asset(path, packageName) }}
+    {{ asset(path, packageName, absolute = false, version = null) }}
 
 ``path``
     **type**: ``string``
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
+``absolute`` (deprecated as of 2.7)
+    **type**: ``boolean`` **default**: ``false``
+``version`` (deprecated as of 2.7)
+    **type**: ``string`` **default** ``null``
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`book-templating-assets`.
+:ref:`book-templating-assets`. For asset versioning, see :ref:`ref-framework-assets-version`.
 
 assets_version
 ~~~~~~~~~~~~~~
@@ -361,6 +358,50 @@ Returns the absolute URL (with scheme and host) for the given route. If
 ``schemeRelative`` is enabled, it'll create a scheme-relative URL. More
 information in :ref:`book-templating-pages`.
 
+absolute_url
+~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+     The ``absolute_url`` function was introduced in Symfony 2.7
+
+.. code-block:: jinja
+
+    {{ absolute_url(path) }}
+
+``path``
+    **type**: ``string``
+
+Returns the absolute URL for the given absolute path. This is useful to convert
+an existing path:
+
+.. code-block:: jinja
+
+    {{ absolute_url(asset(path)) }}
+
+relative_path
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+     The ``relative_path`` function was introduced in Symfony 2.7
+
+.. code-block:: jinja
+
+    {{ relative_path(path) }}
+
+``path``
+    **type**: ``string``
+
+Returns a relative path for the given absolute path (based on the current
+request path). For instance, if the current path is
+``/article/news/welcome.html``, the relative path for ``/article/image.png`` is
+``../images.png``.
+
+expression
+~~~~~~~~~~
+
+Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
+Twig. See ":ref:`Template Expressions <book-security-template-expression>`".
+
 .. _reference-twig-filters:
 
 Filters
@@ -368,9 +409,6 @@ Filters
 
 humanize
 ~~~~~~~~
-
-.. versionadded:: 2.1
-    The ``humanize`` filter was introduced in Symfony 2.1
 
 .. code-block:: jinja
 
@@ -637,6 +675,16 @@ trans_default_domain
 
 This will set the default domain in the current template.
 
+stopwatch
+~~~~~~~~~
+
+.. code-block:: jinja
+
+    {% stopwatch 'name' %}...{% endstopwatch %}
+
+This will time the run time of the code inside it and put that on the timeline
+of the WebProfilerBundle.
+
 .. _reference-twig-tests:
 
 Tests
@@ -676,7 +724,12 @@ The available attributes are:
 * ``app.session``
 * ``app.environment``
 * ``app.debug``
-* ``app.security``
+* ``app.security`` (deprecated as of 2.6)
+
+.. caution::
+
+     The ``app.security`` global is deprecated as of 2.6. The user is already
+     available as ``app.user`` and ``is_granted()`` is registered as function.
 
 Symfony Standard Edition Extensions
 -----------------------------------

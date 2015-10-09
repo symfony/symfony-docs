@@ -28,7 +28,7 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
 | options     |                                                                        |
-|             | - `empty_value`_                                                       |
+|             | - `placeholder`_                                                       |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `expanded`_                                                          |
@@ -68,7 +68,7 @@ Inherited Options
 These options inherit from the :doc:`choice </reference/forms/types/choice>`
 type:
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

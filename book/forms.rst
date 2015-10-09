@@ -234,7 +234,7 @@ controller::
         if ($form->isValid()) {
             // ... perform some action, such as saving the task to the database
 
-            return $this->redirect($this->generateUrl('task_success'));
+            return $this->redirectToRoute('task_success');
         }
 
         return $this->render('default/new.html.twig', array(
@@ -327,7 +327,7 @@ querying if the "Save and add" button was clicked::
             ? 'task_new'
             : 'task_success';
 
-        return $this->redirect($this->generateUrl($nextAction));
+        return $this->redirectToRoute($nextAction);
     }
 
 .. index::
@@ -478,13 +478,17 @@ you'll need to specify which validation group(s) your form should use::
         'validation_groups' => array('registration'),
     ))->add(...);
 
+.. versionadded:: 2.7
+    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
+    the method was called ``setDefaultOptions()``.
+
 If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``setDefaultOptions()``
+good practice), then you'll need to add the following to the ``configureOptions()``
 method::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => array('registration'),
@@ -506,9 +510,9 @@ Disabling Validation
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => false,
@@ -532,10 +536,10 @@ If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
 to an array callback::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => array(
@@ -552,10 +556,10 @@ You can also define whole logic inline by using a ``Closure``::
 
     use AppBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function (FormInterface $form) {
@@ -576,10 +580,10 @@ of the entity as well you have to adjust the option as follows::
 
     use AppBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function (FormInterface $form) {
@@ -777,7 +781,7 @@ the correct values of a number of field options.
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
 
-    ->add('task', null, array('max_length' => 4))
+    ->add('task', null, array('attr' => array('maxlength' => 4)))
 
 .. index::
    single: Forms; Rendering in a template
@@ -1108,9 +1112,9 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+        use Symfony\Component\OptionsResolver\OptionsResolver;
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Task',
@@ -1251,7 +1255,7 @@ it after a form submission can be done when the form is valid::
         $em->persist($task);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('task_success'));
+        return $this->redirectToRoute('task_success');
     }
 
 If, for some reason, you don't have access to your original ``$task`` object,
@@ -1339,7 +1343,7 @@ create a form class so that a ``Category`` object can be modified by the user::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class CategoryType extends AbstractType
     {
@@ -1348,7 +1352,7 @@ create a form class so that a ``Category`` object can be modified by the user::
             $builder->add('name');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Category',
@@ -1488,7 +1492,7 @@ renders the form:
         {% form_theme form 'form/fields.html.twig' %}
 
         {# or if you want to use multiple themes #}
-        {% form_theme form 'form/fields.html.twig' 'Form/fields2.html.twig' %}
+        {% form_theme form 'form/fields.html.twig' 'form/fields2.html.twig' %}
 
         {# ... render the form #}
 
@@ -1628,9 +1632,8 @@ file:
 
         # app/config/config.yml
         twig:
-            form:
-                resources:
-                    - 'form/fields.html.twig'
+            form_themes:
+                - 'form/fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -1644,9 +1647,7 @@ file:
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form>
-                    <twig:resource>form/fields.html.twig</twig:resource>
-                </twig:form>
+                <twig:theme>form/fields.html.twig</twig:theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -1655,10 +1656,8 @@ file:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'form/fields.html.twig',
-                ),
+            'form_themes' => array(
+                'form/fields.html.twig',
             ),
             // ...
         ));
@@ -1790,13 +1789,13 @@ that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
     {
         // ...
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class'      => 'AppBundle\Entity\Task',
@@ -1910,11 +1909,6 @@ The answer is to setup the constraints yourself, and attach them to the individu
 fields. The overall approach is covered a bit more in the :ref:`validation chapter <book-validation-raw-values>`,
 but here's a short example:
 
-.. versionadded:: 2.1
-   The ``constraints`` option, which accepts a single constraint or an array
-   of constraints (before 2.1, the option was called ``validation_constraint``,
-   and only accepted a single constraint) was introduced in Symfony 2.1.
-
 .. code-block:: php
 
     use Symfony\Component\Validator\Constraints\Length;
@@ -1974,7 +1968,7 @@ Learn more from the Cookbook
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
-.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/2.3/src/Symfony/Bridge/Twig
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.3/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`view on GitHub`: https://github.com/symfony/symfony/tree/2.3/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
+.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form

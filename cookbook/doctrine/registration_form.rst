@@ -111,7 +111,7 @@ Next, create the form for the ``User`` model::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class UserType extends AbstractType
     {
@@ -125,7 +125,7 @@ Next, create the form for the ``User`` model::
             ));
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\User'
@@ -287,7 +287,7 @@ the validation and saves the data into the database::
             $em->persist($registration->getUser());
             $em->flush();
 
-            return $this->redirect(...);
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(

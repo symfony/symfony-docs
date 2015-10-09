@@ -7,8 +7,8 @@ Authorization
 When any of the authentication providers (see :ref:`authentication_providers`)
 has verified the still-unauthenticated token, an authenticated token will
 be returned. The authentication listener should set this token directly
-in the :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`
-using its :method:`Symfony\\Component\\Security\\Core\\SecurityContextInterface::setToken`
+in the :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface`
+using its :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface::setToken`
 method.
 
 From then on, the user is authenticated, i.e. identified. Now, other parts
@@ -28,6 +28,11 @@ An authorization decision will always be based on a few things:
 * An object (optional)
     Any object for which access control needs to be checked, like
     an article or a comment object.
+
+.. versionadded:: 2.6
+    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
+    had to use the ``setToken()`` method of the
+    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
 
 .. _components-security-access-decision-manager:
 
@@ -227,24 +232,25 @@ are required for the current user to get access to the application::
         $authenticationManager
     );
 
-Security Context
-~~~~~~~~~~~~~~~~
+Authorization Checker
+~~~~~~~~~~~~~~~~~~~~~
 
 The access decision manager is also available to other parts of the application
-via the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
-method of the :class:`Symfony\\Component\\Security\\Core\\SecurityContext`.
+via the :method:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker::isGranted`
+method of the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker`.
 A call to this method will directly delegate the question to the access
 decision manager::
 
-    use Symfony\Component\Security\SecurityContext;
+    use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-    $securityContext = new SecurityContext(
+    $authorizationChecker = new AuthorizationChecker(
+        $tokenStorage,
         $authenticationManager,
         $accessDecisionManager
     );
 
-    if (!$securityContext->isGranted('ROLE_ADMIN')) {
+    if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
 

@@ -23,8 +23,7 @@ your controller::
     }
 
 The ``logger`` service has different methods for different logging levels.
-See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
-on which methods are available.
+See LoggerInterface_ for details on which methods are available.
 
 Handlers and Channels: Writing Logs to different Locations
 ----------------------------------------------------------
@@ -534,5 +533,6 @@ the ``monolog.processor`` tag:
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));
 
-.. _`Monolog`: https://github.com/Seldaek/monolog
+.. _Monolog: https://github.com/Seldaek/monolog
+.. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
 .. _`logrotate`: https://fedorahosted.org/logrotate/
