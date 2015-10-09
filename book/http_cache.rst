@@ -912,7 +912,7 @@ Here is how you can configure the Symfony reverse proxy to support the
             if ('127.0.0.1' !== $request->getClientIp()) {
                 return new Response(
                     'Invalid HTTP method',
-                    400
+                    Response::HTTP_BAD_REQUEST
                 );
             }
 
