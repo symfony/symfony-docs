@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-01T06:24:32Z
+
+I think it's a good idea to explain it here. Though I would rather put it in a caution block to make it more visible:
+
+```rst
+.. caution::
+    Since the token is stored [...]
+```
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2015-09-01T10:26:00Z
+
+OK, sure! Would you help me?
+I don't have that much knowledge, just wanted to raise the attention of somebody to this issue. There are several related questions on Stackoverflow, e.g. http://stackoverflow.com/questions/26778786/symfony2-failed-to-start-the-session-already-started-by-php/
+but the interplay between session and forms is documented *nowhere*.
+
+On http://symfony.com/doc/current/components/http_foundation/sessions.html it says: "While it is recommended to explicitly start a session,...", this didn't work for me when using a form. So the open questions are:
+
+* What's the exact benefit of starting a session explicitly?
+* Do forms use Symfony's sessions or PHP's native sessions?
+* How can you see the CSRF token in the session? Should probably be in the Attributes Bag, but I can't see it there.
+And a code example of the recommended way to do it would really be nice!
+
+Cheers,
+Thomas
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-02T20:37:43Z
+
+Oh, it's quite easy. Just replace the paragraph you added with the following markup:
+
+```rst
+.. caution::
+
+    Since the token is stored in the session, a session is started automatically
+    as soon as you render a form with CSRF protection.
+```
+
+That's it. :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-05T12:10:37Z
+
+:+1:
