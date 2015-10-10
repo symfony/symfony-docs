@@ -221,8 +221,9 @@ You can change the inner service name if you want to:
 
 Deprecating Services
 --------------------
+
 .. versionadded:: 2.8
-   The ``deprecated`` setting was introduced in Symfony 2.8
+    The ``deprecated`` setting was introduced in Symfony 2.8.
 
 Once you have decided to deprecate the use of a service (because it is outdated
 or you decided not to use and maintain it anymore), you can deprecate its
@@ -232,21 +233,33 @@ definition:
 
     .. code-block:: yaml
 
-       bar:
-         class: stdClass
-         deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
+       acme.my_service:
+           class: ...
+           deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
-        <service id="bar" class="stdClass">
-            <deprecated>The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.</deprecated>
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="acme.my_service" class="...">
+                    <deprecated>The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.</deprecated>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         $container
-            ->register('bar', 'stdClass')
-            ->setDeprecated(true, 'The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.');
+            ->register('acme.my_service', '...')
+            ->setDeprecated(
+                true,
+                'The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.'
+            )
+        ;
 
 Now, every time a service is created using this deprecated definition, a
 deprecation warning will be triggered, advising you to stop or to change your
@@ -258,16 +271,16 @@ occurrence of the ``%service_id%`` placeholder in your template.
 
 .. note::
 
-   The deprecation message is optional. If not set, Symfony will show a default
-   message ``The "%service_id%" service is deprecated. You should stop using it,
-   as it will soon be removed.``.
+    The deprecation message is optional. If not set, Symfony will show a default
+    message ``The "%service_id%" service is deprecated. You should stop using it,
+    as it will soon be removed.``.
 
 .. tip::
 
-   It is strongly recommended that you fill the message template, to avoid a
-   message that could be too generic such as the default one. A good message
-   informs when this service was deprecated, and until when it will be
-   maintained (look at the examples above).
+    It is strongly recommended that you fill the message template, to avoid a
+    message that could be too generic such as the default one. A good message
+    informs when this service was deprecated, and until when it will be
+    maintained (look at the examples above).
 
 For service decorators (see above), if the definition does not modify the
 deprecated status, it will inherit the status from the definition that is
@@ -275,6 +288,5 @@ decorated.
 
 .. caution::
 
-   The ability to "un-deprecate" a service is possible only when declaring the
-   definition in PHP.
-
+    The ability to "un-deprecate" a service is possible only when declaring the
+    definition in PHP.
