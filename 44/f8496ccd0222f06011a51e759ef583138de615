@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-11T09:51:47Z
+
+:+1: nice addition and well explained. Thanks @Taluu.
+
+---------------------------------------------------------------------------
+
+by dudemelo at 2015-09-12T10:51:02Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by dupuchba at 2015-09-13T10:54:30Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by Taluu at 2015-09-14T17:14:30Z
+
+Updated with latest changes on the PR.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-09-20T10:03:59Z
+
+thank you @Taluu
+
+---------------------------------------------------------------------------
+
+by Taluu at 2015-09-25T12:33:59Z
+
+The main PR symfony/symfony#15491 has been merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-09T16:10:33Z
+
+A versionadded directive should also be added directly after the section title:
+```rst
+.. versionadded:: 2.8
+    The `deprecated` setting was introduced in Symfony 2.8.
+```
+
+I'm :+1: for merging this PR. The comments can be addressed after the merge, as they are mostly about markup and not content (however, if you have time and want to do it, feel free to do it).
+
+---------------------------------------------------------------------------
+
+by Taluu at 2015-10-10T15:02:30Z
+
+If it isn't merged in the following days, I'll try find some time to fix what you mentionned in your comments. :}
