@@ -120,7 +120,7 @@ fields
 This required option is the field (or list of fields) on which this entity
 should be unique. For example, if you specified both the ``email`` and ``name``
 field in a single ``UniqueEntity`` constraint, then it would enforce that
-the combination value where unique (e.g. two users could have the same email,
+the combination value is unique (e.g. two users could have the same email,
 as long as they don't have the same name also).
 
 If you need to require two fields to be individually unique (e.g. a unique
