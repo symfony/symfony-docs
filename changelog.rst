@@ -35,8 +35,10 @@ Fixed Documentation
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* `#5740 <https://github.com/symfony/symfony-docs/pull/5740>`_ Fix typo in PdoSessionHandler Documentation (tobemedia)
 * `#5719 <https://github.com/symfony/symfony-docs/pull/5719>`_ changed repo names to the new ones (fabpot)
 * `#5227 <https://github.com/symfony/symfony-docs/pull/5227>`_ [Cookbook] Fix doc on Generic Form Type Extensions (lemoinem)
+* `#5703 <https://github.com/symfony/symfony-docs/pull/5703>`_ comment old logic (OskarStark)
 * `#5683 <https://github.com/symfony/symfony-docs/pull/5683>`_ Improve the demo-warning. (GuGuss)
 * `#5690 <https://github.com/symfony/symfony-docs/pull/5690>`_ Updated the release process image (javiereguiluz)
 * `#5188 <https://github.com/symfony/symfony-docs/pull/5188>`_ Updated Cookies & Caching section (lukey78)
@@ -46,8 +48,10 @@ Minor Documentation Changes
 * `#5685 <https://github.com/symfony/symfony-docs/pull/5685>`_ Fix indentation in some annotations (iamdto)
 * `#5704 <https://github.com/symfony/symfony-docs/pull/5704>`_ Fix typo in translation.rst (zatikbalazs)
 * `#5701 <https://github.com/symfony/symfony-docs/pull/5701>`_ Update testing.rst (hansallis)
+* `#5711 <https://github.com/symfony/symfony-docs/pull/5711>`_ removed service call from controller (sloba88)
 * `#5692 <https://github.com/symfony/symfony-docs/pull/5692>`_ Made a sentence slightly more english (GTheron)
 * `#5715 <https://github.com/symfony/symfony-docs/pull/5715>`_ Add missing code tag (zatikbalazs)
+* `#5720 <https://github.com/symfony/symfony-docs/pull/5720>`_ adding closing tag (InfoTracer)
 * `#5714 <https://github.com/symfony/symfony-docs/pull/5714>`_ Remove unnecessary word from http_cache.rst (zatikbalazs)
 * `#5680 <https://github.com/symfony/symfony-docs/pull/5680>`_ fix grammar mistake (greg0ire)
 * `#5682 <https://github.com/symfony/symfony-docs/pull/5682>`_ Fix grammar and CS (iamdto)
@@ -58,6 +62,9 @@ Minor Documentation Changes
 * `#5674 <https://github.com/symfony/symfony-docs/pull/5674>`_ Update cookbook entries with best practices (JhonnyL)
 * `#5675 <https://github.com/symfony/symfony-docs/pull/5675>`_ [Contributing] add a link to the testing section (xabbuh)
 * `#5669 <https://github.com/symfony/symfony-docs/pull/5669>`_ Better explanation of implicit exception response status code (hvt)
+* `#5651 <https://github.com/symfony/symfony-docs/pull/5651>`_ [Reference][Constraints] follow best practices in the constraints reference (xabbuh)
+* `#5648 <https://github.com/symfony/symfony-docs/pull/5648>`_ Minor fixes for the QuestionHelper documentation (javiereguiluz)
+* `#5641 <https://github.com/symfony/symfony-docs/pull/5641>`_ Move important information out of versionadded (WouterJ)
 * `#5619 <https://github.com/symfony/symfony-docs/pull/5619>`_ Remove a caution note about StringUtils::equals() which is no longer true (javiereguiluz)
 * `#5571 <https://github.com/symfony/symfony-docs/pull/5571>`_ Some small fixes for upload files article (WouterJ)
 * `#5660 <https://github.com/symfony/symfony-docs/pull/5660>`_ Improved "Community Reviews" page (webmozart)
