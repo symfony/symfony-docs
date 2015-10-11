@@ -13,6 +13,56 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+September, 2015
+---------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#5555 <https://github.com/symfony/symfony-docs/pull/5555>`_ added result yaml and xml from example code (OskarStark)
+* `#5631 <https://github.com/symfony/symfony-docs/pull/5631>`_ Updated the Quick Tour to the latest changes introduced by Symfony (javiereguiluz)
+* `#5497 <https://github.com/symfony/symfony-docs/pull/5497>`_ Simplified the Quick tour explanation about Symfony Installation (DQNEO)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5629 <https://github.com/symfony/symfony-docs/pull/5629>`_ Fixing web user permission (BenoitLeveque)
+* `#5673 <https://github.com/symfony/symfony-docs/pull/5673>`_ Update http_cache.rst (szyszka90)
+* `#5666 <https://github.com/symfony/symfony-docs/pull/5666>`_ Fix EntityManager namespace (JhonnyL)
+* `#5656 <https://github.com/symfony/symfony-docs/pull/5656>`_ Fix monolog line formatter in logging cookbook example. (vmarquez)
+* `#5507 <https://github.com/symfony/symfony-docs/pull/5507>`_ Path fixed (carlosreig)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#5719 <https://github.com/symfony/symfony-docs/pull/5719>`_ changed repo names to the new ones (fabpot)
+* `#5227 <https://github.com/symfony/symfony-docs/pull/5227>`_ [Cookbook] Fix doc on Generic Form Type Extensions (lemoinem)
+* `#5683 <https://github.com/symfony/symfony-docs/pull/5683>`_ Improve the demo-warning. (GuGuss)
+* `#5690 <https://github.com/symfony/symfony-docs/pull/5690>`_ Updated the release process image (javiereguiluz)
+* `#5188 <https://github.com/symfony/symfony-docs/pull/5188>`_ Updated Cookies & Caching section (lukey78)
+* `#5710 <https://github.com/symfony/symfony-docs/pull/5710>`_ Fix grammar mistake in security.rst (zatikbalazs)
+* `#5706 <https://github.com/symfony/symfony-docs/pull/5706>`_ Update assetic.rst (Acinonux)
+* `#5705 <https://github.com/symfony/symfony-docs/pull/5705>`_ Update assetic.rst (Acinonux)
+* `#5685 <https://github.com/symfony/symfony-docs/pull/5685>`_ Fix indentation in some annotations (iamdto)
+* `#5704 <https://github.com/symfony/symfony-docs/pull/5704>`_ Fix typo in translation.rst (zatikbalazs)
+* `#5701 <https://github.com/symfony/symfony-docs/pull/5701>`_ Update testing.rst (hansallis)
+* `#5692 <https://github.com/symfony/symfony-docs/pull/5692>`_ Made a sentence slightly more english (GTheron)
+* `#5715 <https://github.com/symfony/symfony-docs/pull/5715>`_ Add missing code tag (zatikbalazs)
+* `#5714 <https://github.com/symfony/symfony-docs/pull/5714>`_ Remove unnecessary word from http_cache.rst (zatikbalazs)
+* `#5680 <https://github.com/symfony/symfony-docs/pull/5680>`_ fix grammar mistake (greg0ire)
+* `#5682 <https://github.com/symfony/symfony-docs/pull/5682>`_ Fix grammar and CS (iamdto)
+* `#5652 <https://github.com/symfony/symfony-docs/pull/5652>`_ Do not use dynamic REQUEST_URI from $_SERVER as base url (senkal)
+* `#5654 <https://github.com/symfony/symfony-docs/pull/5654>`_ Doc about new way of running tests (nicolas-grekas)
+* `#5598 <https://github.com/symfony/symfony-docs/pull/5598>`_ [Cookbook][Security] proofread comments in voter article (xabbuh)
+* `#5560 <https://github.com/symfony/symfony-docs/pull/5560>`_ [2.3] [Contributing] [CS] Added missing docblocks in code snippet (phansys)
+* `#5674 <https://github.com/symfony/symfony-docs/pull/5674>`_ Update cookbook entries with best practices (JhonnyL)
+* `#5675 <https://github.com/symfony/symfony-docs/pull/5675>`_ [Contributing] add a link to the testing section (xabbuh)
+* `#5669 <https://github.com/symfony/symfony-docs/pull/5669>`_ Better explanation of implicit exception response status code (hvt)
+* `#5619 <https://github.com/symfony/symfony-docs/pull/5619>`_ Remove a caution note about StringUtils::equals() which is no longer true (javiereguiluz)
+* `#5571 <https://github.com/symfony/symfony-docs/pull/5571>`_ Some small fixes for upload files article (WouterJ)
+* `#5660 <https://github.com/symfony/symfony-docs/pull/5660>`_ Improved "Community Reviews" page (webmozart)
+
+
 August, 2015
 ------------
 
