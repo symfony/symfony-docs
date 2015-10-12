@@ -1024,8 +1024,8 @@ configuration option.
 .. versionadded:: 2.5
     Setting versioned URLs on an asset-by-asset basis was introduced in Symfony 2.5.
 
-If you need to set a version for a specific asset, you can set the fourth
-argument (or the ``version`` argument) to the desired version:
+If you need to set a version for a specific asset, you can set the ``version`` argument
+if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
 
 .. configuration-block::
 
@@ -1049,8 +1049,8 @@ versioned URL will be deactivated for this asset.
 .. versionadded:: 2.5
     Absolute URLs for assets were introduced in Symfony 2.5.
 
-If you need absolute URLs for assets, you can set the third argument (or the
-``absolute`` argument) to ``true``:
+If you need absolute URLs for assets, you can set the ``absolute`` argument
+if you are using Twig (or the third argument if you are using PHP) to ``true``:
 
 .. configuration-block::
 
