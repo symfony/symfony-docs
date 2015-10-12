@@ -867,6 +867,20 @@ configuration:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/WelcomeController.php
+        class WelcomeController extends Controller
+        {
+            /**
+             * @Route("/", name="_welcome")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -917,6 +931,20 @@ As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/ArticleController.php
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route("/article/{slug}", name="article_show")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
