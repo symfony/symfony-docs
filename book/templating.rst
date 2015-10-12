@@ -1029,8 +1029,8 @@ configuration option.
 
 .. _`book-templating-version-by-asset`:
 
-If you need to set a version for a specific asset, you can set the fourth
-argument (or the ``version`` argument) to the desired version:
+If you need to set a version for a specific asset, you can set the ``version`` argument
+if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
 
 .. configuration-block::
 
@@ -1051,8 +1051,8 @@ If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
-If you need absolute URLs for assets, you can set the third argument (or the
-``absolute`` argument) to ``true``:
+If you need absolute URLs for assets, you can set the ``absolute`` argument
+if you are using Twig (or the third argument if you are using PHP) to ``true``:
 
 .. configuration-block::
 
