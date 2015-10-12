@@ -48,8 +48,7 @@ will contain a Business Identifier Code (BIC).
         AppBundle\Entity\Transaction:
             properties:
                 businessIdentifierCode:
-                    - Bic:
-                        message: This is not a valid Business Identifier Code (BIC).
+                    - Bic: ~
 
     .. code-block:: xml
 
@@ -61,11 +60,7 @@ will contain a Business Identifier Code (BIC).
 
             <class name="AppBundle\Entity\Transaction">
                 <property name="businessIdentifierCode">
-                    <constraint name="Bic">
-                        <option name="message">
-                            This is not a valid Business Identifier Code (BIC).
-                        </option>
-                    </constraint>
+                    <constraint name="Bic" />
                 </property>
             </class>
         </constraint-mapping>
@@ -84,9 +79,7 @@ will contain a Business Identifier Code (BIC).
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('businessIdentifierCode', new Assert\Bic(array(
-                    'message' => 'This is not a valid Business Identifier Code (BIC).',
-                )));
+                $metadata->addPropertyConstraint('businessIdentifierCode', new Assert\Bic());
             }
         }
 
