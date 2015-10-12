@@ -815,10 +815,10 @@ Adding HTTP Method Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the URL, you can also match on the *method* of the incoming
-request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you have a contact form
-with two controllers - one for displaying the form (on a GET request) and one
-for processing the form when it's submitted (on a POST request). This can
-be accomplished with the following route configuration:
+request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you have a site with two urls,
+one for displaying some news (on a GET request) and one for displaying a contact form
+(on a GET request) and for processing the form when it's submitted (on a POST request).
+This can be accomplished with the following route configuration:
 
 .. configuration-block::
 
@@ -903,10 +903,9 @@ be accomplished with the following route configuration:
     The ``methods`` option was introduced in Symfony 2.2. Use the ``_method``
     requirement in older versions.
 
-Despite the fact that these two routes have identical paths (``/contact``),
-the first route will match only GET requests and the second route will match
-only POST requests. This means that you can display the form and submit the
-form via the same URL, while using distinct controllers for the two actions.
+The first route will match only GET requests and the second route will match
+both GET and POST requests. Neither of these routes will match other methods
+like PUT or DELETE requests.
 
 .. note::
 
