@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-12T15:09:58Z
+
+looks good to me :+1:
+
+thank you @mvhirsch
+
+---------------------------------------------------------------------------
+
+by mvhirsch at 2015-08-13T06:30:06Z
+
+@OskarStark I moved the BIC near the IBAN validator.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-13T07:27:59Z
+
+thank you @mvhirsch
+
+---------------------------------------------------------------------------
+
+by mvhirsch at 2015-08-14T13:25:45Z
+
+@WouterJ @OskarStark I just updated the docs according to your notes. Thank you very much!
+
+---------------------------------------------------------------------------
+
+by mvhirsch at 2015-08-24T06:43:23Z
+
+I removed the *Acme* namespace and added *Bic* to the map.rst.inc.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-26T16:32:07Z
+
+i think we can add the ```Finished``` tag ;-)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-26T16:57:38Z
+
+@OskarStark as the code PR isn't merged yet, we'll keep the "On hold" label (meaning: waiting code merge).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-27T11:01:09Z
+
+The code has been merged. Congrats @mvhirsch!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-10T15:27:18Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-12T18:55:25Z
+
+Oh, I forgot to :+1:.
