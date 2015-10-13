@@ -178,7 +178,7 @@ pattern so that it is only accessible by requests from the local server itself:
             # ...
             access_control:
                 #
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, fe80::1, ::1] }
                 - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
