@@ -18,6 +18,7 @@ objects from the database.
 |             | - `em`_                                                          |
 |             | - `group_by`_                                                    |
 |             | - `query_builder`_                                               |
+|             | - `id_reader`_                                                   |
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choice_list`_                                                 |
 | options     | - `choices`_                                                     |
@@ -170,6 +171,21 @@ order) that should be used for the field. The value of this option can
 either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
 the entity and return an instance of ``QueryBuilder``.
+
+id_reader
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``id_reader`` option was introduced in Symfony 2.7.
+    
+**type**: :class:``Symfony\Bridge\Doctrine\Form\ChoiceList\IdReader``
+
+**default**: :class:``Symfony\Bridge\Doctrine\Form\ChoiceList\IdReader``
+
+By default the ``entity`` type only accepts a primary key value
+(usually ``id``). This option allows you to customize this behavior
+by passing a tailored ``IdReader`` instance which may return any
+other column value e.g. an email.
 
 Overridden Options
 ------------------
