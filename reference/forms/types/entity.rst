@@ -110,11 +110,21 @@ choice_label
     The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
     2.7, it was called ``property`` (which has the same functionality).
 
-**type**: ``string``
+**type**: ``string|callable``
 
 This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
 cast into a string and so must have a ``__toString()`` method.
+
+The ``choice_label`` option can also be a callback that accepts 2 arguments: entity and index.
+You can use it like this::
+    
+      $builder->add('gender', 'entity', array(
+         'class' => 'MyBundle:Gender',
+         'choice_label' => function(MyBundle\Entity\Gender $gender, $index) {
+           return $index . '. ' . $gender->getLocalizedGender($this->locale);
+         },
+      ));
 
 .. note::
 
@@ -128,17 +138,6 @@ cast into a string and so must have a ``__toString()`` method.
         $builder->add('gender', 'entity', array(
            'class' => 'MyBundle:Gender',
            'choice_label' => 'translations[en].name',
-        ));
-
-.. note::
-    The ``choice_label`` option can also be a callback. The callback has
-    2 arguments, the entity and index in the list. You can use it like this::
-    
-        $builder->add('gender', 'entity', array(
-           'class' => 'MyBundle:Gender',
-           'choice_label' => function(MyBundle\Gender $gender) {
-             return $gender->getLocalizedGender($this->locale);
-           },
         ));
 
 class
