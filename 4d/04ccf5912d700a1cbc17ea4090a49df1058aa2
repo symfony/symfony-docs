@@ -1,0 +1,166 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-25T14:28:24Z
+
+I think you got confused by the config tree :) Let's show some examples:
+
+Basic Prototyped Array (list)
+---
+
+```php
+$node
+    ->fixXmlConfig('driver')
+    ->children()
+        ->arrayNode('drivers')
+            ->prototype('scalar')->end()
+        ->end() // drivers
+    ->end()
+;
+```
+```yml
+drivers: ['mysql', 'sqlite']
+```
+```xml
+<driver>msyql</driver>
+<driver>sqlite</driver>
+```
+
+**Output after processing**:
+```php
+Array(
+    [0] => 'mysql'
+    [1] => 'sqlite'
+)
+```
+
+Prototyped Array With Children (list)
+---
+
+```php
+$node
+    ->fixXmlConfig('connection')
+    ->children()
+        ->arrayNode('connections')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('table')->end()
+                    ->scalarNode('user')->end()
+                    ->scalarNode('password')->end()
+                ->end()
+            ->end()
+        ->end() // connections
+    ->end()
+;
+```
+```yml
+connections:
+    - { table: symfony, user: root, password: ~ }
+    - { table: foo, user: root, password: pa$$ }
+```
+```xml
+<connection table="symfony" user="root" password="null" />
+<connection table="foo" user="root" password="pa$$" />
+```
+
+**Output after processing**:
+```php
+Array(
+    [0] => Array(
+        [table] => 'symfony'
+        [user] => 'root'
+        [password] => null
+    )
+    [1] => Array(
+        [table] => 'foo'
+        [user] => 'root'
+        [password] => 'pa$$'
+    )
+)
+```
+
+Prototyped Array (list) With Wrong Usage
+---
+
+Assume same tree as previous example, but now this yaml:
+```yml
+connections:
+    sf_connection:
+        table: symfony
+        user: root
+        password: ~
+    default:
+        table: foo
+        user: root
+        password: pa$$
+```
+The outcome will be exactly the same as the previous example, as the config component still handles `connections` as a list.
+
+Prototyped Array (map)
+---
+
+Now, we can fix it using `->useAttributeAsKey()`:
+```php
+$node
+    ->fixXmlConfig('connection')
+    ->children()
+        ->arrayNode('connections')
+            ->prototype('array')
+                ->useAttributeAsKey('name')
+                ->children()
+                    ->scalarNode('table')->end()
+                    ->scalarNode('user')->end()
+                    ->scalarNode('password')->end()
+                ->end()
+            ->end()
+        ->end() // connections
+    ->end()
+;
+```
+Yaml is the same as previous example.
+```xml
+<connection name="sf_connection"
+    table="symfony" user="root" password="null" />
+<connection name="default"
+    table="foo" user="root" password="pa$$" />
+```
+
+**Output after processing**:
+```php
+Array(
+    [sf_connection] => Array(
+        [table] => 'symfony'
+        [user] => 'root'
+        [password] => null
+    )
+    [default] => Array(
+        [table] => 'foo'
+        [user] => 'root'
+        [password] => 'pa$$'
+    )
+)
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-25T15:05:28Z
+
+@WouterJ thanks a lot for your excellent and insightful explanation. I've reused your exact same example to explain the method. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-05-29T06:37:27Z
+
+I wonder if we can label this PR as `finished` instead of `in progress`
+
+---------------------------------------------------------------------------
+
+by stof at 2015-06-06T21:13:03Z
+
+@javiereguiluz please also document the ``->normalizeKeys()`` method and advocate the usage of ``->normalizeKeys(false)`` for prototyped associative array nodes. Keys defined by the user should not have dashes normalized to underscores as it causes confusion.
+The ``->normalizeKeys()`` method was added in 2.2 to solve this issue because of the design mistake in 2.0. But ideally, it would not exist and we would automatically skip the dash-to-underscore normalization for prototyped nodes.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T21:44:49Z
+
+@javiereguiluz do you maybe have time to finish this PR?
