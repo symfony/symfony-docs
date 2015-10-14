@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-06-26T07:43:35Z
+
+All issues have been fixed. Can we label this as `finished`? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-07-07T14:46:52Z
+
+I've updated this PR to add a note comparing listeners and subscribers, as asked in #3987.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-07-15T13:45:33Z
+
+Please, tell me what else I can do to get this PR labelled as `finished`. Thanks.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-08-12T12:53:44Z
+
+the PR title is weird.
+
+this would be better IMO:
+```Added a cookbook SECTION about event subscribers```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-02T14:40:12Z
+
+I've reworded the introduction and also made the required changes. This is ready for the final review. Thanks!
+
+---------------------------------------------------------------------------
+
+by webda2l at 2015-09-03T08:50:57Z
+
+In http://symfony.com/doc/current/cookbook/bundles/best_practices.html, directory for events listeners is ````EventListener/````, and ````Listener/```` in this PR.
+Will be nice to rule on it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-05T10:35:53Z
+
+Indeed, can you make that last change, Javier? Then, this is ready to be merged.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-05T13:55:53Z
+
+I've made some final changes in b5a82ca.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-05T20:09:08Z
+
+:+1: Thanks Javier. That's a really nice work and I think we are finally finished here. :)
