@@ -212,6 +212,9 @@ Before defining the children of an array node, you can provide options like:
 ``addDefaultsIfNotSet()``
     If any child nodes have default values, use them if explicit values
     haven't been provided.
+``normalizeKeys(false)``
+    If called (with ``false``), keys with dashes are *not* normaled to underscores.
+    It is recommended to use this to avoid this unnecessary normalization.
 
 A basic prototyped array configuration can be defined as follows::
 
@@ -309,6 +312,12 @@ tree, when using the following YAML configuration:
 The output configuration will be exactly the same as before. In other words, the
 ``sf_connection`` and ``default`` configuration keys are lost. The reason is that
 the Symfony Config component treats arrays as lists by default.
+
+.. note::
+
+    As of writing this, there is an inconsistency: if only one file is processed,
+    the keys (i.e. ``sf_connection`` and ``default``) are *not* lost. But if more
+    than one file is processed, the keys are lost as described above.
 
 In order to maintain the array keys use the ``useAttributeAsKey()`` method::
 
