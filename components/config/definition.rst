@@ -203,8 +203,9 @@ Array Node Options
 Before defining the children of an array node, you can provide options like:
 
 ``useAttributeAsKey()``
-    Provide the name of a child node, whose value should be used as the
-    key in the resulting array.
+    Provide the name of a child node, whose value should be used as the key in
+    the resulting array. This method also defines the way config array keys are
+    treated, as explained in the following example.
 ``requiresAtLeastOneElement()``
     There should be at least one element in the array (works only when
     ``isRequired()`` is also called).
@@ -212,35 +213,147 @@ Before defining the children of an array node, you can provide options like:
     If any child nodes have default values, use them if explicit values
     haven't been provided.
 
-An example of this::
+A basic prototyped array configuration can be defined as follows::
 
-    $rootNode
+    $node
+        ->fixXmlConfig('driver')
         ->children()
-            ->arrayNode('parameters')
-                ->isRequired()
-                ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('name')
+            ->arrayNode('drivers')
+                ->prototype('scalar')->end()
+            ->end()
+        ->end()
+    ;
+
+When using the following YAML configuration:
+
+.. code-block:: yaml
+
+    drivers: ['mysql', 'sqlite']
+
+Or the following XML configuration:
+
+.. code-block:: xml
+
+    <driver>msyql</driver>
+    <driver>sqlite</driver>
+
+The processed configuration is::
+
+    Array(
+        [0] => 'mysql'
+        [1] => 'sqlite'
+    )
+
+A more complex example would be to define a prototyped array with children::
+
+    $node
+        ->fixXmlConfig('connection')
+        ->children()
+            ->arrayNode('connections')
                 ->prototype('array')
                     ->children()
-                        ->scalarNode('value')->isRequired()->end()
+                        ->scalarNode('table')->end()
+                        ->scalarNode('user')->end()
+                        ->scalarNode('password')->end()
                     ->end()
                 ->end()
             ->end()
         ->end()
     ;
 
-In YAML, the configuration might look like this:
+When using the following YAML configuration:
 
 .. code-block:: yaml
 
-    database:
-        parameters:
-            param1: { value: param1val }
+    connections:
+        - { table: symfony, user: root, password: ~ }
+        - { table: foo, user: root, password: pa$$ }
 
-In XML, each ``parameters`` node would have a ``name`` attribute (along
-with ``value``), which would be removed and used as the key for that element
-in the final array. The ``useAttributeAsKey`` is useful for normalizing
-how arrays are specified between different formats like XML and YAML.
+Or the following XML configuration:
+
+.. code-block:: xml
+
+    <connection table="symfony" user="root" password="null" />
+    <connection table="foo" user="root" password="pa$$" />
+
+The processed configuration is::
+
+    Array(
+        [0] => Array(
+            [table] => 'symfony'
+            [user] => 'root'
+            [password] => null
+        )
+        [1] => Array(
+            [table] => 'foo'
+            [user] => 'root'
+            [password] => 'pa$$'
+        )
+    )
+
+The previous output matches the expected result. However, given the configuration
+tree, when using the following YAML configuration:
+
+.. code-block:: yaml
+
+    connections:
+        sf_connection:
+            table: symfony
+            user: root
+            password: ~
+        default:
+            table: foo
+            user: root
+            password: pa$$
+
+The output configuration will be exactly the same as before. In other words, the
+``sf_connection`` and ``default`` configuration keys are lost. The reason is that
+the Symfony Config component treats arrays as lists by default.
+
+In order to maintain the array keys use the ``useAttributeAsKey()`` method::
+
+    $node
+        ->fixXmlConfig('connection')
+        ->children()
+            ->arrayNode('connections')
+                ->prototype('array')
+                    ->useAttributeAsKey('name')
+                    ->children()
+                        ->scalarNode('table')->end()
+                        ->scalarNode('user')->end()
+                        ->scalarNode('password')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+The argument of this method (``name`` in the example above) defines the name of
+the attribute added to each XML node to differentiate them. Now you can use the
+same YAML configuration showed before or the following XML configuration:
+
+.. code-block:: xml
+
+    <connection name="sf_connection"
+        table="symfony" user="root" password="null" />
+    <connection name="default"
+        table="foo" user="root" password="pa$$" />
+
+In both cases, the processed configuration maintains the ``sf_connection`` and
+``default`` keys::
+
+    Array(
+        [sf_connection] => Array(
+            [table] => 'symfony'
+            [user] => 'root'
+            [password] => null
+        )
+        [default] => Array(
+            [table] => 'foo'
+            [user] => 'root'
+            [password] => 'pa$$'
+        )
+    )
 
 Default and Required Values
 ---------------------------
