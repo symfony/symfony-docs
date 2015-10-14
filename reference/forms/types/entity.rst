@@ -130,6 +130,17 @@ cast into a string and so must have a ``__toString()`` method.
            'choice_label' => 'translations[en].name',
         ));
 
+.. note::
+    The ``choice_label`` option can also be a callback. The callback has
+    2 arguments, the entity and index in the list. You can use it like this::
+    
+        $builder->add('gender', 'entity', array(
+           'class' => 'MyBundle:Gender',
+           'choice_label' => function(MyBundle\Gender $gender) {
+             return $gender->getLocalizedGender($this->locale);
+           },
+        ));
+
 class
 ~~~~~
 
