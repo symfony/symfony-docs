@@ -579,5 +579,5 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 .. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
-.. _`Validator`: https://github.com/symfony/Validator
+.. _`Validator`: https://github.com/symfony/validator
 .. _`Swift Mailer`: http://swiftmailer.org/

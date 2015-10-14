@@ -757,8 +757,8 @@ Learn more from the Cookbook
 
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`download Composer`: https://getcomposer.org/download/
-.. _`Routing`: https://github.com/symfony/Routing
-.. _`Templating`: https://github.com/symfony/Templating
+.. _`Routing`: https://github.com/symfony/routing
+.. _`Templating`: https://github.com/symfony/templating
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: https://www.varnish-cache.org/

@@ -160,8 +160,8 @@ following code:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -178,8 +178,8 @@ following code:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author
             properties:
                 headshot:
                     - Image:
@@ -188,8 +188,8 @@ following code:
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <class name="AppBundle\Entity\Author">
             <property name="headshot">
                 <constraint name="Image">
                     <option name="allowLandscape">false</option>
@@ -200,8 +200,8 @@ following code:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

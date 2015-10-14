@@ -18,7 +18,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Console).
+* Use the official Git repository (https://github.com/symfony/console).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -143,8 +143,9 @@ Coloring the Output
     By default, the Windows command console doesn't support output coloring. The
     Console component disables output coloring for Windows systems, but if your
     commands invoke other scripts which emit color sequences, they will be
-    wrongly displayed as raw escape characters. Install the `ConEmu`_ or `ANSICON`_
-    free applications to add coloring support to your Windows command console.
+    wrongly displayed as raw escape characters. Install the `ConEmu`_, `ANSICON`_
+    or `Mintty`_ (used by default in GitBash and Cygwin) free applications
+    to add coloring support to your Windows command console.
 
 Whenever you output text, you can surround the text with tags to color its
 output. For example::
@@ -582,3 +583,4 @@ Learn More!
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ConEmu: https://code.google.com/p/conemu-maximus5/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _Mintty: https://mintty.github.io/

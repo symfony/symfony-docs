@@ -23,8 +23,8 @@ that Task, right inside the same form.
 First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
 by creating a simple ``Task`` class::
 
-    // src/Acme/TaskBundle/Entity/Task.php
-    namespace Acme\TaskBundle\Entity;
+    // src/AppBundle/Entity/Task.php
+    namespace AppBundle\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
 
@@ -64,8 +64,8 @@ by creating a simple ``Task`` class::
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
 
-    // src/Acme/TaskBundle/Entity/Tag.php
-    namespace Acme\TaskBundle\Entity;
+    // src/AppBundle/Entity/Tag.php
+    namespace AppBundle\Entity;
 
     class Tag
     {
@@ -79,8 +79,8 @@ objects::
 
 Then, create a form class so that a ``Tag`` object can be modified by the user::
 
-    // src/Acme/TaskBundle/Form/Type/TagType.php
-    namespace Acme\TaskBundle\Form\Type;
+    // src/AppBundle/Form/Type/TagType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -96,7 +96,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\TaskBundle\Entity\Tag',
+                'data_class' => 'AppBundle\Entity\Tag',
             ));
         }
 
@@ -113,8 +113,8 @@ form itself, create a form for the ``Task`` class.
 Notice that you embed a collection of ``TagType`` forms using the
 :doc:`collection </reference/forms/types/collection>` field type::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
-    namespace Acme\TaskBundle\Form\Type;
+    // src/AppBundle/Form/Type/TaskType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -132,7 +132,7 @@ Notice that you embed a collection of ``TagType`` forms using the
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\TaskBundle\Entity\Task',
+                'data_class' => 'AppBundle\Entity\Task',
             ));
         }
 
@@ -144,12 +144,12 @@ Notice that you embed a collection of ``TagType`` forms using the
 
 In your controller, you'll now initialize a new instance of ``TaskType``::
 
-    // src/Acme/TaskBundle/Controller/TaskController.php
-    namespace Acme\TaskBundle\Controller;
+    // src/AppBundle/Controller/TaskController.php
+    namespace AppBundle\Controller;
 
-    use Acme\TaskBundle\Entity\Task;
-    use Acme\TaskBundle\Entity\Tag;
-    use Acme\TaskBundle\Form\Type\TaskType;
+    use AppBundle\Entity\Task;
+    use AppBundle\Entity\Tag;
+    use AppBundle\Form\Type\TaskType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -177,7 +177,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
-            return $this->render('AcmeTaskBundle:Task:new.html.twig', array(
+            return $this->render('AppBundle:Task:new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -193,7 +193,7 @@ zero tags when first created).
 
     .. code-block:: html+jinja
 
-        {# src/Acme/TaskBundle/Resources/views/Task/new.html.twig #}
+        {# src/AppBundle/Resources/views/Task/new.html.twig #}
 
         {# ... #}
 
@@ -214,7 +214,7 @@ zero tags when first created).
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Task/new.html.php -->
+        <!-- src/AppBundle/Resources/views/Task/new.html.php -->
 
         <!-- ... -->
 
@@ -262,7 +262,7 @@ great, your user can't actually add any new tags yet.
 .. _cookbook-form-collections-new-prototype:
 
 Allowing "new" Tags with the "Prototype"
------------------------------------------
+----------------------------------------
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
@@ -275,7 +275,7 @@ type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible,
 add the ``allow_add`` option to your collection field::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
 
     // ...
     use Symfony\Component\Form\FormBuilderInterface;
@@ -417,11 +417,16 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 
     You can find a working example in this `JSFiddle`_.
 
+.. seealso::
+
+    If you want to customize the HTML code in the prototype, read
+    :ref:`cookbook-form-custom-prototype`.
+
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
-    // src/Acme/TaskBundle/Entity/Task.php
-    namespace Acme\TaskBundle\Entity;
+    // src/AppBundle/Entity/Task.php
+    namespace AppBundle\Entity;
 
     // ...
     class Task
@@ -441,7 +446,7 @@ for the tags in the ``Task`` class::
 
 Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -475,7 +480,7 @@ you will learn about next!).
     Doctrine:
 
         A new entity was found through the relationship
-        ``Acme\TaskBundle\Entity\Task#tags`` that was not configured to
+        ``AppBundle\Entity\Task#tags`` that was not configured to
         cascade persist operations for entity...
 
     To fix this, you may choose to "cascade" the persist operation automatically
@@ -486,7 +491,7 @@ you will learn about next!).
 
         .. code-block:: php-annotations
 
-            // src/Acme/TaskBundle/Entity/Task.php
+            // src/AppBundle/Entity/Task.php
 
             // ...
 
@@ -497,8 +502,8 @@ you will learn about next!).
 
         .. code-block:: yaml
 
-            # src/Acme/TaskBundle/Resources/config/doctrine/Task.orm.yml
-            Acme\TaskBundle\Entity\Task:
+            # src/AppBundle/Resources/config/doctrine/Task.orm.yml
+            AppBundle\Entity\Task:
                 type: entity
                 # ...
                 oneToMany:
@@ -508,13 +513,13 @@ you will learn about next!).
 
         .. code-block:: xml
 
-            <!-- src/Acme/TaskBundle/Resources/config/doctrine/Task.orm.xml -->
+            <!-- src/AppBundle/Resources/config/doctrine/Task.orm.xml -->
             <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-                <entity name="Acme\TaskBundle\Entity\Task">
+                <entity name="AppBundle\Entity\Task">
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
@@ -536,7 +541,7 @@ you will learn about next!).
     which is called by the form type since ``by_reference`` is set to
     ``false``::
 
-        // src/Acme/TaskBundle/Entity/Task.php
+        // src/AppBundle/Entity/Task.php
 
         // ...
         public function addTag(Tag $tag)
@@ -548,7 +553,7 @@ you will learn about next!).
 
     Inside ``Tag``, just make sure you have an ``addTask`` method::
 
-        // src/Acme/TaskBundle/Entity/Tag.php
+        // src/AppBundle/Entity/Tag.php
 
         // ...
         public function addTask(Task $task)
@@ -571,7 +576,7 @@ The solution is similar to allowing tags to be added.
 
 Start by adding the ``allow_delete`` option in the form Type::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -586,7 +591,7 @@ Start by adding the ``allow_delete`` option in the form Type::
 
 Now, you need to put some code into the ``removeTag`` method of ``Task``::
 
-    // src/Acme/TaskBundle/Entity/Task.php
+    // src/AppBundle/Entity/Task.php
 
     // ...
     class Task
@@ -670,7 +675,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     on the removed tag. This assumes that you have some ``editAction`` which
     is handling the "update" of your Task::
 
-        // src/Acme/TaskBundle/Controller/TaskController.php
+        // src/AppBundle/Controller/TaskController.php
 
         use Doctrine\Common\Collections\ArrayCollection;
 
@@ -678,7 +683,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         public function editAction($id, Request $request)
         {
             $em = $this->getDoctrine()->getManager();
-            $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
+            $task = $em->getRepository('AppBundle:Task')->find($id);
 
             if (!$task) {
                 throw $this->createNotFoundException('No task found for id '.$id);

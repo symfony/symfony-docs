@@ -15,7 +15,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/options-resolver`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/OptionsResolver).
+* Use the official Git repository (https://github.com/symfony/options-resolver).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -173,7 +173,7 @@ It's a good practice to split the option configuration into a separate method::
             $this->options = $resolver->resolve($options);
         }
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'host'       => 'smtp.example.org',
@@ -192,7 +192,7 @@ than processing options. Second, sub-classes may now override the
     // ...
     class GoogleMailer extends Mailer
     {
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             parent::configureOptions($resolver);
 
@@ -215,7 +215,7 @@ For example, to make the ``host`` option required, you can do::
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setRequired('host');
@@ -243,7 +243,7 @@ one required option::
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setRequired(array('host', 'username', 'password'));
@@ -263,7 +263,7 @@ retrieve the names of all required options::
     // ...
     class GoogleMailer extends Mailer
     {
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             parent::configureOptions($resolver);
 
@@ -291,7 +291,7 @@ been set::
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setRequired('host');
@@ -301,7 +301,7 @@ been set::
     // ...
     class GoogleMailer extends Mailer
     {
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             parent::configureOptions($resolver);
 
@@ -336,7 +336,7 @@ correctly. To validate the types of the options, call
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setAllowedTypes('host', 'string');
@@ -381,7 +381,7 @@ to verify that the passed option contains one of these values::
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setDefault('transport', 'sendmail');
@@ -427,16 +427,18 @@ that, you can write normalizers. Normalizers are executed after validating an
 option. You can configure a normalizer by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`::
 
+    use Symfony\Component\OptionsResolver\Options;
+
     // ...
     class Mailer
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
 
-            $resolver->setNormalizer('host', function ($options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, $value) {
                 if ('http://' !== substr($value, 0, 7)) {
                     $value = 'http://'.$value;
                 }
@@ -459,10 +461,10 @@ if you need to use other options during normalization::
     class Mailer
     {
         // ...
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
-            $resolver->setNormalizer('host', function ($options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, $value) {
                 if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
@@ -493,7 +495,7 @@ these options, you can return the desired default value::
     class Mailer
     {
         // ...
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setDefault('encryption', null);
@@ -525,7 +527,7 @@ the closure::
     class Mailer
     {
         // ...
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setDefaults(array(
@@ -537,7 +539,7 @@ the closure::
 
     class GoogleMailer extends Mailer
     {
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             parent::configureOptions($resolver);
 
@@ -568,7 +570,7 @@ comes from the default::
     class Mailer
     {
         // ...
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setDefault('port', 25);
@@ -600,7 +602,7 @@ be included in the resolved options if it was actually passed to
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setDefined('port');
@@ -634,7 +636,7 @@ options in one go::
     class Mailer
     {
         // ...
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
             $resolver->setDefined(array('port', 'encryption'));
@@ -655,7 +657,7 @@ let you find out which options are defined::
     {
         // ...
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             parent::configureOptions($resolver);
 
@@ -701,7 +703,7 @@ can change your code to do the configuration only once per class::
             $this->options = self::$resolversByClass[$class]->resolve($options);
         }
 
-        protected function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             // ...
         }

@@ -16,14 +16,13 @@ In any case, it's a good practice to run tests locally before submitting a
 Before Running the Tests
 ------------------------
 
-To run the Symfony test suite, `install PHPUnit`_ 4.2 (or later) first. Then,
-install the external dependencies used during the tests, such as Doctrine, Twig
-and Monolog. To do so, :doc:`install Composer </cookbook/composer>` and execute
-the following:
+To run the Symfony test suite, install the external dependencies used during the
+tests, such as Doctrine, Twig and Monolog. To do so,
+:doc:`install Composer </cookbook/composer>` and execute the following:
 
 .. code-block:: bash
 
-    $ composer install
+    $ composer update
 
 .. _running:
 
@@ -35,7 +34,7 @@ command:
 
 .. code-block:: bash
 
-    $ phpunit
+    $ php ./phpunit symfony
 
 The output should display ``OK``. If not, read the reported errors to figure out
 what's going on and if the tests are broken because of the new code.
@@ -48,6 +47,13 @@ what's going on and if the tests are broken because of the new code.
 
     .. code-block:: bash
 
-        $ phpunit src/Symfony/Component/Finder/
+        $ php ./phpunit src/Symfony/Component/Finder/
 
-.. _`install PHPUnit`: https://phpunit.de/manual/current/en/installation.html
+.. tip::
+
+    On Windows, install the `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
+    to see colored test results.
+
+.. _ConEmu: https://code.google.com/p/conemu-maximus5/
+.. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _Mintty: https://mintty.github.io/

@@ -232,13 +232,21 @@ controller::
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // perform some action, such as saving the task to the database
+            // ... perform some action, such as saving the task to the database
 
             return $this->redirectToRoute('task_success');
         }
 
-        // ...
+        return $this->render('default/new.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
+    
+.. caution::
+
+    Be aware that the ``createView()`` method should be called *after* ``handleRequest``
+    is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
+    view (like validation errors).
 
 .. versionadded:: 2.3
     The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
@@ -1774,6 +1782,11 @@ The ``_token`` field is a hidden field and will be automatically rendered
 if you include the ``form_end()`` function in your template, which ensures
 that all un-rendered fields are output.
 
+.. caution::
+
+    Since the token is stored in the session, a session is started automatically
+    as soon as you render a form with CSRF protection.
+
 The CSRF token can be customized on a form-by-form basis. For example::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -1953,7 +1966,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/security/csrf_in_login_form`
 * :doc:`/cookbook/cache/form_csrf_caching`
 
-.. _`Symfony Form component`: https://github.com/symfony/Form
+.. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

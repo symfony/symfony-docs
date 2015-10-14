@@ -593,7 +593,7 @@ use somewhere in your application::
         public $name;
     }
 
-Add constraints though any of the supported methods. Set the message option to the
+Add constraints through any of the supported methods. Set the message option to the
 translation source text. For example, to guarantee that the ``$name`` property is
 not empty, add the following:
 

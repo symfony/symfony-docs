@@ -734,19 +734,19 @@ user registers and when a user updates their contact information later:
         class User implements UserInterface
         {
             /**
-            * @Assert\Email(groups={"registration"})
-            */
+             * @Assert\Email(groups={"registration"})
+             */
             private $email;
 
             /**
-            * @Assert\NotBlank(groups={"registration"})
-            * @Assert\Length(min=7, groups={"registration"})
-            */
+             * @Assert\NotBlank(groups={"registration"})
+             * @Assert\Length(min=7, groups={"registration"})
+             */
             private $password;
 
             /**
-            * @Assert\Length(min=2)
-            */
+             * @Assert\Length(min=2)
+             */
             private $city;
         }
 
@@ -927,13 +927,13 @@ username and the password are different only if all other validation passes
         class User implements UserInterface
         {
             /**
-            * @Assert\NotBlank
-            */
+             * @Assert\NotBlank
+             */
             private $username;
 
             /**
-            * @Assert\NotBlank
-            */
+             * @Assert\NotBlank
+             */
             private $password;
 
             /**
@@ -1300,5 +1300,5 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/validation/custom_constraint`
 
-.. _Validator: https://github.com/symfony/Validator
+.. _Validator: https://github.com/symfony/validator
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303

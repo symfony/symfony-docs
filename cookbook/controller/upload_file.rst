@@ -49,7 +49,7 @@ in the ``Product`` entity::
 Note that the type of the ``brochure`` column is ``string`` instead of ``binary``
 or ``blob`` because it just stores the PDF file name instead of the file contents.
 
-Then, add a new ``brochure`` field to the form that manage the ``Product`` entity::
+Then, add a new ``brochure`` field to the form that manages the ``Product`` entity::
 
     // src/AppBundle/Form/ProductType.php
     namespace AppBundle\Form;
@@ -122,7 +122,7 @@ Finally, you need to update the code of the controller that handles the form::
             if ($form->isValid()) {
                 // $file stores the uploaded PDF file
                 /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-                $file = $product->getBrochure()
+                $file = $product->getBrochure();
 
                 // Generate a unique name for the file before saving it
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
@@ -133,15 +133,15 @@ Finally, you need to update the code of the controller that handles the form::
 
                 // Update the 'brochure' property to store the PDF file name
                 // instead of its contents
-                $product->setBrochure($filename);
+                $product->setBrochure($fileName);
 
-                // persist the $product variable or any other work...
+                // ... persist the $product variable or any other work
 
                 return $this->redirect($this->generateUrl('app_product_list'));
             }
 
             return $this->render('product/new.html.twig', array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ));
         }
     }
@@ -150,10 +150,10 @@ There are some important things to consider in the code of the above controller:
 
 #. When the form is uploaded, the ``brochure`` property contains the whole PDF
    file contents. Since this property stores just the file name, you must set
-   its new value before persisting the changes of the entity.
+   its new value before persisting the changes of the entity;
 #. In Symfony applications, uploaded files are objects of the
    :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class, which
-   provides methods for the most common operations when dealing with uploaded files.
+   provides methods for the most common operations when dealing with uploaded files;
 #. A well-known security best practice is to never trust the input provided by
    users. This also applies to the files uploaded by your visitors. The ``Uploaded``
    class provides methods to get the original file extension
@@ -163,7 +163,7 @@ There are some important things to consider in the code of the above controller:
    However, they are considered *not safe* because a malicious user could tamper
    that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
-   method to let Symfony guess the right extension according to the file MIME type.
+   method to let Symfony guess the right extension according to the file MIME type;
 #. The ``UploadedFile`` class also provides a :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::move`
    method to store the file in its intended directory. Defining this directory
    path as an application configuration option is considered a good practice that

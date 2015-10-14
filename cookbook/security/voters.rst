@@ -96,9 +96,8 @@ edit a particular object. Here's an example implementation:
                 return false;
             }
 
-            // double-check that the User object is the expected entity.
-            // It always will be, unless there is some misconfiguration of the
-            // security system.
+            // double-check that the User object is the expected entity (this
+            // only happens when you did not configure the security system properly)
             if (!$user instanceof User) {
                 throw new \LogicException('The user is somehow not our User class!');
             }
@@ -121,7 +120,7 @@ edit a particular object. Here's an example implementation:
 
                     break;
             }
-            
+
             return false;
         }
     }
@@ -183,7 +182,8 @@ and tag it with ``security.voter``:
             <services>
                 <service id="security.access.post_voter"
                     class="AppBundle\Security\Authorization\Voter\PostVoter"
-                    public="false">
+                    public="false"
+                >
 
                     <tag name="security.voter" />
                 </service>
@@ -194,7 +194,7 @@ and tag it with ``security.voter``:
 
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
-        
+
         $definition = new Definition('AppBundle\Security\Authorization\Voter\PostVoter');
         $definition
             ->setPublic(false)
@@ -224,8 +224,7 @@ from the authorization checker is called.
             // get a Post instance
             $post = ...;
 
-            $authChecker = $this->get('security.authorization_checker');
-
+            // keep in mind that this will call all registered security voters
             $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');

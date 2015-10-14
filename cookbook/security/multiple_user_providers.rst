@@ -22,7 +22,7 @@ a new provider that chains the two together:
                         users:
                             foo: { password: test }
                 user_db:
-                    entity: { class: Acme\UserBundle\Entity\User, property: username }
+                    entity: { class: AppBundle\Entity\User, property: username }
 
     .. code-block:: xml
 
@@ -49,7 +49,7 @@ a new provider that chains the two together:
                 </provider>
 
                 <provider name="user_db">
-                    <entity class="Acme\UserBundle\Entity\User" property="username" />
+                    <entity class="AppBundle\Entity\User" property="username" />
                 </provider>
             </config>
         </srv:container>
@@ -73,7 +73,7 @@ a new provider that chains the two together:
                 ),
                 'user_db' => array(
                     'entity' => array(
-                        'class' => 'Acme\UserBundle\Entity\User',
+                        'class' => 'AppBundle\Entity\User',
                         'property' => 'username',
                     ),
                 ),

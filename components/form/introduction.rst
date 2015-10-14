@@ -20,7 +20,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Form).
+* Use the official Git repository (https://github.com/symfony/form).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -189,10 +189,10 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     $defaultFormTheme = 'form_div_layout.html.twig';
 
     $vendorDir = realpath(__DIR__.'/../vendor');
-    // the path to TwigBridge so Twig can locate the
+    // the path to TwigBridge library so Twig can locate the
     // form_div_layout.html.twig file
-    $vendorTwigBridgeDir =
-        $vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig';
+    $appVariableReflection = new \ReflectionClass('\Symfony\Bridge\Twig\AppVariable');
+    $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
     // the path to your other templates
     $viewsDir = realpath(__DIR__.'/../views');
 

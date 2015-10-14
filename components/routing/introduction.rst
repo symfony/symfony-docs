@@ -14,7 +14,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/routing`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Routing).
+* Use the official Git repository (https://github.com/symfony/routing).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -39,7 +39,7 @@ your autoloader to load the Routing component::
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
-    $context = new RequestContext($_SERVER['REQUEST_URI']);
+    $context = new RequestContext('/');
 
     $matcher = new UrlMatcher($routes, $context);
 
@@ -48,10 +48,9 @@ your autoloader to load the Routing component::
 
 .. note::
 
-    Be careful when using ``$_SERVER['REQUEST_URI']``, as it may include
-    any query parameters on the URL, which will cause problems with route
-    matching. An easy way to solve this is to use the HttpFoundation component
-    as explained :ref:`below <components-routing-http-foundation>`.
+    The :class:`Symfony\\Component\\Routing\\RequestContext` parameters can be populated
+    with the values stored in ``$_SERVER``, but it's easier to use the HttpFoundation
+    component as explained :ref:`below <components-routing-http-foundation>`.
 
 You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
@@ -203,7 +202,7 @@ a certain route::
     $routes = new RouteCollection();
     $routes->add('show_post', new Route('/show/{slug}'));
 
-    $context = new RequestContext($_SERVER['REQUEST_URI']);
+    $context = new RequestContext('/');
 
     $generator = new UrlGenerator($routes, $context);
 
@@ -323,7 +322,7 @@ automatically in the background if you want to use it. A basic example of the
 :class:`Symfony\\Component\\Routing\\Router` class would look like::
 
     $locator = new FileLocator(array(__DIR__));
-    $requestContext = new RequestContext($_SERVER['REQUEST_URI']);
+    $requestContext = new RequestContext('/');
 
     $router = new Router(
         new YamlFileLoader($locator),

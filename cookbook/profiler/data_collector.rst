@@ -4,9 +4,9 @@
 How to Create a custom Data Collector
 =====================================
 
-:doc:`The Symfony Profiler </cookbook/profiler/index>` delegates data collecting to
-data collectors. Symfony comes bundled with a few of them, but you can easily
-create your own.
+:doc:`The Symfony Profiler </cookbook/profiler/index>` delegates data collection
+to some special classes called data collectors. Symfony comes bundled with a few
+of them, but you can easily create your own.
 
 Creating a custom Data Collector
 --------------------------------
@@ -33,12 +33,12 @@ Creating a custom data collector is as simple as implementing the
         function getName();
     }
 
-The ``getName()`` method must return a unique name. This is used to access the
-information later on (see :doc:`/cookbook/testing/profiling` for
-instance).
+The value returned by ``getName()`` must be unique in the application. This value
+is also used to access the information later on (see :doc:`/cookbook/testing/profiling`
+for instance).
 
-The ``collect()`` method is responsible for storing the data it wants to give
-access to in local properties.
+The ``collect()`` method is responsible for storing the collected data in local
+properties.
 
 .. caution::
 
@@ -51,101 +51,169 @@ Most of the time, it is convenient to extend
 populate the ``$this->data`` property (it takes care of serializing the
 ``$this->data`` property)::
 
-    class MemoryDataCollector extends DataCollector
+    // src/AppBundle/DataCollector/MyCollector.php
+    use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+
+    class MyCollector extends DataCollector
     {
         public function collect(Request $request, Response $response, \Exception $exception = null)
         {
             $this->data = array(
-                'memory' => memory_get_peak_usage(true),
+                'variable' => 'value',
             );
         }
 
-        public function getMemory()
+        public function getVariable()
         {
-            return $this->data['memory'];
+            return $this->data['variable'];
         }
 
         public function getName()
         {
-            return 'memory';
+            return 'app.my_collector';
         }
     }
 
 .. _data_collector_tag:
 
-Enabling custom Data Collectors
+Enabling Custom Data Collectors
 -------------------------------
 
-To enable a data collector, add it as a regular service in one of your
-configuration, and tag it with ``data_collector``:
+To enable a data collector, define it as a regular service and tag it with
+``data_collector``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
-            data_collector.your_collector_name:
-                class: Fully\Qualified\Collector\Class\Name
+            app.my_collector:
+                class: AppBundle\DataCollector\MyCollector
+                public: false
                 tags:
                     - { name: data_collector }
 
     .. code-block:: xml
 
-        <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
-            <tag name="data_collector" />
-        </service>
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector"
+                         public="false">
+                    <tag name="data_collector" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
+        // app/config/services.php
         $container
-            ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
+            ->register('app.my_collector', 'AppBundle\DataCollector\MyCollector')
+            ->setPublic(false)
             ->addTag('data_collector')
         ;
 
 Adding Web Profiler Templates
 -----------------------------
 
-When you want to display the data collected by your data collector in the web
-debug toolbar or the web profiler, you will need to create a Twig template. The
-following example can help you get started:
+The information collected by your data collector can be displayed both in the
+web debug toolbar and in the web profiler. To do so, you need to create a Twig
+template that includes some specific blocks.
 
-.. code-block:: jinja
+In the simplest case, you just want to display the information in the toolbar
+without providing a profiler panel. This requires to define the ``toolbar``
+block and set the value of two variables called ``icon`` and ``text``:
+
+.. code-block:: html+jinja
 
     {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
     {% block toolbar %}
-        {# This toolbar item may appear along the top or bottom of the screen.#}
         {% set icon %}
-        <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAQAAADVGmdYAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQffAxkBCDStonIVAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAHpJREFUOMtj3PWfgXRAuqZd/5nIsIdhVBPFmgqIjCuYOrJsYtz1fxuUOYER2TQID8afwIiQ8YIkI4TzCv5D2AgaWSuExJKMIDbA7EEVhQEWXJ6FKUY4D48m7HYU/EcWZ8JlE6qfMELPDcUJuEMPxvYazYTDWRMjOcUyAEswO+VjeQQaAAAAAElFTkSuQmCC" alt=""/></span>
-        <span class="sf-toolbar-status">Example</span>
+            {# this is the content displayed as a panel in the toolbar #}
+            <span class="icon"><img src="..." alt=""/></span>
+            <span class="sf-toolbar-status">Information</span>
         {% endset %}
 
         {% set text %}
-        <div class="sf-toolbar-info-piece">
-            <b>Quick piece of data</b>
-            <span>100 units</span>
-        </div>
-        <div class="sf-toolbar-info-piece">
-            <b>Another quick thing</b>
-            <span>300 units</span>
-        </div>
+            {# this is the content displayed when hovering the mouse over
+               the toolbar panel #}
+            <div class="sf-toolbar-info-piece">
+                <b>Quick piece of data</b>
+                <span>100 units</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Another piece of data</b>
+                <span>300 units</span>
+            </div>
         {% endset %}
 
-        {# Set the "link" value to false if you do not have a big "panel"
-           section that you want to direct the user to. #}
-        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+        {# the 'link' value set to 'false' means that this panel doesn't
+           show a section in the web profiler. #}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
+    {% endblock %}
 
+.. tip::
+
+    Built-in collector templates define all their images as embedded base64-encoded
+    images. This makes them work everywhere without having to mess with web assets
+    links:
+
+    .. code-block:: html
+
+        <img src="data:image/png;base64,..." />
+
+    Another solution is to define the images as SVG files. In addition to being
+    resolution-independent, these images can be easily embedded in the Twig
+    template or included from an external file to reuse them in several templates:
+
+    .. code-block:: jinja
+
+        {{ include('@App/data_collector/icon.svg') }}
+
+    You are encouraged to use the latter technique for your own toolbar panels.
+
+If the toolbar panel includes extended web profiler information, the Twig template
+must also define additional blocks:
+
+.. code-block:: html+jinja
+
+    {% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+    {% block toolbar %}
+        {% set icon %}
+            <span class="icon"><img src="..." alt=""/></span>
+            <span class="sf-toolbar-status">Information</span>
+        {% endset %}
+
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                {# ... #}
+            </div>
+        {% endset %}
+
+        {# the 'link' value is now set to 'true', which allows the user to click
+           on it to access the web profiler panel. Since 'true' is the default
+           value, you can omit the 'link' parameter entirely #}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
     {% endblock %}
 
     {% block head %}
-        {# Optional, if you need your own JS or CSS files. #}
-        {{ parent() }} {# Use parent() to keep the default styles #}
+        {# Optional, you can here link to or define your own CSS and JS contents #}
+        {# {{ parent() }} to keep the default styles #}
     {% endblock %}
 
     {% block menu %}
         {# This left-hand menu appears when using the full-screen profiler. #}
         <span class="label">
-            <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAQAAADVGmdYAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQffAxkBCDStonIVAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAHpJREFUOMtj3PWfgXRAuqZd/5nIsIdhVBPFmgqIjCuYOrJsYtz1fxuUOYER2TQID8afwIiQ8YIkI4TzCv5D2AgaWSuExJKMIDbA7EEVhQEWXJ6FKUY4D48m7HYU/EcWZ8JlE6qfMELPDcUJuEMPxvYazYTDWRMjOcUyAEswO+VjeQQaAAAAAElFTkSuQmCC" alt=""/></span>
+            <span class="icon"><img src="..." alt=""/></span>
             <strong>Example Collector</strong>
         </span>
     {% endblock %}
@@ -158,58 +226,90 @@ following example can help you get started:
         </p>
     {% endblock %}
 
-Each block is optional. The ``toolbar`` block is used for the web debug
-toolbar and ``menu`` and ``panel`` are used to add a panel to the web
-profiler.
-
+The ``menu`` and ``panel`` blocks are the only required blocks to define the
+contents displayed in the web profiler panel associated with this data collector.
 All blocks have access to the ``collector`` object.
 
-.. tip::
-
-    Built-in templates use a base64 encoded image for the toolbar:
-
-    .. code-block:: html
-
-        <img src="data:image/png;base64,..." />
-
-    You can easily calculate the base64 value for an image with this
-    little script::
-
-        #!/usr/bin/env php
-        <?php
-        echo base64_encode(file_get_contents($_SERVER['argv'][1]));
-
-To enable the template, add a ``template`` attribute to the ``data_collector``
-tag in your configuration. For example, assuming your template is in some
-AcmeDebugBundle:
+Finally, to enable the data collector template, add a ``template`` attribute to
+the ``data_collector`` tag in your service configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
-            data_collector.your_collector_name:
-                class: Acme\DebugBundle\Collector\Class\Name
+            app.my_collector:
+                class: AppBundle\DataCollector\MyCollector
                 tags:
-                    - { name: data_collector, template: "AcmeDebugBundle:Collector:templatename", id: "your_collector_name" }
+                    -
+                        name:     data_collector
+                        template: 'data_collector/template.html.twig'
+                        id:       'app.my_collector'
+                public: false
 
     .. code-block:: xml
 
-        <service id="data_collector.your_collector_name" class="Acme\DebugBundle\Collector\Class\Name">
-            <tag name="data_collector" template="AcmeDebugBundle:Collector:templatename" id="your_collector_name" />
-        </service>
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector" public="false">
+                    <tag name="data_collector" template="data_collector/template.html.twig" id="app.my_collector" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
+        // app/config/services.php
         $container
-            ->register('data_collector.your_collector_name', 'Acme\DebugBundle\Collector\Class\Name')
+            ->register('app.my_collector', 'AppBundle\DataCollector\MyCollector')
+            ->setPublic(false)
             ->addTag('data_collector', array(
-                'template' => 'AcmeDebugBundle:Collector:templatename',
-                'id'       => 'your_collector_name',
+                'template' => 'data_collector/template.html.twig',
+                'id'       => 'app.my_collector',
             ))
         ;
 
 .. caution::
 
-    Make sure the ``id`` attribute is the same string you used for the
-    ``getName()`` method.
+    The ``id`` attribute must match the value returned by the ``getName()`` method.
+
+The position of each panel in the toolbar is determined by the priority defined
+by each collector. Most built-in collectors use ``255`` as their priority. If you
+want your collector to be displayed before them, use a higher value:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.my_collector:
+                class: AppBundle\DataCollector\MyCollector
+                tags:
+                    - { name: data_collector, template: '...', id: '...', priority: 300 }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector">
+            <tag name="data_collector" template="..." id="..." priority="300" />
+        </service>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('app.my_collector', 'AppBundle\DataCollector\MyCollector')
+            ->addTag('data_collector', array(
+                'template' => '...',
+                'id'       => '...',
+                'priority' => 300,
+            ))
+        ;

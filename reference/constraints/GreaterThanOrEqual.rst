@@ -103,8 +103,8 @@ that a date must at least be the current day:
 
     .. code-block:: php-annotations
 
-        // src/Acme/SocialBundle/Entity/Order.php
-        namespace Acme\OrderBundle\Entity;
+        // src/AppBundle/Entity/Order.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -118,21 +118,21 @@ that a date must at least be the current day:
 
     .. code-block:: yaml
 
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThanOrEqual: today
 
     .. code-block:: xml
 
-        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\OrderBundle\Entity\Order">
+            <class name="AppBundle\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThanOrEqual">today</constraint>
                 </property>
@@ -141,8 +141,8 @@ that a date must at least be the current day:
 
     .. code-block:: php
 
-        // src/Acme/OrderBundle/Entity/Order.php
-        namespace Acme\OrderBundle\Entity;
+        // src/AppBundle/Entity/Order.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -162,8 +162,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php-annotations
 
-        // src/Acme/SocialBundle/Entity/Order.php
-        namespace Acme\OrderBundle\Entity;
+        // src/AppBundle/Entity/Order.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -177,21 +177,21 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThanOrEqual: today UTC
 
     .. code-block:: xml
 
-        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\OrderBundle\Entity\Order">
+            <class name="AppBundle\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThanOrEqual">today UTC</constraint>
                 </property>
@@ -200,8 +200,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php
 
-        // src/Acme/OrderBundle/Entity/Order.php
-        namespace Acme\OrderBundle\Entity;
+        // src/AppBundle/Entity/Order.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -222,8 +222,8 @@ current time:
 
     .. code-block:: php-annotations
 
-        // src/Acme/SocialBundle/Entity/Order.php
-        namespace Acme\OrderBundle\Entity;
+        // src/AppBundle/Entity/Order.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -237,21 +237,21 @@ current time:
 
     .. code-block:: yaml
 
-        # src/OrderBundle/Resources/config/validation.yml
-        Acme\OrderBundle\Entity\Order:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThanOrEqual: +5 hours
 
     .. code-block:: xml
 
-        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\OrderBundle\Entity\Order">
+            <class name="AppBundle\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThanOrEqual">+5 hours</constraint>
                 </property>
@@ -260,8 +260,8 @@ current time:
 
     .. code-block:: php
 
-        // src/Acme/OrderBundle/Entity/Order.php
-        namespace Acme\OrderBundle\Entity;
+        // src/AppBundle/Entity/Order.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

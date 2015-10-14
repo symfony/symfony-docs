@@ -22,7 +22,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/HttpFoundation).
+* Use the official Git repository (https://github.com/symfony/http-foundation).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -464,8 +464,8 @@ represented by a PHP callable instead of a string::
     you must call ``ob_flush()`` before ``flush()``.
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
-    server might also buffer based on its configuration. Even more, if you
-    use fastcgi, buffering can't be disabled at all.
+    server might also buffer based on its configuration. What's more, if you
+    use FastCGI, buffering can't be disabled at all.
 
 .. _component-http-foundation-serving-files:
 

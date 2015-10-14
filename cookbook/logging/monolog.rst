@@ -303,7 +303,7 @@ using a processor.
 
 .. code-block:: php
 
-    namespace Acme\MyBundle;
+    namespace AppBundle;
 
     use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -342,10 +342,10 @@ using a processor.
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
                 arguments:
-                    - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n"
+                    - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
 
             monolog.processor.session_request:
-                class: Acme\MyBundle\SessionRequestProcessor
+                class: AppBundle\SessionRequestProcessor
                 arguments:  ["@session"]
                 tags:
                     - { name: monolog.processor, method: processRecord }
@@ -374,11 +374,11 @@ using a processor.
                 <service id="monolog.formatter.session_request"
                     class="Monolog\Formatter\LineFormatter">
 
-                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%&#xA;</argument>
+                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%&#xA;</argument>
                 </service>
 
                 <service id="monolog.processor.session_request"
-                    class="Acme\MyBundle\SessionRequestProcessor">
+                    class="AppBundle\SessionRequestProcessor">
 
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" />
@@ -404,12 +404,12 @@ using a processor.
                 'monolog.formatter.session_request',
                 'Monolog\Formatter\LineFormatter'
             )
-            ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n');
+            ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n');
 
         $container
             ->register(
                 'monolog.processor.session_request',
-                'Acme\MyBundle\SessionRequestProcessor'
+                'AppBundle\SessionRequestProcessor'
             )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord'));
@@ -444,7 +444,7 @@ the ``monolog.processor`` tag:
         # app/config/config.yml
         services:
             monolog.processor.session_request:
-                class: Acme\MyBundle\SessionRequestProcessor
+                class: AppBundle\SessionRequestProcessor
                 arguments:  ["@session"]
                 tags:
                     - { name: monolog.processor, method: processRecord, handler: main }
@@ -463,7 +463,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="monolog.processor.session_request"
-                    class="Acme\MyBundle\SessionRequestProcessor">
+                    class="AppBundle\SessionRequestProcessor">
 
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" handler="main" />
@@ -477,7 +477,7 @@ the ``monolog.processor`` tag:
         $container
             ->register(
                 'monolog.processor.session_request',
-                'Acme\MyBundle\SessionRequestProcessor'
+                'AppBundle\SessionRequestProcessor'
             )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'handler' => 'main'));
@@ -495,7 +495,7 @@ the ``monolog.processor`` tag:
         # app/config/config.yml
         services:
             monolog.processor.session_request:
-                class: Acme\MyBundle\SessionRequestProcessor
+                class: AppBundle\SessionRequestProcessor
                 arguments:  ["@session"]
                 tags:
                     - { name: monolog.processor, method: processRecord, channel: main }
@@ -514,7 +514,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="monolog.processor.session_request"
-                    class="Acme\MyBundle\SessionRequestProcessor">
+                    class="AppBundle\SessionRequestProcessor">
 
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" channel="main" />
@@ -528,7 +528,7 @@ the ``monolog.processor`` tag:
         $container
             ->register(
                 'monolog.processor.session_request',
-                'Acme\MyBundle\SessionRequestProcessor'
+                'AppBundle\SessionRequestProcessor'
             )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));

@@ -122,9 +122,13 @@ the route ``_controller`` value:
     defined as a service. See the `FrameworkExtraBundle documentation`_ for
     details.
 
-.. versionadded:: 2.6
-    If your controller service implements the ``__invoke`` method, you can simply refer to the service id
-    (``app.hello_controller``).
+.. tip::
+
+    If your controller implements the ``__invoke()`` method, you can simply
+    refer to the service id (``app.hello_controller``).
+
+    .. versionadded:: 2.6
+        Support for ``__invoke()`` was introduced in Symfony 2.6.
 
 Alternatives to base Controller Methods
 ---------------------------------------

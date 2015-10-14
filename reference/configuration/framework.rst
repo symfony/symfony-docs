@@ -774,7 +774,7 @@ This determines whether cookies should only be sent over secure connections.
 cookie_httponly
 ...............
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 This determines whether cookies should only be accessible through the HTTP
 protocol. This means that the cookie won't be accessible by scripting

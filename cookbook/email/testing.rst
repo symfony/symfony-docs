@@ -31,7 +31,7 @@ Start with an easy controller action that sends an email::
     Don't forget to enable the profiler as explained in :doc:`/cookbook/testing/profiling`.
 
 In your functional test, use the ``swiftmailer`` collector on the profiler
-to get information about the messages send on the previous request::
+to get information about the messages sent on the previous request::
 
     // src/AppBundle/Tests/Controller/MailControllerTest.php
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

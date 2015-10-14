@@ -150,10 +150,12 @@ have access to the object instance, they receive the object as the first argumen
             ;
 
             // If you're using the old 2.4 validation API
+            /*
             $context->addViolationAt(
                 'firstName',
                 'This name sounds totally fake!'
             );
+            */
         }
     }
 
@@ -186,7 +188,7 @@ You can then use the following configuration to invoke this validator:
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 

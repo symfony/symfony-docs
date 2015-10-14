@@ -215,10 +215,12 @@ and set a new ``Exception`` object, or do nothing::
     response won't work. If you want to overwrite the status code (which you
     should not without a good reason), set the ``X-Status-Code`` header::
 
-        $response = Response(
+        $response = new Response(
             'Error',
-            404 // ignored,
-            array('X-Status-Code' => 200)
+            404, // this status code will be ignored
+            array(
+                'X-Status-Code' => 200 // this status code will actually be sent to the client
+            )
         );
 
 .. seealso::
@@ -234,4 +236,4 @@ Listener Class Name                                                        Prior
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`  -128
 =========================================================================  ========
 
-.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php
+.. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php
