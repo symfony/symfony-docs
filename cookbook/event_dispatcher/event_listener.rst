@@ -64,7 +64,8 @@ The most common way to listen to an event is to register an **event listener**::
 
     Each event receives a slightly different type of ``$event`` object. For
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
-    To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
+    To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
+    or the documentation about the specific even you're listening to.
 
 Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
@@ -220,9 +221,9 @@ Request Events, Checking Types
 ------------------------------
 
 A single page can make several requests (one master request, and then multiple
-sub-requests), which is why when working with the ``KernelEvents::REQUEST``
-event, you might need to check the type of the request. This can be easily
-done as follow::
+sub-requests - typically by :ref:`templating-embedding-controller`). For the core
+Symfony events, you might need to check to see if the event is for a "master" request
+or a "sub request":
 
     // src/AppBundle/EventListener/RequestListener.php
     namespace AppBundle\EventListener;
@@ -244,11 +245,8 @@ done as follow::
         }
     }
 
-.. tip::
-
-    Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
-    interface: ``HttpKernelInterface::MASTER_REQUEST`` and
-    ``HttpKernelInterface::SUB_REQUEST``.
+Certain things, like checking information on the *real* request, may not need to
+be done on the sub-request listeners.
 
 Events or Subscribers
 ---------------------
