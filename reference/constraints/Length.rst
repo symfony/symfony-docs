@@ -1,7 +1,7 @@
 Length
 ======
 
-Validates that a given string length is *between* some minimum and maximum
+Validates that a given string length is *between* some minimum (if is not null or blank, cf. the `min`_ option) and maximum
 value.
 
 +----------------+----------------------------------------------------------------------+
