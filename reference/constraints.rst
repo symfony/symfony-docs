@@ -9,8 +9,11 @@ Validation Constraints Reference
    constraints/Blank
    constraints/NotNull
    constraints/IsNull
+   constraints/Null
    constraints/IsTrue
+   constraints/True
    constraints/IsFalse
+   constraints/False
    constraints/Type
 
    constraints/Email
