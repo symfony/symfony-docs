@@ -179,11 +179,6 @@ Next, create the form for the ``User`` entity::
                 'data_class' => 'AppBundle\Entity\User'
             ));
         }
-
-        public function getName()
-        {
-            return 'user';
-        }
     }
 
 There are just three fields: ``email``, ``username`` and ``plainPassword``
