@@ -7,9 +7,9 @@ the value of properties or the return value of methods on your object.
 * :doc:`NotBlank </reference/constraints/NotBlank>`
 * :doc:`Blank </reference/constraints/Blank>`
 * :doc:`NotNull </reference/constraints/NotNull>`
-* :doc:`Null </reference/constraints/Null>`
-* :doc:`True </reference/constraints/True>`
-* :doc:`False </reference/constraints/False>`
+* :doc:`Null </reference/constraints/IsNull>`
+* :doc:`True </reference/constraints/IsTrue>`
+* :doc:`False </reference/constraints/IsFalse>`
 * :doc:`Type </reference/constraints/Type>`
 
 String Constraints
