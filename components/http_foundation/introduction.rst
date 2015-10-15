@@ -519,6 +519,14 @@ It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
+.. note::
+
+    If a file is created in the same request as when the ``BinaryFileResponse``
+    is sent, the file may be sent without any content. This may be due to cached
+    file stats returning zero for the size of the file. To fix this issue, you
+    will need to call ``clearstatcache(false, $file)`` with the path to the
+    binary file.
+
 .. _component-http-foundation-json-response:
 
 Creating a JSON Response
