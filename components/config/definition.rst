@@ -213,8 +213,9 @@ Before defining the children of an array node, you can provide options like:
     If any child nodes have default values, use them if explicit values
     haven't been provided.
 ``normalizeKeys(false)``
-    If called (with ``false``), keys with dashes are *not* normaled to underscores.
-    It is recommended to use this to avoid this unnecessary normalization.
+    If called (with ``false``), keys with dashes are *not* normalized to underscores.
+    It is recommended to use this with prototype nodes where the user will define
+    a key-value map, to avoid an unnecessary transformation.
 
 A basic prototyped array configuration can be defined as follows::
 
@@ -315,9 +316,10 @@ the Symfony Config component treats arrays as lists by default.
 
 .. note::
 
-    As of writing this, there is an inconsistency: if only one file is processed,
-    the keys (i.e. ``sf_connection`` and ``default``) are *not* lost. But if more
-    than one file is processed, the keys are lost as described above.
+    As of writing this, there is an inconsistency: if only one file provides the
+    configuration in question, the keys (i.e. ``sf_connection`` and ``default``)
+    are *not* lost. But if more than one file provides the configuration, the keys
+    are lost as described above.
 
 In order to maintain the array keys use the ``useAttributeAsKey()`` method::
 
