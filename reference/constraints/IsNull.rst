@@ -1,26 +1,27 @@
-Blank
-=====
+IsNull
+======
 
-Validates that a value is blank, defined as equal to a blank string or equal
-to ``null``. To force that a value strictly be equal to ``null``, see the
-:doc:`/reference/constraints/IsNull` constraint. To force that a value is
-*not* blank, see :doc:`/reference/constraints/NotBlank`.
+Validates that a value is exactly equal to ``null``. To force that a property
+is simply blank (blank string or ``null``), see the  :doc:`/reference/constraints/Blank`
+constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Blank`          |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\BlankValidator` |
-+----------------+---------------------------------------------------------------------+
+Also see :doc:`NotNull <NotNull>`.
+
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `message`_                                                          |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsNull`           |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsNullValidator`  |
++----------------+-----------------------------------------------------------------------+
 
 Basic Usage
 -----------
 
 If, for some reason, you wanted to ensure that the ``firstName`` property
-of an ``Author`` class were blank, you could do the following:
+of an ``Author`` class exactly equal to ``null``, you could do the following:
 
 .. configuration-block::
 
@@ -34,7 +35,7 @@ of an ``Author`` class were blank, you could do the following:
         class Author
         {
             /**
-             * @Assert\Blank()
+             * @Assert\IsNull()
              */
             protected $firstName;
         }
@@ -45,7 +46,7 @@ of an ``Author`` class were blank, you could do the following:
         AppBundle\Entity\Author:
             properties:
                 firstName:
-                    - Blank: ~
+                    - 'IsNull': ~
 
     .. code-block:: xml
 
@@ -57,7 +58,7 @@ of an ``Author`` class were blank, you could do the following:
 
             <class name="AppBundle\Entity\Author">
                 <property name="firstName">
-                    <constraint name="Blank" />
+                    <constraint name="IsNull" />
                 </property>
             </class>
         </constraint-mapping>
@@ -74,7 +75,7 @@ of an ``Author`` class were blank, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('firstName', new Assert\Blank());
+                $metadata->addPropertyConstraint('firstName', Assert\IsNull());
             }
         }
 
@@ -84,6 +85,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be blank.``
+**type**: ``string`` **default**: ``This value should be null.``
 
-This is the message that will be shown if the value is not blank.
+This is the message that will be shown if the value is not ``null``.
