@@ -95,6 +95,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. _reference-form-option-mapped:
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. _reference-form-option-max_length:

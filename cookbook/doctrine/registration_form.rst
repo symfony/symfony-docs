@@ -6,20 +6,37 @@ How to Implement a simple Registration Form
 ===========================================
 
 Creating a registration form is pretty easy - it *really* means just creating
-a form that will update some ``User`` object (a Doctrine entity in this example)
+a form that will update some ``User`` model object (a Doctrine entity in this example)
 and then save it.
+
+.. tip::
+
+    The popular `FOSUserBundle`_ provides a registration form, reset password form
+    and other user management functionality.
 
 If you don't already have a ``User`` entity and a working login system,
 first start with :doc:`/cookbook/security/entity_provider`.
 
 Your ``User`` entity will probably at least have the following fields:
-* ``email``
-* ``username``
-* ``password`` (the encoded password)
-* ``plainPassword`` (*not* persisted: notice no ``@ORM\Column`` above it)
-* anything else you want
 
-With some validation added, it may look something like this::
+``username``
+    This will be used for logging in, unless you instead want your user to
+    :ref:`login via email <registration-form-via-email>` (in that case, this
+    field is unnecessary).
+
+``email``
+    A nice piece of information to collect. You can also allow users to
+    :ref:`login via email <registration-form-via-email>`.
+
+* ``password``
+    The encoded password.
+
+* ``plainPassword``
+    This field is *not* persisted: (notice no ``@ORM\Column`` above it). It
+    temporarily stores the plain password from the registration form. This field
+    can be validated then used to populate the ``password`` field.
+
+With some validation added, your class may look something like this::
 
     // src/AppBundle/Entity/User.php
     namespace AppBundle\Entity;
@@ -41,26 +58,26 @@ With some validation added, it may look something like this::
          * @ORM\Column(type="integer")
          * @ORM\GeneratedValue(strategy="AUTO")
          */
-        protected $id;
+        private $id;
 
         /**
          * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
          * @Assert\Email()
          */
-        protected $email;
+        private $email;
 
         /**
          * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
          */
-        protected $username;
+        private $username;
 
         /**
          * @Assert\NotBlank()
          * @Assert\Length(max = 4096)
          */
-        protected $plainPassword;
+        private $plainPassword;
 
         /**
          * The below length depends on the "algorithm" you use for encoding
@@ -68,14 +85,9 @@ With some validation added, it may look something like this::
          *
          * @ORM\Column(type="string", length=64)
          */
-        protected $password;
+        private $password;
 
-        // other properties
-
-        public function getId()
-        {
-            return $this->id;
-        }
+        // other properties and methods
 
         public function getEmail()
         {
@@ -115,7 +127,9 @@ With some validation added, it may look something like this::
         // other methods, including security methods like getRoles()
     }
 
-
+The ``UserInterface`` requires a few other methods and your ``security.yml`` file
+needs to be configured properly to work with the ``User`` entity. For a more full
+example, see the :ref:`Entity Provider <security-crete-user-entity>` article.
 
 .. _cookbook-registration-password-max:
 
@@ -152,7 +166,9 @@ Next, create the form for the ``User`` entity::
                 ->add('email', 'email');
                 ->add('username', 'text');
                 ->add('plainPassword', 'repeated', array(
-                   'type' => 'password',
+                    'type' => 'password',
+                    'first_options'  => array('label' => 'Password'),
+                    'second_options' => array('label' => 'Repeat Password'),
                 )
             );
         }
@@ -206,13 +222,19 @@ controller for displaying the registration form::
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
-            if ($form->isValid()) {
-                // save the User!
+            if ($form->isValid() && $form->isSubmitted()) {
+                // 3) Encode the password (you could also do this via Doctrine listener)
+                $encoder = $this->get('security.encoder_factory')
+                    ->getEncoder($user);
+                $password = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
+                $user->setPassword($password);
+
+                // 4) save the User!
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
 
-                // do any other work - like send them an email, etc
+                // ... do any other work - like send them an email, etc
                 // maybe set a "flash" success message for the user
 
                 $redirectUrl = $this->generateUrl('replace_with_some_route');
@@ -269,29 +291,42 @@ controller for displaying the registration form::
 
 Next, create the template:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/registration/register.html.twig #}
+    .. code-block:: html+jinja
+
+        {# app/Resources/views/registration/register.html.twig #}
     
-    {{ form_start(form) }}
-        {{ form_row('form.username') }}
-        {{ form_row('form.email') }}
+        {{ form_start(form) }}
+            {{ form_row('form.username') }}
+            {{ form_row('form.email') }}
+            {{ form_row('form.plainPassword.first') }}
+            {{ form_row('form.plainPassword.second') }}
 
-        {{ form_row('form.plainPassword.first', {
-            'label': 'Password'
-        }) }}
-        {{ form_row('form.plainPassword.second', {
-            'label': 'Repeat Password'
-        }) }}
+            <button type="submit">Register!</button>
+        {{ form_end(form) }}
+    
+    .. code-block:: html+php
 
-        <button type="submit">Register!</button>
-    {{ form_end(form) }}
+        <!-- app/Resources/views/registration/register.html.php -->
+
+        <?php echo $view['form']->start($form) ?>
+            <?php echo $view['form']->row($form['username']) ?>
+            <?php echo $view['form']->row($form['email']) ?>
+
+            <?php echo $view['form']->row($form['plainPassword']['first']) ?>
+            <?php echo $view['form']->row($form['plainPassword']['second']) ?>
+
+            <button type="submit">Register!</button>
+        <?php echo $view['form']->end($form) ?>
+
+See :doc:`/cookbook/form/form_customization` for more details.
 
 Update your Database Schema
 ---------------------------
 
-If you've updated the ``User`` entity during this tutorial, make sure that
-your database schema has been updated properly:
+If you've updated the User entity during this tutorial, you have to update your
+database schema using this command:
 
 .. code-block:: bash
 
@@ -299,14 +334,66 @@ your database schema has been updated properly:
 
 That's it! Head to ``/register`` to try things out!
 
+.. _registration-form-via-email:
+
 Having a Registration form with only Email (no Username)
 --------------------------------------------------------
 
-Todo
+If you want your users to login via email and you don't need a username, then you
+can remove it from your ``User`` entity entirely. Instead, make ``getUsername()``
+return the ``email`` property.
+
+    // src/AppBundle/Entity/User.php
+    // ...
+
+    class User implements UserInterface
+    {
+        // ...
+
+        public function getUsername()
+        {
+            return $this->email;
+        }
+
+        // ...
+    }
+
+Next, just update the ``providers`` section of your ``security.yml`` so that Symfony
+knows to load your users via the ``email`` property on login. See
+:ref:`authenticating-someone-with-a-custom-entity-provider`.
 
 Adding a "accept terms" Checkbox
 --------------------------------
 
-Todo
+Sometimes, you want a "Do you accept the terms and conditions" checkbox on your
+registration form. The only trick is that you want to add this field to your form
+without adding an unnecessary new ``termsAccepted`` property to your ``User`` entity
+that you'll never need.
+
+To do this, add a ``termsAccepted`` field to your form, but set its :ref:`mapped <reference-form-option-mapped>`
+option to ``false``::
+
+    // src/AppBundle/Form/UserType.php
+    // ...
+    use Symfony\\Component\\Validator\\Constraints\\IsTrue;
+
+    class UserType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('email', 'email');
+                // ...
+                ->add('termsAccepted', 'checkbox', array(
+                    'mapped' => false,
+                    'constraints' => new IsTrue(),
+                ))
+            );
+        }
+    }
+
+The :ref:`constraints <form-option-constraints>` option is also used, which allows
+us to add validation, even though there is no ``termsAccepted`` property on ``User``.
 
 .. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
+.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
