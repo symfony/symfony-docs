@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-08T17:52:11Z
+
+Nice work @stampycode. These changes should imo be made for the `2.3` branch, but we can (probably) easily apply them there.
+
+@stampycode Is this based off the `2.7` branch or off `2.3`?
+
+---------------------------------------------------------------------------
+
+by stampycode at 2015-09-09T10:49:10Z
+
+This is based off `2.7`, since that's the first version in which the deprecations were made (I think).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-09T18:39:38Z
+
+I think it's totally fine if we merge it into the `2.3` branch (the code was updated there too).
+
+@weaverryan @WouterJ @javiereguiluz What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-11T07:45:09Z
+
+@xabbuh I agree with you. Let's merge it in 2.3 because this change was exceptionally made in that branch too.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-09-28T23:58:39Z
+
+:+1: for 2.3 - if that's what we did in the code
