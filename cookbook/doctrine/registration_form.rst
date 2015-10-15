@@ -341,7 +341,7 @@ Having a Registration form with only Email (no Username)
 
 If you want your users to login via email and you don't need a username, then you
 can remove it from your ``User`` entity entirely. Instead, make ``getUsername()``
-return the ``email`` property.
+return the ``email`` property::
 
     // src/AppBundle/Entity/User.php
     // ...
