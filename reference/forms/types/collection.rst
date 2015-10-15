@@ -12,7 +12,7 @@ relationships (e.g. a product from where you can manage many related product
 photos).
 
 +-------------+-----------------------------------------------------------------------------+
-| Rendered as | depends on the `type`_ option                                               |
+| Rendered as | depends on the `entry_type`_ option                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
