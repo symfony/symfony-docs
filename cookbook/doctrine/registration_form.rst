@@ -224,9 +224,8 @@ controller for displaying the registration form::
             $form->handleRequest($request);
             if ($form->isValid() && $form->isSubmitted()) {
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $encoder = $this->get('security.encoder_factory')
-                    ->getEncoder($user);
-                $password = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
 
                 // 4) save the User!
@@ -237,9 +236,7 @@ controller for displaying the registration form::
                 // ... do any other work - like send them an email, etc
                 // maybe set a "flash" success message for the user
 
-                $redirectUrl = $this->generateUrl('replace_with_some_route');
-
-                return $this->redirect($redirectUrl);
+                return $this->redirectToRoute('replace_with_some_route');
             }
 
             return $this->render(
