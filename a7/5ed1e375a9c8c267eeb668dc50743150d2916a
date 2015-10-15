@@ -1,0 +1,88 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-06T11:06:36Z
+
+Thank you for your contribution @kendrick-k. Can you provide some docs related to your changes that explain in more detail what they are supposed to do and can we add some more detailed inline comments for people wondering about this option?
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-06T11:11:34Z
+
+yes sure :
+
+Capistrano is great for deploying web applications. But the “current” symlink construction causes issues with PHP-FPM and OPcache enabled. PHP-FPM will display old pages after deployment or PHP-FPM just hangs. The hanging / freeze will result in your browser loading for minutes but you will just see a white screen.
+
+To fix this, use $realpath_root instead of $document_root and set the SCRIPT_FILENAME in Nginx to pass to PHP-FPM.
+
+fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
+fastcgi_param  DOCUMENT_ROOT    $realpath_root;
+This will pass the actual path “releases/20150208145800″ to PHP-FPM instead of “current” that is switched to the new release directory. OPcache can’t detect this switch so it has to work with a real path. Read more about that at: https://github.com/zendtech/ZendOptimizerPlus/issues/126.
+
+from : http://pietervogelaar.nl/php-fpm-opcache-nginx-capistrano-stable-deploy
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-06T11:12:24Z
+
+( this issue is painful when you don't know it... )
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-07T09:44:58Z
+
+Hi @xabbuh is the comment fine for you ? Best
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-07T19:10:42Z
+
+@kendrick-k I left you a comment. Can you please check if I understood everything correctly and what you think about my suggestion? Thank you!
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-08T09:28:10Z
+
+Hi yes it's nice ! http://nginx.org/en/docs/http/ngx_http_core_module.html : "ngx_http_core_module module supports embedded variables => $realpath_root
+an absolute pathname corresponding to the root or alias directive’s value for the current request, with all symbolic links resolved to real paths"
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-08T12:59:55Z
+
+Could you then please update the pull request accordingly?
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-09T09:43:14Z
+
+Hello @xabbuh it's ok now :) ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-09T09:51:56Z
+
+@kendrick-k I think it's great now. :) Thank you for your work on this.
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-09T09:59:33Z
+
+cool, thank you too !
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-09T10:01:10Z
+
+Sorry, I have to reopen. :) The PR is not merged yet as I wait for another :+1: from one of the other team members. :)
+
+---------------------------------------------------------------------------
+
+by jakzal at 2015-10-09T16:13:02Z
+
+I was just hit by this :) :+1:
+
+---------------------------------------------------------------------------
+
+by kendrick-k at 2015-10-13T09:43:02Z
+
+@xabbuh hi, it will be integrated within a few days ?
