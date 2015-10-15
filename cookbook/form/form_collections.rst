@@ -126,7 +126,7 @@ Notice that you embed a collection of ``TagType`` forms using the
         {
             $builder->add('description');
 
-            $builder->add('tags', 'collection', array('type' => new TagType()));
+            $builder->add('tags', 'collection', array('entry_type' => new TagType()));
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -285,7 +285,7 @@ add the ``allow_add`` option to your collection field::
         $builder->add('description');
 
         $builder->add('tags', 'collection', array(
-            'type'         => new TagType(),
+            'entry_type'   => new TagType(),
             'allow_add'    => true,
         ));
     }
