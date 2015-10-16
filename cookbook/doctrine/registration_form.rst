@@ -19,12 +19,12 @@ first start with :doc:`/cookbook/security/entity_provider`.
 
 Your ``User`` entity will probably at least have the following fields:
 
-``username``
+* ``username``
     This will be used for logging in, unless you instead want your user to
     :ref:`login via email <registration-form-via-email>` (in that case, this
     field is unnecessary).
 
-``email``
+* ``email``
     A nice piece of information to collect. You can also allow users to
     :ref:`login via email <registration-form-via-email>`.
 
@@ -49,7 +49,7 @@ With some validation added, your class may look something like this::
     /**
      * @ORM\Entity
      * @UniqueEntity(fields="email", message="Email already taken")
-     * @UniqueEntity(fields="username", message="Username  already taken")
+     * @UniqueEntity(fields="username", message="Username already taken")
      */
     class User implements UserInterface
     {
@@ -253,7 +253,7 @@ controller for displaying the registration form::
 
     If you decide to NOT use annotation routing (shown above), then you'll
     need to create a route to this controller:
-    
+
     .. configuration-block::
 
         .. code-block:: yaml
@@ -296,7 +296,7 @@ Next, create the template:
     .. code-block:: html+jinja
 
         {# app/Resources/views/registration/register.html.twig #}
-    
+
         {{ form_start(form) }}
             {{ form_row('form.username') }}
             {{ form_row('form.email') }}
@@ -305,7 +305,7 @@ Next, create the template:
 
             <button type="submit">Register!</button>
         {{ form_end(form) }}
-    
+
     .. code-block:: html+php
 
         <!-- app/Resources/views/registration/register.html.php -->
@@ -370,8 +370,8 @@ registration form. The only trick is that you want to add this field to your for
 without adding an unnecessary new ``termsAccepted`` property to your ``User`` entity
 that you'll never need.
 
-To do this, add a ``termsAccepted`` field to your form, but set its :ref:`mapped <reference-form-option-mapped>`
-option to ``false``::
+To do this, add a ``termsAccepted`` field to your form, but set its
+:ref:`mapped <reference-form-option-mapped>` option to ``false``::
 
     // src/AppBundle/Form/UserType.php
     // ...
