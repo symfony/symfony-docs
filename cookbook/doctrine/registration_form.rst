@@ -163,8 +163,8 @@ Next, create the form for the ``User`` entity::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email');
-                ->add('username', 'text');
+                ->add('email', 'email')
+                ->add('username', 'text')
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
                     'first_options'  => array('label' => 'Password'),
