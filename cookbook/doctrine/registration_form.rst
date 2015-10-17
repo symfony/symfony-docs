@@ -367,7 +367,7 @@ option to ``false``::
 
     // src/AppBundle/Form/UserType.php
     // ...
-    use Symfony\\Component\\Validator\\Constraints\\IsTrue;
+    use Symfony\Component\Validator\Constraints\IsTrue;
 
     class UserType extends AbstractType
     {
