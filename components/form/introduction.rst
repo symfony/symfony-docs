@@ -391,9 +391,11 @@ is created from the form factory.
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type;
+
         $form = $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
         var_dump($twig->render('new.html.twig', array(
@@ -407,6 +409,7 @@ is created from the form factory.
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\Form\Extension\Core\Type;
 
         class DefaultController extends Controller
         {
@@ -415,8 +418,8 @@ is created from the form factory.
                 // createFormBuilder is a shortcut to get the "form factory"
                 // and then call "createBuilder()" on it
                 $form = $this->createFormBuilder()
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
@@ -444,13 +447,14 @@ builder:
 
     .. code-block:: php-standalone
 
+        // ...
         $defaults = array(
             'dueDate' => new \DateTime('tomorrow'),
         );
 
         $form = $formFactory->createBuilder('form', $defaults)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', Type\TextType::class)
+            ->add('dueDate', Type\DateType::class)
             ->getForm();
 
     .. code-block:: php-symfony
@@ -460,8 +464,8 @@ builder:
         );
 
         $form = $this->createFormBuilder($defaults)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', Type\TextType::class)
+            ->add('dueDate', Type\DateType::class)
             ->getForm();
 
 .. tip::
@@ -546,12 +550,13 @@ method:
 
     .. code-block:: php-standalone
 
+        // ...
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
         $form = $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', Type\TextType::class)
+            ->add('dueDate', Type\DateType::class)
             ->getForm();
 
         $request = Request::createFromGlobals();
@@ -578,8 +583,8 @@ method:
         public function newAction(Request $request)
         {
             $form = $this->createFormBuilder()
-                ->add('task', 'text')
-                ->add('dueDate', 'date')
+                ->add('task', TextType::class)
+                ->add('dueDate', DateType::class)
                 ->getForm();
 
             $form->handleRequest($request);
@@ -624,12 +629,13 @@ option when building each field:
 
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Form\Extension\Core\Type;
 
         $form = $formFactory->createBuilder()
-            ->add('task', 'text', array(
+            ->add('task', Type\TextType::class, array(
                 'constraints' => new NotBlank(),
             ))
-            ->add('dueDate', 'date', array(
+            ->add('dueDate', Type\DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
                     new Type('\DateTime'),
@@ -641,12 +647,13 @@ option when building each field:
 
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Form\Extension\Core\Type;
 
         $form = $this->createFormBuilder()
-            ->add('task', 'text', array(
+            ->add('task', Type\TextType::class, array(
                 'constraints' => new NotBlank(),
             ))
-            ->add('dueDate', 'date', array(
+            ->add('dueDate', Type\DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
                     new Type('\DateTime'),

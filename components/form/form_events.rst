@@ -288,10 +288,11 @@ Creating and binding an event listener to the form is very easy::
 
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\Form\Extension\Core\Type;
 
     $form = $formFactory->createBuilder()
-        ->add('username', 'text')
-        ->add('show_email', 'checkbox')
+        ->add('username', Type\TextType::class)
+        ->add('show_email', Type\CheckboxType::class)
         ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $user = $event->getData();
             $form = $event->getForm();
@@ -323,8 +324,8 @@ callback for better readability::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('username', 'text');
-            $builder->add('show_email', 'checkbox');
+            $builder->add('username', Type\TextType::class);
+            $builder->add('show_email', Type\CheckboxType::class);
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
                 array($this, 'onPreSetData')
@@ -351,6 +352,7 @@ Event subscribers have different uses:
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     class AddEmailFieldListener implements EventSubscriberInterface
     {
@@ -370,7 +372,7 @@ Event subscribers have different uses:
             // Check whether the user from the initial data has chosen to
             // display his email or not.
             if (true === $user->isShowEmail()) {
-                $form->add('email', 'email');
+                $form->add('email', EmailType::class);
             }
         }
 
@@ -387,7 +389,7 @@ Event subscribers have different uses:
             // If the data was submitted previously, the additional value that
             // is included in the request variables needs to be removed.
             if (true === $user['show_email']) {
-                $form->add('email', 'email');
+                $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
                 $event->setData($user);
@@ -400,8 +402,8 @@ To register the event subscriber, use the addEventSubscriber() method::
     // ...
 
     $form = $formFactory->createBuilder()
-        ->add('username', 'text')
-        ->add('show_email', 'checkbox')
+        ->add('username', Type\TextType::class)
+        ->add('show_email', Type\CheckboxType::class)
         ->addEventSubscriber(new AddEmailFieldListener())
         ->getForm();
 
