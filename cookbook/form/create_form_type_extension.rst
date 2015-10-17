@@ -312,7 +312,7 @@ next to the file field. For example::
 
         public function getName()
         {
-            return 'media';
+            return 'app_media';
         }
     }
 
