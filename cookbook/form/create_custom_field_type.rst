@@ -311,14 +311,14 @@ the ``genders`` parameter value as the first argument to its to-be-created
                 arguments:
                     - "%genders%"
                 tags:
-                    - { name: form.type, alias: gender }
+                    - { name: form.type, alias: app_gender }
 
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/services.xml -->
         <service id="app.form.type.gender" class="AppBundle\Form\Type\GenderType">
             <argument>%genders%</argument>
-            <tag name="form.type" alias="gender" />
+            <tag name="form.type" alias="app_gender" />
         </service>
 
     .. code-block:: php
@@ -332,7 +332,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
                 array('%genders%')
             ))
             ->addTag('form.type', array(
-                'alias' => 'gender',
+                'alias' => 'app_gender',
             ))
         ;
 
