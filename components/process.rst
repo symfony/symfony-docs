@@ -24,13 +24,14 @@ The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
 a command in a sub-process::
 
     use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Exception\ProcessFailedException;
 
     $process = new Process('ls -lsa');
     $process->run();
 
     // executes after the command finishes
     if (!$process->isSuccessful()) {
-        throw new \RuntimeException($process->getErrorOutput());
+        throw new ProcessFailedException($process);
     }
 
     echo $process->getOutput();
