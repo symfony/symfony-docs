@@ -19,19 +19,19 @@ first start with :doc:`/cookbook/security/entity_provider`.
 
 Your ``User`` entity will probably at least have the following fields:
 
-* ``username``
+``username``
     This will be used for logging in, unless you instead want your user to
     :ref:`login via email <registration-form-via-email>` (in that case, this
     field is unnecessary).
 
-* ``email``
+``email``
     A nice piece of information to collect. You can also allow users to
     :ref:`login via email <registration-form-via-email>`.
 
-* ``password``
+``password``
     The encoded password.
 
-* ``plainPassword``
+``plainPassword``
     This field is *not* persisted: (notice no ``@ORM\Column`` above it). It
     temporarily stores the plain password from the registration form. This field
     can be validated then used to populate the ``password`` field.
