@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-14T13:28:06Z
+
+:+1: I think it makes sense to be consistent here.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-18T08:33:39Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-18T10:46:22Z
+
+For consistency, it makes sense to add it here to. However, what was the actual reason to add it to the front controller?
+
+---------------------------------------------------------------------------
+
+by j-d at 2015-10-18T10:54:13Z
+
+This was the original reason: https://github.com/symfony/symfony-standard/commit/2c844059730cd793c868e7015b1f660933be0552
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-18T11:09:29Z
+
+Thanks for providing the background here. This looks like a reasonable change then. :+1:
