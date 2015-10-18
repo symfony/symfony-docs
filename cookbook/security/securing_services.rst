@@ -80,11 +80,18 @@ Then in your service configuration, you can inject the service:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                <argument type="service" id="security.authorization_checker"/>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
+                    <argument type="service" id="security.authorization_checker"/>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -146,30 +153,32 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
     .. code-block:: yaml
 
-        # app/services.yml
-
-        # ...
+        # app/config/services.yml
         services:
             newsletter_manager:
-                # ...
+                class: AppBundle\Newsletter\NewsletterManager
                 tags:
                     -  { name: security.secure_service }
 
     .. code-block:: xml
 
-        <!-- app/services.xml -->
-        <!-- ... -->
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                <!-- ... -->
-                <tag name="security.secure_service" />
-            </service>
-        </services>
+            <services>
+                <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
+                    <tag name="security.secure_service" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
-        // app/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -225,28 +234,28 @@ documentation.
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # app/config/services.yml
             jms_security_extra:
                 # ...
                 secure_all_services: true
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- app/config/services.xml -->
             <?xml version="1.0" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:jms-security-extra="http://example.org/schema/dic/jms_security_extra"
-                xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <!-- ... -->
-                <jms-security-extra:config secure-controllers="true" secure-all-services="true" />
-
-            </srv:container>
+                <jms-security-extra:config secure-all-services="true" />
+            </container>
 
         .. code-block:: php
 
-            // app/config/config.php
+            // app/config/services.php
             $container->loadFromExtension('jms_security_extra', array(
                 // ...
                 'secure_all_services' => true,

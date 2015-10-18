@@ -22,6 +22,7 @@ Tag Name                                  Usage
 `assetic.formula_resource`_               Adds a resource to the current asset manager
 `assetic.templating.php`_                 Remove this service if PHP templating is disabled
 `assetic.templating.twig`_                Remove this service if Twig templating is disabled
+`auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
@@ -227,6 +228,123 @@ assetic.templating.twig
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain ``twig``.
 
+auto_alias
+----------
+
+.. versionadded:: 2.7
+    The ``auto_alias`` tag was introduced in Symfony 2.7.
+
+**Purpose**: Define aliases based on the value of container parameters
+
+Consider the following configuration that defines three different but related
+services:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            app.mysql_lock:
+                class: AppBundle\Lock\MysqlLock
+                public: false
+            app.postgresql_lock:
+                class: AppBundle\Lock\PostgresqlLock
+                public: false
+            app.sqlite_lock:
+                class: AppBundle\Lock\SqliteLock
+                public: false
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.mysql_lock" public="false"
+                         class="AppBundle\Lock\MysqlLock" />
+                <service id="app.postgresql_lock" public="false"
+                         class="AppBundle\Lock\PostgresqlLock" />
+                <service id="app.sqlite_lock" public="false"
+                         class="AppBundle\Lock\SqliteLock" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container
+            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')->setPublic(false)
+            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')->setPublic(false)
+            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')->setPublic(false)
+        ;
+
+Instead of dealing with these three services, your application needs a generic
+``app.lock`` service that will be an alias to one of these services, depending on
+some configuration. Thanks to the ``auto_alias`` option, you can automatically create
+that alias based on the value of a configuration parameter.
+
+Considering that a configuration parameter called ``database_type`` exists. Then,
+the generic ``app.lock`` service can be defined as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            app.mysql_lock:
+                # ...
+            app.postgresql_lock:
+                # ...
+            app.sqlite_lock:
+                # ...
+            app.lock:
+                tags:
+                    - { name: auto_alias, format: "app.%database_type%_lock" }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.mysql_lock" public="false"
+                         class="AppBundle\Lock\MysqlLock" />
+                <service id="app.postgresql_lock" public="false"
+                         class="AppBundle\Lock\PostgresqlLock" />
+                <service id="app.sqlite_lock" public="false"
+                         class="AppBundle\Lock\SqliteLock" />
+
+                <service id="app.lock">
+                    <tag name="auto_alias" format="app.%database_type%_lock" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container
+            ->register('app.mysql_lock', 'AppBundle\Lock\MysqlLock')->setPublic(false)
+            ->register('app.postgresql_lock', 'AppBundle\Lock\PostgresqlLock')->setPublic(false)
+            ->register('app.sqlite_lock', 'AppBundle\Lock\SqliteLock')->setPublic(false)
+
+            ->register('app.lock')
+            ->addTag('auto_alias', array('format' => 'app.%database_type%_lock'))
+        ;
+
+The ``format`` option defines the expression used to construct the name of the service
+to alias. This expression can use any container parameter (as usual,
+wrapping their names with ``%`` characters).
+
+.. note::
+
+    When using the ``auto_alias`` tag, it's not mandatory to define the aliased
+    services as private. However, doing that (like in the above example) makes
+    sense most of the times to prevent accessing those services directly instead
+    of using the generic service alias.
+
 console.command
 ---------------
 
@@ -274,72 +392,8 @@ form.type_extension
 
 **Purpose**: Create a custom "form extension"
 
-Form type extensions are a way for you took "hook into" the creation of
-any field in your form. For example, the addition of the CSRF token is done
-via a form type extension
-(:class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\FormTypeCsrfExtension`).
-
-A form type extension can modify any part of any field in your form. To
-create a form type extension, first create a class that implements the
-:class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface.
-For simplicity, you'll often extend an
-:class:`Symfony\\Component\\Form\\AbstractTypeExtension` class instead of
-the interface directly::
-
-    // src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php
-    namespace Acme\MainBundle\Form\Type;
-
-    use Symfony\Component\Form\AbstractTypeExtension;
-
-    class MyFormTypeExtension extends AbstractTypeExtension
-    {
-        // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), finishView(), configureOptions()
-    }
-
-In order for Symfony to know about your form extension and use it, give
-it the ``form.type_extension`` tag:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            main.form.type.my_form_type_extension:
-                class: Acme\MainBundle\Form\Type\MyFormTypeExtension
-                tags:
-                    - { name: form.type_extension, alias: field }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service
-                    id="main.form.type.my_form_type_extension"
-                    class="Acme\MainBundle\Form\Type\MyFormTypeExtension">
-
-                    <tag name="form.type_extension" alias="field" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        $container
-            ->register(
-                'main.form.type.my_form_type_extension',
-                'Acme\MainBundle\Form\Type\MyFormTypeExtension'
-            )
-            ->addTag('form.type_extension', array('alias' => 'field'))
-        ;
-
-The ``alias`` key of the tag is the type of field that this extension should
-be applied to. For example, to apply the extension to any form/field, use
-the "form" value.
+For details on creating Form type extensions, read the cookbook article:
+:doc:`/cookbook/form/create_form_type_extension`
 
 .. _reference-dic-type_guesser:
 
@@ -521,14 +575,14 @@ kernel.event_listener
 This tag allows you to hook your own classes into Symfony's process at different
 points.
 
-For a full example of this listener, read the :doc:`/cookbook/service_container/event_listener`
+For a full example of this listener, read the :doc:`/cookbook/event_dispatcher/event_listener`
 cookbook entry.
 
 Core Event Listener Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the reference of Event Listeners associated with each kernel event, see the
-:doc:`Symfony Events Reference </reference/events>`.
+For the reference of Event Listeners associated with each kernel event,
+see the :doc:`Symfony Events Reference </reference/events>`.
 
 .. _dic-tags-kernel-event-subscriber:
 

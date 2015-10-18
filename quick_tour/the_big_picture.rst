@@ -8,116 +8,14 @@ quickly by showing you a simple project in action.
 If you've used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications.
 
-The only technical requisite to follow this tutorial is to have **PHP 5.4
-or higher installed on your computer**. If you use a packaged PHP solution
-such as WAMP, XAMP or MAMP, check out that they are using PHP 5.4 or a more
-recent version. You can also execute the following command in your terminal
-or command console to display the installed PHP version:
-
-.. code-block:: bash
-
-    $ php --version
-
 .. _installing-symfony2:
 
 Installing Symfony
 ------------------
 
-In the past, Symfony had to be installed manually for each new project.
-Now you can use the **Symfony Installer**, which has to be installed the
-very first time you use Symfony on a computer.
-
-On **Linux** and **Mac OS X** systems, execute the following console commands:
-
-.. code-block:: bash
-
-    $ curl -LsS http://symfony.com/installer > symfony.phar
-    $ sudo mv symfony.phar /usr/local/bin/symfony
-    $ chmod a+x /usr/local/bin/symfony
-
-After installing the Symfony installer, you'll have to open a new console
-window to be able to execute the new ``symfony`` command:
-
-.. code-block:: bash
-
-    $ symfony
-
-On **Windows** systems, execute the following console command:
-
-.. code-block:: bash
-
-    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
-
-This command downloads a file called ``symfony.phar`` which contains the
-Symfony installer. Save or move that file to the directory where you create
-the Symfony projects and then, execute the Symfony installer right away
-with this command:
-
-.. code-block:: bash
-
-    c:\> php symfony.phar
-
-Creating your First Symfony Project
------------------------------------
-
-Once the Symfony Installer is set up, use the ``new`` command to create
-new Symfony projects. Let's create a new project called ``myproject``:
-
-.. code-block:: bash
-
-    # Linux and Mac OS X
-    $ symfony new myproject
-
-    # Windows
-    c:\> php symfony.phar new myproject
-
-This command downloads the latest Symfony stable version and creates an
-empty project in the ``myproject/`` directory so you can start developing
-your application right away.
-
-.. _running-symfony2:
-
-Running Symfony
----------------
-
-This tutorial leverages the internal web server provided by PHP to run Symfony
-applications. Therefore, running a Symfony application is a matter of browsing
-the project directory and executing this command:
-
-.. code-block:: bash
-
-    $ cd myproject/
-    $ php app/console server:run
-
-Open your browser and access the ``http://localhost:8000`` URL to see the
-welcome page of Symfony:
-
-.. image:: /images/quick_tour/welcome.png
-   :align: center
-   :alt: Symfony Welcome Page
-
-Congratulations! Your first Symfony project is up and running!
-
-.. note::
-
-    Instead of the welcome page, you may see a blank page or an error page.
-    This is caused by a directory permission misconfiguration. There are
-    several possible solutions depending on your operating system. All of
-    them are explained in the
-    :ref:`Setting up Permissions <book-installation-permissions>` section
-    of the official book.
-
-When you are finished working on your Symfony application, you can stop
-the server with the ``server:stop`` command:
-
-.. code-block:: bash
-
-    $ php app/console server:stop
-
-.. tip::
-
-    If you prefer a traditional web server such as Apache or Nginx, read
-    the :doc:`/cookbook/configuration/web_server_configuration` article.
+Before continuing reading this chapter, make sure to have installed both PHP
+and Symfony as explained in the :doc:`installation chapter </book/installation>`
+of the Symfony book.
 
 Understanding the Fundamentals
 ------------------------------
@@ -128,15 +26,15 @@ of database calls, HTML tags and other PHP code in the same script. To achieve
 this goal with Symfony, you'll first need to learn a few fundamental concepts.
 
 When developing a Symfony application, your responsibility as a developer
-is to write the code that maps the user's *request* (e.g.  ``http://localhost:8000/``)
-to the *resource* associated with it (the ``Welcome to Symfony!`` HTML page).
+is to write the code that maps the user's *request* (e.g. ``http://localhost:8000/``)
+to the *resource* associated with it (the ``Homepage`` HTML page).
 
 The code to execute is defined in **actions** and **controllers**. The mapping
 between user's requests and that code is defined via the **routing** configuration.
 And the contents displayed in the browser are usually rendered using **templates**.
 
-When you browsed ``http://localhost:8000/`` earlier, Symfony executed the
-controller defined in the ``src/AppBundle/Controller/DefaultController.php``
+When you browsed ``http://localhost:8000/app/example`` earlier, Symfony executed
+the controller defined in the ``src/AppBundle/Controller/DefaultController.php``
 file and rendered the ``app/Resources/views/default/index.html.twig`` template.
 In the following sections you'll learn in detail the inner workings of Symfony
 controllers, routes and templates.
@@ -156,7 +54,7 @@ because that will be explained in the next section)::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/app/example", name="homepage")
+         * @Route("/", name="homepage")
          */
         public function indexAction()
         {
@@ -179,7 +77,7 @@ information and then they render a template to show the results to the user.
 
 In this example, the ``index`` action is practically empty because it doesn't
 need to call any other method. The action just renders a template with the
-*Welcome to Symfony!* content.
+*Homepage.* content.
 
 Routing
 ~~~~~~~
@@ -198,7 +96,7 @@ at the three lines of code above the ``indexAction`` method::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/app/example", name="homepage")
+         * @Route("/", name="homepage")
          */
         public function indexAction()
         {
@@ -214,15 +112,14 @@ start with ``/**``, whereas regular PHP comments start with ``/*``.
 The first value of ``@Route()`` defines the URL that will trigger the execution
 of the action. As you don't have to add the host of your application to
 the URL (e.g. ```http://example.com``), these URLs are always relative and
-they are usually called *paths*. In this case, the ``/`` path refers to
-the application homepage. The second value of ``@Route()`` (e.g.
-``name="homepage"``) is optional and sets the name of this route. For now
-this name is not needed, but later it'll be useful for linking pages.
+they are usually called *paths*. In this case, the ``/`` path refers to the
+application homepage. The second value of ``@Route()`` (e.g. ``name="homepage"``)
+is optional and sets the name of this route. For now this name is not needed,
+but later it'll be useful for linking pages.
 
-Considering all this, the ``@Route("/app/example", name="homepage")`` annotation
-creates a new route called ``homepage`` which makes Symfony execute the
-``index`` action of the ``Default`` controller when the user browses the
-``/app/example`` path of the application.
+Considering all this, the ``@Route("/", name="homepage")`` annotation creates a
+new route called ``homepage`` which makes Symfony execute the ``index`` action
+of the ``Default`` controller when the user browses the ``/`` path of the application.
 
 .. tip::
 
@@ -254,13 +151,14 @@ you'll see the following code:
     {% extends 'base.html.twig' %}
 
     {% block body %}
-        Homepage.
+        <h1>Welcome to Symfony</h1>
+
+        {# ... #}
     {% endblock %}
 
-This template is created with `Twig`_, a new template engine created for
-modern PHP applications. The
-:doc:`second part of this tutorial </quick_tour/the_view>` will introduce
-how templates work in Symfony.
+This template is created with `Twig`_, a template engine created for modern PHP
+applications. The :doc:`second part of this tutorial </quick_tour/the_view>`
+explains how templates work in Symfony.
 
 .. _quick-tour-big-picture-environments:
 

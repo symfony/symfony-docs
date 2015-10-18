@@ -139,8 +139,8 @@ file since there will be fewer files to monitor for changes. Of course if this
 feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
 is no longer a reason to use a bootstrap file.
 
-.. _`byte code caches`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
+.. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: http://php.net/manual/en/book.opcache.php
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`autoload.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
-.. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php
+.. _`bootstrap file`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php

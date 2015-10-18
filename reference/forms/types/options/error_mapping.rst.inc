@@ -1,7 +1,7 @@
 error_mapping
 ~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``empty``
+**type**: ``array`` **default**: ``array()``
 
 This option allows you to modify the target of a validation error.
 

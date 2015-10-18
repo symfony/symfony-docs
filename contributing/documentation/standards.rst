@@ -44,7 +44,7 @@ Example
 
         echo 'You cannot use the :: shortcut here';
 
-    .. _`Symfony Documentation`: http://symfony.com/doc
+    .. _`Symfony Documentation`: https://symfony.com/doc
 
 Code Examples
 -------------
@@ -57,6 +57,9 @@ Code Examples
   Unless the example requires a custom bundle, make sure to always use the
   ``AppBundle`` bundle to store your code;
 * Use ``Acme`` when the code requires a vendor name;
+* Use ``example.com`` as the domain of sample URLs and ``example.org`` and
+  ``example.net`` when additional domains are required. All of these domains are
+  `reserved by the IANA`_.
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
   correctly if it crosses the 85th character;
 * When you fold one or more lines of code, place ``...`` in a comment at the point
@@ -174,8 +177,9 @@ In addition, documentation follows these rules:
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
-.. _`American English`: http://en.wikipedia.org/wiki/American_English
+.. _`reserved by the IANA`: http://tools.ietf.org/html/rfc2606#section-3
+.. _`American English`: https://en.wikipedia.org/wiki/American_English
 .. _`American English Oxford Dictionary`: http://www.oxforddictionaries.com/definition/american_english/
-.. _`headings and titles`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
-.. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma
-.. _`nosism`: http://en.wikipedia.org/wiki/Nosism
+.. _`headings and titles`: https://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
+.. _`Serial (Oxford) Commas`: https://en.wikipedia.org/wiki/Serial_comma
+.. _`nosism`: https://en.wikipedia.org/wiki/Nosism

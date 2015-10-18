@@ -20,7 +20,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Form).
+* Use the official Git repository (https://github.com/symfony/form).
+
+.. include:: /components/require_autoload.rst.inc
 
 Configuration
 -------------
@@ -61,7 +63,7 @@ factory.
 
 .. tip::
 
-    For a working example, see https://github.com/bschussek/standalone-forms
+    For a working example, see https://github.com/webmozart/standalone-forms
 
 Request Handling
 ~~~~~~~~~~~~~~~~
@@ -138,7 +140,7 @@ above snippet and make sure that nobody except your web server can access
 the secret.
 
 Internally, this extension will automatically add a hidden field to every
-form (called ``__token`` by default) whose value is automatically generated
+form (called ``_token`` by default) whose value is automatically generated
 and validated when binding the form.
 
 .. tip::
@@ -187,10 +189,10 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     $defaultFormTheme = 'form_div_layout.html.twig';
 
     $vendorDir = realpath(__DIR__.'/../vendor');
-    // the path to TwigBridge so Twig can locate the
+    // the path to TwigBridge library so Twig can locate the
     // form_div_layout.html.twig file
-    $vendorTwigBridgeDir =
-        $vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig';
+    $appVariableReflection = new \ReflectionClass('\Symfony\Bridge\Twig\AppVariable');
+    $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
     // the path to your other templates
     $viewsDir = realpath(__DIR__.'/../views');
 
@@ -394,9 +396,9 @@ is created from the form factory.
             ->add('dueDate', 'date')
             ->getForm();
 
-        echo $twig->render('new.html.twig', array(
+        var_dump($twig->render('new.html.twig', array(
             'form' => $form->createView(),
-        ));
+        )));
 
     .. code-block:: php-symfony
 
@@ -480,11 +482,11 @@ helper functions:
 
 .. code-block:: html+jinja
 
-    <form action="#" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         {{ form_widget(form) }}
 
         <input type="submit" />
-    </form>
+    {{ form_end(form) }}
 
 .. image:: /images/book/form-simple.png
     :align: center
@@ -698,5 +700,5 @@ method to access the list of errors. It returns a
     on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
-.. _Twig:      http://twig.sensiolabs.org
+.. _Twig: http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html

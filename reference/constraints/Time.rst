@@ -26,8 +26,8 @@ of the day when the event starts:
 
     .. code-block:: php-annotations
 
-        // src/Acme/EventBundle/Entity/Event.php
-        namespace Acme\EventBundle\Entity;
+        // src/AppBundle/Entity/Event.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -41,21 +41,21 @@ of the day when the event starts:
 
     .. code-block:: yaml
 
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Event:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Event:
             properties:
                 startsAt:
                     - Time: ~
 
     .. code-block:: xml
 
-        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\EventBundle\Entity\Event">
+            <class name="AppBundle\Entity\Event">
                 <property name="startsAt">
                     <constraint name="Time" />
                 </property>
@@ -64,8 +64,8 @@ of the day when the event starts:
 
     .. code-block:: php
 
-        // src/Acme/EventBundle/Entity/Event.php
-        namespace Acme\EventBundle\Entity;
+        // src/AppBundle/Entity/Event.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

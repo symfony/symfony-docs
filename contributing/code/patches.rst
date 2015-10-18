@@ -116,7 +116,7 @@ work:
 * ``2.3``, if you are fixing a bug for an existing feature (you may have
   to choose a higher branch if the feature you are fixing was introduced
   in a later version);
-* ``2.7``, if you are adding a new feature which is backward compatible;
+* ``2.8``, if you are adding a new feature which is backward compatible;
 * ``master``, if you are adding a new and backward incompatible feature.
 
 .. note::
@@ -176,9 +176,6 @@ in mind the following:
 
 * Do atomic and logically separate commits (use the power of ``git rebase`` to
   have a clean and logical history);
-
-* Squash irrelevant commits that are just about fixing coding standards or
-  fixing typos in your own code;
 
 * Never fix coding standards in some existing code as it makes the code review
   more difficult;
@@ -255,6 +252,8 @@ Check that all tests still pass and push your branch remotely:
 .. code-block:: bash
 
     $ git push --force origin BRANCH_NAME
+
+.. _contributing-code-pull-request:
 
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
@@ -387,38 +386,21 @@ patch. Before re-submitting the patch, rebase with ``upstream/master`` or
     to avoid messing other branches in the repo (``--force`` tells Git that
     you really want to mess with things so do it carefully).
 
-Often, moderators will ask you to "squash" your commits. This means you will
-convert many commits to one commit. To do this, use the rebase command:
+Moderators earlier asked you to "squash" your commits. This means you will
+convert many commits to one commit. This is no longer necessary today, because
+Symfony project uses a proprietary tool which automatically squashes all commits
+before merging.
 
-.. code-block:: bash
-
-    $ git rebase -i upstream/master
-    $ git push --force origin BRANCH_NAME
-
-After you type this command, an editor will popup showing a list of commits:
-
-.. code-block:: text
-
-    pick 1a31be6 first commit
-    pick 7fc64b4 second commit
-    pick 7d33018 third commit
-
-To squash all commits into the first one, remove the word ``pick`` before the
-second and the last commits, and replace it by the word ``squash`` or just
-``s``. When you save, Git will start rebasing, and if successful, will ask
-you to edit the commit message, which by default is a listing of the commit
-messages of all the commits. When you are finished, execute the push command.
-
-.. _ProGit:                                http://git-scm.com/book
-.. _GitHub:                                https://github.com/signup/free
-.. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
-.. _Symfony repository:                    https://github.com/symfony/symfony
-.. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
-.. _travis-ci.org:                         https://travis-ci.org/
-.. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
+.. _ProGit: http://git-scm.com/book
+.. _GitHub: https://github.com/join
+.. _`GitHub's Documentation`: https://help.github.com/articles/ignoring-files
+.. _Symfony repository: https://github.com/symfony/symfony
+.. _dev mailing-list: http://groups.google.com/group/symfony-devs
+.. _travis-ci.org: https://travis-ci.org/
+.. _`travis-ci.org status icon`: http://about.travis-ci.org/docs/user/status-images/
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
-.. _`documentation repository`:            https://github.com/symfony/symfony-docs
-.. _`fabbot`:                              http://fabbot.io
-.. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
-.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html
+.. _`documentation repository`: https://github.com/symfony/symfony-docs
+.. _`fabbot`: http://fabbot.io
+.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
+.. _PHPUnit: https://phpunit.de/manual/current/en/installation.html

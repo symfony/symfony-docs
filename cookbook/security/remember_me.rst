@@ -15,36 +15,66 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
     .. code-block:: yaml
 
         # app/config/security.yml
-        firewalls:
-            main:
-                remember_me:
-                    key:      "%secret%"
-                    lifetime: 604800 # 1 week in seconds
-                    path:     /
+        security:
+            # ...
+
+            firewalls:
+                default:
+                    # ...
+                    remember_me:
+                        key:      "%secret%"
+                        lifetime: 604800 # 1 week in seconds
+                        path:     /
+                        # by default, the feature is enabled by checking a
+                        # checkbox in the login form (see below), uncomment the
+                        # following line to always enable it.
+                        #always_remember_me: true
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <remember-me
-                    key      = "%secret%"
-                    lifetime = "604800" <!-- 1 week in seconds -->
-                    path     = "/"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="utf-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="default">
+                    <!-- ... -->
+
+                    <!-- 604800 is 1 week in seconds -->
+                    <remember-me
+                        key="%secret%"
+                        lifetime="604800"
+                        path="/" />
+                    <!-- by default, the feature is enabled by checking a checkbox
+                         in the login form (see below), add always-remember-me="true"
+                         to always enable it. -->
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
-                'main' => array(
+                'default' => array(
+                    // ...
                     'remember_me' => array(
                         'key'      => '%secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
+                        // by default, the feature is enabled by checking a
+                        // checkbox in the login form (see below), uncomment
+                        // the following line to always enable it.
+                        //'always_remember_me' => true,
                     ),
                 ),
             ),
@@ -52,7 +82,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``key`` (default value: ``null``)
+``key`` (**required**)
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
@@ -94,21 +124,30 @@ The ``remember_me`` firewall defines the following configuration options:
     "Remember Me" feature is always enabled, regardless of the desire of the
     end user.
 
+``token_provider`` (default value: ``null``)
+    Defines the service id of a token provider to use. By default, tokens are
+    stored in a cookie. For example, you might want to store the token in a
+    database, to not have a (hashed) version of the password in a cookie. The
+    DoctrineBridge comes with a
+    ``Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider`` that
+    you can use.
+
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
 
 It's a good idea to provide the user with the option to use or not use the
 remember me functionality, as it will not always be appropriate. The usual
 way of doing this is to add a checkbox to the login form. By giving the checkbox
-the name ``_remember_me``, the cookie will automatically be set when the checkbox
-is checked and the user successfully logs in. So, your specific login form
-might ultimately look like this:
+the name ``_remember_me`` (or the name you configured using ``remember_me_parameter``),
+the cookie will automatically be set when the checkbox is checked and the user
+successfully logs in. So, your specific login form might ultimately look like
+this:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+        {# app/Resources/views/security/login.html.twig #}
         {% if error %}
             <div>{{ error.message }}</div>
         {% endif %}
@@ -128,7 +167,7 @@ might ultimately look like this:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- app/Resources/views/security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
@@ -150,7 +189,7 @@ might ultimately look like this:
 The user will then automatically be logged in on subsequent visits while
 the cookie remains valid.
 
-Forcing the User to Re-authenticate before Accessing certain Resources
+Forcing the User to Re-Authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
 
 When the user returns to your site, they are authenticated automatically based
@@ -167,15 +206,18 @@ The Security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY`` - automatically assigned to a user who is
-  in a firewall protected part of the site but who has not actually logged in.
-  This is only possible if anonymous access has been allowed.
+``IS_AUTHENTICATED_ANONYMOUSLY``
+    Automatically assigned to a user who is in a firewall protected part of the
+    site but who has not actually logged in. This is only possible if anonymous
+    access has been allowed.
 
-* ``IS_AUTHENTICATED_REMEMBERED`` - automatically assigned to a user who
-  was authenticated via a remember me cookie.
+``IS_AUTHENTICATED_REMEMBERED``
+    Automatically assigned to a user who was authenticated via a remember me
+    cookie.
 
-* ``IS_AUTHENTICATED_FULLY`` - automatically assigned to a user that has
-  provided their login details during the current session.
+``IS_AUTHENTICATED_FULLY``
+    Automatically assigned to a user that has provided their login details
+    during the current session.
 
 You can use these to control access beyond the explicitly assigned roles.
 
@@ -201,6 +243,7 @@ In the following example, the action is only allowed if the user has the
     // ...
     use Symfony\Component\Security\Core\Exception\AccessDeniedException
 
+    // ...
     public function editAction()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

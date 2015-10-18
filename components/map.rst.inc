@@ -11,7 +11,6 @@
   * :doc:`/components/class_loader/psr4_class_loader`
   * :doc:`/components/class_loader/map_class_loader`
   * :doc:`/components/class_loader/cache_class_loader`
-  * :doc:`/components/class_loader/debug_class_loader`
   * :doc:`/components/class_loader/class_map_generator`
 
 * :doc:`/components/config/index`
@@ -47,6 +46,7 @@
   * :doc:`/components/dependency_injection/types`
   * :doc:`/components/dependency_injection/parameters`
   * :doc:`/components/dependency_injection/definitions`
+  * :doc:`/components/dependency_injection/synthetic_services`
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
   * :doc:`/components/dependency_injection/factories`

@@ -91,9 +91,9 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
     You can also include CSS stylesheets: see :ref:`cookbook-assetic-including-css`.
 
-In this example, all of the files in the ``Resources/public/js/`` directory
-of the AppBundle will be loaded and served from a different location.
-The actual rendered tag might simply look like:
+In this example, all files in the ``Resources/public/js/`` directory of the
+AppBundle will be loaded and served from a different location. The actual
+rendered tag might simply look like:
 
 .. code-block:: html
 
@@ -182,6 +182,12 @@ To include an image you can use the ``image`` tag.
 
 You can also use Assetic for image optimization. More information in
 :doc:`/cookbook/assetic/jpeg_optimize`.
+
+.. tip::
+
+    Instead of using Assetic to include images, you may consider using the
+    `LiipImagineBundle`_ community bundle, which allows to compress and
+    manipulate images (rotate, resize, watermark, etc.) before serving them.
 
 .. _cookbook-assetic-cssrewrite:
 
@@ -351,7 +357,7 @@ Filters
 Once they're managed by Assetic, you can apply filters to your assets before
 they are served. This includes filters that compress the output of your assets
 for smaller file sizes (and better frontend optimization). Other filters
-can compile JavaScript file from CoffeeScript files and process SASS into CSS.
+can compile CoffeeScript files to JavaScript and process SASS into CSS.
 In fact, Assetic has a long list of available filters.
 
 Many of the filters do not do the work directly, but use existing third-party
@@ -572,3 +578,5 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
+
+.. _`LiipImagineBundle`: https://github.com/liip/LiipImagineBundle

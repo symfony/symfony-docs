@@ -19,6 +19,9 @@ how the input and output of the data is handled.
 |             | - `grouping`_                                                       |
 |             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                       |
+| options     |                                                                     |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `data`_                                                           |
 | options     | - `disabled`_                                                       |
 |             | - `empty_data`_                                                     |
@@ -87,6 +90,11 @@ you can modify this value. You probably won't need to do this unless,
 for example, you want to round to the nearest dollar (set the scale
 to ``0``).
 
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
 Inherited Options
 -----------------
 
@@ -132,4 +140,4 @@ Variable       Type        Usage
 money_pattern  ``string``  The format to use to display the money, including the currency.
 =============  ==========  ===============================================================
 
-.. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217
+.. _`3 letter ISO 4217 code`: https://en.wikipedia.org/wiki/ISO_4217

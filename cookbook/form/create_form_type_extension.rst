@@ -14,16 +14,15 @@ extensions come in.
 
 Form type extensions have 2 main use-cases:
 
-#. You want to add a **generic feature to several types** (such as
-   adding a "help" text to every field type);
 #. You want to add a **specific feature to a single type** (such
-   as adding a "download" feature to the "file" field type).
+   as adding a "download" feature to the "file" field type);
+#. You want to add a **generic feature to several types** (such as
+   adding a "help" text to every "input text"-like type).
 
-In both those cases, it might be possible to achieve your goal with custom
-form rendering, or custom form field types. But using form type extensions
-can be cleaner (by limiting the amount of business logic in templates)
-and more flexible (you can add several type extensions to a single form
-type).
+It might be possible to achieve your goal with custom form rendering or custom
+form field types. But using form type extensions can be cleaner (by limiting the
+amount of business logic in templates) and more flexible (you can add several
+type extensions to a single form type).
 
 Form type extensions can achieve most of what custom field types can do,
 but instead of being field types of their own, **they plug into existing types**.
@@ -48,8 +47,8 @@ When creating a form type extension, you can either implement the
 or extend the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
 class. In most cases, it's easier to extend the abstract class::
 
-    // src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
-    namespace Acme\DemoBundle\Form\Extension;
+    // src/AppBundle/Form/Extension/ImageTypeExtension.php
+    namespace AppBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
 
@@ -103,15 +102,15 @@ tag:
     .. code-block:: yaml
 
         services:
-            acme_demo_bundle.image_type_extension:
-                class: Acme\DemoBundle\Form\Extension\ImageTypeExtension
+            app.image_type_extension:
+                class: AppBundle\Form\Extension\ImageTypeExtension
                 tags:
                     - { name: form.type_extension, alias: file }
 
     .. code-block:: xml
 
-        <service id="acme_demo_bundle.image_type_extension"
-            class="Acme\DemoBundle\Form\Extension\ImageTypeExtension"
+        <service id="app.image_type_extension"
+            class="AppBundle\Form\Extension\ImageTypeExtension"
         >
             <tag name="form.type_extension" alias="file" />
         </service>
@@ -120,8 +119,8 @@ tag:
 
         $container
             ->register(
-                'acme_demo_bundle.image_type_extension',
-                'Acme\DemoBundle\Form\Extension\ImageTypeExtension'
+                'app.image_type_extension',
+                'AppBundle\Form\Extension\ImageTypeExtension'
             )
             ->addTag('form.type_extension', array('alias' => 'file'));
 
@@ -140,8 +139,8 @@ you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
 database)::
 
-    // src/Acme/DemoBundle/Entity/Media.php
-    namespace Acme\DemoBundle\Entity;
+    // src/AppBundle/Entity/Media.php
+    namespace AppBundle\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -188,8 +187,8 @@ you will be able to specify a new option: ``image_path``. This option will
 tell the file field how to get the actual image URL in order to display
 it in the view::
 
-    // src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
-    namespace Acme\DemoBundle\Form\Extension;
+    // src/AppBundle/Form/Extension/ImageTypeExtension.php
+    namespace AppBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\FormView;
@@ -260,7 +259,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
+        {# src/AppBundle/Resources/views/Form/fields.html.twig #}
         {% extends 'form_div_layout.html.twig' %}
 
         {% block file_widget %}
@@ -276,7 +275,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Form/file_widget.html.php -->
+        <!-- src/AppBundle/Resources/views/Form/file_widget.html.php -->
         <?php echo $view['form']->widget($form) ?>
         <?php if (null !== $image_url): ?>
             <img src="<?php echo $view['assets']->getUrl($image_url) ?>"/>
@@ -296,8 +295,8 @@ From now on, when adding a field of type ``file`` in your form, you can
 specify an ``image_path`` option that will be used to display an image
 next to the file field. For example::
 
-    // src/Acme/DemoBundle/Form/Type/MediaType.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/AppBundle/Form/Type/MediaType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -319,3 +318,19 @@ next to the file field. For example::
 
 When displaying the form, if the underlying model has already been associated
 with an image, you will see it displayed next to the file input.
+
+Generic Form Type Extensions
+----------------------------
+
+You can modify several form types at once by specifying their common parent
+(:doc:`/reference/forms/types`). For example, several form types natively
+available in Symfony inherit from the ``text`` form type (such as ``email``,
+``search``, ``url``, etc.). A form type extension applying to ``text``
+(i.e. whose ``getExtendedType`` method returns ``text``) would apply to all of
+these form types.
+
+In the same way, since **most** form types natively available in Symfony inherit
+from the ``form`` form type, a form type extension applying to ``form`` would
+apply to all of these.  A notable exception are the ``button`` form types. Also
+keep in mind that a custom form type which extends neither the ``form`` nor
+the ``button`` type could always be created.

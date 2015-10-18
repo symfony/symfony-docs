@@ -21,11 +21,6 @@ algorithm; you can use the same strategy in your own code thanks to the
     // is some known string (e.g. password) equal to some user input?
     $bool = StringUtils::equals($knownString, $userInput);
 
-.. caution::
-
-    To avoid timing attacks, the known string must be the first argument
-    and the user-entered string the second.
-
 Generating a Secure random Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -50,11 +45,21 @@ to work correctly. Just pass a file name to enable it::
     use Symfony\Component\Security\Core\Util\SecureRandom;
 
     $generator = new SecureRandom('/some/path/to/store/the/seed.txt');
+
     $random = $generator->nextBytes(10);
+    $hashedRandom = md5($random); // see tip below
 
 .. note::
 
-    If you're using the Symfony Framework, you can access a secure random
-    instance directly from the container: its name is ``security.secure_random``.
+    If you're using the Symfony Framework, you can get a secure random number
+    generator via the ``security.secure_random`` service.
 
-.. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
+.. tip::
+
+    The ``nextBytes()`` method returns a binary string which may contain the
+    ``\0`` character. This can cause trouble in several common scenarios, such
+    as storing this value in a database or including it as part of the URL. The
+    solution is to hash the value returned by ``nextBytes()`` (to do that, you
+    can use a simple ``md5()`` PHP function).
+
+.. _`Timing attack`: https://en.wikipedia.org/wiki/Timing_attack

@@ -39,14 +39,15 @@ First, enable form login under your firewall:
         <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall name="main">
+                <firewall name="default">
                     <anonymous />
+                    <http-basic />
                     <form-login login-path="/login" check-path="/login_check" />
                 </firewall>
             </config>
@@ -57,8 +58,9 @@ First, enable form login under your firewall:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array(
-                    'anonymous'  => array(),
+                'default' => array(
+                    'anonymous'  => null,
+                    'http_basic' => null,
                     'form_login' => array(
                         'login_path' => '/login',
                         'check_path' => '/login_check',
@@ -82,7 +84,6 @@ bundle::
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Request;
 
     class SecurityController extends Controller
     {
@@ -126,6 +127,7 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
         login_route:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }
+
         login_check:
             path: /login_check
             # no controller is bound to this route
@@ -159,7 +161,8 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
         $collection->add('login_route', new Route('/login', array(
             '_controller' => 'AppBundle:Security:login',
         )));
-        $collection->add('login_check', new Route('/login_check', array()));
+
+        $collection->add('login_check', new Route('/login_check'));
         // no controller is bound to this route
         // as it's handled by the Security system
 
@@ -236,7 +239,7 @@ Finally, create the template:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
@@ -314,12 +317,13 @@ see :doc:`/cookbook/security/form_login`.
 
 .. _book-security-common-pitfalls:
 
-Avoid common Pitfalls
+Avoid Common Pitfalls
 ---------------------
 
 When setting up your login form, watch out for a few common pitfalls.
 
-**1. Create the correct routes**
+1. Create the Correct Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, be sure that you've defined the ``/login`` and ``/login_check``
 routes correctly and that they correspond to the ``login_path`` and
@@ -328,7 +332,8 @@ redirected to a 404 page instead of the login page, or that submitting
 the login form does nothing (you just see the login form over and over
 again).
 
-**2. Be sure the login page isn't secure (redirect loop!)**
+2. Be Sure the Login Page Isn't Secure (Redirect Loop!)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Also, be sure that the login page is accessible by anonymous users. For example,
 the following configuration - which requires the ``ROLE_ADMIN`` role for
@@ -347,11 +352,18 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <!-- ... -->
-        <access-control>
-            <rule path="^/" role="ROLE_ADMIN" />
-        </access-control>
+            <config>
+                <!-- ... -->
+                <rule path="^/" role="ROLE_ADMIN" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -379,12 +391,19 @@ fixes the problem:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <!-- ... -->
-        <access-control>
-            <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
-            <rule path="^/" role="ROLE_ADMIN" />
-        </access-control>
+            <config>
+                <!-- ... -->
+                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+                <rule path="^/" role="ROLE_ADMIN" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -419,14 +438,24 @@ for the login page:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <!-- ... -->
-        <firewall name="login_firewall" pattern="^/login$">
-            <anonymous />
-        </firewall>
-        <firewall name="secured_area" pattern="^/">
-            <form-login />
-        </firewall>
+            <config>
+                <!-- ... -->
+                <firewall name="login_firewall" pattern="^/login$">
+                    <anonymous />
+                </firewall>
+
+                <firewall name="secured_area" pattern="^/">
+                    <form-login />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -436,15 +465,16 @@ for the login page:
         'firewalls' => array(
             'login_firewall' => array(
                 'pattern'   => '^/login$',
-                'anonymous' => array(),
+                'anonymous' => null,
             ),
             'secured_area' => array(
                 'pattern'    => '^/',
-                'form_login' => array(),
+                'form_login' => null,
             ),
         ),
 
-**3. Be sure /login_check is behind a firewall**
+3. Be Sure /login_check Is Behind a Firewall
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, make sure that your ``check_path`` URL (e.g. ``/login_check``) is behind
 the firewall you're using for your form login (in this example, the single
@@ -452,7 +482,8 @@ firewall matches *all* URLs, including ``/login_check``). If ``/login_check``
 doesn't match any firewall, you'll receive a ``Unable to find the controller
 for path "/login_check"`` exception.
 
-**4. Multiple firewalls don't share the same security context**
+4. Multiple Firewalls Don't Share the Same Security Context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using multiple firewalls and you authenticate against one firewall,
 you will *not* be authenticated against any other firewalls automatically.
@@ -461,7 +492,8 @@ to explicitly specify the same :ref:`reference-security-firewall-context`
 for different firewalls. But usually for most applications, having one
 main firewall is enough.
 
-**5. Routing error pages are not covered by firewalls**
+5. Routing Error Pages Are not Covered by Firewalls
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As routing is done *before* security, 404 error pages are not covered by
 any firewall. This means you can't check for security or even access the

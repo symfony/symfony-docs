@@ -276,10 +276,11 @@ The service container is built using a single configuration resource
 be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
-External service configuration can be imported in two different ways. The
-first - and most common method - is via the ``imports`` directive. Later, you'll
-learn about the second method, which is the flexible and preferred method
-for importing service configuration from third-party bundles.
+External service configuration can be imported in two different ways. The first 
+method, commonly used to import container configuration from the bundles you've 
+created - is via the ``imports`` directive. The second method, although slightly more 
+complex offers more flexibility and is commonly used to import third-party bundle 
+configuration. Read on to learn more about both methods.
 
 .. index::
    single: Service Container; Imports
@@ -1183,4 +1184,4 @@ Learn more
 * :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 
-.. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
+.. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture

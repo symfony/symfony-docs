@@ -1,4 +1,4 @@
-﻿DependencyInjection
+DependencyInjection
 ===================
 
 .. toctree::
@@ -8,6 +8,7 @@
     types
     parameters
     definitions
+    synthetic_services
     compilation
     tags
     factories

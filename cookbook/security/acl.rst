@@ -14,7 +14,7 @@ the ACL system comes in.
     Using ACL's isn't trivial, and for simpler use cases, it may be overkill.
     If your permission logic could be described by just writing some code (e.g.
     to check if a Blog is owned by the current User), then consider using
-    :doc:`voters </cookbook/security/voters_data_permission>`. A voter is passed the object
+    :doc:`voters </cookbook/security/voters>`. A voter is passed the object
     being voted on, which you can use to make complex decisions and effectively
     implement your own ACL. Enforcing authorization (e.g. the ``isGranted``
     part) will look similar to what you see in this entry, but your voter
@@ -52,20 +52,34 @@ First, you need to configure the connection the ACL system is supposed to use:
 
         # app/config/security.yml
         security:
+            # ...
+
             acl:
                 connection: default
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <acl>
-            <connection>default</connection>
-        </acl>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <acl connection="default" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', 'acl', array(
+            // ...
+
             'connection' => 'default',
         ));
 
@@ -225,7 +239,7 @@ added above:
 
 .. code-block:: php
 
-    $identity = new UserSecurityIdentity('johannes', 'Acme\UserBundle\Entity\User');
+    $identity = new UserSecurityIdentity('johannes', 'AppBundle\Entity\User');
     $acl->insertObjectAce($identity, $mask);
 
 The user is now allowed to view, edit, delete, and un-delete objects.

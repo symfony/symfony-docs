@@ -15,7 +15,7 @@ often need to be repeated for various bundles.
 Using the below approach, it is possible to remove the disadvantage of the
 multiple bundle approach by enabling a single Extension to prepend the settings
 for any bundle. It can use the settings defined in the ``app/config/config.yml``
-to prepend settings just as if they would have been written explicitly by
+to prepend settings just as if they had been written explicitly by
 the user in the application configuration.
 
 For example, this could be used to configure the entity manager name to use in

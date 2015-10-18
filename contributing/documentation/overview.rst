@@ -248,6 +248,32 @@ steps to contribute to the Symfony documentation, which you can use as a
 
 You guessed right: after all this hard work, it's **time to celebrate again!**
 
+
+Review your changes
+-------------------
+
+Every GitHub Pull Request is automatically built and deployed by `Platform.sh`_
+on a single environment that you can access on your browser to review your 
+changes.
+
+.. image:: /images/contributing/docs-pull-request-platformsh.png
+   :align: center
+   :alt:   Platform.sh Pull Request Deployment
+
+To access the `Platform.sh`_ environment URL, simply go to your Pull Request 
+page on GitHub and click on ``Details``.
+
+.. note::
+
+    The specific configuration files at the root of the Git repository: 
+    ``.platform.app.yaml``, ``.platform/services.yaml`` and 
+    ``.platform/routes.yaml`` allow `Platform.sh`_ to build Pull Requests.
+
+.. note::
+
+    Only Pull Requests to maintained branches are automatically built by
+    Platform.sh. Check the `roadmap`_ for maintained branches.
+
 Minor Changes (e.g. Typos)
 --------------------------
 
@@ -272,11 +298,6 @@ Why Do my Changes Take so Long to Be Reviewed and/or Merged?
 Please be patient. It can take up to several days before your pull request can
 be fully reviewed. After merging the changes, it could take again several hours
 before your changes appear on the symfony.com website.
-
-What If I Want to Translate Some Documentation into my Language?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Read the dedicated :doc:`document </contributing/documentation/translations>`.
 
 Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -320,7 +341,9 @@ definitely don't want you to waste your time!
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _GitHub: https://github.com/
 .. _`fork the repository`: https://help.github.com/articles/fork-a-repo
-.. _`Symfony Documentation Contributors`: http://symfony.com/contributors/doc
+.. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
 .. _SensioLabsConnect: https://connect.sensiolabs.com/
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
+.. _`Platform.sh`: https://platform.sh
+.. _`roadmap`: https://symfony.com/roadmap

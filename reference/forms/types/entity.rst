@@ -12,15 +12,15 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
-| Options     | - `class`_                                                       |
+| Options     | - `choice_label`_                                                |
+|             | - `class`_                                                       |
 |             | - `data_class`_                                                  |
 |             | - `em`_                                                          |
 |             | - `group_by`_                                                    |
-|             | - `property`_                                                    |
 |             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                     |
-| Options     | - `choice_list`_                                                 |
+| Overridden  | - `choice_list`_                                                 |
+| options     | - `choices`_                                                     |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
@@ -55,13 +55,13 @@ be listed inside the choice field::
 
     $builder->add('users', 'entity', array(
         'class' => 'AcmeHelloBundle:User',
-        'property' => 'username',
+        'choice_label' => 'username',
     ));
 
 In this case, all ``User`` objects will be loaded from the database and
 rendered as either a ``select`` tag, a set or radio buttons or a series
 of checkboxes (this depends on the ``multiple`` and ``expanded`` values).
-If the entity object does not have a ``__toString()`` method the ``property``
+If the entity object does not have a ``__toString()`` method the ``choice_label``
 option is needed.
 
 Using a Custom Query for the Entities
@@ -103,6 +103,33 @@ then you can supply the ``choices`` option directly::
 Field Options
 -------------
 
+choice_label
+~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, it was called ``property`` (which has the same functionality).
+
+**type**: ``string``
+
+This is the property that should be used for displaying the entities
+as text in the HTML element. If left blank, the entity object will be
+cast into a string and so must have a ``__toString()`` method.
+
+.. note::
+
+    The ``choice_label`` option is the property path used to display the option.
+    So you can use anything supported by the
+    :doc:`PropertyAccessor component </components/property_access/introduction>`
+
+    For example, if the translations property is actually an associative
+    array of objects, each with a name property, then you could do this::
+
+        $builder->add('gender', 'entity', array(
+           'class' => 'MyBundle:Gender',
+           'choice_label' => 'translations[en].name',
+        ));
+
 class
 ~~~~~
 
@@ -133,29 +160,6 @@ and does so by adding ``optgroup`` elements around options. Choices that
 do not return a value for this property path are rendered directly under
 the select tag, without a surrounding optgroup.
 
-property
-~~~~~~~~
-
-**type**: ``string``
-
-This is the property that should be used for displaying the entities
-as text in the HTML element. If left blank, the entity object will be
-cast into a string and so must have a ``__toString()`` method.
-
-.. note::
-
-    The ``property`` option is the property path used to display the option.
-    So you can use anything supported by the
-    :doc:`PropertyAccessor component </components/property_access/introduction>`
-
-    For example, if the translations property is actually an associative
-    array of objects, each with a name property, then you could do this::
-
-        $builder->add('gender', 'entity', array(
-           'class' => 'MyBundle:Gender',
-           'property' => 'translations[en].name',
-        ));
-
 query_builder
 ~~~~~~~~~~~~~
 
@@ -183,7 +187,7 @@ directly.
 choices
 ~~~~~~~
 
-**type**:  array | ``\Traversable`` **default**: ``null``
+**type**:  ``array`` | ``\Traversable`` **default**: ``null``
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.

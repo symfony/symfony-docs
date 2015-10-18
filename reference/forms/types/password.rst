@@ -11,6 +11,9 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `always_empty`_                                                      |
 +-------------+------------------------------------------------------------------------+
+| Overridden  | - `trim`_                                                              |
+| options     |                                                                        |
++-------------+------------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                          |
 | options     | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
@@ -21,7 +24,6 @@ The ``password`` field renders an input password text box.
 |             | - `max_length`_ (deprecated as of 2.5)                                 |
 |             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
-|             | - `trim`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`text </reference/forms/types/text>`                              |
 +-------------+------------------------------------------------------------------------+
@@ -44,6 +46,18 @@ Put simply, if for some reason you want to render your password field
 *with* the password value already entered into the box, set this to false
 and submit the form.
 
+Overridden Options
+------------------
+
+trim
+~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+Unlike the rest of form types, the ``password`` type doesn't apply the
+:phpfunction:`trim` function to the value submitted by the user. This ensures that
+the password is merged back onto the underlying object exactly as it was typed
+by the user.
 
 Inherited Options
 -----------------
@@ -76,13 +90,3 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
-
-trim
-~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-If true, the whitespace of the submitted string value will be stripped
-via the :phpfunction:`trim` function when the data is bound. This guarantees
-that if a value is submitted with extra whitespace, it will be removed before
-the value is merged back onto the underlying object.

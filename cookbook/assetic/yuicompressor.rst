@@ -18,7 +18,7 @@ Download the YUI Compressor JAR
 -------------------------------
 
 The YUI Compressor is written in Java and distributed as a JAR. `Download the JAR`_
-from the Yahoo! site and save it to ``app/Resources/java/yuicompressor.jar``.
+from the Yahoo! website and save it to ``app/Resources/java/yuicompressor.jar``.
 
 Configure the YUI Filters
 -------------------------
@@ -163,6 +163,6 @@ apply this filter when debug mode is off.
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
 
-.. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
+.. _`YUI Compressor`: http://yui.github.io/yuicompressor/
 .. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
-.. _`no longer maintained by Yahoo`: http://www.yuiblog.com/blog/2013/01/24/yui-compressor-has-a-new-owner/
+.. _`no longer maintained by Yahoo`: http://yuiblog.com/blog/2013/01/24/yui-compressor-has-a-new-owner/

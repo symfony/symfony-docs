@@ -14,8 +14,8 @@ Before submitting a bug:
 * Double-check the official :doc:`documentation </index>` to see if you're not misusing the
   framework;
 
-* Ask for assistance on the `users mailing-list`_, the `forum`_, or on the
-  #symfony `IRC channel`_ if you're not sure if your issue is really a bug.
+* Ask for assistance on `Stack Overflow`_ or on the #symfony `IRC channel`_
+  if you're not sure if your issue is really a bug.
 
 If your problem definitely looks like a bug, report it using the official bug
 `tracker`_ and follow some basic rules:
@@ -34,8 +34,7 @@ If your problem definitely looks like a bug, report it using the official bug
 
 * *(optional)* Attach a :doc:`patch <patches>`.
 
-.. _users mailing-list: http://groups.google.com/group/symfony2
-.. _forum: http://forum.symfony-project.org/
-.. _IRC channel: irc://irc.freenode.net/symfony
+.. _`Stack Overflow`: http://stackoverflow.com/questions/tagged/symfony2
+.. _IRC channel: https://symfony.com/irc
 .. _tracker: https://github.com/symfony/symfony/issues
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard/

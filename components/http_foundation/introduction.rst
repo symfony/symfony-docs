@@ -22,7 +22,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/HttpFoundation).
+* Use the official Git repository (https://github.com/symfony/http-foundation).
+
+.. include:: /components/require_autoload.rst.inc
 
 .. _component-http-foundation-request:
 
@@ -447,10 +449,10 @@ represented by a PHP callable instead of a string::
 
     $response = new StreamedResponse();
     $response->setCallback(function () {
-        echo 'Hello World';
+        var_dump('Hello World');
         flush();
         sleep(2);
-        echo 'Hello World';
+        var_dump('Hello World');
         flush();
     });
     $response->send();
@@ -462,8 +464,8 @@ represented by a PHP callable instead of a string::
     you must call ``ob_flush()`` before ``flush()``.
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
-    server might also buffer based on its configuration. Even more, if you
-    use fastcgi, buffering can't be disabled at all.
+    server might also buffer based on its configuration. What's more, if you
+    use FastCGI, buffering can't be disabled at all.
 
 .. _component-http-foundation-serving-files:
 
@@ -516,6 +518,13 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 It is possible to delete the file after the request is sent with the 
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
+
+.. note::
+
+    If you *just* created the file during this same request, the file *may* be sent
+    without any content. This may be due to cached file stats that return zero for
+    the size of the file. To fix this issue, call ``clearstatcache(false, $file)``
+    with the path to the binary file.
 
 .. _component-http-foundation-json-response:
 

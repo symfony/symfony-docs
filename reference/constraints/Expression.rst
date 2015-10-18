@@ -24,7 +24,8 @@ Basic Usage
 Imagine you have a class ``BlogPost`` with ``category`` and ``isTechnicalPost``
 properties::
 
-    namespace Acme\DemoBundle\Model;
+    // src/AppBundle/Model/BlogPost.php
+    namespace AppBundle\Model;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -61,8 +62,8 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Model\BlogPost:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Model\BlogPost:
             constraints:
                 - Expression:
                     expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
@@ -70,8 +71,8 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Model/BlogPost.php
-        namespace Acme\DemoBundle\Model;
+        // src/AppBundle/Model/BlogPost.php
+        namespace AppBundle\Model;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -88,12 +89,12 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-            <class name="Acme\DemoBundle\Model\BlogPost">
+            <class name="AppBundle\Model\BlogPost">
                 <constraint name="Expression">
                     <option name="expression">
                         this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()
@@ -107,8 +108,8 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Model/BlogPost.php
-        namespace Acme\DemoBundle\Model;
+        // src/AppBundle/Model/BlogPost.php
+        namespace AppBundle\Model;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -142,8 +143,8 @@ more about the expression language syntax, see
 
         .. code-block:: yaml
 
-            # src/Acme/DemoBundle/Resources/config/validation.yml
-            Acme\DemoBundle\Model\BlogPost:
+            # src/AppBundle/Resources/config/validation.yml
+            AppBundle\Model\BlogPost:
                 properties:
                     isTechnicalPost:
                         - Expression:
@@ -152,8 +153,8 @@ more about the expression language syntax, see
 
         .. code-block:: php-annotations
 
-            // src/Acme/DemoBundle/Model/BlogPost.php
-            namespace Acme\DemoBundle\Model;
+            // src/AppBundle/Model/BlogPost.php
+            namespace AppBundle\Model;
 
             use Symfony\Component\Validator\Constraints as Assert;
 
@@ -174,13 +175,13 @@ more about the expression language syntax, see
 
         .. code-block:: xml
 
-            <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+            <!-- src/AppBundle/Resources/config/validation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-                <class name="Acme\DemoBundle\Model\BlogPost">
+                <class name="AppBundle\Model\BlogPost">
                     <property name="isTechnicalPost">
                         <constraint name="Expression">
                             <option name="expression">
@@ -196,8 +197,8 @@ more about the expression language syntax, see
 
         .. code-block:: php
 
-            // src/Acme/DemoBundle/Model/BlogPost.php
-            namespace Acme\DemoBundle\Model;
+            // src/AppBundle/Model/BlogPost.php
+            namespace AppBundle\Model;
 
             use Symfony\Component\Validator\Constraints as Assert;
             use Symfony\Component\Validator\Mapping\ClassMetadata;

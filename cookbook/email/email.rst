@@ -41,17 +41,20 @@ already included:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config
-            transport="%mailer_transport%"
-            host="%mailer_host%"
-            username="%mailer_user%"
-            password="%mailer_password%" />
+            <swiftmailer:config
+                transport="%mailer_transport%"
+                host="%mailer_host%"
+                username="%mailer_user%"
+                password="%mailer_password%"
+            />
+        </container>
 
     .. code-block:: php
 
@@ -130,13 +133,18 @@ template might look something like this:
     {# app/Resources/views/Emails/registration.html.twig #}
     <h3>You did it! You registered!</h3>
 
-    {# example, assuming you have a route named "login" $}
+    {# example, assuming you have a route named "login" #}
     To login, go to: <a href="{{ url('login') }}">...</a>.
 
     Thanks!
 
     {# Makes an absolute URL to the /images/logo.png file #}
-    <img src="{{ absolute_url(asset('images/logo.png')) }}"
+    <img src="{{ absolute_url(asset('images/logo.png')) }}">
+
+.. versionadded:: 2.7
+    The ``absolute_url()`` function was introduced in Symfony 2.7. Prior
+    to 2.7, the ``asset()`` function has an argument to enable returning
+    an absolute URL.
 
 The ``$message`` object supports many more options, such as including attachments,
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic

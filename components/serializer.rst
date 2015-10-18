@@ -31,7 +31,13 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Serializer).
+* Use the official Git repository (https://github.com/symfony/serializer).
+
+
+.. include:: /components/require_autoload.rst.inc
+
+To use the ``ObjectNormalizer``, the :doc:`PropertyAccess component </components/property_access/index>`
+must also be installed.
 
 Usage
 -----
@@ -43,18 +49,18 @@ which Encoders and Normalizer are going to be available::
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
     $encoders = array(new XmlEncoder(), new JsonEncoder());
-    $normalizers = array(new GetSetMethodNormalizer());
+    $normalizers = array(new ObjectNormalizer());
 
     $serializer = new Serializer($normalizers, $encoders);
 
-There are several normalizers available, e.g. the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` or
-the :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`.
+The preferred normalizer is the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`, but other
+normalizers are available.
 To read more about them, refer to the `Normalizers`_ section of this page. All
-the examples shown below use the ``GetSetMethodNormalizer``.
+the examples shown below use the ``ObjectNormalizer``.
 
 Serializing an Object
 ---------------------
@@ -145,6 +151,30 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
+Deserializing in an Existing Object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The serializer can also be used to update an existing object::
+
+    $person = new Acme\Person();
+    $person->setName('bar');
+    $person->setAge(99);
+    $person->setSportsman(true);
+
+    $data = <<<EOF
+    <person>
+        <name>foo</name>
+        <age>69</age>
+    </person>
+    EOF;
+
+    $serializer->deserialize($data, 'Acme\Person', 'xml', array('object_to_populate' => $person));
+    // $obj2 = Acme\Person(name: 'foo', age: '99', sportsman: true)
+
+This is a common need when working with an ORM.
+
+.. _component-serializer-attributes-groups:
+
 Attributes Groups
 -----------------
 
@@ -185,7 +215,7 @@ like the following::
 
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     // For annotations
-    usr Doctrine\Common\Annotations\AnnotationReader;
+    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
     // For XML
     // use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
@@ -197,6 +227,8 @@ like the following::
     // $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
     // For YAML
     // $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yml'));
+
+.. _component-serializer-attributes-groups-annotations:
 
 Then, create your groups definition:
 
@@ -283,8 +315,13 @@ You are now able to serialize only attributes in the groups you want::
 Ignoring Attributes
 -------------------
 
+.. note::
+
+    Using attribute groups instead of the :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
+    method is considered best practice.
+
 .. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
     method was introduced in Symfony 2.3.
 
 .. versionadded:: 2.7
@@ -293,14 +330,14 @@ Ignoring Attributes
 
 As an option, there's a way to ignore attributes from the origin object. To remove
 those attributes use the
-:method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
+:method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
 method on the normalizer definition::
 
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-    $normalizer = new GetSetMethodNormalizer();
+    $normalizer = new ObjectNormalizer();
     $normalizer->setIgnoredAttributes(array('age'));
     $encoder = new JsonEncoder();
 
@@ -357,11 +394,11 @@ including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormal
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
     use Symfony\Component\Serializer\Encoder\JsonEncoder
-    use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
     $nameConverter = new OrgPrefixNameConverter();
-    $normalizer = new PropertyNormalizer(null, $nameConverter);
+    $normalizer = new ObjectNormalizer(null, $nameConverter);
 
     $serializer = new Serializer(array($normalizer), array(new JsonEncoder()));
 
@@ -392,9 +429,9 @@ snake_case and CamelCased styles during serialization and deserialization
 processes::
 
     use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-    $normalizer = new GetSetMethodNormalizer(null, new CamelCaseToSnakeCaseNameConverter());
+    $normalizer = new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter());
 
     class Person
     {
@@ -424,6 +461,9 @@ Serializing Boolean Attributes
 If you are using isser methods (methods prefixed by ``is``, like
 ``Acme\Person::isSportsman()``), the Serializer component will automatically
 detect and use it to serialize related attributes.
+
+The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``add``
+and ``remove``.
 
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
@@ -461,22 +501,41 @@ Normalizers
 
 There are several types of normalizers available:
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+    This normalizer leverages the :doc:`PropertyAccess Component </components/property_access/index>`
+    to read and write in the object. It means that it can access to properties
+    directly and through getters, setters, hassers, adders and removers. It supports
+    calling the constructor during the denormalization process.
+
+    Objects are normalized to a map of property names (method name stripped of
+    the "get"/"set"/"has"/"remove" prefix and converted to lower case) to property
+    values.
+
+    The ``ObjectNormalizer`` is the most powerful normalizer. It is a configured
+    by default when using the Symfony Standard Edition with the serializer enabled.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
     This normalizer reads the content of the class by calling the "getters"
     (public methods starting with "get"). It will denormalize data by calling
     the constructor and the "setters" (public methods starting with "set").
 
-    Objects are serialized to a map of property names (method name stripped of
+    Objects are normalized to a map of property names (method name stripped of
     the "get" prefix and converted to lower case) to property values.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
-    **private and protected** properties. Objects are normalized to a map of
-    property names to property values.
+    **private and protected** properties. It supports calling the constructor
+    during the denormalization process.
 
-.. versionadded:: 2.6 The
-    :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
+    Objects are normalized to a map of property names to property values.
+
+.. versionadded:: 2.6
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     class was introduced in Symfony 2.6.
+
+.. versionadded:: 2.7
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+    class was introduced in Symfony 2.7.
 
 Handling Circular References
 ----------------------------
@@ -563,14 +622,14 @@ by custom callables. This is especially useful when serializing entities
 having unique identifiers::
 
     $encoder = new JsonEncoder();
-    $normalizer = new GetSetMethodNormalizer();
+    $normalizer = new ObjectNormalizer();
 
     $normalizer->setCircularReferenceHandler(function ($object) {
         return $object->getName();
     });
 
     $serializer = new Serializer(array($normalizer), array($encoder));
-    echo $serializer->serialize($org, 'json');
+    var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
 .. seealso::

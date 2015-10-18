@@ -226,23 +226,31 @@ the username and then check the password (more on passwords in a moment):
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <encoder class="AppBundle\Entity\User"
-                algorithm="bcrypt"
-            />
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <!-- ... -->
+            <config>
+                <encoder class="AppBundle\Entity\User" algorithm="bcrypt" />
 
-            <provider name="our_db_provider">
-                <entity class="AppBundle:User" property="username" />
-            </provider>
+                <!-- ... -->
 
-            <firewall name="default" pattern="^/" provider="our_db_provider">
-                <http-basic />
-            </firewall>
-            
-            <!-- ... -->
-        </config>
+                <provider name="our_db_provider">
+                    <!-- if you're using multiple entity managers, add:
+                         manager-name="customer" -->
+                    <entity class="AppBundle:User" property="username" />
+                </provider>
+
+                <firewall name="default" pattern="^/" provider="our_db_provider">
+                    <http-basic />
+                </firewall>
+
+                <!-- ... -->
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -253,7 +261,9 @@ the username and then check the password (more on passwords in a moment):
                     'algorithm' => 'bcrypt',
                 ),
             ),
+
             // ...
+
             'providers' => array(
                 'our_db_provider' => array(
                     'entity' => array(
@@ -264,11 +274,12 @@ the username and then check the password (more on passwords in a moment):
             ),
             'firewalls' => array(
                 'default' => array(
-                    'pattern' => '^/',
+                    'pattern'    => '^/',
                     'http_basic' => null,
-                    'provider' => 'our_db_provider',
+                    'provider'   => 'our_db_provider',
                 ),
             ),
+
             // ...
         ));
 
@@ -474,7 +485,7 @@ For more details on these methods, see :class:`Symfony\\Component\\Security\\Cor
 
 .. tip::
 
-    Don't forget to add the repository class to the 
+    Don't forget to add the repository class to the
     :ref:`mapping definition of your entity <book-doctrine-custom-repository-classes>`.
 
 To finish this, just remove the ``property`` key from the user provider in
@@ -487,30 +498,37 @@ To finish this, just remove the ``property`` key from the user provider in
         # app/config/security.yml
         security:
             # ...
+
             providers:
                 our_db_provider:
                     entity:
                         class: AppBundle:User
-            # ...
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <provider name="our_db_provider">
-                <entity class="AppBundle:User" />
-            </provider>
+            <config>
+                <!-- ... -->
 
-            <!-- ... -->
-        </config>
+                <provider name="our_db_provider">
+                    <entity class="AppBundle:User" />
+                </provider>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            ...,
+            // ...
+
             'providers' => array(
                 'our_db_provider' => array(
                     'entity' => array(
@@ -518,7 +536,6 @@ To finish this, just remove the ``property`` key from the user provider in
                     ),
                 ),
             ),
-            ...,
         ));
 
 This tells Symfony to *not* query automatically for the User. Instead, when
@@ -562,5 +579,5 @@ is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
 
-.. _fixtures: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
+.. _fixtures: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 .. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle

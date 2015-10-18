@@ -135,7 +135,7 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
-    sandboxing, automatic HTML escaping, manual contextual output escaping, 
+    sandboxing, automatic HTML escaping, manual contextual output escaping,
     and the inclusion of custom functions and filters that only affect templates.
     Twig contains little features that make writing templates easier and more concise.
     Take the following example, which combines a loop with a logical ``if``
@@ -177,6 +177,8 @@ regenerate. Remember to do this when deploying your application.
 .. index::
    single: Templating; Inheritance
 
+.. _twig-inheritance:
+
 Template Inheritance and Layouts
 --------------------------------
 
@@ -206,8 +208,8 @@ First, build a base layout file:
                 <div id="sidebar">
                     {% block sidebar %}
                         <ul>
-                              <li><a href="/">Home</a></li>
-                              <li><a href="/blog">Blog</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/blog">Blog</a></li>
                         </ul>
                     {% endblock %}
                 </div>
@@ -577,6 +579,10 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
+.. versionadded:: 2.3
+    The `include() function`_ is a new Twig feature that's available in Symfony
+    2.3. Prior, the `{% include %} tag`_ tag was used.
+
 .. index::
    single: Templating; Embedding action
 
@@ -654,7 +660,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         {# ... #}
         <div id="sidebar">
             {{ render(controller(
-                'AcmeArticleBundle:Article:recentArticles',
+                'AppBundle:Article:recentArticles',
                 { 'max': 3 }
             )) }}
         </div>
@@ -667,7 +673,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <div id="sidebar">
             <?php echo $view['actions']->render(
                 new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'AcmeArticleBundle:Article:recentArticles',
+                    'AppBundle:Article:recentArticles',
                     array('max' => 3)
                 )
             ) ?>
@@ -784,7 +790,7 @@ in your application configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'templating'      => array(
+            'templating' => array(
                 'hinclude_default_template' => array(
                     'hinclude.html.twig',
                 ),
@@ -808,7 +814,7 @@ any global default template that is defined):
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'default/content.html.twig',
+                'default'  => 'default/content.html.twig',
             )
         ) ?>
 
@@ -826,7 +832,7 @@ Or you can also specify a string to display as the default content:
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'Loading...',
+                'default'  => 'Loading...',
             )
         ) ?>
 
@@ -999,18 +1005,18 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
-        <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/blog.css') }}" rel="stylesheet" />
 
     .. code-block:: html+php
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
 
-        <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" />
 
 The ``asset`` function's main purpose is to make your application more portable.
-If your application lives at the root of your host (e.g. http://example.com),
+If your application lives at the root of your host (e.g. ``http://example.com``),
 then the rendered paths should be ``/images/logo.png``. But if your application
-lives in a subdirectory (e.g. http://example.com/my_app), each asset path
+lives in a subdirectory (e.g. ``http://example.com/my_app``), each asset path
 should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
@@ -1171,7 +1177,7 @@ is by default "web").
 
 .. code-block:: html+jinja
 
-   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
@@ -1185,7 +1191,7 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security``
+``app.security`` (deprecated as of 2.6)
     The security context.
 ``app.user``
     The current user object.
@@ -1218,7 +1224,7 @@ automatically:
 
 .. versionadded:: 2.6
     The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user`` 
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
     (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
     instead.
 
@@ -1396,7 +1402,7 @@ One common way to use inheritance is to use a three-level approach. This
 method works perfectly with the three different types of templates that were just
 covered:
 
-* Create a ``app/Resources/views/base.html.twig`` file that contains the main
+* Create an ``app/Resources/views/base.html.twig`` file that contains the main
   layout for your application (like in the previous example). Internally, this
   template is called ``base.html.twig``;
 
@@ -1487,7 +1493,7 @@ tag to the screen:
 
 .. code-block:: html
 
-    Hello &lt;script&gt;alert(&#39;helloe&#39;)&lt;/script&gt;
+    Hello &lt;script&gt;alert(&#39;hello!&#39;)&lt;/script&gt;
 
 The Twig and PHP templating systems approach the problem in different ways.
 If you're using Twig, output escaping is on by default and you're protected.
@@ -1589,16 +1595,16 @@ is ``true``. By default this means that the variables will be dumped in the
 Syntax Checking
 ---------------
 
-You can check for syntax errors in Twig templates using the ``twig:lint``
+You can check for syntax errors in Twig templates using the ``lint:twig``
 console command:
 
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/article/recent_list.html.twig
+    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console twig:lint app/Resources/views
+    $ php app/console lint:twig app/Resources/views
 
 .. _template-formats:
 
@@ -1691,12 +1697,12 @@ Learn more from the Cookbook
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`KnpBundles.com`: http://knpbundles.com
-.. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`Cross Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`hinclude.js`: http://mnot.github.com/hinclude/
+.. _`hinclude.js`: http://mnot.github.io/hinclude/
 .. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html

@@ -92,7 +92,7 @@ Configuration
 * `validation`_
     * :ref:`enabled <reference-validation-enabled>`
     * :ref:`cache <reference-validation-cache>`
-    * `enable_annotations`_
+    * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
     * `api`_
@@ -102,6 +102,8 @@ Configuration
     * `debug`_
 * `serializer`_
     * :ref:`enabled <reference-serializer-enabled>`
+    * :ref:`cache <reference-serializer-cache>`
+    * :ref:`enable_annotations <reference-serializer-enable_annotations>`
 
 secret
 ~~~~~~
@@ -262,7 +264,7 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. tip::
 
-    If you're on a Windows PC, you can install the `PhpStormOpener`_ to
+    If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
     be able to use this.
 
 Of course, since every developer uses a different IDE, it's better to set
@@ -317,7 +319,7 @@ instance), the host might have been manipulated by an attacker.
     You can read "`HTTP Host header attacks`_" for more information about
     these kinds of attacks.
 
-The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request:getHost>`
+The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request::getHost>`
 method might be vulnerable to some of these attacks because it depends on
 the configuration of your web server. One simple solution to avoid these
 attacks is to whitelist the hosts that your Symfony application can respond
@@ -331,7 +333,7 @@ respond and the user will receive a 500 response.
 
         # app/config/config.yml
         framework:
-            trusted_hosts:  ['acme.com', 'acme.org']
+            trusted_hosts:  ['example.com', 'example.org']
 
     .. code-block:: xml
 
@@ -344,8 +346,8 @@ respond and the user will receive a 500 response.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <trusted-host>acme.com</trusted-host>
-                <trusted-host>acme.org</trusted-host>
+                <trusted-host>example.com</trusted-host>
+                <trusted-host>example.org</trusted-host>
                 <!-- ... -->
             </framework>
         </container>
@@ -354,17 +356,17 @@ respond and the user will receive a 500 response.
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'trusted_hosts' => array('acme.com', 'acme.org'),
+            'trusted_hosts' => array('example.com', 'example.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``.*\.?acme.com$``),
+Hosts can also be configured using regular expressions (e.g.  ``.*\.?example.com$``),
 which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
+    Request::setTrustedHosts(array('.*\.?example.com$', '.*\.?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
@@ -724,7 +726,7 @@ installation.
 .. seealso::
 
     You can see an example of the usage of this in
-    :doc:`/cookbook/configuration/pdo_session_storage`.
+    :doc:`/cookbook/doctrine/pdo_session_storage`.
 
 name
 ....
@@ -1372,6 +1374,8 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+.. _reference-validation-enable_annotations:
+
 enable_annotations
 ..................
 
@@ -1478,7 +1482,32 @@ enabled
 
 Whether to enable the ``serializer`` service or not in the service container.
 
-For more details, see :doc:`/cookbook/serializer`.
+.. _reference-serializer-cache:
+
+cache
+.....
+
+**type**: ``string``
+
+The service that is used to persist class metadata in a cache. The service
+has to implement the :class:`Doctrine\\Common\\Cache\\Cache` interface.
+
+.. seealso::
+
+    For more information, see :ref:`cookbook-serializer-enabling-metadata-cache`.
+
+.. _reference-serializer-enable_annotations:
+
+enable_annotations
+..................
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is enabled, serialization groups can be defined using annotations.
+
+.. seealso::
+
+    For more information, see :ref:`cookbook-serializer-using-serialization-groups-annotations`.
 
 Full Default Configuration
 --------------------------
@@ -1618,7 +1647,7 @@ Full Default Configuration
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
-.. _`Security Advisory Blog post`: http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
+.. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
-.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
+.. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol

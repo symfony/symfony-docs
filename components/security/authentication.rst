@@ -107,7 +107,7 @@ Each provider (since it implements
 has a method :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::supports`
 by which the ``AuthenticationProviderManager``
 can determine if it supports the given token. If this is the case, the
-manager then calls the provider's method :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::authenticate`.
+manager then calls the provider's method :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::authenticate`.
 This method should return an authenticated token or throw an
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`
 (or any other exception extending it).
@@ -274,4 +274,5 @@ in) is correct, you can use::
         $user->getSalt()
     );
 
-.. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
+.. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
+.. _`BasePasswordEncoder::checkPasswordLength`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/BasePasswordEncoder.php

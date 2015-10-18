@@ -9,9 +9,9 @@ In Symfony applications, all errors are treated as exceptions, no matter if they
 are just a 404 Not Found error or a fatal error triggered by throwing some
 exception in your code.
 
-In the `development environment`_, Symfony catches all the exceptions and displays
-a special **exception page** with lots of debug information to help you quickly
-discover the root problem:
+In the :doc:`development environment </cookbook/configuration/environments>`,
+Symfony catches all the exceptions and displays a special **exception page**
+with lots of debug information to help you quickly discover the root problem:
 
 .. image:: /images/cookbook/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in the development environment
@@ -46,7 +46,7 @@ is used to render a Twig template to show the user.
 
 .. _cookbook-error-pages-by-status-code:
 
-This controller uses the HTTP status code, request format and the following
+This controller uses the HTTP status code, the request format and the following
 logic to determine the template filename:
 
 #. Look for a template for the given format and status code (like ``error404.json.twig``
@@ -79,7 +79,7 @@ A typical project that returns HTML and JSON pages, might look like this:
                 ├─ error.html.twig      # All other HTML errors (including 500)
                 ├─ error404.json.twig
                 ├─ error403.json.twig
-                ├─ error.json.twig      # All other JSON errors (including 500)
+                └─ error.json.twig      # All other JSON errors (including 500)
 
 Example 404 Error Template
 --------------------------
@@ -136,7 +136,7 @@ The cause of this problem is that routing is done before security. If a 404 erro
 occurs, the security layer isn't loaded and thus, the ``is_granted()`` function
 is undefined. The solution is to add the following check before using this function:
 
-.. code-block:: twig
+.. code-block:: jinja
 
     {% if app.user and is_granted('...') %}
         {# ... #}
@@ -302,7 +302,7 @@ before, but also requires a thorough understanding of Symfony internals. Suppose
 that your code throws specialized exceptions with a particular meaning to your
 application domain.
 
-:doc:`Writing your own event listener </cookbook/service_container/event_listener>`
+:doc:`Writing your own event listener </cookbook/event_dispatcher/event_listener>`
 for the ``kernel.exception`` event allows you to have a closer look at the exception
 and take different actions depending on it. Those actions might include logging
 the exception, redirecting the user to another page or rendering specialized

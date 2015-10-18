@@ -15,6 +15,8 @@ done by activating the ``switch_user`` firewall listener:
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     # ...
@@ -29,8 +31,11 @@ done by activating the ``switch_user`` firewall listener:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <config>
-                <firewall>
+                <!-- ... -->
+
+                <firewall name="main">
                     <!-- ... -->
                     <switch-user />
                 </firewall>
@@ -41,10 +46,12 @@ done by activating the ``switch_user`` firewall listener:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main'=> array(
                     // ...
-                    'switch_user' => true
+                    'switch_user' => true,
                 ),
             ),
         ));
@@ -93,9 +100,10 @@ over the user's roles until you find one that a ``SwitchUserRole`` object::
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
     $authChecker = $this->get('security.authorization_checker');
+    $tokenStorage = $this->get('security.token_storage');
 
     if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
-        foreach ($authChecker->getToken()->getRoles() as $role) {
+        foreach ($tokenStorage->getToken()->getRoles() as $role) {
             if ($role instanceof SwitchUserRole) {
                 $impersonatingUser = $role->getSource()->getUser();
                 break;
@@ -115,6 +123,8 @@ setting:
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     # ...
@@ -130,7 +140,9 @@ setting:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <config>
-                <firewall>
+                <!-- ... -->
+
+                <firewall name="main">
                     <!-- ... -->
                     <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user" />
                 </firewall>
@@ -141,6 +153,8 @@ setting:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main'=> array(
                     // ...
@@ -151,3 +165,77 @@ setting:
                 ),
             ),
         ));
+
+Events
+------
+
+The firewall dispatches the ``security.switch_user`` event right after the impersonation
+is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
+passed to the listener, and you can use this to get the user that you are now impersonating.
+
+The cookbook article about
+:doc:`Making the Locale "Sticky" during a User's Session </cookbook/session/locale_sticky_session>`
+does not update the locale when you impersonate a user. The following code sample will show
+how to change the sticky locale:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.switch_user_listener:
+                class: AppBundle\EventListener\SwitchUserListener
+                tags:
+                    - { name: kernel.event_listener, event: security.switch_user, method: onSwitchUser }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="app.switch_user_listener"
+                    class="AppBundle\EventListener\SwitchUserListener"
+                >
+                    <tag name="kernel.event_listener"
+                        event="security.switch_user"
+                        method="onSwitchUser"
+                    />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('app.switch_user_listener', 'AppBundle\EventListener\SwitchUserListener')
+            ->addTag('kernel.event_listener', array('event' => 'security.switch_user', 'method' => 'onSwitchUser'))
+        ;
+
+.. caution::
+
+    The listener implementation assumes your ``User`` entity has a ``getLocale()`` method.
+
+.. code-block:: php
+
+        // src/AppBundle/EventListener/SwitchUserListener.pnp
+        namespace AppBundle\EventListener;
+
+        use Symfony\Component\Security\Http\Event\SwitchUserEvent;
+
+        class SwitchUserListener
+        {
+            public function onSwitchUser(SwitchUserEvent $event)
+            {
+                $event->getRequest()->getSession()->set(
+                    '_locale',
+                    $event->getTargetUser()->getLocale()
+                );
+            }
+        }

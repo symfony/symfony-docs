@@ -1,170 +1,269 @@
 .. index::
-   single: Security; Voters
+   single: Security; Data Permission Voters
 
-How to Implement your own Voter to Blacklist IP Addresses
-=========================================================
+How to Use Voters to Check User Permissions
+===========================================
 
-The Symfony Security component provides several layers to authorize users.
-One of the layers is called a "voter". A voter is a dedicated class that checks
-if the user has the rights to connect to the application or access a specific
-resource/URL. For instance, Symfony provides a layer that checks if the user
-is fully authorized or if it has some expected roles.
+In Symfony, you can check the permission to access data by using the
+:doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming
+for many applications. A much easier solution is to work with custom voters,
+which are like simple conditional statements.
 
-It is sometimes useful to create a custom voter to handle a specific case not
-handled by the framework. In this section, you'll learn how to create a voter
-that will allow you to blacklist users by their IP.
+.. seealso::
+
+    Voters can also be used in other ways, like, for example, blacklisting IP
+    addresses from the entire application: :doc:`/cookbook/security/voters`.
+
+.. tip::
+
+    Take a look at the
+    :doc:`authorization </components/security/authorization>`
+    chapter for an even deeper understanding on voters.
+
+How Symfony Uses Voters
+-----------------------
+
+In order to use voters, you have to understand how Symfony works with them.
+All voters are called each time you use the ``isGranted()`` method on Symfony's
+authorization checker (i.e. the ``security.authorization_checker`` service). Each
+one decides if the current user should have access to some resource.
+
+Ultimately, Symfony takes the responses from all voters and makes the final
+decission (to allow or deny access to the resource) according to the strategy defined
+in the application, which can be: affirmative, consensus or unanimous.
+
+For more information take a look at
+:ref:`the section about access decision managers <components-security-access-decision-manager>`.
 
 The Voter Interface
 -------------------
 
-A custom voter must implement
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
-which requires the following three methods:
-
-.. include:: /cookbook/security/voter_interface.rst.inc
-
-In this example, you'll check if the user's IP address matches against a list of
-blacklisted addresses and "something" will be the application. If the user's IP is blacklisted, you'll return
-``VoterInterface::ACCESS_DENIED``, otherwise you'll return
-``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
-access, not to grant access.
-
-Creating a custom Voter
------------------------
-
-To blacklist a user based on its IP, you can use the ``request_stack`` service
-and compare the IP address against a set of blacklisted IP addresses:
+A custom voter needs to implement
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
+or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`,
+which makes creating a voter even easier.
 
 .. code-block:: php
 
-    // src/AppBundle/Security/Authorization/Voter/ClientIpVoter.php
+    abstract class AbstractVoter implements VoterInterface
+    {
+        abstract protected function getSupportedClasses();
+        abstract protected function getSupportedAttributes();
+        abstract protected function isGranted($attribute, $object, $user = null);
+    }
+
+In this example, the voter will check if the user has access to a specific
+object according to your custom conditions (e.g. they must be the owner of
+the object). If the condition fails, you'll return
+``VoterInterface::ACCESS_DENIED``, otherwise you'll return
+``VoterInterface::ACCESS_GRANTED``. In case the responsibility for this decision
+does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``.
+
+Creating the custom Voter
+-------------------------
+
+The goal is to create a voter that checks if a user has access to view or
+edit a particular object. Here's an example implementation:
+
+.. code-block:: php
+
+    // src/AppBundle/Security/Authorization/Voter/PostVoter.php
     namespace AppBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\HttpFoundation\RequestStack;
-    use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
+    use AppBundle\Entity\User;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
-    class ClientIpVoter implements VoterInterface
+    class PostVoter extends AbstractVoter
     {
-        protected $requestStack;
-        private $blacklistedIp;
+        const VIEW = 'view';
+        const EDIT = 'edit';
 
-        public function __construct(RequestStack $requestStack, array $blacklistedIp = array())
+        protected function getSupportedAttributes()
         {
-            $this->requestStack  = $requestStack;
-            $this->blacklistedIp = $blacklistedIp;
+            return array(self::VIEW, self::EDIT);
         }
 
-        public function supportsAttribute($attribute)
+        protected function getSupportedClasses()
         {
-            // you won't check against a user attribute, so return true
-            return true;
+            return array('AppBundle\Entity\Post');
         }
 
-        public function supportsClass($class)
+        protected function isGranted($attribute, $post, $user = null)
         {
-            // your voter supports all type of token classes, so return true
-            return true;
-        }
-
-        public function vote(TokenInterface $token, $object, array $attributes)
-        {
-            $request = $this->requestStack->getCurrentRequest();
-            if (in_array($request->getClientIp(), $this->blacklistedIp)) {
-                return VoterInterface::ACCESS_DENIED;
+            // make sure there is a user object (i.e. that the user is logged in)
+            if (!$user instanceof UserInterface) {
+                return false;
             }
 
-            return VoterInterface::ACCESS_ABSTAIN;
+            // double-check that the User object is the expected entity (this
+            // only happens when you did not configure the security system properly)
+            if (!$user instanceof User) {
+                throw new \LogicException('The user is somehow not our User class!');
+            }
+
+            switch($attribute) {
+                case self::VIEW:
+                    // the data object could have for example a method isPrivate()
+                    // which checks the Boolean attribute $private
+                    if (!$post->isPrivate()) {
+                        return true;
+                    }
+
+                    break;
+                case self::EDIT:
+                    // this assumes that the data object has a getOwner() method
+                    // to get the entity of the user who owns this data object
+                    if ($user->getId() === $post->getOwner()->getId()) {
+                        return true;
+                    }
+
+                    break;
+            }
+
+            return false;
         }
     }
 
 That's it! The voter is done. The next step is to inject the voter into
-the security layer. This can be done easily through the service container.
+the security layer.
 
-.. tip::
+To recap, here's what's expected from the three abstract methods:
 
-    Your implementation of the methods
-    :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute`
-    and :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass`
-    are not being called internally by the framework. Once you have registered your
-    voter the ``vote()`` method will always be called, regardless of whether
-    or not these two methods return true. Therefore you need to call those
-    methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
-    if your voter does not support the class or attribute.
+:method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
+    It tells Symfony that your voter should be called whenever an object of one
+    of the given classes is passed to ``isGranted()``. For example, if you return
+    ``array('AppBundle\Model\Product')``, Symfony will call your voter when a
+    ``Product`` object is passed to ``isGranted()``.
+
+:method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedAttributes`
+    It tells Symfony that your voter should be called whenever one of these
+    strings is passed as the first argument to ``isGranted()``. For example, if
+    you return ``array('CREATE', 'READ')``, then Symfony will call your voter
+    when one of these is passed to ``isGranted()``.
+
+:method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::isGranted`
+    It implements the business logic that verifies whether or not a given user is
+    allowed access to a given attribute (e.g. ``CREATE`` or ``READ``) on a given
+    object. This method must return a boolean.
+
+.. note::
+
+    Currently, to use the ``AbstractVoter`` base class, you must be creating a
+    voter where an object is always passed to ``isGranted()``.
 
 Declaring the Voter as a Service
 --------------------------------
 
-To inject the voter into the security layer, you must declare it as a service,
-and tag it as a ``security.voter``:
+To inject the voter into the security layer, you must declare it as a service
+and tag it with ``security.voter``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
-            security.access.blacklist_voter:
-                class:     AppBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments: ["@request_stack", [123.123.123.123, 171.171.171.171]]
-                public:    false
+            security.access.post_voter:
+                class:      AppBundle\Security\Authorization\Voter\PostVoter
+                public:     false
                 tags:
                     - { name: security.voter }
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
-        <service id="security.access.blacklist_voter"
-                 class="AppBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
-            <argument type="service" id="request_stack" strict="false" />
-            <argument type="collection">
-                <argument>123.123.123.123</argument>
-                <argument>171.171.171.171</argument>
-            </argument>
-            <tag name="security.voter" />
-        </service>
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="security.access.post_voter"
+                    class="AppBundle\Security\Authorization\Voter\PostVoter"
+                    public="false"
+                >
+
+                    <tag name="security.voter" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
-        // src/Acme/AcmeBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            'AppBundle\Security\Authorization\Voter\ClientIpVoter',
-            array(
-                new Reference('request_stack'),
-                array('123.123.123.123', '171.171.171.171'),
-            ),
-        );
-        $definition->addTag('security.voter');
-        $definition->setPublic(false);
+        $definition = new Definition('AppBundle\Security\Authorization\Voter\PostVoter');
+        $definition
+            ->setPublic(false)
+            ->addTag('security.voter')
+        ;
 
-        $container->setDefinition('security.access.blacklist_voter', $definition);
+        $container->setDefinition('security.access.post_voter', $definition);
 
-.. tip::
+How to Use the Voter in a Controller
+------------------------------------
 
-   Be sure to import this configuration file from your main application
-   configuration file (e.g. ``app/config/config.yml``). For more information
-   see :ref:`service-container-imports-directive`. To read more about defining
-   services in general, see the :doc:`/book/service_container` chapter.
+The registered voter will then always be asked as soon as the method ``isGranted()``
+from the authorization checker is called.
+
+.. code-block:: php
+
+    // src/AppBundle/Controller/PostController.php
+    namespace AppBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class PostController extends Controller
+    {
+        public function showAction($id)
+        {
+            // get a Post instance
+            $post = ...;
+
+            // keep in mind that this will call all registered security voters
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
+
+            return new Response('<h1>'.$post->getName().'</h1>');
+        }
+    }
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6.
+    Prior to Symfony 2.6, you had to use the ``isGranted()`` method of the
+    ``security.context`` service.
+
+It's that easy!
 
 .. _security-voters-change-strategy:
 
 Changing the Access Decision Strategy
 -------------------------------------
 
-In order for the new voter to take effect, you need to change the default access
-decision strategy, which, by default, grants access if *any* voter grants
-access.
+Imagine you have multiple voters for one action for an object. For instance,
+you have one voter that checks if the user is a member of the site and a second
+one checking if the user is older than 18.
 
-In this case, choose the ``unanimous`` strategy. Unlike the ``affirmative``
-strategy (the default), with the ``unanimous`` strategy, if only one voter
-denies access (e.g. the ``ClientIpVoter``), access is not granted to the
-end user.
+To handle these cases, the access decision manager uses an access decision
+strategy. You can configure this to suite your needs. There are three
+strategies available:
 
-To do that, override the default ``access_decision_manager`` section of your
-application configuration file with the following code.
+``affirmative`` (default)
+    This grants access as soon as there is *one* voter granting access;
+
+``consensus``
+    This grants access if there are more voters granting access than denying;
+
+``unanimous``
+    This only grants access once *all* voters grant access.
+
+In the above scenario, both voters should grant access in order to grant access
+to the user to read the post. In this case, the default strategy is no longer
+valid and ``unanimous`` should be used instead. You can set this in the
+security configuration:
 
 .. configuration-block::
 
@@ -173,61 +272,29 @@ application configuration file with the following code.
         # app/config/security.yml
         security:
             access_decision_manager:
-                # strategy can be: affirmative, unanimous or consensus
                 strategy: unanimous
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <!-- strategy can be: affirmative, unanimous or consensus -->
-            <access-decision-manager strategy="unanimous">
-        </config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+            <config>
+                <access-decision-manager strategy="unanimous">
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.xml
+        // app/config/security.php
         $container->loadFromExtension('security', array(
-            // strategy can be: affirmative, unanimous or consensus
             'access_decision_manager' => array(
                 'strategy' => 'unanimous',
             ),
         ));
-
-That's it! Now, when deciding whether or not a user should have access,
-the new voter will deny access to any user in the list of blacklisted IPs.
-
-Note that the voters are only called, if any access is actually checked. So 
-you need at least something like 
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            access_control:
-                - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <access-control>
-               <rule path="^/" role="IS_AUTHENTICATED_ANONYMOUSLY" />
-            </access-control>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.xml
-        $container->loadFromExtension('security', array(
-            'access_control' => array(
-               array('path' => '^/', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
-            ),
-         ));
-
-.. seealso::
-
-    For a more advanced usage see
-    :ref:`components-security-access-decision-manager`.

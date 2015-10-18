@@ -5,10 +5,11 @@
 The Class Map Generator
 =======================
 
-Loading a class usually is an easy task given the `PSR-0`_ and `PSR-4`_ standards.
-Thanks to the Symfony ClassLoader component or the autoloading mechanism provided
-by Composer, you don't have to map your class names to actual PHP files manually.
-Nowadays, PHP libraries usually come with autoloading support through Composer.
+Loading a class usually is an easy task given the `PSR-0`_ and `PSR-4`_
+standards. Thanks to the Symfony ClassLoader component or the autoloading
+mechanism provided by Composer, you don't have to map your class names to
+actual PHP files manually. Nowadays, PHP libraries usually come with autoloading
+support through Composer.
 
 But from time to time you may have to use a third-party library that comes
 without any autoloading support and therefore forces you to load each class
@@ -44,16 +45,17 @@ it possible to create a map of class names to files.
 Generating a Class Map
 ----------------------
 
-To generate the class map, simply pass the root directory of your class files
-to the :method:`Symfony\\Component\\ClassLoader\\ClassMapGenerator::createMap`
+To generate the class map, simply pass the root directory of your class
+files to the
+:method:`Symfony\\Component\\ClassLoader\\ClassMapGenerator::createMap`
 method::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
 
-    print_r(ClassMapGenerator::createMap(__DIR__.'/library'));
+    var_dump(ClassMapGenerator::createMap(__DIR__.'/library'));
 
-Given the files and class from the table above, you should see an output like
-this:
+Given the files and class from the table above, you should see an output
+like this:
 
 .. code-block:: text
 
@@ -87,8 +89,9 @@ file in the same directory with the following contents::
     'Acme\\Bar' => '/var/www/library/bar/Foo.php',
     );
 
-Instead of loading each file manually, you'll only have to register the generated
-class map with, for example, the :class:`Symfony\\Component\\ClassLoader\\MapClassLoader`::
+Instead of loading each file manually, you'll only have to register the
+generated class map with, for example, the
+:class:`Symfony\\Component\\ClassLoader\\MapClassLoader`::
 
     use Symfony\Component\ClassLoader\MapClassLoader;
 
@@ -110,8 +113,8 @@ class map with, for example, the :class:`Symfony\\Component\\ClassLoader\\MapCla
     component.
 
 Besides dumping the class map for one directory, you can also pass an array
-of directories for which to generate the class map (the result actually is
-the same as in the example above)::
+of directories for which to generate the class map (the result actually
+is the same as in the example above)::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
 

@@ -39,7 +39,7 @@ The main purpose of the front controller is to create an instance of the
 and return the resulting response to the browser.
 
 Because every request is routed through it, the front controller can be
-used to perform global initializations prior to setting up the kernel or
+used to perform global initialization prior to setting up the kernel or
 to `decorate`_ the kernel with additional features. Examples include:
 
 * Configuring the autoloader or adding additional autoloading mechanisms;
@@ -158,12 +158,12 @@ loading the ``app/config/config_*environment*.yml`` file. You are, of course,
 free to implement this method differently if you need a more sophisticated
 way of loading your configuration.
 
-.. _front controller: http://en.wikipedia.org/wiki/Front_Controller_pattern
+.. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
 .. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
 .. _app_dev.php: https://github.com/symfony/symfony-standard/blob/master/web/app_dev.php
 .. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
-.. _decorate: http://en.wikipedia.org/wiki/Decorator_pattern
+.. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
 .. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
-.. _template methods: http://en.wikipedia.org/wiki/Template_method_pattern
+.. _template methods: https://en.wikipedia.org/wiki/Template_method_pattern

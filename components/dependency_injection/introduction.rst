@@ -1,4 +1,4 @@
-﻿.. index::
+.. index::
     single: DependencyInjection
     single: Components; DependencyInjection
 
@@ -16,8 +16,11 @@ Installation
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/DependencyInjection).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection``
+  on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/dependency-injection).
+
+.. include:: /components/require_autoload.rst.inc
 
 Basic Usage
 -----------
@@ -72,10 +75,10 @@ Then you can set the choice of transport in the container::
 This class is now much more flexible as you have separated the choice of
 transport out of the implementation and into the container.
 
-Which mail transport you have chosen may be something other services need to
-know about. You can avoid having to change it in multiple places by making
-it a parameter in the container and then referring to this parameter for the
-``Mailer`` service's constructor argument::
+Which mail transport you have chosen may be something other services need
+to know about. You can avoid having to change it in multiple places by making
+it a parameter in the container and then referring to this parameter for
+the ``Mailer`` service's constructor argument::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -180,10 +183,10 @@ Setting up the Container with Configuration Files
 
 As well as setting up the services using PHP as above you can also use
 configuration files. This allows you to use XML or YAML to write the definitions
-for the services rather than using PHP to define the services as in the above
-examples. In anything but the smallest applications it makes sense to organize
-the service definitions by moving them into one or more configuration files.
-To do this you also need to install
+for the services rather than using PHP to define the services as in the
+above examples. In anything but the smallest applications it makes sense
+to organize the service definitions by moving them into one or more configuration
+files. To do this you also need to install
 :doc:`the Config component </components/config/introduction>`.
 
 Loading an XML config file::
@@ -282,3 +285,4 @@ config files:
             ->addMethodCall('setMailer', array(new Reference('mailer')));
 
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection
+

@@ -395,7 +395,7 @@ it with :ref:`dic-tags-form-type`.
         <!-- app/config/config.xml -->
         <services>
             <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                <argument type="service" id="security.context" />
+                <argument type="service" id="security.token_storage" />
                 <tag name="form.type" alias="friend_message" />
             </service>
         </services>
@@ -708,7 +708,7 @@ To suppress form validation you can use the ``POST_SUBMIT`` event and prevent
 the :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
 from being called.
 
-The reason for needing to do this is that even if you set ``group_validation``
+The reason for needing to do this is that even if you set ``validation_groups``
 to ``false`` there  are still some integrity checks executed. For example
 an uploaded file will still be checked to see if it is too large and the form
 will still check to see if non-existing fields were submitted. To disable

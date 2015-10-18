@@ -14,7 +14,9 @@ Installation
 You can install the component in two different ways:
 
 * :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/PropertyAccess).
+* Use the official Git repository (https://github.com/symfony/property-access).
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -45,8 +47,8 @@ method. This is done using the index notation that is used in PHP::
         'first_name' => 'Wouter',
     );
 
-    echo $accessor->getValue($person, '[first_name]'); // 'Wouter'
-    echo $accessor->getValue($person, '[age]'); // null
+    var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
+    var_dump($accessor->getValue($person, '[age]')); // null
 
 As you can see, the method will return ``null`` if the index does not exists.
 
@@ -62,8 +64,8 @@ You can also use multi dimensional arrays::
         )
     );
 
-    echo $accessor->getValue($persons, '[0][first_name]'); // 'Wouter'
-    echo $accessor->getValue($persons, '[1][first_name]'); // 'Ryan'
+    var_dump($accessor->getValue($persons, '[0][first_name]')); // 'Wouter'
+    var_dump($accessor->getValue($persons, '[1][first_name]')); // 'Ryan'
 
 Reading from Objects
 --------------------
@@ -80,13 +82,13 @@ To read from properties, use the "dot" notation::
     $person = new Person();
     $person->firstName = 'Wouter';
 
-    echo $accessor->getValue($person, 'firstName'); // 'Wouter'
+    var_dump($accessor->getValue($person, 'firstName')); // 'Wouter'
 
     $child = new Person();
     $child->firstName = 'Bar';
     $person->children = array($child);
 
-    echo $accessor->getValue($person, 'children[0].firstName'); // 'Bar'
+    var_dump($accessor->getValue($person, 'children[0].firstName')); // 'Bar'
 
 .. caution::
 
@@ -116,7 +118,7 @@ property name (``first_name`` becomes ``FirstName``) and prefixes it with
 
     $person = new Person();
 
-    echo $accessor->getValue($person, 'first_name'); // 'Wouter'
+    var_dump($accessor->getValue($person, 'first_name')); // 'Wouter'
 
 Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
@@ -145,10 +147,10 @@ getters, this means that you can do something like this::
     $person = new Person();
 
     if ($accessor->getValue($person, 'author')) {
-        echo 'He is an author';
+        var_dump('He is an author');
     }
     if ($accessor->getValue($person, 'children')) {
-        echo 'He has children';
+        var_dump('He has children');
     }
 
 This will produce: ``He is an author``
@@ -173,7 +175,7 @@ The ``getValue`` method can also use the magic ``__get`` method::
 
     $person = new Person();
 
-    echo $accessor->getValue($person, 'Wouter'); // array(...)
+    var_dump($accessor->getValue($person, 'Wouter')); // array(...)
 
 .. _components-property-access-magic-call:
 
@@ -211,7 +213,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    echo $accessor->getValue($person, 'wouter'); // array(...)
+    var_dump($accessor->getValue($person, 'wouter')); // array(...)
 
 .. versionadded:: 2.3
     The use of magic ``__call()`` method was introduced in Symfony 2.3.
@@ -219,7 +221,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 .. caution::
 
     The ``__call`` feature is disabled by default, you can enable it by calling
-    :method:`PropertyAccessorBuilder::enableMagicCallEnabled<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCallEnabled>`
+    :method:`PropertyAccessorBuilder::enableMagicCall<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall>`
     see `Enable other Features`_.
 
 Writing to Arrays
@@ -235,9 +237,9 @@ method::
 
     $accessor->setValue($person, '[first_name]', 'Wouter');
 
-    echo $accessor->getValue($person, '[first_name]'); // 'Wouter'
+    var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
     // or
-    // echo $person['first_name']; // 'Wouter'
+    // var_dump($person['first_name']); // 'Wouter'
 
 Writing to Objects
 ------------------
@@ -271,9 +273,9 @@ can use setters, the magic ``__set`` method or properties to set values::
     $accessor->setValue($person, 'lastName', 'de Jong');
     $accessor->setValue($person, 'children', array(new Person()));
 
-    echo $person->firstName; // 'Wouter'
-    echo $person->getLastName(); // 'de Jong'
-    echo $person->children; // array(Person());
+    var_dump($person->firstName); // 'Wouter'
+    var_dump($person->getLastName()); // 'de Jong'
+    var_dump($person->children); // array(Person());
 
 You can also use ``__call`` to set values but you need to enable the feature,
 see `Enable other Features`_.
@@ -309,7 +311,7 @@ see `Enable other Features`_.
 
     $accessor->setValue($person, 'wouter', array(...));
 
-    echo $person->getWouter(); // array(...)
+    var_dump($person->getWouter()); // array(...)
 
 Checking Property Paths
 -----------------------
@@ -367,7 +369,7 @@ You can also mix objects and arrays::
     $accessor->setValue($person, 'children[0].firstName', 'Wouter');
     // equal to $person->getChildren()[0]->firstName = 'Wouter'
 
-    echo 'Hello '.$accessor->getValue($person, 'children[0].firstName'); // 'Wouter'
+    var_dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
 
 Enable other Features

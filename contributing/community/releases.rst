@@ -114,7 +114,7 @@ Version  Feature Freeze  Release  End of Maintenance        End of Life
 
     If you want to learn more about the timeline of any given Symfony version,
     use the online `timeline calculator`_. You can also get all data as a JSON
-    string via a URL like `http://symfony.com/roadmap.json?version=2.x`.
+    string via a URL like `https://symfony.com/roadmap.json?version=2.x`.
 
 .. tip::
 
@@ -178,6 +178,6 @@ version is published every two years and there is a year to upgrade.
 .. _Semantic Versioning: http://semver.org/
 .. _Git repository: https://github.com/symfony/symfony
 .. _SensioLabs:     http://sensiolabs.com/
-.. _roadmap notification: http://symfony.com/roadmap
-.. _extended to September 2014: http://symfony.com/blog/extended-maintenance-for-symfony-2-4
-.. _timeline calculator: http://symfony.com/roadmap
+.. _roadmap notification: https://symfony.com/roadmap
+.. _extended to September 2014: https://symfony.com/blog/extended-maintenance-for-symfony-2-4
+.. _timeline calculator: https://symfony.com/roadmap

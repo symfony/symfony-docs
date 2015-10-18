@@ -223,7 +223,7 @@ YAML uses indentation with one or more spaces to describe nested collections:
       PHP:    5.2
       Propel: 1.3
 
-The following YAML is equivalent to the following PHP code:
+The above YAML is equivalent to the following PHP code:
 
 .. code-block:: php
 
@@ -240,7 +240,7 @@ The following YAML is equivalent to the following PHP code:
 
 There is one important thing you need to remember when using indentation in a
 YAML file: *Indentation must be done with one or more spaces, but never with
-tabulations*.
+tabulators*.
 
 You can nest sequences and mappings as you like:
 

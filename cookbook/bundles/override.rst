@@ -90,8 +90,8 @@ In this example you fetch the service definition of the original service, and se
 its class name to your own class.
 
 See :doc:`/cookbook/service_container/compiler_passes` for information on how to use
-compiler passes. If you want to do something beyond just overriding the class -
-like adding a method call - you can only use the compiler pass method.
+compiler passes. If you want to do something beyond just overriding the class,
+like adding a method call, you can only use the compiler pass method.
 
 Entities & Entity Mapping
 -------------------------
@@ -192,7 +192,10 @@ can override the translations from any translation file, as long as it is in
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
 
+    Translation files are also not aware of :doc:`bundle inheritance </cookbook/bundles/inheritance>`.
+    If you want to override translations from the parent bundle, be sure that the
+    parent bundle is loaded before the child bundle in the ``AppKernel`` class.
+
     The file that always wins is the one that is placed in
     ``app/Resources/translations``, as those files are always loaded last.
-
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides

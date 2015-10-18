@@ -67,7 +67,7 @@ configuration looks like this:
 
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
-                    security=false />
+                    security="false" />
 
                 <firewall name="default">
                     <anonymous />
@@ -81,7 +81,7 @@ configuration looks like this:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'in_memory' => array(
-                    'memory' => array(),
+                    'memory' => null,
                 ),
             ),
             'firewalls' => array(
@@ -128,9 +128,9 @@ A) Configuring how your Users will Authenticate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The main job of a firewall is to configure *how* your users will authenticate.
-Will they use a login form? Http Basic? An API token? All of the above?
+Will they use a login form? HTTP basic authentication? An API token? All of the above?
 
-Let's start with Http Basic (the old-school pop-up) and work up from there.
+Let's start with HTTP basic authentication (the old-school prompt) and work up from there.
 To activate this, add the ``http_basic`` key under your firewall:
 
 .. configuration-block::
@@ -198,7 +198,7 @@ example, if you use annotations, create something like this::
          */
         public function adminAction()
         {
-            return new Response('Admin page!');
+            return new Response('<html><body>Admin page!</body></html>');
         }
     }
 
@@ -214,6 +214,8 @@ user to be logged in to access this URL:
             # ...
             firewalls:
                 # ...
+                default:
+                    # ...
 
             access_control:
                 # require ROLE_ADMIN for /admin*
@@ -236,10 +238,8 @@ user to be logged in to access this URL:
                     <!-- ... -->
                 </firewall>
 
-                <access-control>
-                    <!-- require ROLE_ADMIN for /admin* -->
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
+                <!-- require ROLE_ADMIN for /admin* -->
+                <rule path="^/admin" role="ROLE_ADMIN" />
             </config>
         </srv:container>
 
@@ -265,7 +265,7 @@ user to be logged in to access this URL:
     You'll learn more about this ``ROLE_ADMIN`` thing and denying access
     later in the :ref:`security-authorization` section.
 
-Great! Now, if you go to ``/admin``, you'll see the HTTP Basic popup:
+Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
 
 .. image:: /images/book/security_http_basic_popup.png
    :align: center
@@ -279,6 +279,11 @@ But who can you login as? Where do users come from?
     Want to use a traditional login form? Great! See :doc:`/cookbook/security/form_login_setup`.
     What other methods are supported? See the :doc:`Configuration Reference </reference/configuration/security>`
     or :doc:`build your own </cookbook/security/custom_authentication_provider>`.
+
+.. tip::
+
+    If your application logs users in via a third-party service such as Google,
+    Facebook or Twitter, check out the `HWIOAuthBundle`_ community bundle.
 
 .. _security-user-providers:
 .. _where-do-users-come-from-user-providers:
@@ -371,7 +376,7 @@ probably only need one. If you *do* have multiple, you can configure which
 Try to login using username ``admin`` and password ``kitten``. You should
 see an error!
 
-    No encoder has been configured for account "Symfony\Component\Security\Core\User\User"
+    No encoder has been configured for account "Symfony\\Component\\Security\\Core\\User\\User"
 
 To fix this, add an ``encoders`` key:
 
@@ -485,7 +490,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
                 <encoder class="Symfony\Component\Security\Core\User\User"
                     algorithm="bcrypt"
                     cost="12" />
-                
+
                 <!-- ... -->
             </config>
         </srv:container>
@@ -507,7 +512,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
 
 .. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
-Of course, your user's passwords now need to be encoded with this exact algorithm.
+Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, you can use an `online tool`_, which will give you something
 like this:
 
@@ -541,13 +546,14 @@ like this:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <provider name="in_memory">
                     <memory>
                         <user name="ryan" password="$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli" roles="ROLE_USER" />
                         <user name="admin" password="$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G" roles="ROLE_ADMIN" />
                     </memory>
                 </provider>
-                <!-- ... -->
             </config>
         </srv:container>
 
@@ -555,6 +561,8 @@ like this:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'providers' => array(
                 'in_memory' => array(
                     'memory' => array(
@@ -593,8 +601,8 @@ before inserting them into the database? Don't worry, see
 D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Congratulations! You now have a working authentication system that uses Http
-Basic and loads users right from the ``security.yml`` file.
+Congratulations! You now have a working authentication system that uses HTTP
+basic auth and loads users right from the ``security.yml`` file.
 
 Your next steps depend on your setup:
 
@@ -694,8 +702,11 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
         # app/config/security.yml
         security:
             # ...
+
             firewalls:
                 # ...
+                default:
+                    # ...
 
             access_control:
                 # require ROLE_ADMIN for /admin*
@@ -718,10 +729,8 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
                     <!-- ... -->
                 </firewall>
 
-                <access-control>
-                    <!-- require ROLE_ADMIN for /admin* -->
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
+                <!-- require ROLE_ADMIN for /admin* -->
+                <rule path="^/admin" role="ROLE_ADMIN" />
             </config>
         </srv:container>
 
@@ -730,6 +739,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
         // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
+
             'firewalls' => array(
                 // ...
                 'default' => array(
@@ -758,6 +768,7 @@ matches the URL.
         # app/config/security.yml
         security:
             # ...
+
             access_control:
                 - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
                 - { path: ^/admin, roles: ROLE_ADMIN }
@@ -774,10 +785,9 @@ matches the URL.
 
             <config>
                 <!-- ... -->
-                <access-control>
-                    <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
+
+                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
+                <rule path="^/admin" role="ROLE_ADMIN" />
             </config>
         </srv:container>
 
@@ -786,6 +796,7 @@ matches the URL.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
+
             'access_control' => array(
                 array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
                 array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
@@ -989,10 +1000,10 @@ other users. Also, as the admin user, you yourself want to be able to edit
 
 To accomplish this you have 2 options:
 
-* :doc:`Voters </cookbook/security/voters_data_permission>` allow you to
-  use business logic (e.g. the user can edit this post because they were
-  the creator) to determine access. You'll probably want this option - it's
-  flexible enough to solve the above situation.
+* :doc:`Voters </cookbook/security/voters>` allow you to write own business logic
+  (e.g. the user can edit this post because they were the creator) to determine
+  access. You'll probably want this option - it's flexible enough to solve the
+  above situation.
 
 * :doc:`ACLs </cookbook/security/acl>` allow you to create a database structure
   where you can assign *any* arbitrary user *any* access (e.g. EDIT, VIEW)
@@ -1101,13 +1112,14 @@ the firewall can handle this automatically for you when you activate the
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 secured_area:
                     # ...
                     logout:
                         path:   /logout
                         target: /
-            # ...
 
     .. code-block:: xml
 
@@ -1120,11 +1132,12 @@ the firewall can handle this automatically for you when you activate the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall name="secured_area" pattern="^/">
+                <!-- ... -->
+
+                <firewall name="secured_area">
                     <!-- ... -->
                     <logout path="/logout" target="/" />
                 </firewall>
-                <!-- ... -->
             </config>
         </srv:container>
 
@@ -1132,13 +1145,14 @@ the firewall can handle this automatically for you when you activate the
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => 'logout', 'target' => '/'),
+                    'logout' => array('path' => '/logout', 'target' => '/'),
                 ),
             ),
-            // ...
         ));
 
 Next, you'll need to create a route for this URL (but not a controller):
@@ -1149,7 +1163,7 @@ Next, you'll need to create a route for this URL (but not a controller):
 
         # app/config/routing.yml
         logout:
-            path:   /logout
+            path: /logout
 
     .. code-block:: xml
 
@@ -1170,7 +1184,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('logout', new Route('/logout', array()));
+        $collection->add('logout', new Route('/logout'));
 
         return $collection;
 
@@ -1238,6 +1252,8 @@ rules by creating a role hierarchy:
 
         # app/config/security.yml
         security:
+            # ...
+
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
                 ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -1253,6 +1269,8 @@ rules by creating a role hierarchy:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <role id="ROLE_ADMIN">ROLE_USER</role>
                 <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
             </config>
@@ -1262,6 +1280,8 @@ rules by creating a role hierarchy:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
                 'ROLE_SUPER_ADMIN' => array(
@@ -1291,6 +1311,8 @@ cookie will be ever created by Symfony):
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     http_basic: ~
@@ -1307,7 +1329,9 @@ cookie will be ever created by Symfony):
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall stateless="true">
+                <!-- ... -->
+
+                <firewall name="main" stateless="true">
                     <http-basic />
                 </firewall>
             </config>
@@ -1317,8 +1341,10 @@ cookie will be ever created by Symfony):
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
-                'main' => array('http_basic' => array(), 'stateless' => true),
+                'main' => array('http_basic' => null, 'stateless' => true),
             ),
         ));
 
@@ -1382,12 +1408,13 @@ Learn More from the Cookbook
 
 * :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
 * :doc:`Impersonating a User </cookbook/security/impersonating_user>`
-* :doc:`/cookbook/security/voters_data_permission`
+* :doc:`/cookbook/security/voters`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 * :doc:`/cookbook/security/multiple_user_providers`
 
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
-.. _`frameworkextrabundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`SensioDistributionBundle`: https://packagist.org/packages/sensio/distribution-bundle

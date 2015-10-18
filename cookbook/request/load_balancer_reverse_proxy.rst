@@ -7,9 +7,14 @@ an AWS Elastic Load Balancer) or a reverse proxy (e.g. Varnish for
 
 For the most part, this doesn't cause any problems with Symfony. But, when
 a request passes through a proxy, certain request information is sent using
-special ``X-Forwarded-*`` headers. For example, instead of reading the ``REMOTE_ADDR``
-header (which will now be the IP address of your reverse proxy), the user's
-true IP will be stored in an ``X-Forwarded-For`` header.
+either the standard ``Forwarded`` header or non-standard special ``X-Forwarded-*``
+headers. For example, instead of reading the ``REMOTE_ADDR`` header (which
+will now be the IP address of your reverse proxy), the user's true IP will be
+stored in a standard ``Forwarded: for="..."`` header or a non standard
+``X-Forwarded-For`` header.
+
+.. versionadded:: 2.7
+    ``Forwarded`` header support was introduced in Symfony 2.7.
 
 If you don't configure Symfony to look for these headers, you'll get incorrect
 information about the client's IP address, whether or not the client is connecting
@@ -57,9 +62,9 @@ the IP address ``192.0.0.1`` or matches the range of IP addresses that use
 the CIDR notation ``10.0.0.0/8``. For more details, see the
 :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>` option.
 
-That's it! Symfony will now look for the correct ``X-Forwarded-*`` headers
-to get information like the client's IP address, host, port and whether or
-not the request is using HTTPS.
+That's it! Symfony will now look for the correct headers to get information
+like the client's IP address, host, port and whether the request is
+using HTTPS.
 
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
@@ -83,6 +88,9 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
        $response = $kernel->handle($request);
        // ...
 
+#. Ensure that the trusted_proxies setting in your ``app/config/config.yml`` 
+   is not set or it will overwrite the ``setTrustedProxies`` call above.
+
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
@@ -90,9 +98,14 @@ other information.
 My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 ------------------------------------------------------------
 
-Most reverse proxies store information on specific ``X-Forwarded-*`` headers.
-But if your reverse proxy uses non-standard header names, you can configure
+Although `RFC 7239`_ recently defined a standard ``Forwarded`` header to disclose
+all proxy information, most reverse proxies store information in non-standard
+``X-Forwarded-*`` headers.
+
+But if your reverse proxy uses other non-standard header names, you can configure
 these (see ":doc:`/components/http_foundation/trusting_proxies`").
+
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
 .. _`security groups`: http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-elb-security-groups.html
+.. _`RFC 7239`: http://tools.ietf.org/html/rfc7239

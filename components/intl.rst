@@ -23,7 +23,7 @@ Installation
 You can install the component in two different ways:
 
 * :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
-* Using the official Git repository (https://github.com/symfony/Intl).
+* Using the official Git repository (https://github.com/symfony/intl).
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
@@ -138,7 +138,7 @@ This class currently only works with the `intl extension`_ installed::
     $reader = new BinaryBundleReader();
     $data = $reader->read('/path/to/bundle', 'en');
 
-    echo $data['Data']['entry1'];
+    var_dump($data['Data']['entry1']);
 
 PhpBundleReader
 ~~~~~~~~~~~~~~~
@@ -152,7 +152,7 @@ object::
     $reader = new PhpBundleReader();
     $data = $reader->read('/path/to/bundle', 'en');
 
-    echo $data['Data']['entry1'];
+    var_dump($data['Data']['entry1']);
 
 BufferedBundleReader
 ~~~~~~~~~~~~~~~~~~~~
@@ -193,10 +193,10 @@ returned::
     $data = $reader->read('/path/to/bundle', 'en');
 
     // Produces an error if the key "Data" does not exist
-    echo $data['Data']['entry1'];
+    var_dump($data['Data']['entry1']);
 
     // Returns null if the key "Data" does not exist
-    echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'));
+    var_dump($reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1')));
 
 Additionally, the
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReaderInterface::readEntry`
@@ -207,12 +207,12 @@ multi-valued entries (arrays), the values of the more specific and the fallback
 locale will be merged. In order to suppress this behavior, the last parameter
 ``$fallback`` can be set to ``false``::
 
-    echo $reader->readEntry(
+    var_dump($reader->readEntry(
         '/path/to/bundle',
         'en',
         array('Data', 'entry1'),
         false
-    );
+    ));
 
 Accessing ICU Data
 ------------------

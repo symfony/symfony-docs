@@ -11,6 +11,8 @@ The Book
     controller
     routing
     templating
+    configuration
+    bundles
     doctrine
     propel
     testing

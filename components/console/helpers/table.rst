@@ -21,18 +21,25 @@ To display a table, use :class:`Symfony\\Component\\Console\\Helper\\Table`,
 set the headers, set the rows and then render the table::
 
     use Symfony\Component\Console\Helper\Table;
+    // ...
 
-    $table = new Table($output);
-    $table
-        ->setHeaders(array('ISBN', 'Title', 'Author'))
-        ->setRows(array(
-            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
-            array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
-            array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
-            array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
-        ))
-    ;
-    $table->render();
+    class SomeCommand extends Command
+    {
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            $table = new Table($output);
+            $table
+                ->setHeaders(array('ISBN', 'Title', 'Author'))
+                ->setRows(array(
+                    array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+                    array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
+                    array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
+                    array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
+                ))
+            ;
+            $table->render();
+        }
+    }
 
 You can add a table separator anywhere in the output by passing an instance of
 :class:`Symfony\\Component\\Console\\Helper\\TableSeparator` as a row::

@@ -102,6 +102,11 @@ is the item value and the array value is the item's label::
 choice_list
 ~~~~~~~~~~~
 
+.. caution::
+
+    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
+    You should use ``choices`` or ``choice_loader`` now.
+
 **type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
 
 This is one way of specifying the options to be used for this field.
@@ -110,15 +115,31 @@ For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
 With this option you can also allow float values to be selected as data.
-
-.. code-block:: php
+For example::
 
     use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
     // ...
     $builder->add('status', 'choice', array(
-      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half'))
+        'choice_list' => new ChoiceList(
+            array(1, 0.5, 0.1),
+            array('Full', 'Half', 'Almost empty')
+        )
     ));
+
+The ``status`` field created by the code above will be rendered as:
+
+.. code-block:: html
+
+    <select name="status">
+        <option value="0">Full</option>
+        <option value="1">Half</option>
+        <option value="2">Almost empty</option>
+    </select>
+
+But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
+will be returned in your form. If ``Almost empty`` is selected (value ``2``
+in HTML), ``0.1`` will be returned.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 

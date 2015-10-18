@@ -26,6 +26,8 @@ Enable the x509 authentication for a particular firewall in the security configu
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 secured_area:
                     pattern: ^/
@@ -35,13 +37,18 @@ Enable the x509 authentication for a particular firewall in the security configu
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <firewall name="secured_area" pattern="^/">
-                    <x509 provider="your_user_provider"/>
+                    <x509 provider="your_user_provider" />
                 </firewall>
             </config>
         </srv:container>
@@ -50,9 +57,11 @@ Enable the x509 authentication for a particular firewall in the security configu
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'secured_area' => array(
-                    'pattern' => '^/'
+                    'pattern' => '^/',
                     'x509'    => array(
                         'provider' => 'your_user_provider',
                     ),
@@ -140,5 +149,5 @@ key in the ``remote_user`` firewall configuration.
 .. note::
 
     Just like for X509 authentication, you will need to configure a "user provider".
-    See :ref:`the note previous note <cookbook-security-pre-authenticated-user-provider-note>`
+    See :ref:`the previous note <cookbook-security-pre-authenticated-user-provider-note>`
     for more information.

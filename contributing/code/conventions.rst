@@ -92,7 +92,7 @@ A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
 relevant classes, methods, properties, ...::
 
     /**
-     * @deprecated Deprecated since version 2.X, to be removed in 2.Y. Use XXX instead.
+     * @deprecated Deprecated since version 2.8, to be removed in 3.0. Use XXX instead.
      */
 
 The deprecation message should indicate the version when the class/method was
@@ -103,4 +103,11 @@ A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
 the migration starting one or two minor versions before the version where the
 feature will be removed (depending on the criticality of the removal)::
 
-    trigger_error('XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.', E_USER_DEPRECATED);
+    @trigger_error('XXX() is deprecated since version 2.8 and will be removed in 3.0. Use XXX instead.', E_USER_DEPRECATED);
+
+Without the `@-silencing operator`_, users would need to opt-out from deprecation
+notices. Silencing swaps this behavior and allows users to opt-in when they are
+ready to cope with them (by adding a custom error handler like the one used by
+the Web Debug Toolbar or by the PHPUnit bridge).
+
+.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php

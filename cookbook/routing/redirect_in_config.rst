@@ -17,7 +17,7 @@ Redirecting Using a Path
 
 Assume there is no default controller for the ``/`` path of your application
 and you want to redirect these requests to ``/app``. You will need to use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirect`
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirectAction`
 action to redirect to this new url:
 
 .. configuration-block::
@@ -97,7 +97,7 @@ Redirecting Using a Route
 Assume you are migrating your website from WordPress to Symfony, you want to
 redirect ``/wp-admin`` to the route ``sonata_admin_dashboard``. You don't know
 the path, only the route name. This can be achieved using the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirect`
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
 action:
 
 .. configuration-block::

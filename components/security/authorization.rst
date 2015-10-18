@@ -182,7 +182,7 @@ Roles
 
 Roles are objects that give expression to a certain right the user has.
 The only requirement is that they implement :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`,
-which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\Role\\RoleInterface::getRole`
+which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface::getRole`
 method that returns a string representation of the role itself. The default
 :class:`Symfony\\Component\\Security\\Core\\Role\\Role` simply returns its
 first constructor argument::
@@ -191,8 +191,8 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will echo 'ROLE_ADMIN'
-    echo $role->getRole();
+    // will show 'ROLE_ADMIN'
+    var_dump($role->getRole());
 
 .. note::
 
@@ -253,3 +253,4 @@ decision manager::
     if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+

@@ -4,10 +4,10 @@
 integer Field Type
 ==================
 
-Renders an input "number" field. Basically, this is a text field that's good
-at handling data that's in an integer form. The input ``number`` field looks
-like a text box, except that - if the user's browser supports HTML5 - it will
-have some extra front-end functionality.
+Renders an input "number" field. Basically, this is a text field that's
+good at handling data that's in an integer form. The input ``number`` field
+looks like a text box, except that - if the user's browser supports HTML5
+- it will have some extra front-end functionality.
 
 This field has different options on how to handle input values that aren't
 integers. By default, all non-integer values (e.g. 6.78) will round down
@@ -19,6 +19,9 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 | Options     | - `grouping`_                                                         |
 |             | - `scale`_                                                            |
 |             | - `rounding_mode`_                                                    |
++-------------+-----------------------------------------------------------------------+
+| Overridden  | - `compound`_                                                         |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
@@ -73,6 +76,11 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 
 * ``IntegerToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
   "nearest neighbor". If both neighbors are equidistant, round up.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------

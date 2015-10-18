@@ -51,8 +51,8 @@ example, suppose you're creating an author form where you can upload a
 "headshot" image for the author. In your form, the ``headshot`` property
 would be a ``file`` type. The ``Author`` class might look as follows::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
 
     use Symfony\Component\HttpFoundation\File\File;
 
@@ -78,8 +78,8 @@ that it is between a certain size, add the following:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -98,8 +98,8 @@ that it is between a certain size, add the following:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author
             properties:
                 headshot:
                     - Image:
@@ -110,13 +110,13 @@ that it is between a certain size, add the following:
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="headshot">
                     <constraint name="Image">
                         <option name="minWidth">200</option>
@@ -130,9 +130,8 @@ that it is between a certain size, add the following:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -161,8 +160,8 @@ following code:
 
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -179,8 +178,8 @@ following code:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author
             properties:
                 headshot:
                     - Image:
@@ -189,8 +188,8 @@ following code:
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <class name="AppBundle\Entity\Author">
             <property name="headshot">
                 <constraint name="Image">
                     <option name="allowLandscape">false</option>
@@ -201,8 +200,8 @@ following code:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

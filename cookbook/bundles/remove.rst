@@ -56,7 +56,7 @@ Remove the ``_acme_demo`` entry at the bottom of this file.
 
 Some bundles contain configuration in one of the ``app/config/config*.yml``
 files. Be sure to remove the related configuration from these files. You can
-quickly spot bundle configuration by looking for a ``acme_demo`` (or whatever
+quickly spot bundle configuration by looking for an ``acme_demo`` (or whatever
 the name of the bundle is, e.g. ``fos_user`` for the FOSUserBundle) string in
 the configuration files.
 
@@ -79,7 +79,8 @@ can remove the ``Acme`` directory as well.
     :method:`Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface::getPath` method
     to get the path of the bundle::
 
-        echo $this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath();
+        dump($this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath());
+        die();
 
 3.1 Remove Bundle Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~

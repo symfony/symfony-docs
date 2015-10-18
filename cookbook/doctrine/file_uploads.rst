@@ -4,6 +4,13 @@
 How to Handle File Uploads with Doctrine
 ========================================
 
+.. note::
+
+    Instead of handling file uploading yourself, you may consider using the
+    `VichUploaderBundle`_ community bundle. This bundle provides all the common
+    operations (such as file renaming, saving and deleting) and it's tightly
+    integrated with Doctrine ORM, MongoDB ODM, PHPCR ODM and Propel.
+
 Handling file uploads with Doctrine entities is no different than handling
 any other file upload. In other words, you're free to move the file in your
 controller after handling a form submission. For examples of how to do this,
@@ -99,6 +106,13 @@ file.
     If you're using annotations to specify your validation rules (as shown
     in this example), be sure that you've enabled validation by annotation
     (see :ref:`validation configuration <book-validation-configuration>`).
+    
+.. caution::
+
+   If you use the ``getUploadRootDir()`` method, be aware that this will save 
+   the file inside the document root, which can be accessed by everyone. 
+   Consider placing it out of the document root and adding custom viewing 
+   logic when you need to secure the files.
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might
@@ -193,7 +207,7 @@ rules::
     .. code-block:: php
 
         // src/AppBundle/Entity/Document.php
-        namespace Acme\DemoBundle\Entity;
+        namespace AppBundle\Entity;
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -480,6 +494,7 @@ property, instead of the actual filename::
             if (is_file($this->getAbsolutePath())) {
                 // store the old name to delete after the update
                 $this->temp = $this->getAbsolutePath();
+                $this->path = null;
             } else {
                 $this->path = 'initial';
             }
@@ -557,3 +572,4 @@ order to remove the file. Before it's removed, you must store the file path
 from the database, you can safely delete the file (in ``PostRemove``).
 
 .. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
+.. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle

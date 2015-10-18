@@ -17,7 +17,7 @@ you should just use the ``choice`` type directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| Options     |                                                                        |
+| options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
 | options     |                                                                        |
@@ -98,4 +98,4 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
-.. _`3-letter ISO 4217`: http://en.wikipedia.org/wiki/ISO_4217
+.. _`3-letter ISO 4217`: https://en.wikipedia.org/wiki/ISO_4217

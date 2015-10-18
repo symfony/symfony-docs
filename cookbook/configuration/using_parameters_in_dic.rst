@@ -9,7 +9,7 @@ You have seen how to use configuration parameters within
 There are special cases such as when you want, for instance, to use the
 ``%kernel.debug%`` parameter to make the services in your bundle enter
 debug mode. For this case there is more work to do in order
-to make the system understand the parameter value. By default
+to make the system understand the parameter value. By default,
 your parameter ``%kernel.debug%`` will be treated as a
 simple string. Consider the following example::
 

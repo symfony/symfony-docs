@@ -17,7 +17,26 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/security`` on Packagist_);
-* Use the official Git repository (https://github.com/symfony/Security).
+* Use the official Git repository (https://github.com/symfony/security).
+
+.. include:: /components/require_autoload.rst.inc
+
+The Security component is divided into four smaller sub-components which can be
+used separately:
+
+``symfony/security-core``
+    It provides all the common security features, from authentication to
+    authorization and from encoding passwords to loading users.
+
+``symfony/security-http``
+    It integrates the core sub-component with the HTTP protocol to handle HTTP
+    requests and responses.
+
+``symfony/security-csrf``
+    It provides protection against `CSRF attacks`_.
+
+``symfony/security-acl``
+    It provides a fine grained permissions mechanism based on Access Control Lists.
 
 Sections
 --------
@@ -28,3 +47,4 @@ Sections
 * :doc:`/components/security/secure_tools`
 
 .. _Packagist: https://packagist.org/packages/symfony/security
+.. _`CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery

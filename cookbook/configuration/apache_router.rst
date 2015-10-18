@@ -140,7 +140,7 @@ You're now all set to use Apache routes.
 Additional Tweaks
 -----------------
 
-To save a little bit of processing time, change occurrences of ``Request``
+To save some processing time, change occurrences of ``Request``
 to ``ApacheRequest`` in ``web/app.php``::
 
     // web/app.php

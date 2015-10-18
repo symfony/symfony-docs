@@ -98,9 +98,6 @@ optional second argument of the ``new`` command:
     $ symfony new my_project_name 2.3.26
     $ symfony new my_project_name 2.6.5
 
-    # use the most recent LTS (Long Term Support) version
-    $ symfony new my_project_name lts
-
 If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
 pass ``lts`` as the second argument of the ``new`` command:
 
@@ -110,7 +107,7 @@ pass ``lts`` as the second argument of the ``new`` command:
     $ symfony new my_project_name lts
 
     # Windows
-    c:\projects\> php symfony.phar new my_project_name lts
+    c:\projects\> php symfony new my_project_name lts
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
@@ -127,7 +124,7 @@ based on `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
 also be used to create new applications based on the Symfony Framework. If you
-don't have installed it globally, start by reading the next section.
+don't have it installed globally, start by reading the next section.
 
 Installing Composer Globally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,8 +166,8 @@ browsing the project directory and executing this command:
     $ cd my_project_name/
     $ php app/console server:run
 
-Then, open your browser and access the ``http://localhost:8000`` URL to see the
-Welcome page of Symfony:
+Then, open your browser and access the ``http://localhost:8000/`` URL to see the
+Welcome Page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png
    :align: center
@@ -242,7 +239,7 @@ If there are any issues, correct them now before moving on.
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+        $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
         $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
@@ -257,7 +254,7 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+        $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
         $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
         $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 
@@ -313,6 +310,30 @@ several minutes to complete.
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
+
+Installing the Symfony Demo Application
+---------------------------------------
+
+The Symfony Demo application is a fully-functional application that shows the
+recommended way to develop Symfony applications. The application has been
+conceived as a learning tool for Symfony newcomers and its source code contains
+tons of comments and helpful notes.
+
+In order to download the Symfony Demo application, execute the ``demo`` command
+of the Symfony Installer anywhere in your system:
+
+.. code-block:: bash
+
+    # Linux, Mac OS X
+    $ symfony demo
+
+    # Windows
+    c:\projects\> php symfony demo
+
+Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
+built-in web server executing the ``php app/console server:run`` command. Access
+to the ``http://localhost:8000`` URL in your browser to start using the Symfony
+Demo application.
 
 .. _installing-a-symfony2-distribution:
 
@@ -385,12 +406,7 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
-.. note::
-
-    If you want to remove the sample code from your distribution, take a look
-    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
-
-.. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
+.. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot

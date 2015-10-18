@@ -5,13 +5,13 @@ How to Master and Create new Environments
 =========================================
 
 Every application is the combination of code and a set of configuration that
-dictates how that code should function. The configuration may define the
-database being used, whether or not something should be cached, or how verbose
-logging should be. In Symfony, the idea of "environments" is the idea that
-the same codebase can be run using multiple different configurations. For
-example, the ``dev`` environment should use configuration that makes development
-easy and friendly, while the ``prod`` environment should use a set of configuration
-optimized for speed.
+dictates how that code should function. The configuration may define the database
+being used, if something should be cached or how verbose logging should be.
+
+In Symfony, the idea of "environments" is the idea that the same codebase can be
+run using multiple different configurations. For example, the ``dev`` environment
+should use configuration that makes development easy and friendly, while the
+``prod`` environment should use a set of configuration optimized for speed.
 
 .. index::
    single: Environments; Configuration files
@@ -170,10 +170,10 @@ this code and changing the environment string.
 
     Important, but unrelated to the topic of *environments* is the ``false``
     argument as the second argument to the ``AppKernel`` constructor. This
-    specifies whether or not the application should run in "debug mode". Regardless
+    specifies if the application should run in "debug mode". Regardless
     of the environment, a Symfony application can be run with debug mode
     set to ``true`` or ``false``. This affects many things in the application,
-    such as whether or not errors should be displayed or if cache files are
+    such as if errors should be displayed or if cache files are
     dynamically rebuilt on each request. Though not a requirement, debug mode
     is generally set to ``true`` for the ``dev`` and ``test`` environments
     and ``false`` for the ``prod`` environment.
@@ -322,7 +322,7 @@ The new environment is now accessible via::
 .. note::
 
     Some environments, like the ``dev`` environment, are never meant to be
-    accessed on any deployed server by the general public. This is because
+    accessed on any deployed server by the public. This is because
     certain environments, for debugging purposes, may give too much information
     about the application or underlying infrastructure. To be sure these environments
     aren't accessible, the front controller is usually protected from external

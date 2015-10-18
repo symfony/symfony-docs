@@ -13,7 +13,7 @@ the data from ``CategoryType`` to also be validated.
     Instead of using this option, it is recommended that you use the ``Valid``
     constraint in your model to force validation on a child object stored
     on a property. This cascades only the validation but not the use of
-    the ``validation_group`` option on child forms. You can read more
+    the ``validation_groups`` option on child forms. You can read more
     about this in the section about
     :ref:`Embedding a Single Object <forms-embedding-single-object>`.
 

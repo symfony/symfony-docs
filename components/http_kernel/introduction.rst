@@ -17,7 +17,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_);
-* Use the official Git repository (https://github.com/symfony/HttpKernel).
+* Use the official Git repository (https://github.com/symfony/http-kernel).
+
+.. include:: /components/require_autoload.rst.inc
 
 The Workflow of a Request
 -------------------------
@@ -116,11 +118,11 @@ See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 For general information on adding listeners to the events below, see
 :ref:`http-kernel-creating-listener`.
 
-.. tip::
+.. seealso::
 
-    Fabien Potencier also wrote a wonderful series on using the HttpKernel
-    component and other Symfony components to create your own framework. See
-    `Create your own framework... on top of the Symfony2 Components`_.
+    There is a wonderful tutorial series on using the HttpKernel component and
+    other Symfony components to create your own framework. See
+    :doc:`/create_framework/introduction`.
 
 .. _component-http-kernel-kernel-request:
 
@@ -690,7 +692,7 @@ can be used to check if the current request is a "master" or "sub" request.
 For example, a listener that only needs to act on the master request may
 look like this::
 
-    use Symfony\Component\HttpKernel\HttpKernelInterface;
+    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     // ...
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -707,7 +709,7 @@ look like this::
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`Create your own framework... on top of the Symfony2 Components`: http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
 .. _`PHP FPM`: http://php.net/manual/en/install.fpm.php
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`@ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
-.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php
+.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
+.. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php

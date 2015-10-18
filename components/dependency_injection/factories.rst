@@ -8,9 +8,9 @@ Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this
 will not provide you with everything you need to construct your objects.
-For this situation, you can use a factory to create the object and tell the
-service container to call a method on the factory rather than directly instantiating
-the class.
+For this situation, you can use a factory to create the object and tell
+the service container to call a method on the factory rather than directly
+instantiating the class.
 
 .. versionadded:: 2.6
     The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
@@ -72,10 +72,10 @@ configure the service container to use the
 .. note::
 
     When using a factory to create services, the value chosen for the ``class``
-    option has no effect on the resulting service. The actual class name only
-    depends on the object that is returned by the factory. However, the configured
-    class name may be used by compiler passes and therefore should be set to a
-    sensible value.
+    option has no effect on the resulting service. The actual class name
+    only depends on the object that is returned by the factory. However,
+    the configured class name may be used by compiler passes and therefore
+    should be set to a sensible value.
 
 Now, the method will be called statically. If the factory class itself should
 be instantiated and the resulting object's method called, configure the factory

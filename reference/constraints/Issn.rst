@@ -27,8 +27,8 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-        // src/Acme/JournalBundle/Entity/Journal.php
-        namespace Acme\JournalBundle\Entity;
+        // src/AppBundle/Entity/Journal.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -42,21 +42,21 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/Acme/JournalBundle/Resources/config/validation.yml
-        Acme\JournalBundle\Entity\Journal:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Journal:
             properties:
                 issn:
                     - Issn: ~
 
     .. code-block:: xml
 
-        <!-- src/Acme/JournalBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\JournalBundle\Entity\Journal">
+            <class name="AppBundle\Entity\Journal">
                 <property name="issn">
                     <constraint name="Issn" />
                 </property>
@@ -65,8 +65,8 @@ Basic Usage
 
     .. code-block:: php
 
-        // src/Acme/JournalBundle/Entity/Journal.php
-        namespace Acme\JournalBundle\Entity;
+        // src/AppBundle/Entity/Journal.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -107,5 +107,4 @@ this to ``true``, the validator requires a hyphenated ISSN value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`International Standard Serial Number (ISSN)`: http://en.wikipedia.org/wiki/Issn
-
+.. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

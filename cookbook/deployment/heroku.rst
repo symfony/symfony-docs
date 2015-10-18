@@ -11,7 +11,7 @@ published by Heroku.
 Setting up
 ----------
 
-To setup a new Heroku website, first `signup with Heroku`_ or sign in
+To set up a new Heroku website, first `sign up with Heroku`_ or sign in
 with your credentials. Then download and install the `Heroku Toolbelt`_ on your
 local computer.
 
@@ -133,7 +133,7 @@ create the ``Procfile`` file and to add it to the repository:
 2) Set the Environment to prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-During a deploy, Heroku runs ``composer install --no-dev`` to install all of the
+During a deployment, Heroku runs ``composer install --no-dev`` to install all the
 dependencies your application requires. However, typical `post-install-commands`_
 in ``composer.json``, e.g. to install assets or clear (or pre-warm) caches, run
 using Symfony's ``dev`` environment by default.
@@ -325,8 +325,8 @@ This is also very useful to build assets on the production system, e.g. with Ass
     `Grunt`_ or `gulp`_.
 
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
-.. _`signup with Heroku`: https://signup.heroku.com/signup/dc
-.. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
+.. _`sign up with Heroku`: https://signup.heroku.com/signup/dc
+.. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#set-up
 .. _`getting Started with PHP on Heroku`: https://devcenter.heroku.com/articles/getting-started-with-php
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
@@ -336,7 +336,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
 .. _`custom compile steps`: https://devcenter.heroku.com/articles/php-support#custom-compile-step
 .. _`custom Composer command`: https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands
 .. _`Heroku buildpacks`: https://devcenter.heroku.com/articles/buildpacks
-.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi.git
+.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi
 .. _`Grunt`: http://gruntjs.com
 .. _`gulp`: http://gulpjs.com
 .. _`Heroku documentation`: https://devcenter.heroku.com/articles/custom-php-settings#nginx

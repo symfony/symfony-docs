@@ -37,6 +37,9 @@ example containing most features described below:
     {
         const SOME_CONST = 42;
 
+        /**
+         * @var string
+         */
         private $fooBar;
 
         /**
@@ -48,20 +51,30 @@ example containing most features described below:
         }
 
         /**
-         * @param string $dummy Some argument description
-         * @param array  $options
+         * Transforms the input given as first argument.
          *
-         * @return string|null Transformed input
+         * @param bool|string $dummy   Some argument description
+         * @param array       $options An options collection to be used within the transformation
          *
-         * @throws \RuntimeException
+         * @return string|null The transformed input
+         *
+         * @throws \RuntimeException When an invalid option is provided
          */
         private function transformText($dummy, array $options = array())
         {
+            $defaultOptions = array(
+                'some_default' => 'values',
+                'another_default' => 'more values',
+            );
+
+            foreach ($options as $option) {
+                if (!in_array($option, $defaultOptions)) {
+                    throw new \RuntimeException(sprintf('Unrecognized option "%s"', $option));
+                }
+            }
+
             $mergedOptions = array_merge(
-                array(
-                    'some_default' => 'values',
-                    'another_default' => 'more values',
-                ),
+                $defaultOptions,
                 $options
             );
 
@@ -76,10 +89,16 @@ example containing most features described below:
 
                 return ucwords($dummy);
             }
-
-            throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
         }
 
+        /**
+         * Performs some basic check for a given value.
+         *
+         * @param mixed $value     Some value to check against
+         * @param bool  $theSwitch Some switch to control the method's flow
+         *
+         * @return bool|null The resultant check if $theSwitch isn't false, null otherwise
+         */
         private function reverseBoolean($value = null, $theSwitch = false)
         {
             if (!$theSwitch) {
@@ -100,11 +119,20 @@ Structure
 
 * Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
+* Always use `identical comparison`_ unless you need type juggling;
+
+* Use `Yoda conditions`_ when checking a variable against an expression to avoid
+  an accidental assignment inside the condition statement (this applies to ``==``,
+  ``!=``, ``===``, and ``!==``);
+
 * Add a comma after each array item in a multi-line array, even after the
   last one;
 
 * Add a blank line before ``return`` statements, unless the return is alone
   inside a statement-group (like an ``if`` statement);
+
+* Use just ``return;`` instead of ``return null;`` when a function must return
+  void early;
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
@@ -186,3 +214,5 @@ License
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`identical comparison`: http://php.net/manual/en/language.operators.comparison.php
+.. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions

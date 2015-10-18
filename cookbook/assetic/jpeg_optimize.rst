@@ -4,7 +4,7 @@
 How to Use Assetic for Image Optimization with Twig Functions
 =============================================================
 
-Amongst its many filters, Assetic has four filters which can be used for on-the-fly
+Among its many filters, Assetic has four filters which can be used for on-the-fly
 image optimization. This allows you to get the benefits of smaller file sizes
 without having to use an image editor to process each image. The results
 are cached and can be dumped for production so there is no performance hit
@@ -70,7 +70,7 @@ It can now be used from a template:
 Removing all EXIF Data
 ~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the ``jpegoptim`` filter removes some of the meta information stored
+By default, the ``jpegoptim`` filter removes some meta information stored
 in the image. To remove all EXIF data and comments, set the ``strip_all`` option
 to ``true``:
 
@@ -250,4 +250,10 @@ file:
             ),
         ));
 
+.. tip::
+
+    For uploaded images, you can compress and manipulate them using the
+    `LiipImagineBundle`_ community bundle.
+
 .. _`Jpegoptim`: http://www.kokkonen.net/tjko/projects.html
+.. _`LiipImagineBundle`: http://knpbundles.com/liip/LiipImagineBundle

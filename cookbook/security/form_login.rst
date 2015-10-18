@@ -52,6 +52,8 @@ if no previous page was stored in the session). To set it to the
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     form_login:
@@ -61,18 +63,28 @@ if no previous page was stored in the session). To set it to the
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <form-login
-                    default_target_path="default_security_target"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <form-login default-target-path="default_security_target" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main' => array(
                     // ...
@@ -101,6 +113,8 @@ of what URL they had requested previously by setting the
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     form_login:
@@ -110,18 +124,29 @@ of what URL they had requested previously by setting the
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <form-login
-                    always_use_default_target_path="true"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <form-login always-use-default-target-path="true" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main' => array(
                     // ...
@@ -147,31 +172,44 @@ this by setting ``use_referer`` to true (it defaults to false):
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
+                    # ...
                     form_login:
                         # ...
-                        use_referer:        true
+                        use_referer: true
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <form-login
-                    use_referer="true"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <form-login use-referer="true" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main' => array(
                     // ...
-
                     'form_login' => array(
                         // ...
                         'use_referer' => true,
@@ -191,7 +229,7 @@ redirect to the URL defined by some ``account`` route, use the following:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+        {# src/AppBundle/Resources/views/Security/login.html.twig #}
         {% if error %}
             <div>{{ error.message }}</div>
         {% endif %}
@@ -210,7 +248,7 @@ redirect to the URL defined by some ``account`` route, use the following:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
@@ -238,30 +276,45 @@ option to another value.
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
+                    # ...
                     form_login:
                         target_path_parameter: redirect_url
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <form-login
-                    target_path_parameter="redirect_url"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <form-login target-path-parameter="redirect_url" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main' => array(
+                    // ...
                     'form_login' => array(
-                        'target_path_parameter' => redirect_url,
+                        'target_path_parameter' => 'redirect_url',
                     ),
                 ),
             ),
@@ -282,8 +335,11 @@ back to the login form itself. You can set this to a different route (e.g.
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
+                    # ...
                     form_login:
                         # ...
                         failure_path: login_failure
@@ -291,22 +347,32 @@ back to the login form itself. You can set this to a different route (e.g.
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <form-login
-                    failure_path="login_failure"
-                />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <form-login failure-path="login_failure" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'main' => array(
                     // ...
-
                     'form_login' => array(
                         // ...
                         'failure_path' => 'login_failure',

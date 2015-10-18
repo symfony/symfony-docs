@@ -4,10 +4,10 @@
 SecurityBundle Configuration ("security")
 =========================================
 
-The security system is one of the most powerful parts of Symfony, and can
+The security system is one of the most powerful parts of Symfony and can
 largely be controlled via its configuration.
 
-Full default Configuration
+Full Default Configuration
 --------------------------
 
 The following is the full default configuration for the security system.
@@ -316,8 +316,8 @@ post_only
 **type**: ``boolean`` **default**: ``true``
 
 By default, you must submit your login form to the ``check_path`` URL as
-a POST request. By setting this option to ``false``, you can send a GET request
-to the ``check_path`` URL.
+a POST request. By setting this option to ``false``, you can send a GET
+request to the ``check_path`` URL.
 
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -335,7 +335,8 @@ Using the PBKDF2 Encoder: Security and Speed
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
 
-You can see an example of the ``pbkdf2`` encoder in the YAML block on this page.
+You can see an example of the ``pbkdf2`` encoder in the YAML block on this
+page.
 
 But using PBKDF2 also warrants a warning: using it (with a high number
 of iterations) slows down the process. Thus, PBKDF2 should be used with
@@ -393,10 +394,11 @@ Using the BCrypt Password Encoder
         ));
 
 The ``cost`` can be in the range of ``4-31`` and determines how long a password
-will be encoded. Each increment of ``cost`` *doubles* the time it takes to
-encode a password.
+will be encoded. Each increment of ``cost`` *doubles* the time it takes
+to encode a password.
 
-If you don't provide the ``cost`` option, the default cost of ``13`` is used.
+If you don't provide the ``cost`` option, the default cost of ``13`` is
+used.
 
 .. note::
 
@@ -422,8 +424,8 @@ Firewall Context
 Most applications will only need one :ref:`firewall <book-security-firewalls>`.
 But if your application *does* use multiple firewalls, you'll notice that
 if you're authenticated in one firewall, you're not automatically authenticated
-in another. In other words, the systems don't share a common "context": each
-firewall acts like a separate security system.
+in another. In other words, the systems don't share a common "context":
+each firewall acts like a separate security system.
 
 However, each firewall has an optional ``context`` key (which defaults to
 the name of the firewall), which is used when storing and retrieving security
@@ -514,5 +516,5 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             ),
         ));
 
-.. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+.. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

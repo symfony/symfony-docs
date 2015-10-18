@@ -37,9 +37,11 @@ Platform.sh how to deploy your application (read more about
 
     # The name of this app. Must be unique within a project.
     name: myphpproject
-
-    # The toolstack used to build the application.
-    toolstack: "php:symfony"
+    
+    # The type of the application to build.
+    type: php:5.6
+    build:
+      flavor: symfony
 
     # The relationships of the application with services or other applications.
     # The left-hand side is the name of the relationship as it will be exposed

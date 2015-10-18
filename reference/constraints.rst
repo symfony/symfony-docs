@@ -8,8 +8,11 @@ Validation Constraints Reference
    constraints/NotBlank
    constraints/Blank
    constraints/NotNull
+   constraints/IsNull
    constraints/Null
+   constraints/IsTrue
    constraints/True
+   constraints/IsFalse
    constraints/False
    constraints/Type
 

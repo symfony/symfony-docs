@@ -94,11 +94,11 @@ a `barebones repository`_ and then pushing to it. One library that helps
 manage this is `Gitolite`_.
 
 .. _`Git`: http://git-scm.com/
-.. _`Symfony Standard Edition`: http://symfony.com/download
+.. _`Symfony Standard Edition`: https://symfony.com/download
 .. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
 .. _`GitHub .gitignore`: https://help.github.com/articles/ignoring-files
 .. _`Bitbucket`: https://bitbucket.org/
-.. _`comparison of hosting services`: http://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities
+.. _`comparison of hosting services`: https://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities

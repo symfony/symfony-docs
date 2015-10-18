@@ -14,7 +14,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Finder).
+* Use the official Git repository (https://github.com/symfony/finder).
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -28,14 +30,14 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
-        // Print the absolute path
-        print $file->getRealpath()."\n";
+        // Dump the absolute path
+        var_dump($file->getRealpath());
 
-        // Print the relative path to the file, omitting the filename
-        print $file->getRelativePath()."\n";
+        // Dump the relative path to the file, omitting the filename
+        var_dump($file->getRelativePath());
 
-        // Print the relative path to the file
-        print $file->getRelativePathname()."\n";
+        // Dump the relative path to the file
+        var_dump($file->getRelativePathname());
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
@@ -111,14 +113,12 @@ And it also works with user-defined streams::
     use Symfony\Component\Finder\Finder;
 
     $s3 = new \Zend_Service_Amazon_S3($key, $secret);
-    $s3->registerStreamWrapper("s3");
+    $s3->registerStreamWrapper('s3');
 
     $finder = new Finder();
     $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');
     foreach ($finder->in('s3://bucket-name') as $file) {
-        // ... do something
-
-        print $file->getFilename()."\n";
+        // ... do something with the file
     }
 
 .. note::
@@ -302,7 +302,7 @@ The contents of returned files can be read with
 
     foreach ($finder as $file) {
         $contents = $file->getContents();
-        
+
         // ...
     }
 

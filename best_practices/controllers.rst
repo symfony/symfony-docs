@@ -210,4 +210,4 @@ If you need to execute some code before or after the execution of your controlle
 you can use the EventDispatcher component to
 :doc:`set up before and after filters </cookbook/event_dispatcher/before_after_filters>`.
 
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

@@ -16,4 +16,3 @@ There are three types of upgrades, all needing a little different preparation:
     /cookbook/upgrade/patch_version
     /cookbook/upgrade/minor_version
     /cookbook/upgrade/major_version
-    /cookbook/upgrade/deprecation_warnings
