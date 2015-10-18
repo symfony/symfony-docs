@@ -532,7 +532,7 @@ class to have at least 3 characters.
 
     .. code-block:: php-annotations
 
-        // AppBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;

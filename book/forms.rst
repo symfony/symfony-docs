@@ -354,7 +354,7 @@ object.
 
     .. code-block:: php-annotations
 
-        // AppBundle/Entity/Task.php
+        // src/AppBundle/Entity/Task.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Task
@@ -373,7 +373,7 @@ object.
 
     .. code-block:: yaml
 
-        # AppBundle/Resources/config/validation.yml
+        # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Task:
             properties:
                 task:
@@ -384,7 +384,7 @@ object.
 
     .. code-block:: xml
 
-        <!-- AppBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -404,7 +404,7 @@ object.
 
     .. code-block:: php
 
-        // AppBundle/Entity/Task.php
+        // src/AppBundle/Entity/Task.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
