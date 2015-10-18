@@ -355,6 +355,8 @@ object.
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/Task.php
+        namespace AppBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Task
