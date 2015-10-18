@@ -1381,7 +1381,7 @@ FriendsOfPHP organization.
 .. note::
 
     To enable the ``security:check`` command, you need to add the
-    `SensioDistributionBundle`_ in your composer dependencies.
+    `SensioDistributionBundle`_ to your dependencies.
 
     .. code-block:: bash
 
