@@ -10,7 +10,7 @@ Validates that a value is a valid URL string.
 |                | - `protocols`_                                                      |
 |                | - `payload`_                                                        |
 |                | - `checkDNS`_                                                       |
-|                | - `dnsMessage`_
+|                | - `dnsMessage`_                                                     |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -300,6 +300,9 @@ option to ``true``:
             }
         }
 
+This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
+of the ``ANY`` DNS record corresponding to the host associated with the given URL.
+
 dnsMessage
 ~~~~~~~~~~
 
@@ -324,7 +327,7 @@ DNS check failed.
         {
             /**
              * @Assert\Url(
-             *    dnsMessage = "The host '{{ value }}' could not be resolved"
+             *    dnsMessage = "The host '{{ value }}' could not be resolved."
              * )
              */
              protected $bioUrl;
@@ -336,7 +339,8 @@ DNS check failed.
         AppBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: { dnsMessage: The host "{{ value }}" could not be resolved }
+                    - Url:
+                        dnsMessage: 'The host "{{ value }}" could not be resolved.'
 
     .. code-block:: xml
 
@@ -349,7 +353,7 @@ DNS check failed.
             <class name="AppBundle\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
-                        <option name="dnsMessage">The host "{{ value }}" could not be resolved</option>
+                        <option name="dnsMessage">The host "{{ value }}" could not be resolved.</option>
                     </constraint>
                 </property>
             </class>
@@ -368,10 +372,7 @@ DNS check failed.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
-                     'dnsMessage' => 'The host "{{ value }}" could not be resolved'
+                     'dnsMessage' => 'The host "{{ value }}" could not be resolved.'
                 )));
             }
         }
-
-This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
-of the ``ANY`` DNS record corresponding to the host associated with the given URL.
