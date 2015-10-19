@@ -33,7 +33,7 @@ your user table:
 
     .. code-block:: php-annotations
 
-        // AppBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -89,8 +89,7 @@ your user table:
 
     .. code-block:: php
 
-
-        // AppBundle/Entity/User.php
+        // src/AppBundle/Entity/User.php
         namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
