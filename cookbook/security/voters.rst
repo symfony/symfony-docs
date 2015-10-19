@@ -29,7 +29,7 @@ authorization checker (i.e. the ``security.authorization_checker`` service). Eac
 one decides if the current user should have access to some resource.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
-decission (to allow or deny access to the resource) according to the strategy defined
+decision (to allow or deny access to the resource) according to the strategy defined
 in the application, which can be: affirmative, consensus or unanimous.
 
 For more information take a look at
