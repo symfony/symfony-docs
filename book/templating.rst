@@ -870,6 +870,8 @@ configuration:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/WelcomeController.php
+        namespace AppBundle\Controller;
+
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -938,6 +940,8 @@ route:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/ArticleController.php
+        namespace AppBundle\Controller;
+
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
