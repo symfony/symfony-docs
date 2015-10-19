@@ -29,12 +29,12 @@ persisted to the database. Writing in flat PHP is quick and dirty:
 
     <?php
     // index.php
-    $link = mysql_connect('localhost', 'myuser', 'mypassword');
-    mysql_select_db('blog_db', $link);
-
-    $result = mysql_query('SELECT id, title FROM post', $link);
+    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    
+    $result = $link->query('SELECT id, title FROM post');
+    $result->setFetchMode(PDO::FETCH_ASSOC);
     ?>
-
+    
     <!DOCTYPE html>
     <html>
         <head>
@@ -43,7 +43,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
         <body>
             <h1>List of Posts</h1>
             <ul>
-                <?php while ($row = mysql_fetch_assoc($result)): ?>
+                <?php while ($row = $result->fetch()): ?>
                 <li>
                     <a href="/show.php?id=<?php echo $row['id'] ?>">
                         <?php echo $row['title'] ?>
@@ -53,9 +53,9 @@ persisted to the database. Writing in flat PHP is quick and dirty:
             </ul>
         </body>
     </html>
-
+    
     <?php
-    mysql_close($link);
+    $link = null;
     ?>
 
 That's quick to write, fast to execute, and, as your app grows, impossible
@@ -87,20 +87,21 @@ the code that prepares the HTML "presentation":
 
     <?php
     // index.php
-    $link = mysql_connect('localhost', 'myuser', 'mypassword');
-    mysql_select_db('blog_db', $link);
-
-    $result = mysql_query('SELECT id, title FROM post', $link);
-
+    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    
+    $result = $link->query('SELECT id, title FROM post');
+    $result->setFetchMode(PDO::FETCH_ASSOC);
+    
     $posts = array();
-    while ($row = mysql_fetch_assoc($result)) {
+    while ($row = $result->fetch()) {
         $posts[] = $row;
     }
-
-    mysql_close($link);
-
+    
+    $link = null;
+    
     // include the HTML presentation code
     require 'templates/list.php';
+
 
 The HTML code is now stored in a separate file (``templates/list.php``), which
 is primarily an HTML file that uses a template-like PHP syntax:
@@ -150,28 +151,28 @@ of the application are isolated in a new file called ``model.php``:
     // model.php
     function open_database_connection()
     {
-        $link = mysql_connect('localhost', 'myuser', 'mypassword');
-        mysql_select_db('blog_db', $link);
-
+    	$link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
         return $link;
     }
-
+    
     function close_database_connection($link)
     {
-        mysql_close($link);
+        $link = null;
     }
-
+    
     function get_all_posts()
     {
         $link = open_database_connection();
-
-        $result = mysql_query('SELECT id, title FROM post', $link);
+    
+    	$result = $link->query('SELECT id, title FROM post');
+    	$result->setFetchMode(PDO::FETCH_ASSOC);
+        
         $posts = array();
-        while ($row = mysql_fetch_assoc($result)) {
+        while ($row = $result->fetch()) {
             $posts[] = $row;
         }
         close_database_connection($link);
-
+    
         return $posts;
     }
 
@@ -264,14 +265,13 @@ an individual blog result based on a given id::
     function get_post_by_id($id)
     {
         $link = open_database_connection();
-
+    
         $id = intval($id);
-        $query = 'SELECT created_at, title, body FROM post WHERE id = '.$id;
-        $result = mysql_query($query);
-        $row = mysql_fetch_assoc($result);
-
+    	$result = $link->query('SELECT created_at, title, body FROM post WHERE id = '.$id);    
+    	$row = $result->fetch(PDO::FETCH_ASSOC);
+    
         close_database_connection($link);
-
+    
         return $row;
     }
 
