@@ -585,8 +585,8 @@ you set `with_context`_ to false).
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
 .. versionadded:: 2.3
-    The `include() function`_ is a new Twig feature that's available in Symfony
-    2.3. Prior, the `{% include %} tag`_ tag was used.
+    The `include() function`_ is available since Symfony 2.3. Prior, the
+    `{% include %} tag`_ was used.
 
 .. index::
    single: Templating; Embedding action
