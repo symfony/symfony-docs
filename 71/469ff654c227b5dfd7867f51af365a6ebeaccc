@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-18T21:16:06Z
+
+Great :+1: Perfect pull request @BenjaminPaap! :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-18T21:43:18Z
+
+@javiereguiluz @WouterJ @weaverryan I would like to merge this into the `2.3` branch. Using the methods inherited from the `SplObjectStorage` never was a good idea and I think we should not describe bad practices in any of our versions. What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-10-19T02:14:29Z
+
+:+1:
