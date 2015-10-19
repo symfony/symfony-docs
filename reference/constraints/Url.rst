@@ -339,8 +339,7 @@ DNS check failed.
         AppBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url:
-                        dnsMessage: 'The host "{{ value }}" could not be resolved.'
+                    - Url: { dnsMessage: 'The host "{{ value }}" could not be resolved.' }
 
     .. code-block:: xml
 
