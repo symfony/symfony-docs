@@ -25,7 +25,7 @@ security context (i.e. the ``security.context`` service). Each one decides
 if the current user should have access to some resource.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
-decission (to allow or deny access to the resource) according to the strategy defined
+decision (to allow or deny access to the resource) according to the strategy defined
 in the application, which can be: affirmative, consensus or unanimous.
 
 For more information take a look at
@@ -207,7 +207,7 @@ and tag it with ``security.voter``:
 
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
-        
+
         $definition = new Definition('AppBundle\Security\Authorization\Voter\PostVoter');
         $definition
             ->setPublic(false)
