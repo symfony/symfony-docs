@@ -142,6 +142,8 @@ is undefined. The solution is to add the following check before using this funct
         {# ... #}
     {% endif %}
 
+.. _testing-error-pages:
+
 Testing Error Pages during Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -149,17 +151,7 @@ While you're in the development environment, Symfony shows the big *exception*
 page instead of your shiny new customized error page. So, how can you see
 what it looks like and debug it?
 
-The recommended solution is to use a third-party bundle called `WebfactoryExceptionsBundle`_.
-This bundle provides a special test controller that allows you to easily display
-custom error pages for arbitrary HTTP status codes even when ``kernel.debug`` is
-set to ``true``.
-
-.. _testing-error-pages:
-
-Testing Error Pages during Development
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The default ``ExceptionController`` also allows you to preview your
+Fortunately, the default ``ExceptionController`` allows you to preview your
 *error* pages during development.
 
 .. versionadded:: 2.6
