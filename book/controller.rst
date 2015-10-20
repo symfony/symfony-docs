@@ -825,7 +825,9 @@ method to check the CSRF token::
 
 .. versionadded:: 2.6
     The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
-    It is equivalent to executing the following code::
+    It is equivalent to executing the following code:
+
+    .. code-block:: php
 
         use Symfony\Component\Security\Csrf\CsrfToken;
 
