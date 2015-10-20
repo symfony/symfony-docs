@@ -276,9 +276,9 @@ the empty values will be kept.
 entry_options
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``entry_options`` option was introduced in Symfony 2.7 in favor of
-    ``options``, which is available prior to 2.7.
+.. versionadded:: 2.8
+    The ``entry_options`` option was introduced in Symfony 2.8 in favor of
+    ``options``, which is available prior to 2.8.
 
 **type**: ``array`` **default**: ``array()``
 
@@ -303,9 +303,9 @@ type::
 entry_type
 ~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``entry_type`` option was introduced in Symfony 2.7 in favor of
-    ``type``, which is available prior to 2.7.
+.. versionadded:: 2.8
+    The ``entry_type`` option was introduced in Symfony 2.8 in favor of
+    ``type``, which is available prior to 2.8.
 
 **type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
 
