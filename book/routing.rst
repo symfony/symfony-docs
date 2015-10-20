@@ -1499,9 +1499,13 @@ to ``generate()``:
 
     .. code-block:: html+php
 
+        <?php
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
+
         <a href="<?php echo $view['router']->generate('blog_show', array(
             'slug' => 'my-blog-post',
-        ), true) ?>">
+        ), UrlGeneratorInterface::ABSOLUTE_URL) ?>">
             Read this blog post.
         </a>
 

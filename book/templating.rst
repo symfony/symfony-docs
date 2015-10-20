@@ -992,10 +992,14 @@ correctly:
 
     .. code-block:: html+php
 
+        <?php
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
+
         <a href="<?php echo $view['router']->generate(
             '_welcome',
             array(),
-            true
+            UrlGeneratorInterface::ABSOLUTE_URL
         ) ?>">Home</a>
 
 .. index::
