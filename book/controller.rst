@@ -661,7 +661,7 @@ the following code will render the messages stored under the ``notice`` key:
 
 .. note::
 
-    It's common to use ``notice``, ``warning`` and ``error` as the keys of the
+    It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
     different types of flash messages, but you can use any key that fits your
     needs.
 
