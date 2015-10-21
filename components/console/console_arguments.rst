@@ -49,18 +49,18 @@ is required. It can be separated from the option name either by spaces or
 except that it doesn't require a value. Have a look at the following table
 to get an overview of the possible ways to pass options:
 
-===================== ========= =========== ============
-Input                 ``foo``   ``bar``     ``cat``
-===================== ========= =========== ============
-``--bar=Hello``       ``false`` ``"Hello"`` ``null``
-``--bar Hello``       ``false`` ``"Hello"`` ``null``
-``-b=Hello``          ``false`` ``"Hello"`` ``null``
-``-b Hello``          ``false`` ``"Hello"`` ``null``
-``-bHello``           ``false`` ``"Hello"`` ``null``
-``-fcWorld -b Hello`` ``true``  ``"Hello"`` ``"World"``
-``-cfWorld -b Hello`` ``false`` ``"Hello"`` ``"fWorld"``
-``-cbWorld``          ``false`` ``null``    ``"bWorld"``
-===================== ========= =========== ============
+=====================  =========  ===========  ============
+Input                  ``foo``    ``bar``      ``cat``
+=====================  =========  ===========  ============
+``--bar=Hello``        ``false``  ``"Hello"``  ``null``
+``--bar Hello``        ``false``  ``"Hello"``  ``null``
+``-b=Hello``           ``false``  ``"=Hello"``  ``null``
+``-b Hello``           ``false``  ``"Hello"``  ``null``
+``-bHello``            ``false``  ``"Hello"``  ``null``
+``-fcWorld -b Hello``  ``true``   ``"Hello"``  ``"World"``
+``-cfWorld -b Hello``  ``false``  ``"Hello"``  ``"fWorld"``
+``-cbWorld``           ``false``  ``null``     ``"bWorld"``
+=====================  =========  ===========  ============
 
 Things get a little bit more tricky when the command also accepts an optional
 argument::
@@ -77,15 +77,15 @@ arguments. Have a look at the fifth example in the following table where it
 is used to tell the command that ``World`` is the value for ``arg`` and not
 the value of the optional ``cat`` option:
 
-============================== ================= =========== ===========
-Input                          ``bar``           ``cat``     ``arg``
-============================== ================= =========== ===========
-``--bar Hello``                ``"Hello"``       ``null``    ``null``
-``--bar Hello World``          ``"Hello"``       ``null``    ``"World"``
-``--bar "Hello World"``        ``"Hello World"`` ``null``    ``null``
-``--bar Hello --cat World``    ``"Hello"``       ``"World"`` ``null``
-``--bar Hello --cat -- World`` ``"Hello"``       ``null``    ``"World"``
-``-b Hello -c World``          ``"Hello"``       ``"World"`` ``null``
-============================== ================= =========== ===========
+==============================  =================  ===========  ===========
+Input                           ``bar``            ``cat``      ``arg``
+==============================  =================  ===========  ===========
+``--bar Hello``                 ``"Hello"``        ``null``     ``null``
+``--bar Hello World``           ``"Hello"``        ``null``     ``"World"``
+``--bar "Hello World"``         ``"Hello World"``  ``null``     ``null``
+``--bar Hello --cat World``     ``"Hello"``        ``"World"``  ``null``
+``--bar Hello --cat -- World``  ``"Hello"``        ``null``     ``"World"``
+``-b Hello -c World``           ``"Hello"``        ``"World"``  ``null``
+==============================  =================  ===========  ===========
 
 .. _docopt: http://docopt.org/
