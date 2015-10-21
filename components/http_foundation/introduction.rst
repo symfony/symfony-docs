@@ -69,7 +69,7 @@ can be accessed via several public properties:
 
 * ``server``: equivalent of ``$_SERVER``;
 
-* ``headers``: mostly equivalent to a sub-set of ``$_SERVER``
+* ``headers``: mostly equivalent to a subset of ``$_SERVER``
   (``$request->headers->get('User-Agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
@@ -90,7 +90,7 @@ instance (or a sub-class of), which is a data holder class:
 * ``headers``: :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`.
 
 All :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instances have
-methods to retrieve and update its data:
+methods to retrieve and update their data:
 
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`
     Returns the parameters.
@@ -157,16 +157,16 @@ sometimes, you might want to get the value for the "original" parameter name:
 :method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
 argument::
 
-        // the query string is '?foo[bar]=bar'
+    // the query string is '?foo[bar]=bar'
 
-        $request->query->get('foo');
-        // returns array('bar' => 'bar')
+    $request->query->get('foo');
+    // returns array('bar' => 'bar')
 
-        $request->query->get('foo[bar]');
-        // returns null
+    $request->query->get('foo[bar]');
+    // returns null
 
-        $request->query->get('foo[bar]', null, true);
-        // returns 'bar'
+    $request->query->get('foo[bar]', null, true);
+    // returns 'bar'
 
 .. _component-foundation-attributes:
 
@@ -485,7 +485,7 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 .. versionadded:: 2.6
     The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
 
-It is possible to delete the file after the request is sent with the 
+It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
