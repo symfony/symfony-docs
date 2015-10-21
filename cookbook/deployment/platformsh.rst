@@ -134,6 +134,16 @@ Make sure this file is listed in your *imports*:
     imports:
         - { resource: parameters_platform.php }
 
+To bypass the following `Doctrine isssue`_, you need to add a `server_version` 
+in your `config.yml` file:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    password: "%database_password%"
+    server_version: 5.5 # Database server version.
+    charset:  UTF8
+
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -185,9 +195,10 @@ That's it! Your Symfony application will be bootstrapped and deployed. You'll
 soon be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh
-.. _`Platform.sh documentation`: https://docs.platform.sh/toolstacks/symfony/symfony-getting-started
+.. _`Platform.sh documentation`: https://docs.platform.sh/symfony/
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
 .. _`available services`: https://docs.platform.sh/reference/configuration-files/#configure-services
 .. _`migrating your database and files`: https://docs.platform.sh/toolstacks/php/symfony/migrate-existing-site/
+.._`Doctrine issue`: https://github.com/doctrine/DoctrineBundle/issues/351#issuecomment-65771528
