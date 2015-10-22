@@ -134,15 +134,23 @@ Make sure this file is listed in your *imports*:
     imports:
         - { resource: parameters_platform.php }
 
-To bypass the following `Doctrine isssue`_, you need to add a `server_version` 
-in your `config.yml` file:
+To bypass the following `Doctrine isssue`_, you need to add a ``server_version``
+in your ``config.yml`` file:
 
 .. code-block:: yaml
 
     # app/config/config.yml
-    password: "%database_password%"
-    server_version: 5.5 # Database server version.
-    charset:  UTF8
+    # Doctrine Configuration
+    doctrine:
+      dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        server_version: 5.5
+        charset:  UTF8
 
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
