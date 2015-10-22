@@ -1,7 +1,7 @@
 .. index::
    single: EventDispatcher
 
-How to Set up before and after Filters
+How to Set Up Before and After Filters
 =====================================
 
 It is quite common in web application development to need some logic to be
