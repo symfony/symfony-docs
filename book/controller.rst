@@ -805,7 +805,10 @@ If, for example, you're doing a DELETE action, you can use the
 method to check the CSRF token::
 
     $csrf = $this->container->get('form.csrf_provider');
-    $csrf->isCsrfTokenValid('authenticate', new CsrfToken('token_id', 'TOKEN'));
+    $intention = 'authenticate';
+    $token = $csrf->generateCsrfToken($intention);
+
+    $csrf->isCsrfTokenValid($intention, $token);
 
 Final Thoughts
 --------------
