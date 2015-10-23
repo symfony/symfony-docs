@@ -49,18 +49,18 @@ is required. It can be separated from the option name either by spaces or
 except that it doesn't require a value. Have a look at the following table
 to get an overview of the possible ways to pass options:
 
-=====================  =========  ===========  ============
-Input                  ``foo``    ``bar``      ``cat``
-=====================  =========  ===========  ============
-``--bar=Hello``        ``false``  ``"Hello"``  ``null``
-``--bar Hello``        ``false``  ``"Hello"``  ``null``
+=====================  =========  ============  ============
+Input                  ``foo``    ``bar``       ``cat``
+=====================  =========  ============  ============
+``--bar=Hello``        ``false``  ``"Hello"``   ``null``
+``--bar Hello``        ``false``  ``"Hello"``   ``null``
 ``-b=Hello``           ``false``  ``"=Hello"``  ``null``
-``-b Hello``           ``false``  ``"Hello"``  ``null``
-``-bHello``            ``false``  ``"Hello"``  ``null``
-``-fcWorld -b Hello``  ``true``   ``"Hello"``  ``"World"``
-``-cfWorld -b Hello``  ``false``  ``"Hello"``  ``"fWorld"``
-``-cbWorld``           ``false``  ``null``     ``"bWorld"``
-=====================  =========  ===========  ============
+``-b Hello``           ``false``  ``"Hello"``   ``null``
+``-bHello``            ``false``  ``"Hello"``   ``null``
+``-fcWorld -b Hello``  ``true``   ``"Hello"``   ``"World"``
+``-cfWorld -b Hello``  ``false``  ``"Hello"``   ``"fWorld"``
+``-cbWorld``           ``false``  ``null``      ``"bWorld"``
+=====================  =========  ============  ============
 
 Things get a little bit more tricky when the command also accepts an optional
 argument::
