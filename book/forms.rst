@@ -1219,6 +1219,7 @@ Define your form type as a service.
 
             <services>
                 <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
+                    <tag name="form.type" />
                     <argument type="service" id="app.my_service"></argument>
                 </service>
             </services>
