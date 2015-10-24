@@ -229,31 +229,25 @@ example, we gonna override the showAction method::
   
   namespace AppBundle\Controller;
 
+  use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
   use Symfony\Component\HttpFoundation\Request;
   use Symfony\Component\HttpKernel\Exception\FlattenException;
   use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
-  use Symfony\Component\HttpFoundation\Response;
-  
-  class ExceptionController extends \Symfony\Bundle\TwigBundle\Controller\ExceptionController
+  use Symfony\Component\HttpFoundation\JsonResponse;
+
+  class ExceptionController extends BaseExceptionController
   {
+      /**
+       * {@inheritdoc}
+       */
       public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
       {
-          $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
-          $showException = $request->attributes->get('showException', $this->debug); // As opposed to an additional parameter, this maintains BC
+          $code = $exception->getStatusCode();
 
-          // $code = $exception->getStatusCode();
-          $code = 500; // Route exceptions will throw status code 500
-
-          return new Response($this->twig->render(
-              (string) $this->findTemplate($request, $request->getRequestFormat(), $code, $showException),
-              array(
-                  'status_code' => $code,
-                  'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
-                  'exception' => $exception,
-                  'logger' => $logger,
-                  'currentContent' => $currentContent,
-              )
-          ));
+          return new JsonResponse(array(
+              'response_type' => 'error',
+              'message' => 'An exception was thrown.'
+          ), $code);
       }
   }
   
