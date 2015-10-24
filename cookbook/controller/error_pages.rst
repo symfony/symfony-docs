@@ -246,7 +246,7 @@ example, the exceptions will be overwritten by a response in json format::
 
           return new JsonResponse(array(
               'response_type' => 'error',
-              'message' => 'An exception was thrown.'
+              'message' => 'An exception was thrown.',
           ), $code);
       }
   }
