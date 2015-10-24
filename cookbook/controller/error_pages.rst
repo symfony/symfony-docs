@@ -262,7 +262,7 @@ the original class does. To do it, add the service pointing to the controller
 and set the arguments to load the specific needed services::
   
   # app/config/services.yml
-  appbundle.twig.controller.exception:
+  app.twig.exception_controller:
       class: AppBundle\Controller\ExceptionController
       arguments: [@twig, %kernel.debug%]
         
