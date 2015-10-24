@@ -391,13 +391,9 @@ is created from the form factory.
 
     .. code-block:: php-standalone
 
-        // PHP 5.5 and above
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
-
         $form = $formFactory->createBuilder()
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
+            ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+            ->add('dueDate', 'Symfony\Component\Form\Extension\Core\Type\DateType')
             ->getForm();
 
         var_dump($twig->render('new.html.twig', array(
