@@ -228,7 +228,7 @@ example, we gonna override the showAction method::
   # src/AppBundle/Controller/ExceptionController.php
   
   namespace AppBundle\Controller;
-  
+
   use Symfony\Component\HttpFoundation\Request;
   use Symfony\Component\HttpKernel\Exception\FlattenException;
   use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
@@ -240,10 +240,10 @@ example, we gonna override the showAction method::
       {
           $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
           $showException = $request->attributes->get('showException', $this->debug); // As opposed to an additional parameter, this maintains BC
-  
+
           // $code = $exception->getStatusCode();
           $code = 500; // Route exceptions will throw status code 500
-  
+
           return new Response($this->twig->render(
               (string) $this->findTemplate($request, $request->getRequestFormat(), $code, $showException),
               array(
@@ -275,7 +275,7 @@ To finally enable the custom exception controller, set the :ref:`twig.exception_
   
           # app/config/config.yml
           twig:
-              exception_controller:  appbundle.twig.controller.exception:showAction
+              exception_controller:  app.twig.exception_controller:showAction
   
       .. code-block:: xml
   
@@ -290,7 +290,7 @@ To finally enable the custom exception controller, set the :ref:`twig.exception_
                   http://symfony.com/schema/dic/twig/twig-1.0.xsd">
   
               <twig:config>
-                  <twig:exception-controller>appbundle.twig.controller.exception:showAction</twig:exception-controller>
+                  <twig:exception-controller>app.twig.exception_controller:showAction</twig:exception-controller>
               </twig:config>
           </container>
   
@@ -298,7 +298,7 @@ To finally enable the custom exception controller, set the :ref:`twig.exception_
   
           // app/config/config.php
           $container->loadFromExtension('twig', array(
-              'exception_controller' => 'appbundle.twig.controller.exception:showAction',
+              'exception_controller' => 'app.twig.exception_controller:showAction',
               // ...
           ));
 
