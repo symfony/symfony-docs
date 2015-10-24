@@ -27,7 +27,7 @@ set the headers, set the rows and then render the table::
     {
         public function execute(InputInterface $input, OutputInterface $output)
         {
-            $table = new Table($output);
+            $table = new Table();
             $table
                 ->setHeaders(array('ISBN', 'Title', 'Author'))
                 ->setRows(array(
@@ -37,7 +37,7 @@ set the headers, set the rows and then render the table::
                     array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
                 ))
             ;
-            $table->render();
+            $table->render($output);
         }
     }
 
