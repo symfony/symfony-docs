@@ -223,7 +223,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
 To create your own controller logic extending from the ExceptionController, simply
 create a controller with the specified method you want to override. In this
-example, we gonna override the showAction method::
+example, the exceptions will be overwritten by a response in json format::
         
   # src/AppBundle/Controller/ExceptionController.php
   
