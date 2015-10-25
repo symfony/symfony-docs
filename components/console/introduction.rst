@@ -581,6 +581,6 @@ Learn More!
 * :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
-.. _ConEmu: https://code.google.com/p/conemu-maximus5/
+.. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/
