@@ -47,9 +47,7 @@ The CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The component's only goal is to convert CSS selectors to their XPath
-equivalents, using :method:`Symfony\\Component\\CssSelector\\CssSelectorConverter::toXPath`
-
-.. code-block:: php
+equivalents, using :method:`Symfony\\Component\\CssSelector\\CssSelectorConverter::toXPath`::
 
     use Symfony\Component\CssSelector\CssSelectorConverter;
 
