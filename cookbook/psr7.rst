@@ -13,13 +13,13 @@ Installation
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/psr-http-message-bridge`` on `Packagist`_);
+* :doc:`Install it via Composer </components/using_components>` (`symfony/psr-http-message-bridge on Packagist <https://packagist.org/packages/symfony/psr-http-message-bridge>`_);
 * Use the official Git repository (https://github.com/symfony/psr-http-message-bridge).
 
 The bridge also needs a PSR-7 implementation to allow converting HttpFoundation
 objects to PSR-7 objects. It provides native support for `Zend Diactoros`_.
-Use Composer (``zendframework/zend-diactoros`` on `Packagist`_) or refer to
-the project documentation to install it.
+Use Composer (`zendframework/zend-diactoros on Packagist <https://packagist.org/packages/zendframework/zend-diactoros>`_)
+or refer to the project documentation to install it.
 
 Usage
 -----
@@ -85,5 +85,4 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
     $symfonyResponse = $httpFoundationFactory->createResponse($psrResponse);
 
 .. _`PSR-7`: http://www.php-fig.org/psr/psr-7/
-.. _Packagist: https://packagist.org/packages/symfony/psr-http-message-bridge
 .. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
