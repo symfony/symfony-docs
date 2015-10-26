@@ -198,7 +198,8 @@ Service Naming Conventions
 Documentation
 -------------
 
-* Add PHPDoc blocks for all classes, methods, and functions;
+* Add PHPDoc blocks for all classes, methods, and functions, except when the
+  comments are trivial (e.g. basic getter and setter methods);
 
 * Omit the ``@return`` tag if the method does not return anything;
 
