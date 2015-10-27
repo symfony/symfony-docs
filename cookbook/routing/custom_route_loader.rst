@@ -16,7 +16,7 @@ A custom route loader does not enable your bundle to inject routes
 without the need to modify the routing configuration
 (e.g. ``app/config/routing.yml``) manually.
 If your bundle provides routes, whether via a configuration file, like
-the `WebProfilerBundle` does, or via a custom route loader, like the 
+the `WebProfilerBundle` does, or via a custom route loader, like the
 `FOSRestBundle`_ does, an entry in the routing configuration is always
 necessary.
 
@@ -46,7 +46,7 @@ Take these lines from the ``routing.yml`` in the Symfony Standard Edition:
 
     # app/config/routing.yml
     app:
-        resource: @AppBundle/Controller/
+        resource: '@AppBundle/Controller/'
         type:     annotation
 
 When the main loader parses this, it tries all registered delegate loaders and calls
