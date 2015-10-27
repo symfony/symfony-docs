@@ -46,7 +46,7 @@ Take these lines from the ``routing.yml`` in the Symfony Standard Edition:
 
     # app/config/routing.yml
     app:
-        resource: '@AppBundle/Controller/'
+        resource: "@AppBundle/Controller/"
         type:     annotation
 
 When the main loader parses this, it tries all registered delegate loaders and calls
