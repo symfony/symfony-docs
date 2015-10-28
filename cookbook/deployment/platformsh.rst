@@ -135,7 +135,7 @@ Make sure this file is listed in your *imports*:
         - { resource: parameters_platform.php }
 
 To bypass the following `Doctrine issue`_, you need to add a ``server_version``
-in your ``config.yml`` (or ``config.xml``, or ``config.php``) file:
+in your application configuration:
 
 .. configuration-block::
 
@@ -156,7 +156,7 @@ in your ``config.yml`` (or ``config.xml``, or ``config.php``) file:
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-            http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
+                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
         >
 
             <!-- ... -->
