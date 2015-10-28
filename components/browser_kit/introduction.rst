@@ -102,6 +102,96 @@ You can get the form object by using the crawler to select the button and runnin
 Cookies
 -------
 
+Retreiving Cookies
+~~~~~~~~~~~~~~~~~~ 
+
+The Crawler has a cookieJar which is a container for storing and recieving cookies.
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    // Make a request
+    $client = new Client();
+    $crawler = $client->request('GET', 'http://symfony.com');
+
+    // Get the cookie Jar
+    $cookieJar = $crawler->getCookieJar();
+
+    // Get a cookie by name
+    $flavor = $cookieJar->get('flavor');
+
+    // Get cookie data
+    $name = $flavor->getName();
+    $value = $flavor->getValue();
+    $raw = $flavor->getRawValue();
+    $secure = $flavor->isSecure();
+    $isHttpOnly = $flavor->isHttpOnly();
+    $isExpired = $flavor->isExpired();
+    $expires = $flavor->getExpiresTime();
+    $path = $flavor->getPath();
+    $domain = $flavor->getDomain();
+
+Looping Through Cookies
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    // Make a request
+    $client = new Client();
+    $crawler = $client->request('GET', 'http://symfony.com');
+
+    // Get the cookie Jar
+    $cookieJar = $crawler->getCookieJar();
+
+    // Get array with all cookies
+    $cookies = $cookieJar->all();
+    foreach($cookies as $cookie) 
+    {
+        // ...
+    }
+
+    // Get all values
+    $values = $cookieJar->allValues('http://symfony.com');
+    foreach($values as $value)
+    {
+        // ...
+    }
+
+    // Get all raw values
+    $rawValues = $cookieJar->allRawValues('http://symfony.com');
+    foreach($rawValues as $rawValue)
+    {
+        // ...
+    }
+
+.. note::
+    These cookie jar methods only return cookies that have not expired.
+
+Setting Cookies
+~~~~~~~~~~~~~~~
+
+You can define create cookies and add them to a cookie jar that can be injected it into the client constructor. 
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    // create cookies and add to cookie jar
+    $expires = new \DateTime();
+    $expires->add(new \DateInterval('P1D'));
+    $cookie = new Cookie(
+        'flavor',
+        'chocolate chip',
+        $now->getTimestamp()
+    );
+
+    // create a client and set the cookies
+    $client = new Client(array(), array(), $cookieJar);
+    // ...
+
 History
 -------
 
@@ -138,8 +228,6 @@ You can restart the clients history with the restart method. This will also clea
     // restart history
     $client->restart();
 
-Insulated Request
------------------
 
 .. _Packagist: https://packagist.org/packages/symfony/browser-kit
 .. _Goutte: https://github.com/fabpot/Goutte
