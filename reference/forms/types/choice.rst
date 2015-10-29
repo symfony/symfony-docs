@@ -15,10 +15,17 @@ option.
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_list`_                                                             |
+|             | - `choice_loader`_                                                           |
+|             | - `choice_label`_                                                            |
+|             | - `choice_name`_                                                             |
+|             | - `choice_value`_                                                            |
+|             | - `choice_attr`_                                                             |
+|             | - `choices_as_values`_                                                       |
 |             | - `placeholder`_                                                             |
 |             | - `expanded`_                                                                |
 |             | - `multiple`_                                                                |
 |             | - `preferred_choices`_                                                       |
+|             | - `group_by`_                                                                |
 +-------------+------------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
@@ -51,7 +58,8 @@ user sees on the form (e.g. ``Male``).
 .. code-block:: php
 
     $builder->add('gender', 'choice', array(
-        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        'choices'  => array('Male' => 'm', 'Female' => 'f'),
+        'choices_as_values' => true,
         'required' => false,
     ));
 
@@ -61,15 +69,33 @@ of checkboxes depending on the ``expanded`` option::
 
     $builder->add('availability', 'choice', array(
         'choices' => array(
-            'morning'   => 'Morning',
-            'afternoon' => 'Afternoon',
-            'evening'   => 'Evening',
+            'Morning'   => 'morning',
+            'Afternoon' => 'afternoon',
+            'Evening'   => 'evening',
         ),
+        'choices_as_values' => true,
         'multiple' => true,
     ));
 
-You can also use the ``choice_list`` option, which takes an object that
-can specify the choices for your widget.
+If you rely on your option value attribute (e.g. for JavaScript) you need to
+set ``choice_value``, otherwise the option values will be mapped to integer
+values::
+
+    $builder->add('availability', 'choice', array(
+        'choices' => array(
+            'Morning'   => 'morning',
+            'Afternoon' => 'afternoon',
+            'Evening'   => 'evening',
+        ),
+        'choices_as_values' => true,
+        'choice_value' => function ($choice) {
+             return $choice;
+        },
+        'multiple' => true,
+    ));
+
+You can also use the ``choice_loader`` option, which can be used to load the
+list only partially in cases where a fully-loaded list is not necessary.
 
 .. _forms-reference-choice-tags:
 
@@ -85,19 +111,23 @@ choices
 
 This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
-is the item value and the array value is the item's label::
+is the item's label and the array value is the item's value::
 
     $builder->add('gender', 'choice', array(
-        'choices' => array('m' => 'Male', 'f' => 'Female'),
+        'choices' => array('Male' => 'm', 'Female' => 'f'),
+        'choices_as_values' => true,
     ));
 
-.. tip::
+.. versionadded:: 2.7
+    Symfony 2.7 introduced the option to flip the ``choices`` array to be
+    able to use values that are not integers or strings (but e.g. floats
+    or booleans).
 
-    When the values to choose from are not integers or strings (but e.g.
-    floats or booleans), you should use the `choice_list`_ option instead.
-    With this option you are able to keep the original data format which
-    is important to ensure that the user input is validated properly and
-    useless database updates caused by a data type mismatch are avoided.
+.. caution::
+
+    The ``choices_as_values`` option will be removed in Symfony 3.0, where
+    the choices will be passed in the values of the ``choices`` option by
+    default.
 
 choice_list
 ~~~~~~~~~~~
@@ -148,6 +178,16 @@ in HTML), ``0.1`` will be returned.
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/choice_label.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
 
 Overridden Options
 ------------------
