@@ -87,7 +87,7 @@ Anonymous function can be used to filter with more complex criteria::
     $crawler = $crawler
         ->filter('body > p')
         ->reduce(function (Crawler $node, $i) {
-            // filter even nodes
+            // filter every second node
             return ($i % 2) == 0;
         });
 
