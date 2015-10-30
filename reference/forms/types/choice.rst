@@ -137,19 +137,22 @@ modified handling of the ``choices`` optio. Being set to ``false`` the choices a
 will be read as values mapping the keys. Setting the option to ``true`` will enable the new
 handling of the choices mapping keys to values.
 
- * Before 2.7::
+* Before 2.7::
+
     $builder->add('gender', 'choice', array(
         'choices'  => array('m' => 'Male', 'f' => 'Female'),
         'choices_as_values' => false,
     ));
 
- * Optional since 2.7::
+* Optional since 2.7::
+
     $builder->add('gender', 'choice', array(
         'choices' => array('Male' => 'm', 'Female' => 'f'),
         'choices_as_values' => true,
     ));
 
- * Default for 3.0::
+* Default for 3.0::
+
     $builder->add('gender', 'choice', array(
         'choices' => array('Male' => 'm', 'Female' => 'f'),
     ));
