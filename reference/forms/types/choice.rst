@@ -123,6 +123,37 @@ is the item's label and the array value is the item's value::
     able to use values that are not integers or strings (but e.g. floats
     or booleans).
 
+choices_as_values
+~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: false
+
+.. versionadded:: 2.7
+
+    The ``choices_as_values`` option of ChoiceType was introduced in Symfony 2.7.
+
+The ``choices_as_values`` option was introduced to ensure backward compatibility with the
+modified handling of the ``choices`` optio. Being set to ``false`` the choices array
+will be read as values mapping the keys. Setting the option to ``true`` will enable the new
+handling of the choices mapping keys to values.
+
+ * Before 2.7::
+    $builder->add('gender', 'choice', array(
+        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        'choices_as_values' => false,
+    ));
+
+ * Optional since 2.7::
+    $builder->add('gender', 'choice', array(
+        'choices' => array('Male' => 'm', 'Female' => 'f'),
+        'choices_as_values' => true,
+    ));
+
+ * Default for 3.0::
+    $builder->add('gender', 'choice', array(
+        'choices' => array('Male' => 'm', 'Female' => 'f'),
+    ));
+
 .. caution::
 
     The ``choices_as_values`` option will be removed in Symfony 3.0, where
