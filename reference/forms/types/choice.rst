@@ -171,6 +171,18 @@ But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
 will be returned in your form. If ``Almost empty`` is selected (value ``2``
 in HTML), ``0.1`` will be returned.
 
+choice_loader
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+
+    The ``choice_loader`` option of ChoiceType was introduced in Symfony 2.7.
+
+The choice loader can be used to load the list only partially in cases where a
+fully-loaded list is not necessary.
+
+**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
+
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
