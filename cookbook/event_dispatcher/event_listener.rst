@@ -248,8 +248,10 @@ or a "sub request"::
 Certain things, like checking information on the *real* request, may not need to
 be done on the sub-request listeners.
 
+.. _events-or-subscribers:
+
 Listeners or Subscribers
----------------------
+------------------------
 
 Listeners and subscribers can be used in the same application indistinctly. The
 decision to use either of them is usually a matter of personal taste. However,
