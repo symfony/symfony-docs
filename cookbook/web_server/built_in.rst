@@ -37,7 +37,7 @@ can change the socket passing an IP address and a port as a command-line argumen
 
 .. code-block:: bash
 
-    $ php app/console server:run 192.168.0.1:8080
+    $ php app/console server:start 192.168.0.1:8080
 
 .. note::
 
