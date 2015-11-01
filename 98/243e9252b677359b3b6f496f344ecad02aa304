@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-29T22:06:47Z
+
+@tobiassjosten Good catch! I just left two minor comments.
+
+---------------------------------------------------------------------------
+
+by tobiassjosten at 2015-10-30T10:45:00Z
+
+@xabbuh Fixed!
+
+Not too familiar with rST but I'm guessing the new header doesn't need an explicit label?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-30T11:52:15Z
+
+Great! :+1:
+
+And yes, we don't need to add one for the new headline. The label is only needed for the old headline so that people can still refer to this headline with old bookmarks, for example.
