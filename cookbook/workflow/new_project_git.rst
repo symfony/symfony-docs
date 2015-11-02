@@ -101,4 +101,4 @@ manage this is `Gitolite`_.
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
 .. _`GitHub .gitignore`: https://help.github.com/articles/ignoring-files
 .. _`Bitbucket`: https://bitbucket.org/
-.. _`comparison of hosting services`: http://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities
+.. _`comparison of hosting services`: https://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities

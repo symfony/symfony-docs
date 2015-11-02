@@ -1,19 +1,19 @@
 .. index::
-   single: DependencyInjection; Advanced configuration
+    single: DependencyInjection; Advanced configuration
 
 Advanced Container Configuration
 ================================
 
 .. _container-private-services:
 
-Marking Services as public / private
+Marking Services as Public / Private
 ------------------------------------
 
 When defining services, you'll usually want to be able to access these definitions
-within your application code. These services are called ``public``. For example,
-the ``doctrine`` service registered with the container when using the DoctrineBundle
-is a public service. This means that you can fetch it from the container
-using the ``get()`` method::
+within your application code. These services are called ``public``. For
+example, the ``doctrine`` service registered with the container when using
+the DoctrineBundle is a public service. This means that you can fetch it
+from the container using the ``get()`` method::
 
    $doctrine = $container->get('doctrine');
 
@@ -68,8 +68,8 @@ This *may or may not work*, depending on if the service could be inlined.
 Simply said: A service can be marked as private if you do not want to access
 it directly from your code.
 
-However, if a service has been marked as private, you can still alias it (see
-below) to access this service (via the alias).
+However, if a service has been marked as private, you can still alias it
+(see below) to access this service (via the alias).
 
 .. note::
 
@@ -218,3 +218,75 @@ You can change the inner service name if you want to:
             ->addArgument(new Reference('bar.wooz'))
             ->setPublic(false)
             ->setDecoratedService('foo', 'bar.wooz');
+
+Deprecating Services
+--------------------
+
+.. versionadded:: 2.8
+    The ``deprecated`` setting was introduced in Symfony 2.8.
+
+Once you have decided to deprecate the use of a service (because it is outdated
+or you decided not to use and maintain it anymore), you can deprecate its
+definition:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+       acme.my_service:
+           class: ...
+           deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="acme.my_service" class="...">
+                    <deprecated>The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.</deprecated>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.my_service', '...')
+            ->setDeprecated(
+                true,
+                'The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.'
+            )
+        ;
+
+Now, every time a service is created using this deprecated definition, a
+deprecation warning will be triggered, advising you to stop or to change your
+uses of that service.
+
+The message is actually a message template, which will replace occurrences
+of the ``%service_id%`` by the service's id. You **must** have at least one
+occurrence of the ``%service_id%`` placeholder in your template.
+
+.. note::
+
+    The deprecation message is optional. If not set, Symfony will show a default
+    message ``The "%service_id%" service is deprecated. You should stop using it,
+    as it will soon be removed.``.
+
+.. tip::
+
+    It is strongly recommended that you fill the message template, to avoid a
+    message that could be too generic such as the default one. A good message
+    informs when this service was deprecated, and until when it will be
+    maintained (look at the examples above).
+
+For service decorators (see above), if the definition does not modify the
+deprecated status, it will inherit the status from the definition that is
+decorated.
+
+.. caution::
+
+    The ability to "un-deprecate" a service is possible only when declaring the
+    definition in PHP.

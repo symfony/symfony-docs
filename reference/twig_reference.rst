@@ -98,15 +98,15 @@ asset
 
 .. code-block:: jinja
 
-    {{ asset(path, packageName, absolute = false, version = null) }}
+    {{ asset(path, packageName = null) }}
 
 ``path``
     **type**: ``string``
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
-``absolute``
+``absolute`` (deprecated as of 2.7)
     **type**: ``boolean`` **default**: ``false``
-``version``
+``version`` (deprecated as of 2.7)
     **type**: ``string`` **default** ``null``
 
 Returns a public path to ``path``, which takes into account the base path
@@ -418,7 +418,12 @@ humanize
     **type**: ``string``
 
 Makes a technical name human readable (i.e. replaces underscores by spaces
-and capitalizes the string).
+or transforms camelCase text like ``helloWorld`` to ``hello world``
+and then capitalizes the string).
+
+.. versionadded:: 2.3
+    Transforming camelCase text into human readable text was introduced in
+    Symfony 2.3.
 
 trans
 ~~~~~
@@ -719,11 +724,12 @@ The available attributes are:
 * ``app.session``
 * ``app.environment``
 * ``app.debug``
-* ``app.security``
+* ``app.security`` (deprecated as of 2.6)
 
-.. versionadded:: 2.6
-     The ``app.security`` global is deprecated as of 2.6. The user is already available
-     as ``app.user`` and ``is_granted()`` is registered as function.
+.. caution::
+
+     The ``app.security`` global is deprecated as of 2.6. The user is already
+     available as ``app.user`` and ``is_granted()`` is registered as function.
 
 Symfony Standard Edition Extensions
 -----------------------------------

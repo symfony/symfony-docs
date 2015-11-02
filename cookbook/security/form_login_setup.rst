@@ -45,8 +45,9 @@ First, enable form login under your firewall:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall name="main">
+                <firewall name="default">
                     <anonymous />
+                    <http-basic />
                     <form-login login-path="/login" check-path="/login_check" />
                 </firewall>
             </config>
@@ -57,8 +58,9 @@ First, enable form login under your firewall:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array(
-                    'anonymous'  => array(),
+                'default' => array(
+                    'anonymous'  => null,
+                    'http_basic' => null,
                     'form_login' => array(
                         'login_path' => '/login',
                         'check_path' => '/login_check',
@@ -160,7 +162,7 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
             '_controller' => 'AppBundle:Security:login',
         )));
 
-        $collection->add('login_check', new Route('/login_check', array()));
+        $collection->add('login_check', new Route('/login_check'));
         // no controller is bound to this route
         // as it's handled by the Security system
 
@@ -237,7 +239,7 @@ Finally, create the template:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
@@ -350,11 +352,18 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <!-- ... -->
-        <access-control>
-            <rule path="^/" role="ROLE_ADMIN" />
-        </access-control>
+            <config>
+                <!-- ... -->
+                <rule path="^/" role="ROLE_ADMIN" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -382,12 +391,19 @@ fixes the problem:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <!-- ... -->
-        <access-control>
-            <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
-            <rule path="^/" role="ROLE_ADMIN" />
-        </access-control>
+            <config>
+                <!-- ... -->
+                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+                <rule path="^/" role="ROLE_ADMIN" />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -422,14 +438,24 @@ for the login page:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <!-- ... -->
-        <firewall name="login_firewall" pattern="^/login$">
-            <anonymous />
-        </firewall>
-        <firewall name="secured_area" pattern="^/">
-            <form-login />
-        </firewall>
+            <config>
+                <!-- ... -->
+                <firewall name="login_firewall" pattern="^/login$">
+                    <anonymous />
+                </firewall>
+
+                <firewall name="secured_area" pattern="^/">
+                    <form-login />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -439,11 +465,11 @@ for the login page:
         'firewalls' => array(
             'login_firewall' => array(
                 'pattern'   => '^/login$',
-                'anonymous' => array(),
+                'anonymous' => null,
             ),
             'secured_area' => array(
                 'pattern'    => '^/',
-                'form_login' => array(),
+                'form_login' => null,
             ),
         ),
 

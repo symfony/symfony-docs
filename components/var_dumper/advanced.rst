@@ -145,7 +145,7 @@ Another option for doing the same could be::
     use Symfony\Component\VarDumper\Cloner\VarCloner;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-    cloner = new VarCloner();
+    $cloner = new VarCloner();
     $dumper = new CliDumper();
     $output = fopen('php://memory', 'r+b');
 

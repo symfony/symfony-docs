@@ -2,20 +2,20 @@ Symfony Framework Events
 ========================
 
 When the Symfony Framework (or anything using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`)
-handles a request, a few core events are dispatched so that you can add listeners
-throughout the process. These are called the "kernel events". For a larger
-explanation, see :doc:`/components/http_kernel/introduction`.
+handles a request, a few core events are dispatched so that you can add
+listeners throughout the process. These are called the "kernel events".
+For a larger explanation, see :doc:`/components/http_kernel/introduction`.
 
 Kernel Events
 -------------
 
 Each event dispatched by the kernel is a subclass of
-:class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
-each event has access to the following information:
+:class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means
+that each event has access to the following information:
 
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-    Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` or
-    ``HttpKernelInterface::SUB_REQUEST``).
+    Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
+    or ``HttpKernelInterface::SUB_REQUEST``).
 
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
     Returns the Kernel handling the request.
@@ -87,8 +87,8 @@ Listener Class Name                                                             
 
 This event is not used by the FrameworkBundle, but it can be used to implement
 a view sub-system. This event is called *only* if the Controller does *not*
-return a ``Response`` object. The purpose of the event is to allow some other
-return value to be converted into a ``Response``.
+return a ``Response`` object. The purpose of the event is to allow some
+other return value to be converted into a ``Response``.
 
 The value returned by the Controller is accessible via the ``getControllerResult``
 method::
@@ -115,8 +115,8 @@ method::
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
-The purpose of this event is to allow other systems to modify or replace the
-``Response`` object after its creation::
+The purpose of this event is to allow other systems to modify or replace
+the ``Response`` object after its creation::
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
@@ -137,8 +137,8 @@ The FrameworkBundle registers several listeners:
     Fixes the Response ``Content-Type`` based on the request format.
 
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`
-    Adds a ``Surrogate-Control`` HTTP header when the Response needs to be parsed
-    for ESI tags.
+    Adds a ``Surrogate-Control`` HTTP header when the Response needs to
+    be parsed for ESI tags.
 
 .. seealso::
 
@@ -215,10 +215,12 @@ and set a new ``Exception`` object, or do nothing::
     response won't work. If you want to overwrite the status code (which you
     should not without a good reason), set the ``X-Status-Code`` header::
 
-        $response = Response(
+        $response = new Response(
             'Error',
-            404 // ignored,
-            array('X-Status-Code' => 200)
+            404, // this status code will be ignored
+            array(
+                'X-Status-Code' => 200 // this status code will actually be sent to the client
+            )
         );
 
 .. seealso::
@@ -234,4 +236,4 @@ Listener Class Name                                                        Prior
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`  -128
 =========================================================================  ========
 
-.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php
+.. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php

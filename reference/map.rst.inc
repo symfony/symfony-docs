@@ -1,9 +1,9 @@
 * **Configuration Options**
 
-  Ever wondered what configuration options you have available to you in files
-  such as ``app/config/config.yml``? In this section, all the available configuration
-  is broken down by the key (e.g. ``framework``) that defines each possible
-  section of your Symfony configuration.
+  Ever wondered what configuration options you have available to you in
+  files such as ``app/config/config.yml``? In this section, all the available
+  configuration is broken down by the key (e.g. ``framework``) that defines
+  each possible section of your Symfony configuration.
 
   * :doc:`framework </reference/configuration/framework>`
   * :doc:`doctrine </reference/configuration/doctrine>`
@@ -13,6 +13,7 @@
   * :doc:`twig </reference/configuration/twig>`
   * :doc:`monolog </reference/configuration/monolog>`
   * :doc:`web_profiler </reference/configuration/web_profiler>`
+  * :doc:`debug </reference/configuration/debug>` (new in 2.6)
 
 * :doc:`Configuring the Kernel (e.g. AppKernel) </reference/configuration/kernel>`
 

@@ -65,10 +65,10 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     $expression = new SerializedParsedExpression(
         '1 + 4',
-        serialize($language->parse('1 + 4', array()))
+        serialize($language->parse('1 + 4', array())->getNodes())
     );
 
     var_dump($language->evaluate($expression)); // prints 5
 
-.. _DoctrineBridge: https://github.com/symfony/DoctrineBridge
+.. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _`doctrine cache library`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html

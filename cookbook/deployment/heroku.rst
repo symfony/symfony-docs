@@ -326,7 +326,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
 
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`sign up with Heroku`: https://signup.heroku.com/signup/dc
-.. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
+.. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#set-up
 .. _`getting Started with PHP on Heroku`: https://devcenter.heroku.com/articles/getting-started-with-php
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
@@ -336,7 +336,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
 .. _`custom compile steps`: https://devcenter.heroku.com/articles/php-support#custom-compile-step
 .. _`custom Composer command`: https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands
 .. _`Heroku buildpacks`: https://devcenter.heroku.com/articles/buildpacks
-.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi.git
+.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi
 .. _`Grunt`: http://gruntjs.com
 .. _`gulp`: http://gulpjs.com
 .. _`Heroku documentation`: https://devcenter.heroku.com/articles/custom-php-settings#nginx

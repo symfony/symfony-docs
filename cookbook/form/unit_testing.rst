@@ -36,11 +36,11 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTest.php
-    namespace Acme\TestBundle\Tests\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
+    namespace AppBundle\Tests\Form\Type;
 
-    use Acme\TestBundle\Form\Type\TestedType;
-    use Acme\TestBundle\Model\TestObject;
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
@@ -115,20 +115,20 @@ Adding a Type your Form Depends on
 Your form may depend on other types that are defined as services. It
 might look like this::
 
-    // src/Acme/TestBundle/Form/Type/TestedType.php
+    // src/AppBundle/Form/Type/TestedType.php
 
     // ... the buildForm method
-    $builder->add('acme_test_child_type');
+    $builder->add('app_test_child_type');
 
 To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
 before creating the parent form using the ``PreloadedExtension`` class::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace Acme\TestBundle\Tests\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    namespace AppBundle\Tests\Form\Type;
 
-    use Acme\TestBundle\Form\Type\TestedType;
-    use Acme\TestBundle\Model\TestObject;
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Form\PreloadedExtension;
 
@@ -137,6 +137,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
         protected function getExtensions()
         {
             $childType = new TestChildType();
+
             return array(new PreloadedExtension(array(
                 $childType->getName() => $childType,
             ), array()));
@@ -165,13 +166,13 @@ It often happens that you use some options that are added by
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
-on other extensions. You need add those extensions to the factory object::
+on other extensions. You need to add those extensions to the factory object::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace Acme\TestBundle\Tests\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    namespace AppBundle\Tests\Form\Type;
 
-    use Acme\TestBundle\Form\Type\TestedType;
-    use Acme\TestBundle\Model\TestObject;
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
@@ -216,11 +217,11 @@ Testing against different Sets of Data
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
 a good opportunity to use them::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace Acme\TestBundle\Tests\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    namespace AppBundle\Tests\Form\Type;
 
-    use Acme\TestBundle\Form\Type\TestedType;
-    use Acme\TestBundle\Model\TestObject;
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
@@ -263,4 +264,4 @@ easily testing against multiple sets of data.
 You can also pass another argument, such as a boolean if the form has to
 be synchronized with the given set of data or not etc.
 
-.. _`data providers`: http://www.phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers
+.. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers

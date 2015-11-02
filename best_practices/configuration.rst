@@ -180,5 +180,5 @@ that you store them outside the Symfony project and make them available
 through environment variables. Learn how to do it in the following article:
 :doc:`/cookbook/configuration/external_parameters`
 
-.. _`feature toggles`: http://en.wikipedia.org/wiki/Feature_toggle
+.. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html

@@ -403,32 +403,41 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             wsse.security.authentication.provider:
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
-                arguments: ["", "%kernel.cache_dir%/security/nonces"]
+                arguments:
+                    - "" # User Provider
+                    - "%kernel.cache_dir%/security/nonces"
+                public: false
 
             wsse.security.authentication.listener:
                 class: AppBundle\Security\Firewall\WsseListener
                 arguments: ["@security.token_storage", "@security.authentication.manager"]
+                public: false
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="wsse.security.authentication.provider"
-                    class="AppBundle\Security\Authentication\Provider\WsseProvider" public="false">
+                    class="AppBundle\Security\Authentication\Provider\WsseProvider"
+                    public="false"
+                >
                     <argument /> <!-- User Provider -->
                     <argument>%kernel.cache_dir%/security/nonces</argument>
                 </service>
 
                 <service id="wsse.security.authentication.listener"
-                    class="AppBundle\Security\Firewall\WsseListener" public="false">
+                    class="AppBundle\Security\Firewall\WsseListener"
+                    public="false"
+                >
                     <argument type="service" id="security.token_storage"/>
                     <argument type="service" id="security.authentication.manager" />
                 </service>
@@ -437,27 +446,29 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: php
 
-        // src/AppBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('wsse.security.authentication.provider',
-            new Definition(
-                'AppBundle\Security\Authentication\Provider\WsseProvider', array(
-                    '',
-                    '%kernel.cache_dir%/security/nonces',
-                )
+        $definition = new Definition(
+            'AppBundle\Security\Authentication\Provider\WsseProvider',
+            array(
+                '', // User Provider
+                '%kernel.cache_dir%/security/nonces',
             )
         );
+        $definition->setPublic(false);
+        $container->setDefinition('wsse.security.authentication.provider', $definition)
 
-        $container->setDefinition('wsse.security.authentication.listener',
-            new Definition(
-                'AppBundle\Security\Firewall\WsseListener', array(
-                    new Reference('security.token_storage'),
-                    new Reference('security.authentication.manager'),
-                )
+        $definition = new Definition(
+            'AppBundle\Security\Firewall\WsseListener',
+            array(
+                new Reference('security.token_storage'),
+                new Reference('security.authentication.manager'),
             )
         );
+        $definition->setPublic(false);
+        $container->setDefinition('wsse.security.authentication.listener', $definition);
 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
@@ -488,30 +499,49 @@ You are finished! You can now define parts of your app as under WSSE protection.
 
     .. code-block:: yaml
 
+        # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 wsse_secured:
-                    pattern:   /api/.*
+                    pattern:   ^/api/
                     stateless: true
                     wsse:      true
 
     .. code-block:: xml
 
-        <config>
-            <firewall name="wsse_secured" pattern="/api/.*">
-                <stateless />
-                <wsse />
-            </firewall>
-        </config>
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall
+                    name="wsse_secured"
+                    pattern="^/api/"
+                    stateless="true"
+                    wsse="true"
+                />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
+        // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'wsse_secured' => array(
-                    'pattern' => '/api/.*',
-                    'stateless'    => true,
-                    'wsse'    => true,
+                    'pattern'   => '^/api/',
+                    'stateless' => true,
+                    'wsse'      => true,
                 ),
             ),
         ));
@@ -591,32 +621,46 @@ set to any desirable value per firewall.
 
     .. code-block:: yaml
 
+        # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 wsse_secured:
-                    pattern:   /api/.*
+                    pattern:   ^/api/
                     stateless: true
                     wsse:      { lifetime: 30 }
 
     .. code-block:: xml
 
-        <config>
-            <firewall name="wsse_secured"
-                pattern="/api/.*"
-            >
-                <stateless />
-                <wsse lifetime="30" />
-            </firewall>
-        </config>
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="wsse_secured" pattern="^/api/" stateless="true">
+                    <wsse lifetime="30" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
+        // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'wsse_secured' => array(
-                    'pattern' => '/api/.*',
+                    'pattern'   => '^/api/',
                     'stateless' => true,
-                    'wsse'    => array(
+                    'wsse'      => array(
                         'lifetime' => 30,
                     ),
                 ),
@@ -628,5 +672,5 @@ in the factory and consumed or passed to the other classes in the container.
 
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
-.. _`nonce`: http://en.wikipedia.org/wiki/Cryptographic_nonce
-.. _`timing attacks`: http://en.wikipedia.org/wiki/Timing_attack
+.. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce
+.. _`timing attacks`: https://en.wikipedia.org/wiki/Timing_attack

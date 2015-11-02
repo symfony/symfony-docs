@@ -35,16 +35,17 @@ swiftmailer with the memory option, use the following configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer
-            http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config>
-             <swiftmailer:spool type="memory" />
-        </swiftmailer:config>
+            <swiftmailer:config>
+                <swiftmailer:spool type="memory" />
+            </swiftmailer:config>
+        </container>
 
     .. code-block:: php
 
@@ -73,18 +74,20 @@ In order to use the spool with a file, use the following configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer
-            http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config>
-             <swiftmailer:spool
-                 type="file"
-                 path="/path/to/spool" />
-        </swiftmailer:config>
+            <swiftmailer:config>
+                <swiftmailer:spool
+                    type="file"
+                    path="/path/to/spool"
+                />
+            </swiftmailer:config>
+        </container>
 
     .. code-block:: php
 

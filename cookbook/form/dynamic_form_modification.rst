@@ -395,7 +395,7 @@ it with :ref:`dic-tags-form-type`.
         <!-- app/config/config.xml -->
         <services>
             <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                <argument type="service" id="security.context" />
+                <argument type="service" id="security.token_storage" />
                 <tag name="form.type" alias="friend_message" />
             </service>
         </services>

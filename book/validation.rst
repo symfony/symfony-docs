@@ -217,7 +217,7 @@ The ``validator`` service can be used at any time to validate any object.
 In reality, however, you'll usually work with the ``validator`` indirectly
 when working with forms. Symfony's form library uses the ``validator`` service
 internally to validate the underlying object after values have been submitted.
-The constraint violations on the object are converted into ``FieldError``
+The constraint violations on the object are converted into ``FormError``
 objects that can easily be displayed with your form. The typical form submission
 workflow looks like the following from inside a controller::
 
@@ -537,7 +537,7 @@ class to have at least 3 characters.
 
     .. code-block:: php-annotations
 
-        // AppBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -630,7 +630,7 @@ this method must return ``true``:
         class Author
         {
             /**
-             * @Assert\True(message = "The password cannot match your first name")
+             * @Assert\IsTrue(message = "The password cannot match your first name")
              */
             public function isPasswordLegal()
             {
@@ -675,7 +675,7 @@ this method must return ``true``:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
+                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                 )));
             }
@@ -734,19 +734,19 @@ user registers and when a user updates their contact information later:
         class User implements UserInterface
         {
             /**
-            * @Assert\Email(groups={"registration"})
-            */
+             * @Assert\Email(groups={"registration"})
+             */
             private $email;
 
             /**
-            * @Assert\NotBlank(groups={"registration"})
-            * @Assert\Length(min=7, groups={"registration"})
-            */
+             * @Assert\NotBlank(groups={"registration"})
+             * @Assert\Length(min=7, groups={"registration"})
+             */
             private $password;
 
             /**
-            * @Assert\Length(min=2)
-            */
+             * @Assert\Length(min=2)
+             */
             private $city;
         }
 
@@ -927,17 +927,17 @@ username and the password are different only if all other validation passes
         class User implements UserInterface
         {
             /**
-            * @Assert\NotBlank
-            */
+             * @Assert\NotBlank
+             */
             private $username;
 
             /**
-            * @Assert\NotBlank
-            */
+             * @Assert\NotBlank
+             */
             private $password;
 
             /**
-             * @Assert\True(message="The password cannot match your username", groups={"Strict"})
+             * @Assert\IsTrue(message="The password cannot match your username", groups={"Strict"})
              */
             public function isPasswordLegal()
             {
@@ -1011,7 +1011,7 @@ username and the password are different only if all other validation passes
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('password', new Assert\NotBlank());
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
+                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                     'groups'  => array('Strict'),
                 )));
@@ -1300,5 +1300,5 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/validation/custom_constraint`
 
-.. _Validator: https://github.com/symfony/Validator
+.. _Validator: https://github.com/symfony/validator
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303

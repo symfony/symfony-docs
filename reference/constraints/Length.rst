@@ -30,8 +30,8 @@ and "50", you might add the following:
 
     .. code-block:: php-annotations
 
-        // src/Acme/EventBundle/Entity/Participant.php
-        namespace Acme\EventBundle\Entity;
+        // src/AppBundle/Entity/Participant.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,8 +50,8 @@ and "50", you might add the following:
 
     .. code-block:: yaml
 
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Participant:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Participant:
             properties:
                 firstName:
                     - Length:
@@ -62,13 +62,13 @@ and "50", you might add the following:
 
     .. code-block:: xml
 
-        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\EventBundle\Entity\Participant">
+            <class name="AppBundle\Entity\Participant">
                 <property name="firstName">
                     <constraint name="Length">
                         <option name="min">2</option>
@@ -86,8 +86,8 @@ and "50", you might add the following:
 
     .. code-block:: php
 
-        // src/Acme/EventBundle/Entity/Participant.php
-        namespace Acme\EventBundle\Entity;
+        // src/AppBundle/Entity/Participant.php
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -116,9 +116,9 @@ min
 This required option is the "min" length value. Validation will fail if
 the given value's length is **less** than this min value.
 
-It is important to notice that NULL values and empty strings are considered 
-valid no matter if the constraint required a minimum length. Validators are 
-triggered only if the value is not blank.
+It is important to notice that NULL values and empty strings are considered
+valid no matter if the constraint required a minimum length. Validators
+are triggered only if the value is not blank.
 
 max
 ~~~

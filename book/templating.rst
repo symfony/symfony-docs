@@ -579,6 +579,10 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
+.. versionadded:: 2.3
+    The `include() function`_ is a new Twig feature that's available in Symfony
+    2.3. Prior, the `{% include %} tag`_ tag was used.
+
 .. index::
    single: Templating; Embedding action
 
@@ -1010,9 +1014,9 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
         <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" />
 
 The ``asset`` function's main purpose is to make your application more portable.
-If your application lives at the root of your host (e.g. http://example.com),
+If your application lives at the root of your host (e.g. ``http://example.com``),
 then the rendered paths should be ``/images/logo.png``. But if your application
-lives in a subdirectory (e.g. http://example.com/my_app), each asset path
+lives in a subdirectory (e.g. ``http://example.com/my_app``), each asset path
 should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
@@ -1187,7 +1191,7 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security``
+``app.security`` (deprecated as of 2.6)
     The security context.
 ``app.user``
     The current user object.
@@ -1220,7 +1224,7 @@ automatically:
 
 .. versionadded:: 2.6
     The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user`` 
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
     (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
     instead.
 
@@ -1591,16 +1595,16 @@ is ``true``. By default this means that the variables will be dumped in the
 Syntax Checking
 ---------------
 
-You can check for syntax errors in Twig templates using the ``twig:lint``
+You can check for syntax errors in Twig templates using the ``lint:twig``
 console command:
 
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/article/recent_list.html.twig
+    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console twig:lint app/Resources/views
+    $ php app/console lint:twig app/Resources/views
 
 .. _template-formats:
 
@@ -1693,12 +1697,12 @@ Learn more from the Cookbook
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`KnpBundles.com`: http://knpbundles.com
-.. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`Cross Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`hinclude.js`: http://mnot.github.com/hinclude/
+.. _`hinclude.js`: http://mnot.github.io/hinclude/
 .. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html

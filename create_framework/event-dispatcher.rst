@@ -13,7 +13,7 @@ needs. Many software have a similar concept like Drupal or Wordpress. In some
 languages, there is even a standard like `WSGI`_ in Python or `Rack`_ in Ruby.
 
 As there is no standard for PHP, we are going to use a well-known design
-pattern, the *Observer*, to allow any kind of behaviors to be attached to our
+pattern, the *Mediator*, to allow any kind of behaviors to be attached to our
 framework; the Symfony EventDispatcher Component implements a lightweight
 version of this pattern:
 
@@ -302,5 +302,5 @@ to make it more awesome out of the box, add more listeners. Again, this book
 is not about creating a generic framework, but one that is tailored to your
 needs. Stop whenever you see fit, and further evolve the code from there.
 
-.. _`WSGI`: http://www.python.org/dev/peps/pep-0333/#middleware-components-that-play-both-sides
+.. _`WSGI`: https://www.python.org/dev/peps/pep-0333/#middleware-components-that-play-both-sides
 .. _`Rack`: http://rack.rubyforge.org/

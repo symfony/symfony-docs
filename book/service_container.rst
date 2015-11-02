@@ -1184,4 +1184,4 @@ Learn more
 * :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 
-.. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
+.. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture

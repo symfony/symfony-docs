@@ -13,7 +13,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/process`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Process).
+* Use the official Git repository (https://github.com/symfony/process).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -24,13 +24,14 @@ The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
 a command in a sub-process::
 
     use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Exception\ProcessFailedException;
 
     $process = new Process('ls -lsa');
     $process->run();
 
     // executes after the command finishes
     if (!$process->isSuccessful()) {
-        throw new \RuntimeException($process->getErrorOutput());
+        throw new ProcessFailedException($process);
     }
 
     echo $process->getOutput();
@@ -174,7 +175,7 @@ To make your code work better on all platforms, you might want to use the
     method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
-:method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
+:method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
 the generated process commands.
 
 The following example will generate two process commands for a tar binary
@@ -210,7 +211,7 @@ timeout (in seconds)::
     $process->run();
 
 If the timeout is reached, a
-:class:`Symfony\\Process\\Exception\\RuntimeException` is thrown.
+:class:`Symfony\\Component\\Process\\Exception\\RuntimeException` is thrown.
 
 For long running commands, it is your responsibility to perform the timeout
 check regularly::
@@ -320,7 +321,7 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
-.. _`exec`: http://en.wikipedia.org/wiki/Exec_(operating_system)
-.. _`pid`: http://en.wikipedia.org/wiki/Process_identifier
+.. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
+.. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process

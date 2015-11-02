@@ -49,3 +49,6 @@
 /cmf/cookbook/creating_a_cms/the-frontend /cmf/tutorial/the-frontend
 /cookbook/upgrading /cookbook/upgrade/index
 /cookbook/security/voters_data_permission /cookbook/security/voters
+/cookbook/configuration/pdo_session_storage /cookbook/doctrine/pdo_session_storage
+/cookbook/configuration/mongodb_session_storage /cookbook/doctrine/mongodb_session_storage
+/cookbook/service_container/event_listener /cookbook/event_dispatcher/event_listener

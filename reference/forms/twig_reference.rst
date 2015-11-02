@@ -4,15 +4,17 @@
 Twig Template Form Function and Variable Reference
 ==================================================
 
-When working with forms in a template, there are two powerful things at your
-disposal:
+When working with forms in a template, there are two powerful things at
+your disposal:
 
-* :ref:`Functions <reference-form-twig-functions>` for rendering each part of a form
-* :ref:`Variables <twig-reference-form-variables>` for getting *any* information about any field
+* :ref:`Functions <reference-form-twig-functions>` for rendering each part
+  of a form;
+* :ref:`Variables <twig-reference-form-variables>` for getting *any* information
+  about any field.
 
 You'll use functions often to render your fields. Variables, on the other
 hand, are less commonly-used, but infinitely powerful since you can access
-a fields label, id attribute, errors, and anything else about the field.
+a fields label, id attribute, errors and anything else about the field.
 
 .. _reference-form-twig-functions:
 
@@ -20,9 +22,9 @@ Form Rendering Functions
 ------------------------
 
 This reference manual covers all the possible Twig functions available for
-rendering forms. There are several different functions available, and each
-is responsible for rendering a different part of a form (e.g. labels, errors,
-widgets, etc).
+rendering forms. There are several different functions available and
+each is responsible for rendering a different part of a form (e.g. labels,
+errors, widgets, etc).
 
 .. _reference-forms-twig-form:
 
@@ -76,8 +78,8 @@ Renders the end tag of a form.
 
     {{ form_end(form) }}
 
-This helper also outputs ``form_rest()`` unless you set ``render_rest`` to
-false:
+This helper also outputs ``form_rest()`` unless you set ``render_rest``
+to false:
 
 .. code-block:: jinja
 
@@ -98,7 +100,11 @@ label you want to display as the second argument.
 
     {# The two following syntaxes are equivalent #}
     {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
-    {{ form_label(form.name, null, {'label': 'Your name', 'label_attr': {'class': 'foo'}}) }}
+
+    {{ form_label(form.name, null, {
+        'label': 'Your name',
+        'label_attr': {'class': 'foo'}
+    }) }}
 
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
 argument.
@@ -122,8 +128,8 @@ Renders any errors for the given field.
 form_widget(view, variables)
 ----------------------------
 
-Renders the HTML widget of a given field. If you apply this to an entire form
-or collection of fields, each underlying form row will be rendered.
+Renders the HTML widget of a given field. If you apply this to an entire
+form or collection of fields, each underlying form row will be rendered.
 
 .. code-block:: jinja
 
@@ -181,8 +187,8 @@ form_enctype(view)
 
 .. note::
 
-    This helper was deprecated in Symfony 2.3 and will be removed in Symfony 3.0.
-    You should use ``form_start()`` instead.
+    This helper was deprecated in Symfony 2.3 and will be removed in Symfony
+    3.0. You should use ``form_start()`` instead.
 
 If the form contains at least one file upload field, this will render the
 required ``enctype="multipart/form-data"`` form attribute. It's always a
@@ -204,7 +210,8 @@ selectedchoice(selected_value)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This test will check if the current choice is equal to the ``selected_value``
-or if the current choice is in the array (when ``selected_value`` is an array).
+or if the current choice is in the array (when ``selected_value`` is an
+array).
 
 .. code-block:: jinja
 
@@ -221,7 +228,7 @@ More about Form Variables
 
 In almost every Twig function above, the final argument is an array of "variables"
 that are used when rendering that one part of the form. For example, the
-following would render the "widget" for a field, and modify its attributes
+following would render the "widget" for a field and modify its attributes
 to include a special class:
 
 .. code-block:: jinja
@@ -242,41 +249,52 @@ Look at the ``form_label`` as an example:
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
+
         {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% set label_attr = label_attr|merge({
+                'class': (label_attr.class|default('') ~ ' required')|trim
+            }) %}
         {% endif %}
+
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+
+        <label
+            {% for attrname, attrvalue in label_attr -%}
+                {{ attrname }}="{{ attrvalue }}"
+            {%- endfor %}
+        >
+            {{ label|trans({}, translation_domain) }}
+        </label>
     {% endblock form_label %}
 
-This block makes use of several variables: ``compound``, ``label_attr``, ``required``,
-``label``, ``name`` and ``translation_domain``.
-These variables are made available by the form rendering system. But more
-importantly, these are the variables that you can override when calling ``form_label``
-(since in this example, you're rendering the label).
+This block makes use of several variables: ``compound``, ``label_attr``,
+``required``, ``label``, ``name`` and ``translation_domain``. These variables
+are made available by the form rendering system. But more importantly, these
+are the variables that you can override when calling ``form_label`` (since
+in this example, you're rendering the label).
 
 The exact variables available to override depends on which part of the form
 you're rendering (e.g. label versus widget) and which field you're rendering
-(e.g. a ``choice`` widget has an extra ``expanded`` option). If you get comfortable
-with looking through `form_div_layout.html.twig`_, you'll always be able
-to see what options you have available.
+(e.g. a ``choice`` widget has an extra ``expanded`` option). If you get
+comfortable with looking through `form_div_layout.html.twig`_, you'll always
+be able to see what options you have available.
 
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the Form component calls ``buildView`` and ``finishView``
-    on each "node" of your form tree. To see what "view" variables a particular
-    field has, find the source code for the form field (and its parent fields)
-    and look at the above two functions.
+    object of your form when the Form component calls ``buildView`` and
+    ``finishView`` on each "node" of your form tree. To see what "view"
+    variables a particular field has, find the source code for the form
+    field (and its parent fields) and look at the above two functions.
 
 .. note::
 
     If you're rendering an entire form at once (or an entire embedded form),
     the ``variables`` argument will only be applied to the form itself and
-    not its children. In other words, the following will **not** pass a "foo"
-    class attribute to all of the child fields in the form:
+    not its children. In other words, the following will **not** pass a
+    "foo" class attribute to all of the child fields in the form:
 
     .. code-block:: jinja
 
@@ -292,10 +310,10 @@ The following variables are common to every field type. Certain field types
 may have even more variables and some variables here only really apply to
 certain types.
 
-Assuming you have a ``form`` variable in your template, and you want to reference
-the variables on the ``name`` field, accessing the variables is done by using
-a public ``vars`` property on the :class:`Symfony\\Component\\Form\\FormView`
-object:
+Assuming you have a ``form`` variable in your template and you want to
+reference the variables on the ``name`` field, accessing the variables is
+done by using a public ``vars`` property on the
+:class:`Symfony\\Component\\Form\\FormView` object:
 
 .. configuration-block::
 

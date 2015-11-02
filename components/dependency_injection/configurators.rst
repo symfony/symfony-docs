@@ -4,27 +4,28 @@
 Configuring Services with a Service Configurator
 ================================================
 
-The Service Configurator is a feature of the Dependency Injection Container that
-allows you to use a callable to configure a service after its instantiation.
+The Service Configurator is a feature of the Dependency Injection Container
+that allows you to use a callable to configure a service after its instantiation.
 
-You can specify a method in another service, a PHP function or a static method
-in a class. The service instance is passed to the callable, allowing the
-configurator to do whatever it needs to configure the service after its
-creation.
+You can specify a method in another service, a PHP function or a static
+method in a class. The service instance is passed to the callable, allowing
+the configurator to do whatever it needs to configure the service after
+its creation.
 
-A Service Configurator can be used, for example, when you have a service that
-requires complex setup based on configuration settings coming from different
-sources/services. Using an external configurator, you can maintain the service
-implementation cleanly and keep it decoupled from the other objects that provide
-the configuration needed.
+A Service Configurator can be used, for example, when you have a service
+that requires complex setup based on configuration settings coming from
+different sources/services. Using an external configurator, you can maintain
+the service implementation cleanly and keep it decoupled from the other
+objects that provide the configuration needed.
 
-Another interesting use case is when you have multiple objects that share a
-common configuration or that should be configured in a similar way at runtime.
+Another interesting use case is when you have multiple objects that
+share a common configuration or that should be configured in a similar way
+at runtime.
 
-For example, suppose you have an application where you send different types of
-emails to users. Emails are passed through different formatters that could be
-enabled or not depending on some dynamic application settings. You start
-defining a ``NewsletterManager`` class like this::
+For example, suppose you have an application where you send different types
+of emails to users. Emails are passed through different formatters that
+could be enabled or not depending on some dynamic application settings.
+You start defining a ``NewsletterManager`` class like this::
 
     class NewsletterManager implements EmailFormatterAwareInterface
     {
@@ -64,8 +65,8 @@ and also a ``GreetingCardManager`` class::
         // ...
     }
 
-As mentioned before, the goal is to set the formatters at runtime depending on
-application settings. To do this, you also have an ``EmailFormatterManager``
+As mentioned before, the goal is to set the formatters at runtime depending
+on application settings. To do this, you also have an ``EmailFormatterManager``
 class which is responsible for loading and validating formatters enabled
 in the application::
 
@@ -91,8 +92,8 @@ in the application::
     }
 
 If your goal is to avoid having to couple ``NewsletterManager`` and
-``GreetingCardManager`` with ``EmailFormatterManager``, then you might want to
-create a configurator class to configure these instances::
+``GreetingCardManager`` with ``EmailFormatterManager``, then you might want
+to create a configurator class to configure these instances::
 
     class EmailConfigurator
     {
@@ -115,9 +116,9 @@ create a configurator class to configure these instances::
 
 The ``EmailConfigurator``'s job is to inject the enabled filters into ``NewsletterManager``
 and ``GreetingCardManager`` because they are not aware of where the enabled
-filters come from. In the other hand, the ``EmailFormatterManager`` holds the
-knowledge about the enabled formatters and how to load them, keeping the single
-responsibility principle.
+filters come from. In the other hand, the ``EmailFormatterManager`` holds
+the knowledge about the enabled formatters and how to load them, keeping
+the single responsibility principle.
 
 Configurator Service Config
 ---------------------------

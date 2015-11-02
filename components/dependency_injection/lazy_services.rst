@@ -7,7 +7,7 @@ Lazy Services
 .. versionadded:: 2.3
    Lazy services were introduced in Symfony 2.3.
 
-Why lazy Services?
+Why Lazy Services?
 ------------------
 
 In some cases, you may want to inject a service that is a bit heavy to instantiate,
@@ -17,10 +17,10 @@ a few methods on your ``NewsletterManager`` actually use the ``mailer``,
 but even when you don't need it, a ``mailer`` service is always instantiated
 in order to construct your ``NewsletterManager``.
 
-Configuring lazy services is one answer to this. With a lazy service, a "proxy"
-of the ``mailer`` service is actually injected. It looks and acts just like
-the ``mailer``, except that the ``mailer`` isn't actually instantiated until
-you interact with the proxy in some way.
+Configuring lazy services is one answer to this. With a lazy service, a
+"proxy" of the ``mailer`` service is actually injected. It looks and acts
+just like the ``mailer``, except that the ``mailer`` isn't actually instantiated
+until you interact with the proxy in some way.
 
 Installation
 ------------
@@ -34,12 +34,13 @@ the `ProxyManager bridge`_:
 
 .. note::
 
-    If you're using the full-stack framework, the proxy manager bridge is already
-    included but the actual proxy manager needs to be included. So, run:
+    If you're using the full-stack framework, the proxy manager bridge is
+    already included but the actual proxy manager needs to be included.
+    So, run:
 
     .. code-block:: bash
 
-        $ php composer.phar require ocramius/proxy-manager:~1.0
+        $ composer require ocramius/proxy-manager:~1.0
 
     Afterwards compile your container and check to make sure that you get
     a proxy for your lazy services.
@@ -94,14 +95,14 @@ received object.
 
     var_dump(class_implements($service));
 
-If the class implements the ``ProxyManager\Proxy\LazyLoadingInterface`` your
-lazy loaded services are working.
+If the class implements the ``ProxyManager\Proxy\LazyLoadingInterface``
+your lazy loaded services are working.
 
 .. note::
 
-    If you don't install the `ProxyManager bridge`_, the container will just
-    skip over the ``lazy`` flag and simply instantiate the service as it would
-    normally do.
+    If you don't install the `ProxyManager bridge`_, the container will
+    just skip over the ``lazy`` flag and simply instantiate the service
+    as it would normally do.
 
 The proxy gets initialized and the actual service is instantiated as soon
 as you interact in any way with this object.
@@ -114,5 +115,5 @@ in the `documentation of ProxyManager`_.
 
 
 .. _`ProxyManager bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/ProxyManager
-.. _`proxy`: http://en.wikipedia.org/wiki/Proxy_pattern
+.. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
 .. _`documentation of ProxyManager`: https://github.com/Ocramius/ProxyManager/blob/master/docs/lazy-loading-value-holder.md

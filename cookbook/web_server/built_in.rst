@@ -37,7 +37,19 @@ can change the socket passing an IP address and a port as a command-line argumen
 
 .. code-block:: bash
 
-    $ php app/console server:run 192.168.0.1:8080
+    $ php app/console server:start 192.168.0.1:8080
+
+.. note::
+
+    You can use the ``--force`` option to force the web server start
+    if the process wasn't correctly stopped (without using the ``server:stop`` command).
+
+    .. code-block:: bash
+
+        $ php app/console server:start --force
+
+    .. versionadded:: 2.8
+        The ``--force`` option was introduced in Symfony 2.8.
 
 .. note::
 
@@ -117,4 +129,4 @@ when the web server listens to another IP address or to another port:
     $ php app/console server:stop 192.168.0.1:8080
 
 .. _`built-in web server`: http://www.php.net/manual/en/features.commandline.webserver.php
-.. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-401
+.. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-411

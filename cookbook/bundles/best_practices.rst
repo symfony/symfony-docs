@@ -83,9 +83,8 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
     ├─ AcmeBlogBundle.php
     ├─ Controller/
     ├─ README.md
+    ├─ LICENSE
     ├─ Resources/
-    │   ├─ meta/
-    │   │  └─ LICENSE
     │   ├─ config/
     │   ├─ doc/
     │   │  └─ index.rst
@@ -102,9 +101,8 @@ that automated tools can rely on:
 * ``README.md``: This file contains the basic description of the bundle and it
   usually shows some basic examples and links to its full documentation (it
   can use any of the markup formats supported by GitHub, such as ``README.rst``);
-* ``Resources/meta/LICENSE``: The full license for the code. The license file
-  can also be stored in the bundle's root directory to follow the generic
-  conventions about packages;
+* ``LICENSE``: The full contents of the license used by the code. Most third-party
+  bundles are published under the MIT license, but you can `choose any license`_;
 * ``Resources/doc/index.rst``: The root file for the Bundle documentation.
 
 The depth of sub-directories should be kept to the minimum for most used
@@ -146,7 +144,7 @@ class name is ``Acme\BlogBundle\Controller\ContentController``.
 All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible, like
-Commands, Helpers, Listeners, and Controllers.
+Commands, Helpers, Listeners and Controllers.
 
 Classes that connect to the event dispatcher should be suffixed with
 ``Listener``.
@@ -159,7 +157,7 @@ Vendors
 A bundle must not embed third-party PHP libraries. It should rely on the
 standard Symfony autoloading instead.
 
-A bundle should not embed third-party libraries written in JavaScript, CSS, or
+A bundle should not embed third-party libraries written in JavaScript, CSS or
 any other language.
 
 Tests
@@ -175,6 +173,7 @@ the ``Tests/`` directory. Tests should follow the following principles:
 * The tests should cover at least 95% of the code base.
 
 .. note::
+
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
    existence of a ``phpunit.xml.dist`` file.
 
@@ -472,3 +471,4 @@ Learn more from the Cookbook
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
 .. _`Semantic Versioning Standard`: http://semver.org/
 .. _`Packagist`: https://packagist.org/
+.. _`choose any license`: http://choosealicense.com/

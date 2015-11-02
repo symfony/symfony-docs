@@ -319,7 +319,7 @@ instance), the host might have been manipulated by an attacker.
     You can read "`HTTP Host header attacks`_" for more information about
     these kinds of attacks.
 
-The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request:getHost>`
+The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request::getHost>`
 method might be vulnerable to some of these attacks because it depends on
 the configuration of your web server. One simple solution to avoid these
 attacks is to whitelist the hosts that your Symfony application can respond
@@ -726,7 +726,7 @@ installation.
 .. seealso::
 
     You can see an example of the usage of this in
-    :doc:`/cookbook/configuration/pdo_session_storage`.
+    :doc:`/cookbook/doctrine/pdo_session_storage`.
 
 name
 ....
@@ -774,7 +774,7 @@ This determines whether cookies should only be sent over secure connections.
 cookie_httponly
 ...............
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 This determines whether cookies should only be accessible through the HTTP
 protocol. This means that the cookie won't be accessible by scripting

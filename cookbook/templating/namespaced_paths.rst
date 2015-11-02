@@ -15,14 +15,14 @@ Take the following paths as an example:
 .. code-block:: jinja
 
     {% extends "AppBundle::layout.html.twig" %}
-    {% include "AppBundle:Foo:bar.html.twig" %}
+    {{ include('AppBundle:Foo:bar.html.twig') }}
 
 With namespaced paths, the following works as well:
 
 .. code-block:: jinja
 
     {% extends "@App/layout.html.twig" %}
-    {% include "@App/Foo/bar.html.twig" %}
+    {{ include('@App/Foo/bar.html.twig') }}
 
 Both paths are valid and functional by default in Symfony.
 
@@ -77,7 +77,7 @@ called ``sidebar.twig`` in that directory, you can use it easily:
 
 .. code-block:: jinja
 
-    {% include '@foo_bar/sidebar.twig' %}
+    {{ include('@foo_bar/sidebar.twig') }}
 
 Multiple Paths per Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,4 +131,4 @@ in the previous three directories:
 
 .. code-block:: jinja
 
-    {% include '@theme/header.twig' %}
+    {{ include('@theme/header.twig') }}

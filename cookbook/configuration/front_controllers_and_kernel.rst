@@ -158,12 +158,12 @@ loading the ``app/config/config_*environment*.yml`` file. You are, of course,
 free to implement this method differently if you need a more sophisticated
 way of loading your configuration.
 
-.. _front controller: http://en.wikipedia.org/wiki/Front_Controller_pattern
+.. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
 .. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
 .. _app_dev.php: https://github.com/symfony/symfony-standard/blob/master/web/app_dev.php
 .. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
-.. _decorate: http://en.wikipedia.org/wiki/Decorator_pattern
+.. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
 .. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
-.. _template methods: http://en.wikipedia.org/wiki/Template_method_pattern
+.. _template methods: https://en.wikipedia.org/wiki/Template_method_pattern

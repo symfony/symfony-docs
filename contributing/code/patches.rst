@@ -253,6 +253,8 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push --force origin BRANCH_NAME
 
+.. _contributing-code-pull-request:
+
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
 
@@ -389,16 +391,16 @@ convert many commits to one commit. This is no longer necessary today, because
 Symfony project uses a proprietary tool which automatically squashes all commits
 before merging.
 
-.. _ProGit:                                http://git-scm.com/book
-.. _GitHub:                                https://github.com/signup/free
-.. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
-.. _Symfony repository:                    https://github.com/symfony/symfony
-.. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
-.. _travis-ci.org:                         https://travis-ci.org/
-.. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
+.. _ProGit: http://git-scm.com/book
+.. _GitHub: https://github.com/join
+.. _`GitHub's Documentation`: https://help.github.com/articles/ignoring-files
+.. _Symfony repository: https://github.com/symfony/symfony
+.. _dev mailing-list: http://groups.google.com/group/symfony-devs
+.. _travis-ci.org: https://travis-ci.org/
+.. _`travis-ci.org status icon`: http://about.travis-ci.org/docs/user/status-images/
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
-.. _`documentation repository`:            https://github.com/symfony/symfony-docs
-.. _`fabbot`:                              http://fabbot.io
-.. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
-.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html
+.. _`documentation repository`: https://github.com/symfony/symfony-docs
+.. _`fabbot`: http://fabbot.io
+.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
+.. _PHPUnit: https://phpunit.de/manual/current/en/installation.html

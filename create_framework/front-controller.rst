@@ -71,7 +71,7 @@ routing all client requests to a single PHP script.
 .. tip::
 
     Exposing a single PHP script to the end user is a design pattern called
-    the "`front controller`_".
+    the ":ref:`front controller <book-from_flat_php-front-controller>`".
 
 Such a script might look like the following::
 
@@ -146,11 +146,13 @@ web root directory:
 
     example.com
     ├── composer.json
-    │   src
+    ├── composer.lock    
+    ├── src
     │   └── pages
     │       ├── hello.php
     │       └── bye.php
     ├── vendor
+    │   └── autoload.php
     └── web
         └── front.php
 
@@ -235,5 +237,3 @@ variable.
 
     If you decide to stop here, you can probably enhance your framework by
     extracting the URL map to a configuration file.
-
-.. _`front controller`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html#a-front-controller-to-the-rescue

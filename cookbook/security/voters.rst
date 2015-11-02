@@ -29,7 +29,7 @@ authorization checker (i.e. the ``security.authorization_checker`` service). Eac
 one decides if the current user should have access to some resource.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
-decission (to allow or deny access to the resource) according to the strategy defined
+decision (to allow or deny access to the resource) according to the strategy defined
 in the application, which can be: affirmative, consensus or unanimous.
 
 For more information take a look at
@@ -71,6 +71,7 @@ edit a particular object. Here's an example implementation:
     namespace AppBundle\Security\Authorization\Voter;
 
     use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
+    use AppBundle\Entity\User;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class PostVoter extends AbstractVoter
@@ -95,6 +96,12 @@ edit a particular object. Here's an example implementation:
                 return false;
             }
 
+            // double-check that the User object is the expected entity (this
+            // only happens when you did not configure the security system properly)
+            if (!$user instanceof User) {
+                throw new \LogicException('The user is somehow not our User class!');
+            }
+
             switch($attribute) {
                 case self::VIEW:
                     // the data object could have for example a method isPrivate()
@@ -105,15 +112,15 @@ edit a particular object. Here's an example implementation:
 
                     break;
                 case self::EDIT:
-                    // we assume that our data object has a method getOwner() to
-                    // get the current owner user entity for this data object
+                    // this assumes that the data object has a getOwner() method
+                    // to get the entity of the user who owns this data object
                     if ($user->getId() === $post->getOwner()->getId()) {
                         return true;
                     }
 
                     break;
             }
-            
+
             return false;
         }
     }
@@ -155,25 +162,29 @@ and tag it with ``security.voter``:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             security.access.post_voter:
                 class:      AppBundle\Security\Authorization\Voter\PostVoter
                 public:     false
                 tags:
-                   - { name: security.voter }
+                    - { name: security.voter }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
                 <service id="security.access.post_voter"
                     class="AppBundle\Security\Authorization\Voter\PostVoter"
-                    public="false">
+                    public="false"
+                >
+
                     <tag name="security.voter" />
                 </service>
             </services>
@@ -181,15 +192,16 @@ and tag it with ``security.voter``:
 
     .. code-block:: php
 
-        // src/AppBundle/Resources/config/services.php
-        $container
-            ->register(
-                    'security.access.post_voter',
-                    'AppBundle\Security\Authorization\Voter\PostVoter'
-            )
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definition = new Definition('AppBundle\Security\Authorization\Voter\PostVoter');
+        $definition
             ->setPublic(false)
             ->addTag('security.voter')
         ;
+
+        $container->setDefinition('security.access.post_voter', $definition);
 
 How to Use the Voter in a Controller
 ------------------------------------
@@ -212,11 +224,8 @@ from the authorization checker is called.
             // get a Post instance
             $post = ...;
 
-            $authChecker = $this->get('security.authorization_checker');
-
-            if (false === $authChecker->isGranted('view', $post)) {
-                throw $this->createAccessDeniedException('Unauthorized access!');
-            }
+            // keep in mind that this will call all registered security voters
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
@@ -273,10 +282,9 @@ security configuration:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                http://symfony.com/schema/dic/security/security-1.0.xsd"
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
+
             <config>
                 <access-decision-manager strategy="unanimous">
             </config>

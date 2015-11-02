@@ -12,15 +12,15 @@ relationships (e.g. a product from where you can manage many related product
 photos).
 
 +-------------+-----------------------------------------------------------------------------+
-| Rendered as | depends on the `type`_ option                                               |
+| Rendered as | depends on the `entry_type`_ option                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
 |             | - `delete_empty`_                                                           |
-|             | - `options`_                                                                |
+|             | - `entry_options`_                                                          |
+|             | - `entry_type`_                                                             |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
-|             | - `type`_                                                                   |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
 | options     | - `cascade_validation`_                                                     |
@@ -53,10 +53,10 @@ to an array of email addresses. In the form, you want to expose each email
 address as its own input text box::
 
     $builder->add('emails', 'collection', array(
-        // each item in the array will be an "email" field
-        'type'   => 'email',
+        // each entry in the array will be an "email" field
+        'entry_type'   => 'email',
         // these options are passed to each "email" type
-        'options'  => array(
+        'entry_options'  => array(
             'required'  => false,
             'attr'      => array('class' => 'email-box')
         ),
@@ -273,20 +273,24 @@ form you have to set this option to true. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
 
-options
-~~~~~~~
+entry_options
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.8
+    The ``entry_options`` option was introduced in Symfony 2.8 in favor of
+    ``options``, which is available prior to 2.8.
 
 **type**: ``array`` **default**: ``array()``
 
-This is the array that's passed to the form type specified in the `type`_
+This is the array that's passed to the form type specified in the `entry_type`_
 option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
-type as your `type`_ option (e.g. for a collection of drop-down menus),
+type as your `entry_type`_ option (e.g. for a collection of drop-down menus),
 then you'd need to at least pass the ``choices`` option to the underlying
 type::
 
     $builder->add('favorite_cities', 'collection', array(
-        'type'   => 'choice',
-        'options'  => array(
+        'entry_type'   => 'choice',
+        'entry_options'  => array(
             'choices'  => array(
                 'nashville' => 'Nashville',
                 'paris'     => 'Paris',
@@ -295,6 +299,21 @@ type::
             ),
         ),
     ));
+
+entry_type
+~~~~~~~~~~
+
+.. versionadded:: 2.8
+    The ``entry_type`` option was introduced in Symfony 2.8 in favor of
+    ``type``, which is available prior to 2.8.
+
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
+
+This is the field type for each item in this collection (e.g. ``text``,
+``choice``, etc). For example, if you have an array of email addresses,
+you'd use the :doc:`email </reference/forms/types/email>` type. If you want
+to embed a collection of some other form, create a new instance of your
+form type and pass it as this option.
 
 prototype
 ~~~~~~~~~
@@ -343,17 +362,6 @@ prototype_name
 If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are
 not replaced with the same value.
-
-type
-~~~~
-
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
-
-This is the field type for each item in this collection (e.g. ``text``,
-``choice``, etc). For example, if you have an array of email addresses,
-you'd use the :doc:`email </reference/forms/types/email>` type. If you want
-to embed a collection of some other form, create a new instance of your
-form type and pass it as this option.
 
 Inherited Options
 -----------------

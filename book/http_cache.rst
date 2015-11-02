@@ -230,7 +230,7 @@ Here is a list of the main options:
 ``allow_revalidate``
     Specifies whether the client can force a cache revalidate by including a
     ``Cache-Control`` "max-age=0" directive in the request. Set it to ``true`` for
-    compliance with RFC 2616 (default: false).
+    compliance with RFC 2616 (default: ``false``).
 
 ``stale_while_revalidate``
     Specifies the default number of seconds (the granularity is the second as the
@@ -627,7 +627,7 @@ doing so much work.
 
     Symfony also supports weak ETags by passing ``true`` as the second
     argument to the
-    :method:`Symfony\\Component\\HttpFoundation\\Response::setETag` method.
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
 
 .. index::
    single: Cache; Last-Modified header
@@ -651,6 +651,7 @@ header value::
     namespace AppBundle\Controller;
 
     // ...
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
     use AppBundle\Entity\Article;
 
@@ -665,6 +666,7 @@ header value::
 
             $date = $authorDate > $articleDate ? $authorDate : $articleDate;
 
+            $response = new Response();
             $response->setLastModified($date);
             // Set response as public. Otherwise it will be private by default.
             $response->setPublic();
@@ -880,8 +882,8 @@ that data from its cache.
 
     If you want to use cache invalidation, have a look at the
     `FOSHttpCacheBundle`_. This bundle provides services to help with various
-    cache invalidation concepts, and also documents the configuration for the
-    a couple of common caching proxies.
+    cache invalidation concepts and also documents the configuration for a
+    couple of common caching proxies.
 
 If one content corresponds to one URL, the ``PURGE`` model works well.
 You send a request to the cache proxy with the HTTP method ``PURGE`` (using
@@ -1244,7 +1246,7 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/cache/varnish`
 
-.. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
+.. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy

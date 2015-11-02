@@ -207,7 +207,7 @@ rules::
     .. code-block:: php
 
         // src/AppBundle/Entity/Document.php
-        namespace Acme\DemoBundle\Entity;
+        namespace AppBundle\Entity;
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -494,6 +494,7 @@ property, instead of the actual filename::
             if (is_file($this->getAbsolutePath())) {
                 // store the old name to delete after the update
                 $this->temp = $this->getAbsolutePath();
+                $this->path = null;
             } else {
                 $this->path = 'initial';
             }

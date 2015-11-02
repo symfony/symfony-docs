@@ -67,7 +67,7 @@ configuration looks like this:
 
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
-                    security=false />
+                    security="false" />
 
                 <firewall name="default">
                     <anonymous />
@@ -81,7 +81,7 @@ configuration looks like this:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'in_memory' => array(
-                    'memory' => array(),
+                    'memory' => null,
                 ),
             ),
             'firewalls' => array(
@@ -198,7 +198,7 @@ example, if you use annotations, create something like this::
          */
         public function adminAction()
         {
-            return new Response('Admin page!');
+            return new Response('<html><body>Admin page!</body></html>');
         }
     }
 
@@ -214,6 +214,8 @@ user to be logged in to access this URL:
             # ...
             firewalls:
                 # ...
+                default:
+                    # ...
 
             access_control:
                 # require ROLE_ADMIN for /admin*
@@ -236,10 +238,8 @@ user to be logged in to access this URL:
                     <!-- ... -->
                 </firewall>
 
-                <access-control>
-                    <!-- require ROLE_ADMIN for /admin* -->
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
+                <!-- require ROLE_ADMIN for /admin* -->
+                <rule path="^/admin" role="ROLE_ADMIN" />
             </config>
         </srv:container>
 
@@ -512,7 +512,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
 
 .. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
-Of course, your user's passwords now need to be encoded with this exact algorithm.
+Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, you can use an `online tool`_, which will give you something
 like this:
 
@@ -546,13 +546,14 @@ like this:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <provider name="in_memory">
                     <memory>
                         <user name="ryan" password="$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli" roles="ROLE_USER" />
                         <user name="admin" password="$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G" roles="ROLE_ADMIN" />
                     </memory>
                 </provider>
-                <!-- ... -->
             </config>
         </srv:container>
 
@@ -560,6 +561,8 @@ like this:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'providers' => array(
                 'in_memory' => array(
                     'memory' => array(
@@ -699,8 +702,11 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
         # app/config/security.yml
         security:
             # ...
+
             firewalls:
                 # ...
+                default:
+                    # ...
 
             access_control:
                 # require ROLE_ADMIN for /admin*
@@ -723,10 +729,8 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
                     <!-- ... -->
                 </firewall>
 
-                <access-control>
-                    <!-- require ROLE_ADMIN for /admin* -->
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
+                <!-- require ROLE_ADMIN for /admin* -->
+                <rule path="^/admin" role="ROLE_ADMIN" />
             </config>
         </srv:container>
 
@@ -735,6 +739,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
         // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
+
             'firewalls' => array(
                 // ...
                 'default' => array(
@@ -763,6 +768,7 @@ matches the URL.
         # app/config/security.yml
         security:
             # ...
+
             access_control:
                 - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
                 - { path: ^/admin, roles: ROLE_ADMIN }
@@ -779,10 +785,9 @@ matches the URL.
 
             <config>
                 <!-- ... -->
-                <access-control>
-                    <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
+
+                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
+                <rule path="^/admin" role="ROLE_ADMIN" />
             </config>
         </srv:container>
 
@@ -791,6 +796,7 @@ matches the URL.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
+
             'access_control' => array(
                 array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
                 array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
@@ -1106,13 +1112,14 @@ the firewall can handle this automatically for you when you activate the
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 secured_area:
                     # ...
                     logout:
                         path:   /logout
                         target: /
-            # ...
 
     .. code-block:: xml
 
@@ -1125,11 +1132,12 @@ the firewall can handle this automatically for you when you activate the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall name="secured_area" pattern="^/">
+                <!-- ... -->
+
+                <firewall name="secured_area">
                     <!-- ... -->
                     <logout path="/logout" target="/" />
                 </firewall>
-                <!-- ... -->
             </config>
         </srv:container>
 
@@ -1137,13 +1145,14 @@ the firewall can handle this automatically for you when you activate the
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => 'logout', 'target' => '/'),
+                    'logout' => array('path' => '/logout', 'target' => '/'),
                 ),
             ),
-            // ...
         ));
 
 Next, you'll need to create a route for this URL (but not a controller):
@@ -1154,7 +1163,7 @@ Next, you'll need to create a route for this URL (but not a controller):
 
         # app/config/routing.yml
         logout:
-            path:   /logout
+            path: /logout
 
     .. code-block:: xml
 
@@ -1175,7 +1184,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('logout', new Route('/logout', array()));
+        $collection->add('logout', new Route('/logout'));
 
         return $collection;
 
@@ -1243,6 +1252,8 @@ rules by creating a role hierarchy:
 
         # app/config/security.yml
         security:
+            # ...
+
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
                 ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -1258,6 +1269,8 @@ rules by creating a role hierarchy:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <role id="ROLE_ADMIN">ROLE_USER</role>
                 <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
             </config>
@@ -1267,6 +1280,8 @@ rules by creating a role hierarchy:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
                 'ROLE_SUPER_ADMIN' => array(
@@ -1296,6 +1311,8 @@ cookie will be ever created by Symfony):
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 main:
                     http_basic: ~
@@ -1312,7 +1329,9 @@ cookie will be ever created by Symfony):
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall stateless="true">
+                <!-- ... -->
+
+                <firewall name="main" stateless="true">
                     <http-basic />
                 </firewall>
             </config>
@@ -1322,8 +1341,10 @@ cookie will be ever created by Symfony):
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
-                'main' => array('http_basic' => array(), 'stateless' => true),
+                'main' => array('http_basic' => null, 'stateless' => true),
             ),
         ));
 

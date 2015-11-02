@@ -268,16 +268,30 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            fastcgi_param HTTPS off;
+            # When you are using symlinks to link the document root to the
+            # current version of your application, you should pass the real
+            # application path instead of the path to the symlink to PHP
+            # FPM.
+            # Otherwise, PHP's OPcache may not properly detect changes to
+            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+            # for more information).
+            fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
+            fastcgi_param DOCUMENT_ROOT $realpath_root;
         }
         # PROD
         location ~ ^/app\.php(/|$) {
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            fastcgi_param HTTPS off;
+            # When you are using symlinks to link the document root to the
+            # current version of your application, you should pass the real
+            # application path instead of the path to the symlink to PHP
+            # FPM.
+            # Otherwise, PHP's OPcache may not properly detect changes to
+            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+            # for more information).
+            fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
+            fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
             # http://domain.tld/app.php/some-path
             # Remove the internal directive to allow URIs like this
@@ -307,6 +321,6 @@ The **minimum configuration** to get your application running under Nginx is:
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
 .. _`Apache documentation`: http://httpd.apache.org/docs/
-.. _`does not support Unix sockets`: https://issues.apache.org/bugzilla/show_bug.cgi?id=54101
+.. _`does not support Unix sockets`: https://bz.apache.org/bugzilla/show_bug.cgi?id=54101
 .. _`FastCgiExternalServer`: http://www.fastcgi.com/mod_fastcgi/docs/mod_fastcgi.html#FastCgiExternalServer
 .. _`Nginx documentation`: http://wiki.nginx.org/Symfony

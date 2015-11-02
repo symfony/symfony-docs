@@ -4,10 +4,10 @@
 integer Field Type
 ==================
 
-Renders an input "number" field. Basically, this is a text field that's good
-at handling data that's in an integer form. The input ``number`` field looks
-like a text box, except that - if the user's browser supports HTML5 - it will
-have some extra front-end functionality.
+Renders an input "number" field. Basically, this is a text field that's
+good at handling data that's in an integer form. The input ``number`` field
+looks like a text box, except that - if the user's browser supports HTML5
+- it will have some extra front-end functionality.
 
 This field has different options on how to handle input values that aren't
 integers. By default, all non-integer values (e.g. 6.78) will round down

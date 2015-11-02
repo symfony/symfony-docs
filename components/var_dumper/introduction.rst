@@ -42,8 +42,9 @@ use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
 For example::
 
     require __DIR__.'/vendor/autoload.php';
+
     // create a variable, which could be anything!
-    $someVar = '...';
+    $someVar = ...;
 
     dump($someVar);
 
@@ -70,14 +71,14 @@ current PHP SAPI:
     #. Run ``composer global require symfony/var-dumper``;
     #. Add ``auto_prepend_file = ${HOME}/.composer/vendor/autoload.php``
        to your ``php.ini`` file;
-    #. From time to time, run ``composer global update`` to have the latest
-       bug fixes.
+    #. From time to time, run ``composer global update symfony/var-dumper``
+       to have the latest bug fixes.
 
 DebugBundle and Twig Integration
 --------------------------------
 
-The ``DebugBundle`` allows greater integration of the component into the
-Symfony full stack framework. It is enabled by default in the *dev* and *test*
+The DebugBundle allows greater integration of the component into the Symfony
+full-stack framework. It is enabled by default in the *dev* and *test*
 environment of the standard edition since version 2.6.
 
 Since generating (even debug) output in the controller or in the model
@@ -98,29 +99,9 @@ Choosing between both is mostly a matter of personal taste, still:
   be suited to your use case (e.g. you shouldn't use it in an HTML
   attribute or a ``<script>`` tag).
 
-By default for nested variables, dumps are limited to a subset of their
-original value. You can configure the limits in terms of:
-
-* maximum number of items to dump,
-* maximum string length before truncation.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        debug:
-           max_items: 250
-           max_string_length: -1
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/debug"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/debug http://symfony.com/schema/dic/debug/debug-1.0.xsd">
-
-            <config max-items="250" max-string-length="-1" />
-        </container>
+This behavior can be changed by configuring the ``dump.dump_destination``
+option. Read more about this and other options in
+:doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------

@@ -16,9 +16,7 @@ import sys, os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
-
-sys.path.append(os.path.abspath('_exts'))
+sys.path.append(os.path.abspath('_theme/_exts'))
 
 # adding PhpLexer
 from sphinx.highlighting import lexers
@@ -34,11 +32,14 @@ from pygments.lexers.web import PhpLexer
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-    'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice']
+extensions = [
+    'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
+    'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice', 'sensio.sphinx.codeblock',
+    'symfonycom.sphinx'
+]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['_theme/_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -74,7 +75,7 @@ copyright = ''
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-# exclude_patterns = ['_build', 'bundles']
+exclude_patterns = ['_theme']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
@@ -126,7 +127,7 @@ api_url = 'http://api.symfony.com/master/%s'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = 'classic'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

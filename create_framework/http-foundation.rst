@@ -78,8 +78,8 @@ unit test for the above code::
 .. note::
 
     If our application were just slightly bigger, we would have been able to
-    find even more problems. If you are curious about them, read the `Symfony
-    versus Flat PHP`_ chapter of the Symfony documentation.
+    find even more problems. If you are curious about them, read the
+    :doc:`/book/from_flat_php_to_symfony2` chapter of the book.
 
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
@@ -121,6 +121,19 @@ To use this component, add it as a dependency of the project:
 
 Running this command will also automatically download the Symfony
 HttpFoundation component and install it under the ``vendor/`` directory.
+A ``composer.json`` and a ``composer.lock`` file will be generated as well,
+containing the new requirement:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "symfony/http-foundation": "^2.7"
+        }
+    }
+
+The code block shows the content of the ``composer.json`` file (the actual
+version may vary).
 
 .. sidebar:: Class Autoloading
 
@@ -221,7 +234,7 @@ Last but not the least, these classes, like every other class in the Symfony
 code, have been `audited`_ for security issues by an independent company. And
 being an Open-Source project also means that many other developers around the
 world have read the code and have already fixed potential security problems.
-When was the last you ordered a professional security audit for your home-made
+When was the last time you ordered a professional security audit for your home-made
 framework?
 
 Even something as simple as getting the client IP address can be insecure::
@@ -288,13 +301,12 @@ component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 5`_, `Laravel`_, `Silex`_, and `more`_).
 
-.. _`Twig`: http://twig.sensiolabs.com/
-.. _`Symfony versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
+.. _`Twig`: http://twig.sensiolabs.org/
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
 .. _`audited`: http://symfony.com/blog/symfony2-security-audit
 .. _`Symfony`: http://symfony.com/
-.. _`Drupal 8`: http://drupal.org/
-.. _`phpBB 4`: http://www.phpbb.com/
+.. _`Drupal 8`: https://drupal.org/
+.. _`phpBB 4`: https://www.phpbb.com/
 .. _`ezPublish 5`: http://ez.no/
 .. _`Laravel`: http://laravel.com/
 .. _`Silex`: http://silex.sensiolabs.org/

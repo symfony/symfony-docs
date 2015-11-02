@@ -54,12 +54,10 @@ Take the following ``access_control`` entries as an example:
 
             <config>
                 <!-- ... -->
-                <access-control>
-                    <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
-                    <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
-                    <rule path="^/admin" role="ROLE_USER_METHOD" method="POST, PUT" />
-                    <rule path="^/admin" role="ROLE_USER" />
-                </access-control>
+                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
+                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
+                <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT" />
+                <rule path="^/admin" role="ROLE_USER" />
             </config>
         </srv:container>
 
@@ -82,7 +80,7 @@ Take the following ``access_control`` entries as an example:
                 array(
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_METHOD',
-                    'method' => 'POST, PUT',
+                    'methods' => 'POST, PUT',
                 ),
                 array(
                     'path' => '^/admin',
@@ -180,7 +178,7 @@ pattern so that it is only accessible by requests from the local server itself:
             # ...
             access_control:
                 #
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, fe80::1, ::1] }
                 - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
@@ -195,11 +193,12 @@ pattern so that it is only accessible by requests from the local server itself:
 
             <config>
                 <!-- ... -->
-                <access-control>
-                    <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        ips="127.0.0.1, ::1" />
-                    <rule path="^/esi" role="ROLE_NO_ACCESS" />
-                </access-control>
+                <rule path="^/internal"
+                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    ips="127.0.0.1, fe80::1, ::1"
+                />
+
+                <rule path="^/internal" role="ROLE_NO_ACCESS" />
             </config>
         </srv:container>
 
@@ -210,12 +209,12 @@ pattern so that it is only accessible by requests from the local server itself:
             // ...
             'access_control' => array(
                 array(
-                    'path' => '^/esi',
+                    'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                    'ips' => '127.0.0.1, ::1'
+                    'ips' => '127.0.0.1, fe80::1, ::1'
                 ),
                 array(
-                    'path' => '^/esi',
+                    'path' => '^/internal',
                     'role' => 'ROLE_NO_ACCESS'
                 ),
             ),
@@ -233,8 +232,8 @@ the external IP address ``10.0.0.1``:
   that does not match an existing role, it just serves as a trick to always
   deny access).
 
-But if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
-address):
+But if the same request comes from ``127.0.0.1``, ``::1`` (the IPv6 loopback
+address) or ``fe80::1`` (the IPv6 link-local address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
@@ -321,11 +320,10 @@ the user will be redirected to ``https``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <access-control>
-                <rule path="^/cart/checkout"
-                    role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    requires-channel="https" />
-            </access-control>
+            <rule path="^/cart/checkout"
+                role="IS_AUTHENTICATED_ANONYMOUSLY"
+                requires-channel="https"
+            />
         </srv:container>
 
     .. code-block:: php

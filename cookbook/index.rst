@@ -29,7 +29,6 @@ The Cookbook
     service_container/index
     session/index
     psr7
-    symfony1
     templating/index
     testing/index
     upgrade/index

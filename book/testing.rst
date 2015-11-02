@@ -196,9 +196,10 @@ expression or a CSS selector, then use the client to click on it. For example::
     $link = $crawler
         ->filter('a:contains("Greet")') // find all links with the text "Greet"
         ->eq(1) // select the second link in the list
-        ->link() // and click it
+        ->link()
     ;
-
+    
+    // and click it
     $crawler = $client->click($link);
 
 Submitting a form is very similar: select a form button, optionally override
@@ -880,4 +881,4 @@ Learn more
 * :doc:`/cookbook/testing/bootstrap`
 
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
-.. _`documentation`: http://phpunit.de/manual/current/en/
+.. _`documentation`: https://phpunit.de/manual/current/en/

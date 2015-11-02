@@ -40,7 +40,7 @@ Update your framework so that it implements this interface::
     }
 
 Even if this change looks trivial, it brings us a lot! Let's talk about one of
-the most impressive one: transparent `HTTP caching`_ support.
+the most impressive one: transparent :doc:`HTTP caching </book/http_cache>` support.
 
 The ``HttpCache`` class implements a fully-featured reverse proxy, written in
 PHP; it implements ``HttpKernelInterface`` and wraps another
@@ -153,7 +153,7 @@ sub-requests to convert them to their proper content::
     $framework = new HttpKernel\HttpCache\HttpCache(
         $framework,
         new HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
-        new HttpKernel\HttpCache\ESI()
+        new HttpKernel\HttpCache\Esi()
     );
 
 .. note::
@@ -166,7 +166,7 @@ When using complex HTTP caching strategies and/or many ESI include tags, it
 can be hard to understand why and when a resource should be cached or not. To
 ease debugging, you can enable the debug mode::
 
-    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'), new ESI(), array('debug' => true));
+    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'), new Esi(), array('debug' => true));
 
 The debug mode adds a ``X-Symfony-Cache`` header to each response that
 describes what the cache layer did:
@@ -186,5 +186,5 @@ the many features built into the HttpKernel component; HTTP caching being just
 one of them but an important one as it can make your applications fly!
 
 .. _`HTTP caching`: http://symfony.com/doc/current/book/http_cache.html
-.. _`ESI`: http://en.wikipedia.org/wiki/Edge_Side_Includes
+.. _`ESI`: https://en.wikipedia.org/wiki/Edge_Side_Includes
 .. _`Varnish`: https://www.varnish-cache.org/

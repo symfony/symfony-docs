@@ -4,6 +4,11 @@
 How to Work with Scopes
 =======================
 
+.. caution::
+
+    The "container scopes" concept explained in this article has been deprecated
+    in Symfony 2.8 and it will be removed in Symfony 3.0.
+
 This article is all about scopes, a somewhat advanced topic related to the
 :doc:`/book/service_container`. If you've ever gotten an error mentioning
 "scopes" when creating services, then this article is for you.

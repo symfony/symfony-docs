@@ -4,8 +4,8 @@
 How to Inject Instances into the Container
 ------------------------------------------
 
-When using the container in your application, you sometimes need to inject an
-instance instead of configuring the container to create a new instance.
+When using the container in your application, you sometimes need to inject
+an instance instead of configuring the container to create a new instance.
 
 For instance, if you're using the :doc:`HttpKernel </components/http_kernel/introduction>`
 component with the DependencyInjection component, then the ``kernel``
@@ -24,10 +24,10 @@ service is injected into the container from within the ``Kernel`` class::
         }
     }
 
-The ``kernel`` service is called a synthetic service. This service has to be
-configured in the container, so the container knows the service does exist
-during compilation (otherwise, services depending on this ``kernel`` service
-will get a "service does not exists" error).
+The ``kernel`` service is called a synthetic service. This service has to
+be configured in the container, so the container knows the service does
+exist during compilation (otherwise, services depending on this ``kernel``
+service will get a "service does not exist" error).
 
 In order to do so, you have to use
 :method:`Definition::setSynthetic() <Symfony\\Component\\DependencyInjection\\Definition::setSynthetic>`::

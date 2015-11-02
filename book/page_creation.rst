@@ -43,7 +43,7 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
 
-    class LuckyController
+    class LuckyController extends Controller
     {
         /**
          * @Route("/lucky/number")
@@ -104,7 +104,7 @@ Just add a second method to ``LuckyController``::
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
-    class LuckyController
+    class LuckyController extends Controller
     {
         // ...
 
@@ -137,7 +137,7 @@ You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundat
     // --> don't forget this new use statement
     use Symfony\Component\HttpFoundation\JsonResponse;
 
-    class LuckyController
+    class LuckyController extends Controller
     {
         // ...
 
@@ -170,7 +170,7 @@ at the end:
         // src/AppBundle/Controller/LuckyController.php
         // ...
 
-        class LuckyController
+        class LuckyController extends Controller
         {
             /**
              * @Route("/lucky/number/{count}")
@@ -181,7 +181,7 @@ at the end:
             }
 
             // ...
-        }        
+        }
 
     .. code-block:: yaml
 
@@ -224,7 +224,7 @@ The best part is that you can access this value and use it in your controller::
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
-    class LuckyController
+    class LuckyController extends Controller
     {
 
         /**
@@ -272,7 +272,7 @@ easy, powerful and actually quite fun.
 So far, ``LuckyController`` doesn't extend any base class. The easiest way
 to use Twig - or many other tools in Symfony - is to extend Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
-    
+
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
@@ -566,9 +566,9 @@ Ok, time to finish mastering the fundamentals by reading these chapters:
 * :doc:`/book/routing`
 * :doc:`/book/templating`
 
-Then, learn about Symfony's :doc:`service container </book/service_container>`
+Then, in the :doc:`Symfony Book </book/index>`, learn about the :doc:`service container </book/service_container>`,
 the :doc:`form system </book/forms>`, using :doc:`Doctrine </book/doctrine>`
-if you need to query a database and more. in the :doc:`Symfony Book </book/index>`.
+(if you need to query a database) and more!
 
 There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
 "how to" articles to solve *a lot* of problems.

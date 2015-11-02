@@ -1,4 +1,4 @@
-﻿DependencyInjection
+DependencyInjection
 ===================
 
 .. toctree::

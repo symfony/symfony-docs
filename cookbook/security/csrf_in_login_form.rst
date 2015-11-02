@@ -26,6 +26,8 @@ provider available in the Security component:
 
         # app/config/security.yml
         security:
+            # ...
+
             firewalls:
                 secured_area:
                     # ...
@@ -35,17 +37,19 @@ provider available in the Security component:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <firewall name="secured_area">
                     <!-- ... -->
-
                     <form-login csrf-provider="security.csrf.token_manager" />
                 </firewall>
             </config>
@@ -55,15 +59,17 @@ provider available in the Security component:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
                     'form_login' => array(
                         // ...
                         'csrf_provider' => 'security.csrf.token_manager',
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         ));
 
 The Security component can be configured further, but this is all information
@@ -83,7 +89,7 @@ using the login form:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+        {# src/AppBundle/Resources/views/Security/login.html.twig #}
 
         {# ... #}
         <form action="{{ path('login_check') }}" method="post">
@@ -98,7 +104,7 @@ using the login form:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
@@ -124,6 +130,8 @@ After this, you have protected your login form against CSRF attacks.
 
             # app/config/security.yml
             security:
+                # ...
+
                 firewalls:
                     secured_area:
                         # ...
@@ -134,19 +142,22 @@ After this, you have protected your login form against CSRF attacks.
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- app/config/security.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <srv:container xmlns="http://symfony.com/schema/dic/security"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <config>
+                    <!-- ... -->
+
                     <firewall name="secured_area">
                         <!-- ... -->
-
                         <form-login csrf-parameter="_csrf_security_token"
-                            intention="a_private_string" />
+                            intention="a_private_string"
+                        />
                     </firewall>
                 </config>
             </srv:container>
@@ -155,6 +166,8 @@ After this, you have protected your login form against CSRF attacks.
 
             // app/config/security.php
             $container->loadFromExtension('security', array(
+                // ...
+
                 'firewalls' => array(
                     'secured_area' => array(
                         // ...
@@ -162,10 +175,10 @@ After this, you have protected your login form against CSRF attacks.
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
                             'intention'      => 'a_private_string',
-                        )
-                    )
-                )
+                        ),
+                    ),
+                ),
             ));
 
-.. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`Forging Login Requests`: http://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
+.. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`Forging Login Requests`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests

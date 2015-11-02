@@ -13,24 +13,44 @@ to use HTTPS then you could use the following configuration:
 
         .. code-block:: yaml
 
-            access_control:
-                - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
+            # app/config/security.yml
+            security:
+                # ...
+
+                access_control:
+                    - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
 
         .. code-block:: xml
 
-            <access-control>
-                <rule path="^/secure" role="ROLE_ADMIN" requires_channel="https" />
-            </access-control>
+            <!-- app/config/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <config>
+                    <!-- ... -->
+
+                    <rule path="^/secure" role="ROLE_ADMIN" requires_channel="https" />
+                </config>
+            </srv:container>
 
         .. code-block:: php
 
-            'access_control' => array(
-                array(
-                    'path'             => '^/secure',
-                    'role'             => 'ROLE_ADMIN',
-                    'requires_channel' => 'https',
+            // app/config/security.php
+            $container->loadFromExtension('security', array(
+                // ...
+
+                'access_control' => array(
+                    array(
+                        'path'             => '^/secure',
+                        'role'             => 'ROLE_ADMIN',
+                        'requires_channel' => 'https',
+                    ),
                 ),
-            ),
+            ));
 
 The login form itself needs to allow anonymous access, otherwise users will
 be unable to authenticate. To force it to use HTTPS you can still use
@@ -39,20 +59,40 @@ role:
 
 .. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
 
             access_control:
                 - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
-        .. code-block:: xml
+    .. code-block:: xml
 
-            <access-control>
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
                 <rule path="^/login"
-                      role="IS_AUTHENTICATED_ANONYMOUSLY"
-                      requires_channel="https" />
-            </access-control>
+                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    requires_channel="https"
+                />
+            </config>
+        </srv:container>
 
-        .. code-block:: php
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
 
             'access_control' => array(
                 array(
@@ -61,6 +101,7 @@ role:
                     'requires_channel' => 'https',
                 ),
             ),
+        ));
 
 It is also possible to specify using HTTPS in the routing configuration,
 see :doc:`/cookbook/routing/scheme` for more details.

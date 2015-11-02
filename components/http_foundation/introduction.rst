@@ -22,7 +22,7 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/HttpFoundation).
+* Use the official Git repository (https://github.com/symfony/http-foundation).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -69,7 +69,7 @@ can be accessed via several public properties:
 
 * ``server``: equivalent of ``$_SERVER``;
 
-* ``headers``: mostly equivalent to a sub-set of ``$_SERVER``
+* ``headers``: mostly equivalent to a subset of ``$_SERVER``
   (``$request->headers->get('User-Agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
@@ -90,7 +90,7 @@ instance (or a sub-class of), which is a data holder class:
 * ``headers``: :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`.
 
 All :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instances have
-methods to retrieve and update its data:
+methods to retrieve and update their data:
 
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`
     Returns the parameters.
@@ -157,16 +157,16 @@ sometimes, you might want to get the value for the "original" parameter name:
 :method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
 argument::
 
-        // the query string is '?foo[bar]=bar'
+    // the query string is '?foo[bar]=bar'
 
-        $request->query->get('foo');
-        // returns array('bar' => 'bar')
+    $request->query->get('foo');
+    // returns array('bar' => 'bar')
 
-        $request->query->get('foo[bar]');
-        // returns null
+    $request->query->get('foo[bar]');
+    // returns null
 
-        $request->query->get('foo[bar]', null, true);
-        // returns 'bar'
+    $request->query->get('foo[bar]', null, true);
+    // returns 'bar'
 
 .. _component-foundation-attributes:
 
@@ -255,8 +255,8 @@ by using the following methods:
 :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
     Returns the list of accepted encodings ordered by descending quality.
 
-  .. versionadded:: 2.4
-      The ``getEncodings()`` method was introduced in Symfony 2.4.
+    .. versionadded:: 2.4
+        The ``getEncodings()`` method was introduced in Symfony 2.4.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
@@ -464,8 +464,8 @@ represented by a PHP callable instead of a string::
     you must call ``ob_flush()`` before ``flush()``.
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
-    server might also buffer based on its configuration. Even more, if you
-    use fastcgi, buffering can't be disabled at all.
+    server might also buffer based on its configuration. What's more, if you
+    use FastCGI, buffering can't be disabled at all.
 
 .. _component-http-foundation-serving-files:
 
@@ -515,9 +515,16 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 .. versionadded:: 2.6
     The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
 
-It is possible to delete the file after the request is sent with the 
+It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
+
+.. note::
+
+    If you *just* created the file during this same request, the file *may* be sent
+    without any content. This may be due to cached file stats that return zero for
+    the size of the file. To fix this issue, call ``clearstatcache(false, $file)``
+    with the path to the binary file.
 
 .. _component-http-foundation-json-response:
 

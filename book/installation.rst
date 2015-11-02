@@ -98,9 +98,6 @@ optional second argument of the ``new`` command:
     $ symfony new my_project_name 2.3.26
     $ symfony new my_project_name 2.6.5
 
-    # use the most recent LTS (Long Term Support) version
-    $ symfony new my_project_name lts
-
 If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
 pass ``lts`` as the second argument of the ``new`` command:
 
@@ -169,9 +166,8 @@ browsing the project directory and executing this command:
     $ cd my_project_name/
     $ php app/console server:run
 
-Then, open your browser and access the ``http://localhost:8000/app/example``
-URL to see the
-Welcome page of Symfony:
+Then, open your browser and access the ``http://localhost:8000/`` URL to see the
+Welcome Page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png
    :align: center
@@ -243,7 +239,7 @@ If there are any issues, correct them now before moving on.
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+        $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
         $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
@@ -258,7 +254,7 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+        $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
         $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
         $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 
@@ -410,12 +406,7 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
-.. note::
-
-    If you want to remove the sample code from your distribution, take a look
-    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
-
-.. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
+.. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot

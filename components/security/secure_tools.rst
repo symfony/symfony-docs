@@ -21,11 +21,6 @@ algorithm; you can use the same strategy in your own code thanks to the
     // is some known string (e.g. password) equal to some user input?
     $bool = StringUtils::equals($knownString, $userInput);
 
-.. caution::
-
-    To avoid timing attacks, the known string must be the first argument
-    and the user-entered string the second.
-
 Generating a Secure random Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -67,4 +62,4 @@ to work correctly. Just pass a file name to enable it::
     solution is to hash the value returned by ``nextBytes()`` (to do that, you
     can use a simple ``md5()`` PHP function).
 
-.. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
+.. _`Timing attack`: https://en.wikipedia.org/wiki/Timing_attack

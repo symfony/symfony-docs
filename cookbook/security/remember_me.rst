@@ -15,17 +15,20 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
     .. code-block:: yaml
 
         # app/config/security.yml
-        firewalls:
-            default:
-                # ...
-                remember_me:
-                    key:      "%secret%"
-                    lifetime: 604800 # 1 week in seconds
-                    path:     /
-                    # by default, the feature is enabled by checking a
-                    # checkbox in the login form (see below), uncomment the
-                    # below lines to always enable it.
-                    #always_remember_me: true
+        security:
+            # ...
+
+            firewalls:
+                default:
+                    # ...
+                    remember_me:
+                        secret:   "%secret%"
+                        lifetime: 604800 # 1 week in seconds
+                        path:     /
+                        # by default, the feature is enabled by checking a
+                        # checkbox in the login form (see below), uncomment the
+                        # following line to always enable it.
+                        #always_remember_me: true
 
     .. code-block:: xml
 
@@ -38,17 +41,19 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <firewall name="default">
                     <!-- ... -->
 
+                    <!-- 604800 is 1 week in seconds -->
+                    <remember-me
+                        secret="%secret%"
+                        lifetime="604800"
+                        path="/" />
                     <!-- by default, the feature is enabled by checking a checkbox
                          in the login form (see below), add always-remember-me="true"
                          to always enable it. -->
-                    <remember-me
-                        key      = "%secret%"
-                        lifetime = "604800" <!-- 1 week in seconds -->
-                        path     = "/"
-                    />
                 </firewall>
             </config>
         </srv:container>
@@ -57,16 +62,18 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
+            // ...
+
             'firewalls' => array(
                 'default' => array(
                     // ...
                     'remember_me' => array(
-                        'key'      => '%secret%',
+                        'secret'   => '%secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
                         // by default, the feature is enabled by checking a
                         // checkbox in the login form (see below), uncomment
-                        // the below lines to always enable it.
+                        // the following line to always enable it.
                         //'always_remember_me' => true,
                     ),
                 ),
@@ -75,7 +82,10 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``key`` (**required**)
+``secret`` (**required**)
+    .. versionadded:: 2.8
+        Prior to Symfony 2.8, the ``secret`` option was named ``key``.
+
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 

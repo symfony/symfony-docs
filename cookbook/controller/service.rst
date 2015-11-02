@@ -122,9 +122,13 @@ the route ``_controller`` value:
     defined as a service. See the `FrameworkExtraBundle documentation`_ for
     details.
 
-.. versionadded:: 2.6
-    If your controller service implements the ``__invoke`` method, you can simply refer to the service id
-    (``app.hello_controller``).
+.. tip::
+
+    If your controller implements the ``__invoke()`` method, you can simply
+    refer to the service id (``app.hello_controller``).
+
+    .. versionadded:: 2.6
+        Support for ``__invoke()`` was introduced in Symfony 2.6.
 
 Alternatives to base Controller Methods
 ---------------------------------------
@@ -327,7 +331,6 @@ controller:
     ``getRequest`` has been deprecated. Instead, have an argument to your
     controller action method called ``Request $request``. The order of the
     parameters is not important, but the typehint must be provided.
-
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php

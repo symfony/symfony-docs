@@ -269,6 +269,11 @@ page on GitHub and click on ``Details``.
     ``.platform.app.yaml``, ``.platform/services.yaml`` and 
     ``.platform/routes.yaml`` allow `Platform.sh`_ to build Pull Requests.
 
+.. note::
+
+    Only Pull Requests to maintained branches are automatically built by
+    Platform.sh. Check the `roadmap`_ for maintained branches.
+
 Minor Changes (e.g. Typos)
 --------------------------
 
@@ -293,11 +298,6 @@ Why Do my Changes Take so Long to Be Reviewed and/or Merged?
 Please be patient. It can take up to several days before your pull request can
 be fully reviewed. After merging the changes, it could take again several hours
 before your changes appear on the symfony.com website.
-
-What If I Want to Translate Some Documentation into my Language?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Read the dedicated :doc:`document </contributing/documentation/translations>`.
 
 Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -346,3 +346,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh
+.. _`roadmap`: https://symfony.com/roadmap

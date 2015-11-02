@@ -324,8 +324,8 @@ you can control. The following configuration options exist for a mapping:
 type
 ....
 
-One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This specifies
-which type of metadata type your mapping uses.
+One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This
+specifies which type of metadata type your mapping uses.
 
 dir
 ...
@@ -339,18 +339,18 @@ that exist in the DIC (for example ``%kernel.root_dir%``).
 prefix
 ......
 
-A common namespace prefix that all entities of this mapping share. This prefix
-should never conflict with prefixes of other defined mappings otherwise some
-of your entities cannot be found by Doctrine. This option defaults to the
-bundle namespace + ``Entity``, for example for an application bundle called
-AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
+A common namespace prefix that all entities of this mapping share. This
+prefix should never conflict with prefixes of other defined mappings otherwise
+some of your entities cannot be found by Doctrine. This option defaults
+to the bundle namespace + ``Entity``, for example for an application bundle
+called AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
 
 alias
 .....
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
-to be used in DQL queries or for Repository access. When using a bundle the
-alias defaults to the bundle name.
+to be used in DQL queries or for Repository access. When using a bundle
+the alias defaults to the bundle name.
 
 is_bundle
 .........
@@ -358,8 +358,8 @@ is_bundle
 This option is a derived value from ``dir`` and by default is set to ``true``
 if dir is relative proved by a ``file_exists()`` check that returns ``false``.
 It is ``false`` if the existence check returns ``true``. In this case an
-absolute path was specified and the metadata files are most likely in a directory
-outside of a bundle.
+absolute path was specified and the metadata files are most likely in a
+directory outside of a bundle.
 
 .. index::
     single: Configuration; Doctrine DBAL
@@ -448,14 +448,15 @@ The following block shows all possible configuration keys:
 
 .. note::
 
-    The ``server_version`` option was added in Doctrine DBAL 2.5, which is used
-    by DoctrineBundle 1.3. The value of this option should match your database
-    server version (use ``postgres -V`` or ``psql -V`` command to find
-    your PostgreSQL version and ``mysql -V`` to get your MySQL version).
+    The ``server_version`` option was added in Doctrine DBAL 2.5, which
+    is used by DoctrineBundle 1.3. The value of this option should match
+    your database server version (use ``postgres -V`` or ``psql -V`` command
+    to find your PostgreSQL version and ``mysql -V`` to get your MySQL
+    version).
 
-    If you don't define this option and you haven't created your database yet,
-    you may get ``PDOException`` errors because Doctrine will try to guess the
-    database server version automatically and none is available.
+    If you don't define this option and you haven't created your database
+    yet, you may get ``PDOException`` errors because Doctrine will try to
+    guess the database server version automatically and none is available.
 
 If you want to configure multiple connections in YAML, put them under the
 ``connections`` key and give them a unique name:
@@ -524,24 +525,26 @@ Keep in mind that you can't use both syntaxes at the same time.
 Custom Mapping Entities in a Bundle
 -----------------------------------
 
-Doctrine's ``auto_mapping`` feature loads annotation configuration from the
-``Entity/`` directory of each bundle *and* looks for other formats (e.g. YAML, XML)
-in the ``Resources/config/doctrine`` directory.
+Doctrine's ``auto_mapping`` feature loads annotation configuration from
+the ``Entity/`` directory of each bundle *and* looks for other formats (e.g.
+YAML, XML) in the ``Resources/config/doctrine`` directory.
 
-If you store metadata somewhere else in your bundle, you can define your own mappings,
-where you tell Doctrine exactly *where* to look, along with some other configurations.
+If you store metadata somewhere else in your bundle, you can define your
+own mappings, where you tell Doctrine exactly *where* to look, along with
+some other configurations.
 
-If you're using the ``auto_mapping`` configuration, you just need to overwrite the
-configurations you want. In this case it's important that the key of the mapping 
-configurations corresponds to the name of the bundle.
+If you're using the ``auto_mapping`` configuration, you just need to overwrite
+the configurations you want. In this case it's important that the key of
+the mapping configurations corresponds to the name of the bundle.
 
-For example, suppose you decide to store your ``XML`` configuration for ``AppBundle`` entities
-in the ``@AppBundle/SomeResources/config/doctrine`` directory instead:
+For example, suppose you decide to store your ``XML`` configuration for
+``AppBundle`` entities in the ``@AppBundle/SomeResources/config/doctrine``
+directory instead:
 
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         doctrine:
             # ...
             orm:
@@ -552,22 +555,22 @@ in the ``@AppBundle/SomeResources/config/doctrine`` directory instead:
                     AppBundle:
                         type: xml
                         dir: SomeResources/config/doctrine
-                        
+
     .. code-block:: xml
-    
+
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-        
+
             <doctrine:config>
                 <doctrine:orm auto-mapping="true">
                     <mapping name="AppBundle" dir="SomeResources/config/doctrine" type="xml" />
                 </doctrine:orm>
             </doctrine:config>
         </container>
-        
+
     .. code-block:: php
-    
+
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
                 'auto_mapping' => true,
@@ -582,13 +585,14 @@ Mapping Entities Outside of a Bundle
 
 You can also create new mappings, for example outside of the Symfony folder.
 
-For example, the following looks for entity classes in the ``App\Entity`` namespace in the
-``src/Entity`` directory and gives them an ``App`` alias (so you can say things like ``App:Post``):
+For example, the following looks for entity classes in the ``App\Entity``
+namespace in the ``src/Entity`` directory and gives them an ``App`` alias
+(so you can say things like ``App:Post``):
 
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         doctrine:
                 # ...
                 orm:
@@ -597,20 +601,20 @@ For example, the following looks for entity classes in the ``App\Entity`` namesp
                         # ...
                         SomeEntityNamespace:
                             type: annotation
-                            dir: %kernel.root_dir%/../src/Entity
+                            dir: "%kernel.root_dir%/../src/Entity"
                             is_bundle: false
                             prefix: App\Entity
                             alias: App
-                            
+
     .. code-block:: xml
-    
+
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-        
+
             <doctrine:config>
                 <doctrine:orm>
-                    <mapping name="SomeEntityNamespace" 
+                    <mapping name="SomeEntityNamespace"
                         type="annotation"
                         dir="%kernel.root_dir%/../src/Entity"
                         is-bundle="false"
@@ -620,9 +624,9 @@ For example, the following looks for entity classes in the ``App\Entity`` namesp
                 </doctrine:orm>
             </doctrine:config>
         </container>
-        
+
     .. code-block:: php
-            
+
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
                 'auto_mapping' => true,
@@ -641,31 +645,33 @@ For example, the following looks for entity classes in the ``App\Entity`` namesp
 Detecting a Mapping Configuration Format
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the ``type`` on the bundle configuration isn't set,
-the DoctrineBundle will try to detect the correct mapping configuration format for
-the bundle.
+If the ``type`` on the bundle configuration isn't set, the DoctrineBundle
+will try to detect the correct mapping configuration format for the bundle.
 
-DoctrineBundle will look for files matching ``*.orm.[FORMAT]`` (e.g. ``Post.orm.yml``)
-in the configured ``dir`` of your mapping (if you're mapping a bundle, then ``dir`` is
-relative to the bundle's directory).
+DoctrineBundle will look for files matching ``*.orm.[FORMAT]`` (e.g.
+``Post.orm.yml``) in the configured ``dir`` of your mapping (if you're mapping
+a bundle, then ``dir`` is relative to the bundle's directory).
 
 The bundle looks for (in this order) XML, YAML and PHP files.
-Using the ``auto_mapping`` feature, every bundle can have only one configuration format.
-The bundle will stop as soon as it locates one.
+Using the ``auto_mapping`` feature, every bundle can have only one
+configuration format. The bundle will stop as soon as it locates one.
 
 If it wasn't possible to determine a configuration format for a bundle,
-the DoctrineBundle will check if there is an ``Entity`` folder in the bundle's root directory.
-If the folder exist, Doctrine will fall back to using an annotation driver.
+the DoctrineBundle will check if there is an ``Entity`` folder in the bundle's
+root directory. If the folder exist, Doctrine will fall back to using an
+annotation driver.
 
-Default Value of dir
+Default Value of Dir
 ~~~~~~~~~~~~~~~~~~~~
 
-If ``dir`` is not specified, then its default value depends on which configuration driver is being used.
-For drivers that rely on the PHP files (annotation, staticphp) it will
-be ``[Bundle]/Entity``. For drivers that are using configuration
-files (XML, YAML, ...) it will be ``[Bundle]/Resources/config/doctrine``.
+If ``dir`` is not specified, then its default value depends on which configuration
+driver is being used. For drivers that rely on the PHP files (annotation,
+staticphp) it will be ``[Bundle]/Entity``. For drivers that are using
+configuration files (XML, YAML, ...) it will be
+``[Bundle]/Resources/config/doctrine``.
 
-If the ``dir`` configuration is set and the ``is_bundle`` configuration is ``true``,
-the DoctrineBundle will prefix the ``dir`` configuration with the path of the bundle.
+If the ``dir`` configuration is set and the ``is_bundle`` configuration
+is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
+the path of the bundle.
 
 .. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html

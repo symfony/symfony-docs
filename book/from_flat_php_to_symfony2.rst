@@ -266,7 +266,7 @@ an individual blog result based on a given id::
         $link = open_database_connection();
 
         $id = intval($id);
-        $query = 'SELECT date, title, body FROM post WHERE id = '.$id;
+        $query = 'SELECT created_at, title, body FROM post WHERE id = '.$id;
         $result = mysql_query($query);
         $row = mysql_fetch_assoc($result);
 
@@ -297,7 +297,7 @@ the individual blog post:
     <?php ob_start() ?>
         <h1><?php echo $post['title'] ?></h1>
 
-        <div class="date"><?php echo $post['date'] ?></div>
+        <div class="date"><?php echo $post['created_at'] ?></div>
         <div class="body">
             <?php echo $post['body'] ?>
         </div>
@@ -319,6 +319,8 @@ an additional file or perform some other global task (e.g. enforce security)?
 As it stands now, that code would need to be added to every controller file.
 If you forget to include something in one file, hopefully it doesn't relate
 to security...
+
+.. _book-from_flat_php-front-controller:
 
 A "Front Controller" to the Rescue
 ----------------------------------
@@ -755,8 +757,8 @@ Learn more from the Cookbook
 
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`download Composer`: https://getcomposer.org/download/
-.. _`Routing`: https://github.com/symfony/Routing
-.. _`Templating`: https://github.com/symfony/Templating
+.. _`Routing`: https://github.com/symfony/routing
+.. _`Templating`: https://github.com/symfony/templating
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: https://www.varnish-cache.org/
