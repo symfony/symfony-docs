@@ -431,8 +431,8 @@ invokes the service container extension inside the FrameworkBundle:
         # app/config/config.yml
         framework:
             secret:          xxxxxxxxxx
-            form:            true
-            csrf_protection: true
+            form:
+                csrf_protection: ~
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             # ...
 

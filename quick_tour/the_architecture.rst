@@ -151,8 +151,8 @@ or PHP. Have a look at this sample of the default Symfony configuration:
         router:
             resource: "%kernel.root_dir%/config/routing.yml"
             strict_requirements: "%kernel.debug%"
-        form:            true
-        csrf_protection: true
+        form:
+            csrf_protection: ~
         validation:      { enable_annotations: true }
         templating:      { engines: ['twig'] }
         default_locale:  "%locale%"
