@@ -625,7 +625,7 @@ form_theme
     **type**: ``array`` | ``string``
 
 Sets the resources to override the form theme for the given form view instance.
-You can use ``_self`` as resources to set it to the current resource. More
+You can use ``{% form_theme %}`` as resources to set it to the current resource. More
 information in :doc:`/cookbook/form/form_customization`.
 
 trans
