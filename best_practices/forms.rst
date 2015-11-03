@@ -129,6 +129,10 @@ some developers configure form buttons in the controller::
             ));
 
             // ...
+
+            return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+              'form' => $form->createView(),
+            ));
         }
     }
 
