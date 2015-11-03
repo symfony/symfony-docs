@@ -374,7 +374,7 @@ a ``number.html.twig`` file inside of it:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# app/Resources/views/lucky/number.html.twig #}
         {% extends 'base.html.twig' %}

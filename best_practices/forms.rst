@@ -137,7 +137,7 @@ This is also an important error, because you are mixing presentation markup
 always a good practice to follow, so put all the view-related things in the
 view layer:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -157,7 +157,7 @@ One of the simplest ways - which is especially useful during development -
 is to render the form tags and use ``form_widget()`` to render all of the
 fields:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
         {{ form_widget(form) }}

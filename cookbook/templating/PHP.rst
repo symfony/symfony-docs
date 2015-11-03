@@ -94,7 +94,7 @@ You can also use the `@Template`_ shortcut to render the default
             $this->render('AppBundle:Default:index.html.twig');
         }
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# inside a Twig template, namespaced templates work as expected #}
         {{ include('@App/Default/index.html.twig') }}

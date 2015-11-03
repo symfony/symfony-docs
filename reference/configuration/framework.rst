@@ -859,7 +859,7 @@ For example, suppose you have the following:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
@@ -1250,7 +1250,7 @@ Now you can use the ``avatars`` package in your templates:
 
 .. configuration-block:: php
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <img src="{{ asset('...', 'avatars') }}">
 

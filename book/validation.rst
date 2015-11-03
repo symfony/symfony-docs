@@ -175,7 +175,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/author/validation.html.twig #}
         <h3>The author has the following errors</h3>

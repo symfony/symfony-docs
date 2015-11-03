@@ -75,7 +75,7 @@ to show a link to exit impersonation:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
             <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>

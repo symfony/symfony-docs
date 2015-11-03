@@ -87,7 +87,7 @@ using the login form:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# src/AppBundle/Resources/views/Security/login.html.twig #}
 

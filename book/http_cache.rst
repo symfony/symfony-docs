@@ -1073,7 +1073,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# app/Resources/views/static/about.html.twig #}
 

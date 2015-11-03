@@ -642,7 +642,7 @@ the following code will render the ``notice`` message:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
