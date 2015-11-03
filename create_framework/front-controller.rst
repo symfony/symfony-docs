@@ -57,7 +57,7 @@ And for the "Goodbye" page::
 
 We have indeed moved most of the shared code into a central place, but it does
 not feel like a good abstraction, does it? We still have the ``send()`` method
-for all pages, our pages do not look like templates, and we are still not able
+for all pages, our pages do not look like templates and we are still not able
 to test this code properly.
 
 Moreover, adding a new page means that we need to create a new PHP script,

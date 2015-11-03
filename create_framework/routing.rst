@@ -82,7 +82,7 @@ of default values for route attributes (``array('name' => 'World')``).
     :doc:`Routing component documentation </components/routing/introduction>` to
     learn more about its many features like URL generation, attribute
     requirements, HTTP method enforcements, loaders for YAML or XML files,
-    dumpers to PHP or Apache rewrite rules for enhanced performance, and much
+    dumpers to PHP or Apache rewrite rules for enhanced performance and much
     more.
 
 Based on the information stored in the ``RouteCollection`` instance, a
