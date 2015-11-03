@@ -115,7 +115,7 @@ If your Gmail account uses 2-Step-Verification, you must `generate an App passwo
 to use for your ``mailer_password`` parameter. You must also ensure that you
 `allow less secure apps to access your Gmail account`_.
 
-See the :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer.rst>`
+See the :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer>`
 for more details.
 
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
