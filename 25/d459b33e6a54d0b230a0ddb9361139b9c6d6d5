@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-12T16:10:11Z
+
+:+1: some day PHP will support named arguments ... but that day is far far away :)
+
+By the way, you are on a roll proposing changes to the Symfony docs. That's great! It's rare to have a certified Symfony developer like you working on the docs.
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-12T16:20:00Z
+
+It has been a long while since I have reread the Symfony Book, so I have been doing this and while doing it I have been noticing a number of errors/things which can be improved and it is easy to send a PR to update the docs
