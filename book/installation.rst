@@ -98,16 +98,16 @@ optional second argument of the ``new`` command:
     $ symfony new my_project_name 2.3.26
     $ symfony new my_project_name 2.6.5
 
-If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
-pass ``lts`` as the second argument of the ``new`` command:
+    # use a beta or RC version (useful for testing new Symfony versions)
+    $ symfony new my_project 2.7.0-BETA1
+    $ symfony new my_project 2.7.0-RC1
+
+The installer also supports a special version called ``lts`` which installs the
+most recent :ref:`Symfony LTS version <releases-lts>` available:
 
 .. code-block:: bash
 
-    # Linux, Mac OS X
     $ symfony new my_project_name lts
-
-    # Windows
-    c:\projects\> php symfony new my_project_name lts
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one

@@ -208,7 +208,13 @@ impact. Want to know how to use the generator? Insanely easy::
 The code should be self-explanatory; and thanks to the context, you can even
 generate absolute URLs::
 
-    echo $generator->generate('hello', array('name' => 'Fabien'), true);
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+    echo $generator->generate(
+        'hello',
+        array('name' => 'Fabien'),
+        UrlGeneratorInterface::ABSOLUTE_URL
+    );
     // outputs something like http://example.com/somewhere/hello/Fabien
 
 .. tip::
