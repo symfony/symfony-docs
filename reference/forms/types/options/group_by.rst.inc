@@ -6,14 +6,14 @@ group_by
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``null``
 
-Returns the grouping used for the choices. Can be an array/Traversable, a
-callable (like for ``choice_label``) or a property path.
+Returns the grouping used for the choices. Can be an array/Traversable,
+a callable (like for ``choice_label``) or a property path.
 
-The return values of the callable/property path are used as group labels. If
-``null`` is returned, a choice is not grouped.
+The return values of the callable/property path are used as group labels.
+If ``null`` is returned, a choice is not grouped.
 
-If ``null``, the structure of the ``choices`` array is used to construct the
-groups::
+If ``null``, the structure of the ``choices`` array is used to construct
+the groups::
 
     $builder->add('attending', 'choice', array(
         'choices' => array(

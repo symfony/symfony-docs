@@ -77,8 +77,8 @@ of checkboxes depending on the ``expanded`` option::
         'multiple' => true,
     ));
 
-If you rely on your option value attribute (e.g. for JavaScript) you need to
-set ``choice_value``, otherwise the option values will be mapped to integer
+If you rely on your option value attribute (e.g. for JavaScript) you need
+to set ``choice_value``, otherwise the option values will be mapped to integer
 values::
 
     $builder->add('availability', 'choice', array(
@@ -94,8 +94,8 @@ values::
         'multiple' => true,
     ));
 
-You can also use the ``choice_loader`` option, which can be used to load the
-list only partially in cases where a fully-loaded list is not necessary.
+You can also use the ``choice_loader`` option, which can be used to load
+the list only partially in cases where a fully-loaded list is not necessary.
 
 .. _forms-reference-choice-tags:
 
@@ -130,12 +130,14 @@ choices_as_values
 
 .. versionadded:: 2.7
 
-    The ``choices_as_values`` option of ChoiceType was introduced in Symfony 2.7.
+    The ``choices_as_values`` option of ChoiceType was introduced in Symfony
+    2.7.
 
-The ``choices_as_values`` option was introduced to ensure backward compatibility with the
-modified handling of the ``choices`` optio. Being set to ``false`` the choices array
-will be read as values mapping the keys. Setting the option to ``true`` will enable the new
-handling of the choices mapping keys to values.
+The ``choices_as_values`` option was introduced to ensure backward compatibility
+with the modified handling of the ``choices`` optio. Being set to ``false``
+the choices array will be read as values mapping the keys. Setting the option
+to ``true`` will enable the new handling of the choices mapping keys to
+values.
 
 * Before 2.7::
 
@@ -159,9 +161,9 @@ handling of the choices mapping keys to values.
 
 .. caution::
 
-    The ``choices_as_values`` option will be removed in Symfony 3.0, where
-    the choices will be passed in the values of the ``choices`` option by
-    default.
+    The ``choices_as_values`` option will be removed in Symfony 3.0,
+    where the choices will be passed in the values of the ``choices``
+    option by default.
 
 choice_list
 ~~~~~~~~~~~
@@ -210,10 +212,11 @@ choice_loader
 
 .. versionadded:: 2.7
 
-    The ``choice_loader`` option of ChoiceType was introduced in Symfony 2.7.
+    The ``choice_loader`` option of ChoiceType was introduced in Symfony
+    2.7.
 
-The choice loader can be used to load the list only partially in cases where a
-fully-loaded list is not necessary.
+The choice loader can be used to load the list only partially in cases where
+a fully-loaded list is not necessary.
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
