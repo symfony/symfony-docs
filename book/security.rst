@@ -1380,8 +1380,8 @@ FriendsOfPHP organization.
 
 .. note::
 
-    To enable the ``security:check`` command, you need to add the
-    `SensioDistributionBundle`_ to your dependencies.
+    To enable the ``security:check`` command, make sure the
+    `SensioDistributionBundle`_ is installed.
 
     .. code-block:: bash
 
