@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-18T22:02:57Z
+
+Hi @ceithir and thank you so much for providing this fix. I agree with making the change to the `Callback` constraint. However, you please revert the changes that reintroduce the AcmeBlogBundle examples and keep the AppBundle references instead?
+
+---------------------------------------------------------------------------
+
+by ceithir at 2015-10-19T13:22:16Z
+
+Done.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-20T18:10:49Z
+
+:+1:
