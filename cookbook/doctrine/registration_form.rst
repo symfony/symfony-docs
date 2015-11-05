@@ -298,10 +298,10 @@ Next, create the template:
         {# app/Resources/views/registration/register.html.twig #}
 
         {{ form_start(form) }}
-            {{ form_row('form.username') }}
-            {{ form_row('form.email') }}
-            {{ form_row('form.plainPassword.first') }}
-            {{ form_row('form.plainPassword.second') }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.plainPassword.first) }}
+            {{ form_row(form.plainPassword.second) }}
 
             <button type="submit">Register!</button>
         {{ form_end(form) }}
