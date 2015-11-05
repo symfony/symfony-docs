@@ -1,0 +1,77 @@
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-22T10:25:23Z
+
+I intended to merge this with branch 2.3, not sure what I did wrong
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-22T10:38:25Z
+
+:+1: for the fixed typo.
+
+Regarding the title case, Symfony uses a very strange title case variant which is mentioned here (http://symfony.com/doc/current/contributing/documentation/standards.html#english-language-standards). My guess is that this title:
+
+```
+How to set up before and after Filters
+```
+
+Should be spelled instead as:
+
+```
+How to Set Up Before and After Filters
+```
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-22T10:52:20Z
+
+@javiereguiluz You are right about these weird english capitalization rules, changed to what you suggested
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-22T13:02:38Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-22T19:29:13Z
+
+Actually, aren't "before" and "after" closed class words and need to be lowercased?
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-23T08:57:40Z
+
+Maybe you are right... what about "up"? Probably it should not be uppercase either.
+OMG this is turning more complicated than what it sounded :-)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-23T09:07:59Z
+
+I am always confused about this rule too. :) Though I think "Up" should be uppercased as it is part of the verb.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-26T21:48:18Z
+
+@GuGuss Is there an issue with our service hook or is there some other thing going wrong with our platform.sh integration?
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-27T09:25:06Z
+
+I found these pages with rules for capitalization:
+
+http://www.grammarcheck.net/capitalization-in-titles-101/
+http://web.archive.org/web/20130117225252/http://writersblock.ca/tips/monthtip/tipmar98.htm
+
+According to them the capitalization is correct now
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2015-10-27T11:11:14Z
+
+@xabbuh You're right this time ;) PRs aren't built anymore. I'll check what's happening.
