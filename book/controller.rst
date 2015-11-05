@@ -605,12 +605,11 @@ Flash Messages
 ~~~~~~~~~~~~~~
 
 You can also store special messages, called "flash" messages, on the user's
-session. By design, flash messages are meant to be processed exactly once. This
-means that they vanish from the session automatically as soon as they are
-retrieved. This feature makes "flash" messages particularly suited for storing
-user notifications.
+session. By design, flash messages are meant to be used exactly once: they vanish
+from the session automatically as soon as you retrieve them. This feature makes
+"flash" messages particularly great for storing user notifications.
 
-Consider the following form processing example::
+For example, imagine you're processing a form submission::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -635,19 +634,19 @@ Consider the following form processing example::
     }
 
 After processing the request, the controller sets a flash message in the session
-and then redirects. The message key (``notice`` in this example) can be freely
-chosen and is used to retrieve the message content.
+and then redirects. The message key (``notice`` in this example) can be anything:
+you'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
-the following code will render the messages stored under the ``notice`` key:
+read any flash messages from the session::
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% for flashMessage in app.session.flashbag.get('notice') %}
+        {% for flash_message in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
-                {{ flashMessage }}
+                {{ flash_message }}
             </div>
         {% endfor %}
 
