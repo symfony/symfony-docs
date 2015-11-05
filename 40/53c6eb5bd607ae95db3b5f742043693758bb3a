@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by Tobion at 2015-10-20T10:17:01Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-22T07:44:46Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-10-23T09:56:53Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-11-05T16:52:13Z
+
+These changes are a bit misleading because they are targeted at Symfony 2.3 but this change is deprecated in 2.8 and mandatory since 3.0.
+
+However, in this case, I agree with committing the changes to 2.3 and up. Thanks.
+
+:+1:
