@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-14T14:54:16Z
+
+Added the missing use statements
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-18T08:33:06Z
+
+:+1:
+
+@xabbuh can you please restart this travis build
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-18T08:55:26Z
+
+@carlos-granados Thank you for your good job. I just left you some last minor comment and restarted the Travis build (it's green now :)). We also have at least one other routing config example on that page (when talking about hinclude.js). Would you like to update that as well?
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-18T08:57:07Z
+
+Ok, will look at it tomorrow
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2015-10-19T10:32:29Z
+
+@xabbuh I added the missing namespace statements. In the case of about hinclude.js examples, they are not routing examples, they are config examples, so there is no annotations code that can be added
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-19T10:35:12Z
+
+You are right. I have must have confused it. :+1:
