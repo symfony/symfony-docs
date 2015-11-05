@@ -4,7 +4,7 @@
 Switching the Profiler Storage
 ==============================
 
-By default the profile stores the collected data in files in the cache directory.
+By default the profile stores the collected data in files in the ``%kernel.cache_dir%/profiler/`` directory.
 You can control the storage being used through the ``dsn``, ``username``,
 ``password`` and ``lifetime`` options. For example, the following configuration
 uses MySQL as the storage for the profiler with a lifetime of one hour:
