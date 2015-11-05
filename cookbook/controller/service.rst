@@ -269,7 +269,12 @@ controller:
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl` (service: ``router``)
     .. code-block:: php
 
-       $router->generate($route, $params, $absolute);
+       $router->generate($route, $params, $referenceType);
+
+    .. note::
+
+        The ``$referenceType`` argument must be one of the constants defined
+        in the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface`.
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine` (service: ``doctrine``)
 
