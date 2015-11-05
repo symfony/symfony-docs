@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-18T08:49:40Z
+
+@bizmate could you please finish this PR?
+
+---------------------------------------------------------------------------
+
+by bizmate at 2015-10-18T20:42:23Z
+
+@OskarStark I think this is ready now.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-19T06:54:08Z
+
+@xabbuh can you please review this finally?
+
+IMO this PR is :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-19T21:19:36Z
+
+I left a few minor comments, but we can easily apply them when merging this. :+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-10-20T00:42:16Z
+
+@bizmate what was your reason for opening this PR? Usually, we don't include installation instructions in the book for bundles that come with the SE. I'm not necessarily against it, but it's something we should purposefully decide.
+
+---------------------------------------------------------------------------
+
+by bizmate at 2015-10-20T00:52:44Z
+
+If I remember correctly I composer updated symfony from 2.3 to 2.7 and when i was looking for the command  it was not there because the distribution bundle was not automatically added. I asked on IRC and got this suggestion. I think it is much easier to add it to documentation explicitly for anyone that steps into a similar situation.
