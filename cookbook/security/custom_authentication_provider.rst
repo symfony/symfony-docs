@@ -358,8 +358,8 @@ requires the following methods:
     to the DI container for the appropriate security context.
 
 ``getPosition``
-    Method which must be of type ``pre_auth``, ``form``, ``http``,
-    and ``remember_me`` and defines the position at which the provider is called.
+    Returns when the provider should be called. This can be one of ``pre_auth``,
+    ``form``, ``http`` or ``remember_me``.
 
 ``getKey``
     Method which defines the configuration key used to reference

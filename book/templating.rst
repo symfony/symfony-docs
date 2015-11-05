@@ -580,8 +580,8 @@ you set `with_context`_ to false).
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
 .. versionadded:: 2.3
-    The `include() function`_ is a new Twig feature that's available in Symfony
-    2.3. Prior, the `{% include %} tag`_ tag was used.
+    The `include() function`_ is available since Symfony 2.3. Prior, the
+    `{% include %} tag`_ was used.
 
 .. index::
    single: Templating; Embedding action
@@ -856,6 +856,24 @@ configuration:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/WelcomeController.php
+        // ...
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class WelcomeController extends Controller
+        {
+            /**
+             * @Route("/", name="_welcome")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -906,6 +924,24 @@ As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/ArticleController.php
+        // ...
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route("/article/{slug}", name="article_show")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
@@ -981,10 +1017,14 @@ correctly:
 
     .. code-block:: html+php
 
+        <?php
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
+
         <a href="<?php echo $view['router']->generate(
             '_welcome',
             array(),
-            true
+            UrlGeneratorInterface::ABSOLUTE_URL
         ) ?>">Home</a>
 
 .. index::
@@ -1029,8 +1069,8 @@ configuration option.
 
 .. _`book-templating-version-by-asset`:
 
-If you need to set a version for a specific asset, you can set the fourth
-argument (or the ``version`` argument) to the desired version:
+If you need to set a version for a specific asset, you can set the ``version`` argument
+if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
 
 .. configuration-block::
 
@@ -1051,8 +1091,8 @@ If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
-If you need absolute URLs for assets, you can set the third argument (or the
-``absolute`` argument) to ``true``:
+If you need absolute URLs for assets, you can set the ``absolute`` argument
+if you are using Twig (or the third argument if you are using PHP) to ``true``:
 
 .. configuration-block::
 
