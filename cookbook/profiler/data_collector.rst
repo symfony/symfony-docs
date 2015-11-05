@@ -4,7 +4,7 @@
 How to Create a custom Data Collector
 =====================================
 
-:doc:`The Symfony Profiler </cookbook/profiler/index>` delegates data collection
+The :doc:`Symfony Profiler </cookbook/profiler/index>` delegates data collection
 to some special classes called data collectors. Symfony comes bundled with a few
 of them, but you can easily create your own.
 
@@ -16,70 +16,71 @@ Creating a custom data collector is as simple as implementing the
 
     interface DataCollectorInterface
     {
-        /**
-         * Collects data for the given Request and Response.
-         *
-         * @param Request    $request   A Request instance
-         * @param Response   $response  A Response instance
-         * @param \Exception $exception An Exception instance
-         */
         function collect(Request $request, Response $response, \Exception $exception = null);
-
-        /**
-         * Returns the name of the collector.
-         *
-         * @return string The collector name
-         */
         function getName();
     }
 
-The value returned by ``getName()`` must be unique in the application. This value
-is also used to access the information later on (see :doc:`/cookbook/testing/profiling`
-for instance).
+The
+:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName`
+method returns the name of the data collector and must be unique in the
+application. This value is also used to access the information later on (see
+:doc:`/cookbook/testing/profiling` for instance).
 
-The ``collect()`` method is responsible for storing the collected data in local
-properties.
-
-.. caution::
-
-    As the profiler serializes data collector instances, you should not
-    store objects that cannot be serialized (like PDO objects), or you need
-    to provide your own ``serialize()`` method.
+The
+:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect`
+method is responsible for storing the collected data in local properties.
 
 Most of the time, it is convenient to extend
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
 populate the ``$this->data`` property (it takes care of serializing the
-``$this->data`` property)::
+``$this->data`` property). Imagine you create a new data collector that
+collects the method and accepted content types from the request::
 
-    // src/AppBundle/DataCollector/MyCollector.php
+    // src/AppBundle/DataCollector/RequestCollector.php
+    namespace AppBundle\DataCollector;
+
     use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-    class MyCollector extends DataCollector
+    class RequestCollector extends DataCollector
     {
         public function collect(Request $request, Response $response, \Exception $exception = null)
         {
             $this->data = array(
-                'variable' => 'value',
+                'method' => $request->getMethod(),
+                'acceptable_content_types' => $request->getAcceptableContentTypes(),
             );
         }
 
-        public function getVariable()
+        public function getMethod()
         {
-            return $this->data['variable'];
+            return $this->data['method'];
+        }
+
+        public function getAcceptableContentTypes()
+        {
+            return $this->data['acceptable_content_types'];
         }
 
         public function getName()
         {
-            return 'app.my_collector';
+            return 'app.request_collector';
         }
     }
+
+The getters are added to give the template access to the collected information.
+
+.. caution::
+
+    As the profiler serializes data collector instances, you should not
+    store objects that cannot be serialized (like PDO objects) or you need
+    to provide your own ``serialize()`` method.
 
 .. _data_collector_tag:
 
 Enabling Custom Data Collectors
 -------------------------------
 
-To enable a data collector, define it as a regular service and tag it with
+To enable a data collector, define it as a regular service and tag it as
 ``data_collector``:
 
 .. configuration-block::
@@ -88,8 +89,8 @@ To enable a data collector, define it as a regular service and tag it with
 
         # app/config/services.yml
         services:
-            app.my_collector:
-                class: AppBundle\DataCollector\MyCollector
+            app.request_collector:
+                class: AppBundle\DataCollector\RequestCollector
                 public: false
                 tags:
                     - { name: data_collector }
@@ -104,8 +105,10 @@ To enable a data collector, define it as a regular service and tag it with
                 http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
             <services>
-                <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector"
-                         public="false">
+                <service id="app.request_collector"
+                    class="AppBundle\DataCollector\RequestCollector"
+                    public="false"
+                >
                     <tag name="data_collector" />
                 </service>
             </services>
@@ -115,7 +118,7 @@ To enable a data collector, define it as a regular service and tag it with
 
         // app/config/services.php
         $container
-            ->register('app.my_collector', 'AppBundle\DataCollector\MyCollector')
+            ->register('app.request_collector', 'AppBundle\DataCollector\RequestCollector')
             ->setPublic(false)
             ->addTag('data_collector')
         ;
@@ -139,24 +142,25 @@ block and set the value of two variables called ``icon`` and ``text``:
         {% set icon %}
             {# this is the content displayed as a panel in the toolbar #}
             <span class="icon"><img src="..." alt=""/></span>
-            <span class="sf-toolbar-status">Information</span>
+            <span class="sf-toolbar-status">Request</span>
         {% endset %}
 
         {% set text %}
             {# this is the content displayed when hovering the mouse over
                the toolbar panel #}
             <div class="sf-toolbar-info-piece">
-                <b>Quick piece of data</b>
-                <span>100 units</span>
+                <b>Method</b>
+                <span>{{ collector.method }}</span>
             </div>
+
             <div class="sf-toolbar-info-piece">
-                <b>Another piece of data</b>
-                <span>300 units</span>
+                <b>Accepted content type</b>
+                <span>{{ collector.acceptableContentTypes|join(', ') }}</span>
             </div>
         {% endset %}
 
         {# the 'link' value set to 'false' means that this panel doesn't
-           show a section in the web profiler. #}
+           show a section in the web profiler (default is 'true'). #}
         {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
     {% endblock %}
 
@@ -190,7 +194,7 @@ must also define additional blocks:
     {% block toolbar %}
         {% set icon %}
             <span class="icon"><img src="..." alt=""/></span>
-            <span class="sf-toolbar-status">Information</span>
+            <span class="sf-toolbar-status">Request</span>
         {% endset %}
 
         {% set text %}
@@ -199,31 +203,36 @@ must also define additional blocks:
             </div>
         {% endset %}
 
-        {# the 'link' value is now set to 'true', which allows the user to click
-           on it to access the web profiler panel. Since 'true' is the default
-           value, you can omit the 'link' parameter entirely #}
-        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig') }}
     {% endblock %}
 
     {% block head %}
-        {# Optional, you can here link to or define your own CSS and JS contents #}
-        {# {{ parent() }} to keep the default styles #}
+        {# Optional. Here you can link to or define your own CSS and JS contents. #}
+        {# Use {{ parent() }} to extend the default styles instead of overriding them. #}
     {% endblock %}
 
     {% block menu %}
         {# This left-hand menu appears when using the full-screen profiler. #}
         <span class="label">
             <span class="icon"><img src="..." alt=""/></span>
-            <strong>Example Collector</strong>
+            <strong>Request</strong>
         </span>
     {% endblock %}
 
     {% block panel %}
         {# Optional, for showing the most details. #}
-        <h2>Example</h2>
-        <p>
-            <em>Major information goes here</em>
-        </p>
+        <h2>Acceptable Content Types</h2>
+        <table>
+            <tr>
+                <th>Content Type</th>
+            </tr>
+
+            {% for type in collector.acceptableContentTypes %}
+            <tr>
+                <td>{{ type }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     {% endblock %}
 
 The ``menu`` and ``panel`` blocks are the only required blocks to define the
@@ -239,13 +248,13 @@ the ``data_collector`` tag in your service configuration:
 
         # app/config/services.yml
         services:
-            app.my_collector:
-                class: AppBundle\DataCollector\MyCollector
+            app.request_collector:
+                class: AppBundle\DataCollector\RequestCollector
                 tags:
                     -
                         name:     data_collector
                         template: 'data_collector/template.html.twig'
-                        id:       'app.my_collector'
+                        id:       'app.request_collector'
                 public: false
 
     .. code-block:: xml
@@ -258,8 +267,14 @@ the ``data_collector`` tag in your service configuration:
                 http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
             <services>
-                <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector" public="false">
-                    <tag name="data_collector" template="data_collector/template.html.twig" id="app.my_collector" />
+                <service id="app.request_collector"
+                    class="AppBundle\DataCollector\RequestCollector"
+                    public="false"
+                >
+                    <tag name="data_collector"
+                        template="data_collector/template.html.twig"
+                        id="app.request_collector"
+                    />
                 </service>
             </services>
         </container>
@@ -268,11 +283,11 @@ the ``data_collector`` tag in your service configuration:
 
         // app/config/services.php
         $container
-            ->register('app.my_collector', 'AppBundle\DataCollector\MyCollector')
+            ->register('app.request_collector', 'AppBundle\DataCollector\RequestCollector')
             ->setPublic(false)
             ->addTag('data_collector', array(
                 'template' => 'data_collector/template.html.twig',
-                'id'       => 'app.my_collector',
+                'id'       => 'app.request_collector',
             ))
         ;
 
@@ -290,15 +305,15 @@ want your collector to be displayed before them, use a higher value:
 
         # app/config/services.yml
         services:
-            app.my_collector:
-                class: AppBundle\DataCollector\MyCollector
+            app.request_collector:
+                class: AppBundle\DataCollector\RequestCollector
                 tags:
                     - { name: data_collector, template: '...', id: '...', priority: 300 }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.my_collector" class="AppBundle\DataCollector\MyCollector">
+        <service id="app.request_collector" class="AppBundle\DataCollector\RequestCollector">
             <tag name="data_collector" template="..." id="..." priority="300" />
         </service>
 
@@ -306,7 +321,7 @@ want your collector to be displayed before them, use a higher value:
 
         // app/config/services.php
         $container
-            ->register('app.my_collector', 'AppBundle\DataCollector\MyCollector')
+            ->register('app.request_collector', 'AppBundle\DataCollector\RequestCollector')
             ->addTag('data_collector', array(
                 'template' => '...',
                 'id'       => '...',

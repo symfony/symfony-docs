@@ -226,8 +226,7 @@ Deprecating Services
     The ``deprecated`` setting was introduced in Symfony 2.8.
 
 Once you have decided to deprecate the use of a service (because it is outdated
-or you decided not to use and maintain it anymore), you can deprecate its
-definition:
+or you decided not to maintain it anymore), you can deprecate its definition:
 
 .. configuration-block::
 
@@ -261,26 +260,25 @@ definition:
             )
         ;
 
-Now, every time a service is created using this deprecated definition, a
-deprecation warning will be triggered, advising you to stop or to change your
-uses of that service.
+Now, every time this service is used, a deprecation warning is triggered,
+advising you to stop or to change your uses of that service.
 
-The message is actually a message template, which will replace occurrences
-of the ``%service_id%`` by the service's id. You **must** have at least one
+The message is actually a message template, which replaces occurrences of the
+``%service_id%`` placeholder by the service's id. You **must** have at least one
 occurrence of the ``%service_id%`` placeholder in your template.
 
 .. note::
 
-    The deprecation message is optional. If not set, Symfony will show a default
-    message ``The "%service_id%" service is deprecated. You should stop using it,
+    The deprecation message is optional. If not set, Symfony will show this default
+    message: ``The "%service_id%" service is deprecated. You should stop using it,
     as it will soon be removed.``.
 
 .. tip::
 
-    It is strongly recommended that you fill the message template, to avoid a
-    message that could be too generic such as the default one. A good message
-    informs when this service was deprecated, and until when it will be
-    maintained (look at the examples above).
+    It is strongly recommended that you define a custom message because the
+    default one is too generic. A good message informs when this service was
+    deprecated, until when it will be maintained and the alternative services
+    to use (if any).
 
 For service decorators (see above), if the definition does not modify the
 deprecated status, it will inherit the status from the definition that is

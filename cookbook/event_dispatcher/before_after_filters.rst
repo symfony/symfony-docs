@@ -1,8 +1,8 @@
 .. index::
    single: EventDispatcher
 
-How to Setup before and after Filters
-=====================================
+How to Set Up Before and After Filters
+======================================
 
 It is quite common in web application development to need some logic to be
 executed just before or just after your controller actions acting as filters
