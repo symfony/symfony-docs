@@ -604,12 +604,13 @@ session.
 Flash Messages
 ~~~~~~~~~~~~~~
 
-You can also store small messages that will be stored on the user's session.
-This is useful when processing a form:
-you want to redirect and have a special message shown on the *next* page.
-These types of messages are called "flash" messages.
+You can also store special messages, called "flash" messages, on the user's
+session. By design, flash messages are meant to be processed exactly once. This
+means that they vanish from the session automatically as soon as they are
+retrieved. This feature makes "flash" messages particularly suited for storing
+user notifications.
 
-For example, imagine you're processing a form submit::
+Consider the following form processing example::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -633,12 +634,12 @@ For example, imagine you're processing a form submit::
         return $this->render(...);
     }
 
-After processing the request, the controller sets a ``notice`` flash message
-in the session and then redirects. The name (``notice``) isn't significant -
-it's just something you invent and reference next.
+After processing the request, the controller sets a flash message in the session
+and then redirects. The message key (``notice`` in this example) can be freely
+chosen and is used to retrieve the message content.
 
 In the template of the next page (or even better, in your base layout template),
-the following code will render the ``notice`` message:
+the following code will render the messages stored under the ``notice`` key:
 
 .. configuration-block::
 
@@ -660,9 +661,9 @@ the following code will render the ``notice`` message:
 
 .. note::
 
-    By design, flash messages are meant to be processed exactly once. This means
-    that they vanish from the session automatically when they are retrieved from
-    the flash bag by calling the ``get()`` method.
+    It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
+    different types of flash messages, but you can use any key that fits your
+    needs.
 
 .. tip::
 
