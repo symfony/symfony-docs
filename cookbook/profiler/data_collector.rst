@@ -155,7 +155,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 
             <div class="sf-toolbar-info-piece">
                 <b>Accepted content type</b>
-                <span>{{ collector.acceptablecontenttypes|join(', ') }}</span>
+                <span>{{ collector.acceptableContentTypes|join(', ') }}</span>
             </div>
         {% endset %}
 
@@ -227,7 +227,7 @@ must also define additional blocks:
                 <th>Content Type</th>
             </tr>
 
-            {% for type in collector.acceptablecontenttypes %}
+            {% for type in collector.acceptableContentTypes %}
             <tr>
                 <td>{{ type }}</td>
             </tr>
