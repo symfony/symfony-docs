@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-22T09:33:20Z
+
+Seems like "Fix missing ntoe about debug.dump_destination" isn't included in the diff
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-22T19:26:06Z
+
+@WouterJ Isn't that caused by the changes you made in 580f96f3754e7ce71bee69ff4f6908433fdb820b?
