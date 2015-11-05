@@ -212,11 +212,11 @@ In a similar way you can span multiple rows::
         ->setHeaders(array('ISBN', 'Title', 'Author'))
         ->setRows(array(
             array(
-                new TableCell("This ISBN is spanning\nmultiple rows", array('rowspan' => 2)),
-                'A Tale of Two Cities',
-                'Charles Dickens',
+                '978-0521567817',
+                'De Monarchia',
+                new TableCell("Dante Alighieri\nspans multiple rows", array('rowspan' => 2)),
             ),
-            array('Divine Comedy', 'Dante Alighieri'),
+            array('978-0804169127', 'Divine Comedy'),
         ))
     ;
     $table->render();
@@ -225,12 +225,12 @@ which results in:
 
 .. code-block:: text
 
-    +-----------------------+----------------------+-----------------+
-    | ISBN                  | Title                | Author          |
-    +-----------------------+----------------------+-----------------+
-    | This ISBN is spanning | A Tale of Two Cities | Charles Dickens |
-    | multiple rows         | Divine Comedy        | Dante Alighieri |
-    +-----------------------+----------------------+-----------------+
+    +----------------+---------------+---------------------+
+    | ISBN           | Title         | Author              |
+    +----------------+---------------+---------------------+
+    | 978-0521567817 | De Monarchia  | Dante Alighieri     |
+    | 978-0804169127 | Divine Comedy | spans multiple rows |
+    +----------------+---------------+---------------------+
 
 You can use the ``colspan`` and ``rowspan`` options at the same time which allows
 you to create any table layout you may wish.
