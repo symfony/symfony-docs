@@ -867,6 +867,25 @@ configuration:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/WelcomeController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class WelcomeController extends Controller
+        {
+            /**
+             * @Route("/", name="_welcome")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -917,6 +936,25 @@ As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/ArticleController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route("/article/{slug}", name="article_show")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
