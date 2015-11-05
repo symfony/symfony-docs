@@ -6,9 +6,9 @@ choice_label
 
 **type**: ``callable`` or ``string`` **default**: ``null``
 
-Returns the label for each choice. Can be a callable (which receives the choice
-as first and the key of the ``choices`` array as second argument) or a property
-path.
+Returns the label for each choice. Can be a callable (which receives the
+choice as first and the key of the ``choices`` array as second argument)
+or a property path.
 
 If ``null``, the keys of the ``choices`` array are used as labels.
 
