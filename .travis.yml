@@ -7,9 +7,8 @@ sudo: false
 addons:
     apt_packages:
         - enchant
-        - ispell
-        - ibritish
-        - iamerican
+        - aspell
+        - aspell-en
 
 cache:
     directories:
