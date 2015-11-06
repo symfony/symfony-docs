@@ -110,11 +110,12 @@ choice_label
     The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
     2.7, it was called ``property`` (which has the same functionality).
 
-**type**: ``string``
+**type**: ``string`` or a Closure
 
 This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
-cast into a string and so must have a ``__toString()`` method.
+cast into a string and so must have a ``__toString()`` method. If using Closure, it should
+take a single argument, which is the entity and return the label of this entity.
 
 .. note::
 
@@ -152,7 +153,7 @@ instead of the default entity manager.
 group_by
 ~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` or a Closure
 
 This is a property path (e.g. ``author.name``) used to organize the
 available choices in groups. It only works when rendered as a select tag
