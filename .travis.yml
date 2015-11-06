@@ -8,14 +8,15 @@ addons:
     apt_packages:
         - enchant
         - ispell
-        - ibritish-insane
+        - ibritish
+        - iamerican
 
 cache:
     directories:
         - $HOME/.cache/pip
         - _build
 
-install: pip install -r requirements.txt --use-mirrors -q
+install: pip install -r requirements.txt -q
 
 script: 
     - sphinx-build -nW -b html -d _build/doctrees . _build/html
