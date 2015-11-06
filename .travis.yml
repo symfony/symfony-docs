@@ -9,6 +9,8 @@ addons:
         - enchant
         - aspell
         - aspell-en
+        - ispell
+        - iamerican
 
 cache:
     directories:
@@ -21,6 +23,7 @@ script:
     - sphinx-build -nW -b html -d _build/doctrees . _build/html
     - make spelling
     - cat _build/spelling/output.txt | sed -e 's/.*(\(.*\))/\1/g' | sort | uniq
+    - cat _build/spelling/output.txt | sed -e 's/.*(\(.*\))/\1/g' | sort | uniq | wc -l
 
 branches:
   except:
