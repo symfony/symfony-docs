@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-11-05T16:33:58Z
+
+:+1: the new version of Sphinx has been released and the server should be ready (if not, I'll take care of it). Thanks for this improvement. Using anything different thatn `twig` felt unnatural to me.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-11-05T16:37:03Z
+
+Please retrigger the Travis and platform.sh builds now that the extension is updated to support Twig, to see whether it works fine
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-11-06T17:05:50Z
+
+Everything works fine now
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-11-07T09:13:36Z
+
+:+1:
