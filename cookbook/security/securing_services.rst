@@ -234,7 +234,7 @@ documentation.
 
         .. code-block:: yaml
 
-            # app/config/services.yml
+            # app/config/config.yml
             jms_security_extra:
                 # ...
                 secure_all_services: true
