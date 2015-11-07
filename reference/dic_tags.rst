@@ -206,7 +206,7 @@ Second, define a service:
 
 Finally, apply the filter:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% javascripts
         '@AcmeBaseBundle/Resources/public/js/global.js'

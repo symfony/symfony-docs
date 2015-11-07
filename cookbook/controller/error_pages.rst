@@ -87,7 +87,7 @@ Example 404 Error Template
 To override the 404 error template for HTML pages, create a new
 ``error404.html.twig`` template located at ``app/Resources/TwigBundle/views/Exception/``:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
     {% extends 'base.html.twig' %}
@@ -136,7 +136,7 @@ The cause of this problem is that routing is done before security. If a 404 erro
 occurs, the security layer isn't loaded and thus, the ``is_granted()`` function
 is undefined. The solution is to add the following check before using this function:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% if app.user and is_granted('...') %}
         {# ... #}

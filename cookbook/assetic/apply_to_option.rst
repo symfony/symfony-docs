@@ -57,7 +57,7 @@ templates:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
             <script src="{{ asset_url }}"></script>
@@ -82,7 +82,7 @@ You can also combine multiple CoffeeScript files into a single output file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/example.coffee'
                        '@AppBundle/Resources/public/js/another.coffee'
@@ -167,7 +167,7 @@ files being run through the CoffeeScript filter):
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/example.coffee'
                        '@AppBundle/Resources/public/js/another.coffee'

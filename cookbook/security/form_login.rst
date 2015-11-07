@@ -227,7 +227,7 @@ redirect to the URL defined by some ``account`` route, use the following:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# src/AppBundle/Resources/views/Security/login.html.twig #}
         {% if error %}

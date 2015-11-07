@@ -230,7 +230,7 @@ Twig Templates
 Symfony provides specialized Twig tags (``trans`` and ``transchoice``) to
 help with message translation of *static blocks of text*:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans %}Hello %name%{% endtrans %}
 
@@ -254,7 +254,7 @@ works when you use a placeholder following the ``%var%`` pattern.
 
 You can also specify the message domain and pass some additional variables:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
 
@@ -269,7 +269,7 @@ You can also specify the message domain and pass some additional variables:
 The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ message|trans }}
 
@@ -287,7 +287,7 @@ texts* and complex expressions:
     that your translated message is *not* output escaped, you must apply
     the ``raw`` filter after the translation filter:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
             {# text translated between tags is never escaped #}
             {% trans %}
@@ -304,7 +304,7 @@ texts* and complex expressions:
 
     You can set the translation domain for an entire Twig template with a single tag:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
            {% trans_default_domain "app" %}
 

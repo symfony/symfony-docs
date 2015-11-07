@@ -142,7 +142,7 @@ helper functions:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form) }}
@@ -450,7 +450,7 @@ corresponding errors printed out with the form.
 
    .. configuration-block::
 
-       .. code-block:: html+jinja
+       .. code-block:: html+twig
 
            {# app/Resources/views/default/new.html.twig #}
            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
@@ -794,7 +794,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form) }}
@@ -836,7 +836,7 @@ output can be customized on many different levels.
 
     .. configuration-block::
 
-        .. code-block:: jinja
+        .. code-block:: twig
 
             {{ form.vars.value.task }}
 
@@ -858,7 +858,7 @@ used the ``form_row`` helper:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_start(form) }}
             {{ form_errors(form) }}
@@ -910,7 +910,7 @@ specify it:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_label(form.task, 'Task Description') }}
 
@@ -926,7 +926,7 @@ field:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
 
@@ -942,7 +942,7 @@ to get the ``id``:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form.task.vars.id }}
 
@@ -955,7 +955,7 @@ the ``full_name`` value:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form.task.vars.full_name }}
 
@@ -1012,7 +1012,7 @@ to the ``form()`` or the ``form_start()`` helper:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
@@ -1386,7 +1386,7 @@ Render the ``Category`` fields in the same way as the original ``Task`` fields:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# ... #}
 
@@ -1455,7 +1455,7 @@ do this, create a new template file that will store the new markup:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/form/fields.html.twig #}
         {% block form_row %}
@@ -1484,7 +1484,7 @@ renders the form:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/default/new.html.twig #}
         {% form_theme form 'form/fields.html.twig' %}
@@ -1673,7 +1673,7 @@ to define form output.
     In Twig, you can also customize a form block right inside the template
     where that customization is needed:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% extends 'base.html.twig' %}
 

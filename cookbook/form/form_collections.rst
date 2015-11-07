@@ -191,7 +191,7 @@ zero tags when first created).
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# src/AppBundle/Resources/views/Task/new.html.twig #}
 
@@ -297,7 +297,7 @@ new "tag" forms. To render it, make the following change to your template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
             ...
@@ -325,7 +325,7 @@ new "tag" forms. To render it, make the following change to your template:
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
 

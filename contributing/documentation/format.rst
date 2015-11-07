@@ -99,8 +99,8 @@ Markup Format        Use It to Display
 ``xml``              XML
 ``php``              PHP
 ``yaml``             YAML
-``jinja``            Pure Twig markup
-``html+jinja``       Twig markup blended with HTML
+``twig``             Pure Twig markup
+``html+twig``        Twig markup blended with HTML
 ``html+php``         PHP code blended with HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations

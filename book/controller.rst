@@ -642,7 +642,7 @@ read any flash messages from the session::
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% for flash_message in app.session.flashbag.get('notice') %}
             <div class="flash-notice">

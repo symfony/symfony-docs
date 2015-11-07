@@ -85,7 +85,7 @@ the view layer, this work is done in your templates:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' filter='yui_js' %}
             <script src="{{ asset_url }}"></script>
@@ -113,7 +113,7 @@ can be repeated to minify your stylesheets.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% stylesheets '@AppBundle/Resources/public/css/*' filter='yui_css' %}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
@@ -139,7 +139,7 @@ apply this filter when debug mode is off.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' filter='?yui_js' %}
             <script src="{{ asset_url }}"></script>

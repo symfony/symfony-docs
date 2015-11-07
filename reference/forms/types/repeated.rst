@@ -66,7 +66,7 @@ like:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_row(form.password) }}
 
@@ -78,7 +78,7 @@ To render each field individually, use something like this:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# .first and .second may vary in your use - see the note below #}
         {{ form_row(form.password.first) }}

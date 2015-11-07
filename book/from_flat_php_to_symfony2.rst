@@ -710,7 +710,7 @@ called `Twig`_ that makes templates faster to write and easier to read.
 It means that the sample application could contain even less code! Take,
 for example, the list template written in Twig:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/blog/list.html.twig #}
     {% extends "layout.html.twig" %}
@@ -732,7 +732,7 @@ for example, the list template written in Twig:
 
 The corresponding ``layout.html.twig`` template is also easier to write:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/layout.html.twig #}
     <!DOCTYPE html>

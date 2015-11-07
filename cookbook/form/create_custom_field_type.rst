@@ -109,7 +109,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/Form/fields.html.twig #}
         {% block gender_widget %}

@@ -8,7 +8,7 @@ will suppress the label. The label can also be directly set inside the template:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_label(form.name, 'Your name') }}
 

@@ -218,7 +218,7 @@ Finally, create the template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/security/login.html.twig #}
         {# ... you will probably extends your base template, like base.html.twig #}
