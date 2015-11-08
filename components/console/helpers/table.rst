@@ -144,13 +144,13 @@ Here is a full list of things you can customize:
 
     This method can also be used to override a built-in style.
 
-Spanning multiple columns and rows
+Spanning Multiple Columns and Rows
 ----------------------------------
 
 .. versionadded:: 2.7
     Spanning multiple columns and rows was introduced in Symfony 2.7.
 
-To make a table cell which spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
+To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
 
     use Symfony\Component\Console\Helper\Table;
     use Symfony\Component\Console\Helper\TableSeparator;
@@ -167,7 +167,7 @@ To make a table cell which spans multiple columns you can use a :class:`Symfony\
     ;
     $table->render();
 
-which results in:
+This results in:
 
 .. code-block:: text
 
@@ -221,7 +221,7 @@ In a similar way you can span multiple rows::
     ;
     $table->render();
 
-which results in:
+This outputs:
 
 .. code-block:: text
 
