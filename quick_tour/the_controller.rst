@@ -83,7 +83,7 @@ this error is that we're trying to render a template
 Create the new ``app/Resources/views/default/hello.html.twig`` template
 with the following content:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/hello.html.twig #}
     {% extends 'base.html.twig' %}
@@ -281,7 +281,7 @@ forget to add the new ``use`` statement that imports this ``Request`` class)::
 In a template, you can also access the ``Request`` object via the special
 ``app.request`` variable automatically provided by Symfony:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {{ app.request.query.get('page') }}
 
@@ -328,7 +328,7 @@ redirecting the user to another page (which will then show the message)::
 
 And you can display the flash message in the template like this:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="flash-notice">

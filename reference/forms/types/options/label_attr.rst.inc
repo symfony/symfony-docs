@@ -10,7 +10,7 @@ template:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_label(form.name, 'Your name', {
                'label_attr': {'class': 'CUSTOM_LABEL_CLASS'}

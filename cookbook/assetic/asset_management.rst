@@ -16,7 +16,7 @@ directly:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <script src="{{ asset('js/script.js') }}"></script>
 
@@ -57,7 +57,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' %}
             <script src="{{ asset_url }}"></script>
@@ -77,7 +77,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
     Standard Edition, the ``javascripts`` tag will most commonly live in the
     ``javascripts`` block:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# ... #}
         {% block javascripts %}
@@ -113,7 +113,7 @@ except with the ``stylesheets`` tag:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
@@ -134,7 +134,7 @@ except with the ``stylesheets`` tag:
     Standard Edition, the ``stylesheets`` tag will most commonly live in the
     ``stylesheets`` block:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# ... #}
         {% block stylesheets %}
@@ -166,7 +166,7 @@ To include an image you can use the ``image`` tag.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% image '@AppBundle/Resources/public/images/example.jpg' %}
             <img src="{{ asset_url }}" alt="Example" />
@@ -218,7 +218,7 @@ but still serve them as a single file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts
             '@AppBundle/Resources/public/js/*'
@@ -257,7 +257,7 @@ combine third party assets, such as jQuery, with your own into a single file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts
             '@AppBundle/Resources/public/js/thirdparty/jquery.js'
@@ -330,7 +330,7 @@ with the ``@named_asset`` notation:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts
             '@jquery_and_ui'
@@ -410,7 +410,7 @@ into your template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
@@ -436,7 +436,7 @@ done from the template and is relative to the public document root:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
             <script src="{{ asset_url }}"></script>
@@ -563,7 +563,7 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
             <script src="{{ asset_url }}"></script>
