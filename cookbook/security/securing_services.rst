@@ -229,14 +229,14 @@ documentation.
 
         .. code-block:: yaml
 
-            # app/config/services.yml
+            # app/config/config.yml
             jms_security_extra:
                 # ...
                 secure_all_services: true
 
         .. code-block:: xml
 
-            <!-- app/config/services.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -250,7 +250,7 @@ documentation.
 
         .. code-block:: php
 
-            // app/config/services.php
+            // app/config/config.php
             $container->loadFromExtension('jms_security_extra', array(
                 // ...
                 'secure_all_services' => true,
