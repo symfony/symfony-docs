@@ -12,15 +12,13 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
-| Options     | - `choice_label`_                                                |
-|             | - `class`_                                                       |
-|             | - `data_class`_                                                  |
-|             | - `em`_                                                          |
-|             | - `group_by`_                                                    |
+| Options     | - `class`_                                                       |
+|             | - `choice_label`_                                                |
 |             | - `query_builder`_                                               |
+|             | - `em`_                                                          |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choice_list`_                                                 |
-| options     | - `choices`_                                                     |
+| Overridden  | - `choices`_                                                     |
+| options     |                                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
@@ -28,6 +26,7 @@ objects from the database.
 |             | - `expanded`_                                                    |
 |             | - `multiple`_                                                    |
 |             | - `preferred_choices`_                                           |
+|             | - `group_by`_                                                    |
 |             |                                                                  |
 |             | from the :doc:`form </reference/forms/types/form>` type:         |
 |             |                                                                  |
@@ -103,34 +102,6 @@ then you can supply the ``choices`` option directly::
 Field Options
 -------------
 
-choice_label
-~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
-    2.7, it was called ``property`` (which has the same functionality).
-
-**type**: ``string`` or a Closure
-
-This is the property that should be used for displaying the entities
-as text in the HTML element. If left blank, the entity object will be
-cast into a string and so must have a ``__toString()`` method. If using Closure, it should
-take a single argument, which is the entity and return the label of this entity.
-
-.. note::
-
-    The ``choice_label`` option is the property path used to display the option.
-    So you can use anything supported by the
-    :doc:`PropertyAccessor component </components/property_access/introduction>`
-
-    For example, if the translations property is actually an associative
-    array of objects, each with a name property, then you could do this::
-
-        $builder->add('gender', 'entity', array(
-           'class' => 'MyBundle:Gender',
-           'choice_label' => 'translations[en].name',
-        ));
-
 class
 ~~~~~
 
@@ -140,26 +111,49 @@ The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
 a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
 or the short alias name (as shown prior).
 
-.. include:: /reference/forms/types/options/data_class.rst.inc
+choice_label
+~~~~~~~~~~~~
 
-em
-~~
+.. versionadded:: 2.7
+    The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, it was called ``property`` (which has the same functionality).
 
-**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
+**type**: ``string`` or ``callable``
 
-If specified, the specified entity manager will be used to load the choices
-instead of the default entity manager.
+This is the property that should be used for displaying the entities as text in
+the HTML element::
 
-group_by
-~~~~~~~~
+    $builder->add('category', 'entity', array(
+        'class' => 'AppBundle:Category',
+        'choice_label' => 'displayName',
+    ));
 
-**type**: ``string`` or a Closure
+If left blank, the entity object will be cast to a string and so must have a ``__toString()``
+method. You can also pass a callback function for more control::
 
-This is a property path (e.g. ``author.name``) used to organize the
-available choices in groups. It only works when rendered as a select tag
-and does so by adding ``optgroup`` elements around options. Choices that
-do not return a value for this property path are rendered directly under
-the select tag, without a surrounding optgroup.
+    $builder->add('category', 'entity', array(
+        'class' => 'AppBundle:Category',
+        'choice_label' => function ($category) {
+            return $category->getDisplayName();
+        }
+    ));
+
+The method is called for each entity in the list and passed to the function. For
+more detais, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
+
+.. note::
+
+    When passing a string, the ``choice_label`` option is a property path. So you
+    can use anything supported by the
+    :doc:`PropertyAccessor component </components/property_access/introduction>`
+
+    For example, if the translations property is actually an associative
+    array of objects, each with a name property, then you could do this::
+
+        $builder->add('gender', 'entity', array(
+           'class' => 'MyBundle:Gender',
+           'choice_label' => 'translations[en].name',
+        ));
 
 query_builder
 ~~~~~~~~~~~~~
@@ -172,18 +166,17 @@ either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
 the entity and return an instance of ``QueryBuilder``.
 
+em
+~~
+
+**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
+
+If specified, the specified entity manager will be used to load the choices
+instead of the default entity manager.
+
+
 Overridden Options
 ------------------
-
-choice_list
-~~~~~~~~~~~
-
-**default**: :class:`Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\EntityChoiceList`
-
-The purpose of the ``entity`` type is to create and configure this ``EntityChoiceList``
-for you, by using all of the above options. If you need to override this
-option, you may just consider using the :doc:`/reference/forms/types/choice`
-directly.
 
 choices
 ~~~~~~~
@@ -213,6 +206,8 @@ type:
     :doc:`/reference/forms/types/collection` as well. In addition, there
     is a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
