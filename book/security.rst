@@ -888,7 +888,7 @@ the built-in helper function:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted('ROLE_ADMIN') %}
             <a href="...">Delete</a>
@@ -910,7 +910,7 @@ covers all URLs (as shown before in this chapter).
     some internal Symfony details, to avoid broken error pages in the ``prod``
     environment, wrap calls in these templates with a check for ``app.user``:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if app.user and is_granted('ROLE_ADMIN') %}
 
@@ -1085,7 +1085,7 @@ key:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <p>Username: {{ app.user.username }}</p>

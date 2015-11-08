@@ -145,7 +145,7 @@ directory. Therefore, the ``default/index.html.twig`` template corresponds
 to the ``app/Resources/views/default/index.html.twig``. Open that file and
 you'll see the following code:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/index.html.twig #}
     {% extends 'base.html.twig' %}

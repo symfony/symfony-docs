@@ -32,7 +32,7 @@ the rest of the template contents using any of these delimiters:
 Below is a minimal template that illustrates a few basics, using two variables
 ``page_title`` and ``navigation``, which would be passed into the template:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <!DOCTYPE html>
     <html>
@@ -64,7 +64,7 @@ a variable with the dot (``.``) notation. The following code listing shows
 how to display the content of a variable passed by the controller depending
 on its type:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# 1. Simple variables #}
     {# $this->render('template.html.twig', array(
@@ -104,7 +104,7 @@ defines "blocks" of contents that child templates can override.
 The ``index.html.twig`` template uses the ``extends`` tag to indicate that
 it inherits from the ``base.html.twig`` template:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/index.html.twig #}
     {% extends 'base.html.twig' %}
@@ -116,7 +116,7 @@ it inherits from the ``base.html.twig`` template:
 Open the ``app/Resources/views/base.html.twig`` file that corresponds to
 the ``base.html.twig`` template and you'll find the following Twig code:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/base.html.twig #}
     <!DOCTYPE html>
@@ -146,7 +146,7 @@ One of the best features of Twig is its extensibility via tags, filters
 and functions. Take a look at the following sample template that uses filters
 extensively to modify the information before displaying it to the user:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     <h1>{{ article.title|capitalize }}</h1>
 
@@ -168,7 +168,7 @@ create a new template fragment that can then be included from other templates.
 Imagine that we want to display ads on some pages of our application. First,
 create a ``banner.html.twig`` template:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# app/Resources/views/ads/banner.html.twig #}
     <div id="ad-banner">
@@ -178,7 +178,7 @@ create a ``banner.html.twig`` template:
 To display this ad on any page, include the ``banner.html.twig`` template
 using the ``include()`` function:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/index.html.twig #}
     {% extends 'base.html.twig' %}
@@ -201,7 +201,7 @@ the most popular articles of your website. If you want to "render" the result
 of that method (usually some HTML content) inside the ``index`` template,
 use the ``render()`` function:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# app/Resources/views/index.html.twig #}
     {{ render(controller('AppBundle:Default:topArticles')) }}
@@ -236,7 +236,7 @@ hardcoding URLs in templates, the ``path`` function knows how to generate
 URLs based on the routing configuration. That way, all your URLs can be
 easily updated by just changing the configuration:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <a href="{{ path('homepage') }}">Return to homepage</a>
 
@@ -255,7 +255,7 @@ Including Assets: Images, JavaScripts and Stylesheets
 What would the Internet be without images, JavaScripts and stylesheets?
 Symfony provides the ``asset`` function to deal with them easily:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 

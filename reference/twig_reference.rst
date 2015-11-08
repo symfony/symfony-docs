@@ -28,7 +28,7 @@ Functions
 render
 ~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ render(uri, options) }}
 
@@ -51,7 +51,7 @@ The render strategy can be specified in the ``strategy`` key of the options.
 render_esi
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ render_esi(uri, options) }}
 
@@ -78,7 +78,7 @@ Generates an ESI tag when possible or falls back to the behavior of
 controller
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ controller(controller, attributes, query) }}
 
@@ -96,7 +96,7 @@ like :ref:`render() <reference-twig-function-render>` and
 asset
 ~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ asset(path, packageName = null) }}
 
@@ -116,7 +116,7 @@ set for the package and the URL path. More information in
 assets_version
 ~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ assets_version(packageName) }}
 
@@ -129,7 +129,7 @@ Returns the current version of the package, more information in
 form
 ~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form(view, variables) }}
 
@@ -144,7 +144,7 @@ Renders the HTML of a complete form, more information in
 form_start
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_start(view, variables) }}
 
@@ -159,7 +159,7 @@ Renders the HTML start tag of a form, more information in
 form_end
 ~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_end(view, variables) }}
 
@@ -175,7 +175,7 @@ been rendered yet, more information in
 form_enctype
 ~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_enctype(view) }}
 
@@ -189,7 +189,7 @@ form contains at least one file upload field, more information in
 form_widget
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_widget(view, variables) }}
 
@@ -204,7 +204,7 @@ in :ref:`the Twig Form reference <reference-forms-twig-widget>`.
 form_errors
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_errors(view) }}
 
@@ -217,7 +217,7 @@ in :ref:`the Twig Form reference <reference-forms-twig-errors>`.
 form_label
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_label(view, label, variables) }}
 
@@ -234,7 +234,7 @@ Renders the label for the given field, more information in
 form_row
 ~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_row(view, variables) }}
 
@@ -249,7 +249,7 @@ more information in :ref:`the Twig Form reference <reference-forms-twig-row>`.
 form_rest
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_rest(view, variables) }}
 
@@ -264,7 +264,7 @@ Renders all fields that have not yet been rendered, more information in
 csrf_token
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ csrf_token(intention) }}
 
@@ -277,7 +277,7 @@ creating a form.
 is_granted
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ is_granted(role, object, field) }}
 
@@ -300,7 +300,7 @@ found in :ref:`book-security-template`.
 logout_path
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ logout_path(key) }}
 
@@ -312,7 +312,7 @@ Generates a relative logout URL for the given firewall.
 logout_url
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ logout_url(key) }}
 
@@ -325,7 +325,7 @@ instead of a relative one.
 path
 ~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ path(name, parameters, relative) }}
 
@@ -343,7 +343,7 @@ path. More information in :ref:`book-templating-pages`.
 url
 ~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ url(name, parameters, schemeRelative) }}
 
@@ -410,7 +410,7 @@ Filters
 humanize
 ~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ text|humanize }}
 
@@ -428,7 +428,7 @@ and then capitalizes the string).
 trans
 ~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ message|trans(arguments, domain, locale) }}
 
@@ -447,7 +447,7 @@ Translates the text into the current language. More information in
 transchoice
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ message|transchoice(count, arguments, domain, locale) }}
 
@@ -468,7 +468,7 @@ Translates the text with pluralization support. More information in
 yaml_encode
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ input|yaml_encode(inline, dumpObjects) }}
 
@@ -485,7 +485,7 @@ more information.
 yaml_dump
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ value|yaml_dump(inline, dumpObjects) }}
 
@@ -502,7 +502,7 @@ the output.
 abbr_class
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ class|abbr_class }}
 
@@ -515,7 +515,7 @@ FQCN will be shown in a tooltip when a user hovers over the element).
 abbr_method
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ method|abbr_method }}
 
@@ -529,7 +529,7 @@ doesn't have a class name, it's shown as a function (``method()``).
 format_args
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ args|format_args }}
 
@@ -541,7 +541,7 @@ Generates a string with the arguments and their types (within ``<em>`` elements)
 format_args_as_text
 ~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ args|format_args_as_text }}
 
@@ -553,7 +553,7 @@ Equal to the `format_args`_ filter, but without using HTML tags.
 file_excerpt
 ~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ file|file_excerpt(line) }}
 
@@ -567,7 +567,7 @@ Generates an excerpt of seven lines around the given ``line``.
 format_file
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ file|format_file(line, text) }}
 
@@ -585,7 +585,7 @@ the kernel root directory, the kernel root directory path is replaced by
 format_file_from_text
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ text|format_file_from_text }}
 
@@ -597,7 +597,7 @@ Uses `format_file`_ to improve the output of default PHP errors.
 file_link
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ file|file_link(line) }}
 
@@ -615,7 +615,7 @@ Tags
 form_theme
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% form_theme form resources %}
 
@@ -631,7 +631,7 @@ information in :doc:`/cookbook/form/form_customization`.
 trans
 ~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans with vars from domain into locale %}{% endtrans %}
 
@@ -647,7 +647,7 @@ Renders the translation of the content. More information in :ref:`book-translati
 transchoice
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% transchoice count with vars from domain into locale %}{% endtranschoice %}
 
@@ -666,7 +666,7 @@ information in :ref:`book-translation-tags`.
 trans_default_domain
 ~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans_default_domain domain %}
 
@@ -693,7 +693,7 @@ Tests
 selectedchoice
 ~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% if choice is selectedchoice(selectedValue) %}
 

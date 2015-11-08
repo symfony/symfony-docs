@@ -8,7 +8,7 @@ be directly set inside the template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_widget(form.save, { 'label': 'Click me' }) }}
 

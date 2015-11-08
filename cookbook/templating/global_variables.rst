@@ -37,7 +37,7 @@ This is possible inside your ``app/config/config.yml`` file:
 
 Now, the variable ``ga_tracking`` is available in all Twig templates:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <p>The google tracking code is: {{ ga_tracking }}</p>
 

@@ -57,7 +57,7 @@ But Symfony packages an even more powerful templating language called `Twig`_.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <!DOCTYPE html>
     <html>
@@ -94,7 +94,7 @@ Twig also contains **filters**, which modify content before being rendered.
 The following makes the ``title`` variable all uppercase before rendering
 it:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ title|upper }}
 
@@ -111,7 +111,7 @@ and new functions can be easily added. For example, the following uses a
 standard ``for`` tag and the ``cycle`` function to print ten div tags, with
 alternating ``odd``, ``even`` classes:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% for i in 0..10 %}
         <div class="{{ cycle(['odd', 'even'], i) }}">
@@ -141,7 +141,7 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     Take the following example, which combines a loop with a logical ``if``
     statement:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <ul>
             {% for user in users if user.active %}
@@ -195,7 +195,7 @@ First, build a base layout file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
         <!DOCTYPE html>
@@ -263,7 +263,7 @@ A child template might look like this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
@@ -360,7 +360,7 @@ When working with template inheritance, here are some tips to keep in mind:
   can use the ``{{ parent() }}`` function. This is useful if you want to add
   to the contents of a parent block instead of completely overriding it:
 
-  .. code-block:: html+jinja
+  .. code-block:: html+twig
 
       {% block sidebar %}
           <h3>Table of Contents</h3>
@@ -513,7 +513,7 @@ template. First, create the template that you'll need to reuse.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/article_details.html.twig #}
         <h2>{{ article.title }}</h2>
@@ -537,7 +537,7 @@ Including this template from any other template is simple:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/list.html.twig #}
         {% extends 'layout.html.twig' %}
@@ -624,7 +624,7 @@ The ``recentList`` template is perfectly straightforward:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
@@ -653,7 +653,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
 
@@ -697,7 +697,7 @@ tags:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ render_hinclude(controller('...')) }}
         {{ render_hinclude(url('...')) }}
@@ -802,7 +802,7 @@ any global default template that is defined):
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ render_hinclude(controller('...'),  {
             'default': 'default/content.html.twig'
@@ -822,7 +822,7 @@ Or you can also specify a string to display as the default content:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
 
@@ -859,8 +859,8 @@ configuration:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/WelcomeController.php
-        // ...
 
+        // ...
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         class WelcomeController extends Controller
@@ -912,7 +912,7 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ path('_welcome') }}">Home</a>
 
@@ -928,8 +928,8 @@ route:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/ArticleController.php
-        // ...
 
+        // ...
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         class ArticleController extends Controller
@@ -984,7 +984,7 @@ correctly:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
@@ -1008,7 +1008,7 @@ correctly:
 
     You can also generate an absolute URL by using the ``url`` Twig function:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ url('_welcome') }}">Home</a>
 
@@ -1041,7 +1041,7 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
@@ -1135,7 +1135,7 @@ stylesheets and JavaScripts that you'll need throughout your site:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
         <html>
@@ -1182,7 +1182,7 @@ page. From inside that contact page's template, do the following:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/contact/contact.html.twig #}
         {% extends 'base.html.twig' %}
@@ -1215,7 +1215,7 @@ You will need to run the ``php app/console assets:install target [--symlink]``
 command, which moves (or symlinks) files into the correct location. (target
 is by default "web").
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
@@ -1246,7 +1246,7 @@ automatically:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <p>Username: {{ app.user.username }}</p>
         {% if app.debug %}
@@ -1450,7 +1450,7 @@ covered:
   functionality would have a template called ``blog/layout.html.twig`` that
   contains only blog section-specific elements;
 
-  .. code-block:: html+jinja
+  .. code-block:: html+twig
 
       {# app/Resources/views/blog/layout.html.twig #}
       {% extends 'base.html.twig' %}
@@ -1465,7 +1465,7 @@ covered:
   section template. For example, the "index" page would be called something
   close to ``blog/index.html.twig`` and list the actual blog posts.
 
-  .. code-block:: html+jinja
+  .. code-block:: html+twig
 
       {# app/Resources/views/blog/index.html.twig #}
       {% extends 'blog/layout.html.twig' %}
@@ -1502,7 +1502,7 @@ this classic example:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         Hello {{ name }}
 
@@ -1555,7 +1555,7 @@ HTML code. By default, Twig will escape the article body.
 
 To render it normally, add the ``raw`` filter:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ article.body|raw }}
 
@@ -1617,7 +1617,7 @@ for example, inside your controller::
 
 The same mechanism can be used in Twig templates thanks to ``dump`` function:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/article/recent_list.html.twig #}
     {{ dump(articles) }}
@@ -1688,7 +1688,7 @@ key in the parameter hash:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
             PDF Version

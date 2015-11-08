@@ -285,7 +285,7 @@ Next, create the template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/registration/register.html.twig #}
 

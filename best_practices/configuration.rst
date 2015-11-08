@@ -128,7 +128,7 @@ from places with access to the Symfony container.
 Constants can be used for example in your Twig templates thanks to the
 `constant() function`_:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <p>
         Displaying the {{ constant('NUM_ITEMS', post) }} most recent results.

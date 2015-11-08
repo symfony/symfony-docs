@@ -148,7 +148,7 @@ this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/security/login.html.twig #}
         {% if error %}
