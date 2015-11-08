@@ -1534,7 +1534,7 @@ a template helper function:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ path('blog_show', {'slug': 'my-blog-post'}) }}">
           Read this blog post.
@@ -1567,7 +1567,7 @@ to ``generate()``:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ url('blog_show', {'slug': 'my-blog-post'}) }}">
           Read this blog post.

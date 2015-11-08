@@ -66,7 +66,7 @@ The simplest way to render this is all at once:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_row(form.emails) }}
 
@@ -78,7 +78,7 @@ A much more flexible method would look like this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_label(form.emails) }}
         {{ form_errors(form.emails) }}
@@ -160,7 +160,7 @@ you need is the JavaScript:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_start(form) }}
             {# ... #}
@@ -315,7 +315,7 @@ collection field:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_row(form.emails.vars.prototype) }}
 

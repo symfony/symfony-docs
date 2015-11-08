@@ -625,7 +625,7 @@ field according to the current selection in the ``sport`` field:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/Meetup/create.html.twig #}
         {{ form_start(form) }}

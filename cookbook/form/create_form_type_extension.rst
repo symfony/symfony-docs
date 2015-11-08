@@ -257,7 +257,7 @@ Specifically, you need to override the ``file_widget`` block:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# src/AppBundle/Resources/views/Form/fields.html.twig #}
         {% extends 'form_div_layout.html.twig' %}

@@ -20,7 +20,7 @@ This can be customized when rendering the field:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_widget(form.foo_choices, { 'separator': '=====' }) }}
 

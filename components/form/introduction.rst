@@ -480,7 +480,7 @@ done by passing a special form "view" object to your template (notice the
 ``$form->createView()`` in the controller above) and using a set of form
 helper functions:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {{ form_start(form) }}
         {{ form_widget(form) }}

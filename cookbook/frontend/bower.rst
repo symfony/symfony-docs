@@ -82,7 +82,7 @@ template like normal CSS/JS:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/layout.html.twig #}
         <!doctype html>

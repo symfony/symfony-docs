@@ -12,14 +12,14 @@ is built-in automatically for all of your bundles.
 
 Take the following paths as an example:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% extends "AppBundle::layout.html.twig" %}
     {{ include('AppBundle:Foo:bar.html.twig') }}
 
 With namespaced paths, the following works as well:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% extends "@App/layout.html.twig" %}
     {{ include('@App/Foo/bar.html.twig') }}
@@ -82,7 +82,7 @@ The registered namespace is called ``foo_bar``, which refers to the
 ``vendor/acme/foo-bar/templates`` directory. Assuming there's a file
 called ``sidebar.twig`` in that directory, you can use it easily:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ include('@foo_bar/sidebar.twig') }}
 
@@ -136,6 +136,6 @@ specific template doesn't exist.
 Now, you can use the same ``@theme`` namespace to refer to any template located
 in the previous three directories:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ include('@theme/header.twig') }}

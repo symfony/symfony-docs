@@ -62,7 +62,7 @@ this is probably only useful if you'd like to cache this page partial (see
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ render(url('acme_privacy')) }}
 

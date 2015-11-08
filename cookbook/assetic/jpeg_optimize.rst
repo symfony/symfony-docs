@@ -51,7 +51,7 @@ It can now be used from a template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% image '@AppBundle/Resources/public/images/example.jpg'
             filter='jpegoptim' output='/images/example.jpg' %}
@@ -198,7 +198,7 @@ following configuration:
 
 The Twig template can now be changed to the following:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <img src="{{ jpegoptim('@AppBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
 

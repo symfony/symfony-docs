@@ -134,7 +134,7 @@ In the simplest case, you just want to display the information in the toolbar
 without providing a profiler panel. This requires to define the ``toolbar``
 block and set the value of two variables called ``icon`` and ``text``:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
@@ -178,7 +178,7 @@ block and set the value of two variables called ``icon`` and ``text``:
     resolution-independent, these images can be easily embedded in the Twig
     template or included from an external file to reuse them in several templates:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ include('@App/data_collector/icon.svg') }}
 
@@ -187,7 +187,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 If the toolbar panel includes extended web profiler information, the Twig template
 must also define additional blocks:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 

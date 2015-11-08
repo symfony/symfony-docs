@@ -86,7 +86,7 @@ Now, update the template that renders the form to display the new ``brochure``
 field (the exact template code to add depends on the method used by your application
 to :doc:`customize form rendering </cookbook/form/form_customization>`):
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/product/new.html.twig #}
     <h1>Adding a new product</h1>
@@ -171,7 +171,7 @@ There are some important things to consider in the code of the above controller:
 
 You can now use the following code to link to the PDF brochure of an product:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
 

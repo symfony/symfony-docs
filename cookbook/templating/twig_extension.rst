@@ -114,14 +114,14 @@ Using the custom Extension
 
 Using your newly created Twig Extension is no different than any other:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# outputs $5,500.00 #}
     {{ '5500'|price }}
 
 Passing other arguments to your filter:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# outputs $5500,2516 #}
     {{ '5500.25155'|price(4, ',', '') }}
