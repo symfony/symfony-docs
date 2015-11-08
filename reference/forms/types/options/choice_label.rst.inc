@@ -6,13 +6,9 @@ choice_label
 
 **type**: ``callable`` or ``string`` **default**: ``null``
 
-Returns the label for each choice. Can be a callable (which receives the
-choice as first and the key of the ``choices`` array as second argument)
-or a property path.
-
-If ``null``, the keys of the ``choices`` array are used as labels.
-
-* Using a callable to set the label::
+Normally, the array key of each item in the ``choices`` option is used as the
+text that's shown to the user. The ``choice_label`` option allows you to take
+more control::
 
     $builder->add('attending', 'choice', array(
         'choices' => array(
@@ -21,18 +17,35 @@ If ``null``, the keys of the ``choices`` array are used as labels.
             'maybe' => null,
         ),
         'choices_as_values' => true,
-        'choice_label' => function ($choice, $key) {
-            return 'form.choice.'.$key;
+        'choice_label' => function ($value, $key, $index) {
+            if ($value == true) {
+                return 'Definitely!';
+            }
+            return strtoupper($key);
+
+            // or if you want to translate some key
+            //return 'form.choice.'.$key;
         },
     ));
 
-* Using a property path to set the label::
+This method is called for *each* choice, passing you the choice ``$value`` and the
+``$key`` from the choices array (``$index`` is related to `choice_value`_). This
+will give you:
+
+.. image:: /images/reference/form/choice-example2.png
+   :align: center
+   :scale: 50
+   :width: 350
+
+If your choice values are objects, then ``choice_label`` can also be a
+:ref:`reference-form-option-property-path <property path>`. Imagine you have some
+``Status`` class with a ``getDisplayName()`` method::
 
     $builder->add('attending', 'choice', array(
         'choices' => array(
-            Status::getInstance(Status::YES),
-            Status::getInstance(Status::NO),
-            Status::getInstance(Status::MAYBE),
+            new Status(Status::YES),
+            new Status(Status::NO),
+            new Status::(Status::MAYBE),
         ),
         'choices_as_values' => true,
         'choice_label' => 'displayName',

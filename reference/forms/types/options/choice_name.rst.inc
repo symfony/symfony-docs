@@ -6,13 +6,9 @@ choice_name
 
 **type**: ``callable`` or ``string`` **default**: ``null``
 
-Returns the form name for each choice. That name is used as name of the
-checkbox/radio form for this choice. It is also used as index of the choice
-views in the template. Can be a callable (like for ``choice_label``) or
-a property path.
+Controls the internal field name of the choice. You normally don't care about this,
+but in some advanced cases, you might. For example, this "name" becomes the index
+of the choice views in the template.
 
-The generated names must be valid form names, i.e. contain alpha-numeric
-symbols, underscores, hyphens and colons only. They must start with an
-alpha-numeric symbol or an underscore.
-
-If ``null``, an incrementing integer is used as name.
+This can be a callable or a property path. See `choice_label`_ for similar usage.
+If ``null`` is used, an incrementing integer is used as the name.

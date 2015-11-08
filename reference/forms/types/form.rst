@@ -128,6 +128,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
 
+.. _reference-form-option-property-path:
+
 .. include:: /reference/forms/types/options/property_path.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc

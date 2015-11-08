@@ -6,8 +6,10 @@ choice_value
 
 **type**: ``callable`` or ``string`` **default**: ``null``
 
-Returns the string value for each choice. This value is displayed in the
-``value`` attributes and submitted in the POST/PUT requests. Can be a
-callable (like for ``choice_label``) or a property path.
+Returns the string "value" for each choice. This is used in the ``value`` attribute
+in HTML and submitted in the POST/PUT requests. You don't normally need to worry
+about this, but it might be handy when processing an API request (since you can
+configure the value that will be sent in the API request).
 
-If ``null``, an incrementing integer is used as value.
+This can be a callable or a property path. See `choice_label`_ for similar usage.
+If ``null`` is used, an incrementing integer is used as the name.

@@ -6,8 +6,9 @@ choice_attr
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``array()``
 
-Returns the additional HTML attributes for choices. Can be an array, a callable
-(like for ``choice_label``) or a property path.
+Use this to add additional HTML attributes to each choice. This can be an array
+of attributes (if they are the same for each choice), a callable or a property path
+(just like `choice_label`_).
 
 If an array, the keys of the ``choices`` array must be used as keys::
 
@@ -18,7 +19,8 @@ If an array, the keys of the ``choices`` array must be used as keys::
             'Maybe' => null,
         ),
         'choices_as_values' => true,
-        'choice_attr' => array(
-            'Maybe' => array('class' => 'greyed-out'),
-        ),
+        'choice_attr' => function($val, $key, $index) {
+            // adds a class like attending_yes, attending_no, etc
+            return ['class' => 'attending_'.strtolower($key)];
+        },
     ));
