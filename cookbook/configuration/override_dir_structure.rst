@@ -176,8 +176,7 @@ The change in the ``composer.json`` will look like this:
         ...
     }
 
-In ``app/autoload.php``, you need to modify the path leading to the
-``vendor/autoload.php`` file::
+In ``app/autoload.php``, you need to modify the path to the ``autoload.php`` file::
 
     // app/autoload.php
     // ...
