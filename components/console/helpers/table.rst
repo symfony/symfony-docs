@@ -143,3 +143,94 @@ Here is a full list of things you can customize:
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.
+
+Spanning multiple columns and rows
+----------------------------------
+
+.. versionadded:: 2.7
+    Spanning multiple columns and rows was introduced in Symfony 2.7.
+
+To make a table cell which spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableSeparator;
+    use Symfony\Component\Console\Helper\TableCell;
+
+    $table = new Table($output);
+    $table
+        ->setHeaders(array('ISBN', 'Title', 'Author'))
+        ->setRows(array(
+            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+            new TableSeparator(),
+            array(new TableCell('This value spans 3 columns.', array('colspan' => 3))),
+        ))
+    ;
+    $table->render();
+
+which results in:
+
+.. code-block:: text
+
+    +---------------+---------------+-----------------+
+    | ISBN          | Title         | Author          |
+    +---------------+---------------+-----------------+
+    | 99921-58-10-7 | Divine Comedy | Dante Alighieri |
+    +---------------+---------------+-----------------+
+    | This value spans 3 columns.                     |
+    +---------------+---------------+-----------------+
+
+.. tip::
+
+    You can create a multiple-line page title using a header cell that spans
+    the enire table width::
+
+        $table->setHeaders(array(
+            array(new TableCell('Main table title', array('colspan' => 3))),
+            array('ISBN', 'Title', 'Author'),
+        ))
+        // ...
+
+    This generates:
+
+    .. code-block:: text
+
+        +-------+-------+--------+
+        | Main table title       |
+        +-------+-------+--------+
+        | ISBN  | Title | Author |
+        +-------+-------+--------+
+        | ...                    |
+        +-------+-------+--------+
+
+In a similar way you can span multiple rows::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableCell;
+
+    $table = new Table($output);
+    $table
+        ->setHeaders(array('ISBN', 'Title', 'Author'))
+        ->setRows(array(
+            array(
+                '978-0521567817',
+                'De Monarchia',
+                new TableCell("Dante Alighieri\nspans multiple rows", array('rowspan' => 2)),
+            ),
+            array('978-0804169127', 'Divine Comedy'),
+        ))
+    ;
+    $table->render();
+
+which results in:
+
+.. code-block:: text
+
+    +----------------+---------------+---------------------+
+    | ISBN           | Title         | Author              |
+    +----------------+---------------+---------------------+
+    | 978-0521567817 | De Monarchia  | Dante Alighieri     |
+    | 978-0804169127 | Divine Comedy | spans multiple rows |
+    +----------------+---------------+---------------------+
+
+You can use the ``colspan`` and ``rowspan`` options at the same time which allows
+you to create any table layout you may wish.
