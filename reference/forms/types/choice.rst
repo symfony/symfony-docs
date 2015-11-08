@@ -17,8 +17,6 @@ option.
 |             | - `choice_list`_                                                             |
 |             | - `choice_loader`_                                                           |
 |             | - `choice_label`_                                                            |
-|             | - `choice_name`_                                                             |
-|             | - `choice_value`_                                                            |
 |             | - `choice_attr`_                                                             |
 |             | - `choices_as_values`_                                                       |
 |             | - `placeholder`_                                                             |
@@ -26,6 +24,8 @@ option.
 |             | - `multiple`_                                                                |
 |             | - `preferred_choices`_                                                       |
 |             | - `group_by`_                                                                |
+|             | - `choice_name`_                                                             |
+|             | - `choice_value`_                                                            |
 +-------------+------------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
@@ -230,13 +230,13 @@ a fully-loaded list is not necessary.
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
-.. include:: /reference/forms/types/options/choice_name.rst.inc
-
-.. include:: /reference/forms/types/options/choice_value.rst.inc
-
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
 
 Overridden Options
 ------------------
