@@ -1070,7 +1070,7 @@ that will house the logic for building the task form::
 
         public function getName()
         {
-            return 'task';
+            return 'app_task';
         }
     }
 
@@ -1178,7 +1178,7 @@ easy to use in your application.
             app.form.type.task:
                 class: AppBundle\Form\Type\TaskType
                 tags:
-                    - { name: form.type, alias: task }
+                    - { name: form.type, alias: app_task }
 
     .. code-block:: xml
 
@@ -1190,7 +1190,7 @@ easy to use in your application.
 
             <services>
                 <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
-                    <tag name="form.type" alias="task" />
+                    <tag name="form.type" alias="app_task" />
                 </service>
             </services>
         </container>
@@ -1204,7 +1204,7 @@ easy to use in your application.
                 'AppBundle\Form\Type\TaskType'
             )
             ->addTag('form.type', array(
-                'alias' => 'task',
+                'alias' => 'app_task',
             ))
         ;
 
