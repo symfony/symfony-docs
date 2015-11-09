@@ -147,7 +147,7 @@ You can easily "group" options in a select by passing a multi-dimensional choice
         'choices_as_values' => true,
     );
 
-.. image:: /images/reference/form/choice-example3.png
+.. image:: /images/reference/form/choice-example4.png
    :align: center
 
 To get fancier, use the `group_by`_ option.
