@@ -38,7 +38,7 @@ will give you:
    :width: 350
 
 If your choice values are objects, then ``choice_label`` can also be a
-:ref:`reference-form-option-property-path <property path>`. Imagine you have some
+:ref:`property path <reference-form-option-property-path>`. Imagine you have some
 ``Status`` class with a ``getDisplayName()`` method::
 
     $builder->add('attending', 'choice', array(
