@@ -37,8 +37,6 @@ a "Later" group:
 
 .. image:: /images/reference/form/choice-example5.png
    :align: center
-   :scale: 50
-   :width: 350
 
 If you return ``null``, the option won't be grouped. You can also pass a string
 "property path" that will be called to get the group. See the `choice_label`_ for

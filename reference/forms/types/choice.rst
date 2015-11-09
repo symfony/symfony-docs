@@ -66,8 +66,6 @@ This will create a ``select`` drop-down like this:
 
 .. image:: /images/reference/form/choice-example1.png
    :align: center
-   :scale: 50
-   :width: 350
 
 If the user selects ``No``, the form will return ``false`` for this field. Similarly,
 if the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
@@ -151,8 +149,6 @@ You can easily "group" options in a select by passing a multi-dimensional choice
 
 .. image:: /images/reference/form/choice-example3.png
    :align: center
-   :scale: 50
-   :width: 350
 
 To get fancier, use the `group_by`_ option.
 
