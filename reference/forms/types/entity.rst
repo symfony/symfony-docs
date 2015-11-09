@@ -13,6 +13,8 @@ objects from the database.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
 | Options     | - `choice_label`_                                                |
+|             | - `choice_translation_domain`_                                   |
+|             | - `translation_domain`_                                          |
 |             | - `class`_                                                       |
 |             | - `data_class`_                                                  |
 |             | - `em`_                                                          |
@@ -129,6 +131,26 @@ cast into a string and so must have a ``__toString()`` method.
            'class' => 'MyBundle:Gender',
            'choice_label' => 'translations[en].name',
         ));
+
+choice_translation_domain
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``choice_translation_domain`` option was introduced in Symfony 2.7.
+
+**type**: ``boolean`` | ``null`` | ``string``
+
+If specified ``null`` value, corresponds to parents ``translation_domain`` or default domain (messages). If the value is ``string``, corresponds to explicit domain(e.g. ``AcmeStoreBundle``). If the value is ``true``, reuse current ``translation_domain`` and ``false`` to disabled.
+
+translation_domain
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``translation_domain`` option was introduced in Symfony 2.7.
+
+**type**: ``string``
+
+When ``choice_translation_domain`` is ``true`` or ``null``, use translations of informed domain(e.g. ``AcmeStoreBundle`` to ``Acme\StoreBundle\Resources\translation`` files).
 
 class
 ~~~~~
