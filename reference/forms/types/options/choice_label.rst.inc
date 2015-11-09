@@ -34,8 +34,6 @@ will give you:
 
 .. image:: /images/reference/form/choice-example2.png
    :align: center
-   :scale: 50
-   :width: 350
 
 If your choice values are objects, then ``choice_label`` can also be a
 :ref:`property path <reference-form-option-property-path>`. Imagine you have some
