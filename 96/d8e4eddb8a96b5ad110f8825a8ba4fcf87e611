@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-11-08T23:45:51Z
+
+I got the PR target wrong - will merge into 2.7.
+
+---------------------------------------------------------------------------
+
+by althaus at 2015-11-10T08:16:04Z
+
+@weaverryan Nice work. Especially working out the examples should be a good help. I planned to get rid off that `Status` stuff as this only lead to confusion being a too constructed example.
+
+Could you talk to @webmozart? I had some trouble understanding the `choice_loader` so I just took his comment from the code about partially loading stuff. In addition deprecating the `choice_list`, but still using it, is strange.
+
+---------------------------------------------------------------------------
+
+by althaus at 2015-11-10T08:29:59Z
+
+Oh... one important thing I missed: It's important to state the usage of `choice_value` to get around the BC* that the form options get rendered with integer based values instead of the key value. This breaks any JS frontend code relying on the keys.
+
+(*) This is still a real BC in 2.7 in my eyes and I'm not alone. :-1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-11-11T01:30:11Z
+
+@althaus Yes, the `Status` isn't a great example - I removed *most* of them, replaced with `DateTime`.
+
+I added a note about the `choice_value` BC break thing. Yes, this is a BC break, but no it won't be fixed (fixing it now would be *another* BC break). All we can do is document it well - I added a small note, I hope it's obvious enough.
+
+About `choice_loader`, what do you mean by:
+
+> In addition deprecating the choice_list, but still using it, is strange.
+
+Where is it still used? I'm also not totally clear on the use-case of `choice_loader`. From looking at the issue queue, I was surprised by how many people seemed to use `choice_list` - I'm not sure of what it's use-case is either.
+
+Anyways, thanks for the review! We have a lot to do, so I'm merging this now - a bit faster than normal. IF anyone sees any issues, please let me know!
+
+Thanks!
