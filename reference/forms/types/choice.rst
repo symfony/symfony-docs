@@ -189,7 +189,7 @@ to the user.
     $builder->add('gender', 'choice', array(
         // Shows "Male" to the user, returns "m" when selected
         'choices'  => array('m' => 'Male', 'f' => 'Female'),
-        // before 2.7, this options didn't actually exist, but the
+        // before 2.7, this option didn't actually exist, but the
         // behavior was equivalent to setting this to false in 2.7.
         'choices_as_values' => false,
     ));
