@@ -32,7 +32,7 @@ Take the following example::
         },
     ));
 
-This groups the dates that are within 3 days into "Soon" and everyting else into
+This groups the dates that are within 3 days into "Soon" and everything else into
 a "Later" group:
 
 .. image:: /images/reference/form/choice-example5.png
