@@ -12,10 +12,6 @@ In this entry, you'll build a traditional login form. Of course, when the
 user logs in, you can load your users from anywhere - like the database.
 See :ref:`security-user-providers` for details.
 
-This chapter assumes that you've followed the beginning of the
-:doc:`security chapter </book/security>` and have ``http_basic`` authentication
-working properly.
-
 First, enable form login under your firewall:
 
 .. configuration-block::
