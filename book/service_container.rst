@@ -318,10 +318,10 @@ The service container is built using a single configuration resource
 be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
-External service configuration can be imported in two different ways. The first 
-method, commonly used to import container configuration from the bundles you've 
-created - is via the ``imports`` directive. The second method, although slightly more 
-complex offers more flexibility and is commonly used to import third-party bundle 
+External service configuration can be imported in two different ways. The first
+method, commonly used to import container configuration from the bundles you've
+created - is via the ``imports`` directive. The second method, although slightly more
+complex offers more flexibility and is commonly used to import third-party bundle
 configuration. Read on to learn more about both methods.
 
 .. index::
@@ -943,13 +943,15 @@ to be used for a specific purpose. Take the following example:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <service
-                id="foo.twig.extension"
-                class="Acme\HelloBundle\Extension\FooExtension"
-                public="false">
+            <services>
+                <service
+                    id="foo.twig.extension"
+                    class="Acme\HelloBundle\Extension\FooExtension"
+                    public="false">
 
-                <tag name="twig.extension" />
-            </service>
+                    <tag name="twig.extension" />
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
