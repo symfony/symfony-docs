@@ -189,10 +189,12 @@ to the user.
     $builder->add('gender', 'choice', array(
         // Shows "Male" to the user, returns "m" when selected
         'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        // before 2.7, this options didn't actually exist, but the
+        // behavior was equivalent to setting this to false in 2.7.
         'choices_as_values' => false,
     ));
 
-* Optional since 2.7::
+* Since 2.7::
 
     $builder->add('gender', 'choice', array(
         // Shows "Male" to the user, returns "m" when selected
@@ -200,8 +202,8 @@ to the user.
         'choices_as_values' => true,
     ));
 
-In Symfony 3.0, ``choices_as_values`` option will go away, but it's behavior will
-always be used:
+In Symfony 3.0, the ``choices_as_values`` option doesn't exist, but the ``choice``
+type behaves as if it were set to true:
 
 * Default for 3.0::
 
