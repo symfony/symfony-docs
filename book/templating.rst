@@ -51,12 +51,6 @@ template - a text file parsed by PHP that contains a mix of text and PHP code:
         </body>
     </html>
 
-.. caution::
-
-    The use of PHP templates is strongly discouraged for Symfony applications
-    because its support will be dropped in future Symfony versions. Create all
-    your templates using the Twig templating language.
-
 .. index:: Twig; Introduction
 
 But Symfony packages an even more powerful templating language called `Twig`_.
@@ -156,6 +150,9 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
                 <li>No users found</li>
             {% endfor %}
         </ul>
+
+    Another compelling reason for using Twig is that Symfony will drop the
+    built-in support for PHP templates in future versions.
 
 .. index::
    pair: Twig; Cache
