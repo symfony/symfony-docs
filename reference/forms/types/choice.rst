@@ -1,24 +1,30 @@
 .. index::
    single: Forms; Fields; choice
 
-choice Field Type
-=================
+choice Field Type (select drop-downs, radio buttons & checkboxes)
+=================================================================
 
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 
-To use this field, you must specify *either* the ``choice_list`` or ``choices``
-option.
+To use this field, you must specify *either* ``choices`` or ``choice_loader`` option.
 
 +-------------+------------------------------------------------------------------------------+
 | Rendered as | can be various tags (see below)                                              |
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
-|             | - `choice_list`_                                                             |
+|             | - `choices_as_values`_                                                       |
+|             | - `choice_loader`_                                                           |
+|             | - `choice_label`_                                                            |
+|             | - `choice_attr`_                                                             |
 |             | - `placeholder`_                                                             |
 |             | - `expanded`_                                                                |
 |             | - `multiple`_                                                                |
 |             | - `preferred_choices`_                                                       |
+|             | - `group_by`_                                                                |
+|             | - `choice_value`_                                                            |
+|             | - `choice_name`_                                                             |
+|             | - `choice_list`_ (deprecated)                                                |
 +-------------+------------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
@@ -44,36 +50,107 @@ Example Usage
 -------------
 
 The easiest way to use this field is to specify the choices directly via
-the ``choices`` option. The key of the array becomes the value that's actually
-set on your underlying object (e.g. ``m``), while the value is what the
-user sees on the form (e.g. ``Male``).
+the ``choices`` option::
 
-.. code-block:: php
-
-    $builder->add('gender', 'choice', array(
-        'choices'  => array('m' => 'Male', 'f' => 'Female'),
-        'required' => false,
-    ));
-
-By setting ``multiple`` to true, you can allow the user to choose multiple
-values. The widget will be rendered as a multiple ``select`` tag or a series
-of checkboxes depending on the ``expanded`` option::
-
-    $builder->add('availability', 'choice', array(
-        'choices' => array(
-            'morning'   => 'Morning',
-            'afternoon' => 'Afternoon',
-            'evening'   => 'Evening',
+    $builder->add('isAttending', 'choice', array(
+        'choices'  => array(
+            'Maybe' => null,
+            'Yes' => true,
+            'No' => false,
         ),
-        'multiple' => true,
+        // *this line is important*
+        'choices_as_values' => true,
     ));
 
-You can also use the ``choice_list`` option, which takes an object that
-can specify the choices for your widget.
+This will create a ``select`` drop-down like this:
+
+.. image:: /images/reference/form/choice-example1.png
+   :align: center
+
+If the user selects ``No``, the form will return ``false`` for this field. Similarly,
+if the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
+In other words, the **value** of each item is the value you want to get/set in PHP
+code, while the **key** is what will be shown to the user.
+
+.. caution::
+
+    The ``choices_as_values`` *must* be set to ``true`` in all cases. This activates
+    the "new" choice type API, which was introduced in Symfony 2.7. If you omit this
+    option (or set it to ``false``), you'll activate the old API, which is deprecated
+    and will be removed in 3.0. To read about the old API, read an older version of
+    the docs.
+
+Advanced Example (with Objects!)
+--------------------------------
+
+This field has a *lot* of options and most control how the field is displayed. In
+this example, the underlying data is some ``Category`` object that has a ``getName()``
+method::
+
+    $builder
+        ->add('category', 'choice', [
+            'choices' => [
+                new Category('Cat1'),
+                new Category('Cat2'),
+                new Category('Cat3'),
+                new Category('Cat4'),
+            ],
+            'choices_as_values' => true,
+            'choice_label' => function($val, $key, $index) {
+                /** @var Category $val */
+                return strtoupper($val->getName());
+            },
+            'choice_attr' => function($val, $key, $index) {
+                return ['class' => 'category_'.strtolower($val->getName())];
+            },
+            'group_by' => function($val, $key, $index) {
+                // randomly assign things into 2 groups
+                return rand(0, 1) == 1 ? 'Group A' : 'Group B'
+            },
+            'preferred_choices' => function($val, $key, $index) {
+                return $val->getName() == 'Cat2' || $val->getName() == 'Cat3';
+            },
+        ]);
+
+You can also customize the `choice_name`_ and `choice_value`_ of each choice if
+you need further HTML customization.
 
 .. _forms-reference-choice-tags:
 
 .. include:: /reference/forms/types/options/select_how_rendered.rst.inc
+
+Customizing each Option's Text (Label)
+--------------------------------------
+
+Normally, the array key of each item in the ``choices`` option is used as the
+text that's shown to the user. But that can be completely customized via the
+`choice_label`_ option. Check it out for more details.
+
+.. _form-choices-simple-grouping:
+
+Grouping Options
+----------------
+
+You can easily "group" options in a select by passing a multi-dimensional choices array::
+
+    $builder->add('stockStatus', 'choice', [
+        'choices' => [
+            'Main Statuses' => [
+                'Yes' => 'stock_yes',
+                'No' => 'stock_no',
+            ],
+            'Out of Stock Statuses' => [
+                'Backordered' => 'stock_backordered',
+                'Discontinued' => 'stock_discontinued',
+            ]
+        ],
+        'choices_as_values' => true,
+    );
+
+.. image:: /images/reference/form/choice-example4.png
+   :align: center
+
+To get fancier, use the `group_by`_ option.
 
 Field Options
 -------------
@@ -85,19 +162,88 @@ choices
 
 This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
-is the item value and the array value is the item's label::
+is the item's label and the array value is the item's value::
 
-    $builder->add('gender', 'choice', array(
-        'choices' => array('m' => 'Male', 'f' => 'Female'),
+    $builder->add('inStock', 'choice', array(
+        'choices' => array('In Stock' => true, 'Out of Stock' => false),
+        // always include this
+        'choices_as_values' => true,
     ));
 
-.. tip::
+choices_as_values
+~~~~~~~~~~~~~~~~~
 
-    When the values to choose from are not integers or strings (but e.g.
-    floats or booleans), you should use the `choice_list`_ option instead.
-    With this option you are able to keep the original data format which
-    is important to ensure that the user input is validated properly and
-    useless database updates caused by a data type mismatch are avoided.
+**type**: ``boolean`` **default**: false
+
+.. versionadded:: 2.7
+
+    The ``choices_as_values`` option was introduced in Symfony 2.7.
+
+The ``choices_as_values`` option was added to keep backward compatibility with the
+*old* way of handling the ``choices`` option. When set to ``false`` (or omitted),
+the choice keys are used as the underlying value and the choice values are shown
+to the user.
+
+* Before 2.7 (and deprecated now)::
+
+    $builder->add('gender', 'choice', array(
+        // Shows "Male" to the user, returns "m" when selected
+        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        // before 2.7, this options didn't actually exist, but the
+        // behavior was equivalent to setting this to false in 2.7.
+        'choices_as_values' => false,
+    ));
+
+* Since 2.7::
+
+    $builder->add('gender', 'choice', array(
+        // Shows "Male" to the user, returns "m" when selected
+        'choices' => array('Male' => 'm', 'Female' => 'f'),
+        'choices_as_values' => true,
+    ));
+
+In Symfony 3.0, the ``choices_as_values`` option doesn't exist, but the ``choice``
+type behaves as if it were set to true:
+
+* Default for 3.0::
+
+    $builder->add('gender', 'choice', array(
+        'choices' => array('Male' => 'm', 'Female' => 'f'),
+    ));
+
+choice_loader
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+
+    The ``choice_loader`` option was added in Symfony 2.7.
+
+**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
+
+The ``choice_loader`` can be used to only partially load the choices in cases where
+a fully-loaded list is not necessary. This is only needed in advanced cases and
+would replace the ``choices`` option.
+
+.. _reference-form-choice-label:
+
+.. include:: /reference/forms/types/options/choice_label.rst.inc
+
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. include:: /reference/forms/types/options/multiple.rst.inc
+
+.. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
 
 choice_list
 ~~~~~~~~~~~
@@ -105,7 +251,7 @@ choice_list
 .. caution::
 
     The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
-    You should use ``choices`` or ``choice_loader`` now.
+    You should use `choices`_ or `choice_loader`_ now.
 
 **type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
 
@@ -140,14 +286,6 @@ The ``status`` field created by the code above will be rendered as:
 But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
 will be returned in your form. If ``Almost empty`` is selected (value ``2``
 in HTML), ``0.1`` will be returned.
-
-.. include:: /reference/forms/types/options/placeholder.rst.inc
-
-.. include:: /reference/forms/types/options/expanded.rst.inc
-
-.. include:: /reference/forms/types/options/multiple.rst.inc
-
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 Overridden Options
 ------------------
