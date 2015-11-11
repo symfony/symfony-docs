@@ -20,4 +20,4 @@ If ``null`` is used, an incrementing integer is used as the name.
     `value` attribute of options is generated. This is not a problem unless you
     rely on the option values in JavaScript. See `issue #14825`_ for details.
 
-.. _`issue #14285`: https://github.com/symfony/symfony/pull/14825
+.. _`issue #14825`: https://github.com/symfony/symfony/pull/14825
