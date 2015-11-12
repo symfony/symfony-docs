@@ -1,5 +1,3 @@
-.. index::
-
 How to Use Multiple Guard Authenticators
 ========================================
 
