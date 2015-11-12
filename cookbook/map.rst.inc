@@ -176,6 +176,7 @@
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
   * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/multiple_guard_authenticators`
   * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/user_checkers`

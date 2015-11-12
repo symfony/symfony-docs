@@ -22,6 +22,7 @@ Authentication (Identifying/Logging in the User)
     csrf_in_login_form
     named_encoders
     multiple_user_providers
+    multiple_guard_authenticators
     firewall_restriction
     host_restriction
     user_checkers
