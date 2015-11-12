@@ -142,6 +142,7 @@ This is an example of your configuration:
             // ...
             'firewalls' => array(
                 'api' => array(
+                    'pattern' => '^/api',
                     'guard' => array(
                         'authenticators' => array(
                             'app.api_token_authenticator',
