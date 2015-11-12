@@ -87,30 +87,29 @@ This field has a *lot* of options and most control how the field is displayed. I
 this example, the underlying data is some ``Category`` object that has a ``getName()``
 method::
 
-    $builder
-        ->add('category', 'choice', [
-            'choices' => [
-                new Category('Cat1'),
-                new Category('Cat2'),
-                new Category('Cat3'),
-                new Category('Cat4'),
-            ],
-            'choices_as_values' => true,
-            'choice_label' => function($val, $key, $index) {
-                /** @var Category $val */
-                return strtoupper($val->getName());
-            },
-            'choice_attr' => function($val, $key, $index) {
-                return ['class' => 'category_'.strtolower($val->getName())];
-            },
-            'group_by' => function($val, $key, $index) {
-                // randomly assign things into 2 groups
-                return rand(0, 1) == 1 ? 'Group A' : 'Group B'
-            },
-            'preferred_choices' => function($val, $key, $index) {
-                return $val->getName() == 'Cat2' || $val->getName() == 'Cat3';
-            },
-        ]);
+    $builder->add('category', 'choice', [
+        'choices' => [
+            new Category('Cat1'),
+            new Category('Cat2'),
+            new Category('Cat3'),
+            new Category('Cat4'),
+        ],
+        'choices_as_values' => true,
+        'choice_label' => function($category, $key, $index) {
+            /** @var Category $category */
+            return strtoupper($category->getName());
+        },
+        'choice_attr' => function($category, $key, $index) {
+            return ['class' => 'category_'.strtolower($category->getName())];
+        },
+        'group_by' => function($category, $key, $index) {
+            // randomly assign things into 2 groups
+            return rand(0, 1) == 1 ? 'Group A' : 'Group B'
+        },
+        'preferred_choices' => function($category, $key, $index) {
+            return $category->getName() == 'Cat2' || $category->getName() == 'Cat3';
+        },
+    ]);
 
 You can also customize the `choice_name`_ and `choice_value`_ of each choice if
 you need further HTML customization.
