@@ -656,6 +656,9 @@ will not be included in the collection passed to ``setTags``. Depending on
 your persistence layer, this may or may not be enough to actually remove
 the relationship between the removed ``Tag`` and ``Task`` object.
 
+.. tip::
+    Use orphanRemoval = true on the one to many relation to let Doctrine handle this automatically.
+
 .. sidebar:: Doctrine: Ensuring the database persistence
 
     When removing objects in this way, you may need to do a little bit more
