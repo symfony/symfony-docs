@@ -13,9 +13,35 @@ longer be able to use it.
 Allow to Install Symfony 3 Components
 -------------------------------------
 
-.. TODO
+Most third-party bundles define their Symfony dependencies using the ``~2.N`` or
+``^2.N`` constraints in the ``composer.json`` file. For example:
 
-* Change symfony/... ~2.N by ~2.N|~3.M
+.. code-block:: json
+
+    {
+        "require": {
+            "symfony/framework-bundle": "~2.3",
+            "symfony/finder": "~2.3",
+            "symfony/validator": "~2.3",
+        }
+    }
+
+These constraints prevent the bundle from using Symfony 3 components, so it makes
+it impossible to install it in a Symfony 3 based application. This issue is very
+easy to solve thanks to the flexibility of Composer dependencies constraints.
+Just replace ``~2.N`` by ``~2.N|~3.0`` (or ``^2.N`` by ``^2.N|~3.0``).
+
+The above example can be updated to work with Symfony 3 as follows:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "symfony/framework-bundle": "~2.3|~3.0",
+            "symfony/finder": "~2.3|~3.0",
+            "symfony/validator": "~2.3|~3.0",
+        }
+    }
 
 Look for Deprecations and Fix Them
 ----------------------------------
