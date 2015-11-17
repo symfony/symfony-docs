@@ -1028,12 +1028,20 @@ a slash. URLs matching this route might look like:
 
     This example also highlights the special ``_format`` routing parameter.
     When using this parameter, the matched value becomes the "request format"
-    of the ``Request`` object. Ultimately, the request format is used for such
-    things as setting the ``Content-Type`` of the response (e.g. a ``json``
-    request format translates into a ``Content-Type`` of ``application/json``).
-    It can also be used in the controller to render a different template for
-    each value of ``_format``. The ``_format`` parameter is a very powerful way
-    to render the same content in different formats.
+    of the ``Request`` object.
+
+    Ultimately, the request format is used for such things as setting the
+    ``Content-Type`` of the response (e.g. a ``json`` request format translates
+    into a ``Content-Type`` of ``application/json``). It can also be used in the
+    controller to render a different template for each value of ``_format``.
+    The ``_format`` parameter is a very powerful way to render the same content
+    in different formats.
+
+    In Symfony versions previous to 3.0, it is possible to override the request
+    format by adding a query parameter named ``_format`` (for example:
+    ``/foo/bar?_format=json``). Relying on this behavior not only is considered
+    a bad practice but it will complicate the upgrade of your applications to
+    Symfony 3.
 
 .. note::
 
