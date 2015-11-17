@@ -8,6 +8,7 @@ method should be called when an anonymous user hits a page that requires authent
 
 Multiple authenticators with shared entry point
 -----------------------------------------------
+
 Let's have an example of two authenticators: one based on login form, another one on facebook login.
 Both authenticators entry points redirect user to the same login page.
 However, in your configuration you have to explicitly say which entry point you want to use.
@@ -75,6 +76,7 @@ There is one limitation with this approach - you have to use exactly one entry p
 
 Multiple authenticators with separate entry points
 --------------------------------------------------
+
 Let's now have an example of two different authenticators: one based on login form, another one on an API token.
 When user hits secured area he should be redirected to the login page.
 Also when user hits an API endpoint, he should get a relevant API response.
