@@ -98,11 +98,56 @@ of deprecated features:
 Test your Bundle in Symfony 3
 -----------------------------
 
-.. TODO
+Now that your bundle has removed all deprecations, it's time to test it for real
+in a Symfony 3 application. Assuming that you already have a Symfony 3 application,
+you can test the updated bundle locally without having to install it through
+Composer.
 
-* Upgrade a test app to Sf3 or create an empty app (symfony new my_app 3.0)
-* Use the "ln -s my_bundle vendor/.../my_bundle" trick to use the new code in the 3.0 app
-* Configure Travis CI to test your bundle in both 2 and 3 versions.
+If your operating system supports symbolic lings, just point the appropriate
+vendor directory to your local bundle root directory:
+
+.. code-block:: bash
+
+    $ ln -s /path/to/your/local/bundle/ vendor/you-vendor-name/your-buncle-name
+
+If your operating system doesn't support symbolic links, you'll need to copy
+your local bundle directory into the appropriate directory inside ``vendor/``.
+
+Update the Travis CI Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to running tools locally, it's recommended to set-up Travis CI service
+to run the tests of your bundle using different Symfony configurations. Use the
+following recommended configuration as the starting point of your own configuration:
+
+.. code-block:: yaml
+
+    language: php
+    sudo: false
+    php:
+        - 5.3
+        - 5.6
+        - 7.0
+
+    matrix:
+        include:
+            - php: 5.3.3
+              env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' SYMFONY_DEPRECATIONS_HELPER=weak
+            - php: 5.6
+              env: SYMFONY_VERSION='2.3.*'
+            - php: 5.6
+              env: DEPENDENCIES='dev' SYMFONY_VERSION='2.8.*@dev'
+            - php: 5.6
+              env: SYMFONY_VERSION='3.0.*@dev'
+
+    before_install:
+        - composer self-update
+        - if [ "$DEPENDENCIES" == "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
+        - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION}; fi;
+
+    install: composer update $COMPOSER_FLAGS
+
+    script: phpunit -v
 
 .. _`PHPUnit Bridge`: https://github.com/symfony/phpunit-bridge
 .. _`Official Symfony Guide to Upgrade from 2.x to 3.0`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-3.0.md
