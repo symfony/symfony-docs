@@ -216,7 +216,7 @@ the username and then check the password (more on passwords in a moment):
                         # manager_name: customer
 
             firewalls:
-                default:
+                main:
                     pattern:    ^/
                     http_basic: ~
                     provider: our_db_provider
@@ -244,7 +244,7 @@ the username and then check the password (more on passwords in a moment):
                     <entity class="AppBundle:User" property="username" />
                 </provider>
 
-                <firewall name="default" pattern="^/" provider="our_db_provider">
+                <firewall name="main" pattern="^/" provider="our_db_provider">
                     <http-basic />
                 </firewall>
 
@@ -273,7 +273,7 @@ the username and then check the password (more on passwords in a moment):
                 ),
             ),
             'firewalls' => array(
-                'default' => array(
+                'main' => array(
                     'pattern'    => '^/',
                     'http_basic' => null,
                     'provider'   => 'our_db_provider',
