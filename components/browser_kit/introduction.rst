@@ -7,12 +7,12 @@ The BrowserKit Component
 
     The BrowserKit component simulates the behavior of a web browser.
 
-The BrowserKit component allows you to make web request, click on links and submit forms. 
+The BrowserKit component allows you to make web requests, click on links and submit forms. 
 
 Installation
 ------------
 
-You can install the component in 2 different ways:
+You can install the component in two different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/browser-kit`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/BrowserKit).
@@ -21,13 +21,14 @@ Basic Usage
 -----------
 
 .. note::
+
     The component only provides an abstract client and does not provide any "default" backend for the HTTP layer.
 
 Creating a Client
 -----------------
 
 To create your own client you must extend the abstract client class and implement the doRequest method.
-This method accepts a request and should return a response.
+This method accepts a requests and should return a response.
 
 .. code-block:: php
 
@@ -36,8 +37,10 @@ This method accepts a request and should return a response.
     use Symfony\Component\BrowserKit\Client as BaseClient;
     use Symfony\Component\BrowserKit\Response;
 
-    class Client extends BaseClient {
-        protected function doRequest($request) {
+    class Client extends BaseClient 
+    {
+        protected function doRequest($request) 
+        {
             // convert request into a response
             // ...
             return new Response($content, $status, $headers);
@@ -46,14 +49,14 @@ This method accepts a request and should return a response.
 
 For a simple implementation of a browser based on an HTTP layer, have a look at Goutte_.
 
-For an implementation based on HttpKernelInterface, have a look at the Client provided by the :doc:`/components/http_kernel/introduction`.
+For an implementation based on ``HttpKernelInterface``, have a look at the Client provided by the :doc:`/components/http_kernel/introduction`.
 
 
-Making Request
+Making Requests
 ~~~~~~~~~~~~~~
 
-To make a request you use the client's request method. 
-The first two arguments are for the HTTP method and the request url.
+To make a request you use the client's request_ method. 
+The first two arguments are for the HTTP method and the request URL.
 The request method will return a crawler object.
 
 .. code-block:: php
@@ -66,7 +69,7 @@ The request method will return a crawler object.
 Clicking Links
 ~~~~~~~~~~~~~~
 
-Select a link with the crawler and pass it to the click method to click on the link.
+Select a link with the crawler and pass it to the click_ method to click on the link.
 
 .. code-block:: php
 
@@ -195,7 +198,7 @@ You can define create cookies and add them to a cookie jar that can be injected 
 History
 -------
 
-The client stores all your request allowing you to go back and forward in your history.
+The client stores all your requests allowing you to go back and forward in your history.
 
 .. code-block:: php
 
@@ -215,7 +218,7 @@ The client stores all your request allowing you to go back and forward in your h
     // go forward to documentation page
     $doc_crawler = $client->forward();
 
-You can restart the clients history with the restart method. This will also clear out the CookieJar.
+You can restart the client's history with the restart method. This will also clear out the CookieJar.
 
 .. code-block:: php
 
@@ -231,3 +234,5 @@ You can restart the clients history with the restart method. This will also clea
 
 .. _Packagist: https://packagist.org/packages/symfony/browser-kit
 .. _Goutte: https://github.com/fabpot/Goutte
+.. _request: http://api.symfony.com/2.3/Symfony/Component/BrowserKit/Client.html#method_request
+.. _click: http://api.symfony.com/2.3/Symfony/Component/BrowserKit/Client.html#method_click
