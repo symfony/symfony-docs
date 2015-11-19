@@ -53,7 +53,7 @@ For an implementation based on ``HttpKernelInterface``, have a look at the Clien
 
 
 Making Requests
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 To make a request you use the client's request_ method. 
 The first two arguments are for the HTTP method and the request URL.
