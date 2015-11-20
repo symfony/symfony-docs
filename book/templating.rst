@@ -1098,7 +1098,7 @@ if you are using Twig (or the third argument if you are using PHP) to ``true``:
 
     .. code-block:: html+jinja
 
-        <img src="{{ asset('images/logo.png', absolute=true) }}" alt="Symfony!" />
+        <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
 
     .. code-block:: html+php
 
