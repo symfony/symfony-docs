@@ -4,6 +4,11 @@
 How to Create a Custom Form Password Authenticator
 ==================================================
 
+.. tip::
+
+    Check out :doc:`/cookbook/security/guard-authentication` for a simpler and more
+    flexible way to accomplish custom authentication tasks like this.
+
 Imagine you want to allow access to your website only between 2pm and 4pm
 UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
 and provider. In this entry, you'll learn how to do this for a login form
