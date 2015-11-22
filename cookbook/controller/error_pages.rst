@@ -96,7 +96,7 @@ To override the 404 error template for HTML pages, create a new
         <h1>Page not found</h1>
 
         {# example security usage, see below #}
-        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {# ... #}
         {% endif %}
 
@@ -123,24 +123,6 @@ store the HTTP status code and message respectively.
     in the same way as error pages. Create a new ``exception.html.twig`` template
     for the standard HTML exception page or ``exception.json.twig`` for the JSON
     exception page.
-
-Avoiding Exceptions when Using Security Functions in Error Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-One of the common pitfalls when designing custom error pages is to use the
-``is_granted()`` function in the error template (or in any parent template
-inherited by the error template). If you do that, you'll see an exception thrown
-by Symfony.
-
-The cause of this problem is that routing is done before security. If a 404 error
-occurs, the security layer isn't loaded and thus, the ``is_granted()`` function
-is undefined. The solution is to add the following check before using this function:
-
-.. code-block:: twig
-
-    {% if app.user and is_granted('...') %}
-        {# ... #}
-    {% endif %}
 
 .. _testing-error-pages:
 
