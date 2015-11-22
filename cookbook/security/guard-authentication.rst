@@ -149,7 +149,7 @@ This requires you to implement six methods::
     namespace AppBundle\Security;
 
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -217,7 +217,7 @@ This requires you to implement six methods::
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
             );
 
-            return new Response(json_encode($data), 403);
+            return new JsonResponse($data, 403);
         }
 
         /**
@@ -230,7 +230,7 @@ This requires you to implement six methods::
                 'message' => 'Authentication Required'
             );
 
-            return new Response(json_encode($data), 401);
+            return new JsonResponse($data, 401);
         }
 
         public function supportsRememberMe()
@@ -571,7 +571,3 @@ Frequently Asked Questions
     to actually authenticate the user. You can continue doing that (see previous
     question) or use the ``User`` object from FOSUserBundle and create your own
     authenticator(s) (just like in this article).
-
-* :doc:`Creating a Login Form </cookbook/security/guard-login-form>`
-* :doc:`Authenticating with an API Token </cookbook/security/guard-api-key>`
-* :doc:`Using Multiple Authenticators (Login form *and* API Token) </cookbook/security/guard-multi>`
