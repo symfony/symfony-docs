@@ -161,6 +161,7 @@
 
   * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
+  * :doc:`/cookbook/security/guard-authentication`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/form_login`
