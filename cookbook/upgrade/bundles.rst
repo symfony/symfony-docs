@@ -10,8 +10,8 @@ the previous 2.8 version. If your bundle uses any deprecated feature and it's
 published as a third-party bundle, applications upgrading to Symfony 3 will no
 longer be able to use it.
 
-Allow to Install Symfony 3 Components
--------------------------------------
+Allowing to Install Symfony 3 Components
+----------------------------------------
 
 Most third-party bundles define their Symfony dependencies using the ``~2.N`` or
 ``^2.N`` constraints in the ``composer.json`` file. For example:
@@ -46,12 +46,12 @@ The above example can be updated to work with Symfony 3 as follows:
 .. tip::
 
     Another common version constraint found on third-party bundles is ``>=2.N``.
-    You should avoid using that constraint because it can wrongly consider as
-    valid some Symfony versions which are in fact incompatible with your bundle.
-    Use instead ``~2.N|~3.0`` or ``^2.N|~3.0`` to make your bundle future-proof.
+    You should avoid using that constraint because it's too generic (it means
+    that your bundle is compatible with any future Symfony version). Use instead
+    ``~2.N|~3.0`` or ``^2.N|~3.0`` to make your bundle future-proof.
 
-Look for Deprecations and Fix Them
-----------------------------------
+Looking for Deprecations and Fix Them
+-------------------------------------
 
 Besides allowing to install Symfony 3 packages, your bundle must stop using
 any feature deprecated in 2.8 version, because they are removed (and you'll get
@@ -104,8 +104,8 @@ of deprecated features:
     It analyzes Symfony projects to find deprecations. In addition it solves
     automatically some of them thanks to the growing list of supported "fixers".
 
-Test your Bundle in Symfony 3
------------------------------
+Testing your Bundle in Symfony 3
+--------------------------------
 
 Now that your bundle has removed all deprecations, it's time to test it for real
 in a Symfony 3 application. Assuming that you already have a Symfony 3 application,
@@ -157,6 +157,59 @@ following recommended configuration as the starting point of your own configurat
     install: composer update $COMPOSER_FLAGS
 
     script: phpunit
+
+Updating your Code to Support Symfony 2.x and 3.x at the Same Time
+------------------------------------------------------------------
+
+The real challenge of adding Symfony 3 support for your bundles is when you want
+to support both Symfony 2.x and 3.x simultaneously using the same code. There
+are some edge cases where you'll need to deal with the API differences.
+
+Before diving into the specifics of the most common edge cases, the general
+recommendation is to **not rely on the Symfony Kernel version** to decide which
+code to use::
+
+    if (Kernel::VERSION_ID <= 20800) {
+        // code for Symfony 2.x
+    } else {
+        // code for Symfony 3.x
+    }
+
+Instead of checking the Symfony Kernel version, check the version of the specific
+component. For example, the OptionsResolver API changed in its 2.6 version by
+adding a ``setDefined()`` method. The recommended check in this case would be::
+
+    if (!method_exists('Symfony\Component\OptionsResolver\OptionsResolver', 'setDefined')) {
+        // code for the old OptionsResolver API
+    } else {
+        // code for the new OptionsResolver API
+    }
+
+Form Name Refactoring
+~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO
+
+  - how to check which version to use
+  - how to update FormType classes
+  - how to update type service definitions
+  - how to update FormTypeExtension classes & service definition
+
+OptionsResolver API Refactoring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO
+
+  - how to check which version to use
+  - how to both APIs
+
+Service Factory Refactoring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO
+
+  - how to support both APIs ==> Is there a nice way except from (a) doing
+    it in the DI extension or (b) creating 2 service definition files?
 
 .. _`symfony/phpunit-bridge package`: https://github.com/symfony/phpunit-bridge
 .. _`Official Symfony Guide to Upgrade from 2.x to 3.0`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-3.0.md
