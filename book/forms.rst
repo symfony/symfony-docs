@@ -80,6 +80,9 @@ from inside a controller::
     use AppBundle\Entity\Task;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class DefaultController extends Controller
     {
@@ -91,9 +94,11 @@ from inside a controller::
             $task->setDueDate(new \DateTime('tomorrow'));
 
             $form = $this->createFormBuilder($task)
-                ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-                ->add('dueDate', 'Symfony\Component\Form\Extension\Core\Type\DateType')
-                ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => 'Create Task'))
+                ->add('task', TextType::class)
+                // If you use PHP 5.3 or 5.4 you must use
+                // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+                ->add('dueDate', DateType::class)
+                ->add('save', SubmitType::class, array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
@@ -120,16 +125,10 @@ You've also assigned each a "type" (e.g. ``TextType`` and ``DateType``),
 represented by its fully qualified class name. Among other things, it determines
 which HTML form tag(s) is rendered for that field.
 
-.. tip::
-
-   If you are using PHP 5.5 or later you can use the ``::class`` constant of a
-   form type to get its fully qualified class name. Make sure you include the
-   class with a ``use`` statement.
-
 .. versionadded:: 2.8
     To denote the form type, you have to use the fully qualified class name.
-    Before Symfony 2.8, you could use an alias for each type like 'name' or
-    'date'.
+    Before Symfony 2.8, you could use an alias for each type like ``'name'`` or
+    ``'date'``.
 
 Finally, you added a submit button with a custom label for submitting the form to
 the server.
@@ -236,9 +235,9 @@ controller::
         $task = new Task();
 
         $form = $this->createFormBuilder($task)
-            ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-            ->add('dueDate', 'Symfony\Component\Form\Extension\Core\Type\DateType')
-            ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => 'Create Task'))
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Task'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -322,10 +321,10 @@ which of the buttons was clicked to adapt the program flow in your controller.
 To do this, add a second button with the caption "Save and add" to your form::
 
     $form = $this->createFormBuilder($task)
-        ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-        ->add('dueDate', 'Symfony\Component\Form\Extension\Core\Type\DateType')
-        ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => 'Create Task'))
-        ->add('saveAndAdd', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => 'Save and Add'))
+        ->add('task', TextType::class)
+        ->add('dueDate', DateType::class)
+        ->add('save', SubmitType::class, array('label' => 'Create Task'))
+        ->add('saveAndAdd', SubmitType::class, array('label' => 'Save and Add'))
         ->getForm();
 
 In your controller, use the button's
@@ -634,8 +633,8 @@ First, we need to add the two buttons to the form::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('nextStep', 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
-        ->add('previousStep', 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+        ->add('nextStep', SubmitType::class)
+        ->add('previousStep', SubmitType::class)
         ->getForm();
 
 Then, we configure the button for returning to the previous step to run
@@ -644,7 +643,7 @@ so we set its ``validation_groups`` option to false::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('previousStep', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array(
+        ->add('previousStep', SubmitType::class, array(
             'validation_groups' => false,
         ))
         ->getForm();
@@ -681,7 +680,7 @@ boxes. However, the :doc:`date field </reference/forms/types/date>` can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box)::
 
-    ->add('dueDate', 'date', array('widget' => 'single_text'))
+    ->add('dueDate', DateType::class, array('widget' => 'single_text'))
 
 .. image:: /images/book/form-simple2.png
     :align: center
@@ -713,7 +712,7 @@ the documentation for each type.
     The label for the form field can be set using the ``label`` option,
     which can be applied to any field::
 
-        ->add('dueDate', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+        ->add('dueDate', DateType::class, array(
             'widget' => 'single_text',
             'label'  => 'Due Date',
         ))
@@ -743,7 +742,7 @@ guess from the validation rules that both the ``task`` field is a normal
         $form = $this->createFormBuilder($task)
             ->add('task')
             ->add('dueDate', null, array('widget' => 'single_text'))
-            ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+            ->add('save', SubmitType::class)
             ->getForm();
     }
 
@@ -1004,9 +1003,9 @@ ways. If you build your form in the controller, you can use ``setAction()`` and
     $form = $this->createFormBuilder($task)
         ->setAction($this->generateUrl('target_route'))
         ->setMethod('GET')
-        ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-        ->add('dueDate', 'Symfony\Component\Form\Extension\Core\Type\DateType')
-        ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+        ->add('task', TextType::class)
+        ->add('dueDate', DateType::clas)
+        ->add('save', SubmitType::class)
         ->getForm();
 
 .. note::
@@ -1068,6 +1067,7 @@ that will house the logic for building the task form::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class TaskType extends AbstractType
     {
@@ -1076,7 +1076,7 @@ that will house the logic for building the task form::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+                ->add('save', SubmitType::class)
             ;
         }
     }
@@ -1085,11 +1085,12 @@ This new class contains all the directions needed to create the task form. It ca
 be used to quickly build a form object in the controller::
 
     // src/AppBundle/Controller/DefaultController.php
+    use AppBundle\Form\Type\TaskType;
 
     public function newAction()
     {
         $task = ...;
-        $form = $this->createForm('AppBundle\Form\Type\TaskType', $task);
+        $form = $this->createForm(TaskType::class, $task);
 
         // ...
     }
@@ -1136,7 +1137,7 @@ the choice is ultimately up to you.
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('mapped' => false))
-                ->add('save', 'submit')
+                ->add('save', SubmitType::class)
             ;
         }
 
@@ -1174,6 +1175,7 @@ type. Create a constructor to your form type to receive the service::
     use App\Utility\MyService;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class TaskType extends AbstractType
     {
@@ -1190,7 +1192,7 @@ type. Create a constructor to your form type to receive the service::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+                ->add('save', SubmitType::class)
             ;
         }
     }
@@ -1228,7 +1230,9 @@ Define your form type as a service.
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
-        $definition = new Definition('AppBundle\Form\Type\TaskType', array(
+        use AppBundle\Form\Type\TaskType;
+
+        $definition = new Definition(TaskType::class, array(
             new Reference('app.my_service'),
         ));
         $container
@@ -1373,12 +1377,13 @@ class:
 .. code-block:: php
 
     use Symfony\Component\Form\FormBuilderInterface;
+    use AppBundle\Form\Type\CategoryType;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
-        $builder->add('category', 'AppBundle\Form\Type\CategoryType');
+        $builder->add('category', CategoryType::class);
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
@@ -1849,10 +1854,10 @@ an array of the submitted data. This is actually really easy::
     {
         $defaultData = array('message' => 'Type your message here');
         $form = $this->createFormBuilder($defaultData)
-            ->add('name', 'text')
-            ->add('email', 'email')
-            ->add('message', 'textarea')
-            ->add('send', 'submit')
+            ->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('message', TextareaType::class)
+            ->add('send', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
@@ -1913,12 +1918,13 @@ but here's a short example:
 
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     $builder
-       ->add('firstName', 'text', array(
+       ->add('firstName', TextType::class, array(
            'constraints' => new Length(array('min' => 3)),
        ))
-       ->add('lastName', 'text', array(
+       ->add('lastName', TextType::class, array(
            'constraints' => array(
                new NotBlank(),
                new Length(array('min' => 3)),
