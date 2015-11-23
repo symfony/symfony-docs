@@ -329,7 +329,7 @@ You can modify several form types at once by specifying their common parent
 available in Symfony inherit from the ``TextType`` form type (such as ``email``,
 ``SearchType``, ``UrlType``, etc.). A form type extension applying to ``TextType``
 (i.e. whose ``getExtendedType`` method returns ``TextType::class``) would apply
- to all of these form types.
+to all of these form types.
 
 In the same way, since **most** form types natively available in Symfony inherit
 from the ``FormType`` form type, a form type extension applying to ``FormType``
