@@ -30,6 +30,7 @@
 * :doc:`/cookbook/configuration/index`
 
   * :doc:`/cookbook/configuration/environments`
+  * :doc:`/cookbook/configuration/micro-kernel-trait`
   * :doc:`/cookbook/configuration/override_dir_structure`
   * :doc:`/cookbook/configuration/using_parameters_in_dic`
   * :doc:`/cookbook/configuration/front_controllers_and_kernel`
