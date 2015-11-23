@@ -15,8 +15,8 @@ To explain this further, here's a simple example::
         ->add('title', 'text')
         ->add(
             $builder->create('author', 'form', array('by_reference' => ?))
-                ->add('name', 'text')
-                ->add('email', 'email')
+                ->add('name', TextType::class)
+                ->add('email', EmailType::class)
         )
 
 If ``by_reference`` is true, the following takes place behind the scenes
