@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-11-23T12:53:51Z
+
+they should also be added in https://github.com/FriendsOfPHP/security-advisories
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-11-23T12:56:30Z
+
+@fabpot The markup in the blog articles seems to be broken.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2015-11-23T12:59:10Z
+
+@xabbuh fixed
