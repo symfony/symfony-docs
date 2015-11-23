@@ -140,6 +140,10 @@ That's it! Need more information about this step, see:
 Step 1) Create the Authenticator Class
 --------------------------------------
 
+Suppose you have an API where your clients will send an ``X-AUTH-TOKEN`` header
+on each request with their API token. Your job is to read this and find the associated
+user (if any).
+
 To create a custom authentication system, just create a class an make it implement
 :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
