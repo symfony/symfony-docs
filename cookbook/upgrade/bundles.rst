@@ -43,19 +43,26 @@ The above example can be updated to work with Symfony 3 as follows:
         }
     }
 
+.. tip::
+
+    Another common version constraint found on third-party bundles is ``>=2.N``.
+    You should avoid using that constraint because it can wrongly consider as
+    valid some Symfony versions which are in fact incompatible with your bundle.
+    Use instead ``~2.N|~3.0`` or ``^2.N|~3.0`` to make your bundle future-proof.
+
 Look for Deprecations and Fix Them
 ----------------------------------
 
-Besides allowing to install Symfony 3 component, your bundle must stop using
-any feature deprecated in 2.8 version, because they'll throw exceptions in 3.0
-version. The easiest way to detect deprecations is to install the `PHPUnit Bridge`_
-component and then run the test suite.
+Besides allowing to install Symfony 3 packages, your bundle must stop using
+any feature deprecated in 2.8 version, because they are removed (and you'll get
+exceptions or PHP errors). The easiest way to detect deprecations is to install
+the `symfony/phpunit-bridge package`_ and then run the test suite.
 
 First, install the component as a ``dev`` dependency of your bundle:
 
 .. code-block:: bash
 
-    $ composer require --dev "symfony/phpunit-bridge"
+    $ composer require --dev symfony/phpunit-bridge
 
 Then, run your test suite and look for the deprecation list displayed after the
 PHPUnit test report:
@@ -64,7 +71,7 @@ PHPUnit test report:
 
     $ phpunit
 
-    // ... PHPUnit output ...
+    # ... PHPUnit output
 
     Remaining deprecation notices (3)
 
@@ -85,15 +92,17 @@ Useful Resources
 There are several resources that can help you detect, understand and fix the use
 of deprecated features:
 
-* `Official Symfony Guide to Upgrade from 2.x to 3.0`_, the full list of changes
-  required to upgrade to Symfony 3.0 and grouped by component.
-* `SensioLabs DeprecationDetector`_, it runs a static code analysis against your
-  project's source code to find usages of deprecated methods, classes and
-  interfaces. It works for any PHP application, but it includes special detectors
-  for Symfony application, where it can also detect usages of deprecated services.
-* `Symfony Upgrade Fixer`_, it analyzes Symfony projects to find deprecations. In
-  addition it solves automatically some of them thanks to the growing list of
-  supported "fixers".
+`Official Symfony Guide to Upgrade from 2.x to 3.0`_
+    The full list of changes required to upgrade to Symfony 3.0 and grouped
+    by component.
+`SensioLabs DeprecationDetector`_
+    It runs a static code analysis against your project's source code to find
+    usages of deprecated methods, classes and interfaces. It works for any PHP
+    application, but it includes special detectors for Symfony applications,
+    where it can also detect usages of deprecated services.
+`Symfony Upgrade Fixer`_
+    It analyzes Symfony projects to find deprecations. In addition it solves
+    automatically some of them thanks to the growing list of supported "fixers".
 
 Test your Bundle in Symfony 3
 -----------------------------
@@ -103,12 +112,12 @@ in a Symfony 3 application. Assuming that you already have a Symfony 3 applicati
 you can test the updated bundle locally without having to install it through
 Composer.
 
-If your operating system supports symbolic lings, just point the appropriate
+If your operating system supports symbolic links, just point the appropriate
 vendor directory to your local bundle root directory:
 
 .. code-block:: bash
 
-    $ ln -s /path/to/your/local/bundle/ vendor/you-vendor-name/your-buncle-name
+    $ ln -s /path/to/your/local/bundle/ vendor/you-vendor-name/your-bundle-name
 
 If your operating system doesn't support symbolic links, you'll need to copy
 your local bundle directory into the appropriate directory inside ``vendor/``.
@@ -143,13 +152,13 @@ following recommended configuration as the starting point of your own configurat
     before_install:
         - composer self-update
         - if [ "$DEPENDENCIES" == "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
-        - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION}; fi;
+        - if [ "$SYMFONY_VERSION" != "" ]; then composer --no-update require symfony/symfony:${SYMFONY_VERSION}; fi;
 
     install: composer update $COMPOSER_FLAGS
 
-    script: phpunit -v
+    script: phpunit
 
-.. _`PHPUnit Bridge`: https://github.com/symfony/phpunit-bridge
+.. _`symfony/phpunit-bridge package`: https://github.com/symfony/phpunit-bridge
 .. _`Official Symfony Guide to Upgrade from 2.x to 3.0`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-3.0.md
 .. _`SensioLabs DeprecationDetector`: https://github.com/sensiolabs-de/deprecation-detector
 .. _`Symfony Upgrade Fixer`: https://github.com/umpirsky/Symfony-Upgrade-Fixer
