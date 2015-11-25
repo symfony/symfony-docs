@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-08-14T10:34:02Z
+
+:+1:
+
+A minor comment to our doc managers: in https://github.com/symfony/symfony/pull/15549 there is a pending merge to fix some issue related to the `framework.ide` option. But this PR can be safely merged without waiting for getting that bugfix merged. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-30T17:43:25Z
+
+@nicolas-grekas Can you finish here?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-11-24T10:28:16Z
+
+updated
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-11-25T22:15:03Z
+
+:+1:
