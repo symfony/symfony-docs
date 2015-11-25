@@ -159,7 +159,7 @@ web root directory:
 Now, configure your web server root directory to point to ``web/`` and all
 other files won't be accessible from the client anymore.
 
-To test your changes in a browser (``http://localhost:4321/?name=Fabien``), run
+To test your changes in a browser (``http://localhost:4321/hello/?name=Fabien``), run
 the PHP built-in server:
 
 .. code-block:: bash
