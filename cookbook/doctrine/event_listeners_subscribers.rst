@@ -136,11 +136,13 @@ a ``postPersist`` method, which will be called when the event is dispatched::
         {
             $entity = $args->getEntity();
 
-            // perhaps you only want to act on some "Product" entity
-            if ($entity instanceof Product) {
-                $entityManager = $args->getEntityManager();
-                // ... do something with the Product
+            // only act on some "Product" entity
+            if (!$entity instanceof Product) {
+                return;
             }
+
+            $entityManager = $args->getEntityManager();
+            // ... do something with the Product
         }
     }
 
