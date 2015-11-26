@@ -231,6 +231,8 @@ would replace the ``choices`` option.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
@@ -346,29 +348,32 @@ type:
 Field Variables
 ---------------
 
-+------------------------+--------------+-------------------------------------------------------------------+
-| Variable               | Type         | Usage                                                             |
-+========================+==============+===================================================================+
-| multiple               | ``boolean``  | The value of the `multiple`_ option.                              |
-+------------------------+--------------+-------------------------------------------------------------------+
-| expanded               | ``boolean``  | The value of the `expanded`_ option.                              |
-+------------------------+--------------+-------------------------------------------------------------------+
-| preferred_choices      | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
-|                        |              | choices which should be presented to the user with priority.      |
-+------------------------+--------------+-------------------------------------------------------------------+
-| choices                | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
-|                        |              | the remaining choices.                                            |
-+------------------------+--------------+-------------------------------------------------------------------+
-| separator              | ``string``   | The separator to use between choice groups.                       |
-+------------------------+--------------+-------------------------------------------------------------------+
-| placeholder            | ``mixed``    | The empty value if not already in the list, otherwise             |
-|                        |              | ``null``.                                                         |
-+------------------------+--------------+-------------------------------------------------------------------+
-| is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
-|                        |              | and returns whether the choice is in the selected value(s).       |
-+------------------------+--------------+-------------------------------------------------------------------+
-| placeholder_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
-+------------------------+--------------+-------------------------------------------------------------------+
++----------------------------+--------------+-------------------------------------------------------------------+
+| Variable                   | Type         | Usage                                                             |
++============================+==============+===================================================================+
+| multiple                   | ``boolean``  | The value of the `multiple`_ option.                              |
++----------------------------+--------------+-------------------------------------------------------------------+
+| expanded                   | ``boolean``  | The value of the `expanded`_ option.                              |
++----------------------------+--------------+-------------------------------------------------------------------+
+| preferred_choices          | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
+|                            |              | choices which should be presented to the user with priority.      |
++----------------------------+--------------+-------------------------------------------------------------------+
+| choices                    | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
+|                            |              | the remaining choices.                                            |
++----------------------------+--------------+-------------------------------------------------------------------+
+| separator                  | ``string``   | The separator to use between choice groups.                       |
++----------------------------+--------------+-------------------------------------------------------------------+
+| placeholder                | ``mixed``    | The empty value if not already in the list, otherwise             |
+|                            |              | ``null``.                                                         |
++----------------------------+--------------+-------------------------------------------------------------------+
+| choice_translation_domain  | ``mixed``    | ``boolean``, ``null`` or ``string`` to determine if the value     |
+|                            |              | should be translated.                                             |
++----------------------------+--------------+-------------------------------------------------------------------+
+| is_selected                | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
+|                            |              | and returns whether the choice is in the selected value(s).       |
++----------------------------+--------------+-------------------------------------------------------------------+
+| placeholder_in_choices     | ``boolean``  | Whether the empty value is in the choice list.                    |
++----------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::
 
