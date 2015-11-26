@@ -50,7 +50,7 @@ rendered::
 
 As ``render_template`` is used as an argument to the PHP ``call_user_func()``
 function, we can replace it with any valid PHP `callbacks`_. This allows us to
-use a function, an anonymous function, or a method of a class as a
+use a function, an anonymous function or a method of a class as a
 controller... your choice.
 
 As a convention, for each route, the associated controller is configured via

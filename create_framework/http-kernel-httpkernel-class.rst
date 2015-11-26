@@ -11,7 +11,7 @@ There should be an easier way, right?
 
 Enter the ``HttpKernel`` class. Instead of solving the same problem over and
 over again and instead of reinventing the wheel each time, the ``HttpKernel``
-class is a generic, extensible, and flexible implementation of
+class is a generic, extensible and flexible implementation of
 ``HttpKernelInterface``.
 
 This class is very similar to the framework class we have written so far: it
