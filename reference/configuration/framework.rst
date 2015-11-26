@@ -219,7 +219,7 @@ If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.
 
-Symfony contains preconfigured urls for some popular IDEs, you can set them
+Symfony contains preconfigured URLs for some popular IDEs, you can set them
 using the following keys:
 
 * ``textmate``
@@ -230,7 +230,7 @@ using the following keys:
 .. versionadded:: 2.3.14
     The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
-You can also specify a custom url string. If you do this, all percentage
+You can also specify a custom URL string. If you do this, all percentage
 signs (``%``) must be doubled to escape that character. For example, if
 you use PHPstorm on the Mac OS platform, you will do something like:
 
@@ -269,8 +269,11 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-in the ``php.ini`` configuration to the url string. If this configuration
-value is set, then the ``ide`` option will be ignored.
+in the ``php.ini`` configuration to the URL string.
+
+If you don't use Xdebug, another way is to set this URL string in the
+``SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT`` environment variable.
+If any of these configurations values are set, the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 

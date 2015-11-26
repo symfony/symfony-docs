@@ -154,7 +154,7 @@ event (``response``); the event name must be the same as the one used in the
 ``dispatch()`` call.
 
 In the listener, we add the Google Analytics code only if the response is not
-a redirection, if the requested format is HTML, and if the response content
+a redirection, if the requested format is HTML and if the response content
 type is HTML (these conditions demonstrate the ease of manipulating the
 Request and Response data from your code).
 

@@ -884,7 +884,7 @@ Access Control in Templates
 ...........................
 
 If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+the built-in ``is_granted()`` helper function:
 
 .. configuration-block::
 
@@ -900,19 +900,17 @@ the built-in helper function:
             <a href="...">Delete</a>
         <?php endif ?>
 
-If you use this function and you are *not* behind a firewall, an exception will
-be thrown. Again, it's almost always a good idea to have a main firewall that
-covers all URLs (as shown before in this chapter).
+.. note::
 
-.. caution::
-
-    Be careful with this in your base layout or on your error pages! Because of
-    some internal Symfony details, to avoid broken error pages in the ``prod``
-    environment, wrap calls in these templates with a check for ``app.user``:
+    In Symfony versions previous to 2.8, using the ``is_granted()`` function
+    in a page that wasn't behind a firewall resulted in an exception. That's why
+    you also needed to check first for the existence of the user:
 
     .. code-block:: html+twig
 
         {% if app.user and is_granted('ROLE_ADMIN') %}
+
+    Starting from Symfony 2.8, the ``app.user and ...`` check is no longer needed.
 
 Securing other Services
 .......................
