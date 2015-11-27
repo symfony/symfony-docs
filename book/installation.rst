@@ -54,6 +54,8 @@ execute it as follows:
     c:\> move symfony c:\projects
     c:\projects\> php symfony
 
+.. _installation-creating-the-app:
+
 Creating the Symfony Application
 --------------------------------
 
