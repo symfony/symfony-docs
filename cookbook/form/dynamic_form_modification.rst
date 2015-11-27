@@ -433,13 +433,6 @@ class, you can simply call::
         }
     }
 
-<<<<<<< HEAD
-=======
-If you extend the ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class, you can simply call::
-
-    $form = $this->createForm(FriendMessageFormType::class);
-
->>>>>>> pull/5834
 You can also easily embed the form type into another form::
 
     // inside some other "form type" class
