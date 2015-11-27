@@ -9,11 +9,6 @@ In Symfony, you can check the permission to access data by using the
 for many applications. A much easier solution is to work with custom voters,
 which are like simple conditional statements.
 
-.. seealso::
-
-    Voters can also be used in other ways, like, for example, blacklisting IP
-    addresses from the entire application: :doc:`/cookbook/security/voters`.
-
 .. tip::
 
     Take a look at the
