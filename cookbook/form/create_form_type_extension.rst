@@ -300,14 +300,16 @@ next to the file field. For example::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class MediaType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('name', 'text')
-                ->add('file', 'file', array('image_path' => 'webPath'));
+                ->add('name', TextType::class)
+                ->add('file', FileType::class, array('image_path' => 'webPath'));
         }
 
         public function getName()
@@ -324,13 +326,13 @@ Generic Form Type Extensions
 
 You can modify several form types at once by specifying their common parent
 (:doc:`/reference/forms/types`). For example, several form types natively
-available in Symfony inherit from the ``text`` form type (such as ``email``,
-``search``, ``url``, etc.). A form type extension applying to ``text``
-(i.e. whose ``getExtendedType`` method returns ``text``) would apply to all of
-these form types.
+available in Symfony inherit from the ``TextType`` form type (such as ``email``,
+``SearchType``, ``UrlType``, etc.). A form type extension applying to ``TextType``
+(i.e. whose ``getExtendedType`` method returns ``TextType::class``) would apply
+to all of these form types.
 
 In the same way, since **most** form types natively available in Symfony inherit
-from the ``form`` form type, a form type extension applying to ``form`` would
-apply to all of these.  A notable exception are the ``button`` form types. Also
-keep in mind that a custom form type which extends neither the ``form`` nor
-the ``button`` type could always be created.
+from the ``FormType`` form type, a form type extension applying to ``FormType``
+would apply to all of these.  A notable exception are the ``ButtonType`` form
+types. Also keep in mind that a custom form type which extends neither the
+``FormType`` nor the ``ButtonType`` type could always be created.

@@ -22,6 +22,9 @@ form in its own PHP class::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
     class PostType extends AbstractType
     {
@@ -29,10 +32,10 @@ form in its own PHP class::
         {
             $builder
                 ->add('title')
-                ->add('summary', 'textarea')
-                ->add('content', 'textarea')
-                ->add('authorEmail', 'email')
-                ->add('publishedAt', 'datetime')
+                ->add('summary', TextareaType::class)
+                ->add('content', TextareaType::class)
+                ->add('authorEmail', EmailType::class)
+                ->add('publishedAt', DateTimeType::class)
             ;
         }
 
@@ -42,14 +45,9 @@ form in its own PHP class::
                 'data_class' => 'AppBundle\Entity\Post'
             ));
         }
-
-        public function getName()
-        {
-            return 'post';
-        }
     }
 
-To use the class, use ``createForm`` and instantiate the new class::
+To use the class, use ``createForm`` and pass the fully qualified class name::
 
     use AppBundle\Form\PostType;
     // ...
@@ -57,7 +55,7 @@ To use the class, use ``createForm`` and instantiate the new class::
     public function newAction(Request $request)
     {
         $post = new Post();
-        $form = $this->createForm(new PostType(), $post);
+        $form = $this->createForm(PostType::class, $post);
 
         // ...
     }
@@ -97,7 +95,7 @@ directly in your form class, this would effectively limit the scope of that form
         {
             $builder
                 // ...
-                ->add('save', 'submit', array('label' => 'Create Post'))
+                ->add('save', SubmitType::class, array('label' => 'Create Post'))
             ;
         }
 
@@ -122,7 +120,7 @@ some developers configure form buttons in the controller::
         public function newAction(Request $request)
         {
             $post = new Post();
-            $form = $this->createForm(new PostType(), $post);
+            $form = $this->createForm(PostType::class, $post);
             $form->add('submit', 'submit', array(
                 'label' => 'Create',
                 'attr'  => array('class' => 'btn btn-default pull-right')
