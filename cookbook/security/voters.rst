@@ -47,7 +47,7 @@ which makes creating a voter even easier.
     }
 
 .. versionadded::
-    The ``Voter`` helper class was added in Symfony 2.8. In early versions, an
+    The ``Voter`` helper class was added in Symfony 2.8. In earlier versions, an
     ``AbstractVoter`` class with similar behavior was available.
 
 .. _how-to-use-the-voter-in-a-controller:
@@ -146,7 +146,7 @@ would look like this::
             $user = $token->getUser();
 
             if (!$user instanceof User) {
-                // the user must not be logged in, so we deny access
+                // the user must be logged in; if not, deny access
                 return false;
             }
 
