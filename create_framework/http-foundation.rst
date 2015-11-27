@@ -299,7 +299,7 @@ the wheel.
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
-5`_, `Laravel`_, `Silex`_, and `more`_).
+5`_, `Laravel`_, `Silex`_ and `more`_).
 
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/

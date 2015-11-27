@@ -8,7 +8,7 @@ class. It would bring us better *reusability* and easier testing to name just
 a few benefits.
 
 If you have a closer look at the code, ``front.php`` has one input, the
-Request, and one output, the Response. Our framework class will follow this
+Request and one output, the Response. Our framework class will follow this
 simple principle: the logic is about creating the Response associated with a
 Request.
 

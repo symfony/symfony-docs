@@ -411,24 +411,25 @@ it with :ref:`dic-tags-form-type`.
             array('security.token_storage')
         );
 
-If you wish to create it from within a controller or any other service that has
-access to the form factory, you then use::
+If you wish to create it from within a service that has access to the form factory,
+you then use::
 
-    use Symfony\Component\DependencyInjection\ContainerAware;
+    $form = $formFactory->create('friend_message');
 
-    class FriendMessageController extends ContainerAware
+In a controller that extends the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+class, you can simply call::
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class FriendMessageController extends Controller
     {
         public function newAction(Request $request)
         {
-            $form = $this->get('form.factory')->create('friend_message');
+            $form = $this->createForm('friend_message');
 
             // ...
         }
     }
-
-If you extend the ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class, you can simply call::
-
-    $form = $this->createForm('friend_message');
 
 You can also easily embed the form type into another form::
 
