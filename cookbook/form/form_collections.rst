@@ -135,7 +135,7 @@ Notice that you embed a collection of ``TagType`` forms using the
         }
     }
 
-In your controller, you'll create a new form from the ``TaskType``:
+In your controller, you'll create a new form from the ``TaskType``::
 
     // src/AppBundle/Controller/TaskController.php
     namespace AppBundle\Controller;
