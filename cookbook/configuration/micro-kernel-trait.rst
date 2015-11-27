@@ -25,7 +25,7 @@ via Composer:
 
 .. code-block:: bash
 
-    composer require symfony/symfony
+    $ composer require symfony/symfony
 
 Next, create an ``index.php`` file that creates a kernel class and executes it::
 
@@ -101,12 +101,12 @@ that define your bundles, your services and your routes:
 
 **configureContainer(ContainerBuilder $c, LoaderInterface $loader)**
     This methods builds and configures the container. In practice, you will use
-    ``loadFromExtension`` to configure different bundles (this is the equivalent)
-    of what you see in a normal ``config.yml`` file. You can also register services
+    ``loadFromExtension`` to configure different bundles (this is the equivalent
+    of what you see in a normal ``config.yml`` file). You can also register services
     directly in PHP or load external configuration files (shown below).
 
 **configureRoutes(RouteCollectionBuilder $routes)**
-    Your job in this method is to add routes to the system. The ``RouteCollectionBuilder``
+    Your job in this method is to add routes to the application. The ``RouteCollectionBuilder``
     is new in Symfony 2.8 and has methods that make adding routes in PHP more fun.
     You can also load external routing files (shown below).
 
@@ -115,23 +115,23 @@ Advanced Example: Twig, Annotations and the Web Debug Toolbar
 -------------------------------------------------------------
 
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
-Instead, it's goal to give you the power to choose your bundles and structure.
+Instead, its goal to give you the power to choose your bundles and structure.
 
 First, you'll probably want to put your PHP classes in an ``src/`` directory. Configure
 your ``composer.json`` file to load from there:
 
-... code-block:: json
+.. code-block:: json
 
-{
-    "require": {
-        "...": "...",
-    },
-    "autoload": {
-        "psr-4": {
-            "": "src/"
+    {
+        "require": {
+            "...": "..."
+        },
+        "autoload": {
+            "psr-4": {
+                "": "src/"
+            }
         }
     }
-}
 
 Now, suppose you want to use Twig and load routes via annotations. For annotation
 routing, you need SensioFrameworkExtraBundle. This comes with a normal Symfony project.
@@ -139,7 +139,7 @@ But in this case, you need to download it:
 
 .. code-block:: bash
 
-    composer require sensio/framework-extra-bundle
+    $ composer require sensio/framework-extra-bundle
 
 Instead of putting *everything* in ``index.php``, create a new ``app/AppKernel.php``
 to hold the kernel. Now it looks like this::
