@@ -29,7 +29,7 @@ the user::
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-    use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -47,7 +47,8 @@ the user::
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
             } catch (UsernameNotFoundException $e) {
-                throw new AuthenticationException('Invalid username or password');
+                // error will be shown to the client
+                throw new CustomUserMessageAuthenticationException('Invalid username or password');
             }
 
             $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
@@ -55,7 +56,8 @@ the user::
             if ($passwordValid) {
                 $currentHour = date('G');
                 if ($currentHour < 14 || $currentHour > 16) {
-                    throw new AuthenticationException(
+                    // error will be shown to the client
+                    throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
                         100
                     );
@@ -69,7 +71,8 @@ the user::
                 );
             }
 
-            throw new AuthenticationException('Invalid username or password');
+            // error will be shown to the client
+            throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
 
         public function supportsToken(TokenInterface $token, $providerKey)
@@ -83,6 +86,11 @@ the user::
             return new UsernamePasswordToken($username, $password, $providerKey);
         }
     }
+
+.. versionadded:: 2.8
+    The ``CustomUserMessageAuthenticationException`` class is new in Symfony 2.8
+    and helps you return custom authentication messages. In 2.7 or earlier, throw
+    an ``AuthenticationException`` or any sub-class (you can still do this in 2.8).
 
 How it Works
 ------------
