@@ -126,9 +126,10 @@ represented by its fully qualified class name. Among other things, it determines
 which HTML form tag(s) is rendered for that field.
 
 .. versionadded:: 2.8
-    To denote the form type, you have to use the fully qualified class name.
-    Before Symfony 2.8, you could use an alias for each type like ``'name'`` or
-    ``'date'``.
+    To denote the form type, you have to use the fully qualified class name - like
+    TextType::class in PHP 5.5+ or ``Symfony\Component\Form\Extension\Core\Type\TextType``.
+    Before Symfony 2.8, you could use an alias for each type like ``text`` or
+    ``date``. For more details, see the `2.8 UPGRADE Log`_.
 
 Finally, you added a submit button with a custom label for submitting the form to
 the server.
@@ -1230,18 +1231,11 @@ Define your form type as a service.
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
-        use AppBundle\Form\Type\TaskType;
+        use ;
 
-        $definition = new Definition(TaskType::class, array(
-            new Reference('app.my_service'),
-        ));
-        $container
-            ->setDefinition(
-                'app.form.type.task',
-                $definition
-            )
+        $container->register('app.form.type.task', 'AppBundle\Form\Type\TaskType')
+            ->addArgument(new Reference('app.my_service'))
             ->addTag('form.type')
-        ;
 
 Read :ref:`form-cookbook-form-field-service` for more information.
 
@@ -1978,3 +1972,4 @@ Learn more from the Cookbook
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
+.. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form
