@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-11-22T23:48:18Z
+
+@hiddewie, this is awesome! This slipped through the cracks - but I just labeled #5588 as having a PR, so thanks!
+
+I really want to show people `TextType::class` - it's *so* much better. But we *do* need to show people the full class name... but if we show that everywhere, it'll look really unusable and people on 5.5 will use the long class name, not knowing the alternative.
+
+I think we should use the `TextType::class` style everywhere, and show the long class version just once per article, commented-out. Like:
+
+```php
+->add('task', TextType::class)
+// if you're using 5.3 or 5.4, you must use the string class name
+// ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+```
+
+What do you think? Can you make that change? Did you grep the codebase to find all the spots to update or is this just "many" of the spots?
+
+Thanks a lot for this - it's a big change and has been on my list - your help is huge :)
+
+---------------------------------------------------------------------------
+
+by hiddewie at 2015-11-23T09:14:17Z
+
+Thank you for the positive feedback.
+
+I personally also REALLY prefer the `::class`, but because of PHP <5.6 support reasons I thought it would be too early using (almost) only that notation. But if you say this is OK, I will update the PR.
+
+All the changes are made by hand, where I could find them. A grep would not be OK since some of the references are also inside a piece of text.
+
+---------------------------------------------------------------------------
+
+by hiddewie at 2015-11-23T22:22:06Z
+
+I've added more changes to the PR, as I found many more places where the old form types were referenced.
+
+---------------------------------------------------------------------------
+
+by hiddewie at 2015-11-23T22:26:53Z
+
+Please tell me if there need to be more places where the PHP < 5.6 way must be used.
