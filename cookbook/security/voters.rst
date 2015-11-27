@@ -256,6 +256,107 @@ and tag it with ``security.voter``:
 You're done! Now, when you :ref:`call isGranted() with view/edit and a Post object <how-to-use-the-voter-in-a-controller>`,
 your voter will be executed and you can control access.
 
+Checking for Roles inside a Voter
+---------------------------------
+
+.. versionadded:: 2.8
+    The ability to inject the ``AccessDecisionManager`` is new in 2.8: it caused
+    a CircularReferenceException before. In earlier versions, you must inject the
+    ``service_container`` itself and fetch out the ``security.authorization_checker``
+    to use ``isGranted()``.
+
+What if you want to call ``isGranted()`` fomr *inside* your voter - e.g. you want
+to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting
+the ``AccessDecisionManager`` into your voter. You can use this to, for example,
+*always* allow access to a user with ``ROLE_SUPER_ADMIN``::
+
+    // src/AppBundle/Security/PostVoter.php
+    // ...
+
+    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+
+    class PostVoter extends Voter
+    {
+        // ...
+
+        private $decisionManager;
+
+        public function __construct(AccessDecisionManagerInterface $decisionManager)
+        {
+            $this->decisionManager = $decisionManager;
+        }
+
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        {
+            // ...
+
+            // ROLE_SUPER_ADMIN can do anything! The power!
+            if ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN'))) {
+                return true;
+            }
+
+            // ... all the normal voter logic
+        }
+    }
+
+Next, update ``services.yml`` to inject the ``security.access.decision_manager``
+service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.post_voter:
+                class: AppBundle\Security\PostVoter
+                arguments: ['@security.access.decision_manager']
+                tags:
+                    - { name: security.voter }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.post_voter"
+                    class="AppBundle\Security\Authorization\Voter\PostVoter"
+                    public="false"
+                >
+                    <argument type="service" id="security.access.decision_manager"/>
+
+                    <tag name="security.voter" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register('app.post_voter', 'AppBundle\Security\Authorization\Voter\PostVoter')
+            ->addArgument(new Reference('security.access.decision_manager'))
+            ->setPublic(false)
+            ->addTag('security.voter')
+        ;
+
+That's it! Calling ``decide()`` on the ``AccessDecisionManager`` is essentially
+the same as calling ``isGranted()`` on the normal ``security.authorization_checker``
+service (it's just a little lower-level, which is necessary for a voter).
+
+.. note::
+
+    The ``security.access.decision_manager`` is private. This means you can't access
+    it directly from a controller: you can only inject it into other services. That's
+    ok: use ``security.authorization_checker`` instead in all cases except for voters.
+
 .. _security-voters-change-strategy:
 
 Changing the Access Decision Strategy
