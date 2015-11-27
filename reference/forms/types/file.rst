@@ -34,7 +34,10 @@ Basic Usage
 
 Say you have this form definition::
 
-    $builder->add('attachment', 'file');
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    // ...
+
+    $builder->add('attachment', FileType::class);
 
 When the form is submitted, the ``attachment`` field will be an instance
 of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can

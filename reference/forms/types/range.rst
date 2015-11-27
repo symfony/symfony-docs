@@ -32,7 +32,10 @@ Basic Usage
 
 .. code-block:: php
 
-    $builder->add('name', 'range', array(
+    use Symfony\Component\Form\Extension\Core\Type\RangeType;
+    // ...
+
+    $builder->add('name', RangeType::class, array(
         'attr' => array(
             'min' => 5,
             'max' => 50

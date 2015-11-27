@@ -52,9 +52,13 @@ in a form. For example, suppose you have an ``emails`` field that corresponds
 to an array of email addresses. In the form, you want to expose each email
 address as its own input text box::
 
-    $builder->add('emails', 'collection', array(
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    // ...
+
+    $builder->add('emails', CollectionType::class, array(
         // each entry in the array will be an "email" field
-        'entry_type'   => 'email',
+        'entry_type'   => EmailType::class,
         // these options are passed to each "email" type
         'entry_options'  => array(
             'required'  => false,
@@ -288,8 +292,12 @@ type as your `entry_type`_ option (e.g. for a collection of drop-down menus),
 then you'd need to at least pass the ``choices`` option to the underlying
 type::
 
-    $builder->add('favorite_cities', 'collection', array(
-        'entry_type'   => 'choice',
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('favorite_cities', CollectionType::class, array(
+        'entry_type'   => ChoiceType::class,
         'entry_options'  => array(
             'choices'  => array(
                 'nashville' => 'Nashville',

@@ -36,7 +36,10 @@ Example Usage
 
 .. code-block:: php
 
-    $builder->add('public', 'checkbox', array(
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    // ...
+
+    $builder->add('public', CheckboxType::class, array(
         'label'    => 'Show this entry publicly?',
         'required' => false,
     ));

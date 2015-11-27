@@ -56,11 +56,14 @@ When your form contains multiple submit buttons, you can change the validation
 group based on the button which was used to submit the form. Imagine a registration
 form wizard with buttons to go to the previous or the next step::
 
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    // ...
+
     $form = $this->createFormBuilder($user)
-        ->add('previousStep', 'submit', array(
+        ->add('previousStep', SubmitType::class, array(
             'validation_groups' => false,
         ))
-        ->add('nextStep', 'submit', array(
+        ->add('nextStep', SubmitType::class, array(
             'validation_groups' => array('Registration'),
         ))
         ->getForm();

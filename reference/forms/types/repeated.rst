@@ -38,7 +38,10 @@ Example Usage
 
 .. code-block:: php
 
-    $builder->add('password', 'repeated', array(
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    // ...
+
+    $builder->add('password', RepeatedType::class, array(
         'type' => 'password',
         'invalid_message' => 'The password fields must match.',
         'options' => array('attr' => array('class' => 'password-field')),
@@ -130,7 +133,10 @@ Additional options (will be merged into `options`_ below) that should be
 passed *only* to the first field. This is especially useful for customizing
 the label::
 
-    $builder->add('password', 'repeated', array(
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    // ...
+
+    $builder->add('password', RepeatedType::class, array(
         'first_options'  => array('label' => 'Password'),
         'second_options' => array('label' => 'Repeat Password'),
     ));

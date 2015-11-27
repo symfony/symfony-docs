@@ -15,7 +15,10 @@ a bit more flexibility.
 
 Take the following example::
 
-    $builder->add('publishAt', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('publishAt', ChoiceType::class, array(
         'choices' => array(
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),

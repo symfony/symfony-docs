@@ -110,6 +110,7 @@ some developers configure form buttons in the controller::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use AppBundle\Entity\Post;
     use AppBundle\Form\PostType;
 
@@ -121,7 +122,7 @@ some developers configure form buttons in the controller::
         {
             $post = new Post();
             $form = $this->createForm(PostType::class, $post);
-            $form->add('submit', 'submit', array(
+            $form->add('submit', SubmitType::class, array(
                 'label' => 'Create',
                 'attr'  => array('class' => 'btn btn-default pull-right')
             ));
@@ -205,21 +206,3 @@ Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
 for clarity. This isn't technically needed, since ``isValid()`` first calls
 ``isSubmitted()``. But without this, the flow doesn't read well as it *looks*
 like the form is *always* processed (even on the GET request).
-
-Custom Form Field Types
------------------------
-
-.. best-practice::
-
-    Add the ``app_`` prefix to your custom form field types to avoid collisions.
-
-Custom form field types inherit from the ``AbstractType`` class, which defines the
-``getName()`` method to configure the name of that form type. These names must
-be unique in the application.
-
-If a custom form type uses the same name as any of the Symfony's built-in form
-types, it will override it. The same happens when the custom form type matches
-any of the types defined by the third-party bundles installed in your application.
-
-Add the ``app_`` prefix to your custom form field types to avoid name collisions
-that can lead to hard to debug errors.

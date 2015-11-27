@@ -56,7 +56,10 @@ Suppose that you have a ``startTime`` field whose underlying time data is
 a ``DateTime`` object. The following configures the ``time`` type for that
 field as two different choice fields::
 
-    $builder->add('startTime', 'time', array(
+    use Symfony\Component\Form\Extension\Core\Type\TimeType;
+    // ...
+
+    $builder->add('startTime', TimeType::class, array(
         'input'  => 'datetime',
         'widget' => 'choice',
     ));
@@ -65,7 +68,10 @@ The ``input`` option *must* be changed to match the type of the underlying
 date data. For example, if the ``startTime`` field's data were a unix timestamp,
 you'd need to set ``input`` to ``timestamp``::
 
-    $builder->add('startTime', 'time', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('startTime', TimeType::class, array(
         'input'  => 'timestamp',
         'widget' => 'choice',
     ));

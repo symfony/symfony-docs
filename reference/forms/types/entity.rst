@@ -52,7 +52,10 @@ Basic Usage
 The ``entity`` type has just one required option: the entity which should
 be listed inside the choice field::
 
-    $builder->add('users', 'entity', array(
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('users', EntityType::class, array(
         'class' => 'AcmeHelloBundle:User',
         'choice_label' => 'username',
     ));
@@ -71,9 +74,10 @@ If you need to specify a custom query to use when fetching the entities
 the ``query_builder`` option. The easiest way to use the option is as follows::
 
     use Doctrine\ORM\EntityRepository;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('users', 'entity', array(
+    $builder->add('users', EntityType::class, array(
         'class' => 'AcmeHelloBundle:User',
         'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
@@ -92,7 +96,10 @@ For example, if you have a ``$group`` variable (passed into your form perhaps
 as a form option) and ``getUsers`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
 
-    $builder->add('users', 'entity', array(
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('users', EntityType::class, array(
         'class' => 'AcmeHelloBundle:User',
         'choices' => $group->getUsers(),
     ));
@@ -123,7 +130,10 @@ choice_label
 This is the property that should be used for displaying the entities as text in
 the HTML element::
 
-    $builder->add('category', 'entity', array(
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('category', EntityType::class, array(
         'class' => 'AppBundle:Category',
         'choice_label' => 'displayName',
     ));
@@ -131,7 +141,10 @@ the HTML element::
 If left blank, the entity object will be cast to a string and so must have a ``__toString()``
 method. You can also pass a callback function for more control::
 
-    $builder->add('category', 'entity', array(
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('category', EntityType::class, array(
         'class' => 'AppBundle:Category',
         'choice_label' => function ($category) {
             return $category->getDisplayName();
@@ -150,7 +163,10 @@ more detais, see the main :ref:`choice_label <reference-form-choice-label>` docu
     For example, if the translations property is actually an associative
     array of objects, each with a name property, then you could do this::
 
-        $builder->add('gender', 'entity', array(
+        use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+        // ...
+
+        $builder->add('gender', EntityType::class, array(
            'class' => 'MyBundle:Gender',
            'choice_label' => 'translations[en].name',
         ));

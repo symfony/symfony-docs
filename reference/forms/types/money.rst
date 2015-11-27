@@ -65,7 +65,10 @@ If, for some reason, you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
 For example::
 
-    $builder->add('price', 'money', array(
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    // ...
+
+    $builder->add('price', MoneyType::class, array(
         'divisor' => 100,
     ));
 

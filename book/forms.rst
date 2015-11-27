@@ -1005,7 +1005,7 @@ ways. If you build your form in the controller, you can use ``setAction()`` and
         ->setAction($this->generateUrl('target_route'))
         ->setMethod('GET')
         ->add('task', TextType::class)
-        ->add('dueDate', DateType::clas)
+        ->add('dueDate', DateType::class)
         ->add('save', SubmitType::class)
         ->getForm();
 
@@ -1018,7 +1018,10 @@ In :ref:`book-form-creating-form-classes` you will learn how to move the
 form building code into separate classes. When using an external form class
 in the controller, you can pass the action and method as form options::
 
-    $form = $this->createForm(new TaskType(), $task, array(
+    use AppBundle\Form\Type\TaskType;
+    // ...
+
+    $form = $this->createForm(TaskType::class, $task, array(
         'action' => $this->generateUrl('target_route'),
         'method' => 'GET',
     ));
