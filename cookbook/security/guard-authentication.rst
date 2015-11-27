@@ -8,7 +8,7 @@ Whether you need to build a traditional login form, an API token authentication 
 or you need to integrate with some proprietary single-sign-on system, the Guard
 component can make it easy... and fun!
 
-In this example, you'll build an API token authentication system... and learn how
+In this example, you'll build an API token authentication system and learn how
 to work with Guard.
 
 Create a User and a User Provider
@@ -17,7 +17,7 @@ Create a User and a User Provider
 No matter how you authenticate, you need to create a User class that implements ``UserInterface``
 and configure a :doc:`user provider </cookbook/security/custom_provider>`. In this
 example, users are stored in the database via Doctrine, and each user has an ``apiKey``
-property they can use to access their account via the API::
+property they use to access their account via the API::
 
     // src/AppBundle/Entity/User.php
     namespace AppBundle\Entity;
@@ -76,7 +76,7 @@ property they can use to access their account via the API::
     This User doesn't have a password, but you can add a ``password`` property if
     you also want to allow this user to login with a password (e.g. via a login form).
 
-Your ``User`` class doesn't need to be store in Doctrine: do whatever you need.
+Your ``User`` class doesn't need to be stored in Doctrine: do whatever you need.
 Next, make sure you've configured a "user provider" for the user:
 
 .. configuration-block::
@@ -124,7 +124,7 @@ Next, make sure you've configured a "user provider" for the user:
             'providers' => array(
                 'your_db_provider' => array(
                     'entity' => array(
-                        'class'    => 'AppBundle:User',
+                        'class' => 'AppBundle:User',
                     ),
                 ),
             ),
@@ -144,7 +144,7 @@ Suppose you have an API where your clients will send an ``X-AUTH-TOKEN`` header
 on each request with their API token. Your job is to read this and find the associated
 user (if any).
 
-To create a custom authentication system, just create a class an make it implement
+To create a custom authentication system, just create a class and make it implement
 :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
 This requires you to implement six methods::
@@ -181,7 +181,7 @@ This requires you to implement six methods::
                 return;
             }
 
-            // What we return here will be passed to getUser() as $credentials
+            // What you return here will be passed to getUser() as $credentials
             return array(
                 'token' => $token,
             );
@@ -356,7 +356,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
             ),
         ));
 
-You did it! You now have a fully-working API token authentication system. If you're
+You did it! You now have a fully-working API token authentication system. If your
 homepage required ``ROLE_USER``, then you could test it under different conditions:
 
 .. code-block:: bash
@@ -398,7 +398,7 @@ Each authenticator needs the following methods:
 
 **checkCredentials($credentials, UserInterface $user)**
     If ``getUser()`` returns a User object, this method is called. Your job is to
-    verify if the credentials are correct. For a login for, this is where you would
+    verify if the credentials are correct. For a login form, this is where you would
     check that the password is correct for the user. To pass authentication, return
     ``true``. If you return *anything* else
     (or throw an :ref:`AuthenticationException <guard-customize-error>`),
@@ -410,7 +410,7 @@ Each authenticator needs the following methods:
     that will be sent to the client or ``null`` to continue the request
     (e.g. allow the route/controller to be called like normal). Since this
     is an API where each request authenticates itself, you want to return
-    ``nul``.
+    ``null``.
 
 **onAuthenticationFailure(Request $request, AuthenticationException $exception)**
     This is called if authentication fails. Your job
@@ -421,13 +421,15 @@ Each authenticator needs the following methods:
 **start**
     This is called if the client accesses a URI/resource that requires authentication,
     but no authentication details were sent (i.e. you returned ``null`` from
-    ``getCredentialsFromRequest()``). Your job is to return a
+    ``getCredentials()``). Your job is to return a
     :class:`Symfony\\Component\\HttpFoundation\\Response` object that helps
     the user authenticate (e.g. a 401 response that says "token is missing!").
 
 **supportsRememberMe**
+    If you want to support "remember me" functionality, return true from this method.
+    You will still need to active ``rememebe_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
-    functionality.
+    functionality in this example.
 
 .. _guard-customize-error:
 
@@ -457,9 +459,9 @@ to cause a failure::
         {
             // ...
             
-            if ($token == 'MickyMouse') {
+            if ($token == 'ILuvAPIs') {
                 throw new CustomUserMessageAuthenticationException(
-                    'MickyMouse is not a real API key: he\'s a cartoon character'
+                    'ILuvAPIs is not a real API key: it\'s just a silly phrase'
                 );
             }
 
@@ -469,13 +471,13 @@ to cause a failure::
         // ...
     }
 
-In this case, since "MickyMouse" is a ridiculous API key, you could include an easter
+In this case, since "ILuvAPIs" is a ridiculous API key, you could include an easter
 egg to return a custom message if someone tries this:
 
 .. code-block:: bash
 
-    curl -H "X-AUTH-TOKEN: MickyMouse" http://localhost:8000/
-    # {"message":"MickyMouse is not a real API key: he's a cartoon character"}
+    curl -H "X-AUTH-TOKEN: ILuvAPIs" http://localhost:8000/
+    # {"message":"ILuvAPIs is not a real API key: it's just a silly phrase"}
 
 Frequently Asked Questions
 --------------------------
@@ -485,7 +487,7 @@ Frequently Asked Questions
     "entry_point". This means you'll need to choose *which* authenticator's ``start()``
     method should be called when an anonymous user tries to access a protected resource.
     For example, suppose you have an ``app.form_login_authenticator`` that handles
-    a traditional form login. When a user access a protected page anonymously, you
+    a traditional form login. When a user accesses a protected page anonymously, you
     want to use the ``start()`` method from the form authenticator and redirect them
     to the login page (instead of returning a JSON response):
 
@@ -564,8 +566,8 @@ Frequently Asked Questions
             ));
 
 **Can I use this with ``form_login``?**
-    Yes! ``form_login`` is *one* way to authenticator a user, so you could use
-    it *and* then add one more more authenticators. Use a guard authenticator doesn't
+    Yes! ``form_login`` is *one* way to authenticate a user, so you could use
+    it *and* then add one or more authenticators. Using a guard authenticator doesn't
     collide with other ways to authenticate.
 
 **Can I use this with FOSUserBundle?**
