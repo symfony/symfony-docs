@@ -90,10 +90,10 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-``supportsAttribute($attribute)``
+``supportsAttribute($attribute)`` (deprecated as of 2.8)
     will be used to check if the voter knows how to handle the given attribute;
 
-``supportsClass($class)``
+``supportsClass($class)`` (deprecated as of 2.8)
     will be used to check if the voter is able to grant or deny access for
     an object of the given class;
 
@@ -102,6 +102,12 @@ manager to use them:
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
     or ``VoterInterface::ACCESS_ABSTAIN``;
+
+.. note::
+
+    The ``supportsAttribute()`` and ``supportsClass()`` methods are deprecated
+    as of Symfony 2.8 and no longer required in 3.0. These methods should not
+    be called outside the voter class.
 
 The Security component contains some standard voters which cover many use
 cases:
