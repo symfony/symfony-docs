@@ -107,6 +107,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     {
         $bundles = array(
             // ...
+
             // register your bundle
             new Acme\TestBundle\AcmeTestBundle(),
         );
