@@ -28,11 +28,10 @@ command:
 .. code-block:: bash
 
     # specify the configuration directory on the command line
-    $ phpunit -c app/
+    $ phpunit
 
-The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
-file.
+PHPunit is configured by the ``phpunit.xml.dist`` file in the root of your
+Symfony application.
 
 .. tip::
 
@@ -93,23 +92,23 @@ of your bundle::
 
 Just like in your real application - autoloading is automatically enabled
 via the ``bootstrap.php.cache`` file (as configured by default in the
-``app/phpunit.xml.dist`` file).
+``phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
 
 .. code-block:: bash
 
     # run all tests of the application
-    $ phpunit -c app
+    $ phpunit
 
     # run all tests in the Util directory
-    $ phpunit -c app src/AppBundle/Tests/Util
+    $ phpunit src/AppBundle/Tests/Util
 
     # run tests for the Calculator class
-    $ phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
+    $ phpunit src/AppBundle/Tests/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit -c app src/AppBundle/
+    $ phpunit src/AppBundle/
 
 .. index::
    single: Tests; Functional tests
@@ -802,23 +801,23 @@ PHPUnit Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each application has its own PHPUnit configuration, stored in the
-``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``app/phpunit.xml`` file to set up a configuration for your local
-machine only.
+``phpunit.xml.dist`` file. You can edit this file to change the defaults or
+create an ``phpunit.xml`` file to set up a configuration for your local machine
+only.
 
 .. tip::
 
-    Store the ``app/phpunit.xml.dist`` file in your code repository and ignore
-    the ``app/phpunit.xml`` file.
+    Store the ``phpunit.xml.dist`` file in your code repository and ignore
+    the ``phpunit.xml`` file.
 
 By default, only the tests from your own custom bundles stored in the standard
 directories ``src/*/*Bundle/Tests``, ``src/*/Bundle/*Bundle/Tests``,
 ``src/*Bundle/Tests`` are run by the ``phpunit`` command, as configured
-in the ``app/phpunit.xml.dist`` file:
+in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
@@ -836,7 +835,7 @@ configuration adds tests from a custom ``lib/tests`` directory:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
@@ -853,7 +852,7 @@ section:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <filter>
