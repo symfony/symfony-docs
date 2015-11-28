@@ -461,13 +461,13 @@ So what about the other directories in the project?
     file which is used to execute Symfony commands via the console.
 
 ``var/``
-    This is were automatically created files are stored, like cache files
+    This is where automatically created files are stored, like cache files
     (``var/cache/``) and logs (``var/logs/``).
 
 ``vendor/``
-    Vendor (i.e. third-party) libraries and bundles are downloaded here by
-    the `Composer`_ package manager. You should never need to manually edit
-    something in this directory.
+    Third-party libraries, packages and bundles are downloaded here by
+    the `Composer`_ package manager. You should never edit something in this
+    directory.
 
 .. seealso::
 
