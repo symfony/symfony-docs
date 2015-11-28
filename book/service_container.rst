@@ -1182,7 +1182,6 @@ Learn more
 * :doc:`/components/dependency_injection/parentservices`
 * :doc:`/components/dependency_injection/tags`
 * :doc:`/cookbook/controller/service`
-* :doc:`/cookbook/service_container/scopes`
 * :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 
