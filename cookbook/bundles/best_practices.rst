@@ -342,7 +342,7 @@ The end user can provide values in any configuration file:
 
         # app/config/config.yml
         parameters:
-            acme_blog.author.email: fabien@example.com
+            acme_blog.author.email: "fabien@example.com"
 
     .. code-block:: xml
 

@@ -66,7 +66,7 @@ via the ``delivery_address`` option:
 
         # app/config/config_dev.yml
         swiftmailer:
-            delivery_address: dev@example.com
+            delivery_address: "dev@example.com"
 
     .. code-block:: xml
 
