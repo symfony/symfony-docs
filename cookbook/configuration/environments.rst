@@ -347,7 +347,7 @@ However, each environment caches its own set of files:
 
 .. code-block:: text
 
-    <your-project>/
+    your-project/
     ├─ var/
     │  ├─ cache/
     │  │  ├─ dev/   # cache directory for the *dev* environment

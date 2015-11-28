@@ -34,7 +34,7 @@ default Symfony Standard Edition follow this structure:
 
 .. code-block:: text
 
-    <your-project>/
+    your-project/
     ├─ app/
     │  └─ config/
     │     ├─ config.yml
@@ -47,6 +47,8 @@ default Symfony Standard Edition follow this structure:
     │     ├─ routing_dev.yml
     │     └─ security.yml
     ├─ src/
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
@@ -65,7 +67,7 @@ name as the environment:
 
 .. code-block:: text
 
-    <your-project>/
+    your-project/
     ├─ app/
     │  └─ config/
     │     ├─ common/
@@ -84,6 +86,8 @@ name as the environment:
     │        ├─ routing.yml
     │        └─ security.yml
     ├─ src/
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
@@ -161,7 +165,7 @@ and several files to define all application services:
 
 .. code-block:: text
 
-    <your-project>/
+    your-project/
     ├─ app/
     │  └─ config/
     │     ├─ bundles/
@@ -183,6 +187,8 @@ and several files to define all application services:
     │        ├─ ...
     │        └─ security.yml
     ├─ src/
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
