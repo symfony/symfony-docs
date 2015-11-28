@@ -122,7 +122,7 @@ generating a basic bundle skeleton:
 
 .. code-block:: bash
 
-    $ php app/console generate:bundle --namespace=Acme/TestBundle
+    $ php bin/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony's command-line

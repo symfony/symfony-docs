@@ -164,7 +164,7 @@ browsing the project directory and executing this command:
 .. code-block:: bash
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -195,7 +195,7 @@ server with the ``server:stop`` command:
 
 .. code-block:: bash
 
-    $ php app/console server:stop
+    $ php bin/console server:stop
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
@@ -265,7 +265,7 @@ If there are any issues, correct them now before moving on.
     If none of the previous methods work for you, change the umask so that the
     cache and log directories will be group-writable or world-writable (depending
     if the web server user and the command line user are in the same group or not).
-    To achieve this, put the following line at the beginning of the ``app/console``,
+    To achieve this, put the following line at the beginning of the ``bin/console``,
     ``web/app.php`` and ``web/app_dev.php`` files::
 
         umask(0002); // This will let the permissions be 0775
@@ -306,7 +306,7 @@ several minutes to complete.
 
     .. code-block:: bash
 
-        $ php app/console security:check
+        $ php bin/console security:check
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
@@ -331,7 +331,7 @@ of the Symfony Installer anywhere in your system:
     c:\projects\> php symfony demo
 
 Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
-built-in web server executing the ``php app/console server:run`` command. Access
+built-in web server executing the ``php bin/console server:run`` command. Access
 to the ``http://localhost:8000`` URL in your browser to start using the Symfony
 Demo application.
 

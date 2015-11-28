@@ -544,11 +544,11 @@ by changing one option in this configuration file. To find out how, see the
 :doc:`Configuration Reference </reference/index>` section.
 
 Or, to get a big example dump of all of the valid configuration under a key,
-use the handy ``app/console`` command:
+use the handy ``bin/console`` command:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference framework
+    $ bin/console config:dump-reference framework
 
 There's a lot more power behind Symfony's configuration system, including
 environments, imports and parameters. To learn all of it, see the

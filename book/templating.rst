@@ -1211,7 +1211,7 @@ should use the ``parent()`` Twig function to include everything from the ``style
 block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
-You will need to run the ``php app/console assets:install target [--symlink]``
+You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which moves (or symlinks) files into the correct location. (target
 is by default "web").
 
@@ -1391,7 +1391,7 @@ to create it). You're now free to customize the template.
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your
-    cache (``php app/console cache:clear``), even if you are in debug mode.
+    cache (``php bin/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in AcmeBlogBundle inherits from a base template called
@@ -1641,10 +1641,10 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
+    $ php bin/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console lint:twig app/Resources/views
+    $ php bin/console lint:twig app/Resources/views
 
 .. _template-formats:
 
