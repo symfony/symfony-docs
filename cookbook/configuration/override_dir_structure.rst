@@ -154,8 +154,8 @@ file:
 
     .. code-block:: bash
 
-        $ php app/console cache:clear --env=prod
-        $ php app/console assetic:dump --env=prod --no-debug
+        $ php bin/console cache:clear --env=prod
+        $ php bin/console assetic:dump --env=prod --no-debug
 
 Override the ``vendor`` Directory
 ---------------------------------

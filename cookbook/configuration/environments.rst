@@ -221,13 +221,13 @@ behavior:
 .. code-block:: bash
 
     # 'dev' environment and debug enabled
-    $ php app/console command_name
+    $ php bin/console command_name
 
     # 'prod' environment (debug is always disabled for 'prod')
-    $ php app/console command_name --env=prod
+    $ php bin/console command_name --env=prod
 
     # 'test' environment and debug disabled
-    $ php app/console command_name --env=test --no-debug
+    $ php bin/console command_name --env=test --no-debug
 
 In addition to the ``--env`` and ``--debug`` options, the behavior of Symfony
 commands can also be controlled with environment variables. The Symfony console

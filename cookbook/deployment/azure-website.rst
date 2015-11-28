@@ -388,7 +388,7 @@ MySQL database.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 This command builds the tables and indexes for your MySQL database. If your
 Symfony application is more complex than a basic Symfony Standard Edition, you

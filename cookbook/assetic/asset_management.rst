@@ -500,7 +500,7 @@ each time you deploy), you should run the following command:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 This will physically generate and write each file that you need (e.g. ``/js/abcd123.js``).
 If you update any of your assets, you'll need to run this again to regenerate
@@ -542,7 +542,7 @@ need to dump them manually. To do so, run the following command:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump
+    $ php bin/console assetic:dump
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
@@ -551,7 +551,7 @@ assets will be regenerated automatically *as they change*:
 
 .. code-block:: bash
 
-    $ php app/console assetic:watch
+    $ php bin/console assetic:watch
 
 The ``assetic:watch`` command was introduced in AsseticBundle 2.4. In prior
 versions, you had to use the ``--watch`` option of the ``assetic:dump``
