@@ -213,10 +213,6 @@
 
   * :doc:`/cookbook/psr7`
 
-* **symfony1**
-
-  * :doc:`/cookbook/symfony1`
-
 * :doc:`/cookbook/templating/index`
 
   * :doc:`/cookbook/templating/global_variables`

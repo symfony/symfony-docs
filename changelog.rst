@@ -95,6 +95,7 @@ Minor Documentation Changes
 * `#5553 <https://github.com/symfony/symfony-docs/pull/5553>`_ Fix all broken links/permanent redirects/removed anchors (WouterJ)
 * `#5650 <https://github.com/symfony/symfony-docs/pull/5650>`_ [RFR] fixing typo and removing duplicated lines in Config component doc  (salahm)
 * `#5635 <https://github.com/symfony/symfony-docs/pull/5635>`_ Fix minor problems in book/page_creation.rst (fabschurt)
+* `#5579 <https://github.com/symfony/symfony-docs/pull/5579>`_ [3.0] Remove mentions of Symfony1 (WouterJ)
 * `#5647 <https://github.com/symfony/symfony-docs/pull/5647>`_ don't ignore the _exts directory anymore (xabbuh)
 * `#5587 <https://github.com/symfony/symfony-docs/pull/5587>`_ [2.6] Don't use deprecated features (WouterJ)
 * `#5637 <https://github.com/symfony/symfony-docs/pull/5637>`_ Add QueryBuilder vs DQL section (bocharsky-bw)
@@ -128,6 +129,7 @@ July, 2015
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#5374 <https://github.com/symfony/symfony-docs/pull/5374>`_ Remove deprecated parameters (norkunas)
 * `#5533 <https://github.com/symfony/symfony-docs/pull/5533>`_ Replace Capifony with Capistrano/symfony (mojzis)
 * `#5543 <https://github.com/symfony/symfony-docs/pull/5543>`_ Add deprecation notice to "choice_list" option of ChoiceType (XitasoChris)
 * `#5521 <https://github.com/symfony/symfony-docs/pull/5521>`_ [Cookbook][WebServer] #5504 add a tip for the --force option (vincentaubert)
@@ -563,6 +565,7 @@ Minor Documentation Changes
 - `3be0081 <https://github.com/symfony/symfony-docs/commit/3be00819b3300d6ead36fa6793d93874173a4db3>`_ #4976 Improved sentence (edsonmedina)
 - `a444220 <https://github.com/symfony/symfony-docs/commit/a4442209686f612f353b713cc1153a3e17383d25>`_ #4885 Fix typos (ifdattic)
 - `482502d <https://github.com/symfony/symfony-docs/commit/482502d02b838a7c9bbd31df9e2244e9876ec3ed>`_ #4793 [Contributing] Several tweaks (xelaris)
+- `a2395ef <https://github.com/symfony/symfony-docs/commit/a2395ef7c3945749a7b2d38135262eb70349aaaf>`_ #5054 [Changelog] fix changelog syntax (xabbuh)
 - `6b66f03 <https://github.com/symfony/symfony-docs/commit/6b66f034e2efbf488ac2192c3666e32998badc6d>`_ #5003 Updated the generic Deployment article (javiereguiluz)
 - `39a1487 <https://github.com/symfony/symfony-docs/commit/39a14875ad1ed8b4681bcb27288fc802d162c300>`_ #4999 Fixed semantic error (beni0888)
 
@@ -603,7 +606,6 @@ Minor Documentation Changes
 - `1726054 <https://github.com/symfony/symfony-docs/commit/1726054212bda98d4d63edb7f1364472fe91c7fe>`_ #4500 Link to standard edition  (harikt)
 - `91ff6f8 <https://github.com/symfony/symfony-docs/commit/91ff6f8198d17eda5f837c5f1c1725b8030862a1>`_ #4329 ensure consistency with the note (greg0ire)
 - `f4ab4b6 <https://github.com/symfony/symfony-docs/commit/f4ab4b65092c21642f36e9aec733c9348b4b9691>`_ #5002 Revert very bad merge (WouterJ)
-- `e747392 <https://github.com/symfony/symfony-docs/commit/e7473924e1e4233bec66eba6cf09b9dd9c1c079b>`_ Revert "#4977 Unnecessary comma (edsonmedina)"
 - `e5dbd49 <https://github.com/symfony/symfony-docs/commit/e5dbd49deb1cc6d25d4b89c4967a6511192a22ec>`_ #4977 Unnecessary comma (edsonmedina)
 - `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ #4977 Unnecessary comma (edsonmedina)
 - `5d44987 <https://github.com/symfony/symfony-docs/commit/5d4498707f7fc72653fc135a3e3caee675901ee9>`_ #4991 Fixed typo and tweaked syntax. (cdvrooman)
