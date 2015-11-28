@@ -23,7 +23,7 @@ First, enable form login under your firewall:
             # ...
 
             firewalls:
-                default:
+                main:
                     anonymous: ~
                     form_login:
                         login_path: /login
@@ -40,7 +40,7 @@ First, enable form login under your firewall:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall name="default">
+                <firewall name="main">
                     <anonymous />
                     <form-login login-path="/login" check-path="/login_check" />
                 </firewall>
@@ -52,7 +52,7 @@ First, enable form login under your firewall:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'default' => array(
+                'main' => array(
                     'anonymous'  => null,
                     'form_login' => array(
                         'login_path' => '/login',
