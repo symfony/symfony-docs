@@ -91,8 +91,7 @@ in your ``app.php`` and ``app_dev.php`` front controllers. If you simply
 renamed the directory, you're fine. But if you moved it in some way, you
 may need to modify these paths inside those files::
 
-    require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
-    require_once __DIR__.'/../Symfony/app/AppKernel.php';
+    require_once __DIR__.'/../Symfony/var/bootstrap.php.cache';
 
 You also need to change the ``extra.symfony-web-dir`` option in the ``composer.json``
 file:
