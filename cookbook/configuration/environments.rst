@@ -342,13 +342,13 @@ Symfony takes advantage of caching in many ways: the application configuration,
 routing configuration, Twig templates and more are cached to PHP objects
 stored in files on the filesystem.
 
-By default, these cached files are largely stored in the ``app/cache`` directory.
+By default, these cached files are largely stored in the ``var/cache`` directory.
 However, each environment caches its own set of files:
 
 .. code-block:: text
 
     <your-project>/
-    ├─ app/
+    ├─ var/
     │  ├─ cache/
     │  │  ├─ dev/   # cache directory for the *dev* environment
     │  │  └─ prod/  # cache directory for the *prod* environment
@@ -357,7 +357,7 @@ However, each environment caches its own set of files:
 Sometimes, when debugging, it may be helpful to inspect a cached file to
 understand how something is working. When doing so, remember to look in
 the directory of the environment you're using (most commonly ``dev`` while
-developing and debugging). While it can vary, the ``app/cache/dev`` directory
+developing and debugging). While it can vary, the ``var/cache/dev`` directory
 includes the following:
 
 ``appDevDebugProjectContainer.php``

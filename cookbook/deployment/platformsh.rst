@@ -62,7 +62,7 @@ Platform.sh how to deploy your application (read more about
 
     # The mounts that will be performed when the package is deployed.
     mounts:
-        "/app/cache": "shared:files/cache"
+        "/var/cache": "shared:files/cache"
         "/app/logs": "shared:files/logs"
 
     # The hooks that will be performed when the package is deployed.

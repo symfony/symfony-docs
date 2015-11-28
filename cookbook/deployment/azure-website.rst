@@ -260,10 +260,10 @@ directory with at least the following contents:
 .. code-block:: text
 
     /app/bootstrap.php.cache
-    /app/cache/*
+    /var/cache/*
     /app/config/parameters.yml
     /app/logs/*
-    !app/cache/.gitkeep
+    !var/cache/.gitkeep
     !app/logs/.gitkeep
     /app/SymfonyRequirements.php
     /build/
