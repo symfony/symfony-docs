@@ -65,7 +65,7 @@ container and use it to do the logging::
     }
 
 Depending on the environment in which you run your command (and your logging
-setup), you should see the logged entries in ``app/logs/dev.log`` or ``app/logs/prod.log``.
+setup), you should see the logged entries in ``var/logs/dev.log`` or ``var/logs/prod.log``.
 
 Enabling automatic Exceptions Logging
 -------------------------------------

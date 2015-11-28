@@ -262,9 +262,9 @@ directory with at least the following contents:
     /app/bootstrap.php.cache
     /var/cache/*
     /app/config/parameters.yml
-    /app/logs/*
+    /var/logs/*
     !var/cache/.gitkeep
-    !app/logs/.gitkeep
+    !var/logs/.gitkeep
     /app/SymfonyRequirements.php
     /build/
     /vendor/
