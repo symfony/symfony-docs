@@ -36,8 +36,8 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTest.php
+    namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -117,15 +117,18 @@ might look like this::
 
     // src/AppBundle/Form/Type/TestedType.php
 
-    // ... the buildForm method
-    $builder->add('app_test_child_type');
+    // ...
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('app_test_child_type');
+    }
 
 To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
 before creating the parent form using the ``PreloadedExtension`` class::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -158,7 +161,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
     be getting errors that are not related to the form you are currently
     testing but to its children.
 
-Adding custom Extensions
+Adding Custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
@@ -168,8 +171,8 @@ The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
 on other extensions. You need to add those extensions to the factory object::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -217,8 +220,8 @@ Testing against different Sets of Data
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
 a good opportunity to use them::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -226,7 +229,6 @@ a good opportunity to use them::
 
     class TestedTypeTest extends TypeTestCase
     {
-
         /**
          * @dataProvider getValidTestData
          */
