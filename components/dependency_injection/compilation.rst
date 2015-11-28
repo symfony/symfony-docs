@@ -306,46 +306,85 @@ For more details, see :doc:`/cookbook/bundles/prepend_extension`, which
 is specific to the Symfony Framework, but contains more details about this
 feature.
 
-Creating a Compiler Pass
-------------------------
+.. _components-di-compiler-pass:
 
-You can also create and register your own compiler passes with the container.
-To create a compiler pass it needs to implement the
+Execute Code During Compilation
+-------------------------------
+
+You can also execute custom code during compilation by writing your own
+compiler pass. By implementing
 :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
-interface. The compiler pass gives you an opportunity to manipulate the
-service definitions that have been compiled. This can be very powerful,
-but is not something needed in everyday use.
+in your extension, the added ``process()`` method will be called during
+compilation::
 
-The compiler pass must have the ``process`` method which is passed the container
-being compiled::
+    // ...
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+
+    class AcmeDemoExtension implements ExtensionInterface, CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+           // ... do something during the compilation
+        }
+
+        // ...
+    }
+
+.. versionadded:: 2.8
+    Prior to Symfony 2.8, extensions implementing ``CompilerPassInterface``
+    were not automatically registered. You need to register it as explained in
+    :ref:`the next section <components-di-separate-compiler-passes>`.
+
+As ``process()`` is called *after* all extensions are loaded, it allows you to
+edit service definitions of other extensions as well as retrieving information
+about service definitions.
+
+The container's parameters and definitions can be manipulated using the
+methods described in :doc:`/components/dependency_injection/definitions`.
+
+.. note::
+
+    As a rule, only work with services definition in a compiler pass and do not
+    create service instances. Practically, this means using methods ``has()``,
+    ``findDefinition()``, ``getDefinition()``, ``setDefinition()``, etc.
+    instead of ``get()``, ``set()``, etc.
+
+.. tip::
+
+    Make sure your compiler pass does not require services to exist. Abort the
+    method call if some required service is not available.
+
+A common use-case of compiler passes is to search for all service definitions
+that have a certain tag in order to process dynamically plug each into some
+other service. See the section on :ref:`service tags <components-di-compiler-pass-tags>`
+for an example.
+
+.. _components-di-separate-compiler-passes:
+
+Creating Separate Compiler Passes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, you need to do more than one thing during compliation or want to use
+compiler passes without an extension. In this case, you can create a new class
+implementing the ``CompilerPassInterface``::
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    class CustomCompilerPass implements CompilerPassInterface
+    class CustomPass implements CompilerPassInterface
     {
         public function process(ContainerBuilder $container)
         {
-           // ...
+           // ... do something during the compilation
         }
     }
 
-The container's parameters and definitions can be manipulated using the
-methods described in the :doc:`/components/dependency_injection/definitions`.
-One common thing to do in a compiler pass is to search for all services
-that have a certain tag in order to process them in some way or dynamically
-plug each into some other service.
-
-Registering a Compiler Pass
----------------------------
-
-You need to register your custom pass with the container. Its process method
-will then be called when the container is compiled::
+You then need to register your custom pass with the container::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
-    $container->addCompilerPass(new CustomCompilerPass);
+    $container->addCompilerPass(new CustomPass());
 
 .. note::
 
@@ -354,17 +393,16 @@ will then be called when the container is compiled::
     more details.
 
 Controlling the Pass Ordering
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.............................
 
 The default compiler passes are grouped into optimization passes and removal
 passes. The optimization passes run first and include tasks such as resolving
 references within the definitions. The removal passes perform tasks such
-as removing private aliases and unused services. You can choose where in
-the order any custom passes you add are run. By default they will be run
-before the optimization passes.
+as removing private aliases and unused services. When registering compiler
+passes using ``addCompilerPass()``, you can configure when your compiler pass
+is run. By default, they are run before the optimization passes.
 
-You can use the following constants as the second argument when registering
-a pass with the container to control where it goes in the order:
+You can use the following constants to determine when your pass is executed:
 
 * ``PassConfig::TYPE_BEFORE_OPTIMIZATION``
 * ``PassConfig::TYPE_OPTIMIZE``
@@ -373,14 +411,11 @@ a pass with the container to control where it goes in the order:
 * ``PassConfig::TYPE_AFTER_REMOVING``
 
 For example, to run your custom pass after the default removal passes have
-been run::
+been run, use::
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Compiler\PassConfig;
-
-    $container = new ContainerBuilder();
+    // ...
     $container->addCompilerPass(
-        new CustomCompilerPass,
+        new CustomPass(),
         PassConfig::TYPE_AFTER_REMOVING
     );
 
