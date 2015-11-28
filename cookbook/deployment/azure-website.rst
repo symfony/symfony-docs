@@ -265,7 +265,7 @@ directory with at least the following contents:
     /var/logs/*
     !var/cache/.gitkeep
     !var/logs/.gitkeep
-    /bin/SymfonyRequirements.php
+    /var/SymfonyRequirements.php
     /build/
     /vendor/
     /bin/

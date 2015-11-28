@@ -36,6 +36,7 @@ default Symfony Standard Edition follow this structure:
 
     your-project/
     ├─ app/
+    │  ├─ ...
     │  └─ config/
     │     ├─ config.yml
     │     ├─ config_dev.yml
@@ -46,11 +47,7 @@ default Symfony Standard Edition follow this structure:
     │     ├─ routing.yml
     │     ├─ routing_dev.yml
     │     └─ security.yml
-    ├─ src/
-    ├─ tests/
-    ├─ var/
-    ├─ vendor/
-    └─ web/
+    ├─ ...
 
 This default structure was chosen for its simplicity — one file per environment.
 But as any other Symfony feature, you can customize it to better suit your needs.
@@ -69,6 +66,7 @@ name as the environment:
 
     your-project/
     ├─ app/
+    │  ├─ ...
     │  └─ config/
     │     ├─ common/
     │     │  ├─ config.yml
@@ -85,11 +83,7 @@ name as the environment:
     │        ├─ parameters.yml
     │        ├─ routing.yml
     │        └─ security.yml
-    ├─ src/
-    ├─ tests/
-    ├─ var/
-    ├─ vendor/
-    └─ web/
+    ├─ ...
 
 To make this work, change the code of the
 :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
@@ -167,6 +161,7 @@ and several files to define all application services:
 
     your-project/
     ├─ app/
+    │  ├─ ...
     │  └─ config/
     │     ├─ bundles/
     │     │  ├─ bundle1.yml
@@ -186,11 +181,7 @@ and several files to define all application services:
     │        ├─ backend.yml
     │        ├─ ...
     │        └─ security.yml
-    ├─ src/
-    ├─ tests/
-    ├─ var/
-    ├─ vendor/
-    └─ web/
+    ├─ ...
 
 Again, change the code of the ``registerContainerConfiguration()`` method to
 make Symfony aware of the new file organization::
