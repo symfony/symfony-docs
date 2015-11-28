@@ -122,13 +122,13 @@ FrameworkBundle configuration:
 
 .. code-block:: bash
 
-    $ bin/console config:dump-reference FrameworkBundle
+    $ php bin/console config:dump-reference FrameworkBundle
 
 The extension alias (configuration key) can also be used:
 
 .. code-block:: bash
 
-    $ bin/console config:dump-reference framework
+    $ php bin/console config:dump-reference framework
 
 .. note::
 
