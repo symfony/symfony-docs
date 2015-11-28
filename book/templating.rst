@@ -159,7 +159,7 @@ Twig Template Caching
 
 Twig is fast. Each Twig template is compiled down to a native PHP class
 that is rendered at runtime. The compiled classes are located in the
-``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
+``var/cache/{environment}/twig`` directory (where ``{environment}`` is the
 environment, such as ``dev`` or ``prod``) and in some cases can be useful
 while debugging. See :ref:`environments-summary` for more information on
 environments.

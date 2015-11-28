@@ -214,8 +214,8 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the ``app/cache`` and
-    ``app/logs`` directories must be writable both by the web server and the
+    One common issue when installing Symfony is that the ``var/cache`` and
+    ``var/logs`` directories must be writable both by the web server and the
     command line user. On a UNIX system, if your web server user is different
     from your command line user, you can try one of the following solutions.
 
@@ -236,12 +236,12 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ rm -rf app/cache/*
-        $ rm -rf app/logs/*
+        $ rm -rf var/cache/*
+        $ rm -rf var/logs/*
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
+        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
 
 
     **3. Using ACL on a system that does not support chmod +a**
@@ -255,8 +255,8 @@ If there are any issues, correct them now before moving on.
     .. code-block:: bash
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
+        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
 
     If this doesn't work, try adding ``-n`` option.
 
