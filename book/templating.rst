@@ -709,8 +709,11 @@ tags:
             array('renderer' => 'hinclude')
         ) ?>
 
+        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
+             passed as third argument. -->
         <?php echo $view['actions']->render(
-            $view['router']->generate('...'),
+            $view['router']->url('...'),
             array('renderer' => 'hinclude')
         ) ?>
 
@@ -918,7 +921,9 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
@@ -997,7 +1002,9 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
-            <a href="<?php echo $view['router']->generate('article_show', array(
+            <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8,
+                 you had to use generate(). -->
+            <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
                 <?php echo $article->getTitle() ?>
@@ -1006,26 +1013,26 @@ correctly:
 
 .. tip::
 
-    You can also generate an absolute URL by using the ``url`` Twig function:
+    You can also generate an absolute URL by using the ``url`` function:
 
-    .. code-block:: html+twig
+    .. configuration-block::
 
-        <a href="{{ url('_welcome') }}">Home</a>
+        .. code-block:: html+twig
 
-    The same can be done in PHP templates by passing a third argument to
-    the ``generate()`` method:
+            <a href="{{ url('_welcome') }}">Home</a>
 
-    .. code-block:: html+php
+        .. code-block:: html+php
 
-        <?php
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-        ?>
+            <a href="<?php echo $view['router']->url(
+                '_welcome',
+                array()
+            ) ?>">Home</a>
 
-        <a href="<?php echo $view['router']->generate(
-            '_welcome',
-            array(),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        ) ?>">Home</a>
+    .. versionadded:: 2.8
+        The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
+        to 2.8, you had to use the ``generate()`` helper method with
+        ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
+        passed as third argument.
 
 .. index::
    single: Templating; Linking to assets
@@ -1696,7 +1703,9 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', array(
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <a href="<?php echo $view['router']->path('article_show', array(
             'id' => 123,
             '_format' => 'pdf',
         )) ?>">
