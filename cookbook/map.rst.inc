@@ -193,6 +193,7 @@
 
 * :doc:`/cookbook/service_container/index`
 
+  * :doc:`/cookbook/service_container/shared`
   * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/service_container/compiler_passes`
   * (Event Dispatcher) :doc:`/cookbook/event_dispatcher/event_listener`

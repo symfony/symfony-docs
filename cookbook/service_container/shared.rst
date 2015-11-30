@@ -1,7 +1,7 @@
 .. index::
     single: Service Container; Shared Services
 
-How to Define Not Shared Services
+How to Define Non Shared Services
 =================================
 
 .. versionadded:: 2.8
@@ -10,7 +10,7 @@ How to Define Not Shared Services
 
 In the service container, all services are shared by default. This means that
 each time you retrieve the service, you'll get the *same* instance. This is
-often the behaviour you want, but in some cases, you might want to always get a
+often the behavior you want, but in some cases, you might want to always get a
 *new* instance.
 
 In order to always get a new instance, set the ``shared`` setting to ``false``
@@ -20,6 +20,7 @@ in your service definition:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
             app.some_not_shared_service:
                 class: ...
@@ -28,16 +29,20 @@ in your service definition:
 
     .. code-block:: xml
 
+        <!-- app/config/services.xml -->
         <services>
             <service id="app.some_not_shared_service" class="..." shared="false" />
         </services>
 
     .. code-block:: php
 
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // app/config/services.php
         $definition = new Definition('...');
         $definition->setShared(false);
 
         $container->setDefinition('app.some_not_shared_service', $definition);
 
 Now, whenever you call ``$container->get('app.some_not_shared_service')`` or
-inject this service, you'll recieve a new instance.
+inject this service, you'll receive a new instance.
