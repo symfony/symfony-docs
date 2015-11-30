@@ -107,7 +107,9 @@ using the login form:
         <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <form action="<?php echo $view['router']->path('login_check') ?>" method="post">
             <!-- ... the login fields -->
 
             <input type="hidden" name="_csrf_token"
