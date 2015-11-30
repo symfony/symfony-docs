@@ -19,12 +19,12 @@ First, add the following file::
 
     require __DIR__.'/bootstrap.php.cache';
 
-Replace the test bootstrap file ``bootstrap.php.cache`` in ``app/phpunit.xml.dist``
+Replace the test bootstrap file ``bootstrap.php.cache`` in ``phpunit.xml.dist``
 with ``tests.bootstrap.php``:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
 
     <!-- ... -->
     <phpunit
@@ -37,7 +37,7 @@ cache to be cleared:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <php>
         <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
     </php>

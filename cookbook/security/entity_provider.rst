@@ -145,13 +145,13 @@ by running:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle/Entity/User
+    $ php bin/console doctrine:generate:entities AppBundle/Entity/User
 
 Next, make sure to :ref:`create the database table <book-doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

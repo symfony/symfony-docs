@@ -98,7 +98,7 @@ Now generate the mod_rewrite rules:
 
 .. code-block:: bash
 
-    $ php app/console router:dump-apache -e=prod --no-debug
+    $ php bin/console router:dump-apache -e=prod --no-debug
 
 Which should roughly output the following:
 
@@ -145,7 +145,7 @@ to ``ApacheRequest`` in ``web/app.php``::
 
     // web/app.php
 
-    require_once __DIR__.'/../app/bootstrap.php.cache';
+    require_once __DIR__.'/../var/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
     // require_once __DIR__.'/../app/AppCache.php';
 
