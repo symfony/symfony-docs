@@ -113,7 +113,7 @@ tag:
         <service id="app.image_type_extension"
             class="AppBundle\Form\Extension\ImageTypeExtension"
         >
-            <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\FileType" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
         </service>
 
     .. code-block:: php
