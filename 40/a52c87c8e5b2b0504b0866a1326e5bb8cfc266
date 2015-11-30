@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-11-27T19:08:17Z
+
+More is added in #5265 also
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-11-28T01:15:28Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-11-28T09:56:41Z
+
+I think we should add a caution directive here to not pass anything blindly here which may leak security related information (something like what is [done in the class docblock](https://github.com/symfony/symfony/blob/2.8/src/Symfony/Component/Security/Core/Exception/CustomUserMessageAuthenticationException.php#L17-L19)).
