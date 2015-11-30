@@ -286,7 +286,7 @@ and help you fix the problem quickly.
 Using the Command Line Interface
 --------------------------------
 
-Each application comes with a command line interface tool (``app/console``)
+Each application comes with a command line interface tool (``bin/console``)
 that helps you maintain your application. It provides commands that boost
 your productivity by automating tedious and repetitive tasks.
 

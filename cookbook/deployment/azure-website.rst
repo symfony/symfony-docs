@@ -259,7 +259,7 @@ directory with at least the following contents:
 
 .. code-block:: text
 
-    /app/bootstrap.php.cache
+    /var/bootstrap.php.cache
     /var/cache/*
     /app/config/parameters.yml
     /var/logs/*

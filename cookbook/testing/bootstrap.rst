@@ -17,9 +17,9 @@ First, add the following file::
         ));
     }
 
-    require __DIR__.'/bootstrap.php.cache';
+    require __DIR__.'/autoload.php';
 
-Replace the test bootstrap file ``bootstrap.php.cache`` in ``phpunit.xml.dist``
+Replace the test bootstrap file ``autoload.php`` in ``phpunit.xml.dist``
 with ``tests.bootstrap.php``:
 
 .. code-block:: xml
