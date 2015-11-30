@@ -19,7 +19,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             # ...
 
             firewalls:
-                default:
+                main:
                     # ...
                     remember_me:
                         key:      "%secret%"
@@ -43,7 +43,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <!-- ... -->
 
                     <!-- 604800 is 1 week in seconds -->
@@ -65,7 +65,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             // ...
 
             'firewalls' => array(
-                'default' => array(
+                'main' => array(
                     // ...
                     'remember_me' => array(
                         'key'      => '%secret%',
