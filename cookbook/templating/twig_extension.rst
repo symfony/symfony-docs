@@ -99,16 +99,6 @@ Now you must let the Service Container know about your newly created Twig Extens
             ->setPublic(false)
             ->addTag('twig.extension');
 
-.. note::
-
-   Keep in mind that Twig Extensions are not lazily loaded. This means that
-   there's a higher chance that you'll get a
-   :class:`Symfony\\Component\\DependencyInjection\\Exception\\ServiceCircularReferenceException`
-   or a
-   :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-   if any services (or your Twig Extension in this case) are dependent on
-   the request service. For more information take a look at :doc:`/cookbook/service_container/scopes`.
-
 Using the custom Extension
 --------------------------
 
