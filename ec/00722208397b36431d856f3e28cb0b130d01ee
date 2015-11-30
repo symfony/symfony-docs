@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-11-28T08:32:28Z
+
+I don't really care about this, but if we merge it, we should single quotes for quoting (and I think we should do that everywhere else too as it is much easier to use because you do not have to care about escape sequences).
