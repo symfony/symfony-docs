@@ -6,7 +6,7 @@ How to Use Data Transformers
 
 Data transformers are used to translate the data for a field into a format that can
 be displayed in a form (and back on submit). They're already used internally for
-many field types. For example, the :doc:`date field type </reference/forms/types/date>`
+many field types. For example, the :doc:`DateType </reference/forms/types/date>` field
 can be rendered as a ``yyyy-MM-dd``-formatted input textbox. Internally, a data transformer
 converts the starting ``DateTime`` value of the field into the ``yyyy-MM-dd`` string
 to render the form, and then back into a ``DateTime`` object on submit.

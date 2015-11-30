@@ -67,7 +67,7 @@ You can also
 :ref:`register your form type as a service <form-cookbook-form-field-service>`.
 But this is *not* recommended unless you plan to reuse the new form type in many
 places or embed it in other forms directly or via the
-:doc:`collection type </reference/forms/types/collection>`.
+:doc:`CollectionType </reference/forms/types/collection>`.
 
 For most forms that are used only to edit or create something, registering
 the form as a service is over-kill, and makes it more difficult to figure

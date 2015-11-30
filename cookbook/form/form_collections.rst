@@ -106,7 +106,7 @@ goal is to allow the tags of a ``Task`` to be modified right inside the task
 form itself, create a form for the ``Task`` class.
 
 Notice that you embed a collection of ``TagType`` forms using the
-:doc:`collection </reference/forms/types/collection>` field type::
+:doc:`CollectionType </reference/forms/types/collection>` field::
 
     // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
