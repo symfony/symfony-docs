@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by hiddewie at 2015-11-28T14:42:14Z
+
+Nice. You found quite some instances of form types where I missed them (or my `grep`s did not find them).
+
+Would it be an idea to change the titles of the `reference/forms/types/*` articles? At the moment they are something like "xxx Field Type", while I think from 2.8 a title like "XxxType field" is more accurate, as those are the classes that must be used.
+
+---------------------------------------------------------------------------
+
+by Tobion at 2015-11-29T23:55:28Z
+
+https://github.com/symfony/symfony-docs/blob/more-form-tweaks/reference/forms/types/collection.rst#entry_type `This is the field type for each item in this collection (e.g. text, choice, etc)` needs an update
