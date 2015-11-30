@@ -884,20 +884,6 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
             array(new Reference('request_stack'))
         ));
 
-.. sidebar:: Why not Inject the ``request`` Service?
-
-    Almost all Symfony2 built-in services behave in the same way: a single
-    instance is created by the container which it returns whenever you get it or
-    when it is injected into another service. There is one exception in a standard
-    Symfony2 application: the ``request`` service.
-
-    If you try to inject the ``request`` into a service, you will probably receive
-    a
-    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-    exception. That's because the ``request`` can **change** during the life-time
-    of a container (when a sub-request is created for instance).
-
-
 .. tip::
 
     If you define a controller as a service then you can get the ``Request``
