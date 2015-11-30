@@ -4,6 +4,11 @@
 How to Create a Custom Form Password Authenticator
 ==================================================
 
+.. tip::
+
+    Check out :doc:`/cookbook/security/guard-authentication` for a simpler and more
+    flexible way to accomplish custom authentication tasks like this.
+
 Imagine you want to allow access to your website only between 2pm and 4pm
 UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
 and provider. In this entry, you'll learn how to do this for a login form
@@ -16,8 +21,14 @@ The Password Authenticator
 .. versionadded:: 2.6
     The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
 
+.. versionadded:: 2.8
+    The ``SimpleFormAuthenticatorInterface`` interface was moved to the
+    ``Symfony\Component\Security\Http\Authentication`` namespace in Symfony
+    2.8. Prior to 2.8, it was located in the
+    ``Symfony\Component\Security\Core\Authentication`` namespace.
+
 First, create a new class that implements
-:class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
@@ -25,13 +36,13 @@ the user::
     namespace Acme\HelloBundle\Security;
 
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Http\Authentication\SimpleFormAuthenticatorInterface;
 
     class TimeAuthenticator implements SimpleFormAuthenticatorInterface
     {

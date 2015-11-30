@@ -1531,11 +1531,15 @@ a template helper function:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('blog_show', array(
+        <a href="<?php echo $view['router']->path('blog_show', array(
             'slug' => 'my-blog-post',
         )) ?>">
             Read this blog post.
         </a>
+
+.. versionadded:: 2.8
+    The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
+    to 2.8, you had to use the ``generate()`` helper method.
 
 .. index::
    single: Routing; Absolute URLs
@@ -1550,9 +1554,8 @@ method::
     $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
 
-From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
-rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
-to ``generate()``:
+From a template, simply use the ``url()`` function (which generates an absolute
+URL) rather than the ``path()`` function (which generates a relative URL):
 
 .. configuration-block::
 
@@ -1564,15 +1567,17 @@ to ``generate()``:
 
     .. code-block:: html+php
 
-        <?php
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-        ?>
-
-        <a href="<?php echo $view['router']->generate('blog_show', array(
+        <a href="<?php echo $view['router']->url('blog_show', array(
             'slug' => 'my-blog-post',
-        ), UrlGeneratorInterface::ABSOLUTE_URL) ?>">
+        )) ?>">
             Read this blog post.
         </a>
+
+.. versionadded:: 2.8
+    The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
+    to 2.8, you had to use the ``generate()`` helper method with
+    ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
+    passed as the third argument.
 
 .. note::
 

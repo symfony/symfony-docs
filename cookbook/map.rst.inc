@@ -30,6 +30,7 @@
 * :doc:`/cookbook/configuration/index`
 
   * :doc:`/cookbook/configuration/environments`
+  * :doc:`/cookbook/configuration/micro-kernel-trait`
   * :doc:`/cookbook/configuration/override_dir_structure`
   * :doc:`/cookbook/configuration/using_parameters_in_dic`
   * :doc:`/cookbook/configuration/front_controllers_and_kernel`
@@ -161,6 +162,7 @@
 
   * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
+  * :doc:`/cookbook/security/guard-authentication`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/form_login`
@@ -191,6 +193,7 @@
 
 * :doc:`/cookbook/service_container/index`
 
+  * :doc:`/cookbook/service_container/shared`
   * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/service_container/compiler_passes`
   * (Event Dispatcher) :doc:`/cookbook/event_dispatcher/event_listener`

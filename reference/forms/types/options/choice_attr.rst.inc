@@ -12,7 +12,10 @@ of attributes (if they are the same for each choice), a callable or a property p
 
 If an array, the keys of the ``choices`` array must be used as keys::
 
-    $builder->add('attending', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('attending', ChoiceType::class, array(
         'choices' => array(
             'Yes' => true,
             'No' => false,

@@ -10,6 +10,7 @@ How to Create a custom Authentication Provider
     you through that process. But depending on your needs, you may be able
     to solve your problem in a simpler, or via a community bundle:
 
+    * :doc:`/cookbook/security/guard-authentication`
     * :doc:`/cookbook/security/custom_password_authenticator`
     * :doc:`/cookbook/security/api_key_authentication`
     * To authenticate via OAuth using a third-party service such as Google, Facebook

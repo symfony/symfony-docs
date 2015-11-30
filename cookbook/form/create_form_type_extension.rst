@@ -15,7 +15,7 @@ extensions come in.
 Form type extensions have 2 main use-cases:
 
 #. You want to add a **specific feature to a single type** (such
-   as adding a "download" feature to the "file" field type);
+   as adding a "download" feature to the ``FileType`` field type);
 #. You want to add a **generic feature to several types** (such as
    adding a "help" text to every "input text"-like type).
 
@@ -51,6 +51,7 @@ class. In most cases, it's easier to extend the abstract class::
     namespace AppBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
@@ -61,7 +62,7 @@ class. In most cases, it's easier to extend the abstract class::
          */
         public function getExtendedType()
         {
-            return 'file';
+            return FileType::class;
         }
     }
 
@@ -105,14 +106,14 @@ tag:
             app.image_type_extension:
                 class: AppBundle\Form\Extension\ImageTypeExtension
                 tags:
-                    - { name: form.type_extension, alias: file }
+                    - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
 
     .. code-block:: xml
 
         <service id="app.image_type_extension"
             class="AppBundle\Form\Extension\ImageTypeExtension"
         >
-            <tag name="form.type_extension" alias="file" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
         </service>
 
     .. code-block:: php
@@ -122,11 +123,15 @@ tag:
                 'app.image_type_extension',
                 'AppBundle\Form\Extension\ImageTypeExtension'
             )
-            ->addTag('form.type_extension', array('alias' => 'file'));
+            ->addTag('form.type_extension', array('extended_type' => 'Symfony\Component\Form\Extension\Core\Type\FileType'));
 
-The ``alias`` key of the tag is the type of field that this extension should
-be applied to. In your case, as you want to extend the ``file`` field type,
-you will use ``file`` as an alias.
+.. versionadded:: 2.8
+    The ``extended_type`` option is new in Symfony 2.8. Before, the option was
+    called ``alias``.
+
+The ``extended_type`` key of the tag is the type of field that this extension should
+be applied to. In your case, as you want to extend the ``Symfony\Component\Form\Extension\Core\Type\FileType``
+field type, you will use that as the ``extended_type``.
 
 Adding the extension Business Logic
 -----------------------------------
@@ -175,14 +180,14 @@ database)::
     }
 
 Your form type extension class will need to do two things in order to extend
-the ``file`` form type:
+the ``FileType::class`` form type:
 
 #. Override the ``configureOptions`` method in order to add an ``image_path``
    option;
 #. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
    URL to the view.
 
-The logic is the following: when adding a form field of type ``file``,
+The logic is the following: when adding a form field of type ``FileType::class``,
 you will be able to specify a new option: ``image_path``. This option will
 tell the file field how to get the actual image URL in order to display
 it in the view::
@@ -195,6 +200,7 @@ it in the view::
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\PropertyAccess\PropertyAccess;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
@@ -205,7 +211,7 @@ it in the view::
          */
         public function getExtendedType()
         {
-            return 'file';
+            return FileType::class;
         }
 
         /**
@@ -291,7 +297,7 @@ Specifically, you need to override the ``file_widget`` block:
 Using the Form Type Extension
 -----------------------------
 
-From now on, when adding a field of type ``file`` in your form, you can
+From now on, when adding a field of type ``FileType::class`` in your form, you can
 specify an ``image_path`` option that will be used to display an image
 next to the file field. For example::
 
@@ -300,19 +306,16 @@ next to the file field. For example::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class MediaType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('name', 'text')
-                ->add('file', 'file', array('image_path' => 'webPath'));
-        }
-
-        public function getName()
-        {
-            return 'media';
+                ->add('name', TextType::class)
+                ->add('file', FileType::class, array('image_path' => 'webPath'));
         }
     }
 
@@ -324,13 +327,13 @@ Generic Form Type Extensions
 
 You can modify several form types at once by specifying their common parent
 (:doc:`/reference/forms/types`). For example, several form types natively
-available in Symfony inherit from the ``text`` form type (such as ``email``,
-``search``, ``url``, etc.). A form type extension applying to ``text``
-(i.e. whose ``getExtendedType`` method returns ``text``) would apply to all of
-these form types.
+available in Symfony inherit from the ``TextType`` form type (such as ``email``,
+``SearchType``, ``UrlType``, etc.). A form type extension applying to ``TextType``
+(i.e. whose ``getExtendedType`` method returns ``TextType::class``) would apply
+to all of these form types.
 
 In the same way, since **most** form types natively available in Symfony inherit
-from the ``form`` form type, a form type extension applying to ``form`` would
-apply to all of these.  A notable exception are the ``button`` form types. Also
-keep in mind that a custom form type which extends neither the ``form`` nor
-the ``button`` type could always be created.
+from the ``FormType`` form type, a form type extension applying to ``FormType``
+would apply to all of these.  A notable exception are the ``ButtonType`` form
+types. Also keep in mind that a custom form type which extends neither the
+``FormType`` nor the ``ButtonType`` type could always be created.

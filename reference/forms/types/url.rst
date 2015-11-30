@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; url
+   single: Forms; Fields; UrlType
 
-url Field Type
-==============
+UrlType Field
+=============
 
-The ``url`` field is a text field that prepends the submitted value with
+The ``UrlType`` field is a text field that prepends the submitted value with
 a given protocol (e.g. ``http://``) if the submitted value doesn't already
 have a protocol.
 
@@ -26,7 +26,7 @@ have a protocol.
 |             | - `required`_                                                     |
 |             | - `trim`_                                                         |
 +-------------+-------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                         |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                     |
 +-------------+-------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType` |
 +-------------+-------------------------------------------------------------------+
@@ -46,8 +46,7 @@ the data is submitted to the form.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

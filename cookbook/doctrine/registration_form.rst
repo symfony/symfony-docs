@@ -157,15 +157,18 @@ Next, create the form for the ``User`` entity::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email')
-                ->add('username', 'text')
-                ->add('plainPassword', 'repeated', array(
+                ->add('email', EmailType::class)
+                ->add('username', TextType::class)
+                ->add('plainPassword', RepeatedType::class, array(
                     'type' => 'password',
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
@@ -213,7 +216,7 @@ controller for displaying the registration form::
         {
             // 1) build the form
             $user = new User();
-            $form = $this->createForm(new UserType(), $user);
+            $form = $this->createForm(UserType::class, $user);
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
@@ -368,15 +371,17 @@ To do this, add a ``termsAccepted`` field to your form, but set its
     // src/AppBundle/Form/UserType.php
     // ...
     use Symfony\Component\Validator\Constraints\IsTrue;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email');
+                ->add('email', EmailType::class);
                 // ...
-                ->add('termsAccepted', 'checkbox', array(
+                ->add('termsAccepted', CheckboxType::class, array(
                     'mapped' => false,
                     'constraints' => new IsTrue(),
                 ))

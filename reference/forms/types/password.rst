@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; password
+   single: Forms; Fields; PasswordType
 
-password Field Type
-===================
+PasswordType Field
+==================
 
-The ``password`` field renders an input password text box.
+The ``PasswordType`` field renders an input password text box.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
@@ -25,7 +25,7 @@ The ``password`` field renders an input password text box.
 |             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                              |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
@@ -54,7 +54,7 @@ trim
 
 **type**: ``boolean`` **default**: ``false``
 
-Unlike the rest of form types, the ``password`` type doesn't apply the
+Unlike the rest of form types, the ``PasswordType`` doesn't apply the
 :phpfunction:`trim` function to the value submitted by the user. This ensures that
 the password is merged back onto the underlying object exactly as it was typed
 by the user.
@@ -62,8 +62,7 @@ by the user.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 

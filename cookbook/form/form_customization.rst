@@ -211,6 +211,9 @@ this folder.
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
     you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
+    
+    The ``integer`` part comes from the class name: ``IntegerType`` becomes ``integer``,
+    based on a standard.
 
     As you can see, the fragment name is a combination of the field type and
     which part of the field is being rendered (e.g. ``widget``, ``label``,
@@ -698,12 +701,13 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
    form type::
 
         use Symfony\Component\Form\FormBuilderInterface;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             // ...
 
-            $builder->add('name', 'text', array(
+            $builder->add('name', TextType::class, array(
                 'block_name' => 'custom_name',
             ));
         }

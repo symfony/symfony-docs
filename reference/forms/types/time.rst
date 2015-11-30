@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; time
+   single: Forms; Fields; TimeType
 
-time Field Type
-===============
+TimeType Field
+==============
 
 A field to capture time input.
 
@@ -41,7 +41,7 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `mapped`_                                                                 |
 |                      | - `read_only`_ (deprecated as of 2.8)                                       |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | form                                                                        |
+| Parent type          | FormType                                                                    |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -53,10 +53,13 @@ This field type is highly configurable, but easy to use. The most important
 options are ``input`` and ``widget``.
 
 Suppose that you have a ``startTime`` field whose underlying time data is
-a ``DateTime`` object. The following configures the ``time`` type for that
+a ``DateTime`` object. The following configures the ``TimeType`` for that
 field as two different choice fields::
 
-    $builder->add('startTime', 'time', array(
+    use Symfony\Component\Form\Extension\Core\Type\TimeType;
+    // ...
+
+    $builder->add('startTime', TimeType::class, array(
         'input'  => 'datetime',
         'widget' => 'choice',
     ));
@@ -65,7 +68,10 @@ The ``input`` option *must* be changed to match the type of the underlying
 date data. For example, if the ``startTime`` field's data were a unix timestamp,
 you'd need to set ``input`` to ``timestamp``::
 
-    $builder->add('startTime', 'time', array(
+    use Symfony\Component\Form\Extension\Core\Type\TimeType;
+    // ...
+
+    $builder->add('startTime', TimeType::class, array(
         'input'  => 'timestamp',
         'widget' => 'choice',
     ));
@@ -156,8 +162,7 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

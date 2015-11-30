@@ -1,11 +1,11 @@
 .. index::
-   single: Forms; Fields; form
+   single: Forms; Fields; FormType
 
-form Field Type
-===============
+FormType Field
+==============
 
-The ``form`` type predefines a couple of options that are then available
-on all types for which ``form`` is the parent type.
+The ``FormType`` predefines a couple of options that are then available
+on all types for which ``FormType`` is the parent.
 
 +-----------+--------------------------------------------------------------------+
 | Options   | - `action`_                                                        |
@@ -146,7 +146,7 @@ Inherited Options
 The following options are defined in the
 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BaseType` class.
 The ``BaseType`` class is the parent class for both the ``form`` type and
-the :doc:`button type </reference/forms/types/button>`, but it is not part
+the :doc:`ButtonType </reference/forms/types/button>`, but it is not part
 of the form type tree (i.e. it can not be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/attr.rst.inc

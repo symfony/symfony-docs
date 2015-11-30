@@ -57,6 +57,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ProductType extends AbstractType
     {
@@ -64,7 +65,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
         {
             $builder
                 // ...
-                ->add('brochure', 'file', array('label' => 'Brochure (PDF file)'))
+                ->add('brochure', FileType::class, array('label' => 'Brochure (PDF file)'))
                 // ...
             ;
         }
@@ -116,7 +117,7 @@ Finally, you need to update the code of the controller that handles the form::
         public function newAction(Request $request)
         {
             $product = new Product();
-            $form = $this->createForm(new ProductType(), $product);
+            $form = $this->createForm(ProductType::class, $product);
             $form->handleRequest($request);
 
             if ($form->isValid()) {

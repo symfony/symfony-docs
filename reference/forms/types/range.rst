@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; range
+   single: Forms; Fields; RangeType
 
-range Field Type
-================
+RangeType Field
+===============
 
-The ``range`` field is a slider that is rendered using the HTML5
+The ``RangeType`` field is a slider that is rendered using the HTML5
 ``<input type="range" />`` tag.
 
 +-------------+---------------------------------------------------------------------+
@@ -22,7 +22,7 @@ The ``range`` field is a slider that is rendered using the HTML5
 |             | - `required`_                                                       |
 |             | - `trim`_                                                           |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                           |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |
 +-------------+---------------------------------------------------------------------+
@@ -32,7 +32,10 @@ Basic Usage
 
 .. code-block:: php
 
-    $builder->add('name', 'range', array(
+    use Symfony\Component\Form\Extension\Core\Type\RangeType;
+    // ...
+
+    $builder->add('name', RangeType::class, array(
         'attr' => array(
             'min' => 5,
             'max' => 50
@@ -42,8 +45,7 @@ Basic Usage
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 

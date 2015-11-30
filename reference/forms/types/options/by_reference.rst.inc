@@ -10,13 +10,17 @@ called in all cases.
 
 To explain this further, here's a simple example::
 
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    // ...
+
     $builder = $this->createFormBuilder($article);
     $builder
-        ->add('title', 'text')
+        ->add('title', TextType::class)
         ->add(
             $builder->create('author', 'form', array('by_reference' => ?))
-                ->add('name', 'text')
-                ->add('email', 'email')
+                ->add('name', TextType::class)
+                ->add('email', EmailType::class)
         )
 
 If ``by_reference`` is true, the following takes place behind the scenes
