@@ -678,7 +678,7 @@ Field Type Options
 
 Each field type has a number of options that can be used to configure it.
 For example, the ``dueDate`` field is currently being rendered as 3 select
-boxes. However, the :doc:`date field </reference/forms/types/date>` can be
+boxes. However, the :doc:`DateType </reference/forms/types/date>` can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box)::
 
@@ -1430,7 +1430,7 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and the :doc:`collection </reference/forms/types/collection>` field type reference.
+entry and the :doc:`CollectionType </reference/forms/types/collection>` reference.
 
 .. index::
    single: Forms; Theming
@@ -1964,7 +1964,7 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/doctrine/file_uploads`
-* :doc:`File Field Reference </reference/forms/types/file>`
+* :doc:`FileType Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/dynamic_form_modification`
