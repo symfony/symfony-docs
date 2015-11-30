@@ -46,7 +46,7 @@ which makes creating a voter even easier.
         abstract protected function voteOnAttribute($attribute, $subject, TokenInterface $token);
     }
 
-.. versionadded::
+.. versionadded:: 2.8
     The ``Voter`` helper class was added in Symfony 2.8. In earlier versions, an
     ``AbstractVoter`` class with similar behavior was available.
 
@@ -150,7 +150,7 @@ would look like this::
                 return false;
             }
 
-            // we know $subject is a Post object, thanks to supports
+            // you know $subject is a Post object, thanks to supports
             /** @var Post $post */
             $post = $subject;
 
@@ -172,7 +172,7 @@ would look like this::
             }
 
             // the Post object could have, for example, a method isPrivate()
-            // that checks a Boolean $private property
+            // that checks a boolean $private property
             return !$post->isPrivate();
         }
 
@@ -191,7 +191,7 @@ To recap, here's what's expected from the two abstract methods:
 ``Voter::supports($attribute, $subject)``
     When ``isGranted()`` (or ``denyAccessUnlessGranted()``) is called, the first
     argument is passed here as ``$attribute`` (e.g. ``ROLE_USER``, ``edit``) and
-    the second argument (if any) is passed as ```$subject`` (e.g. ``null``, a ``Post``
+    the second argument (if any) is passed as ``$subject`` (e.g. ``null``, a ``Post``
     object). Your job is to determine if your voter should vote on the attribute/subject
     combination. If you return true, ``voteOnAttribute()`` will be called. Otherwise,
     your voter is done: some other voter should process this. In this example, you
@@ -222,6 +222,8 @@ and tag it with ``security.voter``:
                 class: AppBundle\Security\PostVoter
                 tags:
                     - { name: security.voter }
+                # small performance boost
+                public: false
 
     .. code-block:: xml
 
@@ -234,7 +236,7 @@ and tag it with ``security.voter``:
 
             <services>
                 <service id="app.post_voter"
-                    class="AppBundle\Security\Authorization\Voter\PostVoter"
+                    class="AppBundle\Security\PostVoter"
                     public="false"
                 >
 
@@ -248,7 +250,7 @@ and tag it with ``security.voter``:
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->register('app.post_voter', 'AppBundle\Security\Authorization\Voter\PostVoter')
+        $container->register('app.post_voter', 'AppBundle\Security\PostVoter')
             ->setPublic(false)
             ->addTag('security.voter')
         ;
@@ -265,14 +267,15 @@ Checking for Roles inside a Voter
     ``service_container`` itself and fetch out the ``security.authorization_checker``
     to use ``isGranted()``.
 
-What if you want to call ``isGranted()`` fomr *inside* your voter - e.g. you want
+What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
 to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting
-the ``AccessDecisionManager`` into your voter. You can use this to, for example,
-*always* allow access to a user with ``ROLE_SUPER_ADMIN``::
+the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager`
+into your voter. You can use this to, for example, *always* allow access to a user
+with ``ROLE_SUPER_ADMIN``::
 
     // src/AppBundle/Security/PostVoter.php
-    // ...
 
+    // ...
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
     class PostVoter extends Voter
@@ -311,6 +314,7 @@ service:
             app.post_voter:
                 class: AppBundle\Security\PostVoter
                 arguments: ['@security.access.decision_manager']
+                public: false
                 tags:
                     - { name: security.voter }
 
@@ -325,7 +329,7 @@ service:
 
             <services>
                 <service id="app.post_voter"
-                    class="AppBundle\Security\Authorization\Voter\PostVoter"
+                    class="AppBundle\Security\PostVoter"
                     public="false"
                 >
                     <argument type="service" id="security.access.decision_manager"/>
@@ -341,15 +345,15 @@ service:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.post_voter', 'AppBundle\Security\Authorization\Voter\PostVoter')
+        $container->register('app.post_voter', 'AppBundle\Security\PostVoter')
             ->addArgument(new Reference('security.access.decision_manager'))
             ->setPublic(false)
             ->addTag('security.voter')
         ;
 
 That's it! Calling ``decide()`` on the ``AccessDecisionManager`` is essentially
-the same as calling ``isGranted()`` on the normal ``security.authorization_checker``
-service (it's just a little lower-level, which is necessary for a voter).
+the same as calling ``isGranted()`` from a controller or other places 
+(it's just a little lower-level, which is necessary for a voter).
 
 .. note::
 
