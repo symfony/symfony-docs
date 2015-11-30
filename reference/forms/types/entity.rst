@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; choice
+   single: Forms; Fields; EntityType
 
-entity Field Type
-=================
+EntityType Field
+================
 
-A special ``choice`` field that's designed to load options from a Doctrine
+A special ``ChoiceType`` field that's designed to load options from a Doctrine
 entity. For example, if you have a ``Category`` entity, you could use this
 field to display a ``select`` field of all, or some, of the ``Category``
 objects from the database.
@@ -20,7 +20,7 @@ objects from the database.
 | Overridden  | - `choices`_                                                     |
 | options     |                                                                  |
 +-------------+------------------------------------------------------------------+
-| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
+| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
 | options     |                                                                  |
 |             | - `placeholder`_                                                 |
 |             | - `expanded`_                                                    |
@@ -28,7 +28,7 @@ objects from the database.
 |             | - `preferred_choices`_                                           |
 |             | - `group_by`_                                                    |
 |             |                                                                  |
-|             | from the :doc:`form </reference/forms/types/form>` type:         |
+|             | from the :doc:`FormType </reference/forms/types/form>`:          |
 |             |                                                                  |
 |             | - `data`_                                                        |
 |             | - `disabled`_                                                    |
@@ -41,7 +41,7 @@ objects from the database.
 |             | - `read_only`_ (deprecated as of 2.8)                            |
 |             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
-| Parent type | :doc:`choice </reference/forms/types/choice>`                    |
+| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                |
 +-------------+------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
 +-------------+------------------------------------------------------------------+
@@ -56,15 +56,18 @@ be listed inside the choice field::
     // ...
 
     $builder->add('users', EntityType::class, array(
-        'class' => 'AcmeHelloBundle:User',
+        'class' => 'AppBundle:User',
         'choice_label' => 'username',
     ));
 
 In this case, all ``User`` objects will be loaded from the database and
 rendered as either a ``select`` tag, a set or radio buttons or a series
 of checkboxes (this depends on the ``multiple`` and ``expanded`` values).
-If the entity object does not have a ``__toString()`` method the ``choice_label``
-option is needed.
+Because of the `choice_label`_ option, the ``username`` property (usually by calling
+``getUsername()``) will be used as the text to display in the field.
+
+If you omit the ``choice_label`` option, then your entity *must* have a ``__toString()``
+method.
 
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,7 +81,7 @@ the ``query_builder`` option. The easiest way to use the option is as follows::
     // ...
 
     $builder->add('users', EntityType::class, array(
-        'class' => 'AcmeHelloBundle:User',
+        'class' => 'AppBundle:User',
         'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
@@ -100,7 +103,7 @@ then you can supply the ``choices`` option directly::
     // ...
 
     $builder->add('users', EntityType::class, array(
-        'class' => 'AcmeHelloBundle:User',
+        'class' => 'AppBundle:User',
         'choices' => $group->getUsers(),
     ));
 
@@ -114,8 +117,8 @@ class
 
 **type**: ``string`` **required**
 
-The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
-a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
+The class of your entity (e.g. ``AppBundle:Category``). This can be
+a fully-qualified class name (e.g. ``AppBundle\Entity\Category``)
 or the short alias name (as shown prior).
 
 choice_label
@@ -167,7 +170,7 @@ more detais, see the main :ref:`choice_label <reference-form-choice-label>` docu
         // ...
 
         $builder->add('gender', EntityType::class, array(
-           'class' => 'MyBundle:Gender',
+           'class' => 'AppBundle:Category',
            'choice_label' => 'translations[en].name',
         ));
 
@@ -206,8 +209,7 @@ See :ref:`reference-forms-entity-choices`.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>`
-type:
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
@@ -229,11 +231,10 @@ type:
 
 .. note::
 
-    This option expects an array of entity objects, unlike the ``choice``
-    field that requires an array of keys.
+    This option expects an array of entity objects (that's actually the same as with
+    the ``ChoiceType`` field, whichs requires an array of the preferred "values").
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

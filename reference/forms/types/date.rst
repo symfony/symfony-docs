@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; date
+   single: Forms; Fields; DateType
 
-date Field Type
-===============
+DateType Field
+==============
 
 A field that allows the user to modify date information via a variety of
 different HTML elements.
@@ -44,7 +44,7 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `mapped`_                                                                 |
 |                      | - `read_only`_ (deprecated as of 2.8)                                       |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -59,6 +59,9 @@ Suppose that you have a ``publishedAt`` field whose underlying date is a
 ``DateTime`` object. The following configures the ``DateType`` type for that
 field as three different choice fields::
 
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
+
     $builder->add('publishedAt', DateType::class, array(
         'input'  => 'datetime',
         'widget' => 'choice',
@@ -67,6 +70,9 @@ field as three different choice fields::
 The ``input`` option *must* be changed to match the type of the underlying
 date data. For example, if the ``publishedAt`` field's data were a unix
 timestamp, you'd need to set ``input`` to ``timestamp``::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
 
     $builder->add('publishedAt', DateType::class, array(
         'input'  => 'timestamp',
@@ -146,8 +152,7 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

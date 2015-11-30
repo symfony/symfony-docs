@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; money
+   single: Forms; Fields; MoneyType
 
-money Field Type
-================
+MoneyType Field
+===============
 
 Renders an input text field and specializes in handling submitted "money"
 data.
@@ -35,7 +35,7 @@ how the input and output of the data is handled.
 |             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -65,7 +65,7 @@ If, for some reason, you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
 For example::
 
-    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    use Symfony\Component\Form\Extension\Core\Type\MoneyType;
     // ...
 
     $builder->add('price', MoneyType::class, array(
@@ -101,8 +101,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

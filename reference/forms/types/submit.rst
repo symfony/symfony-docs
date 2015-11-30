@@ -1,11 +1,11 @@
 .. index::
-   single: Forms; Fields; submit
+   single: Forms; Fields; SubmitType
 
-submit Field Type
-=================
+SubmitType Field
+================
 
 .. versionadded:: 2.3
-    The ``submit`` type was introduced in Symfony 2.3
+    The ``SubmitType`` type was introduced in Symfony 2.3
 
 A submit button.
 
@@ -19,7 +19,7 @@ A submit button.
 |                      | - `translation_domain`_                                              |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
-| Parent type          | :doc:`button</reference/forms/types/button>`                         |
+| Parent type          | :doc:`ButtonType</reference/forms/types/button>`                     |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType` |
 +----------------------+----------------------------------------------------------------------+

@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; file
+   single: Forms; Fields; FileType
 
-file Field Type
-===============
+FileType Field
+==============
 
-The ``file`` type represents a file input in your form.
+The ``FileType`` represents a file input in your form.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
@@ -24,7 +24,7 @@ The ``file`` type represents a file input in your form.
 |             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
@@ -115,8 +115,7 @@ value is empty.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 

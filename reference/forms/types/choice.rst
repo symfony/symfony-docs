@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; choice
+   single: Forms; Fields; ChoiceType
 
-choice Field Type (select drop-downs, radio buttons & checkboxes)
-=================================================================
+ChoiceType Field (select drop-downs, radio buttons & checkboxes)
+================================================================
 
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
@@ -41,7 +41,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `read_only`_ (deprecated as of 2.8)                                        |
 |             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                                    |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                                |
 +-------------+------------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |
 +-------------+------------------------------------------------------------------------------+
@@ -91,6 +91,7 @@ this example, the underlying data is some ``Category`` object that has a ``getNa
 method::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use AppBundle\Entity\Category;
     // ...
 
     $builder->add('category', ChoiceType::class, [
@@ -333,8 +334,7 @@ the parent field (the form in most cases).
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
