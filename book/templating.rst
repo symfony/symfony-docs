@@ -711,7 +711,7 @@ tags:
 
         <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
              had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
-             passed as third argument. -->
+             passed as the third argument. -->
         <?php echo $view['actions']->render(
             $view['router']->url('...'),
             array('renderer' => 'hinclude')
@@ -1032,7 +1032,7 @@ correctly:
         The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
         to 2.8, you had to use the ``generate()`` helper method with
         ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-        passed as third argument.
+        passed as the third argument.
 
 .. index::
    single: Templating; Linking to assets

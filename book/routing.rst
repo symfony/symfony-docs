@@ -1577,7 +1577,7 @@ URL) rather than the ``path()`` function (which generates a relative URL):
     The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
     to 2.8, you had to use the ``generate()`` helper method with
     ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-    passed as third argument.
+    passed as the third argument.
 
 .. note::
 
