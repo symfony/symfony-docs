@@ -70,7 +70,8 @@ value and then a User object is created::
             $username = $userProvider->getUsernameForApiKey($apiKey);
 
             if (!$username) {
-                // this message will be returned to the client
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
                 throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );

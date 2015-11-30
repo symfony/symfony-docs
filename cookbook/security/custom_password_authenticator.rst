@@ -47,7 +47,8 @@ the user::
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
             } catch (UsernameNotFoundException $e) {
-                // error will be shown to the client
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
                 throw new CustomUserMessageAuthenticationException('Invalid username or password');
             }
 
@@ -56,7 +57,8 @@ the user::
             if ($passwordValid) {
                 $currentHour = date('G');
                 if ($currentHour < 14 || $currentHour > 16) {
-                    // error will be shown to the client
+                    // CAUTION: this message will be returned to the client
+                    // (so don't put any un-trusted messages / error strings here)
                     throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
                         100
@@ -71,7 +73,8 @@ the user::
                 );
             }
 
-            // error will be shown to the client
+            // CAUTION: this message will be returned to the client
+            // (so don't put any un-trusted messages / error strings here)
             throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
 
