@@ -532,7 +532,7 @@ console command:
 
 .. code-block:: bash
 
-    $ php app/console debug:container
+    $ php bin/console debug:container
 
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``container:debug``.
