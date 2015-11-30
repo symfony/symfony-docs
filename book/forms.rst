@@ -127,9 +127,10 @@ which HTML form tag(s) is rendered for that field.
 
 .. versionadded:: 2.8
     To denote the form type, you have to use the fully qualified class name - like
-    TextType::class in PHP 5.5+ or ``Symfony\Component\Form\Extension\Core\Type\TextType``.
+    ``TextType::class`` in PHP 5.5+ or ``Symfony\Component\Form\Extension\Core\Type\TextType``.
     Before Symfony 2.8, you could use an alias for each type like ``text`` or
-    ``date``. For more details, see the `2.8 UPGRADE Log`_.
+    ``date``. The old alias syntax will still work until Symfony 3.0. For more details,
+    see the `2.8 UPGRADE Log`_.
 
 Finally, you added a submit button with a custom label for submitting the form to
 the server.
@@ -1005,7 +1006,7 @@ ways. If you build your form in the controller, you can use ``setAction()`` and
         ->setAction($this->generateUrl('target_route'))
         ->setMethod('GET')
         ->add('task', TextType::class)
-        ->add('dueDate', DateType::clas)
+        ->add('dueDate', DateType::class)
         ->add('save', SubmitType::class)
         ->getForm();
 
@@ -1018,7 +1019,10 @@ In :ref:`book-form-creating-form-classes` you will learn how to move the
 form building code into separate classes. When using an external form class
 in the controller, you can pass the action and method as form options::
 
-    $form = $this->createForm(new TaskType(), $task, array(
+    use AppBundle\Form\Type\TaskType;
+    // ...
+
+    $form = $this->createForm(TaskType::class, $task, array(
         'action' => $this->generateUrl('target_route'),
         'method' => 'GET',
     ));

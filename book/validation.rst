@@ -230,7 +230,7 @@ workflow looks like the following from inside a controller::
     public function updateAction(Request $request)
     {
         $author = new Author();
-        $form = $this->createForm(new AuthorType(), $author);
+        $form = $this->createForm(AuthorType::class, $author);
 
         $form->handleRequest($request);
 

@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; text
+   single: Forms; Fields; TextType
 
-text Field Type
-===============
+TextType Field
+==============
 
-The text field represents the most basic input text field.
+The TextType field represents the most basic input text field.
 
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
@@ -25,7 +25,7 @@ The text field represents the most basic input text field.
 | Overridden  | - `compound`_                                                      |
 | options     |                                                                    |
 +-------------+--------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                          |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                      |
 +-------------+--------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
 +-------------+--------------------------------------------------------------------+
@@ -33,8 +33,7 @@ The text field represents the most basic input text field.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

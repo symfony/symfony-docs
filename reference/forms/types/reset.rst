@@ -1,11 +1,11 @@
 .. index::
-   single: Forms; Fields; reset
+   single: Forms; Fields; ResetType
 
-reset Field Type
-================
+ResetType Field
+===============
 
 .. versionadded:: 2.3
-    The ``reset`` type was introduced in Symfony 2.3
+    The ``ResetType`` was introduced in Symfony 2.3
 
 A button that resets all fields to their original values.
 
@@ -18,7 +18,7 @@ A button that resets all fields to their original values.
 |                      | - `label_attr`_                                                     |
 |                      | - `translation_domain`_                                             |
 +----------------------+---------------------------------------------------------------------+
-| Parent type          | :doc:`button</reference/forms/types/button>`                        |
+| Parent type          | :doc:`ButtonType </reference/forms/types/button>`                   |
 +----------------------+---------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ResetType` |
 +----------------------+---------------------------------------------------------------------+

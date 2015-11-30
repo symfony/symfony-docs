@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; choice
+   single: Forms; Fields; ChoiceType
 
-choice Field Type (select drop-downs, radio buttons & checkboxes)
-=================================================================
+ChoiceType Field (select drop-downs, radio buttons & checkboxes)
+================================================================
 
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
@@ -41,7 +41,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `read_only`_ (deprecated as of 2.8)                                        |
 |             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                                    |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                                |
 +-------------+------------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |
 +-------------+------------------------------------------------------------------------------+
@@ -52,7 +52,10 @@ Example Usage
 The easiest way to use this field is to specify the choices directly via
 the ``choices`` option::
 
-    $builder->add('isAttending', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('isAttending', ChoiceType::class, array(
         'choices'  => array(
             'Maybe' => null,
             'Yes' => true,
@@ -87,7 +90,11 @@ This field has a *lot* of options and most control how the field is displayed. I
 this example, the underlying data is some ``Category`` object that has a ``getName()``
 method::
 
-    $builder->add('category', 'choice', [
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use AppBundle\Entity\Category;
+    // ...
+
+    $builder->add('category', ChoiceType::class, [
         'choices' => [
             new Category('Cat1'),
             new Category('Cat2'),
@@ -132,7 +139,10 @@ Grouping Options
 
 You can easily "group" options in a select by passing a multi-dimensional choices array::
 
-    $builder->add('stockStatus', 'choice', [
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('stockStatus', ChoiceType::class, [
         'choices' => [
             'Main Statuses' => [
                 'Yes' => 'stock_yes',
@@ -163,7 +173,10 @@ This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
 is the item's label and the array value is the item's value::
 
-    $builder->add('inStock', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('inStock', ChoiceType::class, array(
         'choices' => array('In Stock' => true, 'Out of Stock' => false),
         // always include this
         'choices_as_values' => true,
@@ -195,7 +208,7 @@ to the user.
 
 * Since 2.7::
 
-    $builder->add('gender', 'choice', array(
+    $builder->add('gender', ChoiceType::class, array(
         // Shows "Male" to the user, returns "m" when selected
         'choices' => array('Male' => 'm', 'Female' => 'f'),
         'choices_as_values' => true,
@@ -206,7 +219,7 @@ type behaves as if it were set to true:
 
 * Default for 3.0::
 
-    $builder->add('gender', 'choice', array(
+    $builder->add('gender', ChoiceType::class, array(
         'choices' => array('Male' => 'm', 'Female' => 'f'),
     ));
 
@@ -263,9 +276,10 @@ With this option you can also allow float values to be selected as data.
 For example::
 
     use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
     // ...
-    $builder->add('status', 'choice', array(
+    $builder->add('status', ChoiceType::class, array(
         'choice_list' => new ChoiceList(
             array(1, 0.5, 0.1),
             array('Full', 'Half', 'Almost empty')
@@ -320,8 +334,7 @@ the parent field (the form in most cases).
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 

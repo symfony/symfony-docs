@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; checkbox
+   single: Forms; Fields; CheckboxType
 
-checkbox Field Type
-===================
+CheckboxType Field
+==================
 
 Creates a single input checkbox. This should always be used for a field
 that has a boolean value: if the box is checked, the field will be set to
@@ -26,7 +26,7 @@ true, if the box is unchecked, the value will be set to false.
 |             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                              |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
@@ -36,7 +36,10 @@ Example Usage
 
 .. code-block:: php
 
-    $builder->add('public', 'checkbox', array(
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    // ...
+
+    $builder->add('public', CheckboxType::class, array(
         'label'    => 'Show this entry publicly?',
         'required' => false,
     ));
@@ -56,8 +59,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

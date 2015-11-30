@@ -346,39 +346,8 @@ and fill in the listener logic::
 Using the Form
 ~~~~~~~~~~~~~~
 
-Our form is now ready to use and there are two possible ways to use it inside
-of a controller:
-
-a) create it manually and remember to pass the token storage to it;
-
-or
-
-b) define it as a service.
-
-a) Creating the Form manually
-.............................
-
-This is very simple, and is probably the better approach unless you're using
-your new form type in many places or embedding it into other forms::
-
-    class FriendMessageController extends Controller
-    {
-        public function newAction(Request $request)
-        {
-            $tokenStorage = $this->container->get('security.token_storage');
-            $form = $this->createForm(
-                new FriendMessageFormType($tokenStorage)
-            );
-
-            // ...
-        }
-    }
-
-b) Defining the Form as a Service
-.................................
-
-To define your form as a service, just create a normal service and then tag
-it with :ref:`dic-tags-form-type`.
+Our form is now ready to use. But first, because it has a ``__construct()`` method,
+you need to register it as a service and tag it with :ref:`form.type <dic-tags-form-type>`:
 
 .. configuration-block::
 
@@ -412,11 +381,6 @@ it with :ref:`dic-tags-form-type`.
             $definition,
             array('security.token_storage')
         );
-
-If you wish to create it from within a service that has access to the form factory,
-you then use::
-
-    $form = $formFactory->create('friend_message');
 
 In a controller that extends the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
 class, you can simply call::
