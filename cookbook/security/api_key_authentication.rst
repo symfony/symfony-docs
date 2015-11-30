@@ -37,6 +37,7 @@ value and then a User object is created::
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\BadCredentialsException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
@@ -80,7 +81,9 @@ value and then a User object is created::
             $username = $userProvider->getUsernameForApiKey($apiKey);
 
             if (!$username) {
-                throw new AuthenticationException(
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
+                throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
             }
@@ -100,6 +103,11 @@ value and then a User object is created::
             return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
         }
     }
+
+.. versionadded:: 2.8
+    The ``CustomUserMessageAuthenticationException`` class is new in Symfony 2.8
+    and helps you return custom authentication messages. In 2.7 or earlier, throw
+    an ``AuthenticationException`` or any sub-class (you can still do this in 2.8).
 
 Once you've :ref:`configured <cookbook-security-api-key-config>` everything,
 you'll be able to authenticate by adding an apikey parameter to the query
@@ -291,7 +299,11 @@ you can use to create an error ``Response``.
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
-            return new Response("Authentication Failed.", 403);
+            return new Response(
+                // this contains information about *why* authentication failed
+                // use it, or return your own message
+                strtr($exception->getMessageKey(), $exception->getMessageData())
+            , 403)
         }
     }
 
@@ -543,7 +555,8 @@ to see if the stored token has a valid User object that can be used::
             }
 
             if (!$username) {
-                throw new AuthenticationException(
+                // this message will be returned to the client
+                throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
             }

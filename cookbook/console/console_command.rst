@@ -82,11 +82,6 @@ for details.
 Getting Services from the Service Container
 -------------------------------------------
 
-.. caution::
-
-    The "container scopes" concept explained in this section has been deprecated
-    in Symfony 2.8 and it will be removed in Symfony 3.0.
-
 By using :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
 as the base class for the command (instead of the more basic
 :class:`Symfony\\Component\\Console\\Command\\Command`), you have access to the
