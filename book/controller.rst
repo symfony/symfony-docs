@@ -801,7 +801,7 @@ Sometimes you want to use CSRF protection in an action where you don't want to u
 Symfony form.
 
 If, for example, you're doing a DELETE action, you can use the
-:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\DefaultCsrfProvider::isCsrfTokenValid`
+:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderInterface::isCsrfTokenValid`
 method to check the CSRF token::
 
     $csrf = $this->container->get('form.csrf_provider');
