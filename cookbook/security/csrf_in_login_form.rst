@@ -13,6 +13,10 @@ for CSRF. In this article you'll learn how you can use it in your login form.
     Login CSRF attacks are a bit less well-known. See `Forging Login Requests`_
     if you're curious about more details.
 
+.. note::
+
+    Since SF 2.8 ``intention`` has been depreciated, and removed in SF 3.0. It is now labeled as ``csrf_token_id``. ``csrf_provider`` was changed in SF 3.0 to ``csrf_token_generator``.
+    
 Configuring CSRF Protection
 ---------------------------
 
@@ -33,7 +37,9 @@ provider available in the Security component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: security.csrf.token_manager
+                        # Use csrf_provider in SF <2.8
+                        # csrf_provider: security.csrf.token_manager
+                        csrf_token_generator: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -66,7 +72,9 @@ provider available in the Security component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'security.csrf.token_manager',
+                        // Use csrf_provider in SF <2.8
+                        // 'csrf_provider' => 'security.csrf.token_manager',
+                        'csrf_token_generator' => 'security.csrf.token_manager',
                     ),
                 ),
             ),
@@ -122,7 +130,7 @@ After this, you have protected your login form against CSRF attacks.
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
-    the token ID by setting ``intention`` in your configuration:
+    the token ID by setting  ``csrf_token_id`` ~~``intention``~~ in your configuration:
 
     .. configuration-block::
 
@@ -138,7 +146,8 @@ After this, you have protected your login form against CSRF attacks.
                         form_login:
                             # ...
                             csrf_parameter: _csrf_security_token
-                            intention: a_private_string
+                            # intention: a_private_string
+                            csrf_token_id: a_private_string
 
         .. code-block:: xml
 
@@ -156,7 +165,8 @@ After this, you have protected your login form against CSRF attacks.
                     <firewall name="secured_area">
                         <!-- ... -->
                         <form-login csrf-parameter="_csrf_security_token"
-                            intention="a_private_string"
+                            <!-- intention="a_private_string" -->
+                                 csrf_token_id="a_private_string"
                         />
                     </firewall>
                 </config>
@@ -174,7 +184,8 @@ After this, you have protected your login form against CSRF attacks.
                         'form_login' => array(
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
-                            'intention'      => 'a_private_string',
+                            'csrf_token_id'     => 'a_private_string'
+                            // 'intention'      => 'a_private_string',
                         ),
                     ),
                 ),
