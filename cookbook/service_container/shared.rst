@@ -36,9 +36,9 @@ in your service definition:
 
     .. code-block:: php
 
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        // app/config/services.php
         $definition = new Definition('...');
         $definition->setShared(false);
 
