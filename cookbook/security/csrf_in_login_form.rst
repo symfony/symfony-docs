@@ -182,7 +182,7 @@ After this, you have protected your login form against CSRF attacks.
                 ),
             ));
 
-versionadded:: 2.8
+.. versionadded:: 2.8
     The ``intention`` and ``csrf_token_generator`` options were introduced
     in Symfony 2.8. Prior, you had to use the ``csrf_token_id`` and ``csrf_provider``
     options.
