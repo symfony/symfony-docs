@@ -62,11 +62,15 @@ URL path and some array of custom variables in its constructor. This array
 of custom variables can be *anything* that's significant to your application,
 and is returned when that route is matched.
 
-If no matching route can be found a
-:class:`Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException` will be thrown.
+The :method:`UrlMatcher::match() <Symfony\\Component\\Routing\\UrlMatcher::match>`
+returns the variables you set on the route as well as the wildcard placeholders
+(see below). Your application can now use this information to continue
+processing the request. In addition to the configured variables, a ``_route``
+key is added, which holds the name of the matched route.
 
-In addition to your array of custom variables, a ``_route`` key is added,
-which holds the name of the matched route.
+If no matching route can be found, a
+:class:`Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException` will
+be thrown.
 
 Defining Routes
 ~~~~~~~~~~~~~~~
@@ -125,6 +129,9 @@ Take the following route, which combines several of these ideas::
 In this case, the route is matched by ``/archive/2012-01``, because the ``{month}``
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
+
+When using wildcards, these are returned in the resulting array of calling
+``match``. The part of the path that the wildcard matched is used as value.
 
 .. tip::
 
