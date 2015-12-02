@@ -1526,6 +1526,6 @@ should also be used to generate URLs.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/routing/scheme`
+* :doc:`/cookbook/routing/index`
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

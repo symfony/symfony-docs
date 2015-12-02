@@ -150,6 +150,8 @@
   * :doc:`/cookbook/routing/custom_route_loader`
   * :doc:`/cookbook/routing/redirect_trailing_slash`
   * :doc:`/cookbook/routing/extra_information`
+  * :doc:`/cookbook/routing/extending_routing`
+  * :doc:`/cookbook/routing/multiple_routers`
 
 * :doc:`Security Authentication (Identifying/Logging in the User) </cookbook/security/index>`
 
