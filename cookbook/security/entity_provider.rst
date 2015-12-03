@@ -291,8 +291,6 @@ name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
