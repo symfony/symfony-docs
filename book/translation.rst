@@ -374,7 +374,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
 
-    The the paths at which Symfony will look for message files can be modified by adding
+    The paths at which Symfony will look for message files can be modified by adding
     your custom resources path in your config.yml:
 
     .. code-block:: yml
