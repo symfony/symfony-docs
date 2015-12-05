@@ -25,6 +25,12 @@ Now that everything is correctly set up, you can create a new project based on
 Symfony. In your command console, browse to a directory where you have permission
 to create files and execute the following commands:
 
+.. note::
+
+    Please make sure that the `phar extension`_ is installed and enabled.
+    Otherwise, the installer will simply return without doing anything nor
+    giving you any output.
+
 .. code-block:: bash
 
     # Linux, Mac OS X
@@ -178,3 +184,4 @@ the Symfony directory structure.
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/signing-project-releases.html
+.. _`phar extension`: http://php.net/manual/en/intro.phar.php
