@@ -39,24 +39,37 @@ The simplest ``TypeTestCase`` implementation looks like the following::
     // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
     namespace AppBundle\Tests\Form\Type;
 
-    use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
-    use Symfony\Component\Validator\ConstraintViolationList;
-    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     class TestedTypeTest extends TypeTestCase
     {
-        protected function getExtensions()
+        public function testSubmitValidData()
         {
-            $validator = $this->getMock('ValidatorInterface::class');
-            $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
-
-            return array(
-                new ValidatorExtension($validator),
+            $formData = array(
+                'test' => 'test',
+                'test2' => 'test2',
             );
-        }
 
-        // ... your tests
+            $type = new TestedType();
+            $form = $this->factory->create($type);
+
+            $object = TestObject::fromArray($formData);
+
+            // submit the data to the form directly
+            $form->submit($formData);
+
+            $this->assertTrue($form->isSynchronized());
+            $this->assertEquals($object, $form->getData());
+
+            $view = $form->createView();
+            $children = $view->children;
+
+            foreach (array_keys($formData) as $key) {
+                $this->assertArrayHasKey($key, $children);
+            }
+        }
     }
 
 So, what does it test? Here comes a detailed explanation.
