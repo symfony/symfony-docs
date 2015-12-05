@@ -85,7 +85,6 @@ the code that prepares the HTML "presentation":
 
 .. code-block:: html+php
 
-    <?php
     // index.php
     $link = mysql_connect('localhost', 'myuser', 'mypassword');
     mysql_select_db('blog_db', $link);
@@ -146,7 +145,6 @@ of the application are isolated in a new file called ``model.php``:
 
 .. code-block:: html+php
 
-    <?php
     // model.php
     function open_database_connection()
     {
@@ -188,7 +186,6 @@ The controller (``index.php``) is now very simple:
 
 .. code-block:: html+php
 
-    <?php
     require_once 'model.php';
 
     $posts = get_all_posts();
@@ -280,7 +277,6 @@ page:
 
 .. code-block:: html+php
 
-    <?php
     require_once 'model.php';
 
     $post = get_post_by_id($_GET['id']);
@@ -361,7 +357,6 @@ on the requested URI:
 
 .. code-block:: html+php
 
-    <?php
     // index.php
 
     // load and initialize any global libraries
@@ -464,7 +459,6 @@ the HTTP response being returned. Use them to improve the blog:
 
 .. code-block:: html+php
 
-    <?php
     // index.php
     require_once 'vendor/autoload.php';
 
