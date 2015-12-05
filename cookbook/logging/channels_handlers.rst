@@ -104,11 +104,11 @@ You can specify the configuration by many forms:
 
     channels: ~    # Include all the channels
 
-    channels: foo  # Include only channel "foo"
-    channels: "!foo" # Include all channels, except "foo"
+    channels: foo  # Include only channel 'foo'
+    channels: '!foo' # Include all channels, except 'foo'
 
-    channels: [foo, bar]   # Include only channels "foo" and "bar"
-    channels: ["!foo", "!bar"] # Include all channels, except "foo" and "bar"
+    channels: [foo, bar]   # Include only channels 'foo' and 'bar'
+    channels: ['!foo', '!bar'] # Include all channels, except 'foo' and 'bar'
 
 Creating your own Channel
 -------------------------

@@ -271,7 +271,7 @@ do the following:
 
         # app/config/routing.yml
         _hello:
-            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+            resource: '@AcmeDemoBundle/Resources/config/routing.yml'
 
     .. code-block:: xml
 

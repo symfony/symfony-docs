@@ -23,7 +23,7 @@ inside your routing configuration:
             path:     /{_locale}/contact
             defaults: { _controller: AppBundle:Main:contact }
             requirements:
-                _locale: "%app.locales%"
+                _locale: '%app.locales%'
 
     .. code-block:: xml
 

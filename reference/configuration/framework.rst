@@ -232,7 +232,7 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
         # app/config/config.yml
         framework:
-            ide: "phpstorm://open?file=%%f&line=%%l"
+            ide: 'phpstorm://open?file=%%f&line=%%l'
 
     .. code-block:: xml
 
@@ -1070,10 +1070,10 @@ an asset's path:
             templating:
                 assets_base_urls:
                     http:
-                        - "http://cdn.example.com/"
+                        - 'http://cdn.example.com/'
                 # you can also pass just a string:
                 # assets_base_urls:
-                #     http: "//cdn.example.com/"
+                #     http: '//cdn.example.com/'
 
     .. code-block:: xml
 
@@ -1126,9 +1126,9 @@ collection):
             # ...
             templating:
                 assets_base_urls:
-                    - "//cdn.example.com/"
+                    - '//cdn.example.com/'
                 # you can also pass just a string:
-                # assets_base_urls: "//cdn.example.com/"
+                # assets_base_urls: '//cdn.example.com/'
 
     .. code-block:: xml
 
