@@ -578,7 +578,6 @@ It will give you something like this:
             // ...
         ));
 
-
 Everything will now work exactly like before. But if you have dynamic users
 (e.g. from a database), how can you programmatically encode the password
 before inserting them into the database? Don't worry, see
