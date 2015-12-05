@@ -377,7 +377,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
     The paths at which Symfony will look for message files can be modified by adding
     your custom resources path in your config.yml file:
 
-    .. code-block:: yml
+    .. code-block:: yaml
 
         framework:
             translator:
