@@ -173,39 +173,23 @@ on other extensions. You need to add those extensions to the factory object::
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
-    use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
-    use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
+    use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Validator\ConstraintViolationList;
+    use Symfony\Component\Validator\Validator\ValidatorInterface
 
     class TestedTypeTest extends TypeTestCase
     {
-        protected function setUp()
+        protected function getExtensions()
         {
-            parent::setUp();
-
-            $validator = $this->getMock('\Symfony\Component\Validator\ValidatorInterface');
+            $validator = $this->getMock(ValidatorInterface::class);
             $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
-            $this->factory = Forms::createFormFactoryBuilder()
-                ->addExtensions($this->getExtensions())
-                ->addTypeExtension(
-                    new FormTypeValidatorExtension(
-                        $validator
-                    )
-                )
-                ->addTypeGuesser(
-                    $this->getMockBuilder(
-                        'Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser'
-                    )
-                        ->disableOriginalConstructor()
-                        ->getMock()
-                )
-                ->getFormFactory();
-
-            $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-            $this->builder = new FormBuilder(null, null, $this->dispatcher, $this->factory);
+            return array(
+                new ValidatorExtension($validator),
+            );
         }
 
         // ... your tests
