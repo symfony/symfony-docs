@@ -615,7 +615,7 @@ not empty, add the following:
         AppBundle\Entity\Author:
             properties:
                 name:
-                    - NotBlank: { message: "author.name.not_blank" }
+                    - NotBlank: { message: 'author.name.not_blank' }
 
     .. code-block:: xml
 

@@ -100,7 +100,7 @@ the first provider is always used:
                     pattern: ^/
                     provider: user_db
                     http_basic:
-                        realm: "Secured Demo Area"
+                        realm: 'Secured Demo Area'
                         provider: in_memory
                     form_login: ~
 

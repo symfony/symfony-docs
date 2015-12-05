@@ -128,4 +128,4 @@ service by asking for the ``bar`` service like this::
         services:
            foo:
              class: Example\Foo
-           bar: "@foo"
+           bar: '@foo'

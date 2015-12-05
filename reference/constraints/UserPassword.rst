@@ -63,7 +63,7 @@ the user's current password:
             properties:
                 oldPassword:
                     - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
-                        message: "Wrong value for your current password"
+                        message: 'Wrong value for your current password'
 
     .. code-block:: xml
 

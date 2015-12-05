@@ -45,7 +45,7 @@ change the value of ``path`` from
             # ...
             nested:
                 # ...
-                path: "php://stderr"
+                path: 'php://stderr'
 
 Once the application is deployed, run ``heroku logs --tail`` to keep the
 stream of logs from Heroku open in your terminal.

@@ -43,7 +43,7 @@ configuration to the main routing configuration file:
 
     # app/config/routing.yml
     app:
-        resource: "@AppBundle/Controller/"
+        resource: '@AppBundle/Controller/'
         type:     annotation
 
 This configuration will load annotations from any controller stored inside the

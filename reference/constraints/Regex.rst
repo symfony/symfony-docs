@@ -220,8 +220,8 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             properties:
                 name:
                     - Regex:
-                        pattern: "/^[a-z]+$/i"
-                        htmlPattern: "^[a-zA-Z]+$"
+                        pattern: '/^[a-z]+$/i'
+                        htmlPattern: '^[a-zA-Z]+$'
 
     .. code-block:: xml
 
