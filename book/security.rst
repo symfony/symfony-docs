@@ -577,6 +577,10 @@ like this:
             // ...
         ));
 
+.. caution::
+
+    Beware this is a public tool and it should not be used with real passwords because of the risk of farming or other security issues.
+    
 Everything will now work exactly like before. But if you have dynamic users
 (e.g. from a database), how can you programmatically encode the password
 before inserting them into the database? Don't worry, see
