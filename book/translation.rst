@@ -334,7 +334,7 @@ The translator service is accessible in PHP templates through the
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-Symfony looks for message files (i.e. translations) in the following locations:
+Symfony looks for message files (i.e. translations) in the following default locations:
 
 * the ``app/Resources/translations`` directory;
 
@@ -371,6 +371,18 @@ provides many loaders, including:
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use ``xlf`` for translations.
 For more options, see :ref:`component-translator-message-catalogs`.
+
+.. note::
+
+    The the paths at which Symfony will look for message files can be modified by adding
+    your custom resources path in your config.yml:
+
+    .. code-block:: yml
+
+        framework:
+            translator:
+                paths:
+                    - %kernel.root_dir%/../vendor/Symfony/Component/Form/Resources/translations
 
 .. note::
 
