@@ -109,8 +109,8 @@ start with the simplest web application we can think of in PHP::
 
     printf('Hello %s', $input);
 
-You can use the PHP built-in server to test this great
-application in a browser (``http://localhost:4321/index.php?name=Fabien``):
+You can use the PHP built-in server to test this great application in a browser
+(``http://localhost:4321/index.php?name=Fabien``):
 
 .. code-block:: bash
 
