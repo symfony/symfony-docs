@@ -4,6 +4,16 @@
 Combining, Compiling and Minimizing Web Assets with PHP Libraries
 =================================================================
 
+.. caution::
+
+    Starting from Symfony 2.8, Assetic is no longer included by default in the
+    Symfony Standard Edition. Before using any of its features, install the
+    AsseticBundle executing this command command in your project:
+
+    .. code-block:: cli
+
+        $ composer install symfony/assetic-bundle
+
 The official Symfony Best Practices recommend to use Assetic to
 :doc:`manage web assets </best_practices/web-assets>`, unless you are
 comfortable with JavaScript-based front-end tools.

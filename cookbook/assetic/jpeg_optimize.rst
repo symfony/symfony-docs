@@ -4,6 +4,16 @@
 How to Use Assetic for Image Optimization with Twig Functions
 =============================================================
 
+.. caution::
+
+    Starting from Symfony 2.8, Assetic is no longer included by default in the
+    Symfony Standard Edition. Before using any of its features, install the
+    AsseticBundle executing this command command in your project:
+
+    .. code-block:: cli
+
+        $ composer install symfony/assetic-bundle
+
 Among its many filters, Assetic has four filters which can be used for on-the-fly
 image optimization. This allows you to get the benefits of smaller file sizes
 without having to use an image editor to process each image. The results

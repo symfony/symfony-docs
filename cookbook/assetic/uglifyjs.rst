@@ -4,6 +4,16 @@
 How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)
 =========================================================
 
+.. caution::
+
+    Starting from Symfony 2.8, Assetic is no longer included by default in the
+    Symfony Standard Edition. Before using any of its features, install the
+    AsseticBundle executing this command command in your project:
+
+    .. code-block:: cli
+
+        $ composer install symfony/assetic-bundle
+
 `UglifyJS`_ is a JavaScript parser/compressor/beautifier toolkit. It can be used
 to combine and minify JavaScript assets so that they require less HTTP requests
 and make your site load faster. `UglifyCSS`_ is a CSS compressor/beautifier
