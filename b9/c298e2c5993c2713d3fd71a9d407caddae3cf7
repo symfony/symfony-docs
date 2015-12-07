@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-07T14:44:31Z
+
+@DanielSiepmann thanks for submitting this fix. I agree that we should comply with the best practices here. By the way, could you please swap the order of the methods:
+
+```php
+if ($form->isSubmitted() && $form->isValid()) {
+```
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-07T14:48:30Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by DanielSiepmann at 2015-12-07T14:48:59Z
+
+Thanks, I've updated that and will match the order in #5970, too.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-07T15:01:16Z
+
+:+1:
