@@ -242,7 +242,7 @@ controller::
 
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // ... perform some action, such as saving the task to the database
 
             return $this->redirectToRoute('task_success');
