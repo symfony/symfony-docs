@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by dosten at 2015-12-07T14:24:13Z
+
+But this is intended, because is considered a best practice. http://symfony.com/doc/current/best_practices/forms.html
+
+> We recommend using $form->isSubmitted() in the if statement for clarity. This isn't technically needed, since isValid() first calls isSubmitted(). But without this, the flow doesn't read well as it looks like the form is always processed (even on the GET request).
+
+---------------------------------------------------------------------------
+
+by DanielSiepmann at 2015-12-07T14:32:12Z
+
+Okay ... but then this should be changed in the referenced documentation http://symfony.com/doc/current/book/forms.html#handling-form-submissions, shouldn't it?
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-12-07T14:33:10Z
+
+Yes, you're right. If you can do it would be great!
+
+---------------------------------------------------------------------------
+
+by DanielSiepmann at 2015-12-07T14:41:11Z
+
+Done within #5972 I'll close this pull request.
+
+---------------------------------------------------------------------------
+
+by DanielSiepmann at 2015-12-07T14:50:47Z
+
+Following #5972 I've swapped the order of call.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-07T15:01:01Z
+
+:+1:
