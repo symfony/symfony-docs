@@ -7,12 +7,8 @@ How to Apply an Assetic Filter to a specific File Extension
 .. caution::
 
     Starting from Symfony 2.8, Assetic is no longer included by default in the
-    Symfony Standard Edition. Before using any of its features, install the
-    AsseticBundle executing this command command in your project:
-
-    .. code-block:: cli
-
-        $ composer install symfony/assetic-bundle
+    Symfony Standard Edition. Refer to :doc:`this article </cookbook/assetic/asset_management>`
+    to learn how to install and enable Assetic in your Symfony application.
 
 Assetic filters can be applied to individual files, groups of files or even,
 as you'll see here, files that have a specific extension. To show you how

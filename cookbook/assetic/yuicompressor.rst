@@ -13,12 +13,8 @@ How to Minify JavaScripts and Stylesheets with YUI Compressor
 .. caution::
 
     Starting from Symfony 2.8, Assetic is no longer included by default in the
-    Symfony Standard Edition. Before using any of its features, install the
-    AsseticBundle executing this command command in your project:
-
-    .. code-block:: cli
-
-        $ composer install symfony/assetic-bundle
+    Symfony Standard Edition. Refer to :doc:`this article </cookbook/assetic/asset_management>`
+    to learn how to install and enable Assetic in your Symfony application.
 
 Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
