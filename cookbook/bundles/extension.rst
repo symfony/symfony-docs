@@ -40,7 +40,7 @@ but usually you would simply extend the
 
     class AcmeHelloExtension extends Extension
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $config, ContainerBuilder $container)
         {
             // ... you'll load the files here later
         }
