@@ -45,7 +45,7 @@ with a request. The following example demonstrates this technique::
         {
             $session = $this->client->getContainer()->get('session');
 
-            $firewall = 'secured_area';
+            $firewall = 'secured_area'; // put here firewalls context if defined
             $token = new UsernamePasswordToken('admin', null, $firewall, array('ROLE_ADMIN'));
             $session->set('_security_'.$firewall, serialize($token));
             $session->save();
