@@ -209,7 +209,7 @@ straightforward. Parameters make defining services more organized and flexible:
         services:
             my_mailer:
                 class:        Acme\HelloBundle\Mailer
-                arguments:    ["%my_mailer.transport%"]
+                arguments:    ['%my_mailer.transport%']
 
     .. code-block:: xml
 
@@ -353,7 +353,7 @@ directories don't exist, create them.
         services:
             my_mailer:
                 class:        Acme\HelloBundle\Mailer
-                arguments:    ["%my_mailer.transport%"]
+                arguments:    ['%my_mailer.transport%']
 
     .. code-block:: xml
 
@@ -614,7 +614,7 @@ the service container gives you a much more appealing option:
 
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
-                arguments: ["@my_mailer"]
+                arguments: ['@my_mailer']
 
     .. code-block:: xml
 
@@ -700,7 +700,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 calls:
-                    - [setMailer, ["@my_mailer"]]
+                    - [setMailer, ['@my_mailer']]
 
     .. code-block:: xml
 
@@ -762,7 +762,7 @@ it exists and do nothing if it doesn't:
         services:
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
-                arguments: ["@?my_mailer"]
+                arguments: ['@?my_mailer']
 
     .. code-block:: xml
 
@@ -872,7 +872,7 @@ Configuring the service container is easy:
         services:
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
-                arguments: ["@mailer", "@templating"]
+                arguments: ['@mailer', '@templating']
 
     .. code-block:: xml
 

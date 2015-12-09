@@ -49,7 +49,7 @@ To use it, you just need to change some parameters in the main configuration fil
 
             session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-                arguments: ["@pdo", "%pdo.db_options%"]
+                arguments: ['@pdo', '%pdo.db_options%']
 
     .. code-block:: xml
 
@@ -152,9 +152,9 @@ of your project's data, you can use the connection settings from the
             pdo:
                 class: PDO
                 arguments:
-                    - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                    - "%database_user%"
-                    - "%database_password%"
+                    - 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%'
+                    - '%database_user%'
+                    - '%database_password%'
 
     .. code-block:: xml
 

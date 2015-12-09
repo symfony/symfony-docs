@@ -113,7 +113,7 @@ won't use it directly:
         services:
             app.super_admin_matcher:
                 class: AppBundle\Profiler\SuperAdminMatcher
-                arguments: ["@security.context"]
+                arguments: ['@security.context']
                 public: false
 
     .. code-block:: xml
