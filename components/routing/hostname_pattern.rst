@@ -180,9 +180,9 @@ instance, if you want to match both ``m.example.com`` and
                 host:     "m.{domain}"
                 defaults:
                     _controller: AcmeDemoBundle:Main:mobileHomepage
-                    domain: "%domain%"
+                    domain: '%domain%'
                 requirements:
-                    domain: "%domain%"
+                    domain: '%domain%'
 
             homepage:
                 path:  /
@@ -243,7 +243,7 @@ You can also set the host option on imported routes:
     .. code-block:: yaml
 
         acme_hello:
-            resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+            resource: '@AcmeHelloBundle/Resources/config/routing.yml'
             host:     "hello.example.com"
 
     .. code-block:: xml

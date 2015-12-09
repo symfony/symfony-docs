@@ -494,8 +494,8 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
             firewalls:
                 somename:
                     http_digest:
-                        secret: "%secret%"
-                        realm: "secure-api"
+                        secret: '%secret%'
+                        realm: 'secure-api'
 
     .. code-block:: xml
 

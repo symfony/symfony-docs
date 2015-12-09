@@ -164,7 +164,7 @@ file:
         # app/config/config.yml
         framework:
             # ...
-            router: { resource: "%kernel.root_dir%/config/routing.yml" }
+            router: { resource: '%kernel.root_dir%/config/routing.yml' }
 
     .. code-block:: xml
 
@@ -1257,7 +1257,7 @@ configuration:
 
         # app/config/routing.yml
         app:
-            resource: "@AppBundle/Controller/"
+            resource: '@AppBundle/Controller/'
             type:     annotation # required to enable the Annotation reader for this resource
 
     .. code-block:: xml
@@ -1308,7 +1308,7 @@ directory are parsed and put into the routing.
 
             # app/config/routing.yml
             app:
-                resource: "@AcmeOtherBundle/Resources/config/routing.yml"
+                resource: '@AcmeOtherBundle/Resources/config/routing.yml'
 
         .. code-block:: xml
 
@@ -1347,7 +1347,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
         # app/config/routing.yml
         app:
-            resource: "@AppBundle/Controller/"
+            resource: '@AppBundle/Controller/'
             type:     annotation
             prefix:   /site
 

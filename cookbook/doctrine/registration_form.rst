@@ -221,7 +221,7 @@ controller for displaying the registration form::
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
-            if ($form->isValid() && $form->isSubmitted()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // 3) Encode the password (you could also do this via Doctrine listener)
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());

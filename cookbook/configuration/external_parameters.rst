@@ -70,8 +70,8 @@ You can now reference these parameters wherever you need them.
             dbal:
                 driver    pdo_mysql
                 dbname:   symfony_project
-                user:     "%database.user%"
-                password: "%database.password%"
+                user:     '%database.user%'
+                password: '%database.password%'
 
     .. code-block:: xml
 

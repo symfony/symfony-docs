@@ -130,7 +130,7 @@ file:
             # ...
             assetic:
                 # ...
-                read_from: "%kernel.root_dir%/../../public_html"
+                read_from: '%kernel.root_dir%/../../public_html'
 
         .. code-block:: xml
 

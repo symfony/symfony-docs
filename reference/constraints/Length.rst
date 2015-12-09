@@ -57,8 +57,8 @@ and "50", you might add the following:
                     - Length:
                         min: 2
                         max: 50
-                        minMessage: "Your first name must be at least {{ limit }} characters long"
-                        maxMessage: "Your first name cannot be longer than {{ limit }} characters"
+                        minMessage: 'Your first name must be at least {{ limit }} characters long'
+                        maxMessage: 'Your first name cannot be longer than {{ limit }} characters'
 
     .. code-block:: xml
 

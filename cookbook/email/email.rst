@@ -33,10 +33,10 @@ already included:
 
         # app/config/config.yml
         swiftmailer:
-            transport: "%mailer_transport%"
-            host:      "%mailer_host%"
-            username:  "%mailer_user%"
-            password:  "%mailer_password%"
+            transport: '%mailer_transport%'
+            host:      '%mailer_host%'
+            username:  '%mailer_user%'
+            password:  '%mailer_password%'
 
     .. code-block:: xml
 

@@ -149,8 +149,7 @@ known as HTTP headers. For example, one important HTTP response header is
 ``Content-Type``. The body of the same resource could be returned in multiple
 different formats like HTML, XML, or JSON and the ``Content-Type`` header uses
 Internet Media Types like ``text/html`` to tell the client which format is
-being returned. A list of common media types can be found on Wikipedia's
-`List of common media types`_ article.
+being returned. You can see a `list of common media types`_ from IANA.
 
 Many other headers exist, some of which are very powerful. For example, certain
 headers can be used to create a powerful caching system.
@@ -578,6 +577,6 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
 .. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
-.. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
+.. _`list of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Swift Mailer`: http://swiftmailer.org/
