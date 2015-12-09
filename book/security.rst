@@ -517,7 +517,7 @@ For hardcoded users, since 2.7 you can use the built-in command :
 
 .. code-block:: bash
 
-    $ php bin/console security:encode-password
+    $ php app/console security:encode-password
 
 It will give you something like this:
 
