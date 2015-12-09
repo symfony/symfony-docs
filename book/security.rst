@@ -513,8 +513,13 @@ else, you'll want to encode their passwords. The best algorithm to use is
 .. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, you can use an `online tool`_, which will give you something
-like this:
+For hardcoded users, since 2.7 you can use the built-in command :
+
+.. code-block:: bash
+
+    $ php app/console security:encode-password
+
+It will give you something like this:
 
 .. configuration-block::
 
@@ -1411,7 +1416,6 @@ Learn More from the Cookbook
 * :doc:`/cookbook/security/remember_me`
 * :doc:`/cookbook/security/multiple_user_providers`
 
-.. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
