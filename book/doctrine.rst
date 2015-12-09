@@ -64,11 +64,11 @@ information. By convention, this information is usually configured in an
             # app/config/config.yml
             doctrine:
                 dbal:
-                    driver:   "%database_driver%"
-                    host:     "%database_host%"
-                    dbname:   "%database_name%"
-                    user:     "%database_user%"
-                    password: "%database_password%"
+                    driver:   '%database_driver%'
+                    host:     '%database_host%'
+                    dbname:   '%database_name%'
+                    user:     '%database_user%'
+                    password: '%database_password%'
 
         .. code-block:: xml
 
@@ -162,7 +162,7 @@ for you:
             doctrine:
                 dbal:
                     driver: pdo_sqlite
-                    path: "%kernel.root_dir%/sqlite.db"
+                    path: '%kernel.root_dir%/sqlite.db'
                     charset: UTF8
 
         .. code-block:: xml

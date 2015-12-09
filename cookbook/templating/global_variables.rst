@@ -62,7 +62,7 @@ system, which lets you isolate or reuse the value:
         # app/config/config.yml
         twig:
             globals:
-                ga_tracking: "%ga_tracking%"
+                ga_tracking: '%ga_tracking%'
 
     .. code-block:: xml
 
@@ -106,7 +106,7 @@ This should feel familiar, as it's the same syntax you use in service configurat
         twig:
             # ...
             globals:
-                user_management: "@app.user_management"
+                user_management: '@app.user_management'
 
     .. code-block:: xml
 

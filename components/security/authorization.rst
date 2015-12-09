@@ -46,7 +46,7 @@ the votes (either positive, negative or neutral) it has received. It
 recognizes several strategies:
 
 ``affirmative`` (default)
-    grant access as soon as any voter returns an affirmative response;
+    grant access as soon as there is one voter granting access;
 
 ``consensus``
     grant access if there are more voters granting access than there are denying;
