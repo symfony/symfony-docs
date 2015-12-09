@@ -477,14 +477,14 @@ is ``app/config/config.yml``:
         # ...
 
         framework:
-            secret: "%secret%"
+            secret: '%secret%'
             router:
-                resource: "%kernel.root_dir%/config/routing.yml"
+                resource: '%kernel.root_dir%/config/routing.yml'
             # ...
 
         twig:
-            debug:            "%kernel.debug%"
-            strict_variables: "%kernel.debug%"
+            debug:            '%kernel.debug%'
+            strict_variables: '%kernel.debug%'
 
         # ...
 

@@ -55,8 +55,8 @@ you might add the following:
                     - Count:
                         min: 1
                         max: 5
-                        minMessage: "You must specify at least one email"
-                        maxMessage: "You cannot specify more than {{ limit }} emails"
+                        minMessage: 'You must specify at least one email'
+                        maxMessage: 'You cannot specify more than {{ limit }} emails'
 
     .. code-block:: xml
 

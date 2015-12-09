@@ -282,7 +282,7 @@ that the ORM resolves to:
             # the standard distribution overrides this to be true in debug, false otherwise
             auto_generate_proxy_classes: false
             proxy_namespace: Proxies
-            proxy_dir: "%kernel.cache_dir%/doctrine/orm/Proxies"
+            proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
             default_entity_manager: default
             metadata_cache_driver: array
             query_cache_driver: array
@@ -601,7 +601,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                         # ...
                         SomeEntityNamespace:
                             type: annotation
-                            dir: "%kernel.root_dir%/../src/Entity"
+                            dir: '%kernel.root_dir%/../src/Entity'
                             is_bundle: false
                             prefix: App\Entity
                             alias: App

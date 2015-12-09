@@ -28,7 +28,7 @@ action to redirect to this new url:
 
         # load some routes - one should ultimately have the path "/app"
         AppBundle:
-            resource: "@AppBundle/Controller/"
+            resource: '@AppBundle/Controller/'
             type:     annotation
             prefix:   /app
 

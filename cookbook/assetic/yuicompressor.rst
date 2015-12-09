@@ -33,12 +33,12 @@ stylesheets:
 
         # app/config/config.yml
         assetic:
-            # java: "/usr/bin/java"
+            # java: '/usr/bin/java'
             filters:
                 yui_css:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
                 yui_js:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
 
     .. code-block:: xml
 

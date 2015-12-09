@@ -259,8 +259,8 @@ parameter and uses it in the service definition.
 
         # app/config/parameters.yml
         parameters:
-            # This will be parsed as string "@securepass"
-            mailer_password: "@@securepass"
+            # This will be parsed as string '@securepass'
+            mailer_password: '@@securepass'
 
 .. note::
 
@@ -398,7 +398,7 @@ configuration.
 
         # app/config/config.yml
         imports:
-            - { resource: "@AcmeHelloBundle/Resources/config/services.yml" }
+            - { resource: '@AcmeHelloBundle/Resources/config/services.yml' }
 
     .. code-block:: xml
 
@@ -475,7 +475,7 @@ invokes the service container extension inside the FrameworkBundle:
             secret:          xxxxxxxxxx
             form:            true
             csrf_protection: true
-            router:        { resource: "%kernel.root_dir%/config/routing.yml" }
+            router:        { resource: '%kernel.root_dir%/config/routing.yml' }
             # ...
 
     .. code-block:: xml
