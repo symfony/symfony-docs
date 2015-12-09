@@ -63,14 +63,14 @@ The service config for these classes would look something like this:
             newsletter_manager:
                 class: NewsletterManager
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
             greeting_card_manager:
-                class: "GreetingCardManager"
+                class: 'GreetingCardManager'
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
     .. code-block:: xml
 

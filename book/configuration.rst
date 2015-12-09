@@ -21,14 +21,14 @@ format you prefer:
             - { resource: security.yml }
 
         framework:
-            secret:          "%secret%"
-            router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+            secret:          '%secret%'
+            router:          { resource: '%kernel.root_dir%/config/routing.yml' }
             # ...
 
         # Twig Configuration
         twig:
-            debug:            "%kernel.debug%"
-            strict_variables: "%kernel.debug%"
+            debug:            '%kernel.debug%'
+            strict_variables: '%kernel.debug%'
 
         # ...
 
@@ -226,7 +226,7 @@ the configuration file for the ``dev`` environment.
             - { resource: config.yml }
 
         framework:
-            router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
+            router:   { resource: '%kernel.root_dir%/config/routing_dev.yml' }
             profiler: { only_exceptions: false }
 
         # ...

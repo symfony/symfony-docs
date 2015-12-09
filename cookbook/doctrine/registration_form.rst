@@ -160,6 +160,7 @@ Next, create the form for the ``User`` entity::
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
     class UserType extends AbstractType
     {
@@ -169,7 +170,7 @@ Next, create the form for the ``User`` entity::
                 ->add('email', EmailType::class)
                 ->add('username', TextType::class)
                 ->add('plainPassword', RepeatedType::class, array(
-                    'type' => 'password',
+                    'type' => PasswordType::class,
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
                 )
@@ -220,7 +221,7 @@ controller for displaying the registration form::
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
-            if ($form->isValid() && $form->isSubmitted()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // 3) Encode the password (you could also do this via Doctrine listener)
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());

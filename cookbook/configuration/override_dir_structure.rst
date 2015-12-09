@@ -135,7 +135,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
             # ...
             assetic:
                 # ...
-                read_from: "%kernel.root_dir%/../../public_html"
+                read_from: '%kernel.root_dir%/../../public_html'
 
         .. code-block:: xml
 

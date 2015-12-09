@@ -36,7 +36,7 @@ Now, examine the results to see this closely:
             # true, as expected
 
         my_bundle:
-            logging: "%kernel.debug%"
+            logging: '%kernel.debug%'
             # true/false (depends on 2nd parameter of AppKernel),
             # as expected, because %kernel.debug% inside configuration
             # gets evaluated before being passed to the extension

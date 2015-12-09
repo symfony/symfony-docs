@@ -109,7 +109,7 @@ session directory to ``app/sessions``:
         framework:
             session:
                 handler_id: session.handler.native_file
-                save_path: "%kernel.root_dir%/sessions"
+                save_path: '%kernel.root_dir%/sessions'
 
     .. code-block:: xml
 

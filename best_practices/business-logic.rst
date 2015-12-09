@@ -149,7 +149,7 @@ the class namespace as a parameter:
 
     services:
         app.slugger:
-            class: "%slugger.class%"
+            class: '%slugger.class%'
 
 This practice is cumbersome and completely unnecessary for your own services:
 
