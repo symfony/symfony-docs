@@ -230,7 +230,7 @@ Changing the scope of a service should be done in its definition:
             greeting_card_manager:
                 class: AppBundle\Mail\GreetingCardManager
                 scope: request
-                arguments: ["@request"]
+                arguments: ['@request']
 
     .. code-block:: xml
 
@@ -304,7 +304,7 @@ The service config for this class would look something like this:
         services:
             my_mailer:
                 class:     AppBundle\Mail\Mailer
-                arguments: ["@service_container"]
+                arguments: ['@service_container']
                 # scope: container can be omitted as it is the default
 
     .. code-block:: xml

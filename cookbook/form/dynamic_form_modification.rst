@@ -391,7 +391,7 @@ it with :ref:`dic-tags-form-type`.
         services:
             app.form.friend_message:
                 class: AppBundle\Form\Type\FriendMessageFormType
-                arguments: ["@security.context"]
+                arguments: ['@security.context']
                 tags:
                     - { name: form.type, alias: friend_message }
 

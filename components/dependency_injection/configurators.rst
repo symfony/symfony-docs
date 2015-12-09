@@ -139,20 +139,20 @@ The service config for the above classes would look something like this:
 
             email_configurator:
                 class:     EmailConfigurator
-                arguments: ["@email_formatter_manager"]
+                arguments: ['@email_formatter_manager']
                 # ...
 
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
                     - [setMailer, ["@my_mailer"]]
-                configurator: ["@email_configurator", configure]
+                configurator: ['@email_configurator', configure]
 
             greeting_card_manager:
                 class:     GreetingCardManager
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                configurator: ["@email_configurator", configure]
+                    - [setMailer, ['@my_mailer']]
+                configurator: ['@email_configurator', configure]
 
     .. code-block:: xml
 

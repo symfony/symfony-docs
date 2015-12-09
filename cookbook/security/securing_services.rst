@@ -73,7 +73,7 @@ Then in your service configuration, you can inject the service:
         services:
             newsletter_manager:
                 class:     AppBundle\Newsletter\NewsletterManager
-                arguments: ["@security.context"]
+                arguments: ['@security.context']
 
     .. code-block:: xml
 

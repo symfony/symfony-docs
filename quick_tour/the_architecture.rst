@@ -146,8 +146,8 @@ or PHP. Have a look at this sample of the default Symfony configuration:
 
     framework:
         #esi:             ~
-        #translator:      { fallbacks: ["%locale%"] }
-        secret:          "%secret%"
+        #translator:      { fallbacks: ['%locale%'] }
+        secret:          '%secret%'
         router:
             resource: '%kernel.root_dir%/config/routing.yml'
             strict_requirements: '%kernel.debug%'
@@ -191,7 +191,7 @@ the ``config_dev.yml`` file, which loads the main configuration (i.e.
         - { resource: config.yml }
 
     framework:
-        router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
+        router:   { resource: '%kernel.root_dir%/config/routing_dev.yml' }
         profiler: { only_exceptions: false }
 
     web_profiler:

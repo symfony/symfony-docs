@@ -10,7 +10,7 @@
 
             # app/config/config.yml
             imports:
-                - { resource: "%kernel.root_dir%/parameters.yml" }
+                - { resource: '%kernel.root_dir%/parameters.yml' }
 
         .. code-block:: xml
 
