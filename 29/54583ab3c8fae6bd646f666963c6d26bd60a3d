@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by richardpq at 2015-12-08T23:27:36Z
+
+After submit this PR, I noticed that this should applied to 2.3+ (I made the PR to 2.8), should I close this and submit a new PR from 2.3?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-09T20:10:02Z
+
+:+1: Perfect pull request!
+
+By the way, you don't need to worry about the right target branch. We have a nice tool that we use to merge which is able to do the rebase when merging.
+
+---------------------------------------------------------------------------
+
+by richardpq at 2015-12-09T21:03:00Z
+
+@xabbuh perfect! thanks for the tip.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-09T21:03:49Z
+
+:+1:
