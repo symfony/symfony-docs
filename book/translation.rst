@@ -384,10 +384,11 @@ For more options, see :ref:`component-translator-message-catalogs`.
             framework:
                 translator:
                     paths:
-                        - "%kernel.root_dir%/../translations"
+                        - '%kernel.root_dir%/../translations'
 
         .. code-block:: xml
 
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -407,11 +408,12 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: php
 
+            // app/config/config.php
             $container->loadFromExtension('framework', array(
                 'translator' => array(
                     'paths' => array(
-                        '%kernel.root_dir%/../translations'
-                    )
+                        '%kernel.root_dir%/../translations',
+                    ),
                 ),
             ));
 
