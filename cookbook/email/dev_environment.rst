@@ -187,8 +187,8 @@ by adding the ``delivery_whitelist`` option:
         ));
 
 In the above example all email messages will be redirected to ``dev@example.com``,
-except messages sent to the ``admin@mydomain.com`` address or to any email
-address belonging to the domain ``specialdomain.com``, which will be delivered as normal.
+and messages sent to the ``admin@mydomain.com`` address or to any email
+address belonging to the domain ``specialdomain.com`` will be delivered as normal.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------
