@@ -10,12 +10,8 @@ Symfony manages its releases through a *time-based model* and follows the
 * A new Symfony minor version (e.g. 2.8, 3.2, 4.1) comes out every *six months*:
   one in *May* and one in *November*;
 * A new Symfony major version (e.g., 3.0, 4.0) comes out every *two years* and
-  it's released at the same time of the last minor version of the previous branch.
-
-.. note::
-
-    This release process has been adopted as of Symfony 2.2, and all the "rules"
-    explained in this document must be strictly followed as of Symfony 2.4.
+  it's released at the same time of the last minor version of the previous major
+  version.
 
 .. _contributing-release-development:
 
@@ -80,7 +76,7 @@ fixes, and for a *four year* period for security issue fixes.
     also be bought from `SensioLabs`_.
 
 In Symfony 2.x branch, the LTS versions are 2.3, 2.7 and 2.8. Starting from 3.x
-branch, only the last minor version of each branch is considered LTS (e.g 3.4,
+branch, only the last minor version of each branch is considered LTS (e.g. 3.4,
 4.4, 5.4, etc.)
 
 Schedule
