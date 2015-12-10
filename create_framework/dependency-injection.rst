@@ -157,6 +157,7 @@ The front controller is now only about wiring everything together::
 
     $request = Request::createFromGlobals();
 
+    $sc->get('context')->fromRequest($request);
     $response = $sc->get('framework')->handle($request);
 
     $response->send();
