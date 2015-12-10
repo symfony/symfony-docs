@@ -24,7 +24,7 @@ is divided into two phases:
 * **Development**: *Four months* to add new features and to enhance existing
   ones;
 
-* **Stabilisation**: *Two months* to fix bugs, prepare the release, and wait
+* **Stabilization**: *Two months* to fix bugs, prepare the release, and wait
   for the whole Symfony ecosystem (third-party libraries, bundles, and
   projects using Symfony) to catch up.
 
