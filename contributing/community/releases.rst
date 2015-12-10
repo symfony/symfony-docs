@@ -9,9 +9,8 @@ Symfony manages its releases through a *time-based model* and follows the
 
 * A new Symfony minor version (e.g. 2.8, 3.2, 4.1) comes out every *six months*:
   one in *May* and one in *November*;
-* A new Symfony major version (e.g., 3.0.0, 4.0.0) comes out every *two years*
-  and it's released at the same time of the last minor version of the previous
-  branch.
+* A new Symfony major version (e.g., 3.0, 4.0) comes out every *two years* and
+  it's released at the same time of the last minor version of the previous branch.
 
 .. note::
 
@@ -93,7 +92,7 @@ Below is the schedule for the first few versions that use this release model:
    :align: center
 
 * **Yellow** represents the Development phase
-* **Blue** represents the Stabilisation phase
+* **Blue** represents the Stabilization phase
 * **Green** represents the Maintenance period
 
 This results in very predictable dates and maintenance periods:
