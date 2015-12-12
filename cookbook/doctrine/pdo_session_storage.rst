@@ -34,7 +34,7 @@ To use it, you just need to change some parameters in the main configuration fil
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 public:    false
                 arguments:
-                    - "mysql:dbname=mydatabase"
+                    - 'mysql:dbname=mydatabase'
                     - { db_username: myuser, db_password: mypassword }
 
     .. code-block:: xml
@@ -92,7 +92,7 @@ a second array argument to ``PdoSessionHandler``:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 public:    false
                 arguments:
-                    - "mysql:dbname=mydatabase"
+                    - 'mysql:dbname=mydatabase'
                     - { db_table: sessions, db_username: myuser, db_password: mypassword }
 
     .. code-block:: xml
@@ -164,8 +164,8 @@ of your project's data, you can use the connection settings from the
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 public:    false
                 arguments:
-                    - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                    - { db_username: %database_user%, db_password: %database_password% }
+                    - 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%'
+                    - { db_username: '%database_user%', db_password: '%database_password%' }
 
     .. code-block:: xml
 

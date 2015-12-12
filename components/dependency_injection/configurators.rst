@@ -114,9 +114,9 @@ to create a configurator class to configure these instances::
         // ...
     }
 
-The ``EmailConfigurator``'s job is to inject the enabled filters into ``NewsletterManager``
+The ``EmailConfigurator``'s job is to inject the enabled formatters into ``NewsletterManager``
 and ``GreetingCardManager`` because they are not aware of where the enabled
-filters come from. In the other hand, the ``EmailFormatterManager`` holds
+formatters come from. On the other hand, the ``EmailFormatterManager`` holds
 the knowledge about the enabled formatters and how to load them, keeping
 the single responsibility principle.
 
@@ -139,20 +139,20 @@ The service config for the above classes would look something like this:
 
             email_configurator:
                 class:     EmailConfigurator
-                arguments: ["@email_formatter_manager"]
+                arguments: ['@email_formatter_manager']
                 # ...
 
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
                     - [setMailer, ["@my_mailer"]]
-                configurator: ["@email_configurator", configure]
+                configurator: ['@email_configurator', configure]
 
             greeting_card_manager:
                 class:     GreetingCardManager
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                configurator: ["@email_configurator", configure]
+                    - [setMailer, ['@my_mailer']]
+                configurator: ['@email_configurator', configure]
 
     .. code-block:: xml
 

@@ -216,10 +216,10 @@ YAML uses indentation with one or more spaces to describe nested collections:
 
 .. code-block:: yaml
 
-    "symfony 1.0":
+    'symfony 1.0':
       PHP:    5.0
       Propel: 1.2
-    "symfony 1.2":
+    'symfony 1.2':
       PHP:    5.2
       Propel: 1.3
 
@@ -279,8 +279,8 @@ You can mix and match styles to achieve a better readability:
 
 .. code-block:: yaml
 
-    "symfony 1.0": { PHP: 5.0, Propel: 1.2 }
-    "symfony 1.2": { PHP: 5.2, Propel: 1.3 }
+    'symfony 1.0': { PHP: 5.0, Propel: 1.2 }
+    'symfony 1.2': { PHP: 5.2, Propel: 1.3 }
 
 Comments
 --------

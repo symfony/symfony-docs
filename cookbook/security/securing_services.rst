@@ -74,8 +74,8 @@ Then in your service configuration, you can inject the service:
         # app/config/services.yml
         services:
             newsletter_manager:
-                class:     "AppBundle\Newsletter\NewsletterManager"
-                arguments: ["@security.authorization_checker"]
+                class:     AppBundle\Newsletter\NewsletterManager
+                arguments: ['@security.authorization_checker']
 
     .. code-block:: xml
 

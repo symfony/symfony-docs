@@ -1601,7 +1601,7 @@ Full Default Configuration
                 gc_divisor:           ~
                 gc_probability:       ~
                 gc_maxlifetime:       ~
-                save_path:            "%kernel.cache_dir%/sessions"
+                save_path:            '%kernel.cache_dir%/sessions'
 
             # serializer configuration
             serializer:
@@ -1610,7 +1610,7 @@ Full Default Configuration
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  "%%s?%%s"
+                assets_version_format:  '%%s?%%s'
                 hinclude_default_template:  ~
                 form:
                     resources:
@@ -1631,7 +1631,7 @@ Full Default Configuration
                     # Prototype
                     name:
                         version:              ~
-                        version_format:       "%%s?%%s"
+                        version_format:       '%%s?%%s'
                         base_urls:
                             http:                 []
                             ssl:                  []
@@ -1652,8 +1652,8 @@ Full Default Configuration
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       "%kernel.cache_dir%/annotations"
-                debug:                "%kernel.debug%"
+                file_cache_dir:       '%kernel.cache_dir%/annotations'
+                debug:                '%kernel.debug%'
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html

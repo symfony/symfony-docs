@@ -242,7 +242,7 @@ option of your handler to ``rotating_file``:
             handlers:
                 main:
                     type:  rotating_file
-                    path:  "%kernel.logs_dir%/%kernel.environment%.log"
+                    path:  '%kernel.logs_dir%/%kernel.environment%.log'
                     level: debug
                     # max number of log files to keep
                     # defaults to zero, which means infinite files

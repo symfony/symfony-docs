@@ -334,7 +334,7 @@ The translator service is accessible in PHP templates through the
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-Symfony looks for message files (i.e. translations) in the following locations:
+Symfony looks for message files (i.e. translations) in the following default locations:
 
 * the ``app/Resources/translations`` directory;
 
@@ -371,6 +371,51 @@ provides many loaders, including:
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use ``xlf`` for translations.
 For more options, see :ref:`component-translator-message-catalogs`.
+
+.. note::
+
+    You can add other directories with the ``paths`` option in the configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                translator:
+                    paths:
+                        - '%kernel.root_dir%/../translations'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
+
+                <framework:config>
+                    <framework:translator>
+                        <framework:path>%kernel.root_dir%/../translations</framework:path>
+                    </framework:translator>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'translator' => array(
+                    'paths' => array(
+                        '%kernel.root_dir%/../translations',
+                    ),
+                ),
+            ));
 
 .. note::
 

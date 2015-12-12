@@ -13,6 +13,149 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+November, 2015
+--------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#5907 <https://github.com/symfony/symfony-docs/pull/5907>`_ Updating some places to use the new CustomUserMessageAuthenticationException (weaverryan)
+* `#5922 <https://github.com/symfony/symfony-docs/pull/5922>`_ Added minimal cookbook article about the shared flag (WouterJ)
+* `#5908 <https://github.com/symfony/symfony-docs/pull/5908>`_ Voter update (weaverryan)
+* `#5909 <https://github.com/symfony/symfony-docs/pull/5909>`_ More 2.8 form updates (weaverryan)
+* `#5927 <https://github.com/symfony/symfony-docs/pull/5927>`_ Use path() and url() PHP templating helpers (WouterJ)
+* `#5926 <https://github.com/symfony/symfony-docs/pull/5926>`_ Update voter section of best practices (WouterJ)
+* `#5921 <https://github.com/symfony/symfony-docs/pull/5921>`_ [2.8] Document some Security changes (WouterJ)
+* `#5834 <https://github.com/symfony/symfony-docs/pull/5834>`_ Updated form aliases to FQCNs for forms in book and component (hiddewie)
+* `#5265 <https://github.com/symfony/symfony-docs/pull/5265>`_ Documentation for the new Guard authentication style (weaverryan)
+* `#5899 <https://github.com/symfony/symfony-docs/pull/5899>`_ Adding the MicroKernel article (weaverryan)
+* `#5893 <https://github.com/symfony/symfony-docs/pull/5893>`_ Added a note about the use of _format query parameter (javiereguiluz)
+* `#5891 <https://github.com/symfony/symfony-docs/pull/5891>`_ Removed the comments about the is_granted() issues in non-secure pages (javiereguiluz)
+* `#5876 <https://github.com/symfony/symfony-docs/pull/5876>`_ Symfony 2.7 Form choice option update (aivus, althaus, weaverryan)
+* `#5861 <https://github.com/symfony/symfony-docs/pull/5861>`_ Updated Table Console helper for spanning cols and rows (hiddewie)
+* `#5835 <https://github.com/symfony/symfony-docs/pull/5835>`_ Updated CssSelector code example to use the new Converter (hiddewie)
+* `#5816 <https://github.com/symfony/symfony-docs/pull/5816>`_ Merge branches (nicolas-grekas, snoek09, WouterJ, xabbuh)
+* `#5804 <https://github.com/symfony/symfony-docs/pull/5804>`_ Added documentation for dnsMessage option (BenjaminPaap)
+* `#5774 <https://github.com/symfony/symfony-docs/pull/5774>`_ Show a more real example in data collectors doc (WouterJ)
+* `#5735 <https://github.com/symfony/symfony-docs/pull/5735>`_ [Contributing][Code] do not distinguish regular classes and API classes (xabbuh)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5903 <https://github.com/symfony/symfony-docs/pull/5903>`_ Update front controller (nurolopher)
+* `#5768 <https://github.com/symfony/symfony-docs/pull/5768>`_ Removed "http_basic" config from the login form cookbook (javiereguiluz)
+* `#5863 <https://github.com/symfony/symfony-docs/pull/5863>`_ Correct useAttributeAsKey usage (danrot)
+* `#5833 <https://github.com/symfony/symfony-docs/pull/5833>`_ Fixed whitelist delivery of swiftmailer (hiddewie)
+* `#5815 <https://github.com/symfony/symfony-docs/pull/5815>`_ fix constraint names (xabbuh)
+* `#5793 <https://github.com/symfony/symfony-docs/pull/5793>`_ Callback Validation Constraint: Remove reference to deprecated option (ceithir)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#5931 <https://github.com/symfony/symfony-docs/pull/5931>`_ [#5875] Fixed link description, list of common media types (Douglas Naphas)
+* `#5923 <https://github.com/symfony/symfony-docs/pull/5923>`_ Remove information about request service deps of core services (WouterJ)
+* `#5911 <https://github.com/symfony/symfony-docs/pull/5911>`_ Wrap all strings containing @ in quotes in Yaml (WouterJ)
+* `#5889 <https://github.com/symfony/symfony-docs/pull/5889>`_ Always use "main" as the default firewall name (to match Symfony Standard Edition) (javiereguiluz)
+* `#5888 <https://github.com/symfony/symfony-docs/pull/5888>`_ Removed the use of ContainerAware class (javiereguiluz)
+* `#5625 <https://github.com/symfony/symfony-docs/pull/5625>`_ Tell about SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT (nicolas-grekas)
+* `#5896 <https://github.com/symfony/symfony-docs/pull/5896>`_ [Book][Templating] Update absolute URL asset to match 2.7 (lemoinem)
+* `#5828 <https://github.com/symfony/symfony-docs/pull/5828>`_ move the getEntityManager, only get it if needed (OskarStark)
+* `#5900 <https://github.com/symfony/symfony-docs/pull/5900>`_ Added new security advisories to the docs (fabpot)
+* `#5897 <https://github.com/symfony/symfony-docs/pull/5897>`_ Fixed some wrong line number references in doctrine.rst (DigNative)
+* `#5895 <https://github.com/symfony/symfony-docs/pull/5895>`_ Update debug_formatter.rst (strannik-06)
+* `#5883 <https://github.com/symfony/symfony-docs/pull/5883>`_ Book: Update Service Container Documentation (zanderbaldwin)
+* `#5868 <https://github.com/symfony/symfony-docs/pull/5868>`_ [2.8] Make screenshots with the new profiler/web dev toolbar design (WouterJ)
+* `#5862 <https://github.com/symfony/symfony-docs/pull/5862>`_ Fixes done automatically by the docbot (WouterJ)
+* `#5851 <https://github.com/symfony/symfony-docs/pull/5851>`_ updated sentence (OskarStark)
+* `#5870 <https://github.com/symfony/symfony-docs/pull/5870>`_ Update securing_services.rst (aruku)
+* `#5859 <https://github.com/symfony/symfony-docs/pull/5859>`_ Use Twig highlighter instead of Jinja (WouterJ)
+* `#5866 <https://github.com/symfony/symfony-docs/pull/5866>`_ Fixed little typo with a twig example (artf)
+* `#5849 <https://github.com/symfony/symfony-docs/pull/5849>`_ Clarified ambiguous wording (ThomasLandauer)
+* `#5826 <https://github.com/symfony/symfony-docs/pull/5826>`_ "setup" is a noun or adjective, "set up" is the verb (carlos-granados)
+* `#5816 <https://github.com/symfony/symfony-docs/pull/5816>`_ Merge branches (nicolas-grekas, snoek09, WouterJ, xabbuh)
+* `#5813 <https://github.com/symfony/symfony-docs/pull/5813>`_ use constants to choose generated URL type (xabbuh)
+* `#5808 <https://github.com/symfony/symfony-docs/pull/5808>`_ Reworded the explanation about flash messages (javiereguiluz)
+* `#5809 <https://github.com/symfony/symfony-docs/pull/5809>`_ Minor fix (javiereguiluz)
+* `#5807 <https://github.com/symfony/symfony-docs/pull/5807>`_ Minor rewordings for the "deprecated" service option (javiereguiluz)
+* `#5805 <https://github.com/symfony/symfony-docs/pull/5805>`_ Mentioned the BETA and RC support for the Symfony Installer (javiereguiluz)
+* `#5781 <https://github.com/symfony/symfony-docs/pull/5781>`_ Added annotations example to Linking to Pages examples (carlos-granados)
+* `#5780 <https://github.com/symfony/symfony-docs/pull/5780>`_ Clarify when we are talking about PHP and Twig (carlos-granados)
+* `#5767 <https://github.com/symfony/symfony-docs/pull/5767>`_ [Cookbook][Security] clarify description of the getPosition() method (xabbuh)
+* `#5731 <https://github.com/symfony/symfony-docs/pull/5731>`_ [Cookbook][Security] update versionadded directive to match the content (xabbuh)
+* `#5681 <https://github.com/symfony/symfony-docs/pull/5681>`_ Update storage.rst (jls2933)
+* `#5363 <https://github.com/symfony/symfony-docs/pull/5363>`_ Added description on how to enable the security:check command through… (bizmate)
+* `#5841 <https://github.com/symfony/symfony-docs/pull/5841>`_ [Cookbook][Psr7] fix zend-diactoros Packagist link (xabbuh)
+* `#5850 <https://github.com/symfony/symfony-docs/pull/5850>`_ Fixed typo (tobiassjosten)
+* `#5852 <https://github.com/symfony/symfony-docs/pull/5852>`_ Fix doc for 2.6+, `server:start` replace `...:run` (Kevinrob)
+* `#5837 <https://github.com/symfony/symfony-docs/pull/5837>`_ Corrected link to ConEmu (dritter)
+
+
+October, 2015
+-------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#5345 <https://github.com/symfony/symfony-docs/pull/5345>`_ Adding information about empty files sent using BinaryFileResponse. (kherge)
+* `#5214 <https://github.com/symfony/symfony-docs/pull/5214>`_ [WIP] Reworking most of the registration form: (weaverryan)
+* `#5051 <https://github.com/symfony/symfony-docs/pull/5051>`_ Rename CollectionType entry options (WouterJ)
+* `#5677 <https://github.com/symfony/symfony-docs/pull/5677>`_ replacing deprecated usage of True, False, Null validators in docs (Tim Stamp)
+* `#5314 <https://github.com/symfony/symfony-docs/pull/5314>`_ Documented the useAttributeAsKey() method (javiereguiluz)
+* `#5377 <https://github.com/symfony/symfony-docs/pull/5377>`_ Added a cookbook section about event subscribers (beni0888, javiereguiluz)
+* `#5623 <https://github.com/symfony/symfony-docs/pull/5623>`_ [Validator] added BIC validator (mvhirsch)
+* `#5689 <https://github.com/symfony/symfony-docs/pull/5689>`_ [DI] Add some documentation for the deprecation feature (Taluu)
+* `#5592 <https://github.com/symfony/symfony-docs/pull/5592>`_ Updated the article about data collectors (javiereguiluz)
+* `#5745 <https://github.com/symfony/symfony-docs/pull/5745>`_ [Translation] Ability to format a message catalogue without actually writing it. (aitboudad)
+* `#5702 <https://github.com/symfony/symfony-docs/pull/5702>`_ Added a reference to the Foundation form theme (totophe)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5795 <https://github.com/symfony/symfony-docs/pull/5795>`_ Fix typo in UserType class (Dorozhko-Anton)
+* `#5758 <https://github.com/symfony/symfony-docs/pull/5758>`_ symlink issues with php-fpm (kendrick-k)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#5843 <https://github.com/symfony/symfony-docs/pull/5843>`_ Fixed the YAML syntax for service references (javiereguiluz)
+* `#5797 <https://github.com/symfony/symfony-docs/pull/5797>`_ [Process] use ProcessFailedException instead of RuntimeException. (aitboudad)
+* `#5812 <https://github.com/symfony/symfony-docs/pull/5812>`_ Remove duplicate and confusing info about testing error pages (carlos-granados)
+* `#5821 <https://github.com/symfony/symfony-docs/pull/5821>`_ Minor fixes in the HttpFoundation introduction article (javiereguiluz)
+* `#5822 <https://github.com/symfony/symfony-docs/pull/5822>`_ Fixed a syntax issue (javiereguiluz)
+* `#5817 <https://github.com/symfony/symfony-docs/pull/5817>`_ fix version for `entry_options` and `entry_type` (craue)
+* `#5796 <https://github.com/symfony/symfony-docs/pull/5796>`_ Fix for #5783 (BenjaminPaap)
+* `#5810 <https://github.com/symfony/symfony-docs/pull/5810>`_ Fixed a typo (javiereguiluz)
+* `#5784 <https://github.com/symfony/symfony-docs/pull/5784>`_ Add fe80::1 (j-d)
+* `#5799 <https://github.com/symfony/symfony-docs/pull/5799>`_ make file path consitent with other articles (OskarStark)
+* `#5794 <https://github.com/symfony/symfony-docs/pull/5794>`_ Minor tweaks for the registration form article (javiereguiluz)
+* `#5801 <https://github.com/symfony/symfony-docs/pull/5801>`_ namespace fix (OskarStark)
+* `#5792 <https://github.com/symfony/symfony-docs/pull/5792>`_ [Cookbook][EventDispatcher] fix build (xabbuh)
+* `#5787 <https://github.com/symfony/symfony-docs/pull/5787>`_ Definition Tweaks - see #5314 (weaverryan)
+* `#5777 <https://github.com/symfony/symfony-docs/pull/5777>`_ Update links (thewilkybarkid)
+* `#5775 <https://github.com/symfony/symfony-docs/pull/5775>`_ Misspelling (carlos-granados)
+* `#5664 <https://github.com/symfony/symfony-docs/pull/5664>`_ Info about implicit session start (ThomasLandauer)
+* `#5744 <https://github.com/symfony/symfony-docs/pull/5744>`_ translations have been removed from symfony.com (xabbuh)
+* `#5771 <https://github.com/symfony/symfony-docs/pull/5771>`_ Remove not existing response constant (amansilla)
+* `#5761 <https://github.com/symfony/symfony-docs/pull/5761>`_ [DX] [Security] Renamed key to secret (SongoQ)
+* `#5766 <https://github.com/symfony/symfony-docs/pull/5766>`_ Fixed two typos (ThomasLandauer)
+* `#5733 <https://github.com/symfony/symfony-docs/pull/5733>`_ [Components][OptionsResolver] adding type hint to normalizer callback (xabbuh)
+* `#5561 <https://github.com/symfony/symfony-docs/pull/5561>`_ Change default value of cookie_httponly (jderusse)
+* `#5678 <https://github.com/symfony/symfony-docs/pull/5678>`_ Update HttpFoundation note after recent changes in routing component (senkal)
+* `#5643 <https://github.com/symfony/symfony-docs/pull/5643>`_ Document how to customize the prototype (daFish, WouterJ)
+* `#5584 <https://github.com/symfony/symfony-docs/pull/5584>`_ Add DebugBundle config reference (WouterJ)
+* `#5753 <https://github.com/symfony/symfony-docs/pull/5753>`_ configureOptions(...) : protected => public (lucascherifi)
+* `#5750 <https://github.com/symfony/symfony-docs/pull/5750>`_ fix YAML syntax highlighting (xabbuh)
+* `#5749 <https://github.com/symfony/symfony-docs/pull/5749>`_ complete Swiftmailer XML examples (xabbuh)
+* `#5730 <https://github.com/symfony/symfony-docs/pull/5730>`_ Remove documentation of deprecated console shell (Tobion)
+* `#5726 <https://github.com/symfony/symfony-docs/pull/5726>`_ Document the support of Mintty for colors (stof)
+* `#5708 <https://github.com/symfony/symfony-docs/pull/5708>`_ Added caution to call createView after handleRequest (WouterJ)
+* `#5640 <https://github.com/symfony/symfony-docs/pull/5640>`_ Update controller.rst clarifying automatic deletion for flash messages (miguelvilata)
+* `#5578 <https://github.com/symfony/symfony-docs/pull/5578>`_ Add supported branches in platform.sh section (WouterJ)
+* `#5468 <https://github.com/symfony/symfony-docs/pull/5468>`_ [Cookbook][Templating] Add note about cache warming namespaced twig templates (kbond)
+* `#5684 <https://github.com/symfony/symfony-docs/pull/5684>`_ Fix delivery_whitelist regex (gonzalovilaseca)
+* `#5742 <https://github.com/symfony/symfony-docs/pull/5742>`_ incorrect: severity is an array key here and not a constant (lbayerl)
+
+
 September, 2015
 ---------------
 
