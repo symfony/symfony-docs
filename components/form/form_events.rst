@@ -191,10 +191,9 @@ View data        Same as in ``FormEvents::POST_SET_DATA``
 
 .. sidebar:: ``FormEvents::SUBMIT`` in the Form component
 
-    The ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
-    subscribes to the ``FormEvents::SUBMIT`` event in order to remove the
-    fields that need to be removed whenever manipulating a collection of forms
-    for which ``allow_delete`` has been enabled.
+    The ``Symfony\Component\Form\Extension\Core\EventListener\FixUrlProtocolListener``
+    subscribes to the ``FormEvents::SUBMIT`` event in order to prepend a default
+    protocol to URL field data that was submitted without a protocol.
 
 C) The ``FormEvents::POST_SUBMIT`` Event
 ........................................
