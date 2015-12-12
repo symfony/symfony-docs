@@ -206,7 +206,7 @@ argument:
         services:
             app.hello_controller:
                 class:     AppBundle\Controller\HelloController
-                arguments: ["@templating"]
+                arguments: ['@templating']
 
     .. code-block:: xml
 

@@ -408,13 +408,13 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             wsse.security.authentication.provider:
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
                 arguments:
-                    - "" # User Provider
-                    - "%kernel.cache_dir%/security/nonces"
+                    - '' # User Provider
+                    - '%kernel.cache_dir%/security/nonces'
                 public: false
 
             wsse.security.authentication.listener:
                 class: AppBundle\Security\Firewall\WsseListener
-                arguments: ["@security.token_storage", "@security.authentication.manager"]
+                arguments: ['@security.token_storage', '@security.authentication.manager']
                 public: false
 
     .. code-block:: xml

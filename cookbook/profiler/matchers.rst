@@ -118,7 +118,7 @@ won't use it directly:
         services:
             app.super_admin_matcher:
                 class: AppBundle\Profiler\SuperAdminMatcher
-                arguments: ["@security.authorization_checker"]
+                arguments: ['@security.authorization_checker']
                 public: false
 
     .. code-block:: xml

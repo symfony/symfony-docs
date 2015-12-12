@@ -63,9 +63,9 @@ Full Default Configuration
                         # the version of your database engine
                         server_version:       ~
 
-                        # when true, queries are logged to a "doctrine" monolog channel
-                        logging:              "%kernel.debug%"
-                        profiling:            "%kernel.debug%"
+                        # when true, queries are logged to a 'doctrine' monolog channel
+                        logging:              '%kernel.debug%'
+                        profiling:            '%kernel.debug%'
                         driver_class:         ~
                         wrapper_class:        ~
                         options:
@@ -114,7 +114,7 @@ Full Default Configuration
             orm:
                 default_entity_manager:  ~
                 auto_generate_proxy_classes:  false
-                proxy_dir:            "%kernel.cache_dir%/doctrine/orm/Proxies"
+                proxy_dir:            '%kernel.cache_dir%/doctrine/orm/Proxies'
                 proxy_namespace:      Proxies
                 # search for the "ResolveTargetEntityListener" class for a cookbook about this
                 resolve_target_entities: []
@@ -392,13 +392,13 @@ The following block shows all possible configuration keys:
                 # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 "%kernel.data_dir%/data.sqlite"
+                path:                 '%kernel.data_dir%/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
                 wrapper_class:        MyDoctrineDbalConnectionWrapper
                 charset:              UTF8
-                logging:              "%kernel.debug%"
+                logging:              '%kernel.debug%'
                 platform_service:     MyOwnDatabasePlatformService
                 server_version:       5.6
                 mapping_types:

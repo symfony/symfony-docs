@@ -136,7 +136,7 @@ argument is the ``ClientConfiguration`` object:
             my_mailer:
                 class: AppBundle\Mail\Mailer
                 scope: client
-                arguments: ["@client_configuration"]
+                arguments: ['@client_configuration']
 
     .. code-block:: xml
 
@@ -210,7 +210,7 @@ The service configuration for this class would look something like this:
         services:
             my_mailer:
                 class:     AppBundle\Mail\Mailer
-                arguments: ["@service_container"]
+                arguments: ['@service_container']
                 # scope: container can be omitted as it is the default
 
     .. code-block:: xml

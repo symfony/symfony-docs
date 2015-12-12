@@ -39,7 +39,7 @@ Full Default Configuration
 
                 # Default options and values for some "my_custom_handler"
                 # Note: many of these options are specific to the "type".
-                # For example, the "service" type doesn't use any options
+                # For example, the 'service' type doesn't use any options
                 # except id and channels
                 my_custom_handler:
                     type:                 ~ # Required
@@ -47,7 +47,7 @@ Full Default Configuration
                     priority:             0
                     level:                DEBUG
                     bubble:               true
-                    path:                 "%kernel.logs_dir%/%kernel.environment%.log"
+                    path:                 '%kernel.logs_dir%/%kernel.environment%.log'
                     ident:                false
                     facility:             user
                     max_files:            0

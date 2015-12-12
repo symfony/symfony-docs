@@ -11,7 +11,7 @@ following ``translator`` configuration option and set your application locale:
     # app/config/config.yml
     framework:
         # ...
-        translator: { fallbacks: ["%locale%"] }
+        translator: { fallbacks: ['%locale%'] }
 
     # app/config/parameters.yml
     parameters:
