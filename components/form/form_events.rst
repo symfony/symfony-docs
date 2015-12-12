@@ -193,7 +193,7 @@ View data        Same as in ``FormEvents::POST_SET_DATA``
 
     The ``Symfony\Component\Form\Extension\Core\EventListener\FixUrlProtocolListener``
     subscribes to the ``FormEvents::SUBMIT`` event in order to prepend a default
-    protocol to URL field data that was submitted without a protocol.
+    protocol to URL fields that were submitted without a protocol.
 
 C) The ``FormEvents::POST_SUBMIT`` Event
 ........................................
