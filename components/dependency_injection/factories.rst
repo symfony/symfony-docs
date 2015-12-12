@@ -34,7 +34,7 @@ object::
 
 To make the ``NewsletterManager`` object available as a service, you can
 configure the service container to use the
-``NewsletterFactory::createNewsletterManager()`` factory method:
+``NewsletterManagerFactory::createNewsletterManager()`` factory method:
 
 .. configuration-block::
 
