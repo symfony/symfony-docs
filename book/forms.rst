@@ -1186,7 +1186,7 @@ type. Create a constructor to your form type to receive the service::
     {
         private $myService;
 
-        public function __construct(MyService $mySevice)
+        public function __construct(MyService $myService)
         {
             $this->myService = $myService;
         }
