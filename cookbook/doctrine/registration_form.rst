@@ -199,7 +199,7 @@ Handling the Form Submission
 Next, you need a controller to handle the form. Start by creating a simple
 controller for displaying the registration form::
 
-    // src/AppBundle/Controller/AccountController.php
+    // src/AppBundle/Controller/RegistrationController.php
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
