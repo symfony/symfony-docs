@@ -19,6 +19,9 @@ November, 2015
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#5917 <https://github.com/symfony/symfony-docs/pull/5917>`_ [3.0][Cookbook] Use the 3.0 directory structure (WouterJ)
+* `#5916 <https://github.com/symfony/symfony-docs/pull/5916>`_ [3.0][Best Practices][Quick Tour] Use the 3.0 directory structure (WouterJ)
+* `#5913 <https://github.com/symfony/symfony-docs/pull/5913>`_ [3.0][Book] Use the 3.0 directory structure (WouterJ)
 * `#5907 <https://github.com/symfony/symfony-docs/pull/5907>`_ Updating some places to use the new CustomUserMessageAuthenticationException (weaverryan)
 * `#5922 <https://github.com/symfony/symfony-docs/pull/5922>`_ Added minimal cookbook article about the shared flag (WouterJ)
 * `#5908 <https://github.com/symfony/symfony-docs/pull/5908>`_ Voter update (weaverryan)
