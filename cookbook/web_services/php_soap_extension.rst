@@ -63,7 +63,7 @@ a ``HelloService`` object properly:
         services:
             hello_service:
                 class: Acme\SoapBundle\Services\HelloService
-                arguments: ["@mailer"]
+                arguments: ['@mailer']
 
     .. code-block:: xml
 

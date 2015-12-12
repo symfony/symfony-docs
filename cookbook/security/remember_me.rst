@@ -22,7 +22,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 main:
                     # ...
                     remember_me:
-                        secret:   "%secret%"
+                        secret:   '%secret%'
                         lifetime: 604800 # 1 week in seconds
                         path:     /
                         # by default, the feature is enabled by checking a

@@ -312,7 +312,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
             app.form.type.gender:
                 class: AppBundle\Form\Type\GenderType
                 arguments:
-                    - "%genders%"
+                    - '%genders%'
                 tags:
                     - { name: form.type }
 

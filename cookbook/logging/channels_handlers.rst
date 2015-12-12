@@ -39,13 +39,13 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
                     # log all messages (since debug is the lowest level)
                     level:    debug
                     type:     stream
-                    path:     "%kernel.logs_dir%/security.log"
+                    path:     '%kernel.logs_dir%/security.log'
                     channels: [security]
 
                 # an example of *not* logging security channel messages for this handler
                 main:
                     # ...
-                    # channels: ["!security"]
+                    # channels: ['!security']
 
     .. code-block:: xml
 
@@ -134,7 +134,7 @@ need to tag your services:
 
         # app/config/config.yml
         monolog:
-            channels: ["foo", "bar"]
+            channels: ['foo', 'bar']
 
     .. code-block:: xml
 

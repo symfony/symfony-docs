@@ -431,7 +431,7 @@ it's recognized as a custom field type:
         services:
             app.type.issue_selector:
                 class: AppBundle\Form\IssueSelectorType
-                arguments: ["@doctrine.orm.entity_manager"]
+                arguments: ['@doctrine.orm.entity_manager']
                 tags:
                     - { name: form.type }
 
