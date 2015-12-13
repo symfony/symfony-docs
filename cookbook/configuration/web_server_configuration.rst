@@ -297,6 +297,12 @@ The **minimum configuration** to get your application running under Nginx is:
             # Remove the internal directive to allow URIs like this
             internal;
         }
+        
+        # return 404 for all other php files not matching the front controller
+        # this prevents access to other php files you don't want to be accessible.
+        location ~ \.php$ {
+          return 404;
+        }
 
         error_log /var/log/nginx/project_error.log;
         access_log /var/log/nginx/project_access.log;
@@ -310,10 +316,10 @@ The **minimum configuration** to get your application running under Nginx is:
 .. tip::
 
     This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
-    the web directory. All other files will be served as text. You **must**
-    also make sure that if you *do* deploy ``app_dev.php`` or ``config.php``
-    that these files are secured and not available to any outside user (the
-    IP address checking code at the top of each file does this by default).
+    the web directory. All other files will be denied. You **must** also make 
+    sure that if you *do* deploy ``app_dev.php`` or ``config.php`` that these 
+    files are secured and not available to any outside user (the IP address 
+    checking code at the top of each file does this by default).
 
     If you have other PHP files in your web directory that need to be executed,
     be sure to include them in the ``location`` block above.
