@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by rvanlaak at 2015-12-10T15:52:47Z
+
+Shouldn't the development phase in the image always start at the release date of the previous milestone? The 3.1 version does not seem to match that. Or won't be there any development in the next couple of months? :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-10T16:02:08Z
+
+@rvanlaak you are right! The image contained lots of errors. Hopefully all are gone in 99070c9. Thanks for this nice catch and for warning me about this.
