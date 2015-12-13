@@ -75,7 +75,7 @@ fixes, and for a *four year* period for security issue fixes.
     Paid support after the three year support provided by the community can
     also be bought from `SensioLabs`_.
 
-In Symfony 2.x branch, the LTS versions are 2.3, 2.7 and 2.8. Starting from 3.x
+In the Symfony 2.x branch, the LTS versions are 2.3, 2.7 and 2.8. Starting from the 3.x
 branch, only the last minor version of each branch is considered LTS (e.g. 3.4,
 4.4, 5.4, etc.)
 
