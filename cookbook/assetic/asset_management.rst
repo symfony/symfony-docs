@@ -4,6 +4,91 @@
 How to Use Assetic for Asset Management
 =======================================
 
+Installing and Enabling Assetic
+-------------------------------
+
+Starting from Symfony 2.8, Assetic is no longer included by default in the
+Symfony Standard Edition. Before using any of its features, install the
+AsseticBundle executing this console command in your project:
+
+    .. code-block:: bash
+
+        $ composer require symfony/assetic-bundle
+
+Then, enable the bundle in the ``AppKernel`` file of your Symfony application::
+
+    // app/AppKernel.php
+
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+                new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            );
+
+            // ...
+        }
+    }
+
+Finally, add the following minimal configuration to enable Assetic support in
+your application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            debug:          "%kernel.debug%"
+            use_controller: false
+            filters:
+                cssrewrite: ~
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <assetic:config debug="%kernel.debug%" use-controller="%kernel.debug%">
+                <assetic:filters cssrewrite="null" />
+            </assetic:config>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        $container->loadFromExtension('assetic', array(
+            'debug' => '%kernel.debug%',
+            'use_controller' => '%kernel.debug%',
+            'filters' => array(
+                'cssrewrite' => null,
+            ),
+            // ...
+        ));
+
+        // ...
+
+Introducing Assetic
+-------------------
+
 Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
 :ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
