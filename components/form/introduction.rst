@@ -102,7 +102,7 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
     Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
     object to :method:`Symfony\\Component\\Form\\Form::handleRequest`::
 
-        $form->handleRequest($request);
+        $form->handleRequest();
 
     .. note::
 
@@ -556,7 +556,7 @@ method:
 
         $request = Request::createFromGlobals();
 
-        $form->handleRequest($request);
+        $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -582,7 +582,7 @@ method:
                 ->add('dueDate', 'date')
                 ->getForm();
 
-            $form->handleRequest($request);
+            $form->handleRequest();
 
             if ($form->isValid()) {
                 $data = $form->getData();
