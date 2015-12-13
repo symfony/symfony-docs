@@ -15,7 +15,7 @@ AsseticBundle executing this console command in your project:
 
         $ composer require symfony/assetic-bundle
 
-Then, enable the bundle in the ``AppKernel`` file of your Symfony application::
+Then, enable the bundle in the ``AppKernel.php`` file of your Symfony application::
 
     // app/AppKernel.php
 
@@ -44,8 +44,8 @@ your application:
 
         # app/config/config.yml
         assetic:
-            debug:          "%kernel.debug%"
-            use_controller: false
+            debug:          '%kernel.debug%'
+            use_controller: '%kernel.debug%'
             filters:
                 cssrewrite: ~
 
@@ -57,12 +57,11 @@ your application:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config debug="%kernel.debug%" use-controller="%kernel.debug%">
                 <assetic:filters cssrewrite="null" />
@@ -74,7 +73,6 @@ your application:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('assetic', array(
             'debug' => '%kernel.debug%',
             'use_controller' => '%kernel.debug%',
