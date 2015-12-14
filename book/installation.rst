@@ -109,9 +109,6 @@ most recent :ref:`Symfony LTS version <releases-lts>` available:
 
     $ symfony new my_project_name lts
 
-    # Windows
-    c:\projects\> php symfony new my_project_name lts
-
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
 to use for your projects.
