@@ -32,7 +32,7 @@ Open your command console and execute the following commands:
 
 .. code-block:: bash
 
-    $ sudo curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
+    $ sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
     $ sudo chmod a+x /usr/local/bin/symfony
 
 This will create a global ``symfony`` command in your system.
@@ -44,7 +44,7 @@ Open your command console and execute the following command:
 
 .. code-block:: bash
 
-    c:\> php -r "readfile('http://symfony.com/installer');" > symfony
+    c:\> php -r "readfile('https://symfony.com/installer');" > symfony
 
 Then, move the downloaded ``symfony`` file to your project's directory and
 execute it as follows:
