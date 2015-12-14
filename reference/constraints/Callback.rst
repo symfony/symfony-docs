@@ -134,110 +134,110 @@ process. Each method can be one of the following formats:
 
 1) **String method name**
 
-    If the name of a method is a simple string (e.g. ``isAuthorValid``),
-    that method will be called on the same object that's being validated
-    and the ``ExecutionContextInterface`` will be the only argument (see
-    the above example).
+   If the name of a method is a simple string (e.g. ``isAuthorValid``),
+   that method will be called on the same object that's being validated
+   and the ``ExecutionContextInterface`` will be the only argument (see
+   the above example).
 
 2) **Static array callback**
 
-    Each method can also be specified as a standard array callback:
+   Each method can also be specified as a standard array callback:
 
-    .. configuration-block::
+   .. configuration-block::
 
-        .. code-block:: php-annotations
+       .. code-block:: php-annotations
 
-            // src/AppBundle/Entity/Author.php
-            use Symfony\Component\Validator\Constraints as Assert;
+           // src/AppBundle/Entity/Author.php
+           use Symfony\Component\Validator\Constraints as Assert;
 
-            /**
-             * @Assert\Callback(methods={
-             *     { "AppBundle\MyStaticValidatorClass", "isAuthorValid" }
-             * })
-             */
-            class Author
-            {
-            }
+           /**
+            * @Assert\Callback(methods={
+            *     { "AppBundle\MyStaticValidatorClass", "isAuthorValid" }
+            * })
+            */
+           class Author
+           {
+           }
 
-        .. code-block:: yaml
+       .. code-block:: yaml
 
-            # src/AppBundle/Resources/config/validation.yml
-            AppBundle\Entity\Author:
-                constraints:
-                    - Callback:
-                        methods:
-                            -    [AppBundle\MyStaticValidatorClass, isAuthorValid]
+           # src/AppBundle/Resources/config/validation.yml
+           AppBundle\Entity\Author:
+               constraints:
+                   - Callback:
+                       methods:
+                           -    [AppBundle\MyStaticValidatorClass, isAuthorValid]
 
-        .. code-block:: xml
+       .. code-block:: xml
 
-            <!-- src/AppBundle/Resources/config/validation.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+           <!-- src/AppBundle/Resources/config/validation.xml -->
+           <?xml version="1.0" encoding="UTF-8" ?>
+           <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-                <class name="AppBundle\Entity\Author">
-                    <constraint name="Callback">
-                        <option name="methods">
-                            <value>
-                                <value>AppBundle\MyStaticValidatorClass</value>
-                                <value>isAuthorValid</value>
-                            </value>
-                        </option>
-                    </constraint>
-                </class>
-            </constraint-mapping>
+               <class name="AppBundle\Entity\Author">
+                   <constraint name="Callback">
+                       <option name="methods">
+                           <value>
+                               <value>AppBundle\MyStaticValidatorClass</value>
+                               <value>isAuthorValid</value>
+                           </value>
+                       </option>
+                   </constraint>
+               </class>
+           </constraint-mapping>
 
-        .. code-block:: php
+       .. code-block:: php
 
-            // src/AppBundle/Entity/Author.php
+           // src/AppBundle/Entity/Author.php
 
-            use Symfony\Component\Validator\Mapping\ClassMetadata;
-            use Symfony\Component\Validator\Constraints\Callback;
+           use Symfony\Component\Validator\Mapping\ClassMetadata;
+           use Symfony\Component\Validator\Constraints\Callback;
 
-            class Author
-            {
-                public $name;
+           class Author
+           {
+               public $name;
 
-                public static function loadValidatorMetadata(ClassMetadata $metadata)
-                {
-                    $metadata->addConstraint(new Callback(array(
-                        'methods' => array(
-                            array(
-                                'AppBundle\MyStaticValidatorClass',
-                                'isAuthorValid',
-                            ),
-                        ),
-                    )));
-                }
-            }
+               public static function loadValidatorMetadata(ClassMetadata $metadata)
+               {
+                   $metadata->addConstraint(new Callback(array(
+                       'methods' => array(
+                           array(
+                               'AppBundle\MyStaticValidatorClass',
+                               'isAuthorValid',
+                           ),
+                       ),
+                   )));
+               }
+           }
 
-    In this case, the static method ``isAuthorValid`` will be called on
-    the ``AppBundle\MyStaticValidatorClass`` class. It's passed both
-    the original object being validated (e.g. ``Author``) as well as the
-    ``ExecutionContextInterface``::
+   In this case, the static method ``isAuthorValid`` will be called on
+   the ``AppBundle\MyStaticValidatorClass`` class. It's passed both
+   the original object being validated (e.g. ``Author``) as well as the
+   ``ExecutionContextInterface``::
 
-        namespace AppBundle;
+       namespace AppBundle;
 
-        use Symfony\Component\Validator\ExecutionContextInterface;
-        use AppBundle\Entity\Author;
+       use Symfony\Component\Validator\ExecutionContextInterface;
+       use AppBundle\Entity\Author;
 
-        class MyStaticValidatorClass
-        {
-            public static function isAuthorValid(
-                Author $author,
-                ExecutionContextInterface $context
-            ) {
-                // ...
-            }
-        }
+       class MyStaticValidatorClass
+       {
+           public static function isAuthorValid(
+               Author $author,
+               ExecutionContextInterface $context
+           ) {
+               // ...
+           }
+       }
 
-    .. tip::
+   .. tip::
 
-        If you specify your ``Callback`` constraint via PHP, then you also
-        have the option to make your callback either a PHP closure or a
-        non-static callback. It is *not* currently possible, however, to
-        specify a :term:`service` as a constraint. To validate using a service,
-        you should :doc:`create a custom validation constraint
-        </cookbook/validation/custom_constraint>` and add that new constraint
-        to your class.
+       If you specify your ``Callback`` constraint via PHP, then you also
+       have the option to make your callback either a PHP closure or a
+       non-static callback. It is *not* currently possible, however, to
+       specify a :term:`service` as a constraint. To validate using a service,
+       you should :doc:`create a custom validation constraint
+       </cookbook/validation/custom_constraint>` and add that new constraint
+       to your class.
