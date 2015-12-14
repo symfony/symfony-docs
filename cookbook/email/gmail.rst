@@ -51,11 +51,11 @@ In the development configuration file, change the ``transport`` setting to
         ));
 
 If you are using the Symfony Standard Edition, it's more convenient to configure
-these parameters in ``parameters.yml``:
+these options in the ``parameters.yml.dist`` file:
 
 .. code-block:: yaml
 
-    # app/config/parameters.yml
+    # app/config/parameters.yml.dist
     parameters:
         # ...
         mailer_user:      your_gmail_username
@@ -104,16 +104,25 @@ Redefining the Default Configuration Parameters
 -----------------------------------------------
 
 The ``gmail`` transport is simply a shortcut that uses the ``smtp`` transport
-and sets ``encryption`` to ``ssl``, ``auth_mode`` to ``login`` and ``host`` to
-``smtp.gmail.com`` to work with Gmail.
+and sets these options:
+
+==============  ==================
+Option          Value
+==============  ==================
+``encryption``  ``ssl``
+``auth_mode``   ``login``
+``host``        ``smtp.gmail.com``
+==============  ==================
 
 If your application uses ``tls`` encryption or ``oauth`` authentication, you
 must override the default options by defining the ``encryption`` and ``auth_mode``
 parameters.
 
+If you are using 2-Step-Verification, you must `generate an App password`_ and use this as your ``mailer_password`` value.
+
 If your Gmail account uses 2-Step-Verification, you must `generate an App password`_
-to use for your ``mailer_password`` parameter. You must also ensure that you
-`allow less secure apps to access your Gmail account`_.
+and use it as the value of the ``mailer_password`` parameter. You must also ensure
+that you `allow less secure apps to access your Gmail account`_.
 
 See the :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer>`
 for more details.
