@@ -2,7 +2,7 @@ placeholder
 ~~~~~~~~~~~
 
 .. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
     ``empty_value``, which is available prior to 2.6.
 
 .. versionadded:: 2.3
