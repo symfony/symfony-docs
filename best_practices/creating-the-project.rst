@@ -33,7 +33,7 @@ to create files and execute the following commands:
 
     # Windows
     c:\> cd projects/
-    c:\projects\> php symfony.phar new blog
+    c:\projects\> php symfony new blog
 
 This command creates a new directory called ``blog`` that contains a fresh new
 project based on the most recent stable Symfony version available. In addition,
