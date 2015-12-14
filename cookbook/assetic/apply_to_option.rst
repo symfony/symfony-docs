@@ -27,14 +27,23 @@ An example configuration might look like this:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="coffee"
-                bin="/usr/bin/coffee/"
-                node="/usr/bin/node/">
-                <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
-            </assetic:filter>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="coffee"
+                    bin="/usr/bin/coffee/"
+                    node="/usr/bin/node/">
+                    <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
+                </assetic:filter>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -137,14 +146,23 @@ In this case you can specify that the ``coffee`` filter is applied to all
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="coffee"
-                bin="/usr/bin/coffee"
-                node="/usr/bin/node"
-                apply_to="\.coffee$" />
-                <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="coffee"
+                    bin="/usr/bin/coffee"
+                    node="/usr/bin/node"
+                    apply_to="\.coffee$" />
+                    <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
