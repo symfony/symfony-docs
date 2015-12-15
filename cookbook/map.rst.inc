@@ -44,6 +44,7 @@
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
+  * :doc:`/cookbook/console/style`
   * :doc:`/cookbook/console/command_in_controller`
   * :doc:`/cookbook/console/sending_emails`
   * :doc:`/cookbook/console/logging`
