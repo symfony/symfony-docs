@@ -104,7 +104,7 @@ directory of the application and add just the following content:
 
 .. code-block:: text
 
-    web: bin/heroku-php-apache2 web/
+    web: vendor/bin/heroku-php-apache2 web/
 
 .. note::
 
@@ -114,14 +114,14 @@ directory of the application and add just the following content:
 
     .. code-block:: text
 
-        web: bin/heroku-php-nginx -C nginx_app.conf web/
+        web: vendor/bin/heroku-php-nginx -C nginx_app.conf web/
 
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
 .. code-block:: bash
 
-    $ echo "web: bin/heroku-php-apache2 web/" > Procfile
+    $ echo "web: vendor/bin/heroku-php-apache2 web/" > Procfile
     $ git add .
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
