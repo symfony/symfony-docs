@@ -808,7 +808,9 @@ method to check the CSRF token::
     $intention = 'authenticate';
     $token = $csrf->generateCsrfToken($intention);
 
-    $csrf->isCsrfTokenValid($intention, $token);
+    if (!$csrf->isCsrfTokenValid($intention, $token)) {
+        // CSRF token invalid! Do something, like redirect with an error.
+    }
 
 Final Thoughts
 --------------
