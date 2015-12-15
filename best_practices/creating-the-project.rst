@@ -27,9 +27,8 @@ to create files and execute the following commands:
 
 .. note::
 
-    Please make sure that the `phar extension`_ is installed and enabled.
-    Otherwise, the installer will simply return without doing anything nor
-    giving you any output.
+    If the installer doesn't work for you or doesn't output anything, make sure
+    that the `phar extension`_ is installed and enabled on your computer.
 
 .. code-block:: bash
 
