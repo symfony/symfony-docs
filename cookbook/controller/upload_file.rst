@@ -156,16 +156,26 @@ Finally, you need to update the code of the controller that handles the form::
         }
     }
 
+Now, create the ``brochures_directory`` parameter that was used in the
+controller to specify the directory in which the brochures should be stored:
+
+.. code-block:: yaml
+
+    # app/config/parameters.yml
+    parameters:
+        # ...
+        brochures_directory: '%kernel.root_dir%/../web/uploads/brochures'
+
 There are some important things to consider in the code of the above controller:
 
 #. When the form is uploaded, the ``brochure`` property contains the whole PDF
    file contents. Since this property stores just the file name, you must set
    its new value before persisting the changes of the entity;
 #. In Symfony applications, uploaded files are objects of the
-   :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class, which
+   :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class. This class
    provides methods for the most common operations when dealing with uploaded files;
 #. A well-known security best practice is to never trust the input provided by
-   users. This also applies to the files uploaded by your visitors. The ``Uploaded``
+   users. This also applies to the files uploaded by your visitors. The ``UploadedFile``
    class provides methods to get the original file extension
    (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension`),
    the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`)
