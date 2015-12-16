@@ -2,8 +2,8 @@ NotBlank
 ========
 
 Validates that a value is not blank, defined as not strictly ``false``,
-not equal to a blank string and also not equal to ``null``. To force that
-a value is simply not equal to ``null``, see the
+not equal to a blank string, not an empty array and also not equal to ``null``.
+To force that a value is simply not equal to ``null``, see the
 :doc:`/reference/constraints/NotNull` constraint.
 
 +----------------+------------------------------------------------------------------------+
