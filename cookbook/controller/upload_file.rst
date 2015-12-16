@@ -139,8 +139,7 @@ Finally, you need to update the code of the controller that handles the form::
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
                 // Move the file to the directory where brochures are stored
-                $brochuresDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/brochures';
-                $file->move($brochuresDir, $fileName);
+                $file->move($this->container->getParameter('brochures_directory'), $fileName);
 
                 // Update the 'brochure' property to store the PDF file name
                 // instead of its contents
@@ -175,10 +174,6 @@ There are some important things to consider in the code of the above controller:
    that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
-#. The ``UploadedFile`` class also provides a :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::move`
-   method to store the file in its intended directory. Defining this directory
-   path as an application configuration option is considered a good practice that
-   simplifies the code: ``$this->container->getParameter('brochures_dir')``.
 
 You can use the following code to link to the PDF brochure of an product:
 
