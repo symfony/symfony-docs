@@ -46,7 +46,7 @@ property they use to access their account via the API::
         /**
          * @ORM\Column(type"string", unique=true)
          */
-        private $apiKey;
+        private $apiToken;
 
         public function getUsername()
         {
