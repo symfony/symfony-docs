@@ -43,7 +43,7 @@ which allow to create *semantic* commands and forget about their styling.
 Basic Usage
 -----------
 
-In your command, instantiate the :class:`Symfony\\Component\\Console\\Helper\\SymfonyStyle`
+In your command, instantiate the :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle`
 class and pass the ``$input`` and ``$output`` variables as its arguments. Then,
 you can start using any of its helpers, such as ``title()``, which displays the
 title of the command::
@@ -78,7 +78,7 @@ title of the command::
 Helper Methods
 --------------
 
-The :class:`Symfony\\Component\\Console\\Helper\\SymfonyStyle` class defines 18
+The :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` class defines 18
 helper methods that cover the most common interactions performed by console commands.
 
 Common Output Elements
@@ -117,7 +117,7 @@ Common Output Elements
         $io->text(array(
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
-            'Aenean sit amet arcu vitae sem faucibus porta'
+            'Aenean sit amet arcu vitae sem faucibus porta',
         ));
 
 :method:`Symfony\\Component\\Console\\Helper\\StyleInterface::listing`
@@ -163,12 +163,12 @@ Common Output Elements
     avoid using this helper unless strictly necessary::
 
         // use simple strings for short caution message
-        $io->note('Lorem ipsum dolor sit amet');
+        $io->caution('Lorem ipsum dolor sit amet');
 
         // ...
 
         // consider using arrays when displaying long caution messages
-        $io->note(array(
+        $io->caution(array(
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
             'Aenean sit amet arcu vitae sem faucibus porta'
@@ -191,27 +191,27 @@ Common Output Elements
     to the method (don't pass any value if the length of the progress bar is
     unknown)::
 
-        // display a progress bar of unknown length
+        // displays a progress bar of unknown length
         $io->progressStart();
 
-        // display a 100-step length progress bar
+        // displays a 100-step length progress bar
         $io->progressStart(100);
 
 :method:`Symfony\\Component\\Console\\Helper\\StyleInterface::progressAdvance`
     It makes the progress bar advance the given number of steps (or ``1`` step
     if no argument is passed)::
 
-        // advanced the progress bar 1 step
-        $io->progressStart();
+        // advances the progress bar 1 step
+        $io->progressAdvance();
 
-        // advanced the progress bar 10 steps
-        $io->progressStart(10);
+        // advances the progress bar 10 steps
+        $io->progressAdvance(10);
 
 :method:`Symfony\\Component\\Console\\Helper\\StyleInterface::progressFinish`
     It finishes the progress bar (filling up all the remaining steps when its
     length is known)::
 
-        $io->progressFinish(10);
+        $io->progressFinish();
 
 Asking for User's Input
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,7 +227,7 @@ Asking for User's Input
         $io->ask('Where are you from?', 'United States');
 
     In case you need to validate the given value, pass a callback validator as
-    the third argument:
+    the third argument::
 
         $io->ask('Number of workers to start', 1, function ($number) {
             if (!is_integer($number)) {
@@ -243,6 +243,7 @@ Asking for User's Input
 
         $io->ask('What is your password?');
 
+        // validates the given answer
         $io->ask('What is your password?', function ($password) {
             if (empty($password)) {
                 throw new \RuntimeException('Password cannot be empty.');
@@ -254,23 +255,23 @@ Asking for User's Input
 :method:`Symfony\\Component\\Console\\Helper\\StyleInterface::confirm`
     It asks a Yes/No question to the user and it only returns ``true`` or ``false``::
 
-        $io->('Restart the web server?');
+        $io->confirm('Restart the web server?');
 
     You can pass the default value as the second argument so the user can simply
     hit the <Enter> key to select that value::
 
-        $io->('Restart the web server?', true);
+        $io->confirm('Restart the web server?', true);
 
 :method:`Symfony\\Component\\Console\\Helper\\StyleInterface::choice`
     It asks a question whose answer is constrained to the given list of valid
     answers::
 
-        $io->('Which queue do you want to analyze?', array('queue1', 'queue2', 'queue3'));
+        $io->choice('Select the queue to analyze', array('queue1', 'queue2', 'queue3'));
 
     You can pass the default value as the third argument so the user can simply
     hit the <Enter> key to select that value::
 
-        $io->('Which queue do you want to analyze?', array('queue1', 'queue2', 'queue3'), 'queue1');
+        $io->choice('Select the queue to analyze', array('queue1', 'queue2', 'queue3'), 'queue1');
 
 Displaying the Result of the Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -331,13 +332,13 @@ Defining your Own Styles
 
 If you don't like the design of the commands that use the Symfony Style, you can
 define your own set of console styles. Just create a class that implements the
-:class:`Symfony\Component\Console\Style\StyleInterface`::
+:class:`Symfony\\Component\\Console\\Style\\StyleInterface`::
 
     namespace AppBundle\Console;
 
     use Symfony\Component\Console\Style\StyleInterface;
 
-    class CustomStyle
+    class CustomStyle implements StyleInterface
     {
         // implement the methods of the interface...
     }
@@ -349,15 +350,22 @@ of your commands to change their appearance::
     namespace AppBundle\Console;
 
     use AppBundle\Console\CustomStyle;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
     use Symfony\Component\Console\Style\SymfonyStyle;
 
-    public function execute()
+    class GreetCommand extends ContainerAwareCommand
     {
-        // Before
-        // $io = new SymfonyStyle();
-
-        // After
-        // $io = new CustomStyle();
-
         // ...
+
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            // Before
+            // $io = new SymfonyStyle($input, $output);
+
+            // After
+            $io = new CustomStyle($input, $output);
+
+            // ...
+        }
     }
