@@ -86,16 +86,27 @@ Now, update the template that renders the form to display the new ``brochure``
 field (the exact template code to add depends on the method used by your application
 to :doc:`customize form rendering </cookbook/form/form_customization>`):
 
-.. code-block:: html+twig
+.. configuration-block::
 
-    {# app/Resources/views/product/new.html.twig #}
-    <h1>Adding a new product</h1>
+    .. code-block:: html+twig
 
-    {{ form_start() }}
-        {# ... #}
+        {# app/Resources/views/product/new.html.twig #}
+        <h1>Adding a new product</h1>
 
-        {{ form_row(form.brochure) }}
-    {{ form_end() }}
+        {{ form_start(form) }}
+            {# ... #}
+
+            {{ form_row(form.brochure) }}
+        {{ form_end(form) }}
+
+    .. code-block:: html+php
+
+        <!-- app/Resources/views/product/new.html.twig -->
+        <h1>Adding a new product</h1>
+
+        <?php echo $view['form']->start($form) ?>
+            <?php echo $view['form']->row($form['brochure']) ?>
+        <?php echo $view['form']->end($form) ?>
 
 Finally, you need to update the code of the controller that handles the form::
 
@@ -169,10 +180,18 @@ There are some important things to consider in the code of the above controller:
    path as an application configuration option is considered a good practice that
    simplifies the code: ``$this->container->getParameter('brochures_dir')``.
 
-You can now use the following code to link to the PDF brochure of an product:
+You can use the following code to link to the PDF brochure of an product:
 
-.. code-block:: html+twig
+.. configuration-block::
 
-    <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
+    .. code-block:: html+twig
+
+        <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
+
+    .. code-block:: html+php
+
+        <a href="<?php echo $view['assets']->getUrl('uploads/brochures/'.$product->getBrochure()) ?>">
+            View brochure (PDF)
+        </a>
 
 .. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle
