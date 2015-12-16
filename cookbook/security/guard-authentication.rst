@@ -189,12 +189,12 @@ This requires you to implement six methods::
 
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
-            $apiToken = $credentials['token'];
+            $apiKey = $credentials['token'];
 
             // if null, authentication will fail
             // if a User object, checkCredentials() is called
             return $this->em->getRepository('AppBundle:User')
-                ->findOneBy(array('apiToken' => $apiToken));
+                ->findOneBy(array('apiKey' => $apiKey));
         }
 
         public function checkCredentials($credentials, UserInterface $user)
