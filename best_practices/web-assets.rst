@@ -39,7 +39,8 @@ These days, you probably can't simply create static CSS and JavaScript files
 and include them in your template. Instead, you'll probably want to combine
 and minify these to improve client-side performance. You may also want to
 use LESS or Sass (for example), which means you'll need some way to process
-these into CSS files.
+these into CSS files. To install assetic in the standard edition of the framework,
+just use the `AsseticBundle`_.
 
 A lot of tools exist to solve these problems, including pure-frontend (non-PHP)
 tools like GruntJS.
@@ -94,3 +95,4 @@ the `official Assetic documentation`_ to learn more about all the available
 features.
 
 .. _`official Assetic documentation`: https://github.com/kriswallsmith/assetic
+.. _`AsseticBundle` : https://github.com/symfony/assetic-bundle
