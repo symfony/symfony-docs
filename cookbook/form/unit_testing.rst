@@ -167,7 +167,7 @@ cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` only loads the core form extension, which means an
 "Invalid option" exception will be raised if you try to test a class that
 depends on other extensions. The
-:method:`Symfony\Component\Form\Test\TypeTestCase::getExtensions` allows you to
+:method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` allows you to
 return a list of extensions to register::
 
     // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
