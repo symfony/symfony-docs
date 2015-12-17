@@ -293,4 +293,97 @@ Now you're ready to use this service in the controller::
         // ...
     }
 
+Using a Doctrine Listener
+-------------------------
+
+If you are using Doctrine to store the Product entity, you can create a
+:doc:`Doctrine listener </cookbook/doctrine/event_listeners_subscribers>` to
+automatically upload the file when persisting the entity::
+
+    // src/AppBundle/EventListener/BrochureUploadListener.php
+    namespace AppBundle\EventListener;
+
+    use Doctrine\ORM\Event\LifecycleEventArgs;
+    use AppBundle\Entity\Product;
+    use AppBundle\FileUploader;
+
+    class BrochureUploadListener
+    {
+        private $uploader;
+
+        public function __construct(FileUploader $uploader)
+        {
+            $this->uploader = $uploader;
+        }
+
+        public function prePersist(LifecycleEventArgs $args)
+        {
+            $entity = $args->getEntity();
+
+            // upload only works for Product entities
+            if (!$entity instanceof Product) {
+                return;
+            }
+
+            $file = $entity->getBrochure();
+            $fileName = $this->uploader->upload($file);
+
+            $entity->setBrochure($fileName);
+        }
+    }
+
+Now, register this class as a Doctrine listener:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+            app.doctrine_brochure_listener:
+                class: AppBundle\EventListener\BrochureUploadListener
+                arguments: ['@app.brochure_uploader']
+                tags:
+                    - { name: doctrine.event_listener, event: prePersist }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <!-- ... -->
+
+            <service id="app.doctrine_brochure_listener"
+                class="AppBundle\EventListener\BrochureUploaderListener"
+            >
+                <argument type="service" id="app.brochure_uploader"/>
+
+                <tag name="doctrine.event_listener" event="prePersist"/>
+            </service>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Reference;
+        
+        // ...
+        $definition = new Definition(
+            'AppBundle\EventListener\BrochureUploaderListener',
+            array(new Reference('brochures_directory'))
+        );
+        $definition->addTag('doctrine.event_listener', array(
+            'event' => 'prePersist',
+        ));
+        $container->setDefinition('app.doctrine_brochure_listener', $definition);
+
+This listeners is now automatically executed when persisting a new Product
+entity. This way, you can remove everything related to uploading from the
+controller.
+
 .. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle
