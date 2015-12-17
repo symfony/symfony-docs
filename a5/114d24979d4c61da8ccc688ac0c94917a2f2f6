@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-08T09:50:02Z
+
+:+1: I think we should merge this into the `2.8` branch where the constructor already supports this way. However, we can make that decision when merging. So there's no reason to create a new pull request. Thank you @leunggamciu!
