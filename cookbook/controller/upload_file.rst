@@ -139,7 +139,10 @@ Finally, you need to update the code of the controller that handles the form::
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
                 // Move the file to the directory where brochures are stored
-                $file->move($this->container->getParameter('brochures_directory'), $fileName);
+                $file->move(
+                    $this->container->getParameter('brochures_directory'),
+                    $fileName
+                );
 
                 // Update the 'brochure' property to store the PDF file name
                 // instead of its contents
@@ -198,5 +201,96 @@ You can use the following code to link to the PDF brochure of an product:
         <a href="<?php echo $view['assets']->getUrl('uploads/brochures/'.$product->getBrochure()) ?>">
             View brochure (PDF)
         </a>
+
+Creating an Uploader Service
+----------------------------
+
+To avoid logic in controllers, making them big, you can extract the upload
+logic to a seperate service::
+
+    // src/AppBundle/FileUploader.php
+    namespace AppBundle\FileUploader;
+
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+    class FileUploader
+    {
+        private $targetDir;
+
+        public function __construct($targetDir)
+        {
+            $this->targetDir = $targetDir;
+        }
+
+        public function upload(UploadedFile $file)
+        {
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            $file->move($this->targetDir, $fileName);
+
+            return $fileName;
+        }
+    }
+
+This class can be registered as a service in the service container:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+            app.brochure_uploader:
+                class: AppBundle\FileUploader
+                arguments: ['%brochures_directory%']
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <!-- ... -->
+
+            <service id="app.brochure_uploader" class="AppBundle\FileUploader">
+                <argument>%brochures_directory%</argument>
+            </service>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // ...
+        $container->setDefinition('app.brochure_uploader', new Definition(
+            'AppBundle\FileUploader',
+            array('%brochures_directory%')
+        ));
+
+Now you're ready to use this service in the controller::
+
+    // src/AppBundle/Controller/ProductController.php
+
+    // ...
+    public function newAction(Request $request)
+    {
+        // ...
+
+        if ($form->isValid()) {
+            $file = $product->getBrochure();
+            $fileName = $this->get('app.brochure_uploader')->upload($file);
+
+            $product->setBrochure($fileName);
+
+            // ...
+        }
+
+        // ...
+    }
 
 .. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle
