@@ -200,6 +200,10 @@ Documentation
 
 * Add PHPDoc blocks for all classes, methods, and functions;
 
+* Group annotations together so that annotations of the same type immediately
+  follow each other, and annotations of a different type are separated by a
+  single blank line;
+
 * Omit the ``@return`` tag if the method does not return anything;
 
 * The ``@package`` and ``@subpackage`` annotations are not used.
