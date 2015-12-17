@@ -158,15 +158,17 @@ before creating the parent form using the ``PreloadedExtension`` class::
     be getting errors that are not related to the form you are currently
     testing but to its children.
 
-Adding custom Extensions
+Adding Custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
 :doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
-The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
-exception will be raised if you try to use it for testing a class that depends
-on other extensions. You need to add those extensions to the factory object::
+The ``TypeTestCase`` only loads the core form extension, which means an
+"Invalid option" exception will be raised if you try to test a class that
+depends on other extensions. The
+:method:`Symfony\Component\Form\Test\TypeTestCase::getExtensions` allows you to
+return a list of extensions to register::
 
     // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
     namespace AppBundle\Tests\Form\Type;
@@ -194,7 +196,7 @@ on other extensions. You need to add those extensions to the factory object::
         // ... your tests
     }
 
-Testing against different Sets of Data
+Testing against Different Sets of Data
 --------------------------------------
 
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
