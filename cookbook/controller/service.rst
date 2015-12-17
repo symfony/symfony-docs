@@ -285,8 +285,7 @@ controller:
         in the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface`.
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine` (service: ``doctrine``)
-
-    *Simply inject doctrine instead of fetching it from the container*
+    *Simply inject doctrine instead of fetching it from the container.*
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.token_storage``)
     .. code-block:: php
