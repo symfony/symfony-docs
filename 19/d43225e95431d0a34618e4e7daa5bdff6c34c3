@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-22T07:40:16Z
+
+I'm not sure, but this look like a Bug to me, how does the tests look like for this case?
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-10-23T09:36:03Z
+
+seems that there is no testcase for this case?
+https://github.com/symfony/symfony/blob/2.8/src/Symfony/Component/Console/Tests/Input/StringInputTest.php#L59
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-23T11:08:55Z
+
+At least, the behaviour as described by @javiereguiluz is consistent with what common commands in UNIX shells do (afaik this is described somewhere). So I would simply change the docs accordingly.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-23T12:13:25Z
+
+@xabbuh you are right, i added a PR with a test case, maybe you can have a look on it.
+
+Thank you
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-17T14:53:30Z
+
+This definitely looks like a doc issue. The code behavior is considered correct (although it may be  counterintuitive). If this is true, could we consider this PR finished? Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T16:42:39Z
+
+:+1:
