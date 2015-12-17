@@ -118,9 +118,10 @@ the custom tag that you'll use in your compiler pass. The compiler pass
 is what makes this tag "mean" something.
 
 .. _components-di-compiler-pass-tags:
+.. _create-a-compilerpass:
 
-Create a CompilerPass
----------------------
+Create a Compiler Pass
+----------------------
 
 You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
 container for any services with the ``acme_mailer.transport`` tag::

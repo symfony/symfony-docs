@@ -306,6 +306,7 @@ For more details, see :doc:`/cookbook/bundles/prepend_extension`, which
 is specific to the Symfony Framework, but contains more details about this
 feature.
 
+.. _creating-a-compiler-pass:
 .. _components-di-compiler-pass:
 
 Execute Code During Compilation
@@ -332,8 +333,8 @@ compilation::
 
 .. versionadded:: 2.8
     Prior to Symfony 2.8, extensions implementing ``CompilerPassInterface``
-    were not automatically registered. You need to register it as explained in
-    :ref:`the next section <components-di-separate-compiler-passes>`.
+    were not automatically registered. You needed to register them as explained
+    in :ref:`the next section <components-di-separate-compiler-passes>`.
 
 As ``process()`` is called *after* all extensions are loaded, it allows you to
 edit service definitions of other extensions as well as retrieving information
@@ -344,10 +345,17 @@ methods described in :doc:`/components/dependency_injection/definitions`.
 
 .. note::
 
+    Please note that the ``process()`` method in the extension class is
+    called during the optimization step. You can read
+    :ref:`the next section <components-di-separate-compiler-passes>` if you
+    need to edit the container during another step.
+
+.. note::
+
     As a rule, only work with services definition in a compiler pass and do not
-    create service instances. Practically, this means using methods ``has()``,
-    ``findDefinition()``, ``getDefinition()``, ``setDefinition()``, etc.
-    instead of ``get()``, ``set()``, etc.
+    create service instances. In practice, this means using the methods
+    ``has()``, ``findDefinition()``, ``getDefinition()``, ``setDefinition()``,
+    etc. instead of ``get()``, ``set()``, etc.
 
 .. tip::
 
@@ -364,9 +372,10 @@ for an example.
 Creating Separate Compiler Passes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes, you need to do more than one thing during compliation or want to use
-compiler passes without an extension. In this case, you can create a new class
-implementing the ``CompilerPassInterface``::
+Sometimes, you need to do more than one thing during compliation, want to use
+compiler passes without an extension or you need to execute some code at
+another step in the compilation process. In these cases, you can create a new
+class implementing the ``CompilerPassInterface``::
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
