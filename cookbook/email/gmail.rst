@@ -68,8 +68,8 @@ these options in the ``parameters.yml.dist`` file:
         # app/config/config_dev.yml
         swiftmailer:
             transport: gmail
-            username:  %mailer_user%
-            password:  %mailer_password%
+            username:  '%mailer_user%'
+            password:  '%mailer_password%'
 
     .. code-block:: xml
 
