@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-09T20:15:35Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-15T09:04:52Z
+
+I agree with adding this note ... but I'm not sure about the wording.
+
+In my opinion, the problem is that you are telling the users: *"hey, do this and check this before executing the command"*. Problem is that most of our users won't have this issue (because PHAR is usually enabled) and a lot of newcomers don't know where or how to check for this "strange" phar extension. So we should avoid telling them to check anything before executing the command.
+
+If we reword the note as follows, most of these issue would be solved:
+
+```
+If the installer doesn't work for you or doesn't output anything, make sure
+that the `PHP phar extension`_ is installed and enabled in your computer.
+```
