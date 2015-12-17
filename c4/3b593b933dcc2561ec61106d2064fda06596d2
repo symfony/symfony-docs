@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by phansys at 2015-06-26T14:23:18Z
+
+My idea is to document all the rules tagged as **[symfony]** in [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/7ef7ea94ccb0d528daa2f428226958e00926b928/README.rst#usage) within separated PRs and later add a note about the possibility of running the tool with ```--dry-run``` option in order to check if all standards are respected.
+What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-26T22:45:20Z
+
+:+1: for merging this PR!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-17T11:33:17Z
+
+I agree with @WouterJ: this PR looks mergeable. Please forget my comment above.
