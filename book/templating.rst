@@ -1130,9 +1130,9 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and JavaScript assets in Symfony. Symfony also packages another library,
-    called Assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets. For more information on
+    and JavaScript assets in Symfony. Symfony is also compatible with another
+    library, called Assetic, which follows this philosophy but allows you to do
+    much more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
 Start by adding two blocks to your base template that will hold your assets:

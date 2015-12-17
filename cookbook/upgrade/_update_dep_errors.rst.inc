@@ -4,6 +4,8 @@ Dependency Errors
 If you get a dependency error, it may simply mean that you need to upgrade
 other Symfony dependencies too. In that case, try the following command:
 
+.. code-block:: bash
+
     $ composer update symfony/symfony --with-dependencies
 
 This updates ``symfony/symfony`` and *all* packages that it depends on, which will

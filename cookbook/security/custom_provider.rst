@@ -324,9 +324,9 @@ options, the password may be encoded multiple times and encoded to base64.
     before comparing it to your encoded password. If ``getSalt()`` returns
     nothing, then the submitted password is simply encoded using the algorithm
     you specify in ``security.yml``. If a salt *is* specified, then the following
-    value is created and *then* hashed via the algorithm:
+    value is created and *then* hashed via the algorithm::
 
-        ``$password.'{'.$salt.'}';``
+        $password.'{'.$salt.'}'
 
     If your external users have their passwords salted via a different method,
     then you'll need to do a bit more work so that Symfony properly encodes
