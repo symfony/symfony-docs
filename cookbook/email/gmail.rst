@@ -118,14 +118,16 @@ If your application uses ``tls`` encryption or ``oauth`` authentication, you
 must override the default options by defining the ``encryption`` and ``auth_mode``
 parameters.
 
-If you are using 2-Step-Verification, you must `generate an App password`_ and use this as your ``mailer_password`` value.
+If you are using 2-Step-Verification, you must `generate an App password`_ and
+use this as your ``mailer_password`` value.
 
 If your Gmail account uses 2-Step-Verification, you must `generate an App password`_
 and use it as the value of the ``mailer_password`` parameter. You must also ensure
 that you `allow less secure apps to access your Gmail account`_.
 
-See the :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer>`
-for more details.
+.. seealso::
+
+    :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer>`
 
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
 .. _`allow less secure apps to access your Gmail account`: https://support.google.com/accounts/answer/6010255
