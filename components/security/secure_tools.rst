@@ -45,5 +45,3 @@ to work correctly. Just pass a file name to enable it::
     as storing this value in a database or including it as part of the URL. The
     solution is to hash the value returned by ``nextBytes()`` (to do that, you
     can use a simple ``md5()`` PHP function).
-
-.. _`Timing attack`: https://en.wikipedia.org/wiki/Timing_attack
