@@ -24,6 +24,7 @@ The Components
     options_resolver
     process
     property_access/index
+    property_info
     routing/index
     security/index
     serializer
