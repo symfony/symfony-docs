@@ -83,6 +83,11 @@ to meet those requirements.
     distributing them. If you want to verify the integrity of any Symfony
     version, follow the steps `explained in this post`_.
 
+.. note::
+
+    If the installer doesn't work for you or doesn't output anything, make sure
+    that the `Phar extension`_ is installed and enabled on your computer.
+
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -419,3 +424,4 @@ a wide variety of articles about solving specific problems with Symfony.
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
 .. _`Git`: http://git-scm.com/
+.. _`Phar extension`: http://php.net/manual/en/intro.phar.php

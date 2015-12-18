@@ -191,7 +191,7 @@ at the end:
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -205,7 +205,7 @@ at the end:
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/routing.php
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 

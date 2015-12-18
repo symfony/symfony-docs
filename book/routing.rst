@@ -1186,9 +1186,9 @@ Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
 
 You could also refer to this controller using its fully-qualified class name
-and method: ``AppBundle\Controller\BlogController::showAction``.
-But if you follow some simple conventions, the logical name is more concise
-and allows more flexibility.
+and method: ``AppBundle\Controller\BlogController::showAction``. But if you
+follow some simple conventions, the logical name is more concise and allows
+more flexibility.
 
 .. note::
 
