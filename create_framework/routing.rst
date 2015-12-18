@@ -33,7 +33,7 @@ framework just a little to make templates even more readable::
 As we now extract the request query parameters, simplify the ``hello.php``
 template as follows::
 
-    <!-- example.com/src/pages/hello.php -->
+    // example.com/src/pages/hello.php
 
     Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
@@ -168,7 +168,7 @@ There are a few new things in the code:
 
 * Request attributes are extracted to keep our templates simple::
 
-      <!-- example.com/src/pages/hello.php -->
+      // example.com/src/pages/hello.php
 
       Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 

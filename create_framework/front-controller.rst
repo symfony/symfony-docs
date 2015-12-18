@@ -193,7 +193,7 @@ the ``setContent()`` directly from the front controller script::
 
 And the ``hello.php`` script can now be converted to a template::
 
-    <!-- example.com/src/pages/hello.php -->
+    // example.com/src/pages/hello.php
 
     <?php $name = $request->get('name', 'World') ?>
 
