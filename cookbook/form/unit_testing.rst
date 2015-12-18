@@ -167,54 +167,39 @@ Adding Custom Extensions
 It often happens that you use some options that are added by
 :doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
-The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
-exception will be raised if you try to use it for testing a class that depends
-on other extensions. You need to add those extensions to the factory object::
+The ``TypeTestCase`` only loads the core form extension, which means an
+"Invalid option" exception will be raised if you try to test a class that
+depends on other extensions. The
+:method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` allows you to
+return a list of extensions to register::
 
     // tests/AppBundle/Form/Type/TestedTypeTests.php
     namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
-    use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
-    use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
+    use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Validator\ConstraintViolationList;
 
     class TestedTypeTest extends TypeTestCase
     {
-        protected function setUp()
+        protected function getExtensions()
         {
-            parent::setUp();
-
             $validator = $this->getMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
             $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
-            $this->factory = Forms::createFormFactoryBuilder()
-                ->addExtensions($this->getExtensions())
-                ->addTypeExtension(
-                    new FormTypeValidatorExtension(
-                        $validator
-                    )
-                )
-                ->addTypeGuesser(
-                    $this->getMockBuilder(
-                        'Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser'
-                    )
-                        ->disableOriginalConstructor()
-                        ->getMock()
-                )
-                ->getFormFactory();
-
-            $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-            $this->builder = new FormBuilder(null, null, $this->dispatcher, $this->factory);
+            return array(
+                new ValidatorExtension($validator),
+            );
         }
 
         // ... your tests
     }
 
-Testing against different Sets of Data
+Testing against Different Sets of Data
 --------------------------------------
 
 If you are not familiar yet with PHPUnit's `data providers`_, this might be

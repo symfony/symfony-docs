@@ -12,13 +12,9 @@ conventions or patterns. A great example for this use-case is the
 `FOSRestBundle`_ where routes are generated based on the names of the
 action methods in a controller.
 
-A custom route loader does not enable your bundle to inject routes
-without the need to modify the routing configuration
-(e.g. ``app/config/routing.yml``) manually.
-If your bundle provides routes, whether via a configuration file, like
-the `WebProfilerBundle` does, or via a custom route loader, like the
-`FOSRestBundle`_ does, an entry in the routing configuration is always
-necessary.
+You still need to modify your routing configuration (e.g.
+``app/config/routing.yml``) manually, even when using a custom route
+loader.
 
 .. note::
 
@@ -57,6 +53,12 @@ its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
 will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
 containing :class:`Symfony\\Component\\Routing\\Route` objects.
 
+.. note::
+
+    Routes loaded this way will be cached by the Router the same way as
+    when they are defined in one of the default formats (e.g. XML, YML,
+    PHP file).
+
 Creating a custom Loader
 ------------------------
 
@@ -64,13 +66,14 @@ To load routes from some custom source (i.e. from something other than annotatio
 YAML or XML files), you need to create a custom route loader. This loader
 has to implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
-In most cases it's better not to implement
-:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
-yourself, but extend from :class:`Symfony\\Component\\Config\\Loader\\Loader`.
+In most cases it is easier to extend from
+:class:`Symfony\\Component\\Config\\Loader\\Loader` instead of implementing
+:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface` yourself.
 
 The sample loader below supports loading routing resources with a type of
-``extra``. The type ``extra`` isn't important - you can just invent any resource
-type you want. The resource name itself is not actually used in the example::
+``extra``. The type name should not clash with other loaders that might
+support the same type of resource. Just make up a name specific to what
+you do. The resource name itself is not actually used in the example::
 
     // src/AppBundle/Routing/ExtraLoader.php
     namespace AppBundle\Routing;
@@ -182,7 +185,7 @@ Using the custom Loader
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 If you did nothing else, your custom routing loader would *not* be called.
-Instead, you only need to add a few extra lines to the routing configuration:
+What remains to do is adding a few lines to the routing configuration:
 
 .. configuration-block::
 
