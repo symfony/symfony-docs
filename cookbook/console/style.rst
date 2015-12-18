@@ -23,9 +23,11 @@ Consider for example the code used to display the title of the following command
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            $output->writeln('<info>Lorem Ipsum Dolor Sit Amet</>');
-            $output->writeln('<info>==========================</>');
-            $output->writeln('');
+            $output->writeln(array(
+                '<info>Lorem Ipsum Dolor Sit Amet</>',
+                '<info>==========================</>',
+                '',
+            ));
 
             // ...
         }
@@ -52,7 +54,7 @@ title of the command::
     namespace AppBundle\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-    use Symfony\Component\Console\Helper\SymfonyStyle;
+    use Symfony\Component\Console\Style\SymfonyStyle;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
@@ -69,29 +71,23 @@ title of the command::
         }
     }
 
-.. tip::
-
-    You can use any name for the variable that stores the Symfony styles, but
-    it's recommended to name it ``$io`` because it's concise and conveys the
-    notion that it interacts both with the input and the output of the command.
-
 Helper Methods
 --------------
 
-The :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` class defines 18
+The :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` class defines some
 helper methods that cover the most common interactions performed by console commands.
 
-Common Output Elements
-~~~~~~~~~~~~~~~~~~~~~~
+Titling Methods
+~~~~~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::title`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::title`
     It displays the given string as the command title. This method is meant to
     be used only once in a given command, but nothing prevents you to use it
     repeatedly::
 
         $io->title('Lorem ipsum dolor sit amet');
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::section`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::section`
     It displays the given string as the title of some command section. This is
     only needed in complex commands which want to better separate their contents::
 
@@ -103,7 +99,10 @@ Common Output Elements
 
         // ...
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::text`
+Content Methods
+~~~~~~~~~~~~~~~
+
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::text`
     It displays the given string or array of strings as regular text. This is
     useful to render help messages and instructions for the user running the
     command::
@@ -120,7 +119,7 @@ Common Output Elements
             'Aenean sit amet arcu vitae sem faucibus porta',
         ));
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::listing`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::listing`
     It displays an unordered list of elements passed as an array::
 
         $io->listing(array(
@@ -129,7 +128,7 @@ Common Output Elements
             'Element #3 Lorem ipsum dolor sit amet',
         ));
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::table`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::table`
     It displays the given array of headers and rows as a compact table::
 
         $io->table(
@@ -141,7 +140,22 @@ Common Output Elements
             )
         );
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::note`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::newLine`
+    It displays a blank line in the command output. Although it may seem useful,
+    most of the times you won't need it at all. The reason is that every helper
+    already adds their own blank lines, so you don't have to care about the
+    vertical spacing::
+
+        // outputs a single blank line
+        $io->newLine();
+
+        // outputs three consecutive blank lines
+        $io->newLine(3);
+
+Admonition Methods
+~~~~~~~~~~~~~~~~~~
+
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::note`
     It displays the given string or array of strings as a highlighted admonition.
     Use this helper sparingly to avoid cluttering command's output::
 
@@ -154,10 +168,10 @@ Common Output Elements
         $io->note(array(
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
-            'Aenean sit amet arcu vitae sem faucibus porta'
+            'Aenean sit amet arcu vitae sem faucibus porta',
         ));
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::caution`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::caution`
     Similar to the ``note()`` helper, but the contents are more prominently
     highlighted. The resulting contents resemble an error message, so you should
     avoid using this helper unless strictly necessary::
@@ -171,22 +185,13 @@ Common Output Elements
         $io->caution(array(
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
-            'Aenean sit amet arcu vitae sem faucibus porta'
+            'Aenean sit amet arcu vitae sem faucibus porta',
         ));
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::newLine`
-    It displays a blank line in the command output. Although it may seem useful,
-    most of the times you won't need it at all. The reason is that every helper
-    already adds their own blank lines, so you don't have to care about the
-    vertical spacing::
+Progress Bar Methods
+~~~~~~~~~~~~~~~~~~~~
 
-        // outputs a single blank line
-        $io->newLine();
-
-        // outputs three consecutive blank lines
-        $io->newLine(3);
-
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::progressStart`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::progressStart`
     It displays a progress bar with a number of steps equal to the argument passed
     to the method (don't pass any value if the length of the progress bar is
     unknown)::
@@ -197,7 +202,7 @@ Common Output Elements
         // displays a 100-step length progress bar
         $io->progressStart(100);
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::progressAdvance`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::progressAdvance`
     It makes the progress bar advance the given number of steps (or ``1`` step
     if no argument is passed)::
 
@@ -207,16 +212,16 @@ Common Output Elements
         // advances the progress bar 10 steps
         $io->progressAdvance(10);
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::progressFinish`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::progressFinish`
     It finishes the progress bar (filling up all the remaining steps when its
     length is known)::
 
         $io->progressFinish();
 
-Asking for User's Input
-~~~~~~~~~~~~~~~~~~~~~~~
+User Input Methods
+~~~~~~~~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::ask`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::ask`
     It asks the user to provide some value::
 
         $io->ask('What is your name?');
@@ -237,14 +242,14 @@ Asking for User's Input
             return $number;
         });
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::askHidden`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::askHidden`
     It's very similar to the ``ask()`` method but the user's input will be hidden
     and it cannot define a default value. Use it when asking for sensitive information::
 
-        $io->ask('What is your password?');
+        $io->askHidden('What is your password?');
 
         // validates the given answer
-        $io->ask('What is your password?', function ($password) {
+        $io->askHidden('What is your password?', function ($password) {
             if (empty($password)) {
                 throw new \RuntimeException('Password cannot be empty.');
             }
@@ -252,7 +257,7 @@ Asking for User's Input
             return $password;
         });
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::confirm`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::confirm`
     It asks a Yes/No question to the user and it only returns ``true`` or ``false``::
 
         $io->confirm('Restart the web server?');
@@ -262,7 +267,7 @@ Asking for User's Input
 
         $io->confirm('Restart the web server?', true);
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::choice`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::choice`
     It asks a question whose answer is constrained to the given list of valid
     answers::
 
@@ -273,10 +278,10 @@ Asking for User's Input
 
         $io->choice('Select the queue to analyze', array('queue1', 'queue2', 'queue3'), 'queue1');
 
-Displaying the Result of the Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Result Methods
+~~~~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::success`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::success`
     It displays the given string or array of strings highlighted as a successful
     message (with a green background and the ``[OK]`` label). It's meant to be
     used once to display the final result of executing the given command, but you
@@ -293,7 +298,7 @@ Displaying the Result of the Command
             'Consectetur adipiscing elit',
         ));
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::warning`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::warning`
     It displays the given string or array of strings highlighted as a warning
     message (with a read background and the ``[WARNING]`` label). It's meant to be
     used once to display the final result of executing the given command, but you
@@ -310,7 +315,7 @@ Displaying the Result of the Command
             'Consectetur adipiscing elit',
         ));
 
-:method:`Symfony\\Component\\Console\\Helper\\StyleInterface::error`
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::error`
     It displays the given string or array of strings highlighted as an error
     message (with a read background and the ``[ERROR]`` label). It's meant to be
     used once to display the final result of executing the given command, but you
@@ -340,7 +345,7 @@ define your own set of console styles. Just create a class that implements the
 
     class CustomStyle implements StyleInterface
     {
-        // implement the methods of the interface...
+        // ...implement the methods of the interface
     }
 
 Then, instantiate this custom class instead of the default ``SymfonyStyle`` in
