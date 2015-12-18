@@ -378,9 +378,8 @@ is compared to the hashed password returned by your ``getPassword()`` method.
                     'AppBundle\Security\User\WebserviceUser' => array(
                         'algorithm' => 'bcrypt',
                         'cost' => 12,
-                    )
+                    ),
                 ),
-                // ...
             ));
 
 .. _MessageDigestPasswordEncoder: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/MessageDigestPasswordEncoder.php
