@@ -35,6 +35,11 @@ to create files and execute the following commands:
     c:\> cd projects/
     c:\projects\> php symfony new blog
 
+.. note::
+
+    If the installer doesn't work for you or doesn't output anything, make sure
+    that the `Phar extension`_ is installed and enabled on your computer.
+
 This command creates a new directory called ``blog`` that contains a fresh new
 project based on the most recent stable Symfony version available. In addition,
 the installer checks if your system meets the technical requirements to execute
@@ -178,3 +183,4 @@ the Symfony directory structure.
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/signing-project-releases.html
+.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
