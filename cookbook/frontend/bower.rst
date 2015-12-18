@@ -135,6 +135,11 @@ For more details, read the article `Checking in front-end dependencies`_.
 But, it's very possible that Bower will add a lock feature in the future
 (e.g. `bower/bower#1748`_).
 
+Bower.json
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another option is to just commit your bower.json to git which holds the different dependencies. Then use `bower install` to install the required dependencies.
+
 .. _Bower: http://bower.io
 .. _`Node.js`: https://nodejs.org
 .. _BowerPHP: http://bowerphp.org/
