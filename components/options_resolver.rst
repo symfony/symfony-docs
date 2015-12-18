@@ -367,6 +367,43 @@ to add additional allowed types without erasing the ones already set.
     the values to be given as an array mapping option names to allowed types:
     ``$resolver->setAllowedTypes(array('port' => array('null', 'int')));``
 
+You can specify an array of a specific type as an allowed option. The expected type is
+validated in the same way as before (``is_<type>()`` or an ``instanceof`` check).
+Only for an array, this is done recursively. If you expect an option to be an array of
+``DateTime`` instances or a numeric array, you can specify this as follows::
+
+    // ...
+    class Mailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            $resolver->setAllowedTypes('dates', 'DateTime[]');
+            $resolver->setAllowedTypes('ports', 'int[]');
+        }
+    }
+
+Because the OptionsResolver will validate typed arrays recurively, it is possible to
+resolve multi-dimensional arrays, too::
+
+    // ...
+    class Mailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            //allowed type is a 2D array of string values
+            $resolver->setAllowedTypes('hosts', 'string[][]');
+        }
+    }
+
+.. versionadded:: 3.1
+    Before Symfony 3.1, the allowed types had to be scalar values, qualified classes
+    or interfaces. The only way to ensure the values of an array were of the right type
+    was to use a normalizer.
+
 Value Validation
 ~~~~~~~~~~~~~~~~
 
