@@ -97,16 +97,15 @@ optional second argument of the ``new`` command:
 .. code-block:: bash
 
     # use the most recent version in any Symfony branch
-    $ symfony new my_project_name 2.3
-    $ symfony new my_project_name 2.5
     $ symfony new my_project_name 2.6
+    $ symfony new my_project_name 2.8
 
     # use a specific Symfony version
-    $ symfony new my_project_name 2.3.26
-    $ symfony new my_project_name 2.6.5
+    $ symfony new my_project_name 2.7.3
+    $ symfony new my_project_name 2.8.1
 
     # use a beta or RC version (useful for testing new Symfony versions)
-    $ symfony new my_project 2.7.0-BETA1
+    $ symfony new my_project 2.8.0-BETA1
     $ symfony new my_project 2.7.0-RC1
 
 The installer also supports a special version called ``lts`` which installs the
@@ -153,7 +152,7 @@ version as the second argument of the ``create-project`` command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.3.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "2.8.*"
 
 .. tip::
 
