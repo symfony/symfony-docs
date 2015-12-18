@@ -733,7 +733,7 @@ cookie_lifetime
 **type**: ``integer`` **default**: ``null``
 
 This determines the lifetime of the session - in seconds. The default value
-- ``null`` - means that the ``sesssion.cookie_lifetime`` value from ``php.ini``
+- ``null`` - means that the ``session.cookie_lifetime`` value from ``php.ini``
 will be used. Setting this value to ``0`` means the cookie is valid for
 the length of the browser session.
 
