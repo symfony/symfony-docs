@@ -164,8 +164,8 @@ of the application are isolated in a new file called ``model.php``:
     {
         $link = open_database_connection();
     
-    	$result = $link->query('SELECT id, title FROM post');
-    	$result->setFetchMode(PDO::FETCH_ASSOC);
+      	$result = $link->query('SELECT id, title FROM post');
+      	$result->setFetchMode(PDO::FETCH_ASSOC);
         
         $posts = array();
         while ($row = $result->fetch()) {
