@@ -98,15 +98,15 @@ optional second argument of the ``new`` command:
 
     # use the most recent version in any Symfony branch
     $ symfony new my_project_name 2.8
-    $ symfony new my_project_name 3.0
+    $ symfony new my_project_name 3.1
 
     # use a specific Symfony version
-    $ symfony new my_project_name 2.7.3
     $ symfony new my_project_name 2.8.1
+    $ symfony new my_project_name 3.0.2
 
     # use a beta or RC version (useful for testing new Symfony versions)
     $ symfony new my_project 3.0.0-BETA1
-    $ symfony new my_project 2.7.0-RC1
+    $ symfony new my_project 3.1.0-RC1
 
 The installer also supports a special version called ``lts`` which installs the
 most recent :ref:`Symfony LTS version <releases-lts>` available:
@@ -152,7 +152,7 @@ version as the second argument of the ``create-project`` command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "3.0.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "3.1.*"
 
 .. tip::
 
