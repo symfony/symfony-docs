@@ -97,7 +97,7 @@ from inside a controller::
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
-                'form' => $form->createView(),
+                'form' => $form->createView()
             ));
         }
     }
@@ -212,7 +212,7 @@ Handling Form Submissions
 
 The second job of a form is to translate user-submitted data back to the
 properties of an object. To make this happen, the submitted data from the
-user must be written into the form. Add the following functionality to your
+user must be written into ``$form``. Add the following functionality to your
 controller::
 
     // ...
@@ -679,9 +679,12 @@ the documentation for each type.
     The most common option is the ``required`` option, which can be applied to
     any field. By default, the ``required`` option is set to ``true``, meaning
     that HTML5-ready browsers will apply client-side validation if the field
-    is left blank. If you don't want this behavior, either set the ``required``
-    option on your field to ``false`` or
-    :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`.
+    is left blank. If you don't want this behavior, either
+    :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
+    or set the ``required`` option on your field to ``false``:
+    
+      ->add('dueDate', 'date', array('widget' => 'single_text',
+      'required' => false))
 
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
@@ -920,7 +923,7 @@ specify it:
 
 Some field types have additional rendering options that can be passed
 to the widget. These options are documented with each type, but one common
-options is ``attr``, which allows you to modify attributes on the form element.
+option is ``attr``, which allows you to modify attributes on the form element.
 The following would add the ``task_field`` class to the rendered input text
 field:
 

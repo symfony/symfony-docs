@@ -282,7 +282,7 @@ can now re-use the form customization across many templates:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/Form/fields.html.twig #}
+    {# src/AppBundle/Resources/views/Form/fields.html.twig #}
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}

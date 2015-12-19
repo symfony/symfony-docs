@@ -201,7 +201,7 @@ First, build a base layout file:
         <!DOCTYPE html>
         <html>
             <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta charset="UTF-8">
                 <title>{% block title %}Test Application{% endblock %}</title>
             </head>
             <body>
@@ -226,7 +226,7 @@ First, build a base layout file:
         <!DOCTYPE html>
         <html>
             <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta charset="UTF-8">
                 <title><?php $view['slots']->output('title', 'Test Application') ?></title>
             </head>
             <body>
@@ -311,7 +311,7 @@ output might look like this:
     <!DOCTYPE html>
     <html>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta charset="UTF-8">
             <title>My cool blog posts</title>
         </head>
         <body>
@@ -369,6 +369,19 @@ When working with template inheritance, here are some tips to keep in mind:
 
           {{ parent() }}
       {% endblock %}
+
+* Blocks can be nested. For better overview, you can add the block name to the
+  ``{% endblock %}`` tag like this:
+
+  .. code-block:: html+jinja
+
+      {% block foo %}
+          {# ... #}
+          {% block bar %}
+              {# ... #}
+          {% endblock bar %}
+          {# ... #}
+      {% endblock foo %}
 
 .. index::
    single: Templating; Naming conventions

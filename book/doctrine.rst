@@ -953,8 +953,6 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                 products:
                     targetEntity: Product
                     mappedBy: category
-            # don't forget to init the collection in the __construct() method
-            # of the entity
 
     .. code-block:: xml
 
@@ -1096,7 +1094,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
 .. note::
 
-    This task should only be really used during development. For a more robust
+    This command should only be used during development. For a more robust
     method of systematically updating your production database, read about
     `migrations`_.
 
@@ -1187,7 +1185,7 @@ You can also query in the other direction::
         // ...
     }
 
-In this case, the same things occurs: you first query out for a single ``Category``
+In this case, the same things occur: you first query out for a single ``Category``
 object, and then Doctrine makes a second query to retrieve the related ``Product``
 objects, but only once/if you ask for them (i.e. when you call ``->getProducts()``).
 The ``$products`` variable is an array of all ``Product`` objects that relate
