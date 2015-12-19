@@ -1,0 +1,88 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-23T08:56:06Z
+
+Nice! :+1: I'd tweak it a bit and I'd remove the version number to leave it as follows:
+
+```
+$ composer require ircmaxell/password-compat
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-23T09:09:37Z
+
+I agree. There's little risk a compatibility package releases a new major version containing BC breaks. Though if we wanted to keep a version, I would use `~1.0` or something similar instead.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-23T09:16:26Z
+
+if the version is not necessary i am :+1:
+
+but i remembered this: https://github.com/sonata-project/SonataAdminBundle/pull/2649#discussion-diff-22264493
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-23T09:20:36Z
+
+@OskarStark thanks for the info. I agree with @xabbuh's comments.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-23T09:21:44Z
+
+so everything is fine or shall i change something?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-10-23T09:22:43Z
+
+I'd use:
+
+```
+composer require ircmaxell/password-compat:~1.0
+```
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-23T09:29:08Z
+
+fine for me, will change that
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-10-23T09:31:17Z
+
+Done, branch ``2.3`` is ok?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-23T20:12:28Z
+
+I actually do not like the version (note that the comment of me you linked was talking about a root package install, otherwise we often omit the version number).
+
+However, if we want to use the version, we should change it to this to have Windows compability:
+```bash
+$ composer require ircmaxell/password-compat "~1.0"
+```
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T23:53:46Z
+
+@OskarStark can you please take a look at my comment and update this PR or comment?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-12-18T08:02:23Z
+
+Will change that
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-12-19T05:40:09Z
+
+done!
+
+fine?
