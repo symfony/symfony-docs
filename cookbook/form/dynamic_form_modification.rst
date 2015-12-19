@@ -246,7 +246,7 @@ Using an event listener, your form might look like this::
 
         public function getName()
         {
-            return 'friend_message';
+            return 'app_friend_message';
         }
 
         public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -393,7 +393,7 @@ it with :ref:`dic-tags-form-type`.
                 class: AppBundle\Form\Type\FriendMessageFormType
                 arguments: ['@security.context']
                 tags:
-                    - { name: form.type, alias: friend_message }
+                    - { name: form.type, alias: app_friend_message }
 
     .. code-block:: xml
 
@@ -401,7 +401,7 @@ it with :ref:`dic-tags-form-type`.
         <services>
             <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
                 <argument type="service" id="security.context" />
-                <tag name="form.type" alias="friend_message" />
+                <tag name="form.type" alias="app_friend_message" />
             </service>
         </services>
 
@@ -409,7 +409,7 @@ it with :ref:`dic-tags-form-type`.
 
         // app/config/config.php
         $definition = new Definition('AppBundle\Form\Type\FriendMessageFormType');
-        $definition->addTag('form.type', array('alias' => 'friend_message'));
+        $definition->addTag('form.type', array('alias' => 'app_friend_message'));
         $container->setDefinition(
             'app.form.friend_message',
             $definition,
@@ -430,7 +430,7 @@ class, you can simply call::
     {
         public function newAction(Request $request)
         {
-            $form = $this->createForm('friend_message');
+            $form = $this->createForm('app_friend_message');
 
             // ...
         }
@@ -441,7 +441,7 @@ You can also easily embed the form type into another form::
     // inside some other "form type" class
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('message', 'friend_message');
+        $builder->add('message', 'app_friend_message');
     }
 
 .. _cookbook-form-events-submitted-data:
