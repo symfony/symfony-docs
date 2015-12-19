@@ -164,7 +164,7 @@ link for details), create a ``gender_widget`` block to handle this:
             twig:
                 form:
                     resources:
-                        - ':form/fields.html.twig'
+                        - 'form/fields.html.twig'
 
         .. code-block:: xml
 
@@ -181,7 +181,7 @@ link for details), create a ``gender_widget`` block to handle this:
             $container->loadFromExtension('twig', array(
                 'form' => array(
                     'resources' => array(
-                        ':form/fields.html.twig',
+                        'form/fields.html.twig',
                     ),
                 ),
             ));
@@ -197,7 +197,7 @@ link for details), create a ``gender_widget`` block to handle this:
                 templating:
                     form:
                         resources:
-                            - ':form:fields.html.twig'
+                            - ':form:fields.html.php'
 
         .. code-block:: xml
 
@@ -212,7 +212,7 @@ link for details), create a ``gender_widget`` block to handle this:
                 <framework:config>
                     <framework:templating>
                         <framework:form>
-                            <framework:resource>:form:fields.html.twig</twig:resource>
+                            <framework:resource>:form:fields.html.php</twig:resource>
                         </framework:form>
                     </framework:templating>
                 </framework:config>
@@ -225,7 +225,7 @@ link for details), create a ``gender_widget`` block to handle this:
                 'templating' => array(
                     'form' => array(
                         'resources' => array(
-                            ':form:fields.html.twig',
+                            ':form:fields.html.php',
                         ),
                     ),
                 ),
