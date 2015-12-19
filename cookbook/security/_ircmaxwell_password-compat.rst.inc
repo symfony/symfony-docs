@@ -5,9 +5,4 @@
 
     .. code-block:: json
 
-        {
-            "require": {
-                ...
-                "ircmaxell/password-compat": "~1.0.3"
-            }
-        }
+        $ require ircmaxell/password-compat "~1.0"
