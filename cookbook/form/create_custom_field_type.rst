@@ -171,7 +171,7 @@ link for details), create a ``gender_widget`` block to handle this:
             <!-- app/config/config.xml -->
             <twig:config>
                 <twig:form>
-                    <twig:resource>:form/fields.html.twig</twig:resource>
+                    <twig:resource>form/fields.html.twig</twig:resource>
                 </twig:form>
             </twig:config>
 
