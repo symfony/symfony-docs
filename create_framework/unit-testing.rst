@@ -91,6 +91,12 @@ We are now ready to write our first test::
         protected function getFrameworkForException($exception)
         {
             $matcher = $this->getMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
+            $context = $this->getMock('Symfony\Component\Routing\RequestContext');
+            $matcher
+                ->expects($this->once())
+                ->method('getContext')
+                ->willReturn($context)
+            ;
             $matcher
                 ->expects($this->once())
                 ->method('match')
@@ -146,6 +152,12 @@ Response::
     public function testControllerResponse()
     {
         $matcher = $this->getMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
+        $context = $this->getMock('Symfony\Component\Routing\RequestContext');
+        $matcher
+            ->expects($this->once())
+            ->method('getContext')
+            ->willReturn($context)
+        ;
         $matcher
             ->expects($this->once())
             ->method('match')
