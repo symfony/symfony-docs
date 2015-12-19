@@ -45,7 +45,7 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
 
         public function getName()
         {
-            return 'gender';
+            return 'app_gender';
         }
     }
 
