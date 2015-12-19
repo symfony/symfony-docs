@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-10-21T08:19:32Z
+
+Using the ``Form/fields.html.twig`` notation would be better, as this is what we use almost everywhere in the doc now
+
+---------------------------------------------------------------------------
+
+by stof at 2015-10-21T08:20:08Z
+
+note that this notation can be used only for Twig, not for PHP templates
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-10-21T15:30:47Z
+
+Actually, it should be `form/fields.html.twig`.
+
+---------------------------------------------------------------------------
+
+by roukmoute at 2015-10-22T08:47:41Z
+
+@stof: I must keep this [notation](http://symfony.com/doc/current/book/templating.html#referencing-templates-in-a-bundle) for `code-block:: php` or for the section `For the PHP templating engine[...]` ?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-10-22T09:27:54Z
+
+the PHP example needs to keep using the ``:Form`` notation yeah
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T23:55:28Z
+
+@roukmoute can you please update the first 3 code blocks to use `form/fields.html.twig` and the other 3 to `:form:fields.html.twig`?
+
+If you don't have time, feel free to say so and I'll finish this PR.
+
+---------------------------------------------------------------------------
+
+by roukmoute at 2015-12-19T01:13:05Z
+
+Is it OK ?
