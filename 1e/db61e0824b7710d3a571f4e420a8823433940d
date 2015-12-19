@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-01T12:13:23Z
+
+Do you know what the `true` argument was supposed to do?
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-02T00:26:11Z
+
+I guess it was a typo. AFAIK the second argument has always been an array of options.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-02T12:19:41Z
+
+:+1:
