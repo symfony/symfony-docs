@@ -370,19 +370,6 @@ When working with template inheritance, here are some tips to keep in mind:
           {{ parent() }}
       {% endblock %}
 
-* Blocks can be nested. For better overview, you can add the block name to the
-  ``{% endblock %}`` tag like this:
-
-  .. code-block:: html+jinja
-
-      {% block foo %}
-          {# ... #}
-          {% block bar %}
-              {# ... #}
-          {% endblock bar %}
-          {# ... #}
-      {% endblock foo %}
-
 .. index::
    single: Templating; Naming conventions
    single: Templating; File locations

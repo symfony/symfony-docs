@@ -97,7 +97,7 @@ from inside a controller::
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ));
         }
     }
@@ -212,8 +212,8 @@ Handling Form Submissions
 
 The second job of a form is to translate user-submitted data back to the
 properties of an object. To make this happen, the submitted data from the
-user must be written into ``$form``. Add the following functionality to your
-controller::
+user must be written into the Form object. Add the following functionality to
+your controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Request;
@@ -681,10 +681,12 @@ the documentation for each type.
     that HTML5-ready browsers will apply client-side validation if the field
     is left blank. If you don't want this behavior, either
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
-    or set the ``required`` option on your field to ``false``:
+    or set the ``required`` option on your field to ``false``::
     
-      ->add('dueDate', 'date', array('widget' => 'single_text',
-      'required' => false))
+        ->add('dueDate', 'date', array(
+            'widget' => 'single_text',
+            'required' => false
+        ))
 
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a

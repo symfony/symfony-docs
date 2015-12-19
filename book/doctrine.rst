@@ -953,6 +953,8 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                 products:
                     targetEntity: Product
                     mappedBy: category
+        # Don't forget to initialize the collection in
+        # the __construct() method of the entity
 
     .. code-block:: xml
 
