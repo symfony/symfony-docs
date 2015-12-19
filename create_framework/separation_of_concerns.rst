@@ -82,13 +82,13 @@ be autoloaded, update the ``composer.json`` file:
     {
         "...": "...",
         "autoload": {
-            "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
+            "psr-4": { "": "src/" }
         }
     }
 
 .. note::
 
-    For the Composer autoloader to be updated, run ``composer update``.
+    For the Composer autoloader to be updated, run ``composer dump-autoload``.
 
 Move the controller to ``Calendar\Controller\LeapYearController``::
 

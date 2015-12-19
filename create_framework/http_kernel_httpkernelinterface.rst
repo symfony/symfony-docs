@@ -9,7 +9,6 @@ goal by making our framework implement ``HttpKernelInterface``::
     namespace Symfony\Component\HttpKernel;
 
     // ...
-
     interface HttpKernelInterface
     {
         /**
