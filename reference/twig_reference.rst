@@ -98,7 +98,7 @@ asset
 
 .. code-block:: twig
 
-    {{ asset(path, packageName, absolute = false, version = null) }}
+    {{ asset(path, packageName = null) }}
 
 ``path``
     **type**: ``string``

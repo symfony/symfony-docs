@@ -354,11 +354,6 @@ for the hash algorithm.
 Using the BCrypt Password Encoder
 ---------------------------------
 
-.. caution::
-
-    To use this encoder, you either need to use PHP Version 5.5 or install
-    the `ircmaxell/password-compat`_ library via Composer.
-
 .. configuration-block::
 
     .. code-block:: yaml

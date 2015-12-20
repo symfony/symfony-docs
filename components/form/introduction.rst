@@ -398,8 +398,6 @@ is created from the form factory.
 
         $form = $formFactory->createBuilder()
             ->add('task', TextType::class)
-            // If you use PHP 5.3 or 5.4, you must use
-            // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
             ->add('dueDate', DateType::class)
             ->getForm();
 
@@ -426,8 +424,6 @@ is created from the form factory.
 
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class)
-                    // If you use PHP 5.3 or 5.4, you must use
-                    // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
                     ->add('dueDate', DateType::class)
                     ->getForm();
 
@@ -439,8 +435,7 @@ is created from the form factory.
 
 As you can see, creating a form is like writing a recipe: you call ``add``
 for each new field you want to create. The first argument to ``add`` is the
-name of your field, and the second is the fully qualified class name. If you
-use PHP 5.5 or above, you can use ``::class`` constant of a form type. The Form
+name of your field, and the second is the fully qualified class name. The Form
 component comes with a lot of :doc:`built-in types </reference/forms/types>`.
 
 Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`

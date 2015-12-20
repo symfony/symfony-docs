@@ -145,11 +145,6 @@ Example::
         }
     }
 
-.. tip::
-
-    If you still use PHP 5.3, you can extend the
-    :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestClass` instead.
-
 Dump Examples and Output
 ------------------------
 

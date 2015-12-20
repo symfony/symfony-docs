@@ -510,14 +510,12 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, since 2.7 you can use the built-in command :
 
 .. code-block:: bash
 
-    $ php app/console security:encode-password
+    $ php bin/console security:encode-password
 
 It will give you something like this:
 
@@ -1368,7 +1366,7 @@ security vulnerability in your installed dependencies:
 
 .. code-block:: bash
 
-    $ php app/console security:check
+    $ php bin/console security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,

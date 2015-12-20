@@ -97,16 +97,16 @@ optional second argument of the ``new`` command:
 .. code-block:: bash
 
     # use the most recent version in any Symfony branch
-    $ symfony new my_project_name 2.6
     $ symfony new my_project_name 2.8
+    $ symfony new my_project_name 3.1
 
     # use a specific Symfony version
-    $ symfony new my_project_name 2.7.3
     $ symfony new my_project_name 2.8.1
+    $ symfony new my_project_name 3.0.2
 
     # use a beta or RC version (useful for testing new Symfony versions)
-    $ symfony new my_project 2.8.0-BETA1
-    $ symfony new my_project 2.7.0-RC1
+    $ symfony new my_project 3.0.0-BETA1
+    $ symfony new my_project 3.1.0-RC1
 
 The installer also supports a special version called ``lts`` which installs the
 most recent :ref:`Symfony LTS version <releases-lts>` available:
@@ -152,7 +152,7 @@ version as the second argument of the ``create-project`` command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.8.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "3.1.*"
 
 .. tip::
 
@@ -170,7 +170,7 @@ browsing the project directory and executing this command:
 .. code-block:: bash
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -201,7 +201,7 @@ server with the ``server:stop`` command:
 
 .. code-block:: bash
 
-    $ php app/console server:stop
+    $ php bin/console server:stop
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
@@ -220,8 +220,8 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the ``app/cache`` and
-    ``app/logs`` directories must be writable both by the web server and the
+    One common issue when installing Symfony is that the ``var/cache`` and
+    ``var/logs`` directories must be writable both by the web server and the
     command line user. On a UNIX system, if your web server user is different
     from your command line user, you can try one of the following solutions.
 
@@ -242,12 +242,12 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ rm -rf app/cache/*
-        $ rm -rf app/logs/*
+        $ rm -rf var/cache/*
+        $ rm -rf var/logs/*
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
+        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
 
 
     **3. Using ACL on a system that does not support chmod +a**
@@ -261,8 +261,8 @@ If there are any issues, correct them now before moving on.
     .. code-block:: bash
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
+        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
 
     If this doesn't work, try adding ``-n`` option.
 
@@ -271,7 +271,7 @@ If there are any issues, correct them now before moving on.
     If none of the previous methods work for you, change the umask so that the
     cache and log directories will be group-writable or world-writable (depending
     if the web server user and the command line user are in the same group or not).
-    To achieve this, put the following line at the beginning of the ``app/console``,
+    To achieve this, put the following line at the beginning of the ``bin/console``,
     ``web/app.php`` and ``web/app_dev.php`` files::
 
         umask(0002); // This will let the permissions be 0775
@@ -312,7 +312,7 @@ several minutes to complete.
 
     .. code-block:: bash
 
-        $ php app/console security:check
+        $ php bin/console security:check
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
@@ -337,7 +337,7 @@ of the Symfony Installer anywhere in your system:
     c:\projects\> php symfony demo
 
 Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
-built-in web server executing the ``php app/console server:run`` command. Access
+built-in web server executing the ``php bin/console server:run`` command. Access
 to the ``http://localhost:8000`` URL in your browser to start using the Symfony
 Demo application.
 

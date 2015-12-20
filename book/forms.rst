@@ -95,8 +95,6 @@ from inside a controller::
 
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
-                // If you use PHP 5.3 or 5.4 you must use
-                // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
                 ->add('dueDate', DateType::class)
                 ->add('save', SubmitType::class, array('label' => 'Create Task'))
                 ->getForm();

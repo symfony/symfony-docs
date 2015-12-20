@@ -274,11 +274,11 @@ using the console. To show all events and their listeners, run:
 
 .. code-block:: bash
 
-    $ php app/console debug:event-dispatcher
+    $ php bin/console debug:event-dispatcher
 
 You can get registered listeners for a particular event by specifying
 its name:
 
 .. code-block:: bash
 
-    $ php app/console debug:event-dispatcher kernel.exception
+    $ php bin/console debug:event-dispatcher kernel.exception
