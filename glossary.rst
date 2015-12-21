@@ -121,7 +121,7 @@ Glossary
 
    YAML
         *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
-        lightweight, humane data serialization language used extensively in
+        lightweight, human friendly data serialization language used extensively in
         Symfony's configuration files. See the :doc:`/components/yaml/introduction`
         chapter.
 
