@@ -1235,7 +1235,7 @@ Define your form type as a service.
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
-        use ;
+        use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.form.type.task', 'AppBundle\Form\Type\TaskType')
             ->addArgument(new Reference('app.my_service'))

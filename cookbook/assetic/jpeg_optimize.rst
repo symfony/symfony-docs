@@ -32,11 +32,21 @@ using the ``bin`` option of the ``jpegoptim`` filter:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -90,12 +100,22 @@ to ``true``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim"
-                strip_all="true" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim"
+                    strip_all="true" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -131,12 +151,22 @@ be at the expense of its quality:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim"
-                max="70" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim"
+                    max="70" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -173,15 +203,25 @@ following configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-            <assetic:twig>
-                <assetic:twig_function
-                    name="jpegoptim" />
-            </assetic:twig>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim" />
+                <assetic:twig>
+                    <assetic:twig_function
+                        name="jpegoptim" />
+                </assetic:twig>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -223,16 +263,26 @@ file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-            <assetic:twig>
-                <assetic:twig_function
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
                     name="jpegoptim"
-                    output="images/*.jpg" />
-            </assetic:twig>
-        </assetic:config>
+                    bin="path/to/jpegoptim" />
+                <assetic:twig>
+                    <assetic:twig_function
+                        name="jpegoptim"
+                        output="images/*.jpg" />
+                </assetic:twig>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
