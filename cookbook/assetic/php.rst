@@ -93,7 +93,12 @@ First, configure a new ``scssphp`` Assetic filter:
         <!-- app/config/config.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed" />
@@ -161,7 +166,12 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
         <!-- app/config/config.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <filter name="jsqueeze" />
