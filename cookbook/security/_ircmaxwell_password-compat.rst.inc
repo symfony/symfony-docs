@@ -5,4 +5,4 @@
 
     .. code-block:: bash
 
-        $ require ircmaxell/password-compat "~1.0"
+        $ composer require ircmaxell/password-compat "~1.0"
