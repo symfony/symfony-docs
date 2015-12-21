@@ -29,10 +29,9 @@ persisted to the database. Writing in flat PHP is quick and dirty:
 
     <?php
     // index.php
-    $link = mysql_connect('localhost', 'myuser', 'mypassword');
-    mysql_select_db('blog_db', $link);
+    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-    $result = mysql_query('SELECT id, title FROM post', $link);
+    $result = $link->query('SELECT id, title FROM post');
     ?>
 
     <!DOCTYPE html>
@@ -43,7 +42,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
         <body>
             <h1>List of Posts</h1>
             <ul>
-                <?php while ($row = mysql_fetch_assoc($result)): ?>
+                <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
                 <li>
                     <a href="/show.php?id=<?php echo $row['id'] ?>">
                         <?php echo $row['title'] ?>
@@ -55,7 +54,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     </html>
 
     <?php
-    mysql_close($link);
+    $link = null;
     ?>
 
 That's quick to write, fast to execute, and, as your app grows, impossible
@@ -81,25 +80,23 @@ Isolating the Presentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The code can immediately gain from separating the application "logic" from
-the code that prepares the HTML "presentation":
-
-.. code-block:: html+php
+the code that prepares the HTML "presentation"::
 
     // index.php
-    $link = mysql_connect('localhost', 'myuser', 'mypassword');
-    mysql_select_db('blog_db', $link);
+    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-    $result = mysql_query('SELECT id, title FROM post', $link);
+    $result = $link->query('SELECT id, title FROM post');
 
     $posts = array();
-    while ($row = mysql_fetch_assoc($result)) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $posts[] = $row;
     }
 
-    mysql_close($link);
+    $link = null;
 
     // include the HTML presentation code
     require 'templates/list.php';
+
 
 The HTML code is now stored in a separate file (``templates/list.php``), which
 is primarily an HTML file that uses a template-like PHP syntax:
@@ -141,31 +138,29 @@ Isolating the Application (Domain) Logic
 So far the application contains only one page. But what if a second page
 needed to use the same database connection, or even the same array of blog
 posts? Refactor the code so that the core behavior and data-access functions
-of the application are isolated in a new file called ``model.php``:
-
-.. code-block:: html+php
+of the application are isolated in a new file called ``model.php``::
 
     // model.php
     function open_database_connection()
     {
-        $link = mysql_connect('localhost', 'myuser', 'mypassword');
-        mysql_select_db('blog_db', $link);
+        $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
         return $link;
     }
 
     function close_database_connection($link)
     {
-        mysql_close($link);
+        $link = null;
     }
 
     function get_all_posts()
     {
         $link = open_database_connection();
 
-        $result = mysql_query('SELECT id, title FROM post', $link);
+        $result = $link->query('SELECT id, title FROM post');
+
         $posts = array();
-        while ($row = mysql_fetch_assoc($result)) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = $row;
         }
         close_database_connection($link);
@@ -182,9 +177,7 @@ of the application are isolated in a new file called ``model.php``:
    in this example, only a portion (or none) of the model is actually concerned
    with accessing a database.
 
-The controller (``index.php``) is now very simple:
-
-.. code-block:: html+php
+The controller (``index.php``) is now very simple::
 
     require_once 'model.php';
 
@@ -261,11 +254,9 @@ an individual blog result based on a given id::
     function get_post_by_id($id)
     {
         $link = open_database_connection();
-
         $id = intval($id);
-        $query = 'SELECT created_at, title, body FROM post WHERE id = '.$id;
-        $result = mysql_query($query);
-        $row = mysql_fetch_assoc($result);
+        $result = $link->query('SELECT created_at, title, body FROM post WHERE id = '.$id);
+        $row = $result->fetch(PDO::FETCH_ASSOC);
 
         close_database_connection($link);
 
@@ -273,9 +264,7 @@ an individual blog result based on a given id::
     }
 
 Next, create a new file called ``show.php`` - the controller for this new
-page:
-
-.. code-block:: html+php
+page::
 
     require_once 'model.php';
 
@@ -353,9 +342,7 @@ You're about to take a **big** step with the application. With one file handling
 all requests, you can centralize things such as security handling, configuration
 loading, and routing. In this application, ``index.php`` must now be smart
 enough to render the blog post list page *or* the blog post show page based
-on the requested URI:
-
-.. code-block:: html+php
+on the requested URI::
 
     // index.php
 
@@ -365,9 +352,9 @@ on the requested URI:
 
     // route the request internally
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    if ('/index.php' == $uri) {
+    if ('/index.php' === $uri) {
         list_action();
-    } elseif ('/index.php/show' == $uri && isset($_GET['id'])) {
+    } elseif ('/index.php/show' === $uri && isset($_GET['id'])) {
         show_action($_GET['id']);
     } else {
         header('Status: 404 Not Found');
@@ -375,9 +362,7 @@ on the requested URI:
     }
 
 For organization, both controllers (formerly ``index.php`` and ``show.php``)
-are now PHP functions and each has been moved into a separate file, ``controllers.php``:
-
-.. code-block:: php
+are now PHP functions and each has been moved into a separate file, ``controllers.php``::
 
     function list_action()
     {
@@ -455,9 +440,7 @@ to interpret each request and return a response. To this end, Symfony provides
 both a :class:`Symfony\\Component\\HttpFoundation\\Request` and a
 :class:`Symfony\\Component\\HttpFoundation\\Response` class. These classes are
 object-oriented representations of the raw HTTP request being processed and
-the HTTP response being returned. Use them to improve the blog:
-
-.. code-block:: html+php
+the HTTP response being returned. Use them to improve the blog::
 
     // index.php
     require_once 'vendor/autoload.php';
@@ -468,9 +451,9 @@ the HTTP response being returned. Use them to improve the blog:
     $request = Request::createFromGlobals();
 
     $uri = $request->getPathInfo();
-    if ('/' == $uri) {
+    if ('/' === $uri) {
         $response = list_action();
-    } elseif ('/show' == $uri && $request->query->has('id')) {
+    } elseif ('/show' === $uri && $request->query->has('id')) {
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
@@ -482,9 +465,7 @@ the HTTP response being returned. Use them to improve the blog:
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,
-incidentally, acts quite a bit like the Symfony templating engine:
-
-.. code-block:: php
+incidentally, acts quite a bit like the Symfony templating engine::
 
     // controllers.php
     use Symfony\Component\HttpFoundation\Response;

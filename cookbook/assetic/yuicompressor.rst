@@ -43,14 +43,24 @@ stylesheets:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="yui_css"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
-            <assetic:filter
-                name="yui_js"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="yui_css"
+                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                <assetic:filter
+                    name="yui_js"
+                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 

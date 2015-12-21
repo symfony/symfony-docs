@@ -79,12 +79,22 @@ your JavaScripts:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <!-- bin: the path to the uglifyjs executable -->
-            <assetic:filter
-                name="uglifyjs2"
-                bin="/usr/local/bin/uglifyjs" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <!-- bin: the path to the uglifyjs executable -->
+                <assetic:filter
+                    name="uglifyjs2"
+                    bin="/usr/local/bin/uglifyjs" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -137,12 +147,22 @@ can configure its location using the ``node`` key:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config
-            node="/usr/bin/nodejs" >
-            <assetic:filter
-                name="uglifyjs2"
-                bin="/usr/local/bin/uglifyjs" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config
+                node="/usr/bin/nodejs" >
+                <assetic:filter
+                    name="uglifyjs2"
+                    bin="/usr/local/bin/uglifyjs" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -253,11 +273,21 @@ Next, add the configuration for this filter:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="uglifycss"
-                bin="/usr/local/bin/uglifycss" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="uglifycss"
+                    bin="/usr/local/bin/uglifycss" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
