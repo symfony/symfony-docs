@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-18T00:02:48Z
+
+I like updating this to not use mysql. Can you please fix the whitespace issues?
+
+---------------------------------------------------------------------------
+
+by iqbalmalik89 at 2015-12-18T08:34:35Z
+
+Yes, I am working on it.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-19T13:37:20Z
+
+As you can see in the diff of this PR, there are still some whitespace issues.
+
+Anyway, we can also fix these while merging the PR, so I'm :+1: for this PR.
+
+---------------------------------------------------------------------------
+
+by iqbalmalik89 at 2015-12-21T05:53:45Z
+
+Alright. It's my first PR. So what's the next step?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-21T09:54:08Z
+
+@iqbalmalik89 now this PR can be considered finished, the doc team (@weaverryan, @xabbuh, @javiereguiluz and me) can vote on the PR. After at least 2 team members voted +1 (you have mine already), the PR will be merged.
+
+So unfortunately for you, it'll be a waiting game now.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-21T09:57:35Z
+
+:+1: this change is in fact an urgent necessity now that `mysql` is deprecated/dead.
+
+@iqbalmalik89 thanks for taking care of this and for this nice pull request.
