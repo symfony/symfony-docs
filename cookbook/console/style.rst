@@ -363,7 +363,7 @@ of your commands to change their appearance::
     {
         // ...
 
-        public function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output)
         {
             // Before
             // $io = new SymfonyStyle($input, $output);
