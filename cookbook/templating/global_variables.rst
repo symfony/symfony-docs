@@ -7,33 +7,13 @@ How to Inject Variables into all Templates (i.e. global Variables)
 Sometimes you want a variable to be accessible to all the templates you use.
 This is possible inside your ``app/config/config.yml`` file:
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        twig:
-            # ...
-            globals:
-                ga_tracking: UA-xxxxx-x
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <twig:config>
-            <!-- ... -->
-            <twig:global key="ga_tracking">UA-xxxxx-x</twig:global>
-        </twig:config>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('twig', array(
-             // ...
-             'globals' => array(
-                 'ga_tracking' => 'UA-xxxxx-x',
-             ),
-        ));
+    # app/config/config.yml
+    twig:
+        # ...
+        globals:
+            ga_tracking: UA-xxxxx-x
 
 Now, the variable ``ga_tracking`` is available in all Twig templates:
 
@@ -55,30 +35,13 @@ system, which lets you isolate or reuse the value:
     parameters:
         ga_tracking: UA-xxxxx-x
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    # app/config/config.yml
+    twig:
+        globals:
+            ga_tracking: '%ga_tracking%'
 
-        # app/config/config.yml
-        twig:
-            globals:
-                ga_tracking: '%ga_tracking%'
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <twig:config>
-            <twig:global key="ga_tracking">%ga_tracking%</twig:global>
-        </twig:config>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('twig', array(
-             'globals' => array(
-                 'ga_tracking' => '%ga_tracking%',
-             ),
-        ));
 
 The same variable is available exactly as before.
 
