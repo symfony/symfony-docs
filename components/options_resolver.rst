@@ -384,7 +384,7 @@ Only for an array, this is done recursively. If you expect an option to be an ar
         }
     }
 
-Because the OptionsResolver will validate typed arrays recurively, it is possible to
+Because the OptionsResolver will validate typed arrays recursively, it is possible to
 resolve multi-dimensional arrays, too::
 
     // ...
