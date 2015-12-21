@@ -17,7 +17,8 @@ code. This is perfectly fine if you don't need to reuse the form somewhere else.
 But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
-    namespace AppBundle\Form;
+    // src/AppBundle/Form/Type/PostType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -51,7 +52,8 @@ form in its own PHP class::
 
 To use the class, use ``createForm`` and instantiate the new class::
 
-    use AppBundle\Form\PostType;
+    // src/AppBundle/Controller/PostController.php
+    use AppBundle\Form\Type\PostType;
     // ...
 
     public function newAction(Request $request)
@@ -91,6 +93,7 @@ directly in your form class, this would effectively limit the scope of that form
 
 .. code-block:: php
 
+    // src/AppBundle/Form/Type/PostType.php
     class PostType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -108,12 +111,13 @@ This form *may* have been designed for creating posts, but if you wanted
 to reuse it for editing posts, the button label would be wrong. Instead,
 some developers configure form buttons in the controller::
 
-    namespace AppBundle\Controller\Admin;
+    // src/AppBundle/Controller/PostController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use AppBundle\Entity\Post;
-    use AppBundle\Form\PostType;
+    use AppBundle\Form\Type\PostType;
 
     class PostController extends Controller
     {
@@ -139,6 +143,7 @@ view layer:
 
 .. code-block:: html+twig
 
+    {# src/AppBundle/Resources/views/Post/new.html.twig #}
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
@@ -159,6 +164,7 @@ fields:
 
 .. code-block:: html+twig
 
+    {# src/AppBundle/Resources/views/Post/new.html.twig #}
     {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
@@ -176,6 +182,7 @@ Handling a form submit usually follows a similar template:
 
 .. code-block:: php
 
+    // src/AppBundle/Controller/PostController.php
     public function newAction(Request $request)
     {
         // build the form ...
