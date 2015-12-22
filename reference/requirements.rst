@@ -14,7 +14,7 @@ your requirements from the command line via:
 
 .. code-block:: bash
 
-    $ php app/check.php
+    $ php bin/symfony_requirements
 
 Below is the list of required and optional requirements.
 
