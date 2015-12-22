@@ -5,17 +5,16 @@ Using the Autowiring
 ====================
 
 Autowiring allows to register services in the container with minimal configuration.
-It is practical in the field of Rapid Application Development, when designing prototypes
-and in early stages of large projects. It makes it easy to bootstrap an app service
+It is useful in the field of `Rapid Application Development`_, when designing prototypes
+in early stages of large projects. It makes it easy to bootstrap an app service
 graph and eases refactoring.
 
-Let’s see how it works. To do so we will build a fake API publishing statutes on a Twitter
-feed obfuscated with ROT13 (a special case of the Caesar cipher).
+Imagine you're building an API to publish statuses on a Twitter feed, obfuscated
+with `ROT13`.. (a special case of the Caesar cipher).
 
 Start by creating a ROT13 transformer class::
 
     // src/AppBundle/Rot13Transformer.php
-
     namespace AppBundle;
 
     class Rot13Transformer
@@ -29,7 +28,6 @@ Start by creating a ROT13 transformer class::
 And now a Twitter client using this transformer::
 
     // src/AppBundle/TwitterClient.php
-
     namespace AppBundle;
 
     class TwitterClient
@@ -45,21 +43,19 @@ And now a Twitter client using this transformer::
         {
             $transformedStatus = $this->rot13Transformer->transform($status);
 
-            // Connect to Twitter and send the encoded status
+            // ... connect to Twitter and send the encoded status
         }
     }
 
 
-The Dependency Injection Component is now able to automatically register the dependencies
-of this ``TwitterClient`` class. The ``twitter_client`` service definition just
-need to be marked as autowired:
+The Dependency Injection Component will be able able to automatically register the dependencies
+of this ``TwitterClient`` class by marking the ``twitter_client`` service as autowired:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/services.yml
-
         services:
             twitter_client:
                 class:    AppBundle\TwitterClient
@@ -68,7 +64,6 @@ need to be marked as autowired:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -89,28 +84,25 @@ need to be marked as autowired:
 
         $container->setDefinition('twitter_client', $definition);
 
-The autowiring subsystem will parse the constructor of the ``TwitterClient`` class
-and detects its dependencies that way. Here it will find and fill the need for
-an instance of a ``Rot13Transformer``.
-
-If an existing service definition (and only one – see below) is of the needed type,
-it will inject it. Here it’s not the case, but the subsystem is smart enough to
-automatically register a private service for the Rot13Transformer class and set
-it as first argument of the ``twitter_client`` service. Again, it can work only
-if there is one class of the given type. If there are several classes of the same
-type, you must fallback to the explicit service definition or register a default
-implementation.
+The autowiring subsystem will detect the dependencies of the ``TwitterClient``
+class by parsing its constructor. For instance it will find here an instance of
+a ``Rot13Transformer`` as dependency. If an existing service definition (and only
+one – see below) is of the required type, this service will be injected. If it
+not the case (like in this example), the subsystem is smart enough to automatically
+register a private service for the ``Rot13Transformer`` class and set it as first
+argument of the `twitter_client``` service. Again, it can work only if there is one
+class of the given type. If there are several classes of the same type, you must
+use an explicit service definition or register a default implementation.
 
 As you can see, the autowiring feature drastically reduces the amount of configuration
 required to define a service. No more arguments section! It also makes it easy
 to change the dependencies of the ``TwitterClient`` class: just add or remove typehinted
-arguments in the constructor and you’re done. There is no need anymore to search
+arguments in the constructor and you are done. There is no need anymore to search
 and edit related service definitions.
 
 Here is a typical controller using the ``twitter_client`` service::
 
     // src/AppBundle/Controller/DefaultController.php
-
     namespace AppBundle\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -151,18 +143,17 @@ It should return ``OK``.
 Working with Interfaces
 -----------------------
 
-This is nice but when the application grows, it’s recommended to code against abstractions
-instead of implementations: it allows to easily replace some dependencies without
+You might also find yourself using abstractions instead of implementations (especially
+in grown applications) as it allows to easily replace some dependencies without
 modifying the class depending of them.
 
 To follow this best practice, constructor arguments must be typehinted with interfaces
 and not concrete classes. It allows to replace easily the current implementation
 if necessary.
 
-Let’s introduce a ``Rot13TransformerInterface``::
+Let's introduce a ``Rot13TransformerInterface``::
 
     // src/AppBundle/Rot13TransformerInterface.php
-
     namespace AppBundle;
 
     interface Rot13TransformerInterface
@@ -194,14 +185,13 @@ And update ``TwitterClient`` to depend of this new interface::
     }
 
 Finally the service definition must be updated because, obviously, the autowiring
-subsystem isn’t able to find itself the interface implementation to register::
+subsystem isn't able to find itself the interface implementation to register::
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/services.yml
-
         services:
             rot13_transformer:
                 class: AppBundle\Rot13Transformer
@@ -213,7 +203,6 @@ subsystem isn’t able to find itself the interface implementation to register::
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -246,11 +235,10 @@ Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
 Last but not least, the autowiring feature allows to specify the default implementation
-of a given type. Let’s introduce a new implementation of the ``Rot13TransformerInterface``
+of a given type. Let's introduce a new implementation of the ``Rot13TransformerInterface``
 returning the result of the ROT13 transformation uppercased::
 
     // src/AppBundle/UppercaseRot13Transformer.php
-
     namespace AppBundle;
 
     class UppercaseRot13Transformer implements Rot13TransformerInterface
@@ -275,7 +263,6 @@ We can now refactor the controller to add another endpoint leveraging this new
 transformer::
 
     // src/AppBundle/Controller/DefaultController.php
-
     namespace AppBundle\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -329,7 +316,6 @@ and a Twitter client using it::
     .. code-block:: yaml
 
         # app/config/services.yml
-
         services:
             rot13_transformer:
                 class: AppBundle\Rot13Transformer
@@ -350,7 +336,6 @@ and a Twitter client using it::
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -402,10 +387,13 @@ to use by default. This key can take a list of types if necessary (using a YAML
 array).
 
 Thanks to this setting, the ``rot13_transformer`` service is automatically injected
-as argument of the uppercase_rot13_transformer and twitter_client services. For
+as an argument of the ``uppercase_rot13_transformer`` and ``twitter_client`` services. For
 the ``uppercase_twitter_client``, we use a standard service definition to inject
 the specific ``uppercase_rot13_transformer`` service.
 
 As for other RAD features such as the FrameworkBundle controller or annotations,
 keep in mind to not use autowiring in public bundles nor in large projects with
 complex maintenance needs.
+
+.. _Rapid Application Development: https://en.wikipedia.org/wiki/Rapid_application_development
+.. _ROT13: https://en.wikipedia.org/wiki/ROT13
