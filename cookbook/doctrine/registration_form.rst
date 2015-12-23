@@ -1,18 +1,24 @@
 .. index::
    single: Doctrine; Simple Registration Form
    single: Form; Simple Registration Form
+   single: Security; Simple Registration Form
 
-How to Implement a simple Registration Form
+How to Implement a Simple Registration Form
 ===========================================
 
 Creating a registration form is pretty easy - it *really* means just creating
-a form that will update some ``User`` model object (a Doctrine entity in this example)
-and then save it.
+a form that will update some ``User`` model object (a Doctrine entity in this
+example) and then save it.
 
 .. tip::
 
-    The popular `FOSUserBundle`_ provides a registration form, reset password form
-    and other user management functionality.
+    The popular `FOSUserBundle`_ provides a registration form, reset password
+    form and other user management functionality.
+
+.. _the-simple-user-model:
+
+The Simple User Entity
+----------------------
 
 If you don't already have a ``User`` entity and a working login system,
 first start with :doc:`/cookbook/security/entity_provider`.
@@ -30,11 +36,6 @@ Your ``User`` entity will probably at least have the following fields:
 
 ``password``
     The encoded password.
-
-``plainPassword``
-    This field is *not* persisted: (notice no ``@ORM\Column`` above it). It
-    temporarily stores the plain password from the registration form. This field
-    can be validated then used to populate the ``password`` field.
 
 With some validation added, your class may look something like this::
 
@@ -61,7 +62,7 @@ With some validation added, your class may look something like this::
         private $id;
 
         /**
-         * @ORM\Column(type="string", length=255)
+         * @ORM\Column(type="string", length=255, unique=true)
          * @Assert\NotBlank()
          * @Assert\Email()
          */
@@ -74,16 +75,12 @@ With some validation added, your class may look something like this::
         private $username;
 
         /**
-         * @Assert\NotBlank()
-         * @Assert\Length(max = 4096)
-         */
-        private $plainPassword;
-
-        /**
          * The below length depends on the "algorithm" you use for encoding
          * the password, but this works well with bcrypt
          *
-         * @ORM\Column(type="string", length=64)
+         * @ORM\Column(type="string", length=255)
+         * @Assert\NotBlank()
+         * @Assert\Length(max=4096)
          */
         private $password;
 
@@ -109,14 +106,14 @@ With some validation added, your class may look something like this::
             $this->username = $username;
         }
 
-        public function getPlainPassword()
+        public function getPassword()
         {
-            return $this->plainPassword;
+            return $this->password;
         }
 
-        public function setPlainPassword($password)
+        public function setPassword($password)
         {
-            $this->plainPassword = $password;
+            $this->password = $password;
         }
 
         public function setPassword($password)
@@ -135,7 +132,7 @@ example, see the :ref:`Entity Provider <security-crete-user-entity>` article.
 
 .. sidebar:: Why the 4096 Password Limit?
 
-    Notice that the ``plainPassword`` field has a max length of 4096 characters.
+    Notice that the ``password`` field has a max length of 4096 characters.
     For security purposes (`CVE-2013-5750`_), Symfony limits the plain password
     length to 4096 characters when encoding it. Adding this constraint makes
     sure that your form will give a validation error if anyone tries a super-long
@@ -146,8 +143,10 @@ example, see the :ref:`Entity Provider <security-crete-user-entity>` article.
     only place where you don't need to worry about this is your login form,
     since Symfony's Security component handles this for you.
 
-Create a Form for the Model
----------------------------
+.. _create-a-form-for-the-model:
+
+Create a Form for the Entity
+----------------------------
 
 Next, create the form for the ``User`` entity::
 
@@ -165,7 +164,7 @@ Next, create the form for the ``User`` entity::
             $builder
                 ->add('email', 'email')
                 ->add('username', 'text')
-                ->add('plainPassword', 'repeated', array(
+                ->add('password', 'repeated', array(
                     'type' => 'password',
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
@@ -186,8 +185,8 @@ Next, create the form for the ``User`` entity::
         }
     }
 
-There are just three fields: ``email``, ``username`` and ``plainPassword``
-(repeated to confirm the entered password).
+There are just three fields: ``email``, ``username`` and ``password`` (repeated
+to confirm the entered password).
 
 .. tip::
 
@@ -224,8 +223,7 @@ controller for displaying the registration form::
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $encoder = $this->get('security.encoder_factory')
-                    ->getEncoder($user);
+                $encoder = $this->get('security.encoder_factory')->getEncoder($user);
                 $password = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
                 $user->setPassword($password);
 
@@ -248,6 +246,47 @@ controller for displaying the registration form::
             );
         }
     }
+
+Storing plain-text passwords is bad practice, so before saving the user data
+into the database the submitted plain-text password is replaced by an encoded
+one. To define the algorithm used to encode the password configure the encoder
+in the security configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            encoders:
+                AppBundle\Entity\User: bcrypt
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <encoder class="AppBundle\Entity\User">bcrypt</encoder>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'encoders' => array(
+                'AppBundle\Entity\User' => 'bcrypt',
+            ),
+        ));
+
+In this case the recommended ``bcrypt`` algorithm is used. To learn more
+about how to encode the users password have a look into the
+:ref:`security chapter <book-security-encoding-user-password>`.
 
 .. note::
 
