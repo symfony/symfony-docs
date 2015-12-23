@@ -11,9 +11,9 @@ Starting from Symfony 2.8, Assetic is no longer included by default in the
 Symfony Standard Edition. Before using any of its features, install the
 AsseticBundle executing this console command in your project:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        $ composer require symfony/assetic-bundle
+    $ composer require symfony/assetic-bundle
 
 Then, enable the bundle in the ``AppKernel.php`` file of your Symfony application::
 
