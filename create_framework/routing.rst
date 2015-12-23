@@ -41,8 +41,7 @@ One very important aspect of any website is the form of its URLs. Thanks to
 the URL map, we have decoupled the URL from the code that generates the
 associated response, but it is not yet flexible enough. For instance, we might
 want to support dynamic paths to allow embedding data directly into the URL
-instead of relying on a query string (like ``/hello/Fabien`` instead of
-``/hello?name=Fabien``).
+(e.g. ``/hello/Fabien``) instead of relying on a query string (e.g. ``/hello?name=Fabien``).
 
 To support this feature, add the Symfony Routing component as a dependency:
 
