@@ -116,8 +116,7 @@ work:
 * ``2.3``, if you are fixing a bug for an existing feature (you may have
   to choose a higher branch if the feature you are fixing was introduced
   in a later version);
-* ``2.8``, if you are adding a new feature which is backward compatible;
-* ``master``, if you are adding a new and backward incompatible feature.
+* ``master``, if you are adding a new feature.
 
 .. note::
 

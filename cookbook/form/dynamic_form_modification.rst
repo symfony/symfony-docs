@@ -374,13 +374,15 @@ you need to register it as a service and tag it with :ref:`form.type <dic-tags-f
     .. code-block:: php
 
         // app/config/config.php
-        $definition = new Definition('AppBundle\Form\Type\FriendMessageFormType');
-        $definition->addTag('form.type');
-        $container->setDefinition(
-            'app.form.friend_message',
-            $definition,
-            array('security.token_storage')
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $definition = new Definition(
+            'AppBundle\Form\Type\FriendMessageFormType',
+            array(new Reference('security.token_storage'))
         );
+        $definition->addTag('form.type');
+
+        $container->setDefinition('app.form.friend_message', $definition);
 
 In a controller that extends the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
 class, you can simply call::

@@ -18,7 +18,6 @@ Even if the "application" we wrote in the previous chapter was simple enough,
 it suffers from a few problems::
 
     // framework/index.php
-
     $input = $_GET['name'];
 
     printf('Hello %s', $input);
@@ -27,7 +26,6 @@ First, if the ``name`` query parameter is not defined in the URL query string,
 you will get a PHP warning; so let's fix it::
 
     // framework/index.php
-
     $input = isset($_GET['name']) ? $_GET['name'] : 'World';
 
     printf('Hello %s', $input);
@@ -60,7 +58,6 @@ snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
 
     // framework/test.php
-
     class IndexTest extends \PHPUnit_Framework_TestCase
     {
         public function testHello()
@@ -147,7 +144,6 @@ Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
 
     // framework/index.php
-
     require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -227,7 +223,7 @@ With the ``Response`` class, you can easily tweak the response::
 
 .. tip::
 
-    To debug a Response, cast it to a string; it will return the HTTP
+    To debug a response, cast it to a string; it will return the HTTP
     representation of the response (headers and content).
 
 Last but not the least, these classes, like every other class in the Symfony
@@ -239,7 +235,7 @@ framework?
 
 Even something as simple as getting the client IP address can be insecure::
 
-    if ($myIp == $_SERVER['REMOTE_ADDR']) {
+    if ($myIp === $_SERVER['REMOTE_ADDR']) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -248,7 +244,7 @@ production servers; at this point, you will have to change your code to make
 it work on both your development machine (where you don't have a proxy) and
 your servers::
 
-    if ($myIp == $_SERVER['HTTP_X_FORWARDED_FOR'] || $myIp == $_SERVER['REMOTE_ADDR']) {
+    if ($myIp === $_SERVER['HTTP_X_FORWARDED_FOR'] || $myIp === $_SERVER['REMOTE_ADDR']) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -258,7 +254,7 @@ chained proxies)::
 
     $request = Request::createFromGlobals();
 
-    if ($myIp == $request->getClientIp()) {
+    if ($myIp === $request->getClientIp()) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -271,7 +267,7 @@ explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
     Request::setTrustedProxies(array('10.0.0.1'));
 
-    if ($myIp == $request->getClientIp(true)) {
+    if ($myIp === $request->getClientIp(true)) {
         // the client is a known one, so give it some more privilege
     }
 
