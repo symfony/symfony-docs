@@ -63,7 +63,7 @@ requested URL::
 
 The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
-:doc:`DomCrawler component </components/dom_crawler>`_, and which allows
+:doc:`DomCrawler component </components/dom_crawler>`, and which allows
 accessing and traversing HTML elements programmatically.
 
 Clicking Links
