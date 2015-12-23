@@ -258,7 +258,7 @@ directly in the template that's actually rendering the form.
 
 .. code-block:: html+twig
 
-    {% extends '::base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
     {% form_theme form _self %}
 
@@ -297,7 +297,7 @@ can now re-use the form customization across many templates:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/Form/fields.html.twig #}
+    {# app/Resources/views/form/fields.html.twig #}
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
@@ -313,7 +313,7 @@ tell Symfony to use the template via the ``form_theme`` tag:
 
 .. code-block:: html+twig
 
-    {% form_theme form 'AppBundle:Form:fields.html.twig' %}
+    {% form_theme form 'form/fields.html.twig' %}
 
     {{ form_widget(form.age) }}
 
@@ -329,13 +329,12 @@ name of all the templates as an array using the ``with`` keyword:
 
 .. code-block:: html+twig
 
-    {% form_theme form with ['::common.html.twig', ':Form:fields.html.twig',
-                             'AppBundle:Form:fields.html.twig'] %}
+    {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] %}
 
     {# ... #}
 
-The templates can be located at different bundles and they can even be stored
-at the global ``app/Resources/views/`` directory.
+The templates can also be located in different bundles, use the functional name
+to reference these templates, e.g. ``AcmeFormExtraBundle:form:fields.html.twig``.
 
 Child Forms
 ...........
@@ -344,16 +343,16 @@ You can also apply a form theme to a specific child of your form:
 
 .. code-block:: html+twig
 
-    {% form_theme form.child 'AppBundle:Form:fields.html.twig' %}
+    {% form_theme form.child 'form/fields.html.twig' %}
 
 This is useful when you want to have a custom theme for a nested form that's
 different than the one of your main form. Just specify both your themes:
 
 .. code-block:: html+twig
 
-    {% form_theme form 'AppBundle:Form:fields.html.twig' %}
+    {% form_theme form 'form/fields.html.twig' %}
 
-    {% form_theme form.child 'AppBundle:Form:fields_child.html.twig' %}
+    {% form_theme form.child 'form/fields_child.html.twig' %}
 
 .. _cookbook-form-php-theming:
 
@@ -369,9 +368,13 @@ file in order to customize the ``integer_widget`` fragment.
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Form/integer_widget.html.php -->
+    <!-- app/Resources/views/form/integer_widget.html.php -->
     <div class="integer_widget">
-        <?php echo $view['form']->block($form, 'form_widget_simple', array('type' => isset($type) ? $type : "number")) ?>
+        <?php echo $view['form']->block(
+            $form,
+            'form_widget_simple',
+            array('type' => isset($type) ? $type : "number")
+        ) ?>
     </div>
 
 Now that you've created the customized form template, you need to tell Symfony
@@ -382,7 +385,7 @@ tell Symfony to use the theme via the ``setTheme`` helper method:
 
 .. code-block:: php
 
-    <?php $view['form']->setTheme($form, array('AppBundle:Form')); ?>
+    <?php $view['form']->setTheme($form, array(':form')); ?>
 
     <?php $view['form']->widget($form['age']) ?>
 
@@ -395,7 +398,14 @@ method:
 
 .. code-block:: php
 
-    <?php $view['form']->setTheme($form['child'], 'AppBundle:Form/Child'); ?>
+    <?php $view['form']->setTheme($form['child'], ':form'); ?>
+
+.. note::
+
+    The ``:form`` syntax is based on the functional names for templates:
+    ``Bundle:Directory``. As the form directory lives in the
+    ``app/Resources/views`` directory, the ``Bundle`` part is empty, resulting
+    in ``:form``.
 
 .. _cookbook-form-twig-import-base-blocks:
 
@@ -469,8 +479,8 @@ Twig
 ~~~~
 
 By using the following configuration, any customized form blocks inside the
-``AppBundle:Form:fields.html.twig`` template will be used globally when a
-form is rendered.
+``form/fields.html.twig`` template will be used globally when a form is
+rendered.
 
 .. configuration-block::
 
@@ -479,14 +489,14 @@ form is rendered.
         # app/config/config.yml
         twig:
             form_themes:
-                - 'AppBundle:Form:fields.html.twig'
+		- 'form/fields.html.twig'
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
-            <twig:form-theme>AppBundle:Form:fields.html.twig</twig:form-theme>
+            <twig:form-theme>form/fields.html.twig</twig:form-theme>
             <!-- ... -->
         </twig:config>
 
@@ -495,7 +505,7 @@ form is rendered.
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
-                'AppBundle:Form:fields.html.twig',
+		'form/fields.html.twig',
             ),
 
             // ...
@@ -671,7 +681,7 @@ customize the ``name`` field only:
     .. code-block:: html+php
 
         <!-- Main template -->
-        <?php echo $view['form']->setTheme($form, array('AppBundle:Form')); ?>
+        <?php echo $view['form']->setTheme($form, array(':form')); ?>
 
         <?php echo $view['form']->widget($form['name']); ?>
 
@@ -728,7 +738,7 @@ You can also override the markup for an entire field row using the same method:
     .. code-block:: html+php
 
         <!-- Main template -->
-        <?php echo $view['form']->setTheme($form, array('AppBundle:Form')); ?>
+        <?php echo $view['form']->setTheme($form, array(':form')); ?>
 
         <?php echo $view['form']->row($form['name']); ?>
 

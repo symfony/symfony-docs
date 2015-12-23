@@ -403,13 +403,15 @@ it with :ref:`dic-tags-form-type`.
     .. code-block:: php
 
         // app/config/config.php
-        $definition = new Definition('AppBundle\Form\Type\FriendMessageFormType');
-        $definition->addTag('form.type', array('alias' => 'app_friend_message'));
-        $container->setDefinition(
-            'app.form.friend_message',
-            $definition,
-            array('security.token_storage')
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $definition = new Definition(
+            'AppBundle\Form\Type\FriendMessageFormType',
+            array(new Reference('security.token_storage'))
         );
+        $definition->addTag('form.type', array('alias' => 'app_friend_message'));
+
+        $container->setDefinition('app.form.friend_message', $definition);
 
 If you wish to create it from within a service that has access to the form factory,
 you then use::
