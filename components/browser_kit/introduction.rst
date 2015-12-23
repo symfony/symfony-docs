@@ -47,7 +47,7 @@ This method accepts a request and should return a response::
 
 For a simple implementation of a browser based on an HTTP layer, have a look
 at `Goutte`_. For an implementation based on ``HttpKernelInterface``, have a
-look at the Client provided by the :doc:`/components/http_kernel/introduction`.
+look at the Client provided by the :doc:`HttpKernel component </components/http_kernel/introduction>`.
 
 Making Requests
 ~~~~~~~~~~~~~~~
