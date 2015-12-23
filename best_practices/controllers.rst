@@ -157,7 +157,7 @@ also show a 404 page if no ``Post`` can be found.
 When Things Get More Advanced
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This works without any configuration because the wildcard name ``{id}`` matches
+The above example works without any configuration because the wildcard name ``{id}`` matches
 the name of the property on the entity. If this isn't true, or if you have
 even more complex logic, the easiest thing to do is just query for the entity
 manually. In our application, we have this situation in ``CommentController``:
