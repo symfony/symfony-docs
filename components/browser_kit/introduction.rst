@@ -62,8 +62,9 @@ requested URL::
     $crawler = $client->request('GET', 'http://symfony.com');
 
 The value returned by the ``request()`` method is an instance of the
-:class:`Symfony\\Component\\DomCrawler\\Crawler` class, which allows accessing
-and traversing HTML elements programmatically.
+:class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
+:doc:`DomCrawler component </components/dom_crawler>`_, and which allows
+accessing and traversing HTML elements programmatically.
 
 Clicking Links
 ~~~~~~~~~~~~~~
@@ -83,10 +84,12 @@ the needed HTTP GET request to simulate the link click::
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
-The ``Crawler`` object is also capable of simulating form submissions. First,
-select the form via any of its buttons (thanks to the ``selectButton()`` and
-``form()`` methods). Then, fill in the form data to send and use the ``submit()``
-method to make the needed HTTP POST request to submit the form::
+The ``Crawler`` object is also capable of selecting forms. First, select any of
+the form's buttons with the ``selectButton()`` method. Then, use the ``form()``
+method to select the form which the button belongs to.
+
+After selecting the form, fill in its data and send it using the ``submit()``
+method (which makes the needed HTTP POST request to submit the form contents)::
 
     use Acme\Client;
 
@@ -125,17 +128,18 @@ retrieve any cookie while making requests with the client::
     $cookie = $cookieJar->get('name_of_the_cookie');
 
     // Get cookie data
-    $name = $cookie->getName();
-    $value = $cookie->getValue();
-    $raw = $cookie->getRawValue();
-    $secure = $cookie->isSecure();
+    $name       = $cookie->getName();
+    $value      = $cookie->getValue();
+    $raw        = $cookie->getRawValue();
+    $secure     = $cookie->isSecure();
     $isHttpOnly = $cookie->isHttpOnly();
-    $isExpired = $cookie->isExpired();
-    $expires = $cookie->getExpiresTime();
-    $path = $cookie->getPath();
-    $domain = $cookie->getDomain();
+    $isExpired  = $cookie->isExpired();
+    $expires    = $cookie->getExpiresTime();
+    $path       = $cookie->getPath();
+    $domain     = $cookie->getDomain();
 
 .. note::
+
     These methods only return cookies that have not expired.
 
 Looping Through Cookies
@@ -154,22 +158,19 @@ Looping Through Cookies
 
     // Get array with all cookies
     $cookies = $cookieJar->all();
-    foreach($cookies as $cookie)
-    {
+    foreach ($cookies as $cookie) {
         // ...
     }
 
     // Get all values
     $values = $cookieJar->allValues('http://symfony.com');
-    foreach($values as $value)
-    {
+    foreach ($values as $value) {
         // ...
     }
 
     // Get all raw values
     $rawValues = $cookieJar->allRawValues('http://symfony.com');
-    foreach($rawValues as $rawValue)
-    {
+    foreach ($rawValues as $rawValue) {
         // ...
     }
 
@@ -182,13 +183,7 @@ into the client constructor::
     use Acme\Client;
 
     // create cookies and add to cookie jar
-    $expires = new \DateTime();
-    $expires->add(new \DateInterval('P1D'));
-    $cookie = new Cookie(
-        'flavor',
-        'chocolate chip',
-        $now->getTimestamp()
-    );
+    $cookieJar = new Cookie('flavor', 'chocolate', strtotime('+1 day'));
 
     // create a client and set the cookies
     $client = new Client(array(), array(), $cookieJar);
@@ -204,17 +199,17 @@ history::
 
     // make a real request to an external site
     $client = new Client();
-    $home_crawler = $client->request('GET', 'http://symfony.com');
+    $client->request('GET', 'http://symfony.com');
 
     // select and click on a link
-    $doc_link = $crawler->selectLink('Documentation')->link();
-    $doc_crawler = $client->click($link);
+    $link = $crawler->selectLink('Documentation')->link();
+    $client->click($link);
 
     // go back to home page
-    $home_crawler = $client->back();
+    $crawler = $client->back();
 
     // go forward to documentation page
-    $doc_crawler = $client->forward();
+    $crawler = $client->forward();
 
 You can delete the client's history with the ``restart()`` method. This will
 also delete all the cookies::
@@ -223,10 +218,10 @@ also delete all the cookies::
 
     // make a real request to an external site
     $client = new Client();
-    $home_crawler = $client->request('GET', 'http://symfony.com');
+    $client->request('GET', 'http://symfony.com');
 
     // delete history
     $client->restart();
 
-.. _Packagist: https://packagist.org/packages/symfony/browser-kit
-.. _Goutte: https://github.com/fabpot/Goutte
+.. _`Packagist`: https://packagist.org/packages/symfony/browser-kit
+.. _`Goutte`: https://github.com/fabpot/Goutte
