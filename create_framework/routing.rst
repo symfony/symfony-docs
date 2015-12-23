@@ -5,7 +5,6 @@ Before we start diving into the Routing component, let's refactor our current
 framework just a little to make templates even more readable::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +33,6 @@ As we now extract the request query parameters, simplify the ``hello.php``
 template as follows::
 
     <!-- example.com/src/pages/hello.php -->
-
     Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
 Now, we are in good shape to add new features.
@@ -43,13 +41,8 @@ One very important aspect of any website is the form of its URLs. Thanks to
 the URL map, we have decoupled the URL from the code that generates the
 associated response, but it is not yet flexible enough. For instance, we might
 want to support dynamic paths to allow embedding data directly into the URL
-instead of relying on a query string:
-
-    # Before
-    /hello?name=Fabien
-
-    # After
-    /hello/Fabien
+instead of relying on a query string (like ``/hello/Fabien`` instead of
+``/hello?name=Fabien``).
 
 To support this feature, add the Symfony Routing component as a dependency:
 
@@ -102,21 +95,27 @@ The ``match()`` method takes a request path and returns an array of attributes
 ``_route`` attribute)::
 
     print_r($matcher->match('/bye'));
+    /* Gives:
     array (
       '_route' => 'bye',
     );
+    */
 
     print_r($matcher->match('/hello/Fabien'));
+    /* Gives:
     array (
       'name' => 'Fabien',
       '_route' => 'hello',
     );
+    */
 
     print_r($matcher->match('/hello'));
+    /* Gives:
     array (
       'name' => 'World',
       '_route' => 'hello',
     );
+    */
 
 .. note::
 
@@ -132,7 +131,6 @@ The URL matcher throws an exception when none of the routes match::
 With this knowledge in mind, let's write the new version of our framework::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -169,15 +167,11 @@ There are a few new things in the code:
 * Request attributes are extracted to keep our templates simple::
 
       <!-- example.com/src/pages/hello.php -->
-
       Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
-* Route configuration has been moved to its own file:
-
-  .. code-block:: php
+* Route configuration has been moved to its own file::
 
       // example.com/src/app.php
-
       use Symfony\Component\Routing;
 
       $routes = new Routing\RouteCollection();
