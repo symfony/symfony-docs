@@ -110,7 +110,7 @@ Retrieving Cookies
 ~~~~~~~~~~~~~~~~~~
 
 The ``Crawler`` object exposes cookies (if any) through a
-:class:`Symfony\Component\BrowserKit\CookieJar`, which allows you to store and
+:class:`Symfony\\Component\\BrowserKit\\CookieJar`, which allows you to store and
 retrieve any cookie while making requests with the client::
 
     use Acme\Client;
