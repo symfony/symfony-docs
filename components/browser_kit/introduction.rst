@@ -5,90 +5,91 @@
 The BrowserKit Component
 ========================
 
-    The BrowserKit component simulates the behavior of a web browser.
-
-The BrowserKit component allows you to make web requests, click on links and submit forms. 
+    The BrowserKit component simulates the behavior of a web browser, allowing
+    you to make requests, click on links and submit forms programmatically.
 
 Installation
 ------------
 
 You can install the component in two different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/browser-kit`` on `Packagist`_);
+* :doc:`Install it via Composer </components/using_components>`
+  (``symfony/browser-kit`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/BrowserKit).
 
 Basic Usage
 -----------
 
-.. note::
-
-    The component only provides an abstract client and does not provide any "default" backend for the HTTP layer.
-
 Creating a Client
------------------
+~~~~~~~~~~~~~~~~~
 
-To create your own client you must extend the abstract client class and implement the doRequest method.
-This method accepts a requests and should return a response.
+The component only provides an abstract client and does not provide any backend
+ready to use for the HTTP layer.
 
-.. code-block:: php
+To create your own client you must extend the abstract client class and
+implement the :method:`Symfony\\Component\\BrowserKit\\Client::doRequest` method.
+This method accepts a request and should return a response::
 
-    namespace ACME;
+    namespace Acme;
 
     use Symfony\Component\BrowserKit\Client as BaseClient;
     use Symfony\Component\BrowserKit\Response;
 
-    class Client extends BaseClient 
+    class Client extends BaseClient
     {
-        protected function doRequest($request) 
+        protected function doRequest($request)
         {
             // convert request into a response
             // ...
+
             return new Response($content, $status, $headers);
         }
     }
 
-For a simple implementation of a browser based on an HTTP layer, have a look at Goutte_.
-
-For an implementation based on ``HttpKernelInterface``, have a look at the Client provided by the :doc:`/components/http_kernel/introduction`.
-
+For a simple implementation of a browser based on an HTTP layer, have a look
+at `Goutte`_. For an implementation based on ``HttpKernelInterface``, have a
+look at the Client provided by the :doc:`/components/http_kernel/introduction`.
 
 Making Requests
 ~~~~~~~~~~~~~~~
 
-To make a request you use the client's request_ method. 
-The first two arguments are for the HTTP method and the request URL.
-The request method will return a crawler object.
+Use the :method:`Symfony\\Component\\BrowserKit\\Client::request` method to make
+any HTTP request. The first two arguments are for the HTTP method and the
+requested URL::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     $client = new Client();
     $crawler = $client->request('GET', 'http://symfony.com');
 
+The value returned by the ``request()`` method is an instance of the
+:class:`Symfony\\Component\\DomCrawler\\Crawler` class, which allows accessing
+and traversing HTML elements programmatically.
+
 Clicking Links
 ~~~~~~~~~~~~~~
 
-Select a link with the crawler and pass it to the click_ method to click on the link.
+The ``Crawler`` object is capable of simulating link clicks. First, pass the
+text content of the link to the ``selectLink()`` method, which returns you a
+``Link`` object. Then, pass this object to the ``click()`` method, which makes
+the needed HTTP GET request to simulate the link click::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     $client = new Client();
     $crawler = $client->request('GET', 'http://symfony.com');
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $client->click($link);
 
-Submiting Forms
-~~~~~~~~~~~~~~~
+Submitting Forms
+~~~~~~~~~~~~~~~~
 
-You can submit forms with the submit method which takes a form object.
-You can get the form object by using the crawler to select the button and running the form method.
+The ``Crawler`` object is also capable of simulating form submissions. First,
+select the form via any of its buttons (thanks to the ``selectButton()`` and
+``form()`` methods). Then, fill in the form data to send and use the ``submit()``
+method to make the needed HTTP POST request to submit the form::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     // make a real request to an external site
     $client = new Client();
@@ -105,14 +106,14 @@ You can get the form object by using the crawler to select the button and runnin
 Cookies
 -------
 
-Retreiving Cookies
-~~~~~~~~~~~~~~~~~~ 
+Retrieving Cookies
+~~~~~~~~~~~~~~~~~~
 
-The Crawler has a cookieJar which is a container for storing and recieving cookies.
+The ``Crawler`` object exposes cookies (if any) through a
+:class:`Symfony\Component\BrowserKit\CookieJar`, which allows you to store and
+retrieve any cookie while making requests with the client::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     // Make a request
     $client = new Client();
@@ -122,25 +123,28 @@ The Crawler has a cookieJar which is a container for storing and recieving cooki
     $cookieJar = $crawler->getCookieJar();
 
     // Get a cookie by name
-    $flavor = $cookieJar->get('flavor');
+    $cookie = $cookieJar->get('name_of_the_cookie');
 
     // Get cookie data
-    $name = $flavor->getName();
-    $value = $flavor->getValue();
-    $raw = $flavor->getRawValue();
-    $secure = $flavor->isSecure();
-    $isHttpOnly = $flavor->isHttpOnly();
-    $isExpired = $flavor->isExpired();
-    $expires = $flavor->getExpiresTime();
-    $path = $flavor->getPath();
-    $domain = $flavor->getDomain();
+    $name = $cookie->getName();
+    $value = $cookie->getValue();
+    $raw = $cookie->getRawValue();
+    $secure = $cookie->isSecure();
+    $isHttpOnly = $cookie->isHttpOnly();
+    $isExpired = $cookie->isExpired();
+    $expires = $cookie->getExpiresTime();
+    $path = $cookie->getPath();
+    $domain = $cookie->getDomain();
+
+.. note::
+    These methods only return cookies that have not expired.
 
 Looping Through Cookies
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
-    use ACME\Client;
+    use Acme\Client;
 
     // Make a request
     $client = new Client();
@@ -151,7 +155,7 @@ Looping Through Cookies
 
     // Get array with all cookies
     $cookies = $cookieJar->all();
-    foreach($cookies as $cookie) 
+    foreach($cookies as $cookie)
     {
         // ...
     }
@@ -170,17 +174,13 @@ Looping Through Cookies
         // ...
     }
 
-.. note::
-    These cookie jar methods only return cookies that have not expired.
-
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
-You can define create cookies and add them to a cookie jar that can be injected it into the client constructor. 
+You can also create cookies and add them to a cookie jar that can be injected
+into the client constructor::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     // create cookies and add to cookie jar
     $expires = new \DateTime();
@@ -198,11 +198,10 @@ You can define create cookies and add them to a cookie jar that can be injected 
 History
 -------
 
-The client stores all your requests allowing you to go back and forward in your history.
+The client stores all your requests allowing you to go back and forward in your
+history::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     // make a real request to an external site
     $client = new Client();
@@ -218,21 +217,17 @@ The client stores all your requests allowing you to go back and forward in your 
     // go forward to documentation page
     $doc_crawler = $client->forward();
 
-You can restart the client's history with the restart method. This will also clear out the CookieJar.
+You can delete the client's history with the ``restart()`` method. This will
+also delete all the cookies::
 
-.. code-block:: php
-
-    use ACME\Client;
+    use Acme\Client;
 
     // make a real request to an external site
     $client = new Client();
     $home_crawler = $client->request('GET', 'http://symfony.com');
 
-    // restart history
+    // delete history
     $client->restart();
-
 
 .. _Packagist: https://packagist.org/packages/symfony/browser-kit
 .. _Goutte: https://github.com/fabpot/Goutte
-.. _request: http://api.symfony.com/2.3/Symfony/Component/BrowserKit/Client.html#method_request
-.. _click: http://api.symfony.com/2.3/Symfony/Component/BrowserKit/Client.html#method_click
