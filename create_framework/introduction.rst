@@ -104,7 +104,6 @@ Instead of creating our framework from scratch, we are going to write the same
 start with the simplest web application we can think of in PHP::
 
     // framework/index.php
-
     $input = $_GET['name'];
 
     printf('Hello %s', $input);
@@ -116,8 +115,10 @@ You can use the PHP built-in server to test this great application in a browser
 
     $ php -S 127.0.0.1:4321
 
-In the next chapter, we are going to introduce the HttpFoundation Component
-and see what it brings us.
+Otherwise, you can always use your own server (Apache, Nginx, etc.).
+
+In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
+introduce the HttpFoundation Component and see what it brings us.
 
 .. _`Symfony`: http://symfony.com/
 .. _`Silex`: http://silex.sensiolabs.org/

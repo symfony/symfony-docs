@@ -6,7 +6,6 @@ spice things up a little bit, let's go crazy and add another page that says
 goodbye::
 
     // framework/bye.php
-
     require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +25,6 @@ The PHP way of doing the refactoring would probably be the creation of an
 include file::
 
     // framework/init.php
-
     require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +36,6 @@ include file::
 Let's see it in action::
 
     // framework/index.php
-
     require_once __DIR__.'/init.php';
 
     $input = $request->get('name', 'World');
@@ -49,7 +46,6 @@ Let's see it in action::
 And for the "Goodbye" page::
 
     // framework/bye.php
-
     require_once __DIR__.'/init.php';
 
     $response->setContent('Goodbye!');
@@ -76,7 +72,6 @@ routing all client requests to a single PHP script.
 Such a script might look like the following::
 
     // framework/front.php
-
     require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -103,7 +98,6 @@ Such a script might look like the following::
 And here is for instance the new ``hello.php`` script::
 
     // framework/hello.php
-
     $input = $request->get('name', 'World');
     $response->setContent(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
 
@@ -194,7 +188,6 @@ the ``setContent()`` directly from the front controller script::
 And the ``hello.php`` script can now be converted to a template::
 
     <!-- example.com/src/pages/hello.php -->
-
     <?php $name = $request->get('name', 'World') ?>
 
     Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
@@ -202,7 +195,6 @@ And the ``hello.php`` script can now be converted to a template::
 We have the first version of our framework::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;

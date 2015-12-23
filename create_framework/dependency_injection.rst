@@ -7,7 +7,6 @@ empty class, you might be tempted to move some code from the front controller
 to it::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\Routing;
@@ -33,7 +32,6 @@ to it::
 The front controller code would become more concise::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +92,6 @@ container:
 Create a new file to host the dependency injection container configuration::
 
     // example.com/src/container.php
-
     use Symfony\Component\DependencyInjection;
     use Symfony\Component\DependencyInjection\Reference;
 
@@ -147,7 +144,6 @@ it in other object definitions.
 The front controller is now only about wiring everything together::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -165,7 +161,6 @@ As all the objects are now created in the dependency injection container, the
 framework code should be the previous simple version::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\HttpKernel\HttpKernel;
