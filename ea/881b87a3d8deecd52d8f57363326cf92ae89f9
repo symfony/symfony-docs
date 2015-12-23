@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-28T20:14:29Z
+
+You could also add the missing use statement for the HttpKernel component (see https://github.com/symfony/symfony-docs/pull/5556#discussion_r35374644).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T20:16:31Z
+
+That was the original reason for doing this PR, but it turns out it isn't missing. It's included in a previous chapter or code example.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-28T20:20:44Z
+
+I see, but then we should imo add `// ...` placeholders where they are needed in that file.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-28T20:32:22Z
+
+Then we need to do it for 99% of the examples (as it's a tutorial, all code examples are an improvement of the previous shown example)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-07-29T06:21:33Z
+
+Hm, you're right. I think we can keep it as is then.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-19T13:16:44Z
+
+PR updated and ready imo
