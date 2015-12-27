@@ -151,11 +151,7 @@ exist::
 
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element. But
-sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
-:method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
-argument::
+``foo`` parameter and you will get back an array with a ``bar`` element::
 
     // the query string is '?foo[bar]=bar'
 
@@ -165,8 +161,16 @@ argument::
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo[bar]', null, true);
-    // returns 'bar'
+.. versionadded:: 3.0
+    It is no longer possible to get the value of "original" parameter ``foo[bar]``.
+    Prior, you were able to do this via the third argument of 
+    :method:`Symfony\\Component\\HttpFoundation\\Request::get`:
+
+    .. code-block:: php
+    
+        $request->query->get('foo[bar]', null, true);
+        // returns 'bar'
+    
 
 .. _component-foundation-attributes:
 
