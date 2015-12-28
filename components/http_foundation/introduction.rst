@@ -159,18 +159,7 @@ When PHP imports the request query, it handles request parameters like
     // returns array('bar' => 'bar')
 
     $request->query->get('foo[bar]');
-    // returns null
-
-.. versionadded:: 3.0
-    It is no longer possible to get the value of "original" parameter ``foo[bar]``.
-    Prior, you were able to do this via the third argument of 
-    :method:`Symfony\\Component\\HttpFoundation\\Request::get`:
-
-    .. code-block:: php
-    
-        $request->query->get('foo[bar]', null, true);
-        // returns 'bar'
-    
+    // returns null   
 
 .. _component-foundation-attributes:
 
