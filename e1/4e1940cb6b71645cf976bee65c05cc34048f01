@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-26T21:11:05Z
+
+Thanks for proposing this change Javier. However, we already have an example in http://symfony.com/doc/current/contributing/code/conventions.html#deprecations. Isn't that enough?
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-10-26T21:16:02Z
+
+Thank you for the feedback @xabbuh. That example is what I've referenced before.
+Indeed I think this PR aims to use an standardized syntax for messages inside `trigger_error()` calls (the same which is currently used for exception messages), regardless they are for deprecation notices or not.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-11-01T18:31:29Z
+
+I think you should then also add a link to the other section.
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-11-19T19:19:45Z
+
+@xabbuh, I don't know how to create a link to another doc's anchor. Moreover, I can't find anything documented at [Adding Links](https://symfony.com/doc/current/contributing/documentation/format.html#adding-links) section.
+
+Could you please give me some clue?
+Thanks in advance.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-10T11:34:32Z
+
+Sorry for not replying earlier. I completely missed your question. You can link to that section by using the sections label with the `ref`role like this, for example:
+
+```rst
+Read more at :ref:`contributing-code-conventions-deprecations`.
+```
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-12-18T22:06:28Z
+
+Thank you @xabbuh. I've updated the PR with your feedback.
+
+---------------------------------------------------------------------------
+
+by phansys at 2015-12-22T22:02:36Z
+
+@xabbuh, comments addressed.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-23T07:43:49Z
+
+:+1:
