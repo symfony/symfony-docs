@@ -134,6 +134,51 @@ Make sure this file is listed in your *imports*:
     imports:
         - { resource: parameters_platform.php }
 
+To bypass the following `Doctrine issue`_, you need to add a ``server_version``
+in your application configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        doctrine:
+            # ...
+            dbal:
+                # ...
+                server_version: 5.5
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
+        >
+
+            <!-- ... -->
+
+            <doctrine:config>
+                <!-- ... -->
+                <doctrine:dbal server-version="5.5" />
+            </doctrine:config>
+
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('doctrine', array(
+            // ...
+            'dbal' => array(
+                // ...
+                'server_version' => 5.5,
+            ),
+        ));
+
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -185,9 +230,10 @@ That's it! Your Symfony application will be bootstrapped and deployed. You'll
 soon be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh
-.. _`Platform.sh documentation`: https://docs.platform.sh/toolstacks/symfony/symfony-getting-started
+.. _`Platform.sh documentation`: https://docs.platform.sh/symfony/
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
 .. _`available services`: https://docs.platform.sh/reference/configuration-files/#configure-services
 .. _`migrating your database and files`: https://docs.platform.sh/toolstacks/php/symfony/migrate-existing-site/
+.. _`Doctrine issue`: https://github.com/doctrine/DoctrineBundle/issues/351#issuecomment-65771528
