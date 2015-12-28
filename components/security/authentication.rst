@@ -285,15 +285,11 @@ Authentication Success and Failure Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a provider authenticates the user, a ``security.authentication.success``
-event is dispatched.  Likewise, when no providers authenticate the user,
-a ``security.authentication.failure`` event is dispatched.  You
-could listen on the ``security.authentication.failure`` event, for example,
-in order to log failed login attempts.
-
-.. tip::
-
-    One of the authentication events is always triggered when a request points
-    to a secured area.
+event is dispatched.  Likewise, when a provider attempts authentication but
+fails (i.e. throws an ``AuthenticationException``), a
+``security.authentication.failure`` event is dispatched. You could listen on
+the ``security.authentication.failure`` event, for example, in order to log
+failed login attempts.
 
 Security Events
 ~~~~~~~~~~~~~~~
