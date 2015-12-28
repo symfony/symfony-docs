@@ -22,3 +22,4 @@ Security
     csrf_in_login_form
     access_control
     multiple_user_providers
+    throttle_failed_login
