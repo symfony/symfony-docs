@@ -945,7 +945,7 @@ username and the password are different only if all other validation passes
                 - Strict
             getters:
                 passwordLegal:
-                    - 'True':
+                    - 'IsTrue':
                         message: 'The password cannot match your username'
                         groups: [Strict]
             properties:
