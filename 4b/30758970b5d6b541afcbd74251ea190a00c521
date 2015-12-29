@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-29T10:20:29Z
+
+Thanks for your contribution @vudaltsov. Can you explain why you think we need to make this change? As you can see in the list right below the paragraph we actually have five form themes.
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2015-12-29T10:33:01Z
+
+@xabbuh yes, there are five themes in the list, but `four` is used in the sentence "Symfony comes with **four** built-in form themes". I suggest changing `four` to `five`
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-29T10:39:38Z
+
+Of course you are right. :+1:
