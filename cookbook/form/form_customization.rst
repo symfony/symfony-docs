@@ -101,7 +101,7 @@ rendering a form. In other words, if you want to customize one portion of
 how a form is rendered, you'll import a *theme* which contains a customization
 of the appropriate form fragments.
 
-Symfony comes with four **built-in form themes** that define each and every
+Symfony comes with five **built-in form themes** that define each and every
 fragment needed to render every part of a form:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element.
