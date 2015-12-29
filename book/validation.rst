@@ -639,7 +639,7 @@ this method must return ``true``:
         AppBundle\Entity\Author:
             getters:
                 passwordLegal:
-                    - 'True': { message: 'The password cannot match your first name' }
+                    - 'IsTrue': { message: 'The password cannot match your first name' }
 
     .. code-block:: xml
 
