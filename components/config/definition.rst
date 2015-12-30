@@ -429,7 +429,7 @@ method.
 
     $rootNode
         ->children()
-            ->inetegerNode('entries_per_page')
+            ->integerNode('entries_per_page')
                 ->info('This value is only used for the search results page.')
                 ->defaultValue(25)
             ->end()
