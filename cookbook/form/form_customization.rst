@@ -682,7 +682,7 @@ customize the ``name`` field only:
 
         <!-- app/Resources/views/Form/_product_name_widget.html.php -->
         <div class="text_widget">
-              echo $view['form']->block('form_widget_simple') ?>
+            <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
 
 Here, the ``_product_name_widget`` fragment defines the template to use for the
