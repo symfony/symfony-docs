@@ -10,9 +10,6 @@ Symfony full-stack framework and can be configured under the ``debug`` key
 in your application configuration. When using XML, you must use the
 ``http://symfony.com/schema/dic/debug`` namespace.
 
-.. versionadded::
-    The DebugBundle was introduced in Symfony 2.6.
-
 .. tip::
 
    The XSD schema is available at

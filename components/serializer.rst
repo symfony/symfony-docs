@@ -529,20 +529,12 @@ There are several types of normalizers available:
 
     Objects are normalized to a map of property names to property values.
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
-    class was introduced in Symfony 2.6.
-
 .. versionadded:: 2.7
     The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     class was introduced in Symfony 2.7.
 
 Handling Circular References
 ----------------------------
-
-.. versionadded:: 2.6
-    Handling of circular references was introduced in Symfony 2.6. In previous
-    versions of Symfony, circular references led to infinite loops.
 
 Circular references are common when dealing with entity relations::
 

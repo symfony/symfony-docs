@@ -56,9 +56,6 @@ Field Options
 allow_extra_fields
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The ``allow_extra_fields`` option was introduced in Symfony 2.6.
-
 **type**: ``boolean`` **default**: ``false``
 
 Usually, if you submit extra fields that aren't configured in your form,

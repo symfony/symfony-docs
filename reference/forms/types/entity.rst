@@ -23,6 +23,7 @@ objects from the database.
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
 | options     |                                                                  |
 |             | - `placeholder`_                                                 |
+|             | - `choice_translation_domain`_                                   |
 |             | - `expanded`_                                                    |
 |             | - `multiple`_                                                    |
 |             | - `preferred_choices`_                                           |
@@ -212,6 +213,8 @@ Inherited Options
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 

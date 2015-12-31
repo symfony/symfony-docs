@@ -1269,12 +1269,6 @@ automatically:
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif ?>
 
-.. versionadded:: 2.6
-    The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
-    (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
-    instead.
-
 .. tip::
 
     You can add your own global template variables. See the cookbook example

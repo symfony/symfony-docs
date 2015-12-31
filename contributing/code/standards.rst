@@ -51,6 +51,18 @@ example containing most features described below:
         }
 
         /**
+         * @return string
+         *
+         * @deprecated
+         */
+        public function someDeprecatedMethod()
+        {
+            @trigger_error(sprintf('The %s() method is deprecated since version 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
+
+            return Baz::someMethod();
+        }
+
+        /**
          * Transforms the input given as first argument.
          *
          * @param bool|string $dummy   Some argument description
@@ -151,7 +163,11 @@ Structure
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
 
-* Exception message strings should be concatenated using :phpfunction:`sprintf`.
+* Exception and error message strings should be concatenated using :phpfunction:`sprintf`.
+
+* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` should be
+  switched to opt-in via ``@`` operator.
+  Read more at :ref:`contributing-code-conventions-deprecations`;
 
 Naming Conventions
 ------------------

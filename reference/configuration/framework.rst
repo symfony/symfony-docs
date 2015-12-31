@@ -526,11 +526,6 @@ profiler
 enabled
 .......
 
-.. versionadded:: 2.2
-    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
-    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
-    configuration entirely.
-
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this option to ``true``. When you
@@ -1321,9 +1316,6 @@ found.
 logging
 .......
 
-.. versionadded:: 2.6
-    The ``logging`` option was introduced in Symfony 2.6.
-
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
 When ``true``, a log entry is made whenever the translator cannot find a translation
@@ -1404,9 +1396,6 @@ error messages.
 strict_email
 ............
 
-.. versionadded:: 2.5
-    The ``strict_email`` option was introduced in Symfony 2.5.
-
 **type**: ``Boolean`` **default**: ``false``
 
 If this option is enabled, the `egulias/email-validator`_ library will be
@@ -1415,9 +1404,6 @@ the validator uses a simple regular expression to validate email addresses.
 
 api
 ...
-
-.. versionadded:: 2.5
-    The ``api`` option was introduced in Symfony 2.5.
 
 **type**: ``string``
 

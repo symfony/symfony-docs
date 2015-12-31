@@ -59,9 +59,6 @@ dispatched. Listeners receive a
 Disable Commands inside Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    Disabling commands inside listeners was introduced in Symfony 2.6.
-
 Using the
 :method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`
 method, you can disable a command inside a listener. The application

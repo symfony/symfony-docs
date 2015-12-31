@@ -101,7 +101,7 @@ rendering a form. In other words, if you want to customize one portion of
 how a form is rendered, you'll import a *theme* which contains a customization
 of the appropriate form fragments.
 
-Symfony comes with four **built-in form themes** that define each and every
+Symfony comes with some **built-in form themes** that define each and every
 fragment needed to render every part of a form:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element.
@@ -693,7 +693,7 @@ customize the ``name`` field only:
 
         <!-- app/Resources/views/Form/_product_name_widget.html.php -->
         <div class="text_widget">
-              echo $view['form']->block('form_widget_simple') ?>
+            <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
 
 Here, the ``_product_name_widget`` fragment defines the template to use for the

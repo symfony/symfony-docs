@@ -74,8 +74,6 @@ backwards compatibility promise:
 | Add a default value to an argument            | Yes                         |
 +-----------------------------------------------+-----------------------------+
 
-.. include:: _api_tagging.rst.inc
-
 Using our Classes
 ~~~~~~~~~~~~~~~~~
 
@@ -133,8 +131,6 @@ covered by our backwards compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Access a private property (via Reflection)    | No                          |
 +-----------------------------------------------+-----------------------------+
-
-.. include:: _api_tagging.rst.inc
 
 Working on Symfony Code
 -----------------------
