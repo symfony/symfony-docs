@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-21T18:45:44Z
+
+I have "strongly mixed feelings":
+
+  * I like this proposal because it looks simple, suited for lots of non-advanced applications and it reduces the perceived complexity (it's just one additional directory, but still).
+  * I don't like this proposal because of the *.. unless ..* clause. I'd like these best practices to be as strict as possible and not depend on external conditions. If your app grows, you have to create the new `Type/` dir, update the namespaces, the tests, etc. Some people may ask: why do this refactoring now instead of creating the `Type/` dir at the beginning?
+
+For now I'm completely divided :confused:
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-21T19:03:04Z
+
+I particularly agree about the second point. I'll add that we're most of the time unlikely to predict what will be in the `Form` namespace when starting an application, i.e if we'll need types, data-transformers, form extensions, event listeners...
+
+In my experience, as @javiereguiluz pointed out, it's way simpler to deal with the extended `Form\Type` namespace from the beginning than refactoring everything later. More generally, I'm in favor of reflecting the sub-namespace used by the component itself. It also avoid asking ourself inefficiently where to put/find classes across projects.
+
+To me, [the same applies to security voters, auth providers, tokens, etc](https://github.com/symfony/symfony-docs/pull/5908#discussion_r46079075), but it was changed to keep consistency over the `Form\Type` vs `Form` issue.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-12-28T20:24:36Z
+
+If we recommended that people put things directly on `Form/` and they eventually *do* have other things, like data transformers or extensions, I don't think that's a problem: simply put those *other* things in sub-directories and keep the form types at the top-level.
+
+Like I said with voters, there is a cost to making people create a directory just to hold one other directory. Since form "types" are by far the most important and common thing in a `Form` directory, it makes sense to give it a special status. Also, a "Type" directory does not add more clarity (since it's kind of a terrible world).
+
+:+1:
