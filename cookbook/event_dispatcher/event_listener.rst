@@ -266,9 +266,6 @@ there are some minor advantages for each of them:
 Debugging Event Listeners
 -------------------------
 
-.. versionadded:: 2.6
-    The ``debug:event-dispatcher`` command was introduced in Symfony 2.6.
-
 You can find out what listeners are registered in the event dispatcher
 using the console. To show all events and their listeners, run:
 

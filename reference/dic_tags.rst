@@ -877,10 +877,6 @@ For more information, see :doc:`/cookbook/routing/custom_route_loader`.
 routing.expression_language_provider
 ------------------------------------
 
-.. versionadded:: 2.6
-    The ``routing.expression_language_provider`` tag was introduced in Symfony
-    2.6.
-
 **Purpose**: Register a provider for expression language functions in routing
 
 This tag is used to automatically register
@@ -890,10 +886,6 @@ functions to the routing expression language.
 
 security.expression_language_provider
 -------------------------------------
-
-.. versionadded:: 2.6
-    The ``security.expression_language_provider`` tag was introduced in Symfony
-    2.6.
 
 **Purpose**: Register a provider for expression language functions in security
 
