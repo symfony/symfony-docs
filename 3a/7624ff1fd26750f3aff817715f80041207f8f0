@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-01T09:42:47Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-20T09:26:54Z
+
+Thanks for the review @stof! Instead of adding the versionadded directives with important information back, I've created a PR to an older branch to move this information out of the versionadded: https://github.com/symfony/symfony-docs/pull/5641
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-03T09:07:15Z
+
+@WouterJ This needs a rebase.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-19T11:36:08Z
+
+Rebased
