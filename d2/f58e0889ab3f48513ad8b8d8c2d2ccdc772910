@@ -1,0 +1,66 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-15T17:46:22Z
+
+Great work :clap: This looks good !
+
+Additionally, perhaps in the "Defining your Own Styles" section, we might talk about the `Symfony\Component\Console\Style\OutputStyle` abstract class, which is a good start and implements `OutputInterface`, allowing to use common methods such as `write`, `writeln`, `isVerbose`, ...
+Or is it out-of-scope ?
+
+At least, the example on how to create a custom style should take an output as constructor argument I guess.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-16T07:50:34Z
+
+@ogizanagi thanks for your thorough review. I'm embarrassed about the amount of silly mistakes I made. Hopefully everything is fixed now.
+
+Regarding the abstract OutputStyle class, I think is a bit out of the scope of this article. Let's see if others agree.
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-18T18:35:28Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-21T08:43:12Z
+
+Can we change the label of this to "finished"? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-23T21:30:29Z
+
+We must be careful to merge this into `2.8` were it was introduced. By the way, I think we should mention that.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-23T21:32:05Z
+
+No, actually it was introduced in Symfony 2.7. Only the API docs do not render them for 2.7.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-23T21:32:32Z
+
+@xabbuh in fact, it was introduced in 2.7, so I think the branch is OK. However, in 2.8 we made a change: `text()` produces a different output and we introduced a new method called `comment()`. I'll do those changes once this is merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-23T21:46:52Z
+
+@javiereguiluz still you need a versionadded at the top of the article.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-28T11:11:48Z
+
+Added the `versionadded` directive.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-28T11:35:22Z
+
+:+1:
