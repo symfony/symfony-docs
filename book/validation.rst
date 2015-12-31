@@ -651,7 +651,7 @@ this method must return ``true``:
 
             <class name="AppBundle\Entity\Author">
                 <getter property="passwordLegal">
-                    <constraint name="True">
+                    <constraint name="IsTrue">
                         <option name="message">The password cannot match your first name</option>
                     </constraint>
                 </getter>
