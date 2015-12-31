@@ -93,9 +93,6 @@ If you want to ensure that the ``age`` of a ``Person`` class is greater than
 Comparing Dates
 ---------------
 
-.. versionadded:: 2.6
-    The feature to compare dates was introduced in Symfony 2.6.
-
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check
 that a date must at least be the next day:

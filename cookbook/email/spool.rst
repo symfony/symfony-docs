@@ -55,10 +55,17 @@ swiftmailer with the memory option, use the following configuration:
             'spool' => array('type' => 'memory')
         ));
 
-Spool Using a File
+.. _spool-using-a-file:
+
+Spool Using Files
 ------------------
 
-In order to use the spool with a file, use the following configuration:
+When you use the filesystem for spooling, Symfony creates a folder in the given 
+path for each mail service (e.g. "default" for the default service). This folder
+will contain files for each email in the spool. So make sure this directory is 
+writable by Symfony (or your webserver/php)!
+
+In order to use the spool with files, use the following configuration:
 
 .. configuration-block::
 
@@ -69,7 +76,7 @@ In order to use the spool with a file, use the following configuration:
             # ...
             spool:
                 type: file
-                path: /path/to/spool
+                path: /path/to/spooldir
 
     .. code-block:: xml
 
@@ -84,7 +91,7 @@ In order to use the spool with a file, use the following configuration:
             <swiftmailer:config>
                 <swiftmailer:spool
                     type="file"
-                    path="/path/to/spool"
+                    path="/path/to/spooldir"
                 />
             </swiftmailer:config>
         </container>
@@ -97,7 +104,7 @@ In order to use the spool with a file, use the following configuration:
 
             'spool' => array(
                 'type' => 'file',
-                'path' => '/path/to/spool',
+                'path' => '/path/to/spooldir',
             ),
         ));
 

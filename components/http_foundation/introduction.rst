@@ -512,9 +512,6 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
         'filename.txt'
     );
 
-.. versionadded:: 2.6
-    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
-
 It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.

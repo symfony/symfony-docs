@@ -259,10 +259,6 @@ But this only works because the ``GenderType`` is very simple. What if
 the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
 
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
-    ``empty_value``, which is available prior to 2.6.
-
 .. _form-cookbook-form-field-service:
 
 Creating your Field Type as a Service

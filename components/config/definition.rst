@@ -421,10 +421,6 @@ method.
 The info will be printed as a comment when dumping the configuration tree
 with the ``config:dump-reference`` command.
 
-.. versionadded:: 2.6
-    Since Symfony 2.6, the info will also be added to the exception message
-    when an invalid type is given.
-
 Optional Sections
 -----------------
 
