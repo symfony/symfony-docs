@@ -972,7 +972,7 @@ username and the password are different only if all other validation passes
                 </property>
 
                 <getter property="passwordLegal">
-                    <constraint name="True">
+                    <constraint name="IsTrue">
                         <option name="message">The password cannot match your username</option>
                         <option name="groups">
                             <value>Strict</value>
