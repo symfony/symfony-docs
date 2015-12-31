@@ -644,7 +644,7 @@ this method must return ``true``:
         AppBundle\Entity\Author:
             getters:
                 passwordLegal:
-                    - 'True': { message: 'The password cannot match your first name' }
+                    - 'IsTrue': { message: 'The password cannot match your first name' }
 
     .. code-block:: xml
 
@@ -656,7 +656,7 @@ this method must return ``true``:
 
             <class name="AppBundle\Entity\Author">
                 <getter property="passwordLegal">
-                    <constraint name="True">
+                    <constraint name="IsTrue">
                         <option name="message">The password cannot match your first name</option>
                     </constraint>
                 </getter>
@@ -954,7 +954,7 @@ username and the password are different only if all other validation passes
                 - Strict
             getters:
                 passwordLegal:
-                    - 'True':
+                    - 'IsTrue':
                         message: 'The password cannot match your username'
                         groups: [Strict]
             properties:
@@ -981,7 +981,7 @@ username and the password are different only if all other validation passes
                 </property>
 
                 <getter property="passwordLegal">
-                    <constraint name="True">
+                    <constraint name="IsTrue">
                         <option name="message">The password cannot match your username</option>
                         <option name="groups">
                             <value>Strict</value>

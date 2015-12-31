@@ -49,11 +49,17 @@ form in its own PHP class::
         }
     }
 
+.. best-practice::
+
+    Put the form type classes in the ``AppBundle\Form`` namespace, unless you
+    use other custom form classes like data transformers.
+
 To use the class, use ``createForm`` and instantiate the new class::
 
-    use AppBundle\Form\PostType;
     // ...
+    use AppBundle\Form\PostType;
 
+    // ...
     public function newAction(Request $request)
     {
         $post = new Post();
