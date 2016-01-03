@@ -96,7 +96,7 @@ type
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
-This required option is the fully qualified class name or one of the PHP
+This required option is the qualified class name or one of the PHP
 datatypes as determined by PHP's ``is_`` functions.
 
 * :phpfunction:`array <is_array>`

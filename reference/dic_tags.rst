@@ -508,7 +508,7 @@ configuration and tag it with ``kernel.event_subscriber``:
 
         services:
             kernel.subscriber.your_subscriber_name:
-                class: Fully\Qualified\Subscriber\Class\Name
+                class: Qualified\Subscriber\Class\Name
                 tags:
                     - { name: kernel.event_subscriber }
 
@@ -522,7 +522,7 @@ configuration and tag it with ``kernel.event_subscriber``:
             <services>
                 <service
                     id="kernel.subscriber.your_subscriber_name"
-                    class="Fully\Qualified\Subscriber\Class\Name">
+                    class="Qualified\Subscriber\Class\Name">
 
                     <tag name="kernel.event_subscriber" />
                 </service>
@@ -534,7 +534,7 @@ configuration and tag it with ``kernel.event_subscriber``:
         $container
             ->register(
                 'kernel.subscriber.your_subscriber_name',
-                'Fully\Qualified\Subscriber\Class\Name'
+                'Qualified\Subscriber\Class\Name'
             )
             ->addTag('kernel.event_subscriber')
         ;
@@ -576,7 +576,7 @@ channel when injecting the logger in a service.
 
         services:
             my_service:
-                class: Fully\Qualified\Loader\Class\Name
+                class: Qualified\Loader\Class\Name
                 arguments: ['@logger']
                 tags:
                     - { name: monolog.logger, channel: acme }
@@ -589,7 +589,7 @@ channel when injecting the logger in a service.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_service" class="Fully\Qualified\Loader\Class\Name">
+                <service id="my_service" class="Qualified\Loader\Class\Name">
                     <argument type="service" id="logger" />
                     <tag name="monolog.logger" channel="acme" />
                 </service>
@@ -598,7 +598,7 @@ channel when injecting the logger in a service.
 
     .. code-block:: php
 
-        $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(
+        $definition = new Definition('Qualified\Loader\Class\Name', array(
             new Reference('logger'),
         ));
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
@@ -751,7 +751,7 @@ of your configuration and tag it with ``routing.loader``:
 
         services:
             routing.loader.your_loader_name:
-                class: Fully\Qualified\Loader\Class\Name
+                class: Qualified\Loader\Class\Name
                 tags:
                     - { name: routing.loader }
 
@@ -765,7 +765,7 @@ of your configuration and tag it with ``routing.loader``:
             <services>
                 <service
                     id="routing.loader.your_loader_name"
-                    class="Fully\Qualified\Loader\Class\Name">
+                    class="Qualified\Loader\Class\Name">
 
                     <tag name="routing.loader" />
                 </service>
@@ -775,7 +775,7 @@ of your configuration and tag it with ``routing.loader``:
     .. code-block:: php
 
         $container
-            ->register('routing.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
+            ->register('routing.loader.your_loader_name', 'Qualified\Loader\Class\Name')
             ->addTag('routing.loader')
         ;
 
@@ -870,7 +870,7 @@ templates):
 
         services:
             templating.helper.your_helper_name:
-                class: Fully\Qualified\Helper\Class\Name
+                class: Qualified\Helper\Class\Name
                 tags:
                     - { name: templating.helper, alias: alias_name }
 
@@ -884,7 +884,7 @@ templates):
             <services>
                 <service
                     id="templating.helper.your_helper_name"
-                    class="Fully\Qualified\Helper\Class\Name">
+                    class="Qualified\Helper\Class\Name">
 
                     <tag name="templating.helper" alias="alias_name" />
                 </service>
@@ -894,7 +894,7 @@ templates):
     .. code-block:: php
 
         $container
-            ->register('templating.helper.your_helper_name', 'Fully\Qualified\Helper\Class\Name')
+            ->register('templating.helper.your_helper_name', 'Qualified\Helper\Class\Name')
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
@@ -1135,7 +1135,7 @@ configuration and tag it with ``twig.extension``:
 
         services:
             twig.extension.your_extension_name:
-                class: Fully\Qualified\Extension\Class\Name
+                class: Qualified\Extension\Class\Name
                 tags:
                     - { name: twig.extension }
 
@@ -1149,7 +1149,7 @@ configuration and tag it with ``twig.extension``:
             <services>
                 <service
                     id="twig.extension.your_extension_name"
-                    class="Fully\Qualified\Extension\Class\Name">
+                    class="Qualified\Extension\Class\Name">
 
                     <tag name="twig.extension" />
                 </service>
@@ -1161,7 +1161,7 @@ configuration and tag it with ``twig.extension``:
         $container
             ->register(
                 'twig.extension.your_extension_name',
-                'Fully\Qualified\Extension\Class\Name'
+                'Qualified\Extension\Class\Name'
             )
             ->addTag('twig.extension')
         ;
