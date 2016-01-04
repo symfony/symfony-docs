@@ -1168,7 +1168,7 @@ Defining your Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Your form type might have some external dependencies. You can define your form
-type as a service, and inject inject all dependencies you need.
+type as a service, and inject all dependencies you need.
 
 .. note::
 
