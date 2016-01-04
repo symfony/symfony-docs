@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-15T08:50:35Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T21:41:47Z
+
+For a non-native speaker as me, what is the reason behind this PR? It looks like "in favor of" is very commonly used in the docs and code repository.
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-17T22:01:48Z
+
+@WouterJ : Actually, I'm a non-native english speaker too, and I find this very confusing:
+> The ``placeholder`` option was introduced in Symfony 2.6 in favor of ``empty_value``
+
+The left operand of `in favor of` (if I may say so ^^') usually is the value we'll replace.
+The right operand is the new value, the preferred one.
+I think you can easily replace `in favor of` by ` for the preferred one: `:
+> The ``empty_value`` option was deprecated in Symfony 2.6 for the preferred  ``placeholder`` option.
+
+But in the incriminated sentences, it is misused: the `placeholder` is the new option. We'll don't abandon it in favor of the `empty_value` option.
+
+So, to me, `in replacement` makes more sense.
+By the way, AFAIK this is the only place where `in favor of` is misused. Other occurences are perfectly valid.
+For instance:
+> deprecated the `intention` firewall listener setting in favor of the `csrf_token_id`
+
+The `intention` option is the one deprecated. Instead of using it, we should use `csrf_token_id`
+
+---
+
+We could also replace this fix by:
+
+> Prior to 2.6, the ``empty_value`` option was used but is now deprecated in favor of the new ``placeholder`` option.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-31T12:39:02Z
+
+@weaverryan What do you think?
