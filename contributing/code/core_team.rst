@@ -67,12 +67,13 @@ Active Core Members
 
   * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
 
+  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_);
-  * **Christian Flothmann** (`xabbuh`_).
+  * **Ryan Weaver** (`weaverryan`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,6 +154,7 @@ discretion of the **Project Leader**.
 .. _Config: https://github.com/symfony/config
 .. _Console: https://github.com/symfony/console
 .. _Debug: https://github.com/symfony/debug
+.. _DebugBundle: https://github.com/symfony/debug-bundle
 .. _DependencyInjection: https://github.com/symfony/dependency-injection
 .. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _EventDispatcher: https://github.com/symfony/event-dispatcher
@@ -174,7 +176,7 @@ discretion of the **Project Leader**.
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
 .. _VarDumper: https://github.com/symfony/var-dumper
-.. _DebugBundle: https://github.com/symfony/debug-bundle
+.. _Yaml: https://github.com/symfony/yaml
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
