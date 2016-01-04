@@ -67,12 +67,13 @@ Active Core Members
 
   * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
 
+  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_);
-  * **Christian Flothmann** (`xabbuh`_).
+  * **Ryan Weaver** (`weaverryan`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,6 +174,7 @@ discretion of the **Project Leader**.
 .. _Stopwatch: https://github.com/symfony/stopwatch
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
+.. _Yaml: https://github.com/symfony/yaml
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
