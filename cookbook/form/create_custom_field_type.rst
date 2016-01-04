@@ -257,7 +257,7 @@ the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
 
 .. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
     ``empty_value``, which is available prior to 2.6.
 
 .. _form-cookbook-form-field-service:
