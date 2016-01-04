@@ -312,7 +312,7 @@ entry_type
 ~~~~~~~~~~
 
 .. versionadded:: 2.8
-    The ``entry_type`` option was introduced in Symfony 2.8 in favor of
+    The ``entry_type`` option was introduced in Symfony 2.8 and replaces
     ``type``, which is available prior to 2.8.
 
 **type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
