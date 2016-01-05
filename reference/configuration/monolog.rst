@@ -5,7 +5,7 @@ MonologBundle Configuration ("monolog")
 =======================================
 
 For a full list of handler types and related configuration
-options, see `Monolog Configuration`_
+options, see `Monolog Configuration`_.
 
 Full Default Configuration
 --------------------------
