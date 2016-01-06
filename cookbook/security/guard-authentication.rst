@@ -303,7 +303,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
                     # if you want, disable storing the user in the session
                     # stateless: true
-                    
+
                     # maybe other things, like form_login, remember_me, etc
                     # ...
 
@@ -427,7 +427,7 @@ Each authenticator needs the following methods:
 
 **supportsRememberMe**
     If you want to support "remember me" functionality, return true from this method.
-    You will still need to active ``rememebe_me`` under your firewall for it to work.
+    You will still need to active ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
 
@@ -448,17 +448,17 @@ to cause a failure::
 
     // src/AppBundle/Security/TokenAuthenticator.php
     // ...
-    
+
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-    
+
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         // ...
-        
+
         public function getCredentials(Request $request)
         {
             // ...
-            
+
             if ($token == 'ILuvAPIs') {
                 throw new CustomUserMessageAuthenticationException(
                     'ILuvAPIs is not a real API key: it\'s just a silly phrase'
@@ -467,7 +467,7 @@ to cause a failure::
 
             // ...
         }
-        
+
         // ...
     }
 
@@ -512,7 +512,7 @@ Frequently Asked Questions
 
                         # if you want, disable storing the user in the session
                         # stateless: true
-                    
+
                         # maybe other things, like form_login, remember_me, etc
                         # ...
 
