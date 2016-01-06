@@ -10,7 +10,7 @@ class::
 
     class LeapYearController
     {
-        public function indexAction($request)
+        public function indexAction(Request $request)
         {
             if (is_leap_year($request->attributes->get('year'))) {
                 return new Response('Yep, this is a leap year!');
