@@ -43,7 +43,7 @@ If your choice values are objects, then ``choice_label`` can also be a
         'choices' => array(
             new Status(Status::YES),
             new Status(Status::NO),
-            new Status::(Status::MAYBE),
+            new Status(Status::MAYBE),
         ),
         'choices_as_values' => true,
         'choice_label' => 'displayName',
