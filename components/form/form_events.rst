@@ -306,7 +306,7 @@ Creating and binding an event listener to the form is very easy::
             // If the data was submitted previously, the additional value that is
             // included in the request variables needs to be removed.
             if (true === $user['show_email']) {
-                $form->add('email', EmailType::class
+                $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
                 $event->setData($user);
