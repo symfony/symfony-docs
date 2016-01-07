@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-07T10:20:31Z
+
+:+1: `setUp()` is `protected` and `setUpBeforeClass()` is `public static`
