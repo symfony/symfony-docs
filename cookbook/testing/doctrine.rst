@@ -35,7 +35,7 @@ which makes all of this quite easy::
         /**
          * {@inheritDoc}
          */
-        public function setUp()
+        protected function setUp()
         {
             self::bootKernel();
             $this->em = static::$kernel->getContainer()
