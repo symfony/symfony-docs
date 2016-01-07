@@ -418,8 +418,33 @@ All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
 method.
 
+.. code-block:: php
+
+    $rootNode
+        ->children()
+            ->integerNode('entries_per_page')
+                ->info('This value is only used for the search results page.')
+                ->defaultValue(25)
+            ->end()
+        ->end()
+    ;
+
 The info will be printed as a comment when dumping the configuration tree
 with the ``config:dump-reference`` command.
+
+In YAML you may have:
+
+.. code-block:: yaml
+
+    # This value is only used for the search results page.
+    entries_per_page:     25
+
+and in XML:
+
+.. code-block:: xml
+
+    <!-- entries-per-page: This value is only used for the search results page. -->
+    <config entries-per-page="25" />
 
 .. versionadded:: 2.6
     Since Symfony 2.6, the info will also be added to the exception message
