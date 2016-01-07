@@ -263,7 +263,8 @@ document::
             $client->getResponse()->headers->contains(
                 'Content-Type',
                 'application/json'
-            )
+            ),
+            '"Content-Type" header is NOT "application/json"' // optional message shown on failure
         );
 
         // Assert that the response content contains a string
@@ -272,7 +273,9 @@ document::
         $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
 
         // Assert that the response status code is 2xx
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertTrue($client->getResponse()->isSuccessful(),
+                          'response status code is NOT 2xx'
+                          );
         // Assert that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
@@ -283,7 +286,8 @@ document::
 
         // Assert that the response is a redirect to /demo/contact
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact')
+            $client->getResponse()->isRedirect('/demo/contact'),
+            'response is NOT a redirect to /demo/contact'
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
