@@ -446,13 +446,6 @@ In YAML you may have:
     # This value is only used for the search results page.
     entries_per_page:     25
 
-and in XML:
-
-.. code-block:: xml
-
-    <!-- entries-per-page: This value is only used for the search results page. -->
-    <config entries-per-page="25" />
-
 Optional Sections
 -----------------
 
