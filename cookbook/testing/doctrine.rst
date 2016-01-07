@@ -35,7 +35,7 @@ which makes all of this quite easy::
         /**
          * {@inheritDoc}
          */
-        public function setUp()
+        protected function setUp()
         {
             static::$kernel = static::createKernel();
             static::$kernel->boot();
