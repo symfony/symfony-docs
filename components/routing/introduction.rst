@@ -130,8 +130,9 @@ In this case, the route is matched by ``/archive/2012-01``, because the ``{month
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
 
-When using wildcards, these are returned in the resulting array of calling
-``match``. The part of the path that the wildcard matched is used as value.
+When using wildcards, these are returned in the array result when calling
+``match``. The part of the path that the wildcard matched (e.g. ``2012-01``) is used
+as value.
 
 .. tip::
 
