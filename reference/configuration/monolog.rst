@@ -4,6 +4,9 @@
 MonologBundle Configuration ("monolog")
 =======================================
 
+For a full list of handler types and related configuration
+options, see `Monolog Configuration`_.
+
 Full Default Configuration
 --------------------------
 
@@ -112,3 +115,5 @@ Full Default Configuration
     When the profiler is enabled, a handler is added to store the logs'
     messages in the profiler. The profiler uses the name "debug" so it
     is reserved and cannot be used in the configuration.
+
+.. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php
