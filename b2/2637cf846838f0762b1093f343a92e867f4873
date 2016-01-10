@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by kevintweber at 2015-05-23T17:18:08Z
+
+Fudge.  I just realized that I used the RequestStack in the cookbook page, which was introduced in 2.4 not 2.3.  Alas...
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-10-13T01:39:23Z
+
+@kevintweber don't worry about the `request_stack` thing. Actually, if you could do everything with the `request` service that would be ideal. Then I can easily merge into 2.3, then merge up to 2.6 and change to `request_stack` there.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-12-28T20:17:56Z
+
+Ping @kevintweber! Will you have some time to finish this?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by kevintweber at 2015-12-28T21:12:47Z
+
+@weaverryan  Yeah, I'll do it now.  I'm going to remove the cookbook entry because it's rather contrived, and no application should implement such functionality.  It's just a bad example.
+
+---------------------------------------------------------------------------
+
+by kevintweber at 2015-12-28T21:30:23Z
+
+The text is ready to go.  I cannot see the merge conflicts, so you may need to massage it a bit.  (And sorry about the huge delay.)  If you want me to squash the commits, just say so.
