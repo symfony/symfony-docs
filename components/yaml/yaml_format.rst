@@ -69,6 +69,15 @@ escaped with double quotes:
   ``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
   ``\_``, ``\L``, ``\P``
 
+You can insert characters into Yaml string by putting their byte representation 
+using hexadecimal code. For example to insert space into string 
+`"Hello Symfony"` using ASCII code (0x20 hexadecimal) you would write ``"Hello\x20Symfony"``.
+To insert spanish `"ñ"` as in `"España"` (0xf1 hexadecimal) write ``"Espa\xf1"``. Mind that by  using this method you're inserting bytes and should be keep in mind encoding you use.
+
+Unicode character insertion is also simple. To create string ``"I ♥ Symfony"`` which uses unicode character ``"♥"`` -
+"black  heart suit" with unicode codepoint ``\U+2665`` - you would write  ``"I \U00002665 Symfony"``
+(mind that unicode codepoint must be zero-padded to 8 hex digits, otherwise it will not work).
+
 Finally, there are other cases when the strings must be quoted, no matter if
 you're using single or double quotes:
 
