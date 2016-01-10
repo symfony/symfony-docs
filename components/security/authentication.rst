@@ -286,9 +286,12 @@ Authentication Success and Failure Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a provider authenticates the user, a ``security.authentication.success``
-event is dispatched.  Likewise, when a provider attempts authentication but
-fails (i.e. throws an ``AuthenticationException``), a
-``security.authentication.failure`` event is dispatched. You could listen on
+event is dispatched. But beware - this event will fire, for example, on *every*
+request if you have session-based authentication. See ``security.interactive_login``
+below if you need to do something when a user *actually* logs in.
+
+When a provider attempts authentication but fails (i.e. throws an ``AuthenticationException``),
+a ``security.authentication.failure`` event is dispatched. You could listen on
 the ``security.authentication.failure`` event, for example, in order to log
 failed login attempts.
 
