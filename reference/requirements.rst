@@ -50,5 +50,3 @@ Doctrine
 If you want to use Doctrine, you will need to have PDO installed. Additionally,
 you need to have the PDO driver installed for the database server you want
 to use.
-
-.. _`Requirements section of the README`: https://github.com/symfony/symfony/blob/2.8/README.md#requirements
