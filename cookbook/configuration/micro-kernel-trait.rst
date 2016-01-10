@@ -274,7 +274,7 @@ your *kernel* lives in. Since ``AppKernel`` lives in ``app/``, this template liv
 at ``app/Resources/views/micro/random.html.twig``.
 
 Finally, you need a front controller to boot and run the application. Create a
-``web/index.php``:
+``web/index.php``::
 
     // web/index.php
 
