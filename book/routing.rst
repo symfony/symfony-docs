@@ -854,12 +854,12 @@ accomplished with the following route configuration:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        api_show_post:
+        api_post_show:
             path:     /api/posts/{id}
             defaults: { _controller: AppBundle:BlogApi:show }
             methods:  [GET, HEAD]
 
-        api_edit_post:
+        api_post_edit:
             path:     /api/posts/{id}
             defaults: { _controller: AppBundle:BlogApi:edit }
             methods:  [PUT]
@@ -873,11 +873,11 @@ accomplished with the following route configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="api_show_post" path="/api/posts/{id}" methods="GET|HEAD">
+            <route id="api_post_show" path="/api/posts/{id}" methods="GET|HEAD">
                 <default key="_controller">AppBundle:BlogApi:show</default>
             </route>
 
-            <route id="api_edit_post" path="/api/posts/{id}" methods="PUT">
+            <route id="api_post_edit" path="/api/posts/{id}" methods="PUT">
                 <default key="_controller">AppBundle:BlogApi:edit</default>
             </route>
         </routes>
@@ -889,11 +889,11 @@ accomplished with the following route configuration:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('api_show_post', new Route('/api/posts/{id}', array(
+        $collection->add('api_post_show', new Route('/api/posts/{id}', array(
             '_controller' => 'AppBundle:BlogApi:show',
         ), array(), array(), '', array(), array('GET', 'HEAD')));
 
-        $collection->add('api_edit_post', new Route('/api/posts/{id}', array(
+        $collection->add('api_post_edit', new Route('/api/posts/{id}', array(
             '_controller' => 'AppBundle:BlogApi:edit',
         ), array(), array(), '', array(), array('PUT')));
 
