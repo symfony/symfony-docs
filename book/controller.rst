@@ -813,7 +813,7 @@ Just like when creating a controller for a route, the order of the arguments of
 order of the arguments, Symfony will still pass the correct value to each
 variable.
 
-.. _checking-the-validity-of-a-csrf-token::
+.. _checking-the-validity-of-a-csrf-token:
 
 Validating a CSRF Token
 -----------------------
