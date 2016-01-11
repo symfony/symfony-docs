@@ -4,9 +4,16 @@
 Installing and Configuring Symfony
 ==================================
 
-The goal of this chapter is to get you up and running with a working application
-built on top of Symfony. In order to simplify the process of creating new
-applications, Symfony provides an installer application.
+Welcome to Symfony! Starting a new Symfony project is easy. In fact, you'll have
+your first working Symfony application up and running in just a few short minutes.
+
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
+To make creating new applications even simpler, Symfony provides an installer.
+Downloading it is your first step.
 
 Installing the Symfony Installer
 --------------------------------
@@ -412,6 +419,7 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
