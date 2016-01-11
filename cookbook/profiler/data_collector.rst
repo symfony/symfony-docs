@@ -182,7 +182,8 @@ block and set the value of two variables called ``icon`` and ``text``:
 
         {{ include('@App/data_collector/icon.svg') }}
 
-    You are encouraged to use the latter technique for your own toolbar panels.
+    You are encouraged to use the latter technique for your own toolbar panels. Make
+    sure the svg file has the ``height`` property set to ``24``. 
 
 If the toolbar panel includes extended web profiler information, the Twig template
 must also define additional blocks:
