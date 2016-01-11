@@ -1,0 +1,109 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-20T20:24:16Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-10-24T08:15:13Z
+
+@xabbuh please let me know if the example code is fine now.
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-12-01T11:51:43Z
+
+@xabbuh is this PR finished?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-01T11:56:21Z
+
+@snoek09 Sorry for missing your last comment. I left a last minor comment. After that this looks good to be merged to me.
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-12-01T12:16:01Z
+
+@xabbuh No problem. I updated the link.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2015-12-02T07:41:13Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-12-09T20:26:20Z
+
+@xabbuh I think this is ready to be merged.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-09T20:30:02Z
+
+@weaverryan @WouterJ @javiereguiluz Ready to go here? :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-12-10T09:12:48Z
+
+I added some comments, but I like it! Short and simple.
+
+To be clear, this is not an "old way" of checking CSRF, correct? It seems totally valid and current.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-10T10:17:10Z
+
+@weaverryan : No it isn't, because the `form.csrf_provider` service is deprecated since 2.4, as well as the whole [`CsrfProviderInterface`](https://github.com/symfony/symfony/blob/2.8/src/Symfony/Component/Form/Extension/Csrf/CsrfProvider/CsrfProviderInterface.php#L30-L32). We use `security.csrf.token_manager` instead.
+
+However, I wonder if the `book/controller.rst` page is the right place for this ? In #4668, @WouterJ suggested to create a new entry in the cookbook instead, and to me it actually makes much more sense to have this in a Controller or Security cookbook section.
+I know PRs for 2.6+ are already merged (#5325), but what do you think ?
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-12-15T18:52:16Z
+
+@ogizanagi is right. The example code has to work with 2.3 using the 'old way'.
+I also agree that this documentation should be moved to the cookbook.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-15T19:28:45Z
+
+I think we can merge it just as it is and then work on converting this into a cookbook recipe afterwards. What do you think?
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2015-12-15T19:56:05Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2015-12-15T20:23:56Z
+
+I like that idea @xabbuh.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-31T12:53:15Z
+
+@weaverryan @WouterJ @javiereguiluz Okay with merging and thinking about how to rework the whole part afterwards?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-31T13:00:08Z
+
+@xabbuh yes!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-01-10T21:47:31Z
+
+:+1:
