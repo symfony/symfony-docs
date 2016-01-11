@@ -812,10 +812,10 @@ Adding HTTP Method Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the URL, you can also match on the *method* of the incoming
-request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you have a contact form
-with two controllers - one for displaying the form (on a GET request) and one
-for processing the form when it's submitted (on a POST request). This can
-be accomplished with the following route configuration:
+request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you create an API for
+your blog and you have 2 routes: One for displaying a post (on a GET or HEAD
+request) and one for updating a post (on a PUT request). This can be
+accomplished with the following route configuration:
 
 .. configuration-block::
 
@@ -827,39 +827,39 @@ be accomplished with the following route configuration:
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
         // ...
 
-        class MainController extends Controller
+        class BlogApiController extends Controller
         {
             /**
-             * @Route("/news")
-             * @Method("GET")
+             * @Route("/api/posts/{id}")
+             * @Method({"GET","HEAD"})
              */
-            public function newsAction()
+            public function showAction($id)
             {
-                // ... display your news
+                // ... return a JSON response with the post
             }
 
             /**
-             * @Route("/contact")
-             * @Method({"GET", "POST"})
+             * @Route("/api/posts/{id}")
+             * @Method("PUT")
              */
-            public function contactFormAction()
+            public function editAction($id)
             {
-                // ... display and process a contact form
+                // ... edit a post
             }
         }
 
     .. code-block:: yaml
 
         # app/config/routing.yml
-        news:
-            path:     /news
-            defaults: { _controller: AppBundle:Main:news }
-            methods:  [GET]
+        api_post_show:
+            path:     /api/posts/{id}
+            defaults: { _controller: AppBundle:BlogApi:show }
+            methods:  [GET, HEAD]
 
-        contact_form:
-            path:     /contact
-            defaults: { _controller: AppBundle:Main:contactForm }
-            methods:  [GET, POST]
+        api_post_edit:
+            path:     /api/posts/{id}
+            defaults: { _controller: AppBundle:BlogApi:edit }
+            methods:  [PUT]
 
     .. code-block:: xml
 
@@ -870,12 +870,12 @@ be accomplished with the following route configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="news" path="/news" methods="GET">
-                <default key="_controller">AppBundle:Main:news</default>
+            <route id="api_post_show" path="/api/posts/{id}" methods="GET|HEAD">
+                <default key="_controller">AppBundle:BlogApi:show</default>
             </route>
 
-            <route id="contact_form" path="/contact" methods="GET|POST">
-                <default key="_controller">AppBundle:Main:contactForm</default>
+            <route id="api_post_edit" path="/api/posts/{id}" methods="PUT">
+                <default key="_controller">AppBundle:BlogApi:edit</default>
             </route>
         </routes>
 
@@ -886,20 +886,21 @@ be accomplished with the following route configuration:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('news', new Route('/news', array(
-            '_controller' => 'AppBundle:Main:contact',
-        ), array(), array(), '', array(), array('GET')));
+        $collection->add('api_post_show', new Route('/api/posts/{id}', array(
+            '_controller' => 'AppBundle:BlogApi:show',
+        ), array(), array(), '', array(), array('GET', 'HEAD')));
 
-        $collection->add('contact_form', new Route('/contact', array(
-            '_controller' => 'AppBundle:Main:contactForm',
-        ), array(), array(), '', array(), array('GET', 'POST')));
+        $collection->add('api_post_edit', new Route('/api/posts/{id}', array(
+            '_controller' => 'AppBundle:BlogApi:edit',
+        ), array(), array(), '', array(), array('PUT')));
 
         return $collection;
 
-Despite the fact that these two routes have identical paths (``/contact``),
-the first route will match only GET requests and the second route will match
-only POST requests. This means that you can display the form and submit the
-form via the same URL, while using distinct controllers for the two actions.
+Despite the fact that these two routes have identical paths
+(``/api/posts/{id}``), the first route will match only GET or HEAD requests and
+the second route will match only PUT requests. This means that you can display
+and edit the post with the same URL, while using distinct controllers for the
+two actions.
 
 .. note::
 
