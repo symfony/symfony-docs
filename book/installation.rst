@@ -220,9 +220,9 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the ``var/cache`` and
-    ``var/logs`` directories must be writable both by the web server and the
-    command line user. On a UNIX system, if your web server user is different
+    One common issue when installing Symfony is that the ``var/cache``, ``var/logs``
+    and ``var/sessions`` directories must be writable both by the web server and
+    the command line user. On a UNIX system, if your web server user is different
     from your command line user, you can try one of the following solutions.
 
     **1. Use the same user for the CLI and the web server**
@@ -242,12 +242,11 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ rm -rf var/cache/*
-        $ rm -rf var/logs/*
+        $ rm -rf var/cache/* var/logs/* var/sessions/*
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
-        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
+        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
+        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
 
 
     **3. Using ACL on a system that does not support chmod +a**
@@ -261,8 +260,8 @@ If there are any issues, correct them now before moving on.
     .. code-block:: bash
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
-        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
+        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
     If this doesn't work, try adding ``-n`` option.
 
