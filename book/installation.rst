@@ -220,10 +220,10 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the ``var/cache``, ``var/logs``
-    and ``var/sessions`` directories must be writable both by the web server and
-    the command line user. On a UNIX system, if your web server user is different
-    from your command line user, you can try one of the following solutions.
+    One common issue when installing Symfony is that the ``var`` directory must
+    be writable both by the web server and the command line user. On a UNIX
+    system, if your web server user is different from your command line user
+    who owns the files, you can try one of the following solutions.
 
     **1. Use the same user for the CLI and the web server**
 
