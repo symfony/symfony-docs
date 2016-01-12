@@ -33,7 +33,7 @@ provider available in the Security component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: security.csrf.token_manager
+                        csrf_token_generator: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -50,7 +50,7 @@ provider available in the Security component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-provider="security.csrf.token_manager" />
+                    <form-login csrf-token-generator="security.csrf.token_manager" />
                 </firewall>
             </config>
         </srv:container>
@@ -66,7 +66,7 @@ provider available in the Security component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'security.csrf.token_manager',
+                        'csrf_token_generator' => 'security.csrf.token_manager',
                     ),
                 ),
             ),
@@ -74,6 +74,10 @@ provider available in the Security component:
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
+
+.. versionadded:: 3.0
+    The ``csrf_token_generator`` was introduced in Symfony 3.0. Prior to 2.8, it was called ``csrf_provider``.
+
 
 Rendering the CSRF field
 ------------------------
