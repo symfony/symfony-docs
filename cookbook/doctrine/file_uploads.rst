@@ -14,7 +14,7 @@ How to Handle File Uploads with Doctrine
 Handling file uploads with Doctrine entities is no different than handling
 any other file upload. In other words, you're free to move the file in your
 controller after handling a form submission. For examples of how to do this,
-see the :doc:`file type reference </reference/forms/types/file>` page.
+see the :doc:`FileType reference </reference/forms/types/file>` page.
 
 If you choose to, you can also integrate the file upload into your entity
 lifecycle (i.e. creation, update and removal). In this case, as your entity
@@ -98,7 +98,7 @@ file.
 .. tip::
 
     If you have not done so already, you should probably read the
-    :doc:`file </reference/forms/types/file>` type documentation first to
+    :doc:`FileType </reference/forms/types/file>` documentation first to
     understand how the basic upload process works.
 
 .. note::
@@ -258,7 +258,7 @@ The following controller shows you how to handle the entire process::
             $em->persist($document);
             $em->flush();
 
-            return $this->redirect($this->generateUrl(...));
+            return $this->redirectToRoute(...);
         }
 
         return array('form' => $form->createView());
@@ -281,7 +281,7 @@ in a moment to handle the file upload::
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect(...);
+        return $this->redirectToRoute(...);
     }
 
 The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
@@ -446,7 +446,7 @@ call to ``$document->upload()`` should be removed from the controller::
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect(...);
+        return $this->redirectToRoute(...);
     }
 
 .. note::

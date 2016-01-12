@@ -145,12 +145,9 @@ To enable caching, modify the code of a front controller to use the caching
 kernel::
 
     // web/app.php
-    require_once __DIR__.'/../app/bootstrap.php.cache';
-    require_once __DIR__.'/../app/AppKernel.php';
-    require_once __DIR__.'/../app/AppCache.php';
-
     use Symfony\Component\HttpFoundation\Request;
 
+    // ...
     $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
@@ -912,7 +909,7 @@ Here is how you can configure the Symfony reverse proxy to support the
             if ('127.0.0.1' !== $request->getClientIp()) {
                 return new Response(
                     'Invalid HTTP method',
-                    400
+                    Response::HTTP_BAD_REQUEST
                 );
             }
 
@@ -1087,23 +1084,22 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
         <!-- app/Resources/views/static/about.html.php -->
 
-        // you can use a controller reference
-        use Symfony\Component\HttpKernel\Controller\ControllerReference;
+        <!-- you can use a controller reference -->
         <?php echo $view['actions']->render(
-            new ControllerReference(
+            new \Symfony\Component\HttpKernel\Controller\ControllerReference(
                 'AppBundle:News:latest',
                 array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')
         ) ?>
 
-        // ... or a URL
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        <!-- ... or a URL -->
         <?php echo $view['actions']->render(
-            $view['router']->generate(
+            // The url() method was introduced in Symfony 2.8. Prior to 2.8,
+            // you had to use generate($name, $parameters, UrlGeneratorInterface::ABSOLUTE_URL)
+            $view['router']->url(
                 'latest_news',
                 array('maxPerPage' => 5),
-                UrlGeneratorInterface::ABSOLUTE_URL
             ),
             array('strategy' => 'esi'),
         ) ?>

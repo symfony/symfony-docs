@@ -4,9 +4,6 @@
 How to Use and Register Namespaced Twig Paths
 =============================================
 
-.. versionadded:: 2.2
-    Namespaced path support was introduced in 2.2.
-
 Usually, when you refer to a template, you'll use the ``MyBundle:Subdir:filename.html.twig``
 format (see :ref:`template-naming-locations`).
 
@@ -73,13 +70,6 @@ directory:
                 '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
             );
         ));
-
-.. caution::
-
-    Prior to 2.8, templates in custom namespaces are not pre-compiled by
-    Symfony's cache warmup process. They are compiled on demand. This may
-    cause problems if two simultaneous requests are trying to use the
-    template for the first time.
 
 The registered namespace is called ``foo_bar``, which refers to the
 ``vendor/acme/foo-bar/templates`` directory. Assuming there's a file

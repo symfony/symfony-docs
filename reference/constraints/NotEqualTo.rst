@@ -19,6 +19,7 @@ options. To force that a value is equal, see
 +----------------+-------------------------------------------------------------------------+
 | Options        | - `value`_                                                              |
 |                | - `message`_                                                            |
+|                | - `payload`_                                                            |
 +----------------+-------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualTo`         |
 +----------------+-------------------------------------------------------------------------+
@@ -105,3 +106,5 @@ message
 **type**: ``string`` **default**: ``This value should not be equal to {{ compared_value }}.``
 
 This is the message that will be shown if the value is equal.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

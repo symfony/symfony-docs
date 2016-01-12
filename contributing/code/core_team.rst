@@ -52,7 +52,7 @@ Active Core Members
     Process_ component;
 
   * **Nicolas Grekas** (`nicolas-grekas`_) can merge into the Debug_
-    component;
+    component, the VarDumper_ component and the DebugBundle_;
 
   * **Christophe Coevoet** (`stof`_) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
@@ -154,6 +154,7 @@ discretion of the **Project Leader**.
 .. _Config: https://github.com/symfony/config
 .. _Console: https://github.com/symfony/console
 .. _Debug: https://github.com/symfony/debug
+.. _DebugBundle: https://github.com/symfony/debug-bundle
 .. _DependencyInjection: https://github.com/symfony/dependency-injection
 .. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _EventDispatcher: https://github.com/symfony/event-dispatcher
@@ -174,6 +175,7 @@ discretion of the **Project Leader**.
 .. _Stopwatch: https://github.com/symfony/stopwatch
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
+.. _VarDumper: https://github.com/symfony/var-dumper
 .. _Yaml: https://github.com/symfony/yaml
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/

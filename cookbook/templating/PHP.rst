@@ -306,11 +306,11 @@ updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view['router']->generate('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?php echo $view['router']->path('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
-The ``generate()`` method takes the route name and an array of parameters as
+The ``path()`` method takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:
@@ -338,6 +338,21 @@ The ``assets`` helper's main purpose is to make your application more
 portable. Thanks to this helper, you can move the application root directory
 anywhere under your web root directory without changing anything in your
 template's code.
+
+Profiling Templates
+~~~~~~~~~~~~~~~~~~~
+
+By using the ``stopwatch`` helper, you are able to time parts of your template
+and display it on the timeline of the WebProfilerBundle::
+
+    <?php $view['stopwatch']->start('foo') ?>
+    ... things that get timed
+    <?php $view['stopwatch']->stop('foo') ?>
+
+.. tip::
+
+    If you use the same name more than once in your template, the times are
+    grouped on the same line in the timeline.
 
 Output Escaping
 ---------------

@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; datetime
+   single: Forms; Fields; DateTimeType
 
-datetime Field Type
-===================
+DateTimeType Field
+==================
 
 This field type allows the user to modify data that represents a specific
 date and time (e.g. ``1984-06-05 12:15:30``).
@@ -18,9 +18,10 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 | Options              | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
-|                      | - `empty_value`_                                                            |
+|                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `hours`_                                                                  |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
@@ -44,9 +45,9 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_                                                              |
+|                      | - `read_only`_ (deprecated as of 2.8)                                       |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
@@ -60,7 +61,7 @@ date_format
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
 Defines the ``format`` option that will be passed down to the date field.
-See the :ref:`date type's format option <reference-forms-type-date-format>`
+See the :ref:`DateType's format option <reference-forms-type-date-format>`
 for more details.
 
 date_widget
@@ -70,7 +71,7 @@ date_widget
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 format
 ~~~~~~
@@ -84,6 +85,8 @@ by the HTML5 ``datetime`` field. Keeping the default value will cause the
 field to be rendered as an ``input`` field with ``type="datetime"``.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 input
 ~~~~~
@@ -116,8 +119,7 @@ time_widget
 
 **type**: ``string`` **default**: ``choice``
 
-Defines the ``widget`` option for the :doc:`time </reference/forms/types/time>`
-type
+Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
@@ -126,8 +128,8 @@ widget
 
 **type**: ``string`` **default**: ``null``
 
-Defines the ``widget`` option for both the :doc:`date </reference/forms/types/date>`
-type and :doc:`time </reference/forms/types/time>` type. This can be overridden
+Defines the ``widget`` option for both the :doc:`DateType </reference/forms/types/date>`
+and :doc:`TimeType </reference/forms/types/time>`. This can be overridden
 with the `date_widget`_ and `time_widget`_ options.
 
 .. include:: /reference/forms/types/options/with_minutes.rst.inc
@@ -158,8 +160,7 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

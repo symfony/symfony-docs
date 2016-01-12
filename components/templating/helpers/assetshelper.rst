@@ -47,6 +47,20 @@ You can also specify a URL to use in the second parameter of the constructor::
 
 Now URLs are rendered like ``http://cdn.example.com/images/logo.png``.
 
+You can also use the third argument of the helper to force an absolute URL:
+
+.. code-block:: html+php
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>">
+   <!-- renders as:
+   <img src="http://yourwebsite.com/foo/bar/images/logo.png">
+   -->
+
+.. note::
+
+    If you already set a URL in the constructor, using the third argument of
+    ``getUrl`` will not affect the generated URL.
+
 Versioning
 ----------
 
@@ -62,6 +76,16 @@ format, you can specify the new format in fourth argument. It's a string that
 is used in :phpfunction:`sprintf`. The first argument is the path and the
 second is the version. For instance, ``%s?v=%s`` will be rendered as
 ``/images/logo.png?v=328rad75``.
+
+You can also generate a versioned URL on an asset-by-asset basis using the
+fourth argument of the helper:
+
+.. code-block:: html+php
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>">
+   <!-- renders as:
+   <img src="/images/logo.png?v=3.0">
+   -->
 
 Multiple Packages
 -----------------

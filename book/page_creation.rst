@@ -101,8 +101,8 @@ Suppose you want to create a JSON endpoint that returns the lucky number.
 Just add a second method to ``LuckyController``::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     class LuckyController
     {
         // ...
@@ -131,8 +131,8 @@ Try this out in your browser:
 You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     // --> don't forget this new use statement
     use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -167,8 +167,8 @@ at the end:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/LuckyController.php
-        // ...
 
+        // ...
         class LuckyController
         {
             /**
@@ -273,8 +273,8 @@ to use Twig - or many other tools in Symfony - is to extend Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     // --> add this new use statement
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -295,8 +295,8 @@ Twig templates, another that can log messages and many more.
 To render a Twig template, use a service called ``templating``::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     class LuckyController extends Controller
     {
         /**
@@ -328,8 +328,8 @@ But this can get even easier! By extending the ``Controller`` class, you
 also get a lot of shortcut methods, like ``render()``::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     /**
      * @Route("/lucky/number/{count}")
      */
@@ -433,29 +433,40 @@ worked inside the two most important directories:
 else). As you get more advanced, you'll learn what can be done inside each
 of these.
 
-The ``app/`` directory also holds a few other things, like the cache directory
-``app/cache/``, the logs directory ``app/logs/`` and ``app/AppKernel.php``,
-which you'll use to enable new bundles (and one of a *very* short list of
+The ``app/`` directory also holds some other things, like ``app/AppKernel.php``,
+which you'll use to enable new bundles (this is one of a *very* short list of
 PHP files in ``app/``).
 
 The ``src/`` directory has just one directory - ``src/AppBundle`` -
 and everything lives inside of it. A bundle is like a "plugin" and you can
 `find open source bundles`_ and install them into your project. But even
-*your* code lives in a bundle - typically ``AppBundle`` (though there's
-nothing special about ``AppBundle``). To find out more about bundles and
+*your* code lives in a bundle - typically *AppBundle* (though there's
+nothing special about AppBundle). To find out more about bundles and
 why you might create multiple bundles (hint: sharing code between projects),
 see the :doc:`Bundles </book/bundles>` chapter.
 
 So what about the other directories in the project?
 
-``vendor/``
-    Vendor (i.e. third-party) libraries and bundles are downloaded here by
-    the `Composer`_ package manager.
-
 ``web/``
     This is the document root for the project and contains any publicly accessible
     files, like CSS, images and the Symfony front controllers that execute
     the app (``app_dev.php`` and ``app.php``).
+
+``tests/``
+    The automatic tests (e.g. Unit tests) of your application live here.
+
+``bin/``
+    The "binary" files live here. The most important one is the ``console``
+    file which is used to execute Symfony commands via the console.
+
+``var/``
+    This is where automatically created files are stored, like cache files
+    (``var/cache/``) and logs (``var/logs/``).
+
+``vendor/``
+    Third-party libraries, packages and bundles are downloaded here by
+    the `Composer`_ package manager. You should never edit something in this
+    directory.
 
 .. seealso::
 
@@ -474,8 +485,8 @@ is ``app/config/config.yml``:
     .. code-block:: yaml
 
         # app/config/config.yml
-        # ...
 
+        # ...
         framework:
             secret: '%secret%'
             router:
@@ -543,11 +554,11 @@ by changing one option in this configuration file. To find out how, see the
 :doc:`Configuration Reference </reference/index>` section.
 
 Or, to get a big example dump of all of the valid configuration under a key,
-use the handy ``app/console`` command:
+use the handy ``bin/console`` command:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference framework
+    $ php bin/console config:dump-reference framework
 
 There's a lot more power behind Symfony's configuration system, including
 environments, imports and parameters. To learn all of it, see the

@@ -52,14 +52,15 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class CompanyType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('name', 'text')
-                ->add('website', 'text');
+                ->add('name', TextType::class)
+                ->add('website', TextType::class);
         }
     }
 
@@ -70,14 +71,15 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class CustomerType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('firstName', 'text')
-                ->add('lastName', 'text');
+                ->add('firstName', TextType::class)
+                ->add('lastName', TextType::class);
         }
     }
 
@@ -90,29 +92,26 @@ for that::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class LocationType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('address', 'textarea')
-                ->add('zipcode', 'text')
-                ->add('city', 'text')
-                ->add('country', 'text');
+                ->add('address', TextareaType::class)
+                ->add('zipcode', TextType::class)
+                ->add('city', TextType::class)
+                ->add('country', TextType::class);
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'inherit_data' => true
             ));
-        }
-
-        public function getName()
-        {
-            return 'location';
         }
     }
 
@@ -135,7 +134,7 @@ Finally, make this work by adding the location form to your two original forms::
     {
         // ...
 
-        $builder->add('foo', new LocationType(), array(
+        $builder->add('foo', LocationType::class, array(
             'data_class' => 'AppBundle\Entity\Company'
         ));
     }
@@ -147,7 +146,7 @@ Finally, make this work by adding the location form to your two original forms::
     {
         // ...
 
-        $builder->add('bar', new LocationType(), array(
+        $builder->add('bar', LocationType::class, array(
             'data_class' => 'AppBundle\Entity\Customer'
         ));
     }

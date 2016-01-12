@@ -105,41 +105,7 @@ for you. In order for this to work, you must *teach* the container how to
 create the ``Mailer`` service. This is done via configuration, which can
 be specified in YAML, XML or PHP:
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.mailer:
-                class:        AppBundle\Mailer
-                arguments:    [sendmail]
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
-                    <argument>sendmail</argument>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $container->setDefinition('app.mailer', new Definition(
-            'AppBundle\Mailer',
-            array('sendmail')
-        ));
+.. include:: includes/_service_container_my_mailer.rst.inc
 
 .. note::
 
@@ -179,7 +145,7 @@ As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
-":doc:`/cookbook/service_container/scopes`" cookbook article.
+":doc:`/cookbook/service_container/shared`" cookbook article.
 
 .. note::
 
@@ -270,14 +236,6 @@ parameter and uses it in the service definition.
     .. code-block:: xml
 
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
-
-.. caution::
-
-    You may receive a
-    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-    when passing the ``request`` service as an argument. To understand this
-    problem better and learn how to solve it, refer to the cookbook article
-    :doc:`/cookbook/service_container/scopes`.
 
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
@@ -661,6 +619,114 @@ service needs the ``app.mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the classes.
 
+.. _book-services-expressions:
+
+Using the Expression Language
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The service container also supports an "expression" that allows you to inject
+very specific values into a service.
+
+For example, suppose you have a third service (not shown here), called ``mailer_configuration``,
+which has a ``getMailerMethod()`` method on it, which will return a string
+like ``sendmail`` based on some configuration. Remember that the first argument
+to the ``my_mailer`` service is the simple string ``sendmail``:
+
+.. include:: includes/_service_container_my_mailer.rst.inc
+
+But instead of hardcoding this, how could we get this value from the ``getMailerMethod()``
+of the new ``mailer_configuration`` service? One way is to use an expression:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            my_mailer:
+                class:        Acme\HelloBundle\Mailer
+                arguments:    ["@=service('mailer_configuration').getMailerMethod()"]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
+
+            <services>
+                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                    <argument type="expression">service('mailer_configuration').getMailerMethod()</argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\ExpressionLanguage\Expression;
+
+        $container->setDefinition('my_mailer', new Definition(
+            'Acme\HelloBundle\Mailer',
+            array(new Expression('service("mailer_configuration").getMailerMethod()'))
+        ));
+
+To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
+
+In this context, you have access to 2 functions:
+
+``service``
+    Returns a given service (see the example above).
+``parameter``
+    Returns a specific parameter value (syntax is just like ``service``).
+
+You also have access to the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
+via a ``container`` variable. Here's another example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_mailer:
+                class:     Acme\HelloBundle\Mailer
+                arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
+
+            <services>
+                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                    <argument type="expression">container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\ExpressionLanguage\Expression;
+
+        $container->setDefinition('my_mailer', new Definition(
+            'Acme\HelloBundle\Mailer',
+            array(new Expression(
+                "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
+            ))
+        ));
+
+Expressions can be used in ``arguments``, ``properties``, as arguments with
+``configurator`` and as arguments to ``calls`` (method calls).
+
 Optional Dependencies: Setter Injection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -743,6 +809,87 @@ Injecting the dependency by the setter method just needs a change of syntax:
     The approaches presented in this section are called "constructor injection"
     and "setter injection". The Symfony service container also supports
     "property injection".
+
+.. _book-container-request-stack:
+
+Injecting the Request
+~~~~~~~~~~~~~~~~~~~~~
+
+As of Symfony 2.4, instead of injecting the ``request`` service, you should
+inject the ``request_stack`` service and access the ``Request`` by calling
+the :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
+method::
+
+    namespace Acme\HelloBundle\Newsletter;
+
+    use Symfony\Component\HttpFoundation\RequestStack;
+
+    class NewsletterManager
+    {
+        protected $requestStack;
+
+        public function __construct(RequestStack $requestStack)
+        {
+            $this->requestStack = $requestStack;
+        }
+
+        public function anyMethod()
+        {
+            $request = $this->requestStack->getCurrentRequest();
+            // ... do something with the request
+        }
+
+        // ...
+    }
+
+Now, just inject the ``request_stack``, which behaves like any normal service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        services:
+            newsletter_manager:
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
+                arguments: ["@request_stack"]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service
+                    id="newsletter_manager"
+                    class="Acme\HelloBundle\Newsletter\NewsletterManager"
+                >
+                    <argument type="service" id="request_stack"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setDefinition('newsletter_manager', new Definition(
+            'Acme\HelloBundle\Newsletter\NewsletterManager',
+            array(new Reference('request_stack'))
+        ));
+
+.. tip::
+
+    If you define a controller as a service then you can get the ``Request``
+    object without injecting the container by having it passed in as an
+    argument of your action method. See
+    :ref:`book-controller-request-argument` for details.
 
 Making References optional
 --------------------------
@@ -987,18 +1134,18 @@ console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
-    $ php app/console container:debug
+    $ php bin/console debug:container
 
 By default, only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
-    $ php app/console container:debug --show-private
+    $ php bin/console debug:container --show-private
 
 .. note::
 
     If a private service is only used as an argument to just *one* other service,
-    it won't be displayed by the ``container:debug`` command, even when using
+    it won't be displayed by the ``debug:container`` command, even when using
     the ``--show-private`` option. See :ref:`Inline Private Services <inlined-private-services>`
     for more details.
 
@@ -1007,7 +1154,7 @@ its id:
 
 .. code-block:: bash
 
-    $ php app/console container:debug app.mailer
+    $ php bin/console debug:container app.mailer
 
 Learn more
 ----------
@@ -1019,7 +1166,6 @@ Learn more
 * :doc:`/components/dependency_injection/parentservices`
 * :doc:`/components/dependency_injection/tags`
 * :doc:`/cookbook/controller/service`
-* :doc:`/cookbook/service_container/scopes`
 * :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 

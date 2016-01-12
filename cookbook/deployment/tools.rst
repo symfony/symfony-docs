@@ -150,7 +150,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -159,7 +159,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 F) Other Things!
 ~~~~~~~~~~~~~~~~

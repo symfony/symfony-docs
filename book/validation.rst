@@ -103,6 +103,11 @@ following:
     Protected and private properties can also be validated, as well as "getter"
     methods (see :ref:`validator-constraint-targets`).
 
+.. versionadded:: 2.7
+    As of Symfony 2.7, XML and Yaml constraint files located in the
+    ``Resources/config/validation`` sub-directory of a bundle are loaded. Prior
+    to 2.7, only ``Resources/config/validation.yml`` (or ``.xml``) were loaded.
+
 .. index::
    single: Validation; Using the validator
 
@@ -225,14 +230,14 @@ workflow looks like the following from inside a controller::
     public function updateAction(Request $request)
     {
         $author = new Author();
-        $form = $this->createForm(new AuthorType(), $author);
+        $form = $this->createForm(AuthorType::class, $author);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // the validation passed, do something with the $author object
 
-            return $this->redirect($this->generateUrl(...));
+            return $this->redirectToRoute(...);
         }
 
         return $this->render('author/form.html.twig', array(
@@ -604,8 +609,8 @@ Getters
 
 Constraints can also be applied to the return value of a method. Symfony
 allows you to add a constraint to any public method whose name starts with
-"get" or "is". In this guide, both of these types of methods are referred
-to as "getters".
+"get", "is" or "has". In this guide, these types of methods are referred to
+as "getters".
 
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
@@ -686,9 +691,9 @@ Now, create the ``isPasswordLegal()`` method and include the logic you need::
 .. note::
 
     The keen-eyed among you will have noticed that the prefix of the getter
-    ("get" or "is") is omitted in the mapping. This allows you to move the
-    constraint to a property with the same name later (or vice versa) without
-    changing your validation logic.
+    ("get", "is" or "has") is omitted in the mapping. This allows you to move
+    the constraint to a property with the same name later (or vice versa)
+    without changing your validation logic.
 
 .. _validation-class-target:
 
@@ -875,11 +880,15 @@ the class name or the string ``Default``.
     constraints in the ``BaseUser`` class will be validated.
 
 To tell the validator to use a specific group, pass one or more group names
-as the second argument to the ``validate()`` method::
+as the third argument to the ``validate()`` method::
 
-    $errors = $validator->validate($author, array('registration'));
+    // If you're using the new 2.5 validation API (you probably are!)
+    $errors = $validator->validate($author, null, array('registration'));
 
-If no groups are specified, all constraints that belong in group ``Default``
+    // If you're using the old 2.4 validation API, pass the group names as the second argument
+    // $errors = $validator->validate($author, array('registration'));
+
+If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.
 
 Of course, you'll usually work with validation indirectly through the form
@@ -1239,10 +1248,19 @@ it looks like this::
         $emailConstraint->message = 'Invalid email address';
 
         // use the validator to validate the value
+        // If you're using the new 2.5 validation API (you probably are!)
+        $errorList = $this->get('validator')->validate(
+            $email,
+            $emailConstraint
+        );
+
+        // If you're using the old 2.4 validation API
+        /*
         $errorList = $this->get('validator')->validateValue(
             $email,
             $emailConstraint
         );
+        */
 
         if (0 === count($errorList)) {
             // ... this IS a valid email address, do something
@@ -1256,13 +1274,13 @@ it looks like this::
         // ...
     }
 
-By calling ``validateValue`` on the validator, you can pass in a raw value and
+By calling ``validate`` on the validator, you can pass in a raw value and
 the constraint object that you want to validate that value against. A full
 list of the available constraints - as well as the full class name for each
 constraint - is available in the :doc:`constraints reference </reference/constraints>`
 section.
 
-The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
+The ``validate`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
 which holds the error message on its ``getMessage`` method.

@@ -112,6 +112,10 @@ Each part will be explained in the next section.
                 # Examples:
                 somename:
                     pattern: .*
+                    # restrict the firewall to a specific host
+                    host: admin\.example\.com
+                     # restrict the firewall to specific http methods
+                    methods: [GET, POST]
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
                     access_denied_handler: some.service.id
@@ -122,6 +126,8 @@ Each part will be explained in the next section.
                     context: context_key
                     stateless: false
                     x509:
+                        provider: some_key_from_above
+                    remote_user:
                         provider: some_key_from_above
                     http_basic:
                         provider: some_key_from_above
@@ -170,7 +176,7 @@ Each part will be explained in the next section.
 
                     remember_me:
                         token_provider: name
-                        key: someS3cretKey
+                        secret: "%secret%"
                         name: NameOfTheCookie
                         lifetime: 3600 # in seconds
                         path: /foo
@@ -217,7 +223,7 @@ Each part will be explained in the next section.
                                 domain:               ~
                         handlers:             []
                     anonymous:
-                        key:                  4f954a0667e01
+                        secret:               "%secret%"
                     switch_user:
                         provider:             ~
                         parameter:            _switch_user
@@ -235,6 +241,10 @@ Each part will be explained in the next section.
             role_hierarchy:
                 ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
                 ROLE_SUPERADMIN: [ROLE_ADMIN]
+
+.. versionadded:: 2.8
+    The ``secret`` option of ``anonymous`` and ``remember_me`` was introduced
+    in Symfony 2.8. Prior to 2.8, it was called ``key``.
 
 .. _reference-security-firewall-form-login:
 
@@ -322,9 +332,6 @@ Redirecting after Login
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
 
-.. versionadded:: 2.2
-    The PBKDF2 password encoder was introduced in Symfony 2.2.
-
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
 
@@ -342,14 +349,6 @@ for the hash algorithm.
 
 Using the BCrypt Password Encoder
 ---------------------------------
-
-.. caution::
-
-    To use this encoder, you either need to use PHP Version 5.5 or install
-    the `ircmaxell/password-compat`_ library via Composer.
-
-.. versionadded:: 2.2
-    The BCrypt password encoder was introduced in Symfony 2.2.
 
 .. configuration-block::
 
@@ -475,7 +474,7 @@ multiple firewalls, the "context" could actually be shared:
 HTTP-Digest Authentication
 --------------------------
 
-To use HTTP-Digest authentication you need to provide a realm and a key:
+To use HTTP-Digest authentication you need to provide a realm and a secret:
 
 .. configuration-block::
 
@@ -486,7 +485,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             firewalls:
                 somename:
                     http_digest:
-                        key: 'a_random_string'
+                        secret: '%secret%'
                         realm: 'secure-api'
 
     .. code-block:: xml
@@ -494,7 +493,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
         <!-- app/config/security.xml -->
         <security:config>
             <firewall name="somename">
-                <http-digest key="a_random_string" realm="secure-api" />
+                <http-digest secret="%secret%" realm="secure-api" />
             </firewall>
         </security:config>
 
@@ -505,12 +504,16 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             'firewalls' => array(
                 'somename' => array(
                     'http_digest' => array(
-                        'key'   => 'a_random_string',
-                        'realm' => 'secure-api',
+                        'secret' => '%secret%',
+                        'realm'  => 'secure-api',
                     ),
                 ),
             ),
         ));
+
+.. versionadded:: 2.8
+    The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it was
+    called ``key``.
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

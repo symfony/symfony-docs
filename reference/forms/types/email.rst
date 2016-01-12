@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; email
+   single: Forms; Fields; EmailType
 
-email Field Type
-================
+EmailType Field
+===============
 
-The ``email`` field is a text field that is rendered using the HTML5
+The ``EmailType`` field is a text field that is rendered using the HTML5
 ``<input type="email" />`` tag.
 
 +-------------+---------------------------------------------------------------------+
@@ -18,12 +18,12 @@ The ``email`` field is a text field that is rendered using the HTML5
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `max_length`_                                                     |
-|             | - `read_only`_                                                      |
+|             | - `max_length`_ (deprecated as of 2.5)                              |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 |             | - `trim`_                                                           |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                           |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
 +-------------+---------------------------------------------------------------------+
@@ -31,8 +31,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

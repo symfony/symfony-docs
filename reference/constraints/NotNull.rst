@@ -9,6 +9,7 @@ constraint.
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotNull`          |
 +----------------+-----------------------------------------------------------------------+
@@ -86,3 +87,5 @@ message
 **type**: ``string`` **default**: ``This value should not be null.``
 
 This is the message that will be shown if the value is ``null``.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

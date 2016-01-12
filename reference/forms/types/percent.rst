@@ -1,11 +1,11 @@
 .. index::
-   single: Forms; Fields; percent
+   single: Forms; Fields; PercentType
 
-percent Field Type
-==================
+PercentType Field
+=================
 
 
-The ``percent`` type renders an input text field and specializes in handling
+The ``PercentType`` renders an input text field and specializes in handling
 percentage data. If your percentage data is stored as a decimal (e.g. ``.95``),
 you can use this field out-of-the-box. If you store your data as a number
 (e.g. ``95``), you should set the ``type`` option to ``integer``.
@@ -15,7 +15,7 @@ This field adds a percentage sign "``%``" after the input box.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - `precision`_                                                        |
+| Options     | - `scale`_                                                            |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
@@ -31,10 +31,10 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                             |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                         |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
@@ -42,13 +42,17 @@ This field adds a percentage sign "``%``" after the input box.
 Field Options
 -------------
 
-precision
-~~~~~~~~~
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``0``
 
-By default, the input numbers are rounded. To allow for more decimal
-places, use this option.
+By default, the input numbers are rounded. To allow for more decimal places,
+use this option.
 
 type
 ~~~~
@@ -78,8 +82,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
