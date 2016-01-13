@@ -57,11 +57,6 @@ a bare form class looks like::
                 'data_class' => 'AppBundle\Entity\Product'
             ));
         }
-
-        public function getName()
-        {
-            return 'product';
-        }
     }
 
 .. note::
