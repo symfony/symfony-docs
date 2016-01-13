@@ -33,7 +33,7 @@ provider available in the Security component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: security.csrf.token_manager
+                        csrf_token_generator: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -66,7 +66,7 @@ provider available in the Security component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'security.csrf.token_manager',
+                        'csrf_token_generator' => 'security.csrf.token_manager',
                     ),
                 ),
             ),
@@ -124,7 +124,7 @@ After this, you have protected your login form against CSRF attacks.
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
-    the token ID by setting ``intention`` in your configuration:
+    the token ID by setting  ``csrf_token_id`` in your configuration:
 
     .. configuration-block::
 
@@ -140,7 +140,7 @@ After this, you have protected your login form against CSRF attacks.
                         form_login:
                             # ...
                             csrf_parameter: _csrf_security_token
-                            intention: a_private_string
+                            csrf_token_id: a_private_string
 
         .. code-block:: xml
 
@@ -158,7 +158,7 @@ After this, you have protected your login form against CSRF attacks.
                     <firewall name="secured_area">
                         <!-- ... -->
                         <form-login csrf-parameter="_csrf_security_token"
-                            intention="a_private_string"
+                                 csrf_token_id="a_private_string"
                         />
                     </firewall>
                 </config>
@@ -176,11 +176,16 @@ After this, you have protected your login form against CSRF attacks.
                         'form_login' => array(
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
-                            'intention'      => 'a_private_string',
+                            'csrf_token_id'     => 'a_private_string'
                         ),
                     ),
                 ),
             ));
+
+.. versionadded:: 2.8
+    The ``intention`` and ``csrf_token_generator`` options were introduced
+    in Symfony 2.8. Prior, you had to use the ``csrf_token_id`` and ``csrf_provider``
+    options.
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Forging Login Requests`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
