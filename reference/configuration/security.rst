@@ -129,7 +129,7 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     form_login:
                         # submit the login form here
-                        check_path: /login_check
+                        check_path: /login
 
                         # the user is redirected here when they need to log in
                         login_path: /login
@@ -265,7 +265,7 @@ you may create a redirect loop. For details, see
 check_path
 ..........
 
-**type**: ``string`` **default**: ``/login_check``
+**type**: ``string`` **default**: ``/login``
 
 This is the route or path that your login form must submit to. The firewall
 will intercept any requests (``POST`` requests only, by default) to this

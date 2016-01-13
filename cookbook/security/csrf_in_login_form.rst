@@ -92,7 +92,7 @@ using the login form:
         {# src/AppBundle/Resources/views/Security/login.html.twig #}
 
         {# ... #}
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login') }}" method="post">
             {# ... the login fields #}
 
             <input type="hidden" name="_csrf_token"
@@ -107,7 +107,7 @@ using the login form:
         <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
             <!-- ... the login fields -->
 
             <input type="hidden" name="_csrf_token"
