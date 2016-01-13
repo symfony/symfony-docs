@@ -1,0 +1,87 @@
+---------------------------------------------------------------------------
+
+by dupuchba at 2015-08-05T07:39:08Z
+
+@dosten If possible, I would write a concrete use case about this feature :-). What do you think ?
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-08-05T12:51:15Z
+
+should we add a hint, that setting an absolute order, can become an antipattern?
+
+the idea to decorate a service is to add functionality without without knowing exacly what the decorated service does. ordering means leaking such informations to the configuration.
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-08-05T13:15:23Z
+
+@dupuchba Do you have in mind some concrete example?
+
+@timglabisch IMO this isn't an antipattern, only define the order of the service decorators without knowing exactly what the decorated service does. i.e: The `TraceableEventDispatcher` and the `EventDispatcher`, maybe I want to add a "cache" layer to the dispatcher, but I want to apply this decorator first, so the `TraceableEventDispatcher` gets the correct memory usage, time, etc. In this example, the order don't depends of the decorated service or what it's does, but depends on another service decorator.
+
+---------------------------------------------------------------------------
+
+by dupuchba at 2015-08-06T07:48:06Z
+
+@dosten no ideas :( lol
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-08-06T13:42:13Z
+
+@dupuchba IMO a concrete example here is a bad idea, an example of usage is enough.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-05T10:43:26Z
+
+Why are the decorators private while the service being decorated is public?
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-10-23T19:47:17Z
+
+@xabbuh Comments addresed. The decorators are private to allow the `InlineServiceDefinitionsPass` to inline these services and have a real example.
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-11-07T03:24:57Z
+
+ping @xabbuh
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-11-28T15:31:59Z
+
+@xabbuh @WouterJ comments addressed.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-01T10:13:44Z
+
+@dosten I understand why you marked the decorators as private. But what's the reason to keep the initial service public?
+
+---------------------------------------------------------------------------
+
+by dosten at 2015-12-01T10:27:08Z
+
+Well, if I make the initial service private the generated code is not true because if the service is private the generated code isn't `$this->services['foo'] = ...`
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-12-30T08:26:42Z
+
+@dosten thanks for this contribution. It would be nice if we could merge this PR soon because it adds docs for some important feature.
+
+---------------------------------------------------------------------------
+
+by dosten at 2016-01-05T17:35:20Z
+
+@javiereguiluz @xabbuh comments addresed
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-07T09:55:45Z
+
+:+1:
