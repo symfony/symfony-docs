@@ -294,8 +294,8 @@ The ``config:dump-reference`` command dumps the default configuration of a
 bundle in the console using the Yaml format.
 
 As long as your bundle's configuration is located in the standard location
-(``YourBundle\DependencyInjection\Configuration``) and does not require
-arguments to be passed to the constructor it will work automatically. If you
+(``YourBundle\DependencyInjection\Configuration``) and does not extend
+its constructor it will work automatically. If you
 have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
 method and return an instance of your ``Configuration``.
