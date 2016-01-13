@@ -452,6 +452,7 @@ builder:
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
 
@@ -461,7 +462,7 @@ builder:
             'dueDate' => new \DateTime('tomorrow'),
         );
 
-        $form = $formFactory->createBuilder('form', $defaults)
+        $form = $formFactory->createBuilder(FormType::class, $defaults)
             ->add('task', TextType::class)
             ->add('dueDate', DateType::class)
             ->getForm();
