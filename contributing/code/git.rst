@@ -40,3 +40,17 @@ adding ``--show-notes=github-comments`` to the ``git show`` command:
 .. code-block:: bash
 
     $ git show HEAD --show-notes=github-comments
+
+Branches
+--------
+
+Branches of lower versions are merged in branches of higher versions on a regular
+basis by the members of the core team.
+
+The ``--log`` option of the ``git merge`` command be used to include the list of
+merged commits in the commit message. For instance, the following command must
+be used to merge the ``3.0`` branch in the ``master`` branch.
+
+.. code-block:: bash
+
+    $ git merge --log 3.0
