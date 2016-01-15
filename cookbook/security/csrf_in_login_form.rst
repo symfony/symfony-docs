@@ -50,7 +50,7 @@ provider available in the Security component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-provider="security.csrf.token_manager" />
+                    <form-login csrf-token-generator="security.csrf.token_manager" />
                 </firewall>
             </config>
         </srv:container>
@@ -71,6 +71,10 @@ provider available in the Security component:
                 ),
             ),
         ));
+
+.. versionadded:: 2.4
+    The ``csrf_token_generator`` option was introduced in Symfony 2.4. Prior,
+    you had to use the ``csrf_provider`` option.
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
@@ -156,7 +160,7 @@ After this, you have protected your login form against CSRF attacks.
                     <firewall name="secured_area">
                         <!-- ... -->
                         <form-login csrf-parameter="_csrf_security_token"
-                                 csrf_token_id="a_private_string"
+                            csrf-token-id="a_private_string"
                         />
                     </firewall>
                 </config>
@@ -180,10 +184,9 @@ After this, you have protected your login form against CSRF attacks.
                 ),
             ));
 
-.. versionadded:: 2.8
-    The ``intention`` and ``csrf_token_generator`` options were introduced
-    in Symfony 2.8. Prior, you had to use the ``csrf_token_id`` and ``csrf_provider``
-    options.
+.. versionadded:: 2.4
+    The ``csrf_token_id`` option was introduced in Symfony 2.4. Prior, you
+    had to use the ``intention`` option.
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Forging Login Requests`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
