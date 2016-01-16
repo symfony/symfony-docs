@@ -203,7 +203,7 @@ must also define additional blocks:
             </div>
         {% endset %}
 
-        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig') }}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', {'link': true}) }}
     {% endblock %}
 
     {% block head %}
