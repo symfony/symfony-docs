@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-15T22:13:25Z
+
+Deprecations will only be triggered starting with Symfony 2.8. But as the new options have been introduced with Symfony 2.4 we should describe them in the 2.7 docs too (there is no need to start using the old options in a 2.7 based application).
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-01-16T11:21:25Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-16T11:43:53Z
+
+ping @weaverryan @WouterJ @javiereguiluz Let's finish this soon. We are getting a lot of pull requests all wanting to fix this. What do you think?
