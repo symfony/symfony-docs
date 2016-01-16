@@ -41,7 +41,7 @@ value and then a User object is created::
             // $apiKey = $request->headers->get('apikey');
 
             if (!$apiKey) {
-                throw new BadCredentialsException('No API key found');
+                throw new BadCredentialsException();
 
                 // or to just skip api key authentication
                 // return null;
