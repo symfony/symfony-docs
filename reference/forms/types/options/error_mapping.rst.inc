@@ -34,7 +34,7 @@ Here are the rules for the left and the right side of the mapping:
   object, the property path is ``[indexName]``;
 * You can construct nested property paths by concatenating them, separating
   properties by dots. For example: ``addresses[work].matchingCityAndZipCode``;
-* The left side of the error mapping also accepts a dot ``.``, which refers
+* The right side of the error mapping also accepts a dot ``.``, which refers
   to the field itself. That means that any error added to the field is added
   to the given nested field instead;
 * The right side contains simply the names of fields in the form.
