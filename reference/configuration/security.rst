@@ -17,6 +17,11 @@ Each part will be explained in the next section.
     Support for restricting security firewalls to specific http methods was introduced in
     Symfony 2.5.
 
+.. versionadded:: 2.4
+    The ``csrf_token_generator`` and ``csrf_token_id`` were introduced in
+    Symfony 2.4. Prior, you had to use the ``csrf_provider`` and ``intention``
+    options.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -165,9 +170,9 @@ Each part will be explained in the next section.
                         password_parameter: _password
 
                         # csrf token options
-                        csrf_parameter: _csrf_token
-                        intention:      authenticate
-                        csrf_provider:  my.csrf_provider.id
+                        csrf_parameter:       _csrf_token
+                        csrf_token_id:        authenticate
+                        csrf_token_generator: my.csrf_token_generator.id
 
                         # by default, the login form *must* be a POST, not a GET
                         post_only:      true
@@ -213,8 +218,8 @@ Each part will be explained in the next section.
                     context:              ~
                     logout:
                         csrf_parameter:       _csrf_token
-                        csrf_provider:        ~
-                        intention:            logout
+                        csrf_token_generator: ~
+                        csrf_token_id:        logout
                         path:                 /logout
                         target:               /
                         success_handler:      ~
