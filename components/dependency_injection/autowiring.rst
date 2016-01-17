@@ -1,13 +1,13 @@
 .. index::
     single: DependencyInjection; Autowiring
 
-Using the Autowiring
-====================
+Defining Services Dependencies Automatically
+============================================
 
 Autowiring allows to register services in the container with minimal configuration.
 It is useful in the field of `Rapid Application Development`_, when designing prototypes
-in early stages of large projects. It makes it easy to bootstrap an app service
-graph and eases refactoring.
+in early stages of large projects. It makes it easy to register a service graph
+and eases refactoring.
 
 Imagine you're building an API to publish statuses on a Twitter feed, obfuscated
 with `ROT13`.. (a special case of the Caesar cipher).
@@ -47,8 +47,7 @@ And now a Twitter client using this transformer::
         }
     }
 
-
-The Dependency Injection Component will be able able to automatically register the dependencies
+The Dependency Injection Component will be able to automatically register the dependencies
 of this ``TwitterClient`` class by marking the ``twitter_client`` service as autowired:
 
 .. configuration-block::
@@ -87,10 +86,10 @@ of this ``TwitterClient`` class by marking the ``twitter_client`` service as aut
 The autowiring subsystem will detect the dependencies of the ``TwitterClient``
 class by parsing its constructor. For instance it will find here an instance of
 a ``Rot13Transformer`` as dependency. If an existing service definition (and only
-one – see below) is of the required type, this service will be injected. If it
+one – see below) is of the required type, this service will be injected. If it's
 not the case (like in this example), the subsystem is smart enough to automatically
 register a private service for the ``Rot13Transformer`` class and set it as first
-argument of the `twitter_client``` service. Again, it can work only if there is one
+argument of the `twitter_client`` service. Again, it can work only if there is one
 class of the given type. If there are several classes of the same type, you must
 use an explicit service definition or register a default implementation.
 
@@ -136,7 +135,7 @@ Here is a typical controller using the ``twitter_client`` service::
 
 You can give a try to the API with ``curl``::
 
-    curl -d "user=kevin&key=ABCD&status=Salut" http://localhost:8000/tweet
+    curl -d "user=kevin&key=ABCD&status=Hello" http://localhost:8000/tweet
 
 It should return ``OK``.
 
@@ -376,7 +375,7 @@ and a Twitter client using it::
         $container->setDefinition('uppercase_twitter_client', $definition4);
 
 It deserves some explanations. We now have 2 services implementing the ``Rot13TransformerInterface``.
-The autowiring subsystem cannot guess the which one to use, this leads to errors
+The autowiring subsystem cannot guess which one to use, this leads to errors
 like::
 
       [Symfony\Component\DependencyInjection\Exception\RuntimeException]
