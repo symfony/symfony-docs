@@ -605,7 +605,7 @@ from any controller::
         $filters = $session->get('filters', array());
     }
 
-These attributes will remain on the user for the remainder of that user's
+These attributes will remain in the session for the remainder of that user's
 session.
 
 .. index::
@@ -821,7 +821,7 @@ method to check the CSRF token::
     }
 
     // isCsrfTokenValid() is equivalent to:
-    // $this->get('security.csrf.token_manager')->isTokenValid()
+    // $this->get('security.csrf.token_manager')->isTokenValid(
     //     new \Symfony\Component\Security\Csrf\CsrfToken\CsrfToken('token_id', $token)
     // );
 
