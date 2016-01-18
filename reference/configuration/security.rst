@@ -13,15 +13,6 @@ Full Default Configuration
 The following is the full default configuration for the security system.
 Each part will be explained in the next section.
 
-.. versionadded:: 2.5
-    Support for restricting security firewalls to specific http methods was introduced in
-    Symfony 2.5.
-
-.. versionadded:: 2.4
-    The ``csrf_token_generator`` and ``csrf_token_id`` were introduced in
-    Symfony 2.4. Prior, you had to use the ``csrf_provider`` and ``intention``
-    options.
-
 .. configuration-block::
 
     .. code-block:: yaml
