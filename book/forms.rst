@@ -1812,7 +1812,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
-                'intention'       => 'task_item',
+                'csrf_token_id'   => 'task_item',
             ));
         }
 
@@ -1828,8 +1828,12 @@ section.
 
 .. note::
 
-    The ``intention`` option is optional but greatly enhances the security of
-    the generated token by making it different for each form.
+    The ``csrf_token_id`` option is optional but greatly enhances the security
+    of the generated token by making it different for each form.
+
+.. versionadded:: 2.4
+    The ``csrf_token_id`` option was introduced in Symfony 2.4. Prior, you
+    had to use the ``intention`` option.
 
 .. caution::
 

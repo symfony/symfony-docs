@@ -774,8 +774,8 @@ will be able to change the widget for each task as follows:
 
         {% block _tasks_entry_widget %}
             <tr>
-                <td>{{ form_widget(task.task) }}</td>
-                <td>{{ form_widget(task.dueDate) }}</td>
+                <td>{{ form_widget(form.task) }}</td>
+                <td>{{ form_widget(form.dueDate) }}</td>
             </tr>
         {% endblock %}
 
