@@ -1,5 +1,5 @@
-Expression Language
-===================
+ExpressionLanguage
+==================
 
 .. toctree::
     :maxdepth: 2

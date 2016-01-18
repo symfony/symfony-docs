@@ -219,6 +219,79 @@ You can change the inner service name if you want to:
             ->setPublic(false)
             ->setDecoratedService('foo', 'bar.wooz');
 
+.. versionadded:: 2.8
+    The ability to define the decoration priority was introduced in Symfony 2.8.
+    Prior to Symfony 2.8, the priority depends on the order in
+    which definitions are found.
+
+If you want to apply more than one decorator to a service, you can control their
+order by configuring the priority of decoration, this can be any integer number
+(decorators with higher priorities will be applied first).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        foo:
+            class: Foo
+
+        bar:
+            class: Bar
+            public: false
+            decorates: foo
+            decoration_priority: 5
+            arguments: ['@bar.inner']
+
+        baz:
+            class: Baz
+            public: false
+            decorates: foo
+            decoration_priority: 1
+            arguments: ['@baz.inner']
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Foo" />
+
+                <service id="bar" class="Bar" decorates="foo" decoration-priority="5" public="false">
+                    <argument type="service" id="bar.inner" />
+                </service>
+
+                <service id="baz" class="Baz" decorates="foo" decoration-priority="1" public="false">
+                    <argument type="service" id="baz.inner" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register('foo', 'Foo')
+
+        $container->register('bar', 'Bar')
+            ->addArgument(new Reference('bar.inner'))
+            ->setPublic(false)
+            ->setDecoratedService('foo', null, 5);
+
+        $container->register('baz', 'Baz')
+            ->addArgument(new Reference('baz.inner'))
+            ->setPublic(false)
+            ->setDecoratedService('foo', null, 1);
+
+The generated code will be the following:
+
+.. code-block:: php
+
+    $this->services['foo'] = new Baz(new Bar(new Foo())));
+
 Deprecating Services
 --------------------
 

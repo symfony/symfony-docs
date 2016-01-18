@@ -73,8 +73,8 @@ by your extension.
 .. tip::
 
     The value you return in the ``getExtendedType`` method corresponds
-    to the value returned by the ``getName`` method in the form type class
-    you wish to extend.
+    to the fully qualified class name of the form type class you wish to
+    extend.
 
 In addition to the ``getExtendedType`` function, you will probably want
 to override one of the following methods:

@@ -36,7 +36,7 @@ Override the ``cache`` Directory
 --------------------------------
 
 You can change the default cache directory by overriding the ``getCacheDir`` method
-in the ``AppKernel`` class of you application::
+in the ``AppKernel`` class of your application::
 
     // app/AppKernel.php
 
