@@ -4,9 +4,16 @@
 Installing and Configuring Symfony
 ==================================
 
-The goal of this chapter is to get you up and running with a working application
-built on top of Symfony. In order to simplify the process of creating new
-applications, Symfony provides an installer application.
+Welcome to Symfony! Starting a new Symfony project is easy. In fact, you'll have
+your first working Symfony application up and running in just a few short minutes.
+
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
+To make creating new applications even simpler, Symfony provides an installer.
+Downloading it is your first step.
 
 Installing the Symfony Installer
 --------------------------------
@@ -220,10 +227,10 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the ``var/cache`` and
-    ``var/logs`` directories must be writable both by the web server and the
-    command line user. On a UNIX system, if your web server user is different
-    from your command line user, you can try one of the following solutions.
+    One common issue when installing Symfony is that the ``var`` directory must
+    be writable both by the web server and the command line user. On a UNIX
+    system, if your web server user is different from your command line user
+    who owns the files, you can try one of the following solutions.
 
     **1. Use the same user for the CLI and the web server**
 
@@ -242,12 +249,11 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ rm -rf var/cache/*
-        $ rm -rf var/logs/*
+        $ rm -rf var/cache/* var/logs/* var/sessions/*
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
-        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var/cache var/logs
+        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
+        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
 
 
     **3. Using ACL on a system that does not support chmod +a**
@@ -261,8 +267,8 @@ If there are any issues, correct them now before moving on.
     .. code-block:: bash
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
-        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs
+        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
     If this doesn't work, try adding ``-n`` option.
 
@@ -412,6 +418,7 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
