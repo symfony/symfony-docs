@@ -160,7 +160,7 @@ block and set the value of two variables called ``icon`` and ``text``:
         {% endset %}
 
         {# the 'link' value set to 'false' means that this panel doesn't
-           show a section in the web profiler (default is 'true'). #}
+           show a section in the web profiler #}
         {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
     {% endblock %}
 
@@ -203,7 +203,7 @@ must also define additional blocks:
             </div>
         {% endset %}
 
-        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig') }}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
     {% endblock %}
 
     {% block head %}
