@@ -612,7 +612,7 @@ from any controller::
         $filters = $session->get('filters', array());
     }
 
-These attributes will remain on the user for the remainder of that user's
+These attributes will remain in the session for the remainder of that user's
 session.
 
 .. index::
