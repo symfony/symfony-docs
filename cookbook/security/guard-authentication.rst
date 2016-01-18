@@ -418,7 +418,7 @@ Each authenticator needs the following methods:
     object that should be sent to the client. The ``$exception`` will tell you
     *what* went wrong during authentication.
 
-**start**
+**start(Request $request, AuthenticationException $authException = null)**
     This is called if the client accesses a URI/resource that requires authentication,
     but no authentication details were sent (i.e. you returned ``null`` from
     ``getCredentials()``). Your job is to return a
