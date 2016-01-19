@@ -21,6 +21,11 @@ simple two-step process:
 Just like on the web, every interaction is initiated by an HTTP request.
 Your job is pure and simple: understand that request and return a response.
 
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
 .. index::
    single: Page creation; Example
 
@@ -585,6 +590,7 @@ There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
 
 Have fun!
 
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
 .. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/2.7/app/Resources/views/base.html.twig
 .. _`Composer`: https://getcomposer.org
 .. _`find open source bundles`: http://knpbundles.com

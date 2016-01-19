@@ -76,11 +76,6 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
                 'data_class' => 'AppBundle\Entity\Product',
             ));
         }
-
-        public function getName()
-        {
-            return 'product';
-        }
     }
 
 Now, update the template that renders the form to display the new ``brochure``
