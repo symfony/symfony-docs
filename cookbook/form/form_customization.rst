@@ -260,7 +260,7 @@ directly in the template that's actually rendering the form.
 
     {% extends 'base.html.twig' %}
 
-    {% form_theme form _self %}
+    {% form_theme form 'AppBundle:Default:template.twig' %}
 
     {% block integer_widget %}
         <div class="integer_widget">
@@ -275,7 +275,7 @@ directly in the template that's actually rendering the form.
         {{ form_row(form.age) }}
     {% endblock %}
 
-By using the special ``{% form_theme form _self %}`` tag, Twig looks inside
+By using the special ``{% form_theme form 'AppBundle:Default:template.twig' %}`` tag, Twig looks inside
 the same template for any overridden form blocks. Assuming the ``form.age``
 field is an ``integer`` type field, when its widget is rendered, the customized
 ``integer_widget`` block will be used.
@@ -668,7 +668,7 @@ customize the ``name`` field only:
 
     .. code-block:: html+twig
 
-        {% form_theme form _self %}
+        {% form_theme form 'AppBundle:Default:template.twig' %}
 
         {% block _product_name_widget %}
             <div class="text_widget">
@@ -723,7 +723,7 @@ You can also override the markup for an entire field row using the same method:
 
     .. code-block:: html+twig
 
-        {% form_theme form _self %}
+        {% form_theme form 'AppBundle:Default:template.twig' %}
 
         {% block _product_name_row %}
             <div class="name_row">
@@ -763,7 +763,7 @@ will be able to change the widget for each task as follows:
 
     .. code-block:: html+twig
 
-        {% form_theme form _self %}
+        {% form_theme form 'AppBundle:Default:template.twig' %}
 
         {% block _tasks_entry_widget %}
             <tr>

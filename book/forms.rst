@@ -1681,8 +1681,8 @@ to define form output.
 
         {% extends 'base.html.twig' %}
 
-        {# import "_self" as the form theme #}
-        {% form_theme form _self %}
+        {# import current template as the form theme #}
+        {% form_theme form 'AppBundle:Default:template.twig' %}
 
         {# make the form fragment customization #}
         {% block form_row %}
@@ -1695,14 +1695,14 @@ to define form output.
             {{ form_row(form.task) }}
         {% endblock %}
 
-    The ``{% form_theme form _self %}`` tag allows form blocks to be customized
+    The ``{% form_theme form 'AppBundle:Default:template.twig' %}`` tag allows form blocks to be customized
     directly inside the template that will use those customizations. Use
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
 
     .. caution::
 
-        This ``{% form_theme form _self %}`` functionality will *only* work
+        This ``{% form_theme form 'AppBundle:Default:template.twig' %}`` functionality will *only* work
         if your template extends another. If your template does not, you
         must point ``form_theme`` to a separate template.
 
