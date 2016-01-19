@@ -266,7 +266,7 @@ directly in the template that's actually rendering the form.
 
     {% extends 'base.html.twig' %}
 
-    {% form_theme form _self %}
+    {% form_theme form 'AcmeDemoBundle:User:profile.html.twig' %}
 
     {% block integer_widget %}
         <div class="integer_widget">
@@ -281,8 +281,8 @@ directly in the template that's actually rendering the form.
         {{ form_row(form.age) }}
     {% endblock %}
 
-By using the special ``{% form_theme form _self %}`` tag, Twig looks inside
-the same template for any overridden form blocks. Assuming the ``form.age``
+By using the special ``{% form_theme form 'AcmeDemoBundle:User:profile.html.twig' %}`` tag, Twig looks inside
+the given template for any overridden form blocks. Assuming the ``form.age``
 field is an ``integer`` type field, when its widget is rendered, the customized
 ``integer_widget`` block will be used.
 
