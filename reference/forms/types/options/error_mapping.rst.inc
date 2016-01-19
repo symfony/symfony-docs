@@ -36,8 +36,8 @@ Here are the rules for the left and the right side of the mapping:
   properties by dots. For example: ``addresses[work].matchingCityAndZipCode``;
 * The right side contains simply the names of fields in the form.
 
-Additionally, you can set the left side to dot ``.`` which refers to any
-unmapped property or methods needing validation to the given nested field instead
+Additionally, you can set the left side to dot (``.``), which refers to any
+unmapped properties or methods needing validation to the given nested field instead
 of bubbling them to the form::
 
     $resolver->setDefaults(array(
