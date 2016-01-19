@@ -379,7 +379,8 @@ In case you want to use the same translation catalogue outside your application
 (e.g. use translation on the client side), it's possible to fetch raw translation
 messages. Just specify the required locale::
 
-    $messages = $translator->getMessages('fr_FR');
+    $catalogue = $translator->getCatalogue('fr_FR');
+    $messages = $catalogue->all();
 
 The ``$messages`` variable will have the following structure::
 
@@ -392,3 +393,4 @@ The ``$messages`` variable will have the following structure::
             'Value is too long' => 'Valeur est trop long',
         ),
     );
+
