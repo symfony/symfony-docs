@@ -165,10 +165,10 @@ It often happens that you use some options that are added by
 :doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` only loads the core form extension, which means an
-+:class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
-+will be raised if you try to test a class that depends on other extensions.
-+The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
-+allows you to return a list of extensions to register::
+:class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
+will be raised if you try to test a class that depends on other extensions.
+The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
+allows you to return a list of extensions to register::
 
     // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
     namespace AppBundle\Tests\Form\Type;
