@@ -26,8 +26,8 @@ First, enable form login under your firewall:
                 main:
                     anonymous: ~
                     form_login:
-                        login_path: /login
-                        check_path: /login
+                        login_path: login
+                        check_path: login
 
     .. code-block:: xml
 
@@ -55,8 +55,8 @@ First, enable form login under your firewall:
                 'main' => array(
                     'anonymous'  => null,
                     'form_login' => array(
-                        'login_path' => '/login',
-                        'check_path' => '/login',
+                        'login_path' => 'login',
+                        'check_path' => 'login',
                     ),
                 ),
             ),
@@ -98,7 +98,7 @@ under your ``form_login`` configuration (``/login``):
         class SecurityController extends Controller
         {
             /**
-             * @Route("/login", name="login_route")
+             * @Route("/login", name="login")
              */
             public function loginAction(Request $request)
             {
@@ -109,7 +109,7 @@ under your ``form_login`` configuration (``/login``):
 
         # app/config/routing.yml
         login_route:
-            path:     /login
+            path:     login
             defaults: { _controller: AppBundle:Security:login }
 
     .. code-block:: xml
@@ -121,7 +121,7 @@ under your ``form_login`` configuration (``/login``):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login_route" path="/login">
+            <route id="login" path="/login">
                 <default key="_controller">AppBundle:Security:login</default>
             </route>
         </routes>
@@ -133,7 +133,7 @@ under your ``form_login`` configuration (``/login``):
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('login_route', new Route('/login', array(
+        $collection->add('login', new Route('/login', array(
             '_controller' => 'AppBundle:Security:login',
         )));
 
