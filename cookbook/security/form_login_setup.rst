@@ -108,8 +108,8 @@ under your ``form_login`` configuration (``/login``):
     .. code-block:: yaml
 
         # app/config/routing.yml
-        login_route:
-            path:     login
+        login:
+            path:     /login
             defaults: { _controller: AppBundle:Security:login }
 
     .. code-block:: xml
