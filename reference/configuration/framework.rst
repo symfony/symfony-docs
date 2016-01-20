@@ -69,9 +69,10 @@ Configuration
     * `gc_probability`_
     * `gc_maxlifetime`_
     * `save_path`_
+* `assets`_
+    * `version`_
+    * `version_format`_
 * `templating`_
-    * `assets_version`_
-    * `assets_version_format`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
         * `resources`_
@@ -850,14 +851,13 @@ setting the value to ``null``:
             ),
         ));
 
-templating
-~~~~~~~~~~
+assets
+~~~~~~
 
 .. _reference-framework-assets-version:
-.. _ref-framework-assets-version:
 
-assets_version
-..............
+version
+.......
 
 **type**: ``string``
 
@@ -879,7 +879,7 @@ For example, suppose you have the following:
         <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
 
 By default, this will render a path to your image such as ``/images/logo.png``.
-Now, activate the ``assets_version`` option:
+Now, activate the ``version`` option:
 
 .. configuration-block::
 
@@ -888,7 +888,10 @@ Now, activate the ``assets_version`` option:
         # app/config/config.yml
         framework:
             # ...
-            templating: { engines: ['twig'], assets_version: v2 }
+            assets:
+                version: 'v2'
+            templating:
+                engines: ['twig']
 
     .. code-block:: xml
 
@@ -900,7 +903,8 @@ Now, activate the ``assets_version`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:templating assets-version="v2">
+            <framework:assets version="v2">
+            <framework:templating>
                 <!-- ... -->
                 <framework:engine>twig</framework:engine>
             </framework:templating>
@@ -911,40 +915,42 @@ Now, activate the ``assets_version`` option:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'templating'      => array(
-                'engines'        => array('twig'),
-                'assets_version' => 'v2',
+            'assets' => array(
+                'version' => 'v2',
+            ),
+            'templating' => array(
+                'engines' => array('twig'),
             ),
         ));
 
 Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
-this feature, you **must** manually increment the ``assets_version`` value
+this feature, you **must** manually increment the ``version`` value
 before each deployment so that the query parameters change.
 
 It's also possible to set the version value on an asset-by-asset basis (instead
 of using the global version - e.g. ``v2`` - set here). See
 :ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
 
-You can also control how the query string works via the `assets_version_format`_
+You can also control how the query string works via the `version_format`_
 option.
 
 .. tip::
 
     As with all settings, you can use a parameter as value for the
-    ``assets_version``. This makes it easier to increment the cache on each
+    ``version``. This makes it easier to increment the cache on each
     deployment.
 
-.. _reference-templating-version-format:
+.. _reference-assets-version-format:
 
-assets_version_format
-.....................
+version_format
+..............
 
 **type**: ``string`` **default**: ``%%s?%%s``
 
 This specifies a :phpfunction:`sprintf` pattern that will be used with the
-`assets_version`_ option to construct an asset's path. By default, the pattern
+`version`_ option to construct an asset's path. By default, the pattern
 adds the asset's version as a query string. For example, if
-``assets_version_format`` is set to ``%%s?version=%%s`` and ``assets_version``
+``version_format`` is set to ``%%s?version=%%s`` and ``version``
 is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
 .. note::
@@ -957,7 +963,7 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
     Some CDN's do not support cache-busting via query strings, so injecting
     the version into the actual file path is necessary. Thankfully,
-    ``assets_version_format`` is not limited to producing versioned query
+    ``version_format`` is not limited to producing versioned query
     strings.
 
     The pattern receives the asset's original path and version as its first
@@ -972,6 +978,9 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     appropriate version path as part of your deployment process and forgot
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
+
+templating
+~~~~~~~~~~
 
 hinclude_default_template
 .........................
@@ -1277,7 +1286,7 @@ Each package can configure the following options:
 
 * :ref:`base_urls <reference-templating-base-urls>`
 * :ref:`version <reference-framework-assets-version>`
-* :ref:`version_format <reference-templating-version-format>`
+* :ref:`version_format <reference-assets-version-format>`
 
 translator
 ~~~~~~~~~~
@@ -1589,10 +1598,13 @@ Full Default Configuration
             serializer:
                enabled: false
 
+            # assets configuration
+            assets:
+                version:            ~
+                version_format:     '%%s?%%s'
+
             # templating configuration
             templating:
-                assets_version:       ~
-                assets_version_format:  '%%s?%%s'
                 hinclude_default_template:  ~
                 form:
                     resources:
