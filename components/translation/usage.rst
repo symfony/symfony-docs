@@ -378,6 +378,9 @@ messages. Just specify the required locale::
 
     $catalogue = $translator->getCatalogue('fr_FR');
     $messages = $catalogue->all();
+    while ($catalogue = $catalogue->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalogue->all(), $messages);
+    }
 
 The ``$messages`` variable will have the following structure::
 
