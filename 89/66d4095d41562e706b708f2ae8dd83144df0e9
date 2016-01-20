@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by Ener-Getick at 2016-01-19T21:15:47Z
+
+Isn't it a problem that symfony 2.3 is still supported?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-19T21:54:38Z
+
+@Ener-Getick That's not a problem. In the 2.3 docs, these things were never included and they won't be.
+
+---------------------------------------------------------------------------
+
+by Ener-Getick at 2016-01-19T22:13:23Z
+
+Ah right then :+1:
