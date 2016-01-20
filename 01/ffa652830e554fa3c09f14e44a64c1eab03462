@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-23T10:28:42Z
+
+The "it" is refering to the parameter name in the section above it (about paramconverter). It tells you that this code works, as the parameter name equals the property name. Then it shows an example which doesn't work nicely, because parameter name doesn't equal the property name (postSlug in this case).
+
+---------------------------------------------------------------------------
+
+by BallisticPain at 2015-12-23T16:04:10Z
+
+@WouterJ
+Are you just informing me, or asking me to make a change to my commit in order to get this approved?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-23T21:05:26Z
+
+@BallisticPain Actually, the section as it is right now is technically correct. Though as you were confused by how it is written right now we can maybe improve this part. Do you have an idea how we could rewrite this to make it easier to understand?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-11T08:48:09Z
+
+Maybe we can reword a bit the first phrase of the *When Things Get More Advanced* section:
+
+```diff
+-This works without any configuration because the wildcard name ``{id}`` matches [...]
++The above example works without any configuration because the wildcard name
++ ``{id}`` matches [...]
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-11T09:22:04Z
+
+sounds good
+
+---------------------------------------------------------------------------
+
+by BallisticPain at 2016-01-12T04:57:22Z
+
+That does sound good to me too. Would you like me to modify?
+Apologies for the delay. Holidays and I forgot... ;)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-20T13:14:43Z
+
+:+1:
