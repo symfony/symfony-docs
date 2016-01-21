@@ -128,8 +128,8 @@ Glossary
    Annotation
          Annotations are notes written above your code. They can either be explanatory and will be
          ignored during execution or add functionality to the line of code directly below as a means of
-         configuration. For example, the annotation @var describes the type of a variable, whereas for example in
-         Symfony2 @Assert can add validation to a member variable of a class (see :doc:`/book/validation` chapter).
+         configuration. For example, the annotation ``@var`` describes the type of a variable, whereas for example in
+         Symfony2 ``@Assert`` can add validation to a member variable of a class (see :doc:`/book/validation` chapter).
 
 .. _`service-oriented architecture`: https://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
