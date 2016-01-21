@@ -31,7 +31,7 @@ and it only uses one format.
 
 Overall, this means you should aggressively decouple your business logic
 from the framework while, at the same time, aggressively coupling your controllers
-and routing *to* the framework in order to get the most out of it.
+and routing *to* the framework to get the most out of it.
 
 Routing Configuration
 ---------------------
