@@ -158,6 +158,35 @@ Listener Class Name                                                             
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`     -1024
 ===================================================================================  ========
 
+``kernel.finish_request``
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
+
+The purpose of this event is to allow you to reset the global and environmental state of
+the application after a sub-request has finished::
+
+    public function onKernelFinishRequest(FinishRequestEvent $event)
+    {
+        if (null === $parentRequest = $this->requestStack->getParentRequest()) {
+            return;
+        }
+
+        //Reset the locale of the subrequest to the locale of the parent request
+        $this->setLocale($parentRequest);
+    }
+
+These are the built-in Symfony listeners related to this event:
+
+==========================================================================  ========
+Listener Class Name                                                         Priority
+==========================================================================  ========
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`      0
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\TranslatorListener`  0
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`      0
+:class:`Symfony\\Component\\Security\\Http\\Firewall`                       0
+==========================================================================  ========
+
 ``kernel.terminate``
 ~~~~~~~~~~~~~~~~~~~~
 
