@@ -18,7 +18,7 @@ Configuring CSRF Protection
 
 First, configure the Security component so it can use CSRF protection.
 The Security component needs a CSRF token provider. You can set this to use the default
-provider available in the Form component:
+provider available in the Security component:
 
 .. configuration-block::
 
@@ -33,7 +33,7 @@ provider available in the Form component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: form.csrf_provider
+                        csrf_token_generator: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -50,7 +50,7 @@ provider available in the Form component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-provider="form.csrf_provider" />
+                    <form-login csrf-token-generator="security.csrf.token_manager" />
                 </firewall>
             </config>
         </srv:container>
@@ -66,11 +66,15 @@ provider available in the Form component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'form.csrf_provider',
+                        'csrf_token_generator' => 'security.csrf.token_manager',
                     ),
                 ),
             ),
         ));
+
+.. versionadded:: 2.4
+    The ``csrf_token_generator`` option was introduced in Symfony 2.4. Prior,
+    you had to use the ``csrf_provider`` option.
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
@@ -107,7 +111,9 @@ using the login form:
         <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <form action="<?php echo $view['router']->path('login_check') ?>" method="post">
             <!-- ... the login fields -->
 
             <input type="hidden" name="_csrf_token"
@@ -122,7 +128,7 @@ After this, you have protected your login form against CSRF attacks.
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
-    the token ID by setting ``intention`` in your configuration:
+    the token ID by setting  ``csrf_token_id`` in your configuration:
 
     .. configuration-block::
 
@@ -138,7 +144,7 @@ After this, you have protected your login form against CSRF attacks.
                         form_login:
                             # ...
                             csrf_parameter: _csrf_security_token
-                            intention: a_private_string
+                            csrf_token_id: a_private_string
 
         .. code-block:: xml
 
@@ -156,7 +162,7 @@ After this, you have protected your login form against CSRF attacks.
                     <firewall name="secured_area">
                         <!-- ... -->
                         <form-login csrf-parameter="_csrf_security_token"
-                            intention="a_private_string"
+                            csrf-token-id="a_private_string"
                         />
                     </firewall>
                 </config>
@@ -174,11 +180,15 @@ After this, you have protected your login form against CSRF attacks.
                         'form_login' => array(
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
-                            'intention'      => 'a_private_string',
+                            'csrf_token_id'     => 'a_private_string'
                         ),
                     ),
                 ),
             ));
+
+.. versionadded:: 2.4
+    The ``csrf_token_id`` option was introduced in Symfony 2.4. Prior, you
+    had to use the ``intention`` option.
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Forging Login Requests`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests

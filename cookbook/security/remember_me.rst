@@ -22,7 +22,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 main:
                     # ...
                     remember_me:
-                        key:      '%secret%'
+                        secret:   '%secret%'
                         lifetime: 604800 # 1 week in seconds
                         path:     /
                         # by default, the feature is enabled by checking a
@@ -48,7 +48,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
                     <!-- 604800 is 1 week in seconds -->
                     <remember-me
-                        key="%secret%"
+                        secret="%secret%"
                         lifetime="604800"
                         path="/" />
                     <!-- by default, the feature is enabled by checking a checkbox
@@ -68,7 +68,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 'main' => array(
                     // ...
                     'remember_me' => array(
-                        'key'      => '%secret%',
+                        'secret'   => '%secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
                         // by default, the feature is enabled by checking a
@@ -82,7 +82,11 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``key`` (**required**)
+``secret`` (**required**)
+    .. versionadded:: 2.8
+        The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it
+        was named ``key``.
+
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
@@ -172,7 +176,9 @@ this:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <form action="<?php echo $view['router']->path('login_check') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username"
                    name="_username" value="<?php echo $last_username ?>" />
@@ -246,25 +252,20 @@ In the following example, the action is only allowed if the user has the
     // ...
     public function editAction()
     {
-        $isFullyAuthenticated = $this->get('security.context')
-            ->isGranted('IS_AUTHENTICATED_FULLY');
-
-        if (!$isFullyAuthenticated) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
 
-You can also choose to install and use the optional JMSSecurityExtraBundle_,
-which can secure your controller using annotations::
+If your application is based on the Symfony Standard Edition, you can also secure
+your controller using annotations:
 
-    // ...
-    use JMS\SecurityExtraBundle\Annotation\Secure;
-    // ...
+.. code-block:: php
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Secure(roles="IS_AUTHENTICATED_FULLY")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function editAction($name)
     {
@@ -293,5 +294,3 @@ which can secure your controller using annotations::
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.
-
-.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle

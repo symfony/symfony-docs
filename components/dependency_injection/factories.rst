@@ -28,8 +28,8 @@ object::
     }
 
 To make the ``NewsletterManager`` object available as a service, you can
-configure the service container to use the ``NewsletterManagerFactory``
-factory class:
+configure the service container to use the
+``NewsletterManagerFactory::createNewsletterManager()`` factory method:
 
 .. configuration-block::
 
@@ -37,9 +37,8 @@ factory class:
 
         services:
             newsletter_manager:
-                class:          NewsletterManager
-                factory_class:  NewsletterManagerFactory
-                factory_method: createNewsletterManager
+                class:   NewsletterManager
+                factory: [NewsletterManagerFactory, createNewsletterManager]
 
     .. code-block:: xml
 
@@ -49,11 +48,9 @@ factory class:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service
-                    id="newsletter_manager"
-                    class="NewsletterManager"
-                    factory-class="NewsletterManagerFactory"
-                    factory-method="createNewsletterManager" />
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <factory class="NewsletterManagerFactory" method="createNewsletterManager" />
+                </service>
             </services>
         </services>
 
@@ -63,8 +60,7 @@ factory class:
 
         // ...
         $definition = new Definition('NewsletterManager');
-        $definition->setFactoryClass('NewsletterManagerFactory');
-        $definition->setFactoryMethod('createNewsletterManager');
+        $definition->setFactory(array('NewsletterManagerFactory', 'createNewsletterManager'));
 
         $container->setDefinition('newsletter_manager', $definition);
 
@@ -76,23 +72,21 @@ factory class:
     the configured class name may be used by compiler passes and therefore
     should be set to a sensible value.
 
-When you specify the class to use for the factory (via ``factory_class``)
-the method will be called statically. If the factory itself should be instantiated
-and the resulting object's method called, configure the factory itself
-as a service. In this case, the method (e.g. ``createNewsletterManager``)
-should be changed to be non-static:
+Now, the method will be called statically. If the factory class itself should
+be instantiated and the resulting object's method called, configure the factory
+itself as a service. In this case, the method (e.g. get) should be changed to
+be non-static.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         services:
-            newsletter_manager_factory:
-                class:            NewsletterManagerFactory
+            newsletter_manager.factory:
+                class: NewsletterManagerFactory
             newsletter_manager:
-                class:            NewsletterManager
-                factory_service:  newsletter_manager_factory
-                factory_method:   createNewsletterManager
+                class:   NewsletterManager
+                factory: ["@newsletter_manager.factory", createNewsletterManager]
 
     .. code-block:: xml
 
@@ -102,36 +96,28 @@ should be changed to be non-static:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="newsletter_manager_factory" class="NewsletterManagerFactory" />
+                <service id="newsletter_manager.factory" class="NewsletterManagerFactory" />
 
-                <service
-                    id="newsletter_manager"
-                    class="NewsletterManager"
-                    factory-service="newsletter_manager_factory"
-                    factory-method="createNewsletterManager" />
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <factory service="newsletter_manager.factory" method="createNewsletterManager" />
+                </service>
             </services>
         </container>
 
     .. code-block:: php
 
+        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('newsletter_manager_factory', new Definition(
-            'NewsletterManager'
-        ));
-        $container->setDefinition('newsletter_manager', new Definition(
-            'NewsletterManagerFactory'
-        ))->setFactoryService(
-            'newsletter_manager_factory'
-        )->setFactoryMethod(
+        // ...
+        $container->register('newsletter_manager.factory', 'NewsletterManagerFactory');
+
+        $newsletterManager = new Definition();
+        $newsletterManager->setFactory(array(
+            new Reference('newsletter_manager.factory'),
             'createNewsletterManager'
-        );
-
-.. note::
-
-    The factory service is specified by its id name and not a reference
-    to the service itself. So, you do not need to use the ``@`` syntax for
-    this in YAML configurations.
+        ));
+        $container->setDefinition('newsletter_manager', $newsletterManager);
 
 Passing Arguments to the Factory Method
 ---------------------------------------
@@ -145,12 +131,12 @@ method in the previous example takes the ``templating`` service as an argument:
     .. code-block:: yaml
 
         services:
-            newsletter_manager_factory:
-                class:            NewsletterManagerFactory
+            newsletter_manager.factory:
+                class: NewsletterManagerFactory
+
             newsletter_manager:
-                class:            NewsletterManager
-                factory_service:  newsletter_manager_factory
-                factory_method:   createNewsletterManager
+                class:   NewsletterManager
+                factory: ["@newsletter_manager.factory", createNewsletterManager]
                 arguments:
                     - "@templating"
 
@@ -162,32 +148,29 @@ method in the previous example takes the ``templating`` service as an argument:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="newsletter_manager_factory" class="NewsletterManagerFactory" />
+                <service id="newsletter_manager.factory" class="NewsletterManagerFactory"/>
 
-                <service
-                    id="newsletter_manager"
-                    class="NewsletterManager"
-                    factory-service="newsletter_manager_factory"
-                    factory-method="createNewsletterManager">
-
-                    <argument type="service" id="templating" />
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <factory service="newsletter_manager.factory" method="createNewsletterManager"/>
+                    <argument type="service" id="templating"/>
                 </service>
             </services>
         </container>
 
     .. code-block:: php
 
+        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $container->setDefinition('newsletter_manager_factory', new Definition(
-            'NewsletterManagerFactory'
-        ));
-        $container->setDefinition('newsletter_manager', new Definition(
+        $container->register('newsletter_manager.factory', 'NewsletterManagerFactory');
+
+        $newsletterManager = new Definition(
             'NewsletterManager',
             array(new Reference('templating'))
-        ))->setFactoryService(
-            'newsletter_manager_factory'
-        )->setFactoryMethod(
-            'createNewsletterManager'
         );
+        $newsletterManager->setFactory(array(
+            new Reference('newsletter_manager.factory'),
+            'createNewsletterManager'
+        ));
+        $container->setDefinition('newsletter_manager', $newsletterManager);

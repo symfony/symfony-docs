@@ -21,6 +21,7 @@ Validation Constraints Reference
    constraints/Url
    constraints/Regex
    constraints/Ip
+   constraints/Uuid
 
    constraints/Range
 
@@ -52,10 +53,12 @@ Validation Constraints Reference
    constraints/Currency
    constraints/Luhn
    constraints/Iban
+   constraints/Bic
    constraints/Isbn
    constraints/Issn
 
    constraints/Callback
+   constraints/Expression
    constraints/All
    constraints/UserPassword
    constraints/Valid

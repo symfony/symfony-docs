@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; textarea
+   single: Forms; Fields; TextareaType
 
-textarea Field Type
-===================
+TextareaType Field
+==================
 
 Renders a ``textarea`` HTML element.
 
@@ -18,12 +18,12 @@ Renders a ``textarea`` HTML element.
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
-|             | - `max_length`_                                                        |
-|             | - `read_only`_                                                         |
+|             | - `max_length`_ (deprecated as of 2.5)                                 |
+|             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 |             | - `trim`_                                                              |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                              |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
@@ -31,8 +31,7 @@ Renders a ``textarea`` HTML element.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 

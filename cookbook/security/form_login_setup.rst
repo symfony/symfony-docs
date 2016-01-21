@@ -166,26 +166,15 @@ form::
 
     // src/AppBundle/Controller/SecurityController.php
 
-    // ...
-    use Symfony\Component\Security\Core\SecurityContextInterface;
-
-    // ...
     public function loginAction(Request $request)
     {
-        $session = $request->getSession();
+        $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
-        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-        } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
-        } else {
-            $error = null;
-        }
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
             'security/login.html.twig',
@@ -243,7 +232,9 @@ Finally, create the template:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <form action="<?php echo $view['router']->path('login_check') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 

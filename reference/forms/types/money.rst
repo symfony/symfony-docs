@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; money
+   single: Forms; Fields; MoneyType
 
-money Field Type
-================
+MoneyType Field
+===============
 
 Renders an input text field and specializes in handling submitted "money"
 data.
@@ -17,7 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
-|             | - `precision`_                                                      |
+|             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
 | options     |                                                                     |
@@ -32,10 +32,10 @@ how the input and output of the data is handled.
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -65,7 +65,10 @@ If, for some reason, you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
 For example::
 
-    $builder->add('price', 'money', array(
+    use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+    // ...
+
+    $builder->add('price', MoneyType::class, array(
         'divisor' => 100,
     ));
 
@@ -76,14 +79,18 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-precision
-~~~~~~~~~
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``2``
 
-For some reason, if you need some precision other than 2 decimal places,
+If, for some reason, you need some scale other than 2 decimal places,
 you can modify this value. You probably won't need to do this unless,
-for example, you want to round to the nearest dollar (set the precision
+for example, you want to round to the nearest dollar (set the scale
 to ``0``).
 
 Overridden Options
@@ -94,8 +101,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

@@ -145,13 +145,13 @@ by running:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle/Entity/User
+    $ php bin/console doctrine:generate:entities AppBundle/Entity/User
 
 Next, make sure to :ref:`create the database table <book-doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -291,8 +291,6 @@ name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -424,20 +422,18 @@ both are unique in the database. Unfortunately, the native entity provider
 is only able to handle querying via a single property on the user.
 
 To do this, make your ``UserRepository`` implement a special
-:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
-interface requires three methods: ``loadUserByUsername($username)``,
-``refreshUser(UserInterface $user)``, and ``supportsClass($class)``::
+:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
+interface only requires one method: ``loadUserByUsername($username)``::
 
     // src/AppBundle/Entity/UserRepository.php
     namespace AppBundle\Entity;
 
+    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Doctrine\ORM\EntityRepository;
 
-    class UserRepository extends EntityRepository implements UserProviderInterface
+    class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         public function loadUserByUsername($username)
         {
@@ -458,30 +454,12 @@ interface requires three methods: ``loadUserByUsername($username)``,
 
             return $user;
         }
-
-        public function refreshUser(UserInterface $user)
-        {
-            $class = get_class($user);
-            if (!$this->supportsClass($class)) {
-                throw new UnsupportedUserException(
-                    sprintf(
-                        'Instances of "%s" are not supported.',
-                        $class
-                    )
-                );
-            }
-
-            return $this->find($user->getId());
-        }
-
-        public function supportsClass($class)
-        {
-            return $this->getEntityName() === $class
-                || is_subclass_of($class, $this->getEntityName());
-        }
     }
 
-For more details on these methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
+.. versionadded:: 2.8
+    The :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`
+    was introduced in 2.8. Prior to Symfony 2.8, you had to implement
+    ``Symfony\Component\Security\Core\User\UserProviderInterface``.
 
 .. tip::
 
@@ -578,10 +556,6 @@ then instead of these properties being checked, your ``isEqualTo`` method
 is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
-    and the ``EquatableInterface`` was introduced in its place.
 
 .. _fixtures: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 .. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle

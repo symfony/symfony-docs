@@ -1,16 +1,17 @@
 .. index::
-   single: Forms; Fields; form
+   single: Forms; Fields; FormType
 
-form Field Type
-===============
+FormType Field
+==============
 
-The ``form`` type predefines a couple of options that are then available
-on all types for which ``form`` is the parent type.
+The ``FormType`` predefines a couple of options that are then available
+on all types for which ``FormType`` is the parent.
 
 +-----------+--------------------------------------------------------------------+
 | Options   | - `action`_                                                        |
+|           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
-|           | - `cascade_validation`_                                            |
+|           | - `cascade_validation`_ (deprecated as of 2.8)                     |
 |           | - `compound`_                                                      |
 |           | - `constraints`_                                                   |
 |           | - `data`_                                                          |
@@ -24,12 +25,12 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
 |           | - `mapped`_                                                        |
-|           | - `max_length`_                                                    |
+|           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
-|           | - `pattern`_                                                       |
+|           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
-|           | - `read_only`_                                                     |
+|           | - `read_only`_ (deprecated as of 2.8)                              |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
 +-----------+--------------------------------------------------------------------+
@@ -51,6 +52,17 @@ Field Options
 .. _form-option-action:
 
 .. include:: /reference/forms/types/options/action.rst.inc
+
+allow_extra_fields
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+Usually, if you submit extra fields that aren't configured in your form,
+you'll get a "This form should not contain extra fields." validation error.
+
+You can silence this validation error by enabling the ``allow_extra_fields``
+option on the form.
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
@@ -113,6 +125,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
 
+.. _reference-form-option-property-path:
+
 .. include:: /reference/forms/types/options/property_path.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
@@ -129,7 +143,7 @@ Inherited Options
 The following options are defined in the
 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BaseType` class.
 The ``BaseType`` class is the parent class for both the ``form`` type and
-the :doc:`button type </reference/forms/types/button>`, but it is not part
+the :doc:`ButtonType </reference/forms/types/button>`, but it is not part
 of the form type tree (i.e. it can not be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/attr.rst.inc

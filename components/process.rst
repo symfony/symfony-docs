@@ -24,29 +24,49 @@ The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
 a command in a sub-process::
 
     use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Exception\ProcessFailedException;
 
     $process = new Process('ls -lsa');
     $process->run();
 
     // executes after the command finishes
     if (!$process->isSuccessful()) {
-        throw new \RuntimeException($process->getErrorOutput());
+        throw new ProcessFailedException($process);
     }
 
-    print $process->getOutput();
+    echo $process->getOutput();
 
 The component takes care of the subtle differences between the different platforms
 when executing the command.
-
-.. versionadded:: 2.2
-    The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods
-    were introduced in Symfony 2.2.
 
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
+
+The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
+the contents of the output and
+:method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
+the contents of the error output.
+
+The ``mustRun()`` method is identical to ``run()``, except that it will throw
+a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
+if the process couldn't be executed successfully (i.e. the process exited
+with a non-zero code)::
+
+    use Symfony\Component\Process\Exception\ProcessFailedException;
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('ls -lsa');
+
+    try {
+        $process->mustRun();
+
+        echo $process->getOutput();
+    } catch (ProcessFailedException $e) {
+        echo $e->getMessage();
+    }
 
 Getting real-time Process Output
 --------------------------------
@@ -66,9 +86,6 @@ anonymous function to the
             echo 'OUT > '.$buffer;
         }
     });
-
-.. versionadded:: 2.1
-    The non-blocking feature was introduced in 2.1.
 
 Running Processes Asynchronously
 --------------------------------
@@ -213,6 +230,22 @@ check regularly::
 
 .. _reference-process-signal:
 
+Process Idle Timeout
+--------------------
+
+In contrast to the timeout of the previous paragraph, the idle timeout only
+considers the time since the last output was produced by the process::
+
+   use Symfony\Component\Process\Process;
+
+   $process = new Process('something-with-variable-runtime');
+   $process->setTimeout(3600);
+   $process->setIdleTimeout(60);
+   $process->run();
+
+In the case above, a process is considered timed out, when either the total runtime
+exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
+
 Process Signals
 ---------------
 
@@ -262,6 +295,29 @@ You can access the `pid`_ of a running process with the
     Due to some limitations in PHP, if you want to get the pid of a symfony Process,
     you may have to prefix your commands with `exec`_. Please read
     `Symfony Issue#5759`_ to understand why this is happening.
+
+Disabling Output
+----------------
+
+As standard output and error output are always fetched from the underlying process,
+it might be convenient to disable output in some cases to save memory.
+Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
+:method:`Symfony\\Component\\Process\\Process::enableOutput` to toggle this feature::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('/usr/bin/php worker.php');
+    $process->disableOutput();
+    $process->run();
+
+.. caution::
+
+    You can not enable or disable the output while the process is running.
+
+    If you disable the output, you cannot access ``getOutput``,
+    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
+    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
+    methods or use ``setIdleTimeout``.
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992

@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; search
+   single: Forms; Fields; SearchType
 
-search Field Type
-=================
+SearchType Field
+================
 
 This renders an ``<input type="search" />`` field, which is a text box with
 special functionality supported by some browsers.
@@ -19,12 +19,12 @@ Read about the input search field at `DiveIntoHTML5.info`_
 |             | - `label`_                                                           |
 |             | - `label_attr`_                                                      |
 |             | - `mapped`_                                                          |
-|             | - `max_length`_                                                      |
-|             | - `read_only`_                                                       |
+|             | - `max_length`_ (deprecated as of 2.5)                               |
+|             | - `read_only`_ (deprecated as of 2.8)                                |
 |             | - `required`_                                                        |
 |             | - `trim`_                                                            |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                            |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                        |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SearchType` |
 +-------------+----------------------------------------------------------------------+
@@ -32,8 +32,7 @@ Read about the input search field at `DiveIntoHTML5.info`_
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 

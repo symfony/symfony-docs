@@ -1,13 +1,15 @@
 .. index::
-   single: Forms; Fields; file
+   single: Forms; Fields; FileType
 
-file Field Type
-===============
+FileType Field
+==============
 
-The ``file`` type represents a file input in your form.
+The ``FileType`` represents a file input in your form.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
++-------------+---------------------------------------------------------------------+
+| Options     | - `multiple`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
 | options     | - `data_class`_                                                     |
@@ -19,10 +21,10 @@ The ``file`` type represents a file input in your form.
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
@@ -32,7 +34,10 @@ Basic Usage
 
 Say you have this form definition::
 
-    $builder->add('attachment', 'file');
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    // ...
+
+    $builder->add('attachment', FileType::class);
 
 When the form is submitted, the ``attachment`` field will be an instance
 of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can
@@ -77,6 +82,16 @@ before using it directly.
 Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example
 of how to manage a file upload associated with a Doctrine entity.
 
+Field Options
+-------------
+
+multiple
+~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+When set to true, the user will be able to upload multiple files at the same time.
+
 Overridden Options
 ------------------
 
@@ -100,8 +115,7 @@ value is empty.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 

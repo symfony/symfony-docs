@@ -13,13 +13,6 @@ Symfony has a built-in solution for database session storage called
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
 To use it, you just need to change some parameters in the main configuration file:
 
-.. versionadded:: 2.1
-    In Symfony 2.1 the class and namespace are slightly modified. You can now
-    find the session storage classes in the ``Session\Storage`` namespace:
-    ``Symfony\Component\HttpFoundation\Session\Storage``. Also,
-    note that in Symfony 2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony 2.0.
-    Below, you'll notice that ``%session.storage.options%`` is not used anymore.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -30,26 +23,13 @@ To use it, you just need to change some parameters in the main configuration fil
                 # ...
                 handler_id: session.handler.pdo
 
-        parameters:
-            pdo.db_options:
-                db_table:    session
-                db_id_col:   session_id
-                db_data_col: session_value
-                db_time_col: session_time
-
         services:
-            pdo:
-                class: PDO
-                arguments:
-                    dsn:      "mysql:dbname=mydatabase"
-                    user:     myuser
-                    password: mypassword
-                calls:
-                    - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
-
             session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-                arguments: ['@pdo', '%pdo.db_options%']
+                public:    false
+                arguments:
+                    - 'mysql:dbname=mydatabase'
+                    - { db_username: myuser, db_password: mypassword }
 
     .. code-block:: xml
 
@@ -58,29 +38,13 @@ To use it, you just need to change some parameters in the main configuration fil
             <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
         </framework:config>
 
-        <parameters>
-            <parameter key="pdo.db_options" type="collection">
-                <parameter key="db_table">session</parameter>
-                <parameter key="db_id_col">session_id</parameter>
-                <parameter key="db_data_col">session_value</parameter>
-                <parameter key="db_time_col">session_time</parameter>
-            </parameter>
-        </parameters>
-
         <services>
-            <service id="pdo" class="PDO">
-                <argument>mysql:dbname=mydatabase</argument>
-                <argument>myuser</argument>
-                <argument>mypassword</argument>
-                <call method="setAttribute">
-                    <argument type="constant">PDO::ATTR_ERRMODE</argument>
-                    <argument type="constant">PDO::ERRMODE_EXCEPTION</argument>
-                </call>
-            </service>
-
-            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
-                <argument type="service" id="pdo" />
-                <argument>%pdo.db_options%</argument>
+            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                <argument>mysql:dbname=mydatabase</agruement>
+                <argument type="collection">
+                    <argument key="db_username">myuser</argument>
+                    <argument key="db_password">mypassword</argument>
+                </argument>
             </service>
         </services>
 
@@ -98,40 +62,77 @@ To use it, you just need to change some parameters in the main configuration fil
             ),
         ));
 
-        $container->setParameter('pdo.db_options', array(
-            'db_table'      => 'session',
-            'db_id_col'     => 'session_id',
-            'db_data_col'   => 'session_value',
-            'db_time_col'   => 'session_time',
-        ));
-
-        $pdoDefinition = new Definition('PDO', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             'mysql:dbname=mydatabase',
-            'myuser',
-            'mypassword',
+            array('db_username' => 'myuser', 'db_password' => 'mypassword')
         ));
-        $pdoDefinition->addMethodCall('setAttribute', array(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION));
-        $container->setDefinition('pdo', $pdoDefinition);
+        $container->setDefinition('session.handler.pdo', $storageDefinition);
+
+Configuring the Table and Column Names
+--------------------------------------
+
+This will expect a ``sessions`` table with a number of different columns.
+The table name, and all of the column names, can be configured by passing
+a second array argument to ``PdoSessionHandler``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            # ...
+            session.handler.pdo:
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+                public:    false
+                arguments:
+                    - 'mysql:dbname=mydatabase'
+                    - { db_table: sessions, db_username: myuser, db_password: mypassword }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                <argument>mysql:dbname=mydatabase</agruement>
+                <argument type="collection">
+                    <argument key="db_table">sessions</argument>
+                    <argument key="db_username">myuser</argument>
+                    <argument key="db_password">mypassword</argument>
+                </argument>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        use Symfony\Component\DependencyInjection\Definition;
+        // ...
 
         $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
-            new Reference('pdo'),
-            '%pdo.db_options%',
+            'mysql:dbname=mydatabase',
+            array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
         ));
         $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 These are parameters that you must configure:
 
-``db_table``
-    The name of the session table in your database.
+``db_table`` (default ``sessions``):
+    The name of the session table in your database;
 
-``db_id_col``
-    The name of the id column in your session table (``VARCHAR(255)`` or larger).
+``db_id_col`` (default ``sess_id``):
+    The name of the id column in your session table (VARCHAR(128));
 
-``db_data_col``
-    The name of the value column in your session table (``TEXT`` or ``CLOB``).
+``db_data_col`` (default ``sess_data``):
+    The name of the value column in your session table (BLOB);
 
-``db_time_col``:
-    The name of the time column in your session table (``INTEGER``).
+``db_time_col`` (default ``sess_time``):
+    The name of the time column in your session table (INTEGER);
+
+``db_lifetime_col`` (default ``sess_lifetime``):
+    The name of the lifetime column in your session table (INTEGER).
+
 
 Sharing your Database Connection Information
 --------------------------------------------
@@ -149,27 +150,28 @@ of your project's data, you can use the connection settings from the
     .. code-block:: yaml
 
         services:
-            pdo:
-                class: PDO
+            session.handler.pdo:
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+                public:    false
                 arguments:
                     - 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%'
-                    - '%database_user%'
-                    - '%database_password%'
+                    - { db_username: '%database_user%', db_password: '%database_password%' }
 
     .. code-block:: xml
 
-        <service id="pdo" class="PDO">
+        <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
             <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
-            <argument>%database_user%</argument>
-            <argument>%database_password%</argument>
+            <argument type="collection">
+                <argument key="db_username">%database_user%</argument>
+                <argument key="db_password">%database_password%</argument>
+            </argument>
         </service>
 
     .. code-block:: php
 
-        $pdoDefinition = new Definition('PDO', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
-            '%database_user%',
-            '%database_password%',
+            array('db_username' => '%database_user%', 'db_password' => '%database_password%')
         ));
 
 .. _example-sql-statements:
@@ -186,23 +188,30 @@ MySQL
 
 .. code-block:: sql
 
-    CREATE TABLE `session` (
-        `session_id` varchar(255) NOT NULL,
-        `session_value` text NOT NULL,
-        `session_time` int(11) NOT NULL,
-        PRIMARY KEY (`session_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    CREATE TABLE `sessions` (
+        `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY,
+        `sess_data` BLOB NOT NULL,
+        `sess_time` INTEGER UNSIGNED NOT NULL,
+        `sess_lifetime` MEDIUMINT NOT NULL
+    ) COLLATE utf8_bin, ENGINE = InnoDB;
+
+.. note::
+
+    A ``BLOB`` column type can only store up to 64 kb. If the data stored in
+    a user's session exceeds this, an exception may be thrown or their session
+    will be silently reset. Consider using a ``MEDIUMBLOB`` if you need more
+    space.
 
 PostgreSQL
 ~~~~~~~~~~
 
 .. code-block:: sql
 
-    CREATE TABLE session (
-        session_id character varying(255) NOT NULL,
-        session_value text NOT NULL,
-        session_time integer NOT NULL,
-        CONSTRAINT session_pkey PRIMARY KEY (session_id)
+    CREATE TABLE sessions (
+        sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
+        sess_data BYTEA NOT NULL,
+        sess_time INTEGER NOT NULL,
+        sess_lifetime INTEGER NOT NULL
     );
 
 Microsoft SQL Server
@@ -210,12 +219,13 @@ Microsoft SQL Server
 
 .. code-block:: sql
 
-    CREATE TABLE [dbo].[session](
-        [session_id] [nvarchar](255) NOT NULL,
-        [session_value] [ntext] NOT NULL,
-        [session_time] [int] NOT NULL,
+    CREATE TABLE [dbo].[sessions](
+        [sess_id] [nvarchar](255) NOT NULL,
+        [sess_data] [ntext] NOT NULL,
+        [sess_time] [int] NOT NULL,
+        [sess_lifetime] [int] NOT NULL,
         PRIMARY KEY CLUSTERED(
-            [session_id] ASC
+            [sess_id] ASC
         ) WITH (
             PAD_INDEX  = OFF,
             STATISTICS_NORECOMPUTE  = OFF,

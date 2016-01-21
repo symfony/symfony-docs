@@ -391,9 +391,14 @@ is created from the form factory.
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        // ...
+
         $form = $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
         var_dump($twig->render('new.html.twig', array(
@@ -407,6 +412,8 @@ is created from the form factory.
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         class DefaultController extends Controller
         {
@@ -414,9 +421,10 @@ is created from the form factory.
             {
                 // createFormBuilder is a shortcut to get the "form factory"
                 // and then call "createBuilder()" on it
+
                 $form = $this->createFormBuilder()
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
@@ -427,8 +435,8 @@ is created from the form factory.
 
 As you can see, creating a form is like writing a recipe: you call ``add``
 for each new field you want to create. The first argument to ``add`` is the
-name of your field, and the second is the field "type". The Form component
-comes with a lot of :doc:`built-in types </reference/forms/types>`.
+name of your field, and the second is the fully qualified class name. The Form
+component comes with a lot of :doc:`built-in types </reference/forms/types>`.
 
 Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
 it and :ref:`process the form submission <component-form-intro-handling-submission>`.
@@ -444,24 +452,35 @@ builder:
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        // ...
+
         $defaults = array(
             'dueDate' => new \DateTime('tomorrow'),
         );
 
-        $form = $formFactory->createBuilder('form', $defaults)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+        $form = $formFactory->createBuilder(FormType::class, $defaults)
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
     .. code-block:: php-symfony
+
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        // ...
 
         $defaults = array(
             'dueDate' => new \DateTime('tomorrow'),
         );
 
         $form = $this->createFormBuilder($defaults)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
 .. tip::
@@ -513,7 +532,11 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-standalone
 
-        $formBuilder = $formFactory->createBuilder('form', null, array(
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+        // ...
+
+        $formBuilder = $formFactory->createBuilder(FormType::class, null, array(
             'action' => '/search',
             'method' => 'GET',
         ));
@@ -522,11 +545,13 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-symfony
 
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+
         // ...
 
         public function searchAction()
         {
-            $formBuilder = $this->createFormBuilder('form', null, array(
+            $formBuilder = $this->createFormBuilder(FormType::class, null, array(
                 'action' => '/search',
                 'method' => 'GET',
             ));
@@ -548,10 +573,14 @@ method:
 
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        // ...
 
         $form = $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
         $request = Request::createFromGlobals();
@@ -573,13 +602,16 @@ method:
 
     .. code-block:: php-symfony
 
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
         // ...
 
         public function newAction(Request $request)
         {
             $form = $this->createFormBuilder()
-                ->add('task', 'text')
-                ->add('dueDate', 'date')
+                ->add('task', TextType::class)
+                ->add('dueDate', DateType::class)
                 ->getForm();
 
             $form->handleRequest($request);
@@ -589,7 +621,7 @@ method:
 
                 // ... perform some action, such as saving the data to the database
 
-                return $this->redirect($this->generateUrl('task_success'));
+                return $this->redirectToRoute('task_success');
             }
 
             // ...
@@ -624,12 +656,14 @@ option when building each field:
 
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         $form = $formFactory->createBuilder()
-            ->add('task', 'text', array(
+            ->add('task', TextType::class, array(
                 'constraints' => new NotBlank(),
             ))
-            ->add('dueDate', 'date', array(
+            ->add('dueDate', DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
                     new Type('\DateTime'),
@@ -641,12 +675,14 @@ option when building each field:
 
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         $form = $this->createFormBuilder()
-            ->add('task', 'text', array(
+            ->add('task', TextType::class, array(
                 'constraints' => new NotBlank(),
             ))
-            ->add('dueDate', 'date', array(
+            ->add('dueDate', DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
                     new Type('\DateTime'),
@@ -666,30 +702,38 @@ Accessing Form Errors
 ~~~~~~~~~~~~~~~~~~~~~
 
 You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
-method to access the list of errors. Each element is a :class:`Symfony\\Component\\Form\\FormError`
-object::
+method to access the list of errors. It returns a
+:class:`Symfony\\Component\\Form\\FormErrorIterator` instance::
 
     $form = ...;
 
     // ...
 
-    // an array of FormError objects, but only errors attached to this
+    // a FormErrorIterator instance, but only errors attached to this
     // form level (e.g. "global errors)
     $errors = $form->getErrors();
 
-    // an array of FormError objects, but only errors attached to the
+    // a FormErrorIterator instance, but only errors attached to the
     // "firstName" field
     $errors = $form['firstName']->getErrors();
 
-    // a string representation of all errors of the whole form tree
-    $errors = $form->getErrorsAsString();
+    // a FormErrorIterator instance in a flattened structure
+    // use getOrigin() to determine the form causing the error
+    $errors = $form->getErrors(true);
 
-.. note::
+    // a FormErrorIterator instance representing the form tree structure
+    $errors = $form->getErrors(true, false);
 
-    If you enable the :ref:`error_bubbling <reference-form-option-error-bubbling>`
-    option on a field, calling ``getErrors()`` on the parent form will include
-    errors from that field. However, there is no way to determine which field
-    an error was originally attached to.
+.. tip::
+
+    In older Symfony versions, ``getErrors()`` returned an array. To use the
+    errors the same way in Symfony 2.5 or newer, you have to pass them to
+    PHP's :phpfunction:`iterator_to_array` function::
+
+        $errorsAsArray = iterator_to_array($form->getErrors());
+
+    This is useful, for example, if you want to use PHP's ``array_`` function
+    on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org

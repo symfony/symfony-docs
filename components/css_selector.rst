@@ -46,12 +46,17 @@ document.
 The CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.8
+    The ``CssSelectorConverter`` class was introduced in Symfony 2.8. Previously,
+    the ``CssSelector`` class was used and ``toXPath`` was a static method.
+
 The component's only goal is to convert CSS selectors to their XPath
-equivalents::
+equivalents, using :method:`Symfony\\Component\\CssSelector\\CssSelectorConverter::toXPath`::
 
-    use Symfony\Component\CssSelector\CssSelector;
+    use Symfony\Component\CssSelector\CssSelectorConverter;
 
-    var_dump(CssSelector::toXPath('div.item > h4 > a'));
+    $converter = new CssSelectorConverter();
+    var_dump($converter->toXPath('div.item > h4 > a'));
 
 This gives the following output:
 

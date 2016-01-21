@@ -21,18 +21,16 @@ it has its own excellent `documentation`_.
     to use version 4.2 or higher to test the Symfony core code itself).
 
 Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the ``Tests/`` subdirectory of your bundles. If you follow
+that should live in the ``tests/`` directory of your application. If you follow
 this rule, then you can run all of your application's tests with the following
 command:
 
 .. code-block:: bash
 
-    # specify the configuration directory on the command line
-    $ phpunit -c app/
+    $ phpunit
 
-The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
-file.
+PHPunit is configured by the ``phpunit.xml.dist`` file in the root of your
+Symfony application.
 
 .. tip::
 
@@ -64,11 +62,11 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
         }
     }
 
-To test this, create a ``CalculatorTest`` file in the ``Tests/Util`` directory
+To test this, create a ``CalculatorTest`` file in the ``tests/AppBundle/Util`` directory
 of your bundle::
 
-    // src/AppBundle/Tests/Util/CalculatorTest.php
-    namespace AppBundle\Tests\Util;
+    // tests/AppBundle/Util/CalculatorTest.php
+    namespace Tests\AppBundle\Util;
 
     use AppBundle\Util\Calculator;
 
@@ -86,30 +84,30 @@ of your bundle::
 
 .. note::
 
-    By convention, the ``Tests/`` sub-directory should replicate the directory
-    of your bundle for unit tests. So, if you're testing a class in your
-    bundle's ``Util/`` directory, put the test in the ``Tests/Util/``
+    By convention, the ``Tests/AppBundle`` directory should replicate the directory
+    of your bundle for unit tests. So, if you're testing a class in the
+    ``AppBundle/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
     directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``bootstrap.php.cache`` file (as configured by default in the
-``app/phpunit.xml.dist`` file).
+via the ``autoload.php`` file (as configured by default in the
+``phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
 
 .. code-block:: bash
 
     # run all tests of the application
-    $ phpunit -c app
+    $ phpunit
 
     # run all tests in the Util directory
-    $ phpunit -c app src/AppBundle/Tests/Util
+    $ phpunit tests/AppBundle/Util
 
     # run tests for the Calculator class
-    $ phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
+    $ phpunit tests/AppBundle/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit -c app src/AppBundle/
+    $ phpunit tests/AppBundle/
 
 .. index::
    single: Tests; Functional tests
@@ -130,15 +128,15 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests are simple PHP files that typically live in the ``Tests/Controller``
-directory of your bundle. If you want to test the pages handled by your
+Functional tests are simple PHP files that typically live in the ``tests/AppBundle/Controller``
+directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
 As an example, a test could look like this::
 
-    // src/AppBundle/Tests/Controller/PostControllerTest.php
-    namespace AppBundle\Tests\Controller;
+    // tests/AppBundle/Controller/PostControllerTest.php
+    namespace Tests\AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -244,6 +242,10 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
+        use Symfony\Component\HttpFoundation\Response;
+
+        // ...
+
         // Assert that there is at least one h2 tag
         // with the class "subtitle"
         $this->assertGreaterThan(
@@ -273,7 +275,7 @@ document::
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
         $this->assertEquals(
-            200,
+            200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
             $client->getResponse()->getStatusCode()
         );
 
@@ -283,6 +285,9 @@ document::
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. index::
    single: Tests; Client
@@ -463,7 +468,7 @@ Injection Container::
 
 Be warned that this does not work if you insulate the client or if you use an
 HTTP layer. For a list of services available in your application, use the
-``container:debug`` console task.
+``debug:container`` console task.
 
 .. tip::
 
@@ -692,6 +697,11 @@ their type::
 
 .. tip::
 
+    If you purposefully want to select "invalid" select/radio values, see
+    :ref:`components-dom-crawler-invalid`.
+
+.. tip::
+
     You can get the values that will be submitted by calling the ``getValues()``
     method on the ``Form`` object. The uploaded files are available in a
     separate array returned by ``getFiles()``. The ``getPhpValues()`` and
@@ -787,30 +797,26 @@ PHPUnit Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each application has its own PHPUnit configuration, stored in the
-``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``app/phpunit.xml`` file to set up a configuration for your local
-machine only.
+``phpunit.xml.dist`` file. You can edit this file to change the defaults or
+create an ``phpunit.xml`` file to set up a configuration for your local machine
+only.
 
 .. tip::
 
-    Store the ``app/phpunit.xml.dist`` file in your code repository and ignore
-    the ``app/phpunit.xml`` file.
+    Store the ``phpunit.xml.dist`` file in your code repository and ignore
+    the ``phpunit.xml`` file.
 
-By default, only the tests from your own custom bundles stored in the standard
-directories ``src/*/*Bundle/Tests``, ``src/*/Bundle/*Bundle/Tests``,
-``src/*Bundle/Tests`` are run by the ``phpunit`` command, as configured
-in the ``app/phpunit.xml.dist`` file:
+By default, only the tests stored in ``/tests`` are run via the ``phpunit`` command,
+as configured in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
             <testsuite name="Project Test Suite">
-                <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/*/Bundle/*Bundle/Tests</directory>
-                <directory>../src/*Bundle/Tests</directory>
+                <directory>tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... -->
@@ -821,7 +827,7 @@ configuration adds tests from a custom ``lib/tests`` directory:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
@@ -838,7 +844,7 @@ section:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <filter>

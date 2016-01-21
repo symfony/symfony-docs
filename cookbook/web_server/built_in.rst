@@ -19,22 +19,55 @@ Starting the Web Server
 -----------------------
 
 Running a Symfony application using PHP's built-in web server is as easy as
-executing the ``server:run`` command:
+executing the ``server:start`` command:
 
 .. code-block:: bash
 
-    $ php app/console server:run
+    $ php bin/console server:start
 
-This starts a server at ``localhost:8000`` that executes your Symfony application.
-The command will wait and will respond to incoming HTTP requests until you
-terminate it (this is usually done by pressing Ctrl and C).
+This starts the web server at ``localhost:8000`` in the background that serves
+your Symfony application.
 
 By default, the web server listens on port 8000 on the loopback device. You
 can change the socket passing an IP address and a port as a command-line argument:
 
 .. code-block:: bash
 
-    $ php app/console server:run 192.168.0.1:8080
+    $ php bin/console server:start 192.168.0.1:8080
+
+.. note::
+
+    You can use the ``--force`` option to force the web server start
+    if the process wasn't correctly stopped (without using the ``server:stop`` command).
+
+    .. code-block:: bash
+
+        $ php bin/console server:start --force
+
+    .. versionadded:: 2.8
+        The ``--force`` option was introduced in Symfony 2.8.
+
+.. note::
+
+    You can use the ``server:status`` command to check if a web server is
+    listening on a certain socket:
+
+    .. code-block:: bash
+
+        $ php bin/console server:status
+
+        $ php bin/console server:status 192.168.0.1:8080
+
+    The first command shows if your Symfony application will be server through
+    ``localhost:8000``, the second one does the same for ``192.168.0.1:8080``.
+
+.. note::
+
+    Before Symfony 2.6, the ``server:run`` command was used to start the built-in
+    web server. This command is still available and behaves slightly different.
+    Instead of starting the server in the background, it will block the current
+    terminal until you terminate it (this is usually done by pressing Ctrl
+    and C).
 
 .. sidebar:: Using the built-in Web Server from inside a Virtual Machine
 
@@ -45,7 +78,7 @@ can change the socket passing an IP address and a port as a command-line argumen
 
     .. code-block:: bash
 
-        $ php app/console server:run 0.0.0.0:8000
+        $ php bin/console server:start 0.0.0.0:8000
 
     .. caution::
 
@@ -54,7 +87,7 @@ can change the socket passing an IP address and a port as a command-line argumen
         not designed to be used on public networks.
 
 Command Options
----------------
+~~~~~~~~~~~~~~~
 
 The built-in web server expects a "router" script (read about the "router"
 script on `php.net`_) as an argument. Symfony already passes such a router
@@ -64,14 +97,32 @@ script:
 
 .. code-block:: bash
 
-    $ php app/console server:run --env=test --router=app/config/router_test.php
+    $ php bin/console server:start --env=test --router=app/config/router_test.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:
 
 .. code-block:: bash
 
-    $ php app/console server:run --docroot=public_html
+    $ php bin/console server:start --docroot=public_html
+
+Stopping the Server
+-------------------
+
+When you are finished, you can simply stop the web server using the ``server:stop``
+command:
+
+.. code-block:: bash
+
+    $ php bin/console server:stop
+
+Like with the start command, if you omit the socket information, Symfony will
+stop the web server bound to ``localhost:8000``. Just pass the socket information
+when the web server listens to another IP address or to another port:
+
+.. code-block:: bash
+
+    $ php bin/console server:stop 192.168.0.1:8080
 
 .. _`built-in web server`: http://www.php.net/manual/en/features.commandline.webserver.php
 .. _`php.net`: http://php.net/manual/en/features.commandline.webserver.php#example-411
