@@ -5,7 +5,10 @@
 * :doc:`/book/controller`
 * :doc:`/book/routing`
 * :doc:`/book/templating`
+* :doc:`/book/configuration`
+* :doc:`/book/bundles`
 * :doc:`/book/doctrine`
+* :doc:`/book/propel`
 * :doc:`/book/testing`
 * :doc:`/book/validation`
 * :doc:`/book/forms`
@@ -14,5 +17,3 @@
 * :doc:`/book/translation`
 * :doc:`/book/service_container`
 * :doc:`/book/performance`
-* :doc:`/book/internals`
-* :doc:`/book/stable_api`

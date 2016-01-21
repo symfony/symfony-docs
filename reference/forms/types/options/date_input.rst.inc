@@ -3,8 +3,8 @@ input
 
 **type**: ``string`` **default**: ``datetime``
 
-The format of the *input* data - i.e. the format that the date is stored on
-your underlying object. Valid values are:
+The format of the *input* data - i.e. the format that the date is stored
+on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``2011-06-05``)
 * ``datetime`` (a ``DateTime`` object)
@@ -13,3 +13,5 @@ your underlying object. Valid values are:
 
 The value that comes back from the form will also be normalized back into
 this format.
+
+.. include:: /reference/forms/types/options/_date_limitation.rst.inc

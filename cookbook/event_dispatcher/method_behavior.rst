@@ -1,7 +1,7 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
-How to customize a Method Behavior without using Inheritance
+How to Customize a Method Behavior without Using Inheritance
 ============================================================
 
 Doing something before or after a Method Call
@@ -24,8 +24,9 @@ method::
             // get $foo and $bar from the event, they may have been modified
             $foo = $event->getFoo();
             $bar = $event->getBar();
+
             // the real method implementation is here
-            // $ret = ...;
+            $ret = ...;
 
             // do something after the method
             $event = new FilterSendReturnValue($ret);

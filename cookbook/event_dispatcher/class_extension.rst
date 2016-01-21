@@ -1,7 +1,7 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
-How to extend a Class without using Inheritance
+How to Extend a Class without Using Inheritance
 ===============================================
 
 To allow multiple classes to add methods to another one, you can define the
@@ -17,7 +17,7 @@ magic ``__call()`` method in the class you want to be extended like this:
         {
             // create an event named 'foo.method_is_not_found'
             $event = new HandleUndefinedMethodEvent($this, $method, $arguments);
-            $this->dispatcher->dispatch($this, 'foo.method_is_not_found', $event);
+            $this->dispatcher->dispatch('foo.method_is_not_found', $event);
 
             // no listener was able to process the event? The method does not exist
             if (!$event->isProcessed()) {
@@ -77,7 +77,7 @@ use this pattern of class extension:
             $this->stopPropagation();
         }
 
-        public function getReturnValue($val)
+        public function getReturnValue()
         {
             return $this->returnValue;
         }
@@ -97,7 +97,7 @@ and *add* the method ``bar()``:
     {
         public function onFooMethodIsNotFound(HandleUndefinedMethodEvent $event)
         {
-            // we only want to respond to the calls to the 'bar' method
+            // only respond to the calls to the 'bar' method
             if ('bar' != $event->getMethod()) {
                 // allow another listener to take care of this unknown method
                 return;
@@ -109,18 +109,17 @@ and *add* the method ``bar()``:
             // the bar method arguments
             $arguments = $event->getArguments();
 
-            // do something
-            // ...
+            // ... do something
 
             // set the return value
             $event->setReturnValue($someValue);
         }
     }
 
-Finally, add the new ``bar`` method to the ``Foo`` class by register an
+Finally, add the new ``bar`` method to the ``Foo`` class by registering an
 instance of ``Bar`` with the ``foo.method_is_not_found`` event:
 
 .. code-block:: php
 
     $bar = new Bar();
-    $dispatcher->addListener('foo.method_is_not_found', $bar);
+    $dispatcher->addListener('foo.method_is_not_found', array($bar, 'onFooMethodIsNotFound'));

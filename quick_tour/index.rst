@@ -1,5 +1,5 @@
-Quick Tour
-==========
+The Quick Tour
+==============
 
 .. toctree::
    :maxdepth: 1

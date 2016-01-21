@@ -5,19 +5,24 @@ Reference Documents
     :hidden:
 
     configuration/framework
-    configuration/assetic
     configuration/doctrine
     configuration/security
+    configuration/assetic
     configuration/swiftmailer
     configuration/twig
     configuration/monolog
     configuration/web_profiler
 
+    configuration/kernel
+
     forms/types
+    constraints
     forms/twig_reference
 
-    constraints
+    twig_reference
+
     dic_tags
+    events
     requirements
 
 .. include:: /reference/map.rst.inc

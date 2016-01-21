@@ -1,11 +1,11 @@
 .. index::
    single: Emails; Gmail
 
-How to use Gmail to send Emails
+How to Use Gmail to Send Emails
 ===============================
 
 During development, instead of using a regular SMTP server to send emails, you
-might find using Gmail easier and more practical. The Swiftmailer bundle makes
+might find using Gmail easier and more practical. The SwiftmailerBundle makes
 it really easy.
 
 .. tip::
@@ -29,29 +29,59 @@ In the development configuration file, change the ``transport`` setting to
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <!--
-        xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-        http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
-
-        <swiftmailer:config
-            transport="gmail"
-            username="your_gmail_username"
-            password="your_gmail_password" />
+            <!-- ... -->
+            <swiftmailer:config
+                transport="gmail"
+                username="your_gmail_username"
+                password="your_gmail_password"
+            />
+        </container>
 
     .. code-block:: php
 
         // app/config/config_dev.php
         $container->loadFromExtension('swiftmailer', array(
-            'transport' => "gmail",
-            'username'  => "your_gmail_username",
-            'password'  => "your_gmail_password",
+            'transport' => 'gmail',
+            'username'  => 'your_gmail_username',
+            'password'  => 'your_gmail_password',
         ));
 
 You're done!
+
+.. tip::
+
+    If you are using the Symfony Standard Edition, configure the parameters in ``parameters.yml``:
+
+    .. code-block:: yaml
+
+        # app/config/parameters.yml
+        parameters:
+            # ...
+            mailer_transport: gmail
+            mailer_host:      ~
+            mailer_user:      your_gmail_username
+            mailer_password:  your_gmail_password
 
 .. note::
 
     The ``gmail`` transport is simply a shortcut that uses the ``smtp`` transport
     and sets ``encryption``, ``auth_mode`` and ``host`` to work with Gmail.
+
+.. note::
+
+    Depending on your Gmail account settings, you may get authentication errors
+    within your app. If your Gmail account uses 2-Step-Verification, you should
+    `generate an App password`_ to use for your ``mailer_password`` parameter.
+    You should also ensure that you `allow less secure apps to access your Gmail account`_.
+
+.. _`generate an App password`: https://support.google.com/accounts/answer/185833
+.. _`allow less secure apps to access your Gmail account`: https://support.google.com/accounts/answer/6010255

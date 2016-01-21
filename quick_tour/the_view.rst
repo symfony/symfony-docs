@@ -1,208 +1,228 @@
 The View
 ========
 
-After reading the first part of this tutorial, you have decided that Symfony2
-was worth another 10 minutes. Great choice! In this second part, you will
-learn more about the Symfony2 template engine, `Twig`_. Twig is a flexible,
-fast, and secure template engine for PHP. It makes your templates more
-readable and concise; it also makes them more friendly for web designers.
+After reading the first part of this tutorial, you have decided that Symfony
+was worth another 10 minutes. In this second part, you will learn more about
+`Twig`_, the fast, flexible and secure template engine for PHP applications.
+Twig makes your templates more readable and concise; it also makes them
+more friendly for web designers.
 
-.. note::
-
-    Instead of Twig, you can also use :doc:`PHP </cookbook/templating/PHP>`
-    for your templates. Both template engines are supported by Symfony2.
-
-Getting familiar with Twig
+Getting Familiar with Twig
 --------------------------
 
-.. tip::
-
-    If you want to learn Twig, we highly recommend you to read its official
-    `documentation`_. This section is just a quick overview of the main
-    concepts.
+The official `Twig documentation`_ is the best resource to learn everything
+about this template engine. This section just gives you a quick overview
+of its main concepts.
 
 A Twig template is a text file that can generate any type of content (HTML,
-XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
+CSS, JavaScript, XML, CSV, LaTeX, etc.) Twig elements are separated from
+the rest of the template contents using any of these delimiters:
 
-* ``{{ ... }}``: Prints a variable or the result of an expression;
+``{{ ... }}``
+    Prints the content of a variable or the result of evaluating an expression;
 
-* ``{% ... %}``: Controls the logic of the template; it is used to execute
-  ``for`` loops and ``if`` statements, for example.
+``{% ... %}``
+    Controls the logic of the template; it is used for example to execute
+    ``for`` loops and ``if`` statements.
+
+``{# ... #}``
+    Allows including comments inside templates. Contrary to HTML comments,
+    they aren't included in the rendered template.
 
 Below is a minimal template that illustrates a few basics, using two variables
 ``page_title`` and ``navigation``, which would be passed into the template:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <!DOCTYPE html>
     <html>
         <head>
-            <title>My Webpage</title>
+            <title>{{ page_title }}</title>
         </head>
         <body>
             <h1>{{ page_title }}</h1>
 
             <ul id="navigation">
                 {% for item in navigation %}
-                    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+                    <li><a href="{{ item.url }}">{{ item.label }}</a></li>
                 {% endfor %}
             </ul>
         </body>
     </html>
 
+To render a template in Symfony, use the ``render`` method from within a
+controller. If the template needs variables to generate its contents, pass
+them as an array using the second optional argument::
 
-.. tip::
-
-   Comments can be included inside templates using the ``{# ... #}`` delimiter.
-
-To render a template in Symfony, use the ``render`` method from within a controller
-and pass it any variables needed in the template::
-
-    $this->render('AcmeDemoBundle:Demo:hello.html.twig', array(
-        'name' => $name,
+    $this->render('default/index.html.twig', array(
+        'variable_name' => 'variable_value',
     ));
 
-Variables passed to a template can be strings, arrays, or even objects. Twig
-abstracts the difference between them and lets you access "attributes" of a
-variable with the dot (``.``) notation:
+Variables passed to a template can be strings, arrays or even objects. Twig
+abstracts the difference between them and lets you access "attributes" of
+a variable with the dot (``.``) notation. The following code listing shows
+how to display the content of a variable passed by the controller depending
+on its type:
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {# array('name' => 'Fabien') #}
+    {# 1. Simple variables #}
+    {# $this->render('template.html.twig', array(
+           'name' => 'Fabien')
+       ) #}
     {{ name }}
 
-    {# array('user' => array('name' => 'Fabien')) #}
+    {# 2. Arrays #}
+    {# $this->render('template.html.twig', array(
+           'user' => array('name' => 'Fabien'))
+       ) #}
     {{ user.name }}
 
-    {# force array lookup #}
+    {# alternative syntax for arrays #}
     {{ user['name'] }}
 
-    {# array('user' => new User('Fabien')) #}
+    {# 3. Objects #}
+    {# $this->render('template.html.twig', array(
+           'user' => new User('Fabien'))
+       ) #}
     {{ user.name }}
     {{ user.getName }}
 
-    {# force method name lookup #}
+    {# alternative syntax for objects #}
     {{ user.name() }}
     {{ user.getName() }}
-
-    {# pass arguments to a method #}
-    {{ user.date('Y-m-d') }}
-
-.. note::
-
-    It's important to know that the curly braces are not part of the variable
-    but the print statement. If you access variables inside tags don't put the
-    braces around.
 
 Decorating Templates
 --------------------
 
-More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, we like to think about this problem
-differently: a template can be decorated by another one. This works exactly
-the same as PHP classes: template inheritance allows you to build a base
-"layout" template that contains all the common elements of your site and
-defines "blocks" that child templates can override.
+More often than not, templates in a project share common elements, like
+the well-known header and footer. Twig solves this problem elegantly with
+a concept called "template inheritance". This feature allows you to build
+a base template that contains all the common elements of your site and
+defines "blocks" of contents that child templates can override.
 
-The ``hello.html.twig`` template inherits from ``layout.html.twig``, thanks to
-the ``extends`` tag:
+The ``index.html.twig`` template uses the ``extends`` tag to indicate that
+it inherits from the ``base.html.twig`` template:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
-    {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
+    {# app/Resources/views/default/index.html.twig #}
+    {% extends 'base.html.twig' %}
 
-    {% block title "Hello " ~ name %}
-
-    {% block content %}
-        <h1>Hello {{ name }}!</h1>
+    {% block body %}
+        <h1>Welcome to Symfony!</h1>
     {% endblock %}
 
-The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it?
-It is the same notation used to reference a regular template. The ``::`` part
-simply means that the controller element is empty, so the corresponding file
-is directly stored under the ``Resources/views/`` directory.
+Open the ``app/Resources/views/base.html.twig`` file that corresponds to
+the ``base.html.twig`` template and you'll find the following Twig code:
 
-Now, let's have a look at a simplified ``layout.html.twig``:
+.. code-block:: html+twig
 
-.. code-block:: jinja
+    {# app/Resources/views/base.html.twig #}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8" />
+            <title>{% block title %}Welcome!{% endblock %}</title>
+            {% block stylesheets %}{% endblock %}
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        </head>
+        <body>
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
+        </body>
+    </html>
 
-    {# src/Acme/DemoBundle/Resources/views/layout.html.twig #}
-    <div class="symfony-content">
-        {% block content %}
-        {% endblock %}
-    </div>
+The ``{% block %}`` tags tell the template engine that a child template
+may override those portions of the template. In this example, the
+``index.html.twig`` template overrides the ``body`` block, but not the
+``title`` block, which will display the default content defined in the
+``base.html.twig`` template.
 
-The ``{% block %}`` tags define blocks that child templates can fill in. All
-the block tag does is to tell the template engine that a child template may
-override those portions of the template.
+Using Tags, Filters and Functions
+---------------------------------
 
-In this example, the ``hello.html.twig`` template overrides the ``content``
-block, meaning that the "Hello Fabien" text is rendered inside the ``div.symfony-content``
-element.
+One of the best features of Twig is its extensibility via tags, filters
+and functions. Take a look at the following sample template that uses filters
+extensively to modify the information before displaying it to the user:
 
-Using Tags, Filters, and Functions
-----------------------------------
+.. code-block:: twig
 
-One of the best feature of Twig is its extensibility via tags, filters, and
-functions. Symfony2 comes bundled with many of these built-in to ease the
-work of the template designer.
+    <h1>{{ article.title|capitalize }}</h1>
+
+    <p>{{ article.content|striptags|slice(0, 255) }} ...</p>
+
+    <p>Tags: {{ article.tags|sort|join(", ") }}</p>
+
+    <p>Activate your account before {{ 'next Monday'|date('M j, Y') }}</p>
+
+Don't forget to check out the official `Twig documentation`_ to learn everything
+about filters, functions and tags.
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The best way to share a snippet of code between several distinct templates is
-to create a new template that can then be included from other templates.
+The best way to share a snippet of code between several templates is to
+create a new template fragment that can then be included from other templates.
 
-Create an ``embedded.html.twig`` template:
+Imagine that we want to display ads on some pages of our application. First,
+create a ``banner.html.twig`` template:
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {# src/Acme/DemoBundle/Resources/views/Demo/embedded.html.twig #}
-    Hello {{ name }}
+    {# app/Resources/views/ads/banner.html.twig #}
+    <div id="ad-banner">
+        ...
+    </div>
 
-And change the ``index.html.twig`` template to include it:
+To display this ad on any page, include the ``banner.html.twig`` template
+using the ``include()`` function:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
-    {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
+    {# app/Resources/views/default/index.html.twig #}
+    {% extends 'base.html.twig' %}
 
-    {# override the body block from embedded.html.twig #}
-    {% block content %}
-        {% include "AcmeDemoBundle:Demo:embedded.html.twig" %}
+    {% block body %}
+        <h1>Welcome to Symfony!</h1>
+
+        {{ include('ads/banner.html.twig') }}
     {% endblock %}
 
 Embedding other Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 And what if you want to embed the result of another controller in a template?
-That's very useful when working with Ajax, or when the embedded template needs
-some variable not available in the main template.
+That's very useful when working with Ajax, or when the embedded template
+needs some variable not available in the main template.
 
-Suppose you've created a ``fancy`` action, and you want to include it inside
-the ``index`` template. To do this, use the ``render`` tag:
+Suppose you've created a ``topArticlesAction`` controller method to display
+the most popular articles of your website. If you want to "render" the result
+of that method (usually some HTML content) inside the ``index`` template,
+use the ``render()`` function:
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
+    {# app/Resources/views/index.html.twig #}
+    {{ render(controller('AppBundle:Default:topArticles')) }}
 
-Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
-of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
-simulated request variables (as if the ``fancyAction`` were handling a whole
-new request) and are made available to the controller::
+Here, the ``render()`` and ``controller()`` functions use the special
+``AppBundle:Default:topArticles`` syntax to refer to the ``topArticlesAction``
+action of the ``Default`` controller (the ``AppBundle`` part will be explained
+later)::
 
-    // src/Acme/DemoBundle/Controller/DemoController.php
+    // src/AppBundle/Controller/DefaultController.php
 
-    class DemoController extends Controller
+    class DefaultController extends Controller
     {
-        public function fancyAction($name, $color)
+        public function topArticlesAction()
         {
-            // create some object, based on the $color variable
-            $object = ...;
+            // look for the most popular articles in the database
+            $articles = ...;
 
-            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('default/top_articles.html.twig', array(
+                'articles' => $articles,
+            ));
         }
 
         // ...
@@ -211,78 +231,59 @@ new request) and are made available to the controller::
 Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Speaking of web applications, creating links between pages is a must. Instead
-of hardcoding URLs in templates, the ``path`` function knows how to generate
-URLs based on the routing configuration. That way, all your URLs can be easily
-updated by just changing the configuration:
+Creating links between pages is a must for web applications. Instead of
+hardcoding URLs in templates, the ``path`` function knows how to generate
+URLs based on the routing configuration. That way, all your URLs can be
+easily updated by just changing the configuration:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
-    <a href="{{ path('_demo_hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
+    <a href="{{ path('homepage') }}">Return to homepage</a>
 
-The ``path`` function takes the route name and an array of parameters as
-arguments. The route name is the main key under which routes are referenced
-and the parameters are the values of the placeholders defined in the route
-pattern::
-
-    // src/Acme/DemoBundle/Controller/DemoController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-    /**
-     * @Route("/hello/{name}", name="_demo_hello")
-     * @Template()
-     */
-    public function helloAction($name)
-    {
-        return array('name' => $name);
-    }
+The ``path`` function takes the route name as the first argument and you
+can optionally pass an array of route parameters as the second argument.
 
 .. tip::
 
-    The ``url`` function generates *absolute* URLs: ``{{ url('_demo_hello', {
-    'name': 'Thomas' }) }}``.
+    The ``url`` function is very similar to the ``path`` function, but generates
+    *absolute* URLs, which is very handy when rendering emails and RSS files:
+    ``<a href="{{ url('homepage') }}">Visit our website</a>``.
 
-Including Assets: images, JavaScripts, and stylesheets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Including Assets: Images, JavaScripts and Stylesheets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides the ``asset`` function to deal with them easily:
+What would the Internet be without images, JavaScripts and stylesheets?
+Symfony provides the ``asset`` function to deal with them easily:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 
     <img src="{{ asset('images/logo.png') }}" />
 
-The ``asset`` function's main purpose is to make your application more portable.
-Thanks to this function, you can move the application root directory anywhere
-under your web root directory without changing anything in your template's
-code.
+The ``asset()`` function looks for the web assets inside the ``web/`` directory.
+If you store them in another directory, read :doc:`this article </cookbook/assetic/asset_management>`
+to learn how to manage web assets.
 
-Escaping Variables
-------------------
-
-Twig is configured to automatically escapes all output by default. Read Twig
-`documentation`_ to learn more about output escaping and the Escaper
-extension.
+Using the ``asset`` function, your application is more portable. The reason
+is that you can move the application root directory anywhere under your
+web root directory without changing anything in your template's code.
 
 Final Thoughts
 --------------
 
 Twig is simple yet powerful. Thanks to layouts, blocks, templates and action
 inclusions, it is very easy to organize your templates in a logical and
-extensible way. However, if you're not comfortable with Twig, you can always
-use PHP templates inside Symfony without any issues.
+extensible way.
 
-You have only been working with Symfony2 for about 20 minutes, but you can
-already do pretty amazing stuff with it. That's the power of Symfony2. Learning
-the basics is easy, and you will soon learn that this simplicity is hidden
+You have only been working with Symfony for about 20 minutes, but you can
+already do pretty amazing stuff with it. That's the power of Symfony. Learning
+the basics is easy and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
-But I'm getting ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the :doc:`next part of this tutorial<the_controller>`.
-Ready for another 10 minutes with Symfony2?
+But I'm getting ahead of myself. First, you need to learn more about the
+controller and that's exactly the topic of the :doc:`next part of this tutorial
+<the_controller>`. Ready for another 10 minutes with Symfony?
 
-.. _Twig:          http://twig.sensiolabs.org/
-.. _documentation: http://twig.sensiolabs.org/documentation
+.. _Twig: http://twig.sensiolabs.org/
+.. _Twig documentation: http://twig.sensiolabs.org/documentation

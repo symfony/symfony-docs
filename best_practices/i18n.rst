@@ -1,0 +1,96 @@
+Internationalization
+====================
+
+Internationalization and localization adapt the applications and their contents
+to the specific region or language of the users. In Symfony this is an opt-in
+feature that needs to be enabled before using it. To do this, uncomment the
+following ``translator`` configuration option and set your application locale:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    framework:
+        # ...
+        translator: { fallbacks: ['%locale%'] }
+
+    # app/config/parameters.yml
+    parameters:
+        # ...
+        locale:     en
+
+Translation Source File Format
+------------------------------
+
+The Symfony Translation component supports lots of different translation
+formats: PHP, Qt, ``.po``, ``.mo``, JSON, CSV, INI, etc.
+
+.. best-practice::
+
+    Use the XLIFF format for your translation files.
+
+Of all the available translation formats, only XLIFF and gettext have broad
+support in the tools used by professional translators. And since it's based
+on XML, you can validate XLIFF file contents as you write them.
+
+Symfony 2.6 added support for notes inside XLIFF files, making them more
+user-friendly for translators. At the end, good translations are all about
+context, and these XLIFF notes allow you to define that context.
+
+.. tip::
+
+    The Apache-licensed `JMSTranslationBundle`_ offers you a web interface for
+    viewing and editing these translation files. It also has advanced extractors
+    that can read your project and automatically update the XLIFF files.
+
+Translation Source File Location
+--------------------------------
+
+.. best-practice::
+
+    Store the translation files in the ``app/Resources/translations/`` directory.
+
+Traditionally, Symfony developers have created these files in the
+``Resources/translations/`` directory of each bundle.
+
+But since the ``app/Resources/`` directory is considered the global location
+for the application's resources, storing translations in ``app/Resources/translations/``
+centralizes them *and* gives them priority over any other translation file.
+This lets you override translations defined in third-party bundles.
+
+Translation Keys
+----------------
+
+.. best-practice::
+
+    Always use keys for translations instead of content strings.
+
+Using keys simplifies the management of the translation files because you
+can change the original contents without having to update all of the translation
+files.
+
+Keys should always describe their *purpose* and *not* their location. For
+example, if a form has a field with the label "Username", then a nice key
+would be ``label.username``, *not* ``edit_form.label.username``.
+
+Example Translation File
+------------------------
+
+Applying all the previous best practices, the sample translation file for
+English in the application would be:
+
+.. code-block:: xml
+
+    <!-- app/Resources/translations/messages.en.xlf -->
+    <?xml version="1.0"?>
+    <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+        <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+            <body>
+                <trans-unit id="1">
+                    <source>title.post_list</source>
+                    <target>Post List</target>
+                </trans-unit>
+            </body>
+        </file>
+    </xliff>
+
+.. _`JMSTranslationBundle`: https://github.com/schmittjoh/JMSTranslationBundle

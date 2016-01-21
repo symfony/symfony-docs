@@ -1,115 +1,104 @@
-How to Create and store a Symfony2 Project in git
-=================================================
+.. index::
+   single: Workflow; Git
+
+.. _how-to-create-and-store-a-symfony2-project-in-git:
+
+How to Create and Store a Symfony Project in Git
+================================================
 
 .. tip::
 
-    Though this entry is specifically about git, the same generic principles
+    Though this entry is specifically about Git, the same generic principles
     will apply if you're storing your project in Subversion.
 
 Once you've read through :doc:`/book/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. In this
-cookbook article, you'll learn the best way to start a new Symfony2 project
-that's stored using the `git`_ source control management system.
+cookbook article, you'll learn the best way to start a new Symfony project
+that's stored using the `Git`_ source control management system.
 
 Initial Project Setup
 ---------------------
 
-To get started, you'll need to download Symfony and initialize your local
-git repository:
+To get started, you'll need to download Symfony and get things running. See
+the :doc:`/book/installation` chapter for details.
 
-1. Download the `Symfony2 Standard Edition`_ without vendors.
+Once your project is running, just follow these simple steps:
 
-2. Unzip/untar the distribution. It will create a folder called Symfony with
-   your new project structure, config files, etc. Rename it to whatever you like.
+#. Initialize your Git repository:
 
-3. Create a new file called ``.gitignore`` at the root of your new project
-   (e.g. next to the ``deps`` file) and paste the following into it. Files
-   matching these patterns will be ignored by git:
+   .. code-block:: bash
 
-    .. code-block:: text
-
-        /web/bundles/
-        /app/bootstrap*
-        /app/cache/*
-        /app/logs/*
-        /vendor/  
-        /app/config/parameters.ini
-
-4. Copy ``app/config/parameters.ini`` to ``app/config/parameters.ini.dist``.
-   The ``parameters.ini`` file is ignored by git (see above) so that machine-specific
-   settings like database passwords aren't committed. By creating the ``parameters.ini.dist``
-   file, new developers can quickly clone the project, copy this file to
-   ``parameters.ini``, customize it, and start developing.
-
-5. Initialize your git repository:
-
-    .. code-block:: bash
-    
         $ git init
 
-6. Add all of the initial files to git:
+#. Add all of the initial files to Git:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git add .
 
-7. Create an initial commit with your started project:
+   .. tip::
 
-    .. code-block:: bash
-    
+      As you might have noticed, not all files that were downloaded by Composer in step 1,
+      have been staged for commit by Git. Certain files and folders, such as the project's
+      dependencies (which are managed by Composer), ``parameters.yml`` (which contains sensitive
+      information such as database credentials), log and cache files and dumped assets (which are
+      created automatically by your project), should not be committed in Git. To help you prevent
+      committing those files and folders by accident, the Standard Distribution comes with a
+      file called ``.gitignore``, which contains a list of files and folders that Git should
+      ignore.
+
+   .. tip::
+
+      You may also want to create a ``.gitignore`` file that can be used system-wide.
+      This allows you to exclude files/folders for all your projects that are created by
+      your IDE or operating system. For details, see `GitHub .gitignore`_.
+
+#. Create an initial commit with your started project:
+
+   .. code-block:: bash
+
         $ git commit -m "Initial commit"
 
-8. Finally, download all of the third-party vendor libraries:
-
-    .. code-block:: bash
-    
-        $ php bin/vendors install
-
-At this point, you have a fully-functional Symfony2 project that's correctly
-committed to git. You can immediately begin development, committing the new
-changes to your git repository.
+At this point, you have a fully-functional Symfony project that's correctly
+committed to Git. You can immediately begin development, committing the new
+changes to your Git repository.
 
 You can continue to follow along with the :doc:`/book/page_creation` chapter
 to learn more about how to configure and develop inside your application.
 
 .. tip::
 
-    The Symfony2 Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions on the `Standard Edition Readme`_.
+    The Symfony Standard Edition comes with some example functionality. To
+    remove the sample code, follow the instructions in the
+    ":doc:`/cookbook/bundles/remove`" article.
 
 .. _cookbook-managing-vendor-libraries:
 
 .. include:: _vendor_deps.rst.inc
 
-Vendors and Submodules
-~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of using the ``deps``, ``bin/vendors`` system for managing your vendor
-libraries, you may instead choose to use native `git submodules`_. There
-is nothing wrong with this approach, though the ``deps`` system is the official
-way to solve this problem and git submodules can be difficult to work with
-at times.
-
-Storing your Project on a Remote Server
+Storing your Project on a remote Server
 ---------------------------------------
 
-You now have a fully-functional Symfony2 project stored in git. However,
+You now have a fully-functional Symfony project stored in Git. However,
 in most cases, you'll also want to store your project on a remote server
 both for backup purposes, and so that other developers can collaborate on
 the project.
 
-The easiest way to store your project on a remote server is via `GitHub`_.
-Public repositories are free, however you will need to pay a monthly fee
-to host private repositories.
+The easiest way to store your project on a remote server is via a web-based
+hosting service like `GitHub`_ or `Bitbucket`_. Of course, there are more
+services out there, you can start your research with a
+`comparison of hosting services`_.
 
-Alternatively, you can store your git repository on any server by creating
+Alternatively, you can store your Git repository on any server by creating
 a `barebones repository`_ and then pushing to it. One library that helps
 manage this is `Gitolite`_.
 
-.. _`git`: http://git-scm.com/
-.. _`Symfony2 Standard Edition`: http://symfony.com/download
-.. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
-.. _`git submodules`: http://book.git-scm.com/5_submodules.html
+.. _`Git`: http://git-scm.com/
+.. _`Symfony Standard Edition`: https://symfony.com/download
+.. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
-.. _`barebones repository`: http://progit.org/book/ch4-4.html
+.. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
+.. _`GitHub .gitignore`: https://help.github.com/articles/ignoring-files
+.. _`Bitbucket`: https://bitbucket.org/
+.. _`comparison of hosting services`: https://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities

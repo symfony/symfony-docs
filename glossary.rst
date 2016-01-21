@@ -7,9 +7,19 @@ Glossary
    :sorted:
 
    Distribution
-        A *Distribution* is a package made of the Symfony2 Components, a
+        A *Distribution* is a package made of the Symfony Components, a
         selection of bundles, a sensible directory structure, a default
         configuration, and an optional configuration system.
+
+   Dependency Injection
+        The Dependency Injection is a design pattern highly used in the Symfony Framework.
+        It encourages loosely coupled and more maintainable architecture of an application.
+        The main principle of this pattern is that it allows developers to *inject* objects
+        (also known as services) in other objects, generally passing them as parameters.
+        Different levels of coupling between these objects can be established
+        depending on the method used to inject objects together.
+        The Dependency Injection pattern is the more often associated
+        to another specific type of object: the :doc:`/book/service_container`.
 
    Project
         A *Project* is a directory composed of an Application, a set of
@@ -23,7 +33,7 @@ Glossary
    Bundle
         A *Bundle* is a directory containing a set of files (PHP files,
         stylesheets, JavaScripts, images, ...) that *implement* a single
-        feature (a blog, a forum, etc). In Symfony2, (*almost*) everything
+        feature (a blog, a forum, etc). In Symfony, (*almost*) everything
         lives inside a bundle. (see :ref:`page-creation-bundles`)
 
    Front Controller
@@ -42,7 +52,7 @@ Glossary
    Service
         A *Service* is a generic term for any PHP object that performs a
         specific task. A service is usually used "globally", such as a database
-        connection object or an object that delivers email messages. In Symfony2,
+        connection object or an object that delivers email messages. In Symfony,
         services are often configured and retrieved from the service container.
         An application that has many decoupled services is said to follow
         a `service-oriented architecture`_.
@@ -53,15 +63,15 @@ Glossary
         an application. Instead of creating services directly, the developer
         *trains* the service container (via configuration) on how to create
         the services. The service container takes care of lazily instantiating
-        and injecting dependent services. See :doc:`/book/service_container` 
+        and injecting dependent services. See :doc:`/book/service_container`
         chapter.
 
    HTTP Specification
-        The *Http Specification* is a document that describes the Hypertext
+        The *HTTP Specification* is a document that describes the Hypertext
         Transfer Protocol - a set of rules laying out the classic client-server
         request-response communication. The specification defines the format
         used for a request and response as well as the possible HTTP headers
-        that each may have. For more information, read the `Http Wikipedia`_
+        that each may have. For more information, read the `HTTP Wikipedia`_
         article or the `HTTP 1.1 RFC`_.
 
    Environment
@@ -73,10 +83,10 @@ Glossary
         that's optimized for speed.
 
    Vendor
-        A *vendor* is a supplier of PHP libraries and bundles including Symfony2
+        A *vendor* is a supplier of PHP libraries and bundles including Symfony
         itself. Despite the usual commercial connotations of the word, vendors
         in Symfony often (even usually) include free software. Any library you
-        add to your Symfony2 project should go in the ``vendor`` directory. See
+        add to your Symfony project should go in the ``vendor`` directory. See
         :ref:`The Architecture: Using Vendors <using-vendors>`.
 
    Acme
@@ -97,22 +107,22 @@ Glossary
         to the web directory using the ``assets:install`` console task.
 
    Kernel
-        The *Kernel* is the core of Symfony2. The Kernel object handles HTTP
+        The *Kernel* is the core of Symfony. The Kernel object handles HTTP
         requests using all the bundles and libraries registered to it. See
         :ref:`The Architecture: The Application Directory <the-app-dir>` and the
-        :doc:`/book/internals` chapter.
+        :doc:`Internal Events Reference </reference/events>`.
 
    Firewall
-        In Symfony2, a *Firewall* doesn't have to do with networking. Instead,
+        In Symfony, a *Firewall* doesn't have to do with networking. Instead,
         it defines the authentication mechanisms (i.e. it handles the process
         of determining the identity of your users), either for the whole
         application or for just a part of it. See the
         :doc:`/book/security` chapters.
 
-   YAML 
+   YAML
         *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
-        lightweight, humane data serialization language used extensively in
-        Symfony2's configuration files.  See the :doc:`/components/yaml` 
+        lightweight, human friendly data serialization language used extensively in
+        Symfony's configuration files. See the :doc:`/components/yaml/introduction`
         chapter.
 
    Annotation
@@ -121,6 +131,6 @@ Glossary
          configuration. For example, the annotation ``@var`` describes the type of a variable, whereas in
          Symfony2 ``@Assert`` can add validation to a member variable of a class (see :doc:`/book/validation` chapter).
 
-.. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
-.. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+.. _`service-oriented architecture`: https://wikipedia.org/wiki/Service-oriented_architecture
+.. _`HTTP Wikipedia`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html

@@ -2,10 +2,10 @@ Callback
 ========
 
 The purpose of the Callback assertion is to let you create completely custom
-validation rules and to assign any validation errors to specific fields on
-your object. If you're using validation with forms, this means that you can
-make these custom errors display next to a specific field, instead of simply
-at the top of your form.
+validation rules and to assign any validation errors to specific fields
+on your object. If you're using validation with forms, this means that you
+can make these custom errors display next to a specific field, instead of
+simply at the top of your form.
 
 This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
@@ -18,7 +18,7 @@ can do anything, including creating and assigning validation errors.
     add validator "violations".
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`class<validation-class-target>`                                  |
+| Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `methods`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -32,28 +32,11 @@ Setup
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback:
-                    methods:   [isAuthorValid]
-
-    .. code-block:: xml
-
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <constraint name="Callback">
-                <option name="methods">
-                    <value>isAuthorValid</value>
-                </option>
-            </constraint>
-        </class>
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
@@ -63,33 +46,80 @@ Setup
         {
         }
 
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
+            constraints:
+                - Callback:
+                    methods:   [isAuthorValid]
+
+    .. code-block:: xml
+
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="AppBundle\Entity\Author">
+                <constraint name="Callback">
+                    <option name="methods">
+                        <value>isAuthorValid</value>
+                    </option>
+                </constraint>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new Assert\Callback(array(
+                    'methods' => array('isAuthorValid'),
+                )));
+            }
+        }
+
 The Callback Method
 -------------------
 
-The callback method is passed a special ``ExecutionContext`` object. You
-can set "violations" directly on this object and determine to which field
-those errors should be attributed::
+The callback method is passed a special ``ExecutionContextInterface`` object.
+You can set "violations" directly on this object and determine to which
+field those errors should be attributed::
 
     // ...
-    use Symfony\Component\Validator\ExecutionContext;
-    
+    use Symfony\Component\Validator\ExecutionContextInterface;
+
     class Author
     {
         // ...
         private $firstName;
-    
-        public function isAuthorValid(ExecutionContext $context)
+
+        public function isAuthorValid(ExecutionContextInterface $context)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array();
-        
+
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $propertyPath = $context->getPropertyPath() . '.firstName';
-                $context->setPropertyPath($propertyPath);
-                $context->addViolation('This name sounds totally fake!', array(), null);
+                $context->addViolationAt(
+                    'firstname',
+                    'This name sounds totally fake!',
+                    array(),
+                    null
+                );
             }
         }
+    }
 
 Options
 -------
@@ -97,87 +127,116 @@ Options
 methods
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` **default**: ``array()`` [:ref:`default option <validation-default-option>`]
 
 This is an array of the methods that should be executed during the validation
 process. Each method can be one of the following formats:
 
-1) **String method name**
+1) String method name
+.....................
 
-    If the name of a method is a simple string (e.g. ``isAuthorValid``), that
-    method will be called on the same object that's being validated and the
-    ``ExecutionContext`` will be the only argument (see the above example).
+If the name of a method is a simple string (e.g. ``isAuthorValid``), that method
+will be called on the same object that's being validated and the
+``ExecutionContextInterface`` will be the only argument (see the above example).
 
 2) **Static array callback**
+............................
 
-    Each method can also be specified as a standard array callback:
+Each method can also be specified as a standard array callback:
 
-    .. configuration-block::
+.. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: php-annotations
 
-            # src/Acme/BlogBundle/Resources/config/validation.yml
-            Acme\BlogBundle\Entity\Author:
-                constraints:
-                    - Callback:
-                        methods:
-                            -    [Acme\BlogBundle\MyStaticValidatorClass, isAuthorValid]
+        // src/AppBundle/Entity/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
 
-        .. code-block:: php-annotations
-
-            // src/Acme/BlogBundle/Entity/Author.php
-            use Symfony\Component\Validator\Constraints as Assert;
-
-            /**
-             * @Assert\Callback(methods={
-             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid"}
-             * })
-             */
-            class Author
-            {
-            }
-
-        .. code-block:: php
-
-            // src/Acme/BlogBundle/Entity/Author.php
-
-            use Symfony\Component\Validator\Mapping\ClassMetadata;
-            use Symfony\Component\Validator\Constraints\Callback;
-
-            class Author
-            {
-                public $name;
-
-                public static function loadValidatorMetadata(ClassMetadata $metadata)
-                {
-                    $metadata->addConstraint(new Callback(array(
-                        'methods' => array('isAuthorValid'),
-                    )));
-                }
-            }
-
-    In this case, the static method ``isAuthorValid`` will be called on the
-    ``Acme\BlogBundle\MyStaticValidatorClass`` class. It's passed both the original
-    object being validated (e.g. ``Author``) as well as the ``ExecutionContext``::
-
-        namespace Acme\BlogBundle;
-    
-        use Symfony\Component\Validator\ExecutionContext;
-        use Acme\BlogBundle\Entity\Author;
-    
-        class MyStaticValidatorClass
+        /**
+         * @Assert\Callback(methods={
+         *     { "AppBundle\MyStaticValidatorClass", "isAuthorValid" }
+         * })
+         */
+        class Author
         {
-            static public function isAuthorValid(Author $author, ExecutionContext $context)
+        }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
+            constraints:
+                - Callback:
+                    methods:
+                        -    [AppBundle\MyStaticValidatorClass, isAuthorValid]
+
+    .. code-block:: xml
+
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="AppBundle\Entity\Author">
+                <constraint name="Callback">
+                    <option name="methods">
+                        <value>
+                            <value>AppBundle\MyStaticValidatorClass</value>
+                            <value>isAuthorValid</value>
+                        </value>
+                    </option>
+                </constraint>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/AppBundle/Entity/Author.php
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\Callback;
+
+        class Author
+        {
+            public $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                // ...
+                $metadata->addConstraint(new Callback(array(
+                    'methods' => array(
+                        array(
+                            'AppBundle\MyStaticValidatorClass',
+                            'isAuthorValid',
+                        ),
+                    ),
+                )));
             }
         }
 
-    .. tip::
+In this case, the static method ``isAuthorValid`` will be called on the
+``AppBundle\MyStaticValidatorClass`` class. It's passed both the original object
+being validated (e.g. ``Author``) as well as the ``ExecutionContextInterface``::
 
-        If you specify your ``Callback`` constraint via PHP, then you also have
-        the option to make your callback either a PHP closure or a non-static
-        callback. It is *not* currently possible, however, to specify a :term:`service`
-        as a constraint. To validate using a service, you should
-        :doc:`create a custom validation constraint</cookbook/validation/custom_constraint>`
-        and add that new constraint to your class.
+    namespace AppBundle;
+
+    use Symfony\Component\Validator\ExecutionContextInterface;
+    use AppBundle\Entity\Author;
+
+    class MyStaticValidatorClass
+    {
+        public static function isAuthorValid(
+            Author $author,
+            ExecutionContextInterface $context
+        ) {
+            // ...
+        }
+    }
+
+.. tip::
+
+    If you specify your ``Callback`` constraint via PHP, then you also have the
+    option to make your callback either a PHP closure or a non-static callback.
+    It is *not* currently possible, however, to specify a :term:`service` as a
+    constraint. To validate using a service, you should :doc:`create a custom
+    validation constraint </cookbook/validation/custom_constraint>` and add that
+    new constraint to your class.

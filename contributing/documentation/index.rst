@@ -6,5 +6,10 @@ Contributing Documentation
 
     overview
     format
-    translations
+    standards
     license
+
+.. toctree::
+    :hidden:
+
+    translations

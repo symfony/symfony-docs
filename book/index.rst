@@ -1,5 +1,5 @@
-Book
-====
+The Book
+========
 
 .. toctree::
     :hidden:
@@ -11,7 +11,10 @@ Book
     controller
     routing
     templating
+    configuration
+    bundles
     doctrine
+    propel
     testing
     validation
     forms
@@ -20,7 +23,5 @@ Book
     translation
     service_container
     performance
-    internals
-    stable_api
 
 .. include:: /book/map.rst.inc

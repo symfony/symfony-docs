@@ -2,15 +2,32 @@ The Components
 ==============
 
 .. toctree::
-   :maxdepth: 1
+    :hidden:
 
-   class_loader
-   console
-   css_selector
-   dom_crawler
-   finder
-   http_foundation
-   locale
-   process
-   routing
-   yaml
+    using_components
+    class_loader/index
+    config/index
+    console/index
+    css_selector
+    debug
+    dependency_injection/index
+    dom_crawler
+    event_dispatcher/index
+    filesystem
+    finder
+    form/index
+    http_foundation/index
+    http_kernel/index
+    intl
+    options_resolver
+    process
+    property_access/index
+    routing/index
+    security/index
+    serializer
+    stopwatch
+    templating/index
+    translation/index
+    yaml/index
+
+.. include:: /components/map.rst.inc

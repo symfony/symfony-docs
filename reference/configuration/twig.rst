@@ -1,19 +1,20 @@
 .. index::
-   pair: Twig; Configuration Reference
+    pair: Twig; Configuration reference
 
-TwigBundle Configuration Reference
-==================================
+TwigBundle Configuration ("twig")
+=================================
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         twig:
+            exception_controller:  twig.controller.exception:showAction
             form:
                 resources:
 
                     # Default:
-                    - div_layout.html.twig
+                    - form_div_layout.html.twig
 
                     # Example:
                     - MyBundle::form.html.twig
@@ -23,19 +24,28 @@ TwigBundle Configuration Reference
                 foo:                 "@bar"
                 pi:                  3.14
 
-                # Prototype
-                key:
+                # Example options, but the easiest use is as seen above
+                some_variable_name:
+                    # a service id that should be the value
                     id:                   ~
+                    # set to service or leave blank
                     type:                 ~
                     value:                ~
-            autoescape:           ~
-            base_template_class:  ~ # Example: Twig_Template
-            cache:                %kernel.cache_dir%/twig
-            charset:              %kernel.charset%
-            debug:                %kernel.debug%
-            strict_variables:     ~
-            auto_reload:          ~
-            exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
+            autoescape:                ~
+
+            # The following were added in Symfony 2.3.
+            # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
+            autoescape_service:        ~ # Example: '@my_service'
+            autoescape_service_method: ~ # use in combination with autoescape_service option
+            base_template_class:       ~ # Example: Twig_Template
+            cache:                     '%kernel.cache_dir%/twig'
+            charset:                   '%kernel.charset%'
+            debug:                     '%kernel.debug%'
+            strict_variables:          ~
+            auto_reload:               ~
+            optimizations:             ~
+            paths:
+                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': foo_bar
 
     .. code-block:: xml
 
@@ -43,14 +53,24 @@ TwigBundle Configuration Reference
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/doctrine/twig-1.0.xsd">
+                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-            <twig:config auto-reload="%kernel.debug%" autoescape="true" base-template-class="Twig_Template" cache="%kernel.cache_dir%/twig" charset="%kernel.charset%" debug="%kernel.debug%" strict-variables="false">
+            <twig:config auto-reload="%kernel.debug%"
+                autoescape="true"
+                base-template-class="Twig_Template"
+                cache="%kernel.cache_dir%/twig"
+                charset="%kernel.charset%"
+                debug="%kernel.debug%"
+                strict-variables="false"
+                optimizations="true"
+            >
                 <twig:form>
                     <twig:resource>MyBundle::form.html.twig</twig:resource>
                 </twig:form>
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
+                <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
+                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
@@ -66,13 +86,18 @@ TwigBundle Configuration Reference
                  'foo' => '@bar',
                  'pi'  => 3.14,
              ),
-             'auto_reload'         => '%kernel.debug%',
-             'autoescape'          => true,
-             'base_template_class' => 'Twig_Template',
-             'cache'               => '%kernel.cache_dir%/twig',
-             'charset'             => '%kernel.charset%',
-             'debug'               => '%kernel.debug%',
-             'strict_variables'    => false,
+             'auto_reload'          => '%kernel.debug%',
+             'autoescape'           => true,
+             'base_template_class'  => 'Twig_Template',
+             'cache'                => '%kernel.cache_dir%/twig',
+             'charset'              => '%kernel.charset%',
+             'debug'                => '%kernel.debug%',
+             'strict_variables'     => false,
+             'exception_controller' => 'AcmeFooBundle:Exception:showException',
+             'optimizations'        => true,
+             'paths' => array(
+                 '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+             ),
         ));
 
 Configuration
@@ -81,9 +106,9 @@ Configuration
 .. _config-twig-exception-controller:
 
 exception_controller
-....................
+~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController::showAction``
+**type**: ``string`` **default**: ``twig.controller.exception:showAction``
 
 This is the controller that is activated after an exception is thrown anywhere
 in your application. The default controller

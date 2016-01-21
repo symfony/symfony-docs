@@ -1,11 +1,11 @@
 .. index::
-   single: Tests
+   single: Tests; Insulating clients
 
-How to test the Interaction of several Clients
+How to Test the Interaction of several Clients
 ==============================================
 
-If you need to simulate an interaction between different Clients (think of a
-chat for instance), create several Clients::
+If you need to simulate an interaction between different clients (think of a
+chat for instance), create several clients::
 
     $harry = static::createClient();
     $sally = static::createClient();
@@ -17,7 +17,7 @@ chat for instance), create several Clients::
     $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
 
 This works except when your code maintains a global state or if it depends on
-third-party libraries that has some kind of global state. In such a case, you
+a third-party library that has some kind of global state. In such a case, you
 can insulate your clients::
 
     $harry = static::createClient();

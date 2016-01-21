@@ -1,35 +1,46 @@
+.. index::
+   single: Logging; Emailing errors
+
 How to Configure Monolog to Email Errors
 ========================================
 
 Monolog_ can be configured to send an email when an error occurs with an
 application. The configuration for this requires a few nested handlers
 in order to avoid receiving too many emails. This configuration looks
-complicated at first but each handler is fairly straight forward when
+complicated at first but each handler is fairly straightforward when
 it is broken down.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
                 mail:
                     type:         fingers_crossed
+                    # 500 errors are logged at the critical level
                     action_level: critical
+                    # to also log 400 level errors (but not 404's):
+                    # action_level: error
+                    # excluded_404s:
+                    #     - ^/
                     handler:      buffered
                 buffered:
                     type:    buffer
                     handler: swift
                 swift:
                     type:       swift_mailer
-                    from_email: error@example.com
-                    to_email:   error@example.com
+                    from_email: 'error@example.com'
+                    to_email:   'error@example.com'
+                    # or list of recipients
+                    # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
                     subject:    An Error Occurred!
                     level:      debug
 
     .. code-block:: xml
 
+        <!-- app/config/config_prod.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -42,6 +53,12 @@ it is broken down.
                     type="fingers_crossed"
                     action-level="critical"
                     handler="buffered"
+                    <!--
+                    To also log 400 level errors (but not 404's):
+                    action-level="error"
+                    And add this child inside this monolog:handler
+                    <monolog:excluded-404>^/</monolog:excluded-404>
+                    -->
                 />
                 <monolog:handler
                     name="buffered"
@@ -50,24 +67,66 @@ it is broken down.
                 />
                 <monolog:handler
                     name="swift"
+                    type="swift_mailer"
                     from-email="error@example.com"
-                    to-email="error@example.com"
                     subject="An Error Occurred!"
-                    level="debug"
-                />
+                    level="debug">
+
+                    <monolog:to-email>error@example.com</monolog:to-email>
+
+                    <!-- or multiple to-email elements -->
+                    <!--
+                    <monolog:to-email>dev1@example.com</monolog:to-email>
+                    <monolog:to-email>dev2@example.com</monolog:to-email>
+                    ...
+                    -->
+                </monolog:handler>
             </monolog:config>
         </container>
 
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'mail' => array(
+                    'type'         => 'fingers_crossed',
+                    'action_level' => 'critical',
+                    // to also log 400 level errors (but not 404's):
+                    // 'action_level' => 'error',
+                    // 'excluded_404s' => array(
+                    //     '^/',
+                    // ),
+                    'handler'      => 'buffered',
+                ),
+                'buffered' => array(
+                    'type'    => 'buffer',
+                    'handler' => 'swift',
+                ),
+                'swift' => array(
+                    'type'       => 'swift_mailer',
+                    'from_email' => 'error@example.com',
+                    'to_email'   => 'error@example.com',
+                    // or a list of recipients
+                    // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
+                    'subject'    => 'An Error Occurred!',
+                    'level'      => 'debug',
+                ),
+            ),
+        ));
+
 The ``mail`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
-It then logs everything including messages below the action level.  The
-``critical`` level is only triggered for 5xx HTTP code errors. The ``handler``
-setting means that the output is then passed onto the ``buffered`` handler.
+The ``critical`` level is only triggered for 5xx HTTP code errors. If this level
+is reached once, the ``fingers_crossed`` handler will log all messages
+regardless of their level. The ``handler`` setting means that the output
+is then passed onto the ``buffered`` handler.
 
 .. tip::
 
     If you want both 400 level and 500 level errors to trigger an email,
-    set the ``action_level`` to ``error`` instead of ``critical``.
+    set the ``action_level`` to ``error`` instead of ``critical``. See the
+    code above for an example.
 
 The ``buffered`` handler simply keeps all the messages for a request and
 then passes them onto the nested handler in one go. If you do not use this
@@ -79,11 +138,19 @@ to and from addresses and the subject.
 You can combine these handlers with other handlers so that the errors still
 get logged on the server as well as the emails being sent:
 
+.. caution::
+
+    The default spool setting for swiftmailer is set to ``memory``, which
+    means that emails are sent at the very end of the request. However, this
+    does not work with buffered logs at the moment. In order to enable emailing
+    logs per the example below, you must comment out the ``spool: { type: memory }``
+    line in the ``config.yml`` file.
+
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
                 main:
@@ -95,20 +162,21 @@ get logged on the server as well as the emails being sent:
                     members: [streamed, buffered]
                 streamed:
                     type:  stream
-                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    path:  '%kernel.logs_dir%/%kernel.environment%.log'
                     level: debug
                 buffered:
                     type:    buffer
                     handler: swift
                 swift:
                     type:       swift_mailer
-                    from_email: error@example.com
-                    to_email:   error@example.com
+                    from_email: 'error@example.com'
+                    to_email:   'error@example.com'
                     subject:    An Error Occurred!
                     level:      debug
 
     .. code-block:: xml
 
+        <!-- app/config/config_prod.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -121,7 +189,7 @@ get logged on the server as well as the emails being sent:
                     type="fingers_crossed"
                     action_level="critical"
                     handler="grouped"
-                />                
+                />
                 <monolog:handler
                     name="grouped"
                     type="group"
@@ -148,6 +216,39 @@ get logged on the server as well as the emails being sent:
                 />
             </monolog:config>
         </container>
+
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main' => array(
+                    'type'         => 'fingers_crossed',
+                    'action_level' => 'critical',
+                    'handler'      => 'grouped',
+                ),
+                'grouped' => array(
+                    'type'    => 'group',
+                    'members' => array('streamed', 'buffered'),
+                ),
+                'streamed'  => array(
+                    'type'  => 'stream',
+                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                    'level' => 'debug',
+                ),
+                'buffered'    => array(
+                    'type'    => 'buffer',
+                    'handler' => 'swift',
+                ),
+                'swift' => array(
+                    'type'       => 'swift_mailer',
+                    'from_email' => 'error@example.com',
+                    'to_email'   => 'error@example.com',
+                    'subject'    => 'An Error Occurred!',
+                    'level'      => 'debug',
+                ),
+            ),
+        ));
 
 This uses the ``group`` handler to send the messages to the two
 group members, the ``buffered`` and the ``stream`` handlers. The messages will

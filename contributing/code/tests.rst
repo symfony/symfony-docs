@@ -1,89 +1,59 @@
-Running Symfony2 Tests
-======================
+.. _running-symfony2-tests:
 
-Before submitting a :doc:`patch <patches>` for inclusion, you need to run the
-Symfony2 test suite to check that you have not broken anything.
+Running Symfony Tests
+=====================
 
-PHPUnit
--------
+The Symfony project uses a third-party service which automatically runs tests
+for any submitted :doc:`patch <patches>`. If the new code breaks any test,
+the pull request will show an error message with a link to the full error details.
 
-To run the Symfony2 test suite, `install`_ PHPUnit 3.5.11 or later first:
+In any case, it's a good practice to run tests locally before submitting a
+:doc:`patch <patches>` for inclusion, to check that you have not broken anything.
 
-.. code-block:: bash
+.. _phpunit:
+.. _dependencies_optional:
 
-    $ pear channel-discover pear.phpunit.de
-    $ pear channel-discover components.ez.no
-    $ pear channel-discover pear.symfony-project.com
-    $ pear install phpunit/PHPUnit
+Before Running the Tests
+------------------------
 
-Dependencies (optional)
------------------------
-
-To run the entire test suite, including tests that depend on external
-dependencies, Symfony2 needs to be able to autoload them. By default, they are
-autoloaded from `vendor/` under the main root directory (see
-`autoload.php.dist`).
-
-The test suite needs the following third-party libraries:
-
-* Doctrine
-* Swiftmailer
-* Twig
-* Monolog
-
-To install them all, run the `vendors` script:
+To run the Symfony test suite, install the external dependencies used during the
+tests, such as Doctrine, Twig and Monolog. To do so,
+:doc:`install Composer </cookbook/composer>` and execute the following:
 
 .. code-block:: bash
 
-    $ php vendors.php install
+    $ composer update
 
-.. note::
+.. _running:
 
-    Note that the script takes some time to finish.
+Running the Tests
+-----------------
 
-After installation, you can update the vendors to their latest version with
-the follow command:
-
-.. code-block:: bash
-
-    $ php vendors.php update
-
-Running
--------
-
-First, update the vendors (see above).
-
-Then, run the test suite from the Symfony2 root directory with the following
+Then, run the test suite from the Symfony root directory with the following
 command:
 
 .. code-block:: bash
 
-    $ phpunit
+    $ php ./phpunit symfony
 
-The output should display `OK`. If not, you need to figure out what's going on
-and if the tests are broken because of your modifications.
-
-.. tip::
-
-    Run the test suite before applying your modifications to check that they
-    run fine on your configuration.
-
-Code Coverage
--------------
-
-If you add a new feature, you also need to check the code coverage by using
-the `coverage-html` option:
-
-.. code-block:: bash
-
-    $ phpunit --coverage-html=cov/
-
-Check the code coverage by opening the generated `cov/index.html` page in a
-browser.
+The output should display ``OK``. If not, read the reported errors to figure out
+what's going on and if the tests are broken because of the new code.
 
 .. tip::
 
-    The code coverage only works if you have XDebug enabled and all
-    dependencies installed.
+    The entire Symfony suite can take up to several minutes to complete. If you
+    want to test a single component, type its path after the ``phpunit`` command,
+    e.g.:
 
-.. _install: http://www.phpunit.de/manual/current/en/installation.html
+    .. code-block:: bash
+
+        $ php ./phpunit src/Symfony/Component/Finder/
+
+.. tip::
+
+    On Windows, install the `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
+    to see colored test results.
+
+.. _ConEmu: https://code.google.com/p/conemu-maximus5/
+.. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _Mintty: https://mintty.github.io/

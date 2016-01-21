@@ -1,0 +1,299 @@
+.. index::
+   single: DependencyInjection; Tags
+
+Working with Tagged Services
+============================
+
+Tags are a generic string (along with some options) that can be applied
+to any service. By themselves, tags don't actually alter the functionality
+of your services in any way. But if you choose to, you can ask a container
+builder for a list of all services that were tagged with some specific tag.
+This is useful in compiler passes where you can find these services and
+use or modify them in some specific way.
+
+For example, if you are using Swift Mailer you might imagine that you want
+to implement a "transport chain", which is a collection of classes implementing
+``\Swift_Transport``. Using the chain, you'll want Swift Mailer to try several
+ways of transporting the message until one succeeds.
+
+To begin with, define the ``TransportChain`` class::
+
+    class TransportChain
+    {
+        private $transports;
+
+        public function __construct()
+        {
+            $this->transports = array();
+        }
+
+        public function addTransport(\Swift_Transport $transport)
+        {
+            $this->transports[] = $transport;
+        }
+    }
+
+Then, define the chain as a service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_mailer.transport_chain:
+                class: TransportChain
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="acme_mailer.transport_chain" class="TransportChain" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container->register('acme_mailer.transport_chain', 'TransportChain');
+
+Define Services with a Custom Tag
+---------------------------------
+
+Now you might want several of the ``\Swift_Transport`` classes to be instantiated
+and added to the chain automatically using the ``addTransport()`` method.
+For example you may add the following transports as services:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_mailer.transport.smtp:
+                class: \Swift_SmtpTransport
+                arguments:
+                    - '%mailer_host%'
+                tags:
+                    -  { name: acme_mailer.transport }
+            acme_mailer.transport.sendmail:
+                class: \Swift_SendmailTransport
+                tags:
+                    -  { name: acme_mailer.transport }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="acme_mailer.transport.smtp" class="\Swift_SmtpTransport">
+                    <argument>%mailer_host%</argument>
+                    <tag name="acme_mailer.transport" />
+                </service>
+
+                <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
+                    <tag name="acme_mailer.transport" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
+        $definitionSmtp->addTag('acme_mailer.transport');
+        $container->setDefinition('acme_mailer.transport.smtp', $definitionSmtp);
+
+        $definitionSendmail = new Definition('\Swift_SendmailTransport');
+        $definitionSendmail->addTag('acme_mailer.transport');
+        $container->setDefinition('acme_mailer.transport.sendmail', $definitionSendmail);
+
+Notice that each was given a tag named ``acme_mailer.transport``. This is
+the custom tag that you'll use in your compiler pass. The compiler pass
+is what makes this tag "mean" something.
+
+Create a ``CompilerPass``
+-------------------------
+
+Your compiler pass can now ask the container for any services with the
+custom tag::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\Reference;
+
+    class TransportCompilerPass implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+            if (!$container->has('acme_mailer.transport_chain')) {
+                return;
+            }
+
+            $definition = $container->findDefinition(
+                'acme_mailer.transport_chain'
+            );
+
+            $taggedServices = $container->findTaggedServiceIds(
+                'acme_mailer.transport'
+            );
+            foreach ($taggedServices as $id => $tags) {
+                $definition->addMethodCall(
+                    'addTransport',
+                    array(new Reference($id))
+                );
+            }
+        }
+    }
+
+The ``process()`` method checks for the existence of the ``acme_mailer.transport_chain``
+service, then looks for all services tagged ``acme_mailer.transport``. It
+adds to the definition of the ``acme_mailer.transport_chain`` service a
+call to ``addTransport()`` for each "acme_mailer.transport" service it has
+found. The first argument of each of these calls will be the mailer transport
+service itself.
+
+Register the Pass with the Container
+------------------------------------
+
+You also need to register the pass with the container, it will then be
+run when the container is compiled::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    $container = new ContainerBuilder();
+    $container->addCompilerPass(new TransportCompilerPass());
+
+.. note::
+
+    Compiler passes are registered differently if you are using the full-stack
+    framework. See :doc:`/cookbook/service_container/compiler_passes` for
+    more details.
+
+Adding Additional Attributes on Tags
+------------------------------------
+
+Sometimes you need additional information about each service that's tagged
+with your tag. For example, you might want to add an alias to each member
+of the transport chain.
+
+To begin with, change the ``TransportChain`` class::
+
+    class TransportChain
+    {
+        private $transports;
+
+        public function __construct()
+        {
+            $this->transports = array();
+        }
+
+        public function addTransport(\Swift_Transport $transport, $alias)
+        {
+            $this->transports[$alias] = $transport;
+        }
+
+        public function getTransport($alias)
+        {
+            if (array_key_exists($alias, $this->transports)) {
+                return $this->transports[$alias];
+            }
+        }
+    }
+
+As you can see, when ``addTransport`` is called, it takes not only a ``Swift_Transport``
+object, but also a string alias for that transport. So, how can you allow
+each tagged transport service to also supply an alias?
+
+To answer this, change the service declaration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_mailer.transport.smtp:
+                class: \Swift_SmtpTransport
+                arguments:
+                    - '%mailer_host%'
+                tags:
+                    -  { name: acme_mailer.transport, alias: foo }
+            acme_mailer.transport.sendmail:
+                class: \Swift_SendmailTransport
+                tags:
+                    -  { name: acme_mailer.transport, alias: bar }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="acme_mailer.transport.smtp" class="\Swift_SmtpTransport">
+                    <argument>%mailer_host%</argument>
+                    <tag name="acme_mailer.transport" alias="foo" />
+                </service>
+
+                <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
+                    <tag name="acme_mailer.transport" alias="bar" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
+        $definitionSmtp->addTag('acme_mailer.transport', array('alias' => 'foo'));
+        $container->setDefinition('acme_mailer.transport.smtp', $definitionSmtp);
+
+        $definitionSendmail = new Definition('\Swift_SendmailTransport');
+        $definitionSendmail->addTag('acme_mailer.transport', array('alias' => 'bar'));
+        $container->setDefinition('acme_mailer.transport.sendmail', $definitionSendmail);
+
+Notice that you've added a generic ``alias`` key to the tag. To actually
+use this, update the compiler::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\Reference;
+
+    class TransportCompilerPass implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
+                return;
+            }
+
+            $definition = $container->getDefinition(
+                'acme_mailer.transport_chain'
+            );
+
+            $taggedServices = $container->findTaggedServiceIds(
+                'acme_mailer.transport'
+            );
+            foreach ($taggedServices as $id => $tags) {
+                foreach ($tags as $attributes) {
+                    $definition->addMethodCall(
+                        'addTransport',
+                        array(new Reference($id), $attributes["alias"])
+                    );
+                }
+            }
+        }
+    }
+
+The double loop may be confusing. This is because a service can have more
+than one tag. You tag a service twice or more with the ``acme_mailer.transport``
+tag. The second foreach loop iterates over the ``acme_mailer.transport``
+tags set for the current service and gives you the attributes.
+
