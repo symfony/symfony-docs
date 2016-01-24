@@ -126,7 +126,7 @@ that accepts the dependency::
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [setMailer, ["@my_mailer"]]
+                    - [setMailer, ['@my_mailer']]
 
     .. code-block:: xml
 

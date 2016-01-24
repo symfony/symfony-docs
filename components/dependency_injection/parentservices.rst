@@ -192,8 +192,8 @@ a parent for a service.
             mail_manager:
                 abstract:  true
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
             newsletter_manager:
                 class:  "NewsletterManager"
@@ -320,17 +320,17 @@ to the ``NewsletterManager`` class, the config would look like this:
             mail_manager:
                 abstract: true
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
             newsletter_manager:
-                class:  "NewsletterManager"
+                class:  'NewsletterManager'
                 parent: mail_manager
                 calls:
-                    - [setMailer, ["@my_alternative_mailer"]]
+                    - [setMailer, ['@my_alternative_mailer']]
 
             greeting_card_manager:
-                class:  "GreetingCardManager"
+                class:  'GreetingCardManager'
                 parent: mail_manager
 
     .. code-block:: xml

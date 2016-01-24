@@ -347,7 +347,7 @@ using a processor.
 
             monolog.processor.session_request:
                 class: AppBundle\SessionRequestProcessor
-                arguments:  ["@session"]
+                arguments:  ['@session']
                 tags:
                     - { name: monolog.processor, method: processRecord }
 
@@ -446,7 +446,7 @@ the ``monolog.processor`` tag:
         services:
             monolog.processor.session_request:
                 class: AppBundle\SessionRequestProcessor
-                arguments:  ["@session"]
+                arguments:  ['@session']
                 tags:
                     - { name: monolog.processor, method: processRecord, handler: main }
 
@@ -497,7 +497,7 @@ the ``monolog.processor`` tag:
         services:
             monolog.processor.session_request:
                 class: AppBundle\SessionRequestProcessor
-                arguments:  ["@session"]
+                arguments:  ['@session']
                 tags:
                     - { name: monolog.processor, method: processRecord, channel: main }
 
