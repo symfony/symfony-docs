@@ -69,6 +69,9 @@ Active Core Members
 
   * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component.
 
+  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
+    bundle.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
@@ -175,6 +178,7 @@ discretion of the **Project Leader**.
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
 .. _Yaml: https://github.com/symfony/yaml
+.. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
@@ -188,3 +192,4 @@ discretion of the **Project Leader**.
 .. _`weaverryan`: https://github.com/weaverryan/
 .. _`aitboudad`: https://github.com/aitboudad/
 .. _`xabbuh`: https://github.com/xabbuh/
+.. _`javiereguiluz`: https://github.com/javiereguiluz/
