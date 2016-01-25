@@ -269,7 +269,7 @@ parameter and uses it in the service definition.
 
     .. code-block:: xml
 
-        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+        <argument type="string">http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
 
 .. caution::
 
