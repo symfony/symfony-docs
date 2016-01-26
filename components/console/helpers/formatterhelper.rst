@@ -63,3 +63,55 @@ messages and 2 spaces on the left and right).
 The exact "style" you use in the block is up to you. In this case, you're using
 the pre-defined ``error`` style, but there are other styles, or you can create
 your own. See :ref:`components-console-coloring`.
+
+Print Truncated Messages
+------------------------
+
+.. versionadded:: 3.1
+    The ``truncate`` method was introduced in Symfony 3.1.
+
+Sometimes you want to print a message truncated to an explicit character length. This is possible with the
+:method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::truncate` method.
+
+If you would like to truncate a very long message, for example, to 7 characters, you can write::
+
+    $message = "This is a very long message, which should be truncated";
+    $truncatedMessage = $formatter->truncate($message, 7);
+    $output->writeln($truncatedMessage);
+
+And the output will be::
+
+    This is...
+Message is truncated to the given length, then the suffix is appended to end of that string.
+
+Negative String Length
+~~~~~~~~~~~~~~~~~~~~~~
+
+If the length is negative, number of letters to truncate is counted from the end of the message::
+
+    $truncatedMessage = $formatter->truncate($message, -5);
+Will result with::
+
+    This is a very long message, which should be trun...
+Custom Suffix
+~~~~~~~~~~~~~
+
+By default ``...`` suffix is used. If you wish to use a different suffix, simply pass it as the third argument to the method::
+
+    $truncatedMessage = $formatter->truncate($message, 7, '!!');
+Will result with::
+
+    This is!!
+Or if you don't want to use suffix at all, just pass an empty string::
+
+    $truncatedMessage = $formatter->truncate($message, 7, '');
+Which will result with::
+
+    This is
+Suffix is always appended, unless truncate length is longer than a message and a suffix length::
+
+    $output->writeln($formatter->truncate('test', 10));
+will output::
+
+    test
+because length of the ``test...`` string is shorter than 10.
