@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-27T18:59:04Z
+
+@WouterJ What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-27T21:07:06Z
+
+I read the [shell manual](https://docs.mongodb.org/manual/mongo/) and they call it a javascript interface. As it's a shell and not some commands, I think the dollars have to revert and I'm interested if javascript looks any better.
+
+However, let's not spend to much work on this: :+1:
