@@ -235,7 +235,7 @@ parameter and uses it in the service definition.
 
     .. code-block:: xml
 
-        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+        <argument type="string">http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
 
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.

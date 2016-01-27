@@ -1831,10 +1831,6 @@ section.
     The ``csrf_token_id`` option is optional but greatly enhances the security
     of the generated token by making it different for each form.
 
-.. versionadded:: 2.4
-    The ``csrf_token_id`` option was introduced in Symfony 2.4. Prior, you
-    had to use the ``intention`` option.
-
 .. caution::
 
     CSRF tokens are meant to be different for every user. This is why you
