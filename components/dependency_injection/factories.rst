@@ -143,7 +143,7 @@ method in the previous example takes the ``templating`` service as an argument:
                 class:   NewsletterManager
                 factory: ["@newsletter_manager.factory", createNewsletterManager]
                 arguments:
-                    - "@templating"
+                    - '@templating'
 
     .. code-block:: xml
 

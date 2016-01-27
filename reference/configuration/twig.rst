@@ -26,7 +26,7 @@ TwigBundle Configuration ("twig")
             globals:
 
                 # Examples:
-                foo:                 "@bar"
+                foo:                 '@bar'
                 pi:                  3.14
 
                 # Example options, but the easiest use is as seen above

@@ -243,7 +243,7 @@ config files:
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [setMailer, ["@mailer"]]
+                    - [setMailer, ['@mailer']]
 
     .. code-block:: xml
 
