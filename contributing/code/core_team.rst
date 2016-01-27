@@ -65,9 +65,12 @@ Active Core Members
   * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
     component;
 
-  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component;
 
-  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component.
+  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
+
+  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
+    bundle.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
@@ -177,6 +180,7 @@ discretion of the **Project Leader**.
 .. _Validator: https://github.com/symfony/validator
 .. _VarDumper: https://github.com/symfony/var-dumper
 .. _Yaml: https://github.com/symfony/yaml
+.. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
@@ -190,3 +194,4 @@ discretion of the **Project Leader**.
 .. _`weaverryan`: https://github.com/weaverryan/
 .. _`aitboudad`: https://github.com/aitboudad/
 .. _`xabbuh`: https://github.com/xabbuh/
+.. _`javiereguiluz`: https://github.com/javiereguiluz/

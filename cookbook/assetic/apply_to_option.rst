@@ -144,7 +144,7 @@ In this case you can specify that the ``coffee`` filter is applied to all
                     bin:        /usr/bin/coffee
                     node:       /usr/bin/node
                     node_paths: [/usr/lib/node_modules/]
-                    apply_to:   "\.coffee$"
+                    apply_to:   '\.coffee$'
 
     .. code-block:: xml
 

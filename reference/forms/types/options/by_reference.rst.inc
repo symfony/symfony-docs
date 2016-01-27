@@ -12,13 +12,14 @@ To explain this further, here's a simple example::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\FormType;
     // ...
 
     $builder = $this->createFormBuilder($article);
     $builder
         ->add('title', TextType::class)
         ->add(
-            $builder->create('author', 'form', array('by_reference' => ?))
+            $builder->create('author', FormType::class, array('by_reference' => ?))
                 ->add('name', TextType::class)
                 ->add('email', EmailType::class)
         )

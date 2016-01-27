@@ -28,7 +28,6 @@ with ``tests.bootstrap.php``:
 
     <!-- ... -->
     <phpunit
-        ...
         bootstrap = "tests.bootstrap.php"
     >
 
