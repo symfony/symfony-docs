@@ -65,9 +65,9 @@ Active Core Members
   * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
     component;
 
-  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component;
 
-  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component.
+  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
 
   * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
     bundle.
