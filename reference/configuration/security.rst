@@ -319,6 +319,19 @@ Redirecting after Login
 
 .. _reference-security-pbkdf2:
 
+Logout Configuration
+--------------------
+
+invalidate_session
+..................
+
+**type**: ``boolean`` **default**: ``true``
+
+By default, the session of the user is invalidated after the log out process.
+This means that the user will be logged out for all the firewalls defined in
+your application. Set this option to ``false`` to only log out from the current
+firewall.
+
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
 
