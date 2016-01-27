@@ -238,7 +238,7 @@ Or the following XML configuration:
 
 .. code-block:: xml
 
-    <driver>msyql</driver>
+    <driver>mysql</driver>
     <driver>sqlite</driver>
 
 The processed configuration is::
@@ -341,7 +341,7 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
 
 The argument of this method (``name`` in the example above) defines the name of
 the attribute added to each XML node to differentiate them. Now you can use the
-same YAML configuration showed before or the following XML configuration:
+same YAML configuration shown before or the following XML configuration:
 
 .. code-block:: xml
 
