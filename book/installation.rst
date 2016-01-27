@@ -343,7 +343,7 @@ of the Symfony Installer anywhere in your system:
     c:\projects\> php symfony demo
 
 Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
-built-in web server executing the ``php bin/console server:run`` command. Access
+built-in web server executing the ``php app/console server:run`` command. Access
 to the ``http://localhost:8000`` URL in your browser to start using the Symfony
 Demo application.
 
