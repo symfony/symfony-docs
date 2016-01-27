@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-25T15:08:29Z
+
+Thank you for providing this patch @Jace25. That's a good catch as the demo application indeed does not make use of Symfony 3 yet.
+
+---------------------------------------------------------------------------
+
+by Jace25 at 2016-01-25T15:18:17Z
+
+Yes, I have also wondered about this because I just saw that my fresh created project has a bin folder.
+So maybe my pull request is wrong in longterm and a pull request regarding the demo would be better.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-25T16:31:53Z
+
+I guess it will still take some time till the demo application switches to Symfony 3 (see symfony/symfony-demo#248) so we should merge this and remember to revert the change when the demo is updated.
