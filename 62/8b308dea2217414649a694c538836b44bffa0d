@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-25T15:43:30Z
+
+Looks like this is related to a recent update of Sphinx on Travis. [1.3.4 didn't fail](https://travis-ci.org/symfony/symfony-docs/builds/103688233) with this while [1.3.5 now does](https://travis-ci.org/symfony/symfony-docs/builds/104404503).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-25T15:46:02Z
+
+unfortunately, it still breaks.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-25T19:59:02Z
+
+@xabbuh since 1.3.5, pygments errors are now triggered as warnings in Sphinx (https://github.com/sphinx-doc/sphinx/commit/0329edc5107bae03342e7ca446a3d03ab8adeb13). Pygments always had an issue rendering this code blocks, it seems.
+
+The problem is the `&` char, which has to be `&amp;`: http://pygments.org/demo/3557987/
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-25T21:02:12Z
+
+Yeah, there are some more issues in other files. I'll fix them and make a big update here.
