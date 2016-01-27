@@ -41,6 +41,7 @@ it is broken down.
     .. code-block:: xml
 
         <!-- app/config/config_prod.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -48,17 +49,17 @@ it is broken down.
                                 http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
+                <!--
+                To also log 400 level errors (but not 404's):
+                action-level="error"
+                And add this child inside this monolog:handler
+                <monolog:excluded-404>^/</monolog:excluded-404>
+                -->
                 <monolog:handler
                     name="mail"
                     type="fingers_crossed"
                     action-level="critical"
                     handler="buffered"
-                    <!--
-                    To also log 400 level errors (but not 404's):
-                    action-level="error"
-                    And add this child inside this monolog:handler
-                    <monolog:excluded-404>^/</monolog:excluded-404>
-                    -->
                 />
                 <monolog:handler
                     name="buffered"

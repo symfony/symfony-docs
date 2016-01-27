@@ -170,8 +170,10 @@ from specific directories without defining a dependency:
 
 .. code-block:: json
 
-    "autoload": {
-        "psr-0": { "": "src/" }
+    {
+        "autoload": {
+            "psr-0": { "": "src/" }
+        }
     }
 
 This means that if a class is not found in the ``vendor`` directory, Composer

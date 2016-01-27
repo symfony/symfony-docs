@@ -126,8 +126,10 @@ code::
 
     .. code-block:: json
 
-        "require: {
-            "symfony/icu": "1.1.*"
+        {
+            "require": {
+                "symfony/icu": "1.1.*"
+            }
         }
 
     Set the version to

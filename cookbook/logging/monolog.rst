@@ -252,17 +252,22 @@ option of your handler to ``rotating_file``:
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <container xmlns=''http://symfony.com/schema/dic/services"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog">
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
+                <!-- "max_files": max number of log files to keep
+                     defaults to zero, which means infinite files -->
                 <monolog:handler name="main"
                     type="rotating_file"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                    <!-- max number of log files to keep
-                         defaults to zero, which means infinite files -->
                     max_files="10"
                 />
             </monolog:config>
