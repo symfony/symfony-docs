@@ -248,9 +248,6 @@ by using the following methods:
 :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
     Returns the list of accepted encodings ordered by descending quality.
 
-    .. versionadded:: 2.4
-        The ``getEncodings()`` method was introduced in Symfony 2.4.
-
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
 :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` utility class::

@@ -182,12 +182,10 @@ The change in the ``composer.json`` will look like this:
 .. code-block:: json
 
     {
-        ...
         "config": {
             "bin-dir": "bin",
             "vendor-dir": "/some/dir/vendor"
         },
-        ...
     }
 
 Then, update the path to the ``autoload.php`` file in ``app/autoload.php``::

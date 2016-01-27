@@ -286,9 +286,6 @@ document::
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
-    .. versionadded:: 2.4
-        Support for HTTP status code constants was introduced in Symfony 2.4.
-
 .. index::
    single: Tests; Client
 

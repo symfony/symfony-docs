@@ -155,7 +155,7 @@ the parameter value in one place if needed.
 
         .. code-block:: xml
 
-            <argument>http://symfony.com/?foo=%%s&bar=%%d</argument>
+            <argument>http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
 
         .. code-block:: php
 

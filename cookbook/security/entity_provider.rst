@@ -156,7 +156,7 @@ Next, make sure to :ref:`create the database table <book-doctrine-creating-the-d
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, this is just a normal entity. But in order to use this class in the
+So far, this is just a normal entity. But to use this class in the
 security system, it must implement
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
 forces the class to have the five following methods:
