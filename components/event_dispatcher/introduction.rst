@@ -393,6 +393,7 @@ subscribes to the ``kernel.response`` and ``store.order`` events::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Acme\StoreBundle\Event\FilterOrderEvent;
 
     class StoreSubscriber implements EventSubscriberInterface
     {
