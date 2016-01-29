@@ -39,7 +39,6 @@ The simplest ``TypeTestCase`` implementation looks like the following::
     // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
     namespace AppBundle\Tests\Form\Type;
 
-    use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -52,7 +51,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             );
 
-            $type = new TestedType();
+            $type = 'AppBundle\Form\Type\TestedType';
             $form = $this->factory->create($type);
 
             $object = TestObject::fromArray($formData);
