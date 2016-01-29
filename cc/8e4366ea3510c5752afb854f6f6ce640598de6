@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by psampaz at 2016-01-13T12:23:09Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by psampaz at 2016-01-18T18:28:06Z
+
+:+1:  for "does not have a constructor"
+
+---------------------------------------------------------------------------
+
+by Loupax at 2016-01-28T09:03:40Z
+
+Cannot understand why the CI test failed. Is there a way to re-run it without re-commiting?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-28T10:28:27Z
+
+@Loupax don't worry about the CI test. That's an issue that is not related to this PR (and in fact, already fixed on the 2.3 branch).
+
+:+1: from me for merging this PR. Thanks for fixing the docs!
