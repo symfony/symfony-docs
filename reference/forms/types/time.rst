@@ -76,7 +76,7 @@ values.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/placeholder.rst.inc
+.. include:: /reference/forms/types/options/time_placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 

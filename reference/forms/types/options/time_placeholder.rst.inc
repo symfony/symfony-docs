@@ -1,0 +1,50 @@
+placeholder
+~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    ``empty_value``, which is available prior to 2.6.
+
+.. versionadded:: 2.3
+    Since Symfony 2.3, empty values are also supported if the ``expanded``
+    option is set to true.
+
+**type**: ``string`` or ``boolean``
+
+This option determines whether or not a special "empty" option (e.g. "Choose
+an option") will appear at the top of a select widget. This option only
+applies if the ``multiple`` option is set to false.
+
+* Add empty values with "Select hour", "Select minute" and "Select second" as the text::
+
+    $builder->add('startTime', 'time', array(
+        'input'  => 'datetime',
+        'widget' => 'choice',
+        'placeholder' => array(
+            'hour'   => 'Select hour',
+            'minute' => 'Select minute',
+            'second' => 'Select second',
+        )
+    ));
+
+* Guarantee that no "empty" value option is displayed::
+
+    $builder->add('startTime', 'time', array(
+        'input'  => 'datetime',
+        'widget' => 'choice',
+        'placeholder' => array(
+            'hour'   => false,
+            'minute' => false,
+            'second' => false,
+        )
+    ));
+
+If you leave the ``placeholder`` option unset, then a blank (with no text)
+option will automatically be added if and only if the ``required`` option
+is false::
+
+    $builder->add('startTime', 'time', array(
+        'input'    => 'datetime',
+        'widget'   => 'choice',
+        'required' => false
+    ));
