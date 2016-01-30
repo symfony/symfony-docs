@@ -71,7 +71,31 @@ date_widget
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. include:: /reference/forms/types/options/placeholder.rst.inc
+placeholder
+~~~~~~~~~~~
+
+.. versionadded:: 2.6
+The ``placeholder`` option was introduced in Symfony 2.6 and replaces
+    ``empty_value``, which is available prior to 2.6.
+
+**type**: ``string`` or ``array``
+
+If your widget option is set to ``choice``, then this field will be represented
+as a series of ``select`` boxes. The ``placeholder`` option can be used
+to add a "blank" entry to the top of each select box::
+
+    $builder->add('startDateTime', 'datetime', array(
+        'placeholder' => '',
+    ));
+
+Alternatively, you can specify a string to be displayed for the "blank" value::
+
+    $builder->add('startDateTime', 'datetime', array(
+        'placeholder' => array(
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+            'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
+        )
+    ));
 
 format
 ~~~~~~
