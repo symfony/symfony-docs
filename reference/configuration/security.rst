@@ -323,7 +323,7 @@ Logout Configuration
 --------------------
 
 invalidate_session
-..................
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
