@@ -1098,7 +1098,7 @@ If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
-If you need absolute URLs for assets, you can set the ``absolute`` argument
+If you need absolute URLs for assets, you can use the ``absolute_url`` function
 if you are using Twig (or the third argument if you are using PHP) to ``true``:
 
 .. configuration-block::

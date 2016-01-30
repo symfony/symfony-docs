@@ -162,7 +162,7 @@ Because MongoDB uses dynamic collection schemas, you do not need to do anything 
 session collection. However, you may want to add an index to improve garbage collection performance.
 From the `MongoDB shell`_:
 
-.. code-block:: text
+.. code-block:: javascript
 
     use session_db
     db.session.ensureIndex( { "expires_at": 1 }, { expireAfterSeconds: 0 } )
