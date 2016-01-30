@@ -163,8 +163,10 @@ Listener Class Name                                                             
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-The purpose of this event is to allow you to reset the global and environmental state of
-the application after a sub-request has finished::
+The purpose of this event is to allow you to reset the global and environmental
+state of the application after a sub-request has finished (for example, the
+translator listener resets the translator's locale to the one of the parent
+request)::
 
     public function onKernelFinishRequest(FinishRequestEvent $event)
     {
