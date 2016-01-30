@@ -138,7 +138,7 @@ version may vary).
     ``vendor/autoload.php`` file that allows any class to be easily
     `autoloaded`_. Without autoloading, you would need to require the file
     where a class is defined before being able to use it. But thanks to
-    `PSR-0`_, we can just let Composer and PHP do the hard work for us.
+    `PSR-4`_, we can just let Composer and PHP do the hard work for us.
 
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
@@ -309,5 +309,5 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 .. _`Midgard CMS`: http://www.midgard-project.org/
 .. _`Zikula`: http://zikula.org/
 .. _`autoloaded`: http://php.net/autoload
-.. _`PSR-0`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _`PSR-4`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 .. _`more`: http://symfony.com/components/HttpFoundation
