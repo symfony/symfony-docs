@@ -307,8 +307,9 @@ you can use to create an error ``Response``.
             return new Response(
                 // this contains information about *why* authentication failed
                 // use it, or return your own message
-                strtr($exception->getMessageKey(), $exception->getMessageData())
-            , 403)
+                strtr($exception->getMessageKey(), $exception->getMessageData()),
+                403
+            );
         }
     }
 
