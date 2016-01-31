@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-29T15:59:14Z
+
+@garak in code we usually use the lowercase variant (`::class`). Maybe we should do the same for docs?
+
+---------------------------------------------------------------------------
+
+by garak at 2016-01-29T16:05:17Z
+
+That's weird, being `CLASS` a constant :disappointed:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-30T19:13:38Z
+
+@garak afaik, the constant is `class` (See also the original RFC https://wiki.php.net/rfc/class_name_scalars)
+
+---------------------------------------------------------------------------
+
+by garak at 2016-01-30T19:24:51Z
+
+I see. So, I changed the `::class` case
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-30T20:22:02Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-31T00:34:08Z
+
+:+1: (I'll rebase https://github.com/symfony/symfony-docs/pull/6058 after this one is merged)
