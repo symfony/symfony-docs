@@ -32,16 +32,16 @@ And now a Twitter client using this transformer::
 
     class TwitterClient
     {
-        private $rot13Transformer;
+        private $transformer;
 
-        public function __construct(Rot13Transformer $rot13Transformer)
+        public function __construct(Rot13Transformer $transformer)
         {
-            $this->rot13Transformer = $rot13Transformer;
+            $this->transformer = $transformer;
         }
 
-        public function tweetInRot13($user, $key, $status)
+        public function tweet($user, $key, $status)
         {
-            $transformedStatus = $this->rot13Transformer->transform($status);
+            $transformedStatus = $this->transformer->transform($status);
 
             // ... connect to Twitter and send the encoded status
         }
@@ -89,7 +89,7 @@ a ``Rot13Transformer`` as dependency. If an existing service definition (and onl
 one – see below) is of the required type, this service will be injected. If it's
 not the case (like in this example), the subsystem is smart enough to automatically
 register a private service for the ``Rot13Transformer`` class and set it as first
-argument of the `twitter_client`` service. Again, it can work only if there is one
+argument of the ``twitter_client`` service. Again, it can work only if there is one
 class of the given type. If there are several classes of the same type, you must
 use an explicit service definition or register a default implementation.
 
@@ -127,7 +127,7 @@ Here is a typical controller using the ``twitter_client`` service::
                 throw new BadRequestHttpException();
             }
 
-            $this->get('twitter_client')->tweetInRot13($user, $key, $status);
+            $this->get('twitter_client')->tweet($user, $key, $status);
 
             return new Response('OK');
         }
@@ -148,14 +148,14 @@ modifying the class depending of them.
 
 To follow this best practice, constructor arguments must be typehinted with interfaces
 and not concrete classes. It allows to replace easily the current implementation
-if necessary.
+if necessary. It also allows to use other transformers.
 
-Let's introduce a ``Rot13TransformerInterface``::
+Let's introduce a ``TransformerInterface``::
 
-    // src/AppBundle/Rot13TransformerInterface.php
+    // src/AppBundle/TransformerInterface.php
     namespace AppBundle;
 
-    interface Rot13TransformerInterface
+    interface TransformerInterface
     {
         public function transform($value);
     }
@@ -164,7 +164,7 @@ Then edit ``Rot13Transformer`` to make it implementing the new interface::
 
     // ...
 
-    class Rot13Transformer implements Rot13TransformerInterface
+    class Rot13Transformer implements TransformerInterface
 
     // ...
 
@@ -175,7 +175,7 @@ And update ``TwitterClient`` to depend of this new interface::
     {
         // ...
 
-        public function __construct(Rot13TransformerInterface $rot13Transformer)
+        public function __construct(TransformerInterface $transformer)
         {
              // ...
         }
@@ -226,7 +226,7 @@ subsystem isn't able to find itself the interface implementation to register::
         $container->setDefinition('twitter_client', $definition2);
 
 The autowiring subsystem detects that the ``rot13_transformer`` service implements
-the ``Rot13TransformerInterface`` and injects it automatically. Even when using
+the ``TransformerInterface`` and injects it automatically. Even when using
 interfaces (and you should), building the service graph and refactoring the project
 is easier than with standard definitions.
 
@@ -234,29 +234,28 @@ Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
 Last but not least, the autowiring feature allows to specify the default implementation
-of a given type. Let's introduce a new implementation of the ``Rot13TransformerInterface``
+of a given type. Let's introduce a new implementation of the ``TransformerInterface``
 returning the result of the ROT13 transformation uppercased::
 
     // src/AppBundle/UppercaseRot13Transformer.php
     namespace AppBundle;
 
-    class UppercaseRot13Transformer implements Rot13TransformerInterface
+    class UppercaseTransformer implements TransformerInterface
     {
-        private $rot13transformer;
+        private $transformer;
 
-        public function __construct(Rot13TransformerInterface $rot13transformer)
+        public function __construct(TransformerInterface $transformer)
         {
-            $this->rot13transformer = $rot13transformer;
+            $this->transformer = $transformer;
         }
 
         public function transform($value)
         {
-            return strtoupper($this->rot13transformer->transform($value));
+            return strtoupper($this->transformer->transform($value));
         }
     }
 
-This class is intended to decorate the standard ROT13 transformer (or any other
-implementation) and return it uppercased.
+This class is intended to decorate the any transformer and return its value uppercased.
 
 We can now refactor the controller to add another endpoint leveraging this new
 transformer::
@@ -301,7 +300,7 @@ transformer::
                 throw new BadRequestHttpException();
             }
 
-            $this->get($service)->tweetInRot13($user, $key, $status);
+            $this->get($service)->tweet($user, $key, $status);
 
             return new Response('OK');
         }
@@ -318,7 +317,7 @@ and a Twitter client using it::
         services:
             rot13_transformer:
                 class: AppBundle\Rot13Transformer
-                autowiring_types: AppBundle\Rot13TransformerInterface
+                autowiring_types: AppBundle\TransformerInterface
 
             twitter_client:
                 class:    AppBundle\TwitterClient
@@ -342,7 +341,7 @@ and a Twitter client using it::
 
             <services>
                 <service id="rot13_transformer" class="AppBundle\Rot13Transformer">
-                    <autowiring-type>AppBundle\Rot13TransformerInterface</autowiring-type>
+                    <autowiring-type>AppBundle\TransformerInterface</autowiring-type>
                 </service>
                 <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
                 <service id="uppercase_rot13_transformer" class="AppBundle\UppercaseRot13Transformer" autowire="true" />
@@ -359,7 +358,7 @@ and a Twitter client using it::
 
         // ...
         $definition1 = new Definition('AppBundle\Rot13Transformer');
-        $definition1->setAutowiringTypes(array('AppBundle\Rot13TransformerInterface'));
+        $definition1->setAutowiringTypes(array('AppBundle\TransformerInterface'));
         $container->setDefinition('rot13_transformer', $definition1);
 
         $definition2 = new Definition('AppBundle\TwitterClient');
@@ -374,12 +373,12 @@ and a Twitter client using it::
         $definition4->addArgument(new Reference('uppercase_rot13_transformer'));
         $container->setDefinition('uppercase_twitter_client', $definition4);
 
-It deserves some explanations. We now have 2 services implementing the ``Rot13TransformerInterface``.
+It deserves some explanations. We now have 2 services implementing the ``TransformerInterface``.
 The autowiring subsystem cannot guess which one to use, this leads to errors
 like::
 
       [Symfony\Component\DependencyInjection\Exception\RuntimeException]
-      Unable to autowire argument of type "AppBundle\Rot13TransformerInterface" for the service "twitter_client".
+      Unable to autowire argument of type "AppBundle\TransformerInterface" for the service "twitter_client".
 
 Fortunately, the ``autowiring_types`` key is here to specify which implementation
 to use by default. This key can take a list of types if necessary (using a YAML
