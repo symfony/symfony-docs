@@ -83,7 +83,7 @@ placeholder
     The ``placeholder`` option was introduced in Symfony 2.6 and replaces
     ``empty_value``, which is available prior to 2.6.
 
-**type**: ``string`` or ``array``
+**type**: ``string`` | ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. The ``placeholder`` option can be used
