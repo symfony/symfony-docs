@@ -162,8 +162,8 @@ Each part will be explained in the next section.
 
                         # csrf token options
                         csrf_parameter:       _csrf_token
-                        csrf_token_id:        authenticate
-                        csrf_token_generator: my.csrf_token_generator.id
+                        intention:            authenticate
+                        csrf_provider:        my.csrf_token_generator.id
 
                         # by default, the login form *must* be a POST, not a GET
                         post_only:      true
