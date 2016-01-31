@@ -57,7 +57,7 @@ of this ``TwitterClient`` class by marking the ``twitter_client`` service as aut
         # app/config/services.yml
         services:
             twitter_client:
-                class:    AppBundle\TwitterClient
+                class:    'AppBundle\TwitterClient'
                 autowire: true
 
     .. code-block:: xml
@@ -193,10 +193,10 @@ subsystem isn't able to find itself the interface implementation to register::
         # app/config/services.yml
         services:
             rot13_transformer:
-                class: AppBundle\Rot13Transformer
+                class: 'AppBundle\Rot13Transformer'
 
             twitter_client:
-                class:    AppBundle\TwitterClient
+                class:    'AppBundle\TwitterClient'
                 autowire: true
 
     .. code-block:: xml
@@ -316,20 +316,20 @@ and a Twitter client using it::
         # app/config/services.yml
         services:
             rot13_transformer:
-                class: AppBundle\Rot13Transformer
-                autowiring_types: AppBundle\TransformerInterface
+                class:            'AppBundle\Rot13Transformer'
+                autowiring_types: 'AppBundle\TransformerInterface'
 
             twitter_client:
-                class:    AppBundle\TwitterClient
+                class:    'AppBundle\TwitterClient'
                 autowire: true
 
             uppercase_rot13_transformer:
-                class: AppBundle\UppercaseRot13Transformer
+                class:    'AppBundle\UppercaseRot13Transformer'
                 autowire: true
 
             uppercase_twitter_client:
-                class: AppBundle\TwitterClient
-                arguments: [ @uppercase_rot13_transformer ]
+                class:     'AppBundle\TwitterClient'
+                arguments: [ '@uppercase_rot13_transformer' ]
 
     .. code-block:: xml
 
