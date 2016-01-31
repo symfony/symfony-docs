@@ -70,10 +70,12 @@ Print Truncated Messages
 .. versionadded:: 3.1
     The ``truncate`` method was introduced in Symfony 3.1.
 
-Sometimes you want to print a message truncated to an explicit character length. This is possible with the
+Sometimes you want to print a message truncated to an explicit character length.
+This is possible with the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::truncate` method.
 
-If you would like to truncate a very long message, for example, to 7 characters, you can write::
+If you would like to truncate a very long message, for example, to 7 characters,
+you can write::
 
     $message = "This is a very long message, which should be truncated";
     $truncatedMessage = $formatter->truncate($message, 7);
@@ -83,12 +85,14 @@ And the output will be::
 
     This is...
 
-Message is truncated to the given length, then the suffix is appended to end of that string.
+Message is truncated to the given length, then the suffix is appended to end
+of that string.
 
 Negative String Length
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If the length is negative, number of letters to truncate is counted from the end of the message::
+If the length is negative, number of characters to truncate is counted
+from the end of the string::
 
     $truncatedMessage = $formatter->truncate($message, -5);
 
@@ -99,7 +103,8 @@ Will result with::
 Custom Suffix
 ~~~~~~~~~~~~~
 
-By default ``...`` suffix is used. If you wish to use a different suffix, simply pass it as the third argument to the method::
+By default ``...`` suffix is used. If you wish to use a different suffix,
+simply pass it as the third argument to the method::
 
     $truncatedMessage = $formatter->truncate($message, 7, '!!');
 
@@ -115,7 +120,8 @@ Which will result with::
 
     This is
 
-Suffix is always appended, unless truncate length is longer than a message and a suffix length::
+Suffix is always appended, unless truncate length is longer than a message
+and a suffix length::
 
     $output->writeln($formatter->truncate('test', 10));
 
