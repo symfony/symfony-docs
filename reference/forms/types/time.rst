@@ -86,14 +86,15 @@ placeholder
 **type**: ``string`` | ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. The ``placeholder`` option can be used
-to add a "blank" entry to the top of each select box::
+as a series of ``select`` boxes. When the placeholder value is a string,
+it will be used as the **blank value** of all select boxes::
 
     $builder->add('startTime', 'time', array(
-        'placeholder' => '',
+        'placeholder' => 'Select a value',
     ));
 
-Alternatively, you can specify a string to be displayed for the "blank" value::
+Alternatively, you can use an array that configures different placeholder
+values for the hour, minute and second fields::
 
     $builder->add('startTime', 'time', array(
         'placeholder' => array(
