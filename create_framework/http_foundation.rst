@@ -309,5 +309,5 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 .. _`Midgard CMS`: http://www.midgard-project.org/
 .. _`Zikula`: http://zikula.org/
 .. _`autoloaded`: http://php.net/autoload
-.. _`PSR-4`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
+.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
 .. _`more`: http://symfony.com/components/HttpFoundation
