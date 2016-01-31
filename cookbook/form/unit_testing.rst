@@ -52,7 +52,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             );
 
-            $type = new TestedType();
+            $type = TestedType::class;
             $form = $this->factory->create($type);
 
             $object = TestObject::fromArray($formData);
@@ -78,7 +78,7 @@ First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm`` function and options resolution. This should
 be the first test you write::
 
-    $type = new TestedType();
+    $type = TestedType::class;
     $form = $this->factory->create($type);
 
 This test checks that none of your data transformers used by the form
@@ -136,7 +136,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
     {
         protected function getExtensions()
         {
-            $childType = new TestChildType();
+            $childType = TestChildType::class;
 
             return array(new PreloadedExtension(array(
                 $childType->getName() => $childType,
@@ -145,7 +145,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
 
         public function testSubmitValidData()
         {
-            $type = new TestedType();
+            $type = TestedType::class;
             $form = $this->factory->create($type);
 
             // ... your test
