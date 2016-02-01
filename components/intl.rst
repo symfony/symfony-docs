@@ -335,6 +335,27 @@ to the current default locale::
     $currencies = Intl::getCurrencyBundle()->getCurrencyNames('de');
     // => array('AFN' => 'Afghanische Afghani', ...)
 
+Timezones
+~~~~~~~~~
+
+The translations of timezone names can be found in the timezone bundle::
+
+    use Symfony\Component\Intl\Intl;
+
+    \Locale::setDefault('en');
+
+    $timezones = Intl::getTimezoneBundle()->getTimezoneNames();
+    // => array('Africa/Abidjan' => 'Abidjan', ...)
+
+    $timezone = Intl::getTimezoneBundle()->getTimezoneName('America/St_Barthelemy');
+    // => 'St. Barthélemy'
+
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
+
+    $timezones = Intl::getTimezoneBundle()->getTimezoneNames('de');
+    // => array('Africa/Abidjan' => 'Abidjan', ...)
+
 That's all you need to know for now. Have fun coding!
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
