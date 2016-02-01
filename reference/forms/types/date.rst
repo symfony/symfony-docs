@@ -102,7 +102,9 @@ Alternatively, you can use an array that configures different placeholder
 values for the year, month and day fields::
 
     $builder->add('dueDate', 'date', array(
-        'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
+        'placeholder' => array(
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
+        )
     ));
 
 .. _reference-forms-type-date-format:
