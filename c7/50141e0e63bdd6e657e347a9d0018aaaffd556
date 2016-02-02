@@ -1,0 +1,89 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-27T18:17:53Z
+
+Hi @sylozof!
+
+Can you please explain why you made this change? Without this option, Composer will only update the specified package. This means that dependencies aren't updated. Updating to Symfony 2.8 resulted in errors, as it needed a twig update as well. This is why we introduced this option.
+
+Anyway, as you took the time to submit an update, there must be some reason (maybe this is the best fix, or we should add some note/comment).
+
+---------------------------------------------------------------------------
+
+by sylozof at 2016-01-27T20:08:18Z
+
+Hi @WouterJ !
+
+Maybe I was two concise in the PR but I have given more explanations in the related issue #6189. The fact is that when you look at the concerned [page for major version upgrade](http://symfony.com/doc/current/cookbook/upgrade/major_version.html), section 2), you have twice the same command line sample, each with the ``--with-dependencies`` option (see the screen cap below).
+![sf-doc-screenshot](https://cloud.githubusercontent.com/assets/7589928/12626593/b314b146-c539-11e5-9540-0ba167353a5f.png)
+
+So I thought it was redundant and my PR aimed at having something similar to what is found in the [page for minor version upgrade](http://symfony.com/doc/current/cookbook/upgrade/minor_version.html), same section 2) : one sample command line without the option, and the next one with the option.
+
+But maybe my proposal was not relevant if an upgrade to a major version **always** need the ``--with-dependencies`` option. In that case, is the following paragraph talking about dependency errors still need to be here ?
+
+I hope I was clear, don't hesitate to ask for clarifications again.
+
+Also, I'm kind of a beginner with Git and Github, so I'm not sure I'm doing my suggestion the right way, even if I have read the guidelines for contribution before.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-27T20:10:57Z
+
+From what I understand from your issue description, the change looks valid to me. However, it seems that the pull request contains a lot of changes that a unrelated to the changes you did. Would you be able to rebase your changes on the `2.3` branch so that we are able to merge them?
+
+---------------------------------------------------------------------------
+
+by sylozof at 2016-01-28T07:28:23Z
+
+Well, I'm not very familiar with Git and Github but I will try anyway.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-28T07:31:48Z
+
+@sylozof this guide explains how to contribute to Symfony Docs step by step and from scratch: http://symfony.com/doc/current/contributing/documentation/overview.html
+
+Could you please follow that guide to tell us if it's OK or if it's missing some information? And if you have any question or problem, please ask us for help. Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-28T10:33:03Z
+
+@sylozof if you can't do it, just tell us and we'll do it for your (while making sure you still get credits for your work). The GIT commands you have to run is something like:
+
+    # import the project in your local filesystem
+    $ git clone https://github.com/symfony/symfony-docs
+    $ cd symfony-docs
+
+    # add your fork as a remote
+    $ git remote add sylozof https://sylozof@github.com/sylozof/symfony-docs
+
+    # fetch the branches from your remote
+    $ git fetch sylozof
+
+    # checkout the branch related to this PR
+    $ git checkout -b patch-1 sylozof/patch-1
+
+    # make the changes (in this case, rebasing from master branch to 2.3)
+    $ git rebase --onto origin/2.3 origin/master patch-1
+
+    # pushing to github (the -f means force and is required as we rebased, don't include this when doing normal pushes in the future)
+    $ git push -f sylozof
+
+---------------------------------------------------------------------------
+
+by sylozof at 2016-01-28T12:22:54Z
+
+@javiereguiluz @WouterJ thanks a lot for your help. I will try to do it by myself, because learning a new thing is always a good thing.
+
+I'm a bit in a hurry right now but I will do it within the next days. Thanks again.
+
+---------------------------------------------------------------------------
+
+by sylozof at 2016-02-02T18:51:36Z
+
+Ok, I've followed the different steps. I'm not sure I've grasped every subtleties of what I've done, but I got no errors so I think everything got well.
+
+Don't hesitate to notify me if something else needs to be done.
+
+And thanks again for your help.
