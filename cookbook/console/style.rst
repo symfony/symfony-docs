@@ -215,6 +215,13 @@ Progress Bar Methods
         // advances the progress bar 10 steps
         $io->progressAdvance(10);
 
+:method:`Symfony\\Component\\Console\\Style\\StyleInterface::progressRedrawFrequency`
+    It refreshes the progress bar every X steps (or ``1`` step
+    if no argument is passed)::
+
+        // refreshes the progress bar every 2 steps
+        $io->progressRedrawFrequency(2);
+
 :method:`Symfony\\Component\\Console\\Style\\StyleInterface::progressFinish`
     It finishes the progress bar (filling up all the remaining steps when its
     length is known)::
