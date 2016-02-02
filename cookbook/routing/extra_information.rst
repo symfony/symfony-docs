@@ -7,7 +7,7 @@ How to Pass Extra Information from a Route to a Controller
 Parameters inside the ``defaults`` collection don't necessarily have to
 match a placeholder in the route ``path``. In fact, you can use the
 ``defaults`` array to specify extra parameters that will then be accessible as
-arguments to your controller:
+arguments to your controller, and as attributes of the ``Request`` object:
 
 .. configuration-block::
 
@@ -52,12 +52,16 @@ arguments to your controller:
 
         return $collection;
 
-Now, you can access this extra parameter in your controller::
+Now, you can access this extra parameter in your controller, either as an argument (if specified), or through the ``Request`` object::
 
-    public function indexAction($page, $title)
+    use Symfony\Component\HttpFoundation\Request;
+    
+    public function indexAction(Request $request, $page, $title)
     {
+        // ...
+        $titleAttribute = $request->attributes->get('title'); // same as $title
         // ...
     }
 
 As you can see, the ``$title`` variable was never defined inside the route path,
-but you can still access its value from inside your controller.
+but you can still access its value from inside your controller, or from the ``Request`` object's ``attributes`` bag.
