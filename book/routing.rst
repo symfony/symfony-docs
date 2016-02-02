@@ -1162,11 +1162,11 @@ each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-=========  ==================  ==============
-Bundle     Controller Class    Method Name
-=========  ==================  ==============
-AppBundle  ``BlogController``  ``showAction``
-=========  ==================  ==============
+=============  ==================  ==============
+Bundle         Controller Class    Method Name
+=============  ==================  ==============
+``AppBundle``  ``BlogController``  ``showAction``
+=============  ==================  ==============
 
 The controller might look like this::
 
