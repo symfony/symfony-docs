@@ -256,7 +256,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
 .. note::
   
   In case of extending the :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` 
-  you may configure a service to pass the twig-Environment and the debug-Flag to the constructor. 
+  you may configure a service to pass the Twig environment and the ``debug`` flag to the constructor. 
   
   .. configuration-block::
   
@@ -264,7 +264,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
   
           # app/config/config.yml
           services:
-            my_custom_exception_controller_service:
+            app.extension_controller:
               class: AppBundle\CustomExceptionController
               arguments: [ "@twig", "%kernel.debug%" ]
           
