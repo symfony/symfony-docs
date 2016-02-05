@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-31T00:28:02Z
+
+:+1: (if you can include the suggested change in this PR, great! Otherwise we'll do it after merging).
+
+---------------------------------------------------------------------------
+
+by opdavies at 2016-01-31T17:44:58Z
+
+Done. :smile:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-01T11:31:29Z
+
+Shouldn't we mention both PSR-0 and PSR-4 here?
+
+---------------------------------------------------------------------------
+
+by opdavies at 2016-02-02T00:04:14Z
+
+@xabbuh I thought that it would be better to remove PSR-0 as it's deprecated, but I'm happy to be convinced otherwise.
