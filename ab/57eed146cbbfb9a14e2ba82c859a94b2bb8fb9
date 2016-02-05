@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-20T11:01:18Z
+
+The change isn't that easy. We have to do the same that `getMessages()` did before Symfony 3.0 (see https://github.com/symfony/symfony/blob/2.8/src/Symfony/Component/Translation/Translator.php#L273-L284).
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-01-20T11:38:25Z
+
+Adding the while loop you mean?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-20T12:11:41Z
+
+yes, to handle the fallback catalogue
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-01-30T19:24:55Z
+
+@xabbuh, is this fine now?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-30T20:23:40Z
+
+:+1: LGTM
