@@ -689,7 +689,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 $originalTags->add($tag);
             }
 
-            $editForm = $this->createForm(new TaskType::class, $task);
+            $editForm = $this->createForm(TaskType::class, $task);
 
             $editForm->handleRequest($request);
 
