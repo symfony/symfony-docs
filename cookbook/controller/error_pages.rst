@@ -269,7 +269,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
               arguments: [ "@twig", "%kernel.debug%" ]
           
           twig:
-              exception_controller:  my_custom_exception_controller_service:showAction
+              exception_controller:  app.extension_controller:showAction
 
 .. tip::
 
