@@ -4,6 +4,9 @@
 RangeType Field
 ===============
 
+.. versionadded:: 2.8
+    The ``range`` type was introduced in Symfony 2.8.
+
 The ``RangeType`` field is a slider that is rendered using the HTML5
 ``<input type="range" />`` tag.
 
