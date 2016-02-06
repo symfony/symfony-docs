@@ -36,9 +36,10 @@ Here are the rules for the left and the right side of the mapping:
   properties by dots. For example: ``addresses[work].matchingCityAndZipCode``;
 * The right side contains simply the names of fields in the form.
 
-Additionally, you can set the left side to dot (``.``), which refers to any
-unmapped property or method needing validation to the given nested field instead
-of bubbling them to the form::
+By default, errors for any property that is not mapped will bubble up to the
+parent form. You can use the dot (``.``) on the left side to map errors of all
+unmapped properties to a particular field. For instance, to map all these
+errors to the ``city`` field, use::
 
     $resolver->setDefaults(array(
         'error_mapping' => array(
