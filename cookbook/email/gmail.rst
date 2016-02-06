@@ -129,7 +129,7 @@ that you `allow less secure apps to access your Gmail account`_.
 
 .. seealso::
 
-    see the :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer>`
+    See the :doc:`Swiftmailer configuration reference </reference/configuration/swiftmailer>`
     for more details.
 
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
