@@ -113,8 +113,8 @@ pure JavaScript-based testing tools.
 Learn More about Functional Tests
 ---------------------------------
 
-Consider using `Faker`_ and `Alice`_ libraries to generate real-looking data
-for your test fixtures.
+Consider using the `HautelookAliceBundle`_ to generate real-looking data for
+your test fixtures using `Faker`_ and `Alice`_.
 
 .. _`Faker`: https://github.com/fzaninotto/Faker
 .. _`Alice`: https://github.com/nelmio/alice
@@ -122,3 +122,4 @@ for your test fixtures.
 .. _`PhpSpec`: http://www.phpspec.net/
 .. _`Mink`: http://mink.behat.org
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
+.. _`HautelookAliceBundle`: https://github.com/hautelook/AliceBundle
