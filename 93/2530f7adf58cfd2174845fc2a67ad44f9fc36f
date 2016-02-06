@@ -1,0 +1,113 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-04T16:59:40Z
+
+What do you think if we didn't talk about the `SecureRandom` class in all versions of the docs given that the Symfony polyfills (as well as the `paragonie/random-compat` package) provide implementations for all supported PHP versions?
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-01-04T17:04:56Z
+
+@xabbuh Whichever you think is better here.
+
+I've placed against the 2.8 branch since that is when `SecureRandom` was deprecated and `paragonie/random-compat` was "introduced" as a dependency of the Security component.
+
+Using it on older Symfony versions would require installing this as a dependency, which at that point isn't really documenting the Security component any more, but happy to amend this if that is what is desired.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-04T17:09:09Z
+
+Yeah, let's wait what the others think (maybe just adding a tip in older versions is enough).
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-01-04T23:32:02Z
+
+@xabbuh Another question: How would you feel about renaming this page? The title is *Generating a Secure random Number*, but the article is really about *Generating a Secure random String*
+
+Pardon my ignorance of the technology driving the docs here, but would I need to do anything more than change the title on this page?
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-01-09T23:15:59Z
+
+@xabbuh Giving this a bump as, other than my title question above, I think this is just waiting on the docs team to decide about your idea for pre-2.8 versions.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-11T07:38:10Z
+
+I like the new doc a lot and I also like @xabbuh's proposal to "backport" these changes to older versions. Thanks @zsturgess.
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-01-11T09:55:15Z
+
+@javiereguiluz Would you like me to change the base of this pull req to the 2.3 branch, or are you planning something a little different for those versions in a separate pull req?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-11T10:04:29Z
+
+@zsturgess Imo we can just make the changes here as general as possible, merge the changes into the `2.3` branch (we can switch the branch when merging) and maybe remove some unneeded stuff when merging branches up.
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-01-11T10:10:05Z
+
+OK, I will add a "versionadded" hint to instruct users to add paragonie/random_compat as a dependancy on older versions.
+
+Is there anything else you'd like? What do you think of my title proposal, above?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-12T08:50:18Z
+
+@zsturgess It makes sense to update the title with your suggestion.
+
+---------------------------------------------------------------------------
+
+by conradkleinespel at 2016-01-22T10:57:27Z
+
+Given that `random_bytes` is displayed PHP 7 only on php.net, I think having this page describe how to generate a random number is very good.
+
+Coming from Symfony 2.8, upgrading to 3.0, I would have loved to see @zsturgess's changes. Would have saved me a few minutes of looking through the Security component changelog and figuring out that Symfony had a PHP 7 polyfill.
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-01-22T11:47:54Z
+
+Thanks @conradkleinespel !
+
+I think this PR is pretty much ready, @xabbuh mentioned changing the base when merging this PR, so I haven't altered it, but can change it to 2.3 if desired.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-30T19:05:00Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2016-02-01T19:45:36Z
+
+This should go in the 2.3 branch too, as we know include the polyfill in 2.3 too since the latest 2.3 release.
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-02-02T17:17:52Z
+
+@stof How would you like to go about this. Shall I open a new PR, or would you like to switch the base when you merge? I'm wary that opening a new PR loses the chain of comments here. /cc @xabbuh
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-02T19:47:25Z
+
+@zsturgess We can easily switch the branch when merging.
+
+---------------------------------------------------------------------------
+
+by zsturgess at 2016-02-02T22:54:05Z
+
+Thanks for all the help and comments, @stof @xabbuh - I believe all your concerns have now been addressed and this is ready for review again.
