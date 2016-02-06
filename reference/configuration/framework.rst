@@ -808,7 +808,7 @@ start and depends on `gc_divisor`_ and `gc_probability`_.
 save_path
 .........
 
-**type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
+**type**: ``string`` **default**: ``%kernel.cache_dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.

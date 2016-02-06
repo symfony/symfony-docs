@@ -438,7 +438,7 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
         return $this->redirectToRoute('homepage');
 
         // redirectToRoute is equivalent to using redirect() and generateUrl() together:
-        // return $this->redirect($this->generateUrl('homepage'), 301);
+        // return $this->redirect($this->generateUrl('homepage'));
     }
 
 Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
