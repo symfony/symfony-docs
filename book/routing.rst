@@ -1110,14 +1110,14 @@ The controller might look like this::
 Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
 
-You could also refer to this controller using its fully-qualified class name
+You could also refer to this controller using its qualified class name
 and method: ``AppBundle\Controller\BlogController::showAction``. But if you
 follow some simple conventions, the logical name is more concise and allows
 more flexibility.
 
 .. note::
 
-   In addition to using the logical name or the fully-qualified class name,
+   In addition to using the logical name or the qualified class name,
    Symfony supports a third way of referring to a controller. This method
    uses just one colon separator (e.g. ``service_name:indexAction``) and
    refers to the controller as a service (see :doc:`/cookbook/controller/service`).

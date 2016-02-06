@@ -170,14 +170,14 @@ tag and an ``alias`` attribute:
         # app/config/services.yml
         services:
             validator.unique.your_validator_name:
-                class: Fully\Qualified\Validator\Class\Name
+                class: Qualified\Validator\Class\Name
                 tags:
                     - { name: validator.constraint_validator, alias: alias_name }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="validator.unique.your_validator_name" class="Fully\Qualified\Validator\Class\Name">
+        <service id="validator.unique.your_validator_name" class="Qualified\Validator\Class\Name">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <tag name="validator.constraint_validator" alias="alias_name" />
         </service>
@@ -186,7 +186,7 @@ tag and an ``alias`` attribute:
 
         // app/config/services.php
         $container
-            ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
+            ->register('validator.unique.your_validator_name', 'Qualified\Validator\Class\Name')
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'));
 
 Your constraint class should now use this alias to reference the appropriate

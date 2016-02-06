@@ -138,7 +138,7 @@ Classes
 
 The bundle directory structure is used as the namespace hierarchy. For
 instance, a ``ContentController`` controller is stored in
-``Acme/BlogBundle/Controller/ContentController.php`` and the fully qualified
+``Acme/BlogBundle/Controller/ContentController.php`` and the qualified
 class name is ``Acme\BlogBundle\Controller\ContentController``.
 
 All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.

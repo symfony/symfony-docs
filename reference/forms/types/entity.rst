@@ -109,7 +109,7 @@ class
 **type**: ``string`` **required**
 
 The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
-a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
+a qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
 or the short alias name (as shown prior).
 
 .. include:: /reference/forms/types/options/data_class.rst.inc

@@ -139,7 +139,7 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
         }
 
     Now place your mapping file into ``/Resources/config/doctrine-base`` with the
-    fully qualified class name, separated by ``.`` instead of ``\``, for example
+    qualified class name, separated by ``.`` instead of ``\``, for example
     ``Other.Namespace.Model.Name.orm.xml``. You may not mix the two as otherwise
     the ``SymfonyFileLocator`` will get confused.
 
