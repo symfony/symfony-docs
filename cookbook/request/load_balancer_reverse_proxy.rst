@@ -83,7 +83,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
        // web/app.php
 
        // ...
-       Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
+       Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
 
        $response = $kernel->handle($request);
        // ...

@@ -37,6 +37,26 @@ system, as explained below:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/RedirectingController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\HttpFoundation\Request;
+
+        class RedirectingController extends Controller
+        {
+            /**
+             * @Route("/{url}", name="remove_trailing_slash",
+             *     requirements={"url" = ".*\/$"}, methods={"GET"})
+             */
+            public function removeTrailingSlashAction(Request $request)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         remove_trailing_slash:

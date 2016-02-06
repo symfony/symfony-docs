@@ -139,6 +139,8 @@ recommended format. These files are parsed by one of the loader classes.
             'symfony.great'    => 'J\'aime Symfony',
         );
 
+.. _translation-real-vs-keyword-messages:
+
 .. sidebar:: Using Real or Keyword Messages
 
     This example illustrates the two different philosophies when creating
