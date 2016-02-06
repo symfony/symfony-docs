@@ -71,13 +71,9 @@ Registering Forms as Services
 
 You can also
 :ref:`register your form type as a service <form-cookbook-form-field-service>`.
-But this is *not* recommended unless you plan to reuse the new form type in many
-places or embed it in other forms directly or via the
-:doc:`CollectionType </reference/forms/types/collection>`.
-
-For most forms that are used only to edit or create something, registering
-the form as a service is over-kill, and makes it more difficult to figure
-out exactly which form class is being used in a controller.
+This is only needed if your form type requires some dependencies to be injected
+by the container, otherwise it is just unnecessary overhead and therefore
+*not* recommended to do this for each and every form type class.
 
 Form Button Configuration
 -------------------------
