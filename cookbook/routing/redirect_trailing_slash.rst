@@ -53,12 +53,7 @@ system, as explained below:
              */
             public function removeTrailingSlashAction(Request $request)
             {
-                $pathInfo = $request->getPathInfo();
-                $requestUri = $request->getRequestUri();
-
-                $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
-
-                return $this->redirect($url, 301);
+                // ...
             }
         }
 
@@ -68,7 +63,7 @@ system, as explained below:
             path: /{url}
             defaults: { _controller: AppBundle:Redirecting:removeTrailingSlash }
             requirements:
-                url: .*\/$
+                url: .*/$
             methods: [GET]
 
     .. code-block:: xml
@@ -77,7 +72,7 @@ system, as explained below:
         <routes xmlns="http://symfony.com/schema/routing">
             <route id="remove_trailing_slash" path="/{url}" methods="GET">
                 <default key="_controller">AppBundle:Redirecting:removeTrailingSlash</default>
-                <requirement key="url">.*\/$</requirement>
+                <requirement key="url">.*/$</requirement>
             </route>
         </routes>
 
@@ -95,7 +90,7 @@ system, as explained below:
                     '_controller' => 'AppBundle:Redirecting:removeTrailingSlash',
                 ),
                 array(
-                    'url' => '.*\/$',
+                    'url' => '.*/$',
                 ),
                 array(),
                 '',
