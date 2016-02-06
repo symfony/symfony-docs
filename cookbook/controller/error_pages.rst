@@ -236,7 +236,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
                 class: AppBundle\CustomExceptionController
                 arguments: ['@twig', '%kernel.debug%']
 
-        .. code-bock:: xml
+        .. code-block:: xml
 
             <!-- app/config/services.xml -->
             <?xml version="1.0" encoding="utf-8" ?>
