@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-26T06:55:16Z
+
+Thanks @xelan for making the documentation better! I have left just one minor suggestion. What do you think about it?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-30T07:15:49Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by sstok at 2015-10-01T07:20:27Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-03T10:41:24Z
+
+Hm, looking at the code again I think this only true if you do not change the default mailer using the `default_mailer` option (which defaults to `default`).
+
+@stof What do you think?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-10-03T11:12:49Z
+
+@xabbuh using the shorthand syntax in multiple files with a non-default name for the mailer indeed works only if you redefine the name in all files (the same is true for Doctrine shortcuts btw).
+Anyway, the recommendation should be to never use the short syntax if you use multiple mailers (and to avoid changing the mailer name if you use only one, as you don't care about the name anyway in such case)
+
+---------------------------------------------------------------------------
+
+by pardery at 2015-11-30T23:13:52Z
+
+Thanks @stof, @xelan, and everyone else for this info/work.
