@@ -433,7 +433,6 @@ interface requires three methods: ``loadUserByUsername($username)``,
 
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
-    use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Doctrine\ORM\EntityRepository;
 
@@ -441,22 +440,12 @@ interface requires three methods: ``loadUserByUsername($username)``,
     {
         public function loadUserByUsername($username)
         {
-            $user = $this->createQueryBuilder('u')
+            return $this->createQueryBuilder('u')
                 ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
                 ->setParameter('email', $username)
                 ->getQuery()
                 ->getOneOrNullResult();
-
-            if (null === $user) {
-                $message = sprintf(
-                    'Unable to find an active admin AppBundle:User object identified by "%s".',
-                    $username
-                );
-                throw new UsernameNotFoundException($message);
-            }
-
-            return $user;
         }
 
         public function refreshUser(UserInterface $user)
