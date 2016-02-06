@@ -20,7 +20,9 @@ match the following regex path: ``[^/]+``. This means that all characters
 are allowed except ``/``.
 
 You must explicitly allow ``/`` to be part of your parameter by specifying
-a more permissive regex path.
+a more permissive regex path. Please note that when you do this, the parameter
+that needs the ``/`` **must** be the last parameter in line, as other
+parameters can't be matched anymore.
 
 .. configuration-block::
 
