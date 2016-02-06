@@ -75,7 +75,7 @@ with these steps:
    .. code-block:: bash
 
         $ cd myproject/
-        $ svn add --depth=empty app var/cache var/logs app/config web
+        $ svn add --depth=empty app var var/cache var/logs app/config web
 
         $ svn propset svn:ignore "vendor" .
         $ svn propset svn:ignore "bootstrap*" var/
@@ -92,7 +92,7 @@ with these steps:
    .. code-block:: bash
 
         $ svn add --force .
-        $ svn ci -m "add basic Symfony Standard 2.X.Y"
+        $ svn ci -m "add basic Symfony Standard 3.X.Y"
 
 That's it! Since the ``app/config/parameters.yml`` file is ignored, you can
 store machine-specific settings like database passwords here without committing

@@ -30,6 +30,7 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `invalid_message_parameters`_                                       |
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
+|             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
 |             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
@@ -107,6 +108,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

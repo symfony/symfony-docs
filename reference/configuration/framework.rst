@@ -104,6 +104,7 @@ Configuration
     * :ref:`enabled <reference-serializer-enabled>`
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+    * `name_converter`_
 
 secret
 ~~~~~~
@@ -1504,6 +1505,24 @@ If this option is enabled, serialization groups can be defined using annotations
 .. seealso::
 
     For more information, see :ref:`cookbook-serializer-using-serialization-groups-annotations`.
+
+name_converter
+..............
+
+.. versionadded:: 2.8
+    The ``name_converter`` setting was introduced in Symfony 2.8.
+
+**type**: ``string``
+
+The name converter to use.
+The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
+name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
+value.
+
+.. seealso::
+
+    For more information, see
+    :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
 
 Full Default Configuration
 --------------------------

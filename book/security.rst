@@ -511,7 +511,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
         ));
 
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, since 2.7 you can use the built-in command :
+For hardcoded users, since 2.7 you can use the built-in command:
 
 .. code-block:: bash
 
