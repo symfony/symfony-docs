@@ -127,6 +127,11 @@ are done doing other stuff::
     The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
     which means that your code will halt at this line until the external
     process is completed.
+    
+.. caution::
+    
+    You need to call ``$process->isRunning()`` once, after the process has finished. 
+    Otherwise the child may show up in the process list as zombie ([php] <defunct>).
 
 Stopping a Process
 ------------------
