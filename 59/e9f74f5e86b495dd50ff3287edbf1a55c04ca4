@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-17T20:53:41Z
+
+I guess that is related to the security fix described in http://symfony.com/blog/cve-2015-2309-unsafe-methods-in-the-request-class, isn't it? Then it must be merged into the `2.3` branch.
