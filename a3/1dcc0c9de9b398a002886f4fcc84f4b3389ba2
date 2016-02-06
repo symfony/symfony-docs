@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-09-05T11:13:23Z
+
+:+1: looks good
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-03T10:36:59Z
+
+I think we have two things that must be documented:
+
+* This option is only applied when the label of a form type actually is empty.
+* The `label_format` option is evaluated in the form theme. Thus, when you have your own theme, you may have to make sure to update it to see the effect of the `label_format` option.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-19T11:25:14Z
+
+Updated the PR, it should be ready now.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-21T11:09:24Z
+
+Reworded the description
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-21T12:58:21Z
+
+:+1:
