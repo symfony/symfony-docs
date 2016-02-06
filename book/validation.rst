@@ -1285,6 +1285,20 @@ object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
 which holds the error message on its ``getMessage`` method.
 
+Using the Validator outside the Symfony framework context
+---------------------------------------------------------
+
+The Symfony ``validator`` can be used outside Symfony framework thanks to the :class: `Symfony\Component\Validator\ValidatorBuilder`:
+
+    use Symfony\Component\Validator\ValidatorBuilder;
+
+    $validator = (new ValidatorBuilder())
+        ->addMethodMapping('loadValidatorMetadata')
+        ->getValidator();
+
+The ValidatorBuilder accept also Yaml or Xml mappings, you only need to set up the ``addXmlMapping/addYamlMapping`` methods with the correct path to the file. To enable the annotations, the method ``enableAnnotationMapping`` is available.
+
+
 Final Thoughts
 --------------
 
