@@ -1482,7 +1482,7 @@ cache
 **type**: ``string``
 
 The service that is used to persist class metadata in a cache. The service
-has to implement the :class:`Doctrine\\Common\\Cache\\Cache` interface.
+has to implement the ``Doctrine\Common\Cache\Cache`` interface.
 
 .. seealso::
 
