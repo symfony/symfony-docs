@@ -5,7 +5,7 @@ ButtonType Field
 ================
 
 .. versionadded:: 2.3
-    The ``ButtonType`` was introduced in Symfony 2.3
+    The ``ButtonType`` was introduced in Symfony 2.3.
 
 A simple, non-responsive button.
 
