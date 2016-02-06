@@ -16,8 +16,6 @@ objects from the database.
 |             | - `choice_label`_                                                |
 |             | - `query_builder`_                                               |
 |             | - `em`_                                                          |
-|             | - `choice_translation_domain`_                                   |
-|             | - `translation_domain`_                                          |
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                     |
 | options     |                                                                  |
@@ -26,6 +24,7 @@ objects from the database.
 | options     |                                                                  |
 |             | - `placeholder`_                                                 |
 |             | - `choice_translation_domain`_                                   |
+|             | - `translation_domain`_                                          |
 |             | - `expanded`_                                                    |
 |             | - `multiple`_                                                    |
 |             | - `preferred_choices`_                                           |
@@ -178,27 +177,6 @@ em
 If specified, this entity manager will be used to load the choices
 instead of the ``default`` entity manager.
 
-choice_translation_domain
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``choice_translation_domain`` option was introduced in Symfony 2.7.
-
-**type**: ``boolean`` | ``null`` | ``string``
-
-If specified ``null`` value, corresponds to parents ``translation_domain`` or default domain (messages). If the value is ``string``, corresponds to explicit domain(e.g. ``AcmeStoreBundle``). If the value is ``true``, reuse current ``translation_domain`` and ``false`` to disabled.
-
-translation_domain
-~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``translation_domain`` option was introduced in Symfony 2.7.
-
-**type**: ``string``
-
-When ``choice_translation_domain`` is ``true`` or ``null``, use translations of informed domain(e.g. ``AcmeStoreBundle`` to ``Acme\StoreBundle\Resources\translation`` files).
-
-
 Overridden Options
 ------------------
 
@@ -220,6 +198,8 @@ type:
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
