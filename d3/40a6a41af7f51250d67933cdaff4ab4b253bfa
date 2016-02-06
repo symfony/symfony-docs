@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-11T08:10:45Z
+
+:+1: thanks for this improvement @peterkokot  (I find the code of the `removeTrailingSlashAction()` method too "complex" for this trivial case ... but I can't come up with a better proposal).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-11T09:47:11Z
+
+Do we really need to escape the slash?
