@@ -24,6 +24,7 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
+|           | - `label_format`_                                                  |
 |           | - `mapped`_                                                        |
 |           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
@@ -109,6 +110,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. _reference-form-option-mapped:
 

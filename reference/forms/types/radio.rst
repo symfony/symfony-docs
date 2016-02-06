@@ -29,6 +29,7 @@ If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
+|             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
 |             | - `read_only`_                                                      |
 |             | - `required`_                                                       |
@@ -62,6 +63,8 @@ type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
