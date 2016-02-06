@@ -306,7 +306,6 @@ Each mailer is registered as a service::
 
 .. caution::
 
-    When configuring multiple mailers, options must be placed under the appropriate
-    mailer key of the configuration. Options placed directly under the ``swiftmailer``
-    key will not be applied to all mailers, but will configure a mailer named
-    ``default`` instead.
+    When configuring multiple mailers, options must be placed under the
+    appropriate mailer key of the configuration instead of directly under the
+    ``swiftmailer`` key.
