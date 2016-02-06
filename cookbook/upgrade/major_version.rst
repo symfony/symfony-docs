@@ -134,7 +134,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. code-block:: bash
 
-    $ composer update --with-dependencies symfony/symfony
+    $ composer update symfony/symfony
 
 .. include:: /cookbook/upgrade/_update_dep_errors.rst.inc
 

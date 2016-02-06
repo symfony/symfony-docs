@@ -866,7 +866,7 @@ section:
 Learn more
 ----------
 
-* The :doc:`chapter about tests in the Symfony Framework Best Practices </best_practices/tests>`
+* :doc:`The chapter about tests in the Symfony Framework Best Practices </best_practices/tests>`
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`
 * :doc:`/cookbook/testing/http_authentication`
