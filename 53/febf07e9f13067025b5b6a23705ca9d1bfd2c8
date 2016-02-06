@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-20T08:05:39Z
+
+We should add that this only applies to Symfony 2.8 or newer (we should document the polyfill packages in general somewhere, but that's a different topic - see #6052).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-20T11:53:42Z
+
+I've added the versionadded with instructions on how to use the polyfill in older versions.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-31T13:09:14Z
+
+@WouterJ Can you rebase to trigger a build on Platform.sh? I would like to see if the `versionadded` inside a `note` directive renders properly.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-07T09:54:45Z
+
+@xabbuh new platform.sh build was triggered: http://pr-6044-6qmocelev2lwe.eu.platform.sh/cookbook/security/custom_authentication_provider.html It doesn't look equal to a normal versionadded, but I think it's good enough.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-10T18:14:07Z
+
+:+1:
+
+Maybe we should update the template used on platform.sh to reflect the changes @javiereguiluz recently made for symfony.com.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-20T13:04:28Z
+
+@xabbuh these changes are automtically reflected (HTML markup hasn't changed and platform.sh just references the stylesheet from symfony.com).
+
+However, I see symfony.com use a different markup for versionadded directives than the standard template provided by Sphinx. I fail to change the markup, @javiereguiluz can you maybe give me some hints on how the markup of versionadded directives is build?
