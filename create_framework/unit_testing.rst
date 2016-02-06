@@ -26,10 +26,11 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
                 <directory>./tests</directory>
             </testsuite>
         </testsuites>
+
         <filter>
-          <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
-          </whitelist>
+            <whitelist processUncoveredFilesFromWhitelist="true">
+                <directory suffix=".php">./src</directory>
+            </whitelist>
         </filter>
     </phpunit>
 
