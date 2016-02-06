@@ -146,12 +146,12 @@ and validated when binding the form.
 .. tip::
 
     If you're not using the HttpFoundation component, you can use
-    :class:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\DefaultCsrfProvider`
+    :class:`Symfony\\Component\\Security\\Csrf\\TokenStorage\\NativeSessionTokenStorage`
     instead, which relies on PHP's native session handling::
 
-        use Symfony\Component\Form\Extension\Csrf\CsrfProvider\DefaultCsrfProvider;
+        use Symfony\Component\Security\Csrf\TokenStorage\NativeSessionTokenStorage;
 
-        $csrfProvider = new DefaultCsrfProvider($csrfSecret);
+        $csrfProvider = new NativeSessionTokenStorage();
 
 Twig Templating
 ~~~~~~~~~~~~~~~
