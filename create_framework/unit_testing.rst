@@ -26,6 +26,11 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
                 <directory>./tests</directory>
             </testsuite>
         </testsuites>
+        <filter>
+          <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+          </whitelist>
+        </filter>
     </phpunit>
 
 This configuration defines sensible defaults for most PHPUnit settings; more
@@ -179,6 +184,12 @@ coverage feature (you need to enable `XDebug`_ first):
 Open ``example.com/cov/src/Simplex/Framework.php.html`` in a browser and check
 that all the lines for the Framework class are green (it means that they have
 been visited when the tests were executed).
+
+Alternatively you can output the result directly to the console:
+
+.. code-block:: bash
+
+    $ phpunit --coverage-text
 
 Thanks to the simple object-oriented code that we have written so far, we have
 been able to write unit-tests to cover all possible use cases of our
