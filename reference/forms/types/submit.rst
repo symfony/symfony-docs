@@ -5,7 +5,7 @@ submit Field Type
 =================
 
 .. versionadded:: 2.3
-    The ``submit`` type was introduced in Symfony 2.3
+    The ``submit`` type was introduced in Symfony 2.3.
 
 A submit button.
 
