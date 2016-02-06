@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-05T10:50:33Z
+
+Hmm, I'm not sure if I like creating a complete box for this. It's important, but it isn't really important for the article itself.
+
+What about changing the sentence in the article to something like this:
+```rst
+For hardcoded users, you can use an `online tool`_ (do not use it with real passwords),
+which will give you something like this:
+```
+
+---------------------------------------------------------------------------
+
+by mpaquet at 2015-12-05T11:31:01Z
+
+You have a point but the explanation is still relevant imho and should stay.
+
+For hardcoded users, you can use an `online tool`_ (this is a public tool and it should not be used with real passwords because of the risk of farming or other security issues), which will give you something like this:
