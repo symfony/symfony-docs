@@ -251,7 +251,25 @@ will be passed two parameters:
 Instead of creating a new exception controller from scratch you can, of course,
 also extend the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
 In that case, you might want to override one or both of the ``showAction()`` and
-``findTemplate()`` methods. The latter one locates the template to be used.
+``findTemplate()`` methods. The latter one locates the template to be used. 
+
+.. note::
+  
+  In case of extending the :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` 
+  you may configure a service to pass the Twig environment and the ``debug`` flag to the constructor. 
+  
+  .. configuration-block::
+  
+      .. code-block:: yaml
+  
+          # app/config/config.yml
+          services:
+            app.extension_controller:
+              class: AppBundle\CustomExceptionController
+              arguments: [ "@twig", "%kernel.debug%" ]
+          
+          twig:
+              exception_controller:  app.extension_controller:showAction
 
 .. tip::
 
