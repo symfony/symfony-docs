@@ -13,6 +13,47 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+January, 2016
+-------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#6184 <https://github.com/symfony/symfony-docs/pull/6184>`_ added Javier as a merger for the WebProfiler bundle (fabpot)
+* `#5303 <https://github.com/symfony/symfony-docs/pull/5303>`_ [WIP] 4373 - document security events (kevintweber)
+* `#6023 <https://github.com/symfony/symfony-docs/pull/6023>`_ clarify the routing component documentation a bit (dbu)
+* `#6091 <https://github.com/symfony/symfony-docs/pull/6091>`_ Added an example for info() method (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#6193 <https://github.com/symfony/symfony-docs/pull/6193>`_ Added the missing namespace in example of a subscriber class (raulconti)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#6191 <https://github.com/symfony/symfony-docs/pull/6191>`_ Document the invalidate_session option (javiereguiluz)
+* `#6141 <https://github.com/symfony/symfony-docs/pull/6141>`_ Docs do not match functionality (Loupax)
+* `#6192 <https://github.com/symfony/symfony-docs/pull/6192>`_ fix MongoDB shell syntax highlighting (xabbuh)
+* `#6187 <https://github.com/symfony/symfony-docs/pull/6187>`_ Typofix for "Defining and Processing Configuration Values" (kix)
+* `#6183 <https://github.com/symfony/symfony-docs/pull/6183>`_ use valid XML in code block (xabbuh)
+* `#6180 <https://github.com/symfony/symfony-docs/pull/6180>`_ use single quotes for YAML strings (snoek09)
+* `#6070 <https://github.com/symfony/symfony-docs/pull/6070>`_ Typo in When Things Get More Advanced (BallisticPain)
+* `#6119 <https://github.com/symfony/symfony-docs/pull/6119>`_ Remove phrase "in order" (micheal)
+* `#6161 <https://github.com/symfony/symfony-docs/pull/6161>`_ [Contributing][Documentation] replace EOL with EOM (xabbuh)
+* `#6163 <https://github.com/symfony/symfony-docs/pull/6163>`_ Remove excessive pluses (aivus)
+* `#6158 <https://github.com/symfony/symfony-docs/pull/6158>`_ Update override_dir_structure.rst (denniskoenigComparon)
+* `#6122 <https://github.com/symfony/symfony-docs/pull/6122>`_ Added missing mandatory parameter (yceruto)
+* `#6138 <https://github.com/symfony/symfony-docs/pull/6138>`_ Correction needed (pfleu)
+* `#6127 <https://github.com/symfony/symfony-docs/pull/6127>`_ escape namespace backslashes in class role (xabbuh)
+* `#5818 <https://github.com/symfony/symfony-docs/pull/5818>`_ document old way of checking validity of CSRF token (snoek09)
+* `#6062 <https://github.com/symfony/symfony-docs/pull/6062>`_ Update HTTP method requirement example (WouterJ)
+* `#6109 <https://github.com/symfony/symfony-docs/pull/6109>`_ add link to Monolog configuration (snoek09)
+* `#6096 <https://github.com/symfony/symfony-docs/pull/6096>`_ [Contributing] update year in license (xabbuh)
+* `#6114 <https://github.com/symfony/symfony-docs/pull/6114>`_ make method protected (OskarStark)
+* `#6102 <https://github.com/symfony/symfony-docs/pull/6102>`_ promoted xabbuh as merger on the Yaml component (fabpot)
+
+
 December, 2015
 --------------
 
