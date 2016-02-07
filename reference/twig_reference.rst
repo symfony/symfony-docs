@@ -104,10 +104,6 @@ asset
     **type**: ``string``
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
-``absolute`` (deprecated as of 2.7)
-    **type**: ``boolean`` **default**: ``false``
-``version`` (deprecated as of 2.7)
-    **type**: ``string`` **default** ``null``
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
@@ -171,20 +167,6 @@ form_end
 Renders the HTML end tag of a form together with all fields that have not
 been rendered yet, more information in
 :ref:`the Twig Form reference <reference-forms-twig-end>`.
-
-form_enctype
-~~~~~~~~~~~~
-
-.. code-block:: twig
-
-    {{ form_enctype(view) }}
-
-``view``
-    **type**: ``FormView``
-
-Renders the required ``enctype="multipart/form-data"`` attribute if the
-form contains at least one file upload field, more information in
-:ref:`the Twig Form reference <reference-forms-twig-enctype>`.
 
 form_widget
 ~~~~~~~~~~~
@@ -416,10 +398,6 @@ humanize
 Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
-
-.. versionadded:: 2.3
-    Transforming camelCase text into human readable text was introduced in
-    Symfony 2.3.
 
 trans
 ~~~~~
@@ -720,7 +698,6 @@ The available attributes are:
 * ``app.session``
 * ``app.environment``
 * ``app.debug``
-* ``app.security`` (deprecated as of 2.6)
 
 Symfony Standard Edition Extensions
 -----------------------------------

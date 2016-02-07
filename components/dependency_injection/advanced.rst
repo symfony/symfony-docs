@@ -219,11 +219,6 @@ You can change the inner service name if you want to:
             ->setPublic(false)
             ->setDecoratedService('foo', 'bar.wooz');
 
-.. versionadded:: 2.8
-    The ability to define the decoration priority was introduced in Symfony 2.8.
-    Prior to Symfony 2.8, the priority depends on the order in
-    which definitions are found.
-
 If you want to apply more than one decorator to a service, you can control their
 order by configuring the priority of decoration, this can be any integer number
 (decorators with higher priorities will be applied first).
@@ -294,9 +289,6 @@ The generated code will be the following:
 
 Deprecating Services
 --------------------
-
-.. versionadded:: 2.8
-    The ``deprecated`` setting was introduced in Symfony 2.8.
 
 Once you have decided to deprecate the use of a service (because it is outdated
 or you decided not to maintain it anymore), you can deprecate its definition:

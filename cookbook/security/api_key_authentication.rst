@@ -16,12 +16,6 @@ passed as a query string parameter or via an HTTP header.
 The API Key Authenticator
 -------------------------
 
-.. versionadded:: 2.8
-    The ``SimplePreAuthenticatorInterface`` interface was moved to the
-    ``Symfony\Component\Security\Http\Authentication`` namespace in Symfony
-    2.8. Prior to 2.8, it was located in the
-    ``Symfony\Component\Security\Core\Authentication`` namespace.
-
 Authenticating a user based on the Request information should be done via a
 pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Http\\Authentication\\SimplePreAuthenticatorInterface`
 allows you to implement such a scheme really easily.
@@ -103,11 +97,6 @@ value and then a User object is created::
             return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
         }
     }
-
-.. versionadded:: 2.8
-    The ``CustomUserMessageAuthenticationException`` class is new in Symfony 2.8
-    and helps you return custom authentication messages. In 2.7 or earlier, throw
-    an ``AuthenticationException`` or any sub-class (you can still do this in 2.8).
 
 Once you've :ref:`configured <cookbook-security-api-key-config>` everything,
 you'll be able to authenticate by adding an apikey parameter to the query

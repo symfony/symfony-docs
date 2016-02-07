@@ -231,9 +231,6 @@ The tagged service will be removed from the container if
 auto_alias
 ----------
 
-.. versionadded:: 2.7
-    The ``auto_alias`` tag was introduced in Symfony 2.7.
-
 **Purpose**: Define aliases based on the value of container parameters
 
 Consider the following configuration that defines three different but related
@@ -706,9 +703,9 @@ channel when injecting the logger in a service.
 
 .. tip::
 
-    If you use MonologBundle 2.4 or higher, you can configure custom channels
-    in the configuration and retrieve the corresponding logger service from
-    the service container directly (see :ref:`cookbook-monolog-channels-config`).
+    You can also configure custom channels in the configuration and retrieve
+    the corresponding logger service from the service container directly (see
+    :ref:`cookbook-monolog-channels-config`).
 
 .. _dic_tags-monolog-processor:
 

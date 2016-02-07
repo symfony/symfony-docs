@@ -171,7 +171,6 @@ Each part will be explained in the next section.
 
                         # by default, a session must exist before submitting an authentication request
                         # if false, then Request::hasPreviousSession is not called during authentication
-                        # new in Symfony 2.3
                         require_previous_session: true
 
                     remember_me:
@@ -241,10 +240,6 @@ Each part will be explained in the next section.
             role_hierarchy:
                 ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
                 ROLE_SUPERADMIN: [ROLE_ADMIN]
-
-.. versionadded:: 2.8
-    The ``secret`` option of ``anonymous`` and ``remember_me`` was introduced
-    in Symfony 2.8. Prior to 2.8, it was called ``key``.
 
 .. _reference-security-firewall-form-login:
 
@@ -526,10 +521,6 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
                 ),
             ),
         ));
-
-.. versionadded:: 2.8
-    The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it was
-    called ``key``.
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

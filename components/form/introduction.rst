@@ -68,9 +68,6 @@ factory.
 Request Handling
 ~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``handleRequest()`` method was introduced in Symfony 2.3.
-
 To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method::
 
@@ -519,10 +516,6 @@ to do that in the ":ref:`form-rendering-template`" section.
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ability to configure the form method and action was introduced in
-    Symfony 2.3.
-
 By default, a form is submitted to the same URI that rendered the form with
 an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
 and :ref:`form-option-method` options (the ``method`` option is also used
@@ -723,17 +716,6 @@ method to access the list of errors. It returns a
 
     // a FormErrorIterator instance representing the form tree structure
     $errors = $form->getErrors(true, false);
-
-.. tip::
-
-    In older Symfony versions, ``getErrors()`` returned an array. To use the
-    errors the same way in Symfony 2.5 or newer, you have to pass them to
-    PHP's :phpfunction:`iterator_to_array` function::
-
-        $errorsAsArray = iterator_to_array($form->getErrors());
-
-    This is useful, for example, if you want to use PHP's ``array_`` function
-    on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org

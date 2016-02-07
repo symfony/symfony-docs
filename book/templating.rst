@@ -579,10 +579,6 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
-.. versionadded:: 2.3
-    The `include() function`_ is available since Symfony 2.3. Prior, the
-    `{% include %} tag`_ was used.
-
 .. index::
    single: Templating; Embedding action
 
@@ -709,9 +705,6 @@ tags:
             array('renderer' => 'hinclude')
         ) ?>
 
-        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
-             passed as the third argument. -->
         <?php echo $view['actions']->render(
             $view['router']->url('...'),
             array('renderer' => 'hinclude')
@@ -921,8 +914,6 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+php
 
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
@@ -1002,8 +993,6 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
-            <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8,
-                 you had to use generate(). -->
             <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
@@ -1027,12 +1016,6 @@ correctly:
                 '_welcome',
                 array()
             ) ?>">Home</a>
-
-    .. versionadded:: 2.8
-        The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
-        to 2.8, you had to use the ``generate()`` helper method with
-        ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-        passed as the third argument.
 
 .. index::
    single: Templating; Linking to assets
@@ -1238,8 +1221,6 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security`` (deprecated as of 2.6)
-    The security context.
 ``app.user``
     The current user object.
 ``app.request``
@@ -1697,8 +1678,6 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <a href="<?php echo $view['router']->path('article_show', array(
             'id' => 123,
             '_format' => 'pdf',
