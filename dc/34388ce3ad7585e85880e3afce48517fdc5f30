@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-31T19:12:18Z
+
+I left some comments but overall it looks OK. @mheki thanks for providing this feature and for providing its docs too!
+
+---------------------------------------------------------------------------
+
+by mheki at 2016-01-31T20:45:54Z
+
+Thanks for the feedback @javiereguiluz all changed now
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2016-02-01T16:24:17Z
+
+Status: Reviewed
+
+Thank you @mheki
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-06T08:27:36Z
+
+I think I would not add several code blocks for the different ways to configure the suffix, but instead add a large code block which contains several examples and comments that explain what the result of each example will be.
+
+---------------------------------------------------------------------------
+
+by mheki at 2016-02-07T10:17:32Z
+
+I've applied your suggestions @xabbuh
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-07T10:22:35Z
+
+:+1:
