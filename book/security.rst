@@ -1137,10 +1137,11 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``).
 
 .. caution::
 
-    Notice that when using http-basic authenticated firewall there is no real 
-    way to log out : the only way to 'logout' is to have the browser stop sending your name and password 
-    on every request. Clearing your browser cache, restarting your browser usually helps, and some web developer
-    tools might be helpful here.
+    Notice that when using http-basic authenticated firewalls, there is no
+    real  way to log out : the only way to *log out* is to have the browser
+    stop sending your name and password  on every request. Clearing your
+    browser cache or restarting your browser usually helps. Some web developer
+    tools might be helpful here too.
 
 .. _`security-encoding-password`:
 
