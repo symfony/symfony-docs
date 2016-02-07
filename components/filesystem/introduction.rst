@@ -239,9 +239,6 @@ isAbsolutePath
 dumpFile
 ~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``dumpFile()`` was introduced in Symfony 2.3.
-
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
 dump contents to a file. It does this in an atomic manner: it writes a temporary
 file first and then moves it to the new file location when it's finished.

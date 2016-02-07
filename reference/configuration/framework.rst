@@ -136,9 +136,6 @@ out all the application users.
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``http_method_override`` option was introduced in Symfony 2.3.
-
 **type**: ``boolean`` **default**: ``true``
 
 This determines whether the ``_method`` request parameter is used as the
@@ -178,10 +175,6 @@ trusted_proxies
 
 Configures the IP addresses that should be trusted as proxies. For more
 details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
-
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
-    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
 
@@ -227,9 +220,6 @@ using the following keys:
 * ``macvim``
 * ``emacs``
 * ``sublime``
-
-.. versionadded:: 2.3.14
-    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom URL string. If you do this, all percentage
 signs (``%``) must be doubled to escape that character. For example, if
@@ -541,12 +531,6 @@ and ``test`` environments.
 
 collect
 .......
-
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -1299,12 +1283,6 @@ fallbacks
 
 **type**: ``string|array`` **default**: ``array('en')``
 
-.. versionadded:: 2.3.25
-    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
-    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
-    language defined as a string. Please note that you can still use the
-    old ``fallback`` option if you want define only one fallback.
-
 This option is used when the translation key for the current locale wasn't
 found.
 
@@ -1369,10 +1347,6 @@ cache
 
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
-
-.. versionadded:: 2.8
-    The ``validator.mapping.cache.doctrine.apc`` service was introduced in
-    Symfony 2.8.
 
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
 cache provide from the Doctrine project.
@@ -1508,9 +1482,6 @@ If this option is enabled, serialization groups can be defined using annotations
 
 name_converter
 ..............
-
-.. versionadded:: 2.8
-    The ``name_converter`` setting was introduced in Symfony 2.8.
 
 **type**: ``string``
 

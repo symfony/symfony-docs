@@ -281,10 +281,6 @@ the empty values will be kept.
 entry_options
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.8
-    The ``entry_options`` option was introduced in Symfony 2.8 in favor of
-    ``options``, which is available prior to 2.8.
-
 **type**: ``array`` **default**: ``array()``
 
 This is the array that's passed to the form type specified in the `entry_type`_
@@ -311,10 +307,6 @@ type::
 
 entry_type
 ~~~~~~~~~~
-
-.. versionadded:: 2.8
-    The ``entry_type`` option was introduced in Symfony 2.8 and replaces
-    ``type``, which is available prior to 2.8.
 
 **type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
 

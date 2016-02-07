@@ -103,11 +103,6 @@ following:
     Protected and private properties can also be validated, as well as "getter"
     methods (see :ref:`validator-constraint-targets`).
 
-.. versionadded:: 2.7
-    As of Symfony 2.7, XML and Yaml constraint files located in the
-    ``Resources/config/validation`` sub-directory of a bundle are loaded. Prior
-    to 2.7, only ``Resources/config/validation.yml`` (or ``.xml``) were loaded.
-
 .. index::
    single: Validation; Using the validator
 

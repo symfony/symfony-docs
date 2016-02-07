@@ -68,9 +68,6 @@ factory.
 Request Handling
 ~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``handleRequest()`` method was introduced in Symfony 2.3.
-
 To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method::
 
@@ -518,10 +515,6 @@ to do that in the ":ref:`form-rendering-template`" section.
 
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ability to configure the form method and action was introduced in
-    Symfony 2.3.
 
 By default, a form is submitted to the same URI that rendered the form with
 an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`

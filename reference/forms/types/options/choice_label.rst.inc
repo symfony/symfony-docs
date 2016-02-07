@@ -1,9 +1,6 @@
 choice_label
 ~~~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``choice_label`` option was introduced in Symfony 2.7.
-
 **type**: ``callable`` or ``string`` **default**: ``null``
 
 Normally, the array key of each item in the ``choices`` option is used as the

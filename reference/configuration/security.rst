@@ -242,10 +242,6 @@ Each part will be explained in the next section.
                 ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
                 ROLE_SUPERADMIN: [ROLE_ADMIN]
 
-.. versionadded:: 2.8
-    The ``secret`` option of ``anonymous`` and ``remember_me`` was introduced
-    in Symfony 2.8. Prior to 2.8, it was called ``key``.
-
 .. _reference-security-firewall-form-login:
 
 Form Login Configuration
@@ -526,10 +522,6 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
                 ),
             ),
         ));
-
-.. versionadded:: 2.8
-    The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it was
-    called ``key``.
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

@@ -1,9 +1,6 @@
 Isbn
 ====
 
-.. versionadded:: 2.3
-    The Isbn constraint was introduced in Symfony 2.3.
-
 .. caution::
 
     The ``isbn10`` and ``isbn13`` options are deprecated since Symfony 2.5

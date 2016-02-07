@@ -1,9 +1,6 @@
 Bic
 ===
 
-.. versionadded:: 2.8
-    The Bic constraint was introduced in Symfony 2.8.
-
 This constraint is used to ensure that a value has the proper format of a
 `Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
 uniquely identify both financial and non-financial institutions.

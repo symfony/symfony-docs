@@ -46,10 +46,6 @@ Field Options
 scale
 ~~~~~
 
-.. versionadded:: 2.7
-    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
-    it was known as ``precision``.
-
 **type**: ``integer`` **default**: ``0``
 
 By default, the input numbers are rounded. To allow for more decimal places,

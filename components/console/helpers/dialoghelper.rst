@@ -208,9 +208,6 @@ or the maximum attempts is reached (which you can define in the fifth
 argument). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth argument.
 
-.. versionadded:: 2.3
-    Multiselect support was introduced in Symfony 2.3.
-
 Multiple Choices
 ................
 

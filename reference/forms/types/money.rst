@@ -83,10 +83,6 @@ be set back on your object.
 scale
 ~~~~~
 
-.. versionadded:: 2.7
-    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
-    it was known as ``precision``.
-
 **type**: ``integer`` **default**: ``2``
 
 If, for some reason, you need some scale other than 2 decimal places,

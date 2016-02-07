@@ -188,10 +188,6 @@ choices_as_values
 
 **type**: ``boolean`` **default**: false
 
-.. versionadded:: 2.7
-
-    The ``choices_as_values`` option was introduced in Symfony 2.7.
-
 The ``choices_as_values`` option was added to keep backward compatibility with the
 *old* way of handling the ``choices`` option. When set to ``false`` (or omitted),
 the choice keys are used as the underlying value and the choice values are shown
@@ -226,10 +222,6 @@ type behaves as if it were set to true:
 
 choice_loader
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-
-    The ``choice_loader`` option was added in Symfony 2.7.
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 

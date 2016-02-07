@@ -231,9 +231,6 @@ The tagged service will be removed from the container if
 auto_alias
 ----------
 
-.. versionadded:: 2.7
-    The ``auto_alias`` tag was introduced in Symfony 2.7.
-
 **Purpose**: Define aliases based on the value of container parameters
 
 Consider the following configuration that defines three different but related

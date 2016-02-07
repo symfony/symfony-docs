@@ -331,9 +331,6 @@ done by using a public ``vars`` property on the
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
-.. versionadded:: 2.3
-    The ``method`` and ``action`` variables were introduced in Symfony 2.3.
-
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
 +========================+=====================================================================================+

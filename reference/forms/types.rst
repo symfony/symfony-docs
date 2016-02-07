@@ -4,13 +4,6 @@
 Form Types Reference
 ====================
 
-.. versionadded:: 2.8
-    To denote the form type, you have to use the fully qualified class name - like
-    ``TextType::class`` in PHP 5.5+ or ``Symfony\Component\Form\Extension\Core\Type\TextType``.
-    Before Symfony 2.8, you could use an alias for each type like ``text`` or
-    ``date``. The old alias syntax will still work until Symfony 3.0. For more details,
-    see the `2.8 UPGRADE Log`_.
-
 .. toctree::
    :maxdepth: 1
    :hidden:

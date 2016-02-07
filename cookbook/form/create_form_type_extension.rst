@@ -125,12 +125,6 @@ tag:
             )
             ->addTag('form.type_extension', array('extended_type' => 'Symfony\Component\Form\Extension\Core\Type\FileType'));
 
-.. versionadded:: 2.8
-    The ``extended_type`` option is new in Symfony 2.8. Before, the option was
-    called ``alias``. If you're a bundle author and need to support multiple Symfony
-    versions, specify *both* ``extended_type`` and ``alias`` (having both will prevent
-    any deprecation warnings).
-
 The ``extended_type`` key of the tag is the type of field that this extension should
 be applied to. In your case, as you want to extend the ``Symfony\Component\Form\Extension\Core\Type\FileType``
 field type, you will use that as the ``extended_type``.

@@ -579,10 +579,6 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
-.. versionadded:: 2.3
-    The `include() function`_ is available since Symfony 2.3. Prior, the
-    `{% include %} tag`_ was used.
-
 .. index::
    single: Templating; Embedding action
 
