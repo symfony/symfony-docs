@@ -20,6 +20,18 @@ The component supports:
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 
+.. caution::
+
+    A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
+    and 8 backslashes (``\\\\\\\\``) in a regex::
+
+        echo $language->evaluate('"\\\\"'); // prints \
+        $language->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
+
+    Control characters (e.g. ``\n``) in expressions are replaced with
+    whitespace. To avoid this, escape the sequence with a single backslash
+    (e.g.  ``\\n``).
+
 .. _component-expression-objects:
 
 Working with Objects
@@ -180,28 +192,6 @@ Comparison Operators
 
     You must use parenthesis because the unary operator ``not`` has precedence
     over the binary operator ``matches``.
-
-    A backslash(``\``) must be escaped by 4 backslashes(``\\\\``) in a string and
-    8 backslashes(``\\\\\\\\``) in a regex::
-
-        $language->evaluate('"\\\\"');
-        // returns \
-
-        $language->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"');
-        // returns true
-
-    Control characters must be defined as the escaped form of their escape sequences.
-    Otherwise, they will be replaced by spaces and ignored::
-
-        $language->evaluate('"a\nb"');
-        // returns a b
-
-        $language->evaluate('"a\\nb"');
-        // returns a\nb
-
-    This is because the backslashes in a string will be stripped by the
-    ``stripcslashes()`` function and the stripped slashes in a regex will be
-    stripped again by the regex engine.
 
 Examples::
 
