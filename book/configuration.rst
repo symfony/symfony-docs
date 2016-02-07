@@ -87,8 +87,8 @@ format you prefer:
 
 .. note::
 
-   You'll learn exactly how to load each file/format in the next section
-   `Environments`_.
+    You'll learn exactly how to load each file/format in the next section
+    `Environments`_.
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
@@ -194,6 +194,12 @@ cached files and allow them to rebuild:
     The ``test`` environment is used when running automated tests and cannot
     be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
+
+.. tip::
+
+    When using the ``server:run`` command to start a server,
+    ``http://localhost:8000/`` will use the dev front controller of your
+    application.
 
 .. index::
    single: Environments; Configuration
