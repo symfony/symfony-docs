@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-07T22:59:53Z
+
+PR has been updated to address the comments from @stof and @javiereguiluz. The password is now encoded before storing it into the database. This makes the chapter more security related than before. As mentioned in https://github.com/symfony/symfony-docs/pull/4773#discussion_r22519002 IMO splitting this chapter should be considered.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-16T15:53:23Z
+
+Sorry, I'm a bit lost. Is this PR now ready to merge, or does it wait on comments?
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-16T17:55:08Z
+
+I think my last changes, which introduced the encoding of the password, should be reviewed. If the changes are approved, this PR could be merged IMO. Anyway, I think it would be a good idea to split the entry, but this could be done in a later PR if someone agrees with my opinion.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-18T15:15:41Z
+
+Thank you for the review @WouterJ @xabbuh. I updated the PR.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-03-29T21:33:37Z
+
+IMO this is ready to merge, isn't it?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-30T06:42:08Z
+
+@xelaris :+1: indeed it looks ready to be merged. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:45:47Z
+
+@WouterJ As you added the "In Progress" label after the last change: What do you think needs to be done here?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-17T18:53:10Z
+
+Do we still have to do something here or is it ready to be merged?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T19:01:23Z
+
+:+1: (a rebase is needed though)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-23T21:11:44Z
+
+closing in favour of #6073
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-28T11:22:12Z
+
+reopening here as #6073 was closed
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-12-29T00:06:59Z
+
+I rebased this PR and took a look into the overlap with #5214. Most of the changes made in this PR where already covered or obsoleted by #5214. There are only some tweaks remaining and a focus on encoding with bcrypt including the detailed example on how to configure the encoding algorithm.
+
+Related to the comments made in #6073: The handling of the plain text password is still relevant, as the entity class holds both, the plain and the encoded password. In contrast to the first version of this PR, a ``password`` property was introduced in #5214 for persistence and the ``plainPassword`` gets stopped from being persisted, but kept relevant for form handling and validation. Actually there was a ``Registration`` DTO before #5214.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-07T10:55:56Z
+
+:+1: As far as I can see, this one looks ready to me.
