@@ -141,12 +141,9 @@ by adding the ``delivery_whitelist`` option:
         swiftmailer:
             delivery_address: dev@example.com
             delivery_whitelist:
-               # all email addresses matching this regex will *not* be
-               # redirected to dev@example.com
+               # all email addresses matching these regexes will be delivered
+               # like normal, as well as being sent to dev@example.com
                - '/@specialdomain\.com$/'
-
-               # all emails sent to admin@mydomain.com won't
-               # be redirected to dev@example.com too
                - '/^admin@mydomain\.com$/'
 
     .. code-block:: xml
@@ -162,10 +159,9 @@ by adding the ``delivery_whitelist`` option:
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config delivery-address="dev@example.com">
-                <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
+                <!-- all email addresses matching these regexes will be delivered
+                     like normal, as well as being sent to dev@example.com -->
                 <swiftmailer:delivery-whitelist-pattern>/@specialdomain\.com$/</swiftmailer:delivery-whitelist-pattern>
-
-                <!-- all emails sent to admin@mydomain.com won't be redirected to dev@example.com too -->
                 <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain\.com$/</swiftmailer:delivery-whitelist-pattern>
             </swiftmailer:config>
         </container>
@@ -176,19 +172,16 @@ by adding the ``delivery_whitelist`` option:
         $container->loadFromExtension('swiftmailer', array(
             'delivery_address'  => "dev@example.com",
             'delivery_whitelist' => array(
-                // all email addresses matching this regex will *not* be
-                // redirected to dev@example.com
+                // all email addresses matching these regexes will be delivered
+                // like normal, as well as being sent to dev@example.com
                 '/@specialdomain\.com$/',
-
-                // all emails sent to admin@mydomain.com won't be
-                // redirected to dev@example.com too
                 '/^admin@mydomain\.com$/',
             ),
         ));
 
-In the above example all email messages will be redirected to ``dev@example.com``,
-and messages sent to the ``admin@mydomain.com`` address or to any email
-address belonging to the domain ``specialdomain.com`` will be delivered as normal.
+In the above example all email messages will be redirected to ``dev@example.com``
+and messages sent to the ``admin@mydomain.com`` address or to any email address
+belonging to the domain ``specialdomain.com`` will also be delivered as normal.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------
