@@ -21,6 +21,7 @@ New Documentation
 
 * `#6174 <https://github.com/symfony/symfony-docs/pull/6174>`_ Missing reference docs for kernel.finish_request event (acrobat)
 * `#6184 <https://github.com/symfony/symfony-docs/pull/6184>`_ added Javier as a merger for the WebProfiler bundle (fabpot)
+* `#5600 <https://github.com/symfony/symfony-docs/pull/5600>`_ [DependencyInjection] Documented the ability of define the service decoration priority (dosten)
 * `#5303 <https://github.com/symfony/symfony-docs/pull/5303>`_ [WIP] 4373 - document security events (kevintweber)
 * `#6023 <https://github.com/symfony/symfony-docs/pull/6023>`_ clarify the routing component documentation a bit (dbu)
 * `#6091 <https://github.com/symfony/symfony-docs/pull/6091>`_ Added an example for info() method (javiereguiluz)
@@ -30,12 +31,15 @@ Fixed Documentation
 
 * `#6193 <https://github.com/symfony/symfony-docs/pull/6193>`_ Added the missing namespace in example of a subscriber class (raulconti)
 * `#6152 <https://github.com/symfony/symfony-docs/pull/6152>`_ csrf_token_generator and csrf_token_id documentation (Raistlfiren, Aaron Valandra, xabbuh)
+* `#6115 <https://github.com/symfony/symfony-docs/pull/6115>`_ [Form] Fix syntax error in code snippet (valisj)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* `#6199 <https://github.com/symfony/symfony-docs/pull/6199>`_ fix types (garak)
 * `#6207 <https://github.com/symfony/symfony-docs/pull/6207>`_ revert form login CSRF changes on wrong branch (xabbuh)
 * `#6191 <https://github.com/symfony/symfony-docs/pull/6191>`_ Document the invalidate_session option (javiereguiluz)
+* `#6204 <https://github.com/symfony/symfony-docs/pull/6204>`_ Expected: semicolon (cn007b)
 * `#6141 <https://github.com/symfony/symfony-docs/pull/6141>`_ Docs do not match functionality (Loupax)
 * `#6192 <https://github.com/symfony/symfony-docs/pull/6192>`_ fix MongoDB shell syntax highlighting (xabbuh)
 * `#6147 <https://github.com/symfony/symfony-docs/pull/6147>`_ Update templating.rst - Asset absolute url fix (gbalcewicz)
@@ -46,21 +50,32 @@ Minor Documentation Changes
 * `#6119 <https://github.com/symfony/symfony-docs/pull/6119>`_ Remove phrase "in order" (micheal)
 * `#6160 <https://github.com/symfony/symfony-docs/pull/6160>`_ remove versionadded for unmaintained versions (xabbuh)
 * `#6161 <https://github.com/symfony/symfony-docs/pull/6161>`_ [Contributing][Documentation] replace EOL with EOM (xabbuh)
+* `#6166 <https://github.com/symfony/symfony-docs/pull/6166>`_ Fix by_reference deprecated FormType::class (nemo-)
 * `#6162 <https://github.com/symfony/symfony-docs/pull/6162>`_ [Reference] add missing version number (xabbuh)
 * `#6163 <https://github.com/symfony/symfony-docs/pull/6163>`_ Remove excessive pluses (aivus)
+* `#6149 <https://github.com/symfony/symfony-docs/pull/6149>`_ Reference to session + Corrected sample code char (sfdumi)
+* `#6130 <https://github.com/symfony/symfony-docs/pull/6130>`_ [Security][Guard] Completed start method signature (jeremyFreeAgent)
+* `#6080 <https://github.com/symfony/symfony-docs/pull/6080>`_ Removed doc about getting original parameter value from ParameterBag (edefimov)
 * `#6158 <https://github.com/symfony/symfony-docs/pull/6158>`_ Update override_dir_structure.rst (denniskoenigComparon)
 * `#6122 <https://github.com/symfony/symfony-docs/pull/6122>`_ Added missing mandatory parameter (yceruto)
+* `#6108 <https://github.com/symfony/symfony-docs/pull/6108>`_ [Form] remove the getName() function as it is deprecated (aybbou)
 * `#6100 <https://github.com/symfony/symfony-docs/pull/6100>`_ [Cookbook][Security] add back updateUserSecurityIdentity() hint (xabbuh)
 * `#6138 <https://github.com/symfony/symfony-docs/pull/6138>`_ Correction needed (pfleu)
+* `#6139 <https://github.com/symfony/symfony-docs/pull/6139>`_ Update the doc to change a deprecated use case (ChristopheBoucaut)
 * `#6133 <https://github.com/symfony/symfony-docs/pull/6133>`_ fixed the component name (fabpot)
 * `#6127 <https://github.com/symfony/symfony-docs/pull/6127>`_ escape namespace backslashes in class role (xabbuh)
 * `#5818 <https://github.com/symfony/symfony-docs/pull/5818>`_ document old way of checking validity of CSRF token (snoek09)
 * `#6062 <https://github.com/symfony/symfony-docs/pull/6062>`_ Update HTTP method requirement example (WouterJ)
+* `#6120 <https://github.com/symfony/symfony-docs/pull/6120>`_ fix README requirements link (garak)
 * `#6109 <https://github.com/symfony/symfony-docs/pull/6109>`_ add link to Monolog configuration (snoek09)
+* `#6121 <https://github.com/symfony/symfony-docs/pull/6121>`_ [MicroKernel] Fixed the display of a code block (jeremyFreeAgent)
 * `#6096 <https://github.com/symfony/symfony-docs/pull/6096>`_ [Contributing] update year in license (xabbuh)
 * `#6114 <https://github.com/symfony/symfony-docs/pull/6114>`_ make method protected (OskarStark)
 * `#6111 <https://github.com/symfony/symfony-docs/pull/6111>`_ Fixed a typo in the choice_label code example (ferdynator)
+* `#6110 <https://github.com/symfony/symfony-docs/pull/6110>`_ [Security][Guard] Fixed a typo (jeremyFreeAgent)
+* `#6106 <https://github.com/symfony/symfony-docs/pull/6106>`_ Remove repetition in text (dominikhajduk)
 * `#6102 <https://github.com/symfony/symfony-docs/pull/6102>`_ promoted xabbuh as merger on the Yaml component (fabpot)
+* `#6014 <https://github.com/symfony/symfony-docs/pull/6014>`_ [2.8][Form] entry_type option: replace "in favor" misuses (ogizanagi)
 * `#6013 <https://github.com/symfony/symfony-docs/pull/6013>`_ [2.7][Form] placeholder option: replace "in favor" misuses (ogizanagi)
 
 
