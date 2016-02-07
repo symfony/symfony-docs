@@ -234,7 +234,7 @@ redirect to the URL defined by some ``account`` route, use the following:
             <div>{{ error.message }}</div>
         {% endif %}
 
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login') }}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
@@ -253,7 +253,7 @@ redirect to the URL defined by some ``account`` route, use the following:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 
