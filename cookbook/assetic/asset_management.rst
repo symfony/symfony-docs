@@ -667,7 +667,10 @@ command for the same behavior.
 
 Since running this command in the ``dev`` environment may generate a bunch
 of files, it's usually a good idea to point your generated asset files to
-some isolated directory (e.g. ``/js/compiled``), to keep things organized:
+some isolated directory (e.g. ``/js/compiled``) to keep things organized.
+When using assetic dump for the development environment, you must specify a
+directory or Symfony will look in the non-existing _controller directory.
+So do not use ``output=app.js`` but ``output=js/app.js``.
 
 .. configuration-block::
 
