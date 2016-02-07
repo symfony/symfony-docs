@@ -28,6 +28,7 @@ New Documentation
 * `#6022 <https://github.com/symfony/symfony-docs/pull/6022>`_ clarify custom route loader documentation (dbu)
 * `#5994 <https://github.com/symfony/symfony-docs/pull/5994>`_ Updated the release process for Symfony 3.x and future releases (javiereguiluz)
 * `#5954 <https://github.com/symfony/symfony-docs/pull/5954>`_ Fix #5236 [2.8][Translation] specify additional translation loading paths (Pierre Maraitre, Balamung)
+* `#5948 <https://github.com/symfony/symfony-docs/pull/5948>`_ Update 3.0 docs accordingly to min PHP version requirement (ogizanagi)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -58,6 +59,7 @@ Minor Documentation Changes
 * `#5445 <https://github.com/symfony/symfony-docs/pull/5445>`_ Reworded the explanation about the kernel.event_listener tag (javiereguiluz)
 * `#6054 <https://github.com/symfony/symfony-docs/pull/6054>`_ Remove 2.8 branch from patch documentation (Triiistan)
 * `#6057 <https://github.com/symfony/symfony-docs/pull/6057>`_ Fix PHP code for registering service (WouterJ)
+* `#6066 <https://github.com/symfony/symfony-docs/pull/6066>`_ Update location of `app/check.php` to `bin/symfony_requirements` (Kevinrob)
 * `#6067 <https://github.com/symfony/symfony-docs/pull/6067>`_ improve phrasing (greg0ire)
 * `#6063 <https://github.com/symfony/symfony-docs/pull/6063>`_ minor #5829 Fix broken composer command (JHGitty)
 * `#6041 <https://github.com/symfony/symfony-docs/pull/6041>`_ Fixed misspelling of human in glossary.rst YAML (Wasserschlange)
@@ -73,6 +75,7 @@ Minor Documentation Changes
 * `#5446 <https://github.com/symfony/symfony-docs/pull/5446>`_ [Contributing] [Standards] Added note about phpdoc_separation (phansys)
 * `#6027 <https://github.com/symfony/symfony-docs/pull/6027>`_ Update guard-authentication.rst (rvanginneken)
 * `#6025 <https://github.com/symfony/symfony-docs/pull/6025>`_ Update guard-authentication.rst (rvanginneken)
+* `#6038 <https://github.com/symfony/symfony-docs/pull/6038>`_ Fix #6037 (zsturgess)
 * `#5820 <https://github.com/symfony/symfony-docs/pull/5820>`_ Fixed an issue with command option shortcuts (javiereguiluz)
 * `#6033 <https://github.com/symfony/symfony-docs/pull/6033>`_ Fix Typo (Shine-neko)
 * `#6011 <https://github.com/symfony/symfony-docs/pull/6011>`_ Fixed formatting issues (javiereguiluz)
