@@ -130,7 +130,7 @@ Minor Documentation Changes
 * `#5445 <https://github.com/symfony/symfony-docs/pull/5445>`_ Reworded the explanation about the kernel.event_listener tag (javiereguiluz)
 * `#6054 <https://github.com/symfony/symfony-docs/pull/6054>`_ Remove 2.8 branch from patch documentation (Triiistan)
 * `#6057 <https://github.com/symfony/symfony-docs/pull/6057>`_ Fix PHP code for registering service (WouterJ)
-* `#6066 <https://github.com/symfony/symfony-docs/pull/6066>`_ Update location of `app/check.php` to `bin/symfony_requirements` (Kevinrob)
+* `#6066 <https://github.com/symfony/symfony-docs/pull/6066>`_ Update location of ``app/check.php`` to ``bin/symfony_requirements`` (Kevinrob)
 * `#6067 <https://github.com/symfony/symfony-docs/pull/6067>`_ improve phrasing (greg0ire)
 * `#6063 <https://github.com/symfony/symfony-docs/pull/6063>`_ minor #5829 Fix broken composer command (JHGitty)
 * `#6041 <https://github.com/symfony/symfony-docs/pull/6041>`_ Fixed misspelling of human in glossary.rst YAML (Wasserschlange)
