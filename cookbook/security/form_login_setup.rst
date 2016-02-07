@@ -42,7 +42,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="main">
                     <anonymous />
-                    <form-login login-path="/login" check-path="/login" />
+                    <form-login login-path="login" check-path="login" />
                 </firewall>
             </config>
         </srv:container>
@@ -82,8 +82,8 @@ bundle::
     {
     }
 
-Next, create a route for the path you configured earlier
-under your ``form_login`` configuration (``/login``):
+Next, configure the route that you earlier used under your ``form_login``
+configuration (``login``):
 
 .. configuration-block::
 
@@ -247,7 +247,7 @@ Finally, create the template:
 
 The form can look like anything, but has a few requirements:
 
-* The form must POST to ``/login``, since that's what you configured
+* The form must POST to the ``login`` route, since that's what you configured
   under the ``form_login`` key in ``security.yml``.
 
 * The username must have the name ``_username`` and the password must have

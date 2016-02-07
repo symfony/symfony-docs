@@ -129,10 +129,10 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     form_login:
                         # submit the login form here
-                        check_path: login
+                        check_path: /login_check
 
                         # the user is redirected here when they need to log in
-                        login_path: login
+                        login_path: /login
 
                         # if true, forward the user to the login form instead of redirecting
                         use_forward: false
@@ -252,7 +252,7 @@ The Login Form and Process
 login_path
 ..........
 
-**type**: ``string`` **default**: ``login``
+**type**: ``string`` **default**: ``/login``
 
 This is the route or path that the user will be redirected to (unless ``use_forward``
 is set to ``true``) when they try to access a protected resource but isn't
@@ -265,7 +265,7 @@ you may create a redirect loop. For details, see
 check_path
 ..........
 
-**type**: ``string`` **default**: ``login``
+**type**: ``string`` **default**: ``/login_check``
 
 This is the route or path that your login form must submit to. The firewall
 will intercept any requests (``POST`` requests only, by default) to this
