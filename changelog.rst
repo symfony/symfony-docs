@@ -127,7 +127,7 @@ Minor Documentation Changes
 * `#5989 <https://github.com/symfony/symfony-docs/pull/5989>`_ Fix words according context (richardpq)
 * `#5992 <https://github.com/symfony/symfony-docs/pull/5992>`_ More use single quotes for YAML strings (snoek09)
 * `#5957 <https://github.com/symfony/symfony-docs/pull/5957>`_ mark deep option as deprecated (snoek09)
-* `#5943 <https://github.com/symfony/symfony-docs/pull/5943>`_ Add tip for when returning `null` from `createToken()` (jeroenseegers)
+* `#5943 <https://github.com/symfony/symfony-docs/pull/5943>`_ Add tip for when returning ``null`` from ``createToken()`` (jeroenseegers)
 * `#5956 <https://github.com/symfony/symfony-docs/pull/5956>`_ Update security.rst (mpaquet)
 * `#5959 <https://github.com/symfony/symfony-docs/pull/5959>`_ Fix #5912 Ambiguity on Access Decision Manager's Strategy (Pierre Maraitre)
 * `#5955 <https://github.com/symfony/symfony-docs/pull/5955>`_ use single quotes for YAML strings (snoek09)
