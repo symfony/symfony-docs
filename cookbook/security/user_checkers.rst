@@ -9,24 +9,28 @@ if the identified user is allowed to log in. By defining a custom user checker, 
 can define per firewall which checker should be used.
 
 .. versionadded:: 2.8
-    Defining a custom user checker was introduced in Symfony 2.8.
-
+    The ability to configure a custom user checker per firewall was introduced
+    in Symfony 2.8.
 
 Creating a Custom User Checker
 ------------------------------
 
-User checkers are defined in PHP classes that must implement the
-:class:`UserCheckerInterface Symfony\\Component\\Security\\Core\\UserCheckerInterface`.
-This interface defines two methods called ``checkPreAuth()`` and ``checkPostAuth()``
-to perform checks before and after user authentication. If one or more
-conditions are not met, an exception should be thrown which extends the
-:class:`AccountStatusException Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException`
+User checkers are classes that must implement the
+:class:`Symfony\\Component\\Security\\Core\\UserCheckerInterface`. This interface
+defines two methods called ``checkPreAuth()`` and ``checkPostAuth()`` to
+perform checks before and after user authentication. If one or more conditions
+are not met, an exception should be thrown which extends the
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException`.
 
 .. code-block:: php
 
-    namespace App\Security;
+    namespace AppBundle\Security;
 
+    use AppBundle\Exception\AccountDeletedException;
+    use AppBundle\Security\User as AppUser;
+    use Symfony\Component\Security\Core\Exception\AccountExpiredException;
     use Symfony\Component\Security\Core\User\UserCheckInterface;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     class UserChecker implements UserCheckerInterface
     {
@@ -69,7 +73,7 @@ other service:
         # app/config/services.yml
         services:
             app.user_checker:
-                class: App\Security\UserChecker
+                class: AppBundle\Security\UserChecker
 
     .. code-block:: xml
 
@@ -80,17 +84,14 @@ other service:
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.user_checker" class="App\Security\UserChecker" />
+                <service id="app.user_checker" class="AppBundle\Security\UserChecker" />
             </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $userChecker = new Definition('App\Security\UserChecker');
-        $container->setDefinition('app.user_checker', $userChecker);
+        $container->register('app.user_checker', 'AppBundle\Security\UserChecker');
 
 All that's left to do is add the checker to the desired firewall where the value
 is the service id of your user checker:
@@ -211,5 +212,5 @@ It's possible to have a different user checker per firewall.
 
 .. note::
 
-    Internally the user checkers are aliased per firewall. For `secured_area` the alias
-    `security.user_checker.secured_area` would point to `app.user_checker`.
+    Internally the user checkers are aliased per firewall. For ``secured_area``
+    the alias ``security.user_checker.secured_area`` would point to ``app.user_checker``.
