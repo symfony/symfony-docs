@@ -85,48 +85,33 @@ And the output will be::
 
     This is...
 
-Message is truncated to the given length, then the suffix is appended to end
+The message is truncated to the given length, then the suffix is appended to end
 of that string.
 
 Negative String Length
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If the length is negative, number of characters to truncate is counted
+If the length is negative, the number of characters to truncate is counted
 from the end of the string::
 
     $truncatedMessage = $formatter->truncate($message, -5);
 
-Will result with::
+This will result in::
 
     This is a very long message, which should be trun...
 
 Custom Suffix
 ~~~~~~~~~~~~~
 
-By default ``...`` suffix is used. If you wish to use a different suffix,
-simply pass it as the third argument to the method::
+By default, the ``...`` suffix is used. If you wish to use a different suffix,
+simply pass it as the third argument to the method.
+The suffix is always appended, unless truncate length is longer than a message
+and a suffix length.
+If you don't want to use suffix at all, just pass an empty string::
 
-    $truncatedMessage = $formatter->truncate($message, 7, '!!');
+    $truncatedMessage = $formatter->truncate($message, 7, '!!'); // result: This is!!
+    $truncatedMessage = $formatter->truncate($message, 7, '');   // result: This is
+    $truncatedMessage = $formatter->truncate('test', 10));
+    /* result: test
+       because length of the "test..." string is shorter than 10 */
 
-Will result with::
-
-    This is!!
-
-Or if you don't want to use suffix at all, just pass an empty string::
-
-    $truncatedMessage = $formatter->truncate($message, 7, '');
-
-Which will result with::
-
-    This is
-
-Suffix is always appended, unless truncate length is longer than a message
-and a suffix length::
-
-    $output->writeln($formatter->truncate('test', 10));
-
-will output::
-
-    test
-
-because length of the ``test...`` string is shorter than 10.
