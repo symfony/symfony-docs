@@ -19,6 +19,8 @@ December, 2015
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#5906 <https://github.com/symfony/symfony-docs/pull/5906>`_ Added documentation for choice_translation_domain option (peterrehm)
+* `#6017 <https://github.com/symfony/symfony-docs/pull/6017>`_ Documented the Symfony Console Styles (javiereguiluz)
 * `#5811 <https://github.com/symfony/symfony-docs/pull/5811>`_ Conversion from mysql to PDO (iqbalmalik89)
 * `#5962 <https://github.com/symfony/symfony-docs/pull/5962>`_ Simplify code example in "Adding custom extensions" section (snoek09)
 * `#6022 <https://github.com/symfony/symfony-docs/pull/6022>`_ clarify custom route loader documentation (dbu)
@@ -30,6 +32,7 @@ Fixed Documentation
 * `#6063 <https://github.com/symfony/symfony-docs/pull/6063>`_ minor #5829 Fix broken composer command (JHGitty)
 * `#5904 <https://github.com/symfony/symfony-docs/pull/5904>`_ Update php_soap_extension.rst (xDaizu)
 * `#5819 <https://github.com/symfony/symfony-docs/pull/5819>`_ Remove AppBundle (roukmoute)
+* `#6001 <https://github.com/symfony/symfony-docs/pull/6001>`_ Fix class name (BlueM)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,11 +51,13 @@ Minor Documentation Changes
 * `#5445 <https://github.com/symfony/symfony-docs/pull/5445>`_ Reworded the explanation about the kernel.event_listener tag (javiereguiluz)
 * `#6054 <https://github.com/symfony/symfony-docs/pull/6054>`_ Remove 2.8 branch from patch documentation (Triiistan)
 * `#6057 <https://github.com/symfony/symfony-docs/pull/6057>`_ Fix PHP code for registering service (WouterJ)
+* `#6067 <https://github.com/symfony/symfony-docs/pull/6067>`_ improve phrasing (greg0ire)
 * `#6063 <https://github.com/symfony/symfony-docs/pull/6063>`_ minor #5829 Fix broken composer command (JHGitty)
 * `#6041 <https://github.com/symfony/symfony-docs/pull/6041>`_ Fixed misspelling of human in glossary.rst YAML (Wasserschlange)
 * `#6049 <https://github.com/symfony/symfony-docs/pull/6049>`_ Finish #5798 Add app_ prefix to form type names (OskarStark, WouterJ)
 * `#5829 <https://github.com/symfony/symfony-docs/pull/5829>`_ use composer command instead of editing json file (OskarStark)
 * `#6046 <https://github.com/symfony/symfony-docs/pull/6046>`_ Update framework.rst (typo in sesssion) (patrick-mota)
+* `#5662 <https://github.com/symfony/symfony-docs/pull/5662>`_ Fixed wrong version of symfony with composer install (Nek-)
 * `#5890 <https://github.com/symfony/symfony-docs/pull/5890>`_ Updated article for modern Symfony practices and the use of bcrypt (javiereguiluz)
 * `#6015 <https://github.com/symfony/symfony-docs/pull/6015>`_ [Assetic] complete XML configuration examples (xabbuh)
 * `#5963 <https://github.com/symfony/symfony-docs/pull/5963>`_ Add note about 'phar extension' dependency (snoek09)
@@ -70,6 +75,9 @@ Minor Documentation Changes
 * `#6000 <https://github.com/symfony/symfony-docs/pull/6000>`_ Update registration_form.rst (afurculita)
 * `#5989 <https://github.com/symfony/symfony-docs/pull/5989>`_ Fix words according context (richardpq)
 * `#5992 <https://github.com/symfony/symfony-docs/pull/5992>`_ More use single quotes for YAML strings (snoek09)
+* `#5957 <https://github.com/symfony/symfony-docs/pull/5957>`_ mark deep option as deprecated (snoek09)
+* `#5943 <https://github.com/symfony/symfony-docs/pull/5943>`_ Add tip for when returning `null` from `createToken()` (jeroenseegers)
+* `#5956 <https://github.com/symfony/symfony-docs/pull/5956>`_ Update security.rst (mpaquet)
 * `#5959 <https://github.com/symfony/symfony-docs/pull/5959>`_ Fix #5912 Ambiguity on Access Decision Manager's Strategy (Pierre Maraitre)
 * `#5955 <https://github.com/symfony/symfony-docs/pull/5955>`_ use single quotes for YAML strings (snoek09)
 * `#5979 <https://github.com/symfony/symfony-docs/pull/5979>`_ [Book] Do not extend the base controller before introducing it (ogizanagi)
