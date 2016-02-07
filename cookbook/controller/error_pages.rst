@@ -267,7 +267,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
             # app/config/services.yml
             services:
                 app.exception_controller:
-                class: AppBundle\CustomExceptionController
+                class: AppBundle\Controller\CustomExceptionController
                 arguments: ['@twig', '%kernel.debug%']
 
         .. code-block:: xml
@@ -298,6 +298,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
                 new Reference('twig'),
                 '%kernel.debug%'
             ));
+            $container->setDefinition('app.exception_controller', $definition);
 
     And then configure ``twig.exception_controller`` using the controller as
     services syntax (e.g. ``app.exception_controller:showAction``).

@@ -20,6 +20,18 @@ The component supports:
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 
+.. caution::
+
+    A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
+    and 8 backslashes (``\\\\\\\\``) in a regex::
+
+        echo $language->evaluate('"\\\\"'); // prints \
+        $language->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
+
+    Control characters (e.g. ``\n``) in expressions are replaced with
+    whitespace. To avoid this, escape the sequence with a single backslash
+    (e.g.  ``\\n``).
+
 .. _component-expression-objects:
 
 Working with Objects

@@ -178,6 +178,7 @@
   * :doc:`/cookbook/security/multiple_user_providers`
   * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/host_restriction`
+  * :doc:`/cookbook/security/user_checkers`
 
 * :doc:`Security Authorization (Denying Access) </cookbook/security/index>`
 
