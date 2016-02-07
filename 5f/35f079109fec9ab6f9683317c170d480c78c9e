@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T21:48:19Z
+
+:+1: I can confirm this correct from [the code](https://github.com/swiftmailer/swiftmailer/blob/5.x/lib/classes/Swift/Plugins/RedirectingPlugin.php). Thank you for submitting it!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-17T22:01:38Z
+
+In the code blocks above this paragraph are comments that need to be update ("all email ddresses matching this regex will *not* be redirected to dev@example.com" and "all emails sent to dmin@mydomain.com won't be redirected to dev@example.com too").
+
+---------------------------------------------------------------------------
+
+by gonzalovilaseca at 2015-12-17T22:22:10Z
+
+Ok, will update asap
