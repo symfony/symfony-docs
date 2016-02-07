@@ -57,8 +57,8 @@ which uses a login form to load users from the database:
                 pattern: ^/
                 anonymous: true
                 form_login:
-                    check_path: security_login_check
-                    login_path: security_login_form
+                    check_path: login
+                    login_path: login
 
                 logout:
                     path: security_logout

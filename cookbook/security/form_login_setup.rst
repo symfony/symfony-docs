@@ -26,8 +26,8 @@ First, enable form login under your firewall:
                 main:
                     anonymous: ~
                     form_login:
-                        login_path: /login
-                        check_path: /login_check
+                        login_path: login
+                        check_path: login
 
     .. code-block:: xml
 
@@ -42,7 +42,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="main">
                     <anonymous />
-                    <form-login login-path="/login" check-path="/login_check" />
+                    <form-login login-path="login" check-path="login" />
                 </firewall>
             </config>
         </srv:container>
@@ -55,8 +55,8 @@ First, enable form login under your firewall:
                 'main' => array(
                     'anonymous'  => null,
                     'form_login' => array(
-                        'login_path' => '/login',
-                        'check_path' => '/login_check',
+                        'login_path' => 'login',
+                        'check_path' => 'login',
                     ),
                 ),
             ),
@@ -82,8 +82,8 @@ bundle::
     {
     }
 
-Next, create two routes: one for each of the paths you configured earlier
-under your ``form_login`` configuration (``/login`` and ``/login_check``):
+Next, configure the route that you earlier used under your ``form_login``
+configuration (``login``):
 
 .. configuration-block::
 
@@ -98,33 +98,19 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
         class SecurityController extends Controller
         {
             /**
-             * @Route("/login", name="login_route")
+             * @Route("/login", name="login")
              */
             public function loginAction(Request $request)
             {
-            }
-
-            /**
-             * @Route("/login_check", name="login_check")
-             */
-            public function loginCheckAction()
-            {
-                // this controller will not be executed,
-                // as the route is handled by the Security system
             }
         }
 
     .. code-block:: yaml
 
         # app/config/routing.yml
-        login_route:
+        login:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }
-
-        login_check:
-            path: /login_check
-            # no controller is bound to this route
-            # as it's handled by the Security system
 
     .. code-block:: xml
 
@@ -135,13 +121,9 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login_route" path="/login">
+            <route id="login" path="/login">
                 <default key="_controller">AppBundle:Security:login</default>
             </route>
-
-            <route id="login_check" path="/login_check" />
-            <!-- no controller is bound to this route
-                 as it's handled by the Security system -->
         </routes>
 
     ..  code-block:: php
@@ -151,13 +133,9 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('login_route', new Route('/login', array(
+        $collection->add('login', new Route('/login', array(
             '_controller' => 'AppBundle:Security:login',
         )));
-
-        $collection->add('login_check', new Route('/login_check'));
-        // no controller is bound to this route
-        // as it's handled by the Security system
 
         return $collection;
 
@@ -214,7 +192,7 @@ Finally, create the template:
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login') }}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
@@ -237,7 +215,7 @@ Finally, create the template:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 
@@ -263,7 +241,7 @@ Finally, create the template:
 
 The form can look like anything, but has a few requirements:
 
-* The form must POST to ``/login_check``, since that's what you configured
+* The form must POST to the ``login`` route, since that's what you configured
   under the ``form_login`` key in ``security.yml``.
 
 * The username must have the name ``_username`` and the password must have
@@ -291,7 +269,7 @@ To review the whole process:
    user to the login form (``/login``);
 #. The ``/login`` page renders login form via the route and controller created
    in this example;
-#. The user submits the login form to ``/login_check``;
+#. The user submits the login form to ``/login``;
 #. The security system intercepts the request, checks the user's submitted
    credentials, authenticates the user if they are correct, and sends the
    user back to the login form if they are not.
@@ -318,12 +296,11 @@ When setting up your login form, watch out for a few common pitfalls.
 1. Create the Correct Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, be sure that you've defined the ``/login`` and ``/login_check``
-routes correctly and that they correspond to the ``login_path`` and
-``check_path`` config values. A misconfiguration here can mean that you're
-redirected to a 404 page instead of the login page, or that submitting
-the login form does nothing (you just see the login form over and over
-again).
+First, be sure that you've defined the ``/login`` route correctly and that
+it corresponds to the ``login_path`` and``check_path`` config values.
+A misconfiguration here can mean that you're redirected to a 404 page instead
+of the login page, or that submitting the login form does nothing (you just see
+the login form over and over again).
 
 2. Be Sure the Login Page Isn't Secure (Redirect Loop!)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -466,14 +443,14 @@ for the login page:
             ),
         ),
 
-3. Be Sure /login_check Is Behind a Firewall
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Be Sure check_path Is Behind a Firewall
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, make sure that your ``check_path`` URL (e.g. ``/login_check``) is behind
+Next, make sure that your ``check_path`` URL (e.g. ``/login``) is behind
 the firewall you're using for your form login (in this example, the single
-firewall matches *all* URLs, including ``/login_check``). If ``/login_check``
+firewall matches *all* URLs, including ``/login``). If ``/login``
 doesn't match any firewall, you'll receive a ``Unable to find the controller
-for path "/login_check"`` exception.
+for path "/login"`` exception.
 
 4. Multiple Firewalls Don't Share the Same Security Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
