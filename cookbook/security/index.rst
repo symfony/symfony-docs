@@ -24,6 +24,7 @@ Authentication (Identifying/Logging in the User)
     multiple_user_providers
     firewall_restriction
     host_restriction
+    user_checkers
 
 Authorization (Denying Access)
 ------------------------------
