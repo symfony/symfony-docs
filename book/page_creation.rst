@@ -63,7 +63,7 @@ Before diving into this, test it out!
 
 .. tip::
 
-    If you setup a proper virtual host in
+    If you set up a proper virtual host in
     :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
     replace ``http://localhost:8000`` with your host name - like
     ``http://symfony.dev/app_dev.php/lucky/number``.
