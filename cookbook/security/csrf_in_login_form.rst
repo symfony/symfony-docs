@@ -92,7 +92,7 @@ using the login form:
         {# src/AppBundle/Resources/views/Security/login.html.twig #}
 
         {# ... #}
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login') }}" method="post">
             {# ... the login fields #}
 
             <input type="hidden" name="_csrf_token"
@@ -109,7 +109,7 @@ using the login form:
         <!-- ... -->
         <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
              had to use generate(). -->
-        <form action="<?php echo $view['router']->path('login_check') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... the login fields -->
 
             <input type="hidden" name="_csrf_token"

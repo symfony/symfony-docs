@@ -234,7 +234,7 @@ redirect to the URL defined by some ``account`` route, use the following:
             <div>{{ error.message }}</div>
         {% endif %}
 
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login') }}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
@@ -255,7 +255,7 @@ redirect to the URL defined by some ``account`` route, use the following:
 
         <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
              had to use generate(). -->
-        <form action="<?php echo $view['router']->path('login_check') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 
