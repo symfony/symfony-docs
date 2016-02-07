@@ -59,11 +59,12 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
 
 Before diving into this, test it out!
 
-    http://localhost:8000/app_dev.php/lucky/number
+    http://localhost:8000/lucky/number
 
 .. tip::
 
-    If you setup a proper virtual host in :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
+    If you setup a proper virtual host in
+    :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
     replace ``http://localhost:8000`` with your host name - like
     ``http://symfony.dev/app_dev.php/lucky/number``.
 
@@ -79,16 +80,6 @@ The method below the annotation - ``numberAction`` - is called the *controller*
 and is where you build the page. The only rule is that a controller *must*
 return a Symfony :ref:`Response <component-http-foundation-response>` object
 (and you'll even learn to bend this rule eventually).
-
-.. sidebar:: What's the ``app_dev.php`` in the URL?
-
-    Great question! By including ``app_dev.php`` in the URL, you're executing
-    Symfony through a file - ``web/app_dev.php`` - that boots it in the ``dev``
-    environment. This enables great debugging tools and rebuilds cached
-    files automatically. For production, you'll use clean URLs - like
-    ``http://localhost:8000/lucky/number`` - that execute a different file -
-    ``app.php`` - that's optimized for speed. To learn more about this and
-    environments, see :ref:`book-page-creation-prod-cache-clear`.
 
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -126,7 +117,7 @@ Just add a second method to ``LuckyController``::
 
 Try this out in your browser:
 
-    http://localhost:8000/app_dev.php/api/lucky/number
+    http://localhost:8000/api/lucky/number
 
 You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`::
 
@@ -247,7 +238,7 @@ The best part is that you can access this value and use it in your controller::
 
 Try it by going to ``/lucky/number/XX`` - replacing XX with *any* number:
 
-    http://localhost:8000/app_dev.php/lucky/number/7
+    http://localhost:8000/lucky/number/7
 
 You should see *7* lucky numbers printed out! You can get the value of any
 ``{placeholder}`` in your route by adding a ``$placeholder`` argument to
@@ -404,7 +395,7 @@ to put the content into the middle of the ``base.html.twig`` layout.
 
 Refresh to see your template in action!
 
-    http://localhost:8000/app_dev.php/lucky/number/9
+    http://localhost:8000/lucky/number/9
 
 If you view the source code, you now have a basic HTML structure thanks to
 ``base.html.twig``.
