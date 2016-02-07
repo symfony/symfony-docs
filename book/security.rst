@@ -1135,6 +1135,13 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``).
     :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
     See :doc:`Security Configuration Reference </reference/configuration/security>`.
 
+.. caution::
+
+    Notice that when using http-basic authenticated firewall there is no real 
+    way to log out : the only way to 'logout' is to have the browser stop sending your name and password 
+    on every request. Clearing your browser cache, restarting your browser usually helps, and some web developer
+    tools might be helpful here.
+
 .. _`security-encoding-password`:
 
 Dynamically Encoding a Password
