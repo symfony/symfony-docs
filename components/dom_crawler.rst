@@ -289,8 +289,6 @@ and :phpclass:`DOMNode` objects:
 
         $html = $crawler->html();
 
-    The ``html`` method is new in Symfony 2.3.
-
 Links
 ~~~~~
 

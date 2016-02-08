@@ -180,24 +180,6 @@ obvious (since it'll render the field for you).
 
     {{ form_rest(form) }}
 
-.. _reference-forms-twig-enctype:
-
-form_enctype(view)
-------------------
-
-.. note::
-
-    This helper was deprecated in Symfony 2.3 and will be removed in Symfony
-    3.0. You should use ``form_start()`` instead.
-
-If the form contains at least one file upload field, this will render the
-required ``enctype="multipart/form-data"`` form attribute. It's always a
-good idea to include this in your form tag:
-
-.. code-block:: html+twig
-
-    <form action="{{ path('form_submit') }}" method="post" {{ form_enctype(form) }}>
-
 Form Tests Reference
 --------------------
 
@@ -359,12 +341,6 @@ done by using a public ``vars`` property on the
 +------------------------+-------------------------------------------------------------------------------------+
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
 |                        | validation. Additionally, a ``required`` class is added to the label.               |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element. (deprecated as of 2.5, to be    |
-|                        | removed in 3.0, use ``attr["maxlength"]`` instead)                                  |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``pattern``            | Adds a ``pattern`` HTML attribute to the element. (deprecated as of 2.5, to be      |
-|                        | removed in 3.0, use ``attr["pattern"]`` instead)                                    |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``label``              | The string label that will be rendered.                                             |
 +------------------------+-------------------------------------------------------------------------------------+

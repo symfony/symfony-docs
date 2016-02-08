@@ -32,7 +32,6 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `label_attr`_                                                       |
 |             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                         |
@@ -108,7 +107,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

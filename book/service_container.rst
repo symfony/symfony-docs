@@ -811,13 +811,15 @@ Injecting the dependency by the setter method just needs a change of syntax:
     "property injection".
 
 .. _book-container-request-stack:
+.. _injecting-the-request:
 
-Injecting the Request
-~~~~~~~~~~~~~~~~~~~~~
+Accessing the Request in a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As of Symfony 2.4, instead of injecting the ``request`` service, you should
-inject the ``request_stack`` service and access the ``Request`` by calling
-the :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
+Whenever you need to access the current request in a service, you can either
+add it as an argument to the methods that need the request or inject the
+``request_stack`` service and access the ``Request`` by calling the
+:method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
 method::
 
     namespace Acme\HelloBundle\Newsletter;

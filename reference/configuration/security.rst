@@ -171,7 +171,6 @@ Each part will be explained in the next section.
 
                         # by default, a session must exist before submitting an authentication request
                         # if false, then Request::hasPreviousSession is not called during authentication
-                        # new in Symfony 2.3
                         require_previous_session: true
 
                     remember_me:

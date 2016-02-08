@@ -1014,8 +1014,6 @@ to the ``form()`` or the ``form_start()`` helper:
 
         <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
-            // The path() method was introduced in Symfony 2.8. Prior to 2.8,
-            // you had to use generate().
             'action' => $view['router']->path('target_route'),
             'method' => 'GET',
         )) ?>
@@ -1951,4 +1949,3 @@ Learn more from the Cookbook
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
-.. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form

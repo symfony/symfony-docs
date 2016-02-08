@@ -717,17 +717,6 @@ method to access the list of errors. It returns a
     // a FormErrorIterator instance representing the form tree structure
     $errors = $form->getErrors(true, false);
 
-.. tip::
-
-    In older Symfony versions, ``getErrors()`` returned an array. To use the
-    errors the same way in Symfony 2.5 or newer, you have to pass them to
-    PHP's :phpfunction:`iterator_to_array` function::
-
-        $errorsAsArray = iterator_to_array($form->getErrors());
-
-    This is useful, for example, if you want to use PHP's ``array_`` function
-    on the form errors.
-
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html

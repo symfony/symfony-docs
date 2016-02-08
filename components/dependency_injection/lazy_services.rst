@@ -27,7 +27,7 @@ the `ProxyManager bridge`_:
 
 .. code-block:: bash
 
-    $ composer require symfony/proxy-manager-bridge:~2.3
+    $ composer require symfony/proxy-manager-bridge
 
 .. note::
 

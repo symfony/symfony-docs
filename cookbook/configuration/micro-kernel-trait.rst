@@ -100,9 +100,9 @@ that define your bundles, your services and your routes:
     directly in PHP or load external configuration files (shown below).
 
 **configureRoutes(RouteCollectionBuilder $routes)**
-    Your job in this method is to add routes to the application. The ``RouteCollectionBuilder``
-    is new in Symfony 2.8 and has methods that make adding routes in PHP more fun.
-    You can also load external routing files (shown below).
+    Your job in this method is to add routes to the application. The
+    ``RouteCollectionBuilder`` has methods that make adding routes in PHP more
+    fun. You can also load external routing files (shown below).
 
 
 Advanced Example: Twig, Annotations and the Web Debug Toolbar

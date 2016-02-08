@@ -173,10 +173,10 @@ this code and changing the environment string.
     specifies if the application should run in "debug mode". Regardless
     of the environment, a Symfony application can be run with debug mode
     set to ``true`` or ``false``. This affects many things in the application,
-    such as if errors should be displayed or if cache files are
+    such as displaying stacktraces on error pages or if cache files are
     dynamically rebuilt on each request. Though not a requirement, debug mode
-    is generally set to ``true`` for the ``dev`` and ``test`` environments
-    and ``false`` for the ``prod`` environment.
+    is generally set to ``true`` for the ``dev`` and ``test`` environments and
+    ``false`` for the ``prod`` environment.
 
     Internally, the value of the debug mode becomes the ``kernel.debug``
     parameter used inside the :doc:`service container </book/service_container>`.
@@ -206,10 +206,6 @@ this code and changing the environment string.
                 ),
                 // ...
             ));
-
-    As of Symfony 2.3, showing errors or not no longer depends on the debug
-    mode. You'll need to enable that in your front controller by calling
-    :method:`Symfony\\Component\\Debug\\Debug::enable`.
 
 Selecting the Environment for Console Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
