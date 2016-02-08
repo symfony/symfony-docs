@@ -125,6 +125,12 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
     Returns the alphabetic characters and digits of the parameter value;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
+    Returns the parameter value converted to boolean;
+
+    .. versionadded:: 2.6
+        The ``getBoolean()`` method was introduced in Symfony 2.6.
+
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
