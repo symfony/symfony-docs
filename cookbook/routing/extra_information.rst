@@ -52,16 +52,25 @@ arguments to your controller, and as attributes of the ``Request`` object:
 
         return $collection;
 
-Now, you can access this extra parameter in your controller, either as an argument (if specified), or through the ``Request`` object::
+Now, you can access this extra parameter in your controller, as an argument to the controller method::
 
     use Symfony\Component\HttpFoundation\Request;
     
-    public function indexAction(Request $request, $page, $title)
+    public function indexAction($page, $title)
     {
         // ...
-        $titleAttribute = $request->attributes->get('title'); // same as $title
+    }
+
+Alternately, the title could be accessed through the ``Request`` object::
+
+    use Symfony\Component\HttpFoundation\Request;
+    
+    public function indexAction(Request $request, $page)
+    {
+        // ...
+        $title = $request->attributes->get('title');
         // ...
     }
 
 As you can see, the ``$title`` variable was never defined inside the route path,
-but you can still access its value from inside your controller, or from the ``Request`` object's ``attributes`` bag.
+but you can still access its value from inside your controller, through the method's argument, or from the ``Request`` object's ``attributes`` bag.
