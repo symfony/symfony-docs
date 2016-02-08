@@ -77,7 +77,7 @@ Faking the Method with ``_method``
 .. note::
 
     The ``_method`` functionality shown here is disabled by default in Symfony 2.2
-    and enabled by default in Symfony 2.3. To control it in Symfony 2.2, you
+    and enabled by default in Symfony 2.3 and above. To control it in Symfony 2.2, you
     must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
     before you handle the request (e.g. in your front controller). In Symfony
     2.3, use the :ref:`configuration-framework-http_method_override` option.
