@@ -1608,12 +1608,12 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/routing/scheme`
-* :doc:`/current/cookbook/routing/slash_in_parameter`
-* :doc:`/current/cookbook/routing/redirect_in_config`
-* :doc:`/current/cookbook/routing/method_parameters`
-* :doc:`/current/cookbook/routing/service_container_parameters`
-* :doc:`/current/cookbook/routing/custom_route_loader`
-* :doc:`/current/cookbook/routing/redirect_trailing_slash`
-* :doc:`/current/cookbook/routing/extra_information`
+* :doc:`/cookbook/routing/slash_in_parameter`
+* :doc:`/cookbook/routing/redirect_in_config`
+* :doc:`/cookbook/routing/method_parameters`
+* :doc:`/cookbook/routing/service_container_parameters`
+* :doc:`/cookbook/routing/custom_route_loader`
+* :doc:`/cookbook/routing/redirect_trailing_slash`
+* :doc:`/cookbook/routing/extra_information`
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
