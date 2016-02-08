@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-07T20:33:25Z
+
+@bocharsky-bw thanks for adding this missing doc!
+
+Note to mergers: the `getBoolean()` method was introduced in 2.6, so this PR must be merged in 2.7 branch. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-08T09:02:45Z
+
+:+1:
