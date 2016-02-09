@@ -582,6 +582,6 @@ There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
 Have fun!
 
 .. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
-.. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/2.7/app/Resources/views/base.html.twig
+.. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/3.0/app/Resources/views/base.html.twig
 .. _`Composer`: https://getcomposer.org
 .. _`find open source bundles`: http://knpbundles.com

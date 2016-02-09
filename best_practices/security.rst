@@ -270,7 +270,6 @@ the same ``getAuthorEmail`` logic you used above:
     use Symfony\Component\Security\Core\User\UserInterface;
     use AppBundle\Entity\Post;
 
-    // Voter class requires Symfony 2.8 or higher version
     class PostVoter extends Voter
     {
         const CREATE = 'create';

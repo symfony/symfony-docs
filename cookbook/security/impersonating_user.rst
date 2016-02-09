@@ -84,8 +84,6 @@ to show a link to exit impersonation:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-                had to use generate(). -->
             <a href="<?php echo $view['router']->path('homepage', array(
                 '_switch_user' => '_exit',
             ) ?>">

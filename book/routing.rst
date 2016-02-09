@@ -1543,10 +1543,6 @@ a template helper function:
             Read this blog post.
         </a>
 
-.. versionadded:: 2.8
-    The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method.
-
 .. index::
    single: Routing; Absolute URLs
 
@@ -1580,12 +1576,6 @@ URL) rather than the ``path()`` function (which generates a relative URL):
         )) ?>">
             Read this blog post.
         </a>
-
-.. versionadded:: 2.8
-    The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method with
-    ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-    passed as the third argument.
 
 .. note::
 

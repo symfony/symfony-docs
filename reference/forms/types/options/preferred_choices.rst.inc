@@ -21,9 +21,6 @@ you can list the most popular on top, like Bork Bork and Pirate::
         'preferred_choices' => array('muppets', 'arr')
     ));
 
-.. versionadded:: 2.7
-    Setting a callable or propery path was introduced in Symfony 2.7.
-
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
 

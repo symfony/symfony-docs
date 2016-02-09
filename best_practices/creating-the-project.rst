@@ -114,8 +114,7 @@ ProductBundle, then there's no advantage to having two separate bundles.
     Create only one bundle called AppBundle for your application logic
 
 Implementing a single AppBundle bundle in your projects will make your code
-more concise and easier to understand. Starting in Symfony 2.6, the official
-Symfony documentation uses the AppBundle name.
+more concise and easier to understand.
 
 .. note::
 

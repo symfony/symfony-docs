@@ -41,7 +41,6 @@ option defaults to 120 years ago to the current year.
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
 |                      | - `mapped`_                                                                   |
-|                      | - `read_only`_ (deprecated as of 2.8)                                         |
 +----------------------+-------------------------------------------------------------------------------+
 | Parent type          | :doc:`DateType </reference/forms/types/date>`                                 |
 +----------------------+-------------------------------------------------------------------------------+
@@ -68,10 +67,6 @@ These options inherit from the :doc:`DateType </reference/forms/types/date>`:
 
 placeholder
 ~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` | ``array``
 
@@ -117,5 +112,3 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
