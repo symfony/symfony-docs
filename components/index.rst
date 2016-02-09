@@ -6,6 +6,7 @@ The Components
 
     using_components
     asset/index
+    browser_kit/index
     class_loader/index
     config/index
     console/index
