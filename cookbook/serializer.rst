@@ -178,7 +178,8 @@ Enabling the Metadata Cache
 ---------------------------
 
 .. versionadded:: 2.7
-    Serializer was introduced in Symfony 2.7.
+    Serializer metadata and the ability to cache them were introduced in
+    Symfony 2.7.
 
 Metadata used by the Serializer component such as groups can be cached to
 enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
