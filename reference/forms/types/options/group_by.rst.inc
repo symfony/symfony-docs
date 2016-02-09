@@ -1,9 +1,6 @@
 group_by
 ~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``group_by`` option was introduced in Symfony 2.7.
-
 **type**: ``array``, ``callable`` or ``string`` **default**: ``null``
 
 You can easily "group" options in a select simply by passing a multi-dimensional

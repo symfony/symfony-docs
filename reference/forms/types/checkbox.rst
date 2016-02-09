@@ -24,7 +24,6 @@ true, if the box is unchecked, the value will be set to false.
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                          |
@@ -77,8 +76,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

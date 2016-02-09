@@ -445,11 +445,6 @@ interface only requires one method: ``loadUserByUsername($username)``::
         }
     }
 
-.. versionadded:: 2.8
-    The :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`
-    was introduced in 2.8. Prior to Symfony 2.8, you had to implement
-    ``Symfony\Component\Security\Core\User\UserProviderInterface``.
-
 .. tip::
 
     Don't forget to add the repository class to the

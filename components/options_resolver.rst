@@ -690,4 +690,3 @@ options in your code.
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
 .. _Form component: http://symfony.com/doc/current/components/form/introduction.html
 .. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md#260
-.. _`read the Symfony 2.5 documentation`: http://symfony.com/doc/2.5/components/options_resolver.html

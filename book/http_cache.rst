@@ -1095,12 +1095,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
         <!-- ... or a URL -->
         <?php echo $view['actions']->render(
-            // The url() method was introduced in Symfony 2.8. Prior to 2.8,
-            // you had to use generate($name, $parameters, UrlGeneratorInterface::ABSOLUTE_URL)
-            $view['router']->url(
-                'latest_news',
-                array('maxPerPage' => 5),
-            ),
+            $view['router']->url('latest_news', array('maxPerPage' => 5)),
             array('strategy' => 'esi'),
         ) ?>
 

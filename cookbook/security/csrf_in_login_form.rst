@@ -107,8 +107,6 @@ using the login form:
         <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... the login fields -->
 

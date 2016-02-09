@@ -331,11 +331,6 @@ compilation::
         // ...
     }
 
-.. versionadded:: 2.8
-    Prior to Symfony 2.8, extensions implementing ``CompilerPassInterface``
-    were not automatically registered. You needed to register them as explained
-    in :ref:`the next section <components-di-separate-compiler-passes>`.
-
 As ``process()`` is called *after* all extensions are loaded, it allows you to
 edit service definitions of other extensions as well as retrieving information
 about service definitions.

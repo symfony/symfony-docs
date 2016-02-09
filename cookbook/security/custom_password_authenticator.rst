@@ -16,12 +16,6 @@ your user submits their username and password).
 The Password Authenticator
 --------------------------
 
-.. versionadded:: 2.8
-    The ``SimpleFormAuthenticatorInterface`` interface was moved to the
-    ``Symfony\Component\Security\Http\Authentication`` namespace in Symfony
-    2.8. Prior to 2.8, it was located in the
-    ``Symfony\Component\Security\Core\Authentication`` namespace.
-
 First, create a new class that implements
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventually, this will allow you to create custom logic for authenticating
@@ -95,11 +89,6 @@ the user::
             return new UsernamePasswordToken($username, $password, $providerKey);
         }
     }
-
-.. versionadded:: 2.8
-    The ``CustomUserMessageAuthenticationException`` class is new in Symfony 2.8
-    and helps you return custom authentication messages. In 2.7 or earlier, throw
-    an ``AuthenticationException`` or any sub-class (you can still do this in 2.8).
 
 How it Works
 ------------

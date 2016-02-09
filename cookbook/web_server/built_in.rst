@@ -44,9 +44,6 @@ can change the socket passing an IP address and a port as a command-line argumen
 
         $ php bin/console server:start --force
 
-    .. versionadded:: 2.8
-        The ``--force`` option was introduced in Symfony 2.8.
-
 .. note::
 
     You can use the ``server:status`` command to check if a web server is
@@ -61,13 +58,13 @@ can change the socket passing an IP address and a port as a command-line argumen
     The first command shows if your Symfony application will be server through
     ``localhost:8000``, the second one does the same for ``192.168.0.1:8080``.
 
-.. note::
+.. tip::
 
-    Before Symfony 2.6, the ``server:run`` command was used to start the built-in
-    web server. This command is still available and behaves slightly different.
-    Instead of starting the server in the background, it will block the current
-    terminal until you terminate it (this is usually done by pressing Ctrl
-    and C).
+    Some systems do not support the ``server:start`` command, in these cases
+    you can execute the ``server:run`` command. This command behaves slightly
+    different. Instead of starting the server in the background, it will block
+    the current terminal until you terminate it (this is usually done by
+    pressing Ctrl and C).
 
 .. sidebar:: Using the built-in Web Server from inside a Virtual Machine
 

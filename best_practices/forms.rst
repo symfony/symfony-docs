@@ -85,9 +85,10 @@ makes them easier to re-use later.
 
     Add buttons in the templates, not in the form classes or the controllers.
 
-Since Symfony 2.3, you can add buttons as fields on your form. This is a nice
-way to simplify the template that renders your form. But if you add the buttons
-directly in your form class, this would effectively limit the scope of that form:
+The Symfony Form component allows you to add buttons as fields on your form.
+This is a nice way to simplify the template that renders your form. But if you
+add the buttons directly in your form class, this would effectively limit the
+scope of that form:
 
 .. code-block:: php
 

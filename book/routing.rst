@@ -1543,10 +1543,6 @@ a template helper function:
             Read this blog post.
         </a>
 
-.. versionadded:: 2.8
-    The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method.
-
 .. index::
    single: Routing; Absolute URLs
 
@@ -1581,12 +1577,6 @@ URL) rather than the ``path()`` function (which generates a relative URL):
             Read this blog post.
         </a>
 
-.. versionadded:: 2.8
-    The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method with
-    ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-    passed as the third argument.
-
 .. note::
 
     The host that's used when generating an absolute URL is automatically
@@ -1608,5 +1598,12 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/routing/scheme`
+* :doc:`/cookbook/routing/slash_in_parameter`
+* :doc:`/cookbook/routing/redirect_in_config`
+* :doc:`/cookbook/routing/method_parameters`
+* :doc:`/cookbook/routing/service_container_parameters`
+* :doc:`/cookbook/routing/custom_route_loader`
+* :doc:`/cookbook/routing/redirect_trailing_slash`
+* :doc:`/cookbook/routing/extra_information`
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
