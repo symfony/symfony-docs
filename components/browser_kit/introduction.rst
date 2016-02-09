@@ -15,7 +15,7 @@ You can install the component in two different ways:
 
 * :doc:`Install it via Composer </components/using_components>`
   (``symfony/browser-kit`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/BrowserKit).
+* Use the official Git repository (https://github.com/symfony/browser-kit).
 
 Basic Usage
 -----------
@@ -45,16 +45,17 @@ This method accepts a request and should return a response::
         }
     }
 
-For a simple implementation of a browser based on an HTTP layer, have a look
-at `Goutte`_. For an implementation based on ``HttpKernelInterface``, have a
-look at the Client provided by the :doc:`HttpKernel component </components/http_kernel/introduction>`.
+For a simple implementation of a browser based on the HTTP layer, have a look
+at `Goutte`_. For an implementation based on ``HttpKernelInterface``, have
+a look at the :class:`Symfony\\Component\\HttpKernel\\Client` provided by
+the :doc:`HttpKernel component </components/http_kernel/introduction>`.
 
 Making Requests
 ~~~~~~~~~~~~~~~
 
-Use the :method:`Symfony\\Component\\BrowserKit\\Client::request` method to make
-any HTTP request. The first two arguments are for the HTTP method and the
-requested URL::
+Use the :method:`Symfony\\Component\\BrowserKit\\Client::request` method to
+make HTTP requests. The first two arguments are the HTTP method and the requested
+URL::
 
     use Acme\Client;
 
@@ -63,16 +64,16 @@ requested URL::
 
 The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
-:doc:`DomCrawler component </components/dom_crawler>`, and which allows
-accessing and traversing HTML elements programmatically.
+:doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
+and traversing HTML elements programmatically.
 
 Clicking Links
 ~~~~~~~~~~~~~~
 
 The ``Crawler`` object is capable of simulating link clicks. First, pass the
-text content of the link to the ``selectLink()`` method, which returns you a
-``Link`` object. Then, pass this object to the ``click()`` method, which makes
-the needed HTTP GET request to simulate the link click::
+text content of the link to the ``selectLink()`` method, which returns a
+``Link`` object. Then, pass this object to the ``click()`` method, which
+performs the needed HTTP GET request to simulate the link click::
 
     use Acme\Client;
 
