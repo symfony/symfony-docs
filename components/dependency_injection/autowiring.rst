@@ -13,8 +13,8 @@ typehint which is useful in the field of `Rapid Application Development`_,
 when designing prototypes in early stages of large projects. It makes it easy
 to register a service graph and eases refactoring.
 
-Imagine you're building an API to publish statuses on a Twitter feed, which
-has to be obfuscated with ``ROT13`` (a special case of the Caesar cipher).
+Imagine you're building an API to publish statuses on a Twitter feed, obfuscated
+with `ROT13`_ (a special case of the Caesar cipher).
 
 Start by creating a ROT13 transformer class::
 
