@@ -1514,7 +1514,7 @@ to ``generate()``:
     The host that's used when generating an absolute URL is automatically
     detected using the current ``Request`` object. When generating absolute
     URLs from outside the web context (for instance in a console command) this
-    doesn't work. See :doc:`/cookbook/console/sending_emails` to learn how to
+    doesn't work. See :doc:`/cookbook/console/request_context` to learn how to
     solve this problem.
 
 Summary

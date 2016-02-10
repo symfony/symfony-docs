@@ -1,9 +1,8 @@
 .. index::
-   single: Console; Sending emails
    single: Console; Generating URLs
 
-How to Generate URLs and Send Emails from the Console
-=====================================================
+How to Generate URLs from the Console
+=====================================
 
 Unfortunately, the command line context does not know about your VirtualHost
 or domain name. This means that if you generate absolute URLs within a
@@ -84,43 +83,3 @@ from the ``router`` service and override its settings::
            // ... your code here
        }
    }
-
-Using Memory Spooling
----------------------
-
-.. versionadded:: 2.3
-    When using Symfony 2.3+ and SwiftmailerBundle 2.3.5+, the memory spool is now
-    handled automatically in the CLI and the code below is not necessary anymore.
-
-Sending emails in a console command works the same way as described in the
-:doc:`/cookbook/email/email` cookbook except if memory spooling is used.
-
-When using memory spooling (see the :doc:`/cookbook/email/spool` cookbook for more
-information), you must be aware that because of how Symfony handles console
-commands, emails are not sent automatically. You must take care of flushing
-the queue yourself. Use the following code to send emails inside your
-console command::
-
-    $message = new \Swift_Message();
-
-    // ... prepare the message
-
-    $container = $this->getContainer();
-    $mailer = $container->get('mailer');
-
-    $mailer->send($message);
-
-    // now manually flush the queue
-    $spool = $mailer->getTransport()->getSpool();
-    $transport = $container->get('swiftmailer.transport.real');
-
-    $spool->flushQueue($transport);
-
-Another option is to create an environment which is only used by console
-commands and uses a different spooling method.
-
-.. note::
-
-    Taking care of the spooling is only needed when memory spooling is used.
-    If you are using file spooling (or no spooling at all), there is no need
-    to flush the queue manually within the command.
