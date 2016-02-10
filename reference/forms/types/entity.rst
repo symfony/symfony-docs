@@ -24,6 +24,7 @@ objects from the database.
 | options     |                                                                  |
 |             | - `placeholder`_                                                 |
 |             | - `choice_translation_domain`_                                   |
+|             | - `translation_domain`_                                          |
 |             | - `expanded`_                                                    |
 |             | - `multiple`_                                                    |
 |             | - `preferred_choices`_                                           |
@@ -195,7 +196,6 @@ em
 If specified, this entity manager will be used to load the choices
 instead of the ``default`` entity manager.
 
-
 Overridden Options
 ------------------
 
@@ -216,6 +216,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 

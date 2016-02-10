@@ -47,7 +47,7 @@
   * :doc:`/cookbook/console/usage`
   * :doc:`/cookbook/console/style`
   * :doc:`/cookbook/console/command_in_controller`
-  * :doc:`/cookbook/console/sending_emails`
+  * :doc:`/cookbook/console/request_context`
   * :doc:`/cookbook/console/logging`
   * :doc:`/cookbook/console/commands_as_services`
 
@@ -265,3 +265,4 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
+  * :doc:`/cookbook/workflow/homestead`

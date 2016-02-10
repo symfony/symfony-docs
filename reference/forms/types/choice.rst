@@ -17,6 +17,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `choice_loader`_                                                           |
 |             | - `choice_label`_                                                            |
 |             | - `choice_attr`_                                                             |
+|             | - `choice_translation_domain`_                                               |
 |             | - `placeholder`_                                                             |
 |             | - `expanded`_                                                                |
 |             | - `multiple`_                                                                |
@@ -41,6 +42,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `mapped`_                                                                  |
 |             | - `read_only`_ (deprecated as of 2.8)                                        |
 |             | - `required`_                                                                |
+|             | - `translation_domain`_                                                      |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                                |
 +-------------+------------------------------------------------------------------------------+
@@ -360,6 +362,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 Field Variables
 ---------------
