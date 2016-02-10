@@ -47,7 +47,7 @@
   * :doc:`/cookbook/console/usage`
   * :doc:`/cookbook/console/style`
   * :doc:`/cookbook/console/command_in_controller`
-  * :doc:`/cookbook/console/sending_emails`
+  * :doc:`/cookbook/console/request_context`
   * :doc:`/cookbook/console/logging`
   * :doc:`/cookbook/console/commands_as_services`
 
@@ -176,6 +176,7 @@
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
   * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/multiple_guard_authenticators`
   * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/user_checkers`
@@ -259,3 +260,4 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
+  * :doc:`/cookbook/workflow/homestead`
