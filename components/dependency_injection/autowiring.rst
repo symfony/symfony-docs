@@ -4,13 +4,17 @@
 Defining Services Dependencies Automatically
 ============================================
 
-Autowiring allows to register services in the container with minimal configuration.
-It is useful in the field of `Rapid Application Development`_, when designing prototypes
-in early stages of large projects. It makes it easy to register a service graph
-and eases refactoring.
+.. versionadded:: 2.8
+    Support for autowiring services was introduced in Symfony 2.8.
 
-Imagine you're building an API to publish statuses on a Twitter feed, obfuscated
-with `ROT13`.. (a special case of the Caesar cipher).
+Autowiring allows to register services in the container with minimal configuration.
+It automatically resolves the service dependencies based on the constructor's
+typehint which is useful in the field of `Rapid Application Development`_,
+when designing prototypes in early stages of large projects. It makes it easy
+to register a service graph and eases refactoring.
+
+Imagine you're building an API to publish statuses on a Twitter feed, which
+has to be obfuscated with ``ROT13`` (a special case of the Caesar cipher).
 
 Start by creating a ROT13 transformer class::
 
@@ -47,8 +51,9 @@ And now a Twitter client using this transformer::
         }
     }
 
-The Dependency Injection Component will be able to automatically register the dependencies
-of this ``TwitterClient`` class by marking the ``twitter_client`` service as autowired:
+The DependencyInjection component will be able to automatically register
+the dependencies of this ``TwitterClient`` class when the ``twitter_client``
+service is marked as autowired:
 
 .. configuration-block::
 
@@ -133,9 +138,11 @@ Here is a typical controller using the ``twitter_client`` service::
         }
     }
 
-You can give a try to the API with ``curl``::
+You can give the API a try using ``curl``:
 
-    curl -d "user=kevin&key=ABCD&status=Hello" http://localhost:8000/tweet
+.. code-block:: bash
+
+    $ curl -d "user=kevin&key=ABCD&status=Hello" http://localhost:8000/tweet
 
 It should return ``OK``.
 
@@ -316,20 +323,20 @@ and a Twitter client using it::
         # app/config/services.yml
         services:
             rot13_transformer:
-                class:            'AppBundle\Rot13Transformer'
-                autowiring_types: 'AppBundle\TransformerInterface'
+                class:            AppBundle\Rot13Transformer
+                autowiring_types: AppBundle\TransformerInterface
 
             twitter_client:
-                class:    'AppBundle\TwitterClient'
+                class:    AppBundle\TwitterClient
                 autowire: true
 
             uppercase_rot13_transformer:
-                class:    'AppBundle\UppercaseRot13Transformer'
+                class:    AppBundle\UppercaseRot13Transformer
                 autowire: true
 
             uppercase_twitter_client:
-                class:     'AppBundle\TwitterClient'
-                arguments: [ '@uppercase_rot13_transformer' ]
+                class:     AppBundle\TwitterClient
+                arguments: ['@uppercase_rot13_transformer']
 
     .. code-block:: xml
 
@@ -373,16 +380,17 @@ and a Twitter client using it::
         $definition4->addArgument(new Reference('uppercase_rot13_transformer'));
         $container->setDefinition('uppercase_twitter_client', $definition4);
 
-It deserves some explanations. We now have 2 services implementing the ``TransformerInterface``.
-The autowiring subsystem cannot guess which one to use, this leads to errors
-like::
+This deserves some explanations. You now have two services implementing the
+``TransformerInterface``. The autowiring subsystem cannot guess which one
+to use which leads to errors like this:
+
+.. code-block:: text
 
       [Symfony\Component\DependencyInjection\Exception\RuntimeException]
       Unable to autowire argument of type "AppBundle\TransformerInterface" for the service "twitter_client".
 
 Fortunately, the ``autowiring_types`` key is here to specify which implementation
-to use by default. This key can take a list of types if necessary (using a YAML
-array).
+to use by default. This key can take a list of types if necessary.
 
 Thanks to this setting, the ``rot13_transformer`` service is automatically injected
 as an argument of the ``uppercase_rot13_transformer`` and ``twitter_client`` services. For
