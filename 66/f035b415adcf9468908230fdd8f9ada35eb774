@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-19T10:36:12Z
+
+Updated this PR. I did not add a section about the advantages and drawbacks, I don't have enough knowledge to write these down. However, I added a quick tip to improve the speed of the application on Homestead. I would like to link to http://www.whitewashing.de/2013/08/19/speedup_symfony2_on_vagrant_boxes.html , but I guess that's not possible due to symfony.com's external linking policy (/cc @javiereguiluz)?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-01-21T11:13:48Z
+
+Updated
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-09T16:59:44Z
+
+Is this ready to be merged?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-09T17:06:50Z
+
+Yes, (imo)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-10T14:41:50Z
+
+@WouterJ Was is inteded to base this on the `2.8` branch?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-10T14:57:00Z
+
+No, should work with all Symfony versions
