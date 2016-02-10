@@ -101,8 +101,10 @@ execute the second command only.
 
 .. tip::
 
-    If you want to use annotations, you can safely delete the XML (or YAML) files
-    after running these two commands.
+    If you want to use annotations, you must remove the XML (or YAML) files
+    after running these two commands. It is `not possible to mix XML/YAML metadata
+    definitions with annotated PHP entity class definitions 
+    <http://symfony.com/doc/current/book/doctrine.html#add-mapping-information>`_.
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 
