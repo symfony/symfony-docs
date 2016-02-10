@@ -50,6 +50,7 @@
   * :doc:`/components/dependency_injection/types`
   * :doc:`/components/dependency_injection/parameters`
   * :doc:`/components/dependency_injection/definitions`
+  * :doc:`/components/dependency_injection/autowiring`
   * :doc:`/components/dependency_injection/synthetic_services`
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
