@@ -133,6 +133,15 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     http_digest:
                         provider: some_key_from_above
+                    guard:
+                        # A key from the "providers" section of your security config, in case your user provider is different than the firewall
+                        provider:             ~
+
+                        # A service id (of one of your authenticators) whose start() method should be called when an anonymous user hits a page that requires authentication
+                        entry_point:          null
+
+                        # An array of service ids for all of your "authenticators"
+                        authenticators:       []
                     form_login:
                         # submit the login form here
                         check_path: /login_check
