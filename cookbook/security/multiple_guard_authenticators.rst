@@ -1,17 +1,20 @@
 How to Use Multiple Guard Authenticators
 ========================================
 
-Guard authentication component allows you to easily use many different authenticators at a time.
+The Guard authentication component allows you to easily use many different
+authenticators at a time.
 
-An entry point is a service id (of one of your authenticators) whose start()
-method should be called when an anonymous user hits a page that requires authentication.
+An entry point is a service id (of one of your authenticators) whose
+``start()`` method is called to start the authentication process.
 
-Multiple authenticators with shared entry point
+Multiple Authenticators with Shared Entry Point
 -----------------------------------------------
 
-Let's have an example of two authenticators: one based on login form, another one on facebook login.
-Both authenticators entry points redirect user to the same login page.
-However, in your configuration you have to explicitly say which entry point you want to use.
+Sometimes you want to offer your users different authentication mechanisms like
+a form login and a Facebook login while both entry points redirect the user to
+the same login page.
+However, in your configuration you have to explicitly say which entry point
+you want to use.
 
 This is how your security configuration can look in action:
 
@@ -45,7 +48,7 @@ This is how your security configuration can look in action:
                 <!-- ... -->
                 <firewall name="default">
                     <anonymous />
-                    <guard entry_point="app.form_login_authenticator">
+                    <guard entry-point="app.form_login_authenticator">
                         <authenticator>app.form_login_authenticator</authenticator>
                         <authenticator>app.facebook_connect_authenticator</authenticator>
                     </guard>
@@ -74,16 +77,14 @@ This is how your security configuration can look in action:
 
 There is one limitation with this approach - you have to use exactly one entry point.
 
-Multiple authenticators with separate entry points
+Multiple Authenticators with Separate Entry Points
 --------------------------------------------------
 
-Let's now have an example of two different authenticators: one based on login form, another one on an API token.
-When user hits secured area he should be redirected to the login page.
-Also when user hits an API endpoint, he should get a relevant API response.
-
-Solution for this use case is to provide guard authenticators in two separate firewalls.
-
-This is an example of your configuration:
+However, there are use cases where you have authenticators that protect different
+parts of your application. For example, you have a login form that protects
+the secured area of your application front-end and API end points that are
+protected with API tokens. As you can only configure one entry point per firewall,
+the solution is to split the configuration into two separate firewalls:
 
 .. configuration-block::
 
@@ -106,7 +107,7 @@ This is an example of your configuration:
             access_control:
                 - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
                 - { path: ^/api, roles: ROLE_API_USER }
-                - { path: ^/, roles: ROLE_ADMIN }
+                - { path: ^/, roles: ROLE_USER }
 
     .. code-block:: xml
 
@@ -133,7 +134,7 @@ This is an example of your configuration:
                 </firewall>
                 <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
                 <rule path="^/api" role="ROLE_API_USER" />
-                <rule path="^/" role="ROLE_ADMIN" />
+                <rule path="^/" role="ROLE_USER" />
             </config>
         </srv:container>
 
@@ -163,6 +164,6 @@ This is an example of your configuration:
             'access_control' => array(
                 array('path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
                 array('path' => '^/api', 'role' => 'ROLE_API_USER'),
-                array('path' => '^/', 'role' => 'ROLE_ADMIN'),
+                array('path' => '^/', 'role' => 'ROLE_USER'),
             ),
         ));
