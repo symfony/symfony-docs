@@ -1,3 +1,6 @@
+.. index::
+   single: Symfony versus Flat PHP
+
 .. _symfony2-versus-flat-php:
 
 Symfony versus Flat PHP
@@ -5,10 +8,11 @@ Symfony versus Flat PHP
 
 **Why is Symfony better than just opening up a file and writing flat PHP?**
 
-If you've never used a PHP framework, aren't familiar with the MVC philosophy,
-or just wonder what all the *hype* is around Symfony, this chapter is for
-you. Instead of *telling* you that Symfony allows you to develop faster and
-better software than with flat PHP, you'll see for yourself.
+If you've never used a PHP framework, aren't familiar with the
+model-view-controller `MVC`_ philosophy, or just wonder what all the *hype*
+is around Symfony, this chapter is for you. Instead of *telling* you that
+Symfony allows you to develop faster and better software than with flat PHP,
+you'll see for yourself.
 
 In this chapter, you'll write a simple application in flat PHP, and then
 refactor it to be more organized. You'll travel through time, seeing the
@@ -103,6 +107,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
 
+    <!-- templates/list.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -179,6 +184,7 @@ of the application are isolated in a new file called ``model.php``::
 
 The controller (``index.php``) is now very simple::
 
+    // index.php
     require_once 'model.php';
 
     $posts = get_all_posts();
@@ -197,7 +203,7 @@ offering various advantages and the opportunity to reuse almost everything
 on different pages.
 
 The only part of the code that *can't* be reused is the page layout. Fix
-that by creating a new ``layout.php`` file:
+that by creating a new ``templates/layout.php`` file:
 
 .. code-block:: html+php
 
@@ -217,6 +223,7 @@ the layout:
 
 .. code-block:: html+php
 
+    <!-- templates/list.php -->
     <?php $title = 'List of Posts' ?>
 
     <?php ob_start() ?>
@@ -237,8 +244,9 @@ the layout:
 You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-uses a Templating component that allows this to be accomplished cleanly
-and easily. You'll see it in action shortly.
+uses a :doc:`Templating </components/templating/introduction>` component
+that allows this to be accomplished cleanly and easily. You'll see it in
+action shortly.
 
 Adding a Blog "show" Page
 -------------------------
@@ -248,7 +256,7 @@ and reusable. To prove it, add a blog "show" page, which displays an individual
 blog post identified by an ``id`` query parameter.
 
 To begin, create a new function in the ``model.php`` file that retrieves
-an individual blog result based on a given id::
+an individual blog result based on a given ``id``::
 
     // model.php
     function get_post_by_id($id)
@@ -270,6 +278,7 @@ an individual blog result based on a given id::
 Next, create a new file called ``show.php`` - the controller for this new
 page::
 
+    // show.php
     require_once 'model.php';
 
     $post = get_post_by_id($_GET['id']);
@@ -281,6 +290,7 @@ the individual blog post:
 
 .. code-block:: html+php
 
+    <!-- templates/show.php -->
     <?php $title = $post['title'] ?>
 
     <?php ob_start() ?>
@@ -327,9 +337,10 @@ application change slightly, but start to become more flexible:
     /index.php/show     => Blog post show page (index.php executed)
 
 .. tip::
-    The ``index.php`` portion of the URI can be removed if using Apache
-    rewrite rules (or equivalent). In that case, the resulting URI of the
-    blog show page would be simply ``/show``.
+
+    Using Apache's ``mod_rewrite`` (or equivalent with other web servers),
+    the URL can easily be cleaned up - ``index.php`` portion removed -
+    to be just ``/show``.
 
 When using a front controller, a single PHP file (``index.php`` in this case)
 renders *every* request. For the blog post show page, ``/index.php/show`` will
@@ -364,8 +375,12 @@ on the requested URI::
     }
 
 For organization, both controllers (formerly ``index.php`` and ``show.php``)
-are now PHP functions and each has been moved into a separate file, ``controllers.php``::
+are now PHP functions and each has been moved into a separate file named
+``controllers.php``. The job of each PHP function, now called a
+:term:`controller`, is to use information from the ``Request`` object to create
+and return a ``Response`` object.::
 
+    // controllers.php
     function list_action()
     {
         $posts = get_all_posts();
@@ -384,6 +399,14 @@ one of the two controllers (the ``list_action()`` and ``show_action()``
 functions) is called. In reality, the front controller is beginning to look and
 act a lot like Symfony's mechanism for handling and routing requests.
 
+.. note::
+
+    Though similarly named, a "front controller" is different from the PHP functions
+    called "controllers" talked about in this chapter. A front controller is a short PHP
+    file through which all requests are directed. "Controller" functions are grouped in
+    several files and they hold your code which creates and returns the appropriate
+    ``Response`` object. Controllers are also called *actions*.
+
 .. tip::
 
    Another advantage of a front controller is flexible URLs. Notice that
@@ -393,7 +416,7 @@ act a lot like Symfony's mechanism for handling and routing requests.
 
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
-from satisfied. For example, the "routing" system is fickle, and wouldn't
+from satisfied. For example, the routing system is fickle, and wouldn't
 recognize that the list page (``/index.php``) should be accessible also via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.
@@ -401,13 +424,11 @@ routing, calling controllers, templates, etc.). More time will need to be
 spent to handle form submissions, input validation, logging and security.
 Why should you have to reinvent solutions to all these routine problems?
 
-.. _add-a-touch-of-symfony2:
-
 Add a Touch of Symfony
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony to the rescue. Before actually using Symfony, you need to download
-it. This can be done by using Composer, which takes care of downloading the
+it. This can be done by using `Composer`_, which takes care of downloading the
 correct version and all its dependencies and provides an autoloader. An
 autoloader is a tool that makes it possible to start using PHP classes
 without explicitly including the file containing the class.
@@ -427,7 +448,7 @@ content:
     }
 
 Next, `download Composer`_ and then run the following command, which will download Symfony
-into a vendor/ directory:
+into a ``vendor/`` directory:
 
 .. code-block:: bash
 
@@ -511,8 +532,6 @@ allowing HTTP headers and content to be added via an object-oriented interface.
 And while the responses in this application are simple, this flexibility
 will pay dividends as your application grows.
 
-.. _the-sample-application-in-symfony2:
-
 The Sample Application in Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -520,8 +539,10 @@ The blog has come a *long* way, but it still contains a lot of code for such
 a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
-from scratch, you could at least use Symfony's standalone `Routing`_ and
-`Templating`_ components, which already solve these problems.
+from scratch, you could at least use Symfony's standalone
+:doc:`Routing </components/routing/introduction>` and
+:doc:`Templating </components/templating/introduction>` components, which already
+solve these problems.
 
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
@@ -559,10 +580,15 @@ them for you. Here's the same sample application, now built in Symfony::
         }
     }
 
+First we have a "controller class" which is a convenient way to group several
+"controllers" together. So methods inside a controller class are controllers
+also called *actions*. They hold code which creates and returns the appropriate
+``Response`` object.
+
 The two controllers are still lightweight. Each uses the
 :doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list template is now quite a bit simpler:
+``Response`` object. The list (``list.php``) template is now quite a bit simpler:
 
 .. code-block:: html+php
 
@@ -585,7 +611,7 @@ database and the Templating component to render a template and return a
         <?php endforeach ?>
     </ul>
 
-The layout is nearly identical:
+The layout (``layout.php``) is nearly identical:
 
 .. code-block:: html+php
 
@@ -605,12 +631,13 @@ The layout is nearly identical:
 
 .. note::
 
-    The show template is left as an exercise, as it should be trivial to
-    create based on the list template.
+    The show (``show.php``) template is left as an exercise, as it should be trivial to
+    create based on the list (``list.php``) template.
 
-When Symfony's engine (called the ``Kernel``) boots up, it needs a map so
+When Symfony's engine (called the :term:`Kernel`) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format:
+A routing configuration map ``app/config/routing.yml`` provides this information
+in a readable format:
 
 .. code-block:: yaml
 
@@ -624,9 +651,9 @@ A routing configuration map provides this information in a readable format:
         defaults: { _controller: AppBundle:Blog:show }
 
 Now that Symfony is handling all the mundane tasks, the front controller
-is dead simple. And since it does so little, you'll never have to touch
-it once it's created (and if you use a `Symfony distribution`_, you won't
-even need to create it!)::
+``web/app.php`` is dead simple. And since it does so little, you'll never
+have to touch it once it's created (and if you use a `Symfony distribution`_,
+you won't even need to create it!)::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
@@ -637,16 +664,18 @@ even need to create it!)::
     $kernel = new AppKernel('prod', false);
     $kernel->handle(Request::createFromGlobals())->send();
 
-The front controller's only job is to initialize Symfony's engine (``Kernel``)
-and pass it a ``Request`` object to handle. Symfony's core then uses the
-routing map to determine which controller to call. Just like before, the
-controller method is responsible for returning the final ``Response`` object.
-There's really not much else to it.
+Front controller's only job is to initialize Symfony's engine (called the
+:term:`Kernel`) and pass it a ``Request`` object to handle. The Symfony core
+asks the router to inspect the request. The router matches the incoming URL
+to a specific route and returns information about the route, including the
+controller that should be executed. The correct controller from the matched
+route is executed and the code inside the controller creates and returns the
+appropriate ``Response`` object. The HTTP headers and content of the ``Response``
+object are sent back to the client.
 
-For a visual representation of how Symfony handles each request, see the
-:ref:`request flow diagram <request-flow-figure>`.
-
-.. _where-symfony2-delivers:
+.. figure:: /images/request-flow.png
+   :align: center
+   :alt: Symfony request flow
 
 Where Symfony Delivers
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -663,8 +692,11 @@ at how migrating the blog from flat PHP to Symfony has improved life:
   to develop or maintain low-level utilities** such as autoloading,
   :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
 
-* Symfony gives you **access to open source tools** such as Doctrine and the
-  Templating, Security, Form, Validation and Translation components (to name
+* Symfony gives you **access to open source tools** such as `Doctrine`_ and the
+  :doc:`Templating </components/templating/introduction>`,
+  :doc:`Security </components/security/introduction>`,
+  :doc:`Form </components/form/introduction>`, `Validator`_ and
+  :doc:`Translation </components/translation/introduction>` components (to name
   a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the Routing
@@ -685,7 +717,7 @@ Better Templates
 If you choose to use it, Symfony comes standard with a templating engine
 called `Twig`_ that makes templates faster to write and easier to read.
 It means that the sample application could contain even less code! Take,
-for example, the list template written in Twig:
+for example, lets rewrite ``layout.html.php`` template in Twig:
 
 .. code-block:: html+twig
 
@@ -707,7 +739,7 @@ for example, the list template written in Twig:
         </ul>
     {% endblock %}
 
-The corresponding ``layout.html.twig`` template is also easier to write:
+The corresponding ``layout.html.php`` template is also easier to write in Twig:
 
 .. code-block:: html+twig
 
@@ -732,12 +764,14 @@ Learn more from the Cookbook
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/service`
 
+
+.. _`MVC`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org
+.. _`SQL injection attack`: https://en.wikipedia.org/wiki/SQL_injection
+.. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/
-.. _`Routing`: https://github.com/symfony/routing
-.. _`Templating`: https://github.com/symfony/templating
+.. _`Symfony distribution`: https://github.com/symfony/symfony-standard
+.. _`Validator`: https://github.com/symfony/validator
+.. _`Varnish`: https://www.varnish-cache.org/
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
-.. _`Varnish`: https://www.varnish-cache.org/
-.. _`PHPUnit`: http://www.phpunit.de
-.. _`Symfony distribution`: https://github.com/symfony/symfony-standard
