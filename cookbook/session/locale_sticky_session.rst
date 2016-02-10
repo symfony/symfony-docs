@@ -54,7 +54,7 @@ how you determine the desired locale from the request::
         {
             return array(
                 // must be registered after the default Locale listener
-                KernelEvents::REQUEST => array(array('onKernelRequest', 16)),
+                KernelEvents::REQUEST => array(array('onKernelRequest', 15)),
             );
         }
     }
