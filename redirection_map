@@ -1,5 +1,6 @@
 /book/stable_api /contributing/code/bc
 /book/internals /reference/events
+/cookbook/console/sending_emails /cookbook/console/request_context
 /cookbook/deployment-tools /cookbook/deployment/tools
 /cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
 /cookbook/doctrine/doctrine_fixtures /bundles/DoctrineFixturesBundle/index
