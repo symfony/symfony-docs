@@ -47,7 +47,7 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
 
-    class LuckyController
+    class LuckyController extends Controller
     {
         /**
          * @Route("/lucky/number")
@@ -99,7 +99,7 @@ Just add a second method to ``LuckyController``::
     // src/AppBundle/Controller/LuckyController.php
 
     // ...
-    class LuckyController
+    class LuckyController extends Controller
     {
         // ...
 
@@ -132,7 +132,7 @@ You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundat
     // --> don't forget this new use statement
     use Symfony\Component\HttpFoundation\JsonResponse;
 
-    class LuckyController
+    class LuckyController extends Controller
     {
         // ...
 
@@ -165,7 +165,7 @@ at the end:
         // src/AppBundle/Controller/LuckyController.php
 
         // ...
-        class LuckyController
+        class LuckyController extends Controller
         {
             /**
              * @Route("/lucky/number/{count}")
@@ -219,7 +219,7 @@ The best part is that you can access this value and use it in your controller::
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
-    class LuckyController
+    class LuckyController extends Controller
     {
 
         /**
