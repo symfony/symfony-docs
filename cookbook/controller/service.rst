@@ -76,6 +76,13 @@ Then you can define it as a service as follows:
             'AppBundle\Controller\HelloController'
         ));
 
+.. caution::
+
+    If you are managing your routes with PHP annotation, you may need to add an
+    ``@Route`` annotation to the controller-class which specifies its service
+    ID. If you don't, the system may try to construct your controller without
+    any arguments. See the `FrameworkExtraBundle documentation`_ for details.
+
 Referring to the Service
 ------------------------
 
