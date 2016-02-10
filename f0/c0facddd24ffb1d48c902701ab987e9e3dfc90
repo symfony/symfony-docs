@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by mheki at 2016-02-01T12:05:29Z
+
+Any thoughts on this?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-09T22:43:20Z
+
+I am really sorry that we missed to review your pull request for such a long time @mheki! This looks really great and I just left you some minor comments.
+
+---------------------------------------------------------------------------
+
+by mheki at 2016-02-10T11:05:20Z
+
+Thanks for the review @xabbuh @WouterJ I've changed the docs according to your suggestions.
+Could you take a look again please?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-10T11:15:29Z
+
+Looks great, thanks for submitting the docs and your quick response @mheki! :+1:
+
+I think we should add a ``.. versionadded::`` directive indicating Guard was added in 2.8 directly after the headline, but we can add this after the merge.
+
+---------------------------------------------------------------------------
+
+by mheki at 2016-02-10T11:36:20Z
+
+Hmmm... I've just seen your commit `Removed all 2.x versionadded directives` made couple days ago...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-10T11:38:05Z
+
+@mheki yeah, for the 3.0 + master branch. I think it still makes sense for the 2.8 branch.
+
+---------------------------------------------------------------------------
+
+by mheki at 2016-02-10T12:44:05Z
+
+:+1:  added `versionadded`
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-10T13:43:50Z
+
+Nice, thanks! :)
