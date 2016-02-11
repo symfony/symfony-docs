@@ -23,9 +23,9 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
 | options     |                                                                        |
-|             | - `placeholder`_                                                       |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
+|             | - `placeholder`_                                                       |
 |             | - `preferred_choices`_                                                 |
 |             |                                                                        |
 |             | from the :doc:`form </reference/forms/types/form>` type                |
@@ -64,11 +64,11 @@ Inherited Options
 These options inherit from the :doc:`choice </reference/forms/types/choice>`
 type:
 
-.. include:: /reference/forms/types/options/placeholder.rst.inc
-
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
