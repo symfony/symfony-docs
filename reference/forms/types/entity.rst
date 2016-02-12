@@ -13,7 +13,6 @@ objects from the database.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
 | Options     | - `class`_                                                       |
-|             | - `data_class`_                                                  |
 |             | - `em`_                                                          |
 |             | - `group_by`_                                                    |
 |             | - `property`_                                                    |
@@ -21,6 +20,7 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choice_list`_                                                 |
 | options     | - `choices`_                                                     |
+|             | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
@@ -112,8 +112,6 @@ The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
 a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
 or the short alias name (as shown prior).
 
-.. include:: /reference/forms/types/options/data_class.rst.inc
-
 em
 ~~
 
@@ -125,7 +123,7 @@ instead of the default entity manager.
 group_by
 ~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` **default** ``null``
 
 This is a property path (e.g. ``author.name``) used to organize the
 available choices in groups. It only works when rendered as a select tag
@@ -136,7 +134,7 @@ the select tag, without a surrounding optgroup.
 property
 ~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
 This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
@@ -175,9 +173,9 @@ choice_list
 
 **default**: :class:`Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\EntityChoiceList`
 
-The purpose of the ``entity`` type is to create and configure this ``EntityChoiceList``
-for you, by using all of the above options. If you need to override this
-option, you may just consider using the :doc:`/reference/forms/types/choice`
+The purpose of the ``entity`` type is to create and configure this
+``EntityChoiceList`` for you, by using all of the above options. If you need
+to override this option, you may just consider using the :doc:`/reference/forms/types/choice`
 directly.
 
 choices
@@ -188,6 +186,14 @@ choices
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
 See :ref:`reference-forms-entity-choices`.
+
+data_class
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+This option is not used in favor of the ``class`` option which is required
+to query the entities.
 
 Inherited Options
 -----------------
