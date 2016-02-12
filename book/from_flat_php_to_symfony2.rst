@@ -27,7 +27,7 @@ A Simple Blog in Flat PHP
 
 In this chapter, you'll build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
-persisted to the database. Writing in flat PHP is quick and dirty::
+persisted to the database. Writing in flat PHP is quick and dirty:
 
 .. code-block:: html+php
 
@@ -103,7 +103,7 @@ the code that prepares the HTML "presentation"::
 
 
 The HTML code is now stored in a separate file ``templates/list.php``, which
-is primarily an HTML file that uses a template-like PHP syntax::
+is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
 
@@ -203,7 +203,7 @@ offering various advantages and the opportunity to reuse almost everything
 on different pages.
 
 The only part of the code that *can't* be reused is the page layout. Fix
-that by creating a new ``templates/layout.php`` file::
+that by creating a new ``templates/layout.php`` file:
 
 .. code-block:: html+php
 
@@ -219,7 +219,7 @@ that by creating a new ``templates/layout.php`` file::
     </html>
 
 The template ``templates/list.php`` can now be simplified to "extend"
-the ``templates/layout.php``::
+the ``templates/layout.php``:
 
 .. code-block:: html+php
 
@@ -286,7 +286,7 @@ page::
     require 'templates/show.php';
 
 Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog post::
+the individual blog post:
 
 .. code-block:: html+php
 
@@ -436,7 +436,7 @@ autoloader is a tool that makes it possible to start using PHP classes
 without explicitly including the file containing the class.
 
 In your root directory, create a ``composer.json`` file with the following
-content::
+content:
 
 .. code-block:: json
 
@@ -591,7 +591,7 @@ also called *actions*. They hold code which creates and returns the appropriate
 The two controllers are still lightweight. Each uses the
 :doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list ``list.php`` template is now quite a bit simpler::
+``Response`` object. The list ``list.php`` template is now quite a bit simpler:
 
 .. code-block:: html+php
 
@@ -614,7 +614,7 @@ database and the Templating component to render a template and return a
         <?php endforeach ?>
     </ul>
 
-The layout ``layout.php`` is nearly identical::
+The layout ``layout.php`` is nearly identical:
 
 .. code-block:: html+php
 
@@ -640,7 +640,7 @@ The layout ``layout.php`` is nearly identical::
 When Symfony's engine (called the :term:`Kernel`) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
 A routing configuration map ``app/config/routing.yml`` provides this information
-in a readable format::
+in a readable format:
 
 .. code-block:: yaml
 
@@ -687,7 +687,7 @@ If you choose to use it, Symfony comes standard with a templating engine
 called `Twig`_ that makes templates faster to write and easier to read.
 It means that the sample application could contain even less code! Take,
 for example, rewriting ``list.html.php`` template in Twig would look like
-this::
+this:
 
 .. code-block:: html+twig
 
@@ -709,7 +709,7 @@ this::
         </ul>
     {% endblock %}
 
-And rewriting ``layout.html.php`` template in Twig would look like this::
+And rewriting ``layout.html.php`` template in Twig would look like this:
 
 .. code-block:: html+twig
 
