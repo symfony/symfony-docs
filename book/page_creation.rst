@@ -1,6 +1,9 @@
 .. index::
    single: Create your First Page in Symfony
 
+.. _creating-pages-in-symfony2:
+.. _creating-pages-in-symfony
+
 Create your First Page in Symfony
 =================================
 
@@ -204,7 +207,7 @@ Dynamic URL Patterns: /lucky/number/{count}
 Woh, you're doing great! But Symfony's routing can do a lot more. Suppose
 now that you want a user to be able to go to ``/lucky/number/5`` to generate
 *5* lucky numbers at once. Update the route to have a "wildcard" placeholders
-``{counter}`` at the end:
+``{counter}`` at the end::
 
 .. configuration-block::
 
@@ -409,7 +412,7 @@ If you refresh your browser now, you'll get an error:
     Unable to find template "lucky/number.html.twig"
 
 Fix that by creating a new ``app/Resources/views/lucky`` directory and putting
-a ``number.html.twig`` file inside of it:
+a ``number.html.twig`` file inside of it::
 
 .. configuration-block::
 
@@ -518,7 +521,7 @@ Application Configuration
 
 Symfony Standard Edition comes with several built-in bundles (open your
 ``app/AppKernel.php`` file) and you'll probably install more. The main configuration
-file for bundles is ``app/config/config.yml``:
+file for bundles is ``app/config/config.yml``::
 
 .. configuration-block::
 

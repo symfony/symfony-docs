@@ -28,7 +28,7 @@ ways.
 Linux and Mac OS X Systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Open your command console and execute the following commands:
+Open your command console and execute the following commands::
 
 .. code-block:: bash
 
@@ -40,14 +40,14 @@ This will create a global ``symfony`` command in your system.
 Windows Systems
 ~~~~~~~~~~~~~~~
 
-Open your command console and execute the following command:
+Open your command console and execute the following command::
 
 .. code-block:: bash
 
     c:\> php -r "readfile('https://symfony.com/installer');" > symfony
 
 Then, move the downloaded ``symfony`` file to your project's directory and
-execute it as follows:
+execute it as follows::
 
 .. code-block:: bash
 
@@ -60,7 +60,7 @@ Creating the Symfony Application
 --------------------------------
 
 Once the Symfony Installer is available, create your first Symfony application
-with the ``new`` command:
+with the ``new`` command::
 
 .. code-block:: bash
 
@@ -92,7 +92,7 @@ Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In case your project needs to be based on a specific Symfony version, use the
-optional second argument of the ``new`` command:
+optional second argument of the ``new`` command::
 
 .. code-block:: bash
 
@@ -109,7 +109,7 @@ optional second argument of the ``new`` command:
     $ symfony new my_project 2.7.0-RC1
 
 The installer also supports a special version called ``lts`` which installs the
-most recent :ref:`Symfony LTS version <releases-lts>` available:
+most recent :ref:`Symfony LTS version <releases-lts>` available::
 
 .. code-block:: bash
 
@@ -141,14 +141,14 @@ Creating a Symfony Application with Composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once Composer is installed on your computer, execute the ``create-project`` Composer
-command to create a new Symfony application based on its latest stable version:
+command to create a new Symfony application based on its latest stable version::
 
 .. code-block:: bash
 
     $ composer create-project symfony/framework-standard-edition my_project_name
 
 If you need to base your application on a specific Symfony version, provide that
-version as the second argument of the ``create-project`` Composer command:
+version as the second argument of the ``create-project`` Composer command::
 
 .. code-block:: bash
 
@@ -165,7 +165,7 @@ Running the Symfony Application
 
 Symfony leverages the internal web server provided by PHP to run applications
 while developing them. Therefore, running a Symfony application is a matter of
-browsing the project directory and executing this command:
+browsing the project directory and executing this command::
 
 .. code-block:: bash
 
@@ -183,12 +183,12 @@ Instead of the Welcome Page, you may see a blank page or an error page.
 This is caused by a directory permission misconfiguration. There are several
 possible solutions depending on your operating system. All of them are
 explained in the :ref:`Setting up Permissions <book-installation-permissions>`
-section.
+section of this chapter.
 
 Using PHP's internal web server is only suitable while developing the application.
 In order to run Symfony applications on production servers, you'll have to
 configure your `Apache`_ or `Nginx`_ web server and virtual host as explained in
-:doc:`/cookbook/configuration/web_server_configuration`.
+cookbook article :doc:`/cookbook/configuration/web_server_configuration`.
 
 .. note::
 
@@ -197,14 +197,22 @@ configure your `Apache`_ or `Nginx`_ web server and virtual host as explained in
     `Nginx`_ web server and virtual host.
 
 When you are finished working on your Symfony application, you can stop the
+<<<<<<< 2dc8c63868d4d5677c0ec3350d6bdac807452b2f
 server by pressing `Ctrl+C` from terminal.
+=======
+server with the ``server:stop`` command::
+
+.. code-block:: bash
+
+    $ php app/console server:stop
+>>>>>>> made some new changes, corrected mistakes, undo some foolish deletions
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
 
 Symfony applications come with a visual server configuration tester to show if
 your environment is ready to use Symfony. Access the following URL to check your
-configuration:
+configuration::
 
 .. code-block:: text
 
@@ -216,9 +224,9 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the **``app/cache`` and
+    One common issue when installing Symfony is that the ``app/cache`` and
     ``app/logs`` directories must be writable both by the web server and the
-    command line user**. On a UNIX system, if your web server user is different
+    command line user. On a UNIX system, if your web server user is different
     from your command line user, you can try one of the following solutions.
 
     **1. Use the same user for the CLI and the web server**
@@ -226,7 +234,7 @@ If there are any issues, correct them now before moving on.
     In development environments, it is a common practice to use the same UNIX
     user for the CLI and the web server because it avoids any of these permissions
     issues when setting up new projects. This can be done by editing your web server
-    configuration (e.g. commonly ``httpd.conf`` or ``apache2.conf`` for Apache) and setting
+    configuration (e.g. commonly httpd.conf or apache2.conf for Apache) and setting
     its user to be the same as your CLI user (e.g. for Apache, update the ``User``
     and ``Group`` values).
     
@@ -299,7 +307,7 @@ and they are managed exclusively by Composer.
 
 Updating those third-party libraries frequently is a good practice to prevent bugs
 and security vulnerabilities. Execute the ``update`` Composer command to update
-them all at once:
+them all at once::
 
 .. code-block:: bash
 
@@ -309,6 +317,7 @@ them all at once:
 Depending on the complexity of your project, this update process can take up to
 several minutes to complete.
 
+<<<<<<< 2dc8c63868d4d5677c0ec3350d6bdac807452b2f
 .. tip::
 
     Symfony provides a command to check whether your project's dependencies
@@ -320,6 +329,40 @@ several minutes to complete.
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
+=======
+Using Source Control
+--------------------
+
+If you're using a version control system like `Git`_, you can safely commit all
+your project's code. The reason is that Symfony applications already contain a
+``.gitignore`` file specially prepared for Symfony.
+
+For specific instructions on how best to set up your project to be stored
+in Git, see cookbook article :doc:`/cookbook/workflow/new_project_git`.
+
+Checking out a Versioned Symfony Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using Composer to manage application's dependencies, it's recommended to
+ignore the entire ``vendor/`` directory before committing its code to the
+repository. This means that when checking out a Symfony application from a Git
+repository, there will be no ``vendor/`` directory and the application won't
+work out-of-the-box.
+
+In order to make it work, check out the Symfony application and then execute the
+``install`` Composer command to download and install all the dependencies required
+by the application::
+
+.. code-block:: bash
+
+    $ cd my_project_name/
+    $ composer install
+
+How does Composer know which specific dependencies to install? Because when a
+Symfony application is committed to a repository, the ``composer.json`` and
+``composer.lock`` files are also committed. These files tell Composer which
+dependencies (and which specific versions) to install for the application.
+>>>>>>> made some new changes, corrected mistakes, undo some foolish deletions
 
 Installing the Symfony Demo Application
 ---------------------------------------
@@ -330,7 +373,7 @@ conceived as a learning tool for Symfony newcomers and its source code contains
 tons of comments and helpful notes.
 
 In order to download the Symfony Demo application, execute the ``demo`` command
-of the Symfony Installer anywhere in your system:
+of the Symfony Installer anywhere in your system::
 
 .. code-block:: bash
 
@@ -368,38 +411,20 @@ applications:
 * The `Symfony REST Edition`_ shows how to build an application that provides a
   RESTful API using the `FOSRestBundle`_ and several other related bundles.
 
-Using Source Control
---------------------
+Configuration Formats
+---------------------
 
-If you're using a version control system like `Git`_, you can safely commit all
-your project's code. The reason is that Symfony applications already contain a
-``.gitignore`` file specially prepared for Symfony.
+Symfony supports several configuration formats: YAML, XML and PHP. Throughout
+the chapters, all configuration examples will be shown in all three formats.
+Each has its own advantages and disadvantages. The choice of which to use is up
+to you:
 
-For specific instructions on how best to set up your project to be stored
-in Git, see :doc:`/cookbook/workflow/new_project_git`.
+* *YAML*: Simple, clean and readable (learn more about YAML in the Yaml component
+  documentation :doc:`/components/yaml/yaml_format`);
 
-Checking out a Versioned Symfony Application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
-When using Composer to manage application's dependencies, it's recommended to
-ignore the entire ``vendor/`` directory before committing its code to the
-repository. This means that when checking out a Symfony application from a Git
-repository, there will be no ``vendor/`` directory and the application won't
-work out-of-the-box.
-
-In order to make it work, check out the Symfony application and then execute the
-``install`` Composer command to download and install all the dependencies required
-by the application:
-
-.. code-block:: bash
-
-    $ cd my_project_name/
-    $ composer install
-
-How does Composer know which specific dependencies to install? Because when a
-Symfony application is committed to a repository, the ``composer.json`` and
-``composer.lock`` files are also committed. These files tell Composer which
-dependencies (and which specific versions) to install for the application.
+* *PHP*: Very powerful but less readable than standard configuration formats.
 
 Beginning Development
 ---------------------
