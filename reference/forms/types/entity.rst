@@ -22,6 +22,9 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
+|             | - `choice_value`_                                                |
+|             | - `choice_name`_                                                 |
+|             | - `choice_attr`_                                                 |
 |             | - `placeholder`_                                                 |
 |             | - `choice_translation_domain`_                                   |
 |             | - `translation_domain`_                                          |
@@ -194,6 +197,12 @@ Inherited Options
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>`
 type:
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
