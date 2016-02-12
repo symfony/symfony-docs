@@ -2,7 +2,7 @@
    single: Create your First Page in Symfony
 
 .. _creating-pages-in-symfony2:
-.. _creating-pages-in-symfony
+.. _creating-pages-in-symfony:
 
 Create your First Page in Symfony
 =================================
