@@ -11,7 +11,7 @@ DEFAULT_PLACEHOLDER
 
 This option determines what value the field will return when the submitted
 value is empty. It does not set an initial value if none is provided when
-the form is rendered in a view (see `Data` or `Placeholder` options).
+the form is rendered in a view (see ``data`` or ``placeholder`` options).
 
 It helps you handling form submission and you can customize this to your needs.
 For example, if you want the ``gender`` choice field to be explicitly set to ``null``
