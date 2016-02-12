@@ -467,7 +467,7 @@ A Symfony Request in Action
 
 Without diving into too much detail, here is this process in action. Suppose
 you want to add a ``/contact`` page to your Symfony application. First, start
-by adding an entry for ``/contact`` to your routing configuration file:
+by adding an entry for ``/contact`` to your routing configuration file::
 
 .. configuration-block::
 
