@@ -9,7 +9,7 @@ Symfony versus Flat PHP
 **Why is Symfony better than just opening up a file and writing flat PHP?**
 
 If you've never used a PHP framework, aren't familiar with the
-model-view-controller `MVC`_ philosophy, or just wonder what all the *hype*
+`Model-View-Controller`_ (MVC) philosophy, or just wonder what all the *hype*
 is around Symfony, this chapter is for you. Instead of *telling* you that
 Symfony allows you to develop faster and better software than with flat PHP,
 you'll see for yourself.
@@ -27,7 +27,7 @@ A Simple Blog in Flat PHP
 
 In this chapter, you'll build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
-persisted to the database. Writing in flat PHP is quick and dirty:
+persisted to the database. Writing in flat PHP is quick and dirty::
 
 .. code-block:: html+php
 
@@ -102,8 +102,8 @@ the code that prepares the HTML "presentation"::
     require 'templates/list.php';
 
 
-The HTML code is now stored in a separate file (``templates/list.php``), which
-is primarily an HTML file that uses a template-like PHP syntax:
+The HTML code is now stored in a separate file ``templates/list.php``, which
+is primarily an HTML file that uses a template-like PHP syntax::
 
 .. code-block:: html+php
 
@@ -127,7 +127,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
         </body>
     </html>
 
-By convention, the file that contains all the application logic - ``index.php`` -
+By convention, the file that contains all the application logic
 is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
@@ -203,7 +203,7 @@ offering various advantages and the opportunity to reuse almost everything
 on different pages.
 
 The only part of the code that *can't* be reused is the page layout. Fix
-that by creating a new ``templates/layout.php`` file:
+that by creating a new ``templates/layout.php`` file::
 
 .. code-block:: html+php
 
@@ -218,8 +218,8 @@ that by creating a new ``templates/layout.php`` file:
         </body>
     </html>
 
-The template (``templates/list.php``) can now be simplified to "extend"
-the layout:
+The template ``templates/list.php`` can now be simplified to "extend"
+the ``templates/layout.php``::
 
 .. code-block:: html+php
 
@@ -256,7 +256,7 @@ and reusable. To prove it, add a blog "show" page, which displays an individual
 blog post identified by an ``id`` query parameter.
 
 To begin, create a new function in the ``model.php`` file that retrieves
-an individual blog result based on a given ``id``::
+an individual blog result based on a given id::
 
     // model.php
     function get_post_by_id($id)
@@ -282,7 +282,7 @@ page::
     require 'templates/show.php';
 
 Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog post:
+the individual blog post::
 
 .. code-block:: html+php
 
@@ -305,7 +305,7 @@ this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
 but this can't really be done easily yet. Worse, had you forgotten to clean
-the ``id`` parameter via the PHP ``intval()`` function, your
+the ``id`` parameter via the ``intval()`` PHP function, your
 entire database would be at risk for an `SQL injection attack`_.
 
 Another major problem is that each individual controller file must include
@@ -322,7 +322,7 @@ A "Front Controller" to the Rescue
 
 The solution is to use a :term:`front controller`: a single PHP file through
 which *all* requests are processed. With a front controller, the URIs for the
-application change slightly, but start to become more flexible:
+application change slightly, but start to become more flexible::
 
 .. code-block:: text
 
@@ -376,7 +376,7 @@ For organization, both controllers (formerly ``index.php`` and ``show.php``)
 are now PHP functions and each has been moved into a separate file named
 ``controllers.php``. The job of each PHP function, now called a
 :term:`controller`, is to use information from the ``Request`` object to create
-and return a ``Response`` object.::
+and return a ``Response`` object::
 
     // controllers.php
     function list_action()
@@ -415,12 +415,14 @@ act a lot like Symfony's mechanism for handling and routing requests.
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
 from satisfied. For example, the routing system is fickle, and wouldn't
-recognize that the list page (``/index.php``) should be accessible also via ``/``
+recognize that the list page - ``/index.php``  - should be accessible also via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.
 routing, calling controllers, templates, etc.). More time will need to be
 spent to handle form submissions, input validation, logging and security.
 Why should you have to reinvent solutions to all these routine problems?
+
+.. _add-a-touch-of-symfony2:
 
 Add a Touch of Symfony
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -432,7 +434,7 @@ autoloader is a tool that makes it possible to start using PHP classes
 without explicitly including the file containing the class.
 
 In your root directory, create a ``composer.json`` file with the following
-content:
+content::
 
 .. code-block:: json
 
@@ -520,7 +522,8 @@ incidentally, acts quite a bit like the Symfony templating engine::
 
 By bringing in a small part of Symfony, the application is more flexible and
 reliable. The ``Request`` provides a dependable way to access information
-about the HTTP request. Specifically, the ``getPathInfo()`` method returns
+about the HTTP request. Specifically, the
+:method:`Symfony\\Component\\HttpFoundation\\Request::getPathInfo` method returns
 a cleaned URI (always returning ``/show`` and never ``/index.php/show``).
 So, even if the user goes to ``/index.php/show``, the application is intelligent
 enough to route the request through ``show_action()``.
@@ -586,7 +589,7 @@ also called *actions*. They hold code which creates and returns the appropriate
 The two controllers are still lightweight. Each uses the
 :doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list (``list.php``) template is now quite a bit simpler:
+``Response`` object. The list ``list.php`` template is now quite a bit simpler::
 
 .. code-block:: html+php
 
@@ -609,7 +612,7 @@ database and the Templating component to render a template and return a
         <?php endforeach ?>
     </ul>
 
-The layout (``layout.php``) is nearly identical:
+The layout ``layout.php`` is nearly identical::
 
 .. code-block:: html+php
 
@@ -629,13 +632,13 @@ The layout (``layout.php``) is nearly identical:
 
 .. note::
 
-    The show (``show.php``) template is left as an exercise, as it should be trivial to
-    create based on the list (``list.php``) template.
+    The show ``show.php`` template is left as an exercise, as it should be trivial to
+    create based on the list ``list.php`` template.
 
 When Symfony's engine (called the :term:`Kernel`) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
 A routing configuration map ``app/config/routing.yml`` provides this information
-in a readable format:
+in a readable format::
 
 .. code-block:: yaml
 
@@ -675,8 +678,57 @@ object are sent back to the client.
    :align: center
    :alt: Symfony request flow
 
+PHP Templates versus Twig Templates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you choose to use it, Symfony comes standard with a templating engine
+called `Twig`_ that makes templates faster to write and easier to read.
+It means that the sample application could contain even less code! Take,
+for example, rewriting ``list.html.php`` template in Twig would look like
+this::
+
+.. code-block:: html+twig
+
+    {# app/Resources/views/blog/list.html.twig #}
+    {% extends "layout.html.twig" %}
+
+    {% block title %}List of Posts{% endblock %}
+
+    {% block body %}
+        <h1>List of Posts</h1>
+        <ul>
+            {% for post in posts %}
+            <li>
+                <a href="{{ path('blog_show', {'id': post.id}) }}">
+                    {{ post.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+
+And rewriting ``layout.html.php`` template in Twig would look like this::
+
+.. code-block:: html+twig
+
+    {# app/Resources/views/layout.html.twig #}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>{% block title %}Default title{% endblock %}</title>
+        </head>
+        <body>
+            {% block body %}{% endblock %}
+        </body>
+    </html>
+
+Twig is well-supported in Symfony. And while PHP templates will always
+be supported in Symfony, the many advantages of Twig will continue to
+be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
+
+
 Where Symfony Delivers
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 In the upcoming chapters, you'll learn more about how each piece of Symfony
 works and the recommended organization of a project. For now, have a look
@@ -709,53 +761,6 @@ And perhaps best of all, by using Symfony, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony community**!
 A good selection of Symfony community tools can be found on `KnpBundles.com`_.
 
-Better Templates
-----------------
-
-If you choose to use it, Symfony comes standard with a templating engine
-called `Twig`_ that makes templates faster to write and easier to read.
-It means that the sample application could contain even less code! Take,
-for example, lets rewrite ``layout.html.php`` template in Twig:
-
-.. code-block:: html+twig
-
-    {# app/Resources/views/blog/list.html.twig #}
-    {% extends "layout.html.twig" %}
-
-    {% block title %}List of Posts{% endblock %}
-
-    {% block body %}
-        <h1>List of Posts</h1>
-        <ul>
-            {% for post in posts %}
-            <li>
-                <a href="{{ path('blog_show', {'id': post.id}) }}">
-                    {{ post.title }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    {% endblock %}
-
-The corresponding ``layout.html.php`` template is also easier to write in Twig:
-
-.. code-block:: html+twig
-
-    {# app/Resources/views/layout.html.twig #}
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>{% block title %}Default title{% endblock %}</title>
-        </head>
-        <body>
-            {% block body %}{% endblock %}
-        </body>
-    </html>
-
-Twig is well-supported in Symfony. And while PHP templates will always
-be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
-
 Learn more from the Cookbook
 ----------------------------
 
@@ -763,7 +768,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 
-.. _`MVC`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+.. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`SQL injection attack`: https://en.wikipedia.org/wiki/SQL_injection
 .. _`Composer`: https://getcomposer.org
