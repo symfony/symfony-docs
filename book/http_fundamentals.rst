@@ -1,5 +1,5 @@
 .. index::
-   single: Symfony and HTTP Fundamentals
+   single: HTTP Fundamentals
 
 .. _symfony2-and-http-fundamentals:
 
@@ -172,6 +172,9 @@ Symfony is architected to match this reality.
     specification. A great tool to check both the request and response headers
     while browsing is the `Live HTTP Headers`_ extension for Firefox.
 
+.. index::
+   single: HTTP; HTTP in PHP
+
 Requests and Responses in PHP
 -----------------------------
 
@@ -204,8 +207,14 @@ message. PHP will create a true HTTP response and return it to the client:
     The URI requested is: /testing?foo=symfony
     The value of the "foo" parameter is: symfony
 
-Requests and Responses in Symfony
----------------------------------
+.. index::
+   single: HTTP; HTTP in Symfony
+   single: HTTP; Symfony Request object
+
+.. _book-request-object:
+
+Symfony Request Object
+----------------------
 
 Symfony provides an alternative to the raw PHP approach via two classes that
 allow you to interact with the HTTP request and response in an easier way.
@@ -240,39 +249,44 @@ have all the request information at your fingertips::
     $request->getMethod();    // GET, POST, PUT, DELETE, HEAD
     $request->getLanguages(); // an array of languages the client accepts
 
+``Request`` class has several public properties via which we can access information
+about the client request. As seen above, the ``$_GET`` and ``$_POST`` PHP global
+variables are accessible via the public ``query`` and ``request`` properties
+respectively, ``$_COOKIE`` is accessible via ``cookies``, ``$_FILES`` via ``files``
+and ``$_SERVER`` via ``server``. ``headers`` property is mostly equivalent to
+a subset of ``$_SERVER`` (e.g. $request->headers->get('User-Agent')). Each property is a
+:class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance (or a sub-class
+of: :class:`Symfony\\Component\\HttpFoundation\\ServerBag`,
+:class:`Symfony\\Component\\HttpFoundation\\FileBag`,
+:class:`Symfony\\Component\\HttpFoundation\\HeaderBag`,
+), which is a data holder class. All ``ParameterBag`` instances have methods to
+retrieve and update their data like: ``get()`` to return a parameter by name,
+``has()`` to return true if the parameter is defined, ``all()`` to return all
+the parameters and many more...
+
+.. _book-fundamentals-attributes:
+
+The ``Request`` class also has a public ``attributes`` property, which holds
+special data related to how the application works internally. For the
+Symfony Framework, the ``attributes`` holds the values returned by the
+matched route, like ``_controller``, ``id`` (if you have an ``{id}``
+"wildcard" placeholders), and even the name of the matched route (``_route``)
+(you will learn about these route parameters and controller arguments in
+:ref:`routing chapter <book-special-routing-parameters>`). The ``attributes``
+property exists entirely to be a place where you can prepare and store
+context-specific information about the request.
+
 As a bonus, the ``Request`` class does a lot of work in the background that
-you'll never need to worry about. For example, the ``isSecure()`` method
+you'll never need to worry about. For example, the
+:method:`Symfony\\Component\\HttpFoundation\\Request::isSecure` method
 checks the *three* different values in PHP that can indicate whether or not
 the user is connecting via a secured connection (i.e. HTTPS).
 
-.. sidebar:: ParameterBags and Request Attributes
+.. index::
+   single: HTTP; Symfony Respond object
 
-    As seen above, with the ``Request`` class the ``$_GET`` and ``$_POST``
-    variables are accessible via the public ``query`` and ``request`` properties
-    respectively. Each of these two objects are an instance of
-    :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` object, which has
-    methods like :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`,
-    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`,
-    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all` and more.
-    Public properties ``query``, ``request`` and ``cookies`` are also some instance
-    of the ``ParameterBag``, ``server`` property is an instance of
-    :class:`Symfony\\Component\\HttpFoundation\\ServerBag`, ``files`` property is
-    an instance of :class:`Symfony\\Component\\HttpFoundation\\FileBag` and
-    ``headers`` property is an instance of
-    :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`. These classes also
-    have methods like ``get()``, ``has()`` and ``all()`` plus many more.
-
-    .. _book-fundamentals-attributes:
-
-    The Request class also has a public ``attributes`` property, which holds
-    special data related to how the application works internally. For the
-    Symfony Framework, the ``attributes`` holds the values returned by the
-    matched route, like ``_controller``, ``id`` (if you have an ``{id}``
-    "wildcard" placeholders), and even the name of the matched route (``_route``)
-    (you will learn about these route parameters and controller arguments in
-    :doc:`routing chapter </book/routing>`). The ``attributes`` property exists
-    entirely to be a place where you can prepare and store context-specific
-    information about the request.
+Symfony Response Object
+-----------------------
 
 Symfony also provides a :class:`Symfony\\Component\\HttpFoundation\\Response`
 class: a simple PHP representation of an HTTP response message. This allows your
@@ -292,18 +306,38 @@ needs to be returned to the client::
     // print the HTTP headers followed by the content
     $response->send();
 
+Like the ``Request``, the ``Response`` also has a public ``headers`` property
+which is a :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag` instance.
+``ResponseHeaderBag`` instances have methods for getting and setting the response
+headers. The header names are normalized so that using ``Content-Type`` is equivalent
+to ``content-type`` or even ``content_type``.
+
+There are also special classes to make certain kinds of responses easier:
+
+* For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+  See :ref:`component-http-foundation-json-response`.
+
+* For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
+  See :ref:`component-http-foundation-serving-files`.
+
+* For streamed responses, there is
+  :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
+  See :ref:`streaming-response`.
+
+.. tip::
+
+    The ``Request`` and ``Response`` classes are part of a standalone component
+    included with Symfony called HttpFoundation. This component can be used entirely
+    independently of Symfony and also provides classes for handling sessions and
+    file uploads. So, now that you know the basics you can continue your research
+    on Symfony ``Request`` and ``Response`` object in the
+    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+
 If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
 the response. Even as you learn the many powerful features in Symfony, keep
 in mind that the goal of your application is always *to interpret a request
 and create the appropriate response based on your application logic*.
-
-.. tip::
-
-    The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called :doc:`HttpFoundation </components/http_foundation/introduction>`.
-    This component can be used entirely independently of Symfony and also provides
-    classes for handling sessions and file uploads.
 
 The Journey from the Request to the Response
 --------------------------------------------
@@ -319,6 +353,9 @@ content with security. How can you manage all of this and still keep your
 code organized and maintainable?
 
 Symfony was created to solve these problems so that you don't have to.
+
+.. index::
+    single: Front controller; Origins
 
 The Front Controller
 ~~~~~~~~~~~~~~~~~~~~
@@ -388,6 +425,9 @@ on that value. This can get ugly quickly::
 Solving this problem can be difficult. Fortunately it's *exactly* what Symfony
 is designed to do.
 
+.. index::
+    single: HTTP; Symfony request flow
+
 The Symfony Application Flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -398,7 +438,7 @@ the same simple pattern for every request:
    :align: center
    :alt: Symfony request flow
 
-   Incoming requests are interpreted by the :doc:`routing </book/routing>` and
+   Incoming requests are interpreted by the :doc:`router component </book/routing>` and
    passed to PHP functions that return ``Response`` objects.
 
 Each "page" of your site is defined in a routing configuration file that
@@ -466,11 +506,15 @@ by adding an entry for ``/contact`` to your routing configuration file:
         return $collection;
 
 When someone visits the ``/contact`` page, this route is matched, and the
-specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
-the ``AppBundle:Main:contact`` string is a short syntax that points to a
-specific controller ``contactAction`` inside a controller class called
-``MainController``. In the routing chapter you will also learn about
-routing parameters like ``_controller``, ``_route`` and the ``defaults`` array.
+specified controller is executed. As you'll learn in the
+:ref:`routing chapter <controller-string-syntax>`, the ``AppBundle:Main:contact``
+string is a short syntax named *logical controller name* that points to a specific
+controller ``contactAction()`` inside a controller class called ``MainController)+``.
+In the routing chapter you will also learn about routing parameters like
+``_controller``, ``_route`` and the ``defaults`` array.
+
+In the following very simple example, the controller simply creates a ``Response``
+object with the HTML ``<h1>Contact us!</h1>``::
 
     // src/AppBundle/Controller/MainController.php
     namespace AppBundle\Controller;
@@ -485,13 +529,13 @@ routing parameters like ``_controller``, ``_route`` and the ``defaults`` array.
         }
     }
 
-In this very simple example, the controller simply creates a ``Response`` object
-with the HTML ``<h1>Contact us!</h1>``. In the :doc:`controller chapter </book/controller>`,
-you'll learn how a controller can render templates, allowing your "presentation"
-code (i.e. anything that actually writes out HTML) to live in a separate
-template file. This frees up the controller to worry only about the hard
-stuff: interacting with the database, handling submitted data, or sending
-email messages.
+In the :doc:`controller chapter </book/controller>`, you'll learn how a controller can
+render templates, allowing your "presentation" code (i.e. anything that actually
+writes out HTML) to live in a separate template file. This frees up the controller
+to worry only about the hard stuff: interacting with the database, handling
+submitted data, or sending email messages.
+
+-.. _symfony2-build-your-app-not-your-tools:
 
 Symfony: Build your App, not your Tools
 ---------------------------------------
@@ -507,6 +551,9 @@ The good news is that none of these problems is unique. Symfony provides
 a framework full of tools that allow you to build your application, not your
 tools. With Symfony, nothing is imposed on you: you're free to use the full
 Symfony Framework, or just one piece of Symfony all by itself.
+
+.. index::
+    single: Symfony; Components
 
 Standalone Tools: The Symfony *Components*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -546,6 +593,9 @@ regardless of how your project is developed. To name a few:
 Each one of these components is decoupled and can be used in *any* PHP project,
 regardless of whether or not you use the Symfony Framework. Every part is
 made to be used if needed and replaced when necessary.
+
+.. index::
+    single: Symfony; Framework
 
 The Full Solution: The Symfony *Framework*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
