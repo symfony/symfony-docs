@@ -1011,6 +1011,9 @@ In :ref:`book-form-creating-form-classes` you will learn how to move the
 form building code into separate classes. When using an external form class
 in the controller, you can pass the action and method as form options::
 
+    use AppBundle\Form\TaskType;
+    // ...
+
     $form = $this->createForm(new TaskType(), $task, array(
         'action' => $this->generateUrl('target_route'),
         'method' => 'GET',
@@ -1056,8 +1059,8 @@ However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the task form::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -1093,7 +1096,7 @@ be used to quickly build a form object in the controller::
     // src/AppBundle/Controller/DefaultController.php
 
     // add this new use statement at the top of the class
-    use AppBundle\Form\Type\TaskType;
+    use AppBundle\Form\TaskType;
 
     public function newAction()
     {
@@ -1181,7 +1184,7 @@ easy to use in your application.
         # src/AppBundle/Resources/config/services.yml
         services:
             app.form.type.task:
-                class: AppBundle\Form\Type\TaskType
+                class: AppBundle\Form\TaskType
                 tags:
                     - { name: form.type, alias: app_task }
 
@@ -1194,7 +1197,7 @@ easy to use in your application.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
+                <service id="app.form.type.task" class="AppBundle\Form\TaskType">
                     <tag name="form.type" alias="app_task" />
                 </service>
             </services>
@@ -1206,7 +1209,7 @@ easy to use in your application.
         $container
             ->register(
                 'app.form.type.task',
-                'AppBundle\Form\Type\TaskType'
+                'AppBundle\Form\TaskType'
             )
             ->addTag('form.type', array(
                 'alias' => 'app_task',
@@ -1345,8 +1348,8 @@ Next, add a new ``category`` property to the ``Task`` class::
 Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
 
-    // src/AppBundle/Form/Type/CategoryType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/CategoryType.php
+    namespace AppBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -1375,11 +1378,10 @@ create a form class so that a ``Category`` object can be modified by the user::
 The end goal is to allow the ``Category`` of a ``Task`` to be modified right
 inside the task form itself. To accomplish this, add a ``category`` field
 to the ``TaskType`` object whose type is an instance of the new ``CategoryType``
-class:
-
-.. code-block:: php
+class::
 
     use Symfony\Component\Form\FormBuilderInterface;
+    use AppBundle\Form\CategoryType;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
