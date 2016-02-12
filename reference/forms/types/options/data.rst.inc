@@ -1,12 +1,12 @@
 data
 ~~~~
 
-**type**: ``mixed`` **default**: Defaults to field of the underlying object (if there is one)
+**type**: ``mixed`` **default**: Defaults to field of the underlying structure.
 
-When you create a form, each field initially displays the value of the
-corresponding property of the form's domain object (if an object is bound
-to the form). If you want to override the initial value for the form or
-just an individual field, you can set it in the data option::
+When you attach a form type to a form, it becomes a field that initially maps
+the value of the corresponding property or key of the form's domain data. If
+you want to override the initial value which will be rendered in the view for
+the form or any field, you can set it in the data option::
 
     $builder->add('token', 'hidden', array(
         'data' => 'abcdef',
@@ -15,5 +15,5 @@ just an individual field, you can set it in the data option::
 .. note::
 
     The default values for form fields are taken directly from the underlying
-    data structure (e.g. an entity or an array). The ``data`` option overrides
-    this default value.
+    data structure matching the field name with a property of an object or a
+    key of an array. The ``data`` option overrides this default value.
