@@ -1,8 +1,12 @@
 Length
 ======
 
-Validates that a given string length is *between* some minimum (if is not null or blank, cf. the `min`_ option) and maximum
-value.
+Validates that a given string length is *between* some minimum and maximum value.
+
+**Warning**: *null* and *blank* values are not handled by this constraint. To
+handle them, refers to the :doc:`/reference/constraints/Null`,
+:doc:`/reference/constraints/NotNull`, :doc:`/reference/constraints/Blank` and
+:doc:`/reference/constraints/NotBlank` constraints.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`               |
