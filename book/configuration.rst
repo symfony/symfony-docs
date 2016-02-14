@@ -164,7 +164,7 @@ Configuration Files of the Symfony Standard Edition
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The configuration files of the default Symfony Standard Edition are in
-YAML and follow this structure ::
+YAML and follow this structure:
 
 .. code-block:: text
 
