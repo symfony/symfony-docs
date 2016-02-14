@@ -12,6 +12,7 @@
   * :doc:`/cookbook/bundles/installation`
   * :doc:`/cookbook/bundles/best_practices`
   * :doc:`/cookbook/bundles/inheritance`
+  * :doc:`/cookbook/bundles/dependencies`
   * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/remove`
   * :doc:`/cookbook/bundles/extension`
