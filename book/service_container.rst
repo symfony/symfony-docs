@@ -1,9 +1,8 @@
 .. index::
-   single: Service Container
-   single: DependencyInjection; Container
+   single: Service container: Introduction
 
-Service Container
-=================
+Service or Dependency Injection Container
+=========================================
 
 A modern PHP application is full of objects. One object may facilitate the
 delivery of email messages while another may allow you to persist information
@@ -12,15 +11,16 @@ your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
 into many objects that handle each task.
 
-This chapter is about a special PHP object in Symfony that helps
-you instantiate, organize and retrieve the many objects of your application.
-This object, called a service container, will allow you to standardize and
-centralize the way objects are constructed in your application. The container
-makes your life easier, is super fast, and emphasizes an architecture that
-promotes reusable and decoupled code. Since all core Symfony classes
-use the container, you'll learn how to extend, configure and use any object
-in Symfony. In large part, the service container is the biggest contributor
-to the speed and extensibility of Symfony.
+This chapter is about a special **PHP object in Symfony, called a service
+container or dependency injection container, that helps you instantiate,
+organize and retrieve the many objects of your application**. This object,
+allows to standardize and centralize the way objects are constructed
+in an application. The container makes your life easier, is super fast,
+and emphasizes an architecture that promotes reusable and decoupled code.
+Since **all core Symfony classes use the container**, you'll learn how to
+extend, configure and use any object in Symfony. In large part, the service
+container is the biggest contributor to the speed and extensibility of
+Symfony.
 
 Finally, configuring and using the service container is easy. By the end
 of this chapter, you'll be comfortable creating your own objects via the
@@ -34,26 +34,25 @@ the service container makes writing good code so easy.
     the :doc:`DependencyInjection component documentation </components/dependency_injection/introduction>`.
 
 .. index::
-   single: Service Container; What is a service?
+   single: Service container; What is a service?
 
 What is a Service?
 ------------------
 
-Put simply, a :term:`Service` is any PHP object that performs some sort of
-"global" task. It's a purposefully-generic name used in computer science
-to describe an object that's created for a specific purpose (e.g. delivering
-emails). Each service is used throughout your application whenever you need
-the specific functionality it provides. You don't have to do anything special
-to make a service: simply write a PHP class with some code that accomplishes
-a specific task. Congratulations, you've just created a service!
+Put simply, **a :term:`service` is any PHP object that performs some sort of
+"global" task**. It's a purposefully-generic name used in computer science to
+describe an object that's created for a specific purpose (e.g. delivering
+emails). Each service is used throughout an application whenever the specific
+functionality it provides is needed. Creating a service is a simple matter of
+creating a PHP class that accomplishes a specific task.
 
-.. note::
+.. caution::
 
     As a rule, a PHP object is a service if it is used globally in your
-    application. A single ``Mailer`` service is used globally to send
-    email messages whereas the many ``Message`` objects that it delivers
-    are *not* services. Similarly, a ``Product`` object is not a service,
-    but an object that persists ``Product`` objects to a database *is* a service.
+    application. A single ``mailer`` service is used globally to send email
+    messages whereas the many ``Message`` objects that it delivers are *not*
+    services. Similarly, a ``Product`` object is not a service, but an object
+    that persists ``Product`` objects to a database *is* a service.
 
 So what's the big deal then? The advantage of thinking about "services" is
 that you begin to think about separating each piece of functionality in your
@@ -67,17 +66,17 @@ classes is a well-known and trusted object-oriented best-practice. These skills
 are key to being a good developer in almost any language.
 
 .. index::
-   single: Service Container; What is a service container?
+   single: Service container; What is a service or dependency injection container
 
-What is a Service Container?
-----------------------------
+What is a Service or Dependency Injection Container?
+----------------------------------------------------
 
-A :term:`Service Container` (or *dependency injection container*) is simply
-a PHP object that manages the instantiation of services (i.e. objects).
+A :term:`service container` or dependency injection container is simply
+a **PHP object that manages the instantiation of services (i.e. objects)**.
 
-For example, suppose you have a simple PHP class that delivers email messages.
-Without a service container, you must manually create the object whenever
-you need it::
+For example, suppose you have a simple PHP class, called ``Mailer``, that
+delivers email messages. Without a service container, you must manually create
+the object whenever you need it::
 
     use AppBundle\Mailer;
 
@@ -85,25 +84,25 @@ you need it::
     $mailer->send('ryan@example.com', ...);
 
 This is easy enough. The imaginary ``Mailer`` class allows you to configure
-the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``, etc).
-But what if you wanted to use the mailer service somewhere else? You certainly
-don't want to repeat the mailer configuration *every* time you need to use
-the ``Mailer`` object. What if you needed to change the ``transport`` from
-``sendmail`` to ``smtp`` everywhere in the application? You'd need to hunt
-down every place you create a ``Mailer`` service and change it.
+the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``,
+etc.). But what if you wanted to send an email from somewhere else in your
+code? You certainly don't want to repeat the mailer configuration *every* time
+you need to use the ``Mailer`` object. What if you needed to change the transport
+method from ``sendmail`` to ``smtp`` everywhere in the application? You'd
+need to hunt down every place you create a ``Mailer`` object and change it.
 
 .. index::
-   single: Service Container; Configuring services
+   single: Service Container; Creating/Configuring services in the container
 
 .. _service-container-creating-service:
 
 Creating/Configuring Services in the Container
 ----------------------------------------------
 
-A better answer is to let the service container create the ``Mailer`` object
+A better approach is to let the service container create the ``Mailer`` object
 for you. In order for this to work, you must *teach* the container how to
-create the ``Mailer`` service. This is done via configuration, which can
-be specified in YAML, XML or PHP:
+create the ``Mailer`` service (i.e. object). This is done in service
+configuration file, which can be specified in YAML, XML or PHP::
 
 .. configuration-block::
 
@@ -141,19 +140,14 @@ be specified in YAML, XML or PHP:
             array('sendmail')
         ));
 
-.. note::
-
-    When Symfony initializes, it builds the service container using the
-    application configuration (``app/config/config.yml`` by default). The
-    exact file that's loaded is dictated by the ``AppKernel::registerContainerConfiguration()``
-    method, which loads an environment-specific configuration file (e.g.
-    ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
-    for ``prod``).
+``app.mailer`` defines the name under the which service is registered inside
+service container. It tells a service controller what service he needs to
+instantiate.
 
 An instance of the ``AppBundle\Mailer`` class is now available via the service
-container. The container is available in any traditional Symfony controller
-where you can access the services of the container via the ``get()`` shortcut
-method::
+container. **The service container is available in any controller class which
+extends Symfony's base ``Controller`` class.** This gives access to the ``get()``
+shortcut method used to access the services of the container::
 
     class HelloController extends Controller
     {
@@ -168,35 +162,39 @@ method::
     }
 
 When you ask for the ``app.mailer`` service from the container, the container
-constructs the object and returns it. This is another major advantage of
-using the service container. Namely, a service is *never* constructed until
-it's needed. If you define a service and never use it on a request, the service
-is never created. This saves memory and increases the speed of your application.
-This also means that there's very little or no performance hit for defining
-lots of services. Services that are never used are never constructed.
+constructs the ``Mailer`` service (i.e. object) and returns it. This is another
+major advantage of using the service container. Namely, a service is *never*
+constructed until it's needed. If you define a service and never use it on a
+request, the service is never created. This saves memory and increases the
+speed of your application. This also means that there's very little or no
+performance hit for defining lots of services. Services that are never used
+are never constructed.
 
 As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
-":doc:`/cookbook/service_container/scopes`" cookbook article.
+":doc:`/cookbook/service_container/shared`" cookbook article.
 
-.. note::
+.. seealso::
 
-    In this example, the controller extends Symfony's base Controller, which
-    gives you access to the service container itself. You can then use the
-    ``get`` method to locate and retrieve the ``app.mailer`` service from
-    the service container. You can also define your :doc:`controllers as services </cookbook/controller/service>`.
-    This is a bit more advanced and not necessary, but it allows you to inject
-    only the services you need into your controller.
+    Controller class can also be defined as a service. When using a controller
+    defined as a service, it will most likely not extend the base
+    ``Controller`` class. Instead of relying on its service container with
+    access to all services, you'll inject the controller class only with
+    the services you need. To learn more read
+    :doc:` </cookbook/controller/service>` cookbook article.
+
+.. index::
+   single: Service Container; Service container parameters
 
 .. _book-service-container-parameters:
 
-Service Parameters
-------------------
+Service Container Parameters
+----------------------------
 
 The creation of new services (i.e. objects) via the container is pretty
-straightforward. Parameters make defining services more organized and flexible:
+straightforward. Parameters make defining services more organized and flexible::
 
 .. configuration-block::
 
@@ -251,6 +249,12 @@ parameter and uses it in the service definition.
 
 .. note::
 
+    Parameters can be defined in ``app/config/service.yml`` service
+    configuration file like seen above or inside ``app/config/parameters.yml``.
+    The end result is exactly the same.
+
+.. note::
+
     If you want to use a string that starts with an ``@`` sign as a parameter
     value (e.g. a very safe mailer password) in a YAML file, you need to escape
     it by adding another ``@`` sign (this only applies to the YAML format):
@@ -271,16 +275,8 @@ parameter and uses it in the service definition.
 
         <argument type="string">http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
 
-.. caution::
-
-    You may receive a
-    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-    when passing the ``request`` service as an argument. To understand this
-    problem better and learn how to solve it, refer to the cookbook article
-    :doc:`/cookbook/service_container/scopes`.
-
 The purpose of parameters is to feed information into services. Of course
-there was nothing wrong with defining the service without using any parameters.
+there is nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
 
 * separation and organization of all service "options" under a single
@@ -296,10 +292,14 @@ third-party bundles will *always* use parameters as they make the service
 stored in the container more configurable. For the services in your application,
 however, you may not need the flexibility of parameters.
 
-Array Parameters
-~~~~~~~~~~~~~~~~
+.. seealso::
 
-Parameters can also contain array values. See :ref:`component-di-parameters-array`.
+    To learn more about container parameters read dependency injection
+    documentation article :doc:`/components/dependency_injection/parameters`.
+    You will also learn that parameters can also contain array values.
+
+.. index::
+   single: Service Container; Other container configuration resources
 
 Importing other Container Configuration Resources
 -------------------------------------------------
@@ -312,20 +312,20 @@ Importing other Container Configuration Resources
     could be loaded from anywhere (e.g. a database or even via an external
     web service).
 
-The service container is built using a single configuration resource
-(``app/config/config.yml`` by default). All other service configuration
-(including the core Symfony and third-party bundle configuration) must
-be imported from inside this file in one way or another. This gives you absolute
-flexibility over the services in your application.
+The service container is built using a single configuration resource -
+default application configuration file ``app/config/config.yml``. All other
+service configuration (including the core Symfony and third-party bundle
+configuration) must be imported from inside this file in one way or another.
+This gives absolute flexibility over the services in an application.
 
 External service configuration can be imported in two different ways. The first
 method, commonly used to import container configuration from the bundles you've
-created - is via the ``imports`` directive. The second method, although slightly more
-complex offers more flexibility and is commonly used to import third-party bundle
-configuration. Read on to learn more about both methods.
+created - is via the ``imports`` directive. The second method, although slightly
+more complex offers more flexibility and is commonly used to import third-party
+bundle configuration. Read on to learn more about both methods.
 
 .. index::
-   single: Service Container; Imports
+   single: Service Container; Other container configuration resources - imports
 
 .. _service-container-imports-directive:
 
@@ -333,20 +333,19 @@ Importing Configuration with ``imports``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 So far, you've placed your ``app.mailer`` service container definition directly
-in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the AcmeHelloBundle, it
-makes more sense to put the ``app.mailer`` container definition inside the
+in the application service configuration file (i.e. ``app/config/services.yml``).
+Of course, since the ``Mailer`` class itself lives inside the AppBundle, it
+makes more sense to put the ``app.mailer`` service definition inside the
 bundle as well.
 
-First, move the ``app.mailer`` container definition into a new container resource
-file inside AcmeHelloBundle. If the ``Resources`` or ``Resources/config``
-directories don't exist, create them.
+First, move the ``app.mailer`` service definition into a new container resource
+file ``services.yml`` inside AppBundle located at ``Resources/config`` directory::
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         parameters:
             app.mailer.transport: sendmail
 
@@ -357,7 +356,7 @@ directories don't exist, create them.
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -377,7 +376,7 @@ directories don't exist, create them.
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
@@ -388,9 +387,9 @@ directories don't exist, create them.
         ));
 
 The definition itself hasn't changed, only its location. Of course the service
-container doesn't know about the new resource file. Fortunately, you can
-easily import the resource file using the ``imports`` key in the application
-configuration.
+container doesn't know about the new resource file, so the new resource must be
+imported from inside default application configuration file
+``app/config/config.yml`` using the ``imports`` key::
 
 .. configuration-block::
 
@@ -398,7 +397,7 @@ configuration.
 
         # app/config/config.yml
         imports:
-            - { resource: '@AcmeHelloBundle/Resources/config/services.yml' }
+            - { resource: '@AppBundle/Resources/config/services.yml' }
 
     .. code-block:: xml
 
@@ -410,23 +409,23 @@ configuration.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
-                <import resource="@AcmeHelloBundle/Resources/config/services.xml"/>
+                <import resource="@AppBundle/Resources/config/services.xml"/>
             </imports>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
-        $loader->import('@AcmeHelloBundle/Resources/config/services.php');
-
-.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
+        $loader->import('@AppBundle/Resources/config/services.php');
 
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHelloBundle`` syntax resolves the directory path
-of the AcmeHelloBundle bundle. This helps you specify the path to the resource
-without worrying later if you move the AcmeHelloBundle to a different directory.
+file. The special ``@AppBundle`` syntax resolves the directory path
+of the AppBundle bundle. This helps you specify the path to the resource
+without worrying later if you move the AppBundle to a different directory.
+
+.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
 .. index::
    single: Service Container; Extension configuration
@@ -447,9 +446,9 @@ like you've seen so far. Namely, a bundle uses one or more configuration
 resource files (usually XML) to specify the parameters and services for that
 bundle. However, instead of importing each of these resources directly from
 your application configuration using the ``imports`` directive, you can simply
-invoke a *service container extension* inside the bundle that does the work for
-you. A service container extension is a PHP class created by the bundle author
-to accomplish two things:
+**invoke a service container extension inside the third-party bundle** that
+does the work for you. **A *service container extension* is a PHP class created
+by the bundle author to accomplish two things**:
 
 * import all service container resources needed to configure the services for
   the bundle;
@@ -462,9 +461,9 @@ In other words, a service container extension configures the services for
 a bundle on your behalf. And as you'll see in a moment, the extension provides
 a sensible, high-level interface for configuring the bundle.
 
-Take the FrameworkBundle - the core Symfony Framework bundle - as an
+Take the FrameworkBundle, the core Symfony Framework bundle, as an
 example. The presence of the following code in your application configuration
-invokes the service container extension inside the FrameworkBundle:
+invokes the service container extension inside the FrameworkBundle::
 
 .. configuration-block::
 
@@ -512,8 +511,8 @@ invokes the service container extension inside the FrameworkBundle:
             // ...
         ));
 
-When the configuration is parsed, the container looks for an extension that
-can handle the ``framework`` configuration directive. The extension in question,
+When the configuration is parsed, the **container looks for an extension that
+can handle the ``framework`` configuration directive**. The extension in question,
 which lives in the FrameworkBundle, is invoked and the service configuration
 for the FrameworkBundle is loaded. If you remove the ``framework`` key
 from your application configuration file entirely, the core Symfony services
@@ -537,22 +536,37 @@ notifying you of options that are missing or the wrong data type.
 
 When installing or configuring a bundle, see the bundle's documentation for
 how the services for the bundle should be installed and configured. The options
-available for the core bundles can be found inside the :doc:`Reference Guide </reference/index>`.
+available for the core bundles can be found inside the
+:doc:`Reference Guide </reference/index>`.
 
-.. note::
+.. caution::
 
-   Natively, the service container only recognizes the ``parameters``,
+   ** Natively, the service container only recognizes the ``parameters``,
    ``services``, and ``imports`` directives. Any other directives
-   are handled by a service container extension.
+   are handled by a service container extension.**
 
-If you want to expose user friendly configuration in your own bundles, read the
-":doc:`/cookbook/bundles/extension`" cookbook recipe.
+.. seealso::
+
+    If you want to expose user friendly configuration in your own bundles,
+    read the ":doc:`/cookbook/bundles/extension`" cookbook article.
 
 .. index::
-   single: Service Container; Referencing services
+   single: Service Container; Injecting services into other services
 
-Referencing (Injecting) Services
---------------------------------
+Referencing (Injecting) Services Into Other Services
+----------------------------------------------------
+
+In this title we will look at how to create independent service classes
+with well-defined dependencies.
+
+.. index::
+   single: Service Container; Injecting services - constructor injection
+
+Constructor Injection
+~~~~~~~~~~~~~~~~~~~~~
+
+First we will look at "constructor injection" approach. There are two other
+approaches called "setter injection" and "property injection".
 
 So far, the original ``app.mailer`` service is simple: it takes just one argument
 in its constructor, which is easily configurable. As you'll see, the real
@@ -583,8 +597,9 @@ something like this::
         // ...
     }
 
-Without using the service container, you can create a new ``NewsletterManager``
-fairly easily from inside a controller::
+Without using the service container (note we haven't registered ``NewsletterManager``
+as service yet), you can create a new ``NewsletterManager`` fairly easily
+from inside a controller::
 
     use AppBundle\Newsletter\NewsletterManager;
 
@@ -601,7 +616,7 @@ This approach is fine, but what if you decide later that the ``NewsletterManager
 class needs a second or third constructor argument? What if you decide to
 refactor your code and rename the class? In both cases, you'd need to find every
 place where the ``NewsletterManager`` is instantiated and modify it. Of course,
-the service container gives you a much more appealing option:
+the service container gives you a much more appealing option::
 
 .. configuration-block::
 
@@ -655,21 +670,98 @@ of ``NewsletterManager``. In this case, however, the specified service ``app.mai
 must exist. If it does not, an exception will be thrown. You can mark your
 dependencies as optional - this will be discussed in the next section.
 
-Using references is a very powerful tool that allows you to create independent service
-classes with well-defined dependencies. In this example, the ``app.newsletter_manager``
-service needs the ``app.mailer`` service in order to function. When you define
-this dependency in the service container, the container takes care of all
-the work of instantiating the classes.
+Using references is a very powerful tool that allows you to create independent
+service classes with well-defined dependencies. In this example, the
+``app.newsletter_manager`` service needs the ``app.mailer`` service in order
+to function. When you define this dependency in the service container, the
+container takes care of all the work of instantiating the classes.
 
-Optional Dependencies: Setter Injection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Constructor Injection - Optional Dependencies
+.............................................
 
-Injecting dependencies into the constructor in this manner is an excellent
-way of ensuring that the dependency is available to use. If you have optional
-dependencies for a class, then "setter injection" may be a better option. This
-means injecting the dependency using a method call rather than through the
-constructor. The class would look like this::
+Sometimes, one of your services may have an optional dependency, meaning
+that the dependency is not required for your service to work properly. In
+the example above, the ``app.mailer`` service *must* exist, otherwise an exception
+will be thrown. By modifying the ``app.newsletter_manager`` service definition,
+you can make this reference optional. The container will then inject it if
+it exists and do nothing if it doesn't::
 
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.mailer:
+                # ...
+
+            app.newsletter_manager:
+                class:     AppBundle\Newsletter\NewsletterManager
+                arguments: ['@?app.mailer']
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.mailer">
+                <!-- ... -->
+                </service>
+
+                <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
+                    <argument type="service" id="app.mailer" on-invalid="ignore" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\DependencyInjection\ContainerInterface;
+
+        $container->setDefinition('app.mailer', ...);
+
+        $container->setDefinition('app.newsletter_manager', new Definition(
+            'AppBundle\Newsletter\NewsletterManager',
+            array(
+                new Reference(
+                    'app.mailer',
+                    ContainerInterface::IGNORE_ON_INVALID_REFERENCE
+                )
+            )
+        ));
+
+In YAML, the special ``@?`` syntax tells the service container that the dependency
+is optional. Of course, the ``NewsletterManager`` must also be rewritten to
+allow for an optional dependency::
+
+    public function __construct(Mailer $mailer = null)
+    {
+        // ...
+    }
+
+.. index::
+   single: Service Container; Injecting services - setter injection
+
+Setter Injection - Optional Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We have seen "constructor injection" approach. There are two other
+approaches called "setter injection" and "property injection". Here we will
+look at "setter injection" approach.
+
+If you have optional dependencies for a class, then "setter injection" is
+another option to use. This means injecting the dependency using a method
+call rather than through the constructor. The class would look like this::
+
+    // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;
 
     use AppBundle\Mailer;
@@ -686,7 +778,7 @@ constructor. The class would look like this::
         // ...
     }
 
-Injecting the dependency by the setter method just needs a change of syntax:
+Injecting the dependency by the setter method just needs a change of syntax::
 
 .. configuration-block::
 
@@ -738,90 +830,27 @@ Injecting the dependency by the setter method just needs a change of syntax:
             new Reference('app.mailer'),
         ));
 
-.. note::
+.. index::
+   single: Service Container; Symfony Core and Third-Party Bundle Services
 
-    The approaches presented in this section are called "constructor injection"
-    and "setter injection". The Symfony service container also supports
-    "property injection".
-
-Making References optional
---------------------------
-
-Sometimes, one of your services may have an optional dependency, meaning
-that the dependency is not required for your service to work properly. In
-the example above, the ``app.mailer`` service *must* exist, otherwise an exception
-will be thrown. By modifying the ``app.newsletter_manager`` service definition,
-you can make this reference optional. The container will then inject it if
-it exists and do nothing if it doesn't:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.newsletter_manager:
-                class:     AppBundle\Newsletter\NewsletterManager
-                arguments: ['@?app.mailer']
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.mailer">
-                <!-- ... -->
-                </service>
-
-                <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                    <argument type="service" id="app.mailer" on-invalid="ignore" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\ContainerInterface;
-
-        $container->setDefinition('app.mailer', ...);
-
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
-            array(
-                new Reference(
-                    'app.mailer',
-                    ContainerInterface::IGNORE_ON_INVALID_REFERENCE
-                )
-            )
-        ));
-
-In YAML, the special ``@?`` syntax tells the service container that the dependency
-is optional. Of course, the ``NewsletterManager`` must also be rewritten to
-allow for an optional dependency::
-
-        public function __construct(Mailer $mailer = null)
-        {
-            // ...
-        }
-
-Core Symfony and Third-Party Bundle Services
+Symfony Core and Third-Party Bundle Services
 --------------------------------------------
 
-Since Symfony and all third-party bundles configure and retrieve their services
-via the container, you can easily access them or even use them in your own
-services. To keep things simple, Symfony by default does not require that
-controllers must be defined as services. Furthermore, Symfony injects the entire
-service container into your controller. For example, to handle the storage of
-information on a user's session, Symfony provides a ``session`` service,
-which you can access inside a standard controller as follows::
+Symfony by default does not require that controllers must be defined as services.
+Symfony injects the entire service container (which gives access to all core
+Symfony services) into your controller if it extends Symfony base ``Controller``
+class. Furthermore, since all third-party bundles configure and retrieve
+their services via the container, you can also easily access and use third-party
+services inside a standard controller (or in your own services).
+
+In Symfony, you'll constantly use services provided by the Symfony core or
+other third-party bundles to perform tasks such as rendering templates
+(``templating``), sending emails (``mailer``), or accessing information on
+the request (``request``).
+
+For example, to handle the storage of information on a user's session, Symfony
+provides a ``session`` service, which you can access inside a standard
+controller as follows::
 
     public function indexAction($bar)
     {
@@ -831,15 +860,12 @@ which you can access inside a standard controller as follows::
         // ...
     }
 
-In Symfony, you'll constantly use services provided by the Symfony core or
-other third-party bundles to perform tasks such as rendering templates (``templating``),
-sending emails (``mailer``), or accessing information on the request (``request``).
-
-You can take this a step further by using these services inside services that
-you've created for your application. Beginning by modifying the ``NewsletterManager``
-to use the real Symfony ``mailer`` service (instead of the pretend ``app.mailer``).
-Also pass the templating engine service to the ``NewsletterManager``
-so that it can generate the email content via a template::
+Now how about how to use Symfony core or third-party services in your
+own services? Take an example from above and beginning by modifying the
+``NewsletterManager`` service to use the real Symfony ``mailer`` service
+(instead of the pretend ``app.mailer`` service ). Also pass the ``templating``
+engine service to the ``NewsletterManager`` so that it can generate the email
+content via a template::
 
     // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;
@@ -863,7 +889,7 @@ so that it can generate the email content via a template::
         // ...
     }
 
-Configuring the service container is easy:
+Configuring the service container is easy::
 
 .. configuration-block::
 
@@ -920,8 +946,8 @@ Tags
 
 In the same way that a blog post on the Web might be tagged with things such
 as "Symfony" or "PHP", services configured in your container can also be
-tagged. In the service container, a tag implies that the service is meant
-to be used for a specific purpose. Take the following example:
+tagged. In the service container, **a tag implies that the service is meant
+to be used for a specific purpose**. Take the following example::
 
 .. configuration-block::
 
@@ -967,23 +993,49 @@ to be used for a specific purpose. Take the following example:
 
 The ``twig.extension`` tag is a special tag that the TwigBundle uses
 during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``foo.twig.extension`` service should be registered
-as a Twig extension with Twig. In other words, Twig finds all services tagged
-with ``twig.extension`` and automatically registers them as extensions.
+the bundle knows that the ``foo.twig.extension`` *service should be registered
+as a Twig extension with Twig*. In other words, **Twig finds all services
+tagged with ``twig.extension`` and automatically registers them as extensions**.
 
-Tags, then, are a way to tell Symfony or other third-party bundles that
-your service should be registered or used in some special way by the bundle.
+**Tags, then, are a way to tell Symfony or other third-party bundles that
+your service should be registered or used in some special way by the bundle.**
 
 For a list of all the tags available in the core Symfony Framework, check
-out :doc:`/reference/dic_tags`. Each of these has a different effect on your
-service and many tags require additional arguments (beyond just the ``name``
-parameter).
+out :doc:`/reference/dic_tags` of the reference documentation. Each of these
+has a different effect on your service and many tags require additional
+arguments (beyond just the ``name`` parameter).
+
+.. index::
+   single: Service Container; Accessing the Request object in a service
+
+.. _book-container-request-stack:
+
+Accessing the Request Object in a Service
+-----------------------------------------
+
+Why not Inject the ``request`` Service?
+
+Almost all Symfony2 built-in services behave in the same way: a single
+instance is created by the container which it returns whenever you get it
+or when it is injected into another service. There is one exception in a
+standard Symfony2 application: the ``request`` service. If you try to
+inject the ``request`` into a service, you will probably receive a
+:class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
+exception. That's because the request can change during the life-time
+of a container (when a sub-request is created for instance).
+
+To understand this problem better and learn how to solve it, refer to
+the cookbook article :doc:`/cookbook/service_container/scopes`.
+
+.. index::
+   single: Service Container; Debugging
 
 Debugging Services
 ------------------
 
 You can find out what services are registered with the container using the
-console. To show all services and the class for each service, run:
+console. To show all services and the class for each service, run
+``container:debug`` console command:
 
 .. code-block:: bash
 
@@ -1008,6 +1060,21 @@ its id:
 .. code-block:: bash
 
     $ php app/console container:debug app.mailer
+
+Summary
+-------
+
+Service container or dependency injection container is a PHP object which:
+* allows to standardize and centralize the way objects are constructed in an
+  application;
+* manages the instantiation of services (i.e. objects).
+
+A service is any PHP object that:
+* performs some sort of "global" task - is used globally in an application:
+* is created for a specific purpose (e.g. delivering emails).
+
+Creating a service is a simple matter of creating a PHP class that accomplishes
+a specific task and registering it as a service in a service configuration file.
 
 Learn more
 ----------
