@@ -1,3 +1,7 @@
+.. index::
+   single: PHPUnitBridge
+   single: Components; PHPUnitBridge
+
 The PHPUnit Bridge Component
 =============================
 
@@ -122,3 +126,4 @@ reasons.
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
+.. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
