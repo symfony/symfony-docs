@@ -1065,11 +1065,13 @@ Summary
 -------
 
 Service container or dependency injection container is a PHP object which:
+
 * allows to standardize and centralize the way objects are constructed in an
   application;
 * manages the instantiation of services (i.e. objects).
 
 A service is any PHP object that:
+
 * performs some sort of "global" task - is used globally in an application:
 * is created for a specific purpose (e.g. delivering emails).
 
