@@ -80,7 +80,7 @@ The ``@Template`` annotation is useful, but also involves some magic. We
 don't think its benefit is worth the magic, and so recommend against using
 it.
 
-Most of the time, ``@Template`` is used without any parameters, which makes
+Most of the time, ``@Template()`` is used without any parameters, which makes
 it more difficult to know which template is being rendered. It also makes
 it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
@@ -148,7 +148,7 @@ For example:
         ));
     }
 
-Normally, you'd expect a ``$id`` argument to ``showAction``. Instead, by
+Normally, you'd expect a ``$id`` argument to ``showAction()``. Instead, by
 creating a new argument (``$post``) and type-hinting it with the ``Post``
 class (which is a Doctrine entity), the ParamConverter automatically queries
 for an object whose ``$id`` property matches the ``{id}`` value. It will
