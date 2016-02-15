@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-13T21:37:40Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-14T08:20:46Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-14T11:31:44Z
+
+Technically, the YAML syntax was valid before, but we need this change so that Sphinx renders the code block successfully. However, the code block will still be rendered without any syntax highlighting as the code block type is `text`. So I think we should either abstain from making this change or also change the code block type to `yaml`.
+
+---------------------------------------------------------------------------
+
+by mhor at 2016-02-14T12:50:12Z
+
+@xabbuh, I changed block type to ``yaml``. This yaml is technically invalid see [https://github.com/symfony/symfony-standard/issues/426](https://github.com/symfony/symfony-standard/issues/426)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-14T13:12:20Z
+
+:+1:
+
+Regarding the syntax, I think I will have to read the spec again and maybe we need to fix the Yaml component in regard of how to treat indicator characters. Thanks for pointing that out @mhor.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-15T17:21:27Z
+
+Thinking about this again, I think we should change the type of the code block back to text as the output that you see in your terminal won't be coloured either.
+
+---------------------------------------------------------------------------
+
+by mhor at 2016-02-15T21:41:12Z
+
+I agree with you @xabbuh.  I revert modification of ``code-block``
