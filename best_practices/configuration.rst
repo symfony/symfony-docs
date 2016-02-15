@@ -107,9 +107,7 @@ If you've done something like this in the past, it's likely that you've in fact
 *never* actually needed to change that value. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
-You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity:
-
-.. code-block:: php
+You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity::
 
     // src/AppBundle/Entity/Post.php
     namespace AppBundle\Entity;
