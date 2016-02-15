@@ -855,6 +855,7 @@ assets
 ~~~~~~
 
 .. _reference-framework-assets-version:
+.. _ref-framework-assets-version:
 
 version
 .......
