@@ -237,7 +237,7 @@ In this example, the ``config_dev.yml`` configuration file imports the common
 with its own options.
 
 For more details on environments, see
-":ref:`<page-creation-environments>`" section of the book.
+":ref:`page-creation-environments`" section of the book.
 
 Final Thoughts
 --------------
