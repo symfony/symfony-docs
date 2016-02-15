@@ -217,9 +217,9 @@ into the database::
 
     use AppBundle\Form\UserType;
     use AppBundle\Entity\User;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
     class RegistrationController extends Controller
     {
@@ -247,7 +247,7 @@ into the database::
                 $em->persist($user);
                 $em->flush();
 
-                // ... do any other work - like send them an email, etc
+                // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user
 
                 $redirectUrl = $this->generateUrl('replace_with_some_route');
@@ -410,9 +410,9 @@ return the ``email`` property::
         // ...
     }
 
-Next, just update the ``providers`` section of your ``security.yml`` so that Symfony
-knows to load your users via the ``email`` property on login. See
-:ref:`authenticating-someone-with-a-custom-entity-provider`.
+Next, just update the ``providers`` section of your ``security.yml`` file
+so that Symfony knows how to load your users via the ``email`` property on
+login. See :ref:`authenticating-someone-with-a-custom-entity-provider`.
 
 Adding a "accept terms" Checkbox
 --------------------------------
