@@ -6,8 +6,7 @@ The PHPUnit Bridge Component
 
 It comes with the following features:
 
-* Enforce a consistent `C` locale (It forces applications to use the default
-language for output)
+* Enforce a consistent `C` locale (It forces applications to use the default language for output)
 * Auto-register `class_exists` to load Doctrine annotations (when used);
 * Print a user deprecation notices summary at the end of the test suite;
 * Display the stack trace of a deprecation on-demand.
@@ -35,12 +34,9 @@ will have a similar report:
 
 The summary includes:
 
-* **Unsilenced** reports deprecation notices that were triggered without the
-recommended @-silencing operator;
-* **Legacy** deprecation notices denote tests that explicitly test some legacy
-interfaces.
-* **Remaining/Other** deprecation notices are all other (non-legacy) notices,
-grouped by message, test class and method.
+* **Unsilenced** reports deprecation notices that were triggered without the recommended @-silencing operator;
+* **Legacy** deprecation notices denote tests that explicitly test some legacy interfaces.
+* **Remaining/Other** deprecation notices are all other (non-legacy) notices, grouped by message, test class and method.
 
 Trigger deprecation notices
 ---------------------------
