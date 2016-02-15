@@ -1301,7 +1301,6 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/validation/custom_constraint`
-* :doc:`/cookbook/validation/severity`
 
 .. _Validator: https://github.com/symfony/validator
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303
