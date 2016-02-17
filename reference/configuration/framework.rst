@@ -27,6 +27,11 @@ Configuration
 * `test`_
 * `default_locale`_
 * `trusted_hosts`_
+* `assets`_
+    * `base_urls`_
+    * `base_path`_
+    * `version`_
+    * `version_format`_
 * :ref:`form <reference-framework-form>`
     * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
@@ -69,14 +74,9 @@ Configuration
     * `gc_maxlifetime`_
     * `save_path`_
 * `templating`_
-    * `assets_version`_
-    * `assets_version_format`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
         * `resources`_
-    * `assets_base_urls`_
-        * http
-        * ssl
     * :ref:`cache <reference-templating-cache>`
     * `engines`_
     * `loaders`_
@@ -366,6 +366,234 @@ can respond to any given host.
 .. seealso::
 
     Read more about this in the `Security Advisory Blog post`_.
+
+assets
+~~~~~~~~~~~~~
+
+.. _reference-base-urls:
+
+base_urls
+................
+
+**type**: ``string|array``
+
+This option allows you to define base URLs to be used for assets. If multiple base URLs are provided, Symfony will select one from the collection each time it generates
+an asset's path:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                base_urls:
+                    - 'http://cdn.example.com/'
+                # you can also pass just a string:
+                # base_urls:
+                #   - '//cdn.example.com/'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+
+            <framework:config>
+                <!-- ... -->
+
+                <framework:assets>
+                    <framework:base-url>
+                        http://cdn.example.com/
+                    </framework:base-url>
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'base_urls' => array(
+                    'http://cdn.example.com/',
+                ),
+                // you can also pass just a string:
+                // 'base_urls' => array(
+                //    '//cdn.example.com/',
+                // ),
+            ),
+        ));
+
+For your convenience, you can pass a string or array of strings to
+``base_urls`` directly. This will automatically be organized into
+the ``http`` and ``ssl`` base urls (``https://`` and `protocol-relative`_
+URLs will be added to both collections and ``http://`` only to the ``http``
+collection):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                base_urls:
+                    - '//cdn.example.com/'
+                # you can also pass just a string:
+                # base_urls: '//cdn.example.com/'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+
+            <framework:config>
+                <!-- ... -->
+
+                <framework:assets>
+                    <framework:base-url>//cdn.example.com/</framework:base-url>
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'base_urls' => array(
+                    '//cdn.example.com/',
+                ),
+                // you can also pass just a string:
+                // 'base_urls' => '//cdn.example.com/',
+            ),
+        ));
+
+.. _reference-version:
+.. _ref-version:
+
+version
+..............
+
+**type**: ``string``
+
+This option is used to *bust* the cache on assets by globally adding a query
+parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
+applies only to assets rendered via the Twig ``asset`` function (or PHP
+equivalent) as well as assets rendered with Assetic.
+
+For example, suppose you have the following:
+
+.. configuration-block::
+
+    .. code-block:: html+twig
+
+        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
+
+    .. code-block:: php
+
+        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
+
+By default, this will render a path to your image such as ``/images/logo.png``.
+Now, activate the ``version`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets: { version: v2 }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:assets version="v2">
+                <!-- ... -->
+            </framework:assets >
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets'      => array(
+                'version' => 'v2',
+            ),
+        ));
+
+Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
+this feature, you **must** manually increment the ``version`` value
+before each deployment so that the query parameters change.
+
+It's also possible to set the version value on an asset-by-asset basis (instead
+of using the global version - e.g. ``v2`` - set here). See
+:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
+
+You can also control how the query string works via the `version_format`_
+option.
+
+.. tip::
+
+    As with all settings, you can use a parameter as value for the
+    ``version``. This makes it easier to increment the cache on each
+    deployment.
+
+.. _reference-version-format:
+
+version_format
+.....................
+
+**type**: ``string`` **default**: ``%%s?%%s``
+
+This specifies a :phpfunction:`sprintf` pattern that will be used with the
+`version`_ option to construct an asset's path. By default, the pattern
+adds the asset's version as a query string. For example, if
+``version_format`` is set to ``%%s?version=%%s`` and ``version``
+is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
+
+.. note::
+
+    All percentage signs (``%``) in the format string must be doubled to
+    escape the character. Without escaping, values might inadvertently be
+    interpreted as :ref:`book-service-container-parameters`.
+
+.. tip::
+
+    Some CDN's do not support cache-busting via query strings, so injecting
+    the version into the actual file path is necessary. Thankfully,
+    ``version_format`` is not limited to producing versioned query
+    strings.
+
+    The pattern receives the asset's original path and version as its first
+    and second parameters, respectively. Since the asset's path is one
+    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
+    however, you can prefix the asset's path using a pattern of
+    ``version-%%2$s/%%1$s``, which would result in the path
+    ``version-5/images/logo.png``.
+
+    URL rewrite rules could then be used to disregard the version prefix
+    before serving the asset. Alternatively, you could copy assets to the
+    appropriate version path as part of your deployment process and forgot
+    any URL rewriting. The latter option is useful if you would like older
+    asset versions to remain accessible at their original URL.
 
 .. _reference-framework-form:
 
@@ -824,126 +1052,6 @@ setting the value to ``null``:
 templating
 ~~~~~~~~~~
 
-.. _reference-framework-assets-version:
-.. _ref-framework-assets-version:
-
-assets_version
-..............
-
-**type**: ``string``
-
-This option is used to *bust* the cache on assets by globally adding a query
-parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
-applies only to assets rendered via the Twig ``asset`` function (or PHP
-equivalent) as well as assets rendered with Assetic.
-
-For example, suppose you have the following:
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
-
-    .. code-block:: php
-
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
-
-By default, this will render a path to your image such as ``/images/logo.png``.
-Now, activate the ``assets_version`` option:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating: { engines: ['twig'], assets_version: v2 }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:templating assets-version="v2">
-                <!-- ... -->
-                <framework:engine>twig</framework:engine>
-            </framework:templating>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating'      => array(
-                'engines'        => array('twig'),
-                'assets_version' => 'v2',
-            ),
-        ));
-
-Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
-this feature, you **must** manually increment the ``assets_version`` value
-before each deployment so that the query parameters change.
-
-It's also possible to set the version value on an asset-by-asset basis (instead
-of using the global version - e.g. ``v2`` - set here). See
-:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
-
-You can also control how the query string works via the `assets_version_format`_
-option.
-
-.. tip::
-
-    As with all settings, you can use a parameter as value for the
-    ``assets_version``. This makes it easier to increment the cache on each
-    deployment.
-
-.. _reference-templating-version-format:
-
-assets_version_format
-.....................
-
-**type**: ``string`` **default**: ``%%s?%%s``
-
-This specifies a :phpfunction:`sprintf` pattern that will be used with the
-`assets_version`_ option to construct an asset's path. By default, the pattern
-adds the asset's version as a query string. For example, if
-``assets_version_format`` is set to ``%%s?version=%%s`` and ``assets_version``
-is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
-
-.. note::
-
-    All percentage signs (``%``) in the format string must be doubled to
-    escape the character. Without escaping, values might inadvertently be
-    interpreted as :ref:`book-service-container-parameters`.
-
-.. tip::
-
-    Some CDN's do not support cache-busting via query strings, so injecting
-    the version into the actual file path is necessary. Thankfully,
-    ``assets_version_format`` is not limited to producing versioned query
-    strings.
-
-    The pattern receives the asset's original path and version as its first
-    and second parameters, respectively. Since the asset's path is one
-    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
-    however, you can prefix the asset's path using a pattern of
-    ``version-%%2$s/%%1$s``, which would result in the path
-    ``version-5/images/logo.png``.
-
-    URL rewrite rules could then be used to disregard the version prefix
-    before serving the asset. Alternatively, you could copy assets to the
-    appropriate version path as part of your deployment process and forgot
-    any URL rewriting. The latter option is useful if you would like older
-    asset versions to remain accessible at their original URL.
-
 hinclude_default_template
 .........................
 
@@ -1031,118 +1139,6 @@ Assume you have custom global form themes in
 
     See :ref:`book-forms-theming-global` for more information.
 
-.. _reference-templating-base-urls:
-
-assets_base_urls
-................
-
-**default**: ``{ http: [], ssl: [] }``
-
-This option allows you to define base URLs to be used for assets referenced
-from ``http`` and ``ssl`` (``https``) pages. If multiple base URLs are
-provided, Symfony will select one from the collection each time it generates
-an asset's path:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating:
-                assets_base_urls:
-                    http:
-                        - 'http://cdn.example.com/'
-                # you can also pass just a string:
-                # assets_base_urls:
-                #     http: '//cdn.example.com/'
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
-
-            <framework:config>
-                <!-- ... -->
-
-                <framework:templating>
-                    <framework:assets-base-url>
-                        <framework:http>http://cdn.example.com/</framework:http>
-                    </framework:assets-base-url>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating' => array(
-                'assets_base_urls' => array(
-                    'http' => array(
-                        'http://cdn.example.com/',
-                    ),
-                ),
-                // you can also pass just a string:
-                // 'assets_base_urls' => array(
-                //     'http' => '//cdn.example.com/',
-                // ),
-            ),
-        ));
-
-For your convenience, you can pass a string or array of strings to
-``assets_base_urls`` directly. This will automatically be organized into
-the ``http`` and ``ssl`` base urls (``https://`` and `protocol-relative`_
-URLs will be added to both collections and ``http://`` only to the ``http``
-collection):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating:
-                assets_base_urls:
-                    - '//cdn.example.com/'
-                # you can also pass just a string:
-                # assets_base_urls: '//cdn.example.com/'
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
-
-            <framework:config>
-                <!-- ... -->
-
-                <framework:templating>
-                    <framework:assets-base-url>//cdn.example.com/</framework:assets-base-url>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating' => array(
-                'assets_base_urls' => array(
-                    '//cdn.example.com/',
-                ),
-                // you can also pass just a string:
-                // 'assets_base_urls' => '//cdn.example.com/',
-            ),
-        ));
-
 .. _reference-templating-cache:
 
 cache
@@ -1190,7 +1186,7 @@ You can group assets into packages, to specify different base URLs for them:
         # app/config/config.yml
         framework:
             # ...
-            templating:
+            assets:
                 packages:
                     avatars:
                         base_urls: 'http://static_cdn.example.com/avatars'
@@ -1223,7 +1219,7 @@ You can group assets into packages, to specify different base URLs for them:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'templating' => array(
+            'assets' => array(
                 'packages' => array(
                     'avatars' => array(
                         'base_urls' => 'http://static_cdn.example.com/avatars',
@@ -1246,9 +1242,9 @@ Now you can use the ``avatars`` package in your templates:
 
 Each package can configure the following options:
 
-* :ref:`base_urls <reference-templating-base-urls>`
-* :ref:`version <reference-framework-assets-version>`
-* :ref:`version_format <reference-templating-version-format>`
+* :ref:`base_urls <reference-base-urls>`
+* :ref:`version <reference-version>`
+* :ref:`version_format <reference-version-format>`
 
 translator
 ~~~~~~~~~~
@@ -1474,7 +1470,10 @@ Full Default Configuration
 
             csrf_protection:
                 enabled:              false
-
+            assets:
+                base_urls: []
+                version:       ~
+                version_format:  '%%s?%%s'
             # form configuration
             form:
                 enabled:              false
@@ -1546,17 +1545,12 @@ Full Default Configuration
 
             # templating configuration
             templating:
-                assets_version:       ~
-                assets_version_format:  '%%s?%%s'
                 hinclude_default_template:  ~
                 form:
                     resources:
 
                         # Default:
                         - FrameworkBundle:Form
-                assets_base_urls:
-                    http:                 []
-                    ssl:                  []
                 cache:                ~
                 engines:              # Required
 
