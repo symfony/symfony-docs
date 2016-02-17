@@ -1477,7 +1477,7 @@ Generating Absolute URLs
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the router will generate relative URLs (e.g. ``/blog``). From
-a controller, simply pass ``true`` to the third argument of the ``generateUrl()``
+a controller, simply pass ``UrlGeneratorInterface::ABSOLUTE_URL`` to the third argument of the ``generateUrl()``
 method::
 
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
