@@ -12,7 +12,7 @@ It comes with the following features:
 
 * Forces the application to use the default language locale for output (set the
   locale to ``C``)
-* Auto-register `class_exists` to load Doctrine annotations (when used)
+* Auto-register ``class_exists`` to load Doctrine annotations (when used)
 * It displays the whole list of deprecated features used in the application
 * Display the stack trace of a deprecation on-demand.
 
@@ -32,7 +32,7 @@ Usage
 
 Once the component installed, it automatically registers a
 `PHPUnit event listener`_ which in turn registers a `PHP error handler`_
-called `DeprecationErrorHandler`. After running your PHPUnit tests again, you
+called ``DeprecationErrorHandler``. After running your PHPUnit tests again, you
 will get a report similar to this one:
 
 .. image:: /images/components/phpunit_bridge/report.png
@@ -75,7 +75,7 @@ Configuration
 In case you need to inspect the stack trace of a particular deprecation
 triggered by your unit tests, you can set the ``SYMFONY_DEPRECATIONS_HELPER``
 `environment variable`_ to a regular expression that matches this deprecation's
-message, encapsed between `/`. For example, with:
+message, encapsed between ``/``. For example, with:
 
 .. configuration-block::
 
