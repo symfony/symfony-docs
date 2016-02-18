@@ -916,9 +916,7 @@ user is logged in (you don't care about roles), then you can use
 
     public function helloAction($name)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
@@ -1002,9 +1000,7 @@ look like::
 
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
 
@@ -1044,9 +1040,7 @@ the User object, and use the ``isGranted`` method (or
 :ref:`access_control <security-authorization-access-control>`) to do this::
 
     // yay! Use this to see if the user is logged in
-    if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-        throw $this->createAccessDeniedException();
-    }
+    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
     // boo :(. Never check for the User object to see if they're logged in
     if ($this->getUser()) {
