@@ -934,6 +934,7 @@ option.
     ``assets_version``. This makes it easier to increment the cache on each
     deployment.
 
+.. _reference-framework-assets-version-format:
 .. _reference-templating-version-format:
 
 assets_version_format
@@ -1206,6 +1207,8 @@ An array (or a string when configuring just one loader) of service ids for
 templating loaders. Templating loaders are used to find and load templates
 from a resource (e.g. a filesystem or database). Templating loaders must
 implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
+
+.. _reference-framework-assets-packages:
 
 packages
 ........

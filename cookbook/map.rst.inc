@@ -1,3 +1,7 @@
+* :doc:`/cookbook/asset/index`
+
+  * :doc:`/cookbook/asset/custom_version_strategy`
+
 * :doc:`/cookbook/assetic/index`
 
   * :doc:`/cookbook/assetic/asset_management`
