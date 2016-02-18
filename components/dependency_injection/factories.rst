@@ -55,7 +55,7 @@ factory class:
                     factory-class="NewsletterManagerFactory"
                     factory-method="createNewsletterManager" />
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
