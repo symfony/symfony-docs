@@ -64,6 +64,7 @@
   * :doc:`/cookbook/deployment/azure-website`
   * :doc:`/cookbook/deployment/heroku`
   * :doc:`/cookbook/deployment/platformsh`
+  * :doc:`/cookbook/deployment/fortrabbit`
 
 * :doc:`/cookbook/doctrine/index`
 
