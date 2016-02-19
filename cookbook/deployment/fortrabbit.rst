@@ -4,7 +4,9 @@
 Deploying to fortrabbit
 =======================
 
-This step-by-step cookbook describes how to deploy a Symfony web application to `fortrabbit`_. You can read more about using Symfony with fortrabbit on the official fortrabbit `Symfony install guide`_.
+This step-by-step cookbook describes how to deploy a Symfony web application to
+ `fortrabbit`_. You can read more about using Symfony with fortrabbit on the 
+ official fortrabbit `Symfony install guide`_.
 
 
 
@@ -21,13 +23,15 @@ Before we begin, you should have done a few things on the fortrabbit side:
 Preparing your Application
 --------------------------
 
-You don't need to change any code to deploy a Symfony application to fortrabbit. But it requires some minor tweaks to its configuration.
+You don't need to change any code to deploy a Symfony application to fortrabbit. 
+But it requires some minor tweaks to its configuration.
 
 
 Configure Logging
 ~~~~~~~~~~~~~~~~~
 
-Per default Symfony logs to a file. Modify the app/config/config_prod.yml file to redirect it to PHP's error_log():
+Per default Symfony logs to a file. Modify the app/config/config_prod.yml file 
+to redirect it to PHP's error_log():
 
 .. code-block:: yaml
 
@@ -42,7 +46,8 @@ Per default Symfony logs to a file. Modify the app/config/config_prod.yml file t
 Configuring Database Access & Session Handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the fortrabbit App Secrets to attain your database credentials. Create the file app/config_prod_secrets.php with the following contents::
+You can use the fortrabbit App Secrets to attain your database credentials. 
+Create the file app/config_prod_secrets.php with the following contents::
 
    <?php
    // Get the path to the secrects.json file
@@ -110,28 +115,34 @@ Configuring the Environment in the Dashboard
 PHP Settings
 ~~~~~~~~~~~~
 
-The PHP version and enabled extensions are configuable under the PHP settings of your App within the fortrabbit Dashboard.
+The PHP version and enabled extensions are configuable under the PHP settings 
+of your App within the fortrabbit Dashboard.
 
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
-Set the `SYMFONY_ENV` environment variable to `prod` to make sure the right config files get loaded. ENV vars are configuable in fortrabbit Dashboard as well.
+Set the `SYMFONY_ENV` environment variable to `prod` to make sure the right 
+config files get loaded. ENV vars are configuable in fortrabbit Dashboard as well.
 
 
 Document Root
 ~~~~~~~~~~~~~
 
-The document root is configuable for every custom domain you setup for your App. The default is /htdocs, but for Symfony 
-you probalby want to change it to /htdocs/web. You also do so in the fortrabbit Dashboard under `Domain` settings.
+The document root is configuable for every custom domain you setup for your App. 
+The default is /htdocs, but for Symfony you probalby want to change it to 
+/htdocs/web. You also do so in the fortrabbit Dashboard under `Domain` settings.
 
 
 Deploying to fortrabbit
 -----------------------
 
-It is assumed that your codebase is under version-control with Git and dependencies are managed with Composer (locally).
+It is assumed that your codebase is under version-control with Git and dependencies
+ are managed with Composer (locally).
 
-Every time you push to fortrabbit composer install runs before your code gets deployed. To finetune the deployment behaviour put a `fortrabbit.yml`_. deployment file (optional) in the project root.
+Every time you push to fortrabbit composer install runs before your code gets 
+deployed. To finetune the deployment behaviour put a `fortrabbit.yml`_. deployment 
+file (optional) in the project root.
 
 Add fortrabbit as a (additional) Git remote and add your configuration changes.
 
@@ -202,10 +213,13 @@ Commit and push
 
 .. note::
 
-   The first `git push` takes much longer as all composer dependencies get downloaded. All subsequent deploys are done within seconds. 
+   The first `git push` takes much longer as all composer dependencies get 
+   downloaded. All subsequent deploys are done within seconds. 
 
 
-That's it! Your application is being deployed on fortrabbit. More information about `database migrations and tunneling`_ can be found in the fortrabbit documentation.
+That's it! Your application is being deployed on fortrabbit. More information 
+about `database migrations and tunneling`_ can be found in the fortrabbit 
+documentation.
 
 .. _`fortrabbit`: http://www.fortrabbit.com
 .. _`symfony install guide`: http://help.fortrabbit.com/install-symfony
