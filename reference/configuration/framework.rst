@@ -882,7 +882,9 @@ This option allows you to define a base path to be used for assets:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:assets base_path="/images">
+            <framework:config>
+                <framework:assets base_path="/images" />
+            </framework:config>
         </container>
 
     .. code-block:: php
@@ -923,11 +925,12 @@ collection each time it generates an asset's path:
         <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- ... -->
-
                 <framework:assets base-url="http://cdn.example.com/" />
             </framework:config>
         </container>
@@ -970,15 +973,11 @@ You can group assets into packages, to specify different base URLs for them:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-
                 <framework:assets>
-
                     <framework:package
                         name="avatars"
-                        base-url="http://static_cdn.example.com/avatars">
-
+                        base-url="http://static_cdn.example.com/avatars" />
                 </framework:assets>
-
             </framework:config>
         </container>
 
@@ -1063,7 +1062,9 @@ Now, activate the ``version`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:assets version="v2">
+            <framework:config>
+                <framework:assets version="v2" />
+            </framework:config>
         </container>
 
     .. code-block:: php
