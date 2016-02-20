@@ -70,6 +70,7 @@ Configuration
     * `gc_maxlifetime`_
     * `save_path`_
 * `assets`_
+    * `base_path`_
     * `base_urls`_
     * `packages`_
     * `version`_
@@ -852,6 +853,48 @@ setting the value to ``null``:
 assets
 ~~~~~~
 
+.. _reference-assets-base-path:
+
+base_path
+.........
+
+**type**: ``string``
+
+This option allows you to define a base path to be used for assets:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:assets base_path="/images">
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'base_path' => '/images',
+            ),
+        ));
+
 .. _reference-templating-base-urls:
 .. _reference-assets-base-urls:
 
@@ -967,6 +1010,7 @@ Now you can use the ``avatars`` package in your templates:
 
 Each package can configure the following options:
 
+* :ref:`base_path <reference-assets-base-path>`
 * :ref:`base_urls <reference-assets-base-urls>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
@@ -1526,16 +1570,18 @@ Full Default Configuration
 
             # assets configuration
             assets:
+                base_path:          ~
+                base_urls:          []
                 version:            ~
                 version_format:     '%%s?%%s'
-                base_urls:          []
                 packages:
 
                     # Prototype
                     name:
+                        base_path:            ~
+                        base_urls:            []
                         version:              ~
                         version_format:       '%%s?%%s'
-                        base_urls:            []
 
             # templating configuration
             templating:
