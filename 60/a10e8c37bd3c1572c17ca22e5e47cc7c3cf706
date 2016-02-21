@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-02-12T08:30:05Z
+
+@xabbuh please let me know if this is OK.
+
+---------------------------------------------------------------------------
+
+by michaelperrin at 2016-02-16T13:54:19Z
+
+This should definitely be merged as the current situation is misleading.
+
+Is there a PR on the Symfony project itself? The default `config.yml` file has the following code:
+
+```yaml
+templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+```
+
+But uncommenting `assets_version` just generates an error.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-16T14:55:38Z
+
+There is a pull request: symfony/symfony-standard#891
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-02-16T19:59:36Z
+
+I removed the `base_urls` examples with protocol-relative URLs. Do we want to keep this and rephrase it?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-18T11:24:07Z
+
+Looks really great to me. Actually the only thing that is missing no is the description of the `base_path` option.
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-02-18T11:58:51Z
+
+Thank you @xabbuh. Do we want to add the description for `base_path` in this PR or separately?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-19T22:07:43Z
+
+@snoek09 If you happen to find some time to add it, that would be great. Otherwise, I think we can merge this as is and it afterwards in a separate PR.
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-02-20T08:50:36Z
+
+@xabbuh I've added the `base_path` option. Maybe this option needs some more text explaining it.
