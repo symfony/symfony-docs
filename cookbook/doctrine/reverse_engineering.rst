@@ -99,7 +99,7 @@ The first command generates entity classes with annotation mappings. But
 if you want to use YAML or XML mapping instead of annotations, you should
 execute the second command only.
 
-.. tip::
+.. caution::
 
     If you want to use annotations, you must remove the XML (or YAML) files
     after running these two commands. This is necessary as
