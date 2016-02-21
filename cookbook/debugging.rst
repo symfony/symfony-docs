@@ -21,10 +21,12 @@ Disabling the Bootstrap File and Class Caching
 
 And to make the production environment as fast as possible, Symfony creates
 big PHP files in your cache containing the aggregation of PHP classes your
-project needs for every request. However, this behavior can confuse your IDE
-or your debugger. This recipe shows you how you can tweak this caching
-mechanism to make it friendlier when you need to debug code that involves
-Symfony classes.
+project needs for every request. However, this behavior can confuse your debugger,
+because the same class can be located in two different places: the original class
+file and the big file which aggregates lots of classes.
+
+This recipe shows you how you can tweak this caching mechanism to make it friendlier
+when you need to debug code that involves Symfony classes.
 
 The ``app_dev.php`` front controller reads as follows by default::
 
@@ -38,8 +40,8 @@ The ``app_dev.php`` front controller reads as follows by default::
     $request = Request::createFromGlobals();
     // ...
 
-To make your debugger happier, disable all PHP class caches by removing (or
-commenting) the call to ``loadClassCache()``::
+To make your debugger happier, disable the loading of all PHP class caches
+by removing the call to ``loadClassCache()``::
 
     // ...
 
@@ -56,7 +58,5 @@ commenting) the call to ``loadClassCache()``::
     session.
 
 Some IDEs do not like the fact that some classes are stored in different
-locations. To avoid problems, you can either tell your IDE to ignore the PHP
-cache files, or you can change the extension used by Symfony for these files::
-
-    $kernel->loadClassCache('classes', '.php.cache');
+locations. To avoid problems, you can tell your IDE to ignore the PHP cache
+file.

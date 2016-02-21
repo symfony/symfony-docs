@@ -254,7 +254,7 @@ Next, you need to instantiate the ``IssueToNumberTransformer`` class from inside
 of the entity manager (because ``IssueToNumberTransformer`` needs this).
 
 No problem! Just add a ``__construct()`` function to ``TaskType`` and force this
-to be passed in by registering ``TaskType`` as a service.::
+to be passed in by registering ``TaskType`` as a service::
 
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
