@@ -122,7 +122,7 @@ of your App within the fortrabbit Dashboard.
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
-Set the `SYMFONY_ENV` environment variable to `prod` to make sure the right 
+Set the ``SYMFONY_ENV`` environment variable to ``prod`` to make sure the right 
 config files get loaded. ENV vars are configuable in fortrabbit Dashboard as well.
 
 
@@ -130,18 +130,18 @@ Document Root
 ~~~~~~~~~~~~~
 
 The document root is configuable for every custom domain you setup for your App. 
-The default is /htdocs, but for Symfony you probalby want to change it to 
-/htdocs/web. You also do so in the fortrabbit Dashboard under `Domain` settings.
+The default is /htdocs, but for Symfony you probably want to change it to 
+/htdocs/web. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
 
 
 Deploying to fortrabbit
 -----------------------
 
 It is assumed that your codebase is under version-control with Git and dependencies
- are managed with Composer (locally).
+are managed with Composer (locally).
 
 Every time you push to fortrabbit composer install runs before your code gets 
-deployed. To finetune the deployment behaviour put a `fortrabbit.yml`_. deployment 
+deployed. To finetune the deployment behavior put a `fortrabbit.yml`_. deployment 
 file (optional) in the project root.
 
 Add fortrabbit as a (additional) Git remote and add your configuration changes.
@@ -159,7 +159,10 @@ Commit and push
    $ git commit -m 'fortrabbit config'
    $ git push fortrabbit master -u
 
-**Note:** Replace your-app with the name of your fortrabbit App.
+
+.. note::
+
+    Replace your-app with the name of your fortrabbit App.
 
 
 .. code-block:: bash
@@ -213,7 +216,7 @@ Commit and push
 
 .. note::
 
-   The first `git push` takes much longer as all composer dependencies get 
+   The first ``git push` takes much longer as all composer dependencies get 
    downloaded. All subsequent deploys are done within seconds. 
 
 
