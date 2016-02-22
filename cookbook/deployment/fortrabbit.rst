@@ -216,7 +216,7 @@ Commit and push
 
 .. note::
 
-   The first ``git push` takes much longer as all composer dependencies get 
+   The first ``git push`` takes much longer as all composer dependencies get 
    downloaded. All subsequent deploys are done within seconds. 
 
 
