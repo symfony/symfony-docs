@@ -82,6 +82,10 @@ specifically tailored to the requirements of Symfony.
     This Python-based library provides a basic suite of operations for executing
     local or remote shell commands and uploading/downloading files.
 
+`Deployer`_
+    This is another native PHP rewrite of Capistrano, with some ready recipes for 
+    Symfony.
+
 Bundles
     There are some `bundles that add deployment features`_ directly into your
     Symfony console.
@@ -200,4 +204,4 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
-
+.. _`Deployer`: http://deployer.org/
