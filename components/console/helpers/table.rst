@@ -66,6 +66,27 @@ You can add a table separator anywhere in the output by passing an instance of
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
 
+The width of the columns are automatically set using the width of their contents by default. You can change this behavior via :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`::
+
+    // Sets the left column to 10 characters, the middle to auto and the right to 30 characters.
+    // The left column will effectively be 13 characters, as the columns content don't fit 10.
+    $table->setColumnWidths(array(10, 'auto', 30));
+    $table->render();
+    
+This code results in:
+
+.. code-block:: text
+
+    +---------------+--------------------------+--------------------------------+
+    | ISBN          | Title                    | Author                         |
+    +---------------+--------------------------+--------------------------------+
+    | 99921-58-10-7 | Divine Comedy            | Dante Alighieri                |
+    | 9971-5-0210-0 | A Tale of Two Cities     | Charles Dickens                |
+    +---------------+--------------------------+--------------------------------+
+    | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien               |
+    | 80-902734-1-6 | And Then There Were None | Agatha Christie                |
+    +---------------+--------------------------+--------------------------------+
+
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 
