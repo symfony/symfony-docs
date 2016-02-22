@@ -12,7 +12,10 @@ about this, but it might be handy when processing an API request (since you can
 configure the value that will be sent in the API request).
 
 This can be a callable or a property path. See `choice_label`_ for similar usage.
-If ``null`` is used, an incrementing integer is used as the name.
+*If you use a callable for this option, it gets passed the choice as its **only**
+argument*. This is a difference compared to the callables of `choice_label`_ and
+`choice_name`_, which receive additional arguments. If ``null`` is used, an
+incrementing integer is used as the name.
 
 .. caution::
 
