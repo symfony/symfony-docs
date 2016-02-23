@@ -13,11 +13,11 @@ This step-by-step cookbook describes how to deploy a Symfony web application to
 Setting up fortrabbit
 ---------------------
 
-Before we begin, you should have done a few things on the fortrabbit side:
+Before getting started, you should have done a few things on the fortrabbit side:
 
-- Sign up
-- Add an SSH key to your Account (to deploy via Git)
-- Create an App
+* Sign up
+* Add an SSH key to your Account (to deploy via Git)
+* Create an App
 
 
 Preparing your Application
@@ -30,83 +30,114 @@ But it requires some minor tweaks to its configuration.
 Configure Logging
 ~~~~~~~~~~~~~~~~~
 
-Per default Symfony logs to a file. Modify the app/config/config_prod.yml file 
-to redirect it to PHP's error_log():
+Per default Symfony logs to a file. Modify the ``app/config/config_prod.yml`` file 
+to redirect it to :phpfunction:`error_log`:
 
-.. code-block:: yaml
+.. configuration-block::
 
-   monolog:
-   # ..
-   handlers:
-      # ..
-         nested:
-            type:  error_log
-            # ..
+    .. code-block:: yaml
+
+        # app/config/config_prod.yml
+        monolog:
+            # ...
+            handlers:
+                nested:
+                    type: error_log
+
+    .. code-block:: xml
+
+        <!-- app/config/config_prod.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
+            <monolog:config>
+                <!-- ... -->
+                <monolog:handler
+                    name="nested"
+                    type="error_log"
+                />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->loadFromExtension('monolog', array(
+            // ...
+            'handlers' => array(
+                'nested' => array(
+                    'type' => 'error_log',
+                ),
+            ),
+        ));
 
 Configuring Database Access & Session Handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the fortrabbit App Secrets to attain your database credentials. 
-Create the file app/config_prod_secrets.php with the following contents::
+Create the file ``app/config_prod_secrets.php`` with the following contents::
 
-   <?php
-   // Get the path to the secrects.json file
-   if (!$secrets = getenv("APP_SECRETS")) {
-     return;
-   }
+    <?php
+    // Get the path to the secrects.json file
+    if (!$secrets = getenv("APP_SECRETS")) {
+        return;
+    }
 
-   // Read the file and decode json to an array
-   $secrets = json_decode(file_get_contents($secrets), true);
+    // Read the file and decode json to an array
+    $secrets = json_decode(file_get_contents($secrets), true);
 
-   // Set database parameters to the container
-   if (isset($secrets['MYSQL'])) {
-        
-      $container->setParameter('database_driver', 'pdo_mysql');
-      $container->setParameter('database_host', $secrets['MYSQL']['HOST']);
-      $container->setParameter('database_name', $secrets['MYSQL']['DATABASE']);
-      $container->setParameter('database_user', $secrets['MYSQL']['USER']);
-      $container->setParameter('database_password', $secrets['MYSQL']['PASSWORD']);
-   }
+    // Set database parameters to the container
+    if (isset($secrets['MYSQL'])) {
 
-   // Check if the Memcache component is present
-   if (isset($secrets['MEMCACHE'])) {
-        
-      $memcache = $secrets['MEMCACHE'];
-      $handlers = [];
-        
-      foreach (range(1, $memcache['COUNT']) as $num) {
-         $handlers [] = $memcache['HOST'. $num]. ':'. $memcache['PORT'. $num];
-      }
+        $container->setParameter('database_driver', 'pdo_mysql');
+        $container->setParameter('database_host', $secrets['MYSQL']['HOST']);
+        $container->setParameter('database_name', $secrets['MYSQL']['DATABASE']);
+        $container->setParameter('database_user', $secrets['MYSQL']['USER']);
+        $container->setParameter('database_password', $secrets['MYSQL']['PASSWORD']);
+    }
 
-      // Apply ini settings
-      ini_set('session.save_handler', 'memcached');
-      ini_set('session.save_path', implode(',', $handlers));
-      
-      if ($memcache['COUNT'] == 2) {
-         ini_set('memcached.sess_number_of_replicas', 1);
-         ini_set('memcached.sess_consistent_hash', 1);
-         ini_set('memcached.sess_binary', 1);
-      }
-      
-   }
+    // Check if the Memcache component is present
+    if (isset($secrets['MEMCACHE'])) {
 
+        $memcache = $secrets['MEMCACHE'];
+        $handlers = [];
+
+        foreach (range(1, $memcache['COUNT']) as $num) {
+            $handlers [] = $memcache['HOST' . $num] . ':' . $memcache['PORT' . $num];
+        }
+
+        // Apply ini settings
+        ini_set('session.save_handler', 'memcached');
+        ini_set('session.save_path', implode(',', $handlers));
+
+        if ($memcache['COUNT'] == 2) {
+            ini_set('memcached.sess_number_of_replicas', 1);
+            ini_set('memcached.sess_consistent_hash', 1);
+            ini_set('memcached.sess_binary', 1);
+        }
+    }
 
 Make sure this file is listed in your *imports*:
 
 .. code-block:: yaml
 
-   # app/config/config_prod.yml
-   imports:
-      - { resource: config.yml }
-      - { resource: config_prod_secrets.php }
-   
-   # ..
-   framework:
-      session:
-         # set handler_id to null to use default session handler from php.ini (memcached)
-         handler_id:  ~
-   # ..    
+    # app/config/config_prod.yml
+    imports:
+        - { resource: config.yml }
+        - { resource: config_prod_secrets.php }
 
+    # ..
+    framework:
+        session:
+            # set handler_id to null to use default session handler from php.ini (memcached)
+            handler_id:  ~
+    # ..
 
 
 Configuring the Environment in the Dashboard
