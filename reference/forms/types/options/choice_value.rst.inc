@@ -11,11 +11,14 @@ in HTML and submitted in the POST/PUT requests. You don't normally need to worry
 about this, but it might be handy when processing an API request (since you can
 configure the value that will be sent in the API request).
 
-This can be a callable or a property path. See `choice_label`_ for similar usage.
-*If you use a callable for this option, it gets passed the choice as its **only**
-argument*. This is a difference compared to the callables of `choice_label`_ and
-`choice_name`_, which receive additional arguments. If ``null`` is used, an
-incrementing integer is used as the name.
+This can be a callable or a property path. If ``null`` is given, an incrementing
+integer is used as the value.
+
+.. note::
+
+    In contrast to other choice options (e.g. `choice_label`_), the callable for
+    the ``choice_value`` option takes as **only** argument the actual choice, which
+    is also the value that gets passed to your model after submitting the form.
 
 .. caution::
 
