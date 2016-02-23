@@ -18,7 +18,7 @@ integer is used as the value.
 
     In contrast to other choice options (e.g. `choice_label`_), the callable for
     the ``choice_value`` option takes as **only** argument the actual choice, which
-    is also the value that gets passed to your model after submitting the form.
+    is also the value that gets passed to your model when submitting the form.
 
 .. caution::
 
