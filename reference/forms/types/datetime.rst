@@ -15,7 +15,8 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `date_format`_                                                            |
+| Options              | - `choice_translation_domain`_                                              |
+|                      | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
@@ -54,6 +55,8 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 
 Field Options
 -------------
+
+.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
 
 date_format
 ~~~~~~~~~~~
