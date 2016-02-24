@@ -158,7 +158,7 @@ Constraint Validators with Dependencies
 If your constraint validator has dependencies, such as a database connection,
 it will need to be configured as a service in the Dependency Injection
 Container. This service must include the ``validator.constraint_validator``
-tag and an ``alias`` attribute:
+tag and may include an ``alias`` attribute:
 
 .. configuration-block::
 
@@ -186,20 +186,13 @@ tag and an ``alias`` attribute:
             ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'));
 
-Your constraint class should now use this alias to reference the appropriate
-validator::
+As mentioned above, Symfony will automatically look for a class named after
+the constraint, with ``Validator`` appended. You can override this in you constraint class::
 
     public function validatedBy()
     {
-        return 'alias_name';
+        return 'Fully\Qualified\Class\Named\ConstraintValidator'; \\ or 'alias_name' if provided
     }
-
-As mentioned above, Symfony will automatically look for a class named after
-the constraint, with ``Validator`` appended. If your constraint validator
-is defined as a service, it's important that you override the
-``validatedBy()`` method to return the alias used when defining your service,
-otherwise Symfony won't use the constraint validator service, and will
-instantiate the class instead, without any dependencies injected.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
