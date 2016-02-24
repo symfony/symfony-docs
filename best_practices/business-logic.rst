@@ -136,8 +136,8 @@ of course use whatever format you like.
 Service: No Class Parameter
 ---------------------------
 
-You may have noticed that the previous service definition doesn't configure
-the class namespace as a parameter:
+This would be the way to define the service with the class namespace as a
+parameter:
 
 .. code-block:: yaml
 
