@@ -13,7 +13,7 @@ Setting up fortrabbit
 
 Before getting started, you should have done a few things on the fortrabbit side:
 
-* Sign up
+* `Sign up`_.
 * Add an SSH key to your Account (to deploy via Git)
 * Create an App
 
@@ -245,7 +245,8 @@ That's it! Your application is being deployed on fortrabbit. More information
 about `database migrations and tunneling`_ can be found in the fortrabbit 
 documentation.
 
-.. _`fortrabbit`: http://www.fortrabbit.com
-.. _`symfony install guide`: http://help.fortrabbit.com/install-symfony
-.. _`fortrabbit.yml`: http://help.fortrabbit.com/deployment-file-v2
-.. _`database migrations and tunneling`: http://help.fortrabbit.com/install-symfony-2#toc-migrate-amp-other-database-commands
+.. _`fortrabbit`: https://www.fortrabbit.com
+.. _`Symfony install guide`: https://help.fortrabbit.com/install-symfony
+.. _`fortrabbit.yml`: https://help.fortrabbit.com/deployment-file-v2
+.. _`database migrations and tunneling`: https://help.fortrabbit.com/install-symfony-2#toc-migrate-amp-other-database-commands
+.. _`Sign up`: https://dashboard.fortrabbit.com
