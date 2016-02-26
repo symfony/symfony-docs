@@ -112,7 +112,7 @@ Create the file ``app/config_prod_secrets.php`` with the following contents::
         ini_set('session.save_handler', 'memcached');
         ini_set('session.save_path', implode(',', $handlers));
 
-        if ($memcache['COUNT'] == 2) {
+        if ("2" === $memcache['COUNT']) {
             ini_set('memcached.sess_number_of_replicas', 1);
             ini_set('memcached.sess_consistent_hash', 1);
             ini_set('memcached.sess_binary', 1);
@@ -121,20 +121,57 @@ Create the file ``app/config_prod_secrets.php`` with the following contents::
 
 Make sure this file is listed in your *imports*:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config_prod.yml
-    imports:
-        - { resource: config.yml }
-        - { resource: config_prod_secrets.php }
+    .. code-block:: yaml
 
-    # ..
-    framework:
-        session:
-            # set handler_id to null to use default session handler from php.ini (memcached)
-            handler_id:  ~
-    # ..
+        # app/config/config_prod.yml
+            imports:
+                - { resource: config.yml }
+                - { resource: config_prod_secrets.php }
 
+            # ..
+            framework:
+                session:
+                    # set handler_id to null to use default session handler from php.ini (memcached)
+                    handler_id:  ~
+            # ..
+
+    .. code-block:: xml
+
+        <!-- app/config/config_prod.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <imports>
+                <import resource="config.xml" />
+                <import resource="config_prod_secrets.php" />
+            </imports>
+
+            <!-- .. -->
+            <framework:config>
+                <!-- .. -->
+                <framework:session save_path="null" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $loader->import('config/config.php');
+        $loader->import('config_prod_secrets.php');
+
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                'handler_id' => null,
+            ),
+        ));
+
+        // ...
 
 Configuring the Environment in the Dashboard
 --------------------------------------------
@@ -155,8 +192,8 @@ Document Root
 ~~~~~~~~~~~~~
 
 The document root is configuable for every custom domain you setup for your App. 
-The default is /htdocs, but for Symfony you probably want to change it to 
-/htdocs/web. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
+The default is ``/htdocs``, but for Symfony you probably want to change it to
+``/htdocs/web``. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
 
 Deploying to fortrabbit
 -----------------------
