@@ -8,8 +8,6 @@ This step-by-step cookbook describes how to deploy a Symfony web application to
  `fortrabbit`_. You can read more about using Symfony with fortrabbit on the 
  official fortrabbit `Symfony install guide`_.
 
-
-
 Setting up fortrabbit
 ---------------------
 
@@ -19,13 +17,11 @@ Before getting started, you should have done a few things on the fortrabbit side
 * Add an SSH key to your Account (to deploy via Git)
 * Create an App
 
-
 Preparing your Application
 --------------------------
 
 You don't need to change any code to deploy a Symfony application to fortrabbit. 
 But it requires some minor tweaks to its configuration.
-
 
 Configure Logging
 ~~~~~~~~~~~~~~~~~
@@ -149,13 +145,11 @@ PHP Settings
 The PHP version and enabled extensions are configuable under the PHP settings 
 of your App within the fortrabbit Dashboard.
 
-
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
 Set the ``SYMFONY_ENV`` environment variable to ``prod`` to make sure the right 
 config files get loaded. ENV vars are configuable in fortrabbit Dashboard as well.
-
 
 Document Root
 ~~~~~~~~~~~~~
@@ -163,7 +157,6 @@ Document Root
 The document root is configuable for every custom domain you setup for your App. 
 The default is /htdocs, but for Symfony you probably want to change it to 
 /htdocs/web. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
-
 
 Deploying to fortrabbit
 -----------------------
@@ -190,11 +183,9 @@ Commit and push
    $ git commit -m 'fortrabbit config'
    $ git push fortrabbit master -u
 
-
 .. note::
 
     Replace your-app with the name of your fortrabbit App.
-
 
 .. code-block:: bash
     
@@ -249,7 +240,6 @@ Commit and push
 
    The first ``git push`` takes much longer as all composer dependencies get 
    downloaded. All subsequent deploys are done within seconds. 
-
 
 That's it! Your application is being deployed on fortrabbit. More information 
 about `database migrations and tunneling`_ can be found in the fortrabbit 
