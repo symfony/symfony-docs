@@ -137,8 +137,8 @@ Service: No Class Parameter
 ---------------------------
 
 This would be the way to define the service with the class namespace as a
-parameter - which is cumbersome and completely unnecessary for your own
-services
+parameter (which is cumbersome and completely unnecessary for your own
+services):
 
 .. code-block:: yaml
 
