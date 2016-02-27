@@ -40,12 +40,12 @@ The summary includes:
 
 **Unsilenced**
     Reports deprecation notices that were triggered without the recommended
-    @-silencing operator
+    @-silencing operator.
 **Legacy**
-    Deprecation notices denote tests that explicitly test some legacy features
+    Deprecation notices denote tests that explicitly test some legacy features.
 **Remaining/Other**
     Deprecation notices are all other (non-legacy) notices, grouped by message,
-    test class and method
+    test class and method.
 
 Trigger Deprecation Notices
 ---------------------------
@@ -78,21 +78,21 @@ triggered by your unit tests, you can set the ``SYMFONY_DEPRECATIONS_HELPER``
 `environment variable`_ to a regular expression that matches this deprecation's
 message, enclosed with ``/``. For example, with:
 
-    .. code-block:: xml
+.. code-block:: xml
 
-        <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
-        <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
-        >
-        <?xml version="1.0" encoding="UTF-8"?>
+    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+    >
+    <?xml version="1.0" encoding="UTF-8"?>
 
-            <!-- ... -->
+        <!-- ... -->
 
-            <php>
-                <server name="KERNEL_DIR" value="app/" />
-                <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
-            </php>
-        </phpunit>
+        <php>
+            <server name="KERNEL_DIR" value="app/" />
+            <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
+        </php>
+    </phpunit>
 
 PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
