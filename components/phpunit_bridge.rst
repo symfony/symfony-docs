@@ -5,15 +5,16 @@
 The PHPUnit Bridge
 ==================
 
-    The PHPUnit Bridge component provides utilities to report legacy tests and
-    usage of deprecated code.
+    The PHPUnit Bridge component provides utilities to report legacy tests, and
+    usage of deprecated code a `ClockMock` for time-sensitive tests.
 
 It comes with the following features:
 
 * Forces the tests to use a consistent locale (``C``)
 * Auto-register ``class_exists`` to load Doctrine annotations (when used)
 * It displays the whole list of deprecated features used in the application
-* Displays the stack trace of a deprecation on-demand.
+* Displays the stack trace of a deprecation on-demand
+* Provides a `ClockMock` class for time-sensitive tests
 
 Installation
 ------------
@@ -107,10 +108,39 @@ the value ``"weak"`` will make the bridge ignore any deprecation notices. This i
 useful to projects that must use deprecated interfaces for backward compatibility
 reasons.
 
+Time-sensitive Tests
+--------------------
+
+The mock class ``ClockMock`` allows you to mock the time functions ``time()``,
+``microtime()``, ``sleep()`` and ``usleep()``.
+
+For example, assuming you have the following code:
+
+.. code-block:: php
+
+    $stopwatch = new Stopwatch();
+
+    $stopwatch->start();
+    sleep(1);
+    $duration = $stopwatch->stop();
+
+    $this->assertEquals(1, $duration);
+
+You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
+calculate the duration time of your process, here 1 second. However, this test
+may fail because of the duration time might actually be `1.000023s`.
+
+To use the ``ClockMock`` in your test, you can:
+
+* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or method
+* Register it manually by calling ``\Symfony\Bridge\PhpUnit\ClockMock::register(true)``
+  (before the test) and ``Symfony\Bridge\PhpUnit\ClockMock::register(false)``
+  (after the test)
+
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
-.. _`@-silencing operator` http://php.net/manual/en/language.operators.errorcontrol.php
-.. _`@-silenced` http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
