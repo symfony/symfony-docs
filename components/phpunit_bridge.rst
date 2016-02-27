@@ -6,7 +6,7 @@ The PHPUnit Bridge
 ==================
 
     The PHPUnit Bridge component provides utilities to report legacy tests, and
-    usage of deprecated code a `ClockMock` for time-sensitive tests.
+    usage of deprecated code and a helper for time-sensitive tests.
 
 It comes with the following features:
 
@@ -14,7 +14,7 @@ It comes with the following features:
 * Auto-register ``class_exists`` to load Doctrine annotations (when used)
 * It displays the whole list of deprecated features used in the application
 * Displays the stack trace of a deprecation on-demand
-* Provides a `ClockMock` class for time-sensitive tests
+* Provides a `ClockMock` mock class for time-sensitive tests
 
 Installation
 ------------
