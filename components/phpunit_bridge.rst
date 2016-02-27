@@ -2,8 +2,8 @@
    single: PHPUnitBridge
    single: Components; PHPUnitBridge
 
-The PHPUnit Bridge Component
-=============================
+The PHPUnit Bridge
+==================
 
     The PHPUnit Bridge component provides utilities to report legacy tests and
     usage of deprecated code.
@@ -40,7 +40,7 @@ The summary includes:
 
 **Unsilenced**
     Reports deprecation notices that were triggered without the recommended
-    @-silencing operator.
+    `@-silencing operator`_.
 **Legacy**
     Deprecation notices denote tests that explicitly test some legacy features.
 **Remaining/Other**
@@ -54,7 +54,7 @@ Deprecation notices can be triggered by using::
 
     @trigger_error('Your deprecation message', E_USER_DEPRECATED);
 
-Without the @-silencing operator, users would need to opt-out from deprecation
+Without the `@-silencing operator`_, users would need to opt-out from deprecation
 notices. Silencing by default swaps this behavior and allows users to opt-in
 when they are ready to cope with them (by adding a custom error handler like the
 one provided by this bridge). When not silenced, deprecation notices will appear
@@ -99,7 +99,7 @@ message contains the ``"foobar"`` string.
 Making Tests Fail
 -----------------
 
-By default, any non-legacy-tagged or any non-@-silenced deprecation notices will
+By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices will
 make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
 arbitrary value (ex: ``320``) will make the tests fails only if a higher number
 of deprecation notices is reached (``0`` is the default value). You can also set
@@ -112,3 +112,5 @@ reasons.
 .. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
+.. _`@-silencing operator` http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silenced` http://php.net/manual/en/language.operators.errorcontrol.php
