@@ -5,16 +5,20 @@
 The PHPUnit Bridge
 ==================
 
-    The PHPUnit Bridge component provides utilities to report legacy tests, and
-    usage of deprecated code and a helper for time-sensitive tests.
+    The PHPUnit Bridge provides utilities to report legacy tests, and usage of
+    deprecated code and a helper for time-sensitive tests.
 
 It comes with the following features:
 
-* Forces the tests to use a consistent locale (``C``)
-* Auto-register ``class_exists`` to load Doctrine annotations (when used)
-* It displays the whole list of deprecated features used in the application
-* Displays the stack trace of a deprecation on-demand
-* Provides a `ClockMock` mock class for time-sensitive tests
+* Forces the tests to use a consistent locale (``C``);
+
+* Auto-register ``class_exists`` to load Doctrine annotations (when used);
+
+* It displays the whole list of deprecated features used in the application;
+
+* Displays the stack trace of a deprecation on-demand;
+
+* Provides a `ClockMock` mock class for time-sensitive tests.
 
 Installation
 ------------
@@ -22,8 +26,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>`
-  (``symfony/phpunit-bridge`` on `Packagist`_); as a dev dependency
-* Use the official Git repository (https://github.com/symfony/phpunit-bridge)
+  (``symfony/phpunit-bridge`` on `Packagist`_); as a dev dependency;
+
+* Use the official Git repository (https://github.com/symfony/phpunit-bridge).
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -42,8 +47,10 @@ The summary includes:
 **Unsilenced**
     Reports deprecation notices that were triggered without the recommended
     `@-silencing operator`_.
+
 **Legacy**
     Deprecation notices denote tests that explicitly test some legacy features.
+
 **Remaining/Other**
     Deprecation notices are all other (non-legacy) notices, grouped by message,
     test class and method.
@@ -66,10 +73,13 @@ Mark Tests as Legacy
 
 There are four ways to mark a test as legacy:
 
-* (**Recommended**) Add the ``@group legacy`` annotation to its class or method
-* Make its class start with the ``Legacy`` prefix
-* Make its method start with ``testLegacy``
-* Make its data provider start with ``provideLegacy`` or ``getLegacy``
+* (**Recommended**) Add the ``@group legacy`` annotation to its class or method;
+
+* Make its class start with the ``Legacy`` prefix;
+
+* Make its method start with ``testLegacy``;
+
+* Make its data provider start with ``provideLegacy`` or ``getLegacy``.
 
 Configuration
 -------------
@@ -104,19 +114,17 @@ By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices w
 make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
 arbitrary value (ex: ``320``) will make the tests fails only if a higher number
 of deprecation notices is reached (``0`` is the default value). You can also set
-the value ``"weak"`` will make the bridge ignore any deprecation notices. This is
-useful to projects that must use deprecated interfaces for backward compatibility
-reasons.
+the value ``"weak"`` which will make the bridge ignore any deprecation notices.
+This is useful to projects that must use deprecated interfaces for backward
+compatibility reasons.
 
 Time-sensitive Tests
 --------------------
 
-The mock class ``ClockMock`` allows you to mock the time functions ``time()``,
+The ``ClockMock`` class allows you to mock the time functions ``time()``,
 ``microtime()``, ``sleep()`` and ``usleep()``.
 
-For example, assuming you have the following code:
-
-.. code-block:: php
+For example, assuming you have the following code::
 
     $stopwatch = new Stopwatch();
 
@@ -130,12 +138,14 @@ You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
 calculate the duration time of your process, here 1 second. However, this test
 may fail because of the duration time might actually be `1.000023s`.
 
-To use the ``ClockMock`` in your test, you can:
+To use the ``ClockMock`` class in your test, you can:
 
-* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or method
+* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or
+  method;
+
 * Register it manually by calling ``\Symfony\Bridge\PhpUnit\ClockMock::register(true)``
   (before the test) and ``Symfony\Bridge\PhpUnit\ClockMock::register(false)``
-  (after the test)
+  (after the test).
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
