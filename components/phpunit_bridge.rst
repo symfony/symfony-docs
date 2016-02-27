@@ -10,11 +10,10 @@ The PHPUnit Bridge Component
 
 It comes with the following features:
 
-* Forces the application to use the default language locale for output (set the
-  locale to ``C``)
+* Forces the tests to use a consistent locale (``C``)
 * Auto-register ``class_exists`` to load Doctrine annotations (when used)
 * It displays the whole list of deprecated features used in the application
-* Display the stack trace of a deprecation on-demand.
+* Displays the stack trace of a deprecation on-demand.
 
 Installation
 ------------
@@ -32,21 +31,23 @@ Usage
 
 Once the component installed, it automatically registers a
 `PHPUnit event listener`_ which in turn registers a `PHP error handler`_
-called ``DeprecationErrorHandler``. After running your PHPUnit tests again, you
-will get a report similar to this one:
+called ``DeprecationErrorHandler``. After running your PHPUnit tests, you will
+get a report similar to this one:
 
 .. image:: /images/components/phpunit_bridge/report.png
 
 The summary includes:
 
-* **Unsilenced** reports deprecation notices that were triggered without the
-  recommended @-silencing operator
-* **Legacy** deprecation notices denote tests that explicitly test some legacy
-  features
-* **Remaining/Other** deprecation notices are all other (non-legacy) notices,
-  grouped by message, test class and method
+**Unsilenced**
+    Reports deprecation notices that were triggered without the recommended
+    @-silencing operator
+**Legacy**
+    Deprecation notices denote tests that explicitly test some legacy features
+**Remaining/Other**
+    Deprecation notices are all other (non-legacy) notices, grouped by message,
+    test class and method
 
-Trigger deprecation notices
+Trigger Deprecation Notices
 ---------------------------
 
 Deprecation notices can be triggered by using::
@@ -59,15 +60,15 @@ when they are ready to cope with them (by adding a custom error handler like the
 one provided by this bridge). When not silenced, deprecation notices will appear
 in the **Unsilenced** section of the deprecation report.
 
-Mark tests as legacy
+Mark Tests as Legacy
 --------------------
 
 There are four ways to mark a test as legacy:
 
+* (**Recommended**) Add the ``@group legacy`` annotation to its class or method
 * Make its class start with the ``Legacy`` prefix
 * Make its method start with ``testLegacy``
 * Make its data provider start with ``provideLegacy`` or ``getLegacy``
-* Add the ``@group legacy`` annotation to its class or method
 
 Configuration
 -------------
@@ -75,21 +76,16 @@ Configuration
 In case you need to inspect the stack trace of a particular deprecation
 triggered by your unit tests, you can set the ``SYMFONY_DEPRECATIONS_HELPER``
 `environment variable`_ to a regular expression that matches this deprecation's
-message, encapsed between ``/`. For example, with:
-
-.. configuration-block::
+message, enclosed with ``/``. For example, with:
 
     .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8"?>
 
         <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
         <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
-                 backupGlobals="false"
-                 colors="true"
-                 bootstrap="app/autoload.php"
         >
+        <?xml version="1.0" encoding="UTF-8"?>
+
             <!-- ... -->
 
             <php>
@@ -100,6 +96,9 @@ message, encapsed between ``/`. For example, with:
 
 PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
+
+Making Tests Fail
+-----------------
 
 By default, any non-legacy-tagged or any non-@-silenced deprecation notices will
 make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
