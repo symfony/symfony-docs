@@ -137,7 +137,8 @@ Service: No Class Parameter
 ---------------------------
 
 This would be the way to define the service with the class namespace as a
-parameter:
+parameter - which is cumbersome and completely unnecessary for your own
+services
 
 .. code-block:: yaml
 
@@ -150,8 +151,6 @@ parameter:
     services:
         app.slugger:
             class: '%slugger.class%'
-
-This practice is cumbersome and completely unnecessary for your own services:
 
 .. best-practice::
 
