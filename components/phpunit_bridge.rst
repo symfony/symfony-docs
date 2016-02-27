@@ -75,7 +75,7 @@ Configuration
 In case you need to inspect the stack trace of a particular deprecation
 triggered by your unit tests, you can set the ``SYMFONY_DEPRECATIONS_HELPER``
 `environment variable`_ to a regular expression that matches this deprecation's
-message, encapsed between ``/``. For example, with:
+message, encapsed between ``/`. For example, with:
 
 .. configuration-block::
 
@@ -102,8 +102,10 @@ PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
 
 By default, any non-legacy-tagged or any non-@-silenced deprecation notices will
-make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to the
-value ``"weak"`` will make the bridge ignore any deprecation notices. This is
+make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
+arbitrary value (ex: ``320``) will make the tests fails only if a higher number
+of deprecation notices is reached (``0`` is the default value). You can also set
+the value ``"weak"`` will make the bridge ignore any deprecation notices. This is
 useful to projects that must use deprecated interfaces for backward compatibility
 reasons.
 
