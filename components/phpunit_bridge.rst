@@ -84,7 +84,6 @@ message, enclosed with ``/``. For example, with:
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
     >
-    <?xml version="1.0" encoding="UTF-8"?>
 
         <!-- ... -->
 
