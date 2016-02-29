@@ -30,11 +30,11 @@ render
 
 .. code-block:: twig
 
-    {{ render(uri, options) }}
+    {{ render(uri, options = []) }}
 
 ``uri``
     **type**: ``string`` | ``ControllerReference``
-``options``
+``options`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the fragment for the given controller (using the `controller`_ function)
@@ -53,11 +53,11 @@ render_esi
 
 .. code-block:: twig
 
-    {{ render_esi(uri, options) }}
+    {{ render_esi(uri, options = []) }}
 
 ``uri``
     **type**: ``string`` | ``ControllerReference``
-``options``
+``options`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Generates an ESI tag when possible or falls back to the behavior of
@@ -80,13 +80,13 @@ controller
 
 .. code-block:: twig
 
-    {{ controller(controller, attributes, query) }}
+    {{ controller(controller, attributes = [], query = []) }}
 
 ``controller``
     **type**: ``string``
-``attributes``
+``attributes`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``query``
+``query`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Returns an instance of ``ControllerReference`` to be used with functions
@@ -98,11 +98,11 @@ asset
 
 .. code-block:: twig
 
-    {{ asset(path, packageName, absolute = false, version = null) }}
+    {{ asset(path, packageName = null, absolute = false, version = null) }}
 
 ``path``
     **type**: ``string``
-``packageName``
+``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
 ``absolute`` (deprecated as of 2.7)
     **type**: ``boolean`` **default**: ``false``
@@ -118,9 +118,9 @@ assets_version
 
 .. code-block:: twig
 
-    {{ assets_version(packageName) }}
+    {{ assets_version(packageName = null) }}
 
-``packageName``
+``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
 
 Returns the current version of the package, more information in
@@ -131,11 +131,11 @@ form
 
 .. code-block:: twig
 
-    {{ form(view, variables) }}
+    {{ form(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the HTML of a complete form, more information in
@@ -146,11 +146,11 @@ form_start
 
 .. code-block:: twig
 
-    {{ form_start(view, variables) }}
+    {{ form_start(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the HTML start tag of a form, more information in
@@ -161,11 +161,11 @@ form_end
 
 .. code-block:: twig
 
-    {{ form_end(view, variables) }}
+    {{ form_end(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the HTML end tag of a form together with all fields that have not
@@ -191,11 +191,11 @@ form_widget
 
 .. code-block:: twig
 
-    {{ form_widget(view, variables) }}
+    {{ form_widget(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders a complete form or a specific HTML widget of a field, more information
@@ -219,13 +219,13 @@ form_label
 
 .. code-block:: twig
 
-    {{ form_label(view, label, variables) }}
+    {{ form_label(view, label = null, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``label``
+``label`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the label for the given field, more information in
@@ -236,11 +236,11 @@ form_row
 
 .. code-block:: twig
 
-    {{ form_row(view, variables) }}
+    {{ form_row(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the row (the field's label, errors and widget) of the given field,
@@ -251,11 +251,11 @@ form_rest
 
 .. code-block:: twig
 
-    {{ form_rest(view, variables) }}
+    {{ form_rest(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders all fields that have not yet been rendered, more information in
@@ -279,13 +279,13 @@ is_granted
 
 .. code-block:: twig
 
-    {{ is_granted(role, object, field) }}
+    {{ is_granted(role, object = null, field = null) }}
 
 ``role``
     **type**: ``string``
-``object``
+``object`` *(optional)*
     **type**: ``object``
-``field``
+``field`` *(optional)*
     **type**: ``string``
 
 Returns ``true`` if the current user has the required role. Optionally,
@@ -302,21 +302,22 @@ logout_path
 
 .. code-block:: twig
 
-    {{ logout_path(key) }}
+    {{ logout_path(key = null) }}
 
-``key``
+``key`` *(optional)*
     **type**: ``string``
 
-Generates a relative logout URL for the given firewall.
+Generates a relative logout URL for the given firewall. If no key is provided,
+the URL is generated for the current firewall the user is logged into.
 
 logout_url
 ~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ logout_url(key) }}
+    {{ logout_url(key = null) }}
 
-``key``
+``key`` *(optional)*
     **type**: ``string``
 
 Equal to the `logout_path`_ function, but it'll generate an absolute URL
@@ -327,13 +328,13 @@ path
 
 .. code-block:: twig
 
-    {{ path(name, parameters, relative) }}
+    {{ path(name, parameters = [], relative = false) }}
 
 ``name``
     **type**: ``string``
-``parameters``
+``parameters`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``relative``
+``relative`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Returns the relative URL (without the scheme and host) for the given route.
@@ -345,13 +346,13 @@ url
 
 .. code-block:: twig
 
-    {{ url(name, parameters, schemeRelative) }}
+    {{ url(name, parameters = [], schemeRelative = false) }}
 
 ``name``
     **type**: ``string``
-``parameters``
+``parameters`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``schemeRelative``
+``schemeRelative`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Returns the absolute URL (with scheme and host) for the given route. If
@@ -432,15 +433,15 @@ trans
 
 .. code-block:: twig
 
-    {{ message|trans(arguments, domain, locale) }}
+    {{ message|trans(arguments = [], domain = null, locale = null) }}
 
 ``message``
     **type**: ``string``
-``arguments``
+``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Translates the text into the current language. More information in
@@ -451,17 +452,17 @@ transchoice
 
 .. code-block:: twig
 
-    {{ message|transchoice(count, arguments, domain, locale) }}
+    {{ message|transchoice(count, arguments = [], domain = null, locale = null) }}
 
 ``message``
     **type**: ``string``
 ``count``
     **type**: ``integer``
-``arguments``
+``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Translates the text with pluralization support. More information in
@@ -472,13 +473,13 @@ yaml_encode
 
 .. code-block:: twig
 
-    {{ input|yaml_encode(inline, dumpObjects) }}
+    {{ input|yaml_encode(inline = 0, dumpObjects = false) }}
 
 ``input``
     **type**: ``mixed``
-``inline``
+``inline`` *(optional)*
     **type**: ``integer`` **default**: ``0``
-``dumpObjects``
+``dumpObjects`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for
@@ -489,13 +490,13 @@ yaml_dump
 
 .. code-block:: twig
 
-    {{ value|yaml_dump(inline, dumpObjects) }}
+    {{ value|yaml_dump(inline = 0, dumpObjects = false) }}
 
 ``value``
     **type**: ``mixed``
-``inline``
+``inline`` *(optional)*
     **type**: ``integer`` **default**: ``0``
-``dumpObjects``
+``dumpObjects`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
@@ -557,11 +558,11 @@ file_excerpt
 
 .. code-block:: twig
 
-    {{ file|file_excerpt(line) }}
+    {{ file|file_excerpt(line = null) }}
 
 ``file``
     **type**: ``string``
-``line``
+``line`` *(optional)*
     **type**: ``integer``
 
 Generates an excerpt of seven lines around the given ``line``.
@@ -571,13 +572,13 @@ format_file
 
 .. code-block:: twig
 
-    {{ file|format_file(line, text) }}
+    {{ file|format_file(line, text = null) }}
 
 ``file``
     **type**: ``string``
 ``line``
     **type**: ``integer``
-``text``
+``text`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Generates the file path inside an ``<a>`` element. If the path is inside
@@ -601,9 +602,9 @@ file_link
 
 .. code-block:: twig
 
-    {{ file|file_link(line) }}
+    {{ file|file_link(line = null) }}
 
-``line``
+``line`` *(optional)*
     **type**: ``integer``
 
 Generates a link to the provided file (and optionally line number) using
@@ -637,11 +638,11 @@ trans
 
     {% trans with vars from domain into locale %}{% endtrans %}
 
-``vars``
+``vars`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``string``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``string``
 
 Renders the translation of the content. More information in :ref:`book-translation-tags`.
@@ -655,11 +656,11 @@ transchoice
 
 ``count``
     **type**: ``integer``
-``vars``
+``vars`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Renders the translation of the content with pluralization support, more
