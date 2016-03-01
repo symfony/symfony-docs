@@ -527,6 +527,10 @@ There are several types of normalizers available:
     This normalizer converts \DateTime objects (or anything that implements
     `\DateTimeInterface`) into strings. By default it uses the RFC3339 format.
 
+::class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
+    This normalizer converts \SplFileInfo objects into a data URI string
+    (`data:...`) such that files can be embedded into serialized data.
+
 Handling Circular References
 ----------------------------
 
