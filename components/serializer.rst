@@ -523,6 +523,10 @@ There are several types of normalizers available:
 
     Unlike with `json_encode` circular references are handled.
 
+::class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
+    This normalizer converts \DateTime objects (or anything that implements
+    `\DateTimeInterface`) into strings. By default it uses the RFC3339 format.
+
 Handling Circular References
 ----------------------------
 
