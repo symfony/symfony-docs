@@ -68,9 +68,9 @@ You can add a table separator anywhere in the output by passing an instance of
 
 The width of the columns are automatically set using the width of their contents by default. You can change this behavior via :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`::
 
-    // Sets the left column to 10 characters, the middle to auto and the right to 30 characters.
-    // The left column will effectively be 13 characters, as the columns content don't fit 10.
-    $table->setColumnWidths(array(10, 'auto', 30));
+    // Sets the left column to 10 characters, the middle to 0, and the right to 30 characters.
+    // The left two columns will effectively be 13 and 24 characters, as the columns' content don't fit within the set values.
+    $table->setColumnWidths(array(10, 0, 30));
     $table->render();
     
 This code results in:
