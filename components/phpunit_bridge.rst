@@ -121,22 +121,42 @@ compatibility reasons.
 Time-sensitive Tests
 --------------------
 
-The ``ClockMock`` class allows you to mock the time functions ``time()``,
-``microtime()``, ``sleep()`` and ``usleep()``.
+Use Case
+~~~~~~~~
 
-For example, assuming you have the following code::
+If you have this kind of time-related tests::
 
-    $stopwatch = new Stopwatch();
+    use Symfony\Component\Stopwatch\Stopwatch;
 
-    $stopwatch->start();
-    sleep(1);
-    $duration = $stopwatch->stop();
+    class MyTest extends \PHPUnit_Framework_TestCase
+    {
+        public function testSomething()
+        {
+            $stopwatch = new Stopwatch();
 
-    $this->assertEquals(1, $duration);
+            $stopwatch->start();
+            sleep(10);
+            $duration = $stopwatch->stop();
+
+            $this->assertEquals(10, $duration);
+        }
+    }
 
 You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
-calculate the duration time of your process, here 1 second. However, this test
-may fail because of the duration time might actually be `1.000023s`.
+calculate the duration time of your process, here 10 seconds. However, depending
+on the load of the server your the processes running on your local machine, the
+``$duration`` could for example be `10.000023s` instead of `10s`.
+
+This kind of tests are called transient tests: they are failing randomly
+depending on spurious and external circumstances. They are often cause trouble
+when using public continuous integration services like `Travis CI`_.
+
+Clock Mocking
+~~~~~~~~~~~~~
+
+The ``ClockMock`` class provided by this bridge allows you to mock the PHP's
+built-in time functions ``time()``, ``microtime()``, ``sleep()`` and
+``usleep()``.
 
 To use the ``ClockMock`` class in your test, you can:
 
@@ -147,6 +167,71 @@ To use the ``ClockMock`` class in your test, you can:
   (before the test) and ``Symfony\Bridge\PhpUnit\ClockMock::register(false)``
   (after the test).
 
+As a result, the following is guarenteed to work and is no longer a transient
+test:
+
+.. code-block:: php
+
+    use Symfony\Component\Stopwatch\Stopwatch;
+
+    /**
+     * @group time-sensitive
+     */
+    class MyTest extends \PHPUnit_Framework_TestCase
+    {
+        public function testSomething()
+        {
+            $stopwatch = new Stopwatch();
+
+            $stopwatch->start();
+            sleep(10);
+            $duration = $stopwatch->stop();
+
+            $this->assertEquals(10, $duration);
+        }
+    }
+
+And that's all!
+
+An added bonus of using the ``ClockMock`` class is that time passes instantly.
+Using PHP's ``sleep(10)`` will make your test wait for 10 actual seconds (more
+or less). In contrast, the ``ClockMock`` class advances the internal clock the
+given number of seconds without actually waiting that time, so your test will
+execute 10 seconds faster.
+
+Troubleshooting
+~~~~~~~~~~~~~~~
+
+The ``@group time-sensitive`` works "by convention" and assumes that the
+namespace of the tested class can be obtained just by removing the ``\Tests\``
+part from the test namespace. I.e. that if the your test case fully-qualified
+class name (FQCN) is ``App\Tests\Watch\DummyWatchTest``, it assumes the tested
+class FQCN is ``App\Watch\DummyWatch``.
+
+If this convention doesn't work for your application, you can also configure
+the mocked namespaces in the `phpunit.xml` file, as done for example in the
+:doc:`HttpKernel Component </components/http_kernel/introduction>`:
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+                <arguments>
+                    <array>
+                        <element><string>Symfony\Component\HttpFoundation</string></element>
+                    </array>
+                </arguments>
+            </listener>
+        </listeners>
+    </phpunit>
+
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
@@ -154,3 +239,4 @@ To use the ``ClockMock`` class in your test, you can:
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`Travis CI`: https://travis-ci.com/
