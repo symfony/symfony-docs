@@ -511,6 +511,18 @@ There are several types of normalizers available:
 
     Objects are normalized to a map of property names to property values.
 
+::class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
+    This normalizer works with classes that implement `\JsonSerializable`.
+
+    It will call the `jsonSerialize` method and then further normalize the result.
+    This means that nested `JsonSerializable` classes will also be normalized.
+
+    This normalizer is particularly helpful when you want to gradually migrate
+    from an existing codebase using simple `json_encode` to the full Symfony
+    Serializer by allowing you to mix which normalizers are used for which classes.
+
+    Unlike with `json_encode` circular references are handled.
+
 Handling Circular References
 ----------------------------
 
