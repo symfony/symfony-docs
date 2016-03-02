@@ -169,13 +169,13 @@ link for details), create a ``gender_widget`` block to handle this:
             # app/config/config.yml
             twig:
                 form_themes:
-                    - 'form/fields.html.twig'
+                    - 'Form/fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
-                <twig:form-theme>form/fields.html.twig</twig:form-theme>
+                <twig:form-theme>Form/fields.html.twig</twig:form-theme>
             </twig:config>
 
         .. code-block:: php
@@ -183,7 +183,7 @@ link for details), create a ``gender_widget`` block to handle this:
             // app/config/config.php
             $container->loadFromExtension('twig', array(
                 'form_themes' => array(
-                    'form/fields.html.twig',
+                    'Form/fields.html.twig',
                 ),
             ));
 
