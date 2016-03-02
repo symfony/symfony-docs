@@ -29,7 +29,7 @@ are not met, an exception should be thrown which extends the
     use AppBundle\Exception\AccountDeletedException;
     use AppBundle\Security\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
-    use Symfony\Component\Security\Core\User\UserCheckInterface;
+    use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class UserChecker implements UserCheckerInterface
