@@ -1568,6 +1568,15 @@ are 4 possible *parts* of a form that can be rendered:
 
 .. note::
 
+    The portion corresponding to ``collection`` type is ``entry``.
+    In the case of embedded collections, for example,
+    in a form which you have a year which contains months, and months contains days.
+    You want to personalize each collection render, where the form prefix is ``_my_form_year``,
+    you need to write two blocks, ``_my_form_year_months_entry_row`` to customize month render, and
+    ``_my_form_year_months_entry_days_entry_row`` for days inputs.
+
+.. note::
+
     There are actually 2 other *parts* - ``rows`` and ``rest`` -
     but you should rarely if ever need to worry about overriding them.
 
