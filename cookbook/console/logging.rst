@@ -18,6 +18,12 @@ There are basically two logging cases you would need:
 * Manually logging some information from your command;
 * Logging uncaught exceptions.
 
+.. tip::
+
+    Do not repeat yourself! Console logging is a common task, so be sure to
+    check if there are existing bundles that suit your needs
+    (e.g. `vasek-purchart/console-errors-bundle`_).
+
 Manually Logging from a Console Command
 ---------------------------------------
 
@@ -262,3 +268,5 @@ Then implement the actual listener::
             ));
         }
     }
+
+.. _`vasek-purchart/console-errors-bundle`: https://packagist.org/packages/vasek-purchart/console-errors-bundle
