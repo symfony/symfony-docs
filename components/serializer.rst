@@ -511,25 +511,27 @@ There are several types of normalizers available:
 
     Objects are normalized to a map of property names to property values.
 
-::class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
-    This normalizer works with classes that implement ``\JsonSerializable``.
+:class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
+    This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 
-    It will call the ``jsonSerialize`` method and then further normalize the result.
-    This means that nested ``JsonSerializable`` classes will also be normalized.
+    It will call the :phpmethod:`JsonSerializable::jsonSerialize` method and
+    then further normalize the result. This means that nested
+    :phpclass:`JsonSerializable` classes will also be normalized.
 
     This normalizer is particularly helpful when you want to gradually migrate
-    from an existing codebase using simple ``json_encode`` to the full Symfony
+    from an existing codebase using simple :phpfunction:`json_encode` to the Symfony
     Serializer by allowing you to mix which normalizers are used for which classes.
 
-    Unlike with ``json_encode`` circular references are handled.
+    Unlike with :phpfunction:`json_encode` circular references can be handled.
 
-::class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
-    This normalizer converts ``\DateTime`` objects (or anything that implements
-    ``\DateTimeInterface``) into strings. By default it uses the RFC3339 format.
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
+    This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
+    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
+    By default it uses the RFC3339 format.
 
-::class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
-    This normalizer converts ``\SplFileInfo`` objects into a data URI string
-    (``data:...``) such that files can be embedded into serialized data.
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
+    This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
+    string (``data:...``) such that files can be embedded into serialized data.
 
 Handling Circular References
 ----------------------------
