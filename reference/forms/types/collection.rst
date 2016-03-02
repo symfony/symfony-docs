@@ -21,6 +21,7 @@ photos).
 |             | - `entry_type`_                                                             |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
+|             | - `prototype_options`_                                                      |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
 | options     | - `empty_data`_                                                             |
@@ -280,7 +281,11 @@ the empty values will be kept.
 entry_options
 ~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` or ``callable`` **default**: ``array()``
+
+.. versionadded:: 3.1
+
+    Since version 3.1, ``entry_options`` can be set dynamically by a callable.
 
 This is the array that's passed to the form type specified in the `entry_type`_
 option. For example, if you used the :doc:`ChoiceType </reference/forms/types/choice>`
@@ -303,6 +308,44 @@ type::
             ),
         ),
     ));
+
+The above example output each field of the collection with the same choices.
+When defined as a callable, each entry of the collection is passed to it as
+only argument and it must return a corresponding array of options::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('favorite_places', CollectionType::class, array(
+        'entry_type' => ChoiceType::class,
+        'entry_options' => function ($choice) {
+            $options = array();
+
+            if ($choice instanceof \AppBundle\Entity\City) {
+                $options = array(
+                    'choices'  => $choice->getFamousPlaces(),
+                    'choice_value' => 'id',
+                    'choice_label' => 'localName',
+                    'choice_attr' => function ($place) {
+                        $url = '/places/'.(null === $place ? '' : $place->getSlug();
+
+                        return array(
+                            'class' => 'place_option',
+                            'attr' => array('data-url' => $url),
+                        );
+                    },
+                );
+            }
+
+            return $options;
+        },
+        'data' => $visitedCities,
+    ));
+
+Many form type have useful options that can be handy to set dynamically for
+each entries. A :class:`Symfony\Component\Form\Extension\Core\Type\HiddenType` collection would be able
+to hold specific data html attributes for each entry.
 
 entry_type
 ~~~~~~~~~~
@@ -362,6 +405,25 @@ prototype_name
 If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are
 not replaced with the same value.
+
+prototype_options
+~~~~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``entry_options`` value
+
+.. versionadded:: 3.1
+
+    The ``prototype_options`` option was added in Symfony 3.1.
+
+You can pass any options that will override the corresponding default set in
+``entry_options`` option. Can be useful to pass custom css classes and data
+html attributes with the ``attr`` option to your prototype.
+
+.. note::
+
+    Since version 3.1, you should use a ``data`` key in ``prototype_options``
+    to define a default data for each new prototype instead of the deprecated
+    ``prototype_data`` option.
 
 Inherited Options
 -----------------
