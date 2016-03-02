@@ -191,7 +191,7 @@ And update ``TwitterClient`` to depend of this new interface::
     }
 
 Finally the service definition must be updated because, obviously, the autowiring
-subsystem isn't able to find itself the interface implementation to register::
+subsystem isn't able to find itself the interface implementation to register:
 
 .. configuration-block::
 
@@ -314,7 +314,7 @@ transformer::
     }
 
 The last step is to update service definitions to register this new implementation
-and a Twitter client using it::
+and a Twitter client using it:
 
 .. configuration-block::
 
