@@ -47,6 +47,7 @@ The **minimum configuration** to get your application running under Apache is:
             AllowOverride All
             Order Allow,Deny
             Allow from All
+            Require all granted
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
@@ -78,6 +79,7 @@ and increase web server performance:
             AllowOverride None
             Order Allow,Deny
             Allow from All
+            Require all granted
 
             <IfModule mod_rewrite.c>
                 Options -MultiViews
@@ -233,6 +235,7 @@ should look something like this:
             AllowOverride All
             Order Allow,Deny
             Allow from all
+            Require all granted
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
