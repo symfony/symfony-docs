@@ -11,6 +11,18 @@ want to decouple the bundle for use in other projects, you want to include the
 service configuration in the bundle itself. This article will teach you how to
 do that.
 
+Removing from config.yml
+---------------------------
+
+Your default ``app/config/config.yml`` file tries to import ``services.yml`` from the original location, which would result in error. All you need to do is to find next lines::
+
+    imports:
+    // other imported files
+      - { resource: services.yml }
+      
+
+and delete the line containing ``services.yml``.
+
 Creating an Extension Class
 ---------------------------
 
