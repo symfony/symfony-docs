@@ -82,6 +82,7 @@ with these steps:
         $ svn propset svn:ignore "parameters.yml" app/config/
         $ svn propset svn:ignore "*" var/cache/
         $ svn propset svn:ignore "*" var/logs/
+        $ svn propset svn:ignore "*" var/sessions/
 
         $ svn propset svn:ignore "bundles" web
 
