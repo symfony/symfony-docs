@@ -5,7 +5,7 @@
 The PHPUnit Bridge
 ==================
 
-    The PHPUnit Bridge provides utilities to report legacy tests, and usage of
+    The PHPUnit Bridge provides utilities to report legacy tests and usage of
     deprecated code and a helper for time-sensitive tests.
 
 It comes with the following features:
