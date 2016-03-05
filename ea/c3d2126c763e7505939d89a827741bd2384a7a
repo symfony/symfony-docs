@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-21T16:39:37Z
+
+:+1: @mustafaaloko thanks for this nice catch!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-21T16:41:14Z
+
+(Note to doc managers: this change has to be merged in 2.3 branch)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-22T10:48:21Z
+
+Both `isValid()` and `isSubmitted()` return false if the form was not submitted. The extra call is there purely for more clarity. I think it is important to mention that `isValid()` also returns false when the form was not submitted. However, I also agree with your change: :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-22T18:53:58Z
+
+Should we update the following two items too to make the text more consistent (both refer to `isValid()` and the wording now doesn't perfectly match anymore with the changes to this item imo)?
