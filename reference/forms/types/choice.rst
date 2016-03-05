@@ -224,8 +224,6 @@ The ``status`` field created by the code above will be rendered as:
 
 .. code-block:: html
 
-.. code-block:: html
-
     <select name="status">
         <option value="0">Full</option>
         <option value="1">Half</option>
@@ -300,10 +298,7 @@ type behaves as if it were set to true:
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
 
-<<<<<<< HEAD
-=======
 .. include:: /reference/forms/types/options/multiple.rst.inc
->>>>>>> 2.7
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
