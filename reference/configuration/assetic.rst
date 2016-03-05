@@ -52,7 +52,7 @@ Full Default Configuration
                 some_filter:                 []
             workers:
                 # see https://github.com/symfony/AsseticBundle/pull/119
-                # Cache can also be busted via the framework.templating.assets_version
+                # Cache can also be busted via the framework.assets.version
                 # setting - see the "framework" configuration section
                 cache_busting:
                     enabled:              false

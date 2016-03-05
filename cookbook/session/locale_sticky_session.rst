@@ -53,8 +53,8 @@ how you determine the desired locale from the request::
         public static function getSubscribedEvents()
         {
             return array(
-                // must be registered before the default Locale listener
-                KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
+                // must be registered after the default Locale listener
+                KernelEvents::REQUEST => array(array('onKernelRequest', 15)),
             );
         }
     }

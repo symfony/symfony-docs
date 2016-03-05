@@ -1,8 +1,8 @@
 .. index::
     single: DependencyInjection; Autowiring
 
-Defining Services Dependencies Automatically
-============================================
+Defining Services Dependencies Automatically (Autowiring)
+=========================================================
 
 .. versionadded:: 2.8
     Support for autowiring services was introduced in Symfony 2.8.
@@ -13,8 +13,8 @@ typehint which is useful in the field of `Rapid Application Development`_,
 when designing prototypes in early stages of large projects. It makes it easy
 to register a service graph and eases refactoring.
 
-Imagine you're building an API to publish statuses on a Twitter feed, which
-has to be obfuscated with ``ROT13`` (a special case of the Caesar cipher).
+Imagine you're building an API to publish statuses on a Twitter feed, obfuscated
+with `ROT13`_ (a special case of the Caesar cipher).
 
 Start by creating a ROT13 transformer class::
 
@@ -76,7 +76,7 @@ service is marked as autowired:
             <services>
                 <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
@@ -191,7 +191,7 @@ And update ``TwitterClient`` to depend of this new interface::
     }
 
 Finally the service definition must be updated because, obviously, the autowiring
-subsystem isn't able to find itself the interface implementation to register::
+subsystem isn't able to find itself the interface implementation to register:
 
 .. configuration-block::
 
@@ -218,7 +218,7 @@ subsystem isn't able to find itself the interface implementation to register::
                 <service id="rot13_transformer" class="AppBundle\Rot13Transformer" />
                 <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
@@ -314,7 +314,7 @@ transformer::
     }
 
 The last step is to update service definitions to register this new implementation
-and a Twitter client using it::
+and a Twitter client using it:
 
 .. configuration-block::
 
@@ -356,7 +356,7 @@ and a Twitter client using it::
                     <argument type="service" id="uppercase_rot13_transformer" />
                 </service>
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
