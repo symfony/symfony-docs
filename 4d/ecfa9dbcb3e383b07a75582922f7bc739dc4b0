@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-17T00:51:43Z
+
+Any feedback on this one? @weaverryan? @javiereguiluz?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-17T07:51:52Z
+
+@theofidry the contributed doc is nice. Thanks!
+
+The only thing I miss is a cool feature that @nicolas-grekas told me about: you can use a number as the value of `SYMFONY_DEPRECATIONS_HELPER`. Why? @WouterJ explains it well in this StackOverfow answer: http://stackoverflow.com/questions/35377529/problems-using-symfony2-phpunit/35378446#35378446
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-17T08:51:13Z
+
+>you can use a number as the value of `SYMFONY_DEPRECATIONS_HELPER`
+
+Indeed quite a nice feature. I will address your comments shortly, thanks for the review :)
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-27T15:22:14Z
+
+I updated most the PR to address the comments, my apologies if I forgot one
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-27T15:43:51Z
+
+Cool, thanks for your work on this one! You seem to have misunderstood/forgotten 2 minor things, but we can fix those during the merge as well. :+1: from me!
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-27T15:47:47Z
+
+You're welcome :smile:
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-27T16:23:29Z
+
+updated:
+
+* Added a link for the `@ operator`
+* Dropped the `Component` part in the name as it's a bridge and not a component
+* Added doc for the `ClockMock`
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-27T16:44:44Z
+
+It looks great! Thanks for your quick response.
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-27T16:50:57Z
+
+Oh gosh I hate when GitHub collapses all comments even if they are know. Sorry I cannot find where you putted your comment:
+
+>Yeah, we can maybe skip it in the introduction. It's usefull to know what it does, but you already mentioned that just below this summary.
+
+Maybe I've just changed the intro to not mention `ClockMock`. I still like the idea of the intro rather than the bullet point list as the bullet point list already gives a fairly detailed list of the features, whereas the intro stays more vague and gives a bigger picture of what the bridge does.
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-27T22:58:53Z
+
+@xabbuh updated
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-28T07:44:12Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-29T14:50:07Z
+
+@theofidry thanks for writing this doc. I used it to write this blog post: http://symfony.com/blog/new-in-symfony-2-8-clock-mocking-and-time-sensitive-tests
+
+The blog post was reviewed by Nicolas, so I'm afraid that the current pull request has some errors about how to enable/disable the clock mocking explicitly. In addition, we could mention the fact that clock mocking makes your tests execute much faster (because time passes instantly).
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-02-29T14:55:52Z
+
+@javiereguiluz then I guess what is left is update the clock mocking part with your blog post ;) I will try to do that tonight but can't guarantee anything.
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-03-01T22:36:56Z
+
+Updated :)
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-03-05T13:11:46Z
+
+Any update? Would love to see it merge this weekend :smile:
