@@ -527,7 +527,7 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
-    By default it uses the RFC3339 format.
+    By default it uses the RFC3339_ format.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
@@ -675,3 +675,4 @@ you indicate that you're expecting an array instead of a single object.
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
+.. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
