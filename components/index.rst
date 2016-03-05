@@ -23,6 +23,7 @@ The Components
     http_kernel/index
     intl
     options_resolver
+    phpunit_bridge
     process
     property_access/index
     routing/index

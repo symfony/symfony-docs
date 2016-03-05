@@ -5,7 +5,7 @@
   * :doc:`/components/asset/introduction`
 
 * :doc:`/components/browser_kit/index`
-  
+
   * :doc:`/components/browser_kit/introduction`
 
 * :doc:`/components/class_loader/index`
@@ -115,6 +115,10 @@
 * **OptionsResolver**
 
   * :doc:`/components/options_resolver`
+
+* **PHPUnitBridge**
+
+  * :doc:`/components/phpunit_bridge`
 
 * **Process**
 
