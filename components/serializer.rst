@@ -533,6 +533,10 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
 
+.. versionadded:: 3.1
+    The ``JsonSerializableNormalizer``, ``DateTimeNormalizer`` and
+    ``DataUriNormalizer`` normalizers were added in Symfony 3.1
+
 Handling Circular References
 ----------------------------
 
