@@ -260,7 +260,7 @@ possible paths:
 #. When initially loading the page in a browser, the form is simply created and
    rendered. :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes that the form was not submitted and does nothing.
-   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
+   :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted` returns ``false``
    if the form was not submitted.
 
 #. When the user submits the form, :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
