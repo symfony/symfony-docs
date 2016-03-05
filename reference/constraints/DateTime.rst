@@ -87,8 +87,8 @@ format
 .. versionadded:: 3.1
     The ``format`` option was introduced in Symfony 3.1.
 
-This option allows to validate a custom date format.
-See `DateTime::createFromFormat <date_create_from_format>`_ for formatting options.
+This option allows to validate a custom date format. See
+:phpmethod:`DateTime::createFromFormat` for formatting options.
 
 message
 ~~~~~~~
@@ -98,5 +98,3 @@ message
 This message is shown if the underlying data is not a valid datetime.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
-
-.. _`date_create_from_format`: http://php.net/manual/en/datetime.createfromformat.php
