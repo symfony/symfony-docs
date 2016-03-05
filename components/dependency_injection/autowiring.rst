@@ -1,8 +1,8 @@
 .. index::
     single: DependencyInjection; Autowiring
 
-Defining Services Dependencies Automatically
-============================================
+Defining Services Dependencies Automatically (Autowiring)
+=========================================================
 
 .. versionadded:: 2.8
     Support for autowiring services was introduced in Symfony 2.8.
@@ -76,7 +76,7 @@ service is marked as autowired:
             <services>
                 <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
@@ -218,7 +218,7 @@ subsystem isn't able to find itself the interface implementation to register::
                 <service id="rot13_transformer" class="AppBundle\Rot13Transformer" />
                 <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
@@ -356,7 +356,7 @@ and a Twitter client using it::
                     <argument type="service" id="uppercase_rot13_transformer" />
                 </service>
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
