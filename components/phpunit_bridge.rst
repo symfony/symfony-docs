@@ -18,7 +18,11 @@ It comes with the following features:
 
 * Displays the stack trace of a deprecation on-demand;
 
-* Provides a `ClockMock` mock class for time-sensitive tests.
+* Provides a ``ClockMock`` helper class for time-sensitive tests.
+
+.. versionadded:: 2.7
+    The PHPUnit Bridge was introduced in Symfony 2.7. It is however possible to
+    install the bridge in any Symfony application (even 2.3).
 
 Installation
 ------------
@@ -37,8 +41,8 @@ Usage
 
 Once the component installed, it automatically registers a
 `PHPUnit event listener`_ which in turn registers a `PHP error handler`_
-called ``DeprecationErrorHandler``. After running your PHPUnit tests, you will
-get a report similar to this one:
+called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`. After
+running your PHPUnit tests, you will get a report similar to this one:
 
 .. image:: /images/components/phpunit_bridge/report.png
 
@@ -75,9 +79,9 @@ There are four ways to mark a test as legacy:
 
 * (**Recommended**) Add the ``@group legacy`` annotation to its class or method;
 
-* Make its class start with the ``Legacy`` prefix;
+* Make its class name start with the ``Legacy`` prefix;
 
-* Make its method start with ``testLegacy``;
+* Make its method name start with ``testLegacy`` instead of ``test``;
 
 * Make its data provider start with ``provideLegacy`` or ``getLegacy``.
 
@@ -154,23 +158,21 @@ when using public continuous integration services like `Travis CI`_.
 Clock Mocking
 ~~~~~~~~~~~~~
 
-The ``ClockMock`` class provided by this bridge allows you to mock the PHP's
-built-in time functions ``time()``, ``microtime()``, ``sleep()`` and
-``usleep()``.
+The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
+allows you to mock the PHP's built-in time functions ``time()``,
+``microtime()``, ``sleep()`` and ``usleep()``.
 
 To use the ``ClockMock`` class in your test, you can:
 
 * (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or
   method;
 
-* Register it manually by calling ``\Symfony\Bridge\PhpUnit\ClockMock::register(true)``
-  (before the test) and ``Symfony\Bridge\PhpUnit\ClockMock::register(false)``
-  (after the test).
+* Register it manually by calling ``ClockMock::register(__CLASS__)`` and
+  ``ClockMock::withClockMock(true)`` before the test and
+  ``ClockMock::withClockMock(false)`` after the test.
 
 As a result, the following is guarenteed to work and is no longer a transient
-test:
-
-.. code-block:: php
+test::
 
     use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -193,11 +195,13 @@ test:
 
 And that's all!
 
-An added bonus of using the ``ClockMock`` class is that time passes instantly.
-Using PHP's ``sleep(10)`` will make your test wait for 10 actual seconds (more
-or less). In contrast, the ``ClockMock`` class advances the internal clock the
-given number of seconds without actually waiting that time, so your test will
-execute 10 seconds faster.
+.. tip::
+
+    An added bonus of using the ``ClockMock`` class is that time passes
+    instantly. Using PHP's ``sleep(10)`` will make your test wait for 10
+    actual seconds (more or less). In contrast, the ``ClockMock`` class
+    advances the internal clock the given number of seconds without actually
+    waiting that time, so your test will execute 10 seconds faster.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
@@ -209,7 +213,7 @@ class name (FQCN) is ``App\Tests\Watch\DummyWatchTest``, it assumes the tested
 class FQCN is ``App\Watch\DummyWatch``.
 
 If this convention doesn't work for your application, you can also configure
-the mocked namespaces in the `phpunit.xml` file, as done for example in the
+the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
 :doc:`HttpKernel Component </components/http_kernel/introduction>`:
 
 .. code-block:: xml
