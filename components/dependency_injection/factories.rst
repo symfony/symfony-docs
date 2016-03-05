@@ -52,7 +52,7 @@ configure the service container to use the
                     <factory class="NewsletterManagerFactory" method="createNewsletterManager" />
                 </service>
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 

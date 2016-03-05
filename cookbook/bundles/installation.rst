@@ -122,12 +122,12 @@ The output will look like this:
 .. code-block:: text
 
     assetic:
-        debug:                %kernel.debug%
+        debug:                '%kernel.debug%'
         use_controller:
-            enabled:              %kernel.debug%
+            enabled:              '%kernel.debug%'
             profiler:             false
-        read_from:            %kernel.root_dir%/../web
-        write_to:             %assetic.read_from%
+        read_from:            '%kernel.root_dir%/../web'
+        write_to:             '%assetic.read_from%'
         java:                 /usr/bin/java
         node:                 /usr/local/bin/node
         node_paths:           []

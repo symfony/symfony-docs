@@ -8,3 +8,4 @@ Deployment
     azure-website
     heroku
     platformsh
+    fortrabbit
