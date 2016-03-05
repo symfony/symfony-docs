@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-19T11:07:24Z
+
+@ostark the syntax of your article is mostly right. However, we need lines to be wrapped at around 80 characters (we don't use "soft wraps" at the Symfony docs). Thanks!
+
+---------------------------------------------------------------------------
+
+by ostark at 2016-02-19T11:20:20Z
+
+@javiereguiluz Thanks for letting me know.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-21T16:36:58Z
+
+Although I don't have experience with fortrabbit, the article looked very informative and easy to follow. I've left some minor comments but overall I'm :+1: for including this article. Thanks @ostark.
+
+---------------------------------------------------------------------------
+
+by ostark at 2016-02-21T18:02:40Z
+
+Thanks for your efforts! @javiereguiluz will have a look at your suggestions tomorrow.
+
+---------------------------------------------------------------------------
+
+by ostark at 2016-02-23T10:04:32Z
+
+Thank you for your help @xabbuh & @javiereguiluz!
+Hopefully this time everything is correct.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-23T19:21:43Z
+
+@ostark Sorry, I didn't have a enough time to finish my review yesterday. I did that now and left some more minor comments. Overall, the article looks very well (I cannot say anything about how that works as I didn't use fortrabbit yet though).
+
+---------------------------------------------------------------------------
+
+by ostark at 2016-02-26T12:50:45Z
+
+@xabbuh Thanks again for taking care! I hope I didn't messed up anything.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-27T20:44:11Z
+
+:+1:
