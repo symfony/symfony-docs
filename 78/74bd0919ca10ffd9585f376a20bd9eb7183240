@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-17T22:20:49Z
+
+Would you also like to remove the paragraph below talking about the third argument?
+
+---------------------------------------------------------------------------
+
+by rendler-denis at 2016-02-18T07:54:31Z
+
+Hey, @xabbuh!
+Are you are referring to this paragraph:
+"When PHP imports the request query, it handles request parameters like foo[bar]=bar in a special way as it creates an array. So you can get the foo parameter and you will get back an array with a bar element:"
+
+This seems to correctly reflect the behaviour of the code. This time I also checked it :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-19T11:19:53Z
+
+I agree with @rendler-denis. It seems that no other change is needed in this file.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-23T20:49:51Z
+
+I agree. Seems like I confused different versions of this article. :+1:
