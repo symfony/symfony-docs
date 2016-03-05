@@ -5,17 +5,17 @@ Deploying to fortrabbit
 =======================
 
 This step-by-step cookbook describes how to deploy a Symfony web application to
- `fortrabbit`_. You can read more about using Symfony with fortrabbit on the 
- official fortrabbit `Symfony install guide`_.
+`fortrabbit`_. You can read more about using Symfony with fortrabbit on the
+official fortrabbit `Symfony install guide`_.
 
 Setting up fortrabbit
 ---------------------
 
 Before getting started, you should have done a few things on the fortrabbit side:
 
-* `Sign up`_.
-* Add an SSH key to your Account (to deploy via Git)
-* Create an App
+* `Sign up`_;
+* Add an SSH key to your Account (to deploy via Git);
+* Create an App.
 
 Preparing your Application
 --------------------------
@@ -54,10 +54,7 @@ to redirect it to :phpfunction:`error_log`:
 
             <monolog:config>
                 <!-- ... -->
-                <monolog:handler
-                    name="nested"
-                    type="error_log"
-                />
+                <monolog:handler name="nested" type="error_log" />
             </monolog:config>
         </container>
 
@@ -77,20 +74,20 @@ Configuring Database Access & Session Handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the fortrabbit App Secrets to attain your database credentials. 
-Create the file ``app/config_prod_secrets.php`` with the following contents::
+Create the file ``app/config/config_prod_secrets.php`` with the following
+contents::
 
-    <?php
-    // Get the path to the secrects.json file
-    if (!$secrets = getenv("APP_SECRETS")) {
+    // get the path to the secrects.json file
+    $secrets = getenv("APP_SECRETS")
+    if (!$secrets) {
         return;
     }
 
-    // Read the file and decode json to an array
+    // read the file and decode json to an array
     $secrets = json_decode(file_get_contents($secrets), true);
 
-    // Set database parameters to the container
+    // set database parameters to the container
     if (isset($secrets['MYSQL'])) {
-
         $container->setParameter('database_driver', 'pdo_mysql');
         $container->setParameter('database_host', $secrets['MYSQL']['HOST']);
         $container->setParameter('database_name', $secrets['MYSQL']['DATABASE']);
@@ -98,17 +95,16 @@ Create the file ``app/config_prod_secrets.php`` with the following contents::
         $container->setParameter('database_password', $secrets['MYSQL']['PASSWORD']);
     }
 
-    // Check if the Memcache component is present
+    // check if the Memcache component is present
     if (isset($secrets['MEMCACHE'])) {
-
         $memcache = $secrets['MEMCACHE'];
         $handlers = [];
 
         foreach (range(1, $memcache['COUNT']) as $num) {
-            $handlers [] = $memcache['HOST' . $num] . ':' . $memcache['PORT' . $num];
+            $handlers[] = $memcache['HOST'.$num].':'.$memcache['PORT'.$num];
         }
 
-        // Apply ini settings
+        // apply ini settings
         ini_set('session.save_handler', 'memcached');
         ini_set('session.save_path', implode(',', $handlers));
 
@@ -119,7 +115,7 @@ Create the file ``app/config_prod_secrets.php`` with the following contents::
         }
     }
 
-Make sure this file is listed in your *imports*:
+Make sure this file is imported into the main config file:
 
 .. configuration-block::
 
@@ -205,11 +201,11 @@ Every time you push to fortrabbit composer install runs before your code gets
 deployed. To finetune the deployment behavior put a `fortrabbit.yml`_. deployment 
 file (optional) in the project root.
 
-Add fortrabbit as a (additional) Git remote and add your configuration changes.
+Add fortrabbit as a (additional) Git remote and add your configuration changes:
 
 .. code-block:: bash
 
-   $ git remote add fortrabbit git@deploy.eu2.frbit.com:your-app.git
+   $ git remote add fortrabbit git@deploy.eu2.frbit.com:<your-app>.git
    $ git add composer.json composer.lock
    $ git add app/config/config_prod_secrets.php
 
@@ -222,7 +218,7 @@ Commit and push
 
 .. note::
 
-    Replace your-app with the name of your fortrabbit App.
+    Replace ``<your-app>`` with the name of your fortrabbit App.
 
 .. code-block:: bash
     
