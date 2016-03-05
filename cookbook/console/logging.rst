@@ -86,8 +86,7 @@ First configure a listener for console exception events in the service container
         services:
             kernel.listener.command_dispatch:
                 class: AppBundle\EventListener\ConsoleExceptionListener
-                arguments:
-                    logger: '@logger'
+                arguments: ['@logger']
                 tags:
                     - { name: kernel.event_listener, event: console.exception }
 
@@ -184,8 +183,7 @@ First configure a listener for console terminate events in the service container
         services:
             kernel.listener.command_dispatch:
                 class: AppBundle\EventListener\ErrorLoggerListener
-                arguments:
-                    logger: '@logger'
+                arguments: ['@logger']
                 tags:
                     - { name: kernel.event_listener, event: console.terminate }
 

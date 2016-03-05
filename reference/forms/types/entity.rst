@@ -18,7 +18,7 @@ objects from the database.
 |             | - `em`_                                                          |
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                     |
-| options     |                                                                  |
+| options     | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
@@ -191,6 +191,14 @@ choices
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
 See :ref:`reference-forms-entity-choices`.
+
+data_class
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+This option is not used in favor of the ``class`` option which is required
+to query the entities.
 
 Inherited Options
 -----------------

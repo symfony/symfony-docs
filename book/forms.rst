@@ -260,21 +260,15 @@ possible paths:
 #. When initially loading the page in a browser, the form is simply created and
    rendered. :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes that the form was not submitted and does nothing.
-   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
+   :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted` returns ``false``
    if the form was not submitted.
 
 #. When the user submits the form, :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes this and immediately writes the submitted data back into the
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated. If it is invalid (validation is covered in the next section),
-   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
-   again, so the form is rendered together with all validation errors;
-
-   .. note::
-
-       You can use the method :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted`
-       to check whether a form was submitted, regardless of whether or not the
-       submitted data is actually valid.
+   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns
+   ``false``, so the form is rendered together with all validation errors;
 
 #. When the user submits the form with valid data, the submitted data is again
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
