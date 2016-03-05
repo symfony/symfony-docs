@@ -35,7 +35,7 @@ Your ``User`` entity will probably at least have the following fields:
 ``plainPassword``
     This field is *not* persisted: (notice no ``@ORM\Column`` above it). It
     temporarily stores the plain password from the registration form. This field
-    can be validated then used to populate the ``password`` field.
+    can be validated and is then used to populate the ``password`` field.
 
 With some validation added, your class may look something like this::
 
@@ -127,7 +127,7 @@ With some validation added, your class may look something like this::
 
         public function getSalt()
         {
-            // The bcrypt algorithm don't require a separate salt.
+            // The bcrypt algorithm doesn't require a separate salt.
             // You *may* need a real salt if you choose a different encoder.
             return null;
         }
@@ -135,9 +135,10 @@ With some validation added, your class may look something like this::
         // other methods, including security methods like getRoles()
     }
 
-The ``UserInterface`` requires a few other methods and your ``security.yml`` file
-needs to be configured properly to work with the ``User`` entity. For a more full
-example, see the :ref:`Entity Provider <security-crete-user-entity>` article.
+The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
+a few other methods and your ``security.yml`` file needs to be configured
+properly to work with the ``User`` entity. For a more complete example, see
+the :ref:`Entity Provider <security-crete-user-entity>` article.
 
 .. _cookbook-registration-password-max:
 
@@ -190,7 +191,7 @@ Next, create the form for the ``User`` entity::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\User'
+                'data_class' => 'AppBundle\Entity\User',
             ));
         }
     }
@@ -200,7 +201,8 @@ There are just three fields: ``email``, ``username`` and ``plainPassword``
 
 .. tip::
 
-    To explore more things about the Form component, read :doc:`/book/forms`.
+    To explore more things about the Form component, read the
+    :doc:`chapter about forms </book/forms>` in the book.
 
 Handling the Form Submission
 ----------------------------
@@ -212,12 +214,11 @@ into the database::
     // src/AppBundle/Controller/RegistrationController.php
     namespace AppBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
     use AppBundle\Form\UserType;
     use AppBundle\Entity\User;
-    use Symfony\Component\HttpFoundation\Request;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
 
     class RegistrationController extends Controller
     {
@@ -244,7 +245,7 @@ into the database::
                 $em->persist($user);
                 $em->flush();
 
-                // ... do any other work - like send them an email, etc
+                // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user
 
                 return $this->redirectToRoute('replace_with_some_route');
@@ -372,8 +373,8 @@ See :doc:`/cookbook/form/form_customization` for more details.
 Update your Database Schema
 ---------------------------
 
-If you've updated the User entity during this tutorial, you have to update your
-database schema using this command:
+If you've updated the ``User`` entity during this tutorial, you have to update
+your database schema using this command:
 
 .. code-block:: bash
 
@@ -405,9 +406,9 @@ return the ``email`` property::
         // ...
     }
 
-Next, just update the ``providers`` section of your ``security.yml`` so that Symfony
-knows to load your users via the ``email`` property on login. See
-:ref:`authenticating-someone-with-a-custom-entity-provider`.
+Next, just update the ``providers`` section of your ``security.yml`` file
+so that Symfony knows how to load your users via the ``email`` property on
+login. See :ref:`authenticating-someone-with-a-custom-entity-provider`.
 
 Adding a "accept terms" Checkbox
 --------------------------------

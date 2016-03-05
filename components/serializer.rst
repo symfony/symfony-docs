@@ -363,8 +363,8 @@ Given you have the following object::
 
     class Company
     {
-        public name;
-        public address;
+        public $name;
+        public $address;
     }
 
 And in the serialized form, all attributes must be prefixed by ``org_`` like

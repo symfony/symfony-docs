@@ -29,11 +29,11 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
-|             | - `placeholder`_                                                       |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
+|             | - `placeholder`_                                                       |
 |             | - `preferred_choices`_                                                 |
 |             |                                                                        |
 |             | from the :doc:`FormType </reference/forms/types/form>`                 |
@@ -69,8 +69,6 @@ Inherited Options
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
-.. include:: /reference/forms/types/options/placeholder.rst.inc
-
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
@@ -78,6 +76,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 

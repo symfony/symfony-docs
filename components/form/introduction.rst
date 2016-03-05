@@ -556,7 +556,7 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
         public function searchAction()
         {
-            $formBuilder = $this->createFormBuilder(FormType::class, null, array(
+            $formBuilder = $this->createFormBuilder(null, array(
                 'action' => '/search',
                 'method' => 'GET',
             ));

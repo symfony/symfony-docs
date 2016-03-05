@@ -13,6 +13,77 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+February, 2016
+--------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#6172 <https://github.com/symfony/symfony-docs/pull/6172>`_ move assets options from templating to assets section and add base_path documentation (snoek09)
+* `#6021 <https://github.com/symfony/symfony-docs/pull/6021>`_ mention routing from the database (dbu)
+* `#6233 <https://github.com/symfony/symfony-docs/pull/6233>`_ Document translation_domain for choice fields (merorafael, WouterJ)
+* `#5655 <https://github.com/symfony/symfony-docs/pull/5655>`_ Added doc about Homestead's Symfony integration (WouterJ)
+* `#6072 <https://github.com/symfony/symfony-docs/pull/6072>`_ Add browserkit component documentation (yamiko, yamiko-ninja, robert Parker, javiereguiluz)
+* `#6243 <https://github.com/symfony/symfony-docs/pull/6243>`_ Add missing getBoolean() method (bocharsky-bw)
+* `#6231 <https://github.com/symfony/symfony-docs/pull/6231>`_ Use hash_equals instead of StringUtils::equals (WouterJ)
+* `#5724 <https://github.com/symfony/symfony-docs/pull/5724>`_ Describe configuration behaviour with multiple mailers (xelan)
+* `#6077 <https://github.com/symfony/symfony-docs/pull/6077>`_ fixes #5971 (vincentaubert)
+* `#6156 <https://github.com/symfony/symfony-docs/pull/6156>`_ [reference] [form] [options] fix #6153 (HeahDude)
+* `#6104 <https://github.com/symfony/symfony-docs/pull/6104>`_ Fix #6103 (zsturgess)
+* `#5856 <https://github.com/symfony/symfony-docs/pull/5856>`_ Reworded the "How to use Gmail" cookbook article (javiereguiluz)
+* `#6230 <https://github.com/symfony/symfony-docs/pull/6230>`_ Add annotation to glossary (rebased) (DerStoffel)
+* `#5642 <https://github.com/symfony/symfony-docs/pull/5642>`_ Documented label_format option (WouterJ)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#5995 <https://github.com/symfony/symfony-docs/pull/5995>`_ Update dev_environment.rst (gonzalovilaseca)
+* `#6240 <https://github.com/symfony/symfony-docs/pull/6240>`_ [#6224] some tweaks (xabbuh)
+* `#5513 <https://github.com/symfony/symfony-docs/pull/5513>`_ [load_balancer_reverse_proxy ] Always use 127.0.0.1 as a trusted proxy (ruudk)
+* `#6124 <https://github.com/symfony/symfony-docs/pull/6124>`_ [cookbook] Add annotations block and fix regex (peterkokot)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#6308 <https://github.com/symfony/symfony-docs/pull/6308>`_ fix literal syntax (xabbuh)
+* `#6251 <https://github.com/symfony/symfony-docs/pull/6251>`_ To use annotations, files must be removed (pbowyer)
+* `#6288 <https://github.com/symfony/symfony-docs/pull/6288>`_ Update factories.rst (velikanov)
+* `#6278 <https://github.com/symfony/symfony-docs/pull/6278>`_ [HttpFoundation] Fix typo for ParameterBag getters (rendler-denis)
+* `#6280 <https://github.com/symfony/symfony-docs/pull/6280>`_ Fix syntax of Company class example (cakper)
+* `#6284 <https://github.com/symfony/symfony-docs/pull/6284>`_ [Book] [Routing] Fix third param true to UrlGeneratorInterface::ABSOLUTE_URI (eriwin)
+* `#6269 <https://github.com/symfony/symfony-docs/pull/6269>`_ [Cookbook][Bundles]fix yaml syntax (mhor)
+* `#6255 <https://github.com/symfony/symfony-docs/pull/6255>`_ [Cookbook][Doctrine] some tweaks to the Doctrine registration article (xabbuh)
+* `#6229 <https://github.com/symfony/symfony-docs/pull/6229>`_ Rewrite EventDispatcher introduction (WouterJ)
+* `#6260 <https://github.com/symfony/symfony-docs/pull/6260>`_ add missing options `choice_value`, `choice_name` and `choice_attr` to `EntityType` (HeahDude)
+* `#6262 <https://github.com/symfony/symfony-docs/pull/6262>`_ [Form] reorder options in choice types references (HeahDude)
+* `#6256 <https://github.com/symfony/symfony-docs/pull/6256>`_ Fixed code example (twifty)
+* `#6250 <https://github.com/symfony/symfony-docs/pull/6250>`_ [Cookbook][Console] remove note about memory spool handling on CLI (xabbuh)
+* `#6249 <https://github.com/symfony/symfony-docs/pull/6249>`_ [Cookbook][Serializer] fix wording (xabbuh)
+* `#6246 <https://github.com/symfony/symfony-docs/pull/6246>`_ removed duplicate lines (seferov)
+* `#6222 <https://github.com/symfony/symfony-docs/pull/6222>`_ Updated "Learn more from the Cookbook" section (sfdumi)
+* `#6245 <https://github.com/symfony/symfony-docs/pull/6245>`_ [Cookbook][Console] change API doc class name (xabbuh)
+* `#6223 <https://github.com/symfony/symfony-docs/pull/6223>`_ Improveme the apache/mod_php configuration example (gnat42)
+* `#6234 <https://github.com/symfony/symfony-docs/pull/6234>`_ File System Security Issue in Custom Auth Article (finished) (mattjanssen, WouterJ)
+* `#4773 <https://github.com/symfony/symfony-docs/pull/4773>`_ [Cookbook] Make registration_form follow best practices (xelaris)
+* `#5630 <https://github.com/symfony/symfony-docs/pull/5630>`_ Add a caution about logout when using http-basic authenticated firewall (rmed19)
+* `#6215 <https://github.com/symfony/symfony-docs/pull/6215>`_ Added a caution about failing cache warmers (javiereguiluz)
+* `#6239 <https://github.com/symfony/symfony-docs/pull/6239>`_ Remove app_dev as build-in server is used (rmed19, WouterJ)
+* `#6241 <https://github.com/symfony/symfony-docs/pull/6241>`_ [ExpressionLanguage] Add caution about backslash handling (zerustech, WouterJ)
+* `#6236 <https://github.com/symfony/symfony-docs/pull/6236>`_ fix some minor typos (xabbuh)
+* `#6237 <https://github.com/symfony/symfony-docs/pull/6237>`_ use literals for external class names (xabbuh)
+* `#6206 <https://github.com/symfony/symfony-docs/pull/6206>`_ add separate placeholder examples for birthday, datetime and time type (snoek09)
+* `#6238 <https://github.com/symfony/symfony-docs/pull/6238>`_ fix directive name (xabbuh)
+* `#6224 <https://github.com/symfony/symfony-docs/pull/6224>`_ Note to create a service if you extend ExceptionController (pamuche)
+* `#5958 <https://github.com/symfony/symfony-docs/pull/5958>`_ Update security.rst (mpaquet)
+* `#6092 <https://github.com/symfony/symfony-docs/pull/6092>`_ Updated information about testing code coverage. (roga)
+* `#6051 <https://github.com/symfony/symfony-docs/pull/6051>`_ Mention HautelookAliceBundle in best practices (theofidry, WouterJ)
+* `#6220 <https://github.com/symfony/symfony-docs/pull/6220>`_ [book] fixes typo about redirect status codes in the controller chapter. (hhamon)
+* `#6227 <https://github.com/symfony/symfony-docs/pull/6227>`_ Update testing.rst (dvapelnik)
+* `#6212 <https://github.com/symfony/symfony-docs/pull/6212>`_ Typo in default session save_path (DerekRoth)
+* `#6208 <https://github.com/symfony/symfony-docs/pull/6208>`_ Replace references of PSR-0 with PSR-4 (opdavies)
+* `#6190 <https://github.com/symfony/symfony-docs/pull/6190>`_ Fix redundant command line sample (sylozof)
+
+
 January, 2016
 -------------
 

@@ -13,19 +13,19 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Rendered as | can be various tags (see below)                                              |
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
-|             | - `choices_as_values`_                                                       |
-|             | - `choice_loader`_                                                           |
-|             | - `choice_label`_                                                            |
 |             | - `choice_attr`_                                                             |
-|             | - `choice_translation_domain`_                                               |
-|             | - `placeholder`_                                                             |
-|             | - `expanded`_                                                                |
-|             | - `multiple`_                                                                |
-|             | - `preferred_choices`_                                                       |
-|             | - `group_by`_                                                                |
-|             | - `choice_value`_                                                            |
-|             | - `choice_name`_                                                             |
+|             | - `choice_label`_                                                            |
 |             | - `choice_list`_ (deprecated)                                                |
+|             | - `choice_loader`_                                                           |
+|             | - `choice_name`_                                                             |
+|             | - `choice_translation_domain`_                                               |
+|             | - `choice_value`_                                                            |
+|             | - `choices_as_values`_                                                       |
+|             | - `expanded`_                                                                |
+|             | - `group_by`_                                                                |
+|             | - `multiple`_                                                                |
+|             | - `placeholder`_                                                             |
+|             | - `preferred_choices`_                                                       |
 +-------------+------------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
@@ -185,6 +185,76 @@ is the item's label and the array value is the item's value::
         'choices_as_values' => true,
     ));
 
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. _reference-form-choice-label:
+
+.. include:: /reference/forms/types/options/choice_label.rst.inc
+
+choice_list
+~~~~~~~~~~~
+
+.. caution::
+
+    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
+    You should use `choices`_ or `choice_loader`_ now.
+
+**type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
+
+This is one way of specifying the options to be used for this field.
+The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
+For more advanced cases, a custom class that implements the interface
+can be created to supply the choices.
+
+With this option you can also allow float values to be selected as data.
+For example::
+
+    use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+    // ...
+    $builder->add('status', ChoiceType::class, array(
+        'choice_list' => new ChoiceList(
+            array(1, 0.5, 0.1),
+            array('Full', 'Half', 'Almost empty')
+        )
+    ));
+
+The ``status`` field created by the code above will be rendered as:
+
+.. code-block:: html
+
+.. code-block:: html
+
+    <select name="status">
+        <option value="0">Full</option>
+        <option value="1">Half</option>
+        <option value="2">Almost empty</option>
+    </select>
+
+But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
+will be returned in your form. If ``Almost empty`` is selected (value ``2``
+in HTML), ``0.1`` will be returned.
+
+choice_loader
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+
+    The ``choice_loader`` option was added in Symfony 2.7.
+
+**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
+
+The ``choice_loader`` can be used to only partially load the choices in cases where
+a fully-loaded list is not necessary. This is only needed in advanced cases and
+would replace the ``choices`` option.
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
 choices_as_values
 ~~~~~~~~~~~~~~~~~
 
@@ -226,84 +296,18 @@ type behaves as if it were set to true:
         'choices' => array('Male' => 'm', 'Female' => 'f'),
     ));
 
-choice_loader
-~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-
-    The ``choice_loader`` option was added in Symfony 2.7.
-
-**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
-
-The ``choice_loader`` can be used to only partially load the choices in cases where
-a fully-loaded list is not necessary. This is only needed in advanced cases and
-would replace the ``choices`` option.
-
-.. _reference-form-choice-label:
-
-.. include:: /reference/forms/types/options/choice_label.rst.inc
-
-.. include:: /reference/forms/types/options/choice_attr.rst.inc
-
-.. include:: /reference/forms/types/options/placeholder.rst.inc
-
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
-
 .. include:: /reference/forms/types/options/expanded.rst.inc
-
-.. include:: /reference/forms/types/options/multiple.rst.inc
-
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
 
-.. include:: /reference/forms/types/options/choice_value.rst.inc
+<<<<<<< HEAD
+=======
+.. include:: /reference/forms/types/options/multiple.rst.inc
+>>>>>>> 2.7
 
-.. include:: /reference/forms/types/options/choice_name.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
-
-choice_list
-~~~~~~~~~~~
-
-.. caution::
-
-    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
-    You should use `choices`_ or `choice_loader`_ now.
-
-**type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
-
-This is one way of specifying the options to be used for this field.
-The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
-For more advanced cases, a custom class that implements the interface
-can be created to supply the choices.
-
-With this option you can also allow float values to be selected as data.
-For example::
-
-    use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-    // ...
-    $builder->add('status', ChoiceType::class, array(
-        'choice_list' => new ChoiceList(
-            array(1, 0.5, 0.1),
-            array('Full', 'Half', 'Almost empty')
-        )
-    ));
-
-The ``status`` field created by the code above will be rendered as:
-
-.. code-block:: html
-
-    <select name="status">
-        <option value="0">Full</option>
-        <option value="1">Half</option>
-        <option value="2">Almost empty</option>
-    </select>
-
-But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
-will be returned in your form. If ``Almost empty`` is selected (value ``2``
-in HTML), ``0.1`` will be returned.
+.. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 Overridden Options
 ------------------

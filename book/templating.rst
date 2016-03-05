@@ -1071,7 +1071,7 @@ being used and generating the correct paths accordingly.
 Additionally, if you use the ``asset`` function, Symfony can automatically
 append a query string to your asset, in order to guarantee that updated static
 assets won't be cached when deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
+look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
 configuration option.
 
 .. _`book-templating-version-by-asset`:
@@ -1095,7 +1095,7 @@ if you are using Twig (or the fourth argument if you are using PHP) to the desir
         ) ?>" alt="Symfony!" />
 
 If you don't give a version or pass ``null``, the default package version
-(from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
+(from :ref:`reference-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
 If you need absolute URLs for assets, you can use the ``absolute_url`` function

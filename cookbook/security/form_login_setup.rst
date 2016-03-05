@@ -294,7 +294,7 @@ When setting up your login form, watch out for a few common pitfalls.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, be sure that you've defined the ``/login`` route correctly and that
-it corresponds to the ``login_path`` and``check_path`` config values.
+it corresponds to the ``login_path`` and ``check_path`` config values.
 A misconfiguration here can mean that you're redirected to a 404 page instead
 of the login page, or that submitting the login form does nothing (you just see
 the login form over and over again).

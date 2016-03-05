@@ -49,7 +49,7 @@ This will "prefer" the "now" and "tomorrow" choices only:
 .. image:: /images/reference/form/choice-example3.png
    :align: center
 
-Finally, if your values are objects, you can also specific a property path string
+Finally, if your values are objects, you can also specify a property path string
 on the object that will return true or false.
 
 The preferred choices are only meaningful when rendering a ``select`` element

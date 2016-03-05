@@ -99,10 +99,11 @@ The first command generates entity classes with annotation mappings. But
 if you want to use YAML or XML mapping instead of annotations, you should
 execute the second command only.
 
-.. tip::
+.. caution::
 
-    If you want to use annotations, you can safely delete the XML (or YAML) files
-    after running these two commands.
+    If you want to use annotations, you must remove the XML (or YAML) files
+    after running these two commands. This is necessary as
+    :ref:`it is not possible to mix mapping configuration formats <book-doctrine-adding-mapping>`
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 

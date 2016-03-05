@@ -18,10 +18,13 @@ objects from the database.
 |             | - `em`_                                                          |
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                     |
-| options     |                                                                  |
+| options     | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
 | options     |                                                                  |
+|             | - `choice_value`_                                                |
+|             | - `choice_name`_                                                 |
+|             | - `choice_attr`_                                                 |
 |             | - `placeholder`_                                                 |
 |             | - `choice_translation_domain`_                                   |
 |             | - `translation_domain`_                                          |
@@ -208,10 +211,24 @@ Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
 See :ref:`reference-forms-entity-choices`.
 
+data_class
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+This option is not used in favor of the ``class`` option which is required
+to query the entities.
+
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
