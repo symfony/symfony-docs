@@ -30,8 +30,8 @@ A functional test can be as easy as this:
 
 .. code-block:: php
 
-    // src/AppBundle/Tests/ApplicationAvailabilityFunctionalTest.php
-    namespace AppBundle\Tests;
+    // tests/AppBundle/ApplicationAvailabilityFunctionalTest.php
+    namespace Tests\AppBundle;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -145,12 +145,9 @@ To enable caching, modify the code of a front controller to use the caching
 kernel::
 
     // web/app.php
-    require_once __DIR__.'/../app/bootstrap.php.cache';
-    require_once __DIR__.'/../app/AppKernel.php';
-    require_once __DIR__.'/../app/AppCache.php';
-
     use Symfony\Component\HttpFoundation\Request;
 
+    // ...
     $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
@@ -1098,12 +1095,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
         <!-- ... or a URL -->
         <?php echo $view['actions']->render(
-            // The url() method was introduced in Symfony 2.8. Prior to 2.8,
-            // you had to use generate($name, $parameters, UrlGeneratorInterface::ABSOLUTE_URL)
-            $view['router']->url(
-                'latest_news',
-                array('maxPerPage' => 5),
-            ),
+            $view['router']->url('latest_news', array('maxPerPage' => 5)),
             array('strategy' => 'esi'),
         ) ?>
 

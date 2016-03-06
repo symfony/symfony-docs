@@ -145,13 +145,13 @@ by running:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle/Entity/User
+    $ php bin/console doctrine:generate:entities AppBundle/Entity/User
 
 Next, make sure to :ref:`create the database table <book-doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -290,8 +290,6 @@ query from your ``AppBundle:User`` entity by the ``username`` property. The
 name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
-
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -446,11 +444,6 @@ interface only requires one method: ``loadUserByUsername($username)``::
                 ->getOneOrNullResult();
         }
     }
-
-.. versionadded:: 2.8
-    The :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`
-    was introduced in 2.8. Prior to Symfony 2.8, you had to implement
-    ``Symfony\Component\Security\Core\User\UserProviderInterface``.
 
 .. tip::
 

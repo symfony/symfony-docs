@@ -15,7 +15,6 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Options     | - `choices`_                                                                 |
 |             | - `choice_attr`_                                                             |
 |             | - `choice_label`_                                                            |
-|             | - `choice_list`_ (deprecated)                                                |
 |             | - `choice_loader`_                                                           |
 |             | - `choice_name`_                                                             |
 |             | - `choice_translation_domain`_                                               |
@@ -40,7 +39,6 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `label_attr`_                                                              |
 |             | - `label_format`_                                                            |
 |             | - `mapped`_                                                                  |
-|             | - `read_only`_ (deprecated as of 2.8)                                        |
 |             | - `required`_                                                                |
 |             | - `translation_domain`_                                                      |
 +-------------+------------------------------------------------------------------------------+
@@ -64,8 +62,6 @@ the ``choices`` option::
             'Yes' => true,
             'No' => false,
         ),
-        // *this line is important*
-        'choices_as_values' => true,
     ));
 
 This will create a ``select`` drop-down like this:
@@ -77,14 +73,6 @@ If the user selects ``No``, the form will return ``false`` for this field. Simil
 if the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
 In other words, the **value** of each item is the value you want to get/set in PHP
 code, while the **key** is what will be shown to the user.
-
-.. caution::
-
-    The ``choices_as_values`` *must* be set to ``true`` in all cases. This activates
-    the "new" choice type API, which was introduced in Symfony 2.7. If you omit this
-    option (or set it to ``false``), you'll activate the old API, which is deprecated
-    and will be removed in 3.0. To read about the old API, read an older version of
-    the docs.
 
 Advanced Example (with Objects!)
 --------------------------------
@@ -104,7 +92,6 @@ method::
             new Category('Cat3'),
             new Category('Cat4'),
         ],
-        'choices_as_values' => true,
         'choice_label' => function($category, $key, $index) {
             /** @var Category $category */
             return strtoupper($category->getName());
@@ -156,7 +143,6 @@ You can easily "group" options in a select by passing a multi-dimensional choice
                 'Discontinued' => 'stock_discontinued',
             ]
         ],
-        'choices_as_values' => true,
     );
 
 .. image:: /images/reference/form/choice-example4.png
@@ -191,55 +177,8 @@ is the item's label and the array value is the item's value::
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
-choice_list
-~~~~~~~~~~~
-
-.. caution::
-
-    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
-    You should use `choices`_ or `choice_loader`_ now.
-
-**type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
-
-This is one way of specifying the options to be used for this field.
-The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
-For more advanced cases, a custom class that implements the interface
-can be created to supply the choices.
-
-With this option you can also allow float values to be selected as data.
-For example::
-
-    use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-    // ...
-    $builder->add('status', ChoiceType::class, array(
-        'choice_list' => new ChoiceList(
-            array(1, 0.5, 0.1),
-            array('Full', 'Half', 'Almost empty')
-        )
-    ));
-
-The ``status`` field created by the code above will be rendered as:
-
-.. code-block:: html
-
-    <select name="status">
-        <option value="0">Full</option>
-        <option value="1">Half</option>
-        <option value="2">Almost empty</option>
-    </select>
-
-But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
-will be returned in your form. If ``Almost empty`` is selected (value ``2``
-in HTML), ``0.1`` will be returned.
-
 choice_loader
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-
-    The ``choice_loader`` option was added in Symfony 2.7.
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
@@ -357,8 +296,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

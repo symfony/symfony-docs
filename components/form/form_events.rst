@@ -257,19 +257,6 @@ Name                    ``FormEvents`` Constant        Event's Data
 ``form.post_bind``      ``FormEvents::POST_SUBMIT``    View data
 ======================  =============================  ===============
 
-.. versionadded:: 2.3
-    Before Symfony 2.3, ``FormEvents::PRE_SUBMIT``, ``FormEvents::SUBMIT``
-    and ``FormEvents::POST_SUBMIT`` were called ``FormEvents::PRE_BIND``,
-    ``FormEvents::BIND`` and ``FormEvents::POST_BIND``.
-
-.. caution::
-
-    The ``FormEvents::PRE_BIND``, ``FormEvents::BIND`` and
-    ``FormEvents::POST_BIND`` constants will be removed in version 3.0 of
-    Symfony.
-    The event names still keep their original values, so make sure you use the
-    ``FormEvents`` constants in your code for forward compatibility.
-
 Event Listeners
 ~~~~~~~~~~~~~~~
 

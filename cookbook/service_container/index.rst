@@ -5,5 +5,4 @@ Service Container
     :maxdepth: 2
 
     shared
-    scopes
     compiler_passes

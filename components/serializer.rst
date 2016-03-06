@@ -178,10 +178,6 @@ This is a common need when working with an ORM.
 Attributes Groups
 -----------------
 
-.. versionadded:: 2.7
-    The support of serialization and deserialization groups was introduced
-    in Symfony 2.7.
-
 Sometimes, you want to serialize different sets of attributes from your
 entities. Groups are a handy way to achieve this need.
 
@@ -320,14 +316,6 @@ Ignoring Attributes
     Using attribute groups instead of the :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
     method is considered best practice.
 
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
-    method was introduced in Symfony 2.3.
-
-.. versionadded:: 2.7
-    Prior to Symfony 2.7, attributes were only ignored while serializing. Since Symfony
-    2.7, they are ignored when deserializing too.
-
 As an option, there's a way to ignore attributes from the origin object. To remove
 those attributes use the
 :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
@@ -348,10 +336,6 @@ method on the normalizer definition::
 
 Converting Property Names when Serializing and Deserializing
 ------------------------------------------------------------
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface`
-    interface was introduced in Symfony 2.7.
 
 Sometimes serialized attributes must be named differently than properties
 or getter/setter methods of PHP classes.
@@ -417,10 +401,6 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
 CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
-    interface was introduced in Symfony 2.7.
 
 In many formats, it's common to use underscores to separate words (also known
 as snake_case). However, PSR-1 specifies that the preferred style for PHP
@@ -530,10 +510,6 @@ There are several types of normalizers available:
     during the denormalization process.
 
     Objects are normalized to a map of property names to property values.
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    class was introduced in Symfony 2.7.
 
 Handling Circular References
 ----------------------------
@@ -648,11 +624,6 @@ Serializing arrays works just like serializing a single object::
     $data = $serializer->serialize($persons, 'json');
 
     // $data contains [{"name":"foo","age":99,"sportsman":false},{"name":"bar","age":33,"sportsman":true}]
-
-.. versionadded:: 2.8
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
-    class was introduced in 2.8. Prior to Symfony 2.8, only the serialization of
-    arrays is supported.
 
 If you want to deserialize such a structure, you need to add the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`

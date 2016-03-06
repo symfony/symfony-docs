@@ -811,13 +811,15 @@ Injecting the dependency by the setter method just needs a change of syntax:
     "property injection".
 
 .. _book-container-request-stack:
+.. _injecting-the-request:
 
-Injecting the Request
-~~~~~~~~~~~~~~~~~~~~~
+Accessing the Request in a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As of Symfony 2.4, instead of injecting the ``request`` service, you should
-inject the ``request_stack`` service and access the ``Request`` by calling
-the :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
+Whenever you need to access the current request in a service, you can either
+add it as an argument to the methods that need the request or inject the
+``request_stack`` service and access the ``Request`` by calling the
+:method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
 method::
 
     namespace Acme\HelloBundle\Newsletter;
@@ -883,20 +885,6 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
             'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(new Reference('request_stack'))
         ));
-
-.. sidebar:: Why not Inject the ``request`` Service?
-
-    Almost all Symfony2 built-in services behave in the same way: a single
-    instance is created by the container which it returns whenever you get it or
-    when it is injected into another service. There is one exception in a standard
-    Symfony2 application: the ``request`` service.
-
-    If you try to inject the ``request`` into a service, you will probably receive
-    a
-    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-    exception. That's because the ``request`` can **change** during the life-time
-    of a container (when a sub-request is created for instance).
-
 
 .. tip::
 
@@ -1148,13 +1136,13 @@ console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
-    $ php app/console debug:container
+    $ php bin/console debug:container
 
 By default, only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
-    $ php app/console debug:container --show-private
+    $ php bin/console debug:container --show-private
 
 .. note::
 
@@ -1168,7 +1156,7 @@ its id:
 
 .. code-block:: bash
 
-    $ php app/console debug:container app.mailer
+    $ php bin/console debug:container app.mailer
 
 Learn more
 ----------
@@ -1180,7 +1168,6 @@ Learn more
 * :doc:`/components/dependency_injection/parentservices`
 * :doc:`/components/dependency_injection/tags`
 * :doc:`/cookbook/controller/service`
-* :doc:`/cookbook/service_container/scopes`
 * :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 

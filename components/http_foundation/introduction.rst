@@ -140,7 +140,7 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
-All getters take up to three arguments: the first one is the parameter name
+All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
 
@@ -164,8 +164,8 @@ When PHP imports the request query, it handles request parameters like
     $request->query->get('foo');
     // returns array('bar' => 'bar')
 
-    $request->query->get('foo[bar]');
-    // returns null   
+    $request->query->get('foo')['bar'];
+    // returns 'bar'
 
 .. _component-foundation-attributes:
 

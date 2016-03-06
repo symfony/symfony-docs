@@ -32,11 +32,9 @@ This interface requires 4 methods:
   tries to guess the value of the :ref:`required <reference-form-option-required>`
   option;
 * :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessMaxLength` -
-  tries to guess the value of the :ref:`max_length <reference-form-option-max_length>`
-  option;
+  tries to guess the value of the ``maxlength`` input attribute;
 * :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern` -
-  tries to guess the value of the :ref:`pattern <reference-form-option-pattern>`
-  option.
+  tries to guess the value of the ``pattern`` input attribute.
 
 Start by creating the class and these methods. Next, you'll learn how to fill each on.
 

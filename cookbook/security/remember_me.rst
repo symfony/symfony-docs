@@ -83,10 +83,6 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 The ``remember_me`` firewall defines the following configuration options:
 
 ``secret`` (**required**)
-    .. versionadded:: 2.8
-        The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it
-        was named ``key``.
-
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
@@ -176,8 +172,6 @@ this:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username"

@@ -510,14 +510,12 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, since 2.7 you can use the built-in command:
+For hardcoded users, you can use the built-in command:
 
 .. code-block:: bash
 
-    $ php app/console security:encode-password
+    $ php bin/console security:encode-password
 
 It will give you something like this:
 
@@ -895,18 +893,6 @@ the built-in ``is_granted()`` helper function:
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
-
-.. note::
-
-    In Symfony versions previous to 2.8, using the ``is_granted()`` function
-    in a page that wasn't behind a firewall resulted in an exception. That's why
-    you also needed to check first for the existence of the user:
-
-    .. code-block:: html+twig
-
-        {% if app.user and is_granted('ROLE_ADMIN') %}
-
-    Starting from Symfony 2.8, the ``app.user and ...`` check is no longer needed.
 
 Securing other Services
 .......................
@@ -1360,7 +1346,7 @@ security vulnerability in your installed dependencies:
 
 .. code-block:: bash
 
-    $ php app/console security:check
+    $ php bin/console security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,

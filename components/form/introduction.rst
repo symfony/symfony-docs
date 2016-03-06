@@ -68,9 +68,6 @@ factory.
 Request Handling
 ~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``handleRequest()`` method was introduced in Symfony 2.3.
-
 To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method::
 
@@ -163,14 +160,14 @@ component offers a rich integration.
 
 To use the integration, you'll need the ``TwigBridge``, which provides integration
 between Twig and several Symfony components. If you're using Composer, you
-could install the latest 2.3 version by adding the following ``require``
+could install the latest 3.x version by adding the following ``require``
 line to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/twig-bridge": "2.3.*"
+            "symfony/twig-bridge": "~3.0"
         }
     }
 
@@ -243,15 +240,15 @@ via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
 Translation and :doc:`Config </components/config/introduction>` components
-installed. If you're using Composer, you could get the latest 2.3 version
+installed. If you're using Composer, you could get the latest 3.x version
 of each of these by adding the following to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/translation": "2.3.*",
-            "symfony/config": "2.3.*"
+            "symfony/translation": "~3.0",
+            "symfony/config": "~3.0"
         }
     }
 
@@ -295,13 +292,13 @@ array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
 it's installed in your application. If you're using Composer and want to
-install the latest 2.3 version, add this to your ``composer.json``:
+install the latest 3.x version, add this to your ``composer.json``:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/validator": "2.3.*"
+            "symfony/validator": "~3.0"
         }
     }
 
@@ -398,8 +395,6 @@ is created from the form factory.
 
         $form = $formFactory->createBuilder()
             ->add('task', TextType::class)
-            // If you use PHP 5.3 or 5.4, you must use
-            // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
             ->add('dueDate', DateType::class)
             ->getForm();
 
@@ -426,8 +421,6 @@ is created from the form factory.
 
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class)
-                    // If you use PHP 5.3 or 5.4, you must use
-                    // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
                     ->add('dueDate', DateType::class)
                     ->getForm();
 
@@ -439,8 +432,7 @@ is created from the form factory.
 
 As you can see, creating a form is like writing a recipe: you call ``add``
 for each new field you want to create. The first argument to ``add`` is the
-name of your field, and the second is the fully qualified class name. If you
-use PHP 5.5 or above, you can use ``::class`` constant of a form type. The Form
+name of your field, and the second is the fully qualified class name. The Form
 component comes with a lot of :doc:`built-in types </reference/forms/types>`.
 
 Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
@@ -523,10 +515,6 @@ to do that in the ":ref:`form-rendering-template`" section.
 
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ability to configure the form method and action was introduced in
-    Symfony 2.3.
 
 By default, a form is submitted to the same URI that rendered the form with
 an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
@@ -728,17 +716,6 @@ method to access the list of errors. It returns a
 
     // a FormErrorIterator instance representing the form tree structure
     $errors = $form->getErrors(true, false);
-
-.. tip::
-
-    In older Symfony versions, ``getErrors()`` returned an array. To use the
-    errors the same way in Symfony 2.5 or newer, you have to pass them to
-    PHP's :phpfunction:`iterator_to_array` function::
-
-        $errorsAsArray = iterator_to_array($form->getErrors());
-
-    This is useful, for example, if you want to use PHP's ``array_`` function
-    on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org

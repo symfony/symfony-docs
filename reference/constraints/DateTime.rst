@@ -3,12 +3,13 @@ DateTime
 
 Validates that a value is a valid "datetime", meaning either a ``DateTime``
 object or a string (or an object that can be cast into a string) that follows
-a valid YYYY-MM-DD HH:MM:SS format.
+a specific format.
 
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
-| Options        | - `message`_                                                           |
+| Options        | - `format`_                                                            |
+|                | - `message`_                                                           |
 |                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\DateTime`          |
@@ -77,6 +78,17 @@ Basic Usage
 
 Options
 -------
+
+format
+~~~~~~
+
+**type**: ``string`` **default**: ``Y-m-d H:i:s``
+
+.. versionadded:: 3.1
+    The ``format`` option was introduced in Symfony 3.1.
+
+This option allows to validate a custom date format. See
+:phpmethod:`DateTime::createFromFormat` for formatting options.
 
 message
 ~~~~~~~

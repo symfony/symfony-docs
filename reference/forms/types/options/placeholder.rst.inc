@@ -1,10 +1,6 @@
 placeholder
 ~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    Since Symfony 2.3, empty values are also supported if the ``expanded``
-    option is set to true.
-
 **type**: ``string`` or ``boolean``
 
 This option determines whether or not a special "empty" option (e.g. "Choose

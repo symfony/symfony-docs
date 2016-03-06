@@ -41,7 +41,6 @@ TwigBundle Configuration ("twig")
                     value:                ~
             autoescape:                ~
 
-            # The following were added in Symfony 2.3.
             # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
             autoescape_service:        ~ # Example: '@my_service'
             autoescape_service_method: ~ # use in combination with autoescape_service option

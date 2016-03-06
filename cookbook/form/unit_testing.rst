@@ -20,11 +20,6 @@ There is already a class that you can benefit from for simple FormTypes
 testing: :class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to
 test the core types and you can use it to test your types too.
 
-.. versionadded:: 2.3
-    The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
-    namespace in 2.3. Previously, the class was located in
-    ``Symfony\Component\Form\Tests\Extension\Core\Type``.
-
 .. note::
 
     Depending on the way you installed your Symfony or Symfony Form component
@@ -36,8 +31,8 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTest.php
+    namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -119,8 +114,8 @@ To solve this, you have to mock the injected dependencies, instantiate your own
 form type and use the :class:`Symfony\\Component\\Form\\PreloadedExtension` to
 make sure the ``FormRegistry`` uses the created instance::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
 
     use Symfony\Component\Form\PreloadedExtension;
     // ...
@@ -168,8 +163,8 @@ will be raised if you try to test a class that depends on other extensions.
 The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
 allows you to return a list of extensions to register::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
 
     // ...
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
@@ -202,8 +197,8 @@ Testing against Different Sets of Data
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
 a good opportunity to use them::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
-    namespace AppBundle\Tests\Form\Type;
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
