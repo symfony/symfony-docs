@@ -233,8 +233,8 @@ In that case, you might want to override one or both of the ``showAction()`` and
             # app/config/services.yml
             services:
                 app.exception_controller:
-                class: AppBundle\Controller\CustomExceptionController
-                arguments: ['@twig', '%kernel.debug%']
+                    class: AppBundle\Controller\CustomExceptionController
+                    arguments: ['@twig', '%kernel.debug%']
 
         .. code-block:: xml
 
