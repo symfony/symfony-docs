@@ -294,7 +294,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                 # ...
 
                 main:
-                    anonymous: ~
+                    anonymous: false
                     logout: ~
 
                     guard:
