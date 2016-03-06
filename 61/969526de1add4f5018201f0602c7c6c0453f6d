@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-11-17T16:31:45Z
+
+The first draft of the article contents is completed. Please review and I'll fix your corrections right away. Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-11-20T23:05:00Z
+
+Hmm, I started bootstrapping such an article as well (for some reason, I completely missed your PR this week...). Just for your info: https://gist.githubusercontent.com/WouterJ/dcb43f67701639f8cd4c/raw/fe9a29eba9aed42d7f7d1df762695b520a8bf3c1/symfony3.rst
+
+I think we have to add some practical guides on how to support both 2.3 and 3.0 for the most commonly used deprecated features. This will work as an example that can be applied for other deprecated features.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-11-23T09:48:03Z
+
+@WouterJ thanks for your review and for bootstraping this article yourself too. In cb31c16 I've added a new section copied from your original article, but there is still a lot of work to do.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-11-23T15:53:29Z
+
+@javiereguiluz what do you think about writing a post for Symfony.com encouraging bundle authors to start upgrading to 3.0 and telling them they can use this WIP pull request as a reference. We could also link to Wouter's document so that author's have example bundles and pull requests that were used for other bundles.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-06T14:35:16Z
+
+So, we didn't complete this one before the Symfony 3 release. What do we think about this now, still worth merging?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-07T11:15:02Z
+
+Probably yes as people will have the same questions with Symfony 4 again (of which we already know when it will be published).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-07T11:15:48Z
+
+So I think we should just make this article a bit more generic to not have to change it again with every new major release.
+
+---------------------------------------------------------------------------
+
+by lushc at 2016-02-08T15:11:20Z
+
++1 for getting merged; we're still coming across incompatible bundles, so the docs will be useful in supporting PRs to fix them.
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2016-03-06T11:34:40Z
+
+@WouterJ I'd merge this ASAP, I come to many bundles (even famous) with missing Symfony 3 support.
+Having some guidelines how to do that might speed up this process significantly.
