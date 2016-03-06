@@ -53,8 +53,8 @@ The above example can be updated to work with Symfony 3 as follows:
 Looking for Deprecations and Fix Them
 -------------------------------------
 
-Besides allowing to install Symfony 3 packages, your bundle must stop using
-any feature deprecated in 2.8 version, because they are removed (and you'll get
+Besides allowing users to use your bundle with Symfony 3, your bundle must stop using
+any feature deprecated by the 2.8 version because they are removed in 3.0 (you'll get
 exceptions or PHP errors). The easiest way to detect deprecations is to install
 the `symfony/phpunit-bridge package`_ and then run the test suite.
 
@@ -184,32 +184,6 @@ adding a ``setDefined()`` method. The recommended check in this case would be::
     } else {
         // code for the new OptionsResolver API
     }
-
-Form Name Refactoring
-~~~~~~~~~~~~~~~~~~~~~
-
-.. TODO
-
-  - how to check which version to use
-  - how to update FormType classes
-  - how to update type service definitions
-  - how to update FormTypeExtension classes & service definition
-
-OptionsResolver API Refactoring
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. TODO
-
-  - how to check which version to use
-  - how to both APIs
-
-Service Factory Refactoring
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. TODO
-
-  - how to support both APIs ==> Is there a nice way except from (a) doing
-    it in the DI extension or (b) creating 2 service definition files?
 
 .. _`symfony/phpunit-bridge package`: https://github.com/symfony/phpunit-bridge
 .. _`Official Symfony Guide to Upgrade from 2.x to 3.0`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-3.0.md
