@@ -1,7 +1,7 @@
 choice_label
 ~~~~~~~~~~~~
 
-**type**: ``callable`` or ``string`` **default**: ``null``
+**type**: ``string``, ``callable`` or ``false`` **default**: ``null``
 
 Normally, the array key of each item in the ``choices`` option is used as the
 text that's shown to the user. The ``choice_label`` option allows you to take
@@ -51,3 +51,6 @@ If your choice values are objects, then ``choice_label`` can also be a
         'choices_as_values' => true,
         'choice_label' => 'displayName',
     ));
+
+If set to ``false``, all the tag labels will be discarded for radio or checkbox
+inputs. You can also return ``false`` from the callable to discard certain labels.
