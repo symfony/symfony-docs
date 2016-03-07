@@ -75,7 +75,7 @@ bundle configuration would look like:
         acme_social:
             twitter:
                 client_id: 123
-                client_secret: $secret
+                client_secret: your_secret
 
     .. code-block:: xml
 
@@ -88,7 +88,7 @@ bundle configuration would look like:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
            <acme-social:config>
-               <twitter client-id="123" client-secret="$secret" />
+               <twitter client-id="123" client-secret="your_secret" />
            </acme-social:config>
 
            <!-- ... -->
@@ -99,7 +99,7 @@ bundle configuration would look like:
         // app/config/config.php
         $container->loadFromExtension('acme_social', array(
             'client_id'     => 123,
-            'client_secret' => '$secret',
+            'client_secret' => 'your_secret',
         ));
 
 .. seealso::
