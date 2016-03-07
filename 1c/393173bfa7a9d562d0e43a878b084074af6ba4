@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-07T14:19:11Z
+
+Good catch @AAstakhov! Actually, we usually use four spaces to indent YAML config examples. Do you want to change that here too (we can do that during merging otherwise).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-07T14:26:02Z
+
+:+1: thanks @AAstakhov
+
+---------------------------------------------------------------------------
+
+by AAstakhov at 2016-03-07T21:56:35Z
+
+Hi, @xabbuh, I hope this time I did it correctly using github online editor.
+
+BTW, I'd like to contribute more to docs. Where is the right place to ask and discuss some ideas? IRC?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-07T22:19:13Z
+
+Perfect! :+1:
+
+You can best ask questions here on GitHub or join us on IRC in #symfony-docs.
