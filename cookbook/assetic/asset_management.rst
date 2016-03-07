@@ -84,6 +84,48 @@ your application:
 
         // ...
 
+If you plan to use assetic in development environmet you will need to add app/config/routing_dev.yml: 
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing_dev.yml
+        _assetic:
+          resource: .
+          type:     assetic
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/routing_dev.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <_assetic:config resource="." type="assetic">
+            </_assetic:config>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // app/config/routing_dev.php
+        $container->loadFromExtension('_assetic', array(
+            'resource' => '.',
+            'type' => 'assetic',
+            // ...
+        ));
+
+        // ...
+
+
 Introducing Assetic
 -------------------
 
