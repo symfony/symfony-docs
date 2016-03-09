@@ -12,26 +12,26 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
-| Options     | - `class`_                                                       |
-|             | - `choice_label`_                                                |
-|             | - `query_builder`_                                               |
+| Options     | - `choice_label`_                                                |
+|             | - `class`_                                                       |
 |             | - `em`_                                                          |
+|             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                     |
 | options     | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
 | options     |                                                                  |
-|             | - `choice_value`_                                                |
-|             | - `choice_name`_                                                 |
 |             | - `choice_attr`_                                                 |
-|             | - `placeholder`_                                                 |
+|             | - `choice_name`_                                                 |
 |             | - `choice_translation_domain`_                                   |
-|             | - `translation_domain`_                                          |
+|             | - `choice_value`_                                                |
 |             | - `expanded`_                                                    |
-|             | - `multiple`_                                                    |
-|             | - `preferred_choices`_                                           |
 |             | - `group_by`_                                                    |
+|             | - `multiple`_                                                    |
+|             | - `placeholder`_                                                 |
+|             | - `preferred_choices`_                                           |
+|             | - `translation_domain`_                                          |
 |             |                                                                  |
 |             | from the :doc:`FormType </reference/forms/types/form>`:          |
 |             |                                                                  |
@@ -117,15 +117,6 @@ then you can supply the ``choices`` option directly::
 Field Options
 -------------
 
-class
-~~~~~
-
-**type**: ``string`` **required**
-
-The class of your entity (e.g. ``AppBundle:Category``). This can be
-a fully-qualified class name (e.g. ``AppBundle\Entity\Category``)
-or the short alias name (as shown prior).
-
 choice_label
 ~~~~~~~~~~~~
 
@@ -175,6 +166,23 @@ more detais, see the main :ref:`choice_label <reference-form-choice-label>` docu
            'choice_label' => 'translations[en].name',
         ));
 
+class
+~~~~~
+
+**type**: ``string`` **required**
+
+The class of your entity (e.g. ``AppBundle:Category``). This can be
+a fully-qualified class name (e.g. ``AppBundle\Entity\Category``)
+or the short alias name (as shown prior).
+
+em
+~~
+
+**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
+
+If specified, this entity manager will be used to load the choices
+instead of the ``default`` entity manager.
+
 query_builder
 ~~~~~~~~~~~~~
 
@@ -185,14 +193,6 @@ order) that should be used for the field. The value of this option can
 either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
 the entity and return an instance of ``QueryBuilder``.
-
-em
-~~
-
-**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
-
-If specified, this entity manager will be used to load the choices
-instead of the ``default`` entity manager.
 
 Overridden Options
 ------------------
@@ -219,19 +219,17 @@ Inherited Options
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
-.. include:: /reference/forms/types/options/choice_value.rst.inc
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
-.. include:: /reference/forms/types/options/choice_attr.rst.inc
-
-.. include:: /reference/forms/types/options/placeholder.rst.inc
-
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
-.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_value.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -243,7 +241,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
     is a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
 
-.. include:: /reference/forms/types/options/group_by.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
@@ -252,7 +250,10 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
     This option expects an array of entity objects (that's actually the same as with
     the ``ChoiceType`` field, whichs requires an array of the preferred "values").
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
+
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
