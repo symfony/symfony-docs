@@ -28,6 +28,13 @@ Renders a ``textarea`` HTML element.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
 
+.. tip::
+
+    If you prefer to use an **advanced WYSIWYG editor** instead of a plain
+    textarea, consider using the IvoryCKEditorBundle community bundle. Read
+    `its documentation <https://symfony.com/doc/current/bundles/IvoryCKEditorBundle/index.html>`_
+    to learn how to integrate it in your Symfony application.
+
 Inherited Options
 -----------------
 
