@@ -80,7 +80,7 @@ If you wanted to encrypt the session data, you could use the proxy to encrypt
 and decrypt the session as required::
 
     // src/AppBundle/Session/EncryptedSessionProxy.php
-    namespace AppBundle/Session;
+    namespace AppBundle\Session;
 
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
 
@@ -118,7 +118,7 @@ where there is no particular need to persist the session. In this case you
 can intercept the session before it is written::
 
     // src/AppBundle/Session/ReadOnlySessionProxy.php
-    namespace AppBundle/Session;
+    namespace AppBundle\Session;
 
     use AppBundle\Entity\User;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
