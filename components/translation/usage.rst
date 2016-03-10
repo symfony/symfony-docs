@@ -115,11 +115,11 @@ recommended format. These files are parsed by one of the loader classes.
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
+                    <trans-unit id="symfony_is_great">
                         <source>Symfony is great</source>
                         <target>J'aime Symfony</target>
                     </trans-unit>
-                    <trans-unit id="2">
+                    <trans-unit id="symfony.great">
                         <source>symfony.great</source>
                         <target>J'aime Symfony</target>
                     </trans-unit>
