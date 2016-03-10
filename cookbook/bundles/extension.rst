@@ -113,6 +113,12 @@ Other available loaders are the ``YamlFileLoader``, ``PhpFileLoader`` and
     The ``IniFileLoader`` can only be used to load parameters and it can only
     load them as strings.
 
+.. caution::
+
+    If you removed the default file with services definitions (i.e.
+    ``app/config/services.yml``), make sure to also remove it from the
+    ``imports`` key in ``app/config/config.yml``.
+
 Using Configuration to Change the Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
