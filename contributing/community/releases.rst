@@ -94,8 +94,7 @@ Below is the schedule for the first few versions that use this release model:
 .. tip::
 
     If you want to learn more about the timeline of any given Symfony version,
-    use the online `timeline calculator`_. You can also get all data as a JSON
-    string via a URL like `https://symfony.com/roadmap.json?version=2.x`.
+    use the online `timeline calculator`_.
 
 .. tip::
 
@@ -104,8 +103,7 @@ Below is the schedule for the first few versions that use this release model:
     instance), you can automatically receive an email notification if you
     subscribed on the `roadmap notification`_ page.
 
-Version History
----------------
+.. _version-history:
 
 =======  ==============  =======  ========================  ===========
 Version  Feature Freeze  Release  End of Maintenance        End of Life
