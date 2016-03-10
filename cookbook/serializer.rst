@@ -218,7 +218,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 Going Further with the Serializer Component
 -------------------------------------------
 
-`DunglasApiBundle`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
+`ApiPlatform`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
 hypermedia formats. It is built on top of the Symfony Framework and its Serializer
 component. It provides custom normalizers and a custom encoder, custom metadata
 and a caching system.
@@ -227,6 +227,6 @@ If you want to leverage the full power of the Symfony Serializer component,
 take a look at how this bundle works.
 
 .. _`APCu`: https://github.com/krakjoe/apcu
-.. _`DunglasApiBundle`: https://github.com/dunglas/DunglasApiBundle
+.. _`ApiPlatform`: https://github.com/api-platform/core
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com
