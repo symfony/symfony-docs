@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-08T07:25:53Z
+
+@valeriangalliat Thank you for creating the doc PR. FYI, I have prefixed the PR title with "WCM" (waiting code merge).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-07T16:15:27Z
+
+@valeriangalliat Would you mind updating the description with references to the new pull requests?
+
+---------------------------------------------------------------------------
+
+by valeriangalliat at 2015-03-07T16:27:17Z
+
+@xabbuh Done!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-07T16:40:52Z
+
+Thank you!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-10T16:25:36Z
+
+Except for the minor pending comment from @xabbuh, I'm :+1: for this change. By the way, this is no longer `WCM` because the code was finally merged. Thanks @valeriangalliat.
+
+---------------------------------------------------------------------------
+
+by valeriangalliat at 2016-03-10T16:35:05Z
+
+@javiereguiluz Thanks, I updated the PR according to @xabbuh comment.
