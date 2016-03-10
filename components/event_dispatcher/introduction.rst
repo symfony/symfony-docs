@@ -22,8 +22,8 @@ answer.
 Consider the real-world example where you want to provide a plugin system
 for your project. A plugin should be able to add methods, or do something
 before or after a method is executed, without interfering with other plugins.
-This is not an easy problem to solve with single and multiple inheritance
-(were it possible with PHP) has its own drawbacks.
+This is not an easy problem to solve with single inheritance, and even if 
+multiple inheritance was possible with PHP, it comes with its own drawbacks.
 
 The Symfony EventDispatcher component implements the `Mediator`_ pattern
 in a simple and effective way to make all these things possible and to make
