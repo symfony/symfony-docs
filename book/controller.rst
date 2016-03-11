@@ -712,8 +712,7 @@ in the controller if a variable is type-hinted with ``Request`` class::
     }
 
 ``Request`` class has several public properties via which information about the client
-request can be accessed. If you haven't already mastered HTTP fundamentals you
-can read about Symfony ``Request`` object in detail :ref:`here <book-request-object>`.
+request can be accessed.
 
 Like the ``Request``, the ``Response`` object has also a public ``headers`` property
 which is a :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag` instance.
