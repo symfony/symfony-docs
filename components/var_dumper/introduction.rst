@@ -18,7 +18,9 @@ You can install the component in 2 different ways:
 * Use the official Git repository (https://github.com/symfony/var-dumper).
 
 .. note::
-Make sure the bundle is added in your ``app/AppKernel.php``
+
+    If using it inside a Symfony application, make sure that the
+    DebugBundle is enabled in your ``app/AppKernel.php`` file.
 
 .. _components-var-dumper-dump:
 
