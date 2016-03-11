@@ -46,7 +46,7 @@ Actions and Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Open the ``src/AppBundle/Controller/DefaultController.php`` file and you'll
-see the following code (for now, don't look at the ``@Route` configuration
+see the following code (for now, don't look at the ``@Route`` configuration
 because that will be explained in the next section)::
 
     namespace AppBundle\Controller;
