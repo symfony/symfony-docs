@@ -160,7 +160,7 @@ thing in one line to rendering each part of each field independently. The
 best way depends on how much customization you need.
 
 One of the simplest ways - which is especially useful during development -
-is to render the form tags and use ``form_widget()`` function to render
+is to render the form tags and use the ``form_widget()`` function to render
 all of the fields:
 
 .. code-block:: html+twig
