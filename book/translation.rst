@@ -134,7 +134,7 @@ different formats, XLIFF being the recommended format:
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
+                    <trans-unit id="symfony_is_great">
                         <source>Symfony is great</source>
                         <target>J'aime Symfony</target>
                     </trans-unit>
@@ -713,7 +713,7 @@ bundle.
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
+                    <trans-unit id="author.name.not_blank">
                         <source>author.name.not_blank</source>
                         <target>Please enter an author name.</target>
                     </trans-unit>

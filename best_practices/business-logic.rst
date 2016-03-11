@@ -193,7 +193,7 @@ The three entities defined by our sample blog application are a good example:
 Doctrine Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine Entities are plain PHP objects that you store in some "database".
+Doctrine entities are plain PHP objects that you store in some "database".
 Doctrine only knows about your entities through the mapping metadata configured
 for your model classes. Doctrine supports four metadata formats: YAML, XML,
 PHP and annotations.

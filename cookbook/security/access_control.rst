@@ -178,7 +178,7 @@ pattern so that it is only accessible by requests from the local server itself:
             # ...
             access_control:
                 #
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, fe80::1, ::1] }
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
                 - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
@@ -195,7 +195,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 <!-- ... -->
                 <rule path="^/internal"
                     role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    ips="127.0.0.1, fe80::1, ::1"
+                    ips="127.0.0.1, ::1"
                 />
 
                 <rule path="^/internal" role="ROLE_NO_ACCESS" />
@@ -211,7 +211,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 array(
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                    'ips' => '127.0.0.1, fe80::1, ::1'
+                    'ips' => '127.0.0.1, ::1'
                 ),
                 array(
                     'path' => '^/internal',
@@ -232,8 +232,8 @@ the external IP address ``10.0.0.1``:
   that does not match an existing role, it just serves as a trick to always
   deny access).
 
-But if the same request comes from ``127.0.0.1``, ``::1`` (the IPv6 loopback
-address) or ``fe80::1`` (the IPv6 link-local address):
+But if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
+address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
