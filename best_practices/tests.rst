@@ -26,9 +26,7 @@ functional tests, you can quickly spot any big errors before you deploy them:
     Define a functional test that at least checks if your application pages
     are successfully loading.
 
-A functional test can be as easy as this:
-
-.. code-block:: php
+A functional test can be as easy as this::
 
     // src/AppBundle/Tests/ApplicationAvailabilityFunctionalTest.php
     namespace AppBundle\Tests;
@@ -116,10 +114,10 @@ Learn More about Functional Tests
 Consider using the `HautelookAliceBundle`_ to generate real-looking data for
 your test fixtures using `Faker`_ and `Alice`_.
 
-.. _`Faker`: https://github.com/fzaninotto/Faker
-.. _`Alice`: https://github.com/nelmio/alice
 .. _`PhpUnit`: https://phpunit.de/
 .. _`PhpSpec`: http://www.phpspec.net/
-.. _`Mink`: http://mink.behat.org
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
+.. _`Mink`: http://mink.behat.org
 .. _`HautelookAliceBundle`: https://github.com/hautelook/AliceBundle
+.. _`Faker`: https://github.com/fzaninotto/Faker
+.. _`Alice`: https://github.com/nelmio/alice

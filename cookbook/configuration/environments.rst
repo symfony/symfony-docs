@@ -328,7 +328,7 @@ The new environment is now accessible via::
     aren't accessible, the front controller is usually protected from external
     IP addresses via the following code at the top of the controller::
 
-        if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1'))) {
+        if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
             die('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
         }
 

@@ -54,7 +54,7 @@ form in its own PHP class::
     Put the form type classes in the ``AppBundle\Form`` namespace, unless you
     use other custom form classes like data transformers.
 
-To use the class, use ``createForm`` and instantiate the new class::
+To use the class, use ``createForm()`` and instantiate the new class::
 
     // ...
     use AppBundle\Form\PostType;
@@ -160,8 +160,8 @@ thing in one line to rendering each part of each field independently. The
 best way depends on how much customization you need.
 
 One of the simplest ways - which is especially useful during development -
-is to render the form tags and use ``form_widget()`` to render all of the
-fields:
+is to render the form tags and use the ``form_widget()`` function to render
+all of the fields:
 
 .. code-block:: html+twig
 
@@ -171,7 +171,7 @@ fields:
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See the :doc:`/cookbook/form/form_customization` article for more information
+See the :doc:`/cookbook/form/form_customization` cookbook article for more information
 on this and how you can control *how* the form renders at a global level
 using form theming.
 
@@ -204,9 +204,9 @@ Handling a form submit usually follows a similar template:
 
 There are really only two notable things here. First, we recommend that you
 use a single action for both rendering the form and handling the form submit.
-For example, you *could* have a ``newAction`` that *only* renders the form
-and a ``createAction`` that *only* processes the form submit. Both those
-actions will be almost identical. So it's much simpler to let ``newAction``
+For example, you *could* have a ``newAction()`` that *only* renders the form
+and a ``createAction()`` that *only* processes the form submit. Both those
+actions will be almost identical. So it's much simpler to let ``newAction()``
 handle everything.
 
 Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
