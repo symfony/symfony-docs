@@ -36,9 +36,10 @@ user's requests and that code is defined via the **routing** configuration.
 And the contents displayed in the browser are usually rendered using
 **templates**.
 
-When you go to ``http://localhost:8000/app/example``, Symfony will execut the
-controller in ``src/AppBundle/Controller/DefaultController.php`` and rendered
-the ``app/Resources/views/default/index.html.twig`` template.
+When you go to ``http://localhost:8000/app/example``, Symfony will execute
+the controller in ``src/AppBundle/Controller/DefaultController.php`` and
+render the ``app/Resources/views/default/index.html.twig`` template.
+
 In the following sections you'll learn in detail the inner workings of Symfony
 controllers, routes and templates.
 
@@ -239,7 +240,7 @@ In this example, the ``config_dev.yml`` configuration file imports the common
 with its own options.
 
 For more details on environments, see
-":ref:`page-creation-environments`" section of the book.
+:ref:`the "Environments" section <page-creation-environments>` of the book.
 
 Final Thoughts
 --------------
