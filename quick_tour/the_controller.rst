@@ -15,8 +15,9 @@ result of executing any action of any controller is the creation of a
 to the user.
 
 So far, all the actions shown in this tutorial used the ``$this->render()``
-shortcut to return a rendered response as result. In case you need it, you
-can also create a raw ``Response`` object to return any text content::
+controller shortcut method to return a rendered template as result. In case
+you need it, you can also create a raw ``Response`` object to return any
+text content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -51,7 +52,7 @@ each value.
 
 Let's create a new action with route variables to show this feature in action.
 Open the ``src/AppBundle/Controller/DefaultController.php`` file and add
-a new method called ``helloAction`` with the following content::
+a new method called ``helloAction()`` with the following content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;

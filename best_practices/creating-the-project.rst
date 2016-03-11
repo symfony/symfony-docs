@@ -111,7 +111,7 @@ ProductBundle, then there's no advantage to having two separate bundles.
 
 .. best-practice::
 
-    Create only one bundle called AppBundle for your application logic
+    Create only one bundle called AppBundle for your application logic.
 
 Implementing a single AppBundle bundle in your projects will make your code
 more concise and easier to understand.
@@ -169,8 +169,6 @@ structure of Symfony, you can
 ``cache/``, ``logs/`` and ``web/``.
 
 .. _`Composer`: https://getcomposer.org/
-.. _`Get Started`: https://getcomposer.org/doc/00-intro.md
-.. _`Composer download page`: https://getcomposer.org/download/
+.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/signing-project-releases.html
-.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
