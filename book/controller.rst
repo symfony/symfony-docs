@@ -33,9 +33,9 @@ common examples:
 * *Controller A* prepares a ``Response`` object representing the content
   for the homepage of the site.
 
-* *Controller B* reads the ``slug`` parameter from the request to load a
+* *Controller B* reads the ``{slug}`` placeholder from the request to load a
   blog entry from the database and creates a ``Response`` object displaying
-  that blog. If the ``slug`` can't be found in the database, it creates and
+  that blog. If the ``{slug}`` can't be found in the database, it creates and
   returns a ``Response`` object with a 404 status code.
 
 * *Controller C* handles the form submission of a contact form. It reads
@@ -54,31 +54,44 @@ Every request handled by a Symfony project goes through the same simple lifecycl
 The framework takes care of all the repetitive stuff: you just need to write
 your custom code in the controller function:
 
-#. Each request is handled by a single front controller file (e.g. ``app.php``
-   or ``app_dev.php``) that bootstraps the application;
+#. Each request executes a single front controller file (e.g. on production
+   ``app.php`` or on development ``app_dev.php``) that bootstraps the
+   application;
 
-#. The ``Router`` reads information from the request (e.g. the URI), finds
-   a route that matches that information, and reads the ``_controller`` parameter
-   from the route;
+#. Front controller's only job is to initialize Symfony's engine (called the
+   `Kernel`) and pass it a ``Request`` object to handle;
 
-#. The controller from the matched route is executed and the code inside the
-   controller creates and returns a ``Response`` object;
+#. The Symfony core asks the router to inspect the request;
 
-#. The HTTP headers and content of the ``Response`` object are sent back to
-   the client.
+#. The router matches the incoming URL to a specific route and returns
+   information about the route, including the controller that should be
+   executed;
 
-Creating a page is as easy as creating a controller (#3) and making a route that
-maps a URL to that controller (#2).
+#. The correct controller from the matched route is executed and the code
+   inside the controller creates and returns the appropriate ``Response``
+   object;
 
-.. note::
+#. The HTTP headers and content of the ``Response`` object are sent back
+   to the client.
 
-    Though similarly named, a "front controller" is different from the
-    "controllers" talked about in this chapter. A front controller
-    is a short PHP file that lives in your web directory and through which
-    all requests are directed. A typical application will have a production
-    front controller (e.g. ``app.php``) and a development front controller
-    (e.g. ``app_dev.php``). You'll likely never need to edit, view or worry
-    about the front controllers in your application.
+Creating a page is as easy as creating a controller (#5) and making a route
+that maps a URL to that controller (#4).
+
+.. image:: /images/http-xkcd-request.png
+   :align: center
+
+Though similarly named, a "front controller" is different from the PHP
+functions called "controllers" talked about in this chapter. A front
+controller is a short PHP file that lives in your ``web/`` directory
+through which all requests are directed. A typical application will
+have a production front controller (e.g. ``app.php``) and a development
+front controller (e.g. ``app_dev.php``). You'll likely never need to
+edit, view or worry about the front controllers in your application.
+The "controller class" is a convenient way to group several "controllers",
+also called actions, together in one class (e.g. ``updateAction()``,
+``deleteAction()``, etc). So, a controller is a method inside a controller
+class. They hold your code which creates and returns the appropriate
+``Response`` object.
 
 .. index::
    single: Controller; Simple example
@@ -87,10 +100,8 @@ A Simple Controller
 -------------------
 
 While a controller can be any PHP callable (a function, method on an object,
-or a ``Closure``), a controller is usually a method inside a controller class.
-Controllers are also called *actions*.
-
-.. code-block:: php
+or a ``Closure``), a controller is usually a method inside a controller
+class::
 
     // src/AppBundle/Controller/HelloController.php
     namespace AppBundle\Controller;
@@ -105,33 +116,29 @@ Controllers are also called *actions*.
         }
     }
 
-.. tip::
-
-    Note that the *controller* is the ``indexAction`` method, which lives
-    inside a *controller class* (``HelloController``). Don't be confused
-    by the naming: a *controller class* is simply a convenient way to group
-    several controllers/actions together. Typically, the controller class
-    will house several controllers/actions (e.g. ``updateAction``, ``deleteAction``,
-    etc).
+The controller is the ``indexAction()`` method, which lives inside a
+controller class ``HelloController``.
 
 This controller is pretty straightforward:
 
 * *line 2*: Symfony takes advantage of PHP's namespace functionality to
   namespace the entire controller class.
 
-* *line 4*: Symfony again takes advantage of PHP's namespace functionality: the ``use`` keyword imports the
-  ``Response`` class, which the controller must return.
+* *line 4*: Symfony again takes advantage of PHP's namespace functionality:
+  the ``use`` keyword imports the ``Response`` class, which the controller
+  must return.
 
 * *line 6*: The class name is the concatenation of a name for the controller
   class (i.e. ``Hello``) and the word ``Controller``. This is a convention
   that provides consistency to controllers and allows them to be referenced
-  only by the first part of the name (i.e. ``Hello``) in the routing configuration.
+  only by the first part of the name (i.e. ``Hello``) in the routing
+  configuration.
 
 * *line 8*: Each action in a controller class is suffixed with ``Action``
-  and is referenced in the routing configuration by the action's name (``index``).
+  and is referenced in the routing configuration by the action's name (e.g. ``index``).
   In the next section, you'll create a route that maps a URI to this action.
   You'll learn how the route's placeholders (``{name}``) become arguments
-  to the action method (``$name``).
+  to the controller method (``$name``).
 
 * *line 10*: The controller creates and returns a ``Response`` object.
 
@@ -143,7 +150,7 @@ Mapping a URL to a Controller
 
 The new controller returns a simple HTML page. To actually view this page
 in your browser, you need to create a route, which maps a specific URL path
-to the controller:
+to the controller::
 
 .. configuration-block::
 
@@ -211,13 +218,13 @@ simply creating a controller method and an associated route.
 
 Simple, right?
 
-.. sidebar:: The AppBundle:Hello:index controller syntax
+.. sidebar:: Logical controller name
 
-    If you use the YML or XML formats, you'll refer to the controller using
-    a special shortcut syntax: ``AppBundle:Hello:index``. For more details
-    on the controller format, see :ref:`controller-string-syntax`.
-
-.. seealso::
+    If you use the YAML or XML formats, you'll refer to the controller
+    using a special shortcut syntax called *logical controller name*
+    which, for example, looks like ``AppBundle:Hello:index``. For more
+    details on the controller format, read
+    :ref:`controller-string-syntax` subtitle of the Routing chapter.
 
     You can learn much more about the routing system in the
     :doc:`Routing chapter </book/routing>`.
@@ -231,8 +238,9 @@ Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You already know that the route points to the
-``HelloController::indexAction()`` method that lives inside AppBundle. What's
-more interesting is the argument that is passed to that method::
+``HelloController::indexAction()`` controller method that lives inside AppBundle.
+What's more interesting is the argument that is passed to that controller
+method::
 
     // src/AppBundle/Controller/HelloController.php
     // ...
@@ -247,11 +255,14 @@ more interesting is the argument that is passed to that method::
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
-``{name}`` parameter from the matched route (``ryan`` if you go to ``/hello/ryan``).
-When executing your controller, Symfony matches each argument with a parameter
-from the route. So the value for ``{name}`` is passed to ``$name``.
+``{name}`` placehold from the matched route (``ryan`` if you go to
+``/hello/ryan``). When executing controller, Symfony matches each argument
+with a placehold from the route. So the value for ``{name}`` is passed
+to ``$name``. Just make sure they the name of the placeholder is the
+same as the name of the argument variable.
 
-Take the following more-interesting example:
+Take the following more-interesting example, where controller has two
+arguments::
 
 .. configuration-block::
 
@@ -307,62 +318,58 @@ Take the following more-interesting example:
 
         return $collection;
 
-Now, the controller can have two arguments::
+Mapping route parameters to controller arguments is easy and flexible.
+Keep the following guidelines in mind while you develop.
 
-    public function indexAction($firstName, $lastName)
-    {
-        // ...
-    }
+#. **The order of the controller arguments does not matter**
 
-Mapping route parameters to controller arguments is easy and flexible. Keep
-the following guidelines in mind while you develop.
+    Symfony matches the parameter **names** from the route to the variable
+    **names** of the controller. The arguments of the controller could be
+    totally reordered and still work perfectly::
 
-* **The order of the controller arguments does not matter**
+        public function indexAction($lastName, $firstName)
+        {
+            // ...
+        }
 
-  Symfony matches the parameter **names** from the route to the variable
-  **names** of the controller. The arguments of the controller could be totally
-  reordered and still work perfectly::
+#. **Each required controller argument must match up with a routing parameter**
 
-      public function indexAction($lastName, $firstName)
-      {
-          // ...
-      }
+    The following would throw a ``RuntimeException`` because there is no
+    ``foo`` parameter defined in the route::
 
-* **Each required controller argument must match up with a routing parameter**
+        public function indexAction($firstName, $lastName, $foo)
+        {
+            // ...
+        }
 
-  The following would throw a ``RuntimeException`` because there is no ``foo``
-  parameter defined in the route::
+    Making the argument optional, however, is perfectly ok. The following
+    example would not throw an exception::
 
-      public function indexAction($firstName, $lastName, $foo)
-      {
-          // ...
-      }
+        public function indexAction($firstName, $lastName, $foo = 'bar')
+        {
+            // ...
+        }
 
-  Making the argument optional, however, is perfectly ok. The following
-  example would not throw an exception::
+#. **Not all routing parameters need to be arguments on your controller**
 
-      public function indexAction($firstName, $lastName, $foo = 'bar')
-      {
-          // ...
-      }
+    If, for example, the ``lastName`` weren't important for your controller,
+    you could omit it entirely::
 
-* **Not all routing parameters need to be arguments on your controller**
-
-  If, for example, the ``lastName`` weren't important for your controller,
-  you could omit it entirely::
-
-      public function indexAction($firstName)
-      {
-          // ...
-      }
+        public function indexAction($firstName)
+        {
+            // ...
+        }
 
 .. tip::
 
-    Every route also has a special ``_route`` parameter, which is equal to
-    the name of the route that was matched (e.g. ``hello``). Though not usually
-    useful, this is also available as a controller argument. You can also
-    pass other variables from your route to your controller arguments. See
-    :doc:`/cookbook/routing/extra_information`.
+    Every route also has a special ``_route`` parameter (you will learn more
+    about this in the :ref:`Routing chapter <book-special-routing-parameters>`),
+    which is equal to the name of the route that was matched (e.g. ``hello``).
+    Though not usually useful, this is also available as a controller argument.
+
+    You can also pass other variables from your route to your controller
+    arguments. See :doc:`/cookbook/routing/extra_information`.
+
 
 .. _book-controller-request-argument:
 
@@ -838,3 +845,4 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
+
