@@ -364,42 +364,24 @@ the following guidelines in mind while you develop.
     pass other variables from your route to your controller arguments. See
     :doc:`/cookbook/routing/extra_information`.
 
-.. _book-controller-request-argument:
-
-The ``Request`` as a Controller Argument
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-What if you need to read query parameters, grab a request header or get access
-to an uploaded file? All of that information is stored in Symfony's ``Request``
-object. To get it in your controller, just add it as an argument and
-**type-hint it with the Request class**::
-
-    use Symfony\Component\HttpFoundation\Request;
-
-    public function indexAction($firstName, $lastName, Request $request)
-    {
-        $page = $request->query->get('page', 1);
-
-        // ...
-    }
-
-.. seealso::
-
-    Want to know more about getting information from the request? See
-    :ref:`Access Request Information <component-http-foundation-request>`.
-
 .. index::
    single: Controller; Base controller class
 
 The Base Controller Class
 -------------------------
 
-For convenience, Symfony comes with an optional base ``Controller`` class.
-If you extend it, you'll get access to a number of helper methods and all
-of your service objects via the container (see :ref:`controller-accessing-services`).
+For convenience, Symfony comes with an optional base
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
+If you extend it, this wont change anything about how your controller
+works, but you'll get access to a number of **helper methods** and the
+**service container** (see :ref:`controller-accessing-services`): an
+array-like object that gives you access to every useful object in the
+system. These useful objects are called **services**, and Symfony ships
+with a service object that can render Twig templates, another that can
+log messages and many more.
 
-Add the ``use`` statement atop the ``Controller`` class and then modify the
-``HelloController`` to extend it::
+Add the ``use`` statement atop the ``Controller`` class and then modify
+the ``HelloController`` to extend it::
 
     // src/AppBundle/Controller/HelloController.php
     namespace AppBundle\Controller;
@@ -411,38 +393,43 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
         // ...
     }
 
-This doesn't actually change anything about how your controller works: it
-just gives you access to helper methods that the base controller class makes
-available. These are just shortcuts to using core Symfony functionality that's
-available to you with or without the use of the base ``Controller`` class.
-A great way to see the core functionality in action is to look in the
-`Controller class`_.
+Helper methods are just shortcuts to using core Symfony functionality
+that's available to you with or without the use of the base
+``Controller`` class. A great way to see the core functionality in
+action is to look in the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
 
 .. seealso::
 
-    If you're curious about how a controller would work that did *not* extend
-    this base class, check out :doc:`Controllers as Services </cookbook/controller/service>`.
-    This is optional, but can give you more control over the exact objects/dependencies
-    that are injected into your controller.
+    If you're curious about how a controller would work that did *not*
+    extend this base ``Controller`` class, check out cookbook article
+    :doc:`Controllers as Services </cookbook/controller/service>`.
+    This is optional, but can give you more control over the exact
+    objects/dependencies that are injected into your controller.
 
 .. index::
    single: Controller; Redirecting
 
+Generating URLs
+~~~~~~~~~~~~~~~
+
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
+method is just a helper method that generates the URL for a given route.
+
+.. _book-redirecting-users-browser:
+
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the
+To redirect the user's browser to another page **internally**, use the ``generateUrl()``
+method in combination with another helper method called
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-method::
+which needs URL as an argument::
 
     public function indexAction()
     {
         return $this->redirect($this->generateUrl('homepage'));
     }
-
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
 
 By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the second argument::
@@ -451,6 +438,15 @@ perform a 301 (permanent) redirect, modify the second argument::
     {
         return $this->redirect($this->generateUrl('homepage'), 301);
     }
+
+To redirect **externally**, use ``redirect()`` and pass it the external URL::
+
+    public function indexAction()
+    {
+        return $this->redirect('http://symfony.com/doc');
+    }
+
+For more information, see the :doc:`Routing chapter </book/routing>`.
 
 .. tip::
 
@@ -469,31 +465,48 @@ perform a 301 (permanent) redirect, modify the second argument::
 Rendering Templates
 ~~~~~~~~~~~~~~~~~~~
 
-If you're serving HTML, you'll want to render a template. The ``render()``
-method renders a template **and** puts that content into a ``Response``
-object for you::
+To serve HTML, template needs to be rendered and the content put into
+the ``Response`` object. The shortcut method
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`
+of ``Controller`` class does just that::
 
     // renders app/Resources/views/hello/index.html.twig
     return $this->render('hello/index.html.twig', array('name' => $name));
 
-You can also put templates in deeper sub-directories. Just try to avoid creating
-unnecessarily deep structures::
+Templates can be also put in deeper sub-directories. Just try to avoid
+creating unnecessarily deep structures::
 
     // renders app/Resources/views/hello/greetings/index.html.twig
     return $this->render('hello/greetings/index.html.twig', array(
         'name' => $name
     ));
 
+Templates are a generic way to render content in *any* format. And while in
+most cases you'll use templates to render HTML content, a template can just
+as easily generate JavaScript, CSS, XML or any other format you can dream of.
+To learn how to render different templating formats read :ref:`<template-formats>`
+section of the Creating and Using Templates chapter.
+
 The Symfony templating engine is explained in great detail in the
-:doc:`Templating </book/templating>` chapter.
+:doc:`Creating and Using Templates chapter </book/templating>`.
 
-.. sidebar:: Referencing Templates that Live inside the Bundle
+.. sidebar:: Templating Naming Pattern
 
-    You can also put templates in the ``Resources/views`` directory of a
-    bundle and reference them with a
-    ``BundleName:DirectoryName:FileName`` syntax. For example,
-    ``AppBundle:Hello:index.html.twig`` would refer to the template located in
-    ``src/AppBundle/Resources/views/Hello/index.html.twig``. See :ref:`template-referencing-in-bundle`.
+    Templates for a bundle can be put in the ``src/path/to/bundle/Resources/views``
+    directory of a bundle and reference with a special shortcut syntax called
+    *logical name* which, for example, looks like ``AppBundle:Hello:index.html.twig`` or
+    ``AppBundle::layout.html.twig``. The pattern has three parts, each separated
+    by a colon. Syntax used to specify a  template for a specific page::
+
+        **bundle**:**directory**:**filename**
+
+    Syntax used to refer to a base template that's specific to the bundle::
+
+        ``**bundle**::**filename**``
+
+    For more details on the template format, read
+    :ref:`template-referencing-in-bundle` subtitle of the Creating and
+    Using Templates chapter.
 
 .. index::
    single: Controller; Accessing services
@@ -509,7 +522,9 @@ any other "work" you can think of. When you install a new bundle, it probably
 brings in even *more* services.
 
 When extending the base controller class, you can access any Symfony service
-via the ``get()`` method. Here are several common services you might need::
+via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
+method of the ``Controller`` class. Here are several common services you might
+need::
 
     $templating = $this->get('templating');
 
@@ -518,7 +533,7 @@ via the ``get()`` method. Here are several common services you might need::
     $mailer = $this->get('mailer');
 
 What other services exist? To list all services, use the ``container:debug``
-console command:
+console command::
 
 .. code-block:: bash
 
@@ -535,7 +550,7 @@ Managing Errors and 404 Pages
 
 When things are not found, you should play well with the HTTP protocol and
 return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base controller class, do the following::
+If you're extending the base ``Controller`` class, do the following::
 
     public function indexAction()
     {
@@ -548,8 +563,9 @@ If you're extending the base controller class, do the following::
         return $this->render(...);
     }
 
-The ``createNotFoundException()`` method is just a shortcut to create a
-special :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createNotFoundException`
+method is just a shortcut to create a special
+:class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
 Of course, you're free to throw any ``Exception`` class in your controller -
@@ -560,15 +576,34 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using ``app_dev.php`` -
-see :ref:`page-creation-environments`).
+error page is shown to the developer (i.e. when you're using ``app_dev.php``
+front controller - see :ref:`page-creation-environments`).
 
-You'll want to customize the error page your user sees. To do that, see the
-":doc:`/cookbook/controller/error_pages`" cookbook recipe.
+You'll want to customize the error page your user sees. To do that, see
+the cookbook article  ":doc:`/cookbook/controller/error_pages`" cookbook recipe.
 
 .. index::
    single: Controller; The session
    single: Session
+
+.. _book-controller-request-argument:
+
+The Request object as a Controller Argument
+-------------------------------------------
+
+What if you need to read query parameters, grab a request header or get access
+to an uploaded file? All of that information is stored in Symfony's ``Request``
+object. To get it in your controller, just add it as an argument and
+**type-hint it with the ``Request`` class**::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction($firstName, $lastName, Request $request)
+    {
+        $page = $request->query->get('page', 1);
+
+        // ...
+    }
 
 Managing the Session
 --------------------
@@ -578,8 +613,11 @@ about the user (be it a real person using a browser, a bot, or a web service)
 between requests. By default, Symfony stores the attributes in a cookie
 by using the native PHP sessions.
 
-Storing and retrieving information from the session can be easily achieved
-from any controller::
+To retrieving the session we have to call the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getSession`
+method on the ``Request`` object inside a controller. Method returns a
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
+with all the methods to handle a session::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -597,8 +635,7 @@ from any controller::
         $filters = $session->get('filters', array());
     }
 
-These attributes will remain in the session for the remainder of that user's
-session.
+Stored attributes remain in the session for the remainder of that user's session.
 
 .. index::
    single: Session; Flash messages
@@ -836,5 +873,3 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
-
-.. _`Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
