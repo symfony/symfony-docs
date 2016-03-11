@@ -73,7 +73,7 @@ Template Configuration
 
 .. best-practice::
 
-    Don't use the ``@Template()`` annotation to configure the template used by
+    Don't use the ``@Template`` annotation to configure the template used by
     the controller.
 
 The ``@Template`` annotation is useful, but also involves some magic. We
@@ -148,7 +148,7 @@ For example:
         ));
     }
 
-Normally, you'd expect a ``$id`` argument to ``showAction``. Instead, by
+Normally, you'd expect a ``$id`` argument to ``showAction()``. Instead, by
 creating a new argument (``$post``) and type-hinting it with the ``Post``
 class (which is a Doctrine entity), the ParamConverter automatically queries
 for an object whose ``$id`` property matches the ``{id}`` value. It will
