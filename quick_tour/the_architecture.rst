@@ -257,7 +257,7 @@ Understanding the Cache and Logs
 --------------------------------
 
 Symfony applications can contain several configuration files defined in
-several formats (YAML, XML, PHP, etc.) Instead of parsing and combining
+several formats (YAML, XML, PHP, etc.). Instead of parsing and combining
 all those files for each request, Symfony uses its own cache system. In
 fact, the application configuration is only parsed for the very first request
 and then compiled down to plain PHP code stored in the ``app/cache/``
@@ -309,4 +309,4 @@ need to learn a lot to become a Symfony master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and
 pick any topic you want.
 
-.. _Composer:   https://getcomposer.org
+.. _`Composer`:   https://getcomposer.org
