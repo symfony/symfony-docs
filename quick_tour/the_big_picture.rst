@@ -29,14 +29,16 @@ When developing a Symfony application, your responsibility as a developer
 is to write the code that maps the user's *request* (e.g. ``http://localhost:8000/``)
 to the *resource* associated with it (the ``Homepage`` HTML page).
 
-The code to execute is defined in **controllers**  also called **actions** which
-are methods defined in **controller classes** . The mapping between user's requests
-and that code is defined via the **routing** configuration. And the contents displayed
-in the browser are usually rendered using **templates**.
+The code to execute is defined as methods of PHP classes. The methods are
+called **actions** and the classes **controllers**, but in practice most
+developers use **controllers** to refer to both of them. The mapping between
+user's requests and that code is defined via the **routing** configuration.
+And the contents displayed in the browser are usually rendered using
+**templates**.
 
-If you'd browsed ``http://localhost:8000/app/example`` for example, Symfony could
-executed the controller defined in the ``src/AppBundle/Controller/DefaultController.php``
-file and rendered the ``app/Resources/views/default/index.html.twig`` template.
+When you go to ``http://localhost:8000/app/example``, Symfony will execut the
+controller in ``src/AppBundle/Controller/DefaultController.php`` and rendered
+the ``app/Resources/views/default/index.html.twig`` template.
 In the following sections you'll learn in detail the inner workings of Symfony
 controllers, routes and templates.
 
@@ -44,7 +46,7 @@ Actions and Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Open the ``src/AppBundle/Controller/DefaultController.php`` file and you'll
-see the following code (for now, don't look at the ``@Route()`` configuration
+see the following code (for now, don't look at the ``@Route` configuration
 because that will be explained in the next section)::
 
     namespace AppBundle\Controller;

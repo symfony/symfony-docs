@@ -15,7 +15,7 @@ result of executing any action of any controller is the creation of a
 to the user.
 
 So far, all the actions shown in this tutorial used the ``$this->render()``
-controller shortcut method to return a rendered response as result. In case
+controller shortcut method to return a rendered template as result. In case
 you need it, you can also create a raw ``Response`` object to return any
 text content::
 

@@ -232,7 +232,7 @@ Creating Links between Pages
 
 Creating links between pages is a must for web applications. Instead of
 hardcoding URLs in templates, the ``path()`` function knows how to generate
-relative URLs based on the routing configuration. That way, all your URLs
+URLs based on the routing configuration. That way, all your URLs
 can be easily updated by just changing the configuration:
 
 .. code-block:: html+twig
