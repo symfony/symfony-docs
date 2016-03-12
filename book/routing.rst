@@ -150,62 +150,6 @@ which controller should be executed. The whole process looks like this:
    The routing layer is a tool that translates the incoming URL into a specific
    controller to execute.
 
-.. index::
-   single: Routing; Creating routes
-
-Creating Routes
----------------
-
-Symfony loads all the routes for your application from a single routing configuration
-file. The file is usually ``app/config/routing.yml``, but can be configured
-to be anything (including an XML or PHP file) via the application configuration
-file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            router: { resource: '%kernel.root_dir%/config/routing.yml' }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'router' => array(
-                'resource' => '%kernel.root_dir%/config/routing.php',
-            ),
-        ));
-
-.. tip::
-
-    Even though all routes are loaded from a single file, it's common practice
-    to include additional routing resources. To do so, just point out in the
-    main routing configuration file which external files should be included.
-    See the :ref:`routing-include-external-resources` section for more
-    information.
-
 Basic Route Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1167,14 +1111,56 @@ see :doc:`/cookbook/routing/extra_information`.
 
 .. _routing-include-external-resources:
 
-Including External Routing Resources
-------------------------------------
+Including Routing Resources
+---------------------------
 
-All routes are loaded via a single configuration file - usually
-``app/config/routing.yml`` (see `Creating Routes`_ above). However, if you use
-routing annotations, you'll need to point the router to the controllers with
-the annotations. This can be done by "importing" directories into the routing
-configuration:
+Symfony loads all the routes for an application from a single routing
+configuration file. When using YAML the file is ``app/config/routing.yml`` (can
+be configured to be anything including an XML or PHP file). Symfony know which
+routing configuration file to use via the application configuration file::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            router: { resource: '%kernel.root_dir%/config/routing.yml' }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- ... -->
+                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'router' => array(
+                'resource' => '%kernel.root_dir%/config/routing.php',
+            ),
+        ));
+
+This is logical if we use YAML, XML or PHP and not annotations to define
+the routes. What about when we use annotations? In this case
+the router needs to be pointed to the controllers with the annotations.
+This is done by "importin" directory holding controller classes into
+the routing configuration file, and enabling annotations for the resource::
 
 .. configuration-block::
 
@@ -1218,53 +1204,66 @@ configuration:
    Just be sure that it's unique so no other lines override it.
 
 The ``resource`` key loads the given routing resource. In this example the
-resource is a directory, where the ``@AppBundle`` shortcut syntax resolves to
+resource is a directory, where the ``@AppBundle`` shortcut syntax called
+:ref:`namespace path <template-naming-pattern-namespaced-path>` resolves to
 the full path of the AppBundle. When pointing to a directory, all files in that
 directory are parsed and put into the routing.
 
-.. note::
+Including Third Party Routing Resources
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    You can also include other routing configuration files, this is often used
-    to import the routing of third party bundles:
+Even though all routes are loaded from a single routing configuration
+file, it's common practice to include additional routing resources. This
+is often used to import the routing of third party bundles. To do so,
+just point out in the main routing configuration file which external
+files should be included::
 
-    .. configuration-block::
+.. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            # app/config/routing.yml
-            app:
-                resource: '@AcmeOtherBundle/Resources/config/routing.yml'
+        # app/config/routing.yml
+        app:
+            resource: '@AcmeOtherBundle/Resources/config/routing.yml'
 
-        .. code-block:: xml
+    .. code-block:: xml
 
-            <!-- app/config/routing.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <routes xmlns="http://symfony.com/schema/routing"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/routing
-                    http://symfony.com/schema/routing/routing-1.0.xsd">
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
-                <import resource="@AcmeOtherBundle/Resources/config/routing.xml" />
-            </routes>
+            <import resource="@AcmeOtherBundle/Resources/config/routing.xml" />
+        </routes>
 
-        .. code-block:: php
+    .. code-block:: php
 
-            // app/config/routing.php
-            use Symfony\Component\Routing\RouteCollection;
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
 
-            $collection = new RouteCollection();
-            $collection->addCollection(
-                $loader->import("@AcmeOtherBundle/Resources/config/routing.php")
-            );
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            $loader->import("@AcmeOtherBundle/Resources/config/routing.php")
+        );
 
-            return $collection;
+        return $collection;
+
+.. sidebar:: Adding a Host Requirement to Imported Routes
+
+    .. versionadded:: 2.2
+        Host matching support was introduced in Symfony 2.2.
+
+    You can set the ``host`` option on imported routes. For more
+    information, see :ref:`component-routing-host-imported`.
 
 Prefixing Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
 suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
-``/site/blog/{slug}`` instead of ``/blog/{slug}``):
+``/site/blog/{slug}`` instead of ``/blog/{slug}``)::
 
 .. configuration-block::
 
@@ -1307,32 +1306,23 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 The path of each route being loaded from the new routing resource will now
 be prefixed with the string ``/site``.
 
-Adding a Host Requirement to Imported Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    Host matching support was introduced in Symfony 2.2
-
-You can set the host regex on imported routes. For more information, see
-:ref:`component-routing-host-imported`.
-
 .. index::
-   single: Routing; Debugging
+   single: Routing; Debugging; Visualizing routes
 
 Visualizing & Debugging Routes
 ------------------------------
 
 While adding and customizing routes, it's helpful to be able to visualize
-and get detailed information about your routes. A great way to see every route
-in your application is via the ``router:debug`` console command. Execute
-the command by running the following from the root of your project.
+and get detailed information about all the application routes. A great
+way to see every route in an application is via ``router:debug`` console
+command::
 
 .. code-block:: bash
 
     $ php app/console router:debug
 
 This command will print a helpful list of *all* the configured routes in
-your application:
+an application::
 
 .. code-block:: text
 
@@ -1343,15 +1333,14 @@ your application:
     blog                  ANY       /blog/{page}
     blog_show             ANY       /blog/{slug}
 
-You can also get very specific information on a single route by including
-the route name after the command:
+To get very specific information on a single route include the route name
+after the command::
 
 .. code-block:: bash
 
     $ php app/console router:debug article_show
 
-Likewise, if you want to test whether a URL matches a given route, you can
-use the ``router:match`` console command:
+To test whether a URL matches a given route use the ``router:match`` console command::
 
 .. code-block:: bash
 
@@ -1364,17 +1353,23 @@ This command will print which route the URL matches.
     Route "blog_show" matches
 
 .. index::
-   single: Routing; Generating URLs
+   single: Routing; Generating URLs from a Controller
 
 Generating URLs
 ---------------
+
+Generating Relative URLs
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The routing system should also be used to generate URLs. In reality, routing
 is a bidirectional system: mapping the URL to a controller+parameters and
 a route+parameters back to a URL. The
 :method:`Symfony\\Component\\Routing\\Router::match` and
-:method:`Symfony\\Component\\Routing\\Router::generate` methods form this bidirectional
-system. Take the ``blog_show`` example route from earlier::
+:method:`Symfony\\Component\\Routing\\Router::generate` methods of the
+Routing component form this bidirectional system.
+
+Take the ``blog_show`` example route from earlier. ``match()`` tries to
+match a URL path with application routes::
 
     $params = $this->get('router')->match('/blog/my-blog-post');
     // array(
@@ -1382,14 +1377,25 @@ system. Take the ``blog_show`` example route from earlier::
     //     '_controller' => 'AppBundle:Blog:show',
     // )
 
+``generate()`` generates a URL for a specific route based on the given route
+parameters::
+
     $uri = $this->get('router')->generate('blog_show', array(
         'slug' => 'my-blog-post'
     ));
     // /blog/my-blog-post
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
-and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
-route. With this information, any URL can easily be generated::
+and any "wildcard" placeholders (e.g. ``slug => my-blog-post``) used in the path
+for that route.
+
+The ``generate()`` method has a shortcut method ``generateUrl()``
+defined by Symfony base
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class
+which can be accessible in our controller class if it extends ``Controller``
+class::
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class MainController extends Controller
     {
@@ -1404,24 +1410,12 @@ route. With this information, any URL can easily be generated::
         }
     }
 
-.. note::
-
-    The ``generateUrl()`` method defined in the base
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class is
-    just a shortcut for this code::
-
-        $url = $this->container->get('router')->generate(
-            'blog_show',
-            array('slug' => 'my-blog-post')
-        );
-
-In an upcoming section, you'll learn how to generate URLs from inside templates.
-
 .. tip::
 
-    If the front-end of your application uses Ajax requests, you might want
-    to be able to generate URLs in JavaScript based on your routing configuration.
-    By using the `FOSJsRoutingBundle`_, you can do exactly that:
+    If the front-end of your application uses Ajax requests, you might
+    want to be able to generate URLs in JavaScript based on your routing
+    configuration. By using the `FOSJsRoutingBundle`_, you can do
+    exactly that::
 
     .. code-block:: javascript
 
@@ -1433,33 +1427,56 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
     For more information, see the documentation for that bundle.
 
 .. index::
-   single: Routing; Generating URLs in a template
+   single: Routing; Query Strings
 
-Generating URLs with Query Strings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generating Relative URLs with Query Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``generate`` method takes an array of wildcard values to generate the URI.
-But if you pass extra ones, they will be added to the URI as a query string::
+The ``generate()`` method takes an array of "wildcard" placeholders values
+to generate the URI. But if you pass extra ones, they will be added to
+the URI as a query string::
 
-    $this->get('router')->generate('blog', array(
+    $url = $this->get('router')->generate('blog', array(
         'page' => 2,
         'category' => 'Symfony'
     ));
     // /blog/2?category=Symfony
 
-Generating URLs from a Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. index::
+   single: Routing; Absolute URLs from a Controller
 
-The most common place to generate a URL is from within a template when linking
-between pages in your application. This is done just as before, but using
-a template helper function:
+Generating Absolute URLs
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the router will generate relative URLs (e.g. ``/blog``). To
+generate an absolute URL, simply pass ``UrlGeneratorInterface::ABSOLUTE_URL``
+to the third argument of the ``generateUrl()`` method::
+
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+    $url = $this->generateUrl('blog_show', array(
+        'slug' => 'my-blog-post'
+        ),
+        UrlGeneratorInterface::ABSOLUTE_URL
+    );
+    // http://www.example.com/blog/my-blog-post
+
+.. index::
+   single: Routing; Generating URLs from a Template
+
+Generating Relative URLs from a Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The most common place to generate a URL is from within a template when
+linking between pages in an application. This is done just as before,
+but using a Twig ``path()`` function::
 
 .. configuration-block::
 
     .. code-block:: html+twig
 
         <a href="{{ path('blog_show', {'slug': 'my-blog-post'}) }}">
-          Read this blog post.
+            Read this blog post.
         </a>
 
     .. code-block:: html+php
@@ -1470,24 +1487,21 @@ a template helper function:
             Read this blog post.
         </a>
 
+.. sealso::
+
+    To learn more template links read dedicates section to this topic in
+    the :ref:`Templating chapter <book-templating-pages>`.
+
 .. index::
-   single: Routing; Absolute URLs
+   single: Routing; Absolute URLs from a Template
 
-Generating Absolute URLs
-~~~~~~~~~~~~~~~~~~~~~~~~
+Generating Absolute URLs from a Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the router will generate relative URLs (e.g. ``/blog``). From
-a controller, simply pass ``UrlGeneratorInterface::ABSOLUTE_URL`` to the third argument of the ``generateUrl()``
-method::
-
-    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
-    $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), UrlGeneratorInterface::ABSOLUTE_URL);
-    // http://www.example.com/blog/my-blog-post
-
-From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
-rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
-to ``generate()``:
+By default, the router will generate relative URLs (e.g. ``/blog``). To
+generate an absolute URL, from a template, in Twig, simply use the
+``url()`` function which generates an absolute URL rather than the
+``path()`` function which generates a relative URL::
 
 .. configuration-block::
 
@@ -1514,14 +1528,14 @@ to ``generate()``:
     The host that's used when generating an absolute URL is automatically
     detected using the current ``Request`` object. When generating absolute
     URLs from outside the web context (for instance in a console command) this
-    doesn't work. See :doc:`/cookbook/console/request_context` to learn how to
-    solve this problem.
+    doesn't work. See cookbook article :doc:`/cookbook/console/request_context`
+    to learn how to solve this problem.
 
 Summary
 -------
 
 Routing is a system for mapping the URL of incoming requests to the controller
-function that should be called to process the request. It both allows you
+methods that should be called to process the request. It both allows you
 to specify beautiful URLs and keeps the functionality of your application
 decoupled from those URLs. Routing is a bidirectional mechanism, meaning that it
 should also be used to generate URLs.
