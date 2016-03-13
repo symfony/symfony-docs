@@ -10,10 +10,11 @@ firewall map is able to extract the user's credentials from the current
 a token, containing these credentials. The next thing the listener should
 do is ask the authentication manager to validate the given token, and return
 an *authenticated* token if the supplied credentials were found to be valid.
-The listener should then store the authenticated token in the security context::
+The listener should then store the authenticated token using 
+:class:`the token storage <Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface>`::
 
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -21,9 +22,9 @@ The listener should then store the authenticated token in the security context::
     class SomeAuthenticationListener implements ListenerInterface
     {
         /**
-         * @var SecurityContextInterface
+         * @var TokenStorageInterface
          */
-        private $securityContext;
+        private $tokenStorage;
 
         /**
          * @var AuthenticationManagerInterface
@@ -54,7 +55,7 @@ The listener should then store the authenticated token in the security context::
                 ->authenticationManager
                 ->authenticate($unauthenticatedToken);
 
-            $this->securityContext->setToken($authenticatedToken);
+            $this->tokenStorage->setToken($authenticatedToken);
         }
     }
 

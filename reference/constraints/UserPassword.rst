@@ -1,15 +1,6 @@
 UserPassword
 ============
 
-.. note::
-
-    Since Symfony 2.2, the ``UserPassword*`` classes in the
-    :namespace:`Symfony\\Component\\Security\\Core\\Validator\\Constraint <Symfony\\Component\\Security\\Core\\Validator\\Constraint>`
-    namespace are deprecated and will be removed in Symfony 2.3. Please
-    use the ``UserPassword*`` classes in the
-    :namespace:`Symfony\\Component\\Security\\Core\\Validator\\Constraints <Symfony\\Component\\Security\\Core\\Validator\\Constraints>`
-    namespace instead.
-
 This validates that an input value is equal to the current authenticated
 user's password. This is useful in a form where a user can change their
 password, but needs to enter their old password for security.
@@ -23,6 +14,7 @@ password, but needs to enter their old password for security.
 | Applies to     | :ref:`property or method <validation-property-target>`                                     |
 +----------------+--------------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                               |
+|                | - `payload`_                                                                               |
 +----------------+--------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`          |
 +----------------+--------------------------------------------------------------------------------------------+
@@ -115,3 +107,5 @@ message
 
 This is the message that's displayed when the underlying string does *not*
 match the current user's password.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

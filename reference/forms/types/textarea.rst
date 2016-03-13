@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; textarea
+   single: Forms; Fields; TextareaType
 
-textarea Field Type
-===================
+TextareaType Field
+==================
 
 Renders a ``textarea`` HTML element.
 
@@ -17,13 +17,12 @@ Renders a ``textarea`` HTML element.
 |             | - `error_mapping`_                                                     |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
+|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `max_length`_                                                        |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 |             | - `trim`_                                                              |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                              |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
@@ -37,8 +36,7 @@ Renders a ``textarea`` HTML element.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 
@@ -62,11 +60,9 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

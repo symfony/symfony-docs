@@ -83,22 +83,22 @@ matcher::
     // src/AppBundle/Profiler/SuperAdminMatcher.php
     namespace AppBundle\Profiler;
 
-    use Symfony\Component\Security\Core\SecurityContext;
+    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
     class SuperAdminMatcher implements RequestMatcherInterface
     {
-        protected $securityContext;
+        protected $authorizationChecker;
 
-        public function __construct(SecurityContext $securityContext)
+        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
         {
-            $this->securityContext = $securityContext;
+            $this->authorizationChecker = $authorizationChecker;
         }
 
         public function matches(Request $request)
         {
-            return $this->securityContext->isGranted('ROLE_SUPER_ADMIN');
+            return $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN');
         }
     }
 
@@ -113,16 +113,16 @@ won't use it directly:
         services:
             app.super_admin_matcher:
                 class: AppBundle\Profiler\SuperAdminMatcher
-                arguments: ['@security.context']
+                arguments: ['@security.authorization_checker']
                 public: false
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.super_admin_matcher"
+            <service id="app.profiler.matcher.super_admin"
                 class="AppBundle\Profiler\SuperAdminMatcher" public="false">
-                <argument type="service" id="security.context" />
+                <argument type="service" id="security.authorization_checker" />
         </services>
 
     .. code-block:: php
@@ -133,7 +133,7 @@ won't use it directly:
 
         $definition = new Definition(
             'AppBundle\Profiler\SuperAdminMatcher',
-            array(new Reference('security.context'))
+            array(new Reference('security.authorization_checker'))
         );
         $definition->setPublic(false);
 

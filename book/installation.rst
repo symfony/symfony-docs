@@ -4,9 +4,16 @@
 Installing and Configuring Symfony
 ==================================
 
-The goal of this chapter is to get you up and running with a working application
-built on top of Symfony. In order to simplify the process of creating new
-applications, Symfony provides an installer application.
+Welcome to Symfony! Starting a new Symfony project is easy. In fact, you'll have
+your first working Symfony application up and running in just a few short minutes.
+
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
+To make creating new applications even simpler, Symfony provides an installer.
+Downloading it is your first step.
 
 Installing the Symfony Installer
 --------------------------------
@@ -54,6 +61,8 @@ execute it as follows:
     c:\> move symfony c:\projects
     c:\projects\> php symfony
 
+.. _installation-creating-the-app:
+
 Creating the Symfony Application
 --------------------------------
 
@@ -95,17 +104,16 @@ optional second argument of the ``new`` command:
 .. code-block:: bash
 
     # use the most recent version in any Symfony branch
-    $ symfony new my_project_name 2.3
-    $ symfony new my_project_name 2.5
-    $ symfony new my_project_name 2.6
+    $ symfony new my_project_name 2.8
+    $ symfony new my_project_name 3.1
 
     # use a specific Symfony version
-    $ symfony new my_project_name 2.3.26
-    $ symfony new my_project_name 2.6.5
+    $ symfony new my_project_name 2.8.1
+    $ symfony new my_project_name 3.0.2
 
     # use a beta or RC version (useful for testing new Symfony versions)
-    $ symfony new my_project 2.7.0-BETA1
-    $ symfony new my_project 2.7.0-RC1
+    $ symfony new my_project 3.0.0-BETA1
+    $ symfony new my_project 3.1.0-RC1
 
 The installer also supports a special version called ``lts`` which installs the
 most recent :ref:`Symfony LTS version <releases-lts>` available:
@@ -151,7 +159,7 @@ version as the second argument of the ``create-project`` command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.3.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "3.1.*"
 
 .. tip::
 
@@ -169,7 +177,7 @@ browsing the project directory and executing this command:
 .. code-block:: bash
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -200,7 +208,7 @@ server with the ``server:stop`` command:
 
 .. code-block:: bash
 
-    $ php app/console server:stop
+    $ php bin/console server:stop
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
@@ -219,10 +227,10 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue when installing Symfony is that the ``app/cache`` and
-    ``app/logs`` directories must be writable both by the web server and the
-    command line user. On a UNIX system, if your web server user is different
-    from your command line user, you can try one of the following solutions.
+    One common issue when installing Symfony is that the ``var`` directory must
+    be writable both by the web server and the command line user. On a UNIX
+    system, if your web server user is different from your command line user
+    who owns the files, you can try one of the following solutions.
 
     **1. Use the same user for the CLI and the web server**
 
@@ -241,12 +249,11 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ rm -rf app/cache/*
-        $ rm -rf app/logs/*
+        $ rm -rf var/cache/* var/logs/* var/sessions/*
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod -R +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
+        $ sudo chmod -R +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
 
 
     **3. Using ACL on a system that does not support chmod +a**
@@ -260,8 +267,8 @@ If there are any issues, correct them now before moving on.
     .. code-block:: bash
 
         $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+        $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+        $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
     If this doesn't work, try adding ``-n`` option.
 
@@ -270,7 +277,7 @@ If there are any issues, correct them now before moving on.
     If none of the previous methods work for you, change the umask so that the
     cache and log directories will be group-writable or world-writable (depending
     if the web server user and the command line user are in the same group or not).
-    To achieve this, put the following line at the beginning of the ``app/console``,
+    To achieve this, put the following line at the beginning of the ``bin/console``,
     ``web/app.php`` and ``web/app_dev.php`` files::
 
         umask(0002); // This will let the permissions be 0775
@@ -304,6 +311,18 @@ them all at once:
 Depending on the complexity of your project, this update process can take up to
 several minutes to complete.
 
+.. tip::
+
+    Symfony provides a command to check whether your project's dependencies
+    contain any known security vulnerability:
+
+    .. code-block:: bash
+
+        $ php bin/console security:check
+
+    A good security practice is to execute this command regularly to be able to
+    update or replace compromised dependencies as soon as possible.
+
 Installing the Symfony Demo Application
 ---------------------------------------
 
@@ -324,7 +343,7 @@ of the Symfony Installer anywhere in your system:
     c:\projects\> php symfony demo
 
 Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
-built-in web server executing the ``php app/console server:run`` command. Access
+built-in web server executing the ``php bin/console server:run`` command. Access
 to the ``http://localhost:8000`` URL in your browser to start using the Symfony
 Demo application.
 
@@ -399,6 +418,7 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
