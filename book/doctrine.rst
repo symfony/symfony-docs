@@ -111,7 +111,7 @@ information. By convention, this information is usually configured in an
     of your project, like inside your Apache configuration, for example. For
     more information, see :doc:`/cookbook/configuration/external_parameters`.
 
-Now that Doctrine can connect to your database server, the following command
+Now that Doctrine can connect to your database, the following command
 can automatically generate an empty ``test_project`` database for you:
 
 .. code-block:: bash
