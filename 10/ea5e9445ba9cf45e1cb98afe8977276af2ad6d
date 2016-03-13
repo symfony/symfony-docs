@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------
+
+by theofidry at 2016-03-01T22:01:12Z
+
+Not sure why your class names stats with a `:`:
+
+<img width="739" alt="screen shot 2016-03-01 at 21 59 27" src="https://cloud.githubusercontent.com/assets/5175937/13443470/19fb350e-dff9-11e5-8a7c-5a11c741d808.png">
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-03-01T22:39:21Z
+
+It may not be the best place to ask that but can't those new serializers be back-ported? Sounds extreme to apply it only to `~3.1` cc @dunglas.
+
+---------------------------------------------------------------------------
+
+by mcfedr at 2016-03-02T08:23:05Z
+
+Should I be adding these [.. versionadded::](https://symfony.com/doc/current/contributing/documentation/format.html#new-features-or-behavior-changes) ?
+
+---------------------------------------------------------------------------
+
+by mcfedr at 2016-03-02T14:38:16Z
+
+@theofidry I would love to backport these to 2.8 but my understanding is that new features are only added to new version, I am trying to get my project up to date with 3.0 so I can use these
+
+---------------------------------------------------------------------------
+
+by dunglas at 2016-03-02T21:00:18Z
+
+New features are, indeed, only allowed in `master`. The only way to bring new normalizers to old component version is to extract them to a separate (non-core) library or bundle.
+
+However, you can use an old version of Symfony (like 2.8) with only the Serializer Component in 3.1.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-03-05T12:47:10Z
+
+@mcfedr yes, can you please add the `.. versionadded:: 3.1` directives? (you may also include only one after the list of normalizers)
+
+---------------------------------------------------------------------------
+
+by theofidry at 2016-03-13T16:12:34Z
+
+Is there anything left for merging this PR @WouterJ @xabbuh?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-03-13T16:20:46Z
+
+As far as I can see, no. :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-13T18:52:29Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by dunglas at 2016-03-13T19:02:45Z
+
+:+1:
+
+If you think it's interesting I'll split the serializer doc in several files and add details on how to configure the `DateTimeNormalizer` and `DataUriNormalizer` when I'll be less busy. I also need to document the new `@MaxDepth` annotation.
