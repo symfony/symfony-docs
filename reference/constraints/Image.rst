@@ -89,7 +89,7 @@ that it is between a certain size, add the following:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author
+        AppBundle\Entity\Author:
             properties:
                 headshot:
                     - Image:
