@@ -115,7 +115,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/Form/fields.html.twig #}
+        {# app/Resources/views/form/fields.html.twig #}
         {% block gender_widget %}
             {% spaceless %}
                 {% if expanded %}
@@ -136,7 +136,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Form/gender_widget.html.php -->
+        <!-- app/Resources/views/form/gender_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -167,13 +167,13 @@ link for details), create a ``gender_widget`` block to handle this:
             # app/config/config.yml
             twig:
                 form_themes:
-                    - 'Form/fields.html.twig'
+                    - 'form/fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
-                <twig:form-theme>Form/fields.html.twig</twig:form-theme>
+                <twig:form-theme>form/fields.html.twig</twig:form-theme>
             </twig:config>
 
         .. code-block:: php
@@ -181,7 +181,7 @@ link for details), create a ``gender_widget`` block to handle this:
             // app/config/config.php
             $container->loadFromExtension('twig', array(
                 'form_themes' => array(
-                    'Form/fields.html.twig',
+                    'form/fields.html.twig',
                 ),
             ));
 
