@@ -94,7 +94,7 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
-    * `prevent_dns_lookups`_
+    * `use_dns`_
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -1344,12 +1344,12 @@ If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
 
-prevent_dns_lookups
-............
+use_dns
+.......
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``Boolean`` **default**: ``true``
 
-If this option is enabled, ``checkMX()`` and ``checkHost()`` will not actually
+If this option is disabled, ``checkMX()`` and ``checkHost()`` will not actually
 make a DNS lookup. You might use this flag in a scenario where you temporarily
 don't have an internet connection, or are running a test suite that you'd rather
 not have a connection to the internet.
