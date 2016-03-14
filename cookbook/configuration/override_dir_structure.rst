@@ -12,11 +12,17 @@ directory structure is:
 
     your-project/
     ├─ app/
-    │  ├─ cache/
     │  ├─ config/
-    │  ├─ logs/
+    │  └─ ...
+    ├─ bin/
     │  └─ ...
     ├─ src/
+    │  └─ ...
+    ├─ tests/
+    │  └─ ...
+    ├─ var/
+    │  ├─ cache/
+    │  ├─ logs/
     │  └─ ...
     ├─ vendor/
     │  └─ ...
@@ -30,7 +36,7 @@ Override the ``cache`` Directory
 --------------------------------
 
 You can change the default cache directory by overriding the ``getCacheDir`` method
-in the ``AppKernel`` class of you application::
+in the ``AppKernel`` class of your application::
 
     // app/AppKernel.php
 
@@ -41,13 +47,13 @@ in the ``AppKernel`` class of you application::
 
         public function getCacheDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/cache';
+            return dirname(__DIR__).'/var/'.$this->environment.'/cache';
         }
     }
 
-``$this->rootDir`` is the absolute path to the ``app`` directory and ``$this->environment``
-is the current environment (i.e. ``dev``). In this case you have changed
-the location of the cache directory to ``app/{environment}/cache``.
+In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
+In this case you have changed the location of the cache directory to
+``var/{environment}/cache``.
 
 .. caution::
 
@@ -74,11 +80,11 @@ method::
 
         public function getLogDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/logs';
+            return dirname(__DIR__).'/var/'.$this->environment.'/logs';
         }
     }
 
-Here you have changed the location of the directory to ``app/{environment}/logs``.
+Here you have changed the location of the directory to ``var/{environment}/logs``.
 
 .. _override-web-dir:
 
@@ -86,23 +92,22 @@ Override the ``web`` Directory
 ------------------------------
 
 If you need to rename or move your ``web`` directory, the only thing you
-need to guarantee is that the path to the ``app`` directory is still correct
+need to guarantee is that the path to the ``var`` directory is still correct
 in your ``app.php`` and ``app_dev.php`` front controllers. If you simply
 renamed the directory, you're fine. But if you moved it in some way, you
 may need to modify these paths inside those files::
 
-    require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
-    require_once __DIR__.'/../Symfony/app/AppKernel.php';
+    require_once __DIR__.'/../path/to/app/autoload.php';
 
-You also need to change the ``extra.symfony-web-dir`` option in the ``composer.json``
-file:
+You also need to change the ``extra.symfony-web-dir`` option in the
+``composer.json`` file:
 
-.. code-block:: javascript
+.. code-block:: json
 
     {
-        ...
+        "...": "...",
         "extra": {
-            ...
+            "...": "...",
             "symfony-web-dir": "my_new_web_dir"
         }
     }
@@ -130,14 +135,23 @@ file:
             # ...
             assetic:
                 # ...
-                read_from: "%kernel.root_dir%/../../public_html"
+                read_from: '%kernel.root_dir%/../../public_html'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:assetic="http://symfony.com/schema/dic/assetic"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/assetic
+                    http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
-            <!-- ... -->
-            <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+                <!-- ... -->
+                <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+            </container>
 
         .. code-block:: php
 
@@ -154,8 +168,8 @@ file:
 
     .. code-block:: bash
 
-        $ php app/console cache:clear --env=prod
-        $ php app/console assetic:dump --env=prod --no-debug
+        $ php bin/console cache:clear --env=prod
+        $ php bin/console assetic:dump --env=prod --no-debug
 
 Override the ``vendor`` Directory
 ---------------------------------
@@ -168,18 +182,16 @@ The change in the ``composer.json`` will look like this:
 .. code-block:: json
 
     {
-        ...
         "config": {
             "bin-dir": "bin",
             "vendor-dir": "/some/dir/vendor"
         },
-        ...
     }
 
-In ``app/autoload.php``, you need to modify the path leading to the
-``vendor/autoload.php`` file::
+Then, update the path to the ``autoload.php`` file in ``app/autoload.php``::
 
     // app/autoload.php
+
     // ...
     $loader = require '/some/dir/vendor/autoload.php';
 

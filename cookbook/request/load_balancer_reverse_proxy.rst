@@ -13,9 +13,6 @@ will now be the IP address of your reverse proxy), the user's true IP will be
 stored in a standard ``Forwarded: for="..."`` header or a non standard
 ``X-Forwarded-For`` header.
 
-.. versionadded:: 2.7
-    ``Forwarded`` header support was introduced in Symfony 2.7.
-
 If you don't configure Symfony to look for these headers, you'll get incorrect
 information about the client's IP address, whether or not the client is connecting
 via HTTPS, the client's port and the hostname being requested.
@@ -83,7 +80,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
        // web/app.php
 
        // ...
-       Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
+       Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
 
        $response = $kernel->handle($request);
        // ...

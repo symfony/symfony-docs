@@ -15,7 +15,7 @@ about this template engine. This section just gives you a quick overview
 of its main concepts.
 
 A Twig template is a text file that can generate any type of content (HTML,
-CSS, JavaScript, XML, CSV, LaTeX, etc.) Twig elements are separated from
+CSS, JavaScript, XML, CSV, LaTeX, etc.). Twig elements are separated from
 the rest of the template contents using any of these delimiters:
 
 ``{{ ... }}``
@@ -32,7 +32,7 @@ the rest of the template contents using any of these delimiters:
 Below is a minimal template that illustrates a few basics, using two variables
 ``page_title`` and ``navigation``, which would be passed into the template:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <!DOCTYPE html>
     <html>
@@ -50,7 +50,7 @@ Below is a minimal template that illustrates a few basics, using two variables
         </body>
     </html>
 
-To render a template in Symfony, use the ``render`` method from within a
+To render a template in Symfony, use the ``render()`` method from within a
 controller. If the template needs variables to generate its contents, pass
 them as an array using the second optional argument::
 
@@ -64,7 +64,7 @@ a variable with the dot (``.``) notation. The following code listing shows
 how to display the content of a variable passed by the controller depending
 on its type:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# 1. Simple variables #}
     {# $this->render('template.html.twig', array(
@@ -104,7 +104,7 @@ defines "blocks" of contents that child templates can override.
 The ``index.html.twig`` template uses the ``extends`` tag to indicate that
 it inherits from the ``base.html.twig`` template:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/index.html.twig #}
     {% extends 'base.html.twig' %}
@@ -116,7 +116,7 @@ it inherits from the ``base.html.twig`` template:
 Open the ``app/Resources/views/base.html.twig`` file that corresponds to
 the ``base.html.twig`` template and you'll find the following Twig code:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/base.html.twig #}
     <!DOCTYPE html>
@@ -146,7 +146,7 @@ One of the best features of Twig is its extensibility via tags, filters
 and functions. Take a look at the following sample template that uses filters
 extensively to modify the information before displaying it to the user:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     <h1>{{ article.title|capitalize }}</h1>
 
@@ -160,7 +160,7 @@ Don't forget to check out the official `Twig documentation`_ to learn everything
 about filters, functions and tags.
 
 Including other Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 The best way to share a snippet of code between several templates is to
 create a new template fragment that can then be included from other templates.
@@ -168,7 +168,7 @@ create a new template fragment that can then be included from other templates.
 Imagine that we want to display ads on some pages of our application. First,
 create a ``banner.html.twig`` template:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# app/Resources/views/ads/banner.html.twig #}
     <div id="ad-banner">
@@ -178,7 +178,7 @@ create a ``banner.html.twig`` template:
 To display this ad on any page, include the ``banner.html.twig`` template
 using the ``include()`` function:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/index.html.twig #}
     {% extends 'base.html.twig' %}
@@ -190,7 +190,7 @@ using the ``include()`` function:
     {% endblock %}
 
 Embedding other Controllers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template
@@ -201,7 +201,7 @@ the most popular articles of your website. If you want to "render" the result
 of that method (usually some HTML content) inside the ``index`` template,
 use the ``render()`` function:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# app/Resources/views/index.html.twig #}
     {{ render(controller('AppBundle:Default:topArticles')) }}
@@ -212,7 +212,6 @@ action of the ``Default`` controller (the ``AppBundle`` part will be explained
 later)::
 
     // src/AppBundle/Controller/DefaultController.php
-
     class DefaultController extends Controller
     {
         public function topArticlesAction()
@@ -229,43 +228,44 @@ later)::
     }
 
 Creating Links between Pages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 Creating links between pages is a must for web applications. Instead of
-hardcoding URLs in templates, the ``path`` function knows how to generate
-URLs based on the routing configuration. That way, all your URLs can be
-easily updated by just changing the configuration:
+hardcoding URLs in templates, the ``path()`` function knows how to generate
+URLs based on the routing configuration. That way, all your URLs
+can be easily updated by just changing the configuration:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <a href="{{ path('homepage') }}">Return to homepage</a>
 
-The ``path`` function takes the route name as the first argument and you
+The ``path()`` function takes the route name as the first argument and you
 can optionally pass an array of route parameters as the second argument.
 
 .. tip::
 
-    The ``url`` function is very similar to the ``path`` function, but generates
+    The ``url()`` function is very similar to the ``path()`` function, but generates
     *absolute* URLs, which is very handy when rendering emails and RSS files:
     ``<a href="{{ url('homepage') }}">Visit our website</a>``.
 
 Including Assets: Images, JavaScripts and Stylesheets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------------
 
 What would the Internet be without images, JavaScripts and stylesheets?
-Symfony provides the ``asset`` function to deal with them easily:
+Symfony provides the ``asset()`` function to deal with them easily:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 
     <img src="{{ asset('images/logo.png') }}" />
 
 The ``asset()`` function looks for the web assets inside the ``web/`` directory.
-If you store them in another directory, read :doc:`this article </cookbook/assetic/asset_management>`
+If you store them in another directory, read
+:doc:`this article </cookbook/assetic/asset_management>`
 to learn how to manage web assets.
 
-Using the ``asset`` function, your application is more portable. The reason
+Using the ``asset()`` function, your application is more portable. The reason
 is that you can move the application root directory anywhere under your
 web root directory without changing anything in your template's code.
 
@@ -285,5 +285,5 @@ But I'm getting ahead of myself. First, you need to learn more about the
 controller and that's exactly the topic of the :doc:`next part of this tutorial
 <the_controller>`. Ready for another 10 minutes with Symfony?
 
-.. _Twig: http://twig.sensiolabs.org/
-.. _Twig documentation: http://twig.sensiolabs.org/documentation
+.. _`Twig`: http://twig.sensiolabs.org/
+.. _`Twig documentation`: http://twig.sensiolabs.org/documentation

@@ -13,7 +13,7 @@ For example, one common problem in this situation involves checking for flash
 messages, which are stored in the session. The following code would guarantee
 that a session is *always* started:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="flash-notice">
@@ -27,7 +27,7 @@ start a session. This may hurt your application performance because all users wi
 receive a session cookie. To avoid this behavior, add a check before trying to
 access the flash messages:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% if app.request.hasPreviousSession %}
         {% for flashMessage in app.session.flashbag.get('notice') %}

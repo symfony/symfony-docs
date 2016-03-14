@@ -49,9 +49,11 @@ which are basically nodes that you can traverse easily::
         var_dump($domElement->nodeName);
     }
 
-Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
+Specialized :class:`Symfony\\Component\\DomCrawler\\Link`,
+:class:`Symfony\\Component\\DomCrawler\\Image` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
-interacting with html links and forms as you traverse through the HTML tree.
+interacting with html links, images and forms as you traverse through the HTML
+tree.
 
 .. note::
 
@@ -87,7 +89,7 @@ Anonymous function can be used to filter with more complex criteria::
     $crawler = $crawler
         ->filter('body > p')
         ->reduce(function (Crawler $node, $i) {
-            // filter even nodes
+            // filter every other node
             return ($i % 2) == 0;
         });
 
@@ -190,10 +192,6 @@ Get all the child or parent nodes::
 Accessing Node Values
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The :method:`Symfony\\Component\\DomCrawler\\Crawler::nodeName`
-    method was introduced in Symfony 2.6.
-
 Access the node name (HTML tag name) of the first node of the current selection (eg. "p" or "div")::
 
     // will return the node name (HTML tag name) of the first child element under <body>
@@ -226,11 +224,6 @@ Call an anonymous function on each node of the list::
     $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
-
-.. versionadded:: 2.3
-    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
-    are passed a ``Crawler`` as the first argument. Previously, that argument
-    was a :phpclass:`DOMNode`.
 
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
@@ -298,19 +291,11 @@ and :phpclass:`DOMNode` objects:
 
         $html = $crawler->html();
 
-    The ``html`` method is new in Symfony 2.3.
-
-    .. caution::
-
-        Due to an issue in PHP, the ``html()`` method returns wrongly decoded HTML
-        entities in PHP versions lower than 5.3.6 (for example, it returns ``•``
-        instead of ``&bull;``).
-
 Links
 ~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
-the ``selectLink`` method on an existing crawler. This returns a Crawler
+the ``selectLink`` method on an existing crawler. This returns a ``Crawler``
 instance with just the selected link(s). Calling ``link()`` gives you a special
 :class:`Symfony\\Component\\DomCrawler\\Link` object::
 
@@ -333,6 +318,23 @@ methods to get more information about the selected link itself::
     link with ``href="#foo"``, this would return the full URI of the current
     page suffixed with ``#foo``. The return from ``getUri()`` is always a full
     URI that you can act on.
+
+Images
+~~~~~~
+
+To find an image by its ``alt`` attribute, use the ``selectImage`` method on an
+existing crawler. This returns a ``Crawler`` instance with just the selected
+image(s). Calling ``image()`` gives you a special
+:class:`Symfony\\Component\\DomCrawler\\Image` object::
+
+    $imagesCrawler = $crawler->selectImage('Kitten');
+    $image = $imagesCrawler->image();
+
+    // or do this all at once
+    $image = $crawler->selectImage('Kitten')->image();
+
+The :class:`Symfony\\Component\\DomCrawler\\Image` object has the same
+``getUri()`` method as :class:`Symfony\\Component\\DomCrawler\\Link`.
 
 Forms
 ~~~~~

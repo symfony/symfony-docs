@@ -35,8 +35,8 @@ method.
 
 This is how your ``WebserviceUser`` class looks in action::
 
-    // src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
-    namespace Acme\WebserviceUserBundle\Security\User;
+    // src/AppBundle/Security/User/WebserviceUser.php
+    namespace AppBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -120,8 +120,8 @@ more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProvider
 
 Here's an example of how this might look::
 
-    // src/Acme/WebserviceUserBundle/Security/User/WebserviceUserProvider.php
-    namespace Acme\WebserviceUserBundle\Security\User;
+    // src/AppBundle/Security/User/WebserviceUserProvider.php
+    namespace AppBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -162,7 +162,7 @@ Here's an example of how this might look::
 
         public function supportsClass($class)
         {
-            return $class === 'Acme\WebserviceUserBundle\Security\User\WebserviceUser';
+            return $class === 'AppBundle\Security\User\WebserviceUser';
         }
     }
 
@@ -177,8 +177,8 @@ Now you make the user provider available as a service:
 
         # app/config/services.yml
         services:
-            webservice_user_provider:
-                class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
+            app.webservice_user_provider:
+                class: AppBundle\Security\User\WebserviceUserProvider
 
     .. code-block:: xml
 
@@ -190,8 +190,8 @@ Now you make the user provider available as a service:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="webservice_user_provider"
-                    class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider"
+                <service id="app.webservice_user_provider"
+                    class="AppBundle\Security\User\WebserviceUserProvider"
                 />
             </services>
         </container>
@@ -202,8 +202,8 @@ Now you make the user provider available as a service:
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setDefinition(
-            'webservice_user_provider',
-            new Definition('Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider')
+            'app.webservice_user_provider',
+            new Definition('AppBundle\Security\User\WebserviceUserProvider')
         );
 
 .. tip::
@@ -222,7 +222,7 @@ Modify ``security.yml``
 
 Everything comes together in your security configuration. Add the user provider
 to the list of providers in the "security" section. Choose a name for the user provider
-(e.g. "webservice") and mention the id of the service you just defined.
+(e.g. "webservice") and mention the ``id`` of the service you just defined.
 
 .. configuration-block::
 
@@ -234,7 +234,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
             providers:
                 webservice:
-                    id: webservice_user_provider
+                    id: app.webservice_user_provider
 
     .. code-block:: xml
 
@@ -249,7 +249,7 @@ to the list of providers in the "security" section. Choose a name for the user p
             <config>
                 <!-- ... -->
 
-                <provider name="webservice" id="webservice_user_provider" />
+                <provider name="webservice" id="app.webservice_user_provider" />
             </config>
         </srv:container>
 
@@ -261,7 +261,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
             'providers' => array(
                 'webservice' => array(
-                    'id' => 'webservice_user_provider',
+                    'id' => 'app.webservice_user_provider',
                 ),
             ),
         ));
@@ -279,7 +279,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
             # ...
 
             encoders:
-                Acme\WebserviceUserBundle\Security\User\WebserviceUser: sha512
+                AppBundle\Security\User\WebserviceUser: bcrypt
 
     .. code-block:: xml
 
@@ -294,9 +294,8 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
             <config>
                 <!-- ... -->
 
-                <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
-                    algorithm="sha512"
-                />
+                <encoder class="AppBundle\Security\User\WebserviceUser"
+                    algorithm="bcrypt" />
             </config>
         </srv:container>
 
@@ -307,16 +306,15 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
             // ...
 
             'encoders' => array(
-                'Acme\WebserviceUserBundle\Security\User\WebserviceUser' => 'sha512',
+                'AppBundle\Security\User\WebserviceUser' => 'bcrypt',
             ),
+            // ...
         ));
 
 The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
-a user submits their password, the salt value is appended to the password and
-then encoded using this algorithm before being compared to the hashed password
-returned by your ``getPassword()`` method. Additionally, depending on your
-options, the password may be encoded multiple times and encoded to base64.
+a user submits their password, it's encoded using this algorithm and the result
+is compared to the hashed password returned by your ``getPassword()`` method.
 
 .. sidebar:: Specifics on how Passwords are Encoded
 
@@ -324,19 +322,19 @@ options, the password may be encoded multiple times and encoded to base64.
     before comparing it to your encoded password. If ``getSalt()`` returns
     nothing, then the submitted password is simply encoded using the algorithm
     you specify in ``security.yml``. If a salt *is* specified, then the following
-    value is created and *then* hashed via the algorithm:
+    value is created and *then* hashed via the algorithm::
 
-        ``$password.'{'.$salt.'}';``
+        $password.'{'.$salt.'}'
 
     If your external users have their passwords salted via a different method,
     then you'll need to do a bit more work so that Symfony properly encodes
     the password. That is beyond the scope of this entry, but would include
-    sub-classing ``MessageDigestPasswordEncoder`` and overriding the ``mergePasswordAndSalt``
-    method.
+    sub-classing ``MessageDigestPasswordEncoder`` and overriding the
+    ``mergePasswordAndSalt`` method.
 
-    Additionally, the hash, by default, is encoded multiple times and encoded
-    to base64. For specific details, see `MessageDigestPasswordEncoder`_.
-    To prevent this, configure it in your configuration file:
+    Additionally, you can configure the details of the algorithm used to hash
+    passwords. In this example, the application sets explicitly the cost of
+    the bcrypt hashing:
 
     .. configuration-block::
 
@@ -347,10 +345,9 @@ options, the password may be encoded multiple times and encoded to base64.
                 # ...
 
                 encoders:
-                    Acme\WebserviceUserBundle\Security\User\WebserviceUser:
-                        algorithm: sha512
-                        encode_as_base64: false
-                        iterations: 1
+                    AppBundle\Security\User\WebserviceUser:
+                        algorithm: bcrypt
+                        cost: 12
 
         .. code-block:: xml
 
@@ -365,11 +362,9 @@ options, the password may be encoded multiple times and encoded to base64.
                 <config>
                     <!-- ... -->
 
-                    <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
-                        algorithm="sha512"
-                        encode-as-base64="false"
-                        iterations="1"
-                    />
+                    <encoder class="AppBundle\Security\User\WebserviceUser"
+                        algorithm="bcrypt"
+                        cost="12" />
                 </config>
             </srv:container>
 
@@ -380,10 +375,9 @@ options, the password may be encoded multiple times and encoded to base64.
                 // ...
 
                 'encoders' => array(
-                    'Acme\WebserviceUserBundle\Security\User\WebserviceUser' => array(
-                        'algorithm'         => 'sha512',
-                        'encode_as_base64'  => false,
-                        'iterations'        => 1,
+                    'AppBundle\Security\User\WebserviceUser' => array(
+                        'algorithm' => 'bcrypt',
+                        'cost' => 12,
                     ),
                 ),
             ));

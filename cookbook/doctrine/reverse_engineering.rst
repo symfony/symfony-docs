@@ -59,7 +59,7 @@ table fields.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mapping:import --force AcmeBlogBundle xml
+    $ php bin/console doctrine:mapping:import --force AcmeBlogBundle xml
 
 This command line tool asks Doctrine to introspect the database and generate
 the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine``
@@ -92,17 +92,18 @@ entity classes by executing the following two commands.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mapping:convert annotation ./src
-    $ php app/console doctrine:generate:entities AcmeBlogBundle
+    $ php bin/console doctrine:mapping:convert annotation ./src
+    $ php bin/console doctrine:generate:entities AcmeBlogBundle
 
 The first command generates entity classes with annotation mappings. But
 if you want to use YAML or XML mapping instead of annotations, you should
 execute the second command only.
 
-.. tip::
+.. caution::
 
-    If you want to use annotations, you can safely delete the XML (or YAML) files
-    after running these two commands.
+    If you want to use annotations, you must remove the XML (or YAML) files
+    after running these two commands. This is necessary as
+    :ref:`it is not possible to mix mapping configuration formats <book-doctrine-adding-mapping>`
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 

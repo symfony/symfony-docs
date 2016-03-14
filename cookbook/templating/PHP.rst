@@ -94,7 +94,7 @@ You can also use the `@Template`_ shortcut to render the default
             $this->render('AppBundle:Default:index.html.twig');
         }
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# inside a Twig template, namespaced templates work as expected #}
         {{ include('@App/Default/index.html.twig') }}
@@ -306,11 +306,11 @@ updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view['router']->generate('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?php echo $view['router']->path('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
-The ``generate()`` method takes the route name and an array of parameters as
+The ``path()`` method takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:

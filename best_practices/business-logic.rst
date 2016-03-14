@@ -21,6 +21,8 @@ Inside here, you can create whatever directories you want to organize things:
     │  └─ AppBundle/
     │     └─ Utils/
     │        └─ MyClass.php
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
@@ -40,6 +42,8 @@ and put things there:
     │  │   └─ Utils/
     │  │      └─ MyClass.php
     │  └─ AppBundle/
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
@@ -145,7 +149,7 @@ the class namespace as a parameter:
 
     services:
         app.slugger:
-            class: "%slugger.class%"
+            class: '%slugger.class%'
 
 This practice is cumbersome and completely unnecessary for your own services:
 
@@ -193,7 +197,7 @@ The three entities defined by our sample blog application are a good example:
 Doctrine Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine Entities are plain PHP objects that you store in some "database".
+Doctrine entities are plain PHP objects that you store in some "database".
 Doctrine only knows about your entities through the mapping metadata configured
 for your model classes. Doctrine supports four metadata formats: YAML, XML,
 PHP and annotations.
@@ -318,7 +322,7 @@ command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:fixtures:load
+    $ php bin/console doctrine:fixtures:load
 
     Careful, database will be purged. Do you want to continue Y/N ? Y
       > purging database

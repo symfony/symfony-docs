@@ -63,14 +63,14 @@ The service config for these classes would look something like this:
             newsletter_manager:
                 class: NewsletterManager
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
             greeting_card_manager:
-                class: "GreetingCardManager"
+                class: 'GreetingCardManager'
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
     .. code-block:: xml
 
@@ -192,8 +192,8 @@ a parent for a service.
             mail_manager:
                 abstract:  true
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
             newsletter_manager:
                 class:  "NewsletterManager"
@@ -277,8 +277,7 @@ called when the child services are instantiated.
 
 .. caution::
 
-   The ``scope``, ``abstract`` and ``tags`` attributes are always taken
-   from the child service.
+   The ``abstract`` and ``tags`` attributes are always taken from the child service.
 
 The parent service is abstract as it should not be directly retrieved from
 the container or passed into another service. It exists merely as a "template"
@@ -320,17 +319,17 @@ to the ``NewsletterManager`` class, the config would look like this:
             mail_manager:
                 abstract: true
                 calls:
-                    - [setMailer, ["@my_mailer"]]
-                    - [setEmailFormatter, ["@my_email_formatter"]]
+                    - [setMailer, ['@my_mailer']]
+                    - [setEmailFormatter, ['@my_email_formatter']]
 
             newsletter_manager:
-                class:  "NewsletterManager"
+                class:  'NewsletterManager'
                 parent: mail_manager
                 calls:
-                    - [setMailer, ["@my_alternative_mailer"]]
+                    - [setMailer, ['@my_alternative_mailer']]
 
             greeting_card_manager:
-                class:  "GreetingCardManager"
+                class:  'GreetingCardManager'
                 parent: mail_manager
 
     .. code-block:: xml

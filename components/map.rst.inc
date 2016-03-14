@@ -4,6 +4,10 @@
 
   * :doc:`/components/asset/introduction`
 
+* :doc:`/components/browser_kit/index`
+
+  * :doc:`/components/browser_kit/introduction`
+
 * :doc:`/components/class_loader/index`
 
   * :doc:`/components/class_loader/introduction`
@@ -46,6 +50,7 @@
   * :doc:`/components/dependency_injection/types`
   * :doc:`/components/dependency_injection/parameters`
   * :doc:`/components/dependency_injection/definitions`
+  * :doc:`/components/dependency_injection/autowiring`
   * :doc:`/components/dependency_injection/synthetic_services`
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
@@ -110,6 +115,10 @@
 * **OptionsResolver**
 
   * :doc:`/components/options_resolver`
+
+* **PHPUnitBridge**
+
+  * :doc:`/components/phpunit_bridge`
 
 * **Process**
 

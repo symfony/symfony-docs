@@ -164,7 +164,7 @@ file:
         # app/config/config.yml
         framework:
             # ...
-            router: { resource: "%kernel.root_dir%/config/routing.yml" }
+            router: { resource: '%kernel.root_dir%/config/routing.yml' }
 
     .. code-block:: xml
 
@@ -812,10 +812,10 @@ Adding HTTP Method Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the URL, you can also match on the *method* of the incoming
-request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you have a contact form
-with two controllers - one for displaying the form (on a GET request) and one
-for processing the form when it's submitted (on a POST request). This can
-be accomplished with the following route configuration:
+request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you create an API for
+your blog and you have 2 routes: One for displaying a post (on a GET or HEAD
+request) and one for updating a post (on a PUT request). This can be
+accomplished with the following route configuration:
 
 .. configuration-block::
 
@@ -827,39 +827,39 @@ be accomplished with the following route configuration:
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
         // ...
 
-        class MainController extends Controller
+        class BlogApiController extends Controller
         {
             /**
-             * @Route("/news")
-             * @Method("GET")
+             * @Route("/api/posts/{id}")
+             * @Method({"GET","HEAD"})
              */
-            public function newsAction()
+            public function showAction($id)
             {
-                // ... display your news
+                // ... return a JSON response with the post
             }
 
             /**
-             * @Route("/contact")
-             * @Method({"GET", "POST"})
+             * @Route("/api/posts/{id}")
+             * @Method("PUT")
              */
-            public function contactFormAction()
+            public function editAction($id)
             {
-                // ... display and process a contact form
+                // ... edit a post
             }
         }
 
     .. code-block:: yaml
 
         # app/config/routing.yml
-        news:
-            path:     /news
-            defaults: { _controller: AppBundle:Main:news }
-            methods:  [GET]
+        api_post_show:
+            path:     /api/posts/{id}
+            defaults: { _controller: AppBundle:BlogApi:show }
+            methods:  [GET, HEAD]
 
-        contact_form:
-            path:     /contact
-            defaults: { _controller: AppBundle:Main:contactForm }
-            methods:  [GET, POST]
+        api_post_edit:
+            path:     /api/posts/{id}
+            defaults: { _controller: AppBundle:BlogApi:edit }
+            methods:  [PUT]
 
     .. code-block:: xml
 
@@ -870,12 +870,12 @@ be accomplished with the following route configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="news" path="/news" methods="GET">
-                <default key="_controller">AppBundle:Main:news</default>
+            <route id="api_post_show" path="/api/posts/{id}" methods="GET|HEAD">
+                <default key="_controller">AppBundle:BlogApi:show</default>
             </route>
 
-            <route id="contact_form" path="/contact" methods="GET|POST">
-                <default key="_controller">AppBundle:Main:contactForm</default>
+            <route id="api_post_edit" path="/api/posts/{id}" methods="PUT">
+                <default key="_controller">AppBundle:BlogApi:edit</default>
             </route>
         </routes>
 
@@ -886,20 +886,21 @@ be accomplished with the following route configuration:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('news', new Route('/news', array(
-            '_controller' => 'AppBundle:Main:contact',
-        ), array(), array(), '', array(), array('GET')));
+        $collection->add('api_post_show', new Route('/api/posts/{id}', array(
+            '_controller' => 'AppBundle:BlogApi:show',
+        ), array(), array(), '', array(), array('GET', 'HEAD')));
 
-        $collection->add('contact_form', new Route('/contact', array(
-            '_controller' => 'AppBundle:Main:contactForm',
-        ), array(), array(), '', array(), array('GET', 'POST')));
+        $collection->add('api_post_edit', new Route('/api/posts/{id}', array(
+            '_controller' => 'AppBundle:BlogApi:edit',
+        ), array(), array(), '', array(), array('PUT')));
 
         return $collection;
 
-Despite the fact that these two routes have identical paths (``/contact``),
-the first route will match only GET requests and the second route will match
-only POST requests. This means that you can display the form and submit the
-form via the same URL, while using distinct controllers for the two actions.
+Despite the fact that these two routes have identical paths
+(``/api/posts/{id}``), the first route will match only GET or HEAD requests and
+the second route will match only PUT requests. This means that you can display
+and edit the post with the same URL, while using distinct controllers for the
+two actions.
 
 .. note::
 
@@ -1104,12 +1105,20 @@ a slash. URLs matching this route might look like:
 
     This example also highlights the special ``_format`` routing parameter.
     When using this parameter, the matched value becomes the "request format"
-    of the ``Request`` object. Ultimately, the request format is used for such
-    things as setting the ``Content-Type`` of the response (e.g. a ``json``
-    request format translates into a ``Content-Type`` of ``application/json``).
-    It can also be used in the controller to render a different template for
-    each value of ``_format``. The ``_format`` parameter is a very powerful way
-    to render the same content in different formats.
+    of the ``Request`` object.
+
+    Ultimately, the request format is used for such things as setting the
+    ``Content-Type`` of the response (e.g. a ``json`` request format translates
+    into a ``Content-Type`` of ``application/json``). It can also be used in the
+    controller to render a different template for each value of ``_format``.
+    The ``_format`` parameter is a very powerful way to render the same content
+    in different formats.
+
+    In Symfony versions previous to 3.0, it is possible to override the request
+    format by adding a query parameter named ``_format`` (for example:
+    ``/foo/bar?_format=json``). Relying on this behavior not only is considered
+    a bad practice but it will complicate the upgrade of your applications to
+    Symfony 3.
 
 .. note::
 
@@ -1178,9 +1187,9 @@ Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
 
 You could also refer to this controller using its fully-qualified class name
-and method: ``AppBundle\Controller\BlogController::showAction``.
-But if you follow some simple conventions, the logical name is more concise
-and allows more flexibility.
+and method: ``AppBundle\Controller\BlogController::showAction``. But if you
+follow some simple conventions, the logical name is more concise and allows
+more flexibility.
 
 .. note::
 
@@ -1249,7 +1258,7 @@ configuration:
 
         # app/config/routing.yml
         app:
-            resource: "@AppBundle/Controller/"
+            resource: '@AppBundle/Controller/'
             type:     annotation # required to enable the Annotation reader for this resource
 
     .. code-block:: xml
@@ -1300,7 +1309,7 @@ directory are parsed and put into the routing.
 
             # app/config/routing.yml
             app:
-                resource: "@AcmeOtherBundle/Resources/config/routing.yml"
+                resource: '@AcmeOtherBundle/Resources/config/routing.yml'
 
         .. code-block:: xml
 
@@ -1339,7 +1348,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
         # app/config/routing.yml
         app:
-            resource: "@AppBundle/Controller/"
+            resource: '@AppBundle/Controller/'
             type:     annotation
             prefix:   /site
 
@@ -1393,10 +1402,7 @@ the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php app/console debug:router
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``router:debug``.
+    $ php bin/console debug:router
 
 This command will print a helpful list of *all* the configured routes in
 your application:
@@ -1415,14 +1421,14 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php app/console debug:router article_show
+    $ php bin/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:
 
 .. code-block:: bash
 
-    $ php app/console router:match /blog/my-latest-post
+    $ php bin/console router:match /blog/my-latest-post
 
 This command will print which route the URL matches.
 
@@ -1473,25 +1479,14 @@ route. With this information, any URL can easily be generated::
 
 .. note::
 
-    In controllers that don't extend Symfony's base
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`,
-    you can use the ``router`` service's
-    :method:`Symfony\\Component\\Routing\\Router::generate` method::
+    The ``generateUrl()`` method defined in the base
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class is
+    just a shortcut for this code::
 
-        use Symfony\Component\DependencyInjection\ContainerAware;
-
-        class MainController extends ContainerAware
-        {
-            public function showAction($slug)
-            {
-                // ...
-
-                $url = $this->container->get('router')->generate(
-                    'blog_show',
-                    array('slug' => 'my-blog-post')
-                );
-            }
-        }
+        $url = $this->container->get('router')->generate(
+            'blog_show',
+            array('slug' => 'my-blog-post')
+        );
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
@@ -1534,7 +1529,7 @@ a template helper function:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ path('blog_show', {'slug': 'my-blog-post'}) }}">
           Read this blog post.
@@ -1542,7 +1537,7 @@ a template helper function:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('blog_show', array(
+        <a href="<?php echo $view['router']->path('blog_show', array(
             'slug' => 'my-blog-post',
         )) ?>">
             Read this blog post.
@@ -1555,19 +1550,20 @@ Generating Absolute URLs
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the router will generate relative URLs (e.g. ``/blog``). From
-a controller, simply pass ``true`` to the third argument of the ``generateUrl()``
+a controller, simply pass ``UrlGeneratorInterface::ABSOLUTE_URL`` to the third argument of the ``generateUrl()``
 method::
 
-    $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), true);
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+    $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), UrlGeneratorInterface::ABSOLUTE_URL);
     // http://www.example.com/blog/my-blog-post
 
-From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
-rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
-to ``generate()``:
+From a template, simply use the ``url()`` function (which generates an absolute
+URL) rather than the ``path()`` function (which generates a relative URL):
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ url('blog_show', {'slug': 'my-blog-post'}) }}">
           Read this blog post.
@@ -1575,9 +1571,9 @@ to ``generate()``:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('blog_show', array(
+        <a href="<?php echo $view['router']->url('blog_show', array(
             'slug' => 'my-blog-post',
-        ), true) ?>">
+        )) ?>">
             Read this blog post.
         </a>
 
@@ -1586,7 +1582,7 @@ to ``generate()``:
     The host that's used when generating an absolute URL is automatically
     detected using the current ``Request`` object. When generating absolute
     URLs from outside the web context (for instance in a console command) this
-    doesn't work. See :doc:`/cookbook/console/sending_emails` to learn how to
+    doesn't work. See :doc:`/cookbook/console/request_context` to learn how to
     solve this problem.
 
 Summary
@@ -1602,5 +1598,12 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/routing/scheme`
+* :doc:`/cookbook/routing/slash_in_parameter`
+* :doc:`/cookbook/routing/redirect_in_config`
+* :doc:`/cookbook/routing/method_parameters`
+* :doc:`/cookbook/routing/service_container_parameters`
+* :doc:`/cookbook/routing/custom_route_loader`
+* :doc:`/cookbook/routing/redirect_trailing_slash`
+* :doc:`/cookbook/routing/extra_information`
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

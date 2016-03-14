@@ -32,7 +32,7 @@ service will get a "service does not exist" error).
 In order to do so, you have to use
 :method:`Definition::setSynthetic() <Symfony\\Component\\DependencyInjection\\Definition::setSynthetic>`::
 
-    use Symfony\Component\DependencyInjectino\Definition;
+    use Symfony\Component\DependencyInjection\Definition;
 
     // synthetic services don't specify a class
     $kernelDefinition = new Definition();

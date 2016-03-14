@@ -108,26 +108,26 @@ via the ``config:dump-reference`` command:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference AsseticBundle
+    $ bin/console config:dump-reference AsseticBundle
 
 Instead of the full bundle name, you can also pass the short name used as the root
 of the bundle's configuration:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference assetic
+    $ bin/console config:dump-reference assetic
 
 The output will look like this:
 
 .. code-block:: text
 
     assetic:
-        debug:                %kernel.debug%
+        debug:                '%kernel.debug%'
         use_controller:
-            enabled:              %kernel.debug%
+            enabled:              '%kernel.debug%'
             profiler:             false
-        read_from:            %kernel.root_dir%/../web
-        write_to:             %assetic.read_from%
+        read_from:            '%kernel.root_dir%/../web'
+        write_to:             '%assetic.read_from%'
         java:                 /usr/bin/java
         node:                 /usr/local/bin/node
         node_paths:           []

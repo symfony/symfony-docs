@@ -342,7 +342,7 @@ The end user can provide values in any configuration file:
 
         # app/config/config.yml
         parameters:
-            acme_blog.author.email: fabien@example.com
+            acme_blog.author.email: 'fabien@example.com'
 
     .. code-block:: xml
 
@@ -412,55 +412,6 @@ The ``composer.json`` file should include at least the following metadata:
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
-
-Custom Validation Constraints
------------------------------
-
-Starting with Symfony 2.5, a new Validation API was introduced. In fact,
-there are 3 modes, which the user can configure in their project:
-
-* 2.4: the original 2.4 and earlier validation API;
-* 2.5: the new 2.5 and later validation API;
-* 2.5-BC: the new 2.5 API with a backwards-compatible layer so that the
-  2.4 API still works. This is only available in PHP 5.3.9+.
-
-.. note::
-
-    Starting with Symfony 2.7, the support for the 2.4 API has been
-    dropped and the minimal PHP version required for Symfony was
-    increased to 5.3.9. If your bundles requires Symfony >=2.7, you
-    don't need to take care about the 2.4 API anymore.
-
-As a bundle author, you'll want to support *both* API's, since some users
-may still be using the 2.4 API. Specifically, if your bundle adds a violation
-directly to the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContext`
-(e.g. like in a custom validation constraint), you'll need to check for which
-API is being used. The following code, would work for *all* users::
-
-    use Symfony\Component\Validator\ConstraintValidator;
-    use Symfony\Component\Validator\Constraint;
-    use Symfony\Component\Validator\Context\ExecutionContextInterface;
-    // ...
-
-    class ContainsAlphanumericValidator extends ConstraintValidator
-    {
-        public function validate($value, Constraint $constraint)
-        {
-            if ($this->context instanceof ExecutionContextInterface) {
-                // the 2.5 API
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('%string%', $value)
-                    ->addViolation()
-                ;
-            } else {
-                // the 2.4 API
-                $this->context->addViolation(
-                    $constraint->message,
-                    array('%string%' => $value)
-                );
-            }
-        }
-    }
 
 Learn more from the Cookbook
 ----------------------------

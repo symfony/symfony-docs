@@ -41,7 +41,6 @@ dependency as follows:
 
     {
         "require": {
-            // ...
             "symfony/symfony" : "2.7.*@dev"
         }
     }

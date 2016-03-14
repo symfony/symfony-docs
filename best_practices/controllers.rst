@@ -43,7 +43,7 @@ configuration to the main routing configuration file:
 
     # app/config/routing.yml
     app:
-        resource: "@AppBundle/Controller/"
+        resource: '@AppBundle/Controller/'
         type:     annotation
 
 This configuration will load annotations from any controller stored inside the
@@ -73,7 +73,7 @@ Template Configuration
 
 .. best-practice::
 
-    Don't use the ``@Template()`` annotation to configure the template used by
+    Don't use the ``@Template`` annotation to configure the template used by
     the controller.
 
 The ``@Template`` annotation is useful, but also involves some magic. We
@@ -148,7 +148,7 @@ For example:
         ));
     }
 
-Normally, you'd expect a ``$id`` argument to ``showAction``. Instead, by
+Normally, you'd expect a ``$id`` argument to ``showAction()``. Instead, by
 creating a new argument (``$post``) and type-hinting it with the ``Post``
 class (which is a Doctrine entity), the ParamConverter automatically queries
 for an object whose ``$id`` property matches the ``{id}`` value. It will
@@ -157,7 +157,7 @@ also show a 404 page if no ``Post`` can be found.
 When Things Get More Advanced
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This works without any configuration because the wildcard name ``{id}`` matches
+The above example works without any configuration because the wildcard name ``{id}`` matches
 the name of the property on the entity. If this isn't true, or if you have
 even more complex logic, the easiest thing to do is just query for the entity
 manually. In our application, we have this situation in ``CommentController``:

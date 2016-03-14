@@ -125,6 +125,12 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
     Returns the alphabetic characters and digits of the parameter value;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
+    Returns the parameter value converted to boolean;
+
+    .. versionadded:: 2.6
+        The ``getBoolean()`` method was introduced in Symfony 2.6.
+
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
@@ -134,7 +140,7 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
-All getters takes up to three arguments: the first one is the parameter name
+All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
 
@@ -151,11 +157,7 @@ exist::
 
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element. But
-sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
-:method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
-argument::
+``foo`` parameter and you will get back an array with a ``bar`` element::
 
     // the query string is '?foo[bar]=bar'
 
@@ -163,10 +165,7 @@ argument::
     // returns array('bar' => 'bar')
 
     $request->query->get('foo[bar]');
-    // returns null
-
-    $request->query->get('foo[bar]', null, true);
-    // returns 'bar'
+    // returns null   
 
 .. _component-foundation-attributes:
 
@@ -254,9 +253,6 @@ by using the following methods:
 
 :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
     Returns the list of accepted encodings ordered by descending quality.
-
-    .. versionadded:: 2.4
-        The ``getEncodings()`` method was introduced in Symfony 2.4.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
@@ -511,9 +507,6 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
         'filename.txt'
     );
-
-.. versionadded:: 2.6
-    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
 
 It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.

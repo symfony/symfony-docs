@@ -57,7 +57,7 @@ But Symfony packages an even more powerful templating language called `Twig`_.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <!DOCTYPE html>
     <html>
@@ -94,7 +94,7 @@ Twig also contains **filters**, which modify content before being rendered.
 The following makes the ``title`` variable all uppercase before rendering
 it:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ title|upper }}
 
@@ -111,7 +111,7 @@ and new functions can be easily added. For example, the following uses a
 standard ``for`` tag and the ``cycle`` function to print ten div tags, with
 alternating ``odd``, ``even`` classes:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% for i in 0..10 %}
         <div class="{{ cycle(['odd', 'even'], i) }}">
@@ -141,7 +141,7 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     Take the following example, which combines a loop with a logical ``if``
     statement:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <ul>
             {% for user in users if user.active %}
@@ -159,7 +159,7 @@ Twig Template Caching
 
 Twig is fast. Each Twig template is compiled down to a native PHP class
 that is rendered at runtime. The compiled classes are located in the
-``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
+``var/cache/{environment}/twig`` directory (where ``{environment}`` is the
 environment, such as ``dev`` or ``prod``) and in some cases can be useful
 while debugging. See :ref:`environments-summary` for more information on
 environments.
@@ -195,13 +195,13 @@ First, build a base layout file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
         <!DOCTYPE html>
         <html>
             <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta charset="UTF-8">
                 <title>{% block title %}Test Application{% endblock %}</title>
             </head>
             <body>
@@ -226,7 +226,7 @@ First, build a base layout file:
         <!DOCTYPE html>
         <html>
             <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta charset="UTF-8">
                 <title><?php $view['slots']->output('title', 'Test Application') ?></title>
             </head>
             <body>
@@ -263,7 +263,7 @@ A child template might look like this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
@@ -311,7 +311,7 @@ output might look like this:
     <!DOCTYPE html>
     <html>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta charset="UTF-8">
             <title>My cool blog posts</title>
         </head>
         <body>
@@ -360,7 +360,7 @@ When working with template inheritance, here are some tips to keep in mind:
   can use the ``{{ parent() }}`` function. This is useful if you want to add
   to the contents of a parent block instead of completely overriding it:
 
-  .. code-block:: html+jinja
+  .. code-block:: html+twig
 
       {% block sidebar %}
           <h3>Table of Contents</h3>
@@ -513,7 +513,7 @@ template. First, create the template that you'll need to reuse.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/article_details.html.twig #}
         <h2>{{ article.title }}</h2>
@@ -537,7 +537,7 @@ Including this template from any other template is simple:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/list.html.twig #}
         {% extends 'layout.html.twig' %}
@@ -578,10 +578,6 @@ you set `with_context`_ to false).
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
-
-.. versionadded:: 2.3
-    The `include() function`_ is a new Twig feature that's available in Symfony
-    2.3. Prior, the `{% include %} tag`_ tag was used.
 
 .. index::
    single: Templating; Embedding action
@@ -624,7 +620,7 @@ The ``recentList`` template is perfectly straightforward:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
@@ -653,7 +649,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
 
@@ -697,7 +693,7 @@ tags:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ render_hinclude(controller('...')) }}
         {{ render_hinclude(url('...')) }}
@@ -710,7 +706,7 @@ tags:
         ) ?>
 
         <?php echo $view['actions']->render(
-            $view['router']->generate('...'),
+            $view['router']->url('...'),
             array('renderer' => 'hinclude')
         ) ?>
 
@@ -802,7 +798,7 @@ any global default template that is defined):
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ render_hinclude(controller('...'),  {
             'default': 'default/content.html.twig'
@@ -822,7 +818,7 @@ Or you can also specify a string to display as the default content:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
 
@@ -855,6 +851,24 @@ First, link to the "_welcome" page, which is accessible via the following routin
 configuration:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/WelcomeController.php
+
+        // ...
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class WelcomeController extends Controller
+        {
+            /**
+             * @Route("/", name="_welcome")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
@@ -894,18 +908,36 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ path('_welcome') }}">Home</a>
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
+        <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/ArticleController.php
+
+        // ...
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route("/article/{slug}", name="article_show")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
@@ -948,7 +980,7 @@ correctly:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
@@ -961,7 +993,7 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
-            <a href="<?php echo $view['router']->generate('article_show', array(
+            <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
                 <?php echo $article->getTitle() ?>
@@ -970,22 +1002,20 @@ correctly:
 
 .. tip::
 
-    You can also generate an absolute URL by using the ``url`` Twig function:
+    You can also generate an absolute URL by using the ``url`` function:
 
-    .. code-block:: html+jinja
+    .. configuration-block::
 
-        <a href="{{ url('_welcome') }}">Home</a>
+        .. code-block:: html+twig
 
-    The same can be done in PHP templates by passing a third argument to
-    the ``generate()`` method:
+            <a href="{{ url('_welcome') }}">Home</a>
 
-    .. code-block:: html+php
+        .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate(
-            '_welcome',
-            array(),
-            true
-        ) ?>">Home</a>
+            <a href="<?php echo $view['router']->url(
+                '_welcome',
+                array()
+            ) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
@@ -1001,7 +1031,7 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
@@ -1024,13 +1054,13 @@ being used and generating the correct paths accordingly.
 Additionally, if you use the ``asset`` function, Symfony can automatically
 append a query string to your asset, in order to guarantee that updated static
 assets won't be cached when deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
+look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
 configuration option.
 
 .. _`book-templating-version-by-asset`:
 
-If you need to set a version for a specific asset, you can set the fourth
-argument (or the ``version`` argument) to the desired version:
+If you need to set a version for a specific asset, you can set the ``version`` argument
+if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
 
 .. configuration-block::
 
@@ -1048,17 +1078,17 @@ argument (or the ``version`` argument) to the desired version:
         ) ?>" alt="Symfony!" />
 
 If you don't give a version or pass ``null``, the default package version
-(from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
+(from :ref:`reference-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
-If you need absolute URLs for assets, you can set the third argument (or the
-``absolute`` argument) to ``true``:
+If you need absolute URLs for assets, you can use the ``absolute_url`` function
+if you are using Twig (or the third argument if you are using PHP) to ``true``:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        <img src="{{ asset('images/logo.png', absolute=true) }}" alt="Symfony!" />
+        <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
 
     .. code-block:: html+php
 
@@ -1083,9 +1113,9 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and JavaScript assets in Symfony. Symfony also packages another library,
-    called Assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets. For more information on
+    and JavaScript assets in Symfony. Symfony is also compatible with another
+    library, called Assetic, which follows this philosophy but allows you to do
+    much more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
 Start by adding two blocks to your base template that will hold your assets:
@@ -1095,7 +1125,7 @@ stylesheets and JavaScripts that you'll need throughout your site:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
         <html>
@@ -1142,7 +1172,7 @@ page. From inside that contact page's template, do the following:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/contact/contact.html.twig #}
         {% extends 'base.html.twig' %}
@@ -1171,11 +1201,11 @@ should use the ``parent()`` Twig function to include everything from the ``style
 block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
-You will need to run the ``php app/console assets:install target [--symlink]``
+You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which moves (or symlinks) files into the correct location. (target
 is by default "web").
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
@@ -1191,8 +1221,6 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security`` (deprecated as of 2.6)
-    The security context.
 ``app.user``
     The current user object.
 ``app.request``
@@ -1206,7 +1234,7 @@ automatically:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <p>Username: {{ app.user.username }}</p>
         {% if app.debug %}
@@ -1221,12 +1249,6 @@ automatically:
             <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif ?>
-
-.. versionadded:: 2.6
-    The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user``
-    (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
-    instead.
 
 .. tip::
 
@@ -1351,7 +1373,7 @@ to create it). You're now free to customize the template.
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your
-    cache (``php app/console cache:clear``), even if you are in debug mode.
+    cache (``php bin/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in AcmeBlogBundle inherits from a base template called
@@ -1410,7 +1432,7 @@ covered:
   functionality would have a template called ``blog/layout.html.twig`` that
   contains only blog section-specific elements;
 
-  .. code-block:: html+jinja
+  .. code-block:: html+twig
 
       {# app/Resources/views/blog/layout.html.twig #}
       {% extends 'base.html.twig' %}
@@ -1425,7 +1447,7 @@ covered:
   section template. For example, the "index" page would be called something
   close to ``blog/index.html.twig`` and list the actual blog posts.
 
-  .. code-block:: html+jinja
+  .. code-block:: html+twig
 
       {# app/Resources/views/blog/index.html.twig #}
       {% extends 'blog/layout.html.twig' %}
@@ -1462,7 +1484,7 @@ this classic example:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         Hello {{ name }}
 
@@ -1515,7 +1537,7 @@ HTML code. By default, Twig will escape the article body.
 
 To render it normally, add the ``raw`` filter:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ article.body|raw }}
 
@@ -1577,7 +1599,7 @@ for example, inside your controller::
 
 The same mechanism can be used in Twig templates thanks to ``dump`` function:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/article/recent_list.html.twig #}
     {{ dump(articles) }}
@@ -1601,10 +1623,10 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
+    $ php bin/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console lint:twig app/Resources/views
+    $ php bin/console lint:twig app/Resources/views
 
 .. _template-formats:
 
@@ -1648,7 +1670,7 @@ key in the parameter hash:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
             PDF Version
@@ -1656,7 +1678,7 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', array(
+        <a href="<?php echo $view['router']->path('article_show', array(
             'id' => 123,
             '_format' => 'pdf',
         )) ?>">

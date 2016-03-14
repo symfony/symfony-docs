@@ -17,18 +17,17 @@ First, add the following file::
         ));
     }
 
-    require __DIR__.'/bootstrap.php.cache';
+    require __DIR__.'/autoload.php';
 
-Replace the test bootstrap file ``bootstrap.php.cache`` in ``app/phpunit.xml.dist``
+Replace the test bootstrap file ``autoload.php`` in ``phpunit.xml.dist``
 with ``tests.bootstrap.php``:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
 
     <!-- ... -->
     <phpunit
-        ...
         bootstrap = "tests.bootstrap.php"
     >
 
@@ -37,7 +36,7 @@ cache to be cleared:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <php>
         <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
     </php>

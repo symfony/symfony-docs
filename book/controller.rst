@@ -116,8 +116,10 @@ Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony takes advantage of PHP's namespace functionality to
-  namespace the entire controller class. The ``use`` keyword imports the
+* *line 2*: Symfony takes advantage of PHP's namespace functionality to
+  namespace the entire controller class.
+
+* *line 4*: Symfony again takes advantage of PHP's namespace functionality: the ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 
 * *line 6*: The class name is the concatenation of a name for the controller
@@ -436,12 +438,8 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
         return $this->redirectToRoute('homepage');
 
         // redirectToRoute is equivalent to using redirect() and generateUrl() together:
-        // return $this->redirect($this->generateUrl('homepage'), 301);
+        // return $this->redirect($this->generateUrl('homepage'));
     }
-
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
 
 Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
 
@@ -532,10 +530,7 @@ console command:
 
 .. code-block:: bash
 
-    $ php app/console debug:container
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
+    $ php bin/console debug:container
 
 For more information, see the :doc:`/book/service_container` chapter.
 
@@ -610,7 +605,7 @@ from any controller::
         $filters = $session->get('filters', array());
     }
 
-These attributes will remain on the user for the remainder of that user's
+These attributes will remain in the session for the remainder of that user's
 session.
 
 .. index::
@@ -619,12 +614,12 @@ session.
 Flash Messages
 ~~~~~~~~~~~~~~
 
-You can also store small messages that will be stored on the user's session.
-This is useful when processing a form:
-you want to redirect and have a special message shown on the *next* page.
-These types of messages are called "flash" messages.
+You can also store special messages, called "flash" messages, on the user's
+session. By design, flash messages are meant to be used exactly once: they vanish
+from the session automatically as soon as you retrieve them. This feature makes
+"flash" messages particularly great for storing user notifications.
 
-For example, imagine you're processing a form submit::
+For example, imagine you're processing a form submission::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -650,20 +645,20 @@ For example, imagine you're processing a form submit::
         return $this->render(...);
     }
 
-After processing the request, the controller sets a ``notice`` flash message
-in the session and then redirects. The name (``notice``) isn't significant -
-it's just something you invent and reference next.
+After processing the request, the controller sets a flash message in the session
+and then redirects. The message key (``notice`` in this example) can be anything:
+you'll use this key to retrieve the message.
 
-In the template of the next action, the following code could be used to render
-the ``notice`` message:
+In the template of the next page (or even better, in your base layout template),
+read any flash messages from the session:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
-        {% for flashMessage in app.session.flashbag.get('notice') %}
+        {% for flash_message in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
-                {{ flashMessage }}
+                {{ flash_message }}
             </div>
         {% endfor %}
 
@@ -677,9 +672,9 @@ the ``notice`` message:
 
 .. note::
 
-    By design, flash messages are meant to be processed exactly once. This means
-    that they vanish from the session automatically when they are retrieved from
-    the flash bag by calling the ``get()`` method.
+    It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
+    different types of flash messages, but you can use any key that fits your
+    needs.
 
 .. tip::
 
@@ -810,6 +805,25 @@ Just like when creating a controller for a route, the order of the arguments of
 ``name``) with the method argument names (e.g. ``$name``). If you change the
 order of the arguments, Symfony will still pass the correct value to each
 variable.
+
+.. _checking-the-validity-of-a-csrf-token:
+
+Validating a CSRF Token
+-----------------------
+
+Sometimes, you want to use CSRF protection in an action where you don't want to
+use the Symfony Form component. If, for example, you're doing a DELETE action,
+you can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isCsrfTokenValid`
+method to check the CSRF token::
+
+    if ($this->isCsrfTokenValid('token_id', $submittedToken)) {
+        // ... do something, like deleting an object
+    }
+
+    // isCsrfTokenValid() is equivalent to:
+    // $this->get('security.csrf.token_manager')->isTokenValid(
+    //     new \Symfony\Component\Security\Csrf\CsrfToken\CsrfToken('token_id', $token)
+    // );
 
 Final Thoughts
 --------------

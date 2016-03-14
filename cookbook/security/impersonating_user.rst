@@ -75,7 +75,7 @@ to show a link to exit impersonation:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
             <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
@@ -84,11 +84,9 @@ to show a link to exit impersonation:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <a
-                href="<?php echo $view['router']->generate('homepage', array(
-                    '_switch_user' => '_exit',
-                ) ?>"
-            >
+            <a href="<?php echo $view['router']->path('homepage', array(
+                '_switch_user' => '_exit',
+            ) ?>">
                 Exit impersonation
             </a>
         <?php endif ?>

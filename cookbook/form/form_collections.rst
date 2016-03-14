@@ -99,11 +99,6 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
                 'data_class' => 'AppBundle\Entity\Tag',
             ));
         }
-
-        public function getName()
-        {
-            return 'tag';
-        }
     }
 
 With this, you have enough to render a tag form by itself. But since the end
@@ -111,7 +106,7 @@ goal is to allow the tags of a ``Task`` to be modified right inside the task
 form itself, create a form for the ``Task`` class.
 
 Notice that you embed a collection of ``TagType`` forms using the
-:doc:`collection </reference/forms/types/collection>` field type::
+:doc:`CollectionType </reference/forms/types/collection>` field::
 
     // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
@@ -119,6 +114,7 @@ Notice that you embed a collection of ``TagType`` forms using the
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
     class TaskType extends AbstractType
     {
@@ -126,7 +122,9 @@ Notice that you embed a collection of ``TagType`` forms using the
         {
             $builder->add('description');
 
-            $builder->add('tags', 'collection', array('entry_type' => new TagType()));
+            $builder->add('tags', CollectionType::class, array(
+                'entry_type' => TagType::class
+            ));
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -135,14 +133,9 @@ Notice that you embed a collection of ``TagType`` forms using the
                 'data_class' => 'AppBundle\Entity\Task',
             ));
         }
-
-        public function getName()
-        {
-            return 'task';
-        }
     }
 
-In your controller, you'll now initialize a new instance of ``TaskType``::
+In your controller, you'll create a new form from the ``TaskType``::
 
     // src/AppBundle/Controller/TaskController.php
     namespace AppBundle\Controller;
@@ -169,7 +162,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             $task->getTags()->add($tag2);
             // end dummy code
 
-            $form = $this->createForm(new TaskType(), $task);
+            $form = $this->createForm(TaskType::class, $task);
 
             $form->handleRequest($request);
 
@@ -191,7 +184,7 @@ zero tags when first created).
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# src/AppBundle/Resources/views/Task/new.html.twig #}
 
@@ -284,8 +277,8 @@ add the ``allow_add`` option to your collection field::
     {
         $builder->add('description');
 
-        $builder->add('tags', 'collection', array(
-            'entry_type'   => new TagType(),
+        $builder->add('tags', CollectionType::class, array(
+            'entry_type'   => TagType::class,
             'allow_add'    => true,
         ));
     }
@@ -297,7 +290,7 @@ new "tag" forms. To render it, make the following change to your template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
             ...
@@ -325,7 +318,7 @@ new "tag" forms. To render it, make the following change to your template:
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
 
@@ -453,7 +446,7 @@ Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false`
     {
         // ...
 
-        $builder->add('tags', 'collection', array(
+        $builder->add('tags', CollectionType::class, array(
             // ...
             'by_reference' => false,
         ));
@@ -569,7 +562,7 @@ you will learn about next!).
 .. _cookbook-form-collections-remove:
 
 Allowing Tags to be Removed
-----------------------------
+---------------------------
 
 The next step is to allow the deletion of a particular item in the collection.
 The solution is similar to allowing tags to be added.
@@ -583,7 +576,7 @@ Start by adding the ``allow_delete`` option in the form Type::
     {
         // ...
 
-        $builder->add('tags', 'collection', array(
+        $builder->add('tags', CollectionType::class, array(
             // ...
             'allow_delete' => true,
         ));
@@ -696,7 +689,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 $originalTags->add($tag);
             }
 
-            $editForm = $this->createForm(new TaskType(), $task);
+            $editForm = $this->createForm(TaskType::class, $task);
 
             $editForm->handleRequest($request);
 

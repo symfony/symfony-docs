@@ -16,7 +16,7 @@ the application assets are in one location.
 Templates also benefit from centralizing your assets, because the links are
 much more concise:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
@@ -34,6 +34,8 @@ much more concise:
 
 Using Assetic
 -------------
+
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
 
 These days, you probably can't simply create static CSS and JavaScript files
 and include them in your template. Instead, you'll probably want to combine
@@ -54,7 +56,7 @@ of compiling assets developed with a lot of different frontend technologies
 like LESS, Sass and CoffeeScript. Combining all your assets with Assetic is a
 matter of wrapping all the assets with a single Twig tag:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% stylesheets
         'css/bootstrap.min.css'

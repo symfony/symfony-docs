@@ -11,7 +11,7 @@ There should be an easier way, right?
 
 Enter the ``HttpKernel`` class. Instead of solving the same problem over and
 over again and instead of reinventing the wheel each time, the ``HttpKernel``
-class is a generic, extensible, and flexible implementation of
+class is a generic, extensible and flexible implementation of
 ``HttpKernelInterface``.
 
 This class is very similar to the framework class we have written so far: it
@@ -23,7 +23,6 @@ feedback when a problem arises.
 Here is the new framework code::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\HttpKernel\HttpKernel;
@@ -35,7 +34,6 @@ Here is the new framework code::
 And the new front controller::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -79,13 +77,14 @@ thrown ``Exception`` instance to ease exception manipulation and display. It
 can take any valid controller as an exception handler, so you can create an
 ErrorController class instead of using a Closure::
 
-    $listener = new HttpKernel\EventListener\ExceptionListener('Calendar\\Controller\\ErrorController::exceptionAction');
+    $listener = new HttpKernel\EventListener\ExceptionListener(
+        'Calendar\\Controller\\ErrorController::exceptionAction'
+    );
     $dispatcher->addSubscriber($listener);
 
 The error controller reads as follows::
 
     // example.com/src/Calendar/Controller/ErrorController.php
-
     namespace Calendar\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -148,7 +147,6 @@ is to convert the controller return value to a proper Response instance, but
 only if needed::
 
     // example.com/src/Simplex/StringResponseListener.php
-
     namespace Simplex;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

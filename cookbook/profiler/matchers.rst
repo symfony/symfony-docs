@@ -102,11 +102,6 @@ matcher::
         }
     }
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface` was
-    introduced in Symfony 2.6. Prior, you had to use the ``isGranted`` method of
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 Then, configure a new service and set it as ``private`` because the application
 won't use it directly:
 
@@ -118,7 +113,7 @@ won't use it directly:
         services:
             app.super_admin_matcher:
                 class: AppBundle\Profiler\SuperAdminMatcher
-                arguments: ["@security.authorization_checker"]
+                arguments: ['@security.authorization_checker']
                 public: false
 
     .. code-block:: xml
@@ -143,10 +138,6 @@ won't use it directly:
         $definition->setPublic(false);
 
         $container->setDefinition('app.super_admin_matcher', $definition);
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 Once the service is registered, the only thing left to do is configure the
 profiler to use this service as the matcher:

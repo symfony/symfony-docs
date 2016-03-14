@@ -30,12 +30,12 @@ need to change/add some parameters in the main configuration file:
             mongo_client:
                 class: MongoClient
                 # if using a username and password
-                arguments: ["mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017"]
+                arguments: ['mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017']
                 # if not using a username and password
-                arguments: ["mongodb://%mongodb_host%:27017"]
+                arguments: ['mongodb://%mongodb_host%:27017']
             session.handler.mongo:
                 class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
-                arguments: ["@mongo_client", "%mongo.session.options%"]
+                arguments: ['@mongo_client', '%mongo.session.options%']
 
     .. code-block:: xml
 
@@ -162,7 +162,7 @@ Because MongoDB uses dynamic collection schemas, you do not need to do anything 
 session collection. However, you may want to add an index to improve garbage collection performance.
 From the `MongoDB shell`_:
 
-.. code-block:: sql
+.. code-block:: javascript
 
     use session_db
     db.session.ensureIndex( { "expires_at": 1 }, { expireAfterSeconds: 0 } )

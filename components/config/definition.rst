@@ -231,7 +231,7 @@ Or the following XML configuration:
 
 .. code-block:: xml
 
-    <driver>msyql</driver>
+    <driver>mysql</driver>
     <driver>sqlite</driver>
 
 The processed configuration is::
@@ -320,8 +320,8 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
         ->fixXmlConfig('connection')
         ->children()
             ->arrayNode('connections')
+                ->useAttributeAsKey('name')
                 ->prototype('array')
-                    ->useAttributeAsKey('name')
                     ->children()
                         ->scalarNode('table')->end()
                         ->scalarNode('user')->end()
@@ -334,7 +334,7 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
 
 The argument of this method (``name`` in the example above) defines the name of
 the attribute added to each XML node to differentiate them. Now you can use the
-same YAML configuration showed before or the following XML configuration:
+same YAML configuration shown before or the following XML configuration:
 
 .. code-block:: xml
 
@@ -418,12 +418,33 @@ All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
 method.
 
+.. code-block:: php
+
+    $rootNode
+        ->children()
+            ->integerNode('entries_per_page')
+                ->info('This value is only used for the search results page.')
+                ->defaultValue(25)
+            ->end()
+        ->end()
+    ;
+
 The info will be printed as a comment when dumping the configuration tree
 with the ``config:dump-reference`` command.
 
-.. versionadded:: 2.6
-    Since Symfony 2.6, the info will also be added to the exception message
-    when an invalid type is given.
+In YAML you may have:
+
+.. code-block:: yaml
+
+    # This value is only used for the search results page.
+    entries_per_page:     25
+
+and in XML:
+
+.. code-block:: xml
+
+    <!-- entries-per-page: This value is only used for the search results page. -->
+    <config entries-per-page="25" />
 
 Optional Sections
 -----------------

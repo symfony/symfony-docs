@@ -12,11 +12,6 @@ For this situation, you can use a factory to create the object and tell
 the service container to call a method on the factory rather than directly
 instantiating the class.
 
-.. versionadded:: 2.6
-    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
-    method was introduced in Symfony 2.6. Refer to older versions for the
-    syntax for factories prior to 2.6.
-
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object::
 
@@ -34,7 +29,7 @@ object::
 
 To make the ``NewsletterManager`` object available as a service, you can
 configure the service container to use the
-``NewsletterFactory::createNewsletterManager()`` factory method:
+``NewsletterManagerFactory::createNewsletterManager()`` factory method:
 
 .. configuration-block::
 
@@ -57,7 +52,7 @@ configure the service container to use the
                     <factory class="NewsletterManagerFactory" method="createNewsletterManager" />
                 </service>
             </services>
-        </services>
+        </container>
 
     .. code-block:: php
 
@@ -143,7 +138,7 @@ method in the previous example takes the ``templating`` service as an argument:
                 class:   NewsletterManager
                 factory: ["@newsletter_manager.factory", createNewsletterManager]
                 arguments:
-                    - "@templating"
+                    - '@templating'
 
     .. code-block:: xml
 

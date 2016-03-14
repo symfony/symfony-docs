@@ -4,6 +4,8 @@
 How to Use Assetic for Image Optimization with Twig Functions
 =============================================================
 
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
+
 Among its many filters, Assetic has four filters which can be used for on-the-fly
 image optimization. This allows you to get the benefits of smaller file sizes
 without having to use an image editor to process each image. The results
@@ -30,11 +32,21 @@ using the ``bin`` option of the ``jpegoptim`` filter:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -51,7 +63,7 @@ It can now be used from a template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% image '@AppBundle/Resources/public/images/example.jpg'
             filter='jpegoptim' output='/images/example.jpg' %}
@@ -88,12 +100,22 @@ to ``true``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim"
-                strip_all="true" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim"
+                    strip_all="true" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -129,12 +151,22 @@ be at the expense of its quality:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim"
-                max="70" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim"
+                    max="70" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -171,15 +203,25 @@ following configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-            <assetic:twig>
-                <assetic:twig_function
-                    name="jpegoptim" />
-            </assetic:twig>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim" />
+                <assetic:twig>
+                    <assetic:twig_function
+                        name="jpegoptim" />
+                </assetic:twig>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -198,7 +240,7 @@ following configuration:
 
 The Twig template can now be changed to the following:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <img src="{{ jpegoptim('@AppBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
 
@@ -221,16 +263,26 @@ file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-            <assetic:twig>
-                <assetic:twig_function
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
                     name="jpegoptim"
-                    output="images/*.jpg" />
-            </assetic:twig>
-        </assetic:config>
+                    bin="path/to/jpegoptim" />
+                <assetic:twig>
+                    <assetic:twig_function
+                        name="jpegoptim"
+                        output="images/*.jpg" />
+                </assetic:twig>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 

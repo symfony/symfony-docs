@@ -128,7 +128,7 @@ service by asking for the ``bar`` service like this::
         services:
            foo:
              class: Example\Foo
-           bar: "@foo"
+           bar: '@foo'
 
 Decorating Services
 -------------------
@@ -219,15 +219,79 @@ You can change the inner service name if you want to:
             ->setPublic(false)
             ->setDecoratedService('foo', 'bar.wooz');
 
+If you want to apply more than one decorator to a service, you can control their
+order by configuring the priority of decoration, this can be any integer number
+(decorators with higher priorities will be applied first).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        foo:
+            class: Foo
+
+        bar:
+            class: Bar
+            public: false
+            decorates: foo
+            decoration_priority: 5
+            arguments: ['@bar.inner']
+
+        baz:
+            class: Baz
+            public: false
+            decorates: foo
+            decoration_priority: 1
+            arguments: ['@baz.inner']
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Foo" />
+
+                <service id="bar" class="Bar" decorates="foo" decoration-priority="5" public="false">
+                    <argument type="service" id="bar.inner" />
+                </service>
+
+                <service id="baz" class="Baz" decorates="foo" decoration-priority="1" public="false">
+                    <argument type="service" id="baz.inner" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register('foo', 'Foo')
+
+        $container->register('bar', 'Bar')
+            ->addArgument(new Reference('bar.inner'))
+            ->setPublic(false)
+            ->setDecoratedService('foo', null, 5);
+
+        $container->register('baz', 'Baz')
+            ->addArgument(new Reference('baz.inner'))
+            ->setPublic(false)
+            ->setDecoratedService('foo', null, 1);
+
+The generated code will be the following:
+
+.. code-block:: php
+
+    $this->services['foo'] = new Baz(new Bar(new Foo())));
+
 Deprecating Services
 --------------------
 
-.. versionadded:: 2.8
-    The ``deprecated`` setting was introduced in Symfony 2.8.
-
 Once you have decided to deprecate the use of a service (because it is outdated
-or you decided not to use and maintain it anymore), you can deprecate its
-definition:
+or you decided not to maintain it anymore), you can deprecate its definition:
 
 .. configuration-block::
 
@@ -261,26 +325,25 @@ definition:
             )
         ;
 
-Now, every time a service is created using this deprecated definition, a
-deprecation warning will be triggered, advising you to stop or to change your
-uses of that service.
+Now, every time this service is used, a deprecation warning is triggered,
+advising you to stop or to change your uses of that service.
 
-The message is actually a message template, which will replace occurrences
-of the ``%service_id%`` by the service's id. You **must** have at least one
+The message is actually a message template, which replaces occurrences of the
+``%service_id%`` placeholder by the service's id. You **must** have at least one
 occurrence of the ``%service_id%`` placeholder in your template.
 
 .. note::
 
-    The deprecation message is optional. If not set, Symfony will show a default
-    message ``The "%service_id%" service is deprecated. You should stop using it,
+    The deprecation message is optional. If not set, Symfony will show this default
+    message: ``The "%service_id%" service is deprecated. You should stop using it,
     as it will soon be removed.``.
 
 .. tip::
 
-    It is strongly recommended that you fill the message template, to avoid a
-    message that could be too generic such as the default one. A good message
-    informs when this service was deprecated, and until when it will be
-    maintained (look at the examples above).
+    It is strongly recommended that you define a custom message because the
+    default one is too generic. A good message informs when this service was
+    deprecated, until when it will be maintained and the alternative services
+    to use (if any).
 
 For service decorators (see above), if the definition does not modify the
 deprecated status, it will inherit the status from the definition that is

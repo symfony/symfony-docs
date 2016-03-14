@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; file
+   single: Forms; Fields; FileType
 
-file Field Type
-===============
+FileType Field
+==============
 
-The ``file`` type represents a file input in your form.
+The ``FileType`` represents a file input in your form.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
@@ -20,11 +20,11 @@ The ``file`` type represents a file input in your form.
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
+|             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
@@ -34,7 +34,10 @@ Basic Usage
 
 Say you have this form definition::
 
-    $builder->add('attachment', 'file');
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    // ...
+
+    $builder->add('attachment', FileType::class);
 
 When the form is submitted, the ``attachment`` field will be an instance
 of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can
@@ -112,8 +115,7 @@ value is empty.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -125,9 +127,9 @@ type:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/mapped.rst.inc
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

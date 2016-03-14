@@ -29,7 +29,7 @@ TwigBundle Configuration ("twig")
             globals:
 
                 # Examples:
-                foo:                 "@bar"
+                foo:                 '@bar'
                 pi:                  3.14
 
                 # Example options, but the easiest use is as seen above
@@ -41,19 +41,18 @@ TwigBundle Configuration ("twig")
                     value:                ~
             autoescape:                ~
 
-            # The following were added in Symfony 2.3.
             # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
-            autoescape_service:        ~ # Example: "@my_service"
+            autoescape_service:        ~ # Example: '@my_service'
             autoescape_service_method: ~ # use in combination with autoescape_service option
             base_template_class:       ~ # Example: Twig_Template
-            cache:                     "%kernel.cache_dir%/twig"
-            charset:                   "%kernel.charset%"
-            debug:                     "%kernel.debug%"
+            cache:                     '%kernel.cache_dir%/twig'
+            charset:                   '%kernel.charset%'
+            debug:                     '%kernel.debug%'
             strict_variables:          ~
             auto_reload:               ~
             optimizations:             ~
             paths:
-                "%kernel.root_dir%/../vendor/acme/foo-bar/templates": foo_bar
+                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': foo_bar
 
     .. code-block:: xml
 

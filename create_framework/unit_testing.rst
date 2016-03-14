@@ -14,23 +14,24 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-
-    <phpunit backupGlobals="false"
-             backupStaticAttributes="false"
-             colors="true"
-             convertErrorsToExceptions="true"
-             convertNoticesToExceptions="true"
-             convertWarningsToExceptions="true"
-             processIsolation="false"
-             stopOnFailure="false"
-             syntaxCheck="false"
-             bootstrap="vendor/autoload.php"
+    <phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.1/phpunit.xsd"
+        backupGlobals="false"
+        colors="true"
+        bootstrap="vendor/autoload.php"
     >
         <testsuites>
             <testsuite name="Test Suite">
                 <directory>./tests</directory>
             </testsuite>
         </testsuites>
+
+        <filter>
+            <whitelist processUncoveredFilesFromWhitelist="true">
+                <directory suffix=".php">./src</directory>
+            </whitelist>
+        </filter>
     </phpunit>
 
 This configuration defines sensible defaults for most PHPUnit settings; more
@@ -45,7 +46,6 @@ such interfaces for core objects like the URL matcher and the controller
 resolver. Modify the framework to make use of them::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     // ...
@@ -70,7 +70,6 @@ resolver. Modify the framework to make use of them::
 We are now ready to write our first test::
 
     // example.com/tests/Simplex/Tests/FrameworkTest.php
-
     namespace Simplex\Tests;
 
     use Simplex\Framework;
@@ -88,7 +87,7 @@ We are now ready to write our first test::
             $this->assertEquals(404, $response->getStatusCode());
         }
 
-        protected function getFrameworkForException($exception)
+        private function getFrameworkForException($exception)
         {
             $matcher = $this->getMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
             $matcher
@@ -186,6 +185,12 @@ coverage feature (you need to enable `XDebug`_ first):
 Open ``example.com/cov/src/Simplex/Framework.php.html`` in a browser and check
 that all the lines for the Framework class are green (it means that they have
 been visited when the tests were executed).
+
+Alternatively you can output the result directly to the console:
+
+.. code-block:: bash
+
+    $ phpunit --coverage-text
 
 Thanks to the simple object-oriented code that we have written so far, we have
 been able to write unit-tests to cover all possible use cases of our

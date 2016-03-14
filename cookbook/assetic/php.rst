@@ -4,6 +4,8 @@
 Combining, Compiling and Minimizing Web Assets with PHP Libraries
 =================================================================
 
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
+
 The official Symfony Best Practices recommend to use Assetic to
 :doc:`manage web assets </best_practices/web-assets>`, unless you are
 comfortable with JavaScript-based front-end tools.
@@ -91,7 +93,12 @@ First, configure a new ``scssphp`` Assetic filter:
         <!-- app/config/config.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed" />
@@ -119,7 +126,7 @@ the original files are regular CSS files or SCSS files.
 Next, update your Twig template to add the ``{% stylesheets %}`` tag defined
 by Assetic:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/base.html.twig #}
     <!DOCTYPE html>
@@ -159,7 +166,12 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
         <!-- app/config/config.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <filter name="jsqueeze" />
@@ -180,7 +192,7 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
 Next, update the code of your Twig template to add the ``{% javascripts %}`` tag
 defined by Assetic:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <!-- ... -->
 

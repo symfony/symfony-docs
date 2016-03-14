@@ -52,8 +52,8 @@ Canonical Parameters
     Define all your application's parameters in the
     ``app/config/parameters.yml.dist`` file.
 
-Since version 2.3, Symfony includes a configuration file called ``parameters.yml.dist``,
-which stores the canonical list of configuration parameters for the application.
+Symfony includes a configuration file called ``parameters.yml.dist``, which
+stores the canonical list of configuration parameters for the application.
 
 Whenever a new configuration parameter is defined for the application, you
 should also add it to this file and submit the changes to your version control
@@ -107,9 +107,7 @@ If you've done something like this in the past, it's likely that you've in fact
 *never* actually needed to change that value. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
-You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity:
-
-.. code-block:: php
+You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity::
 
     // src/AppBundle/Entity/Post.php
     namespace AppBundle\Entity;
@@ -128,7 +126,7 @@ from places with access to the Symfony container.
 Constants can be used for example in your Twig templates thanks to the
 `constant() function`_:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <p>
         Displaying the {{ constant('NUM_ITEMS', post) }} most recent results.

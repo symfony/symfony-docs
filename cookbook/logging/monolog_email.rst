@@ -31,16 +31,17 @@ it is broken down.
                     handler: swift
                 swift:
                     type:       swift_mailer
-                    from_email: error@example.com
-                    to_email:   error@example.com
+                    from_email: 'error@example.com'
+                    to_email:   'error@example.com'
                     # or list of recipients
-                    # to_email:   [dev1@example.com, dev2@example.com, ...]
+                    # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
                     subject:    An Error Occurred!
                     level:      debug
 
     .. code-block:: xml
 
         <!-- app/config/config_prod.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -48,17 +49,17 @@ it is broken down.
                                 http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
+                <!--
+                To also log 400 level errors (but not 404's):
+                action-level="error"
+                And add this child inside this monolog:handler
+                <monolog:excluded-404>^/</monolog:excluded-404>
+                -->
                 <monolog:handler
                     name="mail"
                     type="fingers_crossed"
                     action-level="critical"
                     handler="buffered"
-                    <!--
-                    To also log 400 level errors (but not 404's):
-                    action-level="error"
-                    And add this child inside this monolog:handler
-                    <monolog:excluded-404>^/</monolog:excluded-404>
-                    -->
                 />
                 <monolog:handler
                     name="buffered"
@@ -154,15 +155,15 @@ get logged on the server as well as the emails being sent:
                     members: [streamed, buffered]
                 streamed:
                     type:  stream
-                    path:  "%kernel.logs_dir%/%kernel.environment%.log"
+                    path:  '%kernel.logs_dir%/%kernel.environment%.log'
                     level: debug
                 buffered:
                     type:    buffer
                     handler: swift
                 swift:
                     type:       swift_mailer
-                    from_email: error@example.com
-                    to_email:   error@example.com
+                    from_email: 'error@example.com'
+                    to_email:   'error@example.com'
                     subject:    An Error Occurred!
                     level:      debug
 

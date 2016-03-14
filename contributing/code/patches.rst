@@ -14,14 +14,14 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.3.9 or above;
+* PHP version 5.5.9 or above;
 * `PHPUnit`_ 4.2 or above.
 
 .. caution::
 
-   Before Symfony 2.7, the minimal PHP version was 5.3.3. Please keep
-   this in mind, if you are working on a bug fix for earlier versions
-   of Symfony.
+   Before Symfony 2.7, the minimal PHP version was 5.3.3. Before Symfony 3.0,
+   minimal version was 5.3.9. Please keep this in mind, if you are working on a
+   bug fix for earlier versions of Symfony.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -116,8 +116,7 @@ work:
 * ``2.3``, if you are fixing a bug for an existing feature (you may have
   to choose a higher branch if the feature you are fixing was introduced
   in a later version);
-* ``2.8``, if you are adding a new feature which is backward compatible;
-* ``master``, if you are adding a new and backward incompatible feature.
+* ``master``, if you are adding a new feature.
 
 .. note::
 

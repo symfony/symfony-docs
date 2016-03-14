@@ -164,7 +164,7 @@ delivery_whitelist
 **type**: ``array``
 
 Used in combination with ``delivery_address``. If set, emails matching any
-of these patterns will be delivered like normal, instead of being sent to
+of these patterns will be delivered like normal, as well as being sent to
 ``delivery_address``. For details, see
 :ref:`the cookbook entry <sending-to-a-specified-address-but-with-exceptions>`.
 
@@ -201,14 +201,14 @@ Full Default Configuration
             auth_mode:            ~
             spool:
                 type:                 file
-                path:                 "%kernel.cache_dir%/swiftmailer/spool"
+                path:                 '%kernel.cache_dir%/swiftmailer/spool'
             sender_address:       ~
             antiflood:
                 threshold:            99
                 sleep:                0
             delivery_address:     ~
             disable_delivery:     ~
-            logging:              "%kernel.debug%"
+            logging:              '%kernel.debug%'
 
     .. code-block:: xml
 
@@ -303,3 +303,9 @@ Each mailer is registered as a service::
 
     // returns the second mailer
     $container->get('swiftmailer.mailer.second_mailer');
+
+.. caution::
+
+    When configuring multiple mailers, options must be placed under the
+    appropriate mailer key of the configuration instead of directly under the
+    ``swiftmailer`` key.

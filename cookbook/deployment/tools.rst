@@ -82,6 +82,10 @@ specifically tailored to the requirements of Symfony.
     This Python-based library provides a basic suite of operations for executing
     local or remote shell commands and uploading/downloading files.
 
+`Deployer`_
+    This is another native PHP rewrite of Capistrano, with some ready recipes for 
+    Symfony.
+
 Bundles
     There are some `bundles that add deployment features`_ directly into your
     Symfony console.
@@ -111,7 +115,7 @@ Check if your server meets the requirements by running:
 
 .. code-block:: bash
 
-    $ php app/check.php
+    $ php bin/symfony_requirements
 
 B) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,7 +154,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -159,7 +163,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 F) Other Things!
 ~~~~~~~~~~~~~~~~
@@ -200,4 +204,4 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
-
+.. _`Deployer`: http://deployer.org/

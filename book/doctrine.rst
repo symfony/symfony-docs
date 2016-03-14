@@ -64,11 +64,11 @@ information. By convention, this information is usually configured in an
             # app/config/config.yml
             doctrine:
                 dbal:
-                    driver:   "%database_driver%"
-                    host:     "%database_host%"
-                    dbname:   "%database_name%"
-                    user:     "%database_user%"
-                    password: "%database_password%"
+                    driver:   '%database_driver%'
+                    host:     '%database_host%'
+                    dbname:   '%database_name%'
+                    user:     '%database_user%'
+                    password: '%database_password%'
 
         .. code-block:: xml
 
@@ -116,7 +116,7 @@ for you:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:database:create
+    $ php bin/console doctrine:database:create
 
 .. sidebar:: Setting up the Database to be UTF8
 
@@ -128,8 +128,8 @@ for you:
 
     .. code-block:: bash
 
-        $ php app/console doctrine:database:drop --force
-        $ php app/console doctrine:database:create
+        $ php bin/console doctrine:database:drop --force
+        $ php bin/console doctrine:database:create
 
     There's no way to configure these defaults inside Doctrine, as it tries to be
     as agnostic as possible in terms of environment configuration. One way to solve
@@ -162,7 +162,7 @@ for you:
             doctrine:
                 dbal:
                     driver: pdo_sqlite
-                    path: "%kernel.root_dir%/sqlite.db"
+                    path: '%kernel.root_dir%/sqlite.db'
                     charset: UTF8
 
         .. code-block:: xml
@@ -227,7 +227,7 @@ just a simple PHP class.
 
     .. code-block:: bash
 
-        $ php app/console doctrine:generate:entity
+        $ php bin/console doctrine:generate:entity
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -392,7 +392,7 @@ a regular PHP class, you need to create getter and setter methods (e.g. ``getNam
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle/Entity/Product
+    $ php bin/console doctrine:generate:entities AppBundle/Entity/Product
 
 This command makes sure that all the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
@@ -434,10 +434,10 @@ mapping information) of a bundle or an entire namespace:
 .. code-block:: bash
 
     # generates all entities in the AppBundle
-    $ php app/console doctrine:generate:entities AppBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
     # generates all entities of bundles in the Acme namespace
-    $ php app/console doctrine:generate:entities Acme
+    $ php bin/console doctrine:generate:entities Acme
 
 .. note::
 
@@ -459,7 +459,7 @@ in your application. To do this, run:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 .. tip::
 
@@ -534,10 +534,10 @@ Take a look at the previous example in more detail:
   responsible for handling the process of persisting and fetching objects
   to and from the database.
 
-* **line 16** The ``persist()`` method tells Doctrine to "manage" the ``$product``
+* **line 17** The ``persist()`` method tells Doctrine to "manage" the ``$product``
   object. This does not actually cause a query to be made to the database (yet).
 
-* **line 17** When the ``flush()`` method is called, Doctrine looks through
+* **line 18** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object has not been
   persisted yet, so the entity manager executes an ``INSERT`` query and a
@@ -852,7 +852,7 @@ used earlier to generate the missing getter and setter methods:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
 repository class. This method will query for all the ``Product`` entities,
@@ -906,7 +906,7 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entity --no-interaction \
+    $ php bin/console doctrine:generate:entity --no-interaction \
         --entity="AppBundle:Category" \
         --fields="name:string(255)"
 
@@ -953,8 +953,8 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                 products:
                     targetEntity: Product
                     mappedBy: category
-            # don't forget to init the collection in the __construct() method
-            # of the entity
+        # Don't forget to initialize the collection in
+        # the __construct() method of the entity
 
     .. code-block:: xml
 
@@ -1063,7 +1063,7 @@ methods for you:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Category``
 and ``Product`` with a natural one-to-many relationship. The ``Category``
@@ -1092,11 +1092,11 @@ table, and ``product.category_id`` column, and new foreign key:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 .. note::
 
-    This task should only be really used during development. For a more robust
+    This command should only be used during development. For a more robust
     method of systematically updating your production database, read about
     `migrations`_.
 
@@ -1187,7 +1187,7 @@ You can also query in the other direction::
         // ...
     }
 
-In this case, the same things occurs: you first query out for a single ``Category``
+In this case, the same things occur: you first query out for a single ``Category``
 object, and then Doctrine makes a second query to retrieve the related ``Product``
 objects, but only once/if you ask for them (i.e. when you call ``->getProducts()``).
 The ``$products`` variable is an array of all ``Product`` objects that relate

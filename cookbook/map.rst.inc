@@ -30,6 +30,7 @@
 * :doc:`/cookbook/configuration/index`
 
   * :doc:`/cookbook/configuration/environments`
+  * :doc:`/cookbook/configuration/micro-kernel-trait`
   * :doc:`/cookbook/configuration/override_dir_structure`
   * :doc:`/cookbook/configuration/using_parameters_in_dic`
   * :doc:`/cookbook/configuration/front_controllers_and_kernel`
@@ -44,8 +45,9 @@
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
+  * :doc:`/cookbook/console/style`
   * :doc:`/cookbook/console/command_in_controller`
-  * :doc:`/cookbook/console/sending_emails`
+  * :doc:`/cookbook/console/request_context`
   * :doc:`/cookbook/console/logging`
   * :doc:`/cookbook/console/commands_as_services`
 
@@ -65,6 +67,7 @@
   * :doc:`/cookbook/deployment/azure-website`
   * :doc:`/cookbook/deployment/heroku`
   * :doc:`/cookbook/deployment/platformsh`
+  * :doc:`/cookbook/deployment/fortrabbit`
 
 * :doc:`/cookbook/doctrine/index`
 
@@ -156,11 +159,13 @@
   * :doc:`/cookbook/routing/custom_route_loader`
   * :doc:`/cookbook/routing/redirect_trailing_slash`
   * :doc:`/cookbook/routing/extra_information`
+  * :doc:`/cookbook/routing/routing_from_database`
 
 * :doc:`Security Authentication (Identifying/Logging in the User) </cookbook/security/index>`
 
   * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
+  * :doc:`/cookbook/security/guard-authentication`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/form_login`
@@ -173,8 +178,10 @@
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
   * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/multiple_guard_authenticators`
   * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/host_restriction`
+  * :doc:`/cookbook/security/user_checkers`
 
 * :doc:`Security Authorization (Denying Access) </cookbook/security/index>`
 
@@ -191,7 +198,7 @@
 
 * :doc:`/cookbook/service_container/index`
 
-  * :doc:`/cookbook/service_container/scopes`
+  * :doc:`/cookbook/service_container/shared`
   * :doc:`/cookbook/service_container/compiler_passes`
   * (Event Dispatcher) :doc:`/cookbook/event_dispatcher/event_listener`
 
@@ -236,6 +243,7 @@
   * :doc:`/cookbook/upgrade/patch_version`
   * :doc:`/cookbook/upgrade/minor_version`
   * :doc:`/cookbook/upgrade/major_version`
+  * :doc:`/cookbook/upgrade/bundles`
 
 * :doc:`/cookbook/validation/index`
 
@@ -255,3 +263,4 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
+  * :doc:`/cookbook/workflow/homestead`

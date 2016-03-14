@@ -1,18 +1,19 @@
 .. index::
    single: Doctrine; Simple Registration Form
    single: Form; Simple Registration Form
+   single: Security; Simple Registration Form
 
-How to Implement a simple Registration Form
+How to Implement a Simple Registration Form
 ===========================================
 
 Creating a registration form is pretty easy - it *really* means just creating
-a form that will update some ``User`` model object (a Doctrine entity in this example)
-and then save it.
+a form that will update some ``User`` model object (a Doctrine entity in this
+example) and then save it.
 
 .. tip::
 
-    The popular `FOSUserBundle`_ provides a registration form, reset password form
-    and other user management functionality.
+    The popular `FOSUserBundle`_ provides a registration form, reset password
+    form and other user management functionality.
 
 If you don't already have a ``User`` entity and a working login system,
 first start with :doc:`/cookbook/security/entity_provider`.
@@ -34,7 +35,7 @@ Your ``User`` entity will probably at least have the following fields:
 ``plainPassword``
     This field is *not* persisted: (notice no ``@ORM\Column`` above it). It
     temporarily stores the plain password from the registration form. This field
-    can be validated then used to populate the ``password`` field.
+    can be validated and is then used to populate the ``password`` field.
 
 With some validation added, your class may look something like this::
 
@@ -61,27 +62,27 @@ With some validation added, your class may look something like this::
         private $id;
 
         /**
-         * @ORM\Column(type="string", length=255)
+         * @ORM\Column(type="string", length=255, unique=true)
          * @Assert\NotBlank()
          * @Assert\Email()
          */
         private $email;
 
         /**
-         * @ORM\Column(type="string", length=255)
+         * @ORM\Column(type="string", length=255, unique=true)
          * @Assert\NotBlank()
          */
         private $username;
 
         /**
          * @Assert\NotBlank()
-         * @Assert\Length(max = 4096)
+         * @Assert\Length(max=4096)
          */
         private $plainPassword;
 
         /**
          * The below length depends on the "algorithm" you use for encoding
-         * the password, but this works well with bcrypt
+         * the password, but this works well with bcrypt.
          *
          * @ORM\Column(type="string", length=64)
          */
@@ -124,12 +125,20 @@ With some validation added, your class may look something like this::
             $this->password = $password;
         }
 
+        public function getSalt()
+        {
+            // The bcrypt algorithm doesn't require a separate salt.
+            // You *may* need a real salt if you choose a different encoder.
+            return null;
+        }
+
         // other methods, including security methods like getRoles()
     }
 
-The ``UserInterface`` requires a few other methods and your ``security.yml`` file
-needs to be configured properly to work with the ``User`` entity. For a more full
-example, see the :ref:`Entity Provider <security-crete-user-entity>` article.
+The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
+a few other methods and your ``security.yml`` file needs to be configured
+properly to work with the ``User`` entity. For a more complete example, see
+the :ref:`Entity Provider <security-crete-user-entity>` article.
 
 .. _cookbook-registration-password-max:
 
@@ -146,8 +155,10 @@ example, see the :ref:`Entity Provider <security-crete-user-entity>` article.
     only place where you don't need to worry about this is your login form,
     since Symfony's Security component handles this for you.
 
-Create a Form for the Model
----------------------------
+.. _create-a-form-for-the-model:
+
+Create a Form for the Entity
+----------------------------
 
 Next, create the form for the ``User`` entity::
 
@@ -157,16 +168,20 @@ Next, create the form for the ``User`` entity::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email')
-                ->add('username', 'text')
-                ->add('plainPassword', 'repeated', array(
-                    'type' => 'password',
+                ->add('email', EmailType::class)
+                ->add('username', TextType::class)
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
                 )
@@ -176,7 +191,7 @@ Next, create the form for the ``User`` entity::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\User'
+                'data_class' => 'AppBundle\Entity\User',
             ));
         }
     }
@@ -186,23 +201,24 @@ There are just three fields: ``email``, ``username`` and ``plainPassword``
 
 .. tip::
 
-    To explore more things about the Form component, read :doc:`/book/forms`.
+    To explore more things about the Form component, read the
+    :doc:`chapter about forms </book/forms>` in the book.
 
 Handling the Form Submission
 ----------------------------
 
-Next, you need a controller to handle the form. Start by creating a simple
-controller for displaying the registration form::
+Next, you need a controller to handle the form rendering and submission. If the
+form is submitted, the controller performs the validation and saves the data
+into the database::
 
-    // src/AppBundle/Controller/AccountController.php
+    // src/AppBundle/Controller/RegistrationController.php
     namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     use AppBundle\Form\UserType;
     use AppBundle\Entity\User;
-    use Symfony\Component\HttpFoundation\Request;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
 
     class RegistrationController extends Controller
     {
@@ -213,11 +229,12 @@ controller for displaying the registration form::
         {
             // 1) build the form
             $user = new User();
-            $form = $this->createForm(new UserType(), $user);
+            $form = $this->createForm(UserType::class, $user);
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
-            if ($form->isValid() && $form->isSubmitted()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+
                 // 3) Encode the password (you could also do this via Doctrine listener)
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());
@@ -228,7 +245,7 @@ controller for displaying the registration form::
                 $em->persist($user);
                 $em->flush();
 
-                // ... do any other work - like send them an email, etc
+                // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user
 
                 return $this->redirectToRoute('replace_with_some_route');
@@ -240,6 +257,45 @@ controller for displaying the registration form::
             );
         }
     }
+
+To define the algorithm used to encode the password in step 3 configure the
+encoder in the security configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            encoders:
+                AppBundle\Entity\User: bcrypt
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <encoder class="AppBundle\Entity\User">bcrypt</encoder>
+            </config>
+        </srv:container>
+        
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'encoders' => array(
+                'AppBundle\Entity\User' => 'bcrypt',
+            ),
+        ));
+
+In this case the recommended ``bcrypt`` algorithm is used. To learn more
+about how to encode the users password have a look into the
+:ref:`security chapter <book-security-encoding-user-password>`.
 
 .. note::
 
@@ -285,15 +341,15 @@ Next, create the template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/registration/register.html.twig #}
 
         {{ form_start(form) }}
-            {{ form_row('form.username') }}
-            {{ form_row('form.email') }}
-            {{ form_row('form.plainPassword.first') }}
-            {{ form_row('form.plainPassword.second') }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.plainPassword.first) }}
+            {{ form_row(form.plainPassword.second) }}
 
             <button type="submit">Register!</button>
         {{ form_end(form) }}
@@ -317,12 +373,12 @@ See :doc:`/cookbook/form/form_customization` for more details.
 Update your Database Schema
 ---------------------------
 
-If you've updated the User entity during this tutorial, you have to update your
-database schema using this command:
+If you've updated the ``User`` entity during this tutorial, you have to update
+your database schema using this command:
 
 .. code-block:: bash
 
-   $ php app/console doctrine:schema:update --force
+   $ php bin/console doctrine:schema:update --force
 
 That's it! Head to ``/register`` to try things out!
 
@@ -350,9 +406,9 @@ return the ``email`` property::
         // ...
     }
 
-Next, just update the ``providers`` section of your ``security.yml`` so that Symfony
-knows to load your users via the ``email`` property on login. See
-:ref:`authenticating-someone-with-a-custom-entity-provider`.
+Next, just update the ``providers`` section of your ``security.yml`` file
+so that Symfony knows how to load your users via the ``email`` property on
+login. See :ref:`authenticating-someone-with-a-custom-entity-provider`.
 
 Adding a "accept terms" Checkbox
 --------------------------------
@@ -368,15 +424,17 @@ To do this, add a ``termsAccepted`` field to your form, but set its
     // src/AppBundle/Form/UserType.php
     // ...
     use Symfony\Component\Validator\Constraints\IsTrue;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email');
+                ->add('email', EmailType::class);
                 // ...
-                ->add('termsAccepted', 'checkbox', array(
+                ->add('termsAccepted', CheckboxType::class, array(
                     'mapped' => false,
                     'constraints' => new IsTrue(),
                 ))

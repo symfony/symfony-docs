@@ -6,7 +6,8 @@ Console
 
     console_command
     usage
+    style
     command_in_controller
-    sending_emails
+    request_context
     logging
     commands_as_services

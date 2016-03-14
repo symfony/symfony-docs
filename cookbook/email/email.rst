@@ -33,10 +33,10 @@ already included:
 
         # app/config/config.yml
         swiftmailer:
-            transport: "%mailer_transport%"
-            host:      "%mailer_host%"
-            username:  "%mailer_user%"
-            password:  "%mailer_password%"
+            transport: '%mailer_transport%'
+            host:      '%mailer_host%'
+            username:  '%mailer_user%'
+            password:  '%mailer_password%'
 
     .. code-block:: xml
 
@@ -140,11 +140,6 @@ template might look something like this:
 
     {# Makes an absolute URL to the /images/logo.png file #}
     <img src="{{ absolute_url(asset('images/logo.png')) }}">
-
-.. versionadded:: 2.7
-    The ``absolute_url()`` function was introduced in Symfony 2.7. Prior
-    to 2.7, the ``asset()`` function has an argument to enable returning
-    an absolute URL.
 
 The ``$message`` object supports many more options, such as including attachments,
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic

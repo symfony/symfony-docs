@@ -4,6 +4,8 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
+
 Full Default Configuration
 --------------------------
 
@@ -12,12 +14,12 @@ Full Default Configuration
     .. code-block:: yaml
 
         assetic:
-            debug:                "%kernel.debug%"
+            debug:                '%kernel.debug%'
             use_controller:
-                enabled:              "%kernel.debug%"
+                enabled:              '%kernel.debug%'
                 profiler:             false
-            read_from:            "%assetic.read_from%"
-            write_to:             "%kernel.root_dir%/../web"
+            read_from:            '%assetic.read_from%'
+            write_to:             '%kernel.root_dir%/../web'
             java:                 /usr/bin/java
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby
@@ -50,7 +52,7 @@ Full Default Configuration
                 some_filter:                 []
             workers:
                 # see https://github.com/symfony/AsseticBundle/pull/119
-                # Cache can also be busted via the framework.templating.assets_version
+                # Cache can also be busted via the framework.assets.version
                 # setting - see the "framework" configuration section
                 cache_busting:
                     enabled:              false
@@ -61,49 +63,58 @@ Full Default Configuration
 
     .. code-block:: xml
 
-        <assetic:config
-            debug="%kernel.debug%"
-            use-controller="%kernel.debug%"
-            read-from="%assetic.read_from%"
-            write-to="%kernel.root_dir%/../web"
-            java="/usr/bin/java"
-            node="/usr/bin/node"
-            sass="/usr/bin/sass"
-        >
-            <!-- Defaults (all currently registered bundles) -->
-            <assetic:bundle>FrameworkBundle</assetic:bundle>
-            <assetic:bundle>SecurityBundle</assetic:bundle>
-            <assetic:bundle>TwigBundle</assetic:bundle>
-            <assetic:bundle>MonologBundle</assetic:bundle>
-            <assetic:bundle>SwiftmailerBundle</assetic:bundle>
-            <assetic:bundle>DoctrineBundle</assetic:bundle>
-            <assetic:bundle>AsseticBundle</assetic:bundle>
-            <assetic:bundle>...</assetic:bundle>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
-            <assetic:asset>
-                <!-- prototype -->
-                <assetic:name>
-                    <assetic:input />
+            <assetic:config
+                debug="%kernel.debug%"
+                use-controller="%kernel.debug%"
+                read-from="%assetic.read_from%"
+                write-to="%kernel.root_dir%/../web"
+                java="/usr/bin/java"
+                node="/usr/bin/node"
+                sass="/usr/bin/sass">
 
-                    <assetic:filter />
+                <!-- Defaults (all currently registered bundles) -->
+                <assetic:bundle>FrameworkBundle</assetic:bundle>
+                <assetic:bundle>SecurityBundle</assetic:bundle>
+                <assetic:bundle>TwigBundle</assetic:bundle>
+                <assetic:bundle>MonologBundle</assetic:bundle>
+                <assetic:bundle>SwiftmailerBundle</assetic:bundle>
+                <assetic:bundle>DoctrineBundle</assetic:bundle>
+                <assetic:bundle>AsseticBundle</assetic:bundle>
+                <assetic:bundle>...</assetic:bundle>
 
-                    <assetic:option>
-                        <!-- prototype -->
-                        <assetic:name />
-                    </assetic:option>
-                </assetic:name>
-            </assetic:asset>
+                <assetic:asset>
+                    <!-- prototype -->
+                    <assetic:name>
+                        <assetic:input />
 
-            <assetic:filter>
-                <!-- prototype -->
-                <assetic:name />
-            </assetic:filter>
+                        <assetic:filter />
 
-            <assetic:twig>
-                <assetic:functions>
+                        <assetic:option>
+                            <!-- prototype -->
+                            <assetic:name />
+                        </assetic:option>
+                    </assetic:name>
+                </assetic:asset>
+
+                <assetic:filter>
                     <!-- prototype -->
                     <assetic:name />
-                </assetic:functions>
-            </assetic:twig>
+                </assetic:filter>
 
-        </assetic:config>
+                <assetic:twig>
+                    <assetic:functions>
+                        <!-- prototype -->
+                        <assetic:name />
+                    </assetic:functions>
+                </assetic:twig>
+            </assetic:config>
+        </container>

@@ -10,6 +10,8 @@ How to Minify JavaScripts and Stylesheets with YUI Compressor
     **strongly advised to avoid using YUI utilities** unless strictly necessary.
     Read :doc:`/cookbook/assetic/uglifyjs` for a modern and up-to-date alternative.
 
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
+
 Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
@@ -33,24 +35,34 @@ stylesheets:
 
         # app/config/config.yml
         assetic:
-            # java: "/usr/bin/java"
+            # java: '/usr/bin/java'
             filters:
                 yui_css:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
                 yui_js:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="yui_css"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
-            <assetic:filter
-                name="yui_js"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="yui_css"
+                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                <assetic:filter
+                    name="yui_js"
+                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -85,7 +97,7 @@ the view layer, this work is done in your templates:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' filter='yui_js' %}
             <script src="{{ asset_url }}"></script>
@@ -113,7 +125,7 @@ can be repeated to minify your stylesheets.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% stylesheets '@AppBundle/Resources/public/css/*' filter='yui_css' %}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
@@ -139,7 +151,7 @@ apply this filter when debug mode is off.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' filter='?yui_js' %}
             <script src="{{ asset_url }}"></script>

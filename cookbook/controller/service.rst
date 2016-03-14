@@ -127,9 +127,6 @@ the route ``_controller`` value:
     If your controller implements the ``__invoke()`` method, you can simply
     refer to the service id (``app.hello_controller``).
 
-    .. versionadded:: 2.6
-        Support for ``__invoke()`` was introduced in Symfony 2.6.
-
 Alternatives to base Controller Methods
 ---------------------------------------
 
@@ -206,7 +203,7 @@ argument:
         services:
             app.hello_controller:
                 class:     AppBundle\Controller\HelloController
-                arguments: ["@templating"]
+                arguments: ['@templating']
 
     .. code-block:: xml
 
@@ -277,11 +274,15 @@ controller:
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl` (service: ``router``)
     .. code-block:: php
 
-       $router->generate($route, $params, $absolute);
+       $router->generate($route, $params, $referenceType);
+
+    .. note::
+
+        The ``$referenceType`` argument must be one of the constants defined
+        in the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface`.
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine` (service: ``doctrine``)
-
-    *Simply inject doctrine instead of fetching it from the container*
+    *Simply inject doctrine instead of fetching it from the container.*
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.token_storage``)
     .. code-block:: php

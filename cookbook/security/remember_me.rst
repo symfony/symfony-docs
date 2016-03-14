@@ -19,10 +19,10 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             # ...
 
             firewalls:
-                default:
+                main:
                     # ...
                     remember_me:
-                        secret:   "%secret%"
+                        secret:   '%secret%'
                         lifetime: 604800 # 1 week in seconds
                         path:     /
                         # by default, the feature is enabled by checking a
@@ -43,7 +43,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <!-- ... -->
 
                     <!-- 604800 is 1 week in seconds -->
@@ -65,7 +65,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             // ...
 
             'firewalls' => array(
-                'default' => array(
+                'main' => array(
                     // ...
                     'remember_me' => array(
                         'secret'   => '%secret%',
@@ -83,9 +83,6 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 The ``remember_me`` firewall defines the following configuration options:
 
 ``secret`` (**required**)
-    .. versionadded:: 2.8
-        Prior to Symfony 2.8, the ``secret`` option was named ``key``.
-
     The value used to encrypt the cookie's content. It's common to use the
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
@@ -148,14 +145,14 @@ this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/security/login.html.twig #}
         {% if error %}
             <div>{{ error.message }}</div>
         {% endif %}
 
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login') }}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
@@ -175,7 +172,7 @@ this:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username"
                    name="_username" value="<?php echo $last_username ?>" />

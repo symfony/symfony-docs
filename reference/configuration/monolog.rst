@@ -4,6 +4,9 @@
 MonologBundle Configuration ("monolog")
 =======================================
 
+For a full list of handler types and related configuration
+options, see `Monolog Configuration`_.
+
 Full Default Configuration
 --------------------------
 
@@ -39,7 +42,7 @@ Full Default Configuration
 
                 # Default options and values for some "my_custom_handler"
                 # Note: many of these options are specific to the "type".
-                # For example, the "service" type doesn't use any options
+                # For example, the 'service' type doesn't use any options
                 # except id and channels
                 my_custom_handler:
                     type:                 ~ # Required
@@ -47,7 +50,7 @@ Full Default Configuration
                     priority:             0
                     level:                DEBUG
                     bubble:               true
-                    path:                 "%kernel.logs_dir%/%kernel.environment%.log"
+                    path:                 '%kernel.logs_dir%/%kernel.environment%.log'
                     ident:                false
                     facility:             user
                     max_files:            0
@@ -112,3 +115,5 @@ Full Default Configuration
     When the profiler is enabled, a handler is added to store the logs'
     messages in the profiler. The profiler uses the name "debug" so it
     is reserved and cannot be used in the configuration.
+
+.. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php

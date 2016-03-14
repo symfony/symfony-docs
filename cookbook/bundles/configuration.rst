@@ -75,7 +75,7 @@ bundle configuration would look like:
         acme_social:
             twitter:
                 client_id: 123
-                client_secret: $ecret
+                client_secret: your_secret
 
     .. code-block:: xml
 
@@ -88,7 +88,7 @@ bundle configuration would look like:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
            <acme-social:config>
-               <twitter client-id="123" client-secret="$ecret" />
+               <twitter client-id="123" client-secret="your_secret" />
            </acme-social:config>
 
            <!-- ... -->
@@ -99,7 +99,7 @@ bundle configuration would look like:
         // app/config/config.php
         $container->loadFromExtension('acme_social', array(
             'client_id'     => 123,
-            'client_secret' => '$ecret',
+            'client_secret' => 'your_secret',
         ));
 
 .. seealso::
@@ -139,7 +139,7 @@ For the configuration example in the previous section, the array passed to your
         array(
             'twitter' => array(
                 'client_id' => 123,
-                'client_secret' => '$ecret',
+                'client_secret' => '$secret',
             ),
         ),
     )
@@ -294,8 +294,8 @@ The ``config:dump-reference`` command dumps the default configuration of a
 bundle in the console using the Yaml format.
 
 As long as your bundle's configuration is located in the standard location
-(``YourBundle\DependencyInjection\Configuration``) and does not require
-arguments to be passed to the constructor it will work automatically. If you
+(``YourBundle\DependencyInjection\Configuration``) and does not have
+a constructor it will work automatically. If you
 have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
 method and return an instance of your ``Configuration``.

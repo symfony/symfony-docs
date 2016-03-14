@@ -28,13 +28,13 @@ Functions
 render
 ~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ render(uri, options) }}
+    {{ render(uri, options = []) }}
 
 ``uri``
     **type**: ``string`` | ``ControllerReference``
-``options``
+``options`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the fragment for the given controller (using the `controller`_ function)
@@ -51,13 +51,13 @@ The render strategy can be specified in the ``strategy`` key of the options.
 render_esi
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ render_esi(uri, options) }}
+    {{ render_esi(uri, options = []) }}
 
 ``uri``
     **type**: ``string`` | ``ControllerReference``
-``options``
+``options`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Generates an ESI tag when possible or falls back to the behavior of
@@ -78,15 +78,15 @@ Generates an ESI tag when possible or falls back to the behavior of
 controller
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ controller(controller, attributes, query) }}
+    {{ controller(controller, attributes = [], query = []) }}
 
 ``controller``
     **type**: ``string``
-``attributes``
+``attributes`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``query``
+``query`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Returns an instance of ``ControllerReference`` to be used with functions
@@ -96,31 +96,27 @@ like :ref:`render() <reference-twig-function-render>` and
 asset
 ~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ asset(path, packageName = null) }}
 
 ``path``
     **type**: ``string``
-``packageName``
+``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
-``absolute`` (deprecated as of 2.7)
-    **type**: ``boolean`` **default**: ``false``
-``version`` (deprecated as of 2.7)
-    **type**: ``string`` **default** ``null``
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`book-templating-assets`. For asset versioning, see :ref:`ref-framework-assets-version`.
+:ref:`book-templating-assets`. For asset versioning, see :ref:`reference-framework-assets-version`.
 
 assets_version
 ~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ assets_version(packageName) }}
+    {{ assets_version(packageName = null) }}
 
-``packageName``
+``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
 
 Returns the current version of the package, more information in
@@ -129,13 +125,13 @@ Returns the current version of the package, more information in
 form
 ~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form(view, variables) }}
+    {{ form(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the HTML of a complete form, more information in
@@ -144,13 +140,13 @@ Renders the HTML of a complete form, more information in
 form_start
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form_start(view, variables) }}
+    {{ form_start(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the HTML start tag of a form, more information in
@@ -159,43 +155,29 @@ Renders the HTML start tag of a form, more information in
 form_end
 ~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form_end(view, variables) }}
+    {{ form_end(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the HTML end tag of a form together with all fields that have not
 been rendered yet, more information in
 :ref:`the Twig Form reference <reference-forms-twig-end>`.
 
-form_enctype
-~~~~~~~~~~~~
-
-.. code-block:: jinja
-
-    {{ form_enctype(view) }}
-
-``view``
-    **type**: ``FormView``
-
-Renders the required ``enctype="multipart/form-data"`` attribute if the
-form contains at least one file upload field, more information in
-:ref:`the Twig Form reference <reference-forms-twig-enctype>`.
-
 form_widget
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form_widget(view, variables) }}
+    {{ form_widget(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders a complete form or a specific HTML widget of a field, more information
@@ -204,7 +186,7 @@ in :ref:`the Twig Form reference <reference-forms-twig-widget>`.
 form_errors
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_errors(view) }}
 
@@ -217,15 +199,15 @@ in :ref:`the Twig Form reference <reference-forms-twig-errors>`.
 form_label
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form_label(view, label, variables) }}
+    {{ form_label(view, label = null, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``label``
+``label`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the label for the given field, more information in
@@ -234,13 +216,13 @@ Renders the label for the given field, more information in
 form_row
 ~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form_row(view, variables) }}
+    {{ form_row(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders the row (the field's label, errors and widget) of the given field,
@@ -249,13 +231,13 @@ more information in :ref:`the Twig Form reference <reference-forms-twig-row>`.
 form_rest
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ form_rest(view, variables) }}
+    {{ form_rest(view, variables = []) }}
 
 ``view``
     **type**: ``FormView``
-``variables``
+``variables`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
 Renders all fields that have not yet been rendered, more information in
@@ -264,7 +246,7 @@ Renders all fields that have not yet been rendered, more information in
 csrf_token
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ csrf_token(intention) }}
 
@@ -277,15 +259,15 @@ creating a form.
 is_granted
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ is_granted(role, object, field) }}
+    {{ is_granted(role, object = null, field = null) }}
 
 ``role``
     **type**: ``string``
-``object``
+``object`` *(optional)*
     **type**: ``object``
-``field``
+``field`` *(optional)*
     **type**: ``string``
 
 Returns ``true`` if the current user has the required role. Optionally,
@@ -300,23 +282,24 @@ found in :ref:`book-security-template`.
 logout_path
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ logout_path(key) }}
+    {{ logout_path(key = null) }}
 
-``key``
+``key`` *(optional)*
     **type**: ``string``
 
-Generates a relative logout URL for the given firewall.
+Generates a relative logout URL for the given firewall. If no key is provided,
+the URL is generated for the current firewall the user is logged into.
 
 logout_url
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ logout_url(key) }}
+    {{ logout_url(key = null) }}
 
-``key``
+``key`` *(optional)*
     **type**: ``string``
 
 Equal to the `logout_path`_ function, but it'll generate an absolute URL
@@ -325,15 +308,15 @@ instead of a relative one.
 path
 ~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ path(name, parameters, relative) }}
+    {{ path(name, parameters = [], relative = false) }}
 
 ``name``
     **type**: ``string``
-``parameters``
+``parameters`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``relative``
+``relative`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Returns the relative URL (without the scheme and host) for the given route.
@@ -343,15 +326,15 @@ path. More information in :ref:`book-templating-pages`.
 url
 ~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ url(name, parameters, schemeRelative) }}
+    {{ url(name, parameters = [], schemeRelative = false) }}
 
 ``name``
     **type**: ``string``
-``parameters``
+``parameters`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``schemeRelative``
+``schemeRelative`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Returns the absolute URL (with scheme and host) for the given route. If
@@ -360,9 +343,6 @@ information in :ref:`book-templating-pages`.
 
 absolute_url
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-     The ``absolute_url`` function was introduced in Symfony 2.7
 
 .. code-block:: jinja
 
@@ -380,9 +360,6 @@ an existing path:
 
 relative_path
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-     The ``relative_path`` function was introduced in Symfony 2.7
 
 .. code-block:: jinja
 
@@ -407,10 +384,12 @@ Twig. See ":ref:`Template Expressions <book-security-template-expression>`".
 Filters
 -------
 
+.. _reference-twig-humanize-filter:
+
 humanize
 ~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ text|humanize }}
 
@@ -421,24 +400,20 @@ Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
 
-.. versionadded:: 2.3
-    Transforming camelCase text into human readable text was introduced in
-    Symfony 2.3.
-
 trans
 ~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ message|trans(arguments, domain, locale) }}
+    {{ message|trans(arguments = [], domain = null, locale = null) }}
 
 ``message``
     **type**: ``string``
-``arguments``
+``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Translates the text into the current language. More information in
@@ -447,19 +422,19 @@ Translates the text into the current language. More information in
 transchoice
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ message|transchoice(count, arguments, domain, locale) }}
+    {{ message|transchoice(count, arguments = [], domain = null, locale = null) }}
 
 ``message``
     **type**: ``string``
 ``count``
     **type**: ``integer``
-``arguments``
+``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Translates the text with pluralization support. More information in
@@ -468,15 +443,15 @@ Translates the text with pluralization support. More information in
 yaml_encode
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ input|yaml_encode(inline, dumpObjects) }}
+    {{ input|yaml_encode(inline = 0, dumpObjects = false) }}
 
 ``input``
     **type**: ``mixed``
-``inline``
+``inline`` *(optional)*
     **type**: ``integer`` **default**: ``0``
-``dumpObjects``
+``dumpObjects`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for
@@ -485,15 +460,15 @@ more information.
 yaml_dump
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ value|yaml_dump(inline, dumpObjects) }}
+    {{ value|yaml_dump(inline = 0, dumpObjects = false) }}
 
 ``value``
     **type**: ``mixed``
-``inline``
+``inline`` *(optional)*
     **type**: ``integer`` **default**: ``0``
-``dumpObjects``
+``dumpObjects`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
 Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
@@ -502,7 +477,7 @@ the output.
 abbr_class
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ class|abbr_class }}
 
@@ -515,7 +490,7 @@ FQCN will be shown in a tooltip when a user hovers over the element).
 abbr_method
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ method|abbr_method }}
 
@@ -529,7 +504,7 @@ doesn't have a class name, it's shown as a function (``method()``).
 format_args
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ args|format_args }}
 
@@ -541,7 +516,7 @@ Generates a string with the arguments and their types (within ``<em>`` elements)
 format_args_as_text
 ~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ args|format_args_as_text }}
 
@@ -553,13 +528,13 @@ Equal to the `format_args`_ filter, but without using HTML tags.
 file_excerpt
 ~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ file|file_excerpt(line) }}
+    {{ file|file_excerpt(line = null) }}
 
 ``file``
     **type**: ``string``
-``line``
+``line`` *(optional)*
     **type**: ``integer``
 
 Generates an excerpt of seven lines around the given ``line``.
@@ -567,15 +542,15 @@ Generates an excerpt of seven lines around the given ``line``.
 format_file
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ file|format_file(line, text) }}
+    {{ file|format_file(line, text = null) }}
 
 ``file``
     **type**: ``string``
 ``line``
     **type**: ``integer``
-``text``
+``text`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Generates the file path inside an ``<a>`` element. If the path is inside
@@ -585,7 +560,7 @@ the kernel root directory, the kernel root directory path is replaced by
 format_file_from_text
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ text|format_file_from_text }}
 
@@ -597,11 +572,11 @@ Uses `format_file`_ to improve the output of default PHP errors.
 file_link
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
-    {{ file|file_link(line) }}
+    {{ file|file_link(line = null) }}
 
-``line``
+``line`` *(optional)*
     **type**: ``integer``
 
 Generates a link to the provided file (and optionally line number) using
@@ -615,7 +590,7 @@ Tags
 form_theme
 ~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% form_theme form resources %}
 
@@ -631,15 +606,15 @@ information in :doc:`/cookbook/form/form_customization`.
 trans
 ~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans with vars from domain into locale %}{% endtrans %}
 
-``vars``
+``vars`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``string``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``string``
 
 Renders the translation of the content. More information in :ref:`book-translation-tags`.
@@ -647,17 +622,17 @@ Renders the translation of the content. More information in :ref:`book-translati
 transchoice
 ~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% transchoice count with vars from domain into locale %}{% endtranschoice %}
 
 ``count``
     **type**: ``integer``
-``vars``
+``vars`` *(optional)*
     **type**: ``array`` **default**: ``[]``
-``domain``
+``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
-``locale``
+``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
 Renders the translation of the content with pluralization support, more
@@ -666,7 +641,7 @@ information in :ref:`book-translation-tags`.
 trans_default_domain
 ~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans_default_domain domain %}
 
@@ -693,7 +668,7 @@ Tests
 selectedchoice
 ~~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% if choice is selectedchoice(selectedValue) %}
 
@@ -724,12 +699,6 @@ The available attributes are:
 * ``app.session``
 * ``app.environment``
 * ``app.debug``
-* ``app.security`` (deprecated as of 2.6)
-
-.. caution::
-
-     The ``app.security`` global is deprecated as of 2.6. The user is already
-     available as ``app.user`` and ``is_granted()`` is registered as function.
 
 Symfony Standard Edition Extensions
 -----------------------------------
@@ -739,10 +708,7 @@ Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong
   to the Twig core. You can read more in `the official Twig Extensions
-  documentation`_;
-* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
-  ``{% image %}`` tags. You can read more about them in
-  :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
+  documentation`_.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

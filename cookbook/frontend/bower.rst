@@ -82,7 +82,7 @@ template like normal CSS/JS:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/layout.html.twig #}
         <!doctype html>
@@ -134,6 +134,12 @@ For more details, read the article `Checking in front-end dependencies`_.
 
 But, it's very possible that Bower will add a lock feature in the future
 (e.g. `bower/bower#1748`_).
+
+If you don't care too much about having *exact* the same versions, you can only
+commit the ``bower.json`` file. Running ``bower install`` will give you the
+latest versions within the specified version range of each package in
+``bower.json``. Using strict version constraints (e.g. ``1.10.*``) is often
+enough to ensure only bringing in compatible versions.
 
 .. _Bower: http://bower.io
 .. _`Node.js`: https://nodejs.org

@@ -4,12 +4,6 @@
 How to Use PdoSessionHandler to Store Sessions in the Database
 ==============================================================
 
-.. caution::
-
-    There was a backwards-compatibility break in Symfony 2.6: the database
-    schema changed slightly. See :ref:`Symfony 2.6 Changes <pdo-session-handle-26-changes>`
-    for details.
-
 The default Symfony session storage writes the session information to files.
 Most medium to large websites use a database to store the session values
 instead of files, because databases are easier to use and scale in a
@@ -34,7 +28,7 @@ To use it, you just need to change some parameters in the main configuration fil
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 public:    false
                 arguments:
-                    - "mysql:dbname=mydatabase"
+                    - 'mysql:dbname=mydatabase'
                     - { db_username: myuser, db_password: mypassword }
 
     .. code-block:: xml
@@ -92,7 +86,7 @@ a second array argument to ``PdoSessionHandler``:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 public:    false
                 arguments:
-                    - "mysql:dbname=mydatabase"
+                    - 'mysql:dbname=mydatabase'
                     - { db_table: sessions, db_username: myuser, db_password: mypassword }
 
     .. code-block:: xml
@@ -121,10 +115,6 @@ a second array argument to ``PdoSessionHandler``:
             array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
         ));
         $container->setDefinition('session.handler.pdo', $storageDefinition);
-
-.. versionadded:: 2.6
-    The ``db_lifetime_col`` was introduced in Symfony 2.6. Prior to 2.6,
-    this column did not exist.
 
 These are parameters that you must configure:
 
@@ -164,8 +154,8 @@ of your project's data, you can use the connection settings from the
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 public:    false
                 arguments:
-                    - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                    - { db_username: %database_user%, db_password: %database_password% }
+                    - 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%'
+                    - { db_username: '%database_user%', db_password: '%database_password%' }
 
     .. code-block:: xml
 
@@ -192,24 +182,6 @@ Preparing the Database to Store Sessions
 Before storing sessions in the database, you must create the table that stores
 the information. The following sections contain some examples of the SQL statements
 you may use for your specific database engine.
-
-.. _pdo-session-handle-26-changes:
-
-.. sidebar:: Schema Changes needed when Upgrading to Symfony 2.6
-
-    If you use the ``PdoSessionHandler`` prior to Symfony 2.6 and upgrade, you'll
-    need to make a few changes to your session table:
-
-    * A new session lifetime (``sess_lifetime`` by default) integer column
-      needs to be added;
-    * The data column (``sess_data`` by default) needs to be changed to a
-      BLOB type.
-
-    Check the SQL statements below for more details.
-
-    To keep the old (2.5 and earlier) functionality, change your class name
-    to use ``LegacyPdoSessionHandler`` instead of ``PdoSessionHandler`` (the
-    legacy class was added in Symfony 2.6.2).
 
 MySQL
 ~~~~~

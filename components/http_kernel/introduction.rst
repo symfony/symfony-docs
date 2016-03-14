@@ -560,7 +560,9 @@ below for more details).
        then ``getStatusCode`` and ``getHeaders`` are called on the exception
        and used to populate the headers and status code of the ``FlattenException``
        object. The idea is that these are used in the next step when creating
-       the final response.
+       the final response. If you want to set custom HTTP headers, you can always
+       use the ``setHeaders`` method on exceptions derived from the
+       :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` class.
 
     3) A controller is executed and passed the flattened exception. The exact
        controller to render is passed as a constructor argument to this listener.
@@ -595,7 +597,7 @@ each event has their own event object:
 =====================  ================================  ===================================================================================
 Name                   ``KernelEvents`` Constant         Argument passed to the listener
 =====================  ================================  ===================================================================================
-kernel.request         ``KernelEvents::REQUEST``         :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    
+kernel.request         ``KernelEvents::REQUEST``         :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 kernel.controller      ``KernelEvents::CONTROLLER``      :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 kernel.view            ``KernelEvents::VIEW``            :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 kernel.response        ``KernelEvents::RESPONSE``        :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
@@ -616,6 +618,7 @@ However, the HttpKernel component comes with some built-in listeners and
 a built-in ControllerResolver that can be used to create a working example::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -641,7 +644,7 @@ a built-in ControllerResolver that can be used to create a working example::
     $matcher = new UrlMatcher($routes, new RequestContext());
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addSubscriber(new RouterListener($matcher));
+    $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
 
     $resolver = new ControllerResolver();
     $kernel = new HttpKernel($dispatcher, $resolver);

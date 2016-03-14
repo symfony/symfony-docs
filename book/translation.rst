@@ -134,7 +134,7 @@ different formats, XLIFF being the recommended format:
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
+                    <trans-unit id="symfony_is_great">
                         <source>Symfony is great</source>
                         <target>J'aime Symfony</target>
                     </trans-unit>
@@ -232,7 +232,7 @@ Twig Templates
 Symfony provides specialized Twig tags (``trans`` and ``transchoice``) to
 help with message translation of *static blocks of text*:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans %}Hello %name%{% endtrans %}
 
@@ -256,7 +256,7 @@ works when you use a placeholder following the ``%var%`` pattern.
 
 You can also specify the message domain and pass some additional variables:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
 
@@ -271,7 +271,7 @@ You can also specify the message domain and pass some additional variables:
 The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ message|trans }}
 
@@ -289,7 +289,7 @@ texts* and complex expressions:
     that your translated message is *not* output escaped, you must apply
     the ``raw`` filter after the translation filter:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
             {# text translated between tags is never escaped #}
             {% trans %}
@@ -306,7 +306,7 @@ texts* and complex expressions:
 
     You can set the translation domain for an entire Twig template with a single tag:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
            {% trans_default_domain "app" %}
 
@@ -334,7 +334,7 @@ The translator service is accessible in PHP templates through the
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-Symfony looks for message files (i.e. translations) in the following locations:
+Symfony looks for message files (i.e. translations) in the following default locations:
 
 * the ``app/Resources/translations`` directory;
 
@@ -374,6 +374,51 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
 
+    You can add other directories with the ``paths`` option in the configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                translator:
+                    paths:
+                        - '%kernel.root_dir%/../translations'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
+
+                <framework:config>
+                    <framework:translator>
+                        <framework:path>%kernel.root_dir%/../translations</framework:path>
+                    </framework:translator>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'translator' => array(
+                    'paths' => array(
+                        '%kernel.root_dir%/../translations',
+                    ),
+                ),
+            ));
+
+.. note::
+
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
@@ -387,7 +432,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
     .. code-block:: bash
 
-        $ php app/console cache:clear
+        $ php bin/console cache:clear
 
 .. _book-translation-fallback:
 
@@ -406,9 +451,6 @@ checks translation resources for several locales:
 
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
-
-.. versionadded:: 2.6
-    The ability to log missing translations was introduced in Symfony 2.6.
 
 .. note::
 
@@ -618,7 +660,7 @@ not empty, add the following:
         AppBundle\Entity\Author:
             properties:
                 name:
-                    - NotBlank: { message: "author.name.not_blank" }
+                    - NotBlank: { message: 'author.name.not_blank' }
 
     .. code-block:: xml
 
@@ -671,7 +713,7 @@ bundle.
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
+                    <trans-unit id="author.name.not_blank">
                         <source>author.name.not_blank</source>
                         <target>Please enter an author name.</target>
                     </trans-unit>
@@ -700,9 +742,6 @@ For more information, see the documentation for these libraries.
 
 Debugging Translations
 ----------------------
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``translation:debug``.
 
 When maintaining a bundle, you may use or remove the usage of a translation
 message without updating all message catalogues. The ``debug:translation``
@@ -815,7 +854,7 @@ To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
 .. code-block:: bash
 
-    $ php app/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr AcmeDemoBundle
 
 You will get this output:
 
@@ -856,15 +895,15 @@ By default all domains are inspected, but it is possible to specify a single dom
 
 .. code-block:: bash
 
-    $ php app/console debug:translation en AcmeDemoBundle --domain=messages
+    $ php bin/console debug:translation en AcmeDemoBundle --domain=messages
 
 When bundles have a lot of messages, it is useful to display only the unused
 or only the missing messages, by using the ``--only-unused`` or ``--only-missing`` switches:
 
 .. code-block:: bash
 
-    $ php app/console debug:translation en AcmeDemoBundle --only-unused
-    $ php app/console debug:translation en AcmeDemoBundle --only-missing
+    $ php bin/console debug:translation en AcmeDemoBundle --only-unused
+    $ php bin/console debug:translation en AcmeDemoBundle --only-missing
 
 Summary
 -------

@@ -21,14 +21,14 @@ format you prefer:
             - { resource: security.yml }
 
         framework:
-            secret:          "%secret%"
-            router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+            secret:          '%secret%'
+            router:          { resource: '%kernel.root_dir%/config/routing.yml' }
             # ...
 
         # Twig Configuration
         twig:
-            debug:            "%kernel.debug%"
-            strict_variables: "%kernel.debug%"
+            debug:            '%kernel.debug%'
+            strict_variables: '%kernel.debug%'
 
         # ...
 
@@ -87,8 +87,8 @@ format you prefer:
 
 .. note::
 
-   You'll learn exactly how to load each file/format in the next section
-   `Environments`_.
+    You'll learn exactly how to load each file/format in the next section
+    `Environments`_.
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
@@ -122,13 +122,13 @@ FrameworkBundle configuration:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference FrameworkBundle
+    $ php bin/console config:dump-reference FrameworkBundle
 
 The extension alias (configuration key) can also be used:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference framework
+    $ php bin/console config:dump-reference framework
 
 .. note::
 
@@ -177,7 +177,7 @@ cached files and allow them to rebuild:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug
 
 .. note::
 
@@ -194,6 +194,12 @@ cached files and allow them to rebuild:
     The ``test`` environment is used when running automated tests and cannot
     be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
+
+.. tip::
+
+    When using the ``server:run`` command to start a server,
+    ``http://localhost:8000/`` will use the dev front controller of your
+    application.
 
 .. index::
    single: Environments; Configuration
@@ -226,7 +232,7 @@ the configuration file for the ``dev`` environment.
             - { resource: config.yml }
 
         framework:
-            router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
+            router:   { resource: '%kernel.root_dir%/config/routing_dev.yml' }
             profiler: { only_exceptions: false }
 
         # ...

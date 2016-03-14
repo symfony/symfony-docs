@@ -45,7 +45,7 @@ change the value of ``path`` from
             # ...
             nested:
                 # ...
-                path: "php://stderr"
+                path: 'php://stderr'
 
 Once the application is deployed, run ``heroku logs --tail`` to keep the
 stream of logs from Heroku open in your terminal.
@@ -167,7 +167,7 @@ variables, you can issue a single command to prepare your app for a deployment:
 Next up, it's finally time to deploy your application to Heroku. If you are
 doing this for the very first time, you may see a message such as the following:
 
-.. code-block:: bash
+.. code-block:: text
 
     The authenticity of host 'heroku.com (50.19.85.132)' can't be established.
     RSA key fingerprint is 8b:48:5e:67:0e:c9:16:47:32:f2:87:0c:1f:c8:60:ad.
@@ -275,7 +275,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
     {
         "scripts": {
             "compile": [
-                "app/console assetic:dump"
+                "bin/console assetic:dump"
             ]
         }
     }

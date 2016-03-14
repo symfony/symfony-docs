@@ -4,6 +4,89 @@
 How to Use Assetic for Asset Management
 =======================================
 
+Installing and Enabling Assetic
+-------------------------------
+
+Starting from Symfony 2.8, Assetic is no longer included by default in the
+Symfony Standard Edition. Before using any of its features, install the
+AsseticBundle executing this console command in your project:
+
+.. code-block:: bash
+
+    $ composer require symfony/assetic-bundle
+
+Then, enable the bundle in the ``AppKernel.php`` file of your Symfony application::
+
+    // app/AppKernel.php
+
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+                new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            );
+
+            // ...
+        }
+    }
+
+Finally, add the following minimal configuration to enable Assetic support in
+your application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            debug:          '%kernel.debug%'
+            use_controller: '%kernel.debug%'
+            filters:
+                cssrewrite: ~
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config debug="%kernel.debug%" use-controller="%kernel.debug%">
+                <assetic:filters cssrewrite="null" />
+            </assetic:config>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'debug' => '%kernel.debug%',
+            'use_controller' => '%kernel.debug%',
+            'filters' => array(
+                'cssrewrite' => null,
+            ),
+            // ...
+        ));
+
+        // ...
+
+Introducing Assetic
+-------------------
+
 Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
 :ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
@@ -16,7 +99,7 @@ directly:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <script src="{{ asset('js/script.js') }}"></script>
 
@@ -57,7 +140,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' %}
             <script src="{{ asset_url }}"></script>
@@ -77,7 +160,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
     Standard Edition, the ``javascripts`` tag will most commonly live in the
     ``javascripts`` block:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# ... #}
         {% block javascripts %}
@@ -113,7 +196,7 @@ except with the ``stylesheets`` tag:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
@@ -134,7 +217,7 @@ except with the ``stylesheets`` tag:
     Standard Edition, the ``stylesheets`` tag will most commonly live in the
     ``stylesheets`` block:
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# ... #}
         {% block stylesheets %}
@@ -166,7 +249,7 @@ To include an image you can use the ``image`` tag.
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% image '@AppBundle/Resources/public/images/example.jpg' %}
             <img src="{{ asset_url }}" alt="Example" />
@@ -218,7 +301,7 @@ but still serve them as a single file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts
             '@AppBundle/Resources/public/js/*'
@@ -257,7 +340,7 @@ combine third party assets, such as jQuery, with your own into a single file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts
             '@AppBundle/Resources/public/js/thirdparty/jquery.js'
@@ -301,7 +384,12 @@ configuration under the ``assetic`` section. Read more in the
         <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:asset name="jquery_and_ui">
@@ -330,7 +418,7 @@ with the ``@named_asset`` notation:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts
             '@jquery_and_ui'
@@ -388,11 +476,21 @@ should be defined:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="uglifyjs2"
-                bin="/usr/local/bin/uglifyjs" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="uglifyjs2"
+                    bin="/usr/local/bin/uglifyjs" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -410,7 +508,7 @@ into your template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
@@ -436,7 +534,7 @@ done from the template and is relative to the public document root:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
             <script src="{{ asset_url }}"></script>
@@ -457,7 +555,7 @@ done from the template and is relative to the public document root:
     Symfony also contains a method for cache *busting*, where the final URL
     generated by Assetic contains a query parameter that can be incremented
     via configuration on each deployment. For more information, see the
-    :ref:`ref-framework-assets-version` configuration option.
+    :ref:`reference-framework-assets-version` configuration option.
 
 .. _cookbook-assetic-dumping:
 
@@ -500,7 +598,7 @@ each time you deploy), you should run the following command:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 This will physically generate and write each file that you need (e.g. ``/js/abcd123.js``).
 If you update any of your assets, you'll need to run this again to regenerate
@@ -528,7 +626,17 @@ the following change in your ``config_dev.yml`` file:
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
-        <assetic:config use-controller="false" />
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config use-controller="false" />
+        </container>
 
     .. code-block:: php
 
@@ -542,7 +650,7 @@ need to dump them manually. To do so, run the following command:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump
+    $ php bin/console assetic:dump
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
@@ -551,7 +659,7 @@ assets will be regenerated automatically *as they change*:
 
 .. code-block:: bash
 
-    $ php app/console assetic:watch
+    $ php bin/console assetic:watch
 
 The ``assetic:watch`` command was introduced in AsseticBundle 2.4. In prior
 versions, you had to use the ``--watch`` option of the ``assetic:dump``
@@ -563,7 +671,7 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
             <script src="{{ asset_url }}"></script>

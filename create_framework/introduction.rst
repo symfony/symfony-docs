@@ -69,7 +69,7 @@ Before You Start
 
 Reading about how to create a framework is not enough. You will have to follow
 along and actually type all the examples included in this tutorial. For that,
-you need a recent version of PHP (5.3.9 or later is good enough), a web server
+you need a recent version of PHP (5.5.9 or later is good enough), a web server
 (like Apache, NGinx or PHP's built-in web server), a good knowledge of PHP and
 an understanding of Object Oriented programming.
 
@@ -104,21 +104,21 @@ Instead of creating our framework from scratch, we are going to write the same
 start with the simplest web application we can think of in PHP::
 
     // framework/index.php
-
     $input = $_GET['name'];
 
     printf('Hello %s', $input);
 
-If you have PHP 5.4, you can use the PHP built-in server to test this great
-application in a browser (``http://localhost:4321/index.php?name=Fabien``).
-Otherwise, use your own server (Apache, Nginx, etc.):
+You can use the PHP built-in server to test this great application in a browser
+(``http://localhost:4321/index.php?name=Fabien``):
 
 .. code-block:: bash
 
     $ php -S 127.0.0.1:4321
 
-In the next chapter, we are going to introduce the HttpFoundation Component
-and see what it brings us.
+Otherwise, you can always use your own server (Apache, Nginx, etc.).
+
+In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
+introduce the HttpFoundation Component and see what it brings us.
 
 .. _`Symfony`: http://symfony.com/
 .. _`Silex`: http://silex.sensiolabs.org/

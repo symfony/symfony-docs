@@ -57,8 +57,8 @@ which uses a login form to load users from the database:
                 pattern: ^/
                 anonymous: true
                 form_login:
-                    check_path: security_login_check
-                    login_path: security_login_form
+                    check_path: login
+                    login_path: login
 
                 logout:
                     path: security_logout
@@ -264,37 +264,65 @@ the same ``getAuthorEmail`` logic you used above:
 
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use AppBundle\Entity\Post;
 
-    // AbstractVoter class requires Symfony 2.6 or higher version
-    class PostVoter extends AbstractVoter
+    class PostVoter extends Voter
     {
         const CREATE = 'create';
         const EDIT   = 'edit';
 
-        protected function getSupportedAttributes()
+        /**
+         * @var AccessDecisionManagerInterface
+         */
+        private $decisionManager;
+
+        public function __construct(AccessDecisionManagerInterface $decisionManager)
         {
-            return array(self::CREATE, self::EDIT);
+            $this->decisionManager = $decisionManager;
         }
 
-        protected function getSupportedClasses()
+        protected function supports($attribute, $subject)
         {
-            return array('AppBundle\Entity\Post');
+            if (!in_array($attribute, array(self::CREATE, self::EDIT))) {
+                return false;
+            }
+
+            if (!$subject instanceof Post) {
+                return false;
+            }
+
+            return true;
         }
 
-        protected function isGranted($attribute, $post, $user = null)
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
         {
+            $user = $token->getUser();
+            /** @var Post */
+            $post = $subject; // $subject must be a Post instance, thanks to the supports method
+
             if (!$user instanceof UserInterface) {
                 return false;
             }
 
-            if ($attribute === self::CREATE && in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-                return true;
-            }
+            switch ($attribute) {
+                case self::CREATE:
+                    // if the user is an admin, allow them to create new posts
+                    if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
+                        return true;
+                    }
 
-            if ($attribute === self::EDIT && $user->getEmail() === $post->getAuthorEmail()) {
-                return true;
+                    break;
+                case self::EDIT:
+                    // if the user is the author of the post, allow them to edit the posts
+                    if ($user->getEmail() === $post->getAuthorEmail()) {
+                        return true;
+                    }
+
+                    break;
             }
 
             return false;
@@ -310,6 +338,7 @@ To enable the security voter in the application, define a new service:
         # ...
         post_voter:
             class:      AppBundle\Security\PostVoter
+            arguments: ['@security.access.decision_manager']
             public:     false
             tags:
                - { name: security.voter }
@@ -337,7 +366,7 @@ via the even easier shortcut in a controller:
      */
     public function editAction($id)
     {
-        $post = // query for the post ...
+        $post = ...; // query for the post
 
         $this->denyAccessUnlessGranted('edit', $post);
 

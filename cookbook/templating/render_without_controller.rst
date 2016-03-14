@@ -62,14 +62,18 @@ this is probably only useful if you'd like to cache this page partial (see
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ render(url('acme_privacy')) }}
 
     .. code-block:: html+php
 
+        <?php
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
+
         <?php echo $view['actions']->render(
-            $view['router']->generate('acme_privacy', array(), true)
+            $view['router']->generate('acme_privacy', array(), UrlGeneratorInterface::ABSOLUTE_URL)
         ) ?>
 
 .. _cookbook-templating-no-controller-caching:

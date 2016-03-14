@@ -34,7 +34,6 @@ To make it work, the framework must dispatch an event just before returning
 the Response instance::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\HttpFoundation\Request;
@@ -46,9 +45,9 @@ the Response instance::
 
     class Framework
     {
-        protected $matcher;
-        protected $resolver;
-        protected $dispatcher;
+        private $matcher;
+        private $resolver;
+        private $dispatcher;
 
         public function __construct(EventDispatcher $dispatcher, UrlMatcherInterface $matcher, ControllerResolverInterface $resolver)
         {
@@ -85,7 +84,6 @@ Each time the framework handles a Request, a ``ResponseEvent`` event is
 now dispatched::
 
     // example.com/src/Simplex/ResponseEvent.php
-
     namespace Simplex;
 
     use Symfony\Component\HttpFoundation\Request;
@@ -118,7 +116,6 @@ The last step is the creation of the dispatcher in the front controller and
 the registration of a listener for the ``response`` event::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     // ...
@@ -154,7 +151,7 @@ event (``response``); the event name must be the same as the one used in the
 ``dispatch()`` call.
 
 In the listener, we add the Google Analytics code only if the response is not
-a redirection, if the requested format is HTML, and if the response content
+a redirection, if the requested format is HTML and if the response content
 type is HTML (these conditions demonstrate the ease of manipulating the
 Request and Response data from your code).
 
@@ -197,7 +194,6 @@ the priority to ``-255``::
 Let's refactor the code a bit by moving the Google listener to its own class::
 
     // example.com/src/Simplex/GoogleListener.php
-
     namespace Simplex;
 
     class GoogleListener
@@ -220,7 +216,6 @@ Let's refactor the code a bit by moving the Google listener to its own class::
 And do the same with the other listener::
 
     // example.com/src/Simplex/ContentLengthListener.php
-
     namespace Simplex;
 
     class ContentLengthListener
@@ -259,7 +254,6 @@ information to the dispatcher via the ``getSubscribedEvents()`` method. Have a
 look at the new version of the ``GoogleListener``::
 
     // example.com/src/Simplex/GoogleListener.php
-
     namespace Simplex;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -277,7 +271,6 @@ look at the new version of the ``GoogleListener``::
 And here is the new version of ``ContentLengthListener``::
 
     // example.com/src/Simplex/ContentLengthListener.php
-
     namespace Simplex;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

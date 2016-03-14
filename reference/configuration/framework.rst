@@ -31,7 +31,6 @@ Configuration
     * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
     * :ref:`enabled <reference-csrf_protection-enabled>`
-    * `field_name`_ (deprecated as of 2.4)
 * `esi`_
     * :ref:`enabled <reference-esi-enabled>`
 * `fragments`_
@@ -69,19 +68,19 @@ Configuration
     * `gc_probability`_
     * `gc_maxlifetime`_
     * `save_path`_
+* `assets`_
+    * `base_path`_
+    * `base_urls`_
+    * `packages`_
+    * `version`_
+    * `version_format`_
 * `templating`_
-    * `assets_version`_
-    * `assets_version_format`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
         * `resources`_
-    * `assets_base_urls`_
-        * http
-        * ssl
     * :ref:`cache <reference-templating-cache>`
     * `engines`_
     * `loaders`_
-    * `packages`_
 * `translator`_
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
@@ -95,7 +94,6 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
-    * `api`_
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -104,6 +102,7 @@ Configuration
     * :ref:`enabled <reference-serializer-enabled>`
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+    * `name_converter`_
 
 secret
 ~~~~~~
@@ -134,9 +133,6 @@ out all the application users.
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ``http_method_override`` option was introduced in Symfony 2.3.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -178,10 +174,6 @@ trusted_proxies
 Configures the IP addresses that should be trusted as proxies. For more
 details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
-    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -219,7 +211,7 @@ If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.
 
-Symfony contains preconfigured urls for some popular IDEs, you can set them
+Symfony contains preconfigured URLs for some popular IDEs, you can set them
 using the following keys:
 
 * ``textmate``
@@ -227,10 +219,7 @@ using the following keys:
 * ``emacs``
 * ``sublime``
 
-.. versionadded:: 2.3.14
-    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
-
-You can also specify a custom url string. If you do this, all percentage
+You can also specify a custom URL string. If you do this, all percentage
 signs (``%``) must be doubled to escape that character. For example, if
 you use PHPstorm on the Mac OS platform, you will do something like:
 
@@ -240,7 +229,7 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
         # app/config/config.yml
         framework:
-            ide: "phpstorm://open?file=%%f&line=%%l"
+            ide: 'phpstorm://open?file=%%f&line=%%l'
 
     .. code-block:: xml
 
@@ -269,8 +258,11 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-in the ``php.ini`` configuration to the url string. If this configuration
-value is set, then the ``ide`` option will be ignored.
+in the ``php.ini`` configuration to the URL string.
+
+If you don't use Xdebug, another way is to set this URL string in the
+``SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT`` environment variable.
+If any of these configurations values are set, the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -424,18 +416,6 @@ If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
-field_name
-..........
-
-.. caution::
-
-    The ``framework.csrf_protection.field_name`` setting is deprecated as
-    of Symfony 2.4, use ``framework.form.csrf_protection.field_name`` instead.
-
-**type**: ``string`` **default**: ``"_token"``
-
-The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
-
 esi
 ~~~
 
@@ -523,11 +503,6 @@ profiler
 enabled
 .......
 
-.. versionadded:: 2.2
-    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
-    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
-    configuration entirely.
-
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this option to ``true``. When you
@@ -542,12 +517,6 @@ and ``test`` environments.
 
 collect
 .......
-
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -743,7 +712,7 @@ cookie_lifetime
 **type**: ``integer`` **default**: ``null``
 
 This determines the lifetime of the session - in seconds. The default value
-- ``null`` - means that the ``sesssion.cookie_lifetime`` value from ``php.ini``
+- ``null`` - means that the ``session.cookie_lifetime`` value from ``php.ini``
 will be used. Setting this value to ``0`` means the cookie is valid for
 the length of the browser session.
 
@@ -810,7 +779,7 @@ start and depends on `gc_divisor`_ and `gc_probability`_.
 save_path
 .........
 
-**type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
+**type**: ``string`` **default**: ``%kernel.cache_dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
@@ -852,14 +821,175 @@ setting the value to ``null``:
             ),
         ));
 
-templating
-~~~~~~~~~~
+assets
+~~~~~~
+
+.. _reference-assets-base-path:
+
+base_path
+.........
+
+**type**: ``string``
+
+This option allows you to define a base path to be used for assets:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets base_path="/images" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'base_path' => '/images',
+            ),
+        ));
+
+.. _reference-templating-base-urls:
+.. _reference-assets-base-urls:
+
+base_urls
+.........
+
+**type**: ``array``
+
+This option allows you to define base URLs to be used for assets.
+If multiple base URLs are provided, Symfony will select one from the
+collection each time it generates an asset's path:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                base_urls:
+                    - 'http://cdn.example.com/'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets base-url="http://cdn.example.com/" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'base_urls' => array('http://cdn.example.com/'),
+            ),
+        ));
+
+packages
+........
+
+You can group assets into packages, to specify different base URLs for them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                packages:
+                    avatars:
+                        base_urls: 'http://static_cdn.example.com/avatars'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets>
+                    <framework:package
+                        name="avatars"
+                        base-url="http://static_cdn.example.com/avatars" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'packages' => array(
+                    'avatars' => array(
+                        'base_urls' => 'http://static_cdn.example.com/avatars',
+                    ),
+                ),
+            ),
+        ));
+
+Now you can use the ``avatars`` package in your templates:
+
+.. configuration-block:: php
+
+    .. code-block:: html+twig
+
+        <img src="{{ asset('...', 'avatars') }}">
+
+    .. code-block:: html+php
+
+        <img src="<?php echo $view['assets']->getUrl('...', 'avatars') ?>">
+
+Each package can configure the following options:
+
+* :ref:`base_path <reference-assets-base-path>`
+* :ref:`base_urls <reference-assets-base-urls>`
+* :ref:`version <reference-framework-assets-version>`
+* :ref:`version_format <reference-assets-version-format>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
 
-assets_version
-..............
+version
+.......
 
 **type**: ``string``
 
@@ -872,7 +1002,7 @@ For example, suppose you have the following:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
@@ -881,7 +1011,7 @@ For example, suppose you have the following:
         <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
 
 By default, this will render a path to your image such as ``/images/logo.png``.
-Now, activate the ``assets_version`` option:
+Now, activate the ``version`` option:
 
 .. configuration-block::
 
@@ -890,7 +1020,8 @@ Now, activate the ``assets_version`` option:
         # app/config/config.yml
         framework:
             # ...
-            templating: { engines: ['twig'], assets_version: v2 }
+            assets:
+                version: 'v2'
 
     .. code-block:: xml
 
@@ -902,10 +1033,9 @@ Now, activate the ``assets_version`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:templating assets-version="v2">
-                <!-- ... -->
-                <framework:engine>twig</framework:engine>
-            </framework:templating>
+            <framework:config>
+                <framework:assets version="v2" />
+            </framework:config>
         </container>
 
     .. code-block:: php
@@ -913,40 +1043,40 @@ Now, activate the ``assets_version`` option:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'templating'      => array(
-                'engines'        => array('twig'),
-                'assets_version' => 'v2',
+            'assets' => array(
+                'version' => 'v2',
             ),
         ));
 
 Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
-this feature, you **must** manually increment the ``assets_version`` value
+this feature, you **must** manually increment the ``version`` value
 before each deployment so that the query parameters change.
 
 It's also possible to set the version value on an asset-by-asset basis (instead
 of using the global version - e.g. ``v2`` - set here). See
 :ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
 
-You can also control how the query string works via the `assets_version_format`_
+You can also control how the query string works via the `version_format`_
 option.
 
 .. tip::
 
     As with all settings, you can use a parameter as value for the
-    ``assets_version``. This makes it easier to increment the cache on each
+    ``version``. This makes it easier to increment the cache on each
     deployment.
 
 .. _reference-templating-version-format:
+.. _reference-assets-version-format:
 
-assets_version_format
-.....................
+version_format
+..............
 
 **type**: ``string`` **default**: ``%%s?%%s``
 
 This specifies a :phpfunction:`sprintf` pattern that will be used with the
-`assets_version`_ option to construct an asset's path. By default, the pattern
+`version`_ option to construct an asset's path. By default, the pattern
 adds the asset's version as a query string. For example, if
-``assets_version_format`` is set to ``%%s?version=%%s`` and ``assets_version``
+``version_format`` is set to ``%%s?version=%%s`` and ``version``
 is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
 .. note::
@@ -959,7 +1089,7 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
     Some CDN's do not support cache-busting via query strings, so injecting
     the version into the actual file path is necessary. Thankfully,
-    ``assets_version_format`` is not limited to producing versioned query
+    ``version_format`` is not limited to producing versioned query
     strings.
 
     The pattern receives the asset's original path and version as its first
@@ -974,6 +1104,9 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     appropriate version path as part of your deployment process and forgot
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
+
+templating
+~~~~~~~~~~
 
 hinclude_default_template
 .........................
@@ -1062,118 +1195,6 @@ Assume you have custom global form themes in
 
     See :ref:`book-forms-theming-global` for more information.
 
-.. _reference-templating-base-urls:
-
-assets_base_urls
-................
-
-**default**: ``{ http: [], ssl: [] }``
-
-This option allows you to define base URLs to be used for assets referenced
-from ``http`` and ``ssl`` (``https``) pages. If multiple base URLs are
-provided, Symfony will select one from the collection each time it generates
-an asset's path:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating:
-                assets_base_urls:
-                    http:
-                        - "http://cdn.example.com/"
-                # you can also pass just a string:
-                # assets_base_urls:
-                #     http: "//cdn.example.com/"
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
-
-            <framework:config>
-                <!-- ... -->
-
-                <framework:templating>
-                    <framework:assets-base-url>
-                        <framework:http>http://cdn.example.com/</framework:http>
-                    </framework:assets-base-url>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating' => array(
-                'assets_base_urls' => array(
-                    'http' => array(
-                        'http://cdn.example.com/',
-                    ),
-                ),
-                // you can also pass just a string:
-                // 'assets_base_urls' => array(
-                //     'http' => '//cdn.example.com/',
-                // ),
-            ),
-        ));
-
-For your convenience, you can pass a string or array of strings to
-``assets_base_urls`` directly. This will automatically be organized into
-the ``http`` and ``ssl`` base urls (``https://`` and `protocol-relative`_
-URLs will be added to both collections and ``http://`` only to the ``http``
-collection):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating:
-                assets_base_urls:
-                    - "//cdn.example.com/"
-                # you can also pass just a string:
-                # assets_base_urls: "//cdn.example.com/"
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
-
-            <framework:config>
-                <!-- ... -->
-
-                <framework:templating>
-                    <framework:assets-base-url>//cdn.example.com/</framework:assets-base-url>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating' => array(
-                'assets_base_urls' => array(
-                    '//cdn.example.com/',
-                ),
-                // you can also pass just a string:
-                // 'assets_base_urls' => '//cdn.example.com/',
-            ),
-        ));
-
 .. _reference-templating-cache:
 
 cache
@@ -1209,78 +1230,6 @@ templating loaders. Templating loaders are used to find and load templates
 from a resource (e.g. a filesystem or database). Templating loaders must
 implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
-packages
-........
-
-You can group assets into packages, to specify different base URLs for them:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating:
-                packages:
-                    avatars:
-                        base_urls: 'http://static_cdn.example.com/avatars'
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-
-                <framework:templating>
-
-                    <framework:package
-                        name="avatars"
-                        base-url="http://static_cdn.example.com/avatars">
-
-                </framework:templating>
-
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating' => array(
-                'packages' => array(
-                    'avatars' => array(
-                        'base_urls' => 'http://static_cdn.example.com/avatars',
-                    ),
-                ),
-            ),
-        ));
-
-Now you can use the ``avatars`` package in your templates:
-
-.. configuration-block:: php
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('...', 'avatars') }}">
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl('...', 'avatars') ?>">
-
-Each package can configure the following options:
-
-* :ref:`base_urls <reference-templating-base-urls>`
-* :ref:`version <reference-framework-assets-version>`
-* :ref:`version_format <reference-templating-version-format>`
-
 translator
 ~~~~~~~~~~
 
@@ -1300,12 +1249,6 @@ fallbacks
 
 **type**: ``string|array`` **default**: ``array('en')``
 
-.. versionadded:: 2.3.25
-    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
-    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
-    language defined as a string. Please note that you can still use the
-    old ``fallback`` option if you want define only one fallback.
-
 This option is used when the translation key for the current locale wasn't
 found.
 
@@ -1317,9 +1260,6 @@ found.
 
 logging
 .......
-
-.. versionadded:: 2.6
-    The ``logging`` option was introduced in Symfony 2.6.
 
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
@@ -1374,10 +1314,6 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
-.. versionadded:: 2.8
-    The ``validator.mapping.cache.doctrine.apc`` service was introduced in
-    Symfony 2.8.
-
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
 cache provide from the Doctrine project.
 
@@ -1401,41 +1337,11 @@ error messages.
 strict_email
 ............
 
-.. versionadded:: 2.5
-    The ``strict_email`` option was introduced in Symfony 2.5.
-
 **type**: ``Boolean`` **default**: ``false``
 
 If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
-
-api
-...
-
-.. versionadded:: 2.5
-    The ``api`` option was introduced in Symfony 2.5.
-
-**type**: ``string``
-
-Starting with Symfony 2.5, the Validator component introduced a new validation
-API. The ``api`` option is used to switch between the different implementations:
-
-``2.5``
-    Use the validation API introduced in Symfony 2.5.
-
-``2.5-bc`` or ``auto``
-    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
-    Symfony will use an API implementation that is compatible with both the
-    legacy ``2.4`` implementation and the ``2.5`` implementation.
-
-.. note::
-
-    The support for the native 2.4 API has been dropped since Symfony 2.7.
-
-To capture these logs in the ``prod`` environment, configure a
-:doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for
-the ``translation`` channel and set its ``level`` to ``debug``.
 
 annotations
 ~~~~~~~~~~~
@@ -1497,7 +1403,7 @@ cache
 **type**: ``string``
 
 The service that is used to persist class metadata in a cache. The service
-has to implement the :class:`Doctrine\\Common\\Cache\\Cache` interface.
+has to implement the ``Doctrine\Common\Cache\Cache`` interface.
 
 .. seealso::
 
@@ -1516,6 +1422,21 @@ If this option is enabled, serialization groups can be defined using annotations
 
     For more information, see :ref:`cookbook-serializer-using-serialization-groups-annotations`.
 
+name_converter
+..............
+
+**type**: ``string``
+
+The name converter to use.
+The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
+name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
+value.
+
+.. seealso::
+
+    For more information, see
+    :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
+
 Full Default Configuration
 --------------------------
 
@@ -1533,7 +1454,6 @@ Full Default Configuration
 
             csrf_protection:
                 enabled:              false
-                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
 
             # form configuration
             form:
@@ -1598,40 +1518,41 @@ Full Default Configuration
                 gc_divisor:           ~
                 gc_probability:       ~
                 gc_maxlifetime:       ~
-                save_path:            "%kernel.cache_dir%/sessions"
+                save_path:            '%kernel.cache_dir%/sessions'
 
             # serializer configuration
             serializer:
                enabled: false
 
+            # assets configuration
+            assets:
+                base_path:          ~
+                base_urls:          []
+                version:            ~
+                version_format:     '%%s?%%s'
+                packages:
+
+                    # Prototype
+                    name:
+                        base_path:            ~
+                        base_urls:            []
+                        version:              ~
+                        version_format:       '%%s?%%s'
+
             # templating configuration
             templating:
-                assets_version:       ~
-                assets_version_format:  "%%s?%%s"
                 hinclude_default_template:  ~
                 form:
                     resources:
 
                         # Default:
                         - FrameworkBundle:Form
-                assets_base_urls:
-                    http:                 []
-                    ssl:                  []
                 cache:                ~
                 engines:              # Required
 
                     # Example:
                     - twig
                 loaders:              []
-                packages:
-
-                    # Prototype
-                    name:
-                        version:              ~
-                        version_format:       "%%s?%%s"
-                        base_urls:
-                            http:                 []
-                            ssl:                  []
 
             # translator configuration
             translator:
@@ -1649,10 +1570,9 @@ Full Default Configuration
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       "%kernel.cache_dir%/annotations"
-                debug:                "%kernel.debug%"
+                file_cache_dir:       '%kernel.cache_dir%/annotations'
+                debug:                '%kernel.debug%'
 
-.. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html

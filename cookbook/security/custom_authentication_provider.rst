@@ -10,6 +10,7 @@ How to Create a custom Authentication Provider
     you through that process. But depending on your needs, you may be able
     to solve your problem in a simpler, or via a community bundle:
 
+    * :doc:`/cookbook/security/guard-authentication`
     * :doc:`/cookbook/security/custom_password_authenticator`
     * :doc:`/cookbook/security/api_key_authentication`
     * To authenticate via OAuth using a third-party service such as Google, Facebook
@@ -134,7 +135,7 @@ set an authenticated token in the token storage if successful.
         {
             $request = $event->getRequest();
 
-            $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
+            $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([a-zA-Z0-9+/]+={0,2})", Created="([^"]+)"/';
             if (!$request->headers->has('x-wsse') || 1 !== preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
                 return;
             }
@@ -213,7 +214,6 @@ the ``PasswordDigest`` header value matches with the user's password.
     use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use AppBundle\Security\Authentication\Token\WsseUserToken;
-    use Symfony\Component\Security\Core\Util\StringUtils;
 
     class WsseProvider implements AuthenticationProviderInterface
     {
@@ -260,19 +260,22 @@ the ``PasswordDigest`` header value matches with the user's password.
 
             // Validate that the nonce is *not* used in the last 5 minutes
             // if it has, this could be a replay attack
-            if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 > time()) {
+            if (
+                file_exists($this->cacheDir.'/'.md5($nonce))
+                && file_get_contents($this->cacheDir.'/'.md5($nonce)) + 300 > time()
+            ) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
             // If cache directory does not exist we create it
             if (!is_dir($this->cacheDir)) {
                 mkdir($this->cacheDir, 0777, true);
             }
-            file_put_contents($this->cacheDir.'/'.$nonce, time());
+            file_put_contents($this->cacheDir.'/'.md5($nonce), time());
 
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
 
-            return StringUtils::equals($expected, $digest);
+            return hash_equals($expected, $digest);
         }
 
         public function supports(TokenInterface $token)
@@ -291,11 +294,10 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. note::
 
-    The comparison of the expected and the provided digests uses a constant
-    time comparison provided by the
-    :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
-    method of the ``StringUtils`` class. It is used to mitigate possible
-    `timing attacks`_.
+    While the :phpfunction:`hash_equals` function was introduced in PHP 5.6,
+    you are safe to use it with any PHP version in your Symfony application. In
+    PHP versions prior to 5.6, `Symfony Polyfill`_ (which is included in
+    Symfony) will define the function for you.
 
 The Factory
 -----------
@@ -358,8 +360,8 @@ requires the following methods:
     to the DI container for the appropriate security context.
 
 ``getPosition``
-    Method which must be of type ``pre_auth``, ``form``, ``http``,
-    and ``remember_me`` and defines the position at which the provider is called.
+    Returns when the provider should be called. This can be one of ``pre_auth``,
+    ``form``, ``http`` or ``remember_me``.
 
 ``getKey``
     Method which defines the configuration key used to reference
@@ -408,13 +410,13 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             wsse.security.authentication.provider:
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
                 arguments:
-                    - "" # User Provider
-                    - "%kernel.cache_dir%/security/nonces"
+                    - '' # User Provider
+                    - '%kernel.cache_dir%/security/nonces'
                 public: false
 
             wsse.security.authentication.listener:
                 class: AppBundle\Security\Firewall\WsseListener
-                arguments: ["@security.token_storage", "@security.authentication.manager"]
+                arguments: ['@security.token_storage', '@security.authentication.manager']
                 public: false
 
     .. code-block:: xml
@@ -674,3 +676,4 @@ in the factory and consumed or passed to the other classes in the container.
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce
 .. _`timing attacks`: https://en.wikipedia.org/wiki/Timing_attack
+.. _`Symfony Polyfill`: https://github.com/symfony/polyfill

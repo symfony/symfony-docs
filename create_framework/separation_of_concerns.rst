@@ -8,7 +8,7 @@ class. It would bring us better *reusability* and easier testing to name just
 a few benefits.
 
 If you have a closer look at the code, ``front.php`` has one input, the
-Request, and one output, the Response. Our framework class will follow this
+Request and one output, the Response. Our framework class will follow this
 simple principle: the logic is about creating the Response associated with a
 Request.
 
@@ -16,7 +16,6 @@ Let's create our very own namespace for our framework: ``Simplex``. Move the
 request handling logic into its own ``Simplex\\Framework`` class::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\HttpFoundation\Request;
@@ -60,7 +59,6 @@ And update ``example.com/web/front.php`` accordingly::
     // example.com/web/front.php
 
     // ...
-
     $request = Request::createFromGlobals();
     $routes = include __DIR__.'/../src/app.php';
 
@@ -79,27 +77,22 @@ To wrap up the refactoring, let's move everything but routes definition from
 For the classes defined under the ``Simplex`` and ``Calendar`` namespaces to
 be autoloaded, update the ``composer.json`` file:
 
-.. code-block:: javascript
+.. code-block:: json
 
     {
-        "require": {
-            "symfony/http-foundation": "2.5.*",
-            "symfony/routing": "2.5.*",
-            "symfony/http-kernel": "2.5.*"
-        },
+        "...": "...",
         "autoload": {
-            "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
+            "psr-4": { "": "src/" }
         }
     }
 
 .. note::
 
-    For the Composer autoloader to be updated, run ``composer update``.
+    For the Composer autoloader to be updated, run ``composer dump-autoload``.
 
-Move the controller to ``Calendar\\Controller\\LeapYearController``::
+Move the controller to ``Calendar\Controller\LeapYearController``::
 
     // example.com/src/Calendar/Controller/LeapYearController.php
-
     namespace Calendar\Controller;
 
     use Symfony\Component\HttpFoundation\Request;
@@ -122,7 +115,6 @@ Move the controller to ``Calendar\\Controller\\LeapYearController``::
 And move the ``is_leap_year()`` function to its own class too::
 
     // example.com/src/Calendar/Model/LeapYear.php
-
     namespace Calendar\Model;
 
     class LeapYear

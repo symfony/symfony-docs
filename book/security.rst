@@ -510,11 +510,14 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, you can use an `online tool`_, which will give you something
-like this:
+For hardcoded users, you can use the built-in command:
+
+.. code-block:: bash
+
+    $ php bin/console security:encode-password
+
+It will give you something like this:
 
 .. configuration-block::
 
@@ -841,15 +844,6 @@ You can easily deny access from inside a controller::
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
-    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
-    in the example above).
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 In both cases, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
@@ -884,11 +878,11 @@ Access Control in Templates
 ...........................
 
 If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+the built-in ``is_granted()`` helper function:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted('ROLE_ADMIN') %}
             <a href="...">Delete</a>
@@ -899,20 +893,6 @@ the built-in helper function:
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
-
-If you use this function and you are *not* behind a firewall, an exception will
-be thrown. Again, it's almost always a good idea to have a main firewall that
-covers all URLs (as shown before in this chapter).
-
-.. caution::
-
-    Be careful with this in your base layout or on your error pages! Because of
-    some internal Symfony details, to avoid broken error pages in the ``prod``
-    environment, wrap calls in these templates with a check for ``app.user``:
-
-    .. code-block:: html+jinja
-
-        {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
 .......................
@@ -1016,10 +996,6 @@ shown above.
 Retrieving the User Object
 --------------------------
 
-.. versionadded:: 2.6
-     The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
-     to Symfony 2.6, you had to use the ``getToken()`` method of the ``security.context`` service.
-
 After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
 look like::
@@ -1085,7 +1061,7 @@ key:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <p>Username: {{ app.user.username }}</p>
@@ -1202,6 +1178,14 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``).
     :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
     See :doc:`Security Configuration Reference </reference/configuration/security>`.
 
+.. caution::
+
+    Notice that when using http-basic authenticated firewalls, there is no
+    real  way to log out : the only way to *log out* is to have the browser
+    stop sending your name and password  on every request. Clearing your
+    browser cache or restarting your browser usually helps. Some web developer
+    tools might be helpful here too.
+
 .. _`security-encoding-password`:
 
 Dynamically Encoding a Password
@@ -1219,9 +1203,6 @@ in the following way from a controller::
     $encoded = $encoder->encodePassword($user, $plainPassword);
 
     $user->setPassword($encoded);
-
-.. versionadded:: 2.6
-    The ``security.password_encoder`` service was introduced in Symfony 2.6.
 
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
@@ -1365,7 +1346,7 @@ security vulnerability in your installed dependencies:
 
 .. code-block:: bash
 
-    $ php app/console security:check
+    $ php bin/console security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,
@@ -1377,6 +1358,15 @@ FriendsOfPHP organization.
     The ``security:check`` command terminates with a non-zero exit code if
     any of your dependencies is affected by a known security vulnerability.
     Therefore, you can easily integrate it in your build process.
+
+.. note::
+
+    To enable the ``security:check`` command, make sure the
+    `SensioDistributionBundle`_ is installed.
+
+    .. code-block:: bash
+
+        $ composer require 'sensio/distribution-bundle'
 
 Final Words
 -----------
@@ -1404,7 +1394,7 @@ Learn More from the Cookbook
 * :doc:`/cookbook/security/remember_me`
 * :doc:`/cookbook/security/multiple_user_providers`
 
-.. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`SensioDistributionBundle`: https://packagist.org/packages/sensio/distribution-bundle

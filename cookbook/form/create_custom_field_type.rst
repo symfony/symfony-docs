@@ -25,6 +25,7 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
     class GenderType extends AbstractType
     {
@@ -40,12 +41,7 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
 
         public function getParent()
         {
-            return 'choice';
-        }
-
-        public function getName()
-        {
-            return 'gender';
+            return ChoiceType::class;
         }
     }
 
@@ -55,7 +51,7 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     is just a convention.
 
 Here, the return value of the ``getParent`` function indicates that you're
-extending the ``choice`` field type. This means that, by default, you inherit
+extending the ``ChoiceType`` field. This means that, by default, you inherit
 all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
@@ -72,10 +68,6 @@ important:
     set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
     for more details.
 
-.. versionadded:: 2.7
-    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
-    the method was called ``setDefaultOptions()``.
-
 ``configureOptions()``
     This defines options for your form type that
     can be used in ``buildForm()`` and ``buildView()``. There are a lot of
@@ -89,10 +81,6 @@ important:
     Also, if you need to modify the "view" of any of your child types from
     your parent type, use the ``finishView()`` method.
 
-The ``getName()`` method returns an identifier which should be unique in
-your application. This is used in various places, such as when customizing
-how your form type will be rendered.
-
 The goal of this field was to extend the choice type to enable selection of
 a gender. This is achieved by fixing the ``choices`` to a list of possible
 genders.
@@ -100,20 +88,26 @@ genders.
 Creating a Template for the Field
 ---------------------------------
 
-Each field type is rendered by a template fragment, which is determined in
-part by the value of your ``getName()`` method. For more information, see
+Each field type is rendered by a template fragment, which is determined in part by
+the class name of your type. For more information, see
 :ref:`cookbook-form-customization-form-themes`.
 
-In this case, since the parent field is ``choice``, you don't *need* to do
-any work as the custom field type will automatically be rendered like a ``choice``
-type. But for the sake of this example, suppose that when your field is "expanded"
+.. note::
+
+    The first part of the prefix (e.g. ``gender``) comes from the class name
+    (``GenderType`` -> ``gender``). This can be controlled by overriding ``getBlockPrefix()``
+    in ``GenderType``.
+
+In this case, since the parent field is ``ChoiceType``, you don't *need* to do
+any work as the custom field type will automatically be rendered like a ``ChoiceType``.
+But for the sake of this example, suppose that when your field is "expanded"
 (i.e. radio buttons or checkboxes, instead of a select field), you want to
 always render it in a ``ul`` element. In your form theme template (see above
 link for details), create a ``gender_widget`` block to handle this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {# app/Resources/views/Form/fields.html.twig #}
         {% block gender_widget %}
@@ -154,7 +148,7 @@ link for details), create a ``gender_widget`` block to handle this:
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
-    be ``gender_widget``, according to the value returned by ``getName``.
+    be ``gender_widget`` (see :ref:`cookbook-form-customization-form-themes`).
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
@@ -167,13 +161,13 @@ link for details), create a ``gender_widget`` block to handle this:
             # app/config/config.yml
             twig:
                 form_themes:
-                    - 'AppBundle:Form:fields.html.twig'
+                    - 'form/fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
-                <twig:form-theme>AppBundle:Form:fields.html.twig</twig:form-theme>
+                <twig:form-theme>form/fields.html.twig</twig:form-theme>
             </twig:config>
 
         .. code-block:: php
@@ -181,7 +175,7 @@ link for details), create a ``gender_widget`` block to handle this:
             // app/config/config.php
             $container->loadFromExtension('twig', array(
                 'form_themes' => array(
-                    'AppBundle:Form:fields.html.twig',
+                    'form/fields.html.twig',
                 ),
             ));
 
@@ -196,7 +190,7 @@ link for details), create a ``gender_widget`` block to handle this:
                 templating:
                     form:
                         resources:
-                            - 'AppBundle:Form'
+                            - ':form:fields.html.php'
 
         .. code-block:: xml
 
@@ -211,7 +205,7 @@ link for details), create a ``gender_widget`` block to handle this:
                 <framework:config>
                     <framework:templating>
                         <framework:form>
-                            <framework:resource>AppBundle:Form</twig:resource>
+                            <framework:resource>:form:fields.html.php</twig:resource>
                         </framework:form>
                     </framework:templating>
                 </framework:config>
@@ -224,7 +218,7 @@ link for details), create a ``gender_widget`` block to handle this:
                 'templating' => array(
                     'form' => array(
                         'resources' => array(
-                            'AppBundle:Form',
+                            ':form:fields.html.php',
                         ),
                     ),
                 ),
@@ -241,24 +235,21 @@ new instance of the type in one of your forms::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use AppBundle\Form\Type\GenderType;
 
     class AuthorType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('gender_code', new GenderType(), array(
+            $builder->add('gender_code', GenderType::class, array(
                 'placeholder' => 'Choose a gender',
             ));
         }
     }
 
-But this only works because the ``GenderType()`` is very simple. What if
+But this only works because the ``GenderType`` is very simple. What if
 the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
-    ``empty_value``, which is available prior to 2.6.
 
 .. _form-cookbook-form-field-service:
 
@@ -309,16 +300,16 @@ the ``genders`` parameter value as the first argument to its to-be-created
             app.form.type.gender:
                 class: AppBundle\Form\Type\GenderType
                 arguments:
-                    - "%genders%"
+                    - '%genders%'
                 tags:
-                    - { name: form.type, alias: gender }
+                    - { name: form.type }
 
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/services.xml -->
         <service id="app.form.type.gender" class="AppBundle\Form\Type\GenderType">
             <argument>%genders%</argument>
-            <tag name="form.type" alias="gender" />
+            <tag name="form.type" />
         </service>
 
     .. code-block:: php
@@ -331,9 +322,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
                 'AppBundle\Form\Type\GenderType',
                 array('%genders%')
             ))
-            ->addTag('form.type', array(
-                'alias' => 'gender',
-            ))
+            ->addTag('form.type')
         ;
 
 .. tip::
@@ -341,10 +330,8 @@ the ``genders`` parameter value as the first argument to its to-be-created
     Make sure the services file is being imported. See :ref:`service-container-imports-directive`
     for details.
 
-Be sure that the ``alias`` attribute of the tag corresponds with the value
-returned by the ``getName`` method defined earlier. You'll see the importance
-of this in a moment when you use the custom field type. But first, add a ``__construct``
-method to ``GenderType``, which receives the gender configuration::
+First, add a ``__construct`` method to ``GenderType``, which receives the gender
+configuration::
 
     // src/AppBundle/Form/Type/GenderType.php
     namespace AppBundle\Form\Type;
@@ -374,28 +361,28 @@ method to ``GenderType``, which receives the gender configuration::
     }
 
 Great! The ``GenderType`` is now fueled by the configuration parameters and
-registered as a service. Additionally, because you used the ``form.type`` alias in its
-configuration, using the field is now much easier::
+registered as a service. Because you used the ``form.type`` alias in its configuration,
+your service will be used instead of creating a *new* ``GenderType``. In other words,
+your controller *does not need to change*, it still looks like this::
 
     // src/AppBundle/Form/Type/AuthorType.php
     namespace AppBundle\Form\Type;
 
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-
-    // ...
+    use AppBundle\Form\Type\GenderType;
 
     class AuthorType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('gender_code', 'gender', array(
+            $builder->add('gender_code', GenderType::class, array(
                 'placeholder' => 'Choose a gender',
             ));
         }
     }
 
-Notice that instead of instantiating a new instance, you can just refer to
-it by the alias used in your service configuration, ``gender``. Have fun!
+Have fun!
 
 .. _`ChoiceType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/ChoiceType.php
 .. _`FieldType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/FieldType.php

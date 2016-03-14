@@ -57,6 +57,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ProductType extends AbstractType
     {
@@ -64,7 +65,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
         {
             $builder
                 // ...
-                ->add('brochure', 'file', array('label' => 'Brochure (PDF file)'))
+                ->add('brochure', FileType::class, array('label' => 'Brochure (PDF file)'))
                 // ...
             ;
         }
@@ -75,18 +76,13 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
                 'data_class' => 'AppBundle\Entity\Product',
             ));
         }
-
-        public function getName()
-        {
-            return 'product';
-        }
     }
 
 Now, update the template that renders the form to display the new ``brochure``
 field (the exact template code to add depends on the method used by your application
 to :doc:`customize form rendering </cookbook/form/form_customization>`):
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/product/new.html.twig #}
     <h1>Adding a new product</h1>
@@ -116,7 +112,7 @@ Finally, you need to update the code of the controller that handles the form::
         public function newAction(Request $request)
         {
             $product = new Product();
-            $form = $this->createForm(new ProductType(), $product);
+            $form = $this->createForm(ProductType::class, $product);
             $form->handleRequest($request);
 
             if ($form->isValid()) {
@@ -171,7 +167,7 @@ There are some important things to consider in the code of the above controller:
 
 You can now use the following code to link to the PDF brochure of an product:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
 

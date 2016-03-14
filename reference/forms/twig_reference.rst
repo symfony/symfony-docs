@@ -33,7 +33,7 @@ form(view, variables)
 
 Renders the HTML of a complete form.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# render the form and change the submission method #}
     {{ form(form, {'method': 'GET'}) }}
@@ -42,7 +42,7 @@ You will mostly use this helper for prototyping or if you use custom form
 themes. If you need more flexibility in rendering the form, you should use
 the other helpers to render individual parts of the form instead:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
@@ -62,7 +62,7 @@ Renders the start tag of a form. This helper takes care of printing the
 configured method and target action of the form. It will also include the
 correct ``enctype`` property if the form contains upload fields.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# render the start tag and change the submission method #}
     {{ form_start(form, {'method': 'GET'}) }}
@@ -74,14 +74,14 @@ form_end(view, variables)
 
 Renders the end tag of a form.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_end(form) }}
 
 This helper also outputs ``form_rest()`` unless you set ``render_rest``
 to false:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# don't render unrendered fields #}
     {{ form_end(form, {'render_rest': false}) }}
@@ -94,7 +94,7 @@ form_label(view, label, variables)
 Renders the label for the given field. You can optionally pass the specific
 label you want to display as the second argument.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_label(form.name) }}
 
@@ -116,7 +116,7 @@ form_errors(view)
 
 Renders any errors for the given field.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_errors(form.name) }}
 
@@ -131,7 +131,7 @@ form_widget(view, variables)
 Renders the HTML widget of a given field. If you apply this to an entire
 form or collection of fields, each underlying form row will be rendered.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# render a widget, but add a "foo" class to it #}
     {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
@@ -154,7 +154,7 @@ form_row(view, variables)
 Renders the "row" of a given field, which is the combination of the field's
 label, errors and widget.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# render a field row, but display a label with text "foo" #}
     {{ form_row(form.name, {'label': 'foo'}) }}
@@ -176,27 +176,9 @@ It's a good idea to always have this somewhere inside your form as it'll
 render hidden fields for you and make any fields you forgot to render more
 obvious (since it'll render the field for you).
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ form_rest(form) }}
-
-.. _reference-forms-twig-enctype:
-
-form_enctype(view)
-------------------
-
-.. note::
-
-    This helper was deprecated in Symfony 2.3 and will be removed in Symfony
-    3.0. You should use ``form_start()`` instead.
-
-If the form contains at least one file upload field, this will render the
-required ``enctype="multipart/form-data"`` form attribute. It's always a
-good idea to include this in your form tag:
-
-.. code-block:: html+jinja
-
-    <form action="{{ path('form_submit') }}" method="post" {{ form_enctype(form) }}>
 
 Form Tests Reference
 --------------------
@@ -213,7 +195,7 @@ This test will check if the current choice is equal to the ``selected_value``
 or if the current choice is in the array (when ``selected_value`` is an
 array).
 
-.. code-block:: jinja
+.. code-block:: twig
 
     <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
 
@@ -231,7 +213,7 @@ that are used when rendering that one part of the form. For example, the
 following would render the "widget" for a field and modify its attributes
 to include a special class:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {# render a widget, but add a "foo" class to it #}
     {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
@@ -243,7 +225,7 @@ of variables. By default, these blocks live inside `form_div_layout.html.twig`_.
 
 Look at the ``form_label`` as an example:
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% block form_label %}
         {% if not compound %}
@@ -296,7 +278,7 @@ be able to see what options you have available.
     not its children. In other words, the following will **not** pass a
     "foo" class attribute to all of the child fields in the form:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# does **not** work - the variables are not recursive #}
         {{ form_widget(form, { 'attr': {'class': 'foo'} }) }}
@@ -317,7 +299,7 @@ done by using a public ``vars`` property on the
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         <label for="{{ form.name.vars.id }}"
             class="{{ form.name.vars.required ? 'required' : '' }}">
@@ -330,9 +312,6 @@ done by using a public ``vars`` property on the
             class="<?php echo $view['form']->get('name')->vars['required'] ? 'required' : '' ?>">
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
-
-.. versionadded:: 2.3
-    The ``method`` and ``action`` variables were introduced in Symfony 2.3.
 
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
@@ -362,12 +341,6 @@ done by using a public ``vars`` property on the
 +------------------------+-------------------------------------------------------------------------------------+
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
 |                        | validation. Additionally, a ``required`` class is added to the label.               |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element. (deprecated as of 2.5, to be    |
-|                        | removed in 3.0, use ``attr["maxlength"]`` instead)                                  |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``pattern``            | Adds a ``pattern`` HTML attribute to the element. (deprecated as of 2.5, to be      |
-|                        | removed in 3.0, use ``attr["pattern"]`` instead)                                    |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``label``              | The string label that will be rendered.                                             |
 +------------------------+-------------------------------------------------------------------------------------+

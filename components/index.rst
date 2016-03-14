@@ -6,6 +6,7 @@ The Components
 
     using_components
     asset/index
+    browser_kit/index
     class_loader/index
     config/index
     console/index
@@ -22,6 +23,7 @@ The Components
     http_kernel/index
     intl
     options_resolver
+    phpunit_bridge
     process
     property_access/index
     routing/index

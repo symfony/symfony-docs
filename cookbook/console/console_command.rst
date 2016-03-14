@@ -68,7 +68,7 @@ This command will now automatically be available to run:
 
 .. code-block:: bash
 
-    $ php app/console demo:greet Fabien
+    $ php bin/console demo:greet Fabien
 
 .. _cookbook-console-dic:
 
@@ -81,11 +81,6 @@ for details.
 
 Getting Services from the Service Container
 -------------------------------------------
-
-.. caution::
-
-    The "container scopes" concept explained in this section has been deprecated
-    in Symfony 2.8 and it will be removed in Symfony 3.0.
 
 By using :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
 as the base class for the command (instead of the more basic
@@ -100,69 +95,6 @@ service container. In other words, you have access to any configured service::
         $logger->info('Executing command for '.$name);
         // ...
     }
-
-However, due to the :doc:`container scopes </cookbook/service_container/scopes>` this
-code doesn't work for some services. For instance, if you try to get the ``request``
-service or any other service related to it, you'll get the following error:
-
-.. code-block:: text
-
-    You cannot create a service ("request") of an inactive scope ("request").
-
-Consider the following example that uses the ``translator`` service to
-translate some contents using a console command::
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $name = $input->getArgument('name');
-        $translator = $this->getContainer()->get('translator');
-        if ($name) {
-            $output->writeln(
-                $translator->trans('Hello %name%!', array('%name%' => $name))
-            );
-        } else {
-            $output->writeln($translator->trans('Hello!'));
-        }
-    }
-
-If you dig into the Translator component classes, you'll see that the ``request``
-service is required to get the locale into which the contents are translated::
-
-    // vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Translation/Translator.php
-    public function getLocale()
-    {
-        if (null === $this->locale && $this->container->isScopeActive('request')
-            && $this->container->has('request')) {
-            $this->locale = $this->container->get('request')->getLocale();
-        }
-
-        return $this->locale;
-    }
-
-Therefore, when using the ``translator`` service inside a command, you'll get the
-previous *"You cannot create a service of an inactive scope"* error message.
-The solution in this case is as easy as setting the locale value explicitly
-before translating contents::
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $name = $input->getArgument('name');
-        $locale = $input->getArgument('locale');
-
-        $translator = $this->getContainer()->get('translator');
-        $translator->setLocale($locale);
-
-        if ($name) {
-            $output->writeln(
-                $translator->trans('Hello %name%!', array('%name%' => $name))
-            );
-        } else {
-            $output->writeln($translator->trans('Hello!'));
-        }
-    }
-
-However, for other services the solution might be more complex. For more details,
-see :doc:`/cookbook/service_container/scopes`.
 
 Invoking other Commands
 -----------------------

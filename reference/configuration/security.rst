@@ -13,10 +13,6 @@ Full Default Configuration
 The following is the full default configuration for the security system.
 Each part will be explained in the next section.
 
-.. versionadded:: 2.5
-    Support for restricting security firewalls to specific http methods was introduced in
-    Symfony 2.5.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -137,6 +133,15 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     http_digest:
                         provider: some_key_from_above
+                    guard:
+                        # A key from the "providers" section of your security config, in case your user provider is different than the firewall
+                        provider:             ~
+
+                        # A service id (of one of your authenticators) whose start() method should be called when an anonymous user hits a page that requires authentication
+                        entry_point:          null
+
+                        # An array of service ids for all of your "authenticators"
+                        authenticators:       []
                     form_login:
                         # submit the login form here
                         check_path: /login_check
@@ -165,9 +170,9 @@ Each part will be explained in the next section.
                         password_parameter: _password
 
                         # csrf token options
-                        csrf_parameter: _csrf_token
-                        intention:      authenticate
-                        csrf_provider:  my.csrf_provider.id
+                        csrf_parameter:       _csrf_token
+                        csrf_token_id:        authenticate
+                        csrf_token_generator: my.csrf_token_generator.id
 
                         # by default, the login form *must* be a POST, not a GET
                         post_only:      true
@@ -175,12 +180,11 @@ Each part will be explained in the next section.
 
                         # by default, a session must exist before submitting an authentication request
                         # if false, then Request::hasPreviousSession is not called during authentication
-                        # new in Symfony 2.3
                         require_previous_session: true
 
                     remember_me:
                         token_provider: name
-                        secret: someS3cretKey
+                        secret: "%secret%"
                         name: NameOfTheCookie
                         lifetime: 3600 # in seconds
                         path: /foo
@@ -213,8 +217,8 @@ Each part will be explained in the next section.
                     context:              ~
                     logout:
                         csrf_parameter:       _csrf_token
-                        csrf_provider:        ~
-                        intention:            logout
+                        csrf_token_generator: ~
+                        csrf_token_id:        logout
                         path:                 /logout
                         target:               /
                         success_handler:      ~
@@ -227,7 +231,7 @@ Each part will be explained in the next section.
                                 domain:               ~
                         handlers:             []
                     anonymous:
-                        secret:               4f954a0667e01
+                        secret:               "%secret%"
                     switch_user:
                         provider:             ~
                         parameter:            _switch_user
@@ -329,6 +333,22 @@ Redirecting after Login
 
 .. _reference-security-pbkdf2:
 
+Logout Configuration
+--------------------
+
+invalidate_session
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+By default, when users log out from any firewall, their sessions are invalidated.
+This means that logging out from one firewall automatically logs them out from
+all the other firewalls.
+
+The ``invalidate_session`` option allows to redefine this behavior. Set this
+option to ``false`` in every firewall and the user will only be logged out from
+the current firewall and not the other ones.
+
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
 
@@ -349,11 +369,6 @@ for the hash algorithm.
 
 Using the BCrypt Password Encoder
 ---------------------------------
-
-.. caution::
-
-    To use this encoder, you either need to use PHP Version 5.5 or install
-    the `ircmaxell/password-compat`_ library via Composer.
 
 .. configuration-block::
 
@@ -479,7 +494,7 @@ multiple firewalls, the "context" could actually be shared:
 HTTP-Digest Authentication
 --------------------------
 
-To use HTTP-Digest authentication you need to provide a realm and a key:
+To use HTTP-Digest authentication you need to provide a realm and a secret:
 
 .. configuration-block::
 
@@ -490,15 +505,15 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             firewalls:
                 somename:
                     http_digest:
-                        key: "a_random_string"
-                        realm: "secure-api"
+                        secret: '%secret%'
+                        realm: 'secure-api'
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
         <security:config>
             <firewall name="somename">
-                <http-digest key="a_random_string" realm="secure-api" />
+                <http-digest secret="%secret%" realm="secure-api" />
             </firewall>
         </security:config>
 
@@ -509,8 +524,8 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             'firewalls' => array(
                 'somename' => array(
                     'http_digest' => array(
-                        'key'   => 'a_random_string',
-                        'realm' => 'secure-api',
+                        'secret' => '%secret%',
+                        'realm'  => 'secure-api',
                     ),
                 ),
             ),

@@ -9,9 +9,6 @@ The VarDumper Component
     arbitrary PHP variable. Built on top, it provides a better ``dump()``
     function that you can use instead of :phpfunction:`var_dump`.
 
-.. versionadded:: 2.6
-    The VarDumper component was introduced in Symfony 2.6.
-
 Installation
 ------------
 
@@ -79,7 +76,7 @@ DebugBundle and Twig Integration
 
 The DebugBundle allows greater integration of the component into the Symfony
 full-stack framework. It is enabled by default in the *dev* and *test*
-environment of the standard edition since version 2.6.
+environment of the Symfony Standard Edition.
 
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
@@ -105,10 +102,6 @@ option. Read more about this and other options in
 
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` was
-    introduced in Symfony 2.7.
 
 The VarDumper component provides
 :class:`a trait <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait>`
@@ -144,11 +137,6 @@ Example::
             $this->assertDumpEquals($expectedDump, $testedVar);
         }
     }
-
-.. tip::
-
-    If you still use PHP 5.3, you can extend the
-    :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestClass` instead.
 
 Dump Examples and Output
 ------------------------

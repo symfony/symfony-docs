@@ -15,10 +15,6 @@ and encoders by reading the :doc:`Serializer Component </components/serializer>`
 Activating the Serializer
 -------------------------
 
-.. versionadded:: 2.3
-    The Serializer has always existed in Symfony, but prior to Symfony 2.3,
-    you needed to build the ``serializer`` service yourself.
-
 The ``serializer`` service is not available by default. To turn it on, activate
 it in your configuration:
 
@@ -74,11 +70,6 @@ you need it or it can be used in a controller like the following::
 Adding Normalizers and Encoders
 -------------------------------
 
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    is enabled by default in Symfony 2.7. In prior versions, you needed to load
-    your own normalizer.
-
 Once enabled, the ``serializer`` service will be available in the container
 and will be loaded with two :ref:`encoders <component-serializer-encoders>`
 (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` and
@@ -129,9 +120,6 @@ Here is an example on how to load the
 Using Serialization Groups Annotations
 --------------------------------------
 
-.. versionadded:: 2.7
-    Support for serialization groups was introduced in Symfony 2.7.
-
 Enable :ref:`serialization groups annotation <component-serializer-attributes-groups>`
 with the following configuration:
 
@@ -177,9 +165,6 @@ to your class and choose which groups to use when serializing::
 Enabling the Metadata Cache
 ---------------------------
 
-.. versionadded:: 2.7
-    Serializer was introduced in Symfony 2.7.
-
 Metadata used by the Serializer component such as groups can be cached to
 enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
 interface can be used.
@@ -217,7 +202,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 Going Further with the Serializer Component
 -------------------------------------------
 
-`DunglasApiBundle`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
+`ApiPlatform`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
 hypermedia formats. It is built on top of the Symfony Framework and its Serializer
 component. It provides custom normalizers and a custom encoder, custom metadata
 and a caching system.
@@ -226,6 +211,6 @@ If you want to leverage the full power of the Symfony Serializer component,
 take a look at how this bundle works.
 
 .. _`APCu`: https://github.com/krakjoe/apcu
-.. _`DunglasApiBundle`: https://github.com/dunglas/DunglasApiBundle
+.. _`ApiPlatform`: https://github.com/api-platform/core
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com

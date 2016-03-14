@@ -17,7 +17,6 @@ Change the template rendering part of the framework to read as follows::
     // example.com/web/front.php
 
     // ...
-
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
         $response = call_user_func('render_template', $request);
@@ -50,7 +49,7 @@ rendered::
 
 As ``render_template`` is used as an argument to the PHP ``call_user_func()``
 function, we can replace it with any valid PHP `callbacks`_. This allows us to
-use a function, an anonymous function, or a method of a class as a
+use a function, an anonymous function or a method of a class as a
 controller... your choice.
 
 As a convention, for each route, the associated controller is configured via
@@ -101,7 +100,6 @@ you can even pass additional arguments to the template::
 Here is the updated and improved version of our framework::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -144,7 +142,6 @@ framework does not need to be modified in any way, just create a new
 ``app.php`` file::
 
     // example.com/src/app.php
-
     use Symfony\Component\Routing;
     use Symfony\Component\HttpFoundation\Response;
 
@@ -153,7 +150,7 @@ framework does not need to be modified in any way, just create a new
             $year = date('Y');
         }
 
-        return 0 == $year % 400 || (0 == $year % 4 && 0 != $year % 100);
+        return 0 === $year % 400 || (0 === $year % 4 && 0 !== $year % 100);
     }
 
     $routes = new Routing\RouteCollection();

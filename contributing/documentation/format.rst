@@ -99,8 +99,8 @@ Markup Format        Use It to Display
 ``xml``              XML
 ``php``              PHP
 ``yaml``             YAML
-``jinja``            Pure Twig markup
-``html+jinja``       Twig markup blended with HTML
+``twig``             Pure Twig markup
+``html+twig``        Twig markup blended with HTML
 ``html+php``         PHP code blended with HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
@@ -194,8 +194,8 @@ how the behavior has changed:
 Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony versions that have
-reached end-of-life will be removed. For example, if Symfony 2.5 were released
-today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
+reached end-of-maintenance will be removed. For example, if Symfony 2.5 were
+released today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
 tags would be removed from the new ``2.5`` branch.
 
 Testing Documentation

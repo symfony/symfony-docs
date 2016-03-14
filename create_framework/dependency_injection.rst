@@ -7,7 +7,6 @@ empty class, you might be tempted to move some code from the front controller
 to it::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\Routing;
@@ -33,7 +32,6 @@ to it::
 The front controller code would become more concise::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +92,6 @@ container:
 Create a new file to host the dependency injection container configuration::
 
     // example.com/src/container.php
-
     use Symfony\Component\DependencyInjection;
     use Symfony\Component\DependencyInjection\Reference;
 
@@ -103,10 +100,11 @@ Create a new file to host the dependency injection container configuration::
     $sc->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
         ->setArguments(array($routes, new Reference('context')))
     ;
+    $sc->register('request_stack', 'Symfony\Component\HttpFoundation\RequestStack');
     $sc->register('resolver', 'Symfony\Component\HttpKernel\Controller\ControllerResolver');
 
     $sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
-        ->setArguments(array(new Reference('matcher')))
+        ->setArguments(array(new Reference('matcher'), new Reference('request_stack')))
     ;
     $sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener')
         ->setArguments(array('UTF-8'))
@@ -132,7 +130,7 @@ them. Objects will be created on-demand when you access them from the
 container or when the container needs them to create other objects.
 
 For instance, to create the router listener, we tell Symfony that its class
-name is ``Symfony\Component\HttpKernel\EventListener\RouterListener``, and
+name is ``Symfony\Component\HttpKernel\EventListener\RouterListener`` and
 that its constructor takes a matcher object (``new Reference('matcher')``). As
 you can see, each object is referenced by a name, a string that uniquely
 identifies each object. The name allows us to get an object and to reference
@@ -147,7 +145,6 @@ it in other object definitions.
 The front controller is now only about wiring everything together::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -165,7 +162,6 @@ As all the objects are now created in the dependency injection container, the
 framework code should be the previous simple version::
 
     // example.com/src/Simplex/Framework.php
-
     namespace Simplex;
 
     use Symfony\Component\HttpKernel\HttpKernel;
@@ -219,7 +215,7 @@ And the related change in the front controller::
 
 We have obviously barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
-definitions, from scope support to dumping a container to a plain PHP class,
+definitions, from shared service support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful
 and is able to manage any kind of PHP class.
 

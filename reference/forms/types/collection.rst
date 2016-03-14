@@ -1,12 +1,12 @@
 .. index::
-   single: Forms; Fields; collection
+   single: Forms; Fields; CollectionType
 
-collection Field Type
-=====================
+CollectionType Field
+====================
 
 This field type is used to render a "collection" of some field or form.
-In the easiest sense, it could be an array of ``text`` fields that populate
-an array ``emails`` field. In more complex examples, you can embed entire
+In the easiest sense, it could be an array of ``TextType`` fields that populate
+an array ``emails`` values. In more complex examples, you can embed entire
 forms, which is useful when creating forms that expose one-to-many
 relationships (e.g. a product from where you can manage many related product
 photos).
@@ -23,16 +23,16 @@ photos).
 |             | - `prototype_name`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
-| options     | - `cascade_validation`_                                                     |
-|             | - `empty_data`_                                                             |
+| options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
+|             | - `label_format`_                                                           |
 |             | - `mapped`_                                                                 |
 |             | - `required`_                                                               |
 +-------------+-----------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                               |
 +-------------+-----------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`    |
 +-------------+-----------------------------------------------------------------------------+
@@ -52,9 +52,13 @@ in a form. For example, suppose you have an ``emails`` field that corresponds
 to an array of email addresses. In the form, you want to expose each email
 address as its own input text box::
 
-    $builder->add('emails', 'collection', array(
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    // ...
+
+    $builder->add('emails', CollectionType::class, array(
         // each entry in the array will be an "email" field
-        'entry_type'   => 'email',
+        'entry_type'   => EmailType::class,
         // these options are passed to each "email" type
         'entry_options'  => array(
             'required'  => false,
@@ -66,7 +70,7 @@ The simplest way to render this is all at once:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_row(form.emails) }}
 
@@ -78,7 +82,7 @@ A much more flexible method would look like this:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_label(form.emails) }}
         {{ form_errors(form.emails) }}
@@ -160,7 +164,7 @@ you need is the JavaScript:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_start(form) }}
             {# ... #}
@@ -276,20 +280,20 @@ the empty values will be kept.
 entry_options
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.8
-    The ``entry_options`` option was introduced in Symfony 2.8 in favor of
-    ``options``, which is available prior to 2.8.
-
 **type**: ``array`` **default**: ``array()``
 
 This is the array that's passed to the form type specified in the `entry_type`_
-option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
-type as your `entry_type`_ option (e.g. for a collection of drop-down menus),
+option. For example, if you used the :doc:`ChoiceType </reference/forms/types/choice>`
+as your `entry_type`_ option (e.g. for a collection of drop-down menus),
 then you'd need to at least pass the ``choices`` option to the underlying
 type::
 
-    $builder->add('favorite_cities', 'collection', array(
-        'entry_type'   => 'choice',
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('favorite_cities', CollectionType::class, array(
+        'entry_type'   => ChoiceType::class,
         'entry_options'  => array(
             'choices'  => array(
                 'nashville' => 'Nashville',
@@ -303,15 +307,11 @@ type::
 entry_type
 ~~~~~~~~~~
 
-.. versionadded:: 2.8
-    The ``entry_type`` option was introduced in Symfony 2.8 in favor of
-    ``type``, which is available prior to 2.8.
-
 **type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
 
-This is the field type for each item in this collection (e.g. ``text``,
-``choice``, etc). For example, if you have an array of email addresses,
-you'd use the :doc:`email </reference/forms/types/email>` type. If you want
+This is the field type for each item in this collection (e.g. ``TextType``,
+``ChoiceType``, etc). For example, if you have an array of email addresses,
+you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, create a new instance of your
 form type and pass it as this option.
 
@@ -334,7 +334,7 @@ collection field:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {{ form_row(form.emails.vars.prototype) }}
 
@@ -366,15 +366,12 @@ not replaced with the same value.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type. Not all options are listed here - only the most applicable to this
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`.
+Not all options are listed here - only the most applicable to this type:
 
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
@@ -396,6 +393,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

@@ -63,7 +63,7 @@ a ``HelloService`` object properly:
         services:
             hello_service:
                 class: Acme\SoapBundle\Services\HelloService
-                arguments: ["@mailer"]
+                arguments: ['@mailer']
 
     .. code-block:: xml
 
@@ -124,7 +124,7 @@ Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
-    $client = new \Soapclient('http://example.com/app.php/soap?wsdl', true);
+    $client = new \Soapclient('http://example.com/app.php/soap?wsdl');
 
     $result = $client->call('hello', array('name' => 'Scott'));
 

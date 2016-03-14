@@ -1,8 +1,8 @@
 .. index::
    single: EventDispatcher
 
-How to Setup before and after Filters
-=====================================
+How to Set Up Before and After Filters
+======================================
 
 It is quite common in web application development to need some logic to be
 executed just before or just after your controller actions acting as filters
@@ -157,7 +157,7 @@ your listener to be called just before any controller is executed.
         services:
             app.tokens.action_listener:
                 class: AppBundle\EventListener\TokenListener
-                arguments: ["%tokens%"]
+                arguments: ['%tokens%']
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
@@ -252,7 +252,7 @@ event:
         services:
             app.tokens.action_listener:
                 class: AppBundle\EventListener\TokenListener
-                arguments: ["%tokens%"]
+                arguments: ['%tokens%']
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
                     - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

@@ -48,30 +48,30 @@ Platform.sh how to deploy your application (read more about
     # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
     # side is in the form `<service name>:<endpoint name>`.
     relationships:
-        database: "mysql:mysql"
+        database: 'mysql:mysql'
 
     # The configuration of app when it is exposed to the web.
     web:
         # The public directory of the app, relative to its root.
-        document_root: "/web"
+        document_root: '/web'
         # The front-controller script to send non-static requests to.
-        passthru: "/app.php"
+        passthru: '/app.php'
 
     # The size of the persistent disk of the application (in MB).
     disk: 2048
 
     # The mounts that will be performed when the package is deployed.
     mounts:
-        "/app/cache": "shared:files/cache"
-        "/app/logs": "shared:files/logs"
+        '/var/cache': 'shared:files/cache'
+        '/var/logs': 'shared:files/logs'
 
     # The hooks that will be performed when the package is deployed.
     hooks:
         build: |
           rm web/app_dev.php
-          app/console --env=prod assetic:dump --no-debug
+          bin/console --env=prod assetic:dump --no-debug
         deploy: |
-          app/console --env=prod cache:clear
+          bin/console --env=prod cache:clear
 
 For best practices, you should also add a ``.platform`` folder at the root of
 your Git repository which contains the following files:
@@ -82,7 +82,7 @@ your Git repository which contains the following files:
     "http://{default}/":
         type: upstream
         # the first part should be your project name
-        upstream: "myphpproject:php"
+        upstream: 'myphpproject:php'
 
 .. code-block:: yaml
 

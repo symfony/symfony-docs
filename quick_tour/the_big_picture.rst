@@ -29,13 +29,17 @@ When developing a Symfony application, your responsibility as a developer
 is to write the code that maps the user's *request* (e.g. ``http://localhost:8000/``)
 to the *resource* associated with it (the ``Homepage`` HTML page).
 
-The code to execute is defined in **actions** and **controllers**. The mapping
-between user's requests and that code is defined via the **routing** configuration.
-And the contents displayed in the browser are usually rendered using **templates**.
+The code to execute is defined as methods of PHP classes. The methods are
+called **actions** and the classes **controllers**, but in practice most
+developers use **controllers** to refer to both of them. The mapping between
+user's requests and that code is defined via the **routing** configuration.
+And the contents displayed in the browser are usually rendered using
+**templates**.
 
-When you browsed ``http://localhost:8000/app/example`` earlier, Symfony executed
-the controller defined in the ``src/AppBundle/Controller/DefaultController.php``
-file and rendered the ``app/Resources/views/default/index.html.twig`` template.
+When you go to ``http://localhost:8000/app/example``, Symfony will execute
+the controller in ``src/AppBundle/Controller/DefaultController.php`` and
+render the ``app/Resources/views/default/index.html.twig`` template.
+
 In the following sections you'll learn in detail the inner workings of Symfony
 controllers, routes and templates.
 
@@ -69,7 +73,7 @@ is called ``Default`` and the PHP class is called ``DefaultController``.
 The methods defined in a controller are called **actions**, they are usually
 associated with one URL of the application and their names are suffixed
 with ``Action``. In this example, the ``Default`` controller has only one
-action called ``index`` and defined in the ``indexAction`` method.
+action called ``index`` and defined in the ``indexAction()`` method.
 
 Actions are usually very short - around 10-15 lines of code - because they
 just call other parts of the application to get or generate the needed
@@ -85,7 +89,7 @@ Routing
 Symfony routes each request to the action that handles it by matching the
 requested URL against the paths configured by the application. Open again
 the ``src/AppBundle/Controller/DefaultController.php`` file and take a look
-at the three lines of code above the ``indexAction`` method::
+at the three lines of code above the ``indexAction()`` method::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -138,14 +142,15 @@ The only content of the ``index`` action is this PHP instruction::
 
 The ``$this->render()`` method is a convenient shortcut to render a template.
 Symfony provides some useful shortcuts to any controller extending from
-the ``Controller`` class.
+the base Symfony :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+class.
 
 By default, application templates are stored in the ``app/Resources/views/``
 directory. Therefore, the ``default/index.html.twig`` template corresponds
 to the ``app/Resources/views/default/index.html.twig``. Open that file and
 you'll see the following code:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/default/index.html.twig #}
     {% extends 'base.html.twig' %}
@@ -194,7 +199,7 @@ environments**.
 What is an Environment?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-An :term:`Environment` represents a group of configurations that's used
+An :term:`environment` represents a group of configurations that's used
 to run your application. Symfony defines two environments by default: ``dev``
 (suited for when developing the application locally) and ``prod`` (optimized
 for when executing the application on production).
@@ -235,7 +240,7 @@ In this example, the ``config_dev.yml`` configuration file imports the common
 with its own options.
 
 For more details on environments, see
-":ref:`Environments & Front Controllers <page-creation-environments>`" article.
+:ref:`the "Environments" section <page-creation-environments>` of the book.
 
 Final Thoughts
 --------------
@@ -246,6 +251,4 @@ how Symfony makes it really easy to implement web sites better and faster.
 If you are eager to learn more about Symfony, dive into the next section:
 ":doc:`The View <the_view>`".
 
-.. _Composer: https://getcomposer.org/
-.. _executable installer: https://getcomposer.org/download
-.. _Twig: http://twig.sensiolabs.org/
+.. _`Twig`: http://twig.sensiolabs.org/

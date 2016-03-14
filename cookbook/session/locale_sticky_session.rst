@@ -4,11 +4,10 @@
 Making the Locale "Sticky" during a User's Session
 ==================================================
 
-Prior to Symfony 2.1, the locale was stored in a session attribute called ``_locale``.
-Since 2.1, it is stored in the Request, which means that it's not "sticky"
-during a user's request. In this article, you'll learn how to make the locale
-of a user "sticky" so that once it's set, that same locale will be used for
-every subsequent request.
+Symfony stores the locale setting in the Request, which means that this setting
+is not available in subsequent requests. In this article, you'll learn how to
+store the locale in the session, so that it'll be the same for every subsequent
+request.
 
 Creating a LocaleListener
 -------------------------
@@ -54,8 +53,8 @@ how you determine the desired locale from the request::
         public static function getSubscribedEvents()
         {
             return array(
-                // must be registered before the default Locale listener
-                KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
+                // must be registered after the default Locale listener
+                KernelEvents::REQUEST => array(array('onKernelRequest', 15)),
             );
         }
     }
@@ -69,7 +68,7 @@ Then register the listener:
         services:
             app.locale_listener:
                 class: AppBundle\EventListener\LocaleListener
-                arguments: ["%kernel.default_locale%"]
+                arguments: ['%kernel.default_locale%']
                 tags:
                     - { name: kernel.event_subscriber }
 
@@ -171,7 +170,7 @@ Then register the listener:
         services:
             app.user_locale_listener:
                 class: AppBundle\EventListener\UserLocaleListener
-                arguments: ["@session"]
+                arguments: ['@session']
                 tags:
                     - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
 

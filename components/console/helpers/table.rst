@@ -66,6 +66,28 @@ You can add a table separator anywhere in the output by passing an instance of
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
 
+The width of the columns are automatically set using the width of their contents
+by default. You can control the minimum widths via :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`::
+
+    // the widths will expand to be bigger if necessary
+    // here, the left two columns will be 13 & 24 characters to fit their content
+    $table->setColumnWidths(array(10, 0, 30));
+    $table->render();
+    
+This code results in:
+
+.. code-block:: text
+
+    +---------------+--------------------------+--------------------------------+
+    | ISBN          | Title                    | Author                         |
+    +---------------+--------------------------+--------------------------------+
+    | 99921-58-10-7 | Divine Comedy            | Dante Alighieri                |
+    | 9971-5-0210-0 | A Tale of Two Cities     | Charles Dickens                |
+    +---------------+--------------------------+--------------------------------+
+    | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien               |
+    | 80-902734-1-6 | And Then There Were None | Agatha Christie                |
+    +---------------+--------------------------+--------------------------------+
+
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 
@@ -143,3 +165,91 @@ Here is a full list of things you can customize:
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.
+
+Spanning Multiple Columns and Rows
+----------------------------------
+
+To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableSeparator;
+    use Symfony\Component\Console\Helper\TableCell;
+
+    $table = new Table($output);
+    $table
+        ->setHeaders(array('ISBN', 'Title', 'Author'))
+        ->setRows(array(
+            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+            new TableSeparator(),
+            array(new TableCell('This value spans 3 columns.', array('colspan' => 3))),
+        ))
+    ;
+    $table->render();
+
+This results in:
+
+.. code-block:: text
+
+    +---------------+---------------+-----------------+
+    | ISBN          | Title         | Author          |
+    +---------------+---------------+-----------------+
+    | 99921-58-10-7 | Divine Comedy | Dante Alighieri |
+    +---------------+---------------+-----------------+
+    | This value spans 3 columns.                     |
+    +---------------+---------------+-----------------+
+
+.. tip::
+
+    You can create a multiple-line page title using a header cell that spans
+    the enire table width::
+
+        $table->setHeaders(array(
+            array(new TableCell('Main table title', array('colspan' => 3))),
+            array('ISBN', 'Title', 'Author'),
+        ))
+        // ...
+
+    This generates:
+
+    .. code-block:: text
+
+        +-------+-------+--------+
+        | Main table title       |
+        +-------+-------+--------+
+        | ISBN  | Title | Author |
+        +-------+-------+--------+
+        | ...                    |
+        +-------+-------+--------+
+
+In a similar way you can span multiple rows::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableCell;
+
+    $table = new Table($output);
+    $table
+        ->setHeaders(array('ISBN', 'Title', 'Author'))
+        ->setRows(array(
+            array(
+                '978-0521567817',
+                'De Monarchia',
+                new TableCell("Dante Alighieri\nspans multiple rows", array('rowspan' => 2)),
+            ),
+            array('978-0804169127', 'Divine Comedy'),
+        ))
+    ;
+    $table->render();
+
+This outputs:
+
+.. code-block:: text
+
+    +----------------+---------------+---------------------+
+    | ISBN           | Title         | Author              |
+    +----------------+---------------+---------------------+
+    | 978-0521567817 | De Monarchia  | Dante Alighieri     |
+    | 978-0804169127 | Divine Comedy | spans multiple rows |
+    +----------------+---------------+---------------------+
+
+You can use the ``colspan`` and ``rowspan`` options at the same time which allows
+you to create any table layout you may wish.

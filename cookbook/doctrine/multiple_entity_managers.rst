@@ -27,20 +27,20 @@ The following configuration code shows how you can configure two entity managers
                 default_connection: default
                 connections:
                     default:
-                        driver:   "%database_driver%"
-                        host:     "%database_host%"
-                        port:     "%database_port%"
-                        dbname:   "%database_name%"
-                        user:     "%database_user%"
-                        password: "%database_password%"
+                        driver:   '%database_driver%'
+                        host:     '%database_host%'
+                        port:     '%database_port%'
+                        dbname:   '%database_name%'
+                        user:     '%database_user%'
+                        password: '%database_password%'
                         charset:  UTF8
                     customer:
-                        driver:   "%database_driver2%"
-                        host:     "%database_host2%"
-                        port:     "%database_port2%"
-                        dbname:   "%database_name2%"
-                        user:     "%database_user2%"
-                        password: "%database_password2%"
+                        driver:   '%database_driver2%'
+                        host:     '%database_host2%'
+                        port:     '%database_port2%'
+                        dbname:   '%database_name2%'
+                        user:     '%database_user2%'
+                        password: '%database_password2%'
                         charset:  UTF8
 
             orm:
@@ -165,20 +165,20 @@ When working with multiple connections to create your databases:
 .. code-block:: bash
 
     # Play only with "default" connection
-    $ php app/console doctrine:database:create
+    $ php bin/console doctrine:database:create
 
     # Play only with "customer" connection
-    $ php app/console doctrine:database:create --connection=customer
+    $ php bin/console doctrine:database:create --connection=customer
 
 When working with multiple entity managers to update your schema:
 
 .. code-block:: bash
 
     # Play only with "default" mappings
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
     # Play only with "customer" mappings
-    $ php app/console doctrine:schema:update --force --em=customer
+    $ php bin/console doctrine:schema:update --force --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::

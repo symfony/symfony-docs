@@ -121,10 +121,15 @@ Glossary
 
    YAML
         *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
-        lightweight, humane data serialization language used extensively in
+        lightweight, human friendly data serialization language used extensively in
         Symfony's configuration files. See the :doc:`/components/yaml/introduction`
         chapter.
 
+   Annotation
+         Annotations are metadata written alongside your code. They can either be explanatory and will be
+         ignored during execution or add functionality to the line of code directly below as a means of
+         configuration. For example, the annotation ``@var`` describes the type of a variable, whereas in
+         Symfony2 ``@Assert`` can add validation to a member variable of a class (see :doc:`/book/validation` chapter).
 
 .. _`service-oriented architecture`: https://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol

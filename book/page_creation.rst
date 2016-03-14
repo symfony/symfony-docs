@@ -21,6 +21,11 @@ simple two-step process:
 Just like on the web, every interaction is initiated by an HTTP request.
 Your job is pure and simple: understand that request and return a response.
 
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
 .. index::
    single: Page creation; Example
 
@@ -39,11 +44,10 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
 
-    class LuckyController extends Controller
+    class LuckyController
     {
         /**
          * @Route("/lucky/number")
@@ -60,11 +64,12 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
 
 Before diving into this, test it out!
 
-    http://localhost:8000/app_dev.php/lucky/number
+    http://localhost:8000/lucky/number
 
 .. tip::
 
-    If you setup a proper virtual host in :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
+    If you set up a proper virtual host in
+    :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
     replace ``http://localhost:8000`` with your host name - like
     ``http://symfony.dev/app_dev.php/lucky/number``.
 
@@ -81,16 +86,6 @@ and is where you build the page. The only rule is that a controller *must*
 return a Symfony :ref:`Response <component-http-foundation-response>` object
 (and you'll even learn to bend this rule eventually).
 
-.. sidebar:: What's the ``app_dev.php`` in the URL?
-
-    Great question! By including ``app_dev.php`` in the URL, you're executing
-    Symfony through a file - ``web/app_dev.php`` - that boots it in the ``dev``
-    environment. This enables great debugging tools and rebuilds cached
-    files automatically. For production, you'll use clean URLs - like
-    ``http://localhost:8000/lucky/number`` - that execute a different file -
-    ``app.php`` - that's optimized for speed. To learn more about this and
-    environments, see :ref:`book-page-creation-prod-cache-clear`.
-
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -102,9 +97,9 @@ Suppose you want to create a JSON endpoint that returns the lucky number.
 Just add a second method to ``LuckyController``::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
-    class LuckyController extends Controller
+    // ...
+    class LuckyController
     {
         // ...
 
@@ -127,17 +122,17 @@ Just add a second method to ``LuckyController``::
 
 Try this out in your browser:
 
-    http://localhost:8000/app_dev.php/api/lucky/number
+    http://localhost:8000/api/lucky/number
 
 You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     // --> don't forget this new use statement
     use Symfony\Component\HttpFoundation\JsonResponse;
 
-    class LuckyController extends Controller
+    class LuckyController
     {
         // ...
 
@@ -168,9 +163,9 @@ at the end:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/LuckyController.php
-        // ...
 
-        class LuckyController extends Controller
+        // ...
+        class LuckyController
         {
             /**
              * @Route("/lucky/number/{count}")
@@ -192,7 +187,7 @@ at the end:
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -206,7 +201,7 @@ at the end:
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/routing.php
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -224,7 +219,7 @@ The best part is that you can access this value and use it in your controller::
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
-    class LuckyController extends Controller
+    class LuckyController
     {
 
         /**
@@ -248,7 +243,7 @@ The best part is that you can access this value and use it in your controller::
 
 Try it by going to ``/lucky/number/XX`` - replacing XX with *any* number:
 
-    http://localhost:8000/app_dev.php/lucky/number/7
+    http://localhost:8000/lucky/number/7
 
 You should see *7* lucky numbers printed out! You can get the value of any
 ``{placeholder}`` in your route by adding a ``$placeholder`` argument to
@@ -274,8 +269,8 @@ to use Twig - or many other tools in Symfony - is to extend Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     // --> add this new use statement
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -296,8 +291,8 @@ Twig templates, another that can log messages and many more.
 To render a Twig template, use a service called ``templating``::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     class LuckyController extends Controller
     {
         /**
@@ -329,8 +324,8 @@ But this can get even easier! By extending the ``Controller`` class, you
 also get a lot of shortcut methods, like ``render()``::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     /**
      * @Route("/lucky/number/{count}")
      */
@@ -374,7 +369,7 @@ a ``number.html.twig`` file inside of it:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
         {# app/Resources/views/lucky/number.html.twig #}
         {% extends 'base.html.twig' %}
@@ -405,7 +400,7 @@ to put the content into the middle of the ``base.html.twig`` layout.
 
 Refresh to see your template in action!
 
-    http://localhost:8000/app_dev.php/lucky/number/9
+    http://localhost:8000/lucky/number/9
 
 If you view the source code, you now have a basic HTML structure thanks to
 ``base.html.twig``.
@@ -434,29 +429,40 @@ worked inside the two most important directories:
 else). As you get more advanced, you'll learn what can be done inside each
 of these.
 
-The ``app/`` directory also holds a few other things, like the cache directory
-``app/cache/``, the logs directory ``app/logs/`` and ``app/AppKernel.php``,
-which you'll use to enable new bundles (and one of a *very* short list of
+The ``app/`` directory also holds some other things, like ``app/AppKernel.php``,
+which you'll use to enable new bundles (this is one of a *very* short list of
 PHP files in ``app/``).
 
 The ``src/`` directory has just one directory - ``src/AppBundle`` -
 and everything lives inside of it. A bundle is like a "plugin" and you can
 `find open source bundles`_ and install them into your project. But even
-*your* code lives in a bundle - typically ``AppBundle`` (though there's
-nothing special about ``AppBundle``). To find out more about bundles and
+*your* code lives in a bundle - typically *AppBundle* (though there's
+nothing special about AppBundle). To find out more about bundles and
 why you might create multiple bundles (hint: sharing code between projects),
 see the :doc:`Bundles </book/bundles>` chapter.
 
 So what about the other directories in the project?
 
-``vendor/``
-    Vendor (i.e. third-party) libraries and bundles are downloaded here by
-    the `Composer`_ package manager.
-
 ``web/``
     This is the document root for the project and contains any publicly accessible
     files, like CSS, images and the Symfony front controllers that execute
     the app (``app_dev.php`` and ``app.php``).
+
+``tests/``
+    The automatic tests (e.g. Unit tests) of your application live here.
+
+``bin/``
+    The "binary" files live here. The most important one is the ``console``
+    file which is used to execute Symfony commands via the console.
+
+``var/``
+    This is where automatically created files are stored, like cache files
+    (``var/cache/``) and logs (``var/logs/``).
+
+``vendor/``
+    Third-party libraries, packages and bundles are downloaded here by
+    the `Composer`_ package manager. You should never edit something in this
+    directory.
 
 .. seealso::
 
@@ -475,17 +481,17 @@ is ``app/config/config.yml``:
     .. code-block:: yaml
 
         # app/config/config.yml
-        # ...
 
+        # ...
         framework:
-            secret: "%secret%"
+            secret: '%secret%'
             router:
-                resource: "%kernel.root_dir%/config/routing.yml"
+                resource: '%kernel.root_dir%/config/routing.yml'
             # ...
 
         twig:
-            debug:            "%kernel.debug%"
-            strict_variables: "%kernel.debug%"
+            debug:            '%kernel.debug%'
+            strict_variables: '%kernel.debug%'
 
         # ...
 
@@ -544,11 +550,11 @@ by changing one option in this configuration file. To find out how, see the
 :doc:`Configuration Reference </reference/index>` section.
 
 Or, to get a big example dump of all of the valid configuration under a key,
-use the handy ``app/console`` command:
+use the handy ``bin/console`` command:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference framework
+    $ php bin/console config:dump-reference framework
 
 There's a lot more power behind Symfony's configuration system, including
 environments, imports and parameters. To learn all of it, see the
@@ -575,6 +581,7 @@ There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
 
 Have fun!
 
-.. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/2.7/app/Resources/views/base.html.twig
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
+.. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/3.0/app/Resources/views/base.html.twig
 .. _`Composer`: https://getcomposer.org
 .. _`find open source bundles`: http://knpbundles.com

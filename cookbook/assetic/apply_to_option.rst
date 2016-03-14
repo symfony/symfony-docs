@@ -4,6 +4,8 @@
 How to Apply an Assetic Filter to a specific File Extension
 ===========================================================
 
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
+
 Assetic filters can be applied to individual files, groups of files or even,
 as you'll see here, files that have a specific extension. To show you how
 to handle each option, suppose that you want to use Assetic's CoffeeScript
@@ -27,14 +29,24 @@ An example configuration might look like this:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="coffee"
-                bin="/usr/bin/coffee/"
-                node="/usr/bin/node/">
-                <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
-            </assetic:filter>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="coffee"
+                    bin="/usr/bin/coffee/"
+                    node="/usr/bin/node/">
+                    <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
+                </assetic:filter>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -57,7 +69,7 @@ templates:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
             <script src="{{ asset_url }}"></script>
@@ -82,7 +94,7 @@ You can also combine multiple CoffeeScript files into a single output file:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/example.coffee'
                        '@AppBundle/Resources/public/js/another.coffee'
@@ -132,19 +144,29 @@ In this case you can specify that the ``coffee`` filter is applied to all
                     bin:        /usr/bin/coffee
                     node:       /usr/bin/node
                     node_paths: [/usr/lib/node_modules/]
-                    apply_to:   "\.coffee$"
+                    apply_to:   '\.coffee$'
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="coffee"
-                bin="/usr/bin/coffee"
-                node="/usr/bin/node"
-                apply_to="\.coffee$" />
-                <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="coffee"
+                    bin="/usr/bin/coffee"
+                    node="/usr/bin/node"
+                    apply_to="\.coffee$" />
+                    <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -167,7 +189,7 @@ files being run through the CoffeeScript filter):
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% javascripts '@AppBundle/Resources/public/js/example.coffee'
                        '@AppBundle/Resources/public/js/another.coffee'

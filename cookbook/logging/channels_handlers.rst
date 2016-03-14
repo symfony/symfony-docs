@@ -39,13 +39,13 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
                     # log all messages (since debug is the lowest level)
                     level:    debug
                     type:     stream
-                    path:     "%kernel.logs_dir%/security.log"
+                    path:     '%kernel.logs_dir%/security.log'
                     channels: [security]
 
                 # an example of *not* logging security channel messages for this handler
                 main:
                     # ...
-                    # channels: ["!security"]
+                    # channels: ['!security']
 
     .. code-block:: xml
 
@@ -104,11 +104,11 @@ You can specify the configuration by many forms:
 
     channels: ~    # Include all the channels
 
-    channels: foo  # Include only channel "foo"
-    channels: "!foo" # Include all channels, except "foo"
+    channels: foo  # Include only channel 'foo'
+    channels: '!foo' # Include all channels, except 'foo'
 
-    channels: [foo, bar]   # Include only channels "foo" and "bar"
-    channels: ["!foo", "!bar"] # Include all channels, except "foo" and "bar"
+    channels: [foo, bar]   # Include only channels 'foo' and 'bar'
+    channels: ['!foo', '!bar'] # Include all channels, except 'foo' and 'bar'
 
 Creating your own Channel
 -------------------------
@@ -125,8 +125,7 @@ specified.
 Configure Additional Channels without Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With MonologBundle 2.4 you can configure additional channels without the
-need to tag your services:
+You can also configure additional channels without the need to tag your services:
 
 .. configuration-block::
 
@@ -134,7 +133,7 @@ need to tag your services:
 
         # app/config/config.yml
         monolog:
-            channels: ["foo", "bar"]
+            channels: ['foo', 'bar']
 
     .. code-block:: xml
 

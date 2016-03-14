@@ -15,8 +15,14 @@ but the recommended structure is as follows:
 
 ``app/``
     The application configuration, templates and translations.
+``bin/``
+    Executable files (e.g. ``bin/console``).
 ``src/``
     The project's PHP code.
+``tests/``
+    Automatic tests (e.g. Unit tests).
+``var/``
+    Generated files (cache, logs, etc.).
 ``vendor/``
     The third-party dependencies.
 ``web/``
@@ -30,7 +36,7 @@ stylesheets and JavaScript files. It is also where each :term:`front controller`
 lives, such as the production controller shown here::
 
     // web/app.php
-    require_once __DIR__.'/../app/bootstrap.php.cache';
+    require_once __DIR__.'/../var/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -146,30 +152,30 @@ or PHP. Have a look at this sample of the default Symfony configuration:
 
     framework:
         #esi:             ~
-        #translator:      { fallbacks: ["%locale%"] }
-        secret:          "%secret%"
+        #translator:      { fallbacks: ['%locale%'] }
+        secret:          '%secret%'
         router:
-            resource: "%kernel.root_dir%/config/routing.yml"
-            strict_requirements: "%kernel.debug%"
+            resource: '%kernel.root_dir%/config/routing.yml'
+            strict_requirements: '%kernel.debug%'
         form:            true
         csrf_protection: true
         validation:      { enable_annotations: true }
         templating:      { engines: ['twig'] }
-        default_locale:  "%locale%"
+        default_locale:  '%locale%'
         trusted_proxies: ~
         session:         ~
 
     # Twig Configuration
     twig:
-        debug:            "%kernel.debug%"
-        strict_variables: "%kernel.debug%"
+        debug:            '%kernel.debug%'
+        strict_variables: '%kernel.debug%'
 
     # Swift Mailer Configuration
     swiftmailer:
-        transport: "%mailer_transport%"
-        host:      "%mailer_host%"
-        username:  "%mailer_user%"
-        password:  "%mailer_password%"
+        transport: '%mailer_transport%'
+        host:      '%mailer_host%'
+        username:  '%mailer_user%'
+        password:  '%mailer_password%'
         spool:     { type: memory }
 
     # ...
@@ -191,7 +197,7 @@ the ``config_dev.yml`` file, which loads the main configuration (i.e.
         - { resource: config.yml }
 
     framework:
-        router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
+        router:   { resource: '%kernel.root_dir%/config/routing_dev.yml' }
         profiler: { only_exceptions: false }
 
     web_profiler:
@@ -257,10 +263,10 @@ Understanding the Cache and Logs
 --------------------------------
 
 Symfony applications can contain several configuration files defined in
-several formats (YAML, XML, PHP, etc.) Instead of parsing and combining
+several formats (YAML, XML, PHP, etc.). Instead of parsing and combining
 all those files for each request, Symfony uses its own cache system. In
 fact, the application configuration is only parsed for the very first request
-and then compiled down to plain PHP code stored in the ``app/cache/``
+and then compiled down to plain PHP code stored in the ``var/cache/``
 directory.
 
 In the development environment, Symfony is smart enough to update the cache
@@ -271,16 +277,16 @@ the ``prod`` environment:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod
+    $ php bin/console cache:clear --env=prod
 
 When developing a web application, things can go wrong in many ways. The
-log files in the ``app/logs/`` directory tell you everything about the requests
+log files in the ``var/logs/`` directory tell you everything about the requests
 and help you fix the problem quickly.
 
 Using the Command Line Interface
 --------------------------------
 
-Each application comes with a command line interface tool (``app/console``)
+Each application comes with a command line interface tool (``bin/console``)
 that helps you maintain your application. It provides commands that boost
 your productivity by automating tedious and repetitive tasks.
 
@@ -288,13 +294,13 @@ Run it without any arguments to learn more about its capabilities:
 
 .. code-block:: bash
 
-    $ php app/console
+    $ php bin/console
 
 The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: bash
 
-    $ php app/console debug:router --help
+    $ php bin/console debug:router --help
 
 Final Thoughts
 --------------
@@ -309,4 +315,4 @@ need to learn a lot to become a Symfony master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and
 pick any topic you want.
 
-.. _Composer:   https://getcomposer.org
+.. _`Composer`:   https://getcomposer.org

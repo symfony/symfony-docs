@@ -18,7 +18,6 @@ Even if the "application" we wrote in the previous chapter was simple enough,
 it suffers from a few problems::
 
     // framework/index.php
-
     $input = $_GET['name'];
 
     printf('Hello %s', $input);
@@ -27,7 +26,6 @@ First, if the ``name`` query parameter is not defined in the URL query string,
 you will get a PHP warning; so let's fix it::
 
     // framework/index.php
-
     $input = isset($_GET['name']) ? $_GET['name'] : 'World';
 
     printf('Hello %s', $input);
@@ -60,7 +58,6 @@ snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
 
     // framework/test.php
-
     class IndexTest extends \PHPUnit_Framework_TestCase
     {
         public function testHello()
@@ -128,7 +125,7 @@ containing the new requirement:
 
     {
         "require": {
-            "symfony/http-foundation": "^2.7"
+            "symfony/http-foundation": "^3.0"
         }
     }
 
@@ -141,13 +138,12 @@ version may vary).
     ``vendor/autoload.php`` file that allows any class to be easily
     `autoloaded`_. Without autoloading, you would need to require the file
     where a class is defined before being able to use it. But thanks to
-    `PSR-0`_, we can just let Composer and PHP do the hard work for us.
+    `PSR-4`_, we can just let Composer and PHP do the hard work for us.
 
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
 
     // framework/index.php
-
     require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -227,7 +223,7 @@ With the ``Response`` class, you can easily tweak the response::
 
 .. tip::
 
-    To debug a Response, cast it to a string; it will return the HTTP
+    To debug a response, cast it to a string; it will return the HTTP
     representation of the response (headers and content).
 
 Last but not the least, these classes, like every other class in the Symfony
@@ -239,7 +235,7 @@ framework?
 
 Even something as simple as getting the client IP address can be insecure::
 
-    if ($myIp == $_SERVER['REMOTE_ADDR']) {
+    if ($myIp === $_SERVER['REMOTE_ADDR']) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -248,7 +244,7 @@ production servers; at this point, you will have to change your code to make
 it work on both your development machine (where you don't have a proxy) and
 your servers::
 
-    if ($myIp == $_SERVER['HTTP_X_FORWARDED_FOR'] || $myIp == $_SERVER['REMOTE_ADDR']) {
+    if ($myIp === $_SERVER['HTTP_X_FORWARDED_FOR'] || $myIp === $_SERVER['REMOTE_ADDR']) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -258,7 +254,7 @@ chained proxies)::
 
     $request = Request::createFromGlobals();
 
-    if ($myIp == $request->getClientIp()) {
+    if ($myIp === $request->getClientIp()) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -271,7 +267,7 @@ explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
     Request::setTrustedProxies(array('10.0.0.1'));
 
-    if ($myIp == $request->getClientIp(true)) {
+    if ($myIp === $request->getClientIp(true)) {
         // the client is a known one, so give it some more privilege
     }
 
@@ -299,7 +295,7 @@ the wheel.
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
-5`_, `Laravel`_, `Silex`_, and `more`_).
+5`_, `Laravel`_, `Silex`_ and `more`_).
 
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
@@ -313,5 +309,5 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 .. _`Midgard CMS`: http://www.midgard-project.org/
 .. _`Zikula`: http://zikula.org/
 .. _`autoloaded`: http://php.net/autoload
-.. _`PSR-0`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
 .. _`more`: http://symfony.com/components/HttpFoundation
