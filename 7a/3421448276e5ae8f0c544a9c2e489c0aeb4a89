@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-14T21:20:48Z
+
+@tabbi89 nice catch! Thanks for fixing this error.
+
+A minor comment for your next pull requests: the pull request must be created against the oldest Symfony branch which is still maintained and suffers the error. In this case, you selected 3.0 branch, but the oldest maintained branch (which is 2.3) also suffers the error. So this pull request should have been created based on 2.3.
+
+But don't worry this time. The change is small enough so our doc managers will do some magic to change the branch when merging it. Thanks!
+
+---------------------------------------------------------------------------
+
+by tabbi89 at 2016-03-14T21:49:06Z
+
+Thanks, next time I will choose the right branch.
