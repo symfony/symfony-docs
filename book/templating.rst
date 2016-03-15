@@ -387,7 +387,7 @@ Template Naming and Locations
 By default, templates can live in two different locations:
 
 ``app/Resources/views/``
-    The applications ``views`` directory can contain application-wide base templates
+    The application's ``views`` directory can contain application-wide base templates
     (i.e. your application's layouts and templates of the application bundle) as
     well as templates that override third party bundle templates
     (see :ref:`overriding-bundle-templates`).
@@ -625,7 +625,7 @@ articles::
         }
     }
 
-The ``recentList`` template is perfectly straightforward:
+The ``recent_list`` template is perfectly straightforward:
 
 .. configuration-block::
 
@@ -990,7 +990,7 @@ route:
 
 In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, revisit the
-``recentList`` template from the previous section and link to the articles
+``recent_list`` template from the previous section and link to the articles
 correctly:
 
 .. configuration-block::
@@ -1074,8 +1074,8 @@ being used and generating the correct paths accordingly.
 
 Additionally, if you use the ``asset`` function, Symfony can automatically
 append a query string to your asset, in order to guarantee that updated static
-assets won't be cached when deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
+assets won't be loaded from cache after being deployed. For example, ``/images/logo.png`` might
+look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
 configuration option.
 
 .. index::
