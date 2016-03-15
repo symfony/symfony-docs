@@ -122,7 +122,7 @@ Commands                         ``Command/``
 Controllers                      ``Controller/``
 Service Container Extensions     ``DependencyInjection/``
 Event Listeners                  ``EventListener/``
-Model classes [1]                ``Model/``
+Model classes [1]                ``Entity/`` (Doctrine ORM) or ``Document/`` (an ODM) 
 Configuration                    ``Resources/config/``
 Web Resources (CSS, JS, images)  ``Resources/public/``
 Translation files                ``Resources/translations/``
