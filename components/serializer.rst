@@ -437,6 +437,22 @@ processes::
     $anne = $normalizer->denormalize(array('first_name' => 'Anne'), 'Person');
     // Person object with firstName: 'Anne'
 
+.. _using-multiple-name-converters:
+
+Using multiple Name Converters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can combine multiple name converters by using the ``ChainNameConverter``::
+
+    use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+    use Symfony\Component\Serializer\NameConverter\ChainNameConverter;
+
+    $camelCaseNameConverter = new CamelCaseToSnakeCaseNameConverter();
+    $orgPrefixNameConverter = new OrgPrefixNameConverter();
+
+    $nameConverter = new ChainNameConverter(array($camelCaseNameConverter, $orgPrefixNameConverter));
+    $normalizer = new ObjectNormalizer(null, $nameConverter);
+
 Serializing Boolean Attributes
 ------------------------------
 
