@@ -63,7 +63,7 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
     }
 
 To test this, create a ``CalculatorTest`` file in the ``tests/AppBundle/Util`` directory
-of your bundle::
+of your application::
 
     // tests/AppBundle/Util/CalculatorTest.php
     namespace Tests\AppBundle\Util;
@@ -84,13 +84,13 @@ of your bundle::
 
 .. note::
 
-    By convention, the ``Tests/AppBundle`` directory should replicate the directory
+    By convention, the ``tests/AppBundle`` directory should replicate the directory
     of your bundle for unit tests. So, if you're testing a class in the
-    ``AppBundle/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
+    ``src/AppBundle/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
     directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``autoload.php`` file (as configured by default in the
+via the ``app/autoload.php`` file (as configured by default in the
 ``phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
@@ -790,7 +790,7 @@ PHPUnit Configuration
 
 Each application has its own PHPUnit configuration, stored in the
 ``phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``phpunit.xml`` file to set up a configuration for your local machine
+create a ``phpunit.xml`` file to set up a configuration for your local machine
 only.
 
 .. tip::
@@ -825,7 +825,7 @@ configuration adds tests from a custom ``lib/tests`` directory:
         <testsuites>
             <testsuite name="Project Test Suite">
                 <!-- ... --->
-                <directory>../lib/tests</directory>
+                <directory>lib/tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... --->
@@ -842,10 +842,10 @@ section:
         <filter>
             <whitelist>
                 <!-- ... -->
-                <directory>../lib</directory>
+                <directory>lib</directory>
                 <exclude>
                     <!-- ... -->
-                    <directory>../lib/tests</directory>
+                    <directory>lib/tests</directory>
                 </exclude>
             </whitelist>
         </filter>
