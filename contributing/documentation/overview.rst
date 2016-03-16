@@ -3,8 +3,8 @@ Contributing to the Documentation
 
 One of the essential principles of the Symfony project is that **documentation
 is as important as code**. That's why a great amount of resources are dedicated
-to documenting new features and to keeping the rest of the documentation up-to-
-date.
+to documenting new features and to keeping the rest of the documentation
+up-to-date.
 
 More than 1,000 developers all around the world have contributed to Symfony's
 documentation and we are glad that you are considering joining this big family.
@@ -17,14 +17,34 @@ Before Your First Contribution
 **Before contributing**, you should consider the following:
 
 * Symfony documentation is written using `reStructuredText`_ markup language.
-  If you are not familiar with this format, read :doc:`this article
-  </contributing/documentation/format>` for a quick overview of its basic
-  features.
+  If you are not familiar with this format, read
+  :doc:`this article </contributing/documentation/format>` for a quick overview
+  of its basic features.
 * Symfony documentation is hosted on `GitHub`_. You'll need a free GitHub user
   account to contribute to the documentation.
 * Symfony documentation is published under a
   :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
   and all your contributions will implicitly adhere to that license.
+
+Fast Online Contributions
+-------------------------
+
+This method is best suited for small contributions, such as typos and rewordings.
+Due to GitHub's functional frontend, it is possible to create Pull Requests
+right in your browser while reading the docs on symfony.com.
+
+First, switch to the oldest maintained Symfony branch which contains the error,
+which is usually ``2.3``. Then, click on the **edit this page** button on the
+upper right corner. Now edit the content and describe your changes within the
+GitHub frontend.
+
+When your work is done, click **Propose file change** to create a commit and, in
+case it is your first contribution, also your fork. A new branch will be created
+automatically and you can then create the Pull Request.
+
+If your contribution is large or if you prefer to work on your own computer,
+keep reading this guide to learn an alternative way to send pull requests to
+Symfony Documentation.
 
 Your First Documentation Contribution
 -------------------------------------
@@ -211,23 +231,6 @@ GitHub and click on ``Details``.
 
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
-
-Minor Changes (e.g. Typos)
---------------------------
-
-You may find just a typo and want to fix it. Due to GitHub's functional
-frontend, it is possible to create Pull Requests right in your browser while
-reading the docs on symfony.com.
-
-First, switch to the oldest maintained Symfony branch which contains the error.
-Then, click on the **edit this page** button on the upper right corner. Now you
-are able to edit the content and describe your changes within the GitHub
-frontend.
-
-When your work is done, click **Propose file change** to create a commit and, in
-case it is your first contribution, also your fork. A new branch is created
-automatically in order to provide a base for your Pull Request. Then fill out
-the form to create the Pull Request as described above.
 
 Frequently Asked Questions
 --------------------------
