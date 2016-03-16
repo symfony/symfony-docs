@@ -209,9 +209,9 @@ inside the ``Entity`` directory of your AppBundle::
 
     class Product
     {
-        protected $name;
-        protected $price;
-        protected $description;
+        private $name;
+        private $price;
+        private $description;
     }
 
 The class - often called an "entity", meaning *a basic class that holds data* -
@@ -274,22 +274,22 @@ directly inside the ``Product`` class via DocBlock annotations:
              * @ORM\Id
              * @ORM\GeneratedValue(strategy="AUTO")
              */
-            protected $id;
+            private $id;
 
             /**
              * @ORM\Column(type="string", length=100)
              */
-            protected $name;
+            private $name;
 
             /**
              * @ORM\Column(type="decimal", scale=2)
              */
-            protected $price;
+            private $price;
 
             /**
              * @ORM\Column(type="text")
              */
-            protected $description;
+            private $description;
         }
 
     .. code-block:: yaml
@@ -391,10 +391,10 @@ Generating Getters and Setters
 
 Even though Doctrine now knows how to persist a ``Product`` object to the
 database, the class itself isn't really useful yet. Since ``Product`` is just
-a regular PHP class with ``protected`` properties, you need to create ``public``
+a regular PHP class with ``private`` properties, you need to create ``public``
 getter and setter methods (e.g. ``getName()``, ``setName($name)``) in order
-to access its properties. Fortunately, the following command can generate
-these boilerplate methods automatically:
+to access its properties in the rest of your application's code. Fortunately,
+the following command can generate these boilerplate methods automatically:
 
 .. code-block:: bash
 
@@ -443,13 +443,6 @@ mapping information) of a bundle or an entire namespace:
 
     # generates all entities of bundles in the Acme namespace
     $ php app/console doctrine:generate:entities Acme
-
-.. note::
-
-    Doctrine doesn't care whether your properties are ``protected`` or ``private``,
-    or whether corresponding getter/setter methods exist for your properties.
-    Using getters and setters is suggested here only because you'll need them
-    to interact with your PHP object in the rest of your application's code.
 
 .. _book-doctrine-creating-the-database-tables-schema:
 
@@ -944,7 +937,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
             /**
              * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
              */
-            protected $products;
+            private $products;
 
             public function __construct()
             {
@@ -1027,7 +1020,7 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
              * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
              * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
              */
-            protected $category;
+            private $category;
         }
 
     .. code-block:: yaml
