@@ -269,7 +269,7 @@ pull request message, like in:
 The default pull request description contains a table which you must fill in
 with the appropriate answers. This ensures that contributions may be reviewed
 without needless feedback loops and that your contributions can be included into
-Symfony as quickly as possible:
+Symfony as quickly as possible.
 
 Some answers to the questions trigger some more requirements:
 
