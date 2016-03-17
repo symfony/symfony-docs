@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-03-07T22:30:07Z
+
+:+1: (it's not 100% true as headers can be set on each response type, but we document that should be easy to discover)
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2016-03-08T19:16:53Z
+
+@WouterJ: There's a typo in your comment, so I'm not sure about what you're saying ;-)
+
+Anyway - my point:
+If I do the following:
+````php
+$response = new Response($dompdf->output());
+$response->setContentDisposition(
+    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+    'filename.txt'
+);
+````
+
+I get: `Fatal error: Call to undefined method Symfony\Component\HttpFoundation\Response::setContentDisposition()`
+
+...since `setContentDisposition()` is a method of `BinaryFileResponse` http://api.symfony.com/2.3/Symfony/Component/HttpFoundation/BinaryFileResponse.html but not of the "regular" Response object http://api.symfony.com/2.3/Symfony/Component/HttpFoundation/Response.html
+
+In the original sentence in the docs ("You can still set..."), it's not clear if "still" means after `$response = new BinaryFileResponse($file);` or after the (implied) `$response = new Response(...)` of the `use Symfony\Component\HttpFoundation\ResponseHeaderBag;...` code sample.
