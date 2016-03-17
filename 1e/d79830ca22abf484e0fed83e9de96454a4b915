@@ -1,0 +1,42 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-13T11:21:48Z
+
+A quick win and a nice improvement! @AAstakhov thanks for helping us improve the Symfony docs.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-13T19:21:10Z
+
+Thanks for the heads up @AAstakhov. However, I'd say let's link to the rendered docs on http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html.
+
+---------------------------------------------------------------------------
+
+by AAstakhov at 2016-03-13T20:15:49Z
+
+@xabbuh, agree
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-13T20:57:53Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by webda2l at 2016-03-14T09:19:17Z
+
+I don't think promote the old (and buggy) Gedmo implementation is a good idea, KNP is simpler and better.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-14T10:48:54Z
+
+@webda2l Would you like to open a new issue for that? We can, of course, discuss to promote another library but we should discuss that apart from this PR which just fixes the link.
+
+---------------------------------------------------------------------------
+
+by webda2l at 2016-03-14T11:03:19Z
+
+This is a just that this PR "Updated link" could become "Remove link", but more people should give their opinion.
+But let's merge this PR for now if you want, no problem.
