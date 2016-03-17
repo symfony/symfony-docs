@@ -92,7 +92,7 @@ of your bundle::
     directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``bootstrap.php.cache`` file (as configured by default in the
+via the ``autoload.php`` file (as configured by default in the
 ``app/phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
