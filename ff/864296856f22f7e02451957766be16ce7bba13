@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-27T14:21:09Z
+
+@javiereguiluz you can also add a pointer without headline:
+
+```rst
+.. _community-releases-version-table:
+
+==== ===== ====
+...
+```
+
+And then use that as anchor. I don't think it's really needed to put the table in a seperate section.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-27T14:25:50Z
+
+@WouterJ I don't mind either solution, but let's try to fix this soon because the link that points to this non-existent anchor is already published in http://symfony.com/roadmap page:
+
+![full_releases](https://cloud.githubusercontent.com/assets/73419/13373355/57381c92-dd66-11e5-94e1-eebd02a5679c.png)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-10T16:55:57Z
+
+I've implemented all your recommendations. Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-03-10T17:37:49Z
+
+:+1:
