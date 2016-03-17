@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by AAstakhov at 2016-03-13T12:40:33Z
+
+Another option is to mark this table row as 'n/a' and/or add one more annotation 'Not applicable to private methods'.
+However, I guess it is an overhead and it is enough just to remove a table row that could cause some confusion.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-13T18:46:14Z
+
+:+1: make sense
+
+@symfony/deciders What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-03-14T12:53:12Z
+
+:+1: there's no change - just a clarification - I like it!
+
+---------------------------------------------------------------------------
+
+by Tobion at 2016-03-16T19:41:35Z
+
+:+1: to remove it
