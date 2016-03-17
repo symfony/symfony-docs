@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by AAstakhov at 2016-03-14T18:25:57Z
+
+Moreover, I found out that this documentation page lists form types with their real class names ('SearchType, UrlType') starting from 2.8. In 2.3 we still have list of terms like 'email, search, url'.
+I believe we should use one single approach for versions 2.3-2.6 and for versions older than 2.8. I could create another PR if somebody else agrees on it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-15T08:51:33Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-15T09:05:38Z
+
+@AAstakhov thanks for this fix and thanks for all the contributions you've created since the last Hack Day.
+
+---------------------------------------------------------------------------
+
+by AAstakhov at 2016-03-15T09:19:54Z
+
+I'm sorry, I closed PR by mistake. Reopened.
