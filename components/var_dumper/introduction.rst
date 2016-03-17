@@ -20,6 +20,11 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/var-dumper`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/var-dumper).
 
+.. note::
+
+    If using it inside a Symfony application, make sure that the
+    DebugBundle is enabled in your ``app/AppKernel.php`` file.
+
 .. _components-var-dumper-dump:
 
 The dump() Function
