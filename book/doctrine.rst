@@ -339,10 +339,8 @@ directly inside the ``Product`` class via DocBlock annotations:
 
 .. tip::
 
-    The table name annotation is optional. If it's omitted, Doctrine will
-    assume that the entity's class name should double as the database table
-    name. In the example above, an explicit definition was provided to force
-    the table name to be lowercased.
+    The table name is optional and if omitted, will be determined automatically
+    based on the name of the entity class.
 
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
@@ -362,7 +360,7 @@ see the :ref:`book-doctrine-field-types` section.
     Be careful if the names of your entity classes (or their properties)
     are also reserved SQL keywords like ``GROUP`` or ``USER``. For example,
     if your entity's class name is ``Group``, then, by default, the corresponding
-    table name would be ``Group``. This will cause an SQL error in some database
+    table name would be ``group``. This will cause an SQL error in some database
     engines. See Doctrine's `Reserved SQL keywords documentation`_ for details
     on how to properly escape these names. Alternatively, if you're free
     to choose your database schema, simply map to a different table name
@@ -507,10 +505,10 @@ a controller, this is pretty easy. Add the following method to the
 
         $em = $this->getDoctrine()->getManager();
 
-        // register the Product entity with Doctrine's entity manager.
+        // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $em->persist($product);
 
-        // synchronize all the registered entities with the database.
+        // actually executes the queries (i.e. the INSERT query)
         $em->flush();
 
         return new Response('Saved new product with id '.$product->getId());
