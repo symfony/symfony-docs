@@ -133,6 +133,8 @@ make sure the ``FormRegistry`` uses the created instance::
         {
             // mock any dependencies
             $this->entityManager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+
+            parent::setUp();
         }
 
         protected function getExtensions()
