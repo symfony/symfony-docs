@@ -54,12 +54,11 @@ Every request handled by a Symfony project goes through the same simple lifecycl
 The framework takes care of all the repetitive stuff: you just need to write
 your custom code in the controller function:
 
-#. Each request executes a single front controller file (e.g. on production
-   ``app.php`` or on development ``app_dev.php``) that bootstraps the
-   application;
+#. Each request executes a single front controller file (e.g. ``app.php`` on production
+   or ``app_dev.php`` on development) that bootstraps the application;
 
-#. Front controller's only job is to initialize Symfony's engine (called the
-   `Kernel`) and pass it a ``Request`` object to handle;
+#. The front controller's only job is to initialize Symfony's engine (called the
+   ``Kernel``) and pass it a ``Request`` object to handle;
 
 #. The Symfony core asks the router to inspect the request;
 
@@ -80,18 +79,20 @@ that maps a URL to that controller (#4).
 .. image:: /images/http-xkcd-request.png
    :align: center
 
-Though similarly named, a "front controller" is different from the PHP
-functions called "controllers" talked about in this chapter. A front
-controller is a short PHP file that lives in your ``web/`` directory
-through which all requests are directed. A typical application will
-have a production front controller (e.g. ``app.php``) and a development
-front controller (e.g. ``app_dev.php``). You'll likely never need to
-edit, view or worry about the front controllers in your application.
-The "controller class" is a convenient way to group several "controllers",
-also called actions, together in one class (e.g. ``updateAction()``,
-``deleteAction()``, etc). So, a controller is a method inside a controller
-class. They hold your code which creates and returns the appropriate
-``Response`` object.
+.. note::
+
+    Though similarly named, a "front controller" is different from the PHP
+    functions called "controllers" talked about in this chapter. A front
+    controller is a short PHP file that lives in your ``web/`` directory
+    through which all requests are directed. A typical application will
+    have a production front controller (e.g. ``app.php``) and a development
+    front controller (e.g. ``app_dev.php``). You'll likely never need to
+    edit, view or worry about the front controllers in your application.
+    The "controller class" is a convenient way to group several "controllers",
+    also called actions, together in one class (e.g. ``updateAction()``,
+    ``deleteAction()``, etc). So, a controller is a method inside a controller
+    class. They hold your code which creates and returns the appropriate
+    ``Response`` object.
 
 .. index::
    single: Controller; Simple example
@@ -150,7 +151,7 @@ Mapping a URL to a Controller
 
 The new controller returns a simple HTML page. To actually view this page
 in your browser, you need to create a route, which maps a specific URL path
-to the controller::
+to the controller:
 
 .. configuration-block::
 
@@ -218,16 +219,13 @@ simply creating a controller method and an associated route.
 
 Simple, right?
 
-.. sidebar:: Logical controller name
+.. sidebar:: The AppBundle:Hello:index controller syntax
 
     If you use the YAML or XML formats, you'll refer to the controller
-    using a special shortcut syntax called *logical controller name*
+    using a special shortcut syntax called the *logical controller name*
     which, for example, looks like ``AppBundle:Hello:index``. For more
     details on the controller format, read
     :ref:`controller-string-syntax` subtitle of the Routing chapter.
-
-    You can learn much more about the routing system in the
-    :doc:`Routing chapter </book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
@@ -255,13 +253,13 @@ method::
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
-``{name}`` placehold from the matched route (``ryan`` if you go to
-``/hello/ryan``). When executing controller, Symfony matches each argument
-with a placehold from the route. So the value for ``{name}`` is passed
+``{name}`` placeholder from the matched route (e.g. ``ryan`` if you go to
+``/hello/ryan``). When executing the controller, Symfony matches each argument
+with a placeholder from the route. So the value for ``{name}`` is passed
 to ``$name``. Just make sure they the name of the placeholder is the
 same as the name of the argument variable.
 
-Take the following more-interesting example, where controller has two
+Take the following more-interesting example, where the controller has two
 arguments::
 
 .. configuration-block::
@@ -362,11 +360,6 @@ Keep the following guidelines in mind while you develop.
 
 .. tip::
 
-    Every route also has a special ``_route`` parameter (you will learn more
-    about this in the :ref:`Routing chapter <book-special-routing-parameters>`),
-    which is equal to the name of the route that was matched (e.g. ``hello``).
-    Though not usually useful, this is also available as a controller argument.
-
     You can also pass other variables from your route to your controller
     arguments. See :doc:`/cookbook/routing/extra_information`.
 
@@ -379,7 +372,7 @@ The Base Controller Class
 
 For convenience, Symfony comes with an optional base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
-If you extend it, this wont change anything about how your controller
+If you extend it, this won't change anything about how your controller
 works, but you'll get access to a number of **helper methods** and the
 **service container** (see :ref:`controller-accessing-services`): an
 array-like object that gives you access to every useful object in the
@@ -388,7 +381,7 @@ with a service object that can render Twig templates, another that can
 log messages and many more.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify
-the ``HelloController`` to extend it::
+``HelloController`` to extend it::
 
     // src/AppBundle/Controller/HelloController.php
     namespace AppBundle\Controller;
@@ -428,10 +421,10 @@ method is just a helper method that generates the URL for a given route.
 Redirecting
 ~~~~~~~~~~~
 
-To redirect the user's browser to another page **internally**, use the ``generateUrl()``
+To redirect the user's browser to another page of your app, use the ``generateUrl()``
 method in combination with another helper method called
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-which needs URL as an argument::
+which takes a URL as an argument::
 
     public function indexAction()
     {
@@ -446,7 +439,7 @@ perform a 301 (permanent) redirect, modify the second argument::
         return $this->redirect($this->generateUrl('homepage'), 301);
     }
 
-To redirect **externally**, use ``redirect()`` and pass it the external URL::
+To redirect to an *external* site, use ``redirect()`` and pass it the external URL::
 
     public function indexAction()
     {
@@ -472,15 +465,14 @@ For more information, see the :doc:`Routing chapter </book/routing>`.
 Rendering Templates
 ~~~~~~~~~~~~~~~~~~~
 
-To serve HTML, template needs to be rendered and the content put into
-the ``Response`` object. The shortcut method
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`
-of ``Controller`` class does just that::
+If you're serving HTML, you'll want to render a template. The ``render()``
+method renders a template **and** puts that content into a ``Response``
+object for you::
 
     // renders app/Resources/views/hello/index.html.twig
     return $this->render('hello/index.html.twig', array('name' => $name));
 
-Templates can be also put in deeper sub-directories. Just try to avoid
+Templates can also live in deeper sub-directories. Just try to avoid
 creating unnecessarily deep structures::
 
     // renders app/Resources/views/hello/greetings/index.html.twig
@@ -491,7 +483,7 @@ creating unnecessarily deep structures::
 Templates are a generic way to render content in *any* format. And while in
 most cases you'll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.
-To learn how to render different templating formats read :ref:`template-formats`
+To learn how to render different templating formats read the :ref:`template-formats`
 section of the Creating and Using Templates chapter.
 
 The Symfony templating engine is explained in great detail in the
@@ -499,21 +491,10 @@ The Symfony templating engine is explained in great detail in the
 
 .. sidebar:: Templating Naming Pattern
 
-    Templates for a bundle can be put in the ``src/path/to/bundle/Resources/views``
-    directory of a bundle and reference with a special shortcut syntax called
-    *logical name* which, for example, looks like ``AppBundle:Hello:index.html.twig`` or
-    ``AppBundle::layout.html.twig``. The pattern has three parts, each separated
-    by a colon. Syntax used to specify a  template for a specific page::
-
-        **bundle**:**directory**:**filename**
-
-    Syntax used to refer to a base template that's specific to the bundle::
-
-        ``**bundle**::**filename**``
-
-    For more details on the template format, read
-    :ref:`template-referencing-in-bundle` subtitle of the Creating and
-    Using Templates chapter.
+    You can also put templates in the ``Resources/views`` directory of a bundle and
+    reference them with a special shortcut syntax like ``@AppBundle/Hello/index.html.twig``
+    or ``@AppBundle/layout.html.twig``. These would live in at ``Resources/views/Hello/index.html.twig``
+    and ``Resources/views/layout.html.twig`` inside the bundle respectively.
 
 .. index::
    single: Controller; Accessing services
@@ -540,7 +521,7 @@ need::
     $mailer = $this->get('mailer');
 
 What other services exist? To list all services, use the ``container:debug``
-console command::
+console command:
 
 .. code-block:: bash
 
@@ -583,11 +564,11 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using ``app_dev.php``
+error page is shown to the developer (i.e. when you're using the ``app_dev.php``
 front controller - see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see
-the cookbook article  ":doc:`/cookbook/controller/error_pages`" cookbook recipe.
+the ":doc:`/cookbook/controller/error_pages`" cookbook recipe.
 
 .. index::
    single: Controller; The session
@@ -620,11 +601,11 @@ about the user (be it a real person using a browser, a bot, or a web service)
 between requests. By default, Symfony stores the attributes in a cookie
 by using the native PHP sessions.
 
-To retrieving the session we have to call the
+To retrieve the session, call
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getSession`
-method on the ``Request`` object inside a controller. Method returns a
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
-with all the methods to handle a session::
+method on the ``Request`` object. This method returns a
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` with easy
+methods for storing and fetching things from the session::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -722,10 +703,9 @@ read any flash messages from the session:
 The Request and Response Object
 -------------------------------
 
-As already mentioned a :ref:`little earlier <book-controller-request-argument>`,
-besides the values of the routing parameters, the controller has also access
-to the ``Request`` object. The framework injects the ``Request`` object
-in the controller if a variable is type-hinted with ``Request`` class::
+As mentioned :ref:`earlier <book-controller-request-argument>`, the framework will
+pass the ``Request`` object to any controller argument taht is type-hinted with
+the ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -753,14 +733,14 @@ in the controller if a variable is type-hinted with ``Request`` class::
         $request->headers->get('content_type');
     }
 
-``Request`` class has several public properties via which information about the client
-request can be accessed.
+The ``Request`` class has several public properties and methods that return any
+information you need about the request.
 
-Like the ``Request``, the ``Response`` object has also a public ``headers`` property
-which is a :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag` instance.
-``ResponseHeaderBag`` instances have methods for getting and setting the response
-headers. The header names are normalized so that using ``Content-Type`` is equivalent
-to ``content-type`` or even ``content_type``.
+Like the ``Request``, the ``Response`` object has also a public ``headers`` property.
+This is a :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag` that has
+some nice methods for getting and setting response headers. The header names are
+normalized so that using ``Content-Type`` is equivalent to ``content-type`` or even
+``content_type``.
 
 The only requirement for a controller is to return a ``Response`` object.
 The :class:`Symfony\\Component\\HttpFoundation\\Response` class is an
@@ -807,15 +787,11 @@ and template are needed). See cookbook article
 Forwarding to Another Controller
 --------------------------------
 
-We already saw how to redirect the :ref:`user's browser <book-redirecting-users-browser>`
-to another page internally or to some external URL.
-
 Though not very common, you can also forward to another controller
-internally with the basic ``Controller`` class method
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`.
-Instead of redirecting the user's browser, method makes an internal
-sub-request, and calls the defined controller. The ``forward()`` method returns
-the ``Response`` object that's returned from *that* controller::
+internally with the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
+method. Instead of redirecting the user's browser, this makes an "internal" sub-request
+and calls the defined controller. The ``forward()`` method returns the ``Response``
+object that's returned from *that* controller::
 
     public function indexAction($name)
     {
@@ -829,38 +805,25 @@ the ``Response`` object that's returned from *that* controller::
         return $response;
     }
 
-The array passed to the method becomes the arguments on the resulting controller.
-The target controller method would look something like this::
+The array passed to the method becomes the arguments for the resulting controller.
+The target controller method might look something like this::
 
     public function fancyAction($name, $color)
     {
         // ... create and return a Response object
     }
 
-.. sidebar:: Logical controller name
-
-    Notice that the ``forward()`` method uses a special string representation
-    called *logical controller name* which, for example, looks like
-    ``AppBundle:Hello:index``. For more details on the controller format, read
-    :ref:`controller-string-syntax` subtitle of the Routing chapter.
-
-    You can learn much more about the routing system in the
-    :doc:`Routing chapter </book/routing>`.
-
-Just like when creating a controller for a route, the order of the
-arguments of ``fancyAction()`` doesn't matter. Symfony matches the route
-placeholder names (e.g. ``{name}``) with the method argument names (e.g. ``$name``).
-If you change the order of the arguments, Symfony will still pass the correct
-value to each variable.
+Just like when creating a controller for a route, the order of the arguments of
+``fancyAction()`` doesn't matter: the matching is done by name.
 
 Checking the Validity of a CSRF Token inside Controller
 -------------------------------------------------------
 
-Sometimes you want to use :ref:`CSRF protection <forms-csrf>` in a controller where
-you don't want to use a Symfony form.
+You may sometimes want to use :ref:`CSRF protection <forms-csrf>` in a controller where
+you don't have a Symfony form.
 
 If, for example, you're doing a DELETE action, you can use the
-:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\SessionCsrfProvider::isCsrfTokenValid`
+:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderInterface::isCsrfTokenValid`
 method to check the CSRF token::
 
     $csrf = $this->container->get('form.csrf_provider');
@@ -894,4 +857,5 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
+
 .. _`Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
