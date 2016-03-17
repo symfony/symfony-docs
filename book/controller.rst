@@ -719,13 +719,53 @@ read any flash messages from the session:
 .. index::
    single: Controller; Response object
 
-The Response Object
--------------------
+The Request and Response Object
+-------------------------------
 
-The only requirement for a controller is to return a ``Response`` object. The
-:class:`Symfony\\Component\\HttpFoundation\\Response` class is an abstraction
-around the HTTP response: the text-based message filled with headers and
-content that's sent back to the client::
+As already mentioned a :ref:`little earlier <book-controller-request-argument>`,
+besides the values of the routing parameters, the controller has also access
+to the ``Request`` object. The framework injects the ``Request`` object
+in the controller if a variable is type-hinted with ``Request`` class::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction(Request $request)
+    {
+        $request->isXmlHttpRequest(); // is it an Ajax request?
+
+        $request->getPreferredLanguage(array('en', 'fr'));
+
+        // retrieve GET and POST variables respectively
+        $request->query->get('page');
+        $request->request->get('page');
+
+        // retrieve SERVER variables
+        $request->server->get('HTTP_HOST');
+
+        // retrieves an instance of UploadedFile identified by foo
+        $request->files->get('foo');
+
+        // retrieve a COOKIE value
+        $request->cookies->get('PHPSESSID');
+
+        // retrieve an HTTP request header, with normalized, lowercase keys
+        $request->headers->get('host');
+        $request->headers->get('content_type');
+    }
+
+``Request`` class has several public properties via which information about the client
+request can be accessed.
+
+Like the ``Request``, the ``Response`` object has also a public ``headers`` property
+which is a :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag` instance.
+``ResponseHeaderBag`` instances have methods for getting and setting the response
+headers. The header names are normalized so that using ``Content-Type`` is equivalent
+to ``content-type`` or even ``content_type``.
+
+The only requirement for a controller is to return a ``Response`` object.
+The :class:`Symfony\\Component\\HttpFoundation\\Response` class is an
+abstraction around the HTTP response - the text-based message filled with
+headers and content that's sent back to the client::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -736,11 +776,6 @@ content that's sent back to the client::
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
 
-The ``headers`` property is a :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`
-object and has some nice methods for getting and setting the headers. The
-header names are normalized so that using ``Content-Type`` is equivalent to
-``content-type`` or even ``content_type``.
-
 There are also special classes to make certain kinds of responses easier:
 
 * For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
@@ -749,53 +784,22 @@ There are also special classes to make certain kinds of responses easier:
 * For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
   See :ref:`component-http-foundation-serving-files`.
 
-* For streamed responses, there is :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
+* For streamed responses, there is
+  :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
 .. seealso::
 
-    Don't worry! There is a lot more information about the Response object
-    in the component documentation. See :ref:`component-http-foundation-response`.
-
-.. index::
-   single: Controller; Request object
-
-The Request Object
-------------------
-
-Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object. The framework injects the ``Request`` object in the
-controller if a variable is type-hinted with
-:class:`Symfony\\Component\\HttpFoundation\\Request`::
-
-    use Symfony\Component\HttpFoundation\Request;
-
-    public function indexAction(Request $request)
-    {
-        $request->isXmlHttpRequest(); // is it an Ajax request?
-
-        $request->getPreferredLanguage(array('en', 'fr'));
-
-        $request->query->get('page'); // get a $_GET parameter
-
-        $request->request->get('page'); // get a $_POST parameter
-    }
-
-Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
-object and are easily accessible.
-
-.. seealso::
-
-    Don't worry! There is a lot more information about the Request object
-    in the component documentation. See :ref:`component-http-foundation-request`.
+    Now that you know the basics you can continue your research on Symfony
+    ``Request`` and ``Response`` object in the
+    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
 Creating Static Pages
 ---------------------
 
 You can create a static page without even creating a controller (only a route
-and template are needed).
-
-See :doc:`/cookbook/templating/render_without_controller`.
+and template are needed). See cookbook article
+:doc:`/cookbook/templating/render_without_controller`.
 
 .. index::
    single: Controller; Forwarding
@@ -803,11 +807,15 @@ See :doc:`/cookbook/templating/render_without_controller`.
 Forwarding to Another Controller
 --------------------------------
 
-Though not very common, you can also forward to another controller internally
-with the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
-method. Instead of redirecting the user's browser, it makes an internal sub-request,
-and calls the controller. The ``forward()`` method returns the ``Response``
-object that's returned from *that* controller::
+We already saw how to redirect the :ref:`user's browser <book-redirecting-users-browser>`
+to another page internally or to some external URL.
+
+Though not very common, you can also forward to another controller
+internally with the basic ``Controller`` class method
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`.
+Instead of redirecting the user's browser, method makes an internal
+sub-request, and calls the defined controller. The ``forward()`` method returns
+the ``Response`` object that's returned from *that* controller::
 
     public function indexAction($name)
     {
@@ -821,36 +829,42 @@ object that's returned from *that* controller::
         return $response;
     }
 
-Notice that the ``forward()`` method uses a special string representation
-of the controller (see :ref:`controller-string-syntax`). In this case, the
-target controller function will be ``SomethingController::fancyAction()``
-inside the AppBundle. The array passed to the method becomes the arguments on
-the resulting controller. This same idea is used when embedding controllers
-into templates (see :ref:`templating-embedding-controller`). The target
-controller method would look something like this::
+The array passed to the method becomes the arguments on the resulting controller.
+The target controller method would look something like this::
 
     public function fancyAction($name, $color)
     {
         // ... create and return a Response object
     }
 
-Just like when creating a controller for a route, the order of the arguments of
-``fancyAction`` doesn't matter. Symfony matches the index key names (e.g.
-``name``) with the method argument names (e.g. ``$name``). If you change the
-order of the arguments, Symfony will still pass the correct value to each
-variable.
+.. sidebar:: Logical controller name
 
-Checking the Validity of a CSRF Token
--------------------------------------
+    Notice that the ``forward()`` method uses a special string representation
+    called *logical controller name* which, for example, looks like
+    ``AppBundle:Hello:index``. For more details on the controller format, read
+    :ref:`controller-string-syntax` subtitle of the Routing chapter.
 
-Sometimes you want to use CSRF protection in an action where you don't want to use a
-Symfony form.
+    You can learn much more about the routing system in the
+    :doc:`Routing chapter </book/routing>`.
+
+Just like when creating a controller for a route, the order of the
+arguments of ``fancyAction()`` doesn't matter. Symfony matches the route
+placeholder names (e.g. ``{name}``) with the method argument names (e.g. ``$name``).
+If you change the order of the arguments, Symfony will still pass the correct
+value to each variable.
+
+Checking the Validity of a CSRF Token inside Controller
+-------------------------------------------------------
+
+Sometimes you want to use :ref:`CSRF protection <forms-csrf>` in a controller where
+you don't want to use a Symfony form.
 
 If, for example, you're doing a DELETE action, you can use the
-:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderInterface::isCsrfTokenValid`
+:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\SessionCsrfProvider::isCsrfTokenValid`
 method to check the CSRF token::
 
     $csrf = $this->container->get('form.csrf_provider');
+
     $intention = 'authenticate';
     $token = $csrf->generateCsrfToken($intention);
 
