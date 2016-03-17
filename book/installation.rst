@@ -195,11 +195,7 @@ your `Apache`_ or `Nginx`_ web server as explained in
 :doc:`/cookbook/configuration/web_server_configuration`.
 
 When you are finished working on your Symfony application, you can stop the
-server with the ``server:stop`` command:
-
-.. code-block:: bash
-
-    $ php app/console server:stop
+server by pressing `Ctrl+C` from terminal.
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
