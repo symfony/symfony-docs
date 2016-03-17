@@ -474,7 +474,8 @@ if it should::
 
     BinaryFileResponse::trustXSendfileTypeHeader();
 
-You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
+With the ``BinaryFileResponse``, you can still set the ``Content-Type`` of the sent file,
+or change its ``Content-Disposition``::
 
     $response->headers->set('Content-Type', 'text/plain');
     $response->setContentDisposition(
