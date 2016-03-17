@@ -111,8 +111,8 @@ information. By convention, this information is usually configured in an
     of your project, like inside your Apache configuration, for example. For
     more information, see :doc:`/cookbook/configuration/external_parameters`.
 
-Now that Doctrine knows about your database, you can have it create the database
-for you:
+Now that Doctrine can connect to your database, the following command
+can automatically generate an empty ``test_project`` database for you:
 
 .. code-block:: bash
 
@@ -209,9 +209,9 @@ inside the ``Entity`` directory of your AppBundle::
 
     class Product
     {
-        protected $name;
-        protected $price;
-        protected $description;
+        private $name;
+        private $price;
+        private $description;
     }
 
 The class - often called an "entity", meaning *a basic class that holds data* -
@@ -238,19 +238,21 @@ Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine allows you to work with databases in a much more interesting way
-than just fetching rows of a column-based table into an array. Instead, Doctrine
-allows you to persist entire *objects* to the database and fetch entire objects
-out of the database. This works by mapping a PHP class to a database table,
-and the properties of that PHP class to columns on the table:
+than just fetching rows of scalar data into an array. Instead, Doctrine
+allows you to fetch entire *objects* out of the database, and to persist
+entire objects to the database. For Doctrine to be able to do this, you
+must *map* your database tables to specific PHP classes, and the columns
+on those tables must be mapped to specific properties on their corresponding
+PHP classes.
 
 .. image:: /images/book/doctrine_image_1.png
    :align: center
 
-For Doctrine to be able to do this, you just have to create "metadata", or
-configuration that tells Doctrine exactly how the ``Product`` class and its
-properties should be *mapped* to the database. This metadata can be specified
-in a number of different formats including YAML, XML or directly inside the
-``Product`` class via annotations:
+You'll provide this mapping information in the form of "metadata", a collection
+of rules that tells Doctrine exactly how the ``Product`` class and its
+properties should be *mapped* to a specific database table. This metadata
+can be specified in a number of different formats, including YAML, XML or
+directly inside the ``Product`` class via DocBlock annotations:
 
 .. configuration-block::
 
@@ -272,22 +274,22 @@ in a number of different formats including YAML, XML or directly inside the
              * @ORM\Id
              * @ORM\GeneratedValue(strategy="AUTO")
              */
-            protected $id;
+            private $id;
 
             /**
              * @ORM\Column(type="string", length=100)
              */
-            protected $name;
+            private $name;
 
             /**
              * @ORM\Column(type="decimal", scale=2)
              */
-            protected $price;
+            private $price;
 
             /**
              * @ORM\Column(type="text")
              */
-            protected $description;
+            private $description;
         }
 
     .. code-block:: yaml
@@ -337,8 +339,10 @@ in a number of different formats including YAML, XML or directly inside the
 
 .. tip::
 
-    The table name is optional and if omitted, will be determined automatically
-    based on the name of the entity class.
+    The table name annotation is optional. If it's omitted, Doctrine will
+    assume that the entity's class name should double as the database table
+    name. In the example above, an explicit definition was provided to force
+    the table name to be lowercased.
 
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
@@ -355,14 +359,15 @@ see the :ref:`book-doctrine-field-types` section.
 
 .. caution::
 
-    Be careful that your class name and properties aren't mapped to a protected
-    SQL keyword (such as ``group`` or ``user``). For example, if your entity
-    class name is ``Group``, then, by default, your table name will be ``group``,
-    which will cause an SQL error in some engines. See Doctrine's
-    `Reserved SQL keywords documentation`_ on how to properly escape these
-    names. Alternatively, if you're free to choose your database schema,
-    simply map to a different table name or column name. See Doctrine's
-    `Creating Classes for the Database`_ and `Property Mapping`_ documentation.
+    Be careful if the names of your entity classes (or their properties)
+    are also reserved SQL keywords like ``GROUP`` or ``USER``. For example,
+    if your entity's class name is ``Group``, then, by default, the corresponding
+    table name would be ``Group``. This will cause an SQL error in some database
+    engines. See Doctrine's `Reserved SQL keywords documentation`_ for details
+    on how to properly escape these names. Alternatively, if you're free
+    to choose your database schema, simply map to a different table name
+    or column name. See Doctrine's `Creating Classes for the Database`_
+    and `Property Mapping`_ documentation.
 
 .. note::
 
@@ -386,9 +391,10 @@ Generating Getters and Setters
 
 Even though Doctrine now knows how to persist a ``Product`` object to the
 database, the class itself isn't really useful yet. Since ``Product`` is just
-a regular PHP class, you need to create getter and setter methods (e.g. ``getName()``,
-``setName()``) in order to access its properties (since the properties are
-``protected``). Fortunately, Doctrine can do this for you by running:
+a regular PHP class with ``private`` properties, you need to create ``public``
+getter and setter methods (e.g. ``getName()``, ``setName($name)``) in order
+to access its properties in the rest of your application's code. Fortunately,
+the following command can generate these boilerplate methods automatically:
 
 .. code-block:: bash
 
@@ -402,16 +408,16 @@ doesn't replace your existing methods).
 .. caution::
 
     Keep in mind that Doctrine's entity generator produces simple getters/setters.
-    You should check generated entities and adjust getter/setter logic to your own
-    needs.
+    You should review the generated methods and add any logic, if necessary,
+    to suit the needs of your application.
 
 .. sidebar:: More about ``doctrine:generate:entities``
 
     With the ``doctrine:generate:entities`` command you can:
 
-    * generate getters and setters;
+    * generate getter and setter methods in entity classes;
 
-    * generate repository classes configured with the
+    * generate repository classes on behalf of entities configured with the
       ``@ORM\Entity(repositoryClass="...")`` annotation;
 
     * generate the appropriate constructor for 1:n and n:m relations.
@@ -422,11 +428,10 @@ doesn't replace your existing methods).
     removed. You can also use the ``--no-backup`` option to prevent generating
     these backup files.
 
-    Note that you don't *need* to use this command. Doctrine doesn't rely
-    on code generation. Like with normal PHP classes, you just need to make
-    sure that your protected/private properties have getter and setter methods.
-    Since this is a common thing to do when using Doctrine, this command
-    was created.
+    Note that you don't *need* to use this command. You could also write the
+    necessary getters and setters by hand. This option simply exists to save
+    you time, since creating these methods is often a common task during
+    development.
 
 You can also generate all known entities (i.e. any PHP class with Doctrine
 mapping information) of a bundle or an entire namespace:
@@ -438,13 +443,6 @@ mapping information) of a bundle or an entire namespace:
 
     # generates all entities of bundles in the Acme namespace
     $ php app/console doctrine:generate:entities Acme
-
-.. note::
-
-    Doctrine doesn't care whether your properties are ``protected`` or ``private``,
-    or whether you have a getter or setter function for a property.
-    The getters and setters are generated here only because you'll need them
-    to interact with your PHP object.
 
 .. _book-doctrine-creating-the-database-tables-schema:
 
@@ -465,17 +463,21 @@ in your application. To do this, run:
 
     Actually, this command is incredibly powerful. It compares what
     your database *should* look like (based on the mapping information of
-    your entities) with how it *actually* looks, and generates the SQL statements
-    needed to *update* the database to where it should be. In other words, if you add
-    a new property with mapping metadata to ``Product`` and run this task
-    again, it will generate the "alter table" statement needed to add that
-    new column to the existing ``product`` table.
+    your entities) with how it *actually* looks, and executes the SQL statements
+    needed to *update* the database schema to where it should be. In other
+    words, if you add a new property with mapping metadata to ``Product``
+    and run this task, it will execute the "ALTER TABLE" statement needed
+    to add that new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
     `migrations`_, which allow you to generate these SQL statements and store
     them in migration classes that can be run systematically on your production
-    server in order to track and migrate your database schema safely and
-    reliably.
+    server in order to update and track changes to your database schema safely
+    and reliably.
+
+    Whether or not you take advantage of migrations, the ``doctrine:schema:update``
+    command should only be used during development. It should not be used in
+    a production environment.
 
 Your database now has a fully-functional ``product`` table with columns that
 match the metadata you've specified.
@@ -483,10 +485,10 @@ match the metadata you've specified.
 Persisting Objects to the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have a mapped ``Product`` entity and corresponding ``product``
-table, you're ready to persist data to the database. From inside a controller,
-this is pretty easy. Add the following method to the ``DefaultController``
-of the bundle::
+Now that you have mapped the ``Product`` entity to its corresponding ``product``
+table, you're ready to persist ``Product`` objects to the database. From inside
+a controller, this is pretty easy. Add the following method to the
+``DefaultController`` of the bundle::
 
 
     // src/AppBundle/Controller/DefaultController.php
@@ -499,16 +501,19 @@ of the bundle::
     public function createAction()
     {
         $product = new Product();
-        $product->setName('A Foo Bar');
-        $product->setPrice('19.99');
-        $product->setDescription('Lorem ipsum dolor');
+        $product->setName('Keyboard');
+        $product->setPrice(19.99);
+        $product->setDescription('Ergonomic and stylish!');
 
         $em = $this->getDoctrine()->getManager();
 
+        // register the Product entity with Doctrine's entity manager.
         $em->persist($product);
+
+        // synchronize all the registered entities with the database.
         $em->flush();
 
-        return new Response('Created product id '.$product->getId());
+        return new Response('Saved new product with id '.$product->getId());
     }
 
 .. note::
@@ -528,20 +533,20 @@ of the bundle::
 Take a look at the previous example in more detail:
 
 * **lines 10-13** In this section, you instantiate and work with the ``$product``
-  object like any other, normal PHP object.
+  object like any other normal PHP object.
 
 * **line 15** This line fetches Doctrine's *entity manager* object, which is
-  responsible for handling the process of persisting and fetching objects
-  to and from the database.
+  responsible for the process of persisting objects to, and fetching objects
+  from, the database.
 
-* **line 17** The ``persist()`` method tells Doctrine to "manage" the ``$product``
-  object. This does not actually cause a query to be made to the database (yet).
+* **line 17** The ``persist($product)`` call tells Doctrine to "manage" the
+  ``$product`` object. This does **not** cause a query to be made to the database.
 
 * **line 18** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
-  to the database. In this example, the ``$product`` object has not been
-  persisted yet, so the entity manager executes an ``INSERT`` query and a
-  row is created in the ``product`` table.
+  to the database. In this example, the ``$product`` object's data doesn't
+  exist in the database, so the entity manager executes an ``INSERT`` query,
+  creating a new row in the ``product`` table.
 
 .. note::
 
@@ -552,9 +557,9 @@ Take a look at the previous example in more detail:
     ``Product`` objects and then subsequently call ``flush()``, Doctrine will
     execute 100 ``INSERT`` queries using a single prepared statement object.
 
-When creating or updating objects, the workflow is always the same. In the
-next section, you'll see how Doctrine is smart enough to automatically issue
-an ``UPDATE`` query if the record already exists in the database.
+Whether creating or updating objects, the workflow is always the same. In
+the next section, you'll see how Doctrine is smart enough to automatically
+issue an ``UPDATE`` query if the entity already exists in the database.
 
 .. tip::
 
@@ -569,15 +574,15 @@ Fetching an object back out of the database is even easier. For example,
 suppose you've configured a route to display a specific ``Product`` based
 on its ``id`` value::
 
-    public function showAction($id)
+    public function showAction($productId)
     {
         $product = $this->getDoctrine()
             ->getRepository('AppBundle:Product')
-            ->find($id);
+            ->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
-                'No product found for id '.$id
+                'No product found for id '.$productId
             );
         }
 
@@ -605,20 +610,20 @@ repository object for an entity class via::
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 
-Once you have your repository, you have access to all sorts of helpful methods::
+Once you have a repository object, you can access all sorts of helpful methods::
 
-    // query by the primary key (usually "id")
-    $product = $repository->find($id);
+    // query for a single product by its primary key (usually "id")
+    $product = $repository->find($productId);
 
-    // dynamic method names to find based on a column value
-    $product = $repository->findOneById($id);
-    $product = $repository->findOneByName('foo');
+    // dynamic method names to find a single product based on a column value
+    $product = $repository->findOneById($productId);
+    $product = $repository->findOneByName('Keyboard');
+
+    // dynamic method names to find a group of products based on a column value
+    $products = $repository->findByPrice(19.99);
 
     // find *all* products
     $products = $repository->findAll();
-
-    // find a group of products based on an arbitrary column value
-    $products = $repository->findByPrice(19.99);
 
 .. note::
 
@@ -628,14 +633,14 @@ Once you have your repository, you have access to all sorts of helpful methods::
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
 to easily fetch objects based on multiple conditions::
 
-    // query for one product matching by name and price
+    // query for a single product matching the given name and price
     $product = $repository->findOneBy(
-        array('name' => 'foo', 'price' => 19.99)
+        array('name' => 'Keyboard', 'price' => 19.99)
     );
 
-    // query for all products matching the name, ordered by price
+    // query for multiple products matching the given name, ordered by price
     $products = $repository->findBy(
-        array('name' => 'foo'),
+        array('name' => 'Keyboard'),
         array('price' => 'ASC')
     );
 
@@ -661,14 +666,14 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
-    public function updateAction($id)
+    public function updateAction($productId)
     {
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('AppBundle:Product')->find($id);
+        $product = $em->getRepository('AppBundle:Product')->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
-                'No product found for id '.$id
+                'No product found for id '.$productId
             );
         }
 
@@ -710,9 +715,8 @@ Querying for Objects
 You've already seen how the repository object allows you to run basic queries
 without any work::
 
-    $repository->find($id);
-
-    $repository->findOneByName('Foo');
+    $product = $repository->find($productId);
+    $product = $repository->findOneByName('Keyboard');
 
 Of course, Doctrine also allows you to write more complex queries using the
 Doctrine Query Language (DQL). DQL is similar to SQL except that you should
@@ -738,8 +742,6 @@ Doctrine's native SQL-like language called DQL to make a query for this::
     )->setParameter('price', '19.99');
 
     $products = $query->getResult();
-    // to get just one result:
-    // $product = $query->setMaxResults(1)->getOneOrNullResult();
 
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
 difference is that you need to think in terms of "objects" instead of rows
@@ -935,7 +937,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
             /**
              * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
              */
-            protected $products;
+            private $products;
 
             public function __construct()
             {
@@ -1018,7 +1020,7 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
              * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
              * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
              */
-            protected $category;
+            private $category;
         }
 
     .. code-block:: yaml
@@ -1116,12 +1118,13 @@ Now you can see this new code in action! Imagine you're inside a controller::
         public function createProductAction()
         {
             $category = new Category();
-            $category->setName('Main Products');
+            $category->setName('Computer Peripherals');
 
             $product = new Product();
-            $product->setName('Foo');
+            $product->setName('Keyboard');
             $product->setPrice(19.99);
-            $product->setDescription('Lorem ipsum dolor');
+            $product->setDescription('Ergonomic and stylish!');
+
             // relate this product to the category
             $product->setCategory($category);
 
@@ -1131,8 +1134,8 @@ Now you can see this new code in action! Imagine you're inside a controller::
             $em->flush();
 
             return new Response(
-                'Created product id: '.$product->getId()
-                .' and category id: '.$category->getId()
+                'Saved new product with id: '.$product->getId()
+                .' and new category with id: '.$category->getId()
             );
         }
     }
@@ -1147,13 +1150,13 @@ Fetching Related Objects
 
 When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
-``Category``::
+``Category`` object::
 
-    public function showAction($id)
+    public function showAction($productId)
     {
         $product = $this->getDoctrine()
             ->getRepository('AppBundle:Product')
-            ->find($id);
+            ->find($productId);
 
         $categoryName = $product->getCategory()->getName();
 
@@ -1176,11 +1179,11 @@ the category (i.e. it's "lazily loaded").
 
 You can also query in the other direction::
 
-    public function showProductsAction($id)
+    public function showProductsAction($categoryId)
     {
         $category = $this->getDoctrine()
             ->getRepository('AppBundle:Category')
-            ->find($id);
+            ->find($categoryId);
 
         $products = $category->getProducts();
 
@@ -1201,7 +1204,7 @@ to the given ``Category`` object via their ``category_id`` value.
 
         $product = $this->getDoctrine()
             ->getRepository('AppBundle:Product')
-            ->find($id);
+            ->find($productId);
 
         $category = $product->getCategory();
 
@@ -1238,14 +1241,14 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/AppBundle/Entity/ProductRepository.php
-    public function findOneByIdJoinedToCategory($id)
+    public function findOneByIdJoinedToCategory($productId)
     {
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT p, c FROM AppBundle:Product p
                 JOIN p.category c
                 WHERE p.id = :id'
-            )->setParameter('id', $id);
+            )->setParameter('id', $productId);
 
         try {
             return $query->getSingleResult();
@@ -1257,11 +1260,11 @@ following method to the ``ProductRepository`` class::
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` with just one query::
 
-    public function showAction($id)
+    public function showAction($productId)
     {
         $product = $this->getDoctrine()
             ->getRepository('AppBundle:Product')
-            ->findOneByIdJoinedToCategory($id);
+            ->findOneByIdJoinedToCategory($productId);
 
         $category = $product->getCategory();
 
