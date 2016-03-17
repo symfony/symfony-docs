@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-04T08:51:03Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by timhovius at 2016-03-04T11:06:10Z
+
+This issue is valid for Symfony versions >= 2.3
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-03-05T11:13:19Z
+
+The best practices naming convention is to use lowercase characters only for template directories and names. Can you please make the template locations use lowercase instead in this article, @timhovius? (we can do it too while merging this PR)
+
+---------------------------------------------------------------------------
+
+by timhovius at 2016-03-14T11:04:33Z
+
+I changed it, thanks for your comment!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-03-17T23:30:23Z
+
+Awesome, thanks Tim!
