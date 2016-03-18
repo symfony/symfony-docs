@@ -102,7 +102,7 @@ the code that prepares the HTML "presentation"::
     require 'templates/list.php';
 
 
-The HTML code is now stored in a separate file ``templates/list.php``, which
+The HTML code is now stored in a separate ``templates/list.php`` file, which
 is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
@@ -456,7 +456,7 @@ into a ``vendor/`` directory:
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as
-the files mentioned in the autoload section of your ``composer.json``.
+the files mentioned in the ``autoload`` section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony provides
@@ -724,7 +724,7 @@ And rewriting ``layout.html.php`` template in Twig would look like this:
 
 Twig is well-supported in Symfony. And while PHP templates will always
 be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
+be discussed. For more information, see the :doc:`Templating chapter </book/templating>`.
 
 
 Where Symfony Delivers
@@ -774,7 +774,7 @@ Learn more from the Cookbook
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Symfony distribution`: https://github.com/symfony/symfony-standard
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`KnpBundles.com`: http://knpbundles.com/
-.. _`Twig`: http://twig.sensiolabs.org

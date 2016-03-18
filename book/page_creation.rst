@@ -33,7 +33,7 @@ Creating a Page: Route and Controller
     :doc:`Installation </book/installation>` chapter, installed
     `Symfony Standard Edition`_ and can access your new Symfony app in the
     browser either using PHP's internal web server or by setting proper
-    virtual host in Apache or Nginx replace.
+    virtual host in Apache or Nginx.
 
     Using PHP's internal web server is only suitable while developing the
     application. In order to run Symfony applications on production servers,
@@ -121,7 +121,7 @@ If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works.
 
 The ``@Route`` above ``numberAction()`` method is called an :term:`annotation`
-and defines the route so that :doc:`router </book/routing>` can match the incoming URL
+and defines the route so that :doc:`Router </book/routing>` can match the incoming URL
 (``http://localhost:8000/lucky/number``) to a specific route (``/lucky/number``)
 and therefore returns information about the route, including the controller method
 that should be executed. The correct controller from the matched route is executed
@@ -131,7 +131,7 @@ object.
 .. note::
 
     You can also write routes in YAML, XML or PHP: you will learn about
-    this in the :doc:`routing </book/routing>` chapter. If you look closer
+    this in the :doc:`Routing </book/routing>` chapter. If you look closer
     the above example has tabs that show you how each format looks - all three additional
     formats use routing configuration file to define routes. Actually, most
     routing examples in the docs have tabs that show you how each format looks.
@@ -485,20 +485,14 @@ which you'll use to enable new bundles (and one of a *very* short list of
 PHP files in ``app/``).
 
 The ``src/`` directory has just one directory ``src/AppBundle`` and everything
-lives inside of it.  Is where your code lives.
-Symfony Standard Edition comes with ``AppBundle`` but there is nothing special about
-``AppBundle``. Your project can have as many bundles as you want, you can even use
-bundles written bay other
-
-The ``src/`` directory has just one directory ``src/AppBundle`` and everything
-lives inside of it. Is where your code lives. It's a set of files within a
+lives inside of it.  Is where your code lives. It's a set of files within a
 directory that implement a single feature. Symfony Standard Edition comes with
 ``AppBundle`` but there is nothing special about ``AppBundle``. Your project can
-have as many bundles as you want, you can even use third-party bundles that you can
-find at `KnpBundles.com`_. So, a :term:`bundle` is like a "plugin" in other software,
-but even better. To find out more about bundles and why you might create multiple
-bundles (hint: sharing code between projects), see the :doc:`Bundles </book/bundles>`
-chapter.
+have as many bundles as you want, you can even use third-party bundles written
+by other that you can find at `KnpBundles.com`_. So, a :term:`bundle` is like a
+"plugin" in other software, but even better. To find out more about bundles and
+why you might create multiple bundles (hint: sharing code between projects), see
+the :doc:`Bundles </book/bundles>` chapter.
 
 So what about the other directories in the project?
 
@@ -514,7 +508,8 @@ So what about the other directories in the project?
 .. seealso::
 
     Symfony is flexible. If you need to, you can easily override the default
-    directory structure. See :doc:`/cookbook/configuration/override_dir_structure`.
+    directory structure. See cookbook article
+    :doc:`/cookbook/configuration/override_dir_structure`.
 
 Application Configuration
 -------------------------
