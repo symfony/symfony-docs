@@ -134,7 +134,7 @@ file:
 Basic Route Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, we will look a very basic and routing example::
+Here is very basic routing example::
 
 .. configuration-block::
 
@@ -146,7 +146,7 @@ First, we will look a very basic and routing example::
         class MainController extends Controller
         {
             /**
-             * @Route("/", name="_welcome")
+             * @Route("/home")
              */
             public function homepageAction()
             {
@@ -158,7 +158,7 @@ First, we will look a very basic and routing example::
 
         # app/config/routing.yml
         _welcome:
-            path:      /
+            path:      /home
             defaults:  { _controller: AppBundle:Main:homepage }
 
     .. code-block:: xml
@@ -170,7 +170,7 @@ First, we will look a very basic and routing example::
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_welcome" path="/">
+            <route id="_welcome" path="/home">
                 <default key="_controller">AppBundle:Main:homepage</default>
             </route>
 
@@ -183,19 +183,18 @@ First, we will look a very basic and routing example::
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('_welcome', new Route('/', array(
+        $collection->add('_welcome', new Route('/home', array(
             '_controller' => 'AppBundle:Main:homepage',
         )));
 
         return $collection;
 
-Without much explanation (it is coming), when client visits URL like
-``http://example.com/`` it matches to ``/`` which executes the appropriate
+Without much explanation (it is coming), when the user visits a URL like
+``http://example.com/home`` it matches to ``/home``. This executes the appropriate
 controller which returns a ``Response`` object.
 
-Of course the routing system supports much more interesting routes. So,
-to a bit more advanced examples which will explain how the routing works in
-detail.
+But the routing system supports routes that are much more flexible than this! Time
+to dive deeper into the routing system.
 
 .. index::
    single: Routing; Placeholders
@@ -222,7 +221,7 @@ up and render that appropriate blog entry::
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{slug}", name="blog_show")
+             * @Route("/blog/{slug}")
              */
             public function showAction($slug)
             {
