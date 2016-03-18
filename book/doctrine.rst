@@ -720,7 +720,7 @@ issue an ``UPDATE`` query if the entity already exists in the database.
     single: Doctrine; Fetching objects from the database using getRepository()
     single: Doctrine; Default finder methods
 
-.. database-fetching-obj-using-repo:
+.. _database-fetching-obj-using-repo:
 
 Fetching Objects from the Database Using ``getRepository()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
