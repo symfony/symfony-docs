@@ -352,7 +352,7 @@ To actually translate the message, Symfony uses a simple process:
 #. If the message is located in the catalog, the translation is returned. If
    not, the translator returns the original message.
 
-You start this process by calling ``trans()` or ``transChoice()`. Then, the
+You start this process by calling ``trans()`` or ``transChoice()``. Then, the
 Translator looks for the exact string inside the appropriate message catalog
 and returns it (if it exists).
 
