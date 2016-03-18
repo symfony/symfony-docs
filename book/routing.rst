@@ -30,7 +30,7 @@ Routing: Under the Hood
 When a request is made to your application, it contains an address to the
 exact "resource" that the client is requesting. This address is called the
 URL, (or URI), and could be ``/contact``, ``/blog/read-me``, or anything
-else. Take the following HTTP request for example::
+else. Take the following HTTP request for example:
 
 .. code-block:: text
 
