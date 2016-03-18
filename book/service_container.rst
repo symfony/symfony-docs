@@ -421,9 +421,10 @@ imported from inside default application configuration file
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AppBundle`` syntax resolves the directory path
-of the AppBundle bundle. This helps you specify the path to the resource
-without worrying later if you move the AppBundle to a different directory.
+file. The special ``@AppBundle`` syntax called **namespace path** resolves the
+full directory path of the AppBundle bundle. This helps you specify the path to
+the resource without worrying later if you move the AppBundle to a different
+directory.
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
@@ -541,7 +542,7 @@ available for the core bundles can be found inside the
 
 .. caution::
 
-   ** Natively, the service container only recognizes the ``parameters``,
+   **Natively, the service container only recognizes the ``parameters``,
    ``services``, and ``imports`` directives. Any other directives
    are handled by a service container extension.**
 
