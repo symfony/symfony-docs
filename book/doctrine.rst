@@ -714,7 +714,7 @@ issue an ``UPDATE`` query if the entity already exists in the database.
     To use Doctrine outside controller classes (which extend Symfony base
     ``Controller`` class), for example in your own custom services you have
     to inject ``doctrine`` service into the service. To learn about services
-    and custom services read :doc:`Service container chapter /book/service_container`.
+    and custom services read :doc:`Service container chapter </book/service_container>`.
 
 .. index::
     single: Doctrine; Fetching objects from the database using getRepository()
