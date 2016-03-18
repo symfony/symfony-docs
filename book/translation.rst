@@ -369,11 +369,10 @@ support for both Twig and PHP templates.
    single: Translation; From inside a template - Twig
 
 .. _book-translation-twig-template:
+.. _book-translation-tags:
 
 Twig Templates
 ~~~~~~~~~~~~~~
-
-.. _book-translation-tags:
 
 Symfony provides two specialized Twig tags ``trans`` and ``transchoice`` to
 help with message translation of *static blocks of text*:
