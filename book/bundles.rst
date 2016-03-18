@@ -139,8 +139,8 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
-of the most common elements of a bundle:
+between all Symfony bundles. Take a look at AcmeDemoBundle, of the Symfony Demo
+application, as it contains some of the most common elements of a bundle:
 
 ``Controller/``
     Contains the controllers of the bundle (e.g. ``RandomController.php``).

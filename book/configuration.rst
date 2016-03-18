@@ -11,10 +11,10 @@ Configuring Symfony and Environments
 Configuration Formats
 ---------------------
 
-Symfony supports four configuration formats: YAML, XML and PHP. Throughout
-the chapters, all configuration examples are shown in all four formats. Each
-has its own advantages and disadvantages. The choice of which to use is up
-to you:
+Symfony supports four configuration formats: annotations, YAML, XML and PHP.
+Throughout the chapters, all configuration examples are shown in all four
+formats. Each has its own advantages and disadvantages. The choice of which
+to use is up to you:
 
 * *YAML*: Simple, clean and readable (learn more about YAML in the Yaml
   component documentation :doc:`/components/yaml/yaml_format`);
@@ -23,7 +23,7 @@ to you:
 
 * *PHP*: Very powerful but less readable than standard configuration formats.
 
-* *Annoatations*: Code and configuration are in the same place, simple to
+* *Annotations*: Code and configuration are in the same place, simple to
   learn and to use, concise to write.
 
 The supported formats with their orders are:
