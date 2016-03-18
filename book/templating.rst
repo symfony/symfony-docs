@@ -320,7 +320,7 @@ several types of extensions:
 
 For example, the following uses a standard ``for`` tag and the ``cycle()``
 function to print ten HTML ``<div>`` tags, with alternating ``odd``, ``even``
-classes::
+classes:
 
 .. code-block:: html+twig
 
@@ -1796,7 +1796,7 @@ When using PHP, you can use :phpfunction:`var_dump` if you need to quickly find
 the value of a variable passed. This is useful, for example, inside your
 controller. The same can be achieved when using Twig thanks to the Debug
 extension. Template parameters can then be dumped using Twig ``dump()``
-function, which internally, uses the PHP `var_dump()` function::
+function, which internally, uses the PHP `var_dump()` function:
 
 .. code-block:: html+twig
 
