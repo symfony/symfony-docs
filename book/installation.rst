@@ -158,6 +158,8 @@ version as the second argument of the ``create-project`` Composer command::
     doing anything. If that's your case, add the ``-vvv`` flag to the previous
     command to display a detailed output of everything that Composer is doing.
 
+    $ composer create-project -vvv symfony/framework-standard-edition my_project_name "2.3.*"
+
 Running the Symfony Application
 -------------------------------
 
@@ -445,10 +447,10 @@ a wide variety of articles about solving specific problems with Symfony.
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
+.. _`Git`: http://git-scm.com/
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`CMS`: https://en.wikipedia.org/wiki/Content_management_system
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
-.. _`Git`: http://git-scm.com/

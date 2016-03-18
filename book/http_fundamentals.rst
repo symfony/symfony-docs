@@ -41,6 +41,9 @@ Symfony is built from the ground up around that reality. Whether you realize
 it or not, HTTP is something you use every day. With Symfony, you'll learn
 how to master it.
 
+.. index::
+   single: HTTP; Request-response paradigm
+
 Step1: The Client Sends a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -98,10 +101,10 @@ delete a specific blog entry, for example:
     but many of them are not widely used or supported. In reality, many
     modern browsers only support ``POST`` and ``GET`` in HTML forms. Various
     others are however supported in `XMLHttpRequest`_, as well as by Symfony's
-    :doc:`router </components/routing/introduction>`.
+    :doc:`Routing component </components/routing/introduction>`.
 
-In addition to the first line, an HTTP request invariably contains other
-lines of information called request headers. The headers can supply a wide
+In addition to the first line, a HTTP request invariably contains other
+lines of information called request **headers**. The headers can supply a wide
 range of information such as the host of the resource being requested (``Host``),
 the response formats the client accepts (``Accept``) and the application the
 client is using to make the request (``User-Agent``). Many other headers exist
@@ -252,17 +255,18 @@ have all the request information at your fingertips::
 ``Request`` class has several public properties via which we can access information
 about the client request. As seen above, the ``$_GET`` and ``$_POST`` PHP global
 variables are accessible via the public ``query`` and ``request`` properties
-respectively, ``$_COOKIE`` is accessible via ``cookies``, ``$_FILES`` via ``files``
-and ``$_SERVER`` via ``server``. ``headers`` property is mostly equivalent to
-a subset of ``$_SERVER`` (e.g. $request->headers->get('User-Agent')). Each property is a
+respectively, ``$_COOKIE`` is accessible via ``cookies`` property, ``$_FILES``
+via ``files`` property and ``$_SERVER`` via ``server`` property. ``headers``
+property is mostly equivalent to a subset of ``$_SERVER``
+(e.g. $request->headers->get('User-Agent')). Each property is a
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance (or a sub-class
 of: :class:`Symfony\\Component\\HttpFoundation\\ServerBag`,
 :class:`Symfony\\Component\\HttpFoundation\\FileBag`,
-:class:`Symfony\\Component\\HttpFoundation\\HeaderBag`,
+:class:`Symfony\\Component\\HttpFoundation\\HeaderBag`
 ), which is a data holder class. All ``ParameterBag`` instances have methods to
 retrieve and update their data like: ``get()`` to return a parameter by name,
 ``has()`` to return true if the parameter is defined, ``all()`` to return all
-the parameters and many more...
+the parameters and many more.
 
 .. _book-fundamentals-attributes:
 
@@ -438,7 +442,7 @@ the same simple pattern for every request:
    :align: center
    :alt: Symfony request flow
 
-   Incoming requests are interpreted by the :doc:`router component </book/routing>` and
+   Incoming requests are interpreted by the :doc:`Routing component </book/routing>` and
    passed to PHP functions that return ``Response`` objects.
 
 Each "page" of your site is defined in a routing configuration file that
@@ -509,7 +513,7 @@ When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the
 :ref:`routing chapter <controller-string-syntax>`, the ``AppBundle:Main:contact``
 string is a short syntax named *logical controller name* that points to a specific
-controller ``contactAction()`` inside a controller class called ``MainController)+``.
+controller ``contactAction()`` inside a controller class called ``MainController``.
 In the routing chapter you will also learn about routing parameters like
 ``_controller``, ``_route`` and the ``defaults`` array.
 
@@ -529,13 +533,13 @@ object with the HTML ``<h1>Contact us!</h1>``::
         }
     }
 
-In the :doc:`controller chapter </book/controller>`, you'll learn how a controller can
+In the :doc:`Controller chapter </book/controller>`, you'll learn how a controller can
 render templates, allowing your "presentation" code (i.e. anything that actually
 writes out HTML) to live in a separate template file. This frees up the controller
 to worry only about the hard stuff: interacting with the database, handling
 submitted data, or sending email messages.
 
--.. _symfony2-build-your-app-not-your-tools:
+.. _symfony2-build-your-app-not-your-tools:
 
 Symfony: Build your App, not your Tools
 ---------------------------------------
