@@ -84,8 +84,8 @@ your project:
 .. code-block:: bash
 
     $ git remote -v
-    origin  https://github.com/<YOUR GITHUB USERNAME>/symfony-docs.git (fetch)
-    origin  https://github.com/<YOUR GITHUB USERNAME>/symfony-docs.git (push)
+    origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (fetch)
+    origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (push)
     upstream  https://github.com/symfony/symfony-docs.git (fetch)
     upstream  https://github.com/symfony/symfony-docs.git (push)
 
@@ -117,11 +117,8 @@ to be committed:
 .. code-block:: bash
 
     # if the modified content existed before
+    $ git add book/installation.rst
     $ git commit book/installation.rst
-
-    # if this is a new content, add it before committing it
-    $ git add book/new_content.rst
-    $ git commit book/new_content.rst
 
 **Step 6.** **Push** the changes to your forked repository:
 
@@ -225,7 +222,8 @@ changes.
    :alt:   Platform.sh Pull Request Deployment
 
 To access the `Platform.sh`_ environment URL, go to your Pull Request page on
-GitHub and click on ``Details``.
+GitHub, click on the **Show all checks** link and finally, click on the ``Details``
+link displayed for Platform.sh service.
 
 .. note::
 
