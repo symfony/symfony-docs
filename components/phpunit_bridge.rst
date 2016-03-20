@@ -114,13 +114,13 @@ message contains the ``"foobar"`` string.
 Making Tests Fail
 -----------------
 
-By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices will
-make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
-arbitrary value (ex: ``320``) will make the tests fails only if a higher number
-of deprecation notices is reached (``0`` is the default value). You can also set
-the value ``"weak"`` which will make the bridge ignore any deprecation notices.
-This is useful to projects that must use deprecated interfaces for backward
-compatibility reasons.
+By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices
+will make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to
+an arbitrary value (ex: ``320``) will make the tests fails only if a higher
+number of deprecation notices is reached (``0`` is the default value). You can
+also set the value ``"weak"`` which will make the bridge ignore any deprecation
+notices. This is useful to projects that must use deprecated interfaces for
+backward compatibility reasons.
 
 Time-sensitive Tests
 --------------------
@@ -203,14 +203,91 @@ And that's all!
     advances the internal clock the given number of seconds without actually
     waiting that time, so your test will execute 10 seconds faster.
 
-Troubleshooting
-~~~~~~~~~~~~~~~
+DNS-sensitive Tests
+-------------------
 
-The ``@group time-sensitive`` works "by convention" and assumes that the
-namespace of the tested class can be obtained just by removing the ``\Tests\``
-part from the test namespace. I.e. that if the your test case fully-qualified
-class name (FQCN) is ``App\Tests\Watch\DummyWatchTest``, it assumes the tested
-class FQCN is ``App\Watch\DummyWatch``.
+Tests that make network connections, for example to check the validity of a DNS
+record, can be slow to execute and unreliable due to the conditions of the
+network. For that reason, this component also provides mocks for these PHP
+functions:
+
+* ``checkdnsrr()``
+* ``dns_check_record()``
+* ``getmxrr()``
+* ``dns_get_mx()``
+* ``gethostbyaddr()``
+* ``gethostbyname()``
+* ``gethostbynamel()``
+* ``dns_get_record()``
+
+Use Case
+~~~~~~~~
+
+Consider the following example that uses the ``checkMX`` option of the ``Email``
+constraint to test the validity of the email domain::
+
+    use Symfony\Component\Validator\Constraints\Email;
+
+    class MyTest extends \PHPUnit_Framework_TestCase
+    {
+        public function testEmail()
+        {
+            $validator = ...
+            $constraint = new Email(array('checkMX' => true));
+
+            $result = $validator->validate('foo@example.com', $constraint);
+
+            // ...
+    }
+
+In order to avoid making a real network connection, add the ``@dns-sensitive``
+annotation to the class and use the ``DnsMock::withMockedHosts()`` to configure
+the data you expect to get for the given hosts::
+
+    use Symfony\Component\Validator\Constraints\Email;
+
+    /**
+     * @group dns-sensitive
+     */
+    class MyTest extends \PHPUnit_Framework_TestCase
+    {
+        public function testEmails()
+        {
+            DnsMock::withMockedHosts(array('example.com' => array(array('type' => 'MX'))));
+
+            $validator = ...
+            $constraint = new Email(array('checkMX' => true));
+
+            $result = $validator->validate('foo@example.com', $constraint);
+
+            // ...
+    }
+
+The ``withMockedHosts()`` method can return any number of hosts with different
+configuration, so you can simulate diverse network conditions::
+
+    DnsMock::withMockedHosts(array(
+        'example.com' => array(
+            array(
+                'type' => 'A',
+                'ip' => '1.2.3.4',
+            ),
+            array(
+                'type' => 'AAAA',
+                'ipv6' => '::12',
+            ),
+        ),
+    ));
+
+Troubleshooting
+---------------
+
+The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
+"by convention" and assumes that the namespace of the tested class can be
+obtained just by removing the ``\Tests\`` part from the test namespace. I.e.
+that if the your test case fully-qualified class name (FQCN) is
+``App\Tests\Watch\DummyWatchTest``, it assumes the tested class FQCN is
+``App\Watch\DummyWatch``.
 
 If this convention doesn't work for your application, you can also configure
 the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
