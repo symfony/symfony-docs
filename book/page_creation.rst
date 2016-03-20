@@ -36,6 +36,8 @@ Suppose you want to create a page - ``/lucky/number`` - that generates a
 lucky (well, random) number and prints it. To do that, create a class and
 a method inside of it that will be executed when someone goes to ``/lucky/number``::
 
+    <?php
+
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
