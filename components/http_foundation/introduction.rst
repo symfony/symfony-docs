@@ -164,8 +164,8 @@ When PHP imports the request query, it handles request parameters like
     $request->query->get('foo');
     // returns array('bar' => 'bar')
 
-    $request->query->get('foo[bar]');
-    // returns null   
+    $request->query->get('foo')['bar'];
+    // returns 'bar'
 
 .. _component-foundation-attributes:
 
