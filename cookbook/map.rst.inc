@@ -234,6 +234,7 @@
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
+  * :doc:`/cookbook/validation/validation_groups`
 
 * :doc:`/cookbook/web_server/index`
 
