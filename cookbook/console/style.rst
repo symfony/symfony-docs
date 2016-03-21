@@ -71,6 +71,60 @@ title of the command::
         }
     }
 
+You can also create a default ProgressBar in your output::
+
+    // src/AppBundle/Command/GreetCommand.php
+    namespace AppBundle\Command;
+
+    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    class GreetCommand extends ContainerAwareCommand
+    {
+        // ...
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $max = 42;
+            $io = new SymfonyStyle($input, $output);
+            $io->title('Lorem Ipsum Dolor Sit Amet');
+            $io->progressStart($max);
+
+            // ...
+        }
+    }
+
+Or, if you want to have a custom ProgressBar style::
+
+    // src/AppBundle/Command/GreetCommand.php
+    namespace AppBundle\Command;
+
+    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    class GreetCommand extends ContainerAwareCommand
+    {
+        // ...
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $max = 42;
+            $progressBar = new ProgressBar($max);
+            $progressBar->setFormat(" %current%/%max% [%bar%] %percent:3s%% %message%");
+
+            $io = new SymfonyStyle($input, $output);
+            $io->title('Lorem Ipsum Dolor Sit Amet');
+            $io->setProgressBar($progressBar);
+            $io->progressStart($max);
+
+            // ...
+        }
+    }
+
 Helper Methods
 --------------
 
