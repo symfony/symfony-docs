@@ -62,5 +62,6 @@ which makes all of this quite easy::
         {
             parent::tearDown();
             $this->em->close();
+            $this->em = null;
         }
     }
