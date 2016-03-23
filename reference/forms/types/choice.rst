@@ -70,10 +70,14 @@ This will create a ``select`` drop-down like this:
 .. image:: /images/reference/form/choice-example1.png
    :align: center
 
-If the user selects ``No``, the form will return ``false`` for this field. Similarly,
-if the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
-In other words, the **value** of each item is the value you want to get/set in PHP
-code, while the **key** is what will be shown to the user.
+The model data of this field, the **choice** may be any of the ``choices`` option
+values, while **keys** are used as default label that the user will see and select.
+
+If the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
+In other words, each value of the ``choices`` option is the **choice** data you
+want to deal with in PHP code, while the **key** is the default label that will be
+shown to the user and the **value** is the string that will be submitted to the
+form and used in the template for the corresponding html attribute.
 
 .. caution::
 
@@ -83,6 +87,31 @@ code, while the **key** is what will be shown to the user.
     and will be removed in 3.0. To read about the old API, read an older version of
     the docs.
 
+.. note::
+
+    Pre selected choices will depend on the **data** passed to the field and
+    the values of the ``choices`` option. However submitted choices will depend
+    on the **string** matching the **choice**. In the example above, the default
+    values are incrementing integers because ``null`` cannot be casted to string.
+    You should consider it as well when dealing with ``empty_data`` option::
+
+        $builder->add('isAttending', 'choice', array(
+            'choices'  => array(
+                'Maybe' => null,
+                'Yes' => true,
+                'No' => false,
+            ),
+            'choices_as_values' => true,
+            'data' => true, // pre selected choice
+            'empty_data' => '1', // default submitted value
+        ));
+
+    When the ``multiple`` option is ``true`` the submitted data is an array of
+    strings, you should the set the ``empty_value`` option accordingly.
+    Also note that as a scalar ``false`` data as string **value** is by default
+    ``"0"`` to avoid conflict with placeholder value which is always an empty
+    string.
+
 Advanced Example (with Objects!)
 --------------------------------
 
@@ -90,32 +119,65 @@ This field has a *lot* of options and most control how the field is displayed. I
 this example, the underlying data is some ``Category`` object that has a ``getName()``
 method::
 
-    $builder->add('category', 'choice', [
-        'choices' => [
+    $builder->add('category', 'choice', array(
+        'choices' => array(
             new Category('Cat1'),
             new Category('Cat2'),
             new Category('Cat3'),
             new Category('Cat4'),
-        ],
+        ),
         'choices_as_values' => true,
-        'choice_label' => function($category, $key, $index) {
-            /** @var Category $category */
+        'choice_label' => function(Category $category, $key, $value) {
             return strtoupper($category->getName());
         },
-        'choice_attr' => function($category, $key, $index) {
-            return ['class' => 'category_'.strtolower($category->getName())];
+        'choice_attr' => function(Category $category, $key, $value) {
+            return array('class' => 'category_'.strtolower($category->getName()));
         },
-        'group_by' => function($category, $key, $index) {
+        'group_by' => function(Category $category, $key, $value) {
             // randomly assign things into 2 groups
             return rand(0, 1) == 1 ? 'Group A' : 'Group B';
         },
-        'preferred_choices' => function($category, $key, $index) {
-            return $category->getName() == 'Cat2' || $category->getName() == 'Cat3';
+        'preferred_choices' => function(Category $category, $key, $value) {
+            return 'Cat2' === $category->getName() || 'Cat3' === $category->getName();
         },
-    ]);
+    ));
 
 You can also customize the `choice_name`_ and `choice_value`_ of each choice if
 you need further HTML customization.
+
+.. caution::
+
+    When dealing with objects as choices, you should be careful about how
+    string values are set to use them with the `empty_data` option.
+    In the example above, the default values are incrementing integers if the
+    ``Category`` class does not implement ``toString`` method.
+    To get a full control of the string values use the `choice_value`_ option::
+
+        $builder->add('category', 'choice', array(
+            'choices'  => array(
+            new Category('Cat1'),
+            new Category('Cat2'),
+            new Category('Cat3'),
+            new Category('Cat4'),
+            ),
+            'choices_as_values' => true,
+            'choice_value' => function(Category $category = null) {
+                if (null === $category) {
+                    return '';
+                }
+
+                return strtolower($category->getName());
+            },
+            'choice_label' => function(Category $category, $key, $value) {
+                return strtoupper($category->getName());
+            },
+            'multiple' => true,
+            'empty_data' => array('cat2'), // default submitted value
+                                           // an array because of multiple option
+        ));
+
+    Note that `choice_value`_ option set as a callable can get passed ``null``
+    when no data is preset or submitted.
 
 .. _forms-reference-choice-tags:
 
@@ -135,19 +197,19 @@ Grouping Options
 
 You can easily "group" options in a select by passing a multi-dimensional choices array::
 
-    $builder->add('stockStatus', 'choice', [
-        'choices' => [
-            'Main Statuses' => [
+    $builder->add('stockStatus', 'choice', array(
+        'choices' => array(
+            'Main Statuses' => array(
                 'Yes' => 'stock_yes',
                 'No' => 'stock_no',
-            ],
-            'Out of Stock Statuses' => [
+            ),
+            'Out of Stock Statuses' => array(
                 'Backordered' => 'stock_backordered',
                 'Discontinued' => 'stock_discontinued',
-            ]
-        ],
+            ),
+        ),
         'choices_as_values' => true,
-    );
+    ));
 
 .. image:: /images/reference/form/choice-example4.png
    :align: center
@@ -160,17 +222,24 @@ Field Options
 choices
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` or ``\Traversable`` **default**: ``array()``
 
 This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
-is the item's label and the array value is the item's value::
+is the choice's label and the array value is the choice's data::
 
     $builder->add('inStock', 'choice', array(
-        'choices' => array('In Stock' => true, 'Out of Stock' => false),
+        'choices' => array(
+            'In Stock' => true,
+            'Out of Stock' => false,
+        ),
         // always include this
         'choices_as_values' => true,
     ));
+
+The component will try to cast the choices data to string to use it in view
+format, in that case ``"0"`` and ``"1"``, but you can customize it using the
+`choice_value`_ option.
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
@@ -229,9 +298,14 @@ choice_loader
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
-The ``choice_loader`` can be used to only partially load the choices in cases where
-a fully-loaded list is not necessary. This is only needed in advanced cases and
-would replace the ``choices`` option.
+The ``choice_loader`` can be used to load the choices form a data source with a
+custom logic (e.g query language) such as database or search engine.
+The list will be fully loaded to display the form, but while submission only the
+submitted choices will be loaded.
+
+Also, the :class:``Symfony\\Component\\Form\\ChoiceList\\Factory\\ChoiceListFactoryInterface`` will cache the choice list
+so the same :class:``Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`` can be used in different fields with more performance
+(reducing N queries to 1).
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
@@ -250,14 +324,14 @@ choices_as_values
 
 The ``choices_as_values`` option was added to keep backward compatibility with the
 *old* way of handling the ``choices`` option. When set to ``false`` (or omitted),
-the choice keys are used as the underlying value and the choice values are shown
-to the user.
+the choice keys are used as the view value and the choice values are shown
+to the user as label.
 
 * Before 2.7 (and deprecated now)::
 
-    $builder->add('gender', 'choice', array(
-        // Shows "Male" to the user, returns "m" when selected
-        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+    $builder->add('agree', 'choice', array(
+        // Shows "Yes" to the user, returns "1" when selected
+        'choices'  => array('1' => 'Yes', '0' => 'No'),
         // before 2.7, this option didn't actually exist, but the
         // behavior was equivalent to setting this to false in 2.7.
         'choices_as_values' => false,
@@ -265,19 +339,18 @@ to the user.
 
 * Since 2.7::
 
-    $builder->add('gender', 'choice', array(
-        // Shows "Male" to the user, returns "m" when selected
-        'choices' => array('Male' => 'm', 'Female' => 'f'),
+    $builder->add('agree', 'choice', array(
+        // Shows "Yes" to the user, returns "1" when selected
+        'choices' => array('Yes' => '1', 'No' => '0'),
         'choices_as_values' => true,
     ));
 
-In Symfony 3.0, the ``choices_as_values`` option doesn't exist, but the ``choice``
-type behaves as if it were set to true:
+As of Symfony 3.0, the ``choices_as_values`` option is ``true`` by default:
 
 * Default for 3.0::
 
-    $builder->add('gender', 'choice', array(
-        'choices' => array('Male' => 'm', 'Female' => 'f'),
+    $builder->add('agree', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+        'choices' => array('Yes' => '1', 'No' => '0'),
     ));
 
 .. include:: /reference/forms/types/options/expanded.rst.inc

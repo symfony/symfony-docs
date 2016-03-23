@@ -1,7 +1,7 @@
 preferred_choices
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``array``, ``callable`` or ``string`` **default**: ``array()``
+**type**: ``array``, ``\Traversable``, ``callable``, ``string`` or :class:``Symfony\\Component\\PropertyAccess\\PropertyPath`` **default**: ``array()``
 
 This option allows you to move certain choices to the top of your list with a visual
 separator between them and the rest of the options. If you have a form of languages,
@@ -32,9 +32,9 @@ be especially useful if your values are objects::
             '1 month' => new \DateTime('+1 month')
         ),
         'choices_as_values' => true,
-        'preferred_choices' => function ($val, $key) {
+        'preferred_choices' => function ($choice, $key, $value) {
             // prefer options within 3 days
-            return $val <= new \DateTime('+3 days');
+            return $choice <= new \DateTime('+3 days');
         },
     ));
 
@@ -45,6 +45,8 @@ This will "prefer" the "now" and "tomorrow" choices only:
 
 Finally, if your values are objects, you can also specify a property path string
 on the object that will return true or false.
+
+See the `choice_label`_ for details about using a property path or a callable.
 
 The preferred choices are only meaningful when rendering a ``select`` element
 (i.e. ``expanded`` false). The preferred choices and normal choices are separated
