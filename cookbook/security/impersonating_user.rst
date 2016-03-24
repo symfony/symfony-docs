@@ -222,7 +222,7 @@ how to change the sticky locale:
 
 .. code-block:: php
 
-        // src/AppBundle/EventListener/SwitchUserListener.pnp
+        // src/AppBundle/EventListener/SwitchUserListener.php
         namespace AppBundle\EventListener;
 
         use Symfony\Component\Security\Http\Event\SwitchUserEvent;
