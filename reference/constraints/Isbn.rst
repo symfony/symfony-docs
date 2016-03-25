@@ -58,7 +58,7 @@ on an  object that will contain an ISBN.
             /**
              * @Assert\Isbn(
              *     type = "isbn10",
-             *     message: "This value is not  valid."
+             *     message = "This value is not  valid."
              * )
              */
             protected $isbn;
