@@ -9,9 +9,9 @@ When a user submits a username and password, the authentication layer asks
 the configured user provider to return a user object for a given username.
 Symfony then checks whether the password of this user is correct and generates
 a security token so the user stays authenticated during the current session.
-Out of the box, Symfony has user providers ``in_memory`` and ``entity``.
-Additionally, you can use ``chain`` user provider to combine different 
-providers in your application.
+Out of the box, Symfony has three user providers: ``in_memory``, ``entity`` and 
+``chain``. The chain user provider can be used to chain several user providers 
+in case a user can be retrieved from different locations.
 
 In this entry you'll see how you can create your own user provider, which
 could be useful if your users are accessed via a custom database, a file,
