@@ -91,7 +91,19 @@ Below is the schedule for the first few versions that use this release model:
 * **Blue** represents the Stabilization phase
 * **Green** represents the Maintenance period
 
-This results in very predictable dates and maintenance periods:
+.. tip::
+
+    If you want to learn more about the timeline of any given Symfony version,
+    use the online `timeline calculator`_.
+
+.. tip::
+
+    Whenever an important event related to Symfony versions happens (a version
+    reaches end of maintenance or a new patch version is released for
+    instance), you can automatically receive an email notification if you
+    subscribed on the `roadmap notification`_ page.
+
+.. _version-history:
 
 =======  ==============  =======  ========================  ===========
 Version  Feature Freeze  Release  End of Maintenance        End of Life
@@ -122,19 +134,6 @@ Version  Feature Freeze  Release  End of Maintenance        End of Life
 .. [1] Symfony 2.4 maintenance has been `extended to September 2014`_.
 .. [2] Symfony 2.8 is the last version of the Symfony 2.x branch.
 .. [3] Symfony 3.0 is the first version to use the new release process based on five minor releases.
-
-.. tip::
-
-    If you want to learn more about the timeline of any given Symfony version,
-    use the online `timeline calculator`_. You can also get all data as a JSON
-    string via a URL like `https://symfony.com/roadmap.json?version=2.x`.
-
-.. tip::
-
-    Whenever an important event related to Symfony versions happens (a version
-    reaches end of maintenance or a new patch version is released for
-    instance), you can automatically receive an email notification if you
-    subscribed on the `roadmap notification`_ page.
 
 Backwards Compatibility
 -----------------------

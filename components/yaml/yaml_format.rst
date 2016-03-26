@@ -50,7 +50,7 @@ can use double quotes, for these characters it is more convenient to use single
 quotes, which avoids having to escape any backslash ``\``:
 
 * ``:``, ``{``, ``}``, ``[``, ``]``, ``,``, ``&``, ``*``, ``#``, ``?``, ``|``,
-  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, ``\```
+  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, `````
 
 The double-quoted style provides a way to express arbitrary strings, by
 using ``\`` to escape characters and sequences. For instance, it is very useful
