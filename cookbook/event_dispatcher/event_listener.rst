@@ -141,9 +141,7 @@ listen to the same ``kernel.exception`` event::
     namespace AppBundle\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-    use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
     class ExceptionSubscriber implements EventSubscriberInterface
     {

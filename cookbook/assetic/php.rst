@@ -42,7 +42,7 @@ Organizing your Web Asset Files
 -------------------------------
 
 This example will include a setup using the Bootstrap CSS framework, jQuery, FontAwesome
-and some regular CSS and and JavaScript application files (called ``main.css`` and
+and some regular CSS and JavaScript application files (called ``main.css`` and
 ``main.js``). The recommended directory structure for this set-up looks like this:
 
 .. code-block:: text
