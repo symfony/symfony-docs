@@ -116,6 +116,9 @@ property name (``first_name`` becomes ``FirstName``) and prefixes it with
 
     var_dump($accessor->getValue($person, 'first_name')); // 'Wouter'
 
+You can override the called getter method using metadata (i.e. annotations or
+configuration files). See `Custom method calls and virtual properties in a class`_.
+
 Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -314,6 +317,9 @@ see `Enable other Features`_.
 
     var_dump($person->getWouter()); // array(...)
 
+You can override the called setter method using metadata (i.e. annotations or
+configuration files). See `Custom method calls and virtual properties in a class`_.
+
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -418,8 +424,231 @@ You can also mix objects and arrays::
     var_dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
 
+Custom method calls and virtual properties in a class
+-----------------------------------------------------
+
+.. versionadded:: 3.4
+   Support for custom accessors was introduced in Symfony 3.4.
+
+Sometimes you may not want the component to guess which method has to be called
+when reading or writing properties. This is especially interesting when property
+names are not in English or its singularization is not properly detected.
+
+For those cases you can add metadata to the class being accessed so that the
+component will use a particular method as a getter, setter or even adder and
+remover (for collections).
+
+Another interesting use of custom methods is declaring virtual properties
+which are not stored directly in the object.
+
+There are three supported ways to state this metadata supported out-of-the-box by
+the component: using annotations, using YAML configuration files or using XML
+configuration files.
+
+.. caution::
+
+    When using as a standalone component the metadata feature is disabled by
+    default. You can enable it by calling
+    :method:`PropertyAccessorBuilder::setMetadataFactory
+    <Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::setMetadataFactory>`
+    see `Enable other Features`_.
+
+There are four method calls that can be overriden: ``getter``, ``setter``, ``adder`` and
+``remover``.
+
+When using annotations you can precede a property with ``@PropertyAccessor`` to state which
+method should be called when a get, set, add or remove operation is needed on the
+property.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // ...
+        use Symfony\Component\PropertyAccess\Annotation\PropertyAccessor;
+
+        class Person
+        {
+            /**
+             * @PropertyAccessor(getter="getFullName", setter="setFullName")
+             */
+            private $name;
+
+            /**
+             * @PropertyAccessor(adder="addNewChild", remover="discardChild")
+             */
+            private $children;
+
+            public function getFullName()
+            {
+                return $this->name;
+            }
+
+            public function setFullName($fullName)
+            {
+                $this->name = $fullName;
+            }
+        }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/property_access.yml
+        Person:
+            name:
+                getter: getFullName
+                setter: setFullName
+            children:
+                adder:   addNewChild
+                remover: discardChild
+
+    .. code-block:: xml
+
+        <!-- src/AppBundle/Resources/config/property_access.xml -->
+        <?xml version="1.0" ?>
+
+        <property-access xmlns="http://symfony.com/schema/dic/property-access-mapping"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xsi:schemaLocation="http://symfony.com/schema/dic/property-access-mapping http://symfony.com/schema/dic/property-access-mapping/property-access-mapping-1.0.xsd">
+
+            <class name="Person">
+                <property name="name" getter="getFullName" setter="setFullName" />
+                <property name="children" adder="addNewChild" remover="discardChild" />
+            </class>
+
+        </property-access>
+
+Then, using the overriden methods is automatic:
+
+.. code-block:: php
+
+    $person = new Person();
+
+    $accessor->setValue($person, 'name', 'John Doe');
+    // will call setFullName
+
+    var_dump('Hello '.$accesor->getValue($person, 'name'));
+    // will return 'Hello John Doe'
+
+You can also associate a particular method with an operation on a property
+using the ``@GetterAccessor``, ``@SetterAccessor``, ``@AdderAccessor`` and
+``@RemoverAccessor`` annotations. All of them take only one parameter: ``property``.
+
+This allows creating virtual properties that are not directly stored in the
+object:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // ...
+        use Symfony\Component\PropertyAccess\Annotation\GetterAccessor;
+        use Symfony\Component\PropertyAccess\Annotation\SetterAccessor;
+
+        class Invoice
+        {
+            private $quantity;
+
+            private $pricePerUnit;
+
+            // Notice that there is no real "total" property
+
+            /**
+             * @GetterAccessor(property="total")
+             */
+            public function getTotal()
+            {
+                return $this->quantity * $this->pricePerUnit;
+            }
+
+            // Notice that 'property' can be omitted in the parameter
+            /**
+             * @SetterAccessor("total")
+             *
+             * @param mixed $total
+             */
+            public function setTotal($total)
+            {
+                $this->quantity = $total / $this->pricePerUnit;
+            }
+        }
+
+    .. code-block:: yaml
+
+        Invoice:
+            total:
+                getter: getTotal
+                setter: setTotal
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+
+        <property-access xmlns="http://symfony.com/schema/dic/property-access-mapping"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xsi:schemaLocation="http://symfony.com/schema/dic/property-access-mapping http://symfony.com/schema/dic/property-access-mapping/property-access-mapping-1.0.xsd">
+
+            <class name="Invoice">
+                <property name="total" getter="getTotal" setter="setTotal" />
+            </class>
+
+        </property-access>
+
+.. code-block:: php
+
+    $invoice = new Invoice();
+
+    $accessor->setValue($invoice, 'quantity', 20);
+    $accessor->setValue($invoice, 'pricePerUnit', 10);
+    var_dump('Total: '.$accesor->getValue($invoice, 'total'));
+    // will return 'Total: 200'
+
+Using property metadata with Symfony
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, Symfony will look for property metadata in the following places
+inside each bundle path:
+
+- `<Bundle path>/Resources/config/property_accessor.xml`
+- `<Bundle path>/Resources/config/property_accessor.yml`
+- `<Bundle path>/Resources/config/property_accessor/*.xml`
+- `<Bundle path>/Resources/config/property_accessor/*.yml`
+
+If you need getting metadata from annotations you must explicitly enable them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            property_access: { enable_annotations: true }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:property_access enable-annotations="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'property_access' => array(
+                'enable_annotations' => true,
+            ),
+        ));
+
 Enable other Features
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 The :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` can be
 configured to enable extra features. To do that you could use the
@@ -450,6 +679,49 @@ Or you can pass parameters directly to the constructor (not the recommended way)
     // ...
     $accessor = new PropertyAccessor(true); // this enables handling of magic __call
 
+If you need to enable metadata processing (see
+`Custom method calls and virtual properties in a class`_) you must instantiate
+a :class:`Symfony\\Component\\PropertyAccess\\Mapping\\Factory\\MetadataFactoryInterface`
+and use the method `setMetadataFactory` on the
+:class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`. Bundled with
+the component you can find
+a `MetadataFactory` class that supports different kind of loaders (annotations,
+YAML and YML files) called :class:`Symfony\\Component\\PropertyAccess\\Mapping\\Factory\\LazyLoadingMetadataFactory`.
+
+.. code-block:: php
+
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\PropertyAccess\Mapping\Factory\LazyLoadingMetadataFactory;
+    use Symfony\Component\PropertyAccess\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\PropertyAccess\Mapping\Loader\LoaderChain;
+    use Symfony\Component\PropertyAccess\Mapping\Loader\XMLFileLoader;
+    use Symfony\Component\PropertyAccess\Mapping\Loader\YamlFileLoader;
+
+    // ...
+
+    $accessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
+
+    // Create annotation loader using Doctrine annotation reader
+    $loader = new AnnotationLoader(new AnnotationReader());
+
+    // or read metadata from a XML file
+    $loader = new XmlFileLoader('metadata.xml');
+
+    // or read metadata from a YAML file
+    $loader = new YamlFileLoader('metadata.yml');
+
+    // or combine several loaders in one
+    $loader = new LoaderChain(
+        new AnnotationLoader(new AnnotationReader()),
+        new XmlFileLoader('metadata.xml'),
+        new YamlFileLoader('metadata.yml'),
+        new YamlFileLoader('metadata2.yml')
+    );
+
+    // Enable metadata loading
+    $metadataFactory = new LazyLoadingMetadataFactory($loader);
+
+    $accessorBuilder->setMetadataFactory($metadataFactory);
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access
 .. _The Inflector component: https://github.com/symfony/inflector
