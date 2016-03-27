@@ -164,6 +164,7 @@
 * :doc:`Security Authentication (Identifying/Logging in the User) </cookbook/security/index>`
 
   * :doc:`/cookbook/security/form_login_setup`
+  * :doc:`/cookbook/security/ldap`
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/guard-authentication`
   * :doc:`/cookbook/security/remember_me`

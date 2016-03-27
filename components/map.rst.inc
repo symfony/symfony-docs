@@ -112,6 +112,10 @@
 
   * :doc:`/components/intl`
 
+* **Ldap**
+
+  * :doc:`/components/ldap`
+
 * **OptionsResolver**
 
   * :doc:`/components/options_resolver`

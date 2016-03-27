@@ -22,6 +22,7 @@ The Components
     http_foundation/index
     http_kernel/index
     intl
+    ldap
     options_resolver
     phpunit_bridge
     process
