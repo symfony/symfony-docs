@@ -33,10 +33,23 @@ from pygments.lexers.web import PhpLexer
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-    'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice', 'sensio.sphinx.codeblock',
-    'symfonycom.sphinx'
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.todo',
+    'sensio.sphinx.refinclude',
+    'sensio.sphinx.configurationblock',
+    'sensio.sphinx.phpcode',
+    'sensio.sphinx.bestpractice',
+    'sensio.sphinx.codeblock',
+    'sphinxcontrib.spelling',
 ]
+
+# Configuration for sphinxcontrib.spelling
+spelling_lang='en_US'
+spelling_word_list_filename='spelling_word_list.txt'
+
+# We exclude the changelog to prevent the spell checker checking the changelog
+exclude_patterns = ['_theme', 'changelog.rst']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_theme/_templates']
@@ -73,9 +86,6 @@ copyright = ''
 # Else, today_fmt is used as the format for a strftime call.
 #today_fmt = '%B %d, %Y'
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-exclude_patterns = ['_theme']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
