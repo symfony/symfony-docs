@@ -171,7 +171,7 @@ To use the ``ClockMock`` class in your test, you can:
   ``ClockMock::withClockMock(true)`` before the test and
   ``ClockMock::withClockMock(false)`` after the test.
 
-As a result, the following is guarenteed to work and is no longer a transient
+As a result, the following is guaranteed to work and is no longer a transient
 test::
 
     use Symfony\Component\Stopwatch\Stopwatch;
@@ -205,6 +205,9 @@ And that's all!
 
 DNS-sensitive Tests
 -------------------
+
+.. versionadded:: 2.7
+    The mocks for DNS related functions were introduced in Symfony 3.1.
 
 Tests that make network connections, for example to check the validity of a DNS
 record, can be slow to execute and unreliable due to the conditions of the
@@ -283,14 +286,14 @@ Troubleshooting
 ---------------
 
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
-"by convention" and assumes that the namespace of the tested class can be
-obtained just by removing the ``\Tests\`` part from the test namespace. I.e.
-that if the your test case fully-qualified class name (FQCN) is
+"by convention" and assume that the namespace of the tested class can be
+obtained just by removing the ``\Tests\`` part from the test namespace. For
+example, if your test case fully-qualified class name (FQCN) is
 ``App\Tests\Watch\DummyWatchTest``, it assumes the tested class FQCN is
 ``App\Watch\DummyWatch``.
 
-If this convention doesn't work for your application, you can also configure
-the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
+If this convention doesn't work for your application, configure the mocked
+namespaces in the ``phpunit.xml`` file, as done for example in the
 :doc:`HttpKernel Component </components/http_kernel/introduction>`:
 
 .. code-block:: xml
