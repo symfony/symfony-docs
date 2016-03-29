@@ -112,7 +112,7 @@ PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
 
 Making Tests Fail
------------------
+~~~~~~~~~~~~~~~~~
 
 By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices will
 make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
@@ -121,6 +121,14 @@ of deprecation notices is reached (``0`` is the default value). You can also set
 the value ``"weak"`` which will make the bridge ignore any deprecation notices.
 This is useful to projects that must use deprecated interfaces for backward
 compatibility reasons.
+
+Disabling the Deprecation Helper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Set the ``SYMFONY_DEPRECATIONS_HELPER`` variable to ``disabled`` to completely
+disable the deprecation helper. This is useful to make use of the rest of
+features provided by this component without getting errors or messages related
+to deprecations.
 
 Time-sensitive Tests
 --------------------
