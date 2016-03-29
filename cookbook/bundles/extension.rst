@@ -125,3 +125,27 @@ Using Configuration to Change the Services
 The Extension is also the class that handles the configuration for that
 particular bundle (e.g. the configuration in ``app/config/config.yml``). To
 read more about it, see the ":doc:`/cookbook/bundles/configuration`" article.
+
+Adding Classes to Compile
+-------------------------
+
+In order to make applications run as fast as possible on production environment,
+Symfony creates a big ``classes.php`` file in the cache directory. This file
+aggregates the contents of the PHP classes that are used in every request,
+reducing the I/O operations related to those classes.
+
+Your own bundles can add classes into this file thanks to the ``addClassesToCompile()``
+method. Define the classes to compile as an array of their FQCN::
+
+    $this->addClassesToCompile(array(
+        'Appbundle\\Manager\\UserManager',
+        'Appbundle\\Service\\Slugger',
+        // ...
+    ));
+
+If you add to compile all the classes commonly used by your bundle, you can
+expect a minor performance improvement.
+
+The main drawback of this technique is that it doesn't work for classes which
+contains annotations, such as controllers with ``@Route`` annotations and
+entities with ``@ORM`` or ``@Assert`` annotations.
