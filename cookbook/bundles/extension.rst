@@ -137,11 +137,17 @@ reducing the I/O operations related to those classes.
 Your own bundles can add classes into this file thanks to the ``addClassesToCompile()``
 method. Define the classes to compile as an array of their FQCN::
 
-    $this->addClassesToCompile(array(
-        'Appbundle\\Manager\\UserManager',
-        'Appbundle\\Service\\Slugger',
+    // ...
+    public function load(array $configs, ContainerBuilder $container)
+    {
         // ...
-    ));
+
+         $this->addClassesToCompile(array(
+            'Appbundle\\Manager\\UserManager',
+            'Appbundle\\Service\\Slugger',
+            // ...
+        ));
+    }
 
 If you add to compile all the classes commonly used by your bundle, you can
 expect a minor performance improvement.
