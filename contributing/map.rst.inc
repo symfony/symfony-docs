@@ -3,6 +3,7 @@
   * :doc:`Bugs </contributing/code/bugs>`
   * :doc:`Patches </contributing/code/patches>`
   * :doc:`Reviewing Issues and Patches </contributing/community/reviews>`
+  * :doc:`Maintenance </contributing/code/maintenance>`
   * :doc:`The Core Team </contributing/code/core_team>`
   * :doc:`Security </contributing/code/security>`
   * :doc:`Tests </contributing/code/tests>`
