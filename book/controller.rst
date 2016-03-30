@@ -704,7 +704,7 @@ The Request and Response Object
 -------------------------------
 
 As mentioned :ref:`earlier <book-controller-request-argument>`, the framework will
-pass the ``Request`` object to any controller argument taht is type-hinted with
+pass the ``Request`` object to any controller argument that is type-hinted with
 the ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
