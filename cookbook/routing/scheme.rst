@@ -55,11 +55,11 @@ will automatically generate an absolute URL with HTTPS as the scheme:
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
-    # generates /secure
+    {# generates https://example.com/secure #}
 
     {# If the current scheme is HTTP #}
     {{ path('secure') }}
-    {# generates https://example.com/secure #}
+    {# generates http://example.com/secure #}
 
 The requirement is also enforced for incoming requests. If you try to access
 the ``/secure`` path with HTTP, you will automatically be redirected to the
