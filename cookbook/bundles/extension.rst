@@ -135,7 +135,8 @@ aggregates the contents of the PHP classes that are used in every request,
 reducing the I/O operations related to those classes.
 
 Your own bundles can add classes into this file thanks to the ``addClassesToCompile()``
-method. Define the classes to compile as an array of their FQCN::
+method. Define the classes to compile as an array of their fully qualified class
+names::
 
     // ...
     public function load(array $configs, ContainerBuilder $container)
@@ -143,15 +144,23 @@ method. Define the classes to compile as an array of their FQCN::
         // ...
 
          $this->addClassesToCompile(array(
-            'Appbundle\\Manager\\UserManager',
-            'Appbundle\\Service\\Slugger',
+            'AppBundle\\Manager\\UserManager',
+            'AppBundle\\Service\\Slugger',
             // ...
         ));
     }
 
-If you add to compile all the classes commonly used by your bundle, you can
+.. note::
+
+    If some class extends from other classes, all its parents are included
+    automatically in the list of classes to compile.
+
+After adding to compile all the classes commonly used by your bundle, you can
 expect a minor performance improvement.
 
-The main drawback of this technique is that it doesn't work for classes which
-contains annotations, such as controllers with ``@Route`` annotations and
-entities with ``@ORM`` or ``@Assert`` annotations.
+The main drawback of this technique is that it doesn't work when:
+
+* Classes contain annotations, such as controllers with ``@Route`` annotations
+  and entities with ``@ORM`` or ``@Assert`` annotations;
+* Classes use the ``__DIR__`` and ``__FILE__`` constants, because their values
+  will change when loading these classes from the ``classes.php`` file.
