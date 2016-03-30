@@ -209,7 +209,7 @@ Nevertheless, if you prefer to do this check locally on your own machine before
 submitting your documentation, follow these steps:
 
 * Install Sphinx_;
-* Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
+* Install the Sphinx extensions using git submodules: ``$ pip install git+https://github.com/fabpot/sphinx-php.git``;
 * Run ``make html`` and view the generated HTML in the ``_build/html`` directory.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
