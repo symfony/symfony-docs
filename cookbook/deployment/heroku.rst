@@ -305,8 +305,8 @@ This is also very useful to build assets on the production system, e.g. with Ass
 
     With the next deploy, Heroku compiles your app using the Node.js buildpack and
     your npm packages become installed. On the other hand, your ``composer.json`` is
-    now ignored. To compile your app with both buildpacks, Node.js *and* PHP, you need 
-    use both buildpacks. To override buildpack auto-detection, you
+    now ignored. To compile your app with both buildpacks, Node.js *and* PHP, you need
+    to use both buildpacks. To override buildpack auto-detection, you
     need to explicitly set the buildpack:
 
     .. code-block:: bash
