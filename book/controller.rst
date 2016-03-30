@@ -260,7 +260,7 @@ to ``$name``. Just make sure they the name of the placeholder is the
 same as the name of the argument variable.
 
 Take the following more-interesting example, where the controller has two
-arguments::
+arguments:
 
 .. configuration-block::
 
