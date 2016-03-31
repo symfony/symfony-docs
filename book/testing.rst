@@ -687,6 +687,39 @@ their type::
     // Upload a file
     $form['photo']->upload('/path/to/lucas.jpg');
 
+If you use a :doc:`Collection of Forms </cookbook/form/form_collections>`,
+you can't add fields to the existing form (this results in an error
+``Unreachable field "…"``). You can use the `submitWithAdditionalValues()`
+method in order to add new fields::
+
+    $crawler = $client->submitWithAdditionalValues(
+        $form,
+        array(),
+        // New values:
+        array('task[tags][0][name]' => 'tag1'),
+    );
+
+    // The tag has been added.
+    $this->assertEquals(1, $crawler->filter('ul.tags > li')->count());
+
+Where ``task[tags][0][name]`` is the name of a field usually created
+with Javascript.
+
+You can remove an existing field, e.g. a tag::
+
+    // Get the values of the form.
+    $values = $form->getPhpValues();
+
+    // Remove the first tag.
+    unset($values['task']['tags'][0]);
+
+    // Submit the data.
+    $crawler = $client->request($form->getMethod(), $form->getUri(),
+        $values, $form->getPhpFiles());
+
+    // The tag has been removed.
+    $this->assertEquals(0, $crawler->filter('ul.tags > li')->count());
+
 .. tip::
 
     If you purposefully want to select "invalid" select/radio values, see
