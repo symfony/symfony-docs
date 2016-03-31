@@ -252,7 +252,7 @@ time and again, you can have just one (or several) listeners deal with them.
 
 A centralized error handling that also allows to log exceptions might look like this::
 
-    // src/AppBundle/EventListener/AcmeExceptionListener.php
+    // src/AppBundle/EventListener/ExceptionListener.php
     namespace AppBundle\EventListener;
 
     use Psr\Log\LoggerInterface;
@@ -260,7 +260,7 @@ A centralized error handling that also allows to log exceptions might look like 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-    class AcmeExceptionListener
+    class ExceptionListener
     {
         private $logger;
 
@@ -279,7 +279,7 @@ A centralized error handling that also allows to log exceptions might look like 
                 $exception->getCode()
             );
 
-            // Log the exception to the configured log file (i.e. acme.log)
+            // Log the exception to the configured log file (i.e. app.log)
             $this->logger->error($message);
 
             // Customize the response object to display the exception details
@@ -300,7 +300,7 @@ A centralized error handling that also allows to log exceptions might look like 
         }
     }
 
-Now, we need to register our listener:
+Now, you need to register your listener:
 
 .. configuration-block::
 
@@ -309,7 +309,7 @@ Now, we need to register our listener:
         # app/config/services.yml
         services:
             app.exception_listener:
-                class: AppBundle\EventListener\AcmeExceptionListener
+                class: AppBundle\EventListener\ExceptionListener
                 arguments: ["@logger"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
@@ -317,7 +317,7 @@ Now, we need to register our listener:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="kernel.listener.your_exception_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
+        <service id="app.exception_listener" class="AppBundle\EventListener\ExceptionListener">
             <argument type="service" id="logger" />
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
         </service>
@@ -326,12 +326,12 @@ Now, we need to register our listener:
 
         // app/config/services.php
         $container
-            ->register('kernel.listener.your_exception_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
+            ->register('app.exception_listener', 'AppBundle\EventListener\ExceptionListener')
             ->addArgument(new Reference('logger'))
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
         ;
 
-Finally, we need to add a new handler that will log the exceptions to the configured log file (acme.log):
+Finally, you need to add a new handler that will log the exceptions to the configured log file (app.log):
 
 .. configuration-block::
 
@@ -342,7 +342,7 @@ Finally, we need to add a new handler that will log the exceptions to the config
             handlers:
                 applog:
                     type: stream
-                    path: /path/to/acme.log
+                    path: /path/to/app.log
                     level: error
 
     .. code-block:: xml
@@ -352,7 +352,7 @@ Finally, we need to add a new handler that will log the exceptions to the config
                 <monolog:handler
                     name="applog"
                     type="stream"
-                    path="/path/to/acme.log"
+                    path="/path/to/app.log"
                     level="error"
                 />
             </monolog:config>
@@ -365,7 +365,7 @@ Finally, we need to add a new handler that will log the exceptions to the config
             'handlers' => array(
                 'applog' => array(
                     'type'  => 'stream',
-                    'path'  => '/path/to/acme.log',
+                    'path'  => '/path/to/app.log',
                     'level' => 'error',
                 ),
             ),
