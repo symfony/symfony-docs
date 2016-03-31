@@ -671,7 +671,7 @@ read any flash messages from the session:
 
     .. code-block:: html+twig
 
-        {% for flash_message in app.session.flashbag.get('notice') %}
+        {% for flash_message in app.session.flashBag.get('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
             </div>
