@@ -154,7 +154,7 @@ key in the ``remote_user`` firewall configuration.
 
 .. caution::
 
-    :doc:`User impersonation <cookbook/security/impersonating_user>` is not
+    :doc:`User impersonation </cookbook/security/impersonating_user>` is not
     compatible with ``REMOTE_USER`` based authentication. The reason is that
     impersonation requires the authentication state to be maintained server-side
     but ``REMOTE_USER`` information is sent by the browser in each request.
