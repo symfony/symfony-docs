@@ -25,7 +25,7 @@ The Components
     property_access/index
     routing/index
     security/index
-    serializer
+    serializer/index
     stopwatch
     templating/index
     translation/index
