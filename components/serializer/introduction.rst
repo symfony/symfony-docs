@@ -74,7 +74,7 @@ exists in your project::
         private $age;
         private $name;
 
-        // Getter
+        // Getters
         public function getName()
         {
             return $this->name;
