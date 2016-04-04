@@ -799,6 +799,11 @@ Part of the Form  Block Name
 ``row``           ``_tasks_entry_row``
 ================  =======================
 
+If you want to avoid duplicating the template code for the prototype, use the
+macro approach described by Maximilian Beck in his
+`Custom form collection prototype <http://glumb.de/en/custom-form-collection-prototype-in-symfony2>`
+blog post.
+
 Other common Customizations
 ---------------------------
 
