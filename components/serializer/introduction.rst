@@ -80,7 +80,7 @@ exists in your project::
         private $name;
         private $sportsman;
 
-        // Getter
+        // Getters
         public function getName()
         {
             return $this->name;
