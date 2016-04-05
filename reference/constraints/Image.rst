@@ -24,6 +24,7 @@ of the documentation on this constraint.
 |                | - `allowSquare`_                                                      |
 |                | - `allowLandscape`_                                                   |
 |                | - `allowPortrait`_                                                    |
+|                | - `detectCorrupted`_                                                  |
 |                | - `mimeTypesMessage`_                                                 |
 |                | - `sizeNotDetectedMessage`_                                           |
 |                | - `maxWidthMessage`_                                                  |
@@ -35,6 +36,7 @@ of the documentation on this constraint.
 |                | - `allowSquareMessage`_                                               |
 |                | - `allowLandscapeMessage`_                                            |
 |                | - `allowPortraitMessage`_                                             |
+|                | - `corruptedMessage`_                                                 |
 |                | - See :doc:`File </reference/constraints/File>` for inherited options |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Image`            |
@@ -311,6 +313,18 @@ allowPortrait
 
 If this option is false, the image cannot be portrait oriented.
 
+detectCorrupted
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.1
+     The ``detectCorrupted`` option was introduced in Symfony 3.1.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is true, the image contents are validated to ensure tha the
+images is not corrupted. This validation is done with PHP's ``imagecreatefromstring()``
+function, which requires the PHP GD extension to be enabled.
+
 sizeNotDetectedMessage
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -391,5 +405,16 @@ allowPortraitMessage
 Portrait oriented images are not allowed``
 
 The error message if the image is portrait oriented and you set `allowPortrait`_ to ``false``.
+
+corruptedMessage
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.1
+     The ``corruptedMessage`` option was introduced in Symfony 3.1.
+
+**type**: ``string`` **default**: ``The image file is corrupted.``
+
+The error message if the image contents are corrupted and you set `detectCorrupted`_
+to ``true``.
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
