@@ -31,7 +31,7 @@ singular form of the given word::
     // $word = 'car'
 
 Besides the regular singular-plural conversions, this component supports most of
-the arbitrary pluralization rules defined by the English language:
+the arbitrary pluralization rules defined by the English language::
 
     use Symfony\Component\Inflector\Inflector;
 
