@@ -109,7 +109,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/Form/fields.html.twig #}
+        {# app/Resources/views/form/fields.html.twig #}
         {% block gender_widget %}
             {% spaceless %}
                 {% if expanded %}
@@ -130,7 +130,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Form/gender_widget.html.php -->
+        <!-- app/Resources/views/form/gender_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>

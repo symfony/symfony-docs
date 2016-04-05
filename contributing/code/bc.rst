@@ -236,7 +236,6 @@ Change return type                                  No
 Add private method                                  Yes
 Remove private method                               Yes
 Change name                                         Yes
-Reduce visibility                                   Yes
 Add argument without a default value                Yes
 Add argument with a default value                   Yes
 Remove argument                                     Yes

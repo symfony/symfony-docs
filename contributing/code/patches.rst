@@ -272,49 +272,10 @@ pull request message, like in:
     [Yaml] fixed something
     [Form] [Validator] [FrameworkBundle] added something
 
-The pull request description must include the following checklist at the top
-to ensure that contributions may be reviewed without needless feedback
-loops and that your contributions can be included into Symfony as quickly as
-possible:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Bug fix?      | [yes|no]
-    | New feature?  | [yes|no]
-    | BC breaks?    | [yes|no]
-    | Deprecations? | [yes|no]
-    | Tests pass?   | [yes|no]
-    | Fixed tickets | [comma separated list of tickets fixed by the PR]
-    | License       | MIT
-    | Doc PR        | [The reference to the documentation PR if any]
-
-An example submission could now look as follows:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Bug fix?      | no
-    | New feature?  | no
-    | BC breaks?    | no
-    | Deprecations? | no
-    | Tests pass?   | yes
-    | Fixed tickets | #12, #43
-    | License       | MIT
-    | Doc PR        | symfony/symfony-docs#123
-
-The whole table must be included (do **not** remove lines that you think are
-not relevant). For simple typos, minor changes in the PHPDocs, or changes in
-translation files, use the shorter version of the check-list:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Fixed tickets | [comma separated list of tickets fixed by the PR]
-    | License       | MIT
+The default pull request description contains a table which you must fill in
+with the appropriate answers. This ensures that contributions may be reviewed
+without needless feedback loops and that your contributions can be included into
+Symfony as quickly as possible.
 
 Some answers to the questions trigger some more requirements:
 

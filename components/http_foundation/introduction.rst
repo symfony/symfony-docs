@@ -147,25 +147,28 @@ exist::
     // the query string is '?foo=bar'
 
     $request->query->get('foo');
-    // returns bar
+    // returns 'bar'
 
     $request->query->get('bar');
     // returns null
 
-    $request->query->get('bar', 'bar');
-    // returns 'bar'
+    $request->query->get('bar', 'baz');
+    // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element::
 
-    // the query string is '?foo[bar]=bar'
+    // the query string is '?foo[bar]=baz'
 
     $request->query->get('foo');
-    // returns array('bar' => 'bar')
+    // returns array('bar' => 'baz')
 
     $request->query->get('foo[bar]');
-    // returns null   
+    // returns null
+
+    $request->query->get('foo')['bar'];
+    // returns 'baz'
 
 .. _component-foundation-attributes:
 
@@ -500,7 +503,8 @@ if it should::
 
     BinaryFileResponse::trustXSendfileTypeHeader();
 
-You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
+With the ``BinaryFileResponse``, you can still set the ``Content-Type`` of the sent file,
+or change its ``Content-Disposition``::
 
     $response->headers->set('Content-Type', 'text/plain');
     $response->setContentDisposition(
