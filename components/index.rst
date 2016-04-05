@@ -21,6 +21,7 @@ The Components
     form/index
     http_foundation/index
     http_kernel/index
+    inflector
     intl
     options_resolver
     phpunit_bridge

@@ -112,6 +112,10 @@
 
   * :doc:`/components/intl`
 
+* **Inflector**
+
+  * :doc:`/components/inflector`
+
 * **OptionsResolver**
 
   * :doc:`/components/options_resolver`
