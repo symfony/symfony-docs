@@ -80,6 +80,33 @@ Listener Class Name                                                             
 :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`  0
 ==============================================================================  ========
 
+``kernel.controller_arguments``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.1
+     The ``kernel.controller_arguments`` event was introduced in Symfony 3.1.
+
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerArgumentsEvent`
+
+This event can be an entry point used to modify the arguments of the controller
+once they have been resolved by Symfony::
+
+    use Symfony\Component\HttpKernel\Event\FilterControllerArgumentsEvent;
+
+    public function onKernelControllerArguments(FilterControllerArgumentsEvent $event)
+    {
+        $controller = $event->getController();
+        $arguments = $event->getArguments();
+        // ...
+
+        // the arguments can be changed as needed
+        $event->setArguments(array('foo', 'bar'));
+    }
+
+.. seealso::
+
+    Read more on the :ref:`kernel.controller_arguments event <component-http-kernel-kernel-controller-arguments>`.
+
 ``kernel.view``
 ~~~~~~~~~~~~~~~
 
