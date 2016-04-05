@@ -150,8 +150,8 @@ can automatically generate an empty ``test_project`` database for you:
 
             # app/config/config.yml
             doctrine:
-                charset: utf8mb4
                 dbal:
+                    charset: utf8mb4
                     default_table_options:
                         charset: utf8mb4
                         collate: utf8mb4_unicode_ci
