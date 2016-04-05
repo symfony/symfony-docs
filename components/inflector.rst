@@ -41,9 +41,9 @@ the arbitrary pluralization rules defined by the English language:
     Inflector::singularize('stories'); // 'story'
     Inflector::singularize('women');   // 'woman'
 
-In some edge cases, it's not possible to determine a unique singular form for
-the given word. In those cases, the ``singularize()`` method returns an array
-with all the compatible singular forms::
+Sometimes it's not possible to determine a unique singular form for the given
+word. In those edge cases, the ``singularize()`` method returns an array with
+all the compatible singular forms::
 
     use Symfony\Component\Inflector\Inflector;
 
