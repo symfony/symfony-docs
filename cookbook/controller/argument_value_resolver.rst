@@ -18,17 +18,17 @@ Functionality Shipped With The HttpKernel
 
 Symfony ships with four value resolvers in the HttpKernel:
   * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\ArgumentFromAttributeResolver`
-   attempts to find a request attribute that matches the name of the argument.
+    attempts to find a request attribute that matches the name of the argument.
 
   * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\RequestValueResolver`
-   injects the current ``Request`` if type-hinted with ``Request``, or a sub-class thereof.
+    injects the current ``Request`` if type-hinted with ``Request``, or a sub-class thereof.
 
   * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\DefaultValueResolver`
-   will set the default value of the argument if present and the argument is optional.
+    will set the default value of the argument if present and the argument is optional.
 
   * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\VariadicValueResolver`
-   verifies in the request if your data is an array and will add all of them to the argument list.
-   When the action is called, the last (variadic) argument will contain all the values of this array.
+    verifies in the request if your data is an array and will add all of them to the argument list.
+    When the action is called, the last (variadic) argument will contain all the values of this array.
 
 .. note::
 
@@ -64,16 +64,16 @@ This interface specifies that you have to implement two methods::
     }
 
   * The ``supports()`` method is used to check whether the resolver supports the given argument. It will
-   only continue if it returns ``true``.
+    only continue if it returns ``true``.
 
   * The ``resolve()`` method will be used to resolve the actual value just acknowledged by
-   ``supports()``. Once a value is resolved you can ``yield`` the value to the ``ArgumentResolver``.
+    ``supports()``. Once a value is resolved you can ``yield`` the value to the ``ArgumentResolver``.
 
   * The ``Request`` object is the current ``Request`` which would also be injected into your
-   action in the forementioned functionality.
+    action in the forementioned functionality.
 
   * The :class:``Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`` represents
-   information retrieved from the method signature for the current argument it's trying to resolve.
+    information retrieved from the method signature for the current argument it's trying to resolve.
 
 .. note::
 
