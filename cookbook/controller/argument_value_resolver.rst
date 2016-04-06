@@ -45,6 +45,9 @@ action::
 
     namespace AppBundle\Controller;
 
+    use AppBundle\User;
+    use Symfony\Component\HttpFoundation\Response;
+
     class UserController
     {
         public function indexAction(User $user)
