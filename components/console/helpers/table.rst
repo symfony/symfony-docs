@@ -92,8 +92,8 @@ because of the ``0`` value. The output of this command will be:
 
 Note that the defined column widths are always considered as the minimum column
 widths. If the contents don't fit, the given column width is increased up to the
-contents length. That's why in the previous example the first column has a ``13``
-character length although the user defined ``10`` as its width.
+longest content length. That's why in the previous example the first column has
+a ``13`` character length although the user defined ``10`` as its width.
 
 You can also set the width individually for each column with the
 :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidth` method.
