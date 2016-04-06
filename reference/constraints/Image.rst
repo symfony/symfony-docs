@@ -321,8 +321,8 @@ detectCorrupted
 
 **type**: ``Boolean`` **default**: ``false``
 
-If this option is true, the image contents are validated to ensure tha the
-images is not corrupted. This validation is done with PHP's ``imagecreatefromstring()``
+If this option is true, the image contents are validated to ensure that the
+image is not corrupted. This validation is done with PHP's ``imagecreatefromstring()``
 function, which requires the PHP GD extension to be enabled.
 
 sizeNotDetectedMessage
