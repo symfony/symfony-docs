@@ -7,3 +7,4 @@ Controller
     error_pages
     service
     upload_file
+    argument_value_resolver
