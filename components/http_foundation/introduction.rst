@@ -355,9 +355,9 @@ takes eight arguments in its constructor:
     The value stored in the cookie.
 ``$expire``
     **type**: ``int``|``string``|``DateTime``|``DateTimeInterface`` **default**: 0
-    The time the cookie expires. This value can be set as a timestamp integer,
-    as a ``strtotime()`` valid date string (e.g. ``+1 week``), as a ``DateTime``
-    object or as an object which implements ``DateTimeInterface``.
+    The time the cookie expires. This value can be a timestamp integer,
+    a :phpfunction:`strtotime` valid date string (e.g. ``+1 week``), a
+    ``DateTime`` object or an object which implements ``DateTimeInterface``.
     The default value is ``0``, which deletes the cookie as soon as the browser
     is closed.
 ``$path``
