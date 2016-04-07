@@ -7,45 +7,46 @@ Extending Action Argument Resolving
 .. versionadded:: 3.1
     The ``ArgumentResolver`` and value resolvers are added in Symfony 3.1.
 
-In the book, you've learned that you can add the :class:`Symfony\\Component\\HttpFoundation\\Request`
-as action argument and it will be injected into the method. This is done via the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. The ``ArgumentResolver`` uses
-several value resolvers which allow you to extend the functionality.
+In the book, you've learned that you can get the :class:`Symfony\\Component\\HttpFoundation\\Request`
+object by adding a ``Request`` argument to your controller. This is done via the
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. By creating and registering custom
+argument value resolvers, you can extend this functionality.
 
 
 Functionality Shipped With The HttpKernel
 -----------------------------------------
 
 Symfony ships with four value resolvers in the HttpKernel:
-  * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\ArgumentFromAttributeResolver`
-    attempts to find a request attribute that matches the name of the argument.
 
-  * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\RequestValueResolver`
-    injects the current ``Request`` if type-hinted with ``Request``, or a sub-class thereof.
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\ArgumentFromAttributeResolver`
+    Attempts to find a request attribute that matches the name of the argument.
 
-  * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\DefaultValueResolver`
-    will set the default value of the argument if present and the argument is optional.
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\RequestValueResolver`
+    Injects the current ``Request`` if type-hinted with ``Request``, or a sub-class thereof.
 
-  * The :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\VariadicValueResolver`
-    verifies in the request if your data is an array and will add all of them to the argument list.
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\DefaultValueResolver`
+    Will set the default value of the argument if present and the argument is optional.
+
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\VariadicValueResolver`
+    Verifies in the request if your data is an array and will add all of them to the argument list.
     When the action is called, the last (variadic) argument will contain all the values of this array.
 
 .. note::
 
-    In older versions of Symfony this logic was all resolved within the ``ControllerResolver``. The
-    old functionality is moved to the ``LegacyArgumentResolver``, which contains the previously
+    Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``. The old
+    functionality is moved to the ``LegacyArgumentResolver``, which contains the previously
     used resolving logic.
 
-Adding a New Value Resolver
----------------------------
+Adding a Custom Value Resolver
+------------------------------
 
-Adding a new value resolver requires one class and one service defintion. In our next example, we
-will be creating a shortcut to inject the ``User`` object from our security. Given you write the following
-action::
+Adding a new value resolver requires one class and one service defintion. In the next example,
+you'll create a value resolver to inject the ``User`` object from the security system.. Given
+you write the following action::
 
     namespace AppBundle\Controller;
 
-    use AppBundle\User;
+    use AppBundle\Entity\User;
     use Symfony\Component\HttpFoundation\Response;
 
     class UserController
@@ -56,7 +57,7 @@ action::
         }
     }
 
-Somehow you will have to get the ``User`` object and inject it into our action. This can be done
+Somehow you will have to get the ``User`` object and inject it into the controller. This can be done
 by implementing the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
 This interface specifies that you have to implement two methods::
 
@@ -66,32 +67,32 @@ This interface specifies that you have to implement two methods::
         public function resolve(Request $request, ArgumentMetadata $argument);
     }
 
-  * The ``supports()`` method is used to check whether the resolver supports the given argument. It will
-    only continue if it returns ``true``.
+``supports()``
+    This method is used to check whether the value resolver supports the
+    given argument. ``resolve()`` will only be executed when this returns ``true``.
+``resolve()``
+    This method will resolve the actual value for the argument. Once the value
+    is resolved, you should `yield`_ the value to the ``ArgumentResolver``.
 
-  * The ``resolve()`` method will be used to resolve the actual value just acknowledged by
-    ``supports()``. Once a value is resolved you can ``yield`` the value to the ``ArgumentResolver``.
-
-  * The ``Request`` object is the current ``Request`` which would also be injected into your
-    action in the forementioned functionality.
-
-  * The :class:``Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`` represents
-    information retrieved from the method signature for the current argument it's trying to resolve.
+Both methods get the ``Request`` object, which is the current request, and an
+:class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`.
+This object contains all informations retrieved from the method signature for the
+current argument.
 
 .. note::
 
     The ``ArgumentMetadata`` is a simple data container created by the
-    :class:``Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadataFactory``. This
+    :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadataFactory`. This
     factory will work on every supported PHP version but might give different results. E.g. the
     ``isVariadic()`` will never return true on PHP 5.5 and only on PHP 7.0 and higher it will give
     you basic types when calling ``getType()``.
 
-Now that you know what to do, you can implement this interface. In order to get the current ``User``,
-you will have to get it from the ``TokenInterface`` which is in the ``TokenStorageInterface``::
+Now that you know what to do, you can implement this interface. To get the current ``User``, you need
+the current security token. This token can be retrieved from the token storage.::
 
     namespace AppBundle\ArgumentValueResolver;
 
-    use AppBundle\User;
+    use AppBundle\Entity\User;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -106,7 +107,12 @@ you will have to get it from the ``TokenInterface`` which is in the ``TokenStora
 
         public function supports(Request $request, ArgumentMetadata $argument)
         {
-            return ($token = $this->tokenStorage->getToken()) && $token->getUser() instanceof User;
+            if (User::class !== $argument->getType()) {
+                return false;
+            }
+
+            $token = $this->tokenStorage->getToken()
+            return $token->getUser() instanceof User;
         }
 
         public function resolve(Request $request, ArgumentMetadata $argument)
@@ -115,7 +121,7 @@ you will have to get it from the ``TokenInterface`` which is in the ``TokenStora
         }
     }
 
-This was pretty simple, now all you have to do is add the configuration for the service container. This
+That's it! Now all you have to do is add the configuration for the service container. This
 can be done by tagging the service with ``kernel.argument_resolver`` and adding a priority.
 
 .. note::
@@ -143,12 +149,19 @@ can be done by tagging the service with ``kernel.argument_resolver`` and adding 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.value_resolver.user" class="AppBundle\ArgumentValueResolver\UserValueResolver">
-                <argument type="service" id="security.token_storage">
-                <tag name="kernel.argument_resolver" priority="50" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="'http://www.w3.org/2001/XMLSchema-Instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.value_resolver.user" class="AppBundle\ArgumentValueResolver\UserValueResolver">
+                    <argument type="service" id="security.token_storage">
+                    <tag name="kernel.argument_resolver" priority="50" />
+                </service>
+            </services>
+
+        </container>
 
     .. code-block:: php
 
@@ -161,3 +174,5 @@ can be done by tagging the service with ``kernel.argument_resolver`` and adding 
         );
         $definition->addTag('kernel.argument_resolver', array('priority' => 50));
         $container->setDefinition('app.value_resolver.user', $definition);
+
+.. _`yield`: http://php.net/manual/en/language.generators.syntax.php
