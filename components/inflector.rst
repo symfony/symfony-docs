@@ -5,7 +5,7 @@
 The Inflector Component
 =======================
 
-    The Inflector component converts English words between singular and plural forms.
+    The Inflector component converts English words from plural to singular.
 
 Installation
 ------------
@@ -22,8 +22,8 @@ Usage
 
 The Inflector component provides an easy and consistent way to convert English
 words between singular and plural forms. The static ``singularize()`` method
-defined by :class:`Symfony\\Component\\Inflector\\Inflector` class returns the
-singular form of the given word::
+defined by the :class:`Symfony\\Component\\Inflector\\Inflector` class returns
+the singular form of the given word::
 
     use Symfony\Component\Inflector\Inflector;
 
