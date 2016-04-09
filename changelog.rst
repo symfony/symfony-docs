@@ -20,9 +20,13 @@ New Documentation
 ~~~~~~~~~~~~~~~~~
 
 * `#6274 <https://github.com/symfony/symfony-docs/pull/6274>`_ Update Doctrine UTF8 docs (mcfedr)
+* `#6314 <https://github.com/symfony/symfony-docs/pull/6314>`_ New normalizers (mcfedr)
+* `#4971 <https://github.com/symfony/symfony-docs/pull/4971>`_ [DomCrawler] Document images crawler (valeriangalliat)
+* `#6296 <https://github.com/symfony/symfony-docs/pull/6296>`_ [Console] Add columns width setter documentation (akeeman)
 * `#6282 <https://github.com/symfony/symfony-docs/pull/6282>`_ [Form] fix ``choice_label`` values (HeahDude)
 * `#5894 <https://github.com/symfony/symfony-docs/pull/5894>`_ [WIP] Added an article to explain how to upgrade third-party bundles to Symfony 3 (javiereguiluz)
 * `#6273 <https://github.com/symfony/symfony-docs/pull/6273>`_ [PHPUnit bridge] Add documentation for the component (theofidry)
+* `#6316 <https://github.com/symfony/symfony-docs/pull/6316>`_ [Validator] Added docs about the format option (dosten)
 * `#6291 <https://github.com/symfony/symfony-docs/pull/6291>`_ fortrabbit deployment guide + index listing (ostark)
 
 Fixed Documentation
