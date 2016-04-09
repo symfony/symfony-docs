@@ -27,20 +27,27 @@ New Documentation
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
+* `#6377 <https://github.com/symfony/symfony-docs/pull/6377>`_ Update "bootstrap.php.cache" to "autoload.php" (guilliamxavier)
+* `#6368 <https://github.com/symfony/symfony-docs/pull/6368>`_ [cookbook] Made list of form types more consistent (AAstakhov)
 * `#6366 <https://github.com/symfony/symfony-docs/pull/6366>`_ Removed server:stop code block for 2.3 (theyoux)
 * `#6347 <https://github.com/symfony/symfony-docs/pull/6347>`_ Add a note about enabling DebugBundle to use VarDumper inside Symfony (martijn80, javiereguiluz)
 * `#6320 <https://github.com/symfony/symfony-docs/pull/6320>`_ Fixed typo in path (timhovius)
 * `#6334 <https://github.com/symfony/symfony-docs/pull/6334>`_ Fixed yaml configuration of app.exception_controller (AAstakhov)
+* `#6322 <https://github.com/symfony/symfony-docs/pull/6322>`_ [DependencyInjection] fix autowiring docs (eXtreme)
 * `#6315 <https://github.com/symfony/symfony-docs/pull/6315>`_ Remove third parameter from createFormBuilder call (Hocdoc)
+* `#6324 <https://github.com/symfony/symfony-docs/pull/6324>`_ Fixed UserCheckerInterface importing (VIs-a-vis)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * `#6404 <https://github.com/symfony/symfony-docs/pull/6404>`_ fixed a typo (RickieL)
+* `#6409 <https://github.com/symfony/symfony-docs/pull/6409>`_ Update 'date' to DateType::class in form.rst (iltar)
 * `#6411 <https://github.com/symfony/symfony-docs/pull/6411>`_ Fixed a typo in configuration-block (VarunAgw)
 * `#6414 <https://github.com/symfony/symfony-docs/pull/6414>`_ stick to Sphinx 1.3.x for the moment (xabbuh)
 * `#6399 <https://github.com/symfony/symfony-docs/pull/6399>`_ Fixed wrong code examples for Isbn constraint (AAstakhov)
 * `#6397 <https://github.com/symfony/symfony-docs/pull/6397>`_ Fix typo in SwitchUserListener file name (luxifer)
+* `#6390 <https://github.com/symfony/symfony-docs/pull/6390>`_ Reworded the example about $deep param (Oliboy50, javiereguiluz)
+* `#6381 <https://github.com/symfony/symfony-docs/pull/6381>`_ [Form] [Cookbook] Correctly setup unit tests with dependencies (corphi)
 * `#6382 <https://github.com/symfony/symfony-docs/pull/6382>`_ unused use instructions (bshevchenko)
 * `#6365 <https://github.com/symfony/symfony-docs/pull/6365>`_ Removed the PR table example (this is now included by GitHub template) (javiereguiluz)
 * `#6363 <https://github.com/symfony/symfony-docs/pull/6363>`_ Removed info about reducing visibility for private (AAstakhov)
@@ -67,6 +74,7 @@ Minor Documentation Changes
 * `#6330 <https://github.com/symfony/symfony-docs/pull/6330>`_ [Form] reorder EntityType options (HeahDude)
 * `#6337 <https://github.com/symfony/symfony-docs/pull/6337>`_ Fix configuration.rst typo (gong023)
 * `#6295 <https://github.com/symfony/symfony-docs/pull/6295>`_ Update tools.rst (andrewtch)
+* `#6323 <https://github.com/symfony/symfony-docs/pull/6323>`_ [DependencyInjection] Add Autowiring keyword (theofidry)
 * `#6325 <https://github.com/symfony/symfony-docs/pull/6325>`_ Minor error (ThomasLandauer)
 * `#6311 <https://github.com/symfony/symfony-docs/pull/6311>`_ Improved TwigExtension to show default values and optional arguments (javiereguiluz)
 * `#6267 <https://github.com/symfony/symfony-docs/pull/6267>`_ [Form] fix 'data_class' option in EntityType (HeahDude)
