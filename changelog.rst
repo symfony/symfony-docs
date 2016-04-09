@@ -19,6 +19,7 @@ March, 2016
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#6274 <https://github.com/symfony/symfony-docs/pull/6274>`_ Update Doctrine UTF8 docs (mcfedr)
 * `#6282 <https://github.com/symfony/symfony-docs/pull/6282>`_ [Form] fix ``choice_label`` values (HeahDude)
 * `#5894 <https://github.com/symfony/symfony-docs/pull/5894>`_ [WIP] Added an article to explain how to upgrade third-party bundles to Symfony 3 (javiereguiluz)
 * `#6273 <https://github.com/symfony/symfony-docs/pull/6273>`_ [PHPUnit bridge] Add documentation for the component (theofidry)
@@ -36,6 +37,7 @@ Fixed Documentation
 * `#6322 <https://github.com/symfony/symfony-docs/pull/6322>`_ [DependencyInjection] fix autowiring docs (eXtreme)
 * `#6315 <https://github.com/symfony/symfony-docs/pull/6315>`_ Remove third parameter from createFormBuilder call (Hocdoc)
 * `#6324 <https://github.com/symfony/symfony-docs/pull/6324>`_ Fixed UserCheckerInterface importing (VIs-a-vis)
+* `#6326 <https://github.com/symfony/symfony-docs/pull/6326>`_ Missing svn:ignore (f-plante)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,6 +67,7 @@ Minor Documentation Changes
 * `#6345 <https://github.com/symfony/symfony-docs/pull/6345>`_ Remove link-local IPv6 address (snoek09)
 * `#6219 <https://github.com/symfony/symfony-docs/pull/6219>`_ Point that route parameters are also Request attributes (sfdumi)
 * `#6348 <https://github.com/symfony/symfony-docs/pull/6348>`_ [best practices] mostly typos (Talita Kocjan Zager)
+* `#6350 <https://github.com/symfony/symfony-docs/pull/6350>`_ Fix reference to app folder (kainjow)
 * `#6275 <https://github.com/symfony/symfony-docs/pull/6275>`_ [quick tour] mostly typos (Talita Kocjan Zager)
 * `#6305 <https://github.com/symfony/symfony-docs/pull/6305>`_ Mention IvoryCKEditorBundle in the Symfony Forms doc (javiereguiluz)
 * `#6331 <https://github.com/symfony/symfony-docs/pull/6331>`_ Rename DunglasApiBundle to ApiPlatform (sroze)
@@ -77,6 +80,7 @@ Minor Documentation Changes
 * `#6323 <https://github.com/symfony/symfony-docs/pull/6323>`_ [DependencyInjection] Add Autowiring keyword (theofidry)
 * `#6325 <https://github.com/symfony/symfony-docs/pull/6325>`_ Minor error (ThomasLandauer)
 * `#6311 <https://github.com/symfony/symfony-docs/pull/6311>`_ Improved TwigExtension to show default values and optional arguments (javiereguiluz)
+* `#6286 <https://github.com/symfony/symfony-docs/pull/6286>`_ [HttpFoundation] Fix typo for ParameterBag getters - 3.0 (rendler-denis)
 * `#6267 <https://github.com/symfony/symfony-docs/pull/6267>`_ [Form] fix 'data_class' option in EntityType (HeahDude)
 * `#6281 <https://github.com/symfony/symfony-docs/pull/6281>`_ Change isValid to isSubmitted. (mustafaaloko)
 
