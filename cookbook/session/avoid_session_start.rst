@@ -15,14 +15,14 @@ that a session is *always* started:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashbag.get('notice') %}
+    {% for flashMessage in app.session.flashBag.get('notice') %}
         <div class="flash-notice">
             {{ flashMessage }}
         </div>
     {% endfor %}
 
 Even if the user is not logged in and even if you haven't created any flash messages,
-just calling the ``get()`` (or even ``has()``) method of the ``flashbag`` will
+just calling the ``get()`` (or even ``has()``) method of the ``flashBag`` will
 start a session. This may hurt your application performance because all users will
 receive a session cookie. To avoid this behavior, add a check before trying to
 access the flash messages:
@@ -30,7 +30,7 @@ access the flash messages:
 .. code-block:: html+twig
 
     {% if app.request.hasPreviousSession %}
-        {% for flashMessage in app.session.flashbag.get('notice') %}
+        {% for flashMessage in app.session.flashBag.get('notice') %}
             <div class="flash-notice">
                 {{ flashMessage }}
             </div>
