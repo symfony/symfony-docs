@@ -260,7 +260,7 @@ to ``$name``. Just make sure they the name of the placeholder is the
 same as the name of the argument variable.
 
 Take the following more-interesting example, where the controller has two
-arguments::
+arguments:
 
 .. configuration-block::
 
@@ -681,7 +681,7 @@ read any flash messages from the session:
 
     .. code-block:: html+twig
 
-        {% for flash_message in app.session.flashbag.get('notice') %}
+        {% for flash_message in app.session.flashBag.get('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
             </div>
@@ -714,7 +714,7 @@ The Request and Response Object
 -------------------------------
 
 As mentioned :ref:`earlier <book-controller-request-argument>`, the framework will
-pass the ``Request`` object to any controller argument taht is type-hinted with
+pass the ``Request`` object to any controller argument that is type-hinted with
 the ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;

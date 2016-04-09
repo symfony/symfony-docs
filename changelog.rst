@@ -13,6 +13,66 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+March, 2016
+-----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#6282 <https://github.com/symfony/symfony-docs/pull/6282>`_ [Form] fix ``choice_label`` values (HeahDude)
+* `#5894 <https://github.com/symfony/symfony-docs/pull/5894>`_ [WIP] Added an article to explain how to upgrade third-party bundles to Symfony 3 (javiereguiluz)
+* `#6273 <https://github.com/symfony/symfony-docs/pull/6273>`_ [PHPUnit bridge] Add documentation for the component (theofidry)
+* `#6291 <https://github.com/symfony/symfony-docs/pull/6291>`_ fortrabbit deployment guide + index listing (ostark)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#6366 <https://github.com/symfony/symfony-docs/pull/6366>`_ Removed server:stop code block for 2.3 (theyoux)
+* `#6347 <https://github.com/symfony/symfony-docs/pull/6347>`_ Add a note about enabling DebugBundle to use VarDumper inside Symfony (martijn80, javiereguiluz)
+* `#6320 <https://github.com/symfony/symfony-docs/pull/6320>`_ Fixed typo in path (timhovius)
+* `#6334 <https://github.com/symfony/symfony-docs/pull/6334>`_ Fixed yaml configuration of app.exception_controller (AAstakhov)
+* `#6315 <https://github.com/symfony/symfony-docs/pull/6315>`_ Remove third parameter from createFormBuilder call (Hocdoc)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#6404 <https://github.com/symfony/symfony-docs/pull/6404>`_ fixed a typo (RickieL)
+* `#6411 <https://github.com/symfony/symfony-docs/pull/6411>`_ Fixed a typo in configuration-block (VarunAgw)
+* `#6414 <https://github.com/symfony/symfony-docs/pull/6414>`_ stick to Sphinx 1.3.x for the moment (xabbuh)
+* `#6399 <https://github.com/symfony/symfony-docs/pull/6399>`_ Fixed wrong code examples for Isbn constraint (AAstakhov)
+* `#6397 <https://github.com/symfony/symfony-docs/pull/6397>`_ Fix typo in SwitchUserListener file name (luxifer)
+* `#6382 <https://github.com/symfony/symfony-docs/pull/6382>`_ unused use instructions (bshevchenko)
+* `#6365 <https://github.com/symfony/symfony-docs/pull/6365>`_ Removed the PR table example (this is now included by GitHub template) (javiereguiluz)
+* `#6363 <https://github.com/symfony/symfony-docs/pull/6363>`_ Removed info about reducing visibility for private (AAstakhov)
+* `#6362 <https://github.com/symfony/symfony-docs/pull/6362>`_ [book] Updated link to Translatable Extension (AAstakhov)
+* `#6336 <https://github.com/symfony/symfony-docs/pull/6336>`_ Added minor clarification (ThomasLandauer)
+* `#6303 <https://github.com/symfony/symfony-docs/pull/6303>`_ Tweaked the Symfony Releases page (javiereguiluz)
+* `#6360 <https://github.com/symfony/symfony-docs/pull/6360>`_ Editing the Doctrine section to improve accuracy and readability (natechicago)
+* `#6352 <https://github.com/symfony/symfony-docs/pull/6352>`_ [book] controller ch review, part 3 (Talita Kocjan Zager)
+* `#6351 <https://github.com/symfony/symfony-docs/pull/6351>`_ [book] controller ch review, part 2 (Talita Kocjan Zager)
+* `#6349 <https://github.com/symfony/symfony-docs/pull/6349>`_ [book] controller ch review, part 1 (Talita Kocjan Zager)
+* `#6369 <https://github.com/symfony/symfony-docs/pull/6369>`_ Minor corrections (sfdumi)
+* `#6370 <https://github.com/symfony/symfony-docs/pull/6370>`_ Fixed typo (tabbi89)
+* `#6371 <https://github.com/symfony/symfony-docs/pull/6371>`_ Fix escaping of backtick inside double back-quotes (guilliamxavier)
+* `#6364 <https://github.com/symfony/symfony-docs/pull/6364>`_ [reference] [constraints] added missing colon character for Image constraint documentation in YAML format. (hhamon)
+* `#6345 <https://github.com/symfony/symfony-docs/pull/6345>`_ Remove link-local IPv6 address (snoek09)
+* `#6219 <https://github.com/symfony/symfony-docs/pull/6219>`_ Point that route parameters are also Request attributes (sfdumi)
+* `#6348 <https://github.com/symfony/symfony-docs/pull/6348>`_ [best practices] mostly typos (Talita Kocjan Zager)
+* `#6275 <https://github.com/symfony/symfony-docs/pull/6275>`_ [quick tour] mostly typos (Talita Kocjan Zager)
+* `#6305 <https://github.com/symfony/symfony-docs/pull/6305>`_ Mention IvoryCKEditorBundle in the Symfony Forms doc (javiereguiluz)
+* `#6331 <https://github.com/symfony/symfony-docs/pull/6331>`_ Rename DunglasApiBundle to ApiPlatform (sroze)
+* `#6328 <https://github.com/symfony/symfony-docs/pull/6328>`_ Update extension.rst - added caution box for people trying to remove the default file with services definitions (Pavel Jurecka)
+* `#6343 <https://github.com/symfony/symfony-docs/pull/6343>`_ Replace XLIFF number ids by strings (Triiistan)
+* `#6344 <https://github.com/symfony/symfony-docs/pull/6344>`_ Altered single / multiple inheritance sentence (outspaced)
+* `#6330 <https://github.com/symfony/symfony-docs/pull/6330>`_ [Form] reorder EntityType options (HeahDude)
+* `#6337 <https://github.com/symfony/symfony-docs/pull/6337>`_ Fix configuration.rst typo (gong023)
+* `#6295 <https://github.com/symfony/symfony-docs/pull/6295>`_ Update tools.rst (andrewtch)
+* `#6325 <https://github.com/symfony/symfony-docs/pull/6325>`_ Minor error (ThomasLandauer)
+* `#6311 <https://github.com/symfony/symfony-docs/pull/6311>`_ Improved TwigExtension to show default values and optional arguments (javiereguiluz)
+* `#6267 <https://github.com/symfony/symfony-docs/pull/6267>`_ [Form] fix 'data_class' option in EntityType (HeahDude)
+* `#6281 <https://github.com/symfony/symfony-docs/pull/6281>`_ Change isValid to isSubmitted. (mustafaaloko)
+
+
 February, 2016
 --------------
 
