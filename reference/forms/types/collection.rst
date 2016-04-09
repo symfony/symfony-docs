@@ -367,10 +367,27 @@ well as :ref:`cookbook-form-collections-new-prototype`.
 prototype_data
 ~~~~~~~~~~~~~~
 
+.. versionadded:: 2.8
+    The ``prototype_data`` option was introduced in Symfony 2.8.
+
 **type**: ``mixed`` **default**: ``null``
 
-Allows you to specify data for the prototype. Each new row added will initially
-contain the data set by this option.
+Allows you to define specific data for the prototype. Each new row added will
+initially contain the data set by this option. By default, the data configured
+for all entries with the ``entry_options`` option will be used.
+
+.. code-block:: php
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    // ...
+
+    $builder->add('tags', CollectionType::class, array(
+        'entry_type' => TextType::class,
+        'allow_add' => true,
+        'prototype' => true,
+        'prototype_data' => 'New Tag Placeholder',
+    ));
 
 prototype_name
 ~~~~~~~~~~~~~~
