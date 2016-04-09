@@ -289,11 +289,12 @@ type::
         'type'   => 'choice',
         'options'  => array(
             'choices'  => array(
-                'nashville' => 'Nashville',
-                'paris'     => 'Paris',
-                'berlin'    => 'Berlin',
-                'london'    => 'London',
+                'Nashville' => 'nashville',
+                'Paris'     => 'paris',
+                'Berlin'    => 'berlin',
+                'London'    => 'london',
             ),
+            'choices_as_values' => true,
         ),
     ));
 
