@@ -349,32 +349,42 @@ takes eight arguments in its constructor:
 
 ``$name``
     **type**: ``string`` **default**: none (this argument is mandatory)
+
     The name of the cookie.
 ``$value``
     **type**: ``string`` **default**: ``null``
+
     The value stored in the cookie.
 ``$expire``
     **type**: ``int``|``string``|``DateTime``|``DateTimeInterface`` **default**: 0
+
     The time the cookie expires. This value can be a timestamp integer,
     a :phpfunction:`strtotime` valid date string (e.g. ``+1 week``), a
     ``DateTime`` object or an object which implements ``DateTimeInterface``.
+
     The default value is ``0``, which deletes the cookie as soon as the browser
     is closed.
 ``$path``
     **type**: ``string`` **default**: ``/``
+
     The path on the server in which the cookie will be available on. The default
     values makes the cookie available on any URL of the server.
 ``$domain``
     **type**: ``string`` **default**: ``null``
+
     The domain that the cookie is available to. The default value makes the cookie
     available just for the current domain (and any of its subdomains).
 ``$secure``
     **type**: ``bool`` **default**: ``false``
+
     Whether the cookie should only be transmitted over a secure HTTPS connection
     from the client.
 ``$httpOnly``
     **type**: ``bool`` **default**: ``true``
-    Whether the cookie will be made accessible only through the HTTP protocol.
+
+    Whether the cookie will be made accessible only through the HTTP protocol
+    (which include both HTTP and HTTPS requests). If ``true``, the cookie won't
+    be accessible via non-HTTP methods, such as JavaScript's ``document.cookie``.
 
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
