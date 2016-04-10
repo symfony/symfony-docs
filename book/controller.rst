@@ -785,6 +785,19 @@ If you want to serve file use
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper::
 
+    $this->file($file, $fileName = null, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT, $mimeType = null);
+
+You can pass:
+
+* Instance of
+  :class:`Symfony\\Component\\HttpFoundation\\File`
+  in ``$file`` parameter (you can customize ``$fileName`` and ``$disposition``)
+
+* String with file content in ``$file`` and appropriate ``$fileName``, ``$disposition`` (or just
+  ``null`` to use default ``ResponseHeaderBag::DISPOSITION_ATTACHMENT``) and ``$mimeType``
+
+Example usage::
+
     use Symfony\Component\HttpFoundation\File\File;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
