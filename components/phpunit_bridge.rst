@@ -206,7 +206,7 @@ And that's all!
 DNS-sensitive Tests
 -------------------
 
-.. versionadded:: 2.7
+.. versionadded:: 3.1
     The mocks for DNS related functions were introduced in Symfony 3.1.
 
 Tests that make network connections, for example to check the validity of a DNS
@@ -214,14 +214,14 @@ record, can be slow to execute and unreliable due to the conditions of the
 network. For that reason, this component also provides mocks for these PHP
 functions:
 
-* ``checkdnsrr()``
-* ``dns_check_record()``
-* ``getmxrr()``
-* ``dns_get_mx()``
-* ``gethostbyaddr()``
-* ``gethostbyname()``
-* ``gethostbynamel()``
-* ``dns_get_record()``
+* :phpfunction:`checkdnsrr()`
+* :phpfunction:`dns_check_record()`
+* :phpfunction:`getmxrr()`
+* :phpfunction:`dns_get_mx()`
+* :phpfunction:`gethostbyaddr()`
+* :phpfunction:`gethostbyname()`
+* :phpfunction:`gethostbynamel()`
+* :phpfunction:`dns_get_record()`
 
 Use Case
 ~~~~~~~~
