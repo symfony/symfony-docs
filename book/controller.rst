@@ -785,6 +785,10 @@ You can simplify sending JSON response with
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::json`
 helper::
 
+    $this->json($data, $status = 200, $headers = array(), $context = array());
+
+For example if you want to send some simple array you can use it like this::
+
     public function jsonAction()
     {
         $data = [1, 2, 3];
