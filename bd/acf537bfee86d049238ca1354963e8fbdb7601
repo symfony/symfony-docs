@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by stof at 2016-03-24T15:12:29Z
+
+@javiereguiluz given that the bridge has more and more features, wouldn't it be better to split its doc into multiple chapters instead, as done for other components ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-29T10:12:05Z
+
+I've changed everything reviewers suggested. I also agree with @stof and we should split this doc as soon as we try to add the explanation of a new feature.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-01T15:56:12Z
+
+Ready for the final review before merge. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-01T16:56:50Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2016-04-01T17:54:21Z
+
+> we should split this doc as soon as we try to add the explanation of a new feature.
+
+As this PR is adding explanations of new features, I would say it is time :smile:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-01T18:03:12Z
+
+@stof I was referring to new explanations after this feature :grin:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-03T07:55:02Z
+
+I am :+1: for merging this as is. If someone feels the need to split the component's documentation with this feature set, we can discuss that in a new PR, but don't block merging this one because of a new discussion.
