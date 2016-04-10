@@ -778,6 +778,20 @@ There are also special classes to make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
+JSON helper
+~~~~~~~~~~~
+
+You can simplify sending JSON response with
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::json`
+helper::
+
+    public function jsonAction()
+    {
+        $data = [1, 2, 3];
+
+        return $this->json($data);
+    }
+
 .. seealso::
 
     Now that you know the basics you can continue your research on Symfony
