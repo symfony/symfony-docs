@@ -806,6 +806,43 @@ If the :doc:`serializer service </cookbook/serializer>` is enabled in your
 application, contents passed to ``json()`` are encoded with it. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
+File helper
+~~~~~~~~~~~
+
+If you want to serve file use the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+helper::
+
+    $this->file($file, $fileName = null, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+You can pass:
+
+* An instance of
+  :class:`Symfony\\Component\\HttpFoundation\\File`
+  in ``$file`` parameter (you can customize ``$fileName`` and ``$disposition``)
+
+* Path to file in ``$file`` parameter
+
+Example usage::
+
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    // This will send file with original name as attachment to browser
+    public function fileAction()
+    {
+        // Load file from file system
+        $file = new File('some_file.pdf');
+
+        return $this->file($file);
+    }
+
+    // Server file from specified path
+    public function pathFileAction()
+    {
+        return $this->file('/path/to/my/picture.jpg');
+    }
+
 .. seealso::
 
     Now that you know the basics you can continue your research on Symfony
