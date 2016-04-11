@@ -785,7 +785,7 @@ If you want to serve file use
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper::
 
-    $this->file($file, $fileName = null, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT, $mimeType = null);
+    $this->file($file, $fileName = null, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
 You can pass:
 
@@ -793,8 +793,9 @@ You can pass:
   :class:`Symfony\\Component\\HttpFoundation\\File`
   in ``$file`` parameter (you can customize ``$fileName`` and ``$disposition``)
 
-* String with file content in ``$file`` and appropriate ``$fileName``, ``$disposition`` (or just
-  ``null`` to use default ``ResponseHeaderBag::DISPOSITION_ATTACHMENT``) and ``$mimeType``
+* Path to file in ``$file`` parameter
+
+* String with file content in ``$file`` and appropriate ``$fileName``
 
 Example usage::
 
@@ -810,10 +811,16 @@ Example usage::
         return $this->file($file);
     }
 
+    // Server file from specified path
+    public function pathFileAction()
+    {
+        return $this->file('/path/to/my/picture.jpg');
+    }
+
     // You can send nonexistent files too (this will be sent with inline disposition)
     public function helloFileAction()
     {
-        return $this->file('Hello, world!', 'hello.txt', ResponseHeaderBag::DISPOSITION_INLINE, 'text/plain');
+        return $this->file('Hello, world!', 'hello.txt', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
 .. seealso::
