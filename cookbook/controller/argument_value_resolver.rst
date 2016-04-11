@@ -109,7 +109,7 @@ the current security token. This token can be retrieved from the token storage.:
                 return false;
             }
 
-            $token = $this->tokenStorage->getToken()
+            $token = $this->tokenStorage->getToken();
             return $token->getUser() instanceof User;
         }
 
