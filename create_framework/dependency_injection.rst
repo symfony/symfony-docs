@@ -9,9 +9,10 @@ to it::
     // example.com/src/Simplex/Framework.php
     namespace Simplex;
 
-    use Symfony\Component\Routing;
-    use Symfony\Component\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\Routing;
+    use Symfony\Component\HttpFoundation;
+    use Symfony\Component\HttpKernel;
 
     class Framework extends HttpKernel\HttpKernel
     {
@@ -19,13 +20,15 @@ to it::
         {
             $context = new Routing\RequestContext();
             $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
-            $resolver = new HttpKernel\Controller\ControllerResolver();
+
+            $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+            $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
             $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-            parent::__construct($dispatcher, $resolver);
+            parent::__construct($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
         }
     }
 
@@ -101,7 +104,8 @@ Create a new file to host the dependency injection container configuration::
         ->setArguments(array($routes, new Reference('context')))
     ;
     $sc->register('request_stack', 'Symfony\Component\HttpFoundation\RequestStack');
-    $sc->register('resolver', 'Symfony\Component\HttpKernel\Controller\ControllerResolver');
+    $sc->register('controller_resolver', 'Symfony\Component\HttpKernel\Controller\ControllerResolver');
+    $sc->register('argument_resolver', 'Symfony\Component\HttpKernel\Controller\ArgumentResolver');
 
     $sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
         ->setArguments(array(new Reference('matcher'), new Reference('request_stack')))
@@ -118,7 +122,12 @@ Create a new file to host the dependency injection container configuration::
         ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ;
     $sc->register('framework', 'Simplex\Framework')
-        ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
+        ->setArguments(array(
+            new Reference('dispatcher'),
+            new Reference('controller_resolver'),
+            new Reference('request_stack'),
+            new Reference('argument_resolver'),
+        ))
     ;
 
     return $sc;
