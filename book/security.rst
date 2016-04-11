@@ -1209,7 +1209,7 @@ user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
 key in ``app/config/security.yml``.
 
 The ``$encoder`` object also has an ``isPasswordValid`` method, which takes
-the ``User`` object as the first argument and the plain password to check
+the encoded password as the first argument and the plain password to check
 as the second argument.
 
 .. caution::
