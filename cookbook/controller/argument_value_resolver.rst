@@ -12,7 +12,6 @@ object by adding a ``Request`` argument to your controller. This is done via the
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. By creating and registering custom
 argument value resolvers, you can extend this functionality.
 
-
 Functionality Shipped With The HttpKernel
 -----------------------------------------
 
@@ -34,14 +33,13 @@ Symfony ships with four value resolvers in the HttpKernel:
 .. note::
 
     Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``. The old
-    functionality is moved to the ``LegacyArgumentResolver``, which contains the previously
-    used resolving logic.
+    functionality is rewritten to the aforementioned value resolvers.
 
 Adding a Custom Value Resolver
 ------------------------------
 
 Adding a new value resolver requires one class and one service defintion. In the next example,
-you'll create a value resolver to inject the ``User`` object from the security system.. Given
+you'll create a value resolver to inject the ``User`` object from the security system. Given
 you write the following action::
 
     namespace AppBundle\Controller;
@@ -76,7 +74,7 @@ This interface specifies that you have to implement two methods::
 
 Both methods get the ``Request`` object, which is the current request, and an
 :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`.
-This object contains all informations retrieved from the method signature for the
+This object contains all information retrieved from the method signature for the
 current argument.
 
 .. note::
@@ -120,6 +118,23 @@ the current security token. This token can be retrieved from the token storage.:
             yield $this->tokenStorage->getToken()->getUser();
         }
     }
+
+In order to get the actual ``User`` object in your argument, the given value should fulfill the
+following requirements:
+
+* The argument type (of the method signature) must be typehinted as ``User``;
+* The security token must be present;
+* The value should be an instance of the ``User``.
+
+When all those requirements are met and true is returned, the ``ArgumentResolver`` calls
+``resolve()`` with the same values as it called ``supports()``.
+
+.. tip::
+
+    You can leverage the ``DefaultValueResolver`` by making your resolver accept only mandatory
+    arguments. Given your signature is `User $user = null`, the above example will not hit ``resolve()``
+    as one of the conditions does not match. Eventually when the ``DefaultValueResolver`` is asked to
+    resolve this, it will simply add the default value from the method signature, which results in ``null``.
 
 That's it! Now all you have to do is add the configuration for the service container. This
 can be done by tagging the service with ``kernel.argument_resolver`` and adding a priority.
