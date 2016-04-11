@@ -744,8 +744,8 @@ SQL-like language, to construct a query for this scenario::
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
 difference is that you need to think in terms of selecting PHP objects,
 instead of rows in a database. For this reason, you select *from* the
-``AppBundle:Product`` *class* (an optional shortcut for ``AppBundle\Entity\Product``)
-and then alias it as ``p``.
+``AppBundle:Product`` *entity* (an optional shortcut for the
+``AppBundle\Entity\Product`` class) and then alias it as ``p``.
 
 .. tip::
 
@@ -904,7 +904,7 @@ You can use this new method just like the default finder methods of the reposito
 Entity Relationships/Associations
 ---------------------------------
 
-Suppose that each product in your application belongs to exactly one "category".
+Suppose that each product in your application belongs to exactly one category.
 In this case, you'll need a ``Category`` class, and a way to relate a
 ``Product`` object to a ``Category`` object.
 
