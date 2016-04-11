@@ -1064,8 +1064,8 @@ Doctrine does not *require* that the "one" side of a one-to-many relationship
 hold a collection of its "many" related entities. But in the context of our
 application, it makes sense for each ``Category`` object to hold an
 array of ``Product`` objects. However, if we had decided against adding
-a ``$products`` property to the ``Category`` class, the ``inversedBy``
-metadata on the Product class would not have been necessary.
+a ``$products`` property to the ``Category`` class, then the ``Product``
+entity's ``inversedBy`` metadata would not have been necessary.
 
 .. note::
 
