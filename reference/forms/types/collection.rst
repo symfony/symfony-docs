@@ -58,8 +58,7 @@ address as its own input text box::
         'type'   => 'email',
         // these options are passed to each "email" type
         'options'  => array(
-            'required'  => false,
-            'attr'      => array('class' => 'email-box')
+            'attr' => array('class' => 'email-box')
         ),
     ));
 
