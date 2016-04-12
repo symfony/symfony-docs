@@ -735,3 +735,5 @@ all of this, use a listener::
 
     By doing this, you may accidentally disable something more than just form
     validation, since the ``POST_SUBMIT`` event may have other listeners.
+
+An other solution is to set ``group_validation`` with an unknown group like ``disable_validation``.
