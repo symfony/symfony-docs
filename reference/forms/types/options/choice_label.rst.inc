@@ -16,7 +16,6 @@ more control::
             'no' => false,
             'maybe' => null,
         ),
-        'choices_as_values' => true,
         'choice_label' => function ($value, $key, $index) {
             if ($value == true) {
                 return 'Definitely!';
@@ -48,7 +47,6 @@ If your choice values are objects, then ``choice_label`` can also be a
             new Status(Status::NO),
             new Status(Status::MAYBE),
         ),
-        'choices_as_values' => true,
         'choice_label' => 'displayName',
     ));
 
