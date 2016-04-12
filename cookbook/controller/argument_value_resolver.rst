@@ -159,7 +159,7 @@ can be done by tagging the service with ``kernel.argument_resolver`` and adding 
                 arguments:
                     - '@security.token_storage'
                 tags:
-                    - { name: kernel.argument_resolver, priority: 50 }
+                    - { name: controller_argument.value_resolver, priority: 50 }
 
     .. code-block:: xml
 
@@ -172,7 +172,7 @@ can be done by tagging the service with ``kernel.argument_resolver`` and adding 
             <services>
                 <service id="app.value_resolver.user" class="AppBundle\ArgumentValueResolver\UserValueResolver">
                     <argument type="service" id="security.token_storage">
-                    <tag name="kernel.argument_resolver" priority="50" />
+                    <tag name="controller_argument.value_resolver" priority="50" />
                 </service>
             </services>
 
@@ -187,7 +187,7 @@ can be done by tagging the service with ``kernel.argument_resolver`` and adding 
             'AppBundle\ArgumentValueResolver\UserValueResolver',
             array(new Reference('security.token_storage'))
         );
-        $definition->addTag('kernel.argument_resolver', array('priority' => 50));
+        $definition->addTag('controller_argument.value_resolver', array('priority' => 50));
         $container->setDefinition('app.value_resolver.user', $definition);
 
 .. _`yield`: http://php.net/manual/en/language.generators.syntax.php
