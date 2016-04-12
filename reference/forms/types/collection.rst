@@ -295,11 +295,12 @@ type::
         'entry_type'   => ChoiceType::class,
         'entry_options'  => array(
             'choices'  => array(
-                'nashville' => 'Nashville',
-                'paris'     => 'Paris',
-                'berlin'    => 'Berlin',
-                'london'    => 'London',
+                'Nashville' => 'nashville',
+                'Paris'     => 'paris',
+                'Berlin'    => 'berlin',
+                'London'    => 'london',
             ),
+            'choices_as_values' => true,
         ),
     ));
 

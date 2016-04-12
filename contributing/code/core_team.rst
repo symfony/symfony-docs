@@ -51,8 +51,19 @@ Active Core Members
   * **Romain Neutron** (`romainneutron`_) can merge into the
     Process_ component;
 
+<<<<<<< HEAD
   * **Nicolas Grekas** (`nicolas-grekas`_) can merge into the Debug_
     component, the VarDumper_ component and the DebugBundle_;
+=======
+<<<<<<< HEAD
+  * **Nicolas Grekas** (`nicolas-grekas`_) can merge into the Debug_
+    component, the VarDumper_ component and the DebugBundle_;
+=======
+  * **Nicolas Grekas** (`nicolas-grekas`_) can merge into the Cache_, Debug_,
+    Process_, PropertyAccess_, VarDumper_ components, PhpUnitBridge_ and
+    the DebugBundle_;
+>>>>>>> 2.3
+>>>>>>> 2.7
 
   * **Christophe Coevoet** (`stof`_) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
