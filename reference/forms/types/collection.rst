@@ -61,7 +61,6 @@ address as its own input text box::
         'entry_type'   => EmailType::class,
         // these options are passed to each "email" type
         'entry_options'  => array(
-            'required'  => false,
             'attr'      => array('class' => 'email-box')
         ),
     ));
@@ -296,10 +295,10 @@ type::
         'entry_type'   => ChoiceType::class,
         'entry_options'  => array(
             'choices'  => array(
-                'nashville' => 'Nashville',
-                'paris'     => 'Paris',
-                'berlin'    => 'Berlin',
-                'london'    => 'London',
+                'Nashville' => 'nashville',
+                'Paris'     => 'paris',
+                'Berlin'    => 'berlin',
+                'London'    => 'london',
             ),
         ),
     ));

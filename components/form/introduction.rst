@@ -315,9 +315,8 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Validator\Validation;
 
     $vendorDir = realpath(__DIR__.'/../vendor');
-    $vendorFormDir = $vendorDir.'/symfony/form/Symfony/Component/Form';
-    $vendorValidatorDir =
-        $vendorDir.'/symfony/validator/Symfony/Component/Validator';
+    $vendorFormDir = $vendorDir.'/symfony/form';
+    $vendorValidatorDir = $vendorDir.'/symfony/validator';
 
     // create the validator - details will vary
     $validator = Validation::createValidator();
