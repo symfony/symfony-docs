@@ -917,7 +917,7 @@ Here is how you can configure the Symfony reverse proxy to support the
             if ($this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(200, 'Purged');
             } else {
-                $response->setStatusCode(200, 'Not found');
+                $response->setStatusCode(404, 'Not found');
             }
 
             return $response;
