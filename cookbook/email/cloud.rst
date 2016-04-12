@@ -36,8 +36,8 @@ and complete the configuration with the provided ``username`` and ``password``:
             host:       email-smtp.us-east-1.amazonaws.com
             port:       465 # different ports are available, see SES console
             encryption: tls # TLS encryption is required
-            username:   AWS_ACCESS_KEY  # to be created in the SES console
-            password:   AWS_SECRET_KEY  # to be created in the SES console
+            username:   AWS_SES_SMTP_USERNAME  # to be created in the SES console
+            password:   AWS_SES_SMTP_PASSWORD  # to be created in the SES console
 
     .. code-block:: xml
 
@@ -57,8 +57,8 @@ and complete the configuration with the provided ``username`` and ``password``:
                 host="email-smtp.us-east-1.amazonaws.com"
                 port="465"
                 encryption="tls"
-                username="AWS_ACCESS_KEY"
-                password="AWS_SECRET_KEY"
+                username="AWS_SES_SMTP_USERNAME"
+                password="AWS_SES_SMTP_PASSWORD"
             />
         </container>
 
@@ -70,8 +70,8 @@ and complete the configuration with the provided ``username`` and ``password``:
             'host'       => 'email-smtp.us-east-1.amazonaws.com',
             'port'       => 465,
             'encryption' => 'tls',
-            'username'   => 'AWS_ACCESS_KEY',
-            'password'   => 'AWS_SECRET_KEY',
+            'username'   => 'AWS_SES_SMTP_USERNAME',
+            'password'   => 'AWS_SES_SMTP_PASSWORD',
         ));
 
 The ``port`` and ``encryption`` keys are not present in the Symfony Standard
@@ -96,8 +96,8 @@ And that's it, you're ready to start sending emails through the cloud!
             mailer_host:       email-smtp.us-east-1.amazonaws.com
             mailer_port:       465 # different ports are available, see SES console
             mailer_encryption: tls # TLS encryption is required
-            mailer_user:       AWS_ACCESS_KEY # to be created in the SES console
-            mailer_password:   AWS_SECRET_KEY # to be created in the SES console
+            mailer_user:       AWS_SES_SMTP_USERNAME # to be created in the SES console
+            mailer_password:   AWS_SES_SMTP_PASSWORD # to be created in the SES console
 
 .. note::
 

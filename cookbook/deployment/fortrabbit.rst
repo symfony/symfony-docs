@@ -20,13 +20,13 @@ Before getting started, you should have done a few things on the fortrabbit side
 Preparing your Application
 --------------------------
 
-You don't need to change any code to deploy a Symfony application to fortrabbit. 
+You don't need to change any code to deploy a Symfony application to fortrabbit.
 But it requires some minor tweaks to its configuration.
 
 Configure Logging
 ~~~~~~~~~~~~~~~~~
 
-Per default Symfony logs to a file. Modify the ``app/config/config_prod.yml`` file 
+Per default Symfony logs to a file. Modify the ``app/config/config_prod.yml`` file
 to redirect it to :phpfunction:`error_log`:
 
 .. configuration-block::
@@ -73,7 +73,7 @@ to redirect it to :phpfunction:`error_log`:
 Configuring Database Access & Session Handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the fortrabbit App Secrets to attain your database credentials. 
+You can use the fortrabbit App Secrets to attain your database credentials.
 Create the file ``app/config/config_prod_secrets.php`` with the following
 contents::
 
@@ -98,7 +98,7 @@ contents::
     // check if the Memcache component is present
     if (isset($secrets['MEMCACHE'])) {
         $memcache = $secrets['MEMCACHE'];
-        $handlers = [];
+        $handlers = array();
 
         foreach (range(1, $memcache['COUNT']) as $num) {
             $handlers[] = $memcache['HOST'.$num].':'.$memcache['PORT'.$num];
@@ -175,19 +175,19 @@ Configuring the Environment in the Dashboard
 PHP Settings
 ~~~~~~~~~~~~
 
-The PHP version and enabled extensions are configuable under the PHP settings 
+The PHP version and enabled extensions are configuable under the PHP settings
 of your App within the fortrabbit Dashboard.
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
-Set the ``SYMFONY_ENV`` environment variable to ``prod`` to make sure the right 
+Set the ``SYMFONY_ENV`` environment variable to ``prod`` to make sure the right
 config files get loaded. ENV vars are configuable in fortrabbit Dashboard as well.
 
 Document Root
 ~~~~~~~~~~~~~
 
-The document root is configuable for every custom domain you setup for your App. 
+The document root is configuable for every custom domain you setup for your App.
 The default is ``/htdocs``, but for Symfony you probably want to change it to
 ``/htdocs/web``. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
 
@@ -197,8 +197,8 @@ Deploying to fortrabbit
 It is assumed that your codebase is under version-control with Git and dependencies
 are managed with Composer (locally).
 
-Every time you push to fortrabbit composer install runs before your code gets 
-deployed. To finetune the deployment behavior put a `fortrabbit.yml`_. deployment 
+Every time you push to fortrabbit composer install runs before your code gets
+deployed. To finetune the deployment behavior put a `fortrabbit.yml`_. deployment
 file (optional) in the project root.
 
 Add fortrabbit as a (additional) Git remote and add your configuration changes:
@@ -221,11 +221,11 @@ Commit and push
     Replace ``<your-app>`` with the name of your fortrabbit App.
 
 .. code-block:: bash
-    
+
    Commit received, starting build of branch master
 
    –––––––––––––––––––––––  ∙ƒ  –––––––––––––––––––––––
-   
+
    B U I L D
 
    Checksum:
@@ -244,7 +244,7 @@ Commit and push
    Installing dependencies (including require-dev) from lock file
    Nothing to install or update
    Generating autoload files
-  
+
    - - -
    172ms
 
@@ -271,11 +271,11 @@ Commit and push
 
 .. note::
 
-   The first ``git push`` takes much longer as all composer dependencies get 
-   downloaded. All subsequent deploys are done within seconds. 
+   The first ``git push`` takes much longer as all composer dependencies get
+   downloaded. All subsequent deploys are done within seconds.
 
-That's it! Your application is being deployed on fortrabbit. More information 
-about `database migrations and tunneling`_ can be found in the fortrabbit 
+That's it! Your application is being deployed on fortrabbit. More information
+about `database migrations and tunneling`_ can be found in the fortrabbit
 documentation.
 
 .. _`fortrabbit`: https://www.fortrabbit.com
