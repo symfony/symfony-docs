@@ -300,7 +300,7 @@ You are now able to serialize only attributes in the groups you want::
     $serializer = new Serializer(array($normalizer));
 
     $data = $serializer->normalize($obj, null, array('groups' => array('group1')));
-    // $data = ['foo' => 'foo'];
+    // $data = array('foo' => 'foo');
 
     $obj2 = $serializer->denormalize(
         array('foo' => 'foo', 'bar' => 'bar'),
