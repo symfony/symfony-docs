@@ -8,9 +8,10 @@ Extending Action Argument Resolving
     The ``ArgumentResolver`` and value resolvers are added in Symfony 3.1.
 
 In the book, you've learned that you can get the :class:`Symfony\\Component\\HttpFoundation\\Request`
-object by adding a ``Request`` argument to your controller. This is done via the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. By creating and registering custom
-argument value resolvers, you can extend this functionality.
+object by adding a ``Request`` argument to your controller. This is done
+via the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`.
+By creating and registering custom argument value resolvers, you can extend
+this functionality.
 
 Functionality Shipped With The HttpKernel
 -----------------------------------------
@@ -21,26 +22,29 @@ Symfony ships with four value resolvers in the HttpKernel:
     Attempts to find a request attribute that matches the name of the argument.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\RequestValueResolver`
-    Injects the current ``Request`` if type-hinted with ``Request``, or a sub-class thereof.
+    Injects the current ``Request`` if type-hinted with ``Request``, or a
+    sub-class thereof.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\DefaultValueResolver`
-    Will set the default value of the argument if present and the argument is optional.
+    Will set the default value of the argument if present and the argument
+    is optional.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\VariadicValueResolver`
-    Verifies in the request if your data is an array and will add all of them to the argument list.
-    When the action is called, the last (variadic) argument will contain all the values of this array.
+    Verifies in the request if your data is an array and will add all of
+    them to the argument list. When the action is called, the last (variadic)
+    argument will contain all the values of this array.
 
 .. note::
 
-    Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``. The old
-    functionality is rewritten to the aforementioned value resolvers.
+    Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``.
+    The old functionality is rewritten to the aforementioned value resolvers.
 
 Adding a Custom Value Resolver
 ------------------------------
 
-Adding a new value resolver requires one class and one service defintion. In the next example,
-you'll create a value resolver to inject the ``User`` object from the security system. Given
-you write the following action::
+Adding a new value resolver requires one class and one service defintion.
+In the next example, you'll create a value resolver to inject the ``User``
+object from the security system. Given you write the following action::
 
     namespace AppBundle\Controller;
 
@@ -55,8 +59,8 @@ you write the following action::
         }
     }
 
-Somehow you will have to get the ``User`` object and inject it into the controller. This can be done
-by implementing the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
+Somehow you will have to get the ``User`` object and inject it into the controller.
+This can be done by implementing the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
 This interface specifies that you have to implement two methods::
 
     interface ArgumentValueResolverInterface
@@ -74,19 +78,21 @@ This interface specifies that you have to implement two methods::
 
 Both methods get the ``Request`` object, which is the current request, and an
 :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`.
-This object contains all information retrieved from the method signature for the
-current argument.
+This object contains all information retrieved from the method signature for
+the current argument.
 
 .. note::
 
     The ``ArgumentMetadata`` is a simple data container created by the
-    :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadataFactory`. This
-    factory will work on every supported PHP version but might give different results. E.g. the
-    ``isVariadic()`` will never return true on PHP 5.5 and only on PHP 7.0 and higher it will give
-    you basic types when calling ``getType()``.
+    :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadataFactory`.
+    This factory will work on every supported PHP version but might give
+    different results. E.g. the ``isVariadic()`` will never return true on
+    PHP 5.5 and only on PHP 7.0 and higher it will give you basic types when
+    calling ``getType()``.
 
-Now that you know what to do, you can implement this interface. To get the current ``User``, you need
-the current security token. This token can be retrieved from the token storage.::
+Now that you know what to do, you can implement this interface. To get the
+current ``User``, you need the current security token. This token can be
+retrieved from the token storage::
 
     namespace AppBundle\ArgumentValueResolver;
 
@@ -124,33 +130,37 @@ the current security token. This token can be retrieved from the token storage.:
         }
     }
 
-In order to get the actual ``User`` object in your argument, the given value should fulfill the
-following requirements:
+In order to get the actual ``User`` object in your argument, the given value
+should fulfill the following requirements:
 
 * The argument type (of the method signature) must be typehinted as ``User``;
 * The security token must be present;
 * The value should be an instance of the ``User``.
 
-When all those requirements are met and true is returned, the ``ArgumentResolver`` calls
-``resolve()`` with the same values as it called ``supports()``.
+When all those requirements are met and true is returned, the ``ArgumentResolver``
+calls ``resolve()`` with the same values as it called ``supports()``.
 
 .. tip::
 
-    You can leverage the ``DefaultValueResolver`` by making your resolver accept only mandatory
-    arguments. Given your signature is `User $user = null`, the above example will not hit ``resolve()``
-    as one of the conditions does not match. Eventually when the ``DefaultValueResolver`` is asked to
-    resolve this, it will simply add the default value from the method signature, which results in ``null``.
+    You can leverage the ``DefaultValueResolver`` by making your resolver
+    accept only mandatory arguments. Given your signature is `User $user = null`,
+    the above example will not hit ``resolve()`` as one of the conditions
+    does not match. Eventually when the ``DefaultValueResolver`` is asked
+    to resolve this, it will simply add the default value from the method
+    signature, which results in ``null``.
 
-That's it! Now all you have to do is add the configuration for the service container. This
-can be done by tagging the service with ``kernel.argument_resolver`` and adding a priority.
+That's it! Now all you have to do is add the configuration for the service
+container. This can be done by tagging the service with ``kernel.argument_resolver``
+and adding a priority.
 
 .. note::
 
-    While adding a priority is optional, it's recommended to add one to make sure the expected
-    value is injected. The ``ArgumentFromAttributeResolver`` has a priority of 100. As this
-    one is responsible for fetching attributes from the ``Request``, it's also recommended to
-    trigger your custom value resolver with a lower priority. This makes sure the argument
-    resolvers are not triggered in (e.g.) subrequests if you pass your user along:
+    While adding a priority is optional, it's recommended to add one to
+    make sure the expected value is injected. The ``ArgumentFromAttributeResolver``
+    has a priority of 100. As this  one is responsible for fetching attributes
+    from the ``Request``, it's also recommended to trigger your custom value
+    resolver with a lower priority. This makes sure the argument resolvers
+    are not triggered in (e.g.) subrequests if you pass your user along:
     ``{{ render(controller('AppBundle:User:index', {'user', app.user})) }}``.
 
 .. configuration-block::
