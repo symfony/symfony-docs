@@ -110,6 +110,11 @@ the current security token. This token can be retrieved from the token storage.:
             }
 
             $token = $this->tokenStorage->getToken();
+
+            if (!$token instanceof TokenInterface) {
+                return false;
+            }
+
             return $token->getUser() instanceof User;
         }
 
