@@ -305,20 +305,20 @@ This is also very useful to build assets on the production system, e.g. with Ass
 
     With the next deploy, Heroku compiles your app using the Node.js buildpack and
     your npm packages become installed. On the other hand, your ``composer.json`` is
-    now ignored. To compile your app with both buildpacks, Node.js *and* PHP, you can
-    use a special `multiple buildpack`_. To override buildpack auto-detection, you
-    need to explicitly set the buildpack URL:
+    now ignored. To compile your app with both buildpacks, Node.js *and* PHP, you need
+    to use both buildpacks. To override buildpack auto-detection, you
+    need to explicitly set the buildpack:
 
     .. code-block:: bash
 
-        $ heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git
-
-    Next, add a ``.buildpacks`` file to your project, listing the buildpacks you need:
-
-    .. code-block:: text
-
-        https://github.com/heroku/heroku-buildpack-nodejs.git
-        https://github.com/heroku/heroku-buildpack-php.git
+        $ heroku buildpacks:set heroku/nodejs
+        Buildpack set. Next release on your-application will use heroku/nodejs.
+        Run git push heroku master to create a new release using this buildpack.
+        $ heroku buildpacks:set heroku/php --index 2
+        Buildpack set. Next release on your-application will use:
+          1. heroku/nodejs
+          2. heroku/php
+        Run git push heroku master to create a new release using these buildpacks.
 
     With the next deploy, you can benefit from both buildpacks. This setup also enables
     your Heroku environment to make use of node based automatic build tools like
@@ -336,7 +336,6 @@ This is also very useful to build assets on the production system, e.g. with Ass
 .. _`custom compile steps`: https://devcenter.heroku.com/articles/php-support#custom-compile-step
 .. _`custom Composer command`: https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands
 .. _`Heroku buildpacks`: https://devcenter.heroku.com/articles/buildpacks
-.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi
 .. _`Grunt`: http://gruntjs.com
 .. _`gulp`: http://gulpjs.com
 .. _`Heroku documentation`: https://devcenter.heroku.com/articles/custom-php-settings#nginx

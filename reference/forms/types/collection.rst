@@ -62,7 +62,6 @@ address as its own input text box::
         'entry_type'   => EmailType::class,
         // these options are passed to each "email" type
         'entry_options'  => array(
-            'required'  => false,
             'attr'      => array('class' => 'email-box')
         ),
     ));
