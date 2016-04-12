@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-04-09T12:12:47Z
+
+Note to merger: remove `choices_as_values` in 3.0+ branches.
