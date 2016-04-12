@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-06T19:11:45Z
+
+:+1: but if I am not mistaken we need to merge this into the `2.7` branch (Symfony 2.3 still uses PSR-0 for autoloading)
+
+---------------------------------------------------------------------------
+
+by nemo- at 2016-04-07T08:05:25Z
+
+Hi, thanks for replying !
+To fulfill your recommendation, should I create another PR with that fix based on 2.7 or update this one ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-07T11:10:27Z
+
+@nemo- All is fine, I think we man make the rebase when merging your PR.
