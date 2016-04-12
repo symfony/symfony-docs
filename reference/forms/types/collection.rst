@@ -300,7 +300,6 @@ type::
                 'Berlin'    => 'berlin',
                 'London'    => 'london',
             ),
-            'choices_as_values' => true,
         ),
     ));
 
