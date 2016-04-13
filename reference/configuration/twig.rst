@@ -105,6 +105,74 @@ Configuration
 
 .. _config-twig-exception-controller:
 
+auto_reload
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+
+If ``true``, whenever a template is rendered, Symfony checks first if its source
+code has changed since it was compiled. If it has changed, the template is
+compiled again automatically.
+
+autoescape_service
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+As of Twig 1.17, the escaping strategy applied by default to the template is
+determined during compilation time based on the filename of the template. This
+means for example that the contents of a ``*.html.twig`` template are escaped
+for HTML and the contents of ``*.js.twig`` are escaped for JavaScript.
+
+This option allows to define the Symfony service which will be used to determine
+the default escaping applied to the template.
+
+autoescape_service_method
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+If ``autoescape_service`` option is defined, then this option defines the method
+called to determine the default escaping applied to the template.
+
+base_template_class
+~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'Twig_Template'``
+
+Twig templates are compiled into PHP classes before using them to render
+contents. This option defines the base class from which all the template classes
+extend. Using a custom base template is discouraged because it will make your
+application harder to maintain.
+
+cache
+~~~~~
+
+**type**: ``string`` **default**: ``'%kernel.cache_dir%/twig'``
+
+Before using the Twig templates to render some contents, they are compiled into
+regular PHP code. Compilation is a costly process, so the result is cached in
+the directory defined by this configuration option.
+
+Set this option to ``null`` to disable Twig template compilation. However, this
+is not recommended (even for the ``dev`` environment).
+
+charset
+~~~~~~~
+
+**type**: ``string`` **default**: ``'%kernel.charset%'``
+
+The charset used by the template files. In Symfony Standard edition this defaults
+to ``UTF-8`` charset.
+
+debug
+~~~~~
+
+**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+
+If ``true``, the compiled templates include a ``__toString()`` method that can
+be used to display their nodes.
+
 exception_controller
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -118,3 +186,122 @@ conditions (see :doc:`/cookbook/controller/error_pages`). Modifying this
 option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
 you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
+
+optimizations
+~~~~~~~~~~~~~
+
+**type**: ``int`` **default**: ``-1``
+
+Twig includes an extension called ``optimizer`` which is enabled by default in
+Symfony applications. This extension analyzes the templates to optimize them
+when being compiled. For example, if your template doesn't use the special
+``loop`` variable inside a ``for`` tag, this extension removes the initialization
+of that unused variable.
+
+By default, this option is ``-1``, which means that all optimizations are turned
+on. Set it to ``0`` to disable all the optimizations. You can even enable or
+disable these optimizations selectively, as explained in the Twig documentation
+about `the optimizer extension`_.
+
+paths
+~~~~~
+
+**type**: ``array`` **default**: ``null``
+
+This option defines the directories where Symfony will look for Twig templates
+in addition to the default locations (``app/Resources/views/`` and the bundles'
+``Resources/views/`` directories). This is useful to integrate the templates
+included in some library or package used by your application.
+
+The values of the ``paths`` option are defined as ``key: value`` pairs where the
+``value`` part can be ``null``. For example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        twig:
+            # ...
+            paths:
+                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': ~
+
+    .. code-block:: xml
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+                <twig:path>%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('twig', array(
+            // ...
+            'paths' => array(
+               '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => null,
+            ),
+        ));
+
+The directories defined in the ``paths`` option have more priority than the
+default directories defined by Symfony. In the above example, if the template
+exists in the ``acme/foo-bar/templates/`` directory inside your application's
+``vendor/``, it will be used by Symfony.
+
+If you provide a value for any path, Symfony will consider it the Twig namespace
+for that directory:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        twig:
+            # ...
+            paths:
+                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': 'foo_bar'
+
+    .. code-block:: xml
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+                <twig:path namspace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('twig', array(
+            // ...
+            'paths' => array(
+               '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+            ),
+        ));
+
+This option is useful to not mess with the default template directories defined
+by Symfony. Besides, it simplifies how you refer to those templates:
+
+.. code-block:: text
+
+    @foo_bar/template_name.html.twig
+
+strict_variables
+~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+
+If set to ``true``, Symfony shows an exception whenever a Twig variable,
+attribute or method doesn't exist. If set to ``false`` these errors are ignored
+and the non-existing values are replaced by ``null``.
+
+.. _`the optimizer extension`: http://twig.sensiolabs.org/doc/api.html#optimizer-extension
