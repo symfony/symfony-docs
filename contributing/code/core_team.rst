@@ -55,10 +55,8 @@ Active Core Members
     Process_, PropertyAccess_, VarDumper_ components, PhpUnitBridge_ and
     the DebugBundle_;
 
-  * **Christophe Coevoet** (`stof`_) can merge into the BrowserKit_,
-    Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
-    HttpFoundation_, HttpKernel_, Serializer_, Stopwatch_, DoctrineBridge_,
-    MonologBridge_, and TwigBridge_ components;
+  * **Christophe Coevoet** (`stof`_) can merge into all components, bridges and
+    bundles;
 
   * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
     component;
@@ -154,7 +152,9 @@ discretion of the **Project Leader**.
 .. [1] Minor changes comprise typos, DocBlock fixes, code standards
        violations, and minor CSS, JavaScript and HTML modifications.
 
+.. _PhpUnitBridge: https://github.com/symfony/phpunit-bridge
 .. _BrowserKit: https://github.com/symfony/browser-kit
+.. _Cache: https://github.com/symfony/cache
 .. _Config: https://github.com/symfony/config
 .. _Console: https://github.com/symfony/console
 .. _Debug: https://github.com/symfony/debug
@@ -173,6 +173,7 @@ discretion of the **Project Leader**.
 .. _OptionsResolver: https://github.com/symfony/options-resolver
 .. _Process: https://github.com/symfony/process
 .. _PropertyAccess: https://github.com/symfony/property-access
+.. _PropertyInfo: https://github.com/symfony/property-info
 .. _Routing: https://github.com/symfony/routing
 .. _Serializer: https://github.com/symfony/serializer
 .. _Translation: https://github.com/symfony/translation
