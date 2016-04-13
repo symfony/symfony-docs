@@ -331,7 +331,7 @@ And you can display the flash message in the template like this:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashbag.get('notice') %}
+    {% for flashMessage in app.session.flashBag.get('notice') %}
         <div class="flash-notice">
             {{ flashMessage }}
         </div>

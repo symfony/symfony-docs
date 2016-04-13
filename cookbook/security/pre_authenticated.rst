@@ -148,3 +148,10 @@ key in the ``remote_user`` firewall configuration.
     Just like for X509 authentication, you will need to configure a "user provider".
     See :ref:`the previous note <cookbook-security-pre-authenticated-user-provider-note>`
     for more information.
+
+.. caution::
+
+    :doc:`User impersonation </cookbook/security/impersonating_user>` is not
+    compatible with ``REMOTE_USER`` based authentication. The reason is that
+    impersonation requires the authentication state to be maintained server-side
+    but ``REMOTE_USER`` information is sent by the browser in each request.
