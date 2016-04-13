@@ -214,14 +214,14 @@ record, can be slow to execute and unreliable due to the conditions of the
 network. For that reason, this component also provides mocks for these PHP
 functions:
 
-* :phpfunction:`checkdnsrr()`
-* :phpfunction:`dns_check_record()`
-* :phpfunction:`getmxrr()`
-* :phpfunction:`dns_get_mx()`
-* :phpfunction:`gethostbyaddr()`
-* :phpfunction:`gethostbyname()`
-* :phpfunction:`gethostbynamel()`
-* :phpfunction:`dns_get_record()`
+* :phpfunction:`checkdnsrr`
+* :phpfunction:`dns_check_record`
+* :phpfunction:`getmxrr`
+* :phpfunction:`dns_get_mx`
+* :phpfunction:`gethostbyaddr`
+* :phpfunction:`gethostbyname`
+* :phpfunction:`gethostbynamel`
+* :phpfunction:`dns_get_record`
 
 Use Case
 ~~~~~~~~
@@ -266,8 +266,10 @@ the data you expect to get for the given hosts::
             // ...
     }
 
-The ``withMockedHosts()`` method can return any number of hosts with different
-configuration, so you can simulate diverse network conditions::
+The ``withMockedHosts()`` method configuration is defined as an array. The keys
+are the mocked hosts and the values are arrays of DNS records in the same format
+returned by :phpfunction:`dns_get_record`, so you can simulate diverse network
+conditions:
 
     DnsMock::withMockedHosts(array(
         'example.com' => array(
