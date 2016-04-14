@@ -17,7 +17,6 @@ you can list the most popular on top, like Bork Bork and Pirate::
             'Bork'   => 'muppets',
             'Pirate' => 'arr'
         ),
-        'choices_as_values' => true,
         'preferred_choices' => array('muppets', 'arr')
     ));
 
@@ -34,7 +33,6 @@ be especially useful if your values are objects::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month')
         ),
-        'choices_as_values' => true,
         'preferred_choices' => function ($val, $key) {
             // prefer options within 3 days
             return $val <= new \DateTime('+3 days');
