@@ -174,7 +174,7 @@ and adding a priority.
                 arguments:
                     - '@security.token_storage'
                 tags:
-                    - { name: controller_argument.value_resolver, priority: 50 }
+                    - { name: controller.argument_value_resolver, priority: 50 }
 
     .. code-block:: xml
 
@@ -187,7 +187,7 @@ and adding a priority.
             <services>
                 <service id="app.value_resolver.user" class="AppBundle\ArgumentValueResolver\UserValueResolver">
                     <argument type="service" id="security.token_storage">
-                    <tag name="controller_argument.value_resolver" priority="50" />
+                    <tag name="controller.argument_value_resolver" priority="50" />
                 </service>
             </services>
 
@@ -202,7 +202,7 @@ and adding a priority.
             'AppBundle\ArgumentValueResolver\UserValueResolver',
             array(new Reference('security.token_storage'))
         );
-        $definition->addTag('controller_argument.value_resolver', array('priority' => 50));
+        $definition->addTag('controller.argument_value_resolver', array('priority' => 50));
         $container->setDefinition('app.value_resolver.user', $definition);
 
 .. _`yield`: http://php.net/manual/en/language.generators.syntax.php
