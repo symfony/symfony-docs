@@ -994,7 +994,7 @@ which you can access inside a standard controller as follows::
 
 In Symfony, you'll constantly use services provided by the Symfony core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
-sending emails (``mailer``), or accessing information on the request (``request``).
+sending emails (``mailer``), or accessing information on the request through the request stack (``request_stack``).
 
 You can take this a step further by using these services inside services that
 you've created for your application. Beginning by modifying the ``NewsletterManager``
