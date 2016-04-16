@@ -33,10 +33,8 @@ directory and execute the following commands:
 .. code-block:: bash
 
     $ composer require leafo/scssphp
-    $ composer require patchwork/jsqueeze:"~1.0"
+    $ composer require patchwork/jsqueeze
 
-It's very important to maintain the ``~1.0`` version constraint for the ``jsqueeze``
-dependency because the most recent stable version is not compatible with Assetic.
 
 Organizing your Web Asset Files
 -------------------------------
