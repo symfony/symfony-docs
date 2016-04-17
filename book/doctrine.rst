@@ -1062,18 +1062,20 @@ to hold those associated objects.
 
 Doctrine does not *require* that the "one" side of a one-to-many relationship
 hold a collection of its "many" related entities. But in the context of our
-application, it makes sense for each ``Category`` object to hold an
-array of ``Product`` objects. However, if we had decided against adding
-a ``$products`` property to the ``Category`` class, then the ``Product``
-entity's ``inversedBy`` metadata would not have been necessary.
+application, it makes sense for each ``Category`` object to hold a collection
+of ``Product`` objects. However, if we had decided against adding a ``$products``
+property to the ``Category`` class, then the ``Product`` entity's ``inversedBy``
+metadata would have to be omitted.
 
 .. note::
 
-    The code in the constructor is important because the ``$products`` property
-    must be an ``ArrayCollection`` object, rather than a traditional ``array``.
-    This object looks and acts almost *exactly* like an array, but has some
-    added flexibility. If this makes you uncomfortable, don't worry. Just
-    imagine that it's an ``array`` and you'll be in good shape.
+    The code in the constructor is important.  Rather than being instantiated
+    as a traditional ``array``, the ``$products`` property must be of a type
+    that implements Doctrine's ``Collection`` interface. In this case, an
+    ``ArrayCollection`` object is used. This object looks and acts almost
+    *exactly* like an array, but has some added flexibility. If this makes
+    you uncomfortable, don't worry. Just imagine that it's an ``array``
+    and you'll be in good shape.
 
 .. tip::
 
