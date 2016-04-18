@@ -105,12 +105,12 @@ associations. Learn more about this feature and its limitations in
 Forms
 -----
 
-As of Symfony 2.8, form types are referred to by their fully-qualified class name::
+Form types are referred to by their fully-qualified class name::
 
     $builder->add('name', CustomType::class);
 
 This means that you cannot override this by creating a sub-class of ``CustomType``
-and registering it as a service, and tagging it with ``form.type`` (you *could*
+and registering it as a service and tagging it with ``form.type`` (you *could*
 do this in earlier version).
 
 Instead, you should use a "form type extension" to modify the existing form type.

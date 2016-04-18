@@ -11,12 +11,6 @@ as one file? This is possible thanks to the new
 you to start with a tiny application, and then add features and structure as you
 need to.
 
-.. note::
-
-    The MicroKernelTrait requires PHP 5.4. However, there's nothing special about
-    this trait. If you're using PHP 5.3, simply copy its methods into *your* kernel
-    class to get the same functionality.
-
 A Single-File Symfony Application
 ---------------------------------
 
@@ -106,9 +100,9 @@ that define your bundles, your services and your routes:
     directly in PHP or load external configuration files (shown below).
 
 **configureRoutes(RouteCollectionBuilder $routes)**
-    Your job in this method is to add routes to the application. The ``RouteCollectionBuilder``
-    is new in Symfony 2.8 and has methods that make adding routes in PHP more fun.
-    You can also load external routing files (shown below).
+    Your job in this method is to add routes to the application. The
+    ``RouteCollectionBuilder`` has methods that make adding routes in PHP more
+    fun. You can also load external routing files (shown below).
 
 
 Advanced Example: Twig, Annotations and the Web Debug Toolbar

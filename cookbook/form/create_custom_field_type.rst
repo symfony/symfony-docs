@@ -50,10 +50,6 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     The location of this file is not important - the ``Form\Type`` directory
     is just a convention.
 
-.. versionadded:: 2.8
-    In 2.8, the ``getName()`` method was removed. Now, fields are always referred
-    to by their fully-qualified class name.
-
 Here, the return value of the ``getParent`` function indicates that you're
 extending the ``ChoiceType`` field. This means that, by default, you inherit
 all of the logic and rendering of that field type. To see some of the logic,
@@ -71,10 +67,6 @@ important:
     a ``multiple`` variable is set and used in the template to set (or not
     set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
     for more details.
-
-.. versionadded:: 2.7
-    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
-    the method was called ``setDefaultOptions()``.
 
 ``configureOptions()``
     This defines options for your form type that

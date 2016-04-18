@@ -44,7 +44,6 @@ objects from the database.
 |             | - `label_attr`_                                                  |
 |             | - `label_format`_                                                |
 |             | - `mapped`_                                                      |
-|             | - `read_only`_ (deprecated as of 2.8)                            |
 |             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                |
@@ -120,10 +119,6 @@ Field Options
 
 choice_label
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
-    2.7, it was called ``property`` (which has the same functionality).
 
 **type**: ``string`` or ``callable``
 
@@ -287,7 +282,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

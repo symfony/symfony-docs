@@ -46,10 +46,6 @@ which makes creating a voter even easier.
         abstract protected function voteOnAttribute($attribute, $subject, TokenInterface $token);
     }
 
-.. versionadded:: 2.8
-    The ``Voter`` helper class was added in Symfony 2.8. In earlier versions, an
-    ``AbstractVoter`` class with similar behavior was available.
-
 .. _how-to-use-the-voter-in-a-controller:
 
 Setup: Checking for Access in a Controller
@@ -260,12 +256,6 @@ your voter will be executed and you can control access.
 
 Checking for Roles inside a Voter
 ---------------------------------
-
-.. versionadded:: 2.8
-    The ability to inject the ``AccessDecisionManager`` is new in 2.8: it caused
-    a CircularReferenceException before. In earlier versions, you must inject the
-    ``service_container`` itself and fetch out the ``security.authorization_checker``
-    to use ``isGranted()``.
 
 What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
 to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting

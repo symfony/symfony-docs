@@ -108,10 +108,6 @@ option. Read more about this and other options in
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
 
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` was
-    introduced in Symfony 2.7.
-
 The VarDumper component provides
 :class:`a trait <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait>`
 that can help writing some of your tests for PHPUnit.
@@ -146,11 +142,6 @@ Example::
             $this->assertDumpEquals($expectedDump, $testedVar);
         }
     }
-
-.. tip::
-
-    If you still use PHP 5.3, you can extend the
-    :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestClass` instead.
 
 Dump Examples and Output
 ------------------------

@@ -17,13 +17,13 @@ clear and warm the ``prod`` cache you need to run:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod
+    $ php bin/console cache:clear --env=prod
 
 or the equivalent:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear -e prod
+    $ php bin/console cache:clear -e prod
 
 In addition to changing the environment, you can also choose to disable debug mode.
 This can be useful where you want to run commands in the ``dev`` environment
@@ -31,4 +31,4 @@ but avoid the performance hit of collecting debug data:
 
 .. code-block:: bash
 
-    $ php app/console list --no-debug
+    $ php bin/console list --no-debug

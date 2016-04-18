@@ -24,8 +24,7 @@ photos).
 |             | - `prototype_name`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
-| options     | - `cascade_validation`_                                                     |
-|             | - `empty_data`_                                                             |
+| options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
 |             | - `label`_                                                                  |
@@ -281,10 +280,6 @@ the empty values will be kept.
 entry_options
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.8
-    The ``entry_options`` option was introduced in Symfony 2.8 in favor of
-    ``options``, which is available prior to 2.8.
-
 **type**: ``array`` **default**: ``array()``
 
 This is the array that's passed to the form type specified in the `entry_type`_
@@ -306,16 +301,11 @@ type::
                 'Berlin'    => 'berlin',
                 'London'    => 'london',
             ),
-            'choices_as_values' => true,
         ),
     ));
 
 entry_type
 ~~~~~~~~~~
-
-.. versionadded:: 2.8
-    The ``entry_type`` option was introduced in Symfony 2.8 and replaces
-    ``type``, which is available prior to 2.8.
 
 **type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
 
@@ -407,8 +397,6 @@ Not all options are listed here - only the most applicable to this type:
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER

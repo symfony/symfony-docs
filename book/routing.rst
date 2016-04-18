@@ -1402,7 +1402,7 @@ the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php app/console debug:router
+    $ php bin/console debug:router
 
 This command will print a helpful list of *all* the configured routes in
 your application:
@@ -1421,14 +1421,14 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php app/console debug:router article_show
+    $ php bin/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:
 
 .. code-block:: bash
 
-    $ php app/console router:match /blog/my-latest-post
+    $ php bin/console router:match /blog/my-latest-post
 
 This command will print which route the URL matches.
 
@@ -1543,10 +1543,6 @@ a template helper function:
             Read this blog post.
         </a>
 
-.. versionadded:: 2.8
-    The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method.
-
 .. index::
    single: Routing; Absolute URLs
 
@@ -1580,12 +1576,6 @@ URL) rather than the ``path()`` function (which generates a relative URL):
         )) ?>">
             Read this blog post.
         </a>
-
-.. versionadded:: 2.8
-    The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method with
-    ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-    passed as the third argument.
 
 .. note::
 

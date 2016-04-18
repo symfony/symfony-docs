@@ -378,7 +378,7 @@ your database schema using this command:
 
 .. code-block:: bash
 
-   $ php app/console doctrine:schema:update --force
+   $ php bin/console doctrine:schema:update --force
 
 That's it! Head to ``/register`` to try things out!
 

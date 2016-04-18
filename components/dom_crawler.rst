@@ -223,11 +223,6 @@ Call an anonymous function on each node of the list::
         return $node->text();
     });
 
-.. versionadded:: 2.3
-    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
-    are passed a ``Crawler`` as the first argument. Previously, that argument
-    was a :phpclass:`DOMNode`.
-
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
@@ -293,8 +288,6 @@ and :phpclass:`DOMNode` objects:
     :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
 
         $html = $crawler->html();
-
-    The ``html`` method is new in Symfony 2.3.
 
 Links
 ~~~~~

@@ -298,11 +298,6 @@ the ``PasswordDigest`` header value matches with the user's password.
     you are safe to use it with any PHP version in your Symfony application. In
     PHP versions prior to 5.6, `Symfony Polyfill`_ (which is included in
     Symfony) will define the function for you.
-    
-    .. versionadded:: 2.8
-        Symfony Polyfill is included by default since Symfony 2.8. Prior to Symfony 2.8,
-        you have to execute ``composer require symfony/polyfill-php56`` to be able to
-        use ``hash_equals`` on older PHP versions.
 
 The Factory
 -----------

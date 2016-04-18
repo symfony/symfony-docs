@@ -1,9 +1,6 @@
 Currency
 ========
 
-.. versionadded:: 2.3
-    The ``Currency`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
 +----------------+---------------------------------------------------------------------------+

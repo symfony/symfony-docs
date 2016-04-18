@@ -8,10 +8,6 @@ During the authentication of a user, additional checks might be required to veri
 if the identified user is allowed to log in. By defining a custom user checker, you
 can define per firewall which checker should be used.
 
-.. versionadded:: 2.8
-    The ability to configure a custom user checker per firewall was introduced
-    in Symfony 2.8.
-
 Creating a Custom User Checker
 ------------------------------
 

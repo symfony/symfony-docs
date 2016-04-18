@@ -159,7 +159,7 @@ Twig Template Caching
 
 Twig is fast. Each Twig template is compiled down to a native PHP class
 that is rendered at runtime. The compiled classes are located in the
-``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
+``var/cache/{environment}/twig`` directory (where ``{environment}`` is the
 environment, such as ``dev`` or ``prod``) and in some cases can be useful
 while debugging. See :ref:`environments-summary` for more information on
 environments.
@@ -579,10 +579,6 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
-.. versionadded:: 2.3
-    The `include() function`_ is available since Symfony 2.3. Prior, the
-    `{% include %} tag`_ was used.
-
 .. index::
    single: Templating; Embedding action
 
@@ -709,9 +705,6 @@ tags:
             array('renderer' => 'hinclude')
         ) ?>
 
-        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
-             passed as the third argument. -->
         <?php echo $view['actions']->render(
             $view['router']->url('...'),
             array('renderer' => 'hinclude')
@@ -921,8 +914,6 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+php
 
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
@@ -1002,8 +993,6 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
-            <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8,
-                 you had to use generate(). -->
             <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
@@ -1027,12 +1016,6 @@ correctly:
                 '_welcome',
                 array()
             ) ?>">Home</a>
-
-    .. versionadded:: 2.8
-        The ``url()`` PHP templating helper was introduced in Symfony 2.8. Prior
-        to 2.8, you had to use the ``generate()`` helper method with
-        ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL``
-        passed as the third argument.
 
 .. index::
    single: Templating; Linking to assets
@@ -1218,7 +1201,7 @@ should use the ``parent()`` Twig function to include everything from the ``style
 block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
-You will need to run the ``php app/console assets:install target [--symlink]``
+You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which moves (or symlinks) files into the correct location. (target
 is by default "web").
 
@@ -1238,8 +1221,6 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security`` (deprecated as of 2.6)
-    The security context.
 ``app.user``
     The current user object.
 ``app.request``
@@ -1392,7 +1373,7 @@ to create it). You're now free to customize the template.
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your
-    cache (``php app/console cache:clear``), even if you are in debug mode.
+    cache (``php bin/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in AcmeBlogBundle inherits from a base template called
@@ -1642,10 +1623,10 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
+    $ php bin/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console lint:twig app/Resources/views
+    $ php bin/console lint:twig app/Resources/views
 
 .. _template-formats:
 
@@ -1697,8 +1678,6 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <a href="<?php echo $view['router']->path('article_show', array(
             'id' => 123,
             '_format' => 'pdf',

@@ -95,8 +95,6 @@ from inside a controller::
 
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
-                // If you use PHP 5.3 or 5.4 you must use
-                // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
                 ->add('dueDate', DateType::class)
                 ->add('save', SubmitType::class, array('label' => 'Create Task'))
                 ->getForm();
@@ -125,19 +123,8 @@ You've also assigned each a "type" (e.g. ``TextType`` and ``DateType``),
 represented by its fully qualified class name. Among other things, it determines
 which HTML form tag(s) is rendered for that field.
 
-.. versionadded:: 2.8
-    To denote the form type, you have to use the fully qualified class name - like
-    ``TextType::class`` in PHP 5.5+ or ``Symfony\Component\Form\Extension\Core\Type\TextType``.
-    Before Symfony 2.8, you could use an alias for each type like ``text`` or
-    ``date``. The old alias syntax will still work until Symfony 3.0. For more details,
-    see the `2.8 UPGRADE Log`_.
-
 Finally, you added a submit button with a custom label for submitting the form to
 the server.
-
-.. versionadded:: 2.3
-    Support for submit buttons was introduced in Symfony 2.3. Before that, you had
-    to add buttons to the form's HTML manually.
 
 Symfony comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
@@ -261,12 +248,6 @@ your controller::
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
 
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
-    was introduced in Symfony 2.3. Previously, the ``$request`` was passed
-    to the ``submit`` method - a strategy which is deprecated and will be
-    removed in Symfony 3.0. For details on that method, see :ref:`cookbook-form-submit-request`.
-
 This controller follows a common pattern for handling forms, and has three
 possible paths:
 
@@ -308,9 +289,6 @@ possible paths:
 
 Submitting Forms with Multiple Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
 
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
@@ -487,10 +465,6 @@ you'll need to specify which validation group(s) your form should use::
         'validation_groups' => array('registration'),
     ))->add(...);
 
-.. versionadded:: 2.7
-    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
-    the method was called ``setDefaultOptions()``.
-
 If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
 good practice), then you'll need to add the following to the ``configureOptions()``
 method::
@@ -512,9 +486,6 @@ be used to validate the underlying object.
 
 Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was introduced in Symfony 2.3.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
@@ -615,9 +586,6 @@ work in the book section about :ref:`validation groups <book-validation-validati
 
 Groups based on the Clicked Button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
 
 When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,
@@ -1040,8 +1008,6 @@ to the ``form()`` or the ``form_start()`` helper:
 
         <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
-            // The path() method was introduced in Symfony 2.8. Prior to 2.8,
-            // you had to use generate().
             'action' => $view['router']->path('target_route'),
             'method' => 'GET',
         )) ?>
@@ -1977,4 +1943,3 @@ Learn more from the Cookbook
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
-.. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form
