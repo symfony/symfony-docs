@@ -100,6 +100,11 @@ The ``firewalls`` key is the *heart* of your security configuration. The
 tools - which live under URLs like ``/_profiler`` and ``/_wdt`` aren't blocked
 by your security.
 
+.. tip::
+
+    You can also match a request against other details of the request (e.g. host). For more
+    information and examples read :doc:`/cookbook/security/firewall_restriction`.
+
 All other URLs will be handled by the ``default`` firewall (no ``pattern``
 key means it matches *all* URLs). You can think of the firewall like your
 security system, and so it usually makes sense to have just one main firewall.
@@ -505,11 +510,12 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, you can use an `online tool`_ (as it's a public tool,
-avoid using real passwords).
+For hardcoded users, you can use the built-in command:
+
+.. code-block:: bash
+
+    $ php bin/console security:encode-password
 
 It will give you something like this:
 
@@ -591,6 +597,9 @@ before inserting them into the database? Don't worry, see
     as well as a few others (e.g. bcrypt). See the ``encoders`` key in the
     :doc:`Security Reference Section </reference/configuration/security>`
     for examples.
+
+    It's also possible to use different hashing algorithms on a user-by-user
+    basis. See :doc:`/cookbook/security/named_encoders` for more details.
 
 D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -678,7 +687,7 @@ There are **two** ways to deny access to something:
    allows you to protect URL patterns (e.g. ``/admin/*``). This is easy,
    but less flexible;
 
-#. :ref:`in your code via the security.context service <book-security-securing-controller>`.
+#. :ref:`in your code via the security.authorization_checker service <book-security-securing-controller>`.
 
 .. _security-authorization-access-control:
 
@@ -821,16 +830,23 @@ Securing Controllers and other Code
 You can easily deny access from inside a controller::
 
     // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
-        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        // The second parameter is used to specify on what object the role is tested.
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        // Old way :
+        // if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        //     throw $this->createAccessDeniedException('Unable to access this page!');
+        // }
 
         // ...
     }
+
+In both cases, a special
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
 
 That's it! If the user isn't logged in yet, they will be asked to login (e.g.
 redirected to the login page). If they *are* logged in, but do *not* have the
@@ -838,13 +854,31 @@ redirected to the login page). If they *are* logged in, but do *not* have the
 :ref:`customize <cookbook-error-pages-by-status-code>`). If they are logged in
 and have the correct roles, the code will be executed.
 
+.. _book-security-securing-controller-annotations:
+
+Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
+using annotations::
+
+    // ...
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function helloAction($name)
+    {
+        // ...
+    }
+
+For more information, see the `FrameworkExtraBundle documentation`_.
+
 .. _book-security-template:
 
 Access Control in Templates
 ...........................
 
 If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+the built-in ``is_granted()`` helper function:
 
 .. configuration-block::
 
@@ -859,20 +893,6 @@ the built-in helper function:
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
-
-If you use this function and you are *not* behind a firewall, an exception will
-be thrown. Again, it's almost always a good idea to have a main firewall that
-covers all URLs (as shown before in this chapter).
-
-.. caution::
-
-    Be careful with this in your base layout or on your error pages! Because of
-    some internal Symfony details, to avoid broken error pages in the ``prod``
-    environment, wrap calls in these templates with a check for ``app.user``:
-
-    .. code-block:: html+twig
-
-        {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
 .......................
@@ -893,12 +913,11 @@ user is logged in (you don't care about roles), then you can use
 ``IS_AUTHENTICATED_FULLY``::
 
     // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw new AccessDeniedException();
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
         }
 
         // ...
@@ -924,6 +943,30 @@ special attributes like this:
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/cookbook/security/access_control`.
+
+.. _book-security-template-expression:
+
+You can also use expressions inside your templates:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted(expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        )) %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+For more details on expressions and security, see :ref:`book-security-expressions`.
 
 .. _security-secure-objects:
 
@@ -954,19 +997,19 @@ Retrieving the User Object
 --------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.context`` service. From inside a controller, this will
+via the ``security.token_storage`` service. From inside a controller, this will
 look like::
 
     public function indexAction()
     {
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw new AccessDeniedException();
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
         }
 
         $user = $this->getUser();
 
         // the above is a shortcut for this
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
     }
 
 .. tip::
@@ -1001,8 +1044,8 @@ the User object, and use the ``isGranted`` method (or
 :ref:`access_control <security-authorization-access-control>`) to do this::
 
     // yay! Use this to see if the user is logged in
-    if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-        throw new AccessDeniedException();
+    if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        throw $this->createAccessDeniedException();
     }
 
     // boo :(. Never check for the User object to see if they're logged in
@@ -1153,13 +1196,13 @@ the users' passwords before inserting them. No matter what algorithm you
 configure for your user object, the hashed password can always be determined
 in the following way from a controller::
 
-    $factory = $this->get('security.encoder_factory');
     // whatever *your* User object is
     $user = new AppBundle\Entity\User();
+    $plainPassword = 'ryanpass';
+    $encoder = $this->container->get('security.password_encoder');
+    $encoded = $encoder->encodePassword($user, $plainPassword);
 
-    $encoder = $factory->getEncoder($user);
-    $password = $encoder->encodePassword('ryanpass', $user->getSalt());
-    $user->setPassword($password);
+    $user->setPassword($encoded);
 
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
@@ -1291,6 +1334,40 @@ cookie will be ever created by Symfony):
     If you use a form login, Symfony will create a cookie even if you set
     ``stateless`` to ``true``.
 
+.. _book-security-checking-vulnerabilities:
+
+Checking for Known Security Vulnerabilities in Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using lots of dependencies in your Symfony projects, some of them may
+contain security vulnerabilities. That's why Symfony includes a command called
+``security:check`` that checks your ``composer.lock`` file to find any known
+security vulnerability in your installed dependencies:
+
+.. code-block:: bash
+
+    $ php bin/console security:check
+
+A good security practice is to execute this command regularly to be able to
+update or replace compromised dependencies as soon as possible. Internally,
+this command uses the public `security advisories database`_ published by the
+FriendsOfPHP organization.
+
+.. tip::
+
+    The ``security:check`` command terminates with a non-zero exit code if
+    any of your dependencies is affected by a known security vulnerability.
+    Therefore, you can easily integrate it in your build process.
+
+.. note::
+
+    To enable the ``security:check`` command, make sure the
+    `SensioDistributionBundle`_ is installed.
+
+    .. code-block:: bash
+
+        $ composer require 'sensio/distribution-bundle'
+
 Final Words
 -----------
 
@@ -1317,6 +1394,7 @@ Learn More from the Cookbook
 * :doc:`/cookbook/security/remember_me`
 * :doc:`/cookbook/security/multiple_user_providers`
 
-.. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`SensioDistributionBundle`: https://packagist.org/packages/sensio/distribution-bundle

@@ -417,7 +417,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.3.*"
+            "symfony/symfony": "3.0.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -457,7 +457,7 @@ the HTTP response being returned. Use them to improve the blog::
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
-        $response = new Response($html, 404);
+        $response = new Response($html, Response::HTTP_NOT_FOUND);
     }
 
     // echo the headers and send the response
@@ -573,7 +573,7 @@ database and the Templating component to render a template and return a
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->generate(
+            <a href="<?php echo $view['router']->path(
                 'blog_show',
                 array('id' => $post->getId())
             ) ?>">

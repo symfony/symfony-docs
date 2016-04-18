@@ -16,13 +16,16 @@ But you can customize this to your needs. For example, if you want the
 ``gender`` choice field to be explicitly set to ``null`` when no value is
 selected, you can do it like this::
 
-    $builder->add('gender', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('gender', ChoiceType::class, array(
         'choices' => array(
             'm' => 'Male',
             'f' => 'Female'
         ),
         'required'    => false,
-        'empty_value' => 'Choose your gender',
+        'placeholder' => 'Choose your gender',
         'empty_data'  => null
     ));
 

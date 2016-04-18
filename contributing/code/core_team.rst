@@ -58,8 +58,8 @@ Active Core Members
   * **Christophe Coevoet** (`stof`_) can merge into all components, bridges and
     bundles;
 
-  * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_,
-    Serializer_ component;
+  * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
+    component;
 
   * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
     component;

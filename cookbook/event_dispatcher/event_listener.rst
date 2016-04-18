@@ -52,7 +52,7 @@ The most common way to listen to an event is to register an **event listener**::
                 $response->setStatusCode($exception->getStatusCode());
                 $response->headers->replace($exception->getHeaders());
             } else {
-                $response->setStatusCode(500);
+                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             // Send the modified response object to the event
@@ -234,7 +234,7 @@ or a "sub request"::
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
-            if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+            if (!$event->isMasterRequest()) {
                 // don't do anything if it's not the master request
                 return;
             }
@@ -260,3 +260,20 @@ there are some minor advantages for each of them:
   Symfony uses subscribers internally;
 * **Listeners are more flexible** because bundles can enable or disable each of
   them conditionally depending on some configuration value.
+
+Debugging Event Listeners
+-------------------------
+
+You can find out what listeners are registered in the event dispatcher
+using the console. To show all events and their listeners, run:
+
+.. code-block:: bash
+
+    $ php bin/console debug:event-dispatcher
+
+You can get registered listeners for a particular event by specifying
+its name:
+
+.. code-block:: bash
+
+    $ php bin/console debug:event-dispatcher kernel.exception

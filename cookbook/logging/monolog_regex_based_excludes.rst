@@ -6,11 +6,6 @@
 How to Configure Monolog to Exclude 404 Errors from the Log
 ===========================================================
 
-.. versionadded:: 2.3
-    This feature was introduced to the MonologBundle in version 2.4. This
-    version is compatible with Symfony 2.3, but only MonologBundle 2.3 is
-    installed by default. To use this feature, upgrade your bundle manually.
-
 Sometimes your logs become flooded with unwanted 404 HTTP errors, for example,
 when an attacker scans your app for some well-known application paths (e.g.
 `/phpmyadmin`). When using a ``fingers_crossed`` handler, you can exclude

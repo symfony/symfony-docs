@@ -275,7 +275,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
     {
         "scripts": {
             "compile": [
-                "app/console assetic:dump"
+                "bin/console assetic:dump"
             ]
         }
     }
