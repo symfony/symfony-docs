@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-16T06:53:17Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-18T08:45:23Z
+
+@carlos-granados Do you have a reference to the PR that fixed this in Assetic?
+
+---------------------------------------------------------------------------
+
+by carlos-granados at 2016-04-18T12:47:57Z
+
+https://github.com/kriswallsmith/assetic/commit/0182f4e14739e1497c8468166ab08197cfeaff12
+https://github.com/kriswallsmith/assetic/pull/698
