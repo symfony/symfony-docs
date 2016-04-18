@@ -23,10 +23,9 @@ Then, define a new service related to the custom session handler:
 
     .. code-block:: xml
 
+        <!-- app/config/services.xml -->
         <services>
-            <service id="app.session_handler"
-                class="AppBundle\Session\CustomSessionHandler">
-            </service>
+            <service id="app.session_handler" class="AppBundle\Session\CustomSessionHandler" />
         </services>
 
     .. code-block:: php
@@ -38,7 +37,7 @@ Then, define a new service related to the custom session handler:
         $container->setDefinition('app.session_handler', new Definition('AppBundle\Session\CustomSessionHandler'));
 
 Finally, use the ``framework.session.handler_id`` configuration option to tell
-Symfony yo use your own session handler instead of the default one:
+Symfony to use your own session handler instead of the default one:
 
 .. configuration-block::
 
@@ -60,11 +59,10 @@ Symfony yo use your own session handler instead of the default one:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
             'session' => array(
-                // ...,
+                // ...
                 'handler_id' => 'app.session_handler',
             ),
         ));
