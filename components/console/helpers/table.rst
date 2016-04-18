@@ -66,15 +66,17 @@ You can add a table separator anywhere in the output by passing an instance of
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
 
-The width of the columns are automatically set using the width of their contents
-by default. You can control the minimum widths via :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`::
+By default the width of the columns is calculated automatically based on their
+contents. Use the :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`
+method to set the column widths explicitly::
 
-    // the widths will expand to be bigger if necessary
-    // here, the left two columns will be 13 & 24 characters to fit their content
+    // ...
     $table->setColumnWidths(array(10, 0, 30));
     $table->render();
-    
-This code results in:
+
+In this example, the first column width will be ``10``, the last column width
+will be ``30`` and the second column width will be calculated automatically
+because of the ``0`` value. The output of this command will be:
 
 .. code-block:: text
 
@@ -87,6 +89,21 @@ This code results in:
     | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien               |
     | 80-902734-1-6 | And Then There Were None | Agatha Christie                |
     +---------------+--------------------------+--------------------------------+
+
+Note that the defined column widths are always considered as the minimum column
+widths. If the contents don't fit, the given column width is increased up to the
+longest content length. That's why in the previous example the first column has
+a ``13`` character length although the user defined ``10`` as its width.
+
+You can also set the width individually for each column with the
+:method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidth` method.
+Its first argument is the column index (starting from ``0``) and the second
+argument is the column width::
+
+    // ...
+    $table->setColumnWidth(0, 10);
+    $table->setColumnWidth(2, 30);
+    $table->render();
 
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
