@@ -11,7 +11,7 @@ quickly.
 .. tip::
 
     Due to the amount of filesystem operations in Symfony (e.g. updating cache
-    files and writing to log files), Symfony can slow down signifcantly. To
+    files and writing to log files), Symfony can slow down significantly. To
     improve the speed, consider :ref:`overriding the cache and log directories <override-cache-dir>`
     to a location outside the NFS share (for instance, by using
     :phpfunction:`sys_get_temp_dir`). You can read `this blog post`_ for more
