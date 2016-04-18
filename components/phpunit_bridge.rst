@@ -269,7 +269,7 @@ the data you expect to get for the given hosts::
 The ``withMockedHosts()`` method configuration is defined as an array. The keys
 are the mocked hosts and the values are arrays of DNS records in the same format
 returned by :phpfunction:`dns_get_record`, so you can simulate diverse network
-conditions:
+conditions::
 
     DnsMock::withMockedHosts(array(
         'example.com' => array(
