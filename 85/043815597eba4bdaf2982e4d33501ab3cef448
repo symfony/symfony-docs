@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-06T19:01:34Z
+
+@javiereguiluz Why not making this change in older branches too?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2016-04-12T11:50:57Z
+
+this is a new feature isn't it?
+
+http://symfony.com/blog/new-in-symfony-3-1-explicit-column-widths-in-console-tables
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-12T19:01:05Z
+
+Indeed :+1: reads better
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-12T19:14:11Z
+
+Fixed all the reported issues.
