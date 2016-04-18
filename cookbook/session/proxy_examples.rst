@@ -31,10 +31,7 @@ Then, define a new service related to the custom session handler:
     .. code-block:: php
 
         // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->setDefinition('app.session_handler', new Definition('AppBundle\Session\CustomSessionHandler'));
+        $container->register('app.session_handler', 'AppBundle\Session\CustomSessionHandler');
 
 Finally, use the ``framework.session.handler_id`` configuration option to tell
 Symfony to use your own session handler instead of the default one:
