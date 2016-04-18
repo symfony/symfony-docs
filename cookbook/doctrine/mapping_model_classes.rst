@@ -16,19 +16,6 @@ register the mappings for your model classes.
     for one of the ODMs. For reusable bundles, rather than duplicate model classes
     just to get the auto-mapping, use the compiler pass.
 
-.. versionadded:: 2.3
-    The base mapping compiler pass was introduced in Symfony 2.3. The Doctrine bundles
-    support it from DoctrineBundle >= 1.3.0, MongoDBBundle >= 3.0.0,
-    PHPCRBundle >= 1.0.0 and the (unversioned) CouchDBBundle supports the
-    compiler pass since the `CouchDB Mapping Compiler Pass pull request`_
-    was merged.
-
-.. versionadded:: 2.6
-    Support for defining namespace aliases was introduced in Symfony 2.6.
-    It is safe to define the aliases with older versions of Symfony as
-    the aliases are the last argument to ``createXmlMappingDriver`` and
-    are ignored by PHP if that argument doesn't exist.
-
 In your bundle class, write the following code to register the compiler pass.
 This one is written for the CmfRoutingBundle, so parts of it will need to
 be adapted for your case::

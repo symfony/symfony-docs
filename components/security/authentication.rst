@@ -4,11 +4,6 @@
 Authentication
 ==============
 
-.. versionadded:: 2.6
-    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
-    had to use the ``getToken()`` method of the
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 When a request points to a secured area, and one of the listeners from the
 firewall map is able to extract the user's credentials from the current
 :class:`Symfony\\Component\\HttpFoundation\\Request` object, it should create

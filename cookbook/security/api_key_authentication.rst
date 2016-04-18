@@ -4,6 +4,11 @@
 How to Authenticate Users with API Keys
 =======================================
 
+.. tip::
+
+    Check out :doc:`/cookbook/security/guard-authentication` for a simpler and more
+    flexible way to accomplish custom authentication tasks like this.
+
 Nowadays, it's quite usual to authenticate the user via an API key (when developing
 a web service for instance). The API key is provided for every request and is
 passed as a query string parameter or via an HTTP header.
@@ -12,7 +17,7 @@ The API Key Authenticator
 -------------------------
 
 Authenticating a user based on the Request information should be done via a
-pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimplePreAuthenticatorInterface`
+pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Http\\Authentication\\SimplePreAuthenticatorInterface`
 allows you to implement such a scheme really easily.
 
 Your exact situation may differ, but in this example, a token is read
@@ -22,13 +27,14 @@ value and then a User object is created::
     // src/AppBundle/Security/ApiKeyAuthenticator.php
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+    use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
@@ -69,7 +75,9 @@ value and then a User object is created::
             $username = $userProvider->getUsernameForApiKey($apiKey);
 
             if (!$username) {
-                throw new AuthenticationException(
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
+                throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
             }
@@ -273,9 +281,9 @@ you can use to create an error ``Response``.
     // src/AppBundle/Security/ApiKeyAuthenticator.php
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+    use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
 
@@ -285,7 +293,12 @@ you can use to create an error ``Response``.
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
-            return new Response("Authentication Failed.", 403);
+            return new Response(
+                // this contains information about *why* authentication failed
+                // use it, or return your own message
+                strtr($exception->getMessageKey(), $exception->getMessageData()),
+                403
+            );
         }
     }
 
@@ -506,8 +519,8 @@ for security reasons. To take advantage of the session, update ``ApiKeyAuthentic
 to see if the stored token has a valid User object that can be used::
 
     // src/AppBundle/Security/ApiKeyAuthenticator.php
-    // ...
 
+    // ...
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
         // ...
@@ -537,7 +550,8 @@ to see if the stored token has a valid User object that can be used::
             }
 
             if (!$username) {
-                throw new AuthenticationException(
+                // this message will be returned to the client
+                throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
             }

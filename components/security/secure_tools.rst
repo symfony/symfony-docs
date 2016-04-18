@@ -1,5 +1,5 @@
-Securely Comparing Strings and Generating Random Values
-=======================================================
+Securely Generating Random Values
+=================================
 
 The Symfony Security component comes with a collection of nice utilities
 related to security. These utilities are used by Symfony, but you should

@@ -29,11 +29,6 @@ An authorization decision will always be based on a few things:
     Any object for which access control needs to be checked, like
     an article or a comment object.
 
-.. versionadded:: 2.6
-    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
-    had to use the ``setToken()`` method of the
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 .. _components-security-access-decision-manager:
 
 Access Decision Manager
@@ -89,13 +84,6 @@ Voters are instances
 of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
 which means they have to implement a few methods which allows the decision
 manager to use them:
-
-``supportsAttribute($attribute)``
-    will be used to check if the voter knows how to handle the given attribute;
-
-``supportsClass($class)``
-    will be used to check if the voter is able to grant or deny access for
-    an object of the given class;
 
 ``vote(TokenInterface $token, $object, array $attributes)``
     this method will do the actual voting and return a value equal to one

@@ -127,9 +127,6 @@ the route ``_controller`` value:
     If your controller implements the ``__invoke()`` method, you can simply
     refer to the service id (``app.hello_controller``).
 
-    .. versionadded:: 2.6
-        Support for ``__invoke()`` was introduced in Symfony 2.6.
-
 Alternatives to base Controller Methods
 ---------------------------------------
 
