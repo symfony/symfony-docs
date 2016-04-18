@@ -1082,7 +1082,7 @@ If you don't give a version or pass ``null``, the default package version
 versioned URL will be deactivated for this asset.
 
 If you need absolute URLs for assets, you can use the ``absolute_url`` function
-if you are using Twig (or the third argument if you are using PHP) to ``true``:
+if you are using Twig or the third argument if you are using PHP to ``true``:
 
 .. configuration-block::
 
