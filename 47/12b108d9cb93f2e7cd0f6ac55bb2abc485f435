@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-04-19T14:19:40Z
+
+@WouterJ is this related to #6487 somehow? Because actually the reference of `CollectionType` is not among that diff.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-04-19T14:26:04Z
+
+@HeahDude yes, this fixes #6487 and #6486 The change is in the diff, but not the complete diff is shown on GitHub.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-04-19T14:28:58Z
+
+Alright, thanks @WouterJ, I've closed #6488 though.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-04-19T18:05:14Z
+
+I'll merge this now to avoid more troubles for the readers. If someone spots something wrong in the diff of this PR, please comment.
