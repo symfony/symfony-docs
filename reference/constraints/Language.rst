@@ -8,7 +8,6 @@ Validates that a value is a valid language *Unicode language identifier*
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
-|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Language`          |
 +----------------+------------------------------------------------------------------------+
@@ -83,5 +82,3 @@ message
 **type**: ``string`` **default**: ``This value is not a valid language.``
 
 This message is shown if the string is not a valid language code.
-
-.. include:: /reference/constraints/_payload-option.rst.inc

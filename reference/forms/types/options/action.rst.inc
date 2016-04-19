@@ -1,6 +1,9 @@
 action
 ~~~~~~
 
+.. versionadded:: 2.3
+    The ``action`` option was introduced in Symfony 2.3.
+
 **type**: ``string`` **default**: empty string
 
 This option specifies where to send the form's data on submission (usually

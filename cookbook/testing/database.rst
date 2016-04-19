@@ -33,7 +33,6 @@ class.
 
 Suppose the class you want to test looks like this::
 
-    // src/AppBundle/Salary/SalaryCalculator.php
     namespace AppBundle\Salary;
 
     use Doctrine\Common\Persistence\ObjectManager;
@@ -60,20 +59,14 @@ Suppose the class you want to test looks like this::
 Since the ``ObjectManager`` gets injected into the class through the constructor,
 it's easy to pass a mock object within a test::
 
-    // tests/AppBundle/Salary/SalaryCalculatorTest.php
-    namespace Tests\AppBundle\Salary;
-
     use AppBundle\Salary\SalaryCalculator;
-    use AppBundle\Entity\Employee;
-    use Doctrine\ORM\EntityRepository;
-    use Doctrine\Common\Persistence\ObjectManager;
 
     class SalaryCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         public function testCalculateTotalSalary()
         {
             // First, mock the object to be used in the test
-            $employee = $this->getMock(Employee::class);
+            $employee = $this->getMock('\AppBundle\Entity\Employee');
             $employee->expects($this->once())
                 ->method('getSalary')
                 ->will($this->returnValue(1000));
@@ -83,7 +76,7 @@ it's easy to pass a mock object within a test::
 
             // Now, mock the repository so it returns the mock of the employee
             $employeeRepository = $this
-                ->getMockBuilder(EntityRepository::class)
+                ->getMockBuilder('\Doctrine\ORM\EntityRepository')
                 ->disableOriginalConstructor()
                 ->getMock();
             $employeeRepository->expects($this->once())
@@ -92,7 +85,7 @@ it's easy to pass a mock object within a test::
 
             // Last, mock the EntityManager to return the mock of the repository
             $entityManager = $this
-                ->getMockBuilder(ObjectManager::class)
+                ->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                 ->disableOriginalConstructor()
                 ->getMock();
             $entityManager->expects($this->once())

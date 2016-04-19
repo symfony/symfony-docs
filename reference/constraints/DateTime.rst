@@ -9,7 +9,6 @@ a valid YYYY-MM-DD HH:MM:SS format.
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
-|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\DateTime`          |
 +----------------+------------------------------------------------------------------------+
@@ -84,5 +83,3 @@ message
 **type**: ``string`` **default**: ``This value is not a valid datetime.``
 
 This message is shown if the underlying data is not a valid datetime.
-
-.. include:: /reference/constraints/_payload-option.rst.inc

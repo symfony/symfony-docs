@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; MoneyType
+   single: Forms; Fields; money
 
-MoneyType Field
-===============
+money Field Type
+================
 
 Renders an input text field and specializes in handling submitted "money"
 data.
@@ -17,7 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
-|             | - `scale`_                                                          |
+|             | - `precision`_                                                      |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
 | options     |                                                                     |
@@ -31,11 +31,11 @@ how the input and output of the data is handled.
 |             | - `invalid_message_parameters`_                                     |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
+|             | - `read_only`_                                                      |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
+| Parent type | :doc:`form </reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -65,10 +65,7 @@ If, for some reason, you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
 For example::
 
-    use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-    // ...
-
-    $builder->add('price', MoneyType::class, array(
+    $builder->add('price', 'money', array(
         'divisor' => 100,
     ));
 
@@ -79,14 +76,14 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-scale
-~~~~~
+precision
+~~~~~~~~~
 
 **type**: ``integer`` **default**: ``2``
 
-If, for some reason, you need some scale other than 2 decimal places,
+For some reason, if you need some precision other than 2 decimal places,
 you can modify this value. You probably won't need to do this unless,
-for example, you want to round to the nearest dollar (set the scale
+for example, you want to round to the nearest dollar (set the precision
 to ``0``).
 
 Overridden Options
@@ -97,7 +94,8 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -123,9 +121,9 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

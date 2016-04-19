@@ -85,7 +85,7 @@ will save a few lines::
 
     class MyFormatDumper extends FileDumper
     {
-        public function formatCatalogue(MessageCatalogue $messages, $domain, array $options = array())
+        protected function format(MessageCatalogue $messages, $domain = 'messages')
         {
             $output = '';
 
@@ -102,14 +102,7 @@ will save a few lines::
         }
     }
 
-.. sidebar:: Format a message catalogue
-
-    In some cases, you want to send the dump contents as a response instead of
-    writing them in files.  To do this, you can use the ``formatCatalogue``
-    method. In this case, you must pass the domain argument, which determines
-    the list of messages that should be dumped.
-
-The :method:`Symfony\\Component\\Translation\\Dumper\\FileDumper::formatCatalogue`
+The :method:`Symfony\\Component\\Translation\\Dumper\\FileDumper::format`
 method creates the output string, that will be used by the
 :method:`Symfony\\Component\\Translation\\Dumper\\FileDumper::dump` method
 of the FileDumper class to create the file. The dumper can be used like any other
@@ -123,3 +116,4 @@ YAML file are dumped into a text file with the custom format::
 
     $dumper = new MyFormatDumper();
     $dumper->dump($catalogue, array('path' => __DIR__.'/dumps'));
+

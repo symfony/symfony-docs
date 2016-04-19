@@ -52,8 +52,8 @@ Canonical Parameters
     Define all your application's parameters in the
     ``app/config/parameters.yml.dist`` file.
 
-Symfony includes a configuration file called ``parameters.yml.dist``, which
-stores the canonical list of configuration parameters for the application.
+Since version 2.3, Symfony includes a configuration file called ``parameters.yml.dist``,
+which stores the canonical list of configuration parameters for the application.
 
 Whenever a new configuration parameter is defined for the application, you
 should also add it to this file and submit the changes to your version control

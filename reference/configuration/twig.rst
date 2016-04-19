@@ -10,22 +10,14 @@ TwigBundle Configuration ("twig")
 
         twig:
             exception_controller:  twig.controller.exception:showAction
+            form:
+                resources:
 
-            form_themes:
+                    # Default:
+                    - form_div_layout.html.twig
 
-                # Default:
-                - form_div_layout.html.twig
-
-                # Bootstrap:
-                - bootstrap_3_layout.html.twig
-                - bootstrap_3_horizontal_layout.html.twig
-
-                # Foundation
-                - foundation_5_layout.html.twig
-
-                # Example:
-                - MyBundle::form.html.twig
-
+                    # Example:
+                    - MyBundle::form.html.twig
             globals:
 
                 # Examples:
@@ -41,6 +33,7 @@ TwigBundle Configuration ("twig")
                     value:                ~
             autoescape:                ~
 
+            # The following were added in Symfony 2.3.
             # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
             autoescape_service:        ~ # Example: '@my_service'
             autoescape_service_method: ~ # use in combination with autoescape_service option
@@ -62,8 +55,7 @@ TwigBundle Configuration ("twig")
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-            <twig:config
-                auto-reload="%kernel.debug%"
+            <twig:config auto-reload="%kernel.debug%"
                 autoescape="true"
                 base-template-class="Twig_Template"
                 cache="%kernel.cache_dir%/twig"
@@ -72,12 +64,11 @@ TwigBundle Configuration ("twig")
                 strict-variables="false"
                 optimizations="true"
             >
-                <twig:form-theme>form_div_layout.html.twig</twig:form-theme> <!-- Default -->
-                <twig:form-theme>MyBundle::form.html.twig</twig:form-theme>
-
+                <twig:form>
+                    <twig:resource>MyBundle::form.html.twig</twig:resource>
+                </twig:form>
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
-
                 <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
                 <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
@@ -86,9 +77,10 @@ TwigBundle Configuration ("twig")
     .. code-block:: php
 
         $container->loadFromExtension('twig', array(
-            'form_themes' => array(
-                'form_div_layout.html.twig', // Default
-                'MyBundle::form.html.twig',
+            'form' => array(
+                'resources' => array(
+                    'MyBundle::form.html.twig',
+                )
              ),
              'globals' => array(
                  'foo' => '@bar',
@@ -107,12 +99,6 @@ TwigBundle Configuration ("twig")
                  '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
              ),
         ));
-
-.. caution::
-
-    The ``twig.form`` (``<twig:form />`` tag for xml) configuration key
-    has been deprecated and will be removed in 3.0. Instead, use the ``twig.form_themes``
-    option.
 
 Configuration
 -------------

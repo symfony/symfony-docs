@@ -14,17 +14,23 @@ your requirements from the command line via:
 
 .. code-block:: bash
 
-    $ php bin/symfony_requirements
+    $ php app/check.php
 
 Below is the list of required and optional requirements.
 
 Required
 --------
 
-* PHP needs to be a minimum version of PHP 5.5.9
+* PHP needs to be a minimum version of PHP 5.3.3
 * JSON needs to be enabled
 * ctype needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
+
+.. caution::
+
+    Be aware that Symfony has some known limitations when using a PHP version
+    less than 5.3.8 or equal to 5.3.16. For more information see the
+    `Requirements section of the README`_.
 
 Optional
 --------
@@ -50,3 +56,5 @@ Doctrine
 If you want to use Doctrine, you will need to have PDO installed. Additionally,
 you need to have the PDO driver installed for the database server you want
 to use.
+
+.. _`Requirements section of the README`: https://github.com/symfony/symfony/blob/2.3/README.md#requirements

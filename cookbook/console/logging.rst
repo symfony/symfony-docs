@@ -65,13 +65,16 @@ container and use it to do the logging::
     }
 
 Depending on the environment in which you run your command (and your logging
-setup), you should see the logged entries in ``var/logs/dev.log`` or ``var/logs/prod.log``.
+setup), you should see the logged entries in ``app/logs/dev.log`` or ``app/logs/prod.log``.
 
 Enabling automatic Exceptions Logging
 -------------------------------------
 
 To get your console application to automatically log uncaught exceptions for
 all of your commands, you can use :doc:`console events</components/console/events>`.
+
+.. versionadded:: 2.3
+    Console events were introduced in Symfony 2.3.
 
 First configure a listener for console exception events in the service container:
 

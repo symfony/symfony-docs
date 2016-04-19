@@ -15,3 +15,6 @@ If you wish the field to be ignored when reading or writing to the object
 you can set the ``property_path`` option to ``false``, but using
 ``property_path`` for this purpose is deprecated, you should use the
 ``mapped`` option.
+
+.. versionadded:: 2.1
+    The ``mapped`` option was introduced in Symfony 2.1 for this use-case.

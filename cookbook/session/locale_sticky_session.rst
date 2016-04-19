@@ -4,10 +4,11 @@
 Making the Locale "Sticky" during a User's Session
 ==================================================
 
-Symfony stores the locale setting in the Request, which means that this setting
-is not available in subsequent requests. In this article, you'll learn how to
-store the locale in the session, so that it'll be the same for every subsequent
-request.
+Prior to Symfony 2.1, the locale was stored in a session attribute called ``_locale``.
+Since 2.1, it is stored in the Request, which means that it's not "sticky"
+during a user's request. In this article, you'll learn how to make the locale
+of a user "sticky" so that once it's set, that same locale will be used for
+every subsequent request.
 
 Creating a LocaleListener
 -------------------------

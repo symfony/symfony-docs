@@ -4,6 +4,9 @@
 The Immutable Event Dispatcher
 ==============================
 
+.. versionadded:: 2.1
+    This feature was introduced in Symfony 2.1.
+
 The :class:`Symfony\\Component\\EventDispatcher\\ImmutableEventDispatcher`
 is a locked or frozen event dispatcher. The dispatcher cannot register new
 listeners or subscribers.

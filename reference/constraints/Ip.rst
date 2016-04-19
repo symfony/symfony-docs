@@ -10,7 +10,6 @@ IPv6 and many other combinations.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `version`_                                                        |
 |                | - `message`_                                                        |
-|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Ip`             |
 +----------------+---------------------------------------------------------------------+
@@ -129,5 +128,3 @@ message
 **type**: ``string`` **default**: ``This is not a valid IP address.``
 
 This message is shown if the string is not a valid IP address.
-
-.. include:: /reference/constraints/_payload-option.rst.inc

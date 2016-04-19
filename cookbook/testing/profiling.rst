@@ -15,9 +15,9 @@ spent in the framework, etc. But before writing assertions, enable the profiler
 and check that the profiler is indeed available (it is enabled by default in
 the ``test`` environment)::
 
-    class LuckyControllerTest extends WebTestCase
+    class HelloControllerTest extends WebTestCase
     {
-        public function testNumberAction()
+        public function testIndex()
         {
             $client = static::createClient();
 
@@ -25,7 +25,7 @@ the ``test`` environment)::
             // (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
-            $crawler = $client->request('GET', '/lucky/number');
+            $crawler = $client->request('GET', '/hello/Fabien');
 
             // ... write some assertions about the Response
 

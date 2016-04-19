@@ -125,12 +125,6 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
     Returns the alphabetic characters and digits of the parameter value;
 
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
-    Returns the parameter value converted to boolean;
-
-    .. versionadded:: 2.6
-        The ``getBoolean()`` method was introduced in Symfony 2.6.
-
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
@@ -140,35 +134,39 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
-All getters take up to two arguments: the first one is the parameter name
+All getters take up to three arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
 
     // the query string is '?foo=bar'
 
     $request->query->get('foo');
-    // returns 'bar'
+    // returns bar
 
     $request->query->get('bar');
     // returns null
 
-    $request->query->get('bar', 'baz');
-    // returns 'baz'
+    $request->query->get('bar', 'bar');
+    // returns 'bar'
 
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element::
+``foo`` parameter and you will get back an array with a ``bar`` element. But
+sometimes, you might want to get the value for the "original" parameter name:
+``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
+:method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
+argument::
 
-    // the query string is '?foo[bar]=baz'
+    // the query string is '?foo[bar]=bar'
 
     $request->query->get('foo');
-    // returns array('bar' => 'baz')
+    // returns array('bar' => 'bar')
 
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo')['bar'];
-    // returns 'baz'
+    $request->query->get('foo[bar]', null, true);
+    // returns 'bar'
 
 .. _component-foundation-attributes:
 
@@ -254,8 +252,9 @@ by using the following methods:
 :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`
     Returns the list of accepted charsets ordered by descending quality.
 
-:method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
-    Returns the list of accepted encodings ordered by descending quality.
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class was
+    introduced in Symfony 2.2.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
@@ -282,38 +281,6 @@ request information. Have a look at
 :class:`the Request API <Symfony\\Component\\HttpFoundation\\Request>`
 for more information about them.
 
-Overriding the Request
-~~~~~~~~~~~~~~~~~~~~~~
-
-The ``Request`` class should not be overridden as it is a data object that
-represents an HTTP message. But when moving from a legacy system, adding
-methods or changing some default behavior might help. In that case, register a
-PHP callable that is able to create an instance of your ``Request`` class::
-
-    use Symfony\Component\HttpFoundation\Request;
-
-    Request::setFactory(function (
-        array $query = array(),
-        array $request = array(),
-        array $attributes = array(),
-        array $cookies = array(),
-        array $files = array(),
-        array $server = array(),
-        $content = null
-    ) {
-        return SpecialRequest::create(
-            $query,
-            $request,
-            $attributes,
-            $cookies,
-            $files,
-            $server,
-            $content
-        );
-    });
-
-    $request = Request::createFromGlobals();
-
 .. _component-http-foundation-response:
 
 Response
@@ -328,7 +295,7 @@ code, and an array of HTTP headers::
 
     $response = new Response(
         'Content',
-        Response::HTTP_OK,
+        200,
         array('content-type' => 'text/html')
     );
 
@@ -339,7 +306,7 @@ This information can also be manipulated after the Response object creation::
     // the headers public attribute is a ResponseHeaderBag
     $response->headers->set('Content-Type', 'text/plain');
 
-    $response->setStatusCode(Response::HTTP_NOT_FOUND);
+    $response->setStatusCode(404);
 
 When setting the ``Content-Type`` of the Response, you can set the charset,
 but it is better to set it via the
@@ -486,6 +453,10 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
+    class was introduced in Symfony 2.2.
+
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
@@ -511,6 +482,9 @@ or change its ``Content-Disposition``::
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
         'filename.txt'
     );
+
+.. versionadded:: 2.6
+    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
 
 It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.

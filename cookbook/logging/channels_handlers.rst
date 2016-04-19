@@ -15,7 +15,7 @@ the channel).
 .. note::
 
     Each channel corresponds to a logger service (``monolog.logger.XXX``)
-    in the container (use the ``debug:container`` command to see a full list)
+    in the container (use the ``container:debug`` command to see a full list)
     and those are injected into different services.
 
 .. _logging-channel-handler:
@@ -125,7 +125,13 @@ specified.
 Configure Additional Channels without Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also configure additional channels without the need to tag your services:
+.. versionadded:: 2.3
+    This feature was introduced to the MonologBundle in version 2.4. This
+    version is compatible with Symfony 2.3, but only MonologBundle 2.3 is
+    installed by default. To use this feature, upgrade your bundle manually.
+
+With MonologBundle 2.4 you can configure additional channels without the
+need to tag your services:
 
 .. configuration-block::
 

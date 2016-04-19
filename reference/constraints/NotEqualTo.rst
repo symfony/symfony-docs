@@ -1,6 +1,9 @@
 NotEqualTo
 ==========
 
+.. versionadded:: 2.3
+    The ``NotEqualTo`` constraint was introduced in Symfony 2.3.
+
 Validates that a value is **not** equal to another value, defined in the
 options. To force that a value is equal, see
 :doc:`/reference/constraints/EqualTo`.
@@ -16,7 +19,6 @@ options. To force that a value is equal, see
 +----------------+-------------------------------------------------------------------------+
 | Options        | - `value`_                                                              |
 |                | - `message`_                                                            |
-|                | - `payload`_                                                            |
 +----------------+-------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualTo`         |
 +----------------+-------------------------------------------------------------------------+
@@ -103,5 +105,3 @@ message
 **type**: ``string`` **default**: ``This value should not be equal to {{ compared_value }}.``
 
 This is the message that will be shown if the value is equal.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
