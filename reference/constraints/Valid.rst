@@ -9,7 +9,7 @@ an object and all sub-objects associated with it.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
-|                | - `payload`_                                                        |
+|                | - `deep`_                                                           |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
 +----------------+---------------------------------------------------------------------+
@@ -267,4 +267,11 @@ If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is
 set to ``true``.
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+deep
+~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this constraint is applied to a property that holds an array of objects,
+then each object in that array will be validated recursively if this option
+is set to ``true``.

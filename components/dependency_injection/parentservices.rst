@@ -277,7 +277,8 @@ called when the child services are instantiated.
 
 .. caution::
 
-   The ``abstract`` and ``tags`` attributes are always taken from the child service.
+   The ``scope``, ``abstract`` and ``tags`` attributes are always taken
+   from the child service.
 
 The parent service is abstract as it should not be directly retrieved from
 the container or passed into another service. It exists merely as a "template"

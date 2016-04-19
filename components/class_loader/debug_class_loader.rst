@@ -1,8 +1,20 @@
+.. index::
+    single: ClassLoader; DebugClassLoader
+
 Debugging a Class Loader
 ========================
 
-.. caution::
+.. versionadded:: 2.1
+    The ``DebugClassLoader`` class was introduced in Symfony 2.1.
 
-    The ``DebugClassLoader`` from the ClassLoader component was deprecated
-    in Symfony 2.5 and removed in Symfony 3.0. Use the
-    :doc:`DebugClassLoader provided by the Debug component </components/debug/class_loader>`.
+The :class:`Symfony\\Component\\ClassLoader\\DebugClassLoader` attempts
+to throw more helpful exceptions when a class isn't found by the registered
+autoloaders. All autoloaders that implement a ``findFile()`` method are
+replaced with a ``DebugClassLoader`` wrapper.
+
+Using the ``DebugClassLoader`` is as easy as calling its static
+:method:`Symfony\\Component\\ClassLoader\\DebugClassLoader::enable` method::
+
+    use Symfony\Component\ClassLoader\DebugClassLoader;
+
+    DebugClassLoader::enable();

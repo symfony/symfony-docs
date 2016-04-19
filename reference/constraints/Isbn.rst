@@ -1,18 +1,20 @@
 Isbn
 ====
 
+.. versionadded:: 2.3
+    The Isbn constraint was introduced in Symfony 2.3.
+
 This constraint validates that an `International Standard Book Number (ISBN)`_
-is either a valid ISBN-10 or a valid ISBN-13.
+is either a valid ISBN-10, a valid ISBN-13 or both.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                |
 +----------------+----------------------------------------------------------------------+
-| Options        | - `type`_                                                            |
-|                | - `message`_                                                         |
+| Options        | - `isbn10`_                                                          |
+|                | - `isbn13`_                                                          |
 |                | - `isbn10Message`_                                                   |
 |                | - `isbn13Message`_                                                   |
 |                | - `bothIsbnMessage`_                                                 |
-|                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`            |
 +----------------+----------------------------------------------------------------------+
@@ -23,7 +25,7 @@ Basic Usage
 -----------
 
 To use the ``Isbn`` validator, simply apply it to a property or method
-on an object that will contain an ISBN.
+on an object that will contain a ISBN number.
 
 .. configuration-block::
 
@@ -38,8 +40,9 @@ on an object that will contain an ISBN.
         {
             /**
              * @Assert\Isbn(
-             *     type = "isbn10",
-             *     message = "This value is not  valid."
+             *     isbn10 = true,
+             *     isbn13 = true,
+             *     bothIsbnMessage = "This value is neither a valid ISBN-10 nor a valid ISBN-13."
              * )
              */
             protected $isbn;
@@ -52,9 +55,9 @@ on an object that will contain an ISBN.
             properties:
                 isbn:
                     - Isbn:
-                        type: isbn10
-                        message: This value is not  valid.
-
+                        isbn10: true
+                        isbn13: true
+                        bothIsbnMessage: This value is neither a valid ISBN-10 nor a valid ISBN-13.
 
     .. code-block:: xml
 
@@ -67,8 +70,11 @@ on an object that will contain an ISBN.
             <class name="AppBundle\Entity\Book">
                 <property name="isbn">
                     <constraint name="Isbn">
-                        <option name="type">isbn10</option>
-                        <option name="message">This value is not  valid.</option>
+                        <option name="isbn10">true</option>
+                        <option name="isbn13">true</option>
+                        <option name="bothIsbnMessage">
+                            This value is neither a valid ISBN-10 nor a valid ISBN-13.
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -89,8 +95,9 @@ on an object that will contain an ISBN.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('isbn', new Assert\Isbn(array(
-                    'type'    => 'isbn10',
-                    'message' => 'This value is not valid.'
+                    'isbn10'          => true,
+                    'isbn13'          => true,
+                    'bothIsbnMessage' => 'This value is neither a valid ISBN-10 nor a valid ISBN-13.'
                 )));
             }
         }
@@ -98,28 +105,28 @@ on an object that will contain an ISBN.
 Available Options
 -----------------
 
-type
-~~~~
+isbn10
+~~~~~~
 
-**type**: ``string`` **default**: ``null``
+**type**: ``boolean`` **default**: ``false``
 
-The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
-and ``null`` to accept any kind of ISBN.
+If this required option is set to ``true`` the constraint will check if
+the code is a valid ISBN-10 code.
 
-message
-~~~~~~~
+isbn13
+~~~~~~
 
-**type**: ``string`` **default**: ``null``
+**type**: ``boolean`` **default**: ``false``
 
-The message that will be shown if the value is not valid. If not ``null``,
-this message has priority over all the other messages.
+If this required option is set to ``true`` the constraint will check if
+the code is a valid ISBN-13 code.
 
 isbn10Message
 ~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
 
-The message that will be shown if the `type`_ option is ``isbn10`` and the given
+The message that will be shown if the `isbn10`_ option is true and the given
 value does not pass the ISBN-10 check.
 
 isbn13Message
@@ -127,7 +134,7 @@ isbn13Message
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
 
-The message that will be shown if the `type`_ option is ``isbn13`` and the given
+The message that will be shown if the `isbn13`_ option is true and the given
 value does not pass the ISBN-13 check.
 
 bothIsbnMessage
@@ -135,9 +142,7 @@ bothIsbnMessage
 
 **type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
 
-The message that will be shown if the `type`_ option is ``null`` and the given
-value does not pass any of the ISBN checks.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
+The message that will be shown if both the `isbn10`_ and `isbn13`_ options
+are true and the given value does not pass the ISBN-13 nor the ISBN-13 check.
 
 .. _`International Standard Book Number (ISBN)`: https://en.wikipedia.org/wiki/Isbn

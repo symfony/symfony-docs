@@ -1,18 +1,18 @@
 .. index::
-   single: Forms; Fields; NumberType
+   single: Forms; Fields; number
 
-NumberType Field
-================
+number Field Type
+=================
 
 Renders an input text field and specializes in handling number input. This
-type offers different options for the scale, rounding and grouping
+type offers different options for the precision, rounding and grouping
 that you want to use for your number.
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                        |
-|             | - `scale`_                                                           |
+|             | - `precision`_                                                       |
 |             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                        |
@@ -27,11 +27,11 @@ that you want to use for your number.
 |             | - `invalid_message_parameters`_                                      |
 |             | - `label`_                                                           |
 |             | - `label_attr`_                                                      |
-|             | - `label_format`_                                                    |
 |             | - `mapped`_                                                          |
+|             | - `read_only`_                                                       |
 |             | - `required`_                                                        |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
+| Parent type | :doc:`form </reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
@@ -41,36 +41,41 @@ Field Options
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-.. include:: /reference/forms/types/options/scale.rst.inc
+.. include:: /reference/forms/types/options/precision.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALFUP``
+**type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_HALFUP``
 
-If a submitted number needs to be rounded (based on the `scale`_
+If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
-option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
-    
-* ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
+option is a constant on the
+:class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
 
-* ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
-  infinity.
+* ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
+  round towards zero.
 
-* ``NumberToLocalizedStringTransformer::ROUND_UP`` Round away from zero.
+* ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
+  round towards negative infinity.
 
-* ``NumberToLocalizedStringTransformer::ROUND_CEILING`` Round towards
-  positive infinity.
+* ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round
+  away from zero.
 
-* ``NumberToLocalizedStringTransformer::ROUND_HALF_DOWN`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round down.
+* ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
+  to round towards positive infinity.
 
-* ``NumberToLocalizedStringTransformer::ROUND_HALF_EVEN`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round towards the
-  even neighbor.
+* ``IntegerToLocalizedStringTransformer::ROUND_HALFDOWN`` Rounding mode
+  to round towards "nearest neighbor" unless both neighbors are equidistant,
+  in which case round down.
 
-* ``NumberToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round up.
+* ``IntegerToLocalizedStringTransformer::ROUND_HALFEVEN`` Rounding mode
+  to round towards the "nearest neighbor" unless both neighbors are equidistant,
+  in which case, round towards the even neighbor.
+
+* ``IntegerToLocalizedStringTransformer::ROUND_HALFUP`` Rounding mode
+  to round towards "nearest neighbor" unless both neighbors are equidistant,
+  in which case round up.
 
 Overridden Options
 ------------------
@@ -80,7 +85,8 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -106,8 +112,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

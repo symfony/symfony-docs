@@ -96,7 +96,7 @@ Fortunately, there is a task for this. Simply run the following command:
 
 .. code-block:: bash
 
-    $ php bin/console init:acl
+    $ php app/console init:acl
 
 Getting Started
 ---------------
@@ -143,8 +143,8 @@ Creating an ACL and Adding an ACE
                 $acl = $aclProvider->createAcl($objectIdentity);
 
                 // retrieving the security identity of the currently logged-in user
-                $tokenStorage = $this->get('security.token_storage');
-                $user = $tokenStorage->getToken()->getUser();
+                $securityContext = $this->get('security.context');
+                $user = $securityContext->getToken()->getUser();
                 $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
                 // grant owner access
@@ -191,10 +191,10 @@ Checking Access
 
         public function editCommentAction(Comment $comment)
         {
-            $authorizationChecker = $this->get('security.authorization_checker');
+            $securityContext = $this->get('security.context');
 
             // check for edit access
-            if (false === $authorizationChecker->isGranted('EDIT', $comment)) {
+            if (false === $securityContext->isGranted('EDIT', $comment)) {
                 throw new AccessDeniedException();
             }
 

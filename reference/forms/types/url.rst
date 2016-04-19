@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; UrlType
+   single: Forms; Fields; url
 
-UrlType Field
-=============
+url Field Type
+==============
 
-The ``UrlType`` field is a text field that prepends the submitted value with
+The ``url`` field is a text field that prepends the submitted value with
 a given protocol (e.g. ``http://``) if the submitted value doesn't already
 have a protocol.
 
@@ -20,12 +20,13 @@ have a protocol.
 |             | - `error_mapping`_                                                |
 |             | - `label`_                                                        |
 |             | - `label_attr`_                                                   |
-|             | - `label_format`_                                                 |
 |             | - `mapped`_                                                       |
+|             | - `max_length`_                                                   |
+|             | - `read_only`_                                                    |
 |             | - `required`_                                                     |
 |             | - `trim`_                                                         |
 +-------------+-------------------------------------------------------------------+
-| Parent type | :doc:`TextType </reference/forms/types/text>`                     |
+| Parent type | :doc:`text </reference/forms/types/text>`                         |
 +-------------+-------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType` |
 +-------------+-------------------------------------------------------------------+
@@ -45,7 +46,8 @@ the data is submitted to the form.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -67,9 +69,11 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/max_length.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

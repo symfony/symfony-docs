@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; TimeType
+   single: Forms; Fields; time
 
-TimeType Field
-==============
+time Field Type
+===============
 
 A field to capture time input.
 
@@ -15,9 +15,8 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `placeholder`_                                                            |
+| Options              | - `empty_value`_                                                            |
 |                      | - `hours`_                                                                  |
-|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
@@ -39,8 +38,9 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
+|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | FormType                                                                    |
+| Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -52,13 +52,10 @@ This field type is highly configurable, but easy to use. The most important
 options are ``input`` and ``widget``.
 
 Suppose that you have a ``startTime`` field whose underlying time data is
-a ``DateTime`` object. The following configures the ``TimeType`` for that
+a ``DateTime`` object. The following configures the ``time`` type for that
 field as two different choice fields::
 
-    use Symfony\Component\Form\Extension\Core\Type\TimeType;
-    // ...
-
-    $builder->add('startTime', TimeType::class, array(
+    $builder->add('startTime', 'time', array(
         'input'  => 'datetime',
         'widget' => 'choice',
     ));
@@ -67,10 +64,7 @@ The ``input`` option *must* be changed to match the type of the underlying
 date data. For example, if the ``startTime`` field's data were a unix timestamp,
 you'd need to set ``input`` to ``timestamp``::
 
-    use Symfony\Component\Form\Extension\Core\Type\TimeType;
-    // ...
-
-    $builder->add('startTime', TimeType::class, array(
+    $builder->add('startTime', 'time', array(
         'input'  => 'timestamp',
         'widget' => 'choice',
     ));
@@ -81,35 +75,9 @@ values.
 Field Options
 -------------
 
-placeholder
-~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
-
-**type**: ``string`` | ``array``
-
-If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. When the placeholder value is a string,
-it will be used as the **blank value** of all select boxes::
-
-    $builder->add('startTime', 'time', array(
-        'placeholder' => 'Select a value',
-    ));
-
-Alternatively, you can use an array that configures different placeholder
-values for the hour, minute and second fields::
-
-    $builder->add('startTime', 'time', array(
-        'placeholder' => array(
-            'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
-        )
-    ));
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 .. include:: /reference/forms/types/options/hours.rst.inc
-
-.. include:: /reference/forms/types/options/html5.rst.inc
 
 input
 ~~~~~
@@ -185,7 +153,8 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -200,6 +169,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Form Variables
 --------------

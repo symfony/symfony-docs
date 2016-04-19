@@ -10,18 +10,13 @@ called in all cases.
 
 To explain this further, here's a simple example::
 
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\Extension\Core\Type\EmailType;
-    use Symfony\Component\Form\Extension\Core\Type\FormType;
-    // ...
-
     $builder = $this->createFormBuilder($article);
     $builder
-        ->add('title', TextType::class)
+        ->add('title', 'text')
         ->add(
-            $builder->create('author', FormType::class, array('by_reference' => ?))
-                ->add('name', TextType::class)
-                ->add('email', EmailType::class)
+            $builder->create('author', 'form', array('by_reference' => ?))
+                ->add('name', 'text')
+                ->add('email', 'email')
         )
 
 If ``by_reference`` is true, the following takes place behind the scenes
@@ -44,8 +39,8 @@ If you set ``by_reference`` to false, submitting looks like this::
 So, all that ``by_reference=false`` really does is force the framework to
 call the setter on the parent object.
 
-Similarly, if you're using the :doc:`CollectionType </reference/forms/types/collection>`
-field where your underlying collection data is an object (like with
+Similarly, if you're using the :doc:`collection</reference/forms/types/collection>`
+form type where your underlying collection data is an object (like with
 Doctrine's ``ArrayCollection``), then ``by_reference`` must be set to ``false``
 if you need the adder and remover (e.g. ``addAuthor()`` and ``removeAuthor()``)
 to be called.

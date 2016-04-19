@@ -28,6 +28,10 @@ Functions
 render
 ~~~~~~
 
+.. versionadded:: 2.2
+    The ``render()`` function was introduced in Symfony 2.2. Prior, the
+    ``{% render %}`` tag was used and had a different signature.
+
 .. code-block:: twig
 
     {{ render(uri, options = []) }}
@@ -78,6 +82,9 @@ Generates an ESI tag when possible or falls back to the behavior of
 controller
 ~~~~~~~~~~
 
+.. versionadded:: 2.2
+    The ``controller()`` function was introduced in Symfony 2.2.
+
 .. code-block:: twig
 
     {{ controller(controller, attributes = [], query = []) }}
@@ -107,7 +114,7 @@ asset
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`book-templating-assets`. For asset versioning, see :ref:`reference-framework-assets-version`.
+:ref:`book-templating-assets`.
 
 assets_version
 ~~~~~~~~~~~~~~
@@ -167,6 +174,20 @@ form_end
 Renders the HTML end tag of a form together with all fields that have not
 been rendered yet, more information in
 :ref:`the Twig Form reference <reference-forms-twig-end>`.
+
+form_enctype
+~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ form_enctype(view) }}
+
+``view``
+    **type**: ``FormView``
+
+Renders the required ``enctype="multipart/form-data"`` attribute if the
+form contains at least one file upload field, more information in
+:ref:`the Twig Form reference <reference-forms-twig-enctype>`.
 
 form_widget
 ~~~~~~~~~~~
@@ -341,53 +362,16 @@ Returns the absolute URL (with scheme and host) for the given route. If
 ``schemeRelative`` is enabled, it'll create a scheme-relative URL. More
 information in :ref:`book-templating-pages`.
 
-absolute_url
-~~~~~~~~~~~~
-
-.. code-block:: jinja
-
-    {{ absolute_url(path) }}
-
-``path``
-    **type**: ``string``
-
-Returns the absolute URL for the given absolute path. This is useful to convert
-an existing path:
-
-.. code-block:: jinja
-
-    {{ absolute_url(asset(path)) }}
-
-relative_path
-~~~~~~~~~~~~~
-
-.. code-block:: jinja
-
-    {{ relative_path(path) }}
-
-``path``
-    **type**: ``string``
-
-Returns a relative path for the given absolute path (based on the current
-request path). For instance, if the current path is
-``/article/news/welcome.html``, the relative path for ``/article/image.png`` is
-``../images.png``.
-
-expression
-~~~~~~~~~~
-
-Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
-Twig. See ":ref:`Template Expressions <book-security-template-expression>`".
-
 .. _reference-twig-filters:
 
 Filters
 -------
 
-.. _reference-twig-humanize-filter:
-
 humanize
 ~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``humanize`` filter was introduced in Symfony 2.1
 
 .. code-block:: twig
 
@@ -399,6 +383,10 @@ humanize
 Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
+
+.. versionadded:: 2.3
+    Transforming camelCase text into human readable text was introduced in
+    Symfony 2.3.
 
 trans
 ~~~~~
@@ -650,16 +638,6 @@ trans_default_domain
 
 This will set the default domain in the current template.
 
-stopwatch
-~~~~~~~~~
-
-.. code-block:: jinja
-
-    {% stopwatch 'name' %}...{% endstopwatch %}
-
-This will time the run time of the code inside it and put that on the timeline
-of the WebProfilerBundle.
-
 .. _reference-twig-tests:
 
 Tests
@@ -699,6 +677,7 @@ The available attributes are:
 * ``app.session``
 * ``app.environment``
 * ``app.debug``
+* ``app.security``
 
 Symfony Standard Edition Extensions
 -----------------------------------
@@ -708,7 +687,10 @@ Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong
   to the Twig core. You can read more in `the official Twig Extensions
-  documentation`_.
+  documentation`_;
+* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
+  ``{% image %}`` tags. You can read more about them in
+  :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

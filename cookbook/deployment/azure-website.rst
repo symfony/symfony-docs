@@ -96,8 +96,8 @@ and how to properly configure PHP for a production environment.
 Configuring the latest PHP Runtime
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Even though Symfony only requires PHP 5.5.9 to run, it's always recommended
-to use the most recent PHP version whenever possible. Earlier versions are no longer
+Even though Symfony only requires PHP 5.3.3 to run, it's always recommended
+to use the most recent PHP version whenever possible. PHP 5.3 is no longer
 supported by the PHP core team, but you can update it easily in Azure.
 
 To update your PHP version on Azure, go to the **Configure** tab of the control
@@ -259,13 +259,13 @@ directory with at least the following contents:
 
 .. code-block:: text
 
-    /var/bootstrap.php.cache
-    /var/cache/*
+    /app/bootstrap.php.cache
+    /app/cache/*
     /app/config/parameters.yml
-    /var/logs/*
-    !var/cache/.gitkeep
-    !var/logs/.gitkeep
-    /var/SymfonyRequirements.php
+    /app/logs/*
+    !app/cache/.gitkeep
+    !app/logs/.gitkeep
+    /app/SymfonyRequirements.php
     /build/
     /vendor/
     /bin/
@@ -388,7 +388,7 @@ MySQL database.
 
 .. code-block:: bash
 
-    $ php bin/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
 This command builds the tables and indexes for your MySQL database. If your
 Symfony application is more complex than a basic Symfony Standard Edition, you

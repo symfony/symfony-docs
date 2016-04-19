@@ -8,10 +8,7 @@ corresponding property of the form's domain object (if an object is bound
 to the form). If you want to override the initial value for the form or
 just an individual field, you can set it in the data option::
 
-    use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-    // ...
-
-    $builder->add('token', HiddenType::class, array(
+    $builder->add('token', 'hidden', array(
         'data' => 'abcdef',
     ));
 

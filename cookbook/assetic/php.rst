@@ -4,8 +4,6 @@
 Combining, Compiling and Minimizing Web Assets with PHP Libraries
 =================================================================
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
-
 The official Symfony Best Practices recommend to use Assetic to
 :doc:`manage web assets </best_practices/web-assets>`, unless you are
 comfortable with JavaScript-based front-end tools.
@@ -33,8 +31,10 @@ directory and execute the following commands:
 .. code-block:: bash
 
     $ composer require leafo/scssphp
-    $ composer require patchwork/jsqueeze
+    $ composer require patchwork/jsqueeze:"~1.0"
 
+It's very important to maintain the ``~1.0`` version constraint for the ``jsqueeze``
+dependency because the most recent stable version is not compatible with Assetic.
 
 Organizing your Web Asset Files
 -------------------------------

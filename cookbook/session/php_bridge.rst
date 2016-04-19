@@ -4,6 +4,9 @@
 Bridge a legacy Application with Symfony Sessions
 =================================================
 
+.. versionadded:: 2.3
+    The ability to integrate with a legacy PHP session was introduced in Symfony 2.3.
+
 If you're integrating the Symfony full-stack Framework into a legacy application
 that starts the session with ``session_start()``, you may still be able to
 use Symfony's session management by using the PHP Bridge session.

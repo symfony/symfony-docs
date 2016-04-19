@@ -125,21 +125,7 @@ an email is pretty straightforward::
     }
 
 To keep things decoupled, the email body has been stored in a template and
-rendered with the ``renderView()`` method. The ``registration.html.twig``
-template might look something like this:
-
-.. code-block:: html+jinja
-
-    {# app/Resources/views/Emails/registration.html.twig #}
-    <h3>You did it! You registered!</h3>
-
-    {# example, assuming you have a route named "login" #}
-    To login, go to: <a href="{{ url('login') }}">...</a>.
-
-    Thanks!
-
-    {# Makes an absolute URL to the /images/logo.png file #}
-    <img src="{{ absolute_url(asset('images/logo.png')) }}">
+rendered with the ``renderView()`` method.
 
 The ``$message`` object supports many more options, such as including attachments,
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic

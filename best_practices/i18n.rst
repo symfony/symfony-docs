@@ -32,9 +32,9 @@ Of all the available translation formats, only XLIFF and gettext have broad
 support in the tools used by professional translators. And since it's based
 on XML, you can validate XLIFF file contents as you write them.
 
-Symfony supports notes in XLIFF files, making them more user-friendly for
-translators. At the end, good translations are all about context, and these
-XLIFF notes allow you to define that context.
+Symfony 2.6 added support for notes inside XLIFF files, making them more
+user-friendly for translators. At the end, good translations are all about
+context, and these XLIFF notes allow you to define that context.
 
 .. tip::
 

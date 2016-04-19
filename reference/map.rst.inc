@@ -13,7 +13,6 @@
   * :doc:`twig </reference/configuration/twig>`
   * :doc:`monolog </reference/configuration/monolog>`
   * :doc:`web_profiler </reference/configuration/web_profiler>`
-  * :doc:`debug </reference/configuration/debug>`
 
 * :doc:`Configuring the Kernel (e.g. AppKernel) </reference/configuration/kernel>`
 

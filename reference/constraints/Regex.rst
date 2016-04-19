@@ -10,7 +10,6 @@ Validates that a value matches a regular expression.
 |                | - `htmlPattern`_                                                      |
 |                | - `match`_                                                            |
 |                | - `message`_                                                          |
-|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Regex`            |
 +----------------+-----------------------------------------------------------------------+
@@ -178,6 +177,9 @@ fail if the input string *does* match this pattern.
 htmlPattern
 ~~~~~~~~~~~
 
+.. versionadded:: 2.1
+    The ``htmlPattern`` option was introduced in Symfony 2.1
+
 **type**: ``string|boolean`` **default**: null
 
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
@@ -276,5 +278,3 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 This is the message that will be shown if this validator fails.
-
-.. include:: /reference/constraints/_payload-option.rst.inc

@@ -13,10 +13,7 @@ override it by passing the format as a string.
 
 For more information on valid formats, see `Date/Time Format Syntax`_::
 
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    // ...
-
-    $builder->add('date_created', DateType::class, array(
+    $builder->add('date_created', 'date', array(
         'widget' => 'single_text',
         // this is actually the default format for single_text
         'format' => 'yyyy-MM-dd',

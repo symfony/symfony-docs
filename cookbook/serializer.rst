@@ -6,14 +6,20 @@ How to Use the Serializer
 
 Serializing and deserializing to and from objects and different formats (e.g.
 JSON or XML) is a very complex topic. Symfony comes with a
-:doc:`Serializer Component </components/serializer>`, which gives you some
+:doc:`Serializer Component</components/serializer>`, which gives you some
 tools that you can leverage for your solution.
 
 In fact, before you start, get familiar with the serializer, normalizers
-and encoders by reading the :doc:`Serializer Component </components/serializer>`.
+and encoders by reading the :doc:`Serializer Component</components/serializer>`.
+You should also check out the `JMSSerializerBundle`_, which expands on the
+functionality offered by Symfony's core serializer.
 
 Activating the Serializer
 -------------------------
+
+.. versionadded:: 2.3
+    The Serializer has always existed in Symfony, but prior to Symfony 2.3,
+    you needed to build the ``serializer`` service yourself.
 
 The ``serializer`` service is not available by default. To turn it on, activate
 it in your configuration:
@@ -42,43 +48,23 @@ it in your configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
-                'enabled' => true,
+                'enabled' => true
             ),
         ));
-
-Using the Serializer Service
-----------------------------
-
-Once enabled, the ``serializer`` service can be injected in any service where
-you need it or it can be used in a controller like the following::
-
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class DefaultController extends Controller
-    {
-        public function indexAction()
-        {
-            $serializer = $this->get('serializer');
-
-            // ...
-        }
-    }
 
 Adding Normalizers and Encoders
 -------------------------------
 
 Once enabled, the ``serializer`` service will be available in the container
-and will be loaded with two :ref:`encoders <component-serializer-encoders>`
+and will be loaded with two :ref:`encoders<component-serializer-encoders>`
 (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` and
-:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`) and the
-:ref:`ObjectNormalizer normalizer <component-serializer-normalizers>`.
+:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`)
+but no :ref:`normalizers<component-serializer-normalizers>`, meaning you'll
+need to load your own.
 
 You can load normalizers and/or encoders by tagging them as
-:ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
-:ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
+:ref:`serializer.normalizer<reference-dic-tags-serializer-normalizer>` and
+:ref:`serializer.encoder<reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
 Here is an example on how to load the
@@ -115,102 +101,11 @@ Here is an example on how to load the
         $definition->addTag('serializer.normalizer');
         $container->setDefinition('get_set_method_normalizer', $definition);
 
-.. _cookbook-serializer-using-serialization-groups-annotations:
+.. note::
 
-Using Serialization Groups Annotations
---------------------------------------
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
+    is broken by design. As soon as you have a circular object graph, an
+    infinite loop is created when calling the getters. You're encouraged
+    to add your own normalizers that fit your use-case.
 
-Enable :ref:`serialization groups annotation <component-serializer-attributes-groups>`
-with the following configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            serializer:
-                enable_annotations: true
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer enable-annotations="true" />
-        </framework:config>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-            ),
-        ));
-
-Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
-to your class and choose which groups to use when serializing::
-
-    $serializer = $this->get('serializer');
-    $json = $serializer->serialize(
-        $someObject,
-        'json', array('groups' => array('group1'))
-    );
-
-.. _cookbook-serializer-enabling-metadata-cache:
-
-Enabling the Metadata Cache
----------------------------
-
-Metadata used by the Serializer component such as groups can be cached to
-enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
-interface can be used.
-
-A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config_prod.yml
-        framework:
-            # ...
-            serializer:
-                cache: serializer.mapping.cache.apc
-
-    .. code-block:: xml
-
-        <!-- app/config/config_prod.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer cache="serializer.mapping.cache.apc" />
-        </framework:config>
-
-    .. code-block:: php
-
-        // app/config/config_prod.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'cache' => 'serializer.mapping.cache.apc',
-            ),
-        ));
-
-Going Further with the Serializer Component
--------------------------------------------
-
-`ApiPlatform`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
-hypermedia formats. It is built on top of the Symfony Framework and its Serializer
-component. It provides custom normalizers and a custom encoder, custom metadata
-and a caching system.
-
-If you want to leverage the full power of the Symfony Serializer component,
-take a look at how this bundle works.
-
-.. _`APCu`: https://github.com/krakjoe/apcu
-.. _`ApiPlatform`: https://github.com/api-platform/core
-.. _`JSON-LD`: http://json-ld.org
-.. _`Hydra Core Vocabulary`: http://hydra-cg.com
+.. _JMSSerializerBundle: http://jmsyst.com/bundles/JMSSerializerBundle
