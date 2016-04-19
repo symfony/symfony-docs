@@ -222,6 +222,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         twig:
             # ...
             paths:
@@ -229,6 +230,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -243,6 +245,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
@@ -262,6 +265,7 @@ for that directory:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         twig:
             # ...
             paths:
@@ -269,6 +273,7 @@ for that directory:
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -283,6 +288,7 @@ for that directory:
 
     .. code-block:: php
 
+        # app/config/config.php
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
