@@ -103,8 +103,6 @@ TwigBundle Configuration ("twig")
 Configuration
 -------------
 
-.. _config-twig-exception-controller:
-
 auto_reload
 ~~~~~~~~~~~
 
@@ -155,15 +153,17 @@ regular PHP code. Compilation is a costly process, so the result is cached in
 the directory defined by this configuration option.
 
 Set this option to ``null`` to disable Twig template compilation. However, this
-is not recommended (even for the ``dev`` environment).
+is not recommended; not even in the ``dev`` environment, because the
+``auto_reload`` option ensures that cached templates which have changed get
+compiled again.
 
 charset
 ~~~~~~~
 
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
-The charset used by the template files. In Symfony Standard edition this defaults
-to ``UTF-8`` charset.
+The charset used by the template files. In the Symfony Standard edition this
+defaults to the ``UTF-8`` charset.
 
 debug
 ~~~~~
@@ -172,6 +172,8 @@ debug
 
 If ``true``, the compiled templates include a ``__toString()`` method that can
 be used to display their nodes.
+
+.. _config-twig-exception-controller:
 
 exception_controller
 ~~~~~~~~~~~~~~~~~~~~
@@ -275,7 +277,7 @@ for that directory:
 
             <twig:config>
                 <!-- ... -->
-                <twig:path namspace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
