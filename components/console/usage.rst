@@ -77,14 +77,11 @@ with:
     $ php application.php list --verbose
     $ php application.php list -v
 
-The verbose flag can optionally take a value between 1 (default) and 3 to
-output even more verbose messages:
+To output even more verbose messages you can use these options:
 
 .. code-block:: bash
 
-    $ php application.php list --verbose=2
     $ php application.php list -vv
-    $ php application.php list --verbose=3
     $ php application.php list -vvv
 
 If you set the optional arguments to give your application a name and version::
