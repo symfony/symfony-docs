@@ -12,15 +12,15 @@ relationships (e.g. a product from where you can manage many related product
 photos).
 
 +-------------+-----------------------------------------------------------------------------+
-| Rendered as | depends on the `entry_type`_ option                                         |
+| Rendered as | depends on the `type`_ option                                               |
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
 |             | - `delete_empty`_                                                           |
-|             | - `entry_options`_                                                          |
-|             | - `entry_type`_                                                             |
+|             | - `options`_                                                                |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
+|             | - `type`_                                                                   |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
 | options     | - `empty_data`_                                                             |
@@ -276,8 +276,8 @@ form you have to set this option to true. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
 
-entry_options
-~~~~~~~~~~~~~
+options
+~~~~~~~
 
 **type**: ``array`` **default**: ``array()``
 
@@ -292,27 +292,16 @@ type::
     // ...
 
     $builder->add('favorite_cities', CollectionType::class, array(
-        'entry_type'   => ChoiceType::class,
+        'entry_type'   => 'choice,
         'entry_options'  => array(
             'choices'  => array(
-                'Nashville' => 'nashville',
-                'Paris'     => 'paris',
-                'Berlin'    => 'berlin',
-                'London'    => 'london',
+                'nashville' => 'Nashville',
+                'paris'     => 'Paris',
+                'berlin'    => 'Berlin',
+                'london'    => 'London',
             ),
         ),
     ));
-
-entry_type
-~~~~~~~~~~
-
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
-
-This is the field type for each item in this collection (e.g. ``TextType``,
-``ChoiceType``, etc). For example, if you have an array of email addresses,
-you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
-to embed a collection of some other form, create a new instance of your
-form type and pass it as this option.
 
 prototype
 ~~~~~~~~~
@@ -361,6 +350,17 @@ prototype_name
 If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are
 not replaced with the same value.
+
+type
+~~~~
+
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
+
+This is the field type for each item in this collection (e.g. ``TextType``,
+``ChoiceType``, etc). For example, if you have an array of email addresses,
+you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
+to embed a collection of some other form, create a new instance of your
+form type and pass it as this option.
 
 Inherited Options
 -----------------
