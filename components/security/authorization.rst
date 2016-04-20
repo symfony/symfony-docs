@@ -133,7 +133,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     // any object
     $object = ...;
 
-    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY');
+    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY'));
 
 RoleVoter
 ~~~~~~~~~
