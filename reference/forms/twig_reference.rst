@@ -180,24 +180,6 @@ obvious (since it'll render the field for you).
 
     {{ form_rest(form) }}
 
-.. _reference-forms-twig-enctype:
-
-form_enctype(view)
-------------------
-
-.. note::
-
-    This helper was deprecated in Symfony 2.3 and will be removed in Symfony
-    3.0. You should use ``form_start()`` instead.
-
-If the form contains at least one file upload field, this will render the
-required ``enctype="multipart/form-data"`` form attribute. It's always a
-good idea to include this in your form tag:
-
-.. code-block:: html+twig
-
-    <form action="{{ path('form_submit') }}" method="post" {{ form_enctype(form) }}>
-
 Form Tests Reference
 --------------------
 
@@ -331,9 +313,6 @@ done by using a public ``vars`` property on the
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
-.. versionadded:: 2.3
-    The ``method`` and ``action`` variables were introduced in Symfony 2.3.
-
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
 +========================+=====================================================================================+
@@ -352,20 +331,16 @@ done by using a public ``vars`` property on the
 |                        | since this only returns "global" errors: some individual fields may have errors.    |
 |                        | Instead, use the ``valid`` option.                                                  |
 +------------------------+-------------------------------------------------------------------------------------+
+| ``submitted``          | Returns ``true`` or ``false`` depending on whether the whole form is submitted      |
++------------------------+-------------------------------------------------------------------------------------+
 | ``valid``              | Returns ``true`` or ``false`` depending on whether the whole form is valid.         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute). |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
 |                        | validation. Additionally, a ``required`` class is added to the label.               |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element.                                 |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``pattern``            | Adds a ``pattern`` HTML attribute to the element.                                   |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``label``              | The string label that will be rendered.                                             |
 +------------------------+-------------------------------------------------------------------------------------+

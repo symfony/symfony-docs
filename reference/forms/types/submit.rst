@@ -1,11 +1,8 @@
 .. index::
-   single: Forms; Fields; submit
+   single: Forms; Fields; SubmitType
 
-submit Field Type
-=================
-
-.. versionadded:: 2.3
-    The ``submit`` type was introduced in Symfony 2.3.
+SubmitType Field
+================
 
 A submit button.
 
@@ -16,10 +13,11 @@ A submit button.
 | options              | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
 |                      | - `label_attr`_                                                      |
+|                      | - `label_format`_                                                    |
 |                      | - `translation_domain`_                                              |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
-| Parent type          | :doc:`button</reference/forms/types/button>`                         |
+| Parent type          | :doc:`ButtonType</reference/forms/types/button>`                     |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType` |
 +----------------------+----------------------------------------------------------------------+
@@ -45,6 +43,8 @@ Inherited Options
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
 validation_groups
@@ -56,11 +56,14 @@ When your form contains multiple submit buttons, you can change the validation
 group based on the button which was used to submit the form. Imagine a registration
 form wizard with buttons to go to the previous or the next step::
 
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    // ...
+
     $form = $this->createFormBuilder($user)
-        ->add('previousStep', 'submit', array(
+        ->add('previousStep', SubmitType::class, array(
             'validation_groups' => false,
         ))
-        ->add('nextStep', 'submit', array(
+        ->add('nextStep', SubmitType::class, array(
             'validation_groups' => array('Registration'),
         ))
         ->getForm();

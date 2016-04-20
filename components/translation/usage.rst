@@ -139,6 +139,8 @@ recommended format. These files are parsed by one of the loader classes.
             'symfony.great'    => 'J\'aime Symfony',
         );
 
+.. _translation-real-vs-keyword-messages:
+
 .. sidebar:: Using Real or Keyword Messages
 
     This example illustrates the two different philosophies when creating
@@ -367,6 +369,31 @@ use for translation::
         array('%count%' => 10),
         'messages',
         'fr_FR'
+    );
+
+Retrieving the Message Catalogue
+--------------------------------
+
+In case you want to use the same translation catalogue outside your application
+(e.g. use translation on the client side), it's possible to fetch raw translation
+messages. Just specify the required locale::
+
+    $catalogue = $translator->getCatalogue('fr_FR');
+    $messages = $catalogue->all();
+    while ($catalogue = $catalogue->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalogue->all(), $messages);
+    }
+
+The ``$messages`` variable will have the following structure::
+
+    array(
+        'messages' => array(
+            'Hello world' => 'Bonjour tout le monde',
+        ),
+        'validators' => array(
+            'Value should not be empty' => 'Valeur ne doit pas être vide',
+            'Value is too long' => 'Valeur est trop long',
+        ),
     );
 
 .. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization

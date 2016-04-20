@@ -8,6 +8,7 @@ you to apply a collection of constraints to each element of the array.
 | Applies to     | :ref:`property or method <validation-property-target>`            |
 +----------------+-------------------------------------------------------------------+
 | Options        | - `constraints`_                                                  |
+|                | - `payload`_                                                      |
 +----------------+-------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\All`          |
 +----------------+-------------------------------------------------------------------+
@@ -107,3 +108,5 @@ constraints
 
 This required option is the array of validation constraints that you want
 to apply to each element of the underlying array.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

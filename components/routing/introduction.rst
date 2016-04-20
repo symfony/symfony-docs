@@ -98,9 +98,6 @@ A full route definition can contain up to seven parts:
 #. An array of methods. These enforce a certain HTTP request method (``HEAD``,
    ``GET``, ``POST``, ...).
 
-.. versionadded:: 2.2
-    Host matching support was introduced in Symfony 2.2
-
 Take the following route, which combines several of these ideas::
 
    $route = new Route(
@@ -169,7 +166,6 @@ host to all routes of a subtree using methods provided by the
     $subCollection->setSchemes(array('https'));
 
     $rootCollection->addCollection($subCollection);
-
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

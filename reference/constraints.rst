@@ -9,11 +9,8 @@ Validation Constraints Reference
    constraints/Blank
    constraints/NotNull
    constraints/IsNull
-   constraints/Null
    constraints/IsTrue
-   constraints/True
    constraints/IsFalse
-   constraints/False
    constraints/Type
 
    constraints/Email
@@ -21,6 +18,7 @@ Validation Constraints Reference
    constraints/Url
    constraints/Regex
    constraints/Ip
+   constraints/Uuid
 
    constraints/Range
 
@@ -52,10 +50,12 @@ Validation Constraints Reference
    constraints/Currency
    constraints/Luhn
    constraints/Iban
+   constraints/Bic
    constraints/Isbn
    constraints/Issn
 
    constraints/Callback
+   constraints/Expression
    constraints/All
    constraints/UserPassword
    constraints/Valid

@@ -1,19 +1,18 @@
 .. index::
-   single: Forms; Fields; timezone
+   single: Forms; Fields; TimezoneType
 
-timezone Field Type
-===================
+TimezoneType Field
+==================
 
-The ``timezone`` type is a subset of the ``ChoiceType`` that allows the
+The ``TimezoneType`` is a subset of the ``ChoiceType`` that allows the
 user to select from all possible timezones.
 
 The "value" for each timezone is the full timezone name, such as ``America/Chicago``
 or ``Europe/Istanbul``.
 
-Unlike the ``choice`` type, you don't need to specify a ``choices`` or
-``choice_list`` option as the field type automatically uses a large list
-of timezones. You *can* specify either of these options manually, but then
-you should just use the ``choice`` type directly.
+Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
+field type automatically uses a large list of timezones. You *can* specify the option
+manually, but then you should just use the ``ChoiceType`` directly.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
@@ -21,14 +20,14 @@ you should just use the ``choice`` type directly.
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
+| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
-|             | - `empty_value`_                                                       |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
+|             | - `placeholder`_                                                       |
 |             | - `preferred_choices`_                                                 |
 |             |                                                                        |
-|             | from the :doc:`form </reference/forms/types/form>` type                |
+|             | from the :doc:`FormType </reference/forms/types/form>`                 |
 |             |                                                                        |
 |             | - `data`_                                                              |
 |             | - `disabled`_                                                          |
@@ -37,11 +36,11 @@ you should just use the ``choice`` type directly.
 |             | - `error_mapping`_                                                     |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
+|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice </reference/forms/types/choice>`                          |
+| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
@@ -52,7 +51,7 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\TimezoneChoiceList`
+**default**: An array of timezones.
 
 The Timezone type defaults the choices to all timezones returned by
 :phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
@@ -60,19 +59,17 @@ The Timezone type defaults the choices to all timezones returned by
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>`
-type:
-
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
+.. include:: /reference/forms/types/options/placeholder.rst.inc
+
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -98,8 +95,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/mapped.rst.inc
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

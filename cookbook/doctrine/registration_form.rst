@@ -167,33 +167,32 @@ Next, create the form for the ``User`` entity::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email')
-                ->add('username', 'text')
-                ->add('plainPassword', 'repeated', array(
-                    'type' => 'password',
+                ->add('email', EmailType::class)
+                ->add('username', TextType::class)
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
                 )
             );
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\User',
             ));
-        }
-
-        public function getName()
-        {
-            return 'user';
         }
     }
 
@@ -230,16 +229,15 @@ into the database::
         {
             // 1) build the form
             $user = new User();
-            $form = $this->createForm(new UserType(), $user);
+            $form = $this->createForm(UserType::class, $user);
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
 
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $encoder = $this->get('security.encoder_factory')
-                    ->getEncoder($user);
-                $password = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
 
                 // 4) save the User!
@@ -250,9 +248,7 @@ into the database::
                 // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user
 
-                $redirectUrl = $this->generateUrl('replace_with_some_route');
-
-                return $this->redirect($redirectUrl);
+                return $this->redirectToRoute('replace_with_some_route');
             }
 
             return $this->render(
@@ -382,7 +378,7 @@ your database schema using this command:
 
 .. code-block:: bash
 
-   $ php app/console doctrine:schema:update --force
+   $ php bin/console doctrine:schema:update --force
 
 That's it! Head to ``/register`` to try things out!
 
@@ -428,15 +424,17 @@ To do this, add a ``termsAccepted`` field to your form, but set its
     // src/AppBundle/Form/UserType.php
     // ...
     use Symfony\Component\Validator\Constraints\IsTrue;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email');
+                ->add('email', EmailType::class);
                 // ...
-                ->add('termsAccepted', 'checkbox', array(
+                ->add('termsAccepted', CheckboxType::class, array(
                     'mapped' => false,
                     'constraints' => new IsTrue(),
                 ))

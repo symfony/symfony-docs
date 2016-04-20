@@ -96,7 +96,7 @@ To override the 404 error template for HTML pages, create a new
         <h1>Page not found</h1>
 
         {# example security usage, see below #}
-        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {# ... #}
         {% endif %}
 
@@ -124,23 +124,7 @@ store the HTTP status code and message respectively.
     for the standard HTML exception page or ``exception.json.twig`` for the JSON
     exception page.
 
-Avoiding Exceptions when Using Security Functions in Error Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-One of the common pitfalls when designing custom error pages is to use the
-``is_granted()`` function in the error template (or in any parent template
-inherited by the error template). If you do that, you'll see an exception thrown
-by Symfony.
-
-The cause of this problem is that routing is done before security. If a 404 error
-occurs, the security layer isn't loaded and thus, the ``is_granted()`` function
-is undefined. The solution is to add the following check before using this function:
-
-.. code-block:: twig
-
-    {% if app.user and is_granted('...') %}
-        {# ... #}
-    {% endif %}
+.. _testing-error-pages:
 
 Testing Error Pages during Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,10 +133,60 @@ While you're in the development environment, Symfony shows the big *exception*
 page instead of your shiny new customized error page. So, how can you see
 what it looks like and debug it?
 
-The recommended solution is to use a third-party bundle called `WebfactoryExceptionsBundle`_.
-This bundle provides a special test controller that allows you to easily display
-custom error pages for arbitrary HTTP status codes even when ``kernel.debug`` is
-set to ``true``.
+Fortunately, the default ``ExceptionController`` allows you to preview your
+*error* pages during development.
+
+To use this feature, you need to have a definition in your
+``routing_dev.yml`` file like so:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing_dev.yml
+        _errors:
+            resource: "@TwigBundle/Resources/config/routing/errors.xml"
+            prefix:   /_error
+
+    .. code-block:: xml
+
+        <!-- app/config/routing_dev.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="@TwigBundle/Resources/config/routing/errors.xml"
+                prefix="/_error" />
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing_dev.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            $loader->import('@TwigBundle/Resources/config/routing/errors.xml')
+        );
+        $collection->addPrefix("/_error");
+
+        return $collection;
+
+If you're coming from an older version of Symfony, you might need to
+add this to your ``routing_dev.yml`` file. If you're starting from
+scratch, the `Symfony Standard Edition`_ already contains it for you.
+
+With this route added, you can use URLs like
+
+.. code-block:: text
+
+     http://localhost/app_dev.php/_error/{statusCode}
+     http://localhost/app_dev.php/_error/{statusCode}.{format}
+
+to preview the *error* page for a given status code as HTML or for a
+given status code and format.
 
 .. _custom-exception-controller:
 .. _replacing-the-default-exceptioncontroller:
@@ -269,6 +303,11 @@ In that case, you might want to override one or both of the ``showAction()`` and
     And then configure ``twig.exception_controller`` using the controller as
     services syntax (e.g. ``app.exception_controller:showAction``).
 
+.. tip::
+
+    The :ref:`error page preview <testing-error-pages>` also works for
+    your own controllers set up this way.
+
 .. _use-kernel-exception-event:
 
 Working with the ``kernel.exception`` Event
@@ -310,3 +349,6 @@ time and again, you can have just one (or several) listeners deal with them.
     out and other things.
 
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
+.. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php
+.. _`development environment`: http://symfony.com/doc/current/cookbook/configuration/environments.html

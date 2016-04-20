@@ -21,6 +21,8 @@ Inside here, you can create whatever directories you want to organize things:
     │  └─ AppBundle/
     │     └─ Utils/
     │        └─ MyClass.php
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
@@ -40,6 +42,8 @@ and put things there:
     │  │   └─ Utils/
     │  │      └─ MyClass.php
     │  └─ AppBundle/
+    ├─ tests/
+    ├─ var/
     ├─ vendor/
     └─ web/
 
@@ -318,7 +322,7 @@ command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:fixtures:load
+    $ php bin/console doctrine:fixtures:load
 
     Careful, database will be purged. Do you want to continue Y/N ? Y
       > purging database

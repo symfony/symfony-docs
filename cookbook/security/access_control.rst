@@ -128,12 +128,14 @@ will match any ``ip``, ``host`` or ``method``:
 ---------------------
 
 Once Symfony has decided which ``access_control`` entry matches (if any),
-it then *enforces* access restrictions based on the ``roles`` and ``requires_channel``
+it then *enforces* access restrictions based on the ``roles``, ``allow_if`` and ``requires_channel``
 options:
 
 * ``role`` If the user does not have the given role(s), then access is denied
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown);
+
+* ``allow_if`` If the expression returns false, then access is denied;
 
 * ``requires_channel`` If the incoming request's channel (e.g. ``http``)
   does not match this value (e.g. ``https``), the user will be redirected
@@ -238,6 +240,55 @@ address):
   ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
 
 * The second access rule is not examined as the first rule matched.
+
+.. _book-security-allow-if:
+
+Securing by an Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once an ``access_control`` entry is matched, you can deny access via the
+``roles`` key or use more complex logic with an expression in the ``allow_if``
+key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                -
+                    path: ^/_internal/secure
+                    allow_if: "'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')"
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal/secure"
+                    allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array(
+                    'path' => '^/_internal/secure',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
+                ),
+            ),
+
+In this case, when the user tries to access any URL starting with ``/_internal/secure``,
+they will only be granted access if the IP address is ``127.0.0.1`` or if
+the user has the ``ROLE_ADMIN`` role.
+
+Inside the expression, you have access to a number of different variables
+and functions including ``request``, which is the Symfony
+:class:`Symfony\\Component\\HttpFoundation\\Request` object (see
+:ref:`component-http-foundation-request`).
+
+For a list of the other functions and variables, see
+:ref:`functions and variables <book-security-expression-variables>`.
 
 .. _book-security-securing-channel:
 
