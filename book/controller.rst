@@ -507,6 +507,22 @@ The Symfony templating engine is explained in great detail in the
 .. index::
    single: Controller; Accessing services
 
+Sending JSON responses
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you're developing an API, you'll probably return JSON contents from your
+controllers. The ``json()`` method turns the given contents into JSON format and
+prepares the HTTP response accordingly for you::
+
+    // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+    $data = array('username' => 'jane.doe');
+    return $this->json($data);
+
+The only required argument is the data to be sent, but ``json()`` defines three
+more optional arguments::
+
+    $this->json($data, $status = 200, $headers = array(), $context = array());
+
 .. _controller-accessing-services:
 
 Accessing other Services
@@ -777,24 +793,6 @@ There are also special classes to make certain kinds of responses easier:
 * For streamed responses, there is
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
-
-JSON helper
-~~~~~~~~~~~
-
-You can simplify sending JSON response with
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::json`
-helper::
-
-    $this->json($data, $status = 200, $headers = array(), $context = array());
-
-For example if you want to send some simple array you can use it like this::
-
-    public function jsonAction()
-    {
-        $data = [1, 2, 3];
-
-        return $this->json($data);
-    }
 
 .. seealso::
 
