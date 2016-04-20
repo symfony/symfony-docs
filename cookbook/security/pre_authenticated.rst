@@ -92,6 +92,9 @@ in the x509 firewall configuration respectively.
 REMOTE_USER Based Authentication
 --------------------------------
 
+.. versionadded:: 2.6
+    REMOTE_USER pre authenticated firewall was introduced in Symfony 2.6.
+
 A lot of authentication modules, like ``auth_kerb`` for Apache provide the username
 using the ``REMOTE_USER`` environment variable. This variable can be trusted by
 the application since the authentication happened before the request reached it.

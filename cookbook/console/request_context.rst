@@ -16,13 +16,16 @@ what URL it should use when generating URLs.
 There are two ways of configuring the request context: at the application level
 and per Command.
 
-Configuring the Request Context Globally
+Configuring the Request Context globally
 ----------------------------------------
+
+.. versionadded:: 2.2
+    The ``base_url`` parameter was introduced in Symfony 2.2.
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
-(localhost) and scheme (http). You can also configure the base path if Symfony
-is not running in the root directory.
+(localhost) and scheme (http). Starting with Symfony 2.2 you can also configure
+the base path if Symfony is not running in the root directory.
 
 Note that this does not impact URLs generated via normal web requests, since those
 will override the defaults.

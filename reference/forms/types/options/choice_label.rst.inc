@@ -1,16 +1,16 @@
 choice_label
 ~~~~~~~~~~~~
 
+.. versionadded:: 2.7
+    The ``choice_label`` option was introduced in Symfony 2.7.
+
 **type**: ``string``, ``callable`` or ``false`` **default**: ``null``
 
 Normally, the array key of each item in the ``choices`` option is used as the
 text that's shown to the user. The ``choice_label`` option allows you to take
 more control::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('attending', ChoiceType::class, array(
+    $builder->add('attending', 'choice', array(
         'choices' => array(
             'yes' => true,
             'no' => false,
@@ -39,10 +39,7 @@ If your choice values are objects, then ``choice_label`` can also be a
 :ref:`property path <reference-form-option-property-path>`. Imagine you have some
 ``Status`` class with a ``getDisplayName()`` method::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('attending', ChoiceType::class, array(
+    $builder->add('attending', 'choice', array(
         'choices' => array(
             new Status(Status::YES),
             new Status(Status::NO),

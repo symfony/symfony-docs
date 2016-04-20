@@ -4,6 +4,9 @@
 Using Events
 ============
 
+.. versionadded:: 2.3
+    Console events were introduced in Symfony 2.3.
+
 The Application class of the Console component allows you to optionally hook
 into the lifecycle of a console application via events. Instead of reinventing
 the wheel, it uses the Symfony EventDispatcher component to do the work::
@@ -55,6 +58,9 @@ dispatched. Listeners receive a
 
 Disable Commands inside Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    Disabling commands inside listeners was introduced in Symfony 2.6.
 
 Using the
 :method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`

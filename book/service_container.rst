@@ -145,7 +145,7 @@ As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
-":doc:`/cookbook/service_container/shared`" cookbook article.
+":doc:`/cookbook/service_container/scopes`" cookbook article.
 
 .. note::
 
@@ -811,15 +811,13 @@ Injecting the dependency by the setter method just needs a change of syntax:
     "property injection".
 
 .. _book-container-request-stack:
-.. _injecting-the-request:
 
-Accessing the Request in a Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Injecting the Request
+~~~~~~~~~~~~~~~~~~~~~
 
-Whenever you need to access the current request in a service, you can either
-add it as an argument to the methods that need the request or inject the
-``request_stack`` service and access the ``Request`` by calling the
-:method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
+As of Symfony 2.4, instead of injecting the ``request`` service, you should
+inject the ``request_stack`` service and access the ``Request`` by calling
+the :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
 method::
 
     namespace Acme\HelloBundle\Newsletter;
@@ -885,6 +883,20 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
             'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(new Reference('request_stack'))
         ));
+
+.. sidebar:: Why not Inject the ``request`` Service?
+
+    Almost all Symfony2 built-in services behave in the same way: a single
+    instance is created by the container which it returns whenever you get it or
+    when it is injected into another service. There is one exception in a standard
+    Symfony2 application: the ``request`` service.
+
+    If you try to inject the ``request`` into a service, you will probably receive
+    a
+    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
+    exception. That's because the ``request`` can **change** during the life-time
+    of a container (when a sub-request is created for instance).
+
 
 .. tip::
 
@@ -982,7 +994,7 @@ which you can access inside a standard controller as follows::
 
 In Symfony, you'll constantly use services provided by the Symfony core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
-sending emails (``mailer``), or accessing information on the request through the request stack (``request_stack``).
+sending emails (``mailer``), or accessing information on the request (``request``).
 
 You can take this a step further by using these services inside services that
 you've created for your application. Beginning by modifying the ``NewsletterManager``
@@ -1136,13 +1148,16 @@ console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
-    $ php bin/console debug:container
+    $ php app/console debug:container
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 By default, only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
-    $ php bin/console debug:container --show-private
+    $ php app/console debug:container --show-private
 
 .. note::
 
@@ -1156,7 +1171,7 @@ its id:
 
 .. code-block:: bash
 
-    $ php bin/console debug:container app.mailer
+    $ php app/console debug:container app.mailer
 
 Learn more
 ----------
@@ -1168,6 +1183,7 @@ Learn more
 * :doc:`/components/dependency_injection/parentservices`
 * :doc:`/components/dependency_injection/tags`
 * :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/service_container/scopes`
 * :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 

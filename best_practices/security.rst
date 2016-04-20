@@ -264,65 +264,37 @@ the same ``getAuthorEmail`` logic you used above:
 
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use AppBundle\Entity\Post;
 
-    class PostVoter extends Voter
+    // AbstractVoter class requires Symfony 2.6 or higher version
+    class PostVoter extends AbstractVoter
     {
         const CREATE = 'create';
         const EDIT   = 'edit';
 
-        /**
-         * @var AccessDecisionManagerInterface
-         */
-        private $decisionManager;
-
-        public function __construct(AccessDecisionManagerInterface $decisionManager)
+        protected function getSupportedAttributes()
         {
-            $this->decisionManager = $decisionManager;
+            return array(self::CREATE, self::EDIT);
         }
 
-        protected function supports($attribute, $subject)
+        protected function getSupportedClasses()
         {
-            if (!in_array($attribute, array(self::CREATE, self::EDIT))) {
-                return false;
-            }
-
-            if (!$subject instanceof Post) {
-                return false;
-            }
-
-            return true;
+            return array('AppBundle\Entity\Post');
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function isGranted($attribute, $post, $user = null)
         {
-            $user = $token->getUser();
-            /** @var Post */
-            $post = $subject; // $subject must be a Post instance, thanks to the supports method
-
             if (!$user instanceof UserInterface) {
                 return false;
             }
 
-            switch ($attribute) {
-                case self::CREATE:
-                    // if the user is an admin, allow them to create new posts
-                    if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
-                        return true;
-                    }
+            if ($attribute === self::CREATE && in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+                return true;
+            }
 
-                    break;
-                case self::EDIT:
-                    // if the user is the author of the post, allow them to edit the posts
-                    if ($user->getEmail() === $post->getAuthorEmail()) {
-                        return true;
-                    }
-
-                    break;
+            if ($attribute === self::EDIT && $user->getEmail() === $post->getAuthorEmail()) {
+                return true;
             }
 
             return false;
@@ -338,7 +310,6 @@ To enable the security voter in the application, define a new service:
         # ...
         post_voter:
             class:      AppBundle\Security\PostVoter
-            arguments: ['@security.access.decision_manager']
             public:     false
             tags:
                - { name: security.voter }
@@ -366,7 +337,7 @@ via the even easier shortcut in a controller:
      */
     public function editAction($id)
     {
-        $post = ...; // query for the post
+        $post = // query for the post ...
 
         $this->denyAccessUnlessGranted('edit', $post);
 

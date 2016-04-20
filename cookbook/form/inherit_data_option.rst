@@ -4,6 +4,10 @@
 How to Reduce Code Duplication with "inherit_data"
 ==================================================
 
+.. versionadded:: 2.3
+    This ``inherit_data`` option was introduced in Symfony 2.3. Before, it
+    was known as ``virtual``.
+
 The ``inherit_data`` form field option can be very useful when you have some
 duplicated fields in different entities. For example, imagine you have two
 entities, a ``Company`` and a ``Customer``::
@@ -48,15 +52,14 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class CompanyType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('name', TextType::class)
-                ->add('website', TextType::class);
+                ->add('name', 'text')
+                ->add('website', 'text');
         }
     }
 
@@ -67,15 +70,14 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class CustomerType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('firstName', TextType::class)
-                ->add('lastName', TextType::class);
+                ->add('firstName', 'text')
+                ->add('lastName', 'text');
         }
     }
 
@@ -89,18 +91,16 @@ for that::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class LocationType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('address', TextareaType::class)
-                ->add('zipcode', TextType::class)
-                ->add('city', TextType::class)
-                ->add('country', TextType::class);
+                ->add('address', 'textarea')
+                ->add('zipcode', 'text')
+                ->add('city', 'text')
+                ->add('country', 'text');
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -108,6 +108,11 @@ for that::
             $resolver->setDefaults(array(
                 'inherit_data' => true
             ));
+        }
+
+        public function getName()
+        {
+            return 'location';
         }
     }
 
@@ -130,7 +135,7 @@ Finally, make this work by adding the location form to your two original forms::
     {
         // ...
 
-        $builder->add('foo', LocationType::class, array(
+        $builder->add('foo', new LocationType(), array(
             'data_class' => 'AppBundle\Entity\Company'
         ));
     }
@@ -142,7 +147,7 @@ Finally, make this work by adding the location form to your two original forms::
     {
         // ...
 
-        $builder->add('bar', LocationType::class, array(
+        $builder->add('bar', new LocationType(), array(
             'data_class' => 'AppBundle\Entity\Customer'
         ));
     }

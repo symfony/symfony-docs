@@ -190,6 +190,10 @@ Get all the child or parent nodes::
 Accessing Node Values
 ~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.6
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::nodeName`
+    method was introduced in Symfony 2.6.
+
 Access the node name (HTML tag name) of the first node of the current selection (eg. "p" or "div")::
 
     // will return the node name (HTML tag name) of the first child element under <body>
@@ -222,6 +226,11 @@ Call an anonymous function on each node of the list::
     $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
+
+.. versionadded:: 2.3
+    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
+    are passed a ``Crawler`` as the first argument. Previously, that argument
+    was a :phpclass:`DOMNode`.
 
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
@@ -288,6 +297,8 @@ and :phpclass:`DOMNode` objects:
     :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
 
         $html = $crawler->html();
+
+    The ``html`` method is new in Symfony 2.3.
 
 Links
 ~~~~~

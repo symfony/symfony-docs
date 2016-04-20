@@ -1,20 +1,17 @@
 .. index::
    single: Security, Firewall
 
-The Firewall and Authorization
-==============================
+The Firewall and Security Context
+=================================
 
-Central to the Security component is authorization. This is handled by an instance
-of :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface`.
-When all steps in the process of authenticating the user have been taken successfully,
-you can ask the authorization checker if the authenticated user has access to a
+Central to the Security component is the security context, which is an instance
+of :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`. When all
+steps in the process of authenticating the user have been taken successfully,
+you can ask the security context if the authenticated user has access to a
 certain action or resource of the application::
 
-    use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+    use Symfony\Component\Security\Core\SecurityContext;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-    // instance of Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-    $tokenStorage = ...;
 
     // instance of Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface
     $authenticationManager = ...;
@@ -22,17 +19,21 @@ certain action or resource of the application::
     // instance of Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
     $accessDecisionManager = ...;
 
-    $authorizationChecker = new AuthorizationChecker(
-        $tokenStorage,
+    $securityContext = new SecurityContext(
         $authenticationManager,
         $accessDecisionManager
     );
 
     // ... authenticate the user
 
-    if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
+    if (!$securityContext->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+
+.. versionadded:: 2.6
+    As of Symfony 2.6, the :class:`Symfony\\Component\\Security\\Core\\SecurityContext` class was split
+    in the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker` and
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorage` classes.
 
 .. note::
 
@@ -119,7 +120,7 @@ which will eventually result in an "HTTP/1.1 403: Access Denied" response.
 Entry Points
 ~~~~~~~~~~~~
 
-When the user is not authenticated at all (i.e. when the token storage
+When the user is not authenticated at all (i.e. when the security context
 has no token yet), the firewall's entry point will be called to "start"
 the authentication process. An entry point should implement
 :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`,

@@ -1,6 +1,9 @@
 Issn
 ====
 
+.. versionadded:: 2.3
+    The Issn constraint was introduced in Symfony 2.3.
+
 Validates that a value is a valid
 `International Standard Serial Number (ISSN)`_.
 
@@ -10,7 +13,6 @@ Validates that a value is a valid
 | Options        | - `message`_                                                          |
 |                | - `caseSensitive`_                                                    |
 |                | - `requireHyphen`_                                                    |
-|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Issn`             |
 +----------------+-----------------------------------------------------------------------+
@@ -101,7 +103,5 @@ requireHyphen
 
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

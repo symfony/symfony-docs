@@ -26,14 +26,10 @@ Full Default Configuration
             # before following the redirect
             intercept_redirects: false
 
-            # Exclude AJAX requests in the web debug toolbar for specified paths
-            excluded_ajax_paths:  ^/bundles|^/_wdt
-
     .. code-block:: xml
 
         <web-profiler:config
             toolbar="false"
             verbose="true"
             intercept_redirects="false"
-            excluded_ajax_paths="^/bundles|^/_wdt"
         />

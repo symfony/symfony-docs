@@ -68,7 +68,7 @@ This command will now automatically be available to run:
 
 .. code-block:: bash
 
-    $ php bin/console demo:greet Fabien
+    $ php app/console demo:greet Fabien
 
 .. _cookbook-console-dic:
 

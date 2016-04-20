@@ -4,8 +4,6 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
-
 Full Default Configuration
 --------------------------
 
@@ -50,12 +48,6 @@ Full Default Configuration
 
                 # An array of named filters (e.g. some_filter, some_other_filter)
                 some_filter:                 []
-            workers:
-                # see https://github.com/symfony/AsseticBundle/pull/119
-                # Cache can also be busted via the framework.assets.version
-                # setting - see the "framework" configuration section
-                cache_busting:
-                    enabled:              false
             twig:
                 functions:
                     # An array of named functions (e.g. some_function, some_other_function)

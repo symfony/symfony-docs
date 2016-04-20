@@ -4,6 +4,9 @@
 Lazy Services
 =============
 
+.. versionadded:: 2.3
+   Lazy services were introduced in Symfony 2.3.
+
 Why Lazy Services?
 ------------------
 
@@ -27,7 +30,7 @@ the `ProxyManager bridge`_:
 
 .. code-block:: bash
 
-    $ composer require symfony/proxy-manager-bridge
+    $ composer require symfony/proxy-manager-bridge:~2.3
 
 .. note::
 

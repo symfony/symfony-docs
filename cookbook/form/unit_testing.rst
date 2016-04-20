@@ -20,6 +20,11 @@ There is already a class that you can benefit from for simple FormTypes
 testing: :class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to
 test the core types and you can use it to test your types too.
 
+.. versionadded:: 2.3
+    The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
+    namespace in 2.3. Previously, the class was located in
+    ``Symfony\Component\Form\Tests\Extension\Core\Type``.
+
 .. note::
 
     Depending on the way you installed your Symfony or Symfony Form component
@@ -31,8 +36,8 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // tests/AppBundle/Form/Type/TestedTypeTest.php
-    namespace Tests\AppBundle\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
+    namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -47,7 +52,8 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             );
 
-            $form = $this->factory->create(TestedType::class);
+            $type = new TestedType();
+            $form = $this->factory->create($type);
 
             $object = TestObject::fromArray($formData);
 
@@ -72,7 +78,8 @@ First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm`` function and options resolution. This should
 be the first test you write::
 
-    $form = $this->factory->create(TestedType::class);
+    $type = new TestedType();
+    $form = $this->factory->create($type);
 
 This test checks that none of your data transformers used by the form
 failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
@@ -102,56 +109,54 @@ widgets you want to display are available in the children property::
         $this->assertArrayHasKey($key, $children);
     }
 
-Testings Types from the Service Container
------------------------------------------
+Adding a Type your Form Depends on
+----------------------------------
 
-Your form may be used as a service, as it depends on other services (e.g. the
-Doctrine entity manager). In these cases, using the above code won't work, as
-the Form component just instantiates the form type without passing any
-arguments to the constructor.
+Your form may depend on other types that are defined as services. It
+might look like this::
 
-To solve this, you have to mock the injected dependencies, instantiate your own
-form type and use the :class:`Symfony\\Component\\Form\\PreloadedExtension` to
-make sure the ``FormRegistry`` uses the created instance::
+    // src/AppBundle/Form/Type/TestedType.php
 
-    // tests/AppBundle/Form/Type/TestedTypeTests.php
-    namespace Tests\AppBundle\Form\Type;
+    // ... the buildForm method
+    $builder->add('app_test_child_type');
 
+To create your form correctly, you need to make the type available to the
+form factory in your test. The easiest way is to register it manually
+before creating the parent form using the ``PreloadedExtension`` class::
+
+    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    namespace AppBundle\Tests\Form\Type;
+
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
+    use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Form\PreloadedExtension;
-    // ...
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $entityManager;
-
-        protected function setUp()
-        {
-            // mock any dependencies
-            $this->entityManager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-
-            parent::setUp();
-        }
-
         protected function getExtensions()
         {
-            // create a type instance with the mocked dependencies
-            $type = new TestedType($this->entityManager);
+            $childType = new TestChildType();
 
-            return array(
-                // register the type instances with the PreloadedExtension
-                new PreloadedExtension(array($type), array()),
-            );
+            return array(new PreloadedExtension(array(
+                $childType->getName() => $childType,
+            ), array()));
         }
 
         public function testSubmitValidData()
         {
-            // Instead of creating a new instance, the one created in
-            // getExtensions() will be used.
-            $form = $this->factory->create(TestedType::class);
+            $type = new TestedType();
+            $form = $this->factory->create($type);
 
             // ... your test
         }
     }
+
+.. caution::
+
+    Make sure the child type you add is well tested. Otherwise you may
+    be getting errors that are not related to the form you are currently
+    testing but to its children.
 
 Adding Custom Extensions
 ------------------------
@@ -165,28 +170,26 @@ will be raised if you try to test a class that depends on other extensions.
 The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
 allows you to return a list of extensions to register::
 
-    // tests/AppBundle/Form/Type/TestedTypeTests.php
-    namespace Tests\AppBundle\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    namespace AppBundle\Tests\Form\Type;
 
-    // ...
+    use AppBundle\Form\Type\TestedType;
+    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Validator\ConstraintViolationList;
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $validator;
-
         protected function getExtensions()
         {
-            $this->validator = $this->getMock(
-                'Symfony\Component\Validator\Validator\ValidatorInterface'
-            );
-            $this->validator
-                ->method('validate')
-                ->will($this->returnValue(new ConstraintViolationList()));
+            $validator = $this->getMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
+            $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
             return array(
-                new ValidatorExtension($this->validator),
+                new ValidatorExtension($validator),
             );
         }
 
@@ -199,8 +202,8 @@ Testing against Different Sets of Data
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
 a good opportunity to use them::
 
-    // tests/AppBundle/Form/Type/TestedTypeTests.php
-    namespace Tests\AppBundle\Form\Type;
+    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
     use AppBundle\Model\TestObject;
@@ -208,6 +211,7 @@ a good opportunity to use them::
 
     class TestedTypeTest extends TypeTestCase
     {
+
         /**
          * @dataProvider getValidTestData
          */

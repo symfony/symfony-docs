@@ -1,6 +1,9 @@
 choice_name
 ~~~~~~~~~~~
 
+.. versionadded:: 2.7
+    The ``choice_name`` option was introduced in Symfony 2.7.
+
 **type**: ``callable`` or ``string`` **default**: ``null``
 
 Controls the internal field name of the choice. You normally don't care about this,

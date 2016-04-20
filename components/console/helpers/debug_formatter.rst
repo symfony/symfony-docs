@@ -4,6 +4,9 @@
 Debug Formatter Helper
 ======================
 
+.. versionadded:: 2.6
+    The Debug Formatter helper was introduced in Symfony 2.6.
+
 The :class:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper` provides
 functions to output debug information when running an external program, for
 instance a process or HTTP request. For example, if you used it to output

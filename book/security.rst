@@ -510,12 +510,14 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
+
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, you can use the built-in command:
+For hardcoded users, since 2.7 you can use the built-in command:
 
 .. code-block:: bash
 
-    $ php bin/console security:encode-password
+    $ php app/console security:encode-password
 
 It will give you something like this:
 
@@ -844,6 +846,15 @@ You can easily deny access from inside a controller::
         // ...
     }
 
+.. versionadded:: 2.6
+    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
+    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
+    in the example above).
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+
 In both cases, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
@@ -878,7 +889,7 @@ Access Control in Templates
 ...........................
 
 If you want to check if the current user has a role inside a template, use
-the built-in ``is_granted()`` helper function:
+the built-in helper function:
 
 .. configuration-block::
 
@@ -893,6 +904,20 @@ the built-in ``is_granted()`` helper function:
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
+
+If you use this function and you are *not* behind a firewall, an exception will
+be thrown. Again, it's almost always a good idea to have a main firewall that
+covers all URLs (as shown before in this chapter).
+
+.. caution::
+
+    Be careful with this in your base layout or on your error pages! Because of
+    some internal Symfony details, to avoid broken error pages in the ``prod``
+    environment, wrap calls in these templates with a check for ``app.user``:
+
+    .. code-block:: html+twig
+
+        {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
 .......................
@@ -995,6 +1020,10 @@ shown above.
 
 Retrieving the User Object
 --------------------------
+
+.. versionadded:: 2.6
+     The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
+     to Symfony 2.6, you had to use the ``getToken()`` method of the ``security.context`` service.
 
 After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
@@ -1204,6 +1233,9 @@ in the following way from a controller::
 
     $user->setPassword($encoded);
 
+.. versionadded:: 2.6
+    The ``security.password_encoder`` service was introduced in Symfony 2.6.
+
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
 key in ``app/config/security.yml``.
@@ -1346,7 +1378,7 @@ security vulnerability in your installed dependencies:
 
 .. code-block:: bash
 
-    $ php bin/console security:check
+    $ php app/console security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,

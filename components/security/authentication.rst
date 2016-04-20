@@ -4,17 +4,21 @@
 Authentication
 ==============
 
+.. versionadded:: 2.6
+    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
+    had to use the ``getToken()`` method of the
+    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
+
 When a request points to a secured area, and one of the listeners from the
 firewall map is able to extract the user's credentials from the current
 :class:`Symfony\\Component\\HttpFoundation\\Request` object, it should create
 a token, containing these credentials. The next thing the listener should
 do is ask the authentication manager to validate the given token, and return
 an *authenticated* token if the supplied credentials were found to be valid.
-The listener should then store the authenticated token using 
-:class:`the token storage <Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface>`::
+The listener should then store the authenticated token in the security context::
 
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\SecurityContextInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -22,9 +26,9 @@ The listener should then store the authenticated token using
     class SomeAuthenticationListener implements ListenerInterface
     {
         /**
-         * @var TokenStorageInterface
+         * @var SecurityContextInterface
          */
-        private $tokenStorage;
+        private $securityContext;
 
         /**
          * @var AuthenticationManagerInterface
@@ -55,7 +59,7 @@ The listener should then store the authenticated token using
                 ->authenticationManager
                 ->authenticate($unauthenticatedToken);
 
-            $this->tokenStorage->setToken($authenticatedToken);
+            $this->securityContext->setToken($authenticatedToken);
         }
     }
 

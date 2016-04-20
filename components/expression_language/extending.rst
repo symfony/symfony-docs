@@ -56,6 +56,9 @@ evaluating or the "names" if compiling).
 Using Expression Providers
 --------------------------
 
+.. versionadded:: 2.6
+    Expression providers were introduced in Symfony 2.6.
+
 When you use the ``ExpressionLanguage`` class in your library, you often want
 to add custom functions. To do so, you can create a new expression provider by
 creating a class that implements

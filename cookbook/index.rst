@@ -16,7 +16,6 @@ The Cookbook
     doctrine/index
     email/index
     event_dispatcher/index
-    expression/index
     form/index
     frontend/index
     install/index
@@ -29,6 +28,7 @@ The Cookbook
     service_container/index
     session/index
     psr7
+    symfony1
     templating/index
     testing/index
     upgrade/index

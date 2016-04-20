@@ -533,7 +533,10 @@ console command:
 
 .. code-block:: bash
 
-    $ php bin/console debug:container
+    $ php app/console debug:container
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 For more information, see the :doc:`/book/service_container` chapter.
 
@@ -840,10 +843,16 @@ method to check the CSRF token::
         // ... do something, like deleting an object
     }
 
-    // isCsrfTokenValid() is equivalent to:
-    // $this->get('security.csrf.token_manager')->isTokenValid(
-    //     new \Symfony\Component\Security\Csrf\CsrfToken\CsrfToken('token_id', $token)
-    // );
+.. versionadded:: 2.6
+    The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
+    It is equivalent to executing the following code:
+
+    .. code-block:: php
+
+        use Symfony\Component\Security\Csrf\CsrfToken;
+
+        $this->get('security.csrf.token_manager')
+            ->isTokenValid(new CsrfToken('token_id', 'TOKEN'));
 
 Final Thoughts
 --------------

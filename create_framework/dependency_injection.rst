@@ -100,11 +100,10 @@ Create a new file to host the dependency injection container configuration::
     $sc->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
         ->setArguments(array($routes, new Reference('context')))
     ;
-    $sc->register('request_stack', 'Symfony\Component\HttpFoundation\RequestStack');
     $sc->register('resolver', 'Symfony\Component\HttpKernel\Controller\ControllerResolver');
 
     $sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
-        ->setArguments(array(new Reference('matcher'), new Reference('request_stack')))
+        ->setArguments(array(new Reference('matcher')))
     ;
     $sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener')
         ->setArguments(array('UTF-8'))
@@ -215,7 +214,7 @@ And the related change in the front controller::
 
 We have obviously barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
-definitions, from shared service support to dumping a container to a plain PHP class,
+definitions, from scope support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful
 and is able to manage any kind of PHP class.
 

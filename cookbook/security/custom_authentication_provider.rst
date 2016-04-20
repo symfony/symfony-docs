@@ -10,7 +10,6 @@ How to Create a custom Authentication Provider
     you through that process. But depending on your needs, you may be able
     to solve your problem in a simpler, or via a community bundle:
 
-    * :doc:`/cookbook/security/guard-authentication`
     * :doc:`/cookbook/security/custom_password_authenticator`
     * :doc:`/cookbook/security/api_key_authentication`
     * To authenticate via OAuth using a third-party service such as Google, Facebook
@@ -214,6 +213,7 @@ the ``PasswordDigest`` header value matches with the user's password.
     use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use AppBundle\Security\Authentication\Token\WsseUserToken;
+    use Symfony\Component\Security\Core\Util\StringUtils;
 
     class WsseProvider implements AuthenticationProviderInterface
     {
@@ -275,7 +275,7 @@ the ``PasswordDigest`` header value matches with the user's password.
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
 
-            return hash_equals($expected, $digest);
+            return StringUtils::equals($expected, $digest);
         }
 
         public function supports(TokenInterface $token)
@@ -294,10 +294,11 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. note::
 
-    While the :phpfunction:`hash_equals` function was introduced in PHP 5.6,
-    you are safe to use it with any PHP version in your Symfony application. In
-    PHP versions prior to 5.6, `Symfony Polyfill`_ (which is included in
-    Symfony) will define the function for you.
+    The comparison of the expected and the provided digests uses a constant
+    time comparison provided by the
+    :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
+    method of the ``StringUtils`` class. It is used to mitigate possible
+    `timing attacks`_.
 
 The Factory
 -----------
@@ -676,4 +677,3 @@ in the factory and consumed or passed to the other classes in the container.
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce
 .. _`timing attacks`: https://en.wikipedia.org/wiki/Timing_attack
-.. _`Symfony Polyfill`: https://github.com/symfony/polyfill
