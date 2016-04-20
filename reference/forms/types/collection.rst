@@ -357,9 +357,6 @@ well as :ref:`cookbook-form-collections-new-prototype`.
 prototype_data
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 2.8
-    The ``prototype_data`` option was introduced in Symfony 2.8.
-
 **type**: ``mixed`` **default**: ``null``
 
 Allows you to define specific data for the prototype. Each new row added will
