@@ -1,6 +1,9 @@
 error_mapping
 ~~~~~~~~~~~~~
 
+.. versionadded:: 2.1
+    The ``error_mapping`` option was introduced in Symfony 2.1.
+
 **type**: ``array`` **default**: ``array()``
 
 This option allows you to modify the target of a validation error.
@@ -13,7 +16,7 @@ of the form.
 With customized error mapping, you can do better: map the error to the city
 field so that it displays above it::
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'error_mapping' => array(

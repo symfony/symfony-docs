@@ -11,7 +11,7 @@ command:
 
 .. code-block:: bash
 
-    $ php bin/console list doctrine
+    $ php app/console list doctrine
 
 A list of available commands will print out. You can find out more information
 about any of these commands (or any Symfony command) by running the ``help``
@@ -20,7 +20,7 @@ task, run:
 
 .. code-block:: bash
 
-    $ php bin/console help doctrine:database:create
+    $ php app/console help doctrine:database:create
 
 Some notable or interesting tasks include:
 
@@ -30,7 +30,7 @@ Some notable or interesting tasks include:
 
   .. code-block:: bash
 
-      $ php bin/console doctrine:ensure-production-settings --env=prod
+      $ php app/console doctrine:ensure-production-settings --env=prod
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see

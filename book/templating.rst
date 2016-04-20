@@ -159,7 +159,7 @@ Twig Template Caching
 
 Twig is fast. Each Twig template is compiled down to a native PHP class
 that is rendered at runtime. The compiled classes are located in the
-``var/cache/{environment}/twig`` directory (where ``{environment}`` is the
+``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
 environment, such as ``dev`` or ``prod``) and in some cases can be useful
 while debugging. See :ref:`environments-summary` for more information on
 environments.
@@ -379,6 +379,11 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
+.. versionadded:: 2.2
+    Namespaced path support was introduced in 2.2, allowing for template names
+    like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
+    for more details.
+
 By default, templates can live in two different locations:
 
 ``app/Resources/views/``
@@ -579,6 +584,10 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
+.. versionadded:: 2.3
+    The `include() function`_ is available since Symfony 2.3. Prior, the
+    `{% include %} tag`_ was used.
+
 .. index::
    single: Templating; Embedding action
 
@@ -686,6 +695,9 @@ that as much code as possible lives in reusable :doc:`services </book/service_co
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.1
+    hinclude.js support was introduced in Symfony 2.1
+
 Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
 Symfony uses a version of the standard ``render`` function to configure ``hinclude``
@@ -706,7 +718,7 @@ tags:
         ) ?>
 
         <?php echo $view['actions']->render(
-            $view['router']->url('...'),
+            $view['router']->generate('...'),
             array('renderer' => 'hinclude')
         ) ?>
 
@@ -792,6 +804,9 @@ in your application configuration:
                 ),
             ),
         ));
+
+.. versionadded:: 2.2
+    Default templates per render function was introduced in Symfony 2.2
 
 You can define default templates per ``render`` function (which will override
 any global default template that is defined):
@@ -914,7 +929,7 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
+        <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
@@ -993,7 +1008,7 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
-            <a href="<?php echo $view['router']->path('article_show', array(
+            <a href="<?php echo $view['router']->generate('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
                 <?php echo $article->getTitle() ?>
@@ -1002,20 +1017,26 @@ correctly:
 
 .. tip::
 
-    You can also generate an absolute URL by using the ``url`` function:
+    You can also generate an absolute URL by using the ``url`` Twig function:
 
-    .. configuration-block::
+    .. code-block:: html+twig
 
-        .. code-block:: html+twig
+        <a href="{{ url('_welcome') }}">Home</a>
 
-            <a href="{{ url('_welcome') }}">Home</a>
+    The same can be done in PHP templates by passing a third argument to
+    the ``generate()`` method:
 
-        .. code-block:: html+php
+    .. code-block:: html+php
 
-            <a href="<?php echo $view['router']->url(
-                '_welcome',
-                array()
-            ) ?>">Home</a>
+        <?php
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
+
+        <a href="<?php echo $view['router']->generate(
+            '_welcome',
+            array(),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
@@ -1057,47 +1078,6 @@ assets won't be loaded from cache after being deployed. For example, ``/images/l
 look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
 configuration option.
 
-.. _`book-templating-version-by-asset`:
-
-If you need to set a version for a specific asset, you can set the ``version`` argument
-if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('images/logo.png', version='3.0') }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            false,
-            '3.0'
-        ) ?>" alt="Symfony!" />
-
-If you don't give a version or pass ``null``, the default package version
-(from :ref:`reference-framework-assets-version`) will be used. If you pass ``false``,
-versioned URL will be deactivated for this asset.
-
-If you need absolute URLs for assets, you can use the ``absolute_url`` function
-if you are using Twig (or the third argument if you are using PHP) to ``true``:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            true
-        ) ?>" alt="Symfony!" />
-
 .. index::
    single: Templating; Including stylesheets and JavaScripts
    single: Stylesheets; Including stylesheets
@@ -1113,9 +1093,9 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and JavaScript assets in Symfony. Symfony is also compatible with another
-    library, called Assetic, which follows this philosophy but allows you to do
-    much more interesting things with those assets. For more information on
+    and JavaScript assets in Symfony. Symfony also packages another library,
+    called Assetic, which follows this philosophy but allows you to do much
+    more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
 Start by adding two blocks to your base template that will hold your assets:
@@ -1201,7 +1181,7 @@ should use the ``parent()`` Twig function to include everything from the ``style
 block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
-You will need to run the ``php bin/console assets:install target [--symlink]``
+You will need to run the ``php app/console assets:install target [--symlink]``
 command, which moves (or symlinks) files into the correct location. (target
 is by default "web").
 
@@ -1221,6 +1201,8 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
+``app.security``
+    The security context.
 ``app.user``
     The current user object.
 ``app.request``
@@ -1373,7 +1355,7 @@ to create it). You're now free to customize the template.
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your
-    cache (``php bin/console cache:clear``), even if you are in debug mode.
+    cache (``php app/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in AcmeBlogBundle inherits from a base template called
@@ -1571,33 +1553,12 @@ in a JavaScript string, use the ``js`` context:
 Debugging
 ---------
 
-When using PHP, you can use the
-:ref:`dump() function from the VarDumper component <components-var-dumper-dump>`
-if you need to quickly find the value of a variable passed. This is useful,
-for example, inside your controller::
+When using PHP, you can use :phpfunction:`var_dump` if you need to quickly find
+the value of a variable passed. This is useful, for example, inside your
+controller. The same can be achieved when using Twig thanks to the Debug
+extension.
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
-
-    // ...
-
-    class ArticleController extends Controller
-    {
-        public function recentListAction()
-        {
-            $articles = ...;
-            dump($articles);
-
-            // ...
-        }
-    }
-
-.. note::
-
-    The output of the ``dump()`` function is then rendered in the web developer
-    toolbar.
-
-The same mechanism can be used in Twig templates thanks to ``dump`` function:
+Template parameters can then be dumped using the ``dump`` function:
 
 .. code-block:: html+twig
 
@@ -1617,16 +1578,16 @@ is ``true``. By default this means that the variables will be dumped in the
 Syntax Checking
 ---------------
 
-You can check for syntax errors in Twig templates using the ``lint:twig``
+You can check for syntax errors in Twig templates using the ``twig:lint``
 console command:
 
 .. code-block:: bash
 
     # You can check by filename:
-    $ php bin/console lint:twig app/Resources/views/article/recent_list.html.twig
+    $ php app/console twig:lint app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php bin/console lint:twig app/Resources/views
+    $ php app/console twig:lint app/Resources/views
 
 .. _template-formats:
 
@@ -1678,7 +1639,7 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->path('article_show', array(
+        <a href="<?php echo $view['router']->generate('article_show', array(
             'id' => 123,
             '_format' => 'pdf',
         )) ?>">

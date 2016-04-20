@@ -1,6 +1,9 @@
 method
 ~~~~~~
 
+.. versionadded:: 2.3
+    The ``method`` option was introduced in Symfony 2.3.
+
 **type**: ``string`` **default**: ``POST``
 
 This option specifies the HTTP method used to submit the form's data. Its

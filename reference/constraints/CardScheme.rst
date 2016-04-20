@@ -1,6 +1,9 @@
 CardScheme
 ==========
 
+.. versionadded:: 2.2
+    The ``CardScheme`` constraint was introduced in Symfony 2.2.
+
 This constraint ensures that a credit card number is valid for a given credit
 card company. It can be used to validate the number before trying to initiate
 a payment through a payment gateway.
@@ -10,7 +13,6 @@ a payment through a payment gateway.
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `schemes`_                                                             |
 |                | - `message`_                                                             |
-|                | - `payload`_                                                             |
 +----------------+--------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\CardScheme`          |
 +----------------+--------------------------------------------------------------------------+
@@ -128,7 +130,5 @@ message
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Wikipedia: Issuer identification number (IIN)`: https://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29

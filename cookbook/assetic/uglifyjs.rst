@@ -4,8 +4,6 @@
 How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)
 =========================================================
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
-
 `UglifyJS`_ is a JavaScript parser/compressor/beautifier toolkit. It can be used
 to combine and minify JavaScript assets so that they require less HTTP requests
 and make your site load faster. `UglifyCSS`_ is a CSS compressor/beautifier

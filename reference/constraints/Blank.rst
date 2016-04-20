@@ -10,7 +10,6 @@ to ``null``. To force that a value strictly be equal to ``null``, see the
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
-|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Blank`          |
 +----------------+---------------------------------------------------------------------+
@@ -88,5 +87,3 @@ message
 **type**: ``string`` **default**: ``This value should be blank.``
 
 This is the message that will be shown if the value is not blank.
-
-.. include:: /reference/constraints/_payload-option.rst.inc

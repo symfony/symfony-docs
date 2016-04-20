@@ -1,20 +1,16 @@
 * :doc:`/components/using_components`
 
-* :doc:`/components/asset/index`
-
-  * :doc:`/components/asset/introduction`
-
 * :doc:`/components/browser_kit/index`
-
+  
   * :doc:`/components/browser_kit/introduction`
 
 * :doc:`/components/class_loader/index`
 
   * :doc:`/components/class_loader/introduction`
   * :doc:`/components/class_loader/class_loader`
-  * :doc:`/components/class_loader/psr4_class_loader`
   * :doc:`/components/class_loader/map_class_loader`
   * :doc:`/components/class_loader/cache_class_loader`
+  * :doc:`/components/class_loader/debug_class_loader`
   * :doc:`/components/class_loader/class_map_generator`
 
 * :doc:`/components/config/index`
@@ -29,20 +25,17 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
-  * :doc:`/components/console/changing_default_command`
   * :doc:`/components/console/console_arguments`
   * :doc:`/components/console/events`
-  * :doc:`/components/console/logger`
   * :doc:`/components/console/helpers/index`
 
 * **CssSelector**
 
   * :doc:`/components/css_selector`
 
-* :doc:`/components/debug/index`
+* **Debug**
 
-  * :doc:`/components/debug/introduction`
-  * :doc:`/components/debug/class_loader`
+  * :doc:`/components/debug`
 
 * :doc:`/components/dependency_injection/index`
 
@@ -50,7 +43,6 @@
   * :doc:`/components/dependency_injection/types`
   * :doc:`/components/dependency_injection/parameters`
   * :doc:`/components/dependency_injection/definitions`
-  * :doc:`/components/dependency_injection/autowiring`
   * :doc:`/components/dependency_injection/synthetic_services`
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
@@ -73,17 +65,9 @@
   * :doc:`/components/event_dispatcher/immutable_dispatcher`
   * :doc:`/components/event_dispatcher/traceable_dispatcher`
 
-* :doc:`/components/expression_language/index`
+* **Filesystem**
 
-  * :doc:`/components/expression_language/introduction`
-  * :doc:`/components/expression_language/syntax`
-  * :doc:`/components/expression_language/extending`
-  * :doc:`/components/expression_language/caching`
-
-* :doc:`/components/filesystem/index`
-
-  * :doc:`/components/filesystem/introduction`
-  * :doc:`/components/filesystem/lock_handler`
+  * :doc:`/components/filesystem`
 
 * **Finder**
 
@@ -115,10 +99,6 @@
 * **OptionsResolver**
 
   * :doc:`/components/options_resolver`
-
-* **PHPUnitBridge**
-
-  * :doc:`/components/phpunit_bridge`
 
 * **Process**
 
@@ -158,11 +138,6 @@
   * :doc:`/components/translation/introduction`
   * :doc:`/components/translation/usage`
   * :doc:`/components/translation/custom_formats`
-
-* :doc:`/components/var_dumper/index`
-
-  * :doc:`/components/var_dumper/introduction`
-  * :doc:`/components/var_dumper/advanced`
 
 * :doc:`/components/yaml/index`
 

@@ -102,9 +102,10 @@ node definition. Node types are available for:
 * scalar (generic type that includes booleans, strings, integers, floats
   and ``null``)
 * boolean
-* integer
-* float
-* enum (similar to scalar, but it only allows a finite set of values)
+* integer (new in 2.2)
+* float (new in 2.2)
+* enum (new in 2.1) (similar to scalar, but it only allows a finite set
+  of values)
 * array
 * variable (no validation)
 
@@ -113,6 +114,9 @@ and are created with ``node($name, $type)`` or their associated shortcut
 
 Numeric Node Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The numeric (float and integer) nodes were introduced in Symfony 2.2.
 
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\IntegerNodeDefinition::min`
@@ -135,6 +139,9 @@ and :method:`Symfony\\Component\\Config\\Definition\\Builder\\IntegerNodeDefinit
 
 Enum Nodes
 ~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The enum node was introduced in Symfony 2.1.
 
 Enum nodes provide a constraint to match the given input against a set of
 values::
@@ -439,15 +446,12 @@ In YAML you may have:
     # This value is only used for the search results page.
     entries_per_page:     25
 
-and in XML:
-
-.. code-block:: xml
-
-    <!-- entries-per-page: This value is only used for the search results page. -->
-    <config entries-per-page="25" />
-
 Optional Sections
 -----------------
+
+.. versionadded:: 2.2
+    The ``canBeEnabled`` and ``canBeDisabled`` methods were introduced in
+    Symfony 2.2.
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut

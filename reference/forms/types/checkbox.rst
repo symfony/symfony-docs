@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; CheckboxType
+   single: Forms; Fields; checkbox
 
-CheckboxType Field
-==================
+checkbox Field Type
+===================
 
 Creates a single input checkbox. This should always be used for a field
 that has a boolean value: if the box is checked, the field will be set to
@@ -22,11 +22,11 @@ true, if the box is unchecked, the value will be set to false.
 |             | - `error_mapping`_                                                     |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
+|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                          |
+| Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
@@ -36,10 +36,7 @@ Example Usage
 
 .. code-block:: php
 
-    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-    // ...
-
-    $builder->add('public', CheckboxType::class, array(
+    $builder->add('public', 'checkbox', array(
         'label'    => 'Show this entry publicly?',
         'required' => false,
     ));
@@ -59,7 +56,8 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -73,9 +71,9 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

@@ -53,10 +53,10 @@ one where the information was generated, use the ``profiler:export`` and
 .. code-block:: bash
 
     # on the production machine
-    $ php bin/console profiler:export > profile.data
+    $ php app/console profiler:export > profile.data
 
     # on the development machine
-    $ php bin/console profiler:import /path/to/profile.data
+    $ php app/console profiler:import /path/to/profile.data
 
     # you can also pipe from the STDIN
-    $ cat /path/to/profile.data | php bin/console profiler:import
+    $ cat /path/to/profile.data | php app/console profiler:import

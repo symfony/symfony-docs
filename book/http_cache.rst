@@ -145,9 +145,12 @@ To enable caching, modify the code of a front controller to use the caching
 kernel::
 
     // web/app.php
+    require_once __DIR__.'/../app/bootstrap.php.cache';
+    require_once __DIR__.'/../app/AppKernel.php';
+    require_once __DIR__.'/../app/AppCache.php';
+
     use Symfony\Component\HttpFoundation\Request;
 
-    // ...
     $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
@@ -909,7 +912,7 @@ Here is how you can configure the Symfony reverse proxy to support the
             if ('127.0.0.1' !== $request->getClientIp()) {
                 return new Response(
                     'Invalid HTTP method',
-                    Response::HTTP_BAD_REQUEST
+                    400
                 );
             }
 
@@ -1084,18 +1087,24 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
         <!-- app/Resources/views/static/about.html.php -->
 
-        <!-- you can use a controller reference -->
+        // you can use a controller reference
+        use Symfony\Component\HttpKernel\Controller\ControllerReference;
         <?php echo $view['actions']->render(
-            new \Symfony\Component\HttpKernel\Controller\ControllerReference(
+            new ControllerReference(
                 'AppBundle:News:latest',
                 array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')
         ) ?>
 
-        <!-- ... or a URL -->
+        // ... or a URL
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
         <?php echo $view['actions']->render(
-            $view['router']->url('latest_news', array('maxPerPage' => 5)),
+            $view['router']->generate(
+                'latest_news',
+                array('maxPerPage' => 5),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
             array('strategy' => 'esi'),
         ) ?>
 

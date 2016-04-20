@@ -10,8 +10,6 @@ How to Minify JavaScripts and Stylesheets with YUI Compressor
     **strongly advised to avoid using YUI utilities** unless strictly necessary.
     Read :doc:`/cookbook/assetic/uglifyjs` for a modern and up-to-date alternative.
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
-
 Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.

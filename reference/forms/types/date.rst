@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; DateType
+   single: Forms; Fields; date
 
-DateType Field
-==============
+date Field Type
+===============
 
 A field that allows the user to modify date information via a variety of
 different HTML elements.
@@ -20,9 +20,8 @@ day and year) or three select boxes (see the `widget`_ option).
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `days`_                                                                   |
-|                      | - `placeholder`_                                                            |
+|                      | - `empty_value`_                                                            |
 |                      | - `format`_                                                                 |
-|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
@@ -42,8 +41,9 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
+|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
+| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -55,13 +55,10 @@ This field type is highly configurable, but easy to use. The most important
 options are ``input`` and ``widget``.
 
 Suppose that you have a ``publishedAt`` field whose underlying date is a
-``DateTime`` object. The following configures the ``DateType`` type for that
+``DateTime`` object. The following configures the ``date`` type for that
 field as three different choice fields::
 
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    // ...
-
-    $builder->add('publishedAt', DateType::class, array(
+    $builder->add('publishedAt', 'date', array(
         'input'  => 'datetime',
         'widget' => 'choice',
     ));
@@ -70,10 +67,7 @@ The ``input`` option *must* be changed to match the type of the underlying
 date data. For example, if the ``publishedAt`` field's data were a unix
 timestamp, you'd need to set ``input`` to ``timestamp``::
 
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    // ...
-
-    $builder->add('publishedAt', DateType::class, array(
+    $builder->add('publishedAt', 'date', array(
         'input'  => 'timestamp',
         'widget' => 'choice',
     ));
@@ -86,33 +80,28 @@ Field Options
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-placeholder
+empty_value
 ~~~~~~~~~~~
 
-**type**: ``string`` | ``array``
+**type**: ``string`` or ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. When the placeholder value is a string,
-it will be used as the **blank value** of all select boxes::
+as a series of ``select`` boxes. The ``empty_value`` option can be used
+to add a "blank" entry to the top of each select box::
 
-    $builder->add('dueDate', DateType::class, array(
-        'placeholder' => 'Select a value',
+    $builder->add('dueDate', 'date', array(
+        'empty_value' => '',
     ));
 
-Alternatively, you can use an array that configures different placeholder
-values for the year, month and day fields::
+Alternatively, you can specify a string to be displayed for the "blank" value::
 
-    $builder->add('dueDate', DateType::class, array(
-        'placeholder' => array(
-            'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
-        )
+    $builder->add('dueDate', 'date', array(
+        'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
     ));
 
 .. _reference-forms-type-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
-
-.. include:: /reference/forms/types/options/html5.rst.inc
 
 .. _form-reference-date-input:
 
@@ -150,7 +139,8 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -165,6 +155,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Field Variables
 ---------------

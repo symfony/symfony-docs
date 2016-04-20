@@ -84,9 +84,11 @@ to show a link to exit impersonation:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <a href="<?php echo $view['router']->path('homepage', array(
-                '_switch_user' => '_exit',
-            ) ?>">
+            <a
+                href="<?php echo $view['router']->generate('homepage', array(
+                    '_switch_user' => '_exit',
+                ) ?>"
+            >
                 Exit impersonation
             </a>
         <?php endif ?>
@@ -97,11 +99,10 @@ over the user's roles until you find one that a ``SwitchUserRole`` object::
 
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
-    $authChecker = $this->get('security.authorization_checker');
-    $tokenStorage = $this->get('security.token_storage');
+    $securityContext = $this->get('security.context');
 
-    if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
-        foreach ($tokenStorage->getToken()->getRoles() as $role) {
+    if ($securityContext->isGranted('ROLE_PREVIOUS_ADMIN')) {
+        foreach ($securityContext->getToken()->getRoles() as $role) {
             if ($role instanceof SwitchUserRole) {
                 $impersonatingUser = $role->getSource()->getUser();
                 break;

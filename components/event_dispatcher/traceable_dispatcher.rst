@@ -5,13 +5,13 @@
 The Traceable Event Dispatcher
 ==============================
 
-The :class:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcher`
+The :class:`Symfony\\Component\\HttpKernel\\Debug\\TraceableEventDispatcher`
 is an event dispatcher that wraps any other event dispatcher and can then
 be used to determine which event listeners have been called by the dispatcher.
 Pass the event dispatcher to be wrapped and an instance of the
 :class:`Symfony\\Component\\Stopwatch\\Stopwatch` to its constructor::
 
-    use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
+    use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
     use Symfony\Component\Stopwatch\Stopwatch;
 
     // the event dispatcher to debug
