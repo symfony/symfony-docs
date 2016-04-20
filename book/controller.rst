@@ -421,22 +421,26 @@ method is just a helper method that generates the URL for a given route.
 Redirecting
 ~~~~~~~~~~~
 
-To redirect the user's browser to another page of your app, use the ``generateUrl()``
-method in combination with another helper method called
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-which takes a URL as an argument::
+If you want to redirect the user to another page, use the ``redirectToRoute()`` method::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is equivalent to using redirect() and generateUrl() together:
+        // return $this->redirect($this->generateUrl('homepage'));
     }
 
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
-perform a 301 (permanent) redirect, modify the second argument::
+.. versionadded:: 2.6
+    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
+
+By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
+perform a 301 (permanent) redirect, modify the third argument::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'), 301);
+        return $this->redirectToRoute('homepage', array(), 301);
     }
 
 To redirect to an *external* site, use ``redirect()`` and pass it the external URL::
@@ -450,12 +454,16 @@ For more information, see the :doc:`Routing chapter </book/routing>`.
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to::
+    The ``redirectToRoute()`` method is simply a shortcut that creates a
+    ``Response`` object that specializes in redirecting the user. It's
+    equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
-        return new RedirectResponse($this->generateUrl('homepage'));
+        public function indexAction()
+        {
+            return new RedirectResponse($this->generateUrl('homepage'));
+        }
 
 .. index::
    single: Controller; Rendering templates
@@ -520,12 +528,15 @@ need::
 
     $mailer = $this->get('mailer');
 
-What other services exist? To list all services, use the ``container:debug``
+What other services exist? To list all services, use the ``debug:container``
 console command:
 
 .. code-block:: bash
 
-    $ php app/console container:debug
+    $ php app/console debug:container
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 For more information, see the :doc:`/book/service_container` chapter.
 
@@ -649,12 +660,14 @@ For example, imagine you're processing a form submission::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl(...));
+            // $this->addFlash is equivalent to $this->get('session')->getFlashBag()->add
+
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(...);
@@ -750,7 +763,7 @@ headers and content that's sent back to the client::
     use Symfony\Component\HttpFoundation\Response;
 
     // create a simple Response with a 200 status code (the default)
-    $response = new Response('Hello '.$name, 200);
+    $response = new Response('Hello '.$name, Response::HTTP_OK);
 
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
@@ -816,24 +829,30 @@ The target controller method might look something like this::
 Just like when creating a controller for a route, the order of the arguments of
 ``fancyAction()`` doesn't matter: the matching is done by name.
 
-Checking the Validity of a CSRF Token inside Controller
--------------------------------------------------------
+.. _checking-the-validity-of-a-csrf-token:
 
-You may sometimes want to use :ref:`CSRF protection <forms-csrf>` in a controller where
-you don't have a Symfony form.
+Validating a CSRF Token
+-----------------------
 
-If, for example, you're doing a DELETE action, you can use the
-:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderInterface::isCsrfTokenValid`
+Sometimes, you want to use CSRF protection in an action where you don't want to
+use the Symfony Form component. If, for example, you're doing a DELETE action,
+you can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isCsrfTokenValid`
 method to check the CSRF token::
 
-    $csrf = $this->container->get('form.csrf_provider');
-
-    $intention = 'authenticate';
-    $token = $csrf->generateCsrfToken($intention);
-
-    if (!$csrf->isCsrfTokenValid($intention, $token)) {
-        // CSRF token invalid! Do something, like redirect with an error.
+    if ($this->isCsrfTokenValid('token_id', $submittedToken)) {
+        // ... do something, like deleting an object
     }
+
+.. versionadded:: 2.6
+    The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
+    It is equivalent to executing the following code:
+
+    .. code-block:: php
+
+        use Symfony\Component\Security\Csrf\CsrfToken;
+
+        $this->get('security.csrf.token_manager')
+            ->isTokenValid(new CsrfToken('token_id', 'TOKEN'));
 
 Final Thoughts
 --------------

@@ -44,9 +44,11 @@
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
+  * :doc:`/cookbook/console/style`
   * :doc:`/cookbook/console/command_in_controller`
   * :doc:`/cookbook/console/request_context`
   * :doc:`/cookbook/console/logging`
+  * :doc:`/cookbook/console/commands_as_services`
 
 * :doc:`/cookbook/controller/index`
 
@@ -98,6 +100,10 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * :doc:`/cookbook/event_dispatcher/event_listener`
 
+* :doc:`/cookbook/expression/index`
+
+  * :doc:`/cookbook/expression/expressions`
+
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/form_customization`
@@ -125,6 +131,7 @@
 
   * :doc:`/cookbook/logging/monolog`
   * :doc:`/cookbook/logging/monolog_email`
+  * :doc:`/cookbook/logging/monolog_console`
   * :doc:`/cookbook/logging/monolog_regex_based_excludes`
   * :doc:`/cookbook/logging/channels_handlers`
 
@@ -161,11 +168,16 @@
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/custom_password_authenticator`
+  * :doc:`/cookbook/security/api_key_authentication`
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/pre_authenticated`
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
+  * :doc:`/cookbook/security/named_encoders`
   * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/firewall_restriction`
+  * :doc:`/cookbook/security/host_restriction`
 
 * :doc:`Security Authorization (Denying Access) </cookbook/security/index>`
 
@@ -192,9 +204,11 @@
   * :doc:`/cookbook/session/locale_sticky_session`
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
-  * :doc:`/cookbook/session/avoid_session_start`
+  * :doc:`/cookbook/session/limit_metadata_writes`
   * (Doctrine) :doc:`/cookbook/doctrine/pdo_session_storage`
   * (Doctrine) :doc:`/cookbook/doctrine/mongodb_session_storage`
+  * :doc:`/cookbook/session/avoid_session_start`
+
 
 * **PSR-7**
 
@@ -234,6 +248,7 @@
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
+  * :doc:`/cookbook/validation/severity`
 
 * :doc:`/cookbook/web_server/index`
 

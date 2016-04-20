@@ -29,6 +29,11 @@ An authorization decision will always be based on a few things:
     Any object for which access control needs to be checked, like
     an article or a comment object.
 
+.. versionadded:: 2.6
+    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
+    had to use the ``setToken()`` method of the
+    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
+
 .. _components-security-access-decision-manager:
 
 Access Decision Manager

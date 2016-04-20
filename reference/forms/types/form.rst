@@ -9,6 +9,7 @@ on all types for which ``form`` is the parent type.
 
 +-----------+--------------------------------------------------------------------+
 | Options   | - `action`_                                                        |
+|           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
 |           | - `cascade_validation`_                                            |
 |           | - `compound`_                                                      |
@@ -23,10 +24,11 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
+|           | - `label_format`_                                                  |
 |           | - `mapped`_                                                        |
-|           | - `max_length`_                                                    |
+|           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
-|           | - `pattern`_                                                       |
+|           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
 |           | - `read_only`_                                                     |
@@ -51,6 +53,20 @@ Field Options
 .. _form-option-action:
 
 .. include:: /reference/forms/types/options/action.rst.inc
+
+allow_extra_fields
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``allow_extra_fields`` option was introduced in Symfony 2.6.
+
+**type**: ``boolean`` **default**: ``false``
+
+Usually, if you submit extra fields that aren't configured in your form,
+you'll get a "This form should not contain extra fields." validation error.
+
+You can silence this validation error by enabling the ``allow_extra_fields``
+option on the form.
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
@@ -95,6 +111,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. _reference-form-option-mapped:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
@@ -112,6 +130,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/pattern.rst.inc
 
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
+
+.. _reference-form-option-property-path:
 
 .. include:: /reference/forms/types/options/property_path.rst.inc
 

@@ -1,6 +1,5 @@
 .. index::
-   single: Security; Data Permission
-   single: Security: Voters
+   single: Security; Data Permission Voters
 
 How to Use Voters to Check User Permissions
 ===========================================
@@ -21,8 +20,8 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-security context (i.e. the ``security.context`` service). Each one decides
-if the current user should have access to some resource.
+authorization checker (i.e. the ``security.authorization_checker`` service). Each
+one decides if the current user should have access to some resource.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
 decision (to allow or deny access to the resource) according to the strategy defined
@@ -34,32 +33,19 @@ For more information take a look at
 The Voter Interface
 -------------------
 
-A custom voter must implement
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
-which has this structure::
+A custom voter needs to implement
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
+or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`,
+which makes creating a voter even easier.
 
-    interface VoterInterface
+.. code-block:: php
+
+    abstract class AbstractVoter implements VoterInterface
     {
-        public function supportsAttribute($attribute);
-        public function supportsClass($class);
-        public function vote(TokenInterface $token, $object, array $attributes);
+        abstract protected function getSupportedClasses();
+        abstract protected function getSupportedAttributes();
+        abstract protected function isGranted($attribute, $object, $user = null);
     }
-
-The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute`
-method is used to check if the voter supports the given user attribute (i.e:
-a role like ``ROLE_USER``, an ACL ``EDIT``, etc.).
-
-The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass`
-method checks whether the voter supports the class of the object whose
-access is being checked.
-
-The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::vote`
-method must implement the business logic that verifies whether or not the
-user has access. This method must return one of the following values:
-
-* ``VoterInterface::ACCESS_GRANTED``: The authorization will be granted by this voter;
-* ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if authorization should be granted;
-* ``VoterInterface::ACCESS_DENIED``: The authorization will be denied by this voter.
 
 In this example, the voter will check if the user has access to a specific
 object according to your custom conditions (e.g. they must be the owner of
@@ -72,66 +58,37 @@ Creating the custom Voter
 -------------------------
 
 The goal is to create a voter that checks if a user has access to view or
-edit a particular object. Here's an example implementation::
+edit a particular object. Here's an example implementation:
+
+.. code-block:: php
 
     // src/AppBundle/Security/Authorization/Voter/PostVoter.php
     namespace AppBundle\Security\Authorization\Voter;
 
+    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
     use AppBundle\Entity\User;
-    use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    class PostVoter implements VoterInterface
+    class PostVoter extends AbstractVoter
     {
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        public function supportsAttribute($attribute)
+        protected function getSupportedAttributes()
         {
-            return in_array($attribute, array(self::VIEW, self::EDIT));
+            return array(self::VIEW, self::EDIT);
         }
 
-        public function supportsClass($class)
+        protected function getSupportedClasses()
         {
-            $supportedClass = 'AppBundle\Entity\Post';
-
-            return $supportedClass === $class || is_subclass_of($class, $supportedClass);
+            return array('AppBundle\Entity\Post');
         }
 
-        /**
-         * @var \AppBundle\Entity\Post $post
-         */
-        public function vote(TokenInterface $token, $post, array $attributes)
+        protected function isGranted($attribute, $post, $user = null)
         {
-            // check if the class of this object is supported by this voter
-            if (!$this->supportsClass(get_class($post))) {
-                return VoterInterface::ACCESS_ABSTAIN;
-            }
-
-            // check if the voter is used correctly, only allow one attribute
-            // this isn't a requirement, it's just one easy way for you to
-            // design your voter
-            if (1 !== count($attributes)) {
-                throw new \InvalidArgumentException(
-                    'Only one attribute is allowed for VIEW or EDIT'
-                );
-            }
-
-            // set the attribute to check against
-            $attribute = $attributes[0];
-
-            // check if the given attribute is covered by this voter
-            if (!$this->supportsAttribute($attribute)) {
-                return VoterInterface::ACCESS_ABSTAIN;
-            }
-
-            // get current logged in user
-            $user = $token->getUser();
-
             // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
-                return VoterInterface::ACCESS_DENIED;
+                return false;
             }
 
             // double-check that the User object is the expected entity (this
@@ -143,27 +100,52 @@ edit a particular object. Here's an example implementation::
             switch($attribute) {
                 case self::VIEW:
                     // the data object could have for example a method isPrivate()
-                    // which checks the boolean attribute $private
+                    // which checks the Boolean attribute $private
                     if (!$post->isPrivate()) {
-                        return VoterInterface::ACCESS_GRANTED;
+                        return true;
                     }
-                    break;
 
+                    break;
                 case self::EDIT:
-                    // we assume that our data object has a method getOwner() to
-                    // get the current owner user entity for this data object
+                    // this assumes that the data object has a getOwner() method
+                    // to get the entity of the user who owns this data object
                     if ($user->getId() === $post->getOwner()->getId()) {
-                        return VoterInterface::ACCESS_GRANTED;
+                        return true;
                     }
+
                     break;
             }
 
-            return VoterInterface::ACCESS_DENIED;
+            return false;
         }
     }
 
 That's it! The voter is done. The next step is to inject the voter into
 the security layer.
+
+To recap, here's what's expected from the three abstract methods:
+
+:method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
+    It tells Symfony that your voter should be called whenever an object of one
+    of the given classes is passed to ``isGranted()``. For example, if you return
+    ``array('AppBundle\Model\Product')``, Symfony will call your voter when a
+    ``Product`` object is passed to ``isGranted()``.
+
+:method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedAttributes`
+    It tells Symfony that your voter should be called whenever one of these
+    strings is passed as the first argument to ``isGranted()``. For example, if
+    you return ``array('CREATE', 'READ')``, then Symfony will call your voter
+    when one of these is passed to ``isGranted()``.
+
+:method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::isGranted`
+    It implements the business logic that verifies whether or not a given user is
+    allowed access to a given attribute (e.g. ``CREATE`` or ``READ``) on a given
+    object. This method must return a boolean.
+
+.. note::
+
+    Currently, to use the ``AbstractVoter`` base class, you must be creating a
+    voter where an object is always passed to ``isGranted()``.
 
 Declaring the Voter as a Service
 --------------------------------
@@ -220,16 +202,16 @@ How to Use the Voter in a Controller
 ------------------------------------
 
 The registered voter will then always be asked as soon as the method ``isGranted()``
-from the security context is called.
-
-.. code-block:: php
+from the authorization checker is called. When extending the base ``Controller``
+class, you can simply call the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::denyAccessUnlessGranted()`
+method::
 
     // src/AppBundle/Controller/PostController.php
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     class PostController extends Controller
     {
@@ -239,13 +221,16 @@ from the security context is called.
             $post = ...;
 
             // keep in mind that this will call all registered security voters
-            if (false === $this->get('security.context')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorized access!');
-            }
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
     }
+
+.. versionadded:: 2.6
+    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6.
+    Prior to Symfony 2.6, you had to call the ``isGranted()`` method of the
+    ``security.context`` service and throw the exception yourself.
 
 It's that easy!
 

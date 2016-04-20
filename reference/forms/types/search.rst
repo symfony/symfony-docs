@@ -18,8 +18,9 @@ Read about the input search field at `DiveIntoHTML5.info`_
 |             | - `error_mapping`_                                                   |
 |             | - `label`_                                                           |
 |             | - `label_attr`_                                                      |
+|             | - `label_format`_                                                    |
 |             | - `mapped`_                                                          |
-|             | - `max_length`_                                                      |
+|             | - `max_length`_ (deprecated as of 2.5)                               |
 |             | - `read_only`_                                                       |
 |             | - `required`_                                                        |
 |             | - `trim`_                                                            |
@@ -52,6 +53,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

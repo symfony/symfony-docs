@@ -28,11 +28,11 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
 | options     |                                                                        |
-|             | - `empty_value`_                                                       |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
+|             | - `placeholder`_                                                       |
 |             | - `preferred_choices`_                                                 |
 |             |                                                                        |
 |             | from the :doc:`form </reference/forms/types/form>` type                |
@@ -42,6 +42,7 @@ you should just use the ``choice`` type directly.
 |             | - `empty_data`_                                                        |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
+|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
@@ -68,8 +69,6 @@ Inherited Options
 These options inherit from the :doc:`choice </reference/forms/types/choice>`
 type:
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
-
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
@@ -77,6 +76,8 @@ type:
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
@@ -102,6 +103,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

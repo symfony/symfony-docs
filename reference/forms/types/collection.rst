@@ -16,6 +16,7 @@ photos).
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
+|             | - `delete_empty`_                                                           |
 |             | - `options`_                                                                |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
@@ -28,6 +29,7 @@ photos).
 |             | - `error_mapping`_                                                          |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
+|             | - `label_format`_                                                           |
 |             | - `mapped`_                                                                 |
 |             | - `required`_                                                               |
 +-------------+-----------------------------------------------------------------------------+
@@ -261,6 +263,16 @@ For more information, see :ref:`cookbook-form-collections-remove`.
     the main object. None of this is handled automatically. For more
     information, see :ref:`cookbook-form-collections-remove`.
 
+delete_empty
+~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you want to explicitly remove entirely empty collection entries from your
+form you have to set this option to true. However, existing collection entries
+will only be deleted if you have the allow_delete_ option enabled. Otherwise
+the empty values will be kept.
+
 options
 ~~~~~~~
 
@@ -276,11 +288,12 @@ type::
         'type'   => 'choice',
         'options'  => array(
             'choices'  => array(
-                'nashville' => 'Nashville',
-                'paris'     => 'Paris',
-                'berlin'    => 'Berlin',
-                'london'    => 'London',
+                'Nashville' => 'nashville',
+                'Paris'     => 'paris',
+                'Berlin'    => 'berlin',
+                'London'    => 'london',
             ),
+            'choices_as_values' => true,
         ),
     ));
 
@@ -376,6 +389,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

@@ -13,11 +13,16 @@ Authentication (Identifying/Logging in the User)
     impersonating_user
     form_login
     custom_provider
+    custom_password_authenticator
+    api_key_authentication
     custom_authentication_provider
     pre_authenticated
     target_path
     csrf_in_login_form
+    named_encoders
     multiple_user_providers
+    firewall_restriction
+    host_restriction
 
 Authorization (Denying Access)
 ------------------------------

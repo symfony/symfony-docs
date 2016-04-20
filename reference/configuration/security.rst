@@ -112,6 +112,10 @@ Each part will be explained in the next section.
                 # Examples:
                 somename:
                     pattern: .*
+                    # restrict the firewall to a specific host
+                    host: admin\.example\.com
+                     # restrict the firewall to specific http methods
+                    methods: [GET, POST]
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
                     access_denied_handler: some.service.id
@@ -122,6 +126,8 @@ Each part will be explained in the next section.
                     context: context_key
                     stateless: false
                     x509:
+                        provider: some_key_from_above
+                    remote_user:
                         provider: some_key_from_above
                     http_basic:
                         provider: some_key_from_above
@@ -155,9 +161,9 @@ Each part will be explained in the next section.
                         password_parameter: _password
 
                         # csrf token options
-                        csrf_parameter: _csrf_token
-                        intention:      authenticate
-                        csrf_provider:  my.csrf_provider.id
+                        csrf_parameter:       _csrf_token
+                        intention:            authenticate
+                        csrf_provider:        my.csrf_token_generator.id
 
                         # by default, the login form *must* be a POST, not a GET
                         post_only:      true
@@ -203,8 +209,8 @@ Each part will be explained in the next section.
                     context:              ~
                     logout:
                         csrf_parameter:       _csrf_token
-                        csrf_provider:        ~
-                        intention:            logout
+                        csrf_token_generator: ~
+                        csrf_token_id:        logout
                         path:                 /logout
                         target:               /
                         success_handler:      ~
@@ -338,9 +344,6 @@ the current firewall and not the other ones.
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
 
-.. versionadded:: 2.2
-    The PBKDF2 password encoder was introduced in Symfony 2.2.
-
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
 
@@ -363,9 +366,6 @@ Using the BCrypt Password Encoder
 
     To use this encoder, you either need to use PHP Version 5.5 or install
     the `ircmaxell/password-compat`_ library via Composer.
-
-.. versionadded:: 2.2
-    The BCrypt password encoder was introduced in Symfony 2.2.
 
 .. configuration-block::
 

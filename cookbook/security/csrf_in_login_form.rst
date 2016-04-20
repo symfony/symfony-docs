@@ -18,7 +18,7 @@ Configuring CSRF Protection
 
 First, configure the Security component so it can use CSRF protection.
 The Security component needs a CSRF token provider. You can set this to use the default
-provider available in the Form component:
+provider available in the Security component:
 
 .. configuration-block::
 
@@ -33,7 +33,7 @@ provider available in the Form component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: form.csrf_provider
+                        csrf_provider: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -50,7 +50,7 @@ provider available in the Form component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-provider="form.csrf_provider" />
+                    <form-login csrf-provider="security.csrf.token_manager" />
                 </firewall>
             </config>
         </srv:container>
@@ -66,7 +66,7 @@ provider available in the Form component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'form.csrf_provider',
+                        'csrf_provider' => 'security.csrf.token_manager',
                     ),
                 ),
             ),
@@ -122,7 +122,7 @@ After this, you have protected your login form against CSRF attacks.
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
-    the token ID by setting ``intention`` in your configuration:
+    the token ID by setting  ``intention`` in your configuration:
 
     .. configuration-block::
 
@@ -174,7 +174,7 @@ After this, you have protected your login form against CSRF attacks.
                         'form_login' => array(
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
-                            'intention'      => 'a_private_string',
+                            'intention'      => 'a_private_string'
                         ),
                     ),
                 ),

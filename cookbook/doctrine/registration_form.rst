@@ -167,7 +167,7 @@ Next, create the form for the ``User`` entity::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class UserType extends AbstractType
     {
@@ -184,7 +184,7 @@ Next, create the form for the ``User`` entity::
             );
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\User',
@@ -237,9 +237,8 @@ into the database::
             if ($form->isSubmitted() && $form->isValid()) {
 
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $encoder = $this->get('security.encoder_factory')
-                    ->getEncoder($user);
-                $password = $encoder->encodePassword($user->getPlainPassword(), $user->getSalt());
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
 
                 // 4) save the User!
@@ -250,9 +249,7 @@ into the database::
                 // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user
 
-                $redirectUrl = $this->generateUrl('replace_with_some_route');
-
-                return $this->redirect($redirectUrl);
+                return $this->redirectToRoute('replace_with_some_route');
             }
 
             return $this->render(

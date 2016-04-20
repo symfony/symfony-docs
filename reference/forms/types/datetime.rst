@@ -18,9 +18,10 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 | Options              | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
-|                      | - `empty_value`_                                                            |
+|                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `hours`_                                                                  |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
@@ -70,7 +71,32 @@ date_widget
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+placeholder
+~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
+    ``empty_value``, which is available prior to 2.6.
+
+**type**: ``string`` | ``array``
+
+If your widget option is set to ``choice``, then this field will be represented
+as a series of ``select`` boxes. When the placeholder value is a string,
+it will be used as the **blank value** of all select boxes::
+
+    $builder->add('startDateTime', 'datetime', array(
+        'placeholder' => 'Select a value',
+    ));
+
+Alternatively, you can use an array that configures different placeholder
+values for the year, month, day, hour, minute and second fields::
+
+    $builder->add('startDateTime', 'datetime', array(
+        'placeholder' => array(
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+            'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
+        )
+    ));
 
 format
 ~~~~~~
@@ -84,6 +110,8 @@ by the HTML5 ``datetime`` field. Keeping the default value will cause the
 field to be rendered as an ``input`` field with ``type="datetime"``.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 input
 ~~~~~

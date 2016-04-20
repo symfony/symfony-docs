@@ -122,6 +122,14 @@ the route ``_controller`` value:
     defined as a service. See the `FrameworkExtraBundle documentation`_ for
     details.
 
+.. tip::
+
+    If your controller implements the ``__invoke()`` method, you can simply
+    refer to the service id (``app.hello_controller``).
+
+    .. versionadded:: 2.6
+        Support for ``__invoke()`` was introduced in Symfony 2.6.
+
 Alternatives to base Controller Methods
 ---------------------------------------
 
@@ -279,19 +287,19 @@ controller:
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine` (service: ``doctrine``)
     *Simply inject doctrine instead of fetching it from the container.*
 
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.context``)
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.token_storage``)
     .. code-block:: php
 
         $user = null;
-        $token = $securityContext->getToken();
+        $token = $tokenStorage->getToken();
         if (null !== $token && is_object($token->getUser())) {
              $user = $token->getUser();
         }
 
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.context``)
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.authorization_checker``)
     .. code-block:: php
 
-        $securityContext->isGranted($attributes, $object);
+        $authChecker->isGranted($attributes, $object);
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
     .. code-block:: php

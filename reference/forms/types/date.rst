@@ -20,8 +20,9 @@ day and year) or three select boxes (see the `widget`_ option).
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `days`_                                                                   |
-|                      | - `empty_value`_                                                            |
+|                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
@@ -80,28 +81,37 @@ Field Options
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-empty_value
+placeholder
 ~~~~~~~~~~~
 
-**type**: ``string`` or ``array``
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
+    ``empty_value``, which is available prior to 2.6.
+
+**type**: ``string`` | ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. The ``empty_value`` option can be used
-to add a "blank" entry to the top of each select box::
+as a series of ``select`` boxes. When the placeholder value is a string,
+it will be used as the **blank value** of all select boxes::
 
     $builder->add('dueDate', 'date', array(
-        'empty_value' => '',
+        'placeholder' => 'Select a value',
     ));
 
-Alternatively, you can specify a string to be displayed for the "blank" value::
+Alternatively, you can use an array that configures different placeholder
+values for the year, month and day fields::
 
     $builder->add('dueDate', 'date', array(
-        'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
+        'placeholder' => array(
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
+        )
     ));
 
 .. _reference-forms-type-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 .. _form-reference-date-input:
 

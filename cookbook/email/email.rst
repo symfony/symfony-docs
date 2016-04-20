@@ -127,6 +127,11 @@ an email is pretty straightforward::
 To keep things decoupled, the email body has been stored in a template and
 rendered with the ``renderView()`` method.
 
+.. versionadded:: 2.7
+    The ``absolute_url()`` function was introduced in Symfony 2.7. Prior
+    to 2.7, the ``asset()`` function has an argument to enable returning
+    an absolute URL.
+
 The ``$message`` object supports many more options, such as including attachments,
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic
 of `Creating Messages`_ in great detail in its documentation.
