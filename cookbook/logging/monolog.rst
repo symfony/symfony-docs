@@ -39,8 +39,8 @@ to write the logs (the handlers can be shared).
     the logger will log to.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
-(by default in the ``var/logs/prod.log`` in the prod environment and
-``var/logs/dev.log`` in the dev environment).
+(by default in the ``app/logs/prod.log`` in the prod environment and
+``app/logs/dev.log`` in the dev environment).
 
 Monolog comes also with a powerful built-in handler for the logging in
 prod environment: ``FingersCrossedHandler``. It allows you to store the

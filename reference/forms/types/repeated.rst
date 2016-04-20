@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; RepeatedType
+   single: Forms; Fields; repeated
 
-RepeatedType Field
-==================
+repeated Field Type
+===================
 
 This is a special field "group", that creates two identical fields whose
 values must match (or a validation error is thrown). The most common use
@@ -28,7 +28,7 @@ accuracy.
 |             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                          |
+| Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |
 +-------------+------------------------------------------------------------------------+
@@ -38,12 +38,8 @@ Example Usage
 
 .. code-block:: php
 
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-    // ...
-
-    $builder->add('password', RepeatedType::class, array(
-        'type' => PasswordType::class,
+    $builder->add('password', 'repeated', array(
+        'type' => 'password',
         'invalid_message' => 'The password fields must match.',
         'options' => array('attr' => array('class' => 'password-field')),
         'required' => true,
@@ -59,7 +55,7 @@ single value (usually a string) that you need.
 The most important option is ``type``, which can be any field type and determines
 the actual type of the two underlying fields. The ``options`` option is
 passed to each of those individual fields, meaning - in this example - any
-option supported by the ``PasswordType`` can be passed in this array.
+option supported by the ``password`` type can be passed in this array.
 
 Rendering
 ~~~~~~~~~
@@ -121,7 +117,7 @@ first_name
 
 This is the actual field name to be used for the first field. This is mostly
 meaningless, however, as the actual data entered into both of the fields
-will be available under the key assigned to the ``RepeatedType`` field itself
+will be available under the key assigned to the ``repeated`` field itself
 (e.g.  ``password``). However, if you don't specify a label, this field
 name is used to "guess" the label for you.
 
@@ -134,10 +130,7 @@ Additional options (will be merged into `options`_ below) that should be
 passed *only* to the first field. This is especially useful for customizing
 the label::
 
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-    // ...
-
-    $builder->add('password', RepeatedType::class, array(
+    $builder->add('password', 'repeated', array(
         'first_options'  => array('label' => 'Password'),
         'second_options' => array('label' => 'Repeat Password'),
     ));
@@ -151,7 +144,7 @@ This options array will be passed to each of the two underlying fields.
 In other words, these are the options that customize the individual field
 types. For example, if the ``type`` option is set to ``password``, this
 array might contain the options ``always_empty`` or ``required`` - both
-options that are supported by the ``PasswordType`` field.
+options that are supported by the ``password`` field type.
 
 second_name
 ~~~~~~~~~~~
@@ -175,7 +168,7 @@ type
 **type**: ``string`` **default**: ``text``
 
 The two underlying fields will be of this field type. For example, passing
-``PasswordType::class`` will render two password fields.
+a type of ``password`` will render two password fields.
 
 Overridden Options
 ------------------
@@ -188,7 +181,8 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

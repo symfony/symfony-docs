@@ -1,6 +1,9 @@
 LockHandler
 ===========
 
+.. versionadded:: 2.6
+    The lock handler feature was introduced in Symfony 2.6
+
 What is a Lock?
 ---------------
 

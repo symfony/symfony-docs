@@ -1,6 +1,9 @@
 NotIdenticalTo
 ==============
 
+.. versionadded:: 2.3
+    The ``NotIdenticalTo`` constraint was introduced in Symfony 2.3.
+
 Validates that a value is **not** identical to another value, defined in
 the options. To force that a value is identical, see
 :doc:`/reference/constraints/IdenticalTo`.

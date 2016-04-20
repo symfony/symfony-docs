@@ -15,11 +15,11 @@ your form. For example::
 
         // $blog is passed in as the data, so the empty_data
         // option is not needed
-        $form = $this->createForm(BlogType::class, $blog);
+        $form = $this->createForm(new BlogType(), $blog);
 
         // no data is passed in, so empty_data is
         // used to get the "starting data"
-        $form = $this->createForm(BlogType::class);
+        $form = $this->createForm(new BlogType());
     }
 
 By default, ``empty_data`` is set to ``null``. Or, if you have specified
@@ -61,14 +61,10 @@ that constructor with no arguments::
         }
     }
 
-You can instantiate your class however you want. In this example, you pass
-some dependency into the ``BlogType`` then use that to instantiate the ``Blog`` class.
-The point is, you can set ``empty_data`` to the exact "new" object that you want to use.
-
-.. tip::
-
-    In order to pass arguments to the ``BlogType`` constructor, you'll need to
-    :ref:`register it as a service and tag with form.type <form-as-services>`.
+You can instantiate your class however you want. In this example, we pass
+some dependency into the ``BlogType`` when we instantiate it, then use that
+to instantiate the ``Blog`` class. The point is, you can set ``empty_data``
+to the exact "new" object that you want to use.
 
 Option 2: Provide a Closure
 ---------------------------

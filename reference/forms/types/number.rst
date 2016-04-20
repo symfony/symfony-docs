@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; NumberType
+   single: Forms; Fields; number
 
-NumberType Field
-================
+number Field Type
+=================
 
 Renders an input text field and specializes in handling number input. This
 type offers different options for the scale, rounding and grouping
@@ -29,9 +29,10 @@ that you want to use for your number.
 |             | - `label_attr`_                                                      |
 |             | - `label_format`_                                                    |
 |             | - `mapped`_                                                          |
+|             | - `read_only`_                                                       |
 |             | - `required`_                                                        |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
+| Parent type | :doc:`form </reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
@@ -80,7 +81,8 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -109,5 +111,7 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

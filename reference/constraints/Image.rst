@@ -46,7 +46,7 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`FileType </reference/forms/types/file>` field. For
+in a form as a :doc:`file </reference/forms/types/file>` form type. For
 example, suppose you're creating an author form where you can upload a
 "headshot" image for the author. In your form, the ``headshot`` property
 would be a ``file`` type. The ``Author`` class might look as follows::

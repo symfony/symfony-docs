@@ -306,11 +306,11 @@ updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view['router']->path('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?php echo $view['router']->generate('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
-The ``path()`` method takes the route name and an array of parameters as
+The ``generate()`` method takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:

@@ -147,6 +147,9 @@ Here is a full list of things you can customize:
 Spanning Multiple Columns and Rows
 ----------------------------------
 
+.. versionadded:: 2.7
+    Spanning multiple columns and rows was introduced in Symfony 2.7.
+
 To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
 
     use Symfony\Component\Console\Helper\Table;

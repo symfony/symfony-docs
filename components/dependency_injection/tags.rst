@@ -117,14 +117,11 @@ Notice that each was given a tag named ``acme_mailer.transport``. This is
 the custom tag that you'll use in your compiler pass. The compiler pass
 is what makes this tag "mean" something.
 
-.. _components-di-compiler-pass-tags:
-.. _create-a-compilerpass:
+Create a ``CompilerPass``
+-------------------------
 
-Create a Compiler Pass
-----------------------
-
-You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
-container for any services with the ``acme_mailer.transport`` tag::
+Your compiler pass can now ask the container for any services with the
+custom tag::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -157,7 +154,7 @@ container for any services with the ``acme_mailer.transport`` tag::
 The ``process()`` method checks for the existence of the ``acme_mailer.transport_chain``
 service, then looks for all services tagged ``acme_mailer.transport``. It
 adds to the definition of the ``acme_mailer.transport_chain`` service a
-call to ``addTransport()`` for each ``acme_mailer.transport`` service it has
+call to ``addTransport()`` for each "acme_mailer.transport" service it has
 found. The first argument of each of these calls will be the mailer transport
 service itself.
 
@@ -177,13 +174,6 @@ run when the container is compiled::
     Compiler passes are registered differently if you are using the full-stack
     framework. See :doc:`/cookbook/service_container/compiler_passes` for
     more details.
-
-.. tip::
-
-    When implementing the ``CompilerPassInterface`` in a service extension, you
-    do not need to register it. See the
-    :ref:`components documentation <components-di-compiler-pass>` for more
-    information.
 
 Adding Additional Attributes on Tags
 ------------------------------------
@@ -306,3 +296,4 @@ The double loop may be confusing. This is because a service can have more
 than one tag. You tag a service twice or more with the ``acme_mailer.transport``
 tag. The second foreach loop iterates over the ``acme_mailer.transport``
 tags set for the current service and gives you the attributes.
+

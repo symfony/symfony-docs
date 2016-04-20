@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; IntegerType
+   single: Forms; Fields; integer
 
-IntegerType Field
-=================
+integer Field Type
+==================
 
 Renders an input "number" field. Basically, this is a text field that's
 good at handling data that's in an integer form. The input ``number`` field
@@ -34,9 +34,10 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `label_attr`_                                                       |
 |             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
+|             | - `read_only`_                                                        |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                         |
+| Parent type | :doc:`form </reference/forms/types/form>`                             |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
@@ -85,7 +86,8 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -114,5 +116,7 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

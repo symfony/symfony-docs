@@ -1,6 +1,16 @@
 Isbn
 ====
 
+.. versionadded:: 2.3
+    The Isbn constraint was introduced in Symfony 2.3.
+
+.. caution::
+
+    The ``isbn10`` and ``isbn13`` options are deprecated since Symfony 2.5
+    and will be removed in Symfony 3.0. Use the ``type`` option instead.
+    Furthermore, when using the ``type`` option, lowercase characters are no
+    longer supported starting in Symfony 2.5, as they are not allowed in ISBNs.
+
 This constraint validates that an `International Standard Book Number (ISBN)`_
 is either a valid ISBN-10 or a valid ISBN-13.
 

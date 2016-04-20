@@ -164,6 +164,11 @@ form::
         );
     }
 
+.. versionadded:: 2.6
+    The ``security.authentication_utils`` service and the
+    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils`
+    class were introduced in Symfony 2.6.
+
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
 submission for you. If the user had submitted an invalid username or password,
@@ -210,7 +215,7 @@ Finally, create the template:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->path('login') ?>" method="post">
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 

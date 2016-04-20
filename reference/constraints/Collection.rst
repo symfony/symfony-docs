@@ -179,6 +179,10 @@ occur.
 Required and Optional Field Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    The ``Required`` and ``Optional`` constraints were moved to the namespace
+    ``Symfony\Component\Validator\Constraints\`` in Symfony 2.3.
+
 Constraints for fields within a collection can be wrapped in the ``Required``
 or ``Optional`` constraint to control whether they should always be applied
 (``Required``) or only applied when the field is present (``Optional``).

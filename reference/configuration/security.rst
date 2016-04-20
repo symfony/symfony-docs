@@ -133,15 +133,6 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     http_digest:
                         provider: some_key_from_above
-                    guard:
-                        # A key from the "providers" section of your security config, in case your user provider is different than the firewall
-                        provider:             ~
-
-                        # A service id (of one of your authenticators) whose start() method should be called when an anonymous user hits a page that requires authentication
-                        entry_point:          null
-
-                        # An array of service ids for all of your "authenticators"
-                        authenticators:       []
                     form_login:
                         # submit the login form here
                         check_path: /login_check
@@ -171,8 +162,8 @@ Each part will be explained in the next section.
 
                         # csrf token options
                         csrf_parameter:       _csrf_token
-                        csrf_token_id:        authenticate
-                        csrf_token_generator: my.csrf_token_generator.id
+                        intention:            authenticate
+                        csrf_provider:        my.csrf_token_generator.id
 
                         # by default, the login form *must* be a POST, not a GET
                         post_only:      true
@@ -180,11 +171,12 @@ Each part will be explained in the next section.
 
                         # by default, a session must exist before submitting an authentication request
                         # if false, then Request::hasPreviousSession is not called during authentication
+                        # new in Symfony 2.3
                         require_previous_session: true
 
                     remember_me:
                         token_provider: name
-                        secret: "%secret%"
+                        key: someS3cretKey
                         name: NameOfTheCookie
                         lifetime: 3600 # in seconds
                         path: /foo
@@ -231,7 +223,7 @@ Each part will be explained in the next section.
                                 domain:               ~
                         handlers:             []
                     anonymous:
-                        secret:               "%secret%"
+                        key:                  4f954a0667e01
                     switch_user:
                         provider:             ~
                         parameter:            _switch_user
@@ -370,6 +362,11 @@ for the hash algorithm.
 Using the BCrypt Password Encoder
 ---------------------------------
 
+.. caution::
+
+    To use this encoder, you either need to use PHP Version 5.5 or install
+    the `ircmaxell/password-compat`_ library via Composer.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -494,7 +491,7 @@ multiple firewalls, the "context" could actually be shared:
 HTTP-Digest Authentication
 --------------------------
 
-To use HTTP-Digest authentication you need to provide a realm and a secret:
+To use HTTP-Digest authentication you need to provide a realm and a key:
 
 .. configuration-block::
 
@@ -505,7 +502,7 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
             firewalls:
                 somename:
                     http_digest:
-                        secret: '%secret%'
+                        key: 'a_random_string'
                         realm: 'secure-api'
 
     .. code-block:: xml
@@ -513,7 +510,7 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
         <!-- app/config/security.xml -->
         <security:config>
             <firewall name="somename">
-                <http-digest secret="%secret%" realm="secure-api" />
+                <http-digest key="a_random_string" realm="secure-api" />
             </firewall>
         </security:config>
 
@@ -524,8 +521,8 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
             'firewalls' => array(
                 'somename' => array(
                     'http_digest' => array(
-                        'secret' => '%secret%',
-                        'realm'  => 'secure-api',
+                        'key'   => 'a_random_string',
+                        'realm' => 'secure-api',
                     ),
                 ),
             ),

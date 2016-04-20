@@ -80,9 +80,6 @@ from inside a controller::
     use AppBundle\Entity\Task;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class DefaultController extends Controller
     {
@@ -94,9 +91,9 @@ from inside a controller::
             $task->setDueDate(new \DateTime('tomorrow'));
 
             $form = $this->createFormBuilder($task)
-                ->add('task', TextType::class)
-                ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, array('label' => 'Create Task'))
+                ->add('task', 'text')
+                ->add('dueDate', 'date')
+                ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
@@ -119,12 +116,15 @@ building the form.
 
 In this example, you've added two fields to your form - ``task`` and ``dueDate`` -
 corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
-You've also assigned each a "type" (e.g. ``TextType`` and ``DateType``),
-represented by its fully qualified class name. Among other things, it determines
-which HTML form tag(s) is rendered for that field.
+You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
+other things, determines which HTML form tag(s) is rendered for that field.
 
 Finally, you added a submit button with a custom label for submitting the form to
 the server.
+
+.. versionadded:: 2.3
+    Support for submit buttons was introduced in Symfony 2.3. Before that, you had
+    to add buttons to the form's HTML manually.
 
 Symfony comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
@@ -224,9 +224,9 @@ your controller::
         $task = new Task();
 
         $form = $this->createFormBuilder($task)
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Task'))
+            ->add('task', 'text')
+            ->add('dueDate', 'date')
+            ->add('save', 'submit', array('label' => 'Create Task'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -241,12 +241,18 @@ your controller::
             'form' => $form->createView(),
         ));
     }
-
+    
 .. caution::
 
     Be aware that the ``createView()`` method should be called *after* ``handleRequest``
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
+
+.. versionadded:: 2.3
+    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
+    was introduced in Symfony 2.3. Previously, the ``$request`` was passed
+    to the ``submit`` method - a strategy which is deprecated and will be
+    removed in Symfony 3.0. For details on that method, see :ref:`cookbook-form-submit-request`.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
@@ -290,15 +296,18 @@ possible paths:
 Submitting Forms with Multiple Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    Support for buttons in forms was introduced in Symfony 2.3.
+
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
 To do this, add a second button with the caption "Save and add" to your form::
 
     $form = $this->createFormBuilder($task)
-        ->add('task', TextType::class)
-        ->add('dueDate', DateType::class)
-        ->add('save', SubmitType::class, array('label' => 'Create Task'))
-        ->add('saveAndAdd', SubmitType::class, array('label' => 'Save and Add'))
+        ->add('task', 'text')
+        ->add('dueDate', 'date')
+        ->add('save', 'submit', array('label' => 'Create Task'))
+        ->add('saveAndAdd', 'submit', array('label' => 'Save and Add'))
         ->getForm();
 
 In your controller, use the button's
@@ -465,6 +474,10 @@ you'll need to specify which validation group(s) your form should use::
         'validation_groups' => array('registration'),
     ))->add(...);
 
+.. versionadded:: 2.7
+    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
+    the method was called ``setDefaultOptions()``.
+
 If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
 good practice), then you'll need to add the following to the ``configureOptions()``
 method::
@@ -486,6 +499,9 @@ be used to validate the underlying object.
 
 Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ability to set ``validation_groups`` to false was introduced in Symfony 2.3.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
@@ -587,6 +603,9 @@ work in the book section about :ref:`validation groups <book-validation-validati
 Groups based on the Clicked Button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    Support for buttons in forms was introduced in Symfony 2.3.
+
 When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,
 consider a form in a wizard that lets you advance to the next step or go back
@@ -597,8 +616,8 @@ First, we need to add the two buttons to the form::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('nextStep', SubmitType::class)
-        ->add('previousStep', SubmitType::class)
+        ->add('nextStep', 'submit')
+        ->add('previousStep', 'submit')
         ->getForm();
 
 Then, we configure the button for returning to the previous step to run
@@ -607,7 +626,7 @@ so we set its ``validation_groups`` option to false::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('previousStep', SubmitType::class, array(
+        ->add('previousStep', 'submit', array(
             'validation_groups' => false,
         ))
         ->getForm();
@@ -640,11 +659,11 @@ Field Type Options
 
 Each field type has a number of options that can be used to configure it.
 For example, the ``dueDate`` field is currently being rendered as 3 select
-boxes. However, the :doc:`DateType </reference/forms/types/date>` can be
+boxes. However, the :doc:`date field </reference/forms/types/date>` can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box)::
 
-    ->add('dueDate', DateType::class, array('widget' => 'single_text'))
+    ->add('dueDate', 'date', array('widget' => 'single_text'))
 
 .. image:: /images/book/form-simple2.png
     :align: center
@@ -662,7 +681,7 @@ the documentation for each type.
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
     
-        ->add('dueDate', DateType::class, array(
+        ->add('dueDate', 'date', array(
             'widget' => 'single_text',
             'required' => false
         ))
@@ -681,7 +700,7 @@ the documentation for each type.
     The label for the form field can be set using the ``label`` option,
     which can be applied to any field::
 
-        ->add('dueDate', DateType::class, array(
+        ->add('dueDate', 'date', array(
             'widget' => 'single_text',
             'label'  => 'Due Date',
         ))
@@ -702,7 +721,7 @@ Now that you've added validation metadata to the ``Task`` class, Symfony
 already knows a bit about your fields. If you allow it, Symfony can "guess"
 the type of your field and set it up for you. In this example, Symfony can
 guess from the validation rules that both the ``task`` field is a normal
-``TextType`` field and the ``dueDate`` field is a ``DateType`` field::
+``text`` field and the ``dueDate`` field is a ``date`` field::
 
     public function newAction()
     {
@@ -711,7 +730,7 @@ guess from the validation rules that both the ``task`` field is a normal
         $form = $this->createFormBuilder($task)
             ->add('task')
             ->add('dueDate', null, array('widget' => 'single_text'))
-            ->add('save', SubmitType::class)
+            ->add('save', 'submit')
             ->getForm();
     }
 
@@ -972,9 +991,9 @@ ways. If you build your form in the controller, you can use ``setAction()`` and
     $form = $this->createFormBuilder($task)
         ->setAction($this->generateUrl('target_route'))
         ->setMethod('GET')
-        ->add('task', TextType::class)
-        ->add('dueDate', DateType::class)
-        ->add('save', SubmitType::class)
+        ->add('task', 'text')
+        ->add('dueDate', 'date')
+        ->add('save', 'submit')
         ->getForm();
 
 .. note::
@@ -986,10 +1005,7 @@ In :ref:`book-form-creating-form-classes` you will learn how to move the
 form building code into separate classes. When using an external form class
 in the controller, you can pass the action and method as form options::
 
-    use AppBundle\Form\Type\TaskType;
-    // ...
-
-    $form = $this->createForm(TaskType::class, $task, array(
+    $form = $this->createForm(new TaskType(), $task, array(
         'action' => $this->generateUrl('target_route'),
         'method' => 'GET',
     ));
@@ -1008,7 +1024,7 @@ to the ``form()`` or the ``form_start()`` helper:
 
         <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
-            'action' => $view['router']->path('target_route'),
+            'action' => $view['router']->generate('target_route'),
             'method' => 'GET',
         )) ?>
 
@@ -1039,7 +1055,6 @@ that will house the logic for building the task form::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class TaskType extends AbstractType
     {
@@ -1048,21 +1063,36 @@ that will house the logic for building the task form::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', SubmitType::class)
+                ->add('save', 'submit')
             ;
         }
+
+        public function getName()
+        {
+            return 'app_task';
+        }
     }
+
+.. caution::
+
+    The ``getName()`` method returns the identifier of this form "type". These
+    identifiers must be unique in the application. Unless you want to override
+    a built-in type, they should be different from the default Symfony types
+    and from any type defined by a third-party bundle installed in your application.
+    Consider prefixing your types with ``app_`` to avoid identifier collisions.
 
 This new class contains all the directions needed to create the task form. It can
 be used to quickly build a form object in the controller::
 
     // src/AppBundle/Controller/DefaultController.php
+
+    // add this new use statement at the top of the class
     use AppBundle\Form\Type\TaskType;
 
     public function newAction()
     {
         $task = ...;
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(new TaskType(), $task);
 
         // ...
     }
@@ -1109,7 +1139,7 @@ the choice is ultimately up to you.
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('mapped' => false))
-                ->add('save', SubmitType::class)
+                ->add('save', 'submit')
             ;
         }
 
@@ -1129,47 +1159,14 @@ the choice is ultimately up to you.
 Defining your Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Your form type might have some external dependencies. You can define your form
-type as a service, and inject all dependencies you need.
+Defining your form type as a service is a good practice and makes it really
+easy to use in your application.
 
 .. note::
 
     Services and the service container will be handled
     :doc:`later on in this book </book/service_container>`. Things will be
     more clear after reading that chapter.
-
-You might want to use a service defined as ``app.my_service`` in your form
-type. Create a constructor to your form type to receive the service::
-
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
-
-    use App\Utility\MyService;
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-    class TaskType extends AbstractType
-    {
-        private $myService;
-
-        public function __construct(MyService $myService)
-        {
-            $this->myService = $myService;
-        }
-
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            // You can now use myService.
-            $builder
-                ->add('task')
-                ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', SubmitType::class)
-            ;
-        }
-    }
-
-Define your form type as a service.
 
 .. configuration-block::
 
@@ -1179,9 +1176,8 @@ Define your form type as a service.
         services:
             app.form.type.task:
                 class: AppBundle\Form\Type\TaskType
-                arguments: ["@app.my_service"]
                 tags:
-                    - { name: form.type }
+                    - { name: form.type, alias: app_task }
 
     .. code-block:: xml
 
@@ -1193,8 +1189,7 @@ Define your form type as a service.
 
             <services>
                 <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
-                    <tag name="form.type" />
-                    <argument type="service" id="app.my_service"></argument>
+                    <tag name="form.type" alias="app_task" />
                 </service>
             </services>
         </container>
@@ -1202,11 +1197,43 @@ Define your form type as a service.
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
-        use Symfony\Component\DependencyInjection\Reference;
+        $container
+            ->register(
+                'app.form.type.task',
+                'AppBundle\Form\Type\TaskType'
+            )
+            ->addTag('form.type', array(
+                'alias' => 'app_task',
+            ))
+        ;
 
-        $container->register('app.form.type.task', 'AppBundle\Form\Type\TaskType')
-            ->addArgument(new Reference('app.my_service'))
-            ->addTag('form.type')
+That's it! Now you can use your form type directly in a controller::
+
+    // src/AppBundle/Controller/DefaultController.php
+    // ...
+
+    public function newAction()
+    {
+        $task = ...;
+        $form = $this->createForm('task', $task);
+
+        // ...
+    }
+
+or even use from within the form type of another form::
+
+    // src/AppBundle/Form/Type/ListType.php
+    // ...
+
+    class ListType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            // ...
+
+            $builder->add('someTask', 'task');
+        }
+    }
 
 Read :ref:`form-cookbook-form-field-service` for more information.
 
@@ -1332,6 +1359,11 @@ create a form class so that a ``Category`` object can be modified by the user::
                 'data_class' => 'AppBundle\Entity\Category',
             ));
         }
+
+        public function getName()
+        {
+            return 'category';
+        }
     }
 
 The end goal is to allow the ``Category`` of a ``Task`` to be modified right
@@ -1342,13 +1374,12 @@ class:
 .. code-block:: php
 
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\CategoryType;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
-        $builder->add('category', CategoryType::class);
+        $builder->add('category', new CategoryType());
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
@@ -1395,7 +1426,7 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and the :doc:`CollectionType </reference/forms/types/collection>` reference.
+entry and the :doc:`collection </reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1819,10 +1850,10 @@ an array of the submitted data. This is actually really easy::
     {
         $defaultData = array('message' => 'Type your message here');
         $form = $this->createFormBuilder($defaultData)
-            ->add('name', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('message', TextareaType::class)
-            ->add('send', SubmitType::class)
+            ->add('name', 'text')
+            ->add('email', 'email')
+            ->add('message', 'textarea')
+            ->add('send', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
@@ -1883,13 +1914,12 @@ but here's a short example:
 
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     $builder
-       ->add('firstName', TextType::class, array(
+       ->add('firstName', 'text', array(
            'constraints' => new Length(array('min' => 3)),
        ))
-       ->add('lastName', TextType::class, array(
+       ->add('lastName', 'text', array(
            'constraints' => array(
                new NotBlank(),
                new Length(array('min' => 3)),
@@ -1929,7 +1959,7 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/doctrine/file_uploads`
-* :doc:`FileType Reference </reference/forms/types/file>`
+* :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/dynamic_form_modification`

@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; ChoiceType
+   single: Forms; Fields; choice
 
-ChoiceType Field (select drop-downs, radio buttons & checkboxes)
-================================================================
+choice Field Type (select drop-downs, radio buttons & checkboxes)
+=================================================================
 
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
@@ -15,6 +15,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Options     | - `choices`_                                                                 |
 |             | - `choice_attr`_                                                             |
 |             | - `choice_label`_                                                            |
+|             | - `choice_list`_ (deprecated)                                                |
 |             | - `choice_loader`_                                                           |
 |             | - `choice_name`_                                                             |
 |             | - `choice_translation_domain`_                                               |
@@ -39,10 +40,11 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `label_attr`_                                                              |
 |             | - `label_format`_                                                            |
 |             | - `mapped`_                                                                  |
+|             | - `read_only`_                                                               |
 |             | - `required`_                                                                |
 |             | - `translation_domain`_                                                      |
 +-------------+------------------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                                |
+| Parent type | :doc:`form </reference/forms/types/form>`                                    |
 +-------------+------------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |
 +-------------+------------------------------------------------------------------------------+
@@ -53,15 +55,14 @@ Example Usage
 The easiest way to use this field is to specify the choices directly via
 the ``choices`` option::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('isAttending', ChoiceType::class, array(
+    $builder->add('isAttending', 'choice', array(
         'choices'  => array(
             'Maybe' => null,
             'Yes' => true,
             'No' => false,
         ),
+        // *this line is important*
+        'choices_as_values' => true,
     ));
 
 This will create a ``select`` drop-down like this:
@@ -74,6 +75,14 @@ if the starting data for this field is ``true``, then ``Yes`` will be auto-selec
 In other words, the **value** of each item is the value you want to get/set in PHP
 code, while the **key** is what will be shown to the user.
 
+.. caution::
+
+    The ``choices_as_values`` *must* be set to ``true`` in all cases. This activates
+    the "new" choice type API, which was introduced in Symfony 2.7. If you omit this
+    option (or set it to ``false``), you'll activate the old API, which is deprecated
+    and will be removed in 3.0. To read about the old API, read an older version of
+    the docs.
+
 Advanced Example (with Objects!)
 --------------------------------
 
@@ -81,17 +90,14 @@ This field has a *lot* of options and most control how the field is displayed. I
 this example, the underlying data is some ``Category`` object that has a ``getName()``
 method::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    use AppBundle\Entity\Category;
-    // ...
-
-    $builder->add('category', ChoiceType::class, [
+    $builder->add('category', 'choice', [
         'choices' => [
             new Category('Cat1'),
             new Category('Cat2'),
             new Category('Cat3'),
             new Category('Cat4'),
         ],
+        'choices_as_values' => true,
         'choice_label' => function($category, $key, $index) {
             /** @var Category $category */
             return strtoupper($category->getName());
@@ -129,10 +135,7 @@ Grouping Options
 
 You can easily "group" options in a select by passing a multi-dimensional choices array::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('stockStatus', ChoiceType::class, [
+    $builder->add('stockStatus', 'choice', [
         'choices' => [
             'Main Statuses' => [
                 'Yes' => 'stock_yes',
@@ -143,6 +146,7 @@ You can easily "group" options in a select by passing a multi-dimensional choice
                 'Discontinued' => 'stock_discontinued',
             ]
         ],
+        'choices_as_values' => true,
     );
 
 .. image:: /images/reference/form/choice-example4.png
@@ -162,10 +166,7 @@ This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
 is the item's label and the array value is the item's value::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('inStock', ChoiceType::class, array(
+    $builder->add('inStock', 'choice', array(
         'choices' => array('In Stock' => true, 'Out of Stock' => false),
         // always include this
         'choices_as_values' => true,
@@ -177,8 +178,54 @@ is the item's label and the array value is the item's value::
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
+choice_list
+~~~~~~~~~~~
+
+.. caution::
+
+    The ``choice_list`` option of ChoiceType was deprecated in Symfony 2.7.
+    You should use `choices`_ or `choice_loader`_ now.
+
+**type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
+
+This is one way of specifying the options to be used for this field.
+The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
+For more advanced cases, a custom class that implements the interface
+can be created to supply the choices.
+
+With this option you can also allow float values to be selected as data.
+For example::
+
+    use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+
+    // ...
+    $builder->add('status', 'choice', array(
+        'choice_list' => new ChoiceList(
+            array(1, 0.5, 0.1),
+            array('Full', 'Half', 'Almost empty')
+        )
+    ));
+
+The ``status`` field created by the code above will be rendered as:
+
+.. code-block:: html
+
+    <select name="status">
+        <option value="0">Full</option>
+        <option value="1">Half</option>
+        <option value="2">Almost empty</option>
+    </select>
+
+But don't be confused! If ``Full`` is selected (value ``0`` in HTML), ``1``
+will be returned in your form. If ``Almost empty`` is selected (value ``2``
+in HTML), ``0.1`` will be returned.
+
 choice_loader
 ~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+
+    The ``choice_loader`` option was added in Symfony 2.7.
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
@@ -218,7 +265,7 @@ to the user.
 
 * Since 2.7::
 
-    $builder->add('gender', ChoiceType::class, array(
+    $builder->add('gender', 'choice', array(
         // Shows "Male" to the user, returns "m" when selected
         'choices' => array('Male' => 'm', 'Female' => 'f'),
         'choices_as_values' => true,
@@ -229,7 +276,7 @@ type behaves as if it were set to true:
 
 * Default for 3.0::
 
-    $builder->add('gender', ChoiceType::class, array(
+    $builder->add('gender', 'choice', array(
         'choices' => array('Male' => 'm', 'Female' => 'f'),
     ));
 
@@ -277,7 +324,8 @@ the parent field (the form in most cases).
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
@@ -296,6 +344,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

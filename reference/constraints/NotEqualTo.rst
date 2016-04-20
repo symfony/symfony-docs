@@ -1,6 +1,9 @@
 NotEqualTo
 ==========
 
+.. versionadded:: 2.3
+    The ``NotEqualTo`` constraint was introduced in Symfony 2.3.
+
 Validates that a value is **not** equal to another value, defined in the
 options. To force that a value is equal, see
 :doc:`/reference/constraints/EqualTo`.

@@ -145,13 +145,13 @@ by running:
 
 .. code-block:: bash
 
-    $ php bin/console doctrine:generate:entities AppBundle/Entity/User
+    $ php app/console doctrine:generate:entities AppBundle/Entity/User
 
 Next, make sure to :ref:`create the database table <book-doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: bash
 
-    $ php bin/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -291,6 +291,8 @@ name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
 
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
+
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -422,17 +424,19 @@ both are unique in the database. Unfortunately, the native entity provider
 is only able to handle querying via a single property on the user.
 
 To do this, make your ``UserRepository`` implement a special
-:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
-interface only requires one method: ``loadUserByUsername($username)``::
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
+interface requires three methods: ``loadUserByUsername($username)``,
+``refreshUser(UserInterface $user)``, and ``supportsClass($class)``::
 
     // src/AppBundle/Entity/UserRepository.php
     namespace AppBundle\Entity;
 
-    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Doctrine\ORM\EntityRepository;
 
-    class UserRepository extends EntityRepository implements UserLoaderInterface
+    class UserRepository extends EntityRepository implements UserProviderInterface
     {
         public function loadUserByUsername($username)
         {
@@ -443,7 +447,30 @@ interface only requires one method: ``loadUserByUsername($username)``::
                 ->getQuery()
                 ->getOneOrNullResult();
         }
+
+        public function refreshUser(UserInterface $user)
+        {
+            $class = get_class($user);
+            if (!$this->supportsClass($class)) {
+                throw new UnsupportedUserException(
+                    sprintf(
+                        'Instances of "%s" are not supported.',
+                        $class
+                    )
+                );
+            }
+
+            return $this->find($user->getId());
+        }
+
+        public function supportsClass($class)
+        {
+            return $this->getEntityName() === $class
+                || is_subclass_of($class, $this->getEntityName());
+        }
     }
+
+For more details on these methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
 
 .. tip::
 

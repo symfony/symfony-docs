@@ -264,16 +264,19 @@ there are some minor advantages for each of them:
 Debugging Event Listeners
 -------------------------
 
+.. versionadded:: 2.6
+    The ``debug:event-dispatcher`` command was introduced in Symfony 2.6.
+
 You can find out what listeners are registered in the event dispatcher
 using the console. To show all events and their listeners, run:
 
 .. code-block:: bash
 
-    $ php bin/console debug:event-dispatcher
+    $ php app/console debug:event-dispatcher
 
 You can get registered listeners for a particular event by specifying
 its name:
 
 .. code-block:: bash
 
-    $ php bin/console debug:event-dispatcher kernel.exception
+    $ php app/console debug:event-dispatcher kernel.exception

@@ -616,7 +616,6 @@ However, the HttpKernel component comes with some built-in listeners and
 a built-in ControllerResolver that can be used to create a working example::
 
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -642,7 +641,7 @@ a built-in ControllerResolver that can be used to create a working example::
     $matcher = new UrlMatcher($routes, new RequestContext());
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
+    $dispatcher->addSubscriber(new RouterListener($matcher));
 
     $resolver = new ControllerResolver();
     $kernel = new HttpKernel($dispatcher, $resolver);

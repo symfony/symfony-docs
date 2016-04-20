@@ -1402,7 +1402,10 @@ the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    $ php app/console debug:router
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``router:debug``.
 
 This command will print a helpful list of *all* the configured routes in
 your application:
@@ -1421,14 +1424,14 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router article_show
+    $ php app/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:
 
 .. code-block:: bash
 
-    $ php bin/console router:match /blog/my-latest-post
+    $ php app/console router:match /blog/my-latest-post
 
 This command will print which route the URL matches.
 
@@ -1537,7 +1540,7 @@ a template helper function:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->path('blog_show', array(
+        <a href="<?php echo $view['router']->generate('blog_show', array(
             'slug' => 'my-blog-post',
         )) ?>">
             Read this blog post.
@@ -1558,8 +1561,9 @@ method::
     $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), UrlGeneratorInterface::ABSOLUTE_URL);
     // http://www.example.com/blog/my-blog-post
 
-From a template, simply use the ``url()`` function (which generates an absolute
-URL) rather than the ``path()`` function (which generates a relative URL):
+From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
+rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
+to ``generate()``:
 
 .. configuration-block::
 
@@ -1571,9 +1575,13 @@ URL) rather than the ``path()`` function (which generates a relative URL):
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->url('blog_show', array(
+        <?php
+        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
+
+        <a href="<?php echo $view['router']->generate('blog_show', array(
             'slug' => 'my-blog-post',
-        )) ?>">
+        ), UrlGeneratorInterface::ABSOLUTE_URL) ?>">
             Read this blog post.
         </a>
 

@@ -1,6 +1,9 @@
 choice_value
 ~~~~~~~~~~~~
 
+.. versionadded:: 2.7
+    The ``choice_value`` option was introduced in Symfony 2.7.
+
 **type**: ``callable`` or ``string`` **default**: ``null``
 
 Returns the string "value" for each choice. This is used in the ``value`` attribute

@@ -1,6 +1,9 @@
 group_by
 ~~~~~~~~
 
+.. versionadded:: 2.7
+    The ``group_by`` option was introduced in Symfony 2.7.
+
 **type**: ``array``, ``callable`` or ``string`` **default**: ``null``
 
 You can easily "group" options in a select simply by passing a multi-dimensional
@@ -12,10 +15,7 @@ a bit more flexibility.
 
 Take the following example::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('publishAt', ChoiceType::class, array(
+    $builder->add('publishAt', 'choice', array(
         'choices' => array(
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),

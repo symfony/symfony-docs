@@ -75,7 +75,7 @@ as the default one.
     access. For example, you don't want to make a debugging environment
     available to arbitrary users in your production environment.
 
-Technically, the `bin/console`_ script used when running Symfony on the command
+Technically, the `app/console`_ script used when running Symfony on the command
 line is also a front controller, only that is not used for web, but for command
 line requests.
 
@@ -162,7 +162,7 @@ way of loading your configuration.
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
 .. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
 .. _app_dev.php: https://github.com/symfony/symfony-standard/blob/master/web/app_dev.php
-.. _bin/console: https://github.com/symfony/symfony-standard/blob/master/bin/console
+.. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
 .. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
 .. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess

@@ -34,6 +34,11 @@ certain action or resource of the application::
         throw new AccessDeniedException();
     }
 
+.. versionadded:: 2.6
+    As of Symfony 2.6, the :class:`Symfony\\Component\\Security\\Core\\SecurityContext` class was split
+    in the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker` and
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorage` classes.
+
 .. note::
 
     Read the dedicated sections to learn more about :doc:`/components/security/authentication`

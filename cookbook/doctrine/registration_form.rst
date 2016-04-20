@@ -168,20 +168,16 @@ Next, create the form for the ``User`` entity::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\EmailType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', EmailType::class)
-                ->add('username', TextType::class)
-                ->add('plainPassword', RepeatedType::class, array(
-                    'type' => PasswordType::class,
+                ->add('email', 'email')
+                ->add('username', 'text')
+                ->add('plainPassword', 'repeated', array(
+                    'type' => 'password',
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
                 )
@@ -193,6 +189,11 @@ Next, create the form for the ``User`` entity::
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\User',
             ));
+        }
+
+        public function getName()
+        {
+            return 'user';
         }
     }
 
@@ -229,7 +230,7 @@ into the database::
         {
             // 1) build the form
             $user = new User();
-            $form = $this->createForm(UserType::class, $user);
+            $form = $this->createForm(new UserType(), $user);
 
             // 2) handle the submit (will only happen on POST)
             $form->handleRequest($request);
@@ -378,7 +379,7 @@ your database schema using this command:
 
 .. code-block:: bash
 
-   $ php bin/console doctrine:schema:update --force
+   $ php app/console doctrine:schema:update --force
 
 That's it! Head to ``/register`` to try things out!
 
@@ -424,17 +425,15 @@ To do this, add a ``termsAccepted`` field to your form, but set its
     // src/AppBundle/Form/UserType.php
     // ...
     use Symfony\Component\Validator\Constraints\IsTrue;
-    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     class UserType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', EmailType::class);
+                ->add('email', 'email');
                 // ...
-                ->add('termsAccepted', CheckboxType::class, array(
+                ->add('termsAccepted', 'checkbox', array(
                     'mapped' => false,
                     'constraints' => new IsTrue(),
                 ))

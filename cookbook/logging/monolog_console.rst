@@ -58,7 +58,8 @@ the console. If they are displayed, they are timestamped and colored appropriate
 Additionally, error logs are written to the error output (php://stderr).
 There is no need to conditionally handle the verbosity settings anymore.
 
-The Monolog console handler is enabled in the Monolog configuration.
+The Monolog console handler is enabled in the Monolog configuration. This is
+the default in Symfony Standard Edition 2.4 too.
 
 .. configuration-block::
 

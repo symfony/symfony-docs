@@ -75,18 +75,16 @@ If you're using the Standard Distribution, this code should already be available
 as comments in this file::
 
     // app.php
-
     // ...
-    $loader = require __DIR__.'/../app/autoload.php';
-    include_once __DIR__.'/../var/bootstrap.php.cache';
-    // Enable APC for autoloading to improve performance.
-    // You should change the ApcClassLoader first argument to a unique prefix
-    // in order to prevent cache key conflicts with other applications
-    // also using APC.
+
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
+
+    // Use APC for autoloading to improve performance
+    // Change 'sf2' by the prefix you want in order
+    // to prevent key conflict with another application
     /*
-    $apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
-    $loader->unregister();
-    $apcLoader->register(true);
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
     */
 
     // ...
@@ -121,7 +119,7 @@ If you're using the Symfony Standard Edition, then you're probably already
 using the bootstrap file. To be sure, open your front controller (usually
 ``app.php``) and check to make sure that the following line exists::
 
-    include_once __DIR__.'/../var/bootstrap.php.cache';
+    require_once __DIR__.'/../app/bootstrap.php.cache';
 
 Note that there are two disadvantages when using a bootstrap file:
 

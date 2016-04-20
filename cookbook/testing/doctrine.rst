@@ -20,12 +20,12 @@ If you need to actually execute a query, you will need to boot the kernel
 to get a valid connection. In this case, you'll extend the ``KernelTestCase``,
 which makes all of this quite easy::
 
-    // tests/AppBundle/Entity/ProductRepositoryTest.php
-    namespace Tests\AppBundle\Entity;
+    // src/AppBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
+    namespace AppBundle\Tests\Entity;
 
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-    class ProductRepositoryTest extends KernelTestCase
+    class ProductRepositoryFunctionalTest extends KernelTestCase
     {
         /**
          * @var \Doctrine\ORM\EntityManager
@@ -38,10 +38,10 @@ which makes all of this quite easy::
         protected function setUp()
         {
             self::bootKernel();
-
             $this->em = static::$kernel->getContainer()
                 ->get('doctrine')
-                ->getManager();
+                ->getManager()
+            ;
         }
 
         public function testSearchByCategoryName()
@@ -60,7 +60,6 @@ which makes all of this quite easy::
         protected function tearDown()
         {
             parent::tearDown();
-
             $this->em->close();
         }
     }

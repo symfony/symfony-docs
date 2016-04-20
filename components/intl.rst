@@ -8,6 +8,10 @@ The Intl Component
     A PHP replacement layer for the C `intl extension`_ that also provides
     access to the localization data of the `ICU library`_.
 
+.. versionadded:: 2.3
+    The Intl component was introduced in Symfony 2.3. In earlier versions of Symfony,
+    you should use the Locale component instead.
+
 .. caution::
 
     The replacement layer is limited to the locale "en". If you want to use

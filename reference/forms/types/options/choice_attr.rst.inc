@@ -1,6 +1,9 @@
 choice_attr
 ~~~~~~~~~~~
 
+.. versionadded:: 2.7
+    The ``choice_attr`` option was introduced in Symfony 2.7.
+
 **type**: ``array``, ``callable`` or ``string`` **default**: ``array()``
 
 Use this to add additional HTML attributes to each choice. This can be an array
@@ -9,10 +12,7 @@ of attributes (if they are the same for each choice), a callable or a property p
 
 If an array, the keys of the ``choices`` array must be used as keys::
 
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('attending', ChoiceType::class, array(
+    $builder->add('attending', 'choice', array(
         'choices' => array(
             'Yes' => true,
             'No' => false,

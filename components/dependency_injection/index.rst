@@ -8,7 +8,6 @@ DependencyInjection
     types
     parameters
     definitions
-    autowiring
     synthetic_services
     compilation
     tags

@@ -22,9 +22,6 @@ form in its own PHP class::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Component\Form\Extension\Core\Type\EmailType;
-    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
     class PostType extends AbstractType
     {
@@ -32,10 +29,10 @@ form in its own PHP class::
         {
             $builder
                 ->add('title')
-                ->add('summary', TextareaType::class)
-                ->add('content', TextareaType::class)
-                ->add('authorEmail', EmailType::class)
-                ->add('publishedAt', DateTimeType::class)
+                ->add('summary', 'textarea')
+                ->add('content', 'textarea')
+                ->add('authorEmail', 'email')
+                ->add('publishedAt', 'datetime')
             ;
         }
 
@@ -45,6 +42,11 @@ form in its own PHP class::
                 'data_class' => 'AppBundle\Entity\Post'
             ));
         }
+
+        public function getName()
+        {
+            return 'post';
+        }
     }
 
 .. best-practice::
@@ -52,7 +54,7 @@ form in its own PHP class::
     Put the form type classes in the ``AppBundle\Form`` namespace, unless you
     use other custom form classes like data transformers.
 
-To use the class, use ``createForm()`` and pass the fully qualified class name::
+To use the class, use ``createForm()`` and instantiate the new class::
 
     // ...
     use AppBundle\Form\PostType;
@@ -61,7 +63,7 @@ To use the class, use ``createForm()`` and pass the fully qualified class name::
     public function newAction(Request $request)
     {
         $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(new PostType(), $post);
 
         // ...
     }
@@ -71,9 +73,13 @@ Registering Forms as Services
 
 You can also
 :ref:`register your form type as a service <form-cookbook-form-field-service>`.
-This is only needed if your form type requires some dependencies to be injected
-by the container, otherwise it is unnecessary overhead and therefore *not*
-recommended to do this for all form type classes.
+But this is *not* recommended unless you plan to reuse the new form type in many
+places or embed it in other forms directly or via the
+:doc:`collection type </reference/forms/types/collection>`.
+
+For most forms that are used only to edit or create something, registering
+the form as a service is over-kill, and makes it more difficult to figure
+out exactly which form class is being used in a controller.
 
 Form Button Configuration
 -------------------------
@@ -85,10 +91,9 @@ makes them easier to re-use later.
 
     Add buttons in the templates, not in the form classes or the controllers.
 
-The Symfony Form component allows you to add buttons as fields on your form.
-This is a nice way to simplify the template that renders your form. But if you
-add the buttons directly in your form class, this would effectively limit the
-scope of that form:
+Since Symfony 2.3, you can add buttons as fields on your form. This is a nice
+way to simplify the template that renders your form. But if you add the buttons
+directly in your form class, this would effectively limit the scope of that form:
 
 .. code-block:: php
 
@@ -98,7 +103,7 @@ scope of that form:
         {
             $builder
                 // ...
-                ->add('save', SubmitType::class, array('label' => 'Create Post'))
+                ->add('save', 'submit', array('label' => 'Create Post'))
             ;
         }
 
@@ -113,7 +118,6 @@ some developers configure form buttons in the controller::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use AppBundle\Entity\Post;
     use AppBundle\Form\PostType;
 
@@ -124,8 +128,8 @@ some developers configure form buttons in the controller::
         public function newAction(Request $request)
         {
             $post = new Post();
-            $form = $this->createForm(PostType::class, $post);
-            $form->add('submit', SubmitType::class, array(
+            $form = $this->createForm(new PostType(), $post);
+            $form->add('submit', 'submit', array(
                 'label' => 'Create',
                 'attr'  => array('class' => 'btn btn-default pull-right')
             ));
@@ -209,3 +213,21 @@ Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
 for clarity. This isn't technically needed, since ``isValid()`` first calls
 ``isSubmitted()``. But without this, the flow doesn't read well as it *looks*
 like the form is *always* processed (even on the GET request).
+
+Custom Form Field Types
+-----------------------
+
+.. best-practice::
+
+    Add the ``app_`` prefix to your custom form field types to avoid collisions.
+
+Custom form field types inherit from the ``AbstractType`` class, which defines the
+``getName()`` method to configure the name of that form type. These names must
+be unique in the application.
+
+If a custom form type uses the same name as any of the Symfony's built-in form
+types, it will override it. The same happens when the custom form type matches
+any of the types defined by the third-party bundles installed in your application.
+
+Add the ``app_`` prefix to your custom form field types to avoid name collisions
+that can lead to hard to debug errors.
