@@ -224,7 +224,7 @@ the layout:
         <ul>
             <?php foreach ($posts as $post): ?>
             <li>
-                <a href="/read?id=<?php echo $post['id'] ?>">
+                <a href="/show.php?id=<?php echo $post['id'] ?>">
                     <?php echo $post['title'] ?>
                 </a>
             </li>
