@@ -139,7 +139,7 @@ For the configuration example in the previous section, the array passed to your
         array(
             'twitter' => array(
                 'client_id' => 123,
-                'client_secret' => '$secret',
+                'client_secret' => 'your_secret',
             ),
         ),
     )
@@ -155,7 +155,7 @@ beneath it, the incoming array might look like this::
         array(
             'twitter' => array(
                 'client_id' => 123,
-                'client_secret' => '$secret',
+                'client_secret' => 'your_secret',
             ),
         ),
         // values from config_dev.yml
