@@ -32,11 +32,9 @@ This interface requires 4 methods:
   tries to guess the value of the :ref:`required <reference-form-option-required>`
   option;
 * :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessMaxLength` -
-  tries to guess the value of the :ref:`max_length <reference-form-option-max_length>`
-  option;
+  tries to guess the value of the ``maxlength`` input attribute;
 * :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern` -
-  tries to guess the value of the :ref:`pattern <reference-form-option-pattern>`
-  option.
+  tries to guess the value of the ``pattern`` input attribute.
 
 Start by creating the class and these methods. Next, you'll learn how to fill each on.
 
@@ -91,6 +89,10 @@ With this knowledge, you can easily implement the ``guessType`` method of the
 
     use Symfony\Component\Form\Guess\Guess;
     use Symfony\Component\Form\Guess\TypeGuess;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+    use Symfony\Component\Form\Extension\Core\Type\NumberType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
     class PHPDocTypeGuesser implements FormTypeGuesserInterface
     {
@@ -107,25 +109,25 @@ With this knowledge, you can easily implement the ``guessType`` method of the
                 case 'string':
                     // there is a high confidence that the type is text when
                     // @var string is used
-                    return new TypeGuess('text', array(), Guess::HIGH_CONFIDENCE);
+                    return new TypeGuess(TextType::class, array(), Guess::HIGH_CONFIDENCE);
 
                 case 'int':
                 case 'integer':
                     // integers can also be the id of an entity or a checkbox (0 or 1)
-                    return new TypeGuess('integer', array(), Guess::MEDIUM_CONFIDENCE);
+                    return new TypeGuess(IntegerType::class, array(), Guess::MEDIUM_CONFIDENCE);
 
                 case 'float':
                 case 'double':
                 case 'real':
-                    return new TypeGuess('number', array(), Guess::MEDIUM_CONFIDENCE);
+                    return new TypeGuess(NumberType::class, array(), Guess::MEDIUM_CONFIDENCE);
 
                 case 'boolean':
                 case 'bool':
-                    return new TypeGuess('checkbox', array(), Guess::HIGH_CONFIDENCE);
+                    return new TypeGuess(CheckboxType::class, array(), Guess::HIGH_CONFIDENCE);
 
                 default:
                     // there is a very low confidence that this one is correct
-                    return new TypeGuess('text', array(), Guess::LOW_CONFIDENCE);
+                    return new TypeGuess(TextType::class, array(), Guess::LOW_CONFIDENCE);
             }
         }
 

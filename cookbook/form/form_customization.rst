@@ -101,7 +101,7 @@ rendering a form. In other words, if you want to customize one portion of
 how a form is rendered, you'll import a *theme* which contains a customization
 of the appropriate form fragments.
 
-Symfony comes with four **built-in form themes** that define each and every
+Symfony comes with some **built-in form themes** that define each and every
 fragment needed to render every part of a form:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element.
@@ -113,6 +113,9 @@ fragment needed to render every part of a form:
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
+* `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
+  with the appropriate CSS classes to apply the default `Foundation CSS framework`_
+  styles.
 
 .. caution::
 
@@ -208,6 +211,9 @@ this folder.
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
     you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
+    
+    The ``integer`` part comes from the class name: ``IntegerType`` becomes ``integer``,
+    based on a standard.
 
     As you can see, the fragment name is a combination of the field type and
     which part of the field is being rendered (e.g. ``widget``, ``label``,
@@ -705,12 +711,13 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
    form type::
 
         use Symfony\Component\Form\FormBuilderInterface;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             // ...
 
-            $builder->add('name', 'text', array(
+            $builder->add('name', TextType::class, array(
                 'block_name' => 'custom_name',
             ));
         }
@@ -1140,3 +1147,5 @@ more details about this concept in Twig, see :ref:`twig-reference-form-variables
 .. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`Bootstrap 3 CSS framework`: http://getbootstrap.com/
+.. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
+.. _`Foundation CSS framework`: http://foundation.zurb.com/

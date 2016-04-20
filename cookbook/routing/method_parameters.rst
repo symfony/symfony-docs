@@ -74,19 +74,17 @@ delete it by matching on GET, PUT and DELETE.
 Faking the Method with ``_method``
 ----------------------------------
 
+Unfortunately, life isn't quite this simple, since most browsers do not support
+sending PUT and DELETE requests via the ``method`` attribute in an HTML form.
+Fortunately, Symfony provides you with a simple way of working around this
+limitation. By including a ``_method`` parameter in the query string or
+parameters of an HTTP request, Symfony will use this as the method when
+matching routes. Forms automatically include a hidden field for this parameter
+if their submission method is not GET or POST.
+See :ref:`the related chapter in the forms documentation <book-forms-changing-action-and-method>`
+for more information.
+
 .. note::
 
-    The ``_method`` functionality shown here is disabled by default in Symfony 2.2
-    and enabled by default in Symfony 2.3. To control it in Symfony 2.2, you
-    must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-    before you handle the request (e.g. in your front controller). In Symfony
-    2.3, use the :ref:`configuration-framework-http_method_override` option.
-
-Unfortunately, life isn't quite this simple, since most browsers do not support
-sending PUT and DELETE requests via the `method` attribute in an HTML form. Fortunately,
-Symfony provides you with a simple way of working around this limitation. By including
-a ``_method`` parameter in the query string or parameters of an HTTP request, Symfony
-will use this as the method when matching routes. Forms automatically include a
-hidden field for this parameter if their submission method is not GET or POST.
-See :ref:`the related chapter in the forms documentation<book-forms-changing-action-and-method>`
-for more information.
+    This feature can be disabled using the
+    :ref:`configuration-framework-http_method_override` option.

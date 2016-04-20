@@ -4,6 +4,8 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
+.. include:: /cookbook/assetic/_standard_edition_warning.inc
+
 Full Default Configuration
 --------------------------
 

@@ -103,11 +103,6 @@ following:
     Protected and private properties can also be validated, as well as "getter"
     methods (see :ref:`validator-constraint-targets`).
 
-.. versionadded:: 2.7
-    As of Symfony 2.7, XML and Yaml constraint files located in the
-    ``Resources/config/validation`` sub-directory of a bundle are loaded. Prior
-    to 2.7, only ``Resources/config/validation.yml`` (or ``.xml``) were loaded.
-
 .. index::
    single: Validation; Using the validator
 
@@ -230,7 +225,7 @@ workflow looks like the following from inside a controller::
     public function updateAction(Request $request)
     {
         $author = new Author();
-        $form = $this->createForm(new AuthorType(), $author);
+        $form = $this->createForm(AuthorType::class, $author);
 
         $form->handleRequest($request);
 
@@ -882,11 +877,7 @@ the class name or the string ``Default``.
 To tell the validator to use a specific group, pass one or more group names
 as the third argument to the ``validate()`` method::
 
-    // If you're using the new 2.5 validation API (you probably are!)
     $errors = $validator->validate($author, null, array('registration'));
-
-    // If you're using the old 2.4 validation API, pass the group names as the second argument
-    // $errors = $validator->validate($author, array('registration'));
 
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.
@@ -1248,19 +1239,10 @@ it looks like this::
         $emailConstraint->message = 'Invalid email address';
 
         // use the validator to validate the value
-        // If you're using the new 2.5 validation API (you probably are!)
         $errorList = $this->get('validator')->validate(
             $email,
             $emailConstraint
         );
-
-        // If you're using the old 2.4 validation API
-        /*
-        $errorList = $this->get('validator')->validateValue(
-            $email,
-            $emailConstraint
-        );
-        */
 
         if (0 === count($errorList)) {
             // ... this IS a valid email address, do something

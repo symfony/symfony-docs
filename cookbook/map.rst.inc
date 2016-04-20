@@ -30,6 +30,7 @@
 * :doc:`/cookbook/configuration/index`
 
   * :doc:`/cookbook/configuration/environments`
+  * :doc:`/cookbook/configuration/micro-kernel-trait`
   * :doc:`/cookbook/configuration/override_dir_structure`
   * :doc:`/cookbook/configuration/using_parameters_in_dic`
   * :doc:`/cookbook/configuration/front_controllers_and_kernel`
@@ -164,6 +165,7 @@
 
   * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
+  * :doc:`/cookbook/security/guard-authentication`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/form_login`
@@ -176,8 +178,10 @@
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
   * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/multiple_guard_authenticators`
   * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/host_restriction`
+  * :doc:`/cookbook/security/user_checkers`
 
 * :doc:`Security Authorization (Denying Access) </cookbook/security/index>`
 
@@ -194,7 +198,7 @@
 
 * :doc:`/cookbook/service_container/index`
 
-  * :doc:`/cookbook/service_container/scopes`
+  * :doc:`/cookbook/service_container/shared`
   * :doc:`/cookbook/service_container/compiler_passes`
   * (Event Dispatcher) :doc:`/cookbook/event_dispatcher/event_listener`
 
@@ -213,10 +217,6 @@
 * **PSR-7**
 
   * :doc:`/cookbook/psr7`
-
-* **symfony1**
-
-  * :doc:`/cookbook/symfony1`
 
 * :doc:`/cookbook/templating/index`
 
