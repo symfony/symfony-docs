@@ -113,7 +113,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
             <ul>
                 <?php foreach ($posts as $post): ?>
                 <li>
-                    <a href="/read?id=<?php echo $post['id'] ?>">
+                    <a href="/show.php?id=<?php echo $post['id'] ?>">
                         <?php echo $post['title'] ?>
                     </a>
                 </li>
