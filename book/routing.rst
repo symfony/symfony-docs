@@ -812,7 +812,7 @@ Path     Parameters
 
     The route requirements can also be defined as container parameters, which
     comes in handy when the regular expression is very complex and used time and
-    again in your application:
+    again in your application.
 
     First, define the regular expression as a parameter:
 
@@ -843,7 +843,7 @@ Path     Parameters
             // app/config/config.php
             $container->setParameter('uuid_regex', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
-    Then, use this ``uuid_regex`` parameter in the route requirements:
+    Then, use this parameter in the route requirements:
 
     .. configuration-block::
 
