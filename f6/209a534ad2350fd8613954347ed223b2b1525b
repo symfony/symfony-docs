@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-19T07:02:08Z
+
+:+1: (even if this isn't part of the output of the `debug:config` command, it's still useful for readers)
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-04-19T07:10:28Z
+
+@xabbuh, @AAstakhov  : Maybe this should conform the `config:dump-reference security` output then:
+
+```yml
+    access_decision_manager:
+        strategy:             affirmative # One of "affirmative"; "consensus"; "unanimous"
+        allow_if_all_abstain:  false
+        allow_if_equal_granted_denied:  true
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-19T07:15:55Z
+
+@ogizanagi Indeed, good idea
