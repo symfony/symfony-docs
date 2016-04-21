@@ -41,6 +41,7 @@ And the new front controller::
     use Symfony\Component\Routing;
     use Symfony\Component\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\HttpFoundation\RequestStack;
 
     $request = Request::createFromGlobals();
     $routes = include __DIR__.'/../src/app.php';
@@ -50,7 +51,7 @@ And the new front controller::
     $resolver = new HttpKernel\Controller\ControllerResolver();
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher));
+    $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, new RequestStack()));
 
     $framework = new Simplex\Framework($dispatcher, $resolver);
 
