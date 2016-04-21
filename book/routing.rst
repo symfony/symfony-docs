@@ -808,6 +808,13 @@ Path     Parameters
 ``/es``  *won't match this route*
 =======  ========================
 
+.. tip::
+
+    The route requirements can also include container parameters, as explained
+    in :doc:`this article </cookbook/routing/service_container_parameters>`.
+    This comes in handy when the regular expression is very complex and used
+    time and again in your application.
+
 .. index::
    single: Routing; Method requirement
 
