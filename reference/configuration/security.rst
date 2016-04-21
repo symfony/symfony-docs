@@ -27,8 +27,7 @@ Each part will be explained in the next section.
             always_authenticate_before_granting:  false
             erase_credentials:    true
             access_decision_manager:
-                # strategy can be: affirmative, consensus, unanimous
-                strategy:             affirmative
+                strategy:             affirmative # One of affirmative, consensus, unanimous
                 allow_if_all_abstain:  false
                 allow_if_equal_granted_denied:  true
             acl:
