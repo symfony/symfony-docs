@@ -808,6 +808,101 @@ Path     Parameters
 ``/es``  *won't match this route*
 =======  ========================
 
+.. tip::
+
+    The route requirements can also be defined as container parameters, which
+    comes in handy when the regular expression is very complex and used time and
+    again in your application.
+
+    First, define the regular expression as a parameter:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            parameters:
+                uuid_regex: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <parameters>
+                    <parameter key="uuid_regex">[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->setParameter('uuid_regex', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+
+    Then, use this parameter in the route requirements:
+
+    .. configuration-block::
+
+        .. code-block:: php-annotations
+
+            // src/AppBundle/Controller/MainController.php
+
+            // ...
+            class MainController extends Controller
+            {
+                /**
+                 * @Route("/show/{uuid}", requirements={
+                 *     "uuid": "%uuid_regex%"
+                 * })
+                 */
+                public function showAction($uuid)
+                {
+                }
+            }
+
+        .. code-block:: yaml
+
+            # app/config/routing.yml
+            show:
+                path:      /show/{uuid}
+                defaults:  { _controller: AppBundle:Main:show }
+                requirements:
+                    uuid: '%uuid_regex%'
+
+        .. code-block:: xml
+
+            <!-- app/config/routing.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    http://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <route id="show" path="/show/{uuid}">
+                    <default key="_controller">AppBundle:Main:show</default>
+                    <requirement key="uuid">%uuid_regex%</requirement>
+                </route>
+            </routes>
+
+        .. code-block:: php
+
+            // app/config/routing.php
+            use Symfony\Component\Routing\RouteCollection;
+            use Symfony\Component\Routing\Route;
+
+            $collection = new RouteCollection();
+            $collection->add('show', new Route('/show/{uuid}', array(
+                '_controller' => 'AppBundle:Main:show',
+            ), array(
+                'uuid' => '%uuid_regex%',
+            )));
+
+            return $collection;
+
 .. index::
    single: Routing; Method requirement
 
