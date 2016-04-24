@@ -34,7 +34,7 @@ and complete the configuration with the provided ``username`` and ``password``:
         swiftmailer:
             transport:  smtp
             host:       email-smtp.us-east-1.amazonaws.com
-            port:       465 # different ports are available, see SES console
+            port:       587 # different ports are available, see SES console
             encryption: tls # TLS encryption is required
             username:   AWS_SES_SMTP_USERNAME  # to be created in the SES console
             password:   AWS_SES_SMTP_PASSWORD  # to be created in the SES console
@@ -55,7 +55,7 @@ and complete the configuration with the provided ``username`` and ``password``:
             <swiftmailer:config
                 transport="smtp"
                 host="email-smtp.us-east-1.amazonaws.com"
-                port="465"
+                port="587"
                 encryption="tls"
                 username="AWS_SES_SMTP_USERNAME"
                 password="AWS_SES_SMTP_PASSWORD"
@@ -68,7 +68,7 @@ and complete the configuration with the provided ``username`` and ``password``:
         $container->loadFromExtension('swiftmailer', array(
             'transport'  => 'smtp',
             'host'       => 'email-smtp.us-east-1.amazonaws.com',
-            'port'       => 465,
+            'port'       => 587,
             'encryption' => 'tls',
             'username'   => 'AWS_SES_SMTP_USERNAME',
             'password'   => 'AWS_SES_SMTP_PASSWORD',
@@ -94,7 +94,7 @@ And that's it, you're ready to start sending emails through the cloud!
             # ...
             mailer_transport:  smtp
             mailer_host:       email-smtp.us-east-1.amazonaws.com
-            mailer_port:       465 # different ports are available, see SES console
+            mailer_port:       587 # different ports are available, see SES console
             mailer_encryption: tls # TLS encryption is required
             mailer_user:       AWS_SES_SMTP_USERNAME # to be created in the SES console
             mailer_password:   AWS_SES_SMTP_PASSWORD # to be created in the SES console
