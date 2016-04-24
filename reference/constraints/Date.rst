@@ -9,6 +9,7 @@ valid YYYY-MM-DD format.
 | Applies to     | :ref:`property or method <validation-property-target>`             |
 +----------------+--------------------------------------------------------------------+
 | Options        | - `message`_                                                       |
+|                | - `payload`_                                                       |
 +----------------+--------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Date`          |
 +----------------+--------------------------------------------------------------------+
@@ -83,3 +84,5 @@ message
 **type**: ``string`` **default**: ``This value is not a valid date.``
 
 This message is shown if the underlying data is not a valid date.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

@@ -5,22 +5,25 @@ The Components
     :hidden:
 
     using_components
+    asset/index
     browser_kit/index
     class_loader/index
     config/index
     console/index
     css_selector
-    debug
+    debug/index
     dependency_injection/index
     dom_crawler
     event_dispatcher/index
-    filesystem
+    expression_language/index
+    filesystem/index
     finder
     form/index
     http_foundation/index
     http_kernel/index
     intl
     options_resolver
+    phpunit_bridge
     process
     property_access/index
     routing/index
@@ -29,6 +32,7 @@ The Components
     stopwatch
     templating/index
     translation/index
+    var_dumper/index
     yaml/index
 
 .. include:: /components/map.rst.inc

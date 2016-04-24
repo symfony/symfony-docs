@@ -11,6 +11,7 @@ Also see :doc:`IsTrue <IsTrue>`.
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsFalse`          |
 +----------------+-----------------------------------------------------------------------+
@@ -110,3 +111,5 @@ message
 **type**: ``string`` **default**: ``This value should be false.``
 
 This message is shown if the underlying data is not false.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
