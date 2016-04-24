@@ -367,7 +367,7 @@ for an example.
 Creating Separate Compiler Passes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes, you need to do more than one thing during compliation, want to use
+Sometimes, you need to do more than one thing during compilation, want to use
 compiler passes without an extension or you need to execute some code at
 another step in the compilation process. In these cases, you can create a new
 class implementing the ``CompilerPassInterface``::
