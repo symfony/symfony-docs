@@ -482,7 +482,7 @@ need it::
             $request = $event->getRequest();
 
             // some logic to determine the $locale
-            $request->getSession()->set('_locale', $locale);
+            $request->setLocale($locale);
         }
 
 Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
