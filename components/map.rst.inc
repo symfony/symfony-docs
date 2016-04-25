@@ -8,6 +8,10 @@
 
   * :doc:`/components/browser_kit/introduction`
 
+* :doc:`/components/cache/index`
+
+  * :doc:`/components/cache/introduction`
+
 * :doc:`/components/class_loader/index`
 
   * :doc:`/components/class_loader/introduction`

@@ -1,0 +1,74 @@
+.. index::
+   single: Cache
+   single: Performance
+   single: Components; Cache
+
+The Cache Component
+===================
+
+    The Cache component provides a strict `PSR-6`_ implementation for adding
+    cache to your applications. It is designed to have a low overhead and it
+    ships with ready to use adapters for the most common caching backends.
+
+Installation
+------------
+
+You can install the component in 2 different ways:
+
+* :doc:`Install it via Composer </components/using_components>` (``symfony/cache`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/cache).
+
+.. note::
+
+    In Symfony applications this component is integrated (and enabled by
+    default) through the FrameworkBundle.
+
+Key Concepts
+------------
+
+Before starting to use the Cache component, it's important that you learn the
+meaning of some key concepts:
+
+* **Item**, a single key/value pair stored in the cache. They key is the unique
+  identifier of the item and cannot be changed. The value can be changed at any
+  time and it can contain any value which can be serialized by PHP;
+* **Pool**, a logical repository of cache items. All cache operations (saving
+  items, looking for items, etc.) are performed through the pool. Applications
+  can define as many pools as needed.
+* **Adapter**, it implements the actual caching mechanism to store the
+  information in the filesystem, in a database, etc. The component provides
+  several ready to use adapters for common caching backends (Redis, APCu, etc.)
+
+Basic Usage
+-----------
+
+This component is a strict implementation of `PSR-6`_, which means that the API
+is the same as defined in the standard. Before starting to cache information,
+create the cache pool using any of the built-in adapters. For example, to create
+a filesystem-based cache, instantiate :class:`Symfony\Component\Cache\Adapter\FilesystemAdapter`
+and define the namespace used to store the items as the first argument::
+
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $cache = new FilesystemAdapter('app.cache')
+
+Now you can create, retrieve, updated and delete items using this cache pool::
+
+    // create a new item by trying to get it from the cache
+    $item = $cache->getItem('user_id');
+
+    // assign a value to the item and save it
+    $item->set('4711');
+    $cache->save($item);
+
+    // retrieve the cached item
+    $cachedUser = $cache->getItem('user_id');
+    // check whether the item exists in the cache
+    $isCached = $cachedUser->isHit();
+    // retrieve the value stored by the item
+    $userId = $cachedUser->get();
+
+    // remove the cache item
+    $cache->deleteItem('user_id');
+
+.. _`PSR-6`: http://www.php-fig.org/psr/psr-6/

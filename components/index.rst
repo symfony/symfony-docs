@@ -8,6 +8,7 @@ The Components
     asset/index
     browser_kit/index
     class_loader/index
+    cache/index
     config/index
     console/index
     css_selector
