@@ -924,7 +924,7 @@ a ``name`` field and the associated getter and setter functions.
 Relationship Mapping Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In our example, each category can be associated with *many* products, while
+In this example, each category can be associated with *many* products, while
 each product can be associated with only *one* category. This relationship
 can be summarized as: *many* products to *one* category (or equivalently,
 *one* category to *many* products).
