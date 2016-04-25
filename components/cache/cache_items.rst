@@ -8,7 +8,7 @@ Cache Items
 
 Cache items are each one of the information units stored in the cache as a
 key/value pair. In the Cache component they are represented by the
-:class:`Symfony\Component\Cache\CacheItem` class.
+:class:`Symfony\\Component\\Cache\\CacheItem` class.
 
 Cache Item Keys and Values
 --------------------------
@@ -25,8 +25,6 @@ numbers (0-9) and the ``_`` and ``.`` symbols. Other common symbols (such as
 The **value** of a cache item can be any data represented by a type which is
 serializable by PHP, such as basic types (strings, integers, floats, boolean,
 nulls), arrays and objects.
-
-If it is not possible to return the exact saved value for any reason, implementing libraries MUST respond with a cache miss rather than corrupted data.
 
 Creating Cache Items
 --------------------
