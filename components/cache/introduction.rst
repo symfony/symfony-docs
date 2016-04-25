@@ -71,3 +71,4 @@ Now you can create, retrieve, updated and delete items using this cache pool::
     $cache->deleteItem('stats.num_products');
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
+.. _Packagist: https://packagist.org/packages/symfony/cache
