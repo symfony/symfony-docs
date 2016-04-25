@@ -6,14 +6,17 @@ data
 When you attach a form type to a form, it becomes a field that initially maps
 the value of the corresponding property or key of the form's domain data. If
 you want to override the initial value which will be rendered in the view for
-the form or any field, you can set it in the data option::
+the form or any nested field, you can set it in the data option::
 
     $builder->add('token', 'hidden', array(
         'data' => 'abcdef',
     ));
 
+    // Is the same as
+    $resolver->setDefault('data' => array('token' => 'abcdef'));
+
 .. note::
 
     The default values for form fields are taken directly from the underlying
-    data structure matching the field name with a property of an object or a
+    data structure matching the field's name with a property of an object or a
     key of an array. The ``data`` option overrides this default value.
