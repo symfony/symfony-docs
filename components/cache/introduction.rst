@@ -55,11 +55,11 @@ and define the namespace used to store the items as the first argument::
 Now you can create, retrieve, updated and delete items using this cache pool::
 
     // create a new item by trying to get it from the cache
-    $numProducts = $cache->getItem('stats.num_products');
+    $cachedNumProducts = $cache->getItem('stats.num_products');
 
     // assign a value to the item and save it
-    $numProducts->set('4711');
-    $cache->save($numProducts);
+    $cachedNumProducts->set('4711');
+    $cache->save($cachedNumProducts);
 
     // retrieve the cache item
     $cachedNumProducts = $cache->getItem('stats.num_products');
