@@ -61,7 +61,7 @@ Class
 ~~~~~
 
 The first optional argument of the ``Definition`` class is the fully qualified
-class name of the object returned when the service is get from the container::
+class name of the object returned when the service is fetched from the container::
 
     use Symfony\Component\DependencyInjection\Definition;
 
@@ -82,7 +82,7 @@ Constructor Arguments
 
 The second optional argument of the ``Definition`` class is an array with the
 arguments passed to the constructor of the object returned when the service is
-get from the container::
+fetched from the container::
 
     use Symfony\Component\DependencyInjection\Definition;
 
@@ -106,15 +106,15 @@ or to get a single argument by its position::
     $definition->getArgument($index);
     // e.g. $definition->getArgument(0) for the first argument
 
-The argument can be a string, an array, a service parameter by using the
+The argument can be a string, an array or a service parameter by using the
 ``%parameter_name%`` syntax::
 
     $definition->addArgument('%kernel_debug%');
 
-If the argument is another container service, don't use the ``get()`` method to
-get the actual service, because it won't be available when defining services.
-Instead, use the :class:`Symfony\\Component\\DependencyInjection\\Reference`
-class to get a reference to the service available once the service container is
+If the argument is another service, don't use the ``get()`` method to fetch it,
+because it won't be available when defining services. Instead, use the
+:class:`Symfony\\Component\\DependencyInjection\\Reference` class to get a
+reference to the service which will be available once the service container is
 fully built::
 
     use Symfony\Component\DependencyInjection\Reference;
