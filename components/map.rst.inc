@@ -11,6 +11,7 @@
 * :doc:`/components/cache/index`
 
   * :doc:`/components/cache/introduction`
+  * :doc:`/components/cache/cache_items`
 
 * :doc:`/components/class_loader/index`
 
