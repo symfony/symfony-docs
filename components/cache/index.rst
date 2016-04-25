@@ -5,3 +5,4 @@ Cache
     :maxdepth: 2
 
     introduction
+    cache_items

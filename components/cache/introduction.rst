@@ -29,9 +29,8 @@ Key Concepts
 Before starting to use the Cache component, it's important that you learn the
 meaning of some key concepts:
 
-* **Item**, a single key/value pair stored in the cache. They key is the unique
-  identifier of the item and cannot be changed. The value can be changed at any
-  time and it can contain any value which can be serialized by PHP;
+* **Item**, a single unit of information stored as a key/value pair, where the
+  key is the unique identifier of the information and the value is its contents;
 * **Pool**, a logical repository of cache items. All cache operations (saving
   items, looking for items, etc.) are performed through the pool. Applications
   can define as many pools as needed.
@@ -58,7 +57,7 @@ Now you can create, retrieve, updated and delete items using this cache pool::
     $cachedNumProducts = $cache->getItem('stats.num_products');
 
     // assign a value to the item and save it
-    $cachedNumProducts->set('4711');
+    $cachedNumProducts->set(4711);
     $cache->save($cachedNumProducts);
 
     // retrieve the cache item
