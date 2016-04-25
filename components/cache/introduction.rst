@@ -55,20 +55,20 @@ and define the namespace used to store the items as the first argument::
 Now you can create, retrieve, updated and delete items using this cache pool::
 
     // create a new item by trying to get it from the cache
-    $item = $cache->getItem('user_id');
+    $numProducts = $cache->getItem('stats.num_products');
 
     // assign a value to the item and save it
-    $item->set('4711');
-    $cache->save($item);
+    $numProducts->set('4711');
+    $cache->save($numProducts);
 
-    // retrieve the cached item
-    $cachedUser = $cache->getItem('user_id');
+    // retrieve the cache item
+    $cachedNumProducts = $cache->getItem('stats.num_products');
     // check whether the item exists in the cache
-    $isCached = $cachedUser->isHit();
+    $isCached = $cachedNumProducts->isHit();
     // retrieve the value stored by the item
-    $userId = $cachedUser->get();
+    $numProducts = $cachedNumProducts->get();
 
     // remove the cache item
-    $cache->deleteItem('user_id');
+    $cache->deleteItem('stats.num_products');
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
