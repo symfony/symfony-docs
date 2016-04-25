@@ -1060,7 +1060,7 @@ to hold those associated objects.
             </entity>
         </doctrine-mapping>
 
-Doctrine does not *require* that the "one" side of a one-to-many relationship
+Doctrine does not *require* the "one" side of a one-to-many relationship to
 hold a collection of its "many" related entities. But in the context of our
 application, it makes sense for each ``Category`` object to hold a collection
 of ``Product`` objects. However, if we had decided against adding a ``$products``
