@@ -435,7 +435,8 @@ need it::
             $request->setLocale($locale);
         }
 
-Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
+Read :doc:`/cookbook/session/locale_sticky_session` for more information on making
+the user's locale "sticky" to their session.
 
 .. note::
 
