@@ -1,5 +1,8 @@
 .. index::
    single: Cache Pool
+   single: APC Cache, APCu Cache
+   single: Doctrine Cache
+   single: Redis Cache
 
 Cache Pools
 ===========
@@ -13,10 +16,151 @@ changes from a filesystem based cache to a Redis or database based cache.
 Creating Cache Pools
 --------------------
 
-Cache Pools are classes which implement the :class:`Psr\\Cache\\CacheItemPoolInterface`
-interface.
+Cache Pools are created through the **cache adapters**, which are classes that
+implement the :class:`Psr\\Cache\\CacheItemPoolInterface` interface. This
+component provides several adapters ready to use in your applications.
 
-.. TODO: how do you create Cache Pools?
+Array Cache Adapter
+~~~~~~~~~~~~~~~~~~~
+
+This adapter is only useful for testing purposes because contents are stored in
+memory and no persisted in any way. Besides, some features explained later are
+not available, such as the deferred saves::
+
+    use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
+    $cache = new ArrayAdapter($defaultLifetime = 0, $storeSerialized = true);
+
+``defaultLifetime``
+    **type**: integer, **default value**: ``0``
+    The default lifetime, in seconds, applied to cache items that don't define
+    their own lifetime. The default value (``0``) means an "infinite" lifetime,
+    but this adapter destroys the cache once the current PHP execution finishes.
+
+``storeSerialized``
+    **type**: boolean, **default value**: ``true``
+    If ``true``, the values saved in the cache are serialized before storing them.
+
+Filesystem Cache Adapter
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This adapter is useful when you want to improve the application performance but
+can't install in the server tools like APC or Redis::
+
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $cache = new FilesystemAdapter($namespace = '', $defaultLifetime = 0, $directory = null);
+
+``namespace``
+    **type**: string, **default value**: ``''`` (an empty string)
+    The subdirectory created inside the main cache directory (defined in the
+    third argument) to store the cache items.
+
+``defaultLifetime``
+    **type**: integer, **default value**: ``0``
+    The default lifetime, in seconds, applied to cache items that don't define
+    their own lifetime. The default value (``0``) means an "infinite" lifetime,
+    which this adapter respects because items are actually persisted.
+
+``directory``
+    **type**: string, **default value**: ``null``
+    The directory where the cache items are stored as files. Make sure that this
+    directory has read-write permissions for your application. If no directory
+    is defined, a new directory called ``symfony-cache/`` is created in the
+    system's temporary directory.
+
+APCu Cache Adapter
+~~~~~~~~~~~~~~~~~~
+
+This adapter can increase the application performance very significantly, because
+contents are cached in the memory of your server, which is much faster than the
+filesystem. It requires to have installed and enabled the PHP APC extension::
+
+    use Symfony\Component\Cache\Adapter\ApcuAdapter;
+
+    $cache = new ApcuAdapter($namespace = '', $defaultLifetime = 0);
+
+``namespace``
+    **type**: string, **default value**: ``''`` (an empty string)
+    The string prefixed to the keys of the items stored in this cache.
+
+``defaultLifetime``
+    **type**: integer, **default value**: ``0``
+    The default lifetime, in seconds, applied to cache items that don't define
+    their own lifetime. The default value (``0``) means an "infinite" lifetime,
+    which in this adapter ends when the web server is restarted or the APC memory
+    is deleted in any other way.
+
+Redis Cache Adapter
+~~~~~~~~~~~~~~~~~~~
+
+This adapter, similarly to APCu adapter, can increase the application performance
+very significantly, because contents are cached in the memory of your server. It
+requires to have installed Redis and have created a connection that implements
+``\Redis`` class::
+
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
+
+    $cache = new RedisAdapter(\Redis $redisConnection, $namespace = '', $defaultLifetime = 0);
+
+``redisConnection``
+    **type**: ``\Redis``, **default value**: (none, this argument is mandatory)
+    The object that represents a valid connection to your Redis system.
+
+``namespace``
+    **type**: string, **default value**: ``''`` (an empty string)
+    The string prefixed to the keys of the items stored in this cache.
+
+``defaultLifetime``
+    **type**: integer, **default value**: ``0``
+    The default lifetime, in seconds, applied to cache items that don't define
+    their own lifetime. The default value (``0``) means an "infinite" lifetime,
+    which in this adapter ends when the server is restarted or the Redis memory
+    is deleted in any other way.
+
+Chain Cache Adapter
+~~~~~~~~~~~~~~~~~~~
+
+This adapter allows to combine any number of the previous adapters. Cache items
+are fetched from the first adapter which contains them. Besides, cache items are
+saved in all the given adapters, so this is a quick way of creating a cache
+replication::
+
+    use Symfony\Component\Cache\Adapter\ApcuAdapter;
+    use Symfony\Component\Cache\Adapter\ChainAdapter;
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $apcCache = new ApcuAdapter();
+    $fileCache = new FilesystemAdapter();
+
+    $cache = new ChainAdapter(array($apcCache, $fileCache));
+
+The second optional argument of ``ChainAdapter`` is the ``maxLifetime`` (default
+``0``) which is the maximum lifetime of items propagated from lower adapters to
+upper ones.
+
+.. TODO: I don't understand the previous phrase, which is copied from the ChainAdapter code.
+
+Proxy Cache Adapter
+~~~~~~~~~~~~~~~~~~~
+
+.. TODO: what is this adapter useful for?
+
+Doctrine Cache Adapter
+~~~~~~~~~~~~~~~~~~~~~~
+
+This adapter wraps any `Doctrine Cache`_ provider so you can use them in your
+application as if they were Symfony Cache adapters::
+
+    use Doctrine\Common\Cache\SQLite3Cache;
+    use Symfony\Component\Cache\Adapter\DoctrineAdapter;
+
+    $doctrineCache = new SQLite3(__DIR__.'/cache/data.sqlite');
+    $symfonyCache = new DoctrineAdapter($doctrineCache);
+
+This adapter also defines two optional arguments called  ``namespace`` (default:
+``''``) and ``defaultLifetime`` (default: ``0``) and adapts them to make them
+work in the underlying Doctrine cache.
 
 Looking for Cache Items
 -----------------------
@@ -102,3 +246,5 @@ method (which returns ``true`` when all items are successfully deleted)::
 
     // ...
     $cacheIsEmpty = $cache->clear();
+
+.. _`Doctrine Cache`: https://github.com/doctrine/cache

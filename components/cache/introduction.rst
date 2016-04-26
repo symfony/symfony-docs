@@ -44,12 +44,11 @@ Basic Usage
 This component is a strict implementation of `PSR-6`_, which means that the API
 is the same as defined in the standard. Before starting to cache information,
 create the cache pool using any of the built-in adapters. For example, to create
-a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`
-and define the namespace used to store the items as the first argument::
+a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-    $cache = new FilesystemAdapter('app.cache')
+    $cache = new FilesystemAdapter();
 
 Now you can create, retrieve, updated and delete items using this cache pool::
 
