@@ -12,6 +12,7 @@
 
   * :doc:`/components/cache/introduction`
   * :doc:`/components/cache/cache_items`
+  * :doc:`/components/cache/cache_pools`
 
 * :doc:`/components/class_loader/index`
 

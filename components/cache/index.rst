@@ -6,3 +6,4 @@ Cache
 
     introduction
     cache_items
+    cache_pools
