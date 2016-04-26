@@ -701,6 +701,51 @@ their type::
     PHP format (it converts the keys with square brackets notation - e.g.
     ``my_form[subject]`` - to PHP arrays).
 
+Adding and Removing Forms to a Collection
+.........................................
+
+If you use a :doc:`Collection of Forms </cookbook/form/form_collections>`,
+you can't add fields to an existing form with
+``$form['task[tags][0][name]'] = 'foo';``. This results in an error
+``Unreachable field "…"`` because ``$form`` can only be used in order to
+set values of existing fields. In order to add new fields, you have to
+add the values to the raw data array::
+
+    // Get the form.
+    $form = $crawler->filter('button')->form();
+
+    // Get the raw values.
+    $values = $form->getPhpValues();
+
+    // Add fields to the raw values.
+    $values['task']['tag'][0]['name'] = 'foo';
+    $values['task']['tag'][1]['name'] = 'bar';
+
+    // Submit the form with the existing and new values.
+    $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values,
+        $form->getPhpFiles());
+
+    // The 2 tags have been added to the collection.
+    $this->assertEquals(2, $crawler->filter('ul.tags > li')->count());
+
+Where ``task[tags][0][name]`` is the name of a field created
+with JavaScript.
+
+You can remove an existing field, e.g. a tag::
+
+    // Get the values of the form.
+    $values = $form->getPhpValues();
+
+    // Remove the first tag.
+    unset($values['task']['tags'][0]);
+
+    // Submit the data.
+    $crawler = $client->request($form->getMethod(), $form->getUri(),
+        $values, $form->getPhpFiles());
+
+    // The tag has been removed.
+    $this->assertEquals(0, $crawler->filter('ul.tags > li')->count());
+
 .. index::
    pair: Tests; Configuration
 
