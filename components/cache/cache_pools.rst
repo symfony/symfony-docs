@@ -84,16 +84,15 @@ Removing Cache Items
 
 Cache Pools include methods to delete a cache item, some of them or all of them.
 The most common is ``deleteItem($key)``, which deletes the cache item identified
-by the given key (it returns ``true`` when the item is successfully deleted and
-``false`` otherwise)::
+by the given key (it returns ``true`` when the item is successfully deleted or
+doesn't exist and ``false`` otherwise)::
 
     // ...
     $isDeleted = $cache->deleteItem('user_'.$userId);
 
-.. TODO: what happens when you delete an object which doesn't exist? You get `true` as result?
-
 Use the ``deleteItems(array($key1, $key2, ...))`` method to delete several cache
-items simultaneously (it returns ``true`` only if all the items have been deleted)::
+items simultaneously (it returns ``true`` only if all the items have been deleted,
+even when any or some of them don't exist)::
 
     // ...
     $areDeleted = $cache->deleteItems(array('category1', 'category2'));
