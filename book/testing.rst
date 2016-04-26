@@ -699,6 +699,9 @@ their type::
     PHP format (it converts the keys with square brackets notation - e.g.
     ``my_form[subject]`` - to PHP arrays).
 
+Adding and Removing Forms to a Collection
+.........................................
+
 If you use a :doc:`Collection of Forms </cookbook/form/form_collections>`,
 you can't add fields to an existing form with
 ``$form['task[tags][0][name]'] = 'foo';``. This results in an error
