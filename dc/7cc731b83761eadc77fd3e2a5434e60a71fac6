@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by Triiistan at 2016-04-22T10:03:13Z
+
+@xabbuh You put the label "In progress" on this PR so people would know it's unfinished and already in review. Since then, I responded to your comments and it seems nobody gave a look anymore. I know you people are giving personal time to this wonderful project, I understand everything can't be done immediately and I thank you immensely for your job 😄. However, I'm wondering if the label actually make people refrain from reviewing Pull Requests: do you regularly go back to "In progress" PRs to see if progress was indeed made?
+
+How can I help you know if I think I finished a PR without putting pression on you and making you a notification?
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-23T09:07:08Z
+
+@Triiistan Actually this was a misunderstand then. I noticed that you commented and didn't see any changes. It seems that you pushed them shortly after I had the look. Sadly, we do not get notifications when new changes are pushed so we sometimes miss changes (we try to look at old PRs from time to time but we have so many :disappointed:). Thanks for poking me. I am doing another round of reviews right now. :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-23T09:08:45Z
+
+:+1:
