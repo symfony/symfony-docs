@@ -14,14 +14,11 @@ Cache Item Keys and Values
 --------------------------
 
 The **key** of a cache item is a UTF-8 encoded string which acts as its
-identifier, so it must be unique for each cache pool. The PSR-6 standard limits
-the key length to 64 characters, but Symfony allows to use longer keys (they are
-encoded internally to reduce their size).
-
-You can freely choose the keys, but they should only contain letters (A-Z, a-z),
-numbers (0-9) and the ``_`` and ``.`` symbols. Other common symbols (such as
-``{``, ``}``, ``(``, ``)``, ``/``, ``\`` and ``@``) are reserved by the PSR-6
-standard for future uses.
+identifier, so it must be unique for each cache pool. You can freely choose the
+keys, but they should only contain letters (A-Z, a-z), numbers (0-9) and the
+``_`` and ``.`` symbols. Other common symbols (such as ``{``, ``}``, ``(``,
+``)``, ``/``, ``\`` and ``@``) are reserved by the PSR-6 standard for future
+uses.
 
 The **value** of a cache item can be any data represented by a type which is
 serializable by PHP, such as basic types (string, integer, float, boolean, null),
