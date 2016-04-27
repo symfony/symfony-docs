@@ -34,15 +34,15 @@ Cache items are created with the ``getItem($key)`` method of the cache pool. The
 argument is the key of the item::
 
     // $cache pool object was created before
-    $cachedNumProducts = $cache->getItem('stats.num_products');
+    $numProducts = $cache->getItem('stats.num_products');
 
 Then, use the ``set($value)`` method to set the data stored in the cache item::
 
     // storing a simple integer
-    $cachedNumProducts->set(4711);
+    $numProducts->set(4711);
 
     // storing an array
-    $cachedNumProducts->set(array(
+    $numProducts->set(array(
         'category1' => 4711,
         'category2' => 2387,
     ));
@@ -56,7 +56,7 @@ Then, use the ``set($value)`` method to set the data stored in the cache item::
 The key and the value of any given cache item can be obtained with the
 corresponding *getter* methods::
 
-    $cacheItem = $cache->getItem('logged_users');
+    $cacheItem = $cache->getItem('exchange_rate');
     // ...
     $key = $cacheItem->getKey();
     $value = $cacheItem->get();

@@ -53,18 +53,18 @@ a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter
 Now you can create, retrieve, updated and delete items using this cache pool::
 
     // create a new item by trying to get it from the cache
-    $cachedNumProducts = $cache->getItem('stats.num_products');
+    $numProducts = $cache->getItem('stats.num_products');
 
     // assign a value to the item and save it
-    $cachedNumProducts->set(4711);
-    $cache->save($cachedNumProducts);
+    $numProducts->set(4711);
+    $cache->save($numProducts);
 
     // retrieve the cache item
-    $cachedNumProducts = $cache->getItem('stats.num_products');
+    $numProducts = $cache->getItem('stats.num_products');
     // check whether the item exists in the cache
-    $isCached = $cachedNumProducts->isHit();
+    $isCached = $numProducts->isHit();
     // retrieve the value stored by the item
-    $numProducts = $cachedNumProducts->get();
+    $total = $numProducts->get();
 
     // remove the cache item
     $cache->deleteItem('stats.num_products');

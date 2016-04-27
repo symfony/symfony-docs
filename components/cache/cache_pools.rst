@@ -11,7 +11,7 @@ Cache Pools are the logical repositories of cache items. They perform all the
 common operations on items, such as saving them or looking for them. Cache pools
 are independent from the actual cache implementation. Therefore, applications
 can keep using the same cache pool even if the underlying cache mechanism
-changes from a filesystem based cache to a Redis or database based cache.
+changes from a file system based cache to a Redis or database based cache.
 
 Creating Cache Pools
 --------------------
