@@ -4,8 +4,8 @@
 Encoders
 ========
 
-Encoders basically turn **arrays** into specific **formats** and vice versa.
-They implement :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface` for encoding (arrays to specific formats) and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface` for decoding (specific formats to arrays).
+Encoders basically turn **arrays** into **formats** and vice versa.
+They implement :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface` for encoding (array to format) and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface` for decoding (format to array).
 
 You can add new encoders to a Serializer instance by using its second constructor argument::
 
