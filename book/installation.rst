@@ -228,6 +228,9 @@ If there are any issues, correct them now before moving on.
     configuration (e.g. commonly httpd.conf or apache2.conf for Apache) and setting
     its user to be the same as your CLI user (e.g. for Apache, update the ``User``
     and ``Group`` values).
+    
+    Be careful, this option is not recommended on production environments for security
+    reasons as a compromise server would give to the hacker the same privileges than this user.
 
     **2. Using ACL on a system that supports chmod +a (MacOS X)**
 
