@@ -6,8 +6,8 @@
 Cache Items
 ===========
 
-Cache items are each one of the information units stored in the cache as a
-key/value pair. In the Cache component they are represented by the
+Cache items are each of the information units stored in the cache as a key/value
+pair. In the Cache component they are represented by the
 :class:`Symfony\\Component\\Cache\\CacheItem` class.
 
 Cache Item Keys and Values
@@ -18,13 +18,14 @@ identifier, so it must be unique for each cache pool. The PSR-6 standard limits
 the key length to 64 characters, but Symfony allows to use longer keys (they are
 encoded internally to reduce their size).
 
-You can freely chose the keys, but they can only contain letters (A-Z, a-z),
+You can freely choose the keys, but they should only contain letters (A-Z, a-z),
 numbers (0-9) and the ``_`` and ``.`` symbols. Other common symbols (such as
-``{``, ``}``, ``(``, ``)``, ``/``, ``\`` and ``@``) are reserved for future uses.
+``{``, ``}``, ``(``, ``)``, ``/``, ``\`` and ``@``) are reserved by the PSR-6
+standard for future uses.
 
 The **value** of a cache item can be any data represented by a type which is
-serializable by PHP, such as basic types (strings, integers, floats, boolean,
-nulls), arrays and objects.
+serializable by PHP, such as basic types (strings, integers, floats, booleans,
+null), arrays and objects.
 
 Creating Cache Items
 --------------------
@@ -63,8 +64,9 @@ corresponding *getter* methods::
 Cache Item Expiration
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default cache items are stored "permanently", which in practice means "as long
-as allowed by the cache implementation used".
+By default cache items are stored permanently. In practice, this "permanent
+storage" can vary greatly depending on the type of cache being used, as
+explained in the :doc:`/cookbook/cache/cache_pools` article.
 
 However, in some applications it's common to use cache items with a shorter
 lifespan. Consider for example an application which caches the latest news just
@@ -92,7 +94,8 @@ standard states that caching errors should not result in application failures.
 
 In practice this means that the ``getItem()`` method always returns an object
 which implements the ``Psr\Cache\CacheItemInterface`` interface, even when the
-cache item doesn't exist. Therefore, you don't have to deal with ``null`` values.
+cache item doesn't exist. Therefore, you don't have to deal with ``null`` return
+values and you can safely store in the cache values such as ``false`` and ``null``.
 
 In order to decide if the returned object is correct or not, caches use the
 concept of hits and misses:
@@ -107,10 +110,10 @@ Cache item objects define a boolean ``isHit()`` method which returns ``true``
 for cache hits::
 
     $latestNews = $cache->getItem('latest_news');
-    $latestNews->expiresAfter(60);
 
-    // check the item a few seconds after creating it
-    $isHit = $latestNews->isHit(); // true
-
-    // check the item 10 minutes after creating it
-    $isHit = $latestNews->isHit(); // false
+    if (!$latestNews->isHit()) {
+        $news = //... do some heavy computation
+        $cache->save($latestNews->set($news));
+    } else {
+        $news = $latestNews->get();
+    }
