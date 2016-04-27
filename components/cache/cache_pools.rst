@@ -127,7 +127,7 @@ Chain Cache Adapter
 
 This adapter allows to combine any number of the previous adapters. Cache items
 are fetched from the first adapter which contains them. Besides, cache items are
-saved in all the given adapters, so this is a quick way of creating a cache
+saved in all the given adapters, so this is a simple way of creating a cache
 replication::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
@@ -139,11 +139,11 @@ replication::
 
     $cache = new ChainAdapter(array($apcCache, $fileCache));
 
-The second optional argument of ``ChainAdapter`` is the ``maxLifetime`` (default
-``0``) which is the maximum lifetime of items propagated from lower adapters to
-upper ones.
-
-.. TODO: I don't understand the previous phrase, which is copied from the ChainAdapter code.
+when an item is not found in the first adapters but is found in the next ones,
+the ``ChainAdapter`` ensures that the fetched item is saved in all the adapters
+where it was missing. Since it's not possible to know the expiry date and time
+of a cache item, the second optional argument of ``ChainAdapter`` is the default
+lifetime applied to those cache items (by default it's ``0``).
 
 Proxy Cache Adapter
 ~~~~~~~~~~~~~~~~~~~

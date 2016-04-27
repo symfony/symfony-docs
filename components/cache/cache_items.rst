@@ -24,8 +24,8 @@ numbers (0-9) and the ``_`` and ``.`` symbols. Other common symbols (such as
 standard for future uses.
 
 The **value** of a cache item can be any data represented by a type which is
-serializable by PHP, such as basic types (strings, integers, floats, booleans,
-null), arrays and objects.
+serializable by PHP, such as basic types (string, integer, float, boolean, null),
+arrays and objects.
 
 Creating Cache Items
 --------------------
