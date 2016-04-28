@@ -148,7 +148,7 @@ of the application are isolated in a new file called ``model.php``::
         return $link;
     }
 
-    function close_database_connection($link)
+    function close_database_connection(&$link)
     {
         $link = null;
     }
