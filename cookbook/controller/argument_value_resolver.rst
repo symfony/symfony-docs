@@ -149,7 +149,7 @@ and adding a priority.
 
     While adding a priority is optional, it's recommended to add one to
     make sure the expected value is injected. The ``ArgumentFromAttributeResolver``
-    has a priority of 100. As this  one is responsible for fetching attributes
+    has a priority of 100. As this one is responsible for fetching attributes
     from the ``Request``, it's also recommended to trigger your custom value
     resolver with a lower priority. This makes sure the argument resolvers
     are not triggered in (e.g.) subrequests if you pass your user along:
@@ -197,8 +197,6 @@ and adding a priority.
         $definition->addTag('controller.argument_value_resolver', array('priority' => 50));
         $container->setDefinition('app.value_resolver.user', $definition);
 
-.. _`yield`: http://php.net/manual/en/language.generators.syntax.php
-
 Creating an Optional User Resolver
 ----------------------------------
 
@@ -209,12 +207,16 @@ method signature to `UserInterface $user = null`.
 
 When you take the ``UserValueResolver`` from the previous example, you can
 see there is no logic in case of failure to comply to the requirements. Default
-values in are defined in the signature and are available in the ``ArgumentMetadata``.
+values are defined in the signature and are available in the ``ArgumentMetadata``.
 When a default value is available and there are no resolvers that support
 the given value, the ``DefaultValueResolver`` is triggered. This Resolver
 takes the default value of your argument and yields it to the argument list::
 
     namespace Symfony\Component\HttpKernel\Controller\ArgumentResolver;
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+    use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
     final class DefaultValueResolver implements ArgumentValueResolverInterface
     {
@@ -228,3 +230,5 @@ takes the default value of your argument and yields it to the argument list::
             yield $argument->getDefaultValue();
         }
     }
+
+.. _`yield`: http://php.net/manual/en/language.generators.syntax.php
