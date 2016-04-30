@@ -261,8 +261,8 @@ If there are any issues, correct them now before moving on.
 
     .. note::
 
-        setfacl isn't available on NFS mount points. However, setting cache and logs over NFS is strongly not recommended for performance.
-
+        setfacl isn't available on NFS mount points. However, setting cache
+        and logs over NFS is strongly not recommended for performance.
 
     **4. Without using ACL**
 
