@@ -43,7 +43,7 @@ it to the container using::
 .. tip::
 
     Registering service definitions is so common that the container provides a
-    shortcut method called ``register()``:
+    shortcut method called ``register()``::
 
         $container->register('app.my_service', 'Acme\Service\MyService');
 
