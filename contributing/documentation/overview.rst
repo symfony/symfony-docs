@@ -274,6 +274,28 @@ page on GitHub and click on ``Details``.
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
 
+Building from source
+--------------------
+
+If you want to build documentation from source on your local machine, follow
+these steps:
+
+**Step 1.** Install pip_ (follow the `pip installation`_ chapter).
+
+**Step 2.** Install Sphinx_ and `Sphinx Extensions for PHP and Symfony`_.
+
+.. code-block:: bash
+
+    $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
+
+.. caution::
+
+    You should install Sphinx and Shpinx extensions globally on your system. It
+    means that above command should be executed as root user.
+
+**Step 3.** Run ``make html`` and view the generated HTML in the ``_build/html``
+directory.
+
 Minor Changes (e.g. Typos)
 --------------------------
 
@@ -346,4 +368,8 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh
+.. _pip: https://pip.pypa.io/en/stable/
+.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
+.. _Sphinx: http://sphinx-doc.org/
+.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
 .. _`roadmap`: https://symfony.com/roadmap
