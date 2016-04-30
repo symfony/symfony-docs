@@ -357,7 +357,7 @@ on the requested URI::
     } elseif ('/index.php/show' === $uri && isset($_GET['id'])) {
         show_action($_GET['id']);
     } else {
-        header('HTTP/1.0 404 Not Found');
+        header('HTTP/1.1 404 Not Found');
         echo '<html><body><h1>Page Not Found</h1></body></html>';
     }
 
