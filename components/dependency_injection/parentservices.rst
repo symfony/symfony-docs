@@ -384,7 +384,7 @@ to the ``NewsletterManager`` class, the config would look like this:
 
         $mailManager = new Definition();
         $mailManager
-            ->setAbstract(true);
+            ->setAbstract(true)
             ->addMethodCall('setMailer', array(
                 new Reference('my_mailer'),
             ))
