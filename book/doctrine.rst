@@ -861,7 +861,7 @@ and setter methods:
     ``Doctrine\ORM\EntityRepository``.
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly-generated
-product repository class. This method will query for all the ``Product``
+``ProductRepository`` class. This method will query for all the ``Product``
 entities, ordered alphabetically by name.
 
 .. code-block:: php
@@ -992,8 +992,8 @@ property on the ``Product`` class, annotated as follows:
             </entity>
         </doctrine-mapping>
 
-This mapping is critical, as it tells Doctrine to use the ``category_id``
-column on the ``products`` table to relate each record in that table with
+This many-to-one mapping is critical. It tells Doctrine to use the ``category_id``
+column on the ``product`` table to relate each record in that table with
 a record in the ``category`` table.
 
 Next, since a single ``Category`` object will relate to many ``Product``
@@ -1060,12 +1060,11 @@ to hold those associated objects.
             </entity>
         </doctrine-mapping>
 
-Doctrine does not *require* the "one" side of a one-to-many relationship to
-hold a collection of its "many" related entities. But in the context of our
-application, it makes sense for each ``Category`` object to hold a collection
-of ``Product`` objects. However, if we had decided against adding a ``$products``
-property to the ``Category`` class, then the ``Product`` entity's ``inversedBy``
-metadata would have to be omitted.
+While the many-to-one mapping shown earlier was mandatory, this one-to-many
+mapping is optional. It is included here to help demonstrate Doctrine's range
+of relationship management capabailties. Plus, in the context of this application,
+it will likely be convenient for each ``Category`` object to automatically
+own a collection of its related ``Product`` objects.
 
 .. note::
 
@@ -1098,10 +1097,10 @@ a *collection* of ``Product`` objects. In other words, you've built your classes
 in a way that makes sense for your application. The fact that the data needs
 to be persisted to a database is always secondary.
 
-Now, review the metadata that was added above the ``Product`` entity's
-``$category`` property.  It tells Doctrine that the related class is ``Category``,
-and that the ``id`` of the related category record should be stored in a
-``category_id`` field on the ``product`` table.
+Now, review the metadata above the ``Product`` entity's ``$category`` property.
+It tells Doctrine that the related class is ``Category``, and that the ``id``
+of the related category record should be stored in a ``category_id`` field
+on the ``product`` table.
 
 In other words, the related ``Category`` object will be stored in the
 ``$category`` property, but behind the scenes, Doctrine will persist this
