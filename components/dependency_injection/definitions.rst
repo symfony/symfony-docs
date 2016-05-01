@@ -4,8 +4,8 @@
 Working with Container Service Definitions
 ==========================================
 
-Service definitions are the instructions followed by the container to build a
-service, so they are not the actual services used by your application.
+Service definitions are the instructions describing how the container should
+build a service. They are not the actual services used by your applications
 
 Getting and Setting Service Definitions
 ---------------------------------------

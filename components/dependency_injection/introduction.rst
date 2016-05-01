@@ -104,10 +104,9 @@ like this::
         // ...
     }
 
-Then you can register this as a service as well and pass the ``mailer`` service
-into it. Instead of getting the actual ``mailer`` service, which doesn't exist
-yet when defining the ``newsletter_manager``, use the ``Reference`` class to
-get a reference to the future ``mailer`` service::
+When defining the ``newsletter_manager`` service, the ``mailer`` service does
+not exist yet. Use the ``Reference`` class to tell the container to inject the
+``mailer`` service when it initializes the newsletter manager::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
