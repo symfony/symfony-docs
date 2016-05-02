@@ -187,4 +187,4 @@ version is published every two years and there is a year to upgrade.
 .. _SensioLabs:     http://sensiolabs.com/
 .. _roadmap notification: https://symfony.com/roadmap
 .. _extended to September 2014: https://symfony.com/blog/extended-maintenance-for-symfony-2-4
-.. _timeline calculator: https://symfony.com/roadmap
+.. _timeline calculator: https://symfony.com/roadmap#checker
