@@ -24,8 +24,8 @@ Remember to configure :ref:`framework.trusted_proxies <reference-framework-trust
 in the Symfony configuration so that Varnish is seen as a trusted proxy and the
 :ref:`X-Forwarded <varnish-x-forwarded-headers>` headers are used.
 
-Varnish, in its' default configuration, sends the ``X-Forwarded-For`` header but
-does not filter out the ``Forwarded``. If you have access to the Varnish
+Varnish, in its default configuration, sends the ``X-Forwarded-For`` header but
+does not filter out the ``Forwarded`` header. If you have access to the Varnish
 configuration file, you can configure Varnish to remove the ``Forwarded``
 header::
 
