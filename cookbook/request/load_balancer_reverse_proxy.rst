@@ -23,7 +23,7 @@ via HTTPS, the client's port and the hostname being requested.
 Solution: trusted_proxies
 -------------------------
 
-This is no problem, but you *do* need to tell Symfony that this is happening
+This is no problem, but you *do* need to tell Symfony what is happening
 and which reverse proxy IP addresses will be doing this type of thing:
 
 .. configuration-block::
@@ -62,6 +62,9 @@ the IP address ``192.0.0.1`` or matches the range of IP addresses that use
 the CIDR notation ``10.0.0.0/8``. For more details, see the
 :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>` option.
 
+You are also saying that you trust that the proxy does not send conflicting
+headers, e.g. sending both X-Forwarded-For and Forwarded in the same request.
+
 That's it! Symfony will now look for the correct headers to get information
 like the client's IP address, host, port and whether the request is
 using HTTPS.
@@ -94,6 +97,29 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
+
+.. _cookbook-request-untrust-header:
+
+My Reverse Proxy Sends X-Forwarded-For but does not Filter the Forwarded Header
+-------------------------------------------------------------------------------
+
+Many popular proxy implementations do not yet support the Forwarded header and
+do not filter it by default. Ideally, you would configure this
+in your proxy. If this is not possible, you can tell Symfony to distrust
+the Forwarded header, while still trusting your proxy's X-Forwarded-For header.
+
+This is done inside of your front controller::
+
+       // web/app.php
+
+       // ...
+       Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
+
+       $response = $kernel->handle($request);
+       // ...
+
+Configuring the proxy server trust is very important, as not doing so will
+malicious users to "spoof" their IP address.
 
 My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 ------------------------------------------------------------
