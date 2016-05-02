@@ -38,14 +38,14 @@ it to the container using::
     use Symfony\Component\DependencyInjection\Definition;
 
     $definition = new Definition('Acme\Service\MyService');
-    $container->setDefinition('app.my_service', $definition);
+    $container->setDefinition('acme.my_service', $definition);
 
 .. tip::
 
     Registering service definitions is so common that the container provides a
     shortcut method called ``register()``::
 
-        $container->register('app.my_service', 'Acme\Service\MyService');
+        $container->register('acme.my_service', 'Acme\Service\MyService');
 
 Working with a Definition
 -------------------------
