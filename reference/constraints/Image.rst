@@ -319,11 +319,11 @@ detectCorrupted
 .. versionadded:: 3.1
      The ``detectCorrupted`` option was introduced in Symfony 3.1.
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If this option is true, the image contents are validated to ensure that the
-image is not corrupted. This validation is done with PHP's ``imagecreatefromstring()``
-function, which requires the PHP GD extension to be enabled.
+image is not corrupted. This validation is done with PHP's :phpfunction:`imagecreatefromstring`
+function, which requires the `PHP GD extension`_ to be enabled.
 
 sizeNotDetectedMessage
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -414,7 +414,8 @@ corruptedMessage
 
 **type**: ``string`` **default**: ``The image file is corrupted.``
 
-The error message if the image contents are corrupted and you set `detectCorrupted`_
-to ``true``.
+The error message when the `detectCorrupted`_ option is enabled and the image
+is corrupted.
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
+.. _`PHP GD extension`: http://php.net/manual/en/book.image.php
