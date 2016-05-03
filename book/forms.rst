@@ -1032,8 +1032,8 @@ to the ``form()`` or the ``form_start()`` helper:
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-      $builder->add('username', TextType::class, array('required' => $options['usernameRequired']));
-      $builder->add('password', PasswordType::class, array('required' => $options['passwordRequired']));
+      $builder->add('username', TextType::class, array('required' => $options['username_required']));
+      $builder->add('password', PasswordType::class, array('required' => $options['password_required']));
     }
 
    public function configureOptions(OptionsResolver $resolver)
