@@ -62,7 +62,7 @@ service is marked as autowired:
         # app/config/services.yml
         services:
             twitter_client:
-                class:    'AppBundle\TwitterClient'
+                class:    AppBundle\TwitterClient
                 autowire: true
 
     .. code-block:: xml
@@ -200,10 +200,10 @@ subsystem isn't able to find itself the interface implementation to register:
         # app/config/services.yml
         services:
             rot13_transformer:
-                class: 'AppBundle\Rot13Transformer'
+                class: AppBundle\Rot13Transformer
 
             twitter_client:
-                class:    'AppBundle\TwitterClient'
+                class:    AppBundle\TwitterClient
                 autowire: true
 
     .. code-block:: xml
