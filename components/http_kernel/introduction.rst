@@ -346,9 +346,9 @@ of arguments that should be passed when executing that callable.
 .. versionadded:: 3.1
      The ``kernel.controller_arguments`` event was introduced in Symfony 3.1.
 
-Once controller arguments have been resolved by Symfony, the ``kernel.controller_arguments``
-event is triggered. This allows to modify or replace the arguments to fit your
-application needs.
+Once controller arguments have been resolved by Symfony, the
+``kernel.controller_arguments`` event is triggered. This allows to modify or
+replace the arguments and the controller to fit your application needs.
 
 .. _component-http-kernel-calling-controller:
 
