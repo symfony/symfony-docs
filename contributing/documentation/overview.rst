@@ -274,7 +274,7 @@ page on GitHub and click on ``Details``.
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
 
-Building from source
+Building from Source
 --------------------
 
 If you want to build documentation from source on your local machine, follow
