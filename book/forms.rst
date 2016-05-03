@@ -1023,7 +1023,7 @@ to the ``form()`` or the ``form_start()`` helper:
 
 .. note::
 
-  Now that the ``createForm()`` method requires the FQCN, you can not longer pass in ``__construct()`` arguments. To get 
+  Now that the ``createForm()`` method requires the FQCN, you can no longer pass in *dynamic* ``__construct()`` arguments. This is not to be confused with :ref:`form-as-services`. To get 
   around this, you will need to create the default options in the form class ``configureOptions()`` method::
   
     use Symfony\Component\OptionsResolver\OptionsResolver;
