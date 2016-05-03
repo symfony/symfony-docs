@@ -1032,16 +1032,16 @@ to the ``form()`` or the ``form_start()`` helper:
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-      $builder->add('username', TextType::class, array('required' => $options['username_required']));
-      $builder->add('password', PasswordType::class, array('required' => $options['password_required']));
+        $builder->add('username', TextType::class, array('required' => $options['username_required']));
+        $builder->add('password', PasswordType::class, array('required' => $options['password_required']));
     }
 
-   public function configureOptions(OptionsResolver $resolver)
-   {
-      $resolver->setDefaults(array(
-        'username_required' => true,
-        'password_required' => false,
-      ));
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'username_required' => true,
+            'password_required' => false,
+        ));
     }
 
 .. index::
