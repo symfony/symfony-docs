@@ -1021,6 +1021,29 @@ to the ``form()`` or the ``form_start()`` helper:
     a PUT, PATCH or DELETE request. Read the cookbook chapter
     ":doc:`/cookbook/routing/method_parameters`" for more information.
 
+.. note::
+
+  Now that the ``createForm()`` method requires the FQCN, you can not longer pass in ``__construct()`` arguments. To get 
+  around this, you will need to create the default options in the form class ``configureOptions()`` method::
+  
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+      $builder->add('username', TextType::class, array('required' => $options['usernameRequired']));
+      $builder->add('password', PasswordType::class, array('required' => $options['passwordRequired']));
+    }
+
+   public function configureOptions(OptionsResolver $resolver)
+   {
+      $resolver->setDefaults(array(
+        'username_required' => true,
+        'password_required' => false,
+      ));
+    }
+
 .. index::
    single: Forms; Creating form classes
 
