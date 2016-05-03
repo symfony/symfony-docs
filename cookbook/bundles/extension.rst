@@ -158,9 +158,10 @@ names::
 After adding to compile all the classes commonly used by your bundle, you can
 expect a minor performance improvement.
 
-The main drawback of this technique is that it doesn't work when:
+Beware that this technique can't be used in some cases:
 
-* Classes contain annotations, such as controllers with ``@Route`` annotations
-  and entities with ``@ORM`` or ``@Assert`` annotations;
-* Classes use the ``__DIR__`` and ``__FILE__`` constants, because their values
-  will change when loading these classes from the ``classes.php`` file.
+* When classes contain annotations, such as controllers with ``@Route``
+  annotations and entities with ``@ORM`` or ``@Assert`` annotations, because
+  the file location retrieved from PHP reflection changes;
+* When classes use the ``__DIR__`` and ``__FILE__`` constants, because their
+  values will change when loading these classes from the ``classes.php`` file.
