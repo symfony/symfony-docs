@@ -125,10 +125,10 @@ compatibility reasons.
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Set the ``SYMFONY_DEPRECATIONS_HELPER`` variable to ``disabled`` to completely
-disable the deprecation helper. This is useful to make use of the rest of
-features provided by this component without getting errors or messages related
-to deprecations.
+Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
+completely disable the deprecation helper. This is useful to make use of the
+rest of features provided by this component without getting errors or messages
+related to deprecations.
 
 Time-sensitive Tests
 --------------------
