@@ -245,11 +245,10 @@ If there are any issues, correct them now before moving on.
 
     **3. Using ACL on a system that supports setfacl (most Linux/BSD)**
 
-    Most Linux and BSD distributions don't support ``chmod +a``, but do support another utility
-    called ``setfacl``. You may need to `enable ACL support`_ on your partition
-    and install setfacl before using it (as is the case with old versions of Ubuntu). This
-    uses a command to try to determine your web server user and set it as
-    ``HTTPDUSER``:
+    Most Linux and BSD distributions don't support ``chmod +a``, but do support
+    another utility called ``setfacl``. You may need to `enable ACL support`_
+    on your partition and install setfacl before using it. This uses a command
+    to try to determine your web server user and set it as ``HTTPDUSER``:
 
     .. code-block:: bash
 
