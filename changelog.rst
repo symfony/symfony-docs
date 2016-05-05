@@ -22,8 +22,10 @@ New Documentation
 * `#6470 <https://github.com/symfony/symfony-docs/pull/6470>`_ Documented the config options of TwigBundle (javiereguiluz)
 * `#6427 <https://github.com/symfony/symfony-docs/pull/6427>`_ [Testing] Explain how to add or remove data in a collection of forms (alexislefebvre)
 * `#6465 <https://github.com/symfony/symfony-docs/pull/6465>`_ Added ldap to the list of user providers (AAstakhov)
+* `#6437 <https://github.com/symfony/symfony-docs/pull/6437>`_ Improved the documentation about the explicit column widths (javiereguiluz)
 * `#6450 <https://github.com/symfony/symfony-docs/pull/6450>`_ [Form] added prototype_data option in CollectionType (kgilden, HeahDude)
 * `#6394 <https://github.com/symfony/symfony-docs/pull/6394>`_ Updated Heroku instructions (magnusnordlander)
+* `#6388 <https://github.com/symfony/symfony-docs/pull/6388>`_ Added the docs for the @dns-sensitive mocks (javiereguiluz)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -49,6 +51,7 @@ Minor Documentation Changes
 * `#6509 <https://github.com/symfony/symfony-docs/pull/6509>`_ Update http_kernel_httpkernel_class.rst (AchillesKal)
 * `#6510 <https://github.com/symfony/symfony-docs/pull/6510>`_ use port 587 in Amazon SES example (snoek09)
 * `#6464 <https://github.com/symfony/symfony-docs/pull/6464>`_ Added possible values for access_decision_manager.strategy (AAstakhov)
+* `#6469 <https://github.com/symfony/symfony-docs/pull/6469>`_ Tweaks for the DNS-sensitive tests doc (javiereguiluz)
 * `#6478 <https://github.com/symfony/symfony-docs/pull/6478>`_ Replace reference to the request service (gerryvdm)
 * `#6479 <https://github.com/symfony/symfony-docs/pull/6479>`_ Update php.rst (carlos-granados)
 * `#6481 <https://github.com/symfony/symfony-docs/pull/6481>`_ Remove reference to Symfony2 in request-flow.png (Daniel Cotton)
