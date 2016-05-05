@@ -13,6 +13,46 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+April, 2016
+-----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#6470 <https://github.com/symfony/symfony-docs/pull/6470>`_ Documented the config options of TwigBundle (javiereguiluz)
+* `#6427 <https://github.com/symfony/symfony-docs/pull/6427>`_ [Testing] Explain how to add or remove data in a collection of forms (alexislefebvre)
+* `#6394 <https://github.com/symfony/symfony-docs/pull/6394>`_ Updated Heroku instructions (magnusnordlander)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#6503 <https://github.com/symfony/symfony-docs/pull/6503>`_ Fix typo in from flat PHP to Symfony (gregfriedrice, WouterJ)
+* `#6483 <https://github.com/symfony/symfony-docs/pull/6483>`_ Fix typo: signifcantly => significantly (ifdattic)
+* `#6482 <https://github.com/symfony/symfony-docs/pull/6482>`_ fixed wrong secret string in array examples (OskarStark)
+* `#6460 <https://github.com/symfony/symfony-docs/pull/6460>`_ Update authorization.rst (mantulo)
+* `#6451 <https://github.com/symfony/symfony-docs/pull/6451>`_ fix status code in snippet (Barno)
+* `#6448 <https://github.com/symfony/symfony-docs/pull/6448>`_ [Form] fixed CollectionType needless option (HeahDude)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#6522 <https://github.com/symfony/symfony-docs/pull/6522>`_ On line 360 the ``404 Not Found`` header not working (mbrig-co)
+* `#6521 <https://github.com/symfony/symfony-docs/pull/6521>`_ The ``$link`` argument must be passed as a reference (mbrig-co)
+* `#6523 <https://github.com/symfony/symfony-docs/pull/6523>`_ Fix snippet (ismailbaskin)
+* `#6472 <https://github.com/symfony/symfony-docs/pull/6472>`_ Avoid confusion (gerryvdm)
+* `#6300 <https://github.com/symfony/symfony-docs/pull/6300>`_ Document constraint validator alias optional (Triiistan)
+* `#6513 <https://github.com/symfony/symfony-docs/pull/6513>`_ remove documentation of not supported "verbose" option value (TobiasXy)
+* `#6510 <https://github.com/symfony/symfony-docs/pull/6510>`_ use port 587 in Amazon SES example (snoek09)
+* `#6464 <https://github.com/symfony/symfony-docs/pull/6464>`_ Added possible values for access_decision_manager.strategy (AAstakhov)
+* `#6479 <https://github.com/symfony/symfony-docs/pull/6479>`_ Update php.rst (carlos-granados)
+* `#6481 <https://github.com/symfony/symfony-docs/pull/6481>`_ Remove reference to Symfony2 in request-flow.png (Daniel Cotton)
+* `#6445 <https://github.com/symfony/symfony-docs/pull/6445>`_ updated the core team (fabpot)
+* `#6452 <https://github.com/symfony/symfony-docs/pull/6452>`_ Use different placeholders in mailer config (sblaut)
+* `#6456 <https://github.com/symfony/symfony-docs/pull/6456>`_ Fixed array [] notation and trailing spaces (iltar)
+* `#6420 <https://github.com/symfony/symfony-docs/pull/6420>`_ Added tip for optional second parameter for form submissions. (Michael Phillips)
+* `#6418 <https://github.com/symfony/symfony-docs/pull/6418>`_ fix spelling of the flashBag() method (xabbuh)
+
+
 March, 2016
 -----------
 
