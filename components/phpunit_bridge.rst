@@ -125,6 +125,10 @@ backward compatibility reasons.
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 3.1
+    The ability to disable the deprecation helper was introduced in Symfony
+    3.1.
+
 Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
 completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
