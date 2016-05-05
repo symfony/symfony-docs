@@ -24,6 +24,7 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Inherited options    | from the :doc:`DateType </reference/forms/types/date>`:                       |
 |                      |                                                                               |
+|                      | - `choice_translation_domain`_                                                |
 |                      | - `days`_                                                                     |
 |                      | - `placeholder`_                                                              |
 |                      | - `format`_                                                                   |
@@ -62,6 +63,8 @@ Inherited Options
 -----------------
 
 These options inherit from the :doc:`DateType </reference/forms/types/date>`:
+
+.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
