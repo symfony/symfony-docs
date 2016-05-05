@@ -32,6 +32,7 @@ Fixed Documentation
 * `#6460 <https://github.com/symfony/symfony-docs/pull/6460>`_ Update authorization.rst (mantulo)
 * `#6451 <https://github.com/symfony/symfony-docs/pull/6451>`_ fix status code in snippet (Barno)
 * `#6448 <https://github.com/symfony/symfony-docs/pull/6448>`_ [Form] fixed CollectionType needless option (HeahDude)
+* `#6439 <https://github.com/symfony/symfony-docs/pull/6439>`_ Fix form/validation directory path (nemo-)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,10 +45,14 @@ Minor Documentation Changes
 * `#6513 <https://github.com/symfony/symfony-docs/pull/6513>`_ remove documentation of not supported "verbose" option value (TobiasXy)
 * `#6510 <https://github.com/symfony/symfony-docs/pull/6510>`_ use port 587 in Amazon SES example (snoek09)
 * `#6464 <https://github.com/symfony/symfony-docs/pull/6464>`_ Added possible values for access_decision_manager.strategy (AAstakhov)
+* `#6478 <https://github.com/symfony/symfony-docs/pull/6478>`_ Replace reference to the request service (gerryvdm)
 * `#6479 <https://github.com/symfony/symfony-docs/pull/6479>`_ Update php.rst (carlos-granados)
 * `#6481 <https://github.com/symfony/symfony-docs/pull/6481>`_ Remove reference to Symfony2 in request-flow.png (Daniel Cotton)
+* `#6449 <https://github.com/symfony/symfony-docs/pull/6449>`_ [Form] fixed ChoiceType example in CollectionType (HeahDude)
 * `#6445 <https://github.com/symfony/symfony-docs/pull/6445>`_ updated the core team (fabpot)
+* `#6423 <https://github.com/symfony/symfony-docs/pull/6423>`_ Added a caution note about REMOTE_USER and user impersonation (javiereguiluz)
 * `#6452 <https://github.com/symfony/symfony-docs/pull/6452>`_ Use different placeholders in mailer config (sblaut)
+* `#6457 <https://github.com/symfony/symfony-docs/pull/6457>`_ Fixed an array notation in comment (serializer.rst) (iltar)
 * `#6456 <https://github.com/symfony/symfony-docs/pull/6456>`_ Fixed array [] notation and trailing spaces (iltar)
 * `#6420 <https://github.com/symfony/symfony-docs/pull/6420>`_ Added tip for optional second parameter for form submissions. (Michael Phillips)
 * `#6418 <https://github.com/symfony/symfony-docs/pull/6418>`_ fix spelling of the flashBag() method (xabbuh)
