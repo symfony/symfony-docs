@@ -19,7 +19,8 @@ day and year) or three select boxes (see the `widget`_ option).
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `days`_                                                                   |
+| Options              | - `choice_translation_domain`_                                              |
+|                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `html5`_                                                                  |
@@ -84,6 +85,8 @@ values.
 
 Field Options
 -------------
+
+.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 

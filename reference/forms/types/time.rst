@@ -15,7 +15,8 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `placeholder`_                                                            |
+| Options              | - `choice_translation_domain`_                                              |
+|                      | - `placeholder`_                                                            |
 |                      | - `hours`_                                                                  |
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
@@ -81,6 +82,8 @@ values.
 
 Field Options
 -------------
+
+.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
 
 placeholder
 ~~~~~~~~~~~
