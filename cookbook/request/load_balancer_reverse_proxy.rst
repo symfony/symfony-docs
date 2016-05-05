@@ -98,12 +98,14 @@ That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
-My Reverse Proxy sends X-Forwarded-For but does not filter the Forwarded header
+.. _cookbook-request-untrust-header:
+
+My Reverse Proxy Sends X-Forwarded-For but does not Filter the Forwarded Header
 -------------------------------------------------------------------------------
 
 Many popular proxy implementations do not yet support the Forwarded header and
-does not filter it by default configuration. Ideally, you would configure this
-in your proxy, but if this is not possible, you can tell Symfony to distrust
+do not filter it by default. Ideally, you would configure this
+in your proxy. If this is not possible, you can tell Symfony to distrust
 the Forwarded header, while still trusting your proxy's X-Forwarded-For header.
 
 This is done inside of your front controller::

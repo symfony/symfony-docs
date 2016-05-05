@@ -27,7 +27,7 @@ in the Symfony configuration so that Varnish is seen as a trusted proxy and the
 Varnish, in its default configuration, sends the ``X-Forwarded-For`` header but
 does not filter out the ``Forwarded`` header. If you have access to the Varnish
 configuration file, you can configure Varnish to remove the ``Forwarded``
-header::
+header:
 
 .. code-block:: varnish4
 
@@ -37,7 +37,7 @@ header::
 
 If you do not have access to your Varnish configuration, you can instead
 configure Symfony to distrust the ``Forwarded`` header as detailed in
-:doc:`/cookbook/request/load_balancer_reverse_proxy`.
+:ref:`the cookbook <cookbook-request-untrust-header>`.
 
 .. _varnish-x-forwarded-headers:
 
