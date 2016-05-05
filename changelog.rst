@@ -61,6 +61,7 @@ Minor Documentation Changes
 * `#6456 <https://github.com/symfony/symfony-docs/pull/6456>`_ Fixed array [] notation and trailing spaces (iltar)
 * `#6420 <https://github.com/symfony/symfony-docs/pull/6420>`_ Added tip for optional second parameter for form submissions. (Michael Phillips)
 * `#6418 <https://github.com/symfony/symfony-docs/pull/6418>`_ fix spelling of the flashBag() method (xabbuh)
+* `#6432 <https://github.com/symfony/symfony-docs/pull/6432>`_ fixed yaml config error (RickieL)
 
 
 March, 2016
