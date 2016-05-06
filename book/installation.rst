@@ -231,9 +231,9 @@ If there are any issues, correct them now before moving on.
     
     .. caution::
     
-      If used in a production environment, be sure this user only has limited privileges
-      (no access to private data or servers, launch of unsafe binaries, etc.)
-      as a compromised server would give to the hacker those privileges.
+        If used in a production environment, be sure this user only has limited privileges
+        (no access to private data or servers, launch of unsafe binaries, etc.)
+        as a compromised server would give to the hacker those privileges.
 
     **2. Using ACL on a system that supports chmod +a (MacOS X)**
 
