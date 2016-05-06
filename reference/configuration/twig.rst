@@ -112,6 +112,21 @@ If ``true``, whenever a template is rendered, Symfony checks first if its source
 code has changed since it was compiled. If it has changed, the template is
 compiled again automatically.
 
+autoescape
+~~~~~~~~~~
+
+**type**: ``boolean`` or ``string`` **default**: ``'filename'``
+
+If set to ``true``, all template contents are escaped for HTML. If set to
+``false``, no escaping is applied automatically (you can still escape each
+content individually in the templates).
+
+If set to a string, template contents are escaped using the strategy with that
+name. Allowed values are ``html``, ``js``, ``css``, ``url`` and ``html_attr``.
+A special strategy called ``filename`` is used by default and it escapes contents
+according to the filename extension (it uses ``html`` for ``*.html.twig``
+templates, ``js`` for ``*.js.html`` templates, etc.)
+
 autoescape_service
 ~~~~~~~~~~~~~~~~~~
 
