@@ -118,8 +118,8 @@ autoescape
 **type**: ``boolean`` or ``string`` **default**: ``'filename'``
 
 If set to ``true``, all template contents are escaped for HTML. If set to
-``false``, no escaping is applied automatically (you can still escape each
-content individually in the templates).
+``false``, automatic escaping is disabled (you can still escape each content
+individually in the templates).
 
 .. caution::
 
@@ -128,11 +128,18 @@ content individually in the templates).
     assume that auto-escaping is enabled and they don't escape contents
     themselves.
 
-If set to a string, template contents are escaped using the strategy with that
-name. Allowed values are ``html``, ``js``, ``css``, ``url`` and ``html_attr``.
-A special strategy called ``filename`` is used by default and it escapes contents
-according to the filename extension (it uses ``html`` for ``*.html.twig``
-templates, ``js`` for ``*.js.html`` templates, etc.)
+If set to a string, the template contents are escaped using the strategy with
+that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
+and ``filename``. The default value is ``filename`` and it escapes contents
+according to the filename extension (e.g. it uses ``html`` for ``*.html.twig``
+templates and ``js`` for ``*.js.html`` templates).
+
+.. tip::
+
+    See :ref:`config-twig-autoescape-service` and :ref:`config-twig-autoescape-service-method`
+    to define your own escaping strategy.
+
+.. _config-twig-autoescape-service:
 
 autoescape_service
 ~~~~~~~~~~~~~~~~~~
@@ -146,6 +153,8 @@ for HTML and the contents of ``*.js.twig`` are escaped for JavaScript.
 
 This option allows to define the Symfony service which will be used to determine
 the default escaping applied to the template.
+
+.. _config-twig-autoescape-service-method:
 
 autoescape_service_method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
