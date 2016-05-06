@@ -85,7 +85,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
        $response = $kernel->handle($request);
        // ...
 
-#. Ensure that the trusted_proxies setting in your ``app/config/config.yml`` 
+#. Ensure that the trusted_proxies setting in your ``app/config/config.yml``
    is not set or it will overwrite the ``setTrustedProxies`` call above.
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
