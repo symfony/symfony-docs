@@ -78,9 +78,9 @@ This interface specifies that you have to implement two methods::
     is resolved, you must `yield`_ the value to the ``ArgumentResolver``.
 
 Both methods get the ``Request`` object, which is the current request, and an
-:class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`.
-This object contains all information retrieved from the method signature for
-the current argument.
+:class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`
+instance. This object contains all information retrieved from the method signature
+for the current argument.
 
 .. note::
 
