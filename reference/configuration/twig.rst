@@ -121,6 +121,13 @@ If set to ``true``, all template contents are escaped for HTML. If set to
 ``false``, no escaping is applied automatically (you can still escape each
 content individually in the templates).
 
+.. caution::
+
+    Setting this option to ``false`` is dangerous and it will make your
+    application vulnerable to XSS exploits because most third-party bundles
+    assume that auto-escaping is enabled and they don't escape contents
+    themselves.
+
 If set to a string, template contents are escaped using the strategy with that
 name. Allowed values are ``html``, ``js``, ``css``, ``url`` and ``html_attr``.
 A special strategy called ``filename`` is used by default and it escapes contents
