@@ -54,7 +54,7 @@ The ``entity`` type has just one required option: the entity which should
 be listed inside the choice field::
 
     $builder->add('users', 'entity', array(
-        'class' => 'AcmeHelloBundle:User',
+        'class' => 'AppBundle:User',
         'property' => 'username',
     ));
 
@@ -64,18 +64,20 @@ of checkboxes (this depends on the ``multiple`` and ``expanded`` values).
 If the entity object does not have a ``__toString()`` method the ``property``
 option is needed.
 
+.. _ref-form-entity-query-builder:
+
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to specify a custom query to use when fetching the entities
+If you want to create a custom query to use when fetching the entities
 (e.g. you only want to return some entities, or need to order them), use
-the ``query_builder`` option. The easiest way to use the option is as follows::
+the `query_builder`_ option::
 
     use Doctrine\ORM\EntityRepository;
     // ...
 
     $builder->add('users', 'entity', array(
-        'class' => 'AcmeHelloBundle:User',
+        'class' => 'AppBundle:User',
         'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
@@ -94,7 +96,7 @@ as a form option) and ``getUsers`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
 
     $builder->add('users', 'entity', array(
-        'class' => 'AcmeHelloBundle:User',
+        'class' => 'AppBundle:User',
         'choices' => $group->getUsers(),
     ));
 
@@ -108,8 +110,8 @@ class
 
 **type**: ``string`` **required**
 
-The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
-a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
+The class of your entity (e.g. ``AppBundle:Category``). This can be
+a fully-qualified class name (e.g. ``AppBundle\Entity\Category``)
 or the short alias name (as shown prior).
 
 em
@@ -159,11 +161,12 @@ query_builder
 
 **type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
 
-If specified, this is used to query the subset of options (and their
-order) that should be used for the field. The value of this option can
-either be a ``QueryBuilder`` object or a Closure. If using a Closure,
-it should take a single argument, which is the ``EntityRepository`` of
-the entity and return an instance of ``QueryBuilder``.
+Allows you to create a custom query for your choices. See
+:ref:`ref-form-entity-query-builder` for an example.
+
+The value of this option can either be a ``QueryBuilder`` object or a Closure.
+When using a Closure, you will be passed the ``EntityRepository`` of the entity
+as the only argument and should return a ``QueryBuilder``.
 
 Overridden Options
 ------------------
