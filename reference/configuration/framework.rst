@@ -86,7 +86,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
-* `property_accessor`_
+* `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
 * `validation`_
@@ -1302,8 +1302,8 @@ for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
 
-property_accessor
-~~~~~~~~~~~~~~~~~
+property_access
+~~~~~~~~~~~~~~~
 
 magic_call
 ..........
