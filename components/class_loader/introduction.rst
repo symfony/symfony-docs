@@ -19,7 +19,7 @@ load your classes:
   the `PSR-0`_ class naming standard;
 
 * :doc:`/components/class_loader/psr4_class_loader`: loads classes that follow
-  the `PSR-4` class naming standard;
+  the `PSR-4`_ class naming standard;
 
 * :doc:`/components/class_loader/map_class_loader`: loads classes using
   a static map from class name to file path.
@@ -45,5 +45,6 @@ You can install the component in 2 different ways:
 .. include:: /components/require_autoload.rst.inc
 
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/
+.. _PSR-4: http://www.php-fig.org/psr/psr-4/
 .. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader
