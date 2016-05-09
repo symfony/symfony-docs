@@ -129,9 +129,6 @@ aliases both with :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath`
 
 and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
 
-    use Symfony\Component\CssSelector\CssSelector;
-
-    CssSelector::disableHtmlExtension();
     $crawler = $crawler->filter('default|entry media|group yt|aspectRatio');
 
 .. note::
@@ -149,12 +146,6 @@ Namespaces can be explicitly registered with the
 
     $crawler->registerNamespace('m', 'http://search.yahoo.com/mrss/');
     $crawler = $crawler->filterXPath('//m:group//yt:aspectRatio');
-
-.. caution::
-
-    To query XML with a CSS selector, the HTML extension needs to be disabled with
-    :method:`CssSelector::disableHtmlExtension <Symfony\\Component\\CssSelector\\CssSelector::disableHtmlExtension>`
-    to avoid converting the selector to lowercase.
 
 Node Traversing
 ~~~~~~~~~~~~~~~
