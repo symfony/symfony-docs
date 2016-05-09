@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by dantleech at 2016-04-23T08:53:58Z
+
+Not sure if this should be expanded into a code block showing the `on null` configuration for XML, YAML and PHP.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-23T09:21:37Z
+
+Didn't you mean `on-invalid` instead of `on-ignore`? I think we would then also need to clarify the difference between `IGNORE_ON_INVALID_REFERENCE` and `NULL_ON_INVALID_REFERENCE`.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-04-23T09:29:11Z
+
+@xabbuh yeah that is what i meant - should this be expanded into a new section with a new set of code examples? or shall i just expand the note?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-23T09:32:04Z
+
+I think a new section with a dedicated example (e.g. a collection argument) that shows the difference would be a good idea.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-24T10:08:14Z
+
+I think I would move the "ignoring" strategy after the "set null" strategy. This way, you could say that it's basically the same strategy, but with the following differences (and then lists these differences).
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-04-27T06:31:08Z
+
+Updated, reworded, rearanged and changed the "ignore" example to use a method call.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-05T22:16:57Z
+
+This is the first time I understand the difference, thanks for submitting this patch!
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-06T07:15:01Z
+
+Updated
