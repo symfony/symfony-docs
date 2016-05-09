@@ -1074,46 +1074,12 @@ assets won't be loaded from cache after being deployed. For example, ``/images/l
 look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
 configuration option.
 
-.. _`book-templating-version-by-asset`:
+If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
+as follows:
 
-If you need to set a version for a specific asset, you can set the ``version`` argument
-if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
+.. code-block:: html+jinja
 
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('images/logo.png', version='3.0') }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            false,
-            '3.0'
-        ) ?>" alt="Symfony!" />
-
-If you don't give a version or pass ``null``, the default package version
-(from :ref:`reference-framework-assets-version`) will be used. If you pass ``false``,
-versioned URL will be deactivated for this asset.
-
-If you need absolute URLs for assets, you can use the ``absolute_url`` function
-if you are using Twig (or the third argument if you are using PHP) to ``true``:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            true
-        ) ?>" alt="Symfony!" />
+    <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts
@@ -1239,15 +1205,22 @@ instance which will give you access to some application specific variables
 automatically:
 
 ``app.security`` (deprecated as of 2.6)
-    The security context.
+    The :class:`Symfony\\Component\\Security\\Core\\SecurityContext` object or
+    ``null`` if there is none.
 ``app.user``
-    The current user object.
+    The representation of the current user or ``null`` if there is none. The
+    value stored in this variable can be a :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+    object, any other object which implements a ``__toString()`` method or even
+    a regular string.
 ``app.request``
-    The request object.
+    The :class:`Symfony\\Component\\HttpFoundation\\Request` object that represents
+    the current request (depending on your application, this can be a sub-request
+    or a regular request, as explained later).
 ``app.session``
-    The session object.
+    The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` object that
+    represents the current user's session or ``null`` if there is none.
 ``app.environment``
-    The current environment (dev, prod, etc).
+    The name of the current environment (``dev``, ``prod``, etc).
 ``app.debug``
     True if in debug mode. False otherwise.
 

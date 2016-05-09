@@ -1082,10 +1082,6 @@ Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``version`` value
 before each deployment so that the query parameters change.
 
-It's also possible to set the version value on an asset-by-asset basis (instead
-of using the global version - e.g. ``v2`` - set here). See
-:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
-
 You can also control how the query string works via the `version_format`_
 option.
 
