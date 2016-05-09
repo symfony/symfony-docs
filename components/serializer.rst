@@ -169,7 +169,7 @@ The serializer can also be used to update an existing object::
     EOF;
 
     $serializer->deserialize($data, 'Acme\Person', 'xml', array('object_to_populate' => $person));
-    // $obj2 = Acme\Person(name: 'foo', age: '99', sportsman: true)
+    // $obj2 = Acme\Person(name: 'foo', age: '69', sportsman: true)
 
 This is a common need when working with an ORM.
 
