@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-03T19:40:15Z
+
+Unrelated to this PR, but those FQCN looks strange. This is the component doc, so `AppBundle` shouldn't be there. Besides, the classes are directly under `AppBundle` but we usually define deeper namespaces.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2016-05-03T19:46:04Z
+
+@javiereguiluz I was a bit confused, I saw this chapter so I was thinking that the `AppBundle` namespace was missing on the whole components documentation, so thank's!
+I'll submit a second one to remove the namespaces from the examples of this file (php + yaml)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-05T21:45:58Z
+
+:+1:  I don't really care much about this. But let's merge this as it's consistent and you put effort into fixing it!
