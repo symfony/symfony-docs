@@ -11,7 +11,7 @@ Creating a new page - whether it's an HTML page or a JSON endpoint - is a
 simple two-step process:
 
 #. *Create a route*: A route is the URL (e.g. ``/about``) to your page and
-   points to a controller;
+   points to a controller.
 
 #. *Create a controller*: A controller is the function you write that builds
    the page. You take the incoming request information and use it to create
