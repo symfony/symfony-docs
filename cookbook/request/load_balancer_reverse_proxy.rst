@@ -63,7 +63,8 @@ the CIDR notation ``10.0.0.0/8``. For more details, see the
 :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>` option.
 
 You are also saying that you trust that the proxy does not send conflicting
-headers, e.g. sending both X-Forwarded-For and Forwarded in the same request.
+headers, e.g. sending both ``X-Forwarded-For`` and ``Forwarded`` in the same
+request.
 
 That's it! Symfony will now look for the correct headers to get information
 like the client's IP address, host, port and whether the request is
@@ -100,13 +101,13 @@ other information.
 
 .. _cookbook-request-untrust-header:
 
-My Reverse Proxy Sends X-Forwarded-For but does not Filter the Forwarded Header
+My Reverse Proxy Sends X-Forwarded-For but Does not Filter the Forwarded Header
 -------------------------------------------------------------------------------
 
-Many popular proxy implementations do not yet support the Forwarded header and
-do not filter it by default. Ideally, you would configure this
-in your proxy. If this is not possible, you can tell Symfony to distrust
-the Forwarded header, while still trusting your proxy's X-Forwarded-For header.
+Many popular proxy implementations do not yet support the ``Forwarded`` header
+and do not filter it by default. Ideally, you would configure this in your
+proxy. If this is not possible, you can tell Symfony to distrust the ``Forwarded``
+header, while still trusting your proxy's ``X-Forwarded-For`` header.
 
 This is done inside of your front controller::
 
@@ -119,7 +120,7 @@ This is done inside of your front controller::
        // ...
 
 Configuring the proxy server trust is very important, as not doing so will
-malicious users to "spoof" their IP address.
+allow malicious users to "spoof" their IP address.
 
 My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 ------------------------------------------------------------

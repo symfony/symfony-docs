@@ -13,7 +13,7 @@ If you find yourself behind some sort of proxy - like a load balancer - then
 certain header information may be sent to you using special ``X-Forwarded-*``
 headers or the ``Forwarded`` header. For example, the ``Host`` HTTP header is
 usually used to return the requested host. But when you're behind a proxy,
-the actual host may be stored in a ``X-Forwarded-Host`` header.
+the actual host may be stored in an ``X-Forwarded-Host`` header.
 
 Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
