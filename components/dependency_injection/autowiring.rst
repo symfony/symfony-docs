@@ -4,9 +4,6 @@
 Defining Services Dependencies Automatically (Autowiring)
 =========================================================
 
-.. versionadded:: 2.8
-    Support for autowiring services was introduced in Symfony 2.8.
-
 Autowiring allows to register services in the container with minimal configuration.
 It automatically resolves the service dependencies based on the constructor's
 typehint which is useful in the field of `Rapid Application Development`_,

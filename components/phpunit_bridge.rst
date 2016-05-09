@@ -20,10 +20,6 @@ It comes with the following features:
 
 * Provides a ``ClockMock`` helper class for time-sensitive tests.
 
-.. versionadded:: 2.7
-    The PHPUnit Bridge was introduced in Symfony 2.7. It is however possible to
-    install the bridge in any Symfony application (even 2.3).
-
 Installation
 ------------
 

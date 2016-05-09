@@ -431,10 +431,6 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
         // return $this->redirect($this->generateUrl('homepage'));
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
-
 By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the third argument::
 
