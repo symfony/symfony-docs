@@ -1269,7 +1269,7 @@ for a given key. The logs are made to the ``translation`` channel and at the
 locale and the ``warning`` level if there is no translation to use at all.
 
 property_access
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 magic_call
 ..........
