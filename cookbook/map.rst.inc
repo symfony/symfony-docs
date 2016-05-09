@@ -167,6 +167,7 @@
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/form_login`
+  * :doc:`/cookbook/security/login_handlers`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_password_authenticator`
   * :doc:`/cookbook/security/api_key_authentication`
