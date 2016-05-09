@@ -29,17 +29,13 @@ not available, such as the deferred saves::
 
     use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-    $cache = new ArrayAdapter($defaultLifetime = 0, $storeSerialized = true);
-
-``defaultLifetime``
-    **type**: integer, **default value**: ``0``
-    The default lifetime, in seconds, applied to cache items that don't define
-    their own lifetime. The default value (``0``) means an "infinite" lifetime,
-    but this adapter destroys the cache once the current PHP execution finishes.
-
-``storeSerialized``
-    **type**: boolean, **default value**: ``true``
-    If ``true``, the values saved in the cache are serialized before storing them.
+    $cache = new ArrayAdapter(
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the current PHP process finishes)
+        $defaultLifetime = 0,
+        // if ``true``, the values saved in the cache are serialized before storing them
+        $storeSerialized = true
+    );
 
 Filesystem Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,25 +46,16 @@ contents as regular files in a set of directories on the local file system::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-    $cache = new FilesystemAdapter($namespace = '', $defaultLifetime = 0, $directory = null);
-
-``namespace``
-    **type**: string, **default value**: ``''`` (an empty string)
-    The subdirectory created inside the main cache directory (defined in the
-    third argument) to store the cache items.
-
-``defaultLifetime``
-    **type**: integer, **default value**: ``0``
-    The default lifetime, in seconds, applied to cache items that don't define
-    their own lifetime. The default value (``0``) means an "infinite" lifetime,
-    which this adapter respects because items are actually persisted.
-
-``directory``
-    **type**: string, **default value**: ``null``
-    The directory where the cache items are stored as files. Make sure that this
-    directory has read-write permissions for your application. If no directory
-    is defined, a new directory called ``symfony-cache/`` is created in the
-    system's temporary directory.
+    $cache = new FilesystemAdapter(
+        // the subdirectory of the main cache directory where cache items are stored
+        $namespace = '',
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the files are deleted)
+        $defaultLifetime = 0,
+        // the main cache directory (the application needs read-write permissions on it)
+        // if none is specified, a directory is created inside the system temporary directory
+        $directory = null
+    );
 
 APCu Cache Adapter
 ~~~~~~~~~~~~~~~~~~
@@ -82,18 +69,13 @@ degrades performance significantly::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
-    $cache = new ApcuAdapter($namespace = '', $defaultLifetime = 0);
-
-``namespace``
-    **type**: string, **default value**: ``''`` (an empty string)
-    The string prefixed to the keys of the items stored in this cache.
-
-``defaultLifetime``
-    **type**: integer, **default value**: ``0``
-    The default lifetime, in seconds, applied to cache items that don't define
-    their own lifetime. The default value (``0``) means an "infinite" lifetime,
-    which in this adapter ends when the web server is restarted or the APC memory
-    is deleted in any other way.
+    $cache = new ApcuAdapter(
+        // the string prefixed to the keys of the items stored in this cache
+        $namespace = '',
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the APC memory is deleted)
+        $defaultLifetime = 0
+    );
 
 Redis Cache Adapter
 ~~~~~~~~~~~~~~~~~~~
@@ -105,22 +87,15 @@ the ``\Redis`` class::
 
     use Symfony\Component\Cache\Adapter\RedisAdapter;
 
-    $cache = new RedisAdapter(\Redis $redisConnection, $namespace = '', $defaultLifetime = 0);
-
-``redisConnection``
-    **type**: ``\Redis``, **default value**: (none, this argument is mandatory)
-    The object that represents a valid connection to your Redis system.
-
-``namespace``
-    **type**: string, **default value**: ``''`` (an empty string)
-    The string prefixed to the keys of the items stored in this cache.
-
-``defaultLifetime``
-    **type**: integer, **default value**: ``0``
-    The default lifetime, in seconds, applied to cache items that don't define
-    their own lifetime. The default value (``0``) means an "infinite" lifetime,
-    which in this adapter ends when the server is restarted or the Redis memory
-    is deleted in any other way.
+    $cache = new RedisAdapter(
+        // the object that stores a valid connection to your Redis system
+        \Redis $redisConnection,
+        // the string prefixed to the keys of the items stored in this cache
+        $namespace = '',
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the Redis memory is deleted)
+        $defaultLifetime = 0
+    );
 
 Chain Cache Adapter
 ~~~~~~~~~~~~~~~~~~~
