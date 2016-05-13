@@ -36,6 +36,7 @@ the `ProxyManager bridge`_:
     So, run:
 
     .. code-block:: bash
+    
         $ composer require ocramius/proxy-manager:~1.0 # for PHP 5
         $ composer require ocramius/proxy-manager:~2.0 # for PHP 7
 
