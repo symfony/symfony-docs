@@ -210,10 +210,10 @@ Troubleshooting
 ~~~~~~~~~~~~~~~
 
 The ``@group time-sensitive`` works "by convention" and assumes that the
-namespace of the tested class can be obtained just by removing the ``\Tests\``
+namespace of the tested class can be obtained just by removing the ``Tests\``
 part from the test namespace. I.e. that if the your test case fully-qualified
 class name (FQCN) is ``App\Tests\Watch\DummyWatchTest``, it assumes the tested
-class FQCN is ``App\Watch\DummyWatch``.
+class namespace is ``App\Watch``.
 
 If this convention doesn't work for your application, you can also configure
 the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
