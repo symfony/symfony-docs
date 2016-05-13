@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by stof at 2016-05-06T09:50:00Z
+
+I would add a note saying that disabling the autoescaping globally could open XSS holes as all bundles in the ecosystem rely on auto-escaping rather than explicitly escaping everything. So using ``false`` here is dangerous.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-06T10:26:51Z
+
+@stof thanks for your insightful comment. That's definitely something we need to mention. I've updated the PR. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-06T18:47:42Z
+
+@WouterJ thanks for the review. I've fixed everything.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-09T08:35:11Z
+
+👍
