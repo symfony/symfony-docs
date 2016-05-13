@@ -55,7 +55,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 date_format
 ~~~~~~~~~~~
