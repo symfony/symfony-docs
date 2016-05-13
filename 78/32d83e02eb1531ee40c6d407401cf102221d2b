@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by iltar at 2016-05-12T06:46:42Z
+
+I'm not entirely sure about this; my rendering goes as following: `@Template("AppBundle:Invoice:create_credit.html.twig")`. `App` would only be valid if your `AppBundle` is called `App`. I don't see my app using `@App` or `@AppBundle` when rendering templates though, but maybe both are supported.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-12T07:08:58Z
+
+@raulconti you are right. [These lines of code](https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/TwigExtension.php#L141-148) are the ones that strip the `Bundle` suffix in Twig namespaces. @iltar you are right too. When using the old template naming you can't remove the `Bundle` suffix.
+
+By the way, I hate this inconsistency and I think Twig namespaces shouldn't change anything.
