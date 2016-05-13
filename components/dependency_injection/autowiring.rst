@@ -18,8 +18,7 @@ with `ROT13`_ (a special case of the Caesar cipher).
 
 Start by creating a ROT13 transformer class::
 
-    // src/AppBundle/Rot13Transformer.php
-    namespace AppBundle;
+    namespace Acme;
 
     class Rot13Transformer
     {
@@ -31,8 +30,7 @@ Start by creating a ROT13 transformer class::
 
 And now a Twitter client using this transformer::
 
-    // src/AppBundle/TwitterClient.php
-    namespace AppBundle;
+    namespace Acme;
 
     class TwitterClient
     {
@@ -59,22 +57,20 @@ service is marked as autowired:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
         services:
             twitter_client:
-                class:    AppBundle\TwitterClient
+                class:    Acme\TwitterClient
                 autowire: true
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
+                <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
             </services>
         </container>
 
@@ -83,7 +79,7 @@ service is marked as autowired:
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition = new Definition('AppBundle\TwitterClient');
+        $definition = new Definition('Acme\TwitterClient');
         $definition->setAutowired(true);
 
         $container->setDefinition('twitter_client', $definition);
@@ -106,8 +102,7 @@ and edit related service definitions.
 
 Here is a typical controller using the ``twitter_client`` service::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    namespace Acme\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -159,8 +154,7 @@ if necessary. It also allows to use other transformers.
 
 Let's introduce a ``TransformerInterface``::
 
-    // src/AppBundle/TransformerInterface.php
-    namespace AppBundle;
+    namespace Acme;
 
     interface TransformerInterface
     {
@@ -197,26 +191,24 @@ subsystem isn't able to find itself the interface implementation to register:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
         services:
             rot13_transformer:
-                class: AppBundle\Rot13Transformer
+                class: Acme\Rot13Transformer
 
             twitter_client:
-                class:    AppBundle\TwitterClient
+                class:    Acme\TwitterClient
                 autowire: true
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="rot13_transformer" class="AppBundle\Rot13Transformer" />
-                <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
+                <service id="rot13_transformer" class="Acme\Rot13Transformer" />
+                <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
             </services>
         </container>
 
@@ -225,10 +217,10 @@ subsystem isn't able to find itself the interface implementation to register:
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition1 = new Definition('AppBundle\Rot13Transformer');
+        $definition1 = new Definition('Acme\Rot13Transformer');
         $container->setDefinition('rot13_transformer', $definition1);
 
-        $definition2 = new Definition('AppBundle\TwitterClient');
+        $definition2 = new Definition('Acme\TwitterClient');
         $definition2->setAutowired(true);
         $container->setDefinition('twitter_client', $definition2);
 
@@ -244,8 +236,7 @@ Last but not least, the autowiring feature allows to specify the default impleme
 of a given type. Let's introduce a new implementation of the ``TransformerInterface``
 returning the result of the ROT13 transformation uppercased::
 
-    // src/AppBundle/UppercaseRot13Transformer.php
-    namespace AppBundle;
+    namespace Acme;
 
     class UppercaseTransformer implements TransformerInterface
     {
@@ -267,8 +258,7 @@ This class is intended to decorate the any transformer and return its value uppe
 We can now refactor the controller to add another endpoint leveraging this new
 transformer::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    namespace Acme\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -320,39 +310,37 @@ and a Twitter client using it:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
         services:
             rot13_transformer:
-                class:            AppBundle\Rot13Transformer
-                autowiring_types: AppBundle\TransformerInterface
+                class:            Acme\Rot13Transformer
+                autowiring_types: Acme\TransformerInterface
 
             twitter_client:
-                class:    AppBundle\TwitterClient
+                class:    Acme\TwitterClient
                 autowire: true
 
             uppercase_rot13_transformer:
-                class:    AppBundle\UppercaseRot13Transformer
+                class:    Acme\UppercaseRot13Transformer
                 autowire: true
 
             uppercase_twitter_client:
-                class:     AppBundle\TwitterClient
+                class:     Acme\TwitterClient
                 arguments: ['@uppercase_rot13_transformer']
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="rot13_transformer" class="AppBundle\Rot13Transformer">
-                    <autowiring-type>AppBundle\TransformerInterface</autowiring-type>
+                <service id="rot13_transformer" class="Acme\Rot13Transformer">
+                    <autowiring-type>Acme\TransformerInterface</autowiring-type>
                 </service>
-                <service id="twitter_client" class="AppBundle\TwitterClient" autowire="true" />
-                <service id="uppercase_rot13_transformer" class="AppBundle\UppercaseRot13Transformer" autowire="true" />
-                <service id="uppercase_twitter_client" class="AppBundle\TwitterClient">
+                <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
+                <service id="uppercase_rot13_transformer" class="Acme\UppercaseRot13Transformer" autowire="true" />
+                <service id="uppercase_twitter_client" class="Acme\TwitterClient">
                     <argument type="service" id="uppercase_rot13_transformer" />
                 </service>
             </services>
@@ -364,19 +352,19 @@ and a Twitter client using it:
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition1 = new Definition('AppBundle\Rot13Transformer');
-        $definition1->setAutowiringTypes(array('AppBundle\TransformerInterface'));
+        $definition1 = new Definition('Acme\Rot13Transformer');
+        $definition1->setAutowiringTypes(array('Acme\TransformerInterface'));
         $container->setDefinition('rot13_transformer', $definition1);
 
-        $definition2 = new Definition('AppBundle\TwitterClient');
+        $definition2 = new Definition('Acme\TwitterClient');
         $definition2->setAutowired(true);
         $container->setDefinition('twitter_client', $definition2);
 
-        $definition3 = new Definition('AppBundle\UppercaseRot13Transformer');
+        $definition3 = new Definition('Acme\UppercaseRot13Transformer');
         $definition3->setAutowired(true);
         $container->setDefinition('uppercase_rot13_transformer', $definition3);
 
-        $definition4 = new Definition('AppBundle\TwitterClient');
+        $definition4 = new Definition('Acme\TwitterClient');
         $definition4->addArgument(new Reference('uppercase_rot13_transformer'));
         $container->setDefinition('uppercase_twitter_client', $definition4);
 
@@ -387,7 +375,7 @@ to use which leads to errors like this:
 .. code-block:: text
 
       [Symfony\Component\DependencyInjection\Exception\RuntimeException]
-      Unable to autowire argument of type "AppBundle\TransformerInterface" for the service "twitter_client".
+      Unable to autowire argument of type "Acme\TransformerInterface" for the service "twitter_client".
 
 Fortunately, the ``autowiring_types`` key is here to specify which implementation
 to use by default. This key can take a list of types if necessary.
