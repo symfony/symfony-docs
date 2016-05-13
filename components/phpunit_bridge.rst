@@ -246,3 +246,4 @@ the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`Travis CI`: https://travis-ci.org/
