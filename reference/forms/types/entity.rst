@@ -152,7 +152,7 @@ method. You can also pass a callback function for more control::
     ));
 
 The method is called for each entity in the list and passed to the function. For
-more detais, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
+more details, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
 
 .. note::
 
