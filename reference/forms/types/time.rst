@@ -82,14 +82,10 @@ values.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 placeholder
 ~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` | ``array``
 

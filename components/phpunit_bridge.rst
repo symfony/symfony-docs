@@ -20,10 +20,6 @@ It comes with the following features:
 
 * Provides a ``ClockMock`` helper class for time-sensitive tests.
 
-.. versionadded:: 2.7
-    The PHPUnit Bridge was introduced in Symfony 2.7. It is however possible to
-    install the bridge in any Symfony application (even 2.3).
-
 Installation
 ------------
 
@@ -136,6 +132,9 @@ related to deprecations.
 
 Time-sensitive Tests
 --------------------
+
+.. versionadded:: 2.8
+    Support for clock mocking was introduced in Symfony 2.8.
 
 Use Case
 ~~~~~~~~
@@ -301,10 +300,10 @@ Troubleshooting
 
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
 "by convention" and assume that the namespace of the tested class can be
-obtained just by removing the ``\Tests\`` part from the test namespace. For
-example, if your test case fully-qualified class name (FQCN) is
-``App\Tests\Watch\DummyWatchTest``, it assumes the tested class FQCN is
-``App\Watch\DummyWatch``.
+obtained just by removing the ``Tests\`` part from the test namespace. I.e.
+that if the your test case fully-qualified class name (FQCN) is
+``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
+is ``App\Watch``.
 
 If this convention doesn't work for your application, configure the mocked
 namespaces in the ``phpunit.xml`` file, as done for example in the
@@ -337,4 +336,4 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
-.. _`Travis CI`: https://travis-ci.com/
+.. _`Travis CI`: https://travis-ci.org/

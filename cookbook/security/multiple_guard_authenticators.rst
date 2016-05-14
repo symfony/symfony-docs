@@ -1,9 +1,6 @@
 How to Use Multiple Guard Authenticators
 ========================================
 
-.. versionadded:: 2.8
-    The ``Guard`` component was introduced in Symfony 2.8.
-
 The Guard authentication component allows you to easily use many different
 authenticators at a time.
 

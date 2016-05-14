@@ -431,10 +431,6 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
         // return $this->redirect($this->generateUrl('homepage'));
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
-
 By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the third argument::
 
@@ -500,8 +496,8 @@ The Symfony templating engine is explained in great detail in the
 .. sidebar:: Templating Naming Pattern
 
     You can also put templates in the ``Resources/views`` directory of a bundle and
-    reference them with a special shortcut syntax like ``@AppBundle/Hello/index.html.twig``
-    or ``@AppBundle/layout.html.twig``. These would live in at ``Resources/views/Hello/index.html.twig``
+    reference them with a special shortcut syntax like ``@App/Hello/index.html.twig``
+    or ``@App/layout.html.twig``. These would live in at ``Resources/views/Hello/index.html.twig``
     and ``Resources/views/layout.html.twig`` inside the bundle respectively.
 
 .. index::

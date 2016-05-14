@@ -379,12 +379,11 @@ is thrown::
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
-    $resolver->setAllowedValues(array(
-        // ...
-        $resolver->setAllowedValues('transport', function ($value) {
-            // return true or false
-        });
-    ));
+    
+    // ...
+    $resolver->setAllowedValues('transport', function ($value) {
+        // return true or false
+    });
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 to add additional allowed values without erasing the ones already set.
