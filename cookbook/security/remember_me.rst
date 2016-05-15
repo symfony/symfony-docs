@@ -22,7 +22,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 main:
                     # ...
                     remember_me:
-                        secret:   '%secret%'
+                        key:   '%secret%'
                         lifetime: 604800 # 1 week in seconds
                         path:     /
                         # by default, the feature is enabled by checking a
@@ -48,7 +48,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
                     <!-- 604800 is 1 week in seconds -->
                     <remember-me
-                        secret="%secret%"
+                        key="%secret%"
                         lifetime="604800"
                         path="/" />
                     <!-- by default, the feature is enabled by checking a checkbox
@@ -68,7 +68,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 'main' => array(
                     // ...
                     'remember_me' => array(
-                        'secret'   => '%secret%',
+                        'key'   => '%secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
                         // by default, the feature is enabled by checking a
@@ -82,9 +82,9 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``secret`` (**required**)
+``key`` (**required**)
     .. versionadded:: 2.8
-        The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it
+        The ``key`` option was introduced in Symfony 2.8. Prior to 2.8, it
         was named ``key``.
 
     The value used to encrypt the cookie's content. It's common to use the
