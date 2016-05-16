@@ -60,12 +60,12 @@ contents as regular files in a set of directories on the local file system::
 APCu Cache Adapter
 ~~~~~~~~~~~~~~~~~~
 
-This adapter can increase the application performance very significantly, because
-contents are cached in the memory of your server, which is much faster than the
-file system. It requires to have installed and enabled the PHP APC extension.
-It's not recommended to use it when performing lots of write and delete
-operations because it produces fragmentation in the APCu memory and that
-degrades performance significantly::
+This adapter can increase the application performance very significantly,
+because contents are cached in the shared memory of your server, which is much
+faster than the file system. It requires to have installed and enabled the PHP
+APCu extension. It's not recommended to use it when performing lots of write and
+delete operations because it produces fragmentation in the APCu memory that can
+degrade performance significantly::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
@@ -80,10 +80,12 @@ degrades performance significantly::
 Redis Cache Adapter
 ~~~~~~~~~~~~~~~~~~~
 
-This adapter, similarly to APCu adapter, can increase the application performance
-very significantly, because contents are cached in the memory of your server. It
-requires to have installed Redis and have created a connection that implements
-the ``\Redis`` class::
+This adapter stores the contents in the memory of the server. Unlike the APCu
+adapter, it's not limited to the shared memory of the current server, so you can
+store contents in a cluster of servers if needed.
+
+It requires to have installed Redis and have created a connection that implements
+the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or ``\Predis`` classes::
 
     use Symfony\Component\Cache\Adapter\RedisAdapter;
 
