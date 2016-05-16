@@ -303,7 +303,7 @@ Result Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::warning`
     It displays the given string or array of strings highlighted as a warning
-    message (with a read background and the ``[WARNING]`` label). It's meant to be
+    message (with a red background and the ``[WARNING]`` label). It's meant to be
     used once to display the final result of executing the given command, but you
     can use it repeatedly during the execution of the command::
 
@@ -320,7 +320,7 @@ Result Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::error`
     It displays the given string or array of strings highlighted as an error
-    message (with a read background and the ``[ERROR]`` label). It's meant to be
+    message (with a red background and the ``[ERROR]`` label). It's meant to be
     used once to display the final result of executing the given command, but you
     can use it repeatedly during the execution of the command::
 
