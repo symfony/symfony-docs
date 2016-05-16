@@ -65,6 +65,9 @@ the user::
                     );
                 }
 
+                // CAUTION: implement __toString method for $user object
+                // or pass the username (like a nickname, email address, etc.) instead $user
+                // otherwise you get a redirect error
                 return new UsernamePasswordToken(
                     $user,
                     $user->getPassword(),
