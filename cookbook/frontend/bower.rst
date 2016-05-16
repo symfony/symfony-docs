@@ -25,7 +25,7 @@ it's installed correctly.
 .. tip::
 
     If you don't want to have NodeJS on your computer, you can also use
-    BowerPHP_ (an unofficial PHP port of Bower). Be aware that this is currently
+    BowerPHP_ (an unofficial PHP port of Bower). Beware that this is currently
     in beta status. If you're using BowerPHP, use ``bowerphp`` instead of
     ``bower`` in the examples.
 
