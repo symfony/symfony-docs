@@ -81,7 +81,7 @@ First configure a listener for console exception events in the service container
 
         # app/config/services.yml
         services:
-            kernel.listener.command_dispatch:
+            kernel.listener.command_exception:
                 class: AppBundle\EventListener\ConsoleExceptionListener
                 arguments: ['@logger']
                 tags:
@@ -96,7 +96,7 @@ First configure a listener for console exception events in the service container
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="kernel.listener.command_dispatch" class="AppBundle\EventListener\ConsoleExceptionListener">
+                <service id="kernel.listener.command_exception" class="AppBundle\EventListener\ConsoleExceptionListener">
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.exception" />
                 </service>
@@ -118,7 +118,7 @@ First configure a listener for console exception events in the service container
             array('event' => 'console.exception')
         );
         $container->setDefinition(
-            'kernel.listener.command_dispatch',
+            'kernel.listener.command_exception',
             $definitionConsoleExceptionListener
         );
 
@@ -178,7 +178,7 @@ First configure a listener for console terminate events in the service container
 
         # app/config/services.yml
         services:
-            kernel.listener.command_dispatch:
+            kernel.listener.command_error:
                 class: AppBundle\EventListener\ErrorLoggerListener
                 arguments: ['@logger']
                 tags:
@@ -193,7 +193,7 @@ First configure a listener for console terminate events in the service container
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="kernel.listener.command_dispatch" class="AppBundle\EventListener\ErrorLoggerListener">
+                <service id="kernel.listener.command_error" class="AppBundle\EventListener\ErrorLoggerListener">
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
@@ -215,7 +215,7 @@ First configure a listener for console terminate events in the service container
             array('event' => 'console.terminate')
         );
         $container->setDefinition(
-            'kernel.listener.command_dispatch',
+            'kernel.listener.command_error',
             $definitionErrorLoggerListener
         );
 
