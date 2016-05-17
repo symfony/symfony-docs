@@ -8,7 +8,7 @@ Extending Action Argument Resolving
     The ``ArgumentResolver`` and value resolvers were introduced in Symfony 3.1.
 
 In the book, you've learned that you can get the :class:`Symfony\\Component\\HttpFoundation\\Request`
-object via an argument in your controller. This argument has to be typehinted
+object via an argument in your controller. This argument has to be type-hinted
 by the ``Request`` class in order to be recognized. This is done via the
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. By
 creating and registering custom argument value resolvers, you can extend
