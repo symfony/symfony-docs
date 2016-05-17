@@ -14,7 +14,7 @@ by the ``Request`` class in order to be recognized. This is done via the
 creating and registering custom argument value resolvers, you can extend
 this functionality.
 
-Functionality Shipped With The HttpKernel
+Functionality Shipped with the HttpKernel
 -----------------------------------------
 
 Symfony ships with four value resolvers in the HttpKernel component:
