@@ -17,7 +17,7 @@ this functionality.
 Functionality Shipped With The HttpKernel
 -----------------------------------------
 
-Symfony ships with four value resolvers in the HttpKernel:
+Symfony ships with four value resolvers in the HttpKernel component:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolver\\ArgumentFromAttributeResolver`
     Attempts to find a request attribute that matches the name of the argument.
@@ -62,13 +62,7 @@ object from the security system. Given you write the following action::
 
 Somehow you will have to get the ``User`` object and inject it into the controller.
 This can be done by implementing the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
-This interface specifies that you have to implement two methods::
-
-    interface ArgumentValueResolverInterface
-    {
-        public function supports(Request $request, ArgumentMetadata $argument);
-        public function resolve(Request $request, ArgumentMetadata $argument);
-    }
+This interface specifies that you have to implement two methods:
 
 ``supports()``
     This method is used to check whether the value resolver supports the
@@ -81,15 +75,6 @@ Both methods get the ``Request`` object, which is the current request, and an
 :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`
 instance. This object contains all information retrieved from the method signature
 for the current argument.
-
-.. note::
-
-    The ``ArgumentMetadata`` is a simple data container created by the
-    :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadataFactory`.
-    This factory will work on every supported PHP version but might give
-    different results. E.g. the ``isVariadic()`` will never return true on
-    PHP 5.5 and only on PHP 7.0 and higher it will give you basic types when
-    calling ``getType()``.
 
 Now that you know what to do, you can implement this interface. To get the
 current ``User``, you need the current security token. This token can be
@@ -134,7 +119,7 @@ retrieved from the token storage::
 In order to get the actual ``User`` object in your argument, the given value
 must fulfill the following requirements:
 
-* An argument must be typehinted as ``User`` in your action method signature;
+* An argument must be type-hinted as ``User`` in your action method signature;
 * A security token must be present;
 * The value must be an instance of the ``User``.
 
@@ -142,7 +127,7 @@ When all those requirements are met and true is returned, the ``ArgumentResolver
 calls ``resolve()`` with the same values as it called ``supports()``.
 
 That's it! Now all you have to do is add the configuration for the service
-container. This can be done by tagging the service with ``kernel.argument_resolver``
+container. This can be done by tagging the service with ``controller.argument_resolver``
 and adding a priority.
 
 .. note::
