@@ -45,18 +45,3 @@ look for tokens based on some criteria::
     // get the latest 10 tokens for requests that happened between 2 and 4 days ago
     $tokens = $container->get('profiler')
         ->find('', '', 10, '4 days ago', '2 days ago');
-
-Lastly, if you want to manipulate profiling data on a different machine than the
-one where the information was generated, use the ``profiler:export`` and
-``profiler:import`` commands:
-
-.. code-block:: bash
-
-    # on the production machine
-    $ php bin/console profiler:export > profile.data
-
-    # on the development machine
-    $ php bin/console profiler:import /path/to/profile.data
-
-    # you can also pipe from the STDIN
-    $ cat /path/to/profile.data | php bin/console profiler:import
