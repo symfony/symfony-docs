@@ -88,8 +88,8 @@ Listener Class Name                                                             
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerArgumentsEvent`
 
-This event can be an entry point used to modify the arguments of the controller
-once they have been resolved by Symfony::
+This event allows to modify the arguments of the controller once they have been
+resolved by Symfony::
 
     use Symfony\Component\HttpKernel\Event\FilterControllerArgumentsEvent;
 
