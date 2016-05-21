@@ -373,7 +373,7 @@ can place it anywhere you like. You should return this path as the base path::
         }
     }
 
-Assume the XSD file is called ``hello-1.0.xsd``, the schema location will be
+Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 ``http://acme_company.com/schema/dic/hello/hello-1.0.xsd``:
 
 .. code-block:: xml
