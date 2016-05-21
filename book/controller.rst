@@ -774,6 +774,51 @@ There are also special classes to make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
+File helper
+~~~~~~~~~~~
+
+If you want to serve file use
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+helper::
+
+    $this->file($file, $fileName = null, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+You can pass:
+
+* Instance of
+  :class:`Symfony\\Component\\HttpFoundation\\File`
+  in ``$file`` parameter (you can customize ``$fileName`` and ``$disposition``)
+
+* Path to file in ``$file`` parameter
+
+* String with file content in ``$file`` and appropriate ``$fileName``
+
+Example usage::
+
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    // This will send file with original name as attachment to browser
+    public function fileAction()
+    {
+        // Load file from file system
+        $file = new File('some_file.pdf');
+
+        return $this->file($file);
+    }
+
+    // Server file from specified path
+    public function pathFileAction()
+    {
+        return $this->file('/path/to/my/picture.jpg');
+    }
+
+    // You can send nonexistent files too (this will be sent with inline disposition)
+    public function helloFileAction()
+    {
+        return $this->file('Hello, world!', 'hello.txt', ResponseHeaderBag::DISPOSITION_INLINE);
+    }
+
 .. seealso::
 
     Now that you know the basics you can continue your research on Symfony
