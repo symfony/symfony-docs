@@ -202,9 +202,9 @@ query_builder
 Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
-The value of this option can either be a ``QueryBuilder`` object or a Closure.
+The value of this option can either be a ``QueryBuilder`` object, a Closure or null.
 When using a Closure, you will be passed the ``EntityRepository`` of the entity
-as the only argument and should return a ``QueryBuilder``.
+as the only argument and should return a ``QueryBuilder``.  If you'd like to display a list of empty entries, you can return null in the query_builder closure.
 
 Overridden Options
 ------------------
