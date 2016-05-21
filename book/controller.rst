@@ -774,7 +774,7 @@ There are also special classes to make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
-JSON helper
+JSON Helper
 ~~~~~~~~~~~
 
 Returning JSON contents is increasingly popular for API-based applications. For
