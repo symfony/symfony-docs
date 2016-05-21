@@ -1206,11 +1206,6 @@ One great advantage of the ESI renderer is that you can make your application
 as dynamic as needed and at the same time, hit the application as little as
 possible.
 
-.. tip::
-
-    The listener only responds to local IP addresses or
-    :doc:`trusted proxies </cookbook/request/load_balancer_reverse_proxy>`.
-
 .. note::
 
     Once you start using ESI, remember to always use the ``s-maxage``
