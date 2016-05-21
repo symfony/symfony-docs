@@ -130,7 +130,7 @@ Finally, you need to update the code of the controller that handles the form::
             $form = $this->createForm(new ProductType(), $product);
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // $file stores the uploaded PDF file
                 /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
                 $file = $product->getBrochure();
@@ -210,7 +210,7 @@ To avoid logic in controllers, making them big, you can extract the upload
 logic to a seperate service::
 
     // src/AppBundle/FileUploader.php
-    namespace AppBundle\FileUploader;
+    namespace AppBundle;
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -304,7 +304,9 @@ automatically upload the file when persisting the entity::
     // src/AppBundle/EventListener/BrochureUploadListener.php
     namespace AppBundle\EventListener;
 
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PreUpdateEventArgs;
     use AppBundle\Entity\Product;
     use AppBundle\FileUploader;
 
@@ -324,7 +326,7 @@ automatically upload the file when persisting the entity::
             $this->uploadFile($entity);
         }
 
-        public function preUpdate(LifecycleEventArs $args)
+        public function preUpdate(PreUpdateEventArgs $args)
         {
             $entity = $args->getEntity();
 
@@ -364,6 +366,7 @@ Now, register this class as a Doctrine listener:
                 arguments: ['@app.brochure_uploader']
                 tags:
                     - { name: doctrine.event_listener, event: prePersist }
+                    - { name: doctrine.event_listener, event: preUpdate }
 
     .. code-block:: xml
 
@@ -382,6 +385,7 @@ Now, register this class as a Doctrine listener:
                 <argument type="service" id="app.brochure_uploader"/>
 
                 <tag name="doctrine.event_listener" event="prePersist"/>
+                <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>
         </container>
 
@@ -397,6 +401,9 @@ Now, register this class as a Doctrine listener:
         );
         $definition->addTag('doctrine.event_listener', array(
             'event' => 'prePersist',
+        ));
+        $definition->addTag('doctrine.event_listener', array(
+            'event' => 'preUpdate',
         ));
         $container->setDefinition('app.doctrine_brochure_listener', $definition);
 
