@@ -203,6 +203,21 @@ You can use the following code to link to the PDF brochure of an product:
             View brochure (PDF)
         </a>
 
+.. tip::
+
+    When creating a form to edit an already persisted item, the file form type
+    still expects a :class:`Symfony\\Component\\HttpFoundation\\File\\File`
+    instance. As the persisted entity now contains only the relative file path,
+    you first have to concatenate the configured upload path with the stored
+    filename and create a new ``File`` class::
+
+        use Symfony\Component\HttpFoundation\File\File;
+        // ...
+
+        $product->setBrochure(
+            new File($this->getParameter('brochures_directory').'/'.$product->getBrochure())
+        );
+
 Creating an Uploader Service
 ----------------------------
 
@@ -410,5 +425,31 @@ Now, register this class as a Doctrine listener:
 This listeners is now automatically executed when persisting a new Product
 entity. This way, you can remove everything related to uploading from the
 controller.
+
+.. tip::
+
+    This listener can also create the ``File`` instance based on the path when
+    fetching entities from the database::
+
+        // ...
+        use Symfony\Component\HttpFoundation\File\File;
+
+        // ...
+        class BrochureUploadListener
+        {
+            // ...
+
+            public function postLoad(LifecycleEventArgs $args)
+            {
+                $entity = $args->getEntity();
+
+                $fileName = $entity->getBrochure();
+
+                $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+            }
+        }
+
+    After adding these lines, configure the listener to also listen for the
+    ``postLoad`` event.
 
 .. _`VichUploaderBundle`: https://github.com/dustin10/VichUploaderBundle
