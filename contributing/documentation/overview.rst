@@ -31,18 +31,34 @@ Before Your First Contribution
 Fast Online Contributions
 -------------------------
 
-This method is best suited for small contributions, such as typos and rewordings.
-Due to GitHub's functional frontend, it is possible to create Pull Requests
-right in your browser while reading the docs on symfony.com.
+If you're making a relatively small change - like fixing a typo or rewording
+something - the easiest way to contribute is directly on GitHub! You can do this
+while you're reading the Symfony documentation.
 
-First, switch to the oldest maintained Symfony branch which contains the error,
-which is usually ``2.3``. Then, click on the **edit this page** button on the
-upper right corner. Now edit the content and describe your changes within the
-GitHub frontend.
+**Step 1.** Click on the **edit this page** button on the upper right corner
+and you'll be redirected to GitHub:
 
-When your work is done, click **Propose file change** to create a commit and, in
-case it is your first contribution, also your fork. A new branch will be created
-automatically and you can then create the Pull Request.
+.. image:: /images/contributing/docs-github-edit-page.png
+
+**Step 2.** Edit the contents, describe your changes and click on the
+**Propose file change** button.
+
+**Step 3.** GitHub will now create a branch and a commit for your changes
+(forking the repository first if this is your first contribution) and it will
+also display a preview of your changes:
+
+.. image:: /images/contributing/docs-github-create-pr.png
+
+If everything is correct, click on the **Create pull request** button.
+
+**Step 4.** GitHub will display a new page where you can do some last-minute
+changes to your pull request before creating it. For simple contributions, you
+can safely ignore these options and just click on the **Create pull request**
+button again.
+
+**Congratulations!** You just created a pull request to the official Symfony
+documentation! The community will now review your pull request and (possibly)
+suggest tweaks.
 
 If your contribution is large or if you prefer to work on your own computer,
 keep reading this guide to learn an alternative way to send pull requests to the
@@ -108,8 +124,8 @@ branch of the ``upstream`` remote, which is the original Symfony Docs repository
 
 Fixes should always be based on the **oldest maintained branch** which contains
 the error. Nowadays this is the ``2.3`` branch. If you are instead documenting a
-new feature, switch to the first Symfony version which included it: ``2.7``,
-``3.1``, etc.
+new feature, switch to the first Symfony version that included it, e.g.
+``upstream/3.1``. Not sure? That's ok! Just use the ``upstream/master`` branch.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
 even remove any content, but make sure that you comply with the
