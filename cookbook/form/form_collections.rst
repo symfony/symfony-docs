@@ -69,13 +69,18 @@ objects::
 
     class Tag
     {
-        public $name;
+        private $name;
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function setName($name)
+        {
+            $this->name = $name;
+        }
     }
-
-.. tip::
-
-    The ``name`` property is public here, but it can just as easily be protected
-    or private (but then it would need ``getName`` and ``setName`` methods).
 
 Then, create a form class so that a ``Tag`` object can be modified by the user::
 
@@ -162,10 +167,10 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             // dummy code - this is here just so that the Task has some tags
             // otherwise, this isn't an interesting example
             $tag1 = new Tag();
-            $tag1->name = 'tag1';
+            $tag1->setName('tag1');
             $task->getTags()->add($tag1);
             $tag2 = new Tag();
-            $tag2->name = 'tag2';
+            $tag2->setName('tag2');
             $task->getTags()->add($tag2);
             // end dummy code
 

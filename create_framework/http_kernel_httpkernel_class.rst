@@ -150,8 +150,9 @@ only if needed::
     namespace Simplex;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+    use Symfony\Component\HttpKernel\KernelEvents;
 
     class StringResponseListener implements EventSubscriberInterface
     {
@@ -166,7 +167,7 @@ only if needed::
 
         public static function getSubscribedEvents()
         {
-            return array('kernel.view' => 'onView');
+            return array(KernelEvents::VIEW => 'onView');
         }
     }
 
