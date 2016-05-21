@@ -74,7 +74,10 @@ degrade performance significantly::
         $namespace = '',
         // in seconds; applied to cache items that don't define their own lifetime
         // 0 means to store the cache items indefinitely (i.e. until the APC memory is deleted)
-        $defaultLifetime = 0
+        $defaultLifetime = 0,
+        // if present, this string is added to the namespace to simplify the
+        // invalidation of the entire cache (e.g. when deploying the application)
+        $version = null
     );
 
 Redis Cache Adapter
