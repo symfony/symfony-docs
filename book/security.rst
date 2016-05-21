@@ -1148,6 +1148,12 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``).
 Dynamically Encoding a Password
 -------------------------------
 
+.. note::
+
+    For historical reasons, Symfony uses the term *"password encoding"* when it
+    should really refer to *"password hashing"*. The "encoders" are in fact
+    `cryptographic hash functions`_.
+
 If, for example, you're storing users in the database, you'll need to encode
 the users' passwords before inserting them. No matter what algorithm you
 configure for your user object, the hashed password can always be determined
@@ -1319,4 +1325,5 @@ Learn More from the Cookbook
 
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`cryptographic hash functions`: https://en.wikipedia.org/wiki/Cryptographic_hash_function
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
