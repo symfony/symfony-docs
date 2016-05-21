@@ -75,7 +75,7 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
         public static function getSubscribedEvents()
         {
             return array(
-                'kernel.response' => array(
+                KernelEvents::RESPONSE => array(
                     array('onKernelResponsePre', 10),
                     array('onKernelResponsePost', 0),
                 ),
@@ -98,3 +98,4 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
             // ...
         }
     }
+
