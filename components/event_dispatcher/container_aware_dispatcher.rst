@@ -68,6 +68,7 @@ and the second argument is the service's class name (which must implement
 The ``EventSubscriberInterface`` is exactly as you would expect::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\KernelEvents;
     // ...
 
     class StoreSubscriber implements EventSubscriberInterface
@@ -75,7 +76,7 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
         public static function getSubscribedEvents()
         {
             return array(
-                'kernel.response' => array(
+                KernelEvents::RESPONSE => array(
                     array('onKernelResponsePre', 10),
                     array('onKernelResponsePost', 0),
                 ),
@@ -98,3 +99,4 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
             // ...
         }
     }
+
