@@ -14,28 +14,18 @@ following sections.
 Install Composer on Linux and Mac OS X
 --------------------------------------
 
-To install Composer on Linux or Mac OS X, execute the following two commands:
+Run the installer following the Download page instructions from https://getcomposer.org/download.
+
+After this you can run this command to move composer.phar to a directory that is in your path:
 
 .. code-block:: bash
 
-    $ curl -sS https://getcomposer.org/installer | php
     $ sudo mv composer.phar /usr/local/bin/composer
-
-.. note::
-
-    If you don't have ``curl`` installed, you can also just download the
-    ``installer`` file manually at https://getcomposer.org/installer and
-    then run:
-
-    .. code-block:: bash
-
-        $ php installer
-        $ sudo mv composer.phar /usr/local/bin/composer
 
 Install Composer on Windows
 ---------------------------
 
-Download the installer from `getcomposer.org/download`_, execute it and follow
+Download the installer from https://getcomposer.org/Composer-Setup.exe, execute it and follow
 the instructions.
 
 Learn more
@@ -44,5 +34,4 @@ Learn more
 Read the `Composer documentation`_ to learn more about its usage and features.
 
 .. _`Composer`: https://getcomposer.org/
-.. _`getcomposer.org/download`: https://getcomposer.org/download
 .. _`Composer documentation`: https://getcomposer.org/doc/00-intro.md
