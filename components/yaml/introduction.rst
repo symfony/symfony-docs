@@ -241,7 +241,7 @@ resources and objects) as ``null``.
 Instead of encoding as ``null`` you can choose to throw an exception if an invalid
 type is encountered in either the dumper or parser as follows::
 
-    // throw an exception if a resource or object is encoutered
+    // throw an exception if a resource or object is encountered
     Yaml::dump($data, 2, 4, true);
 
     // throw an exception if an encoded object is found in the YAML string
@@ -259,12 +259,12 @@ However, you can activate object support using the next argument::
     var_dump(is_object($parsed)); // true
     echo $parsed->foo; // bar
 
-The YAML component uses PHP's ``serialize`` method to generate a string
+The YAML component uses PHP's ``serialize()`` method to generate a string
 representation of the object.
 
-.. warning::
+.. caution::
 
-    Object seialization is specific to this implementation, other PHP YAML
+    Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
     implementations certainly won't - use with discretion!
 
