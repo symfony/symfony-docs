@@ -20,3 +20,5 @@ the form or any nested field, you can set it in the data option::
     The default values for form fields are taken directly from the underlying
     data structure matching the field's name with a property of an object or a
     key of an array. The ``data`` option overrides this default value.
+    It means that when the data passed to the form is an object you want to
+    edit, the `data` option will also override the value already set.
