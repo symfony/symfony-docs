@@ -507,22 +507,6 @@ The Symfony templating engine is explained in great detail in the
 .. index::
    single: Controller; Accessing services
 
-Sending JSON responses
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you're developing an API, you'll probably return JSON contents from your
-controllers. The ``json()`` method turns the given contents into JSON format and
-prepares the HTTP response accordingly for you::
-
-    // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
-    $data = array('username' => 'jane.doe');
-    return $this->json($data);
-
-The only required argument is the data to be sent, but ``json()`` defines three
-more optional arguments::
-
-    $this->json($data, $status = 200, $headers = array(), $context = array());
-
 .. _controller-accessing-services:
 
 Accessing other Services
@@ -778,14 +762,17 @@ headers and content that's sent back to the client::
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
-    // create a JSON-response with a 200 status code
-    $response = new Response(json_encode(array('name' => $name)));
-    $response->headers->set('Content-Type', 'application/json');
+    // create a CSS-response with a 200 status code
+    $response = new Response('<style> ... </style>');
+    $response->headers->set('Content-Type', 'text/css');
+
+.. seealso::
+
+    Now that you know the basics you can continue your research on Symfony
+    ``Request`` and ``Response`` object in the
+    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
 There are also special classes to make certain kinds of responses easier:
-
-* For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
-  See :ref:`component-http-foundation-json-response`.
 
 * For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
   See :ref:`component-http-foundation-serving-files`.
@@ -794,11 +781,27 @@ There are also special classes to make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
-.. seealso::
+Sending JSON responses
+~~~~~~~~~~~~~~~~~~~~~~
 
-    Now that you know the basics you can continue your research on Symfony
-    ``Request`` and ``Response`` object in the
-    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+If you're developing an API, you'll probably return JSON contents from your
+controllers. The ``json()`` method turns the given contents into JSON format and
+prepares the HTTP response headers accordingly::
+
+    // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+    $data = array('username' => 'jane.doe');
+    return $this->json($data);
+
+The only required argument is the data to be sent, but ``json()`` defines three
+more optional arguments::
+
+    $this->json($data, $status = 200, $headers = array(), $context = array());
+
+.. note::
+
+    The ``json()`` shortcut uses the :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+    class to create the response. If you prefer it, you can also use that class.
+    See :ref:`component-http-foundation-json-response`.
 
 Creating Static Pages
 ---------------------
