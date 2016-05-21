@@ -47,8 +47,8 @@ Suppose you have a Task form with a tags ``text`` type::
         // ...
     }
 
-Internally the ``tags`` are stored as an array, but they are displayed
-to the user as a simple string, to make them easier to edit.
+Internally the ``tags`` are stored as an array, but displayed to the user as a
+simple comma seperated string to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
@@ -69,13 +69,13 @@ class::
 
             $builder->get('tags')
                 ->addModelTransformer(new CallbackTransformer(
-                    // transform array to string so the input reads easier
-                    function ($originalTags) {
-                        return implode(', ', $originalTags);
+                    function ($tagsAsArray) {
+                        // transform the array to a string
+                        return implode(', ', $tagsAsArray);
                     },
-                    function ($submittedTags) {
-                        // transform the string back to Array
-                        return explode(', ', $submittedTags);
+                    function ($tagsAsString) {
+                        // transform the string back to an array
+                        return explode(', ', $tagsAsString);
                     }
                 ))
             ;
@@ -84,10 +84,10 @@ class::
         // ...
     }
 
-The ``CallbackTransformer`` takes two callback functions as arguments. The first transforms
-the original value into a format that'll be used to render the field. The second
-does the reverse: it transforms the submitted value back into the format you'll use
-in your code.
+The ``CallbackTransformer`` takes two callback functions as arguments. The
+first transforms the original value into a format that'll be used to render the
+field. The second does the reverse: it transforms the submitted value back into
+the format you'll use in your code.
 
 .. tip::
 
@@ -99,7 +99,8 @@ You can also add the transformer, right when adding the field by changing the fo
 slightly::
 
     $builder->add(
-        $builder->create('tags', 'text')
+        $builder
+            ->create('tags', 'text')
             ->addModelTransformer(...)
     );
 
