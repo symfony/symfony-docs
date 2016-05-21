@@ -16,6 +16,8 @@ to render the form, and then back into a ``DateTime`` object on submit.
     When a form field has the ``inherit_data`` option set, Data Transformers
     won't be applied to that field.
 
+.. _simple-example-sanitizing-html-on-user-input:
+
 Simple Example: Transforming String Tags from User Input to an Array
 --------------------------------------------------------------------
 
