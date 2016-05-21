@@ -14,9 +14,8 @@ following sections.
 Install Composer on Linux and Mac OS X
 --------------------------------------
 
-Run the installer following the Download page instructions from https://getcomposer.org/download.
-
-After this you can run this command to move composer.phar to a directory that is in your path:
+#. Run the installer as described in `the official Composer documentation`_.
+#. Execute the following command to move the ``composer.phar`` to a directory that is in your path:
 
 .. code-block:: bash
 
@@ -25,8 +24,7 @@ After this you can run this command to move composer.phar to a directory that is
 Install Composer on Windows
 ---------------------------
 
-Download the installer from https://getcomposer.org/Composer-Setup.exe, execute it and follow
-the instructions.
+Download the installer from `getcomposer.org`_, execute it and follow the instructions.
 
 Learn more
 ----------
@@ -35,3 +33,5 @@ Read the `Composer documentation`_ to learn more about its usage and features.
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Composer documentation`: https://getcomposer.org/doc/00-intro.md
+.. _`getcomposer.org`: https://getcomposer.org/Composer-Setup.exe
+.. _the official Composer documentation: https://getcomposer.org/download
