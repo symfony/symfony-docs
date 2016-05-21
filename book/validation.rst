@@ -765,6 +765,7 @@ Learn more from the Cookbook
 
 .. _book-validation-validation-groups:
 .. _book-validation-group-sequence:
+.. _book-validation-group-sequence-providers:
 
 * :doc:`/cookbook/validation/validation_groups`
 * :doc:`/cookbook/validation/custom_constraint`

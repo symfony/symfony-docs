@@ -464,6 +464,9 @@ Validation is a very powerful feature of Symfony and has its own
 
 .. _book-forms-validation-groups:
 .. _book-form-validation-groups:
+.. _book-form-disabling-validation:
+.. _book-form-groups-based-on-the-submitted-data:
+.. _book-form-groups-based-on-the-clicked-button:
 
 .. tip::
 
