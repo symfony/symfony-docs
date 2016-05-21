@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-05-21T10:32:10Z
+
+Thanks, this closes #6524.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T10:35:41Z
+
+<strike>Missing documentation for `Parse(.. $references)`</strike> not part of the pulic API.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T10:37:11Z
+
+Also `2.5` introduced the `$objectForMap` argument to parse
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T10:46:39Z
+
+I like this one, it's straight to the point and clear. Thanks!
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T11:07:37Z
+
+Updated. As noted above 2.5 introduced a new argument. Shall I wait until this is resolved / merged before making a PR on 2.5, and then finally on 3.1 ?
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-05-21T11:10:32Z
+
+@dantleech 2.5 is not maintained anymore, so I suggest you wait for this to be merged on 2.7 to send another PR.
+
+You will need to add a note version added where you can point 2.5.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T11:43:27Z
+
+@dantleech you can already create a PR for 2.7 and then rebase after this PR is merged. That allows us to review things already so merging will be a quick process.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T12:24:38Z
+
+Updated.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T12:42:42Z
+
+Just left some last minor comments, but overall this looks quite great!
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T12:52:56Z
+
+Updated
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T13:28:27Z
+
+I just noticed that the chapter contains this sentence:
+
+> Of course, the Symfony Yaml dumper is not able to dump resources. Also, even if the dumper is able to dump PHP objects, it is considered to be a not supported feature.
+
+What do we do with it? Remove it?
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T13:37:23Z
+
+> What do we do with it? Remove it?
+
+Hmm. Either we remove that or the new documentation, or we add a warning.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T13:43:24Z
+
+My suggestion: Let's remove the existing one and add a warning in the new section telling people that object support is a feature only existing in the Symfony Yaml component and thus (as not being part of the standard) very likely not supported in other implementations.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T13:43:29Z
+
+@xabbuh I'd say remove it. The code display show a clear warning when trying to dump resources, so the docs can safely ignore this edge case.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-21T14:07:19Z
+
+Removed the previous `note::` and added a `warning::` ..
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T14:31:50Z
+
+:+1:
