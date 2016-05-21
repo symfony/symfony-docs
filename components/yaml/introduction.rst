@@ -169,12 +169,6 @@ array to its YAML representation:
 
     file_put_contents('/path/to/file.yml', $yaml);
 
-.. note::
-
-    Of course, the Symfony Yaml dumper is not able to dump resources. Also,
-    even if the dumper is able to dump PHP objects, it is considered to be a
-    not supported feature.
-
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
 
@@ -185,7 +179,10 @@ If you only need to dump one array, you can use the
 
     use Symfony\Component\Yaml\Yaml;
 
-    $yaml = Yaml::dump($array, $inline);
+    $yaml = Yaml::dump($array);
+
+Array Expansion and Inlining
+............................
 
 The YAML format supports two kind of representation for arrays, the expanded
 one, and the inline one. By default, the dumper uses the inline
@@ -201,7 +198,7 @@ representation to the inline one:
 
 .. code-block:: php
 
-    echo $dumper->dump($array, 1);
+    echo Yaml::dump($array, 1);
 
 .. code-block:: yaml
 
@@ -210,7 +207,7 @@ representation to the inline one:
 
 .. code-block:: php
 
-    echo $dumper->dump($array, 2);
+    echo Yaml::dump($array, 2);
 
 .. code-block:: yaml
 
@@ -218,6 +215,58 @@ representation to the inline one:
     bar:
         foo: bar
         bar: baz
+
+Indentation
+...........
+
+By default the YAML component will use 4 spaces for indentation. This can be
+changed using the third argument as follows::
+
+    // use 8 spaces for indentation
+    echo Yaml::dump($array, 2, 8);
+
+.. code-block:: yaml
+
+    foo: bar
+    bar:
+            foo: bar
+            bar: baz
+
+Invalid Types and Object Serialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default the YAML component will encode any "unsupported" type (i.e.
+resources and objects) as ``null``.
+
+Instead of encoding as ``null`` you can choose to throw an exception if an invalid
+type is encountered in either the dumper or parser as follows::
+
+    // throw an exception if a resource or object is encountered
+    Yaml::dump($data, 2, 4, true);
+
+    // throw an exception if an encoded object is found in the YAML string
+    Yaml::parse($yaml, true);
+
+However, you can activate object support using the next argument::
+
+    $object = new \stdClass();
+    $object->foo = 'bar';
+
+    $dumped = Yaml::dump($object, 2, 4, false, true);
+    // !!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
+
+    $parsed = Yaml::parse($dumped, false, true);
+    var_dump(is_object($parsed)); // true
+    echo $parsed->foo; // bar
+
+The YAML component uses PHP's ``serialize()`` method to generate a string
+representation of the object.
+
+.. caution::
+
+    Object serialization is specific to this implementation, other PHP YAML
+    parsers will likely not recognize the ``php/object`` tag and non-PHP
+    implementations certainly won't - use with discretion!
 
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
