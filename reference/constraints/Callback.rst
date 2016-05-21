@@ -31,6 +31,9 @@ can do anything, including creating and assigning validation errors.
 Configuration
 -------------
 
+.. versionadded:: 3.1
+    The ``$payload`` parameter was introduced in Symfony 3.1.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
