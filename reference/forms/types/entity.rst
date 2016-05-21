@@ -62,25 +62,29 @@ be listed inside the choice field::
     // ...
 
     $builder->add('users', EntityType::class, array(
+        // query choices from this entity
         'class' => 'AppBundle:User',
+
+        // use the User.username property as the visible option string
         'choice_label' => 'username',
+
+        // used to render a select box, check boxes or radios
+        // 'multiple' => true,
+        // 'expanded' => true,
     ));
 
-In this case, all ``User`` objects will be loaded from the database and
-rendered as either a ``select`` tag, a set or radio buttons or a series
-of checkboxes (this depends on the ``multiple`` and ``expanded`` values).
-Because of the `choice_label`_ option, the ``username`` property (usually by calling
-``getUsername()``) will be used as the text to display in the field.
+This will build a ``select`` drop-down containing *all* of the ``User`` objects
+in the database. To render radio buttons or checkboxes instead, change the
+`multiple`_ and `expanded`_ options.
 
-If you omit the ``choice_label`` option, then your entity *must* have a ``__toString()``
-method.
+.. _ref-form-entity-query-builder:
 
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to specify a custom query to use when fetching the entities
+If you want to create a custom query to use when fetching the entities
 (e.g. you only want to return some entities, or need to order them), use
-the ``query_builder`` option. The easiest way to use the option is as follows::
+the `query_builder`_ option::
 
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -92,6 +96,7 @@ the ``query_builder`` option. The easiest way to use the option is as follows::
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
+        'choice_label' => 'username',
     ));
 
 .. _reference-forms-entity-choices:
@@ -99,8 +104,9 @@ the ``query_builder`` option. The easiest way to use the option is as follows::
 Using Choices
 ~~~~~~~~~~~~~
 
-If you already have the exact collection of entities that you want included
-in the choice element, you can simply pass them via the ``choices`` key.
+If you already have the exact collection of entities that you want to include
+in the choice element, just pass them via the ``choices`` key.
+
 For example, if you have a ``$group`` variable (passed into your form perhaps
 as a form option) and ``getUsers`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
@@ -193,11 +199,12 @@ query_builder
 
 **type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
 
-If specified, this is used to query the subset of options (and their
-order) that should be used for the field. The value of this option can
-either be a ``QueryBuilder`` object or a Closure. If using a Closure,
-it should take a single argument, which is the ``EntityRepository`` of
-the entity and return an instance of ``QueryBuilder``.
+Allows you to create a custom query for your choices. See
+:ref:`ref-form-entity-query-builder` for an example.
+
+The value of this option can either be a ``QueryBuilder`` object or a Closure.
+When using a Closure, you will be passed the ``EntityRepository`` of the entity
+as the only argument and should return a ``QueryBuilder``.
 
 Overridden Options
 ------------------

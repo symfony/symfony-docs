@@ -60,6 +60,8 @@ which makes all of this quite easy::
         protected function tearDown()
         {
             parent::tearDown();
+
             $this->em->close();
+            $this->em = null; // avoid memory leaks
         }
     }
