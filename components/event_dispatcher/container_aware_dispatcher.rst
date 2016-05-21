@@ -68,6 +68,7 @@ and the second argument is the service's class name (which must implement
 The ``EventSubscriberInterface`` is exactly as you would expect::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\KernelEvents;
     // ...
 
     class StoreSubscriber implements EventSubscriberInterface
