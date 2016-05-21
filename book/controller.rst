@@ -758,9 +758,9 @@ headers and content that's sent back to the client::
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
-    // create a JSON-response with a 200 status code
-    $response = new Response(json_encode(array('name' => $name)));
-    $response->headers->set('Content-Type', 'application/json');
+    // create a CSS-response with a 200 status code
+    $response = new Response('<style> ... </style>');
+    $response->headers->set('Content-Type', 'text/css');
 
 There are also special classes to make certain kinds of responses easier:
 
@@ -773,6 +773,27 @@ There are also special classes to make certain kinds of responses easier:
 * For streamed responses, there is
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
+
+JSON Helper
+~~~~~~~~~~~
+
+Returning JSON contents is increasingly popular for API-based applications. For
+that reason, the base controller class defines a ``json()`` method which creates
+a ``JsonResponse`` and encodes the given contents automatically::
+
+    // ...
+    public function indexAction()
+    {
+        // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+        return $this->json(array('username' => 'jane.doe'));
+
+        // the shortcut defines three optional arguments
+        // return $this->json($data, $status = 200, $headers = array(), $context = array());
+    }
+
+If the :doc:`serializer service </cookbook/serializer>` is enabled in your
+application, contents passed to ``json()`` are encoded with it. Otherwise,
+the :phpfunction:`json_encode()` function is used.
 
 .. seealso::
 
