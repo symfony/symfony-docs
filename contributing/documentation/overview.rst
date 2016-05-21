@@ -26,6 +26,8 @@ Before Your First Contribution
   :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
   and all your contributions will implicitly adhere to that license.
 
+.. _minor-changes-e-g-typos
+
 Fast Online Contributions
 -------------------------
 
@@ -43,7 +45,7 @@ case it is your first contribution, also your fork. A new branch will be created
 automatically and you can then create the Pull Request.
 
 If your contribution is large or if you prefer to work on your own computer,
-keep reading this guide to learn an alternative way to send pull requests to
+keep reading this guide to learn an alternative way to send pull requests to the
 Symfony Documentation.
 
 Your First Documentation Contribution
