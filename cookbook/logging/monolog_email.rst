@@ -25,9 +25,9 @@ it is broken down.
                     # action_level: error
                     # excluded_404s:
                     #     - ^/
-                    handler:      buffered
-                buffered:
-                    type:    buffer
+                    handler:      deduplicated
+                deduplicated:
+                    type:    deduplication
                     handler: swift
                 swift:
                     type:       swift_mailer
@@ -35,8 +35,10 @@ it is broken down.
                     to_email:   'error@example.com'
                     # or list of recipients
                     # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
-                    subject:    An Error Occurred!
+                    subject:    'An Error Occurred! %%message%%'
                     level:      debug
+                    formatter:  monolog.formatter.html
+                    content_type: text/html
 
     .. code-block:: xml
 
@@ -49,8 +51,9 @@ it is broken down.
                                 http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
-                <!--
-                To also log 400 level errors (but not 404's):
+                <!-- 
+                500 errors are logged at the critical level,
+                to also log 400 level errors (but not 404's):
                 action-level="error"
                 And add this child inside this monolog:handler
                 <monolog:excluded-404>^/</monolog:excluded-404>
@@ -59,23 +62,25 @@ it is broken down.
                     name="mail"
                     type="fingers_crossed"
                     action-level="critical"
-                    handler="buffered"
+                    handler="deduplicated"
                 />
                 <monolog:handler
-                    name="buffered"
-                    type="buffer"
+                    name="deduplicated"
+                    type="deduplication"
                     handler="swift"
-                />
+                >
                 <monolog:handler
                     name="swift"
                     type="swift_mailer"
                     from-email="error@example.com"
-                    subject="An Error Occurred!"
-                    level="debug">
+                    subject="An Error Occurred! %%message%%"
+                    level="debug"
+                    formatter="monolog.formatter.html"
+                    content-type="text/html">
 
                     <monolog:to-email>error@example.com</monolog:to-email>
 
-                    <!-- or multiple to-email elements -->
+                    <!-- or list of recipients -->
                     <!--
                     <monolog:to-email>dev1@example.com</monolog:to-email>
                     <monolog:to-email>dev2@example.com</monolog:to-email>
@@ -92,26 +97,29 @@ it is broken down.
             'handlers' => array(
                 'mail' => array(
                     'type'         => 'fingers_crossed',
+                    // 500 errors are logged at the critical level
                     'action_level' => 'critical',
                     // to also log 400 level errors (but not 404's):
                     // 'action_level' => 'error',
                     // 'excluded_404s' => array(
                     //     '^/',
                     // ),
-                    'handler'      => 'buffered',
+                    'handler'      => 'deduplicated',
                 ),
-                'buffered' => array(
-                    'type'    => 'buffer',
-                    'handler' => 'swift',
+                'deduplicated' => array(
+                    'type'    => 'deduplication',
+                    'handler' => 'swift'
                 ),
                 'swift' => array(
-                    'type'       => 'swift_mailer',
-                    'from_email' => 'error@example.com',
-                    'to_email'   => 'error@example.com',
+                    'type'         => 'swift_mailer',
+                    'from_email'   => 'error@example.com',
+                    'to_email'     => 'error@example.com',
                     // or a list of recipients
                     // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
-                    'subject'    => 'An Error Occurred!',
-                    'level'      => 'debug',
+                    'subject'      => 'An Error Occurred! %%message%%',
+                    'level'        => 'debug',
+                    'formatter'    => 'monolog.formatter.html'
+                    'content_type' => 'text/html'
                 ),
             ),
         ));
