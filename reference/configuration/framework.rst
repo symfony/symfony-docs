@@ -82,6 +82,12 @@ Configuration
     * :ref:`cache <reference-templating-cache>`
     * `engines`_
     * `loaders`_
+* `assets`_
+    * `base_path`_
+    * `base_urls`_
+    * `packages`_
+    * `version`_
+    * `version_format`_
 * `translator`_
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
@@ -1014,8 +1020,7 @@ Each package can configure the following options:
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
 
-.. _reference-framework-assets-version:
-.. _ref-framework-assets-version:
+.. _reference-templating-cache:
 
 version
 .......
@@ -1103,32 +1108,34 @@ This specifies a :phpfunction:`sprintf` pattern that will be used with the
 adds the asset's version as a query string. For example, if
 ``version_format`` is set to ``%%s?version=%%s`` and ``version``
 is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
+=======
+cache
+.....
+
+**type**: ``string``
+
+The path to the cache directory for templates. When this is not set, caching
+is disabled.
 
 .. note::
 
-    All percentage signs (``%``) in the format string must be doubled to
-    escape the character. Without escaping, values might inadvertently be
-    interpreted as :ref:`book-service-container-parameters`.
+    When using Twig templating, the caching is already handled by the
+    TwigBundle and doesn't need to be enabled for the FrameworkBundle.
 
-.. tip::
+engines
+.......
 
     Some CDN's do not support cache-busting via query strings, so injecting
     the version into the actual file path is necessary. Thankfully,
     ``version_format`` is not limited to producing versioned query
     strings.
 
-    The pattern receives the asset's original path and version as its first
-    and second parameters, respectively. Since the asset's path is one
-    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
-    however, you can prefix the asset's path using a pattern of
-    ``version-%%2$s/%%1$s``, which would result in the path
-    ``version-5/images/logo.png``.
+**type**: ``string[]`` / ``string`` **required**
 
-    URL rewrite rules could then be used to disregard the version prefix
-    before serving the asset. Alternatively, you could copy assets to the
-    appropriate version path as part of your deployment process and forgot
-    any URL rewriting. The latter option is useful if you would like older
-    asset versions to remain accessible at their original URL.
+The Templating Engine to use. This can either be a string (when only one
+engine is configured) or an array of engines.
+
+At least one engine is required.
 
 templating
 ~~~~~~~~~~
@@ -1222,29 +1229,6 @@ Assume you have custom global form themes in
 
 .. _reference-templating-cache:
 
-cache
-.....
-
-**type**: ``string``
-
-The path to the cache directory for templates. When this is not set, caching
-is disabled.
-
-.. note::
-
-    When using Twig templating, the caching is already handled by the
-    TwigBundle and doesn't need to be enabled for the FrameworkBundle.
-
-engines
-.......
-
-**type**: ``string[]`` / ``string`` **required**
-
-The Templating Engine to use. This can either be a string (when only one
-engine is configured) or an array of engines.
-
-At least one engine is required.
-
 loaders
 .......
 
@@ -1254,6 +1238,286 @@ An array (or a string when configuring just one loader) of service ids for
 templating loaders. Templating loaders are used to find and load templates
 from a resource (e.g. a filesystem or database). Templating loaders must
 implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
+
+assets
+~~~~~~
+
+.. versionadded:: 2.7
+    The ``assets`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, the ``templating`` option provided equivalent configuration options.
+
+
+base_path
+.........
+
+**default**: ``''`` (empty string)
+
+.. versionadded:: 2.7
+    The ``base_path`` option was introduced in Symfony 2.7.
+
+The path to prepend when generating the asset's relative URL. For example, if
+the application defines the following configuration:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    framework:
+        assets:
+            base_path: static/images/
+
+The ``asset('logos/default.png')`` function will no longer generate the
+``/logos/default.png`` relative URL but ``/static/images/logos/default.png``.
+
+The value of the ``base_path`` option is appended after the global base path
+defined in the ``router.request_context.base_url`` option (if any).
+
+.. _reference-assets-base-urls:
+.. _reference-templating-base-urls:
+
+base_urls
+.........
+
+**default**: ``[]`` (empty array)
+
+.. versionadded:: 2.7
+    The ``base_urls`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, the option was called ``assets_base_urls`` and it was defined under
+    the ``templating`` key.
+
+This option allows you to define the base URLs used to generate the asset's paths.
+A string value may be provided instead of a single-element array. If multiple base
+URLs are provided, Symfony selects one from the collection each time it generates
+an asset's path.
+
+The selection of the base URL is request context-sensitive. If the rendered page
+is secure, assets are only served via ``https://`` or protocol-relative (``//``)
+URLs. If the page is non-secure, all provided URLs will be considered (even secure
+``htpps://`` URLs).
+
+If your ``base_urls`` option is the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                base_urls:
+                    - 'http://static.example.com/'
+                    - '//assets.example.com/'
+                    - 'https://contents.example.com'
+
+Assets loaded in non-secure pages will use any of the three URLs. However, assets
+loaded in secure pages will only use the last two URLs defined.
+
+packages
+........
+
+.. versionadded:: 2.7
+    The ``packages`` option has been moved to ``assets`` in Symfony 2.7. Prior to
+    Symfony 2.7, the option was defined under the ``templating`` section.
+
+You can group assets into packages, to specify different base URLs for them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                packages:
+                    avatars:
+                        base_urls: 'http://static_cdn.example.com/avatars'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+
+                <framework:assets>
+
+                    <framework:package
+                        name="avatars"
+                        base-url="http://static_cdn.example.com/avatars">
+
+                </framework:assets>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'packages' => array(
+                    'avatars' => array(
+                        'base_urls' => 'http://static_cdn.example.com/avatars',
+                    ),
+                ),
+            ),
+        ));
+
+Now you can use the ``avatars`` package in your templates:
+
+.. configuration-block:: php
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('...', 'avatars') }}">
+
+    .. code-block:: html+php
+
+        <img src="<?php echo $view['assets']->getUrl('...', 'avatars') ?>">
+
+Each package can configure the following options:
+
+* :ref:`base_urls <reference-assets-base-urls>`
+* :ref:`version <reference-assets-version>`
+* :ref:`version_format <reference-assets-version-format>`
+
+.. _reference-framework-assets-version:
+.. _reference-assets-version:
+
+version
+.......
+
+**type**: ``string``
+
+.. versionadded:: 2.7
+    The ``base_urls`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, the option was called ``assets_base_urls`` and it was defined under
+    the ``templating`` key.
+
+
+This option is used to *bust* the cache on assets by globally adding a query
+parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
+applies only to assets rendered via the Twig ``asset`` function (or PHP
+equivalent) as well as assets rendered with Assetic.
+
+For example, suppose you have the following:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
+
+    .. code-block:: php
+
+        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
+
+By default, this will render a path to your image such as ``/images/logo.png``.
+Now, activate the ``version`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                version: v2
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:assets>
+                <!-- ... -->
+                <framework:version>v2</framework:version>
+            </framework:assets>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'version' => 'v2',
+            ),
+        ));
+
+Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
+this feature, you **must** manually increment the ``version`` value before each
+deployment so that the query parameters change.
+
+It's also possible to set the version value on an asset-by-asset basis (instead
+of using the global version - e.g. ``v2`` - set here). See
+:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
+
+You can also control how the query string works via the `version_format`_
+option.
+
+.. tip::
+
+    As with all settings, you can use a parameter as value for the
+    ``assets_version``. This makes it easier to increment the cache on each
+    deployment.
+
+.. _reference-templating-version-format:
+.. _reference-assets-version-format:
+
+version_format
+..............
+
+**type**: ``string`` **default**: ``%%s?%%s``
+
+.. versionadded:: 2.7
+    The ``version_format`` option was introduced in Symfony 2.7. Prior to Symfony
+    2.7, the option was called ``assets_version_format`` and it was defined under
+    the ``templating`` key.
+
+This specifies a :phpfunction:`sprintf` pattern that will be used with the `version`_
+option to construct an asset's path. By default, the pattern adds the asset's
+version as a query string. For example, if ``version_format`` is set to
+``%%s?version=%%s`` and ``version`` is set to ``5``, the asset's path
+would be ``/images/logo.png?version=5``.
+
+.. note::
+
+    All percentage signs (``%``) in the format string must be doubled to
+    escape the character. Without escaping, values might inadvertently be
+    interpreted as :ref:`book-service-container-parameters`.
+
+.. tip::
+
+    Some CDN's do not support cache-busting via query strings, so injecting
+    the version into the actual file path is necessary. Thankfully,
+    ``version_format`` is not limited to producing versioned query strings.
+
+    The pattern receives the asset's original path and version as its first
+    and second parameters, respectively. Since the asset's path is one
+    parameter, you cannot modify it in-place (e.g. ``/images/logo-v5.png``);
+    however, you can prefix the asset's path using a pattern of
+    ``version-%%2$s/%%1$s``, which would result in the path
+    ``version-5/images/logo.png``.
+
+    URL rewrite rules could then be used to disregard the version prefix
+    before serving the asset. Alternatively, you could copy assets to the
+    appropriate version path as part of your deployment process and forgot
+    any URL rewriting. The latter option is useful if you would like older
+    asset versions to remain accessible at their original URL.
 
 translator
 ~~~~~~~~~~
@@ -1594,6 +1858,20 @@ Full Default Configuration
                     # Example:
                     - twig
                 loaders:              []
+
+            # assets configuration
+            assets:
+                base_path:       ~
+                base_urls:       []
+                version:         ~
+                version_format:  "%%s?%%s"
+                packages:
+
+                    # Prototype
+                    name:
+                        version:              ~
+                        version_format:       "%%s?%%s"
+                        base_urls:            []
 
             # translator configuration
             translator:
