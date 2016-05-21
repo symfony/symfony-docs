@@ -128,7 +128,7 @@ Creating a Failure Login Handler
 --------------------------------
 
 The steps to follow are identical to the ones explained in the previous section.
-First, define your own logic in a class that implements
+First, define your own logic in a class that implements the
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`
 and create a new service for it. Then, add the ``failure_handler`` configuration
 option in your firewall:
