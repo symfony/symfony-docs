@@ -791,6 +791,10 @@ a ``JsonResponse`` and encodes the given contents automatically::
         // return $this->json($data, $status = 200, $headers = array(), $context = array());
     }
 
+If the :doc:`serializer service </cookbook/serializer>`_ is enabled in your
+application, contents passed to ``json()`` are encoded with it. Otherwise,
+the :phpfunction:`json_encode()` function is used.
+
 .. seealso::
 
     Now that you know the basics you can continue your research on Symfony
