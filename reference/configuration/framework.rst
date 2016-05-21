@@ -1133,7 +1133,7 @@ engines
     the version into the actual file path is necessary. Thankfully,
     ``version_format`` is not limited to producing versioned query
     strings.
-=======
+
 **type**: ``string[]`` / ``string`` **required**
 
 The Templating Engine to use. This can either be a string (when only one
