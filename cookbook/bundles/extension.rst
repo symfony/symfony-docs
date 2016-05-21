@@ -129,14 +129,13 @@ read more about it, see the ":doc:`/cookbook/bundles/configuration`" article.
 Adding Classes to Compile
 -------------------------
 
-In order to make applications run as fast as possible on production environment,
-Symfony creates a big ``classes.php`` file in the cache directory. This file
-aggregates the contents of the PHP classes that are used in every request,
-reducing the I/O operations related to those classes.
+Symfony creates a big ``classes.php`` file in the cache directory to aggregate
+the contents of the PHP classes that are used in every request. This reduces the
+I/O operations and increases the application performance.
 
-Your own bundles can add classes into this file thanks to the ``addClassesToCompile()``
-method. Define the classes to compile as an array of their fully qualified class
-names::
+Your bundles can also add their own classes into this file thanks to the
+``addClassesToCompile()`` method. Define the classes to compile as an array of
+their fully qualified class names::
 
     // ...
     public function load(array $configs, ContainerBuilder $container)
@@ -152,13 +151,10 @@ names::
 
 .. note::
 
-    If some class extends from other classes, all its parents are included
-    automatically in the list of classes to compile.
+    If some class extends from other classes, all its parents are automatically
+    included in the list of classes to compile.
 
-After adding to compile all the classes commonly used by your bundle, you can
-expect a minor performance improvement.
-
-Beware that this technique can't be used in some cases:
+Beware that this technique **can't be used in some cases**:
 
 * When classes contain annotations, such as controllers with ``@Route``
   annotations and entities with ``@ORM`` or ``@Assert`` annotations, because
