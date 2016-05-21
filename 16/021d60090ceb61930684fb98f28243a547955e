@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-11T08:33:39Z
+
+@mcfedr thanks for sending this proposal. You are obviously right, but do you think we really need this addition to the docs? In this same article, in the *Installation* section, we already explained that you need to install `ocramius/proxy-manager`, right?
+
+![lazy_services_installation](https://cloud.githubusercontent.com/assets/73419/12229273/4897b0b6-b846-11e5-9a7a-4d6e2c4fc32c.png)
+
+---------------------------------------------------------------------------
+
+by mcfedr at 2016-01-11T08:42:08Z
+
+@javiereguiluz Interesting, I for one hadn't even looked on that page, I think as the note about adding `symfony/proxy-manager-bridge` is repeated here, its probably worth repeating `ocramius/proxy-manager`. It took me way to long, searching though the code of `proxy-manager-bridge` and my `vendor` folder to work out why my lazy services were not lazy.
+
+I wouldnt look at *Installation* page for dependency injection as its installed in full-stack Symfony by default.
+
+---------------------------------------------------------------------------
+
+by mcfedr at 2016-01-11T08:45:19Z
+
+Looking again, maybe I was just being a bit short sighted...
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-01-11T08:46:07Z
+
+OK. What if we reword a bit the current phrase instead of adding a new one. Example:
+
+```
+If you don't install the `ProxyManager bridge`_ and the `ocramius/proxy-manager`_,
+the container will just skip over the ``lazy`` flag and simply instantiate the service
+as it would normally do.
+
+[...]
+
+.. _`ocramius/proxy-manager`: https://github.com/Ocramius/ProxyManager
+```
+
+---------------------------------------------------------------------------
+
+by mcfedr at 2016-01-11T08:47:10Z
+
+Sounds good
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2016-03-06T11:48:41Z
+
+This would be really helpful!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-07T14:18:09Z
+
+:+1:
