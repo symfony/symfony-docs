@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T11:51:04Z
+
+I don't think we should include the complete setup. Instead use `// ...` to indicate something is missing (maybe add `// ... (see the previous CSRF Protection section for more information)`).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T12:01:50Z
+
+:+1: Thanks!
