@@ -179,10 +179,14 @@ that help you render the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
-    use Symfony\Component\Form\Forms;
     use Symfony\Bridge\Twig\Extension\FormExtension;
     use Symfony\Bridge\Twig\Form\TwigRenderer;
     use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\Security\Csrf\CsrfTokenManager;
+    use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
+    use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
     // the Twig file that holds all the default markup for rendering forms
     // this file comes with TwigBridge
@@ -202,9 +206,17 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
+
+    // create a Session object from the HttpFoundation component
+    $session = new Session();
+
+    $csrfGenerator = new UriSafeTokenGenerator();
+    $csrfStorage = new SessionTokenStorage($session);
+    $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
+
     // add the FormExtension to Twig
     $twig->addExtension(
-        new FormExtension(new TwigRenderer($formEngine, $csrfProvider))
+        new FormExtension(new TwigRenderer($formEngine, $csrfManager))
     );
 
     // create your form factory as normal
