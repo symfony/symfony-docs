@@ -148,6 +148,20 @@ error if something goes wrong by adding the filename to the message.
 
 .. _components-yaml-dump:
 
+Objects for Mappings
+....................
+
+.. versionadded:: 2.7
+    Support for parsing mappings as objects was introduced in Symfony 2.6.
+
+Yaml :ref:`mappings <yaml-format-collections>` are basically associative
+arrays. You can instruct the parser to return mappings as objects (i.e.
+``\stdClass`` instances) by setting the fourth argument to ``true``::
+
+    $object = Yaml::parse('{"foo": "bar"}', false, false, true);
+    echo get_class($object); // stdClass
+    echo $object->foo; // bar
+
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
