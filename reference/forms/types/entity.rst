@@ -192,14 +192,21 @@ instead of the ``default`` entity manager.
 query_builder
 ~~~~~~~~~~~~~
 
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
+**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure **default**: ``null``
 
 Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
-The value of this option can either be a ``QueryBuilder`` object or a Closure.
-When using a Closure, you will be passed the ``EntityRepository`` of the entity
-as the only argument and should return a ``QueryBuilder``.
+The value of this option can either be a ``QueryBuilder`` object, a Closure or
+``null`` (which will load all entities). When using a Closure, you will be
+passed the ``EntityRepository`` of the entity as the only argument and should
+return a ``QueryBuilder``.
+
+If you'd like to display an empty list of entries, you can return ``null`` in
+the Closure.
+
+.. versionadded:: 2.8
+    Returning ``null`` in the Closure was introduced in Symfony 2.8.
 
 Overridden Options
 ------------------
