@@ -470,8 +470,8 @@ Validation is a very powerful feature of Symfony and has its own
 
 .. tip::
 
-    Read :doc:`/cookbook/validation/validation_groups` article to learn how to
-    select dynamically the constraints to apply for a given form (e.g. to
+    Read the :doc:`/cookbook/validation/validation_groups` article to learn how
+    to dynamically select the constraints to apply for a given form (e.g. to
     validate in a different way users who sign up and users who just updated
     their profile) and how to define the order in which constraints should be
     validated.
