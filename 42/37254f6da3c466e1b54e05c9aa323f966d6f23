@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-21T08:58:54Z
+
+@javiereguiluz In #6453 you said that the explanation comes too early. But here it is even more to the top of the document. Is that intended?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-21T09:20:25Z
+
+@xabbuh you are right. I got confused 😕  The problem is that I couldn't find a place where all the base controller shortcuts are explained. I'll let you decide what to do with this and the other PR.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-05T22:31:16Z
+
+:-1: on this place. https://github.com/symfony/symfony-docs/pull/6453 placed it next to the other sections about Controller response shortcut methods, which seems a better position to me.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T09:25:39Z
+
+OK, here it's a new proposal: I've moved the explanation to the same location as #6453 and simplified everything.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T10:10:22Z
+
+I think we have to document the encoding implementation a bit. This should mostly linking to the Serializer docs and describe that if `framework.serializer` is not enabled in `config.yml`, it'll simply use `json_encode()`.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T14:09:34Z
+
+@WouterJ I've added a note about how are contents encoded. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T14:33:42Z
+
+:+1:
