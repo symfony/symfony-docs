@@ -46,7 +46,8 @@ Suppose you have a Task form with a labels ``text`` type::
         // ...
     }
 
-Internally we want to handle the ``labels`` as array, but to have the form simple we wanna allow the User to edit them as a string.
+Internally the ``labels`` are stored as an array, but they are displayed
+to the user as a simple string, to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``labels``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
