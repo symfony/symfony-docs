@@ -208,8 +208,8 @@ the entity as the only argument and should return a ``QueryBuilder``. If you'd
 like to display an empty list of entries, you can return ``null`` in the
 Closure.
 
-.. versionadded:: 3.1
-    Returning ``null`` in the Closure was introduced in Symfony 3.1.
+.. versionadded:: 2.8
+    Returning ``null`` in the Closure was introduced in Symfony 2.8.
 
 Overridden Options
 ------------------
