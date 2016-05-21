@@ -133,9 +133,6 @@ related to deprecations.
 Time-sensitive Tests
 --------------------
 
-.. versionadded:: 2.8
-    Support for clock mocking was introduced in Symfony 2.8.
-
 Use Case
 ~~~~~~~~
 

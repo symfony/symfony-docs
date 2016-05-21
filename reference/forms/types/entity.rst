@@ -205,9 +205,6 @@ return a ``QueryBuilder``.
 If you'd like to display an empty list of entries, you can return ``null`` in
 the Closure.
 
-.. versionadded:: 2.8
-    Returning ``null`` in the Closure was introduced in Symfony 2.8.
-
 Overridden Options
 ------------------
 

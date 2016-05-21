@@ -345,9 +345,6 @@ information in :ref:`book-templating-pages`.
 absolute_url
 ~~~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``absolute_url()`` function was introduced in Symfony 2.7.
-
 .. code-block:: jinja
 
     {{ absolute_url(path) }}
@@ -369,9 +366,6 @@ you're on the following page in your app:
 
 relative_path
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``relative_path()`` function was introduced in Symfony 2.7.
 
 .. code-block:: jinja
 
