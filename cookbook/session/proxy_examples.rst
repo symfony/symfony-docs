@@ -24,9 +24,16 @@ Then, define a new service related to the custom session handler:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.session_handler" class="AppBundle\Session\CustomSessionHandler" />
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.session_handler" class="AppBundle\Session\CustomSessionHandler" />
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -49,9 +56,15 @@ Symfony to use your own session handler instead of the default one:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:session handler-id="app.session_handler" ... />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <framework:config>
+                <framework:session handler-id="app.session_handler" ... />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
