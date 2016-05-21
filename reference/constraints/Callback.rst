@@ -46,7 +46,7 @@ Configuration
             /**
              * @Assert\Callback
              */
-            public function validate(ExecutionContextInterface $context)
+            public function validate(ExecutionContextInterface $context, $payload)
             {
                 // ...
             }
@@ -103,7 +103,7 @@ field those errors should be attributed::
         // ...
         private $firstName;
 
-        public function validate(ExecutionContextInterface $context)
+        public function validate(ExecutionContextInterface $context, $payload)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array(/* ... */);
@@ -123,7 +123,7 @@ Static Callbacks
 You can also use the constraint with static methods. Since static methods don't
 have access to the object instance, they receive the object as the first argument::
 
-    public static function validate($object, ExecutionContextInterface $context)
+    public static function validate($object, ExecutionContextInterface $context, $payload)
     {
         // somehow you have an array of "fake names"
         $fakeNames = array(/* ... */);
@@ -151,7 +151,7 @@ Suppose your validation function is ``Vendor\Package\Validator::validate()``::
 
     class Validator
     {
-        public static function validate($object, ExecutionContextInterface $context)
+        public static function validate($object, ExecutionContextInterface $context, $payload)
         {
             // ...
         }
@@ -240,7 +240,7 @@ constructor of the Callback constraint::
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $callback = function ($object, ExecutionContextInterface $context) {
+            $callback = function ($object, ExecutionContextInterface $context, $payload) {
                 // ...
             };
 
