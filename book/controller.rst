@@ -762,12 +762,6 @@ headers and content that's sent back to the client::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-.. seealso::
-
-    Now that you know the basics you can continue your research on Symfony
-    ``Request`` and ``Response`` object in the
-    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
-
 There are also special classes to make certain kinds of responses easier:
 
 * For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
@@ -791,14 +785,17 @@ a ``JsonResponse()`` and encodes the given contents automatically::
     public function indexAction()
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
-        $data = array('username' => 'jane.doe');
-        return $this->json($data);
+        return $this->json(array('username' => 'jane.doe'));
+
+        // the shortcut defines three optional arguments
+        // return $this->json($data, $status = 200, $headers = array(), $context = array());
     }
 
-The only required argument is the data to be sent, but ``json()`` defines three
-more optional arguments::
+.. seealso::
 
-    $this->json($data, $status = 200, $headers = array(), $context = array());
+    Now that you know the basics you can continue your research on Symfony
+    ``Request`` and ``Response`` object in the
+    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
 Creating Static Pages
 ---------------------
