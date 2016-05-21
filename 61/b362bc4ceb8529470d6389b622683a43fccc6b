@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T14:44:18Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T14:46:16Z
+
+You could also update the text to something like this:
+
+```rst
+The value of this option can either be a ``QueryBuilder`` object, a Closure or ``null``.
+```
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-05-21T14:46:43Z
+
+Ok then #6594 will need a rebase.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-05-21T14:48:36Z
+
+Fixed
