@@ -17,9 +17,9 @@ Install Composer on Linux and Mac OS X
 #. Run the installer as described in `the official Composer documentation`_;
 #. Execute the following command to move the ``composer.phar`` to a directory that is in your path:
 
-    .. code-block:: bash
-    
-        $ sudo mv composer.phar /usr/local/bin/composer
+   .. code-block:: bash
+
+       $ sudo mv composer.phar /usr/local/bin/composer
 
 Install Composer on Windows
 ---------------------------
