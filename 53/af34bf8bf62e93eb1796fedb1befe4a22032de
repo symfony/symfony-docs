@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by stof at 2016-05-06T18:09:38Z
+
+the commit you linked does not remove trusted proxies at all. It removed their usage in a single place which was not working properly
+
+---------------------------------------------------------------------------
+
+by rawkode at 2016-05-06T18:34:10Z
+
+Sorry, @stof - silly assumption on my part. I've removed all the daft removals.
+
+TIL more about Symfony and the FragmentListener 👍
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T09:03:34Z
+
+👍
