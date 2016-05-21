@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-29T09:45:51Z
+
+@c33s thanks for this proposal. The `cmder` project looks really nice. Sadly I don't use Windows, so I cannot test it myself. Let's ask the opinion about this to some Symfony experts who are Windows users: @WouterJ @iltar  Thanks!
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-03-29T10:02:10Z
+
+@javiereguiluz I have never used it before (only gitbash and powershell). I'll give it a shot when I have some time at home as I use linux at work.
+
+---------------------------------------------------------------------------
+
+by celdia at 2016-05-21T09:22:25Z
+
+I'm linux user. If not, I'll test it in this Fourth Symfony Docs Hack Day.
