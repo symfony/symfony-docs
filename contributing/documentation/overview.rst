@@ -1,11 +1,12 @@
 Contributing to the Documentation
 =================================
 
-One of the essential principles of the Symfony project is that **documentation is
-as important as code**. That's why a great amount of resources are dedicated to
-documenting new features and to keeping the rest of the documentation up-to-date.
+One of the essential principles of the Symfony project is that **documentation
+is as important as code**. That's why a great amount of resources are dedicated
+to documenting new features and to keeping the rest of the documentation
+up-to-date.
 
-More than 700 developers all around the world have contributed to Symfony's
+More than 1,000 developers all around the world have contributed to Symfony's
 documentation and we are glad that you are considering joining this big family.
 This guide will explain everything you need to contribute to the Symfony
 documentation.
@@ -15,14 +16,53 @@ Before Your First Contribution
 
 **Before contributing**, you should consider the following:
 
-* Symfony documentation is written using reStructuredText_ markup language.
-  If you are not familiar with this format, read :doc:`this article </contributing/documentation/format>`
-  for a quick overview of its basic features.
-* Symfony documentation is hosted on GitHub_. You'll need a GitHub user account
-  to contribute to the documentation.
+* Symfony documentation is written using `reStructuredText`_ markup language.
+  If you are not familiar with this format, read
+  :doc:`this article </contributing/documentation/format>` for a quick overview
+  of its basic features.
+* Symfony documentation is hosted on `GitHub`_. You'll need a free GitHub user
+  account to contribute to the documentation.
 * Symfony documentation is published under a
   :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
   and all your contributions will implicitly adhere to that license.
+
+.. _minor-changes-e-g-typos:
+
+Fast Online Contributions
+-------------------------
+
+If you're making a relatively small change - like fixing a typo or rewording
+something - the easiest way to contribute is directly on GitHub! You can do this
+while you're reading the Symfony documentation.
+
+**Step 1.** Click on the **edit this page** button on the upper right corner
+and you'll be redirected to GitHub:
+
+.. image:: /images/contributing/docs-github-edit-page.png
+
+**Step 2.** Edit the contents, describe your changes and click on the
+**Propose file change** button.
+
+**Step 3.** GitHub will now create a branch and a commit for your changes
+(forking the repository first if this is your first contribution) and it will
+also display a preview of your changes:
+
+.. image:: /images/contributing/docs-github-create-pr.png
+
+If everything is correct, click on the **Create pull request** button.
+
+**Step 4.** GitHub will display a new page where you can do some last-minute
+changes to your pull request before creating it. For simple contributions, you
+can safely ignore these options and just click on the **Create pull request**
+button again.
+
+**Congratulations!** You just created a pull request to the official Symfony
+documentation! The community will now review your pull request and (possibly)
+suggest tweaks.
+
+If your contribution is large or if you prefer to work on your own computer,
+keep reading this guide to learn an alternative way to send pull requests to the
+Symfony Documentation.
 
 Your First Documentation Contribution
 -------------------------------------
@@ -35,47 +75,77 @@ Let's imagine that you want to improve the installation chapter of the Symfony
 book. In order to make your changes, follow these steps:
 
 **Step 1.** Go to the official Symfony documentation repository located at
-`github.com/symfony/symfony-docs`_ and `fork the repository`_ to your personal
-account. This is only needed the first time you contribute to Symfony.
+`github.com/symfony/symfony-docs`_ and click on the **Fork** button to `fork the
+repository`_ to your personal account. This is only needed the first time you
+contribute to Symfony.
 
-**Step 2.** **Clone** the forked repository to your local machine (this
-example uses the ``projects/symfony-docs/`` directory to store the documentation;
-change this value accordingly):
+**Step 2.** **Clone** the forked repository to your local machine (this example
+uses the ``projects/symfony-docs/`` directory to store the documentation; change
+this value accordingly):
 
 .. code-block:: bash
 
     $ cd projects/
     $ git clone git://github.com/<YOUR GITHUB USERNAME>/symfony-docs.git
 
-**Step 3.** Switch to the **oldest maintained branch** before making any change.
-Nowadays this is the ``2.3`` branch:
+**Step 3.** Add the original Symfony docs repository as a "Git remote" executing
+this command:
 
 .. code-block:: bash
 
     $ cd symfony-docs/
-    $ git checkout 2.3
+    $ git remote add upstream https://github.com/symfony/symfony-docs.git
 
-If you are instead documenting a new feature, switch to the first Symfony
-version which included it: ``2.5``, ``2.6``, etc.
-
-**Step 4.** Create a dedicated **new branch** for your changes. This greatly
-simplifies the work of reviewing and merging your changes. Use a short and
-memorable name for the new branch:
+If things went right, you'll see the following when listing the "remotes" of
+your project:
 
 .. code-block:: bash
 
-    $ git checkout -b improve_install_chapter
+    $ git remote -v
+    origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (fetch)
+    origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (push)
+    upstream  https://github.com/symfony/symfony-docs.git (fetch)
+    upstream  https://github.com/symfony/symfony-docs.git (push)
+
+The purpose of this step is to allow you work simultaneously on the official
+Symfony repository and on your own fork. You'll see this in action in a moment.
+
+**Step 4.** Create a dedicated **new branch** for your changes. Use a short and
+memorable name for the new branch (if you are fixing a reported issue, use
+``fix_XXX`` as the branch name, where ``XXX`` is the number of the issue):
+
+.. code-block:: bash
+
+    $ git checkout -b improve_install_chapter upstream/2.3
+
+In this example, the name of the branch is ``improve_install_chapter`` and the
+``upstream/2.3`` value tells Git to create this branch based on the ``2.3``
+branch of the ``upstream`` remote, which is the original Symfony Docs repository.
+
+Fixes should always be based on the **oldest maintained branch** which contains
+the error. Nowadays this is the ``2.3`` branch. If you are instead documenting a
+new feature, switch to the first Symfony version that included it, e.g.
+``upstream/3.1``. Not sure? That's ok! Just use the ``upstream/master`` branch.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
-even remove any content, but make sure that you comply with the
-:doc:`/contributing/documentation/standards`.
+even remove any content and do your best to comply with the
+:doc:`/contributing/documentation/standards`. Then commit your changes!
+
+.. code-block:: bash
+
+    # if the modified content existed before
+    $ git add book/installation.rst
+    $ git commit book/installation.rst
 
 **Step 6.** **Push** the changes to your forked repository:
 
 .. code-block:: bash
 
-    $ git commit book/installation.rst
     $ git push origin improve_install_chapter
+
+The ``origin`` value is the name of the Git remote that corresponds to your
+forked repository and ``improve_install_chapter`` is the name of the branch you
+created previously.
 
 **Step 7.** Everything is now ready to initiate a **pull request**. Go to your
 forked repository at ``https//github.com/<YOUR GITHUB USERNAME>/symfony-docs``
@@ -97,37 +167,17 @@ which is the name of the branch you created and where you made your changes.
 .. _pull-request-format:
 
 **Step 8.** The last step is to prepare the **description** of the pull request.
-To ensure that your work is reviewed quickly, please add the following table
-at the beginning of your pull request description:
+A short phrase or paragraph describing the proposed changes is enough to ensure
+that your contribution can be reviewed.
 
-.. code-block:: text
+**Step 9.** Now that you've successfully submitted your first contribution to
+the Symfony documentation, **go and celebrate!**  The documentation managers
+will carefully review your work in short time and they will let you know about
+any required change.
 
-    | Q             | A
-    | ------------- | ---
-    | Doc fix?      | [yes|no]
-    | New docs?     | [yes|no] (PR # on symfony/symfony if applicable)
-    | Applies to    | [Symfony version numbers this applies to]
-    | Fixed tickets | [comma separated list of tickets fixed by the PR]
-
-In this example, this table would look as follows:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Doc fix?      | yes
-    | New docs?     | no
-    | Applies to    | all
-    | Fixed tickets | #10575
-
-**Step 9.** Now that you've successfully submitted your first contribution to the
-Symfony documentation, **go and celebrate!**  The documentation managers will
-carefully review your work in short time and they will let you know about any
-required change.
-
-In case you need to add or modify anything, there is no need to create a new
-pull request. Just make sure that you are on the correct branch, make your
-changes and push them:
+In case you are asked to add or modify something, don't create a new pull
+request. Instead, make sure that you are on the correct branch, make your
+changes and push the new changes:
 
 .. code-block:: bash
 
@@ -138,92 +188,27 @@ changes and push them:
 
     $ git push
 
-**Step 10.** After your pull request is eventually accepted and merged in the Symfony
-documentation, you will be included in the `Symfony Documentation Contributors`_
-list. Moreover, if you happen to have a SensioLabsConnect_ profile, you will
-get a cool `Symfony Documentation Badge`_.
-
-Your Second Documentation Contribution
---------------------------------------
-
-The first contribution took some time because you had to fork the repository,
-learn how to write documentation, comply with the pull requests standards, etc.
-The second contribution will be much easier, except for one detail: given the
-furious update activity of the Symfony documentation repository, odds are that
-your fork is now out of date with the official repository.
-
-Solving this problem requires you to `sync your fork`_ with the original repository.
-To do this, execute this command first to tell git about the original repository:
-
-.. code-block:: bash
-
-    $ cd projects/symfony-docs/
-    $ git remote add upstream https://github.com/symfony/symfony-docs.git
-
-Now you can **sync your fork** by executing the following command:
-
-.. code-block:: bash
-
-    $ cd projects/symfony-docs/
-    $ git fetch upstream
-    $ git checkout 2.3
-    $ git merge upstream/2.3
-
-This command will update the ``2.3`` branch, which is the one you used to
-create the new branch for your changes. If you have used another base branch,
-e.g. ``master``, replace the ``2.3`` with the appropriate branch name.
-
-Great! Now you can proceed by following the same steps explained in the previous
-section:
-
-.. code-block:: bash
-
-    # create a new branch to store your changes based on the 2.3 branch
-    $ cd projects/symfony-docs/
-    $ git checkout 2.3
-    $ git checkout -b my_changes
-
-    # ... do your changes
-
-    # submit the changes to your forked repository
-    $ git add xxx.rst     # (optional) only if this is a new content
-    $ git commit xxx.rst
-    $ git push origin my_changes
-
-    # go to GitHub and create the Pull Request
-    #
-    # Include this table in the description:
-    # | Q             | A
-    # | ------------- | ---
-    # | Doc fix?      | [yes|no]
-    # | New docs?     | [yes|no] (PR # on symfony/symfony if applicable)
-    # | Applies to    | [Symfony version numbers this applies to]
-    # | Fixed tickets | [comma separated list of tickets fixed by the PR]
-
-Your second contribution is now complete, so **go and celebrate again!**
-You can also see how your ranking improves in the list of
-`Symfony Documentation Contributors`_.
+**Step 10.** After your pull request is eventually accepted and merged in the
+Symfony documentation, you will be included in the `Symfony Documentation
+Contributors`_ list. Moreover, if you happen to have a `SensioLabsConnect`_
+profile, you will get a cool `Symfony Documentation Badge`_.
 
 Your Next Documentation Contributions
 -------------------------------------
 
-Now that you've made two contributions to the Symfony documentation, you are
-probably comfortable with all the Git-magic involved in the process. That's
-why your next contributions would be much faster. Here you can find the complete
-steps to contribute to the Symfony documentation, which you can use as a
-**checklist**:
+Check you out! You've made your first contribution to the Symfony documentation!
+Somebody throw a party! Your first contribution took a little extra time because
+you needed to learn a few standards and setup your computer. But from now on,
+your contributions will be much easier to complete.
+
+Here is a **checklist** of steps that will guide you through your next
+contribution to the Symfony docs:
 
 .. code-block:: bash
 
-    # sync your fork with the official Symfony repository
+    # create a new branch based on the oldest maintained version
     $ cd projects/symfony-docs/
-    $ git fetch upstream
-    $ git checkout 2.3
-    $ git merge upstream/2.3
-
-    # create a new branch from the oldest maintained version
-    $ git checkout 2.3
-    $ git checkout -b my_changes
+    $ git checkout -b my_changes upstream/2.3
 
     # ... do your changes
 
@@ -233,61 +218,34 @@ steps to contribute to the Symfony documentation, which you can use as a
     $ git push origin my_changes
 
     # go to GitHub and create the Pull Request
-    #
-    # Include this table in the description:
-    # | Q             | A
-    # | ------------- | ---
-    # | Doc fix?      | [yes|no]
-    # | New docs?     | [yes|no] (PR # on symfony/symfony if applicable)
-    # | Applies to    | [Symfony version numbers this applies to]
-    # | Fixed tickets | [comma separated list of tickets fixed by the PR]
 
     # (optional) make the changes requested by reviewers and commit them
     $ git commit xxx.rst
     $ git push
 
-You guessed right: after all this hard work, it's **time to celebrate again!**
-
+After completing your next contributions, also watch your ranking improve on
+the list of `Symfony Documentation Contributors`_. You guessed right: after all
+this hard work, it's **time to celebrate again!**
 
 Review your changes
 -------------------
 
 Every GitHub Pull Request is automatically built and deployed by `Platform.sh`_
-on a single environment that you can access on your browser to review your 
+on a single environment that you can access on your browser to review your
 changes.
 
 .. image:: /images/contributing/docs-pull-request-platformsh.png
    :align: center
    :alt:   Platform.sh Pull Request Deployment
 
-To access the `Platform.sh`_ environment URL, simply go to your Pull Request 
-page on GitHub and click on ``Details``.
-
-.. note::
-
-    The specific configuration files at the root of the Git repository: 
-    ``.platform.app.yaml``, ``.platform/services.yaml`` and 
-    ``.platform/routes.yaml`` allow `Platform.sh`_ to build Pull Requests.
+To access the `Platform.sh`_ environment URL, go to your Pull Request page on
+GitHub, click on the **Show all checks** link and finally, click on the ``Details``
+link displayed for Platform.sh service.
 
 .. note::
 
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
-
-Minor Changes (e.g. Typos)
---------------------------
-
-You may find just a typo and want to fix it. Due to GitHub's functional
-frontend, it is quite simple to create Pull Requests right in your
-browser while reading the docs on symfony.com. To do this, just click
-the **edit this page** button on the upper right corner. Beforehand,
-please switch to the right branch as mentioned before. Now you are able
-to edit the content and describe your changes within the GitHub
-frontend. When your work is done, click **Propose file change** to
-create a commit and, in case it is your first contribution, also your
-fork. A new branch is created automatically in order to provide a base
-for your Pull Request. Then fill out the form to create the Pull Request
-as described above.
 
 Frequently Asked Questions
 --------------------------
@@ -338,11 +296,11 @@ your proposal after you put all that hard work into making the changes. We
 definitely don't want you to waste your time!
 
 .. _`github.com/symfony/symfony-docs`: https://github.com/symfony/symfony-docs
-.. _reStructuredText: http://docutils.sourceforge.net/rst.html
-.. _GitHub: https://github.com/
+.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
+.. _`GitHub`: https://github.com/
 .. _`fork the repository`: https://help.github.com/articles/fork-a-repo
 .. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
-.. _SensioLabsConnect: https://connect.sensiolabs.com/
+.. _`SensioLabsConnect`: https://connect.sensiolabs.com/
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh

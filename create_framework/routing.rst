@@ -33,7 +33,7 @@ As we now extract the request query parameters, simplify the ``hello.php``
 template as follows::
 
     <!-- example.com/src/pages/hello.php -->
-    Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
+    Hello <?php echo htmlspecialchars(isset($name) ? $name : 'World', ENT_QUOTES, 'UTF-8') ?>
 
 Now, we are in good shape to add new features.
 
