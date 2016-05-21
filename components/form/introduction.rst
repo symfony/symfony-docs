@@ -202,9 +202,12 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
+
+    // ... (see the previous CSRF Protection section for more information)
+
     // add the FormExtension to Twig
     $twig->addExtension(
-        new FormExtension(new TwigRenderer($formEngine, $csrfProvider))
+        new FormExtension(new TwigRenderer($formEngine, $csrfManager))
     );
 
     // create your form factory as normal
