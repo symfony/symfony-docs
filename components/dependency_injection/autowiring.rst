@@ -250,7 +250,7 @@ returning the result of the ROT13 transformation uppercased::
         }
     }
 
-This class is intended to decorate the any transformer and return its value uppercased.
+This class is intended to decorate any transformer and return its value uppercased.
 
 We can now refactor the controller to add another endpoint leveraging this new
 transformer::

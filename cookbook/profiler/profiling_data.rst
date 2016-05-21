@@ -34,14 +34,14 @@ The ``profiler`` service also provides the
 look for tokens based on some criteria::
 
     // get the latest 10 tokens
-    $tokens = $container->get('profiler')->find('', '', 10, '', '');
+    $tokens = $container->get('profiler')->find('', '', 10, '', '', '');
 
     // get the latest 10 tokens for all URL containing /admin/
-    $tokens = $container->get('profiler')->find('', '/admin/', 10, '', '');
+    $tokens = $container->get('profiler')->find('', '/admin/', 10, '', '', '');
 
-    // get the latest 10 tokens for local requests
-    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, '', '');
+    // get the latest 10 tokens for local POST requests
+    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, 'POST', '', '');
 
     // get the latest 10 tokens for requests that happened between 2 and 4 days ago
     $tokens = $container->get('profiler')
-        ->find('', '', 10, '4 days ago', '2 days ago');
+        ->find('', '', 10, '', '4 days ago', '2 days ago');
