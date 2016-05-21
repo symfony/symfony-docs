@@ -128,9 +128,8 @@ new feature, switch to the first Symfony version that included it, e.g.
 ``upstream/3.1``. Not sure? That's ok! Just use the ``upstream/master`` branch.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
-even remove any content, but make sure that you comply with the
-:doc:`/contributing/documentation/standards`. Then, mark your contents as ready
-to be committed:
+even remove any content and do your best to comply with the
+:doc:`/contributing/documentation/standards`. Then commit your changes!
 
 .. code-block:: bash
 
@@ -144,7 +143,7 @@ to be committed:
 
     $ git push origin improve_install_chapter
 
-The ``origin`` value is the name of the Git remote which corresponds to your
+The ``origin`` value is the name of the Git remote that corresponds to your
 forked repository and ``improve_install_chapter`` is the name of the branch you
 created previously.
 
@@ -197,13 +196,13 @@ profile, you will get a cool `Symfony Documentation Badge`_.
 Your Next Documentation Contributions
 -------------------------------------
 
-Your first contribution took some time because you had to fork the repository,
-learn how to write documentation, comply with the pull requests standards, etc.
-Now that you've completed your first contribution to the Symfony documentation,
-you are probably comfortable with all the Git-magic involved in the process.
-That's why your next contributions would be much faster. Here you can find the
-complete steps to contribute to the Symfony documentation, which you can use as
-a **checklist**:
+Check you out! You've made your first contribution to the Symfony documentation!
+Somebody throw a party! Your first contribution took a little extra time because
+you needed to learn a few standards and setup your computer. But from now on,
+your contributions will be much easier to complete.
+
+Here is a **checklist** of steps that will guide you through your next
+contribution to the Symfony docs:
 
 .. code-block:: bash
 
@@ -224,9 +223,9 @@ a **checklist**:
     $ git commit xxx.rst
     $ git push
 
-After completing your next contributions, you can also see how your ranking
-improves in the list of `Symfony Documentation Contributors`_. You guessed
-right: after all this hard work, it's **time to celebrate again!**
+After completing your next contributions, also watch your ranking improve on
+the list of `Symfony Documentation Contributors`_. You guessed right: after all
+this hard work, it's **time to celebrate again!**
 
 Review your changes
 -------------------
