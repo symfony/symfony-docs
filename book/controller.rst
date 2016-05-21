@@ -774,6 +774,9 @@ headers and content that's sent back to the client::
 
 There are also special classes to make certain kinds of responses easier:
 
+* For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+  See :ref:`component-http-foundation-json-response`.
+
 * For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
   See :ref:`component-http-foundation-serving-files`.
 
@@ -781,27 +784,25 @@ There are also special classes to make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
-Sending JSON responses
-~~~~~~~~~~~~~~~~~~~~~~
+JSON helper
+~~~~~~~~~~~
 
-If you're developing an API, you'll probably return JSON contents from your
-controllers. The ``json()`` method turns the given contents into JSON format and
-prepares the HTTP response headers accordingly::
+Returning JSON contents is increasingly popular for API-based applications. For
+that reason, the base controller class defines a ``json()`` method which creates
+a ``JsonResponse()`` and encodes the given contents automatically::
 
-    // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
-    $data = array('username' => 'jane.doe');
-    return $this->json($data);
+    // ...
+    public function indexAction()
+    {
+        // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+        $data = array('username' => 'jane.doe');
+        return $this->json($data);
+    }
 
 The only required argument is the data to be sent, but ``json()`` defines three
 more optional arguments::
 
     $this->json($data, $status = 200, $headers = array(), $context = array());
-
-.. note::
-
-    The ``json()`` shortcut uses the :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
-    class to create the response. If you prefer it, you can also use that class.
-    See :ref:`component-http-foundation-json-response`.
 
 Creating Static Pages
 ---------------------
