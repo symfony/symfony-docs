@@ -164,9 +164,10 @@ controller to specify the directory in which the brochures should be stored:
 
 .. code-block:: yaml
 
-    # app/config/parameters.yml
+    # app/config/config.yml
+
+    # ...
     parameters:
-        # ...
         brochures_directory: '%kernel.root_dir%/../web/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
@@ -320,14 +321,31 @@ automatically upload the file when persisting the entity::
         {
             $entity = $args->getEntity();
 
+            $this->uploadFile($entity);
+        }
+
+        public function preUpdate(LifecycleEventArs $args)
+        {
+            $entity = $args->getEntity();
+
+            $this->uploadFile($entity);
+        }
+
+        private function uploadFile($entity)
+        {
             // upload only works for Product entities
             if (!$entity instanceof Product) {
                 return;
             }
 
             $file = $entity->getBrochure();
-            $fileName = $this->uploader->upload($file);
 
+            // only upload new files
+            if (!$file instanceof UploadedFile) {
+                return;
+            }
+
+            $fileName = $this->uploader->upload($file);
             $entity->setBrochure($fileName);
         }
     }
