@@ -189,7 +189,7 @@ There are some important things to consider in the code of the above controller:
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
 
-You can use the following code to link to the PDF brochure of an product:
+You can use the following code to link to the PDF brochure of a product:
 
 .. configuration-block::
 
@@ -248,7 +248,7 @@ logic to a seperate service::
         }
     }
 
-This class can be registered as a service in the service container:
+Then, define a service for this class:
 
 .. configuration-block::
 
