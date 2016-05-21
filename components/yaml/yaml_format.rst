@@ -165,6 +165,8 @@ YAML uses the ISO-8601 standard to express dates:
     # simple date
     2002-12-14
 
+.. _yaml-format-collections:
+
 Collections
 -----------
 
