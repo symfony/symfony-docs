@@ -81,9 +81,15 @@ option in your firewall:
 When Should Login Handlers Be Used?
 -----------------------------------
 
-Symfony defines an event called ``security.interactive_login`` that lets you
-customize the behavior of the login process. The main differences between this
-event and the login handlers are XXXX and YYYY.
+These security handlers are closely related to the ``security.authentication.success``
+and ``security.authentication.failure`` events, but Symfony also defines an event
+called ``security.interactive_login`` that lets you customize the behavior of
+the login process.
 
-Therefore, you should use the login handlers when XXXX and YYYY, whereas the
-interactive login event is better for ZZZZ.
+The success/failure handlers should be used when you need to change the login
+behavior on success/failure by changing the returned ``Response`` object.
+
+The listener hooked into ``security.interactive_login`` should be used when you
+need to execute some code on login success/failure but without altering the
+``Response`` object being sent. For example, to store in a Redis cache the number
+of failed login attempts to protect against brute-force attacks.
