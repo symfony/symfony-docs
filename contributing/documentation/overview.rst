@@ -26,7 +26,7 @@ Before Your First Contribution
   :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
   and all your contributions will implicitly adhere to that license.
 
-.. _minor-changes-e-g-typos
+.. _minor-changes-e-g-typos:
 
 Fast Online Contributions
 -------------------------
