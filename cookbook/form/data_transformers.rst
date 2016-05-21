@@ -16,24 +16,24 @@ to render the form, and then back into a ``DateTime`` object on submit.
     When a form field has the ``inherit_data`` option set, Data Transformers
     won't be applied to that field.
 
-Simple Example: Sanitizing HTML on User Input
----------------------------------------------
+Simple Example: transforming labels string from User Input to array
+-------------------------------------------------------------------
 
-Suppose you have a Task form with a description ``textarea`` type::
+Suppose you have a Task form with a labels ``text`` type::
 
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     // ...
     class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('description', TextareaType::class);
+            $builder->add('labels', TextType::class);
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -46,15 +46,9 @@ Suppose you have a Task form with a description ``textarea`` type::
         // ...
     }
 
-But, there are two complications:
+Internally we want to handle the ``labels`` as array, but to have the form simple we wanna allow the User to edit them as a string.
 
-#. Your users are allowed to use *some* HTML tags, but not others: you need a way
-   to call :phpfunction:`strip_tags` after the form is submitted;
-
-#. To be friendly, you want to convert ``<br/>`` tags into line breaks (``\n``) before
-   rendering the field so the text is easier to edit.
-
-This is a *perfect* time to attach a custom data transformer to the ``description``
+This is a *perfect* time to attach a custom data transformer to the ``labels``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
 class::
 
@@ -63,27 +57,24 @@ class::
 
     use Symfony\Component\Form\CallbackTransformer;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
     // ...
 
     class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('description', TextareaType::class);
+            $builder->add('labels', TextType::class);
 
-            $builder->get('description')
+            $builder->get('labels')
                 ->addModelTransformer(new CallbackTransformer(
-                    // transform <br/> to \n so the textarea reads easier
-                    function ($originalDescription) {
-                        return preg_replace('#<br\s*/?>#i', "\n", $originalDescription);
+                    // transform array to string so the input reads easier
+                    function ($originalLabels) {
+                        return implode(',', $originalLabels);
                     },
-                    function ($submittedDescription) {
-                        // remove most HTML tags (but not br,p)
-                        $cleaned = strip_tags($submittedDescription, '<br><br/><p>');
-
-                        // transform any \n to real <br/>
-                        return str_replace("\n", '<br/>', $cleaned);
+                    function ($submittedLabels) {
+                        // transform the string back to Array
+                        return explode(',', $submittedLabels);
                     }
                 ))
             ;
@@ -106,10 +97,10 @@ in your code.
 You can also add the transformer, right when adding the field by changing the format
 slightly::
 
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     $builder->add(
-        $builder->create('description', TextareaType::class)
+        $builder->create('description', TextType::class)
             ->addModelTransformer(...)
     );
 
