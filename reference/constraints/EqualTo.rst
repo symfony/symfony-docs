@@ -28,8 +28,8 @@ To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualT
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is equal to
-``20``, you could do the following:
+If you want to ensure that the ``firstName`` of a ``Person`` class is equal to ``Mary``
+and that the ``age`` is ``20``, you could do the following:
 
 .. configuration-block::
 
@@ -43,6 +43,11 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
         class Person
         {
             /**
+             * @Assert\EqualTo("Mary")
+             */
+            protected $firstName;
+
+            /**
              * @Assert\EqualTo(
              *     value = 20
              * )
@@ -55,6 +60,8 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                firstName:
+                    - EqualTo: Mary
                 age:
                     - EqualTo:
                         value: 20
@@ -68,6 +75,11 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="firstName">
+                    <constraint name="EqualTo">
+                        <value>Mary</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="EqualTo">
                         <option name="value">20</option>
@@ -88,6 +100,8 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('firstName', new Assert\EqualTo('Mary'));
+
                 $metadata->addPropertyConstraint('age', new Assert\EqualTo(array(
                     'value' => 20,
                 )));

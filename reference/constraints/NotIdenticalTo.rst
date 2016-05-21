@@ -29,8 +29,9 @@ the options. To force that a value is identical, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is *not* equal
-to ``15`` and *not* an integer, you could do the following:
+The following constraints ensure that:
+- ``firstName`` of ``Person`` is not equal to ``Mary`` *or* not of the same type
+- ``age`` of ``Person`` class is not equal to ``15`` *or* not of the same type
 
 .. configuration-block::
 
@@ -44,6 +45,11 @@ to ``15`` and *not* an integer, you could do the following:
         class Person
         {
             /**
+             * @Assert\NotIdenticalTo("Mary")
+             */
+            protected $firstName;
+
+            /**
              * @Assert\NotIdenticalTo(
              *     value = 15
              * )
@@ -56,6 +62,8 @@ to ``15`` and *not* an integer, you could do the following:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                firstName:
+                    - NotIdenticalTo: Mary
                 age:
                     - NotIdenticalTo:
                         value: 15
@@ -69,6 +77,11 @@ to ``15`` and *not* an integer, you could do the following:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+            <property name="firstName">
+                    <constraint name="NotIdenticalTo">
+                        <value>Mary</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="NotIdenticalTo">
                         <option name="value">15</option>
@@ -89,6 +102,8 @@ to ``15`` and *not* an integer, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('age', new Assert\NotIdenticalTo('Mary'));
+
                 $metadata->addPropertyConstraint('age', new Assert\NotIdenticalTo(array(
                     'value' => 15,
                 )));
