@@ -16,8 +16,8 @@ to render the form, and then back into a ``DateTime`` object on submit.
     When a form field has the ``inherit_data`` option set, Data Transformers
     won't be applied to that field.
 
-Simple Example: Transforming tags string from User Input to array
------------------------------------------------------------------
+Simple Example: Transforming String Tags from User Input to an Array
+--------------------------------------------------------------------
 
 Suppose you have a Task form with a tags ``text`` type::
 
@@ -26,14 +26,13 @@ Suppose you have a Task form with a tags ``text`` type::
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     // ...
     class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('tags', TextType::class);
+            $builder->add('tags', 'text')
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -58,19 +57,18 @@ class::
 
     use Symfony\Component\Form\CallbackTransformer;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     // ...
 
     class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('tags', TextType::class);
+            $builder->add('tags', 'text');
 
             $builder->get('tags')
                 ->addModelTransformer(new CallbackTransformer(
                     // transform array to string so the input reads easier
-                    function ($originalTags) {
+                      function ($originalTags) {
                         return implode(', ', $originalTags);
                     },
                     function ($submittedTags) {
@@ -98,10 +96,8 @@ in your code.
 You can also add the transformer, right when adding the field by changing the format
 slightly::
 
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-
     $builder->add(
-        $builder->create('tags', TextType::class)
+        $builder->create('tags', 'text')
             ->addModelTransformer(...)
     );
 
