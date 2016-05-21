@@ -1232,7 +1232,7 @@ Assume you have custom global form themes in
     See :ref:`book-forms-theming-global` for more information.
 
 .. _reference-templating-cache:
-=======
+
 loaders
 .......
 
