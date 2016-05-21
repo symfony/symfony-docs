@@ -777,6 +777,9 @@ There are also special classes to make certain kinds of responses easier:
 JSON Helper
 ~~~~~~~~~~~
 
+.. versionadded:: 3.1
+    The ``json()`` helper was introduced in Symfony 3.1.
+
 Returning JSON contents is increasingly popular for API-based applications. For
 that reason, the base controller class defines a ``json()`` method which creates
 a ``JsonResponse`` and encodes the given contents automatically::
@@ -793,7 +796,7 @@ a ``JsonResponse`` and encodes the given contents automatically::
 
 If the :doc:`serializer service </cookbook/serializer>` is enabled in your
 application, contents passed to ``json()`` are encoded with it. Otherwise,
-the :phpfunction:`json_encode()` function is used.
+the :phpfunction:`json_encode` function is used.
 
 .. seealso::
 
