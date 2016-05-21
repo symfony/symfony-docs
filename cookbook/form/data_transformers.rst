@@ -70,7 +70,7 @@ class::
             $builder->get('tags')
                 ->addModelTransformer(new CallbackTransformer(
                     // transform array to string so the input reads easier
-                      function ($originalTags) {
+                    function ($originalTags) {
                         return implode(', ', $originalTags);
                     },
                     function ($submittedTags) {
