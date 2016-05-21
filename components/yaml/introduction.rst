@@ -152,7 +152,7 @@ Objects for Mappings
 ....................
 
 .. versionadded:: 2.7
-    Support for parsing mappings as objects was introduced in Symfony 2.6.
+    Support for parsing mappings as objects was introduced in Symfony 2.7.
 
 Yaml :ref:`mappings <yaml-format-collections>` are basically associative
 arrays. You can instruct the parser to return mappings as objects (i.e.
