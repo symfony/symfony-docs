@@ -16,10 +16,10 @@ to render the form, and then back into a ``DateTime`` object on submit.
     When a form field has the ``inherit_data`` option set, Data Transformers
     won't be applied to that field.
 
-Simple Example: transforming labels string from User Input to array
--------------------------------------------------------------------
+Simple Example: Transforming tags string from User Input to array
+-----------------------------------------------------------------
 
-Suppose you have a Task form with a labels ``text`` type::
+Suppose you have a Task form with a tags ``text`` type::
 
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
@@ -33,7 +33,7 @@ Suppose you have a Task form with a labels ``text`` type::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('labels', TextType::class);
+            $builder->add('tags', TextType::class);
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -46,10 +46,10 @@ Suppose you have a Task form with a labels ``text`` type::
         // ...
     }
 
-Internally the ``labels`` are stored as an array, but they are displayed
+Internally the ``tags`` are stored as an array, but they are displayed
 to the user as a simple string, to make them easier to edit.
 
-This is a *perfect* time to attach a custom data transformer to the ``labels``
+This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
 class::
 
@@ -65,17 +65,17 @@ class::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('labels', TextType::class);
+            $builder->add('tags', TextType::class);
 
-            $builder->get('labels')
+            $builder->get('tags')
                 ->addModelTransformer(new CallbackTransformer(
                     // transform array to string so the input reads easier
-                    function ($originalLabels) {
-                        return implode(', ', $originalLabels);
+                    function ($originalTags) {
+                        return implode(', ', $originalTags);
                     },
-                    function ($submittedLabels) {
+                    function ($submittedTags) {
                         // transform the string back to Array
-                        return explode(', ', $submittedLabels);
+                        return explode(', ', $submittedTags);
                     }
                 ))
             ;
@@ -101,7 +101,7 @@ slightly::
     use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     $builder->add(
-        $builder->create('description', TextType::class)
+        $builder->create('tags', TextType::class)
             ->addModelTransformer(...)
     );
 
