@@ -779,7 +779,7 @@ JSON Helper
 
 Returning JSON contents is increasingly popular for API-based applications. For
 that reason, the base controller class defines a ``json()`` method which creates
-a ``JsonResponse()`` and encodes the given contents automatically::
+a ``JsonResponse`` and encodes the given contents automatically::
 
     // ...
     public function indexAction()
