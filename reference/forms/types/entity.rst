@@ -166,12 +166,13 @@ cast into a string and so must have a ``__toString()`` method.
 query_builder
 ~~~~~~~~~~~~~
 
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
+**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure **default**: ``null``
 
 Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
-The value of this option can either be a ``QueryBuilder`` object or a Closure.
+The value of this option can either be a ``QueryBuilder`` object, a Closure or
+``null`` by default which loads all entities.
 When using a Closure, you will be passed the ``EntityRepository`` of the entity
 as the only argument and should return a ``QueryBuilder``.
 
