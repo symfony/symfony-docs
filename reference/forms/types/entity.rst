@@ -172,9 +172,9 @@ Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
 The value of this option can either be a ``QueryBuilder`` object, a Closure or
-``null`` by default which loads all entities.
-When using a Closure, you will be passed the ``EntityRepository`` of the entity
-as the only argument and should return a ``QueryBuilder``.
+``null`` (which will load all entities). When using a Closure, you will be
+passed the ``EntityRepository`` of the entity as the only argument and should
+return a ``QueryBuilder``.
 
 Overridden Options
 ------------------
