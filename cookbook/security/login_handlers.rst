@@ -6,10 +6,11 @@
 How to Customize the Success and Failure Login Handlers
 =======================================================
 
-After the users successfully log in in your application, they are redirected to
+After the users successfully log in to your application, they are redirected to
 the proper URL according to the security configuration options. This is done in
 the :class:`Symfony\\Component\\Security\\Http\\Authentication\\DefaultAuthenticationSuccessHandler`
-class and Symfony defines a similar class called ``DefaultAuthenticationFailureHandler``
+class and Symfony defines a similar class called
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\DefaultAuthenticationFailureHandler`
 to handle the login failures.
 
 This article explains **how to define your own login handlers** to execute
