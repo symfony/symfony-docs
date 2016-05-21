@@ -272,10 +272,10 @@ If there are any issues, correct them now before moving on.
         
     .. note::
 
-        when running php-fpm you should make sure that your user matches 
-        webserver one or add additional rules using setfacl for user running php.
+        When not using PHP's built-in web server, make sure that the web server
+        process runs with your user account or to configure advanced rules (like ACLs).
         
-        You can check it by getting user/group from your php-fpm pool config.
+        http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html.
         
 
     **4. Without using ACL**
