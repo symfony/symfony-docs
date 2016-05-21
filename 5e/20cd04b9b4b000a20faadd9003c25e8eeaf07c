@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-21T10:30:16Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-21T14:54:54Z
+
+What about adding a comment that explains why we set it to `null` here? People might wonder otherwise what's the reason for this statement is.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-03-21T18:59:05Z
+
+:+1: Note would be cool - I'm fine either way
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T08:36:16Z
+
+We can add the note while merging.
