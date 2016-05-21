@@ -70,11 +70,11 @@ class::
                 ->addModelTransformer(new CallbackTransformer(
                     // transform array to string so the input reads easier
                     function ($originalLabels) {
-                        return implode(',', $originalLabels);
+                        return implode(', ', $originalLabels);
                     },
                     function ($submittedLabels) {
                         // transform the string back to Array
-                        return explode(',', $submittedLabels);
+                        return explode(', ', $submittedLabels);
                     }
                 ))
             ;
