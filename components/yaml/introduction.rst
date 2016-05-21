@@ -95,16 +95,20 @@ acts as a thin wrapper that simplifies common uses.
 Reading YAML Files
 ~~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\Yaml\\Parser::parse` method parses a YAML
+The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
 string and converts it to a PHP array:
 
 .. code-block:: php
 
-    use Symfony\Component\Yaml\Parser;
+    use Symfony\Component\Yaml\Yaml;
 
-    $yaml = new Parser();
+    $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
 
-    $value = $yaml->parse(file_get_contents('/path/to/file.yml'));
+.. caution::
+
+    Because it is currently possible to pass a filename to this method, you
+    must validate the input first. Passing a filename is deprecated in
+    Symfony 2.2, and was removed in Symfony 3.0.
 
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
@@ -116,70 +120,48 @@ error occurred:
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
-        $value = $yaml->parse(file_get_contents('/path/to/file.yml'));
+        $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
     } catch (ParseException $e) {
         printf("Unable to parse the YAML string: %s", $e->getMessage());
     }
 
-.. tip::
-
-    As the parser is re-entrant, you can use the same parser object to load
-    different YAML strings.
-
-It may also be convenient to use the
-:method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method:
-
-.. code-block:: php
-
-    use Symfony\Component\Yaml\Yaml;
-
-    $yaml = Yaml::parse(file_get_contents('/path/to/file.yml'));
-
-The :method:`Symfony\\Component\\Yaml\\Yaml::parse` static method takes a YAML
-string or a file containing YAML. Internally, it calls the
-:method:`Symfony\\Component\\Yaml\\Parser::parse` method, but enhances the
-error if something goes wrong by adding the filename to the message.
-
-.. caution::
-
-    Because it is currently possible to pass a filename to this method, you
-    must validate the input first. Passing a filename is deprecated in
-    Symfony 2.2, and will be removed in Symfony 3.0.
-
 .. _components-yaml-dump:
+
+Objects for Mappings
+....................
+
+.. versionadded:: 2.7
+    Support for parsing mappings as objects was introduced in Symfony 2.7.
+
+Yaml :ref:`mappings <yaml-format-collections>` are basically associative
+arrays. You can instruct the parser to return mappings as objects (i.e.
+``\stdClass`` instances) by setting the fourth argument to ``true``::
+
+    $object = Yaml::parse('{"foo": "bar"}', false, false, true);
+    echo get_class($object); // stdClass
+    echo $object->foo; // bar
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\Yaml\\Dumper::dump` method dumps any PHP
+The :method:`Symfony\\Component\\Yaml\\Yaml::dump` method dumps any PHP
 array to its YAML representation:
 
 .. code-block:: php
 
-    use Symfony\Component\Yaml\Dumper;
+    use Symfony\Component\Yaml\Yaml;
 
     $array = array(
         'foo' => 'bar',
         'bar' => array('foo' => 'bar', 'bar' => 'baz'),
     );
 
-    $dumper = new Dumper();
-
-    $yaml = $dumper->dump($array);
+    $yaml = Yaml::dump($array);
 
     file_put_contents('/path/to/file.yml', $yaml);
 
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
-
-If you only need to dump one array, you can use the
-:method:`Symfony\\Component\\Yaml\\Yaml::dump` static method shortcut:
-
-.. code-block:: php
-
-    use Symfony\Component\Yaml\Yaml;
-
-    $yaml = Yaml::dump($array);
 
 Array Expansion and Inlining
 ............................
@@ -192,7 +174,7 @@ representation:
 
     { foo: bar, bar: { foo: bar, bar: baz } }
 
-The second argument of the :method:`Symfony\\Component\\Yaml\\Dumper::dump`
+The second argument of the :method:`Symfony\\Component\\Yaml\\Yaml::dump`
 method customizes the level at which the output switches from the expanded
 representation to the inline one:
 
