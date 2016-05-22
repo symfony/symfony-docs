@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-04-12T06:49:10Z
+
+Well, it still exists (otherwise it would be a BC break). Only the default value changed in 3.0. It is deprecated as of Symfony 3.1.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-14T06:06:56Z
+
+Technically it is not deprecated in 3.0, but I agree with Ryan to remove it from the as it does not support setting it to anything else than `true` and will trigger an exception otherwise.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-04-14T13:26:29Z
+
+closes #6474.
+
+@xabbuh Shouldn't we just say that it's not used anymore and that setting `false` will throw an exception then mark it as deprecated in 3.1+ doc ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-14T14:49:44Z
+
+@HeahDude IIRC we always removed the description of features in the version they got deprecated (but here it doesn't make sense to document it imo).
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-04-14T14:57:15Z
+
+There were many issues on the repo and and questions on stack, although it is recommended to upgrade to 2.8 before upgrading to 3.0, not everyone does that 😢. I vote (without hard feeling) to keep it documented at the strict minimum by removing the "before/after" stuff but keeping a notice for the legacy reason of the default value. What do you think ?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-04-26T16:52:16Z
+
+Now that I've read the discussion here, I think we should keep the option, but change the description to describe that it's not used anymore, and was something that helped you upgrade. Then, if people see this option in their code and look in the docs for it, they'll see the description.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T10:35:08Z
+
+Okay, then let's keep the option and update the description instead.
