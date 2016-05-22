@@ -7,12 +7,8 @@ date Field Type
 A field that allows the user to modify date information via a variety of
 different HTML elements.
 
-The underlying data used for this field type can be a ``DateTime`` object,
-a string, a timestamp or an array. As long as the `input`_ option is set
-correctly, the field will take care of all of the details.
-
-The field can be rendered as a single text box, three text boxes (month,
-day and year) or three select boxes (see the `widget`_ option).
+This field can be rendered in a variety of different ways via the `widget`_ option
+and can understand a number of different input formats via the `input`_ option.
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
@@ -56,24 +52,68 @@ options are ``input`` and ``widget``.
 
 Suppose that you have a ``publishedAt`` field whose underlying date is a
 ``DateTime`` object. The following configures the ``date`` type for that
-field as three different choice fields::
+field as **three different choice fields**::
 
     $builder->add('publishedAt', 'date', array(
-        'input'  => 'datetime',
         'widget' => 'choice',
     ));
 
-The ``input`` option *must* be changed to match the type of the underlying
-date data. For example, if the ``publishedAt`` field's data were a unix
-timestamp, you'd need to set ``input`` to ``timestamp``::
+If your underlying date is *not* a ``DateTime`` object (e.g. it's a unix timestamp),
+configure the `input`_ option.
+
+Rendering a single HTML5 Textbox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For a better user experience, you may want to render a single text field and use
+some kind of "date picker" to help your user fill in the right format. To do that,
+use the ``single_text`` widget::
 
     $builder->add('publishedAt', 'date', array(
-        'input'  => 'timestamp',
-        'widget' => 'choice',
+        // render as a single text box
+        'widget' => 'single_text',
     ));
 
-The field also supports an ``array`` and ``string`` as valid ``input`` option
-values.
+This will render as an ``input type="date"`` HTML5 field, which means that **some -
+but not all - browsers will add nice date picker functionality to the field**. If you
+want to be absolutely sure that *every* user has a consistent date picker, use an
+external JavaScript library.
+
+For example, suppose you want to use the `Bootstrap Datepicker`_ library. First,
+make the following changes::
+
+    $builder->add('publishedAt', 'date', array(
+        'widget' => 'single_text',
+
+        // do not render as type="date", to avoid HTML5 date pickers
+        'html5' => false,
+
+        // add a class that can eb selected in JavaScript
+        'attr' => ['class' => 'js-datepicker'],
+    ));
+
+Assuming you're using jQuery, you can initialize the date picker via:
+
+.. code-block:: html
+
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+
+This ``format`` key tells the date picker to use the date format that Symfony expects.
+This can be tricky: if the date picker is misconfigured, Symfony won't understand
+the format and will throw a validation error. You can also configure the format
+that Symfony should expect via the `format`_ option.
+
+.. caution::
+
+    The string used by a JavaScript date picker to describe its format (e.g. ``yyyy-mm-dd``)
+    may not match the string that Symfony uses (e.g. ``yyyy-MM-dd``). This is because
+    different libraries use different formatting rules to describe the date format.
+    Be aware of this - it can be tricky to make the formats truly match!
 
 Field Options
 -------------
@@ -171,3 +211,5 @@ Field Variables
 +--------------+------------+----------------------------------------------------------------------+
 | date_pattern | ``string`` | A string with the date format to use.                                |
 +--------------+------------+----------------------------------------------------------------------+
+
+.. _`Bootstrap Datepicker`: https://github.com/eternicode/bootstrap-datepicker
