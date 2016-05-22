@@ -17,15 +17,15 @@ objects from the database.
 |             | - `em`_                                                          |
 |             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                     |
-| options     | - `data_class`_                                                  |
+| Overridden  | - `choice_name`_                                                 |
+| options     | - `choice_value`_                                                |
+|             | - `choices`_                                                     |
+|             | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
 |             | - `choice_attr`_                                                 |
-|             | - `choice_name`_                                                 |
 |             | - `choice_translation_domain`_                                   |
-|             | - `choice_value`_                                                |
 |             | - `expanded`_                                                    |
 |             | - `group_by`_                                                    |
 |             | - `multiple`_                                                    |
@@ -124,7 +124,7 @@ choice_label
     The ``choice_label`` option was introduced in Symfony 2.7. Prior to Symfony
     2.7, it was called ``property`` (which has the same functionality).
 
-**type**: ``string`` or ``callable``
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath`
 
 This is the property that should be used for displaying the entities as text in
 the HTML element::
@@ -194,6 +194,40 @@ return a ``QueryBuilder``.
 Overridden Options
 ------------------
 
+choice_name
+~~~~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``choice_name`` option was introduced in Symfony 2.7.
+
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
+
+By default the name of each field is the id of the entity, if it can be read
+from the class metadata by an internal id reader. Otherwise the process will
+fall back to using increasing integers.
+
+choice_value
+~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+    The ``choice_value`` option was introduced in Symfony 2.7.
+
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
+
+As for the ``choice_name`` option, ``choice_value`` uses the id by default.
+It allows an optimization in the :class:``Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\Loader\\DoctrineChoiceLoader`` which will
+only load the ids passed as values while the form submission.
+It prevents all non submitted entities to be loaded from the database, even
+when defining the ``query_builder`` option.
+If it may be useful to set this option using an entity's property as string
+value (e.g for some API), you will gain performances by letting this option set
+by default.
+
+.. note::
+
+    If the id cannot be read, for BC, the component checks if the class implements
+    ``__toString()`` and will use an incremental integer otherwise.
+
 choices
 ~~~~~~~
 
@@ -219,11 +253,7 @@ type:
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
-.. include:: /reference/forms/types/options/choice_name.rst.inc
-
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
-
-.. include:: /reference/forms/types/options/choice_value.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
