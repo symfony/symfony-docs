@@ -316,13 +316,16 @@ The **minimum configuration** to get your application running under Nginx is:
 .. tip::
 
     This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
-    the web directory. All other files will be denied. You **must** also make 
-    sure that if you *do* deploy ``app_dev.php`` or ``config.php`` that these 
-    files are secured and not available to any outside user (the IP address 
-    checking code at the top of each file does this by default).
+    the web directory. All other files ending in ".php" will be denied.
 
     If you have other PHP files in your web directory that need to be executed,
     be sure to include them in the ``location`` block above.
+
+.. caution::
+
+    After you deploy to production, make sure that you **cannot** access the ``app_dev.php``
+    or ``config.php`` scripts (i.e. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
+    If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
 
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
