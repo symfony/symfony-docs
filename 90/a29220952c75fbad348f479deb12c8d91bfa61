@@ -1,0 +1,82 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-13T16:38:50Z
+
+I'm a bit -1 on denying access to all other files. Many people just copy/past this code example without even reading it. Having some custom php file that doesn't work anymore will result in questions. I think we should explicitely match config.php and app_dev.php.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-12-13T17:15:35Z
+
+The thing is matching app_* and config does not make sense for dev environments and could cause confusion and troubles. Especially if people copy and paste the chances are higher that they remove the dev clauses than removing the files. If they manage to do that they should be safe and can enable other files if they really need it.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2016-02-09T19:13:55Z
+
+Can we get that merged or shall I close the PR?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-09T21:46:29Z
+
+Is there no way to let nginx execute other PHP files too instead of returning them as plain text?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-09T21:58:25Z
+
+@xabbuh yes, that would mean changing the current `return 404;` line to the three `fastcgi_pass` lines to execute PHP.
+
+However, for security reasons, you don't want to run the config.php and other scripts in the SE.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-09T22:46:09Z
+
+We could still have the `return 404;` for `app_dev.php` and `config.php` but use `fastcgi_pass` for all other PHP files.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-02-09T22:54:52Z
+
+Yeah, I think that's the best option. @peterrehm can you maybe update your PR?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2016-02-10T06:57:59Z
+
+Don't you think that the current approach is better as it forces you to define the additional files?
+With the current approach files are not being passed to fastcgi unless named `app...`. The highest security level is achieved with my proposal, everything else weakens it.
+
+If we would allow more files the `internal` setting also won't work any more as it is not any more a front controller setup.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T07:58:01Z
+
+I am still a bit mixed on this. I agree with you on the Security perspective, but I am afraid that this config will add confusion for people who have to ship there own PHP files.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T08:48:08Z
+
+On the other hand thinking of this again how common is it that you have to serve your own PHP files in a Symfony application?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2016-05-21T09:56:22Z
+
+Rather uncommon. And I think security is more important.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T10:33:35Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2016-05-22T17:42:41Z
+
+Updated according to @weaverryan's comments.
