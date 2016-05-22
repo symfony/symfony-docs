@@ -22,7 +22,6 @@ Take the following example::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month')
         ),
-        'choices_as_values' => true,
         'group_by' => function($val, $key, $index) {
             if ($val <= new \DateTime('+3 days')) {
                 return 'Soon';
