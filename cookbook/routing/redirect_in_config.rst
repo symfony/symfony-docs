@@ -36,7 +36,7 @@ action to redirect to this new url:
         root:
             path: /
             defaults:
-                _controller: FrameworkBundle:Redirect:urlRedirect
+                _controller: 'FrameworkBundle:Redirect:urlRedirect'
                 path: /app
                 permanent: true
 
@@ -112,7 +112,7 @@ action:
         root:
             path: /wp-admin
             defaults:
-                _controller: FrameworkBundle:Redirect:redirect
+                _controller: 'FrameworkBundle:Redirect:redirect'
                 route: sonata_admin_dashboard
                 permanent: true
 
