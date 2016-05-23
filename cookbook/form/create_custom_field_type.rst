@@ -35,7 +35,8 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
                 'choices' => array(
                     'Male' => 'm',
                     'Female' => 'f',
-                )
+                ),
+                'choices_as_values' => true,
             ));
         }
 
