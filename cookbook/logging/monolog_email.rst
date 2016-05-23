@@ -142,6 +142,7 @@ then passes them onto the nested handler in one go, but only if the records are
 unique over a given period of time (60 seconds by default). If the records are
 duplicates they are simply discarded. Adding this handler reduces the amount of
 notifications to a manageable level, specially in critical failure scenarios.
+
 The messages are then passed to the ``swift`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
 straightforward, the to and from addresses, the formatter, the content type 
