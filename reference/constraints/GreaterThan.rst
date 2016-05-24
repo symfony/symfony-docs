@@ -23,8 +23,10 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is greater
-than ``18``, you could do the following:
+The following constraints ensure that:
+- the number of ``siblings`` of a ``Person`` is greater than ``5``
+- the ``age`` of a ``Person`` class is greater than ``18``
+
 
 .. configuration-block::
 
@@ -37,6 +39,12 @@ than ``18``, you could do the following:
 
         class Person
         {
+
+            /**
+             * @Assert\GreaterThan(5)
+             */
+            protected $siblings;
+
             /**
              * @Assert\GreaterThan(
              *     value = 18
@@ -50,6 +58,8 @@ than ``18``, you could do the following:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                siblings:
+                    - GreaterThan: 5
                 age:
                     - GreaterThan:
                         value: 18
@@ -63,6 +73,11 @@ than ``18``, you could do the following:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="siblings">
+                    <constraint name="GreaterThan">
+                        <value>5</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="GreaterThan">
                         <option name="value">18</option>
@@ -83,6 +98,8 @@ than ``18``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('siblings', new Assert\GreaterThan(5));
+
                 $metadata->addPropertyConstraint('age', new Assert\GreaterThan(array(
                     'value' => 18,
                 )));

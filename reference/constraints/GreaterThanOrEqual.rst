@@ -22,8 +22,9 @@ in the options. To force that a value is greater than another value, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is greater
-than or equal to ``18``, you could do the following:
+The following constraints ensure that:
+- the number of ``siblings`` of a ``Person`` is greater than or equal to ``5``
+- the ``age`` of a ``Person`` class is greater than or equal to ``18``
 
 .. configuration-block::
 
@@ -37,6 +38,11 @@ than or equal to ``18``, you could do the following:
         class Person
         {
             /**
+             * @Assert\GreaterThanOrEqual(5)
+             */
+            protected $siblings;
+
+            /**
              * @Assert\GreaterThanOrEqual(
              *     value = 18
              * )
@@ -49,6 +55,8 @@ than or equal to ``18``, you could do the following:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                siblings:
+                    - GreaterThanOrEqual: 5
                 age:
                     - GreaterThanOrEqual:
                         value: 18
@@ -62,6 +70,11 @@ than or equal to ``18``, you could do the following:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="siblings">
+                    <constraint name="GreaterThanOrEqual">
+                        <value>5</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="GreaterThanOrEqual">
                         <option name="value">18</option>
@@ -82,6 +95,8 @@ than or equal to ``18``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('siblings', new Assert\GreaterThanOrEqual(5));
+
                 $metadata->addPropertyConstraint('age', new Assert\GreaterThanOrEqual(array(
                     'value' => 18,
                 )));
