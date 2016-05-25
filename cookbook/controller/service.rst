@@ -31,7 +31,7 @@ These are the main **drawbacks** of defining controllers as services:
 * It takes more work to create the controllers because they don't have
   automatic access to the services or to the base controller shortcuts;
 * The constructor of the controllers can rapidly become too complex because you
-  must inject every single dependency needed by them.
+  must inject every single dependency needed by them;
 * The code of the controllers is more verbose because you can't use the shortcuts
   of the base controller and you must replace them with some lines of code.
 
