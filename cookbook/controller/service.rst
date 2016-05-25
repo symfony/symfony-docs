@@ -4,31 +4,40 @@
 How to Define Controllers as Services
 =====================================
 
+.. caution::
+
+    Defining controllers as services is **not officially recommended** by Symfony.
+    They are used by some developers for very specific use cases, such as
+    DDD (*domain-driven design*) and Hexagonal Architecture applications.
+
 In the book, you've learned how easily a controller can be used when it
 extends the base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class. While
-this works fine, controllers can also be specified as services.
+this works fine, controllers can also be specified as services. Even if you don't
+specify your controllers as services, you might see them being used in some
+open-source Symfony bundles, so it may be useful to understand both approaches.
 
-.. note::
+These are the main **advantages** of defining controllers as services:
 
-    Specifying a controller as a service takes a bit more work. The
-    primary advantage is that the entire controller or any services passed to
-    the controller can be modified via the service container configuration.
-    This is especially useful when developing an open-source bundle or any
-    bundle that will be used in different projects.
+* The entire controller and any service passed to it can be modified via the
+  service container configuration. This is useful when developing reusable bundles;
+* Your controllers are more "sandboxed". By looking at the constructor arguments,
+  it's easy to see what types of things this controller may or may not do;
+* Since dependencies must be injected manually, it's more obvious when your
+  controller is becoming too big (i.e. if you have many constructor arguments).
 
-    A second advantage is that your controllers are more "sandboxed". By
-    looking at the constructor arguments, it's easy to see what types of things
-    this controller may or may not do. And because each dependency needs
-    to be injected manually, it's more obvious (i.e. if you have many constructor
-    arguments) when your controller is becoming too big. The recommendation from
-    the :doc:`best practices </best_practices/controllers>` is also valid for
-    controllers defined as services: Avoid putting your business logic into the
-    controllers. Instead, inject services that do the bulk of the work.
+These are the main **drawbacks** of defining controllers as services:
 
-    So, even if you don't specify your controllers as services, you'll likely
-    see this done in some open-source Symfony bundles. It's also important
-    to understand the pros and cons of both approaches.
+* It takes more work to create the controllers because they don't have
+  automatic access to the services or to the base controller shortcuts;
+* The constructor of the controllers can rapidly become too complex because you
+  must inject every single dependency needed by them.
+* The code of the controllers is more verbose because you can't use the shortcuts
+  of the base controller and oyu must replace them with some lines of code.
+
+The recommendation from the :doc:`best practices </best_practices/controllers>`
+is also valid for controllers defined as services: avoid putting your business
+logic into the controllers. Instead, inject services that do the bulk of the work.
 
 Defining the Controller as a Service
 ------------------------------------
