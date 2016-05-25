@@ -264,9 +264,6 @@ will be called after another event - ``kernel.controller`` - is dispatched.
        is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony Framework.
 
-       There are also a few other variations on the above process (e.g. if
-       you're registering your controllers as services).
-
 .. _component-http-kernel-kernel-controller:
 
 3) The ``kernel.controller`` Event
