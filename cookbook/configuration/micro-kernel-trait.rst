@@ -194,15 +194,12 @@ to hold the kernel. Now it looks like this::
         {
             // import the WebProfilerRoutes, only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
-                $routes->mount('/_wdt', $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml'));
-                $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
+                $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml', '/_wdt');
+                $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml', '/_profiler');
             }
 
             // load the annotation routes
-            $routes->mount(
-                '/',
-                $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation')
-            );
+            $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation');
         }
     }
 
