@@ -33,7 +33,7 @@ These are the main **drawbacks** of defining controllers as services:
 * The constructor of the controllers can rapidly become too complex because you
   must inject every single dependency needed by them.
 * The code of the controllers is more verbose because you can't use the shortcuts
-  of the base controller and oyu must replace them with some lines of code.
+  of the base controller and you must replace them with some lines of code.
 
 The recommendation from the :doc:`best practices </best_practices/controllers>`
 is also valid for controllers defined as services: avoid putting your business
