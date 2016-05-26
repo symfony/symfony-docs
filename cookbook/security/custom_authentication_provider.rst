@@ -208,6 +208,7 @@ the ``PasswordDigest`` header value matches with the user's password.
     // src/AppBundle/Security/Authentication/Provider/WsseProvider.php
     namespace AppBundle\Security\Authentication\Provider;
 
+    use Psr\Cache\CacheItemPoolInterface;
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -218,12 +219,12 @@ the ``PasswordDigest`` header value matches with the user's password.
     class WsseProvider implements AuthenticationProviderInterface
     {
         private $userProvider;
-        private $cacheDir;
+        private $cachePool;
 
-        public function __construct(UserProviderInterface $userProvider, $cacheDir)
+        public function __construct(UserProviderInterface $userProvider, CacheItemPoolInterface $cachePool)
         {
             $this->userProvider = $userProvider;
-            $this->cacheDir     = $cacheDir;
+            $this->$cachePool     = $cachePool;
         }
 
         public function authenticate(TokenInterface $token)
@@ -258,19 +259,15 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
+            $cacheItem = $this->cacheService->getItem(md5($nonce));
             // Validate that the nonce is *not* used in the last 5 minutes
             // if it has, this could be a replay attack
-            if (
-                file_exists($this->cacheDir.'/'.md5($nonce))
-                && file_get_contents($this->cacheDir.'/'.md5($nonce)) + 300 > time()
-            ) {
+            if ($cacheItem->isHit()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
             // If cache directory does not exist we create it
-            if (!is_dir($this->cacheDir)) {
-                mkdir($this->cacheDir, 0777, true);
-            }
-            file_put_contents($this->cacheDir.'/'.md5($nonce), time());
+            $cacheItem->set(null)->expiresAfter($this->lifetime - (time() - $created));
+            $this->cacheService->save($cacheItem);
 
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
@@ -411,7 +408,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
                 arguments:
                     - '' # User Provider
-                    - '%kernel.cache_dir%/security/nonces'
+                    - '@cache'
                 public: false
 
             wsse.security.authentication.listener:
@@ -433,7 +430,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                     public="false"
                 >
                     <argument /> <!-- User Provider -->
-                    <argument>%kernel.cache_dir%/security/nonces</argument>
+                    <argument type="service" id="cache"></argument>
                 </service>
 
                 <service id="wsse.security.authentication.listener"
@@ -456,7 +453,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             'AppBundle\Security\Authentication\Provider\WsseProvider',
             array(
                 '', // User Provider
-                '%kernel.cache_dir%/security/nonces',
+                new Reference('cache'),
             )
         );
         $definition->setPublic(false);
