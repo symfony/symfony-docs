@@ -259,14 +259,17 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
+            // Try to fetch the cache item from pool
             $cacheItem = $this->cachePool->getItem(md5($nonce));
-            // Validate that the nonce is *not* used in the last 5 minutes
-            // if it has, this could be a replay attack
+            
+            // Validate that the nonce is *not* in cache
+            // if it is, this could be a replay attack
             if ($cacheItem->isHit()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
-            // If cache directory does not exist we create it
-            $cacheItem->set(null)->expiresAfter($this->lifetime - (time() - $created));
+            
+            // Store the item in cache for 5 minutes
+            $cacheItem->set(null)->expiresAfter(300);
             $this->cachePool->save($cacheItem);
 
             // Validate Secret
