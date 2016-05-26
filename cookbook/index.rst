@@ -21,13 +21,13 @@ The Cookbook
     install/index
     logging/index
     profiler/index
+    psr7
     request/index
     routing/index
     security/index
     serializer
     service_container/index
     session/index
-    psr7
     symfony1
     templating/index
     testing/index
