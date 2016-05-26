@@ -490,6 +490,9 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
+Then you must set the file's content as usual, for example by using
+:method:`Symfony\\Component\\HttpFoundation\\Response::setContent`.
+
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
