@@ -91,7 +91,7 @@ example containing most features described below:
             );
 
             if (true === $dummy) {
-                return;
+                return null;
             }
 
             if ('string' === $dummy) {
@@ -109,7 +109,7 @@ example containing most features described below:
          * @param mixed $value     Some value to check against
          * @param bool  $theSwitch Some switch to control the method's flow
          *
-         * @return bool|null The resultant check if $theSwitch isn't false, null otherwise
+         * @return bool|void The resultant check if $theSwitch isn't false, void otherwise
          */
         private function reverseBoolean($value = null, $theSwitch = false)
         {
@@ -143,8 +143,8 @@ Structure
 * Add a blank line before ``return`` statements, unless the return is alone
   inside a statement-group (like an ``if`` statement);
 
-* Use just ``return;`` instead of ``return null;`` when a function must return
-  void early;
+* Use ``return null;`` when a function explicitly returns ``null`` values and
+  use ``return;`` when the function returns ``void`` values;
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
