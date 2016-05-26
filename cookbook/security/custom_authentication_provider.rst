@@ -224,7 +224,7 @@ the ``PasswordDigest`` header value matches with the user's password.
         public function __construct(UserProviderInterface $userProvider, CacheItemPoolInterface $cachePool)
         {
             $this->userProvider = $userProvider;
-            $this->$cachePool     = $cachePool;
+            $this->cachePool     = $cachePool;
         }
 
         public function authenticate(TokenInterface $token)
@@ -259,7 +259,7 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
-            $cacheItem = $this->cacheService->getItem(md5($nonce));
+            $cacheItem = $this->cachePool->getItem(md5($nonce));
             // Validate that the nonce is *not* used in the last 5 minutes
             // if it has, this could be a replay attack
             if ($cacheItem->isHit()) {
@@ -267,7 +267,7 @@ the ``PasswordDigest`` header value matches with the user's password.
             }
             // If cache directory does not exist we create it
             $cacheItem->set(null)->expiresAfter($this->lifetime - (time() - $created));
-            $this->cacheService->save($cacheItem);
+            $this->cachePool->save($cacheItem);
 
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
