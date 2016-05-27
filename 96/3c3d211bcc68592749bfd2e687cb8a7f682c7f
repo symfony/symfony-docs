@@ -1,0 +1,132 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2016-03-30T13:09:42Z
+
+I've probably forgot some things, feel free to list them here. ping @symfony/mergers
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-30T13:16:09Z
+
+What about refactorings which don't provide significant performance improvements? Example: https://github.com/symfony/symfony/pull/18227/files
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-30T13:19:46Z
+
+Another use case: removal of legacy code which was left over by mistake. Example: https://github.com/symfony/symfony/pull/18299/files
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-30T13:23:26Z
+
+Another use case: changes related to design. I'd like to redesign the exception page, the Symfony Requirements check webpage, etc. to match the new design of the toolbar, profiler, welcome page, etc. Would that be allowed?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2016-03-30T13:24:48Z
+
+@javiereguiluz
+
+Refactorings: I would say no
+Removal of legacy code: yes, that's a bug
+Design fixes, yes, design changes, no
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-30T13:25:21Z
+
+Another one: adding tests for untested features present in old branches.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-30T13:27:30Z
+
+A question: changing the visibility of properties/methods is considered a new feature? Example: adding a getter for one property: https://github.com/symfony/symfony/pull/18143/files
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-30T13:31:22Z
+
+Another question: where does "Upgrading ICU data" fit? It was merged on 2.3: https://github.com/symfony/symfony/pull/18019
+
+---------------------------------------------------------------------------
+
+by fabpot at 2016-03-30T13:32:51Z
+
+Keep in mind that I'm not documenting the current way as it is inconsistent at times. That's why I want to write some rules for the future (what we've done in the past is irrelevant but useful to draw the line in the sand).
+
+---------------------------------------------------------------------------
+
+by stof at 2016-03-30T13:45:11Z
+
+> A question: changing the visibility of properties/methods is considered a new feature? Example: adding a getter for one property
+
+both are new features
+
+---------------------------------------------------------------------------
+
+by stof at 2016-03-30T13:45:43Z
+
+> Another one: adding tests for untested features present in old branches.
+
+I would accept this in maintenance branches, as it helps preventing regressions
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-03-30T13:50:26Z
+
+Like https://github.com/symfony/symfony/pull/12425#issuecomment-202892373 for example ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-03-30T14:17:54Z
+
+@fabpot We need to add a reference to the new file to `/contributing/map.rst.inc` too.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-04-05T15:53:00Z
+
+I propose also something like:
+> It is also designed to enable a continuous upgrade path that allows one to move forward with newest Symfony versions in the safest way. One should be able to move PHP versions, OS or Symfony versions almost independently. That's the reason why e.g. supporting latest PHP versions or OS features is considered as bug fixes.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-04-10T09:13:50Z
+
+What about using a definition list instead of the unordered lists?
+```rst
+**Performance improvements**
+    Performance improvements should [...]
+```
+
+---------------------------------------------------------------------------
+
+by fabpot at 2016-04-10T17:23:35Z
+
+@WouterJ because this is really a list.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2016-04-10T17:23:48Z
+
+I've taken into account all comments, should be better now.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T08:42:19Z
+
+@symfony/mergers can you please make a decision on this PR? From a doc point of view, it's ready to be merged but I'm not sure if this is already accepted by the core team.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T17:10:57Z
+
+I've re-read it again and I'm 👍
+
+---------------------------------------------------------------------------
+
+by fabpot at 2016-05-23T08:55:47Z
+
+I would merge this as we can always tweak the rules easily if we think they need to be refined based on our experience. Looks good to me as version 1
