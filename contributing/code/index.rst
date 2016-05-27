@@ -6,6 +6,7 @@ Contributing Code
 
     bugs
     patches
+    maintenance
     core_team
     security
     tests

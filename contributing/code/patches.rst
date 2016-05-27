@@ -113,10 +113,12 @@ Choose the right Branch
 Before working on a patch, you must determine on which branch you need to
 work:
 
-* ``2.3``, if you are fixing a bug for an existing feature (you may have
-  to choose a higher branch if the feature you are fixing was introduced
-  in a later version);
-* ``master``, if you are adding a new feature.
+* ``2.3``, if you are fixing a bug for an existing feature or want to make a
+  change that falls into the :doc:`list of acceptable changes in patch versions
+  </contributing/code/maintenance>` (you may have to choose a higher branch if
+  the feature you are fixing was introduced in a later version);
+
+ * ``master``, if you are adding a new feature.
 
 .. note::
 
