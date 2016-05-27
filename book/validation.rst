@@ -516,9 +516,11 @@ For information on translating the constraint messages, see
 Constraint Targets
 ------------------
 
-Constraints can be applied to a class property (e.g. ``name``) or a public
-getter method (e.g. ``getFullName``). The first is the most common and easy
-to use, but the second allows you to specify more complex validation rules.
+Constraints can be applied to a class property (e.g. ``name``), a public
+getter method (e.g. ``getFullName``) or an entire class. Property constraints
+are the most common and easy to use. Getter constraints allow you to specify
+more complex validation rules. Finally, class constraints are intended
+for scenarios where you want to validate a class as a whole.
 
 .. index::
    single: Validation; Property constraints
