@@ -87,14 +87,18 @@ If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
-    $builder->add('startDateTime', 'datetime', array(
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+    
+    $builder->add('startDateTime', DateTimeType::class, array(
         'placeholder' => 'Select a value',
     ));
 
 Alternatively, you can use an array that configures different placeholder
 values for the year, month, day, hour, minute and second fields::
 
-    $builder->add('startDateTime', 'datetime', array(
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+    
+    $builder->add('startDateTime', DateTimeType::class, array(
         'placeholder' => array(
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
             'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
