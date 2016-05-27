@@ -48,6 +48,11 @@ type of the release. This maintenance is divided into:
   be fixed. The end of this period is referenced as being the *end of life* of
   a release.
 
+.. note::
+
+    The :doc:`maintenance document </contributing/code/maintenance>` describes
+    the boundaries of acceptable changes during maintenance.
+
 Symfony Versions
 ----------------
 
