@@ -121,7 +121,7 @@ The following snippet adds CSRF protection to the form factory::
 
     use Symfony\Component\Form\Forms;
     use Symfony\Component\HttpFoundation\Session\Session;
-    use Symfony\Component\Security\Extension\Csrf\CsrfExtension;
+    use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
     use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
     use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
     use Symfony\Component\Security\Csrf\CsrfTokenManager;
