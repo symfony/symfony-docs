@@ -12,6 +12,7 @@ Authentication (Identifying/Logging in the User)
     remember_me
     impersonating_user
     form_login
+    login_handlers
     custom_provider
     custom_password_authenticator
     api_key_authentication
