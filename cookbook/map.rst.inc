@@ -68,7 +68,6 @@
 
 * :doc:`/cookbook/doctrine/index`
 
-  * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
   * :doc:`/cookbook/doctrine/event_listeners_subscribers`
   * :doc:`/cookbook/doctrine/dbal`
@@ -111,7 +110,7 @@
   * :doc:`/cookbook/form/use_empty_data`
   * :doc:`/cookbook/form/direct_submit`
   * (Validation) :doc:`/cookbook/validation/custom_constraint`
-  * (Doctrine) :doc:`/cookbook/doctrine/file_uploads`
+  * (Controller) :doc:`/cookbook/controller/upload_file`
 
 * :doc:`/cookbook/frontend/index`
 
