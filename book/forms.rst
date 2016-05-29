@@ -1951,10 +1951,9 @@ HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.
 
 There's still much more to learn about the powerful world of forms, such as
-how to handle
-:doc:`file uploads with Doctrine </cookbook/doctrine/file_uploads>` or how
-to create a form where a dynamic number of sub-forms can be added (e.g. a
-todo list where you can keep adding more fields via JavaScript before submitting).
+how to handle :doc:`file uploads </cookbook/controller/upload_file>` or how to
+create a form where a dynamic number of sub-forms can be added (e.g. a todo
+list where you can keep adding more fields via JavaScript before submitting).
 See the cookbook for these topics. Also, be sure to lean on the
 :doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.
@@ -1962,8 +1961,8 @@ includes examples of how to use each field type and its options.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/doctrine/file_uploads`
-* :doc:`FileType Reference </reference/forms/types/file>`
+* :doc:`/cookbook/controller/upload_file`
+* :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/dynamic_form_modification`
