@@ -134,10 +134,9 @@ Adding the extension Business Logic
 The goal of your extension is to display nice images next to file inputs
 (when the underlying model contains images). For that purpose, suppose that
 you use an approach similar to the one described in
-:doc:`How to handle File Uploads with Doctrine </cookbook/doctrine/file_uploads>`:
-you have a Media model with a file property (corresponding to the file field
-in the form) and a path property (corresponding to the image path in the
-database)::
+:doc:`How to handle File Uploads with Doctrine </cookbook/controller/upload_file>`:
+you have a Media model with a path property, corresponding to the image path in
+the database::
 
     // src/AppBundle/Entity/Media.php
     namespace AppBundle\Entity;
@@ -152,12 +151,6 @@ database)::
          * @var string The path - typically stored in the database
          */
         private $path;
-
-        /**
-         * @var \Symfony\Component\HttpFoundation\File\UploadedFile
-         * @Assert\File(maxSize="2M")
-         */
-        public $file;
 
         // ...
 
@@ -179,8 +172,8 @@ the ``file`` form type:
 
 #. Override the ``configureOptions`` method in order to add an ``image_path``
    option;
-#. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
-   URL to the view.
+#. Override the ``buildView`` methods in order to pass the image URL to the
+   view.
 
 The logic is the following: when adding a form field of type ``file``,
 you will be able to specify a new option: ``image_path``. This option will
@@ -227,14 +220,13 @@ it in the view::
          */
         public function buildView(FormView $view, FormInterface $form, array $options)
         {
-            if (array_key_exists('image_path', $options)) {
+            if (isset($options['image_path'])) {
                 $parentData = $form->getParent()->getData();
 
+                $imageUrl = null;
                 if (null !== $parentData) {
                     $accessor = PropertyAccess::createPropertyAccessor();
                     $imageUrl = $accessor->getValue($parentData, $options['image_path']);
-                } else {
-                     $imageUrl = null;
                 }
 
                 // set an "image_url" variable that will be available when rendering this field
