@@ -79,7 +79,7 @@ could have been manipulated by the end-user. Moreover, it can contain
 characters that are not allowed in file names. You should sanitize the name
 before using it directly.
 
-Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example
+Read the :doc:`cookbook </cookbook/controller/upload_file>` for an example
 of how to manage a file upload associated with a Doctrine entity.
 
 Field Options

@@ -62,3 +62,4 @@
 /create_framework/http-kernel-httpkernelinterface /create_framework/http_kernel_httpkernelinterface
 /create_framework/http-kernel-httpkernel-class /create_framework/http_kernel_httpkernel_class
 /create_framework/dependency-injection /create_framework/dependency_injection
+/cookbook/doctrine/file_uploads /cookbook/controller/upload_file
