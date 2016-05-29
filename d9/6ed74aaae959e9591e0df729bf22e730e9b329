@@ -1,0 +1,93 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-29T09:48:47Z
+
+@csarrazi thanks for this!! Bootstrapping documentation for a new component is very hard ... but at the same time very much appreciated!
+
+I have a global question about the proposed docs. Sometimes you write `LDAP server` but most of the times you write `Ldap server`. Wikipedia [always uses LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) as an acronym. I propose to do the same ... except when referring to the name of the component, which apparently is `Ldap`. Thanks!
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-03-29T12:57:19Z
+
+@javiereguiluz Yes, that's what is intended. However, as I wrote this quite late in the evening, I wasn't very consistent. Same thing with `a` / `an` before `LDAP`.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-03-31T16:46:41Z
+
+Still needs to pass on all files to normalize `Ldap` <-> `LDAP`, and `a` -> `an`.
+
+Also, `cookbook/security/ldap.rst` still needs some more work (the examples still need to be adapted, I only added stubs for now).
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-13T06:55:44Z
+
+Is there anything left to do on this PR? We're in the progress of updating our applications to Symfony 3 and the ldap packages used do not support 3.0 thus we will have to implement our own. Sadly the documentation is still missing :(
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-04-13T07:46:27Z
+
+The only remaining part is the cookbook, which is not finalized. Indeed, the configuration sections at the end is not ready yet: Only a few yaml examples are ready, and the configuration for other formats (php, xml) is definitely not ready, as I generally do not use these.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-04-16T07:33:24Z
+
+Done. @javiereguiluz could you take a look at it?
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-04-16T07:33:55Z
+
+By the way, this documentation is for version 2.8 and 3.0 of the Ldap component. Changes brought in 3.1 will be addressed in another PR.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-16T08:24:00Z
+
+I left some unimportant comments but overall I like this documentation a lot: you went straight to the point, everything is clearly explained and there are a ton of useful examples. You did a truly amazing job here. Thanks!
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-04-16T18:05:55Z
+
+Comments corrected.
+
+By the way, the PR for 3.1 will be quite small in comparison, as the only difference will be the description of the new way to define the `ldap` service. However, it first needs this PR to be merged in all branches (2.8, 3.0, master/3.1).
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-05-13T14:47:34Z
+
+Are there still missing things here? I'd like to be able to work on adding the doc for version 3.1 of the Ldap component before the 3.1 release.
+
+Ping @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-05-26T13:23:36Z
+
+Anything else to do @xabbuh, @javiereguiluz?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-26T13:27:41Z
+
+@csarrazi nothing else for me ... except saying **thank you** for your great work!
+
+I'm sure that doc maintainers will merge this soon. We want to document lots of things before the 3.1 release in 5 days.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-05-26T15:56:37Z
+
+Yeah. And this needs to be merged so I can update the docs for 3.1.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-29T11:35:48Z
+
+@javiereguiluz I counted your [last comment](https://github.com/symfony/symfony-docs/pull/6402#issuecomment-221870164) as a +1 vote. So I am going to merge here.
