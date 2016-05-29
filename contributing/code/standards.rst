@@ -163,7 +163,7 @@ Structure
   ``tearDown`` methods of PHPUnit tests, which should always be the first methods
   to increase readability;
 
-* Declare all the arguments in the same line as the method/function name, no
+* Declare all the arguments on the same line as the method/function name, no
   matter how many arguments there are;
 
 * Use parentheses when instantiating classes regardless of the number of
