@@ -153,8 +153,8 @@ Structure
   that are not intended to be instantiated from the outside and thus are not
   concerned by the `PSR-0`_ and `PSR-4`_ autoload standards;
 
-* Declare the class inheritance (if any) and all the implemented interfaces (if
-  any) in the same line as the class name;
+* Declare the class inheritance and all the implemented interfaces on the same
+  line as the class name;
 
 * Declare class properties before methods;
 
