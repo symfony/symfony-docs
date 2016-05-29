@@ -1,0 +1,99 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-17T19:46:38Z
+
+Btw, why do we use an Entity property to store both the uploaded file and file path? Wouldn't it be better to use an unmapped field?
+
+---------------------------------------------------------------------------
+
+by Raistlfiren at 2015-12-21T16:44:41Z
+
+@WouterJ, if I might make an addition as well.... It might be good to include how to handle files when editing them. For example, if I have a simple form like you included in the example, then I would need to either set data_class to null on the brochure field or convert the string to a File object. Otherwise, the form will error out and say - "The form's view data is expected to be an instance of class Symfony\Component\HttpFoundation\File\File, but is a(n) string". Maybe creating the file object is better in a data transformer, not sure. Thoughts?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-01-02T09:16:26Z
+
+> Btw, why do we use an Entity property to store both the uploaded file and file path? Wouldn't it be better to use an unmapped field?
+
+I think this was done to always trigger the lifecycle callback methods. If only the file path were mapped to the database, lifecycle callbacks would never be triggered if only the uploaded file was changed (Doctrine would not treat the entity as changed at all).
+
+However, I tend to say that we should rather move the whole file uploding logic into a DTO and not pollute the entity with logic that doesn't belong there.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-02-21T21:43:23Z
+
+@WouterJ I added 2 small comments, but :+1: from me after that. Sorry for the long delay - I'm also excited to remove the old, terrible article.
+
+---------------------------------------------------------------------------
+
+by Koc at 2016-04-07T14:14:05Z
+
+@WouterJ please add info about uploading and validating multiple files, see #5603 request
+
+---------------------------------------------------------------------------
+
+by Koc at 2016-04-07T14:14:41Z
+
+@weaverryan can we create redirect from old url to the new article?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-11T08:09:20Z
+
+@Koc That's done with the entry in the `redirection_map` file.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T13:29:38Z
+
+I've updated the article. Should be ready to merge now
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T17:52:11Z
+
+While testing this code in an application I found a few bugs which I fixed in f6068c9. Also, I strumbled onto issues creating an edit form as it needs a `File` instance. To avoid problems for readers, I've added two little tip boxes in 0c54b8a.
+
+It's now even more ready to merge than it was this afternoon :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T18:12:19Z
+
+@WouterJ amazing! Thanks for testing everything thoroughly in a real project 🙇
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-22T10:56:38Z
+
+👍 I like the changes you made here.
+
+However, for the future I think we can improve things even more by introducing a DTO that would be used to build the form and doing the file upload. That way we would not need to have the hacks being present currently.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-05-22T18:21:35Z
+
+I left a minor comment, but let's merge this :) 👍
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-27T08:26:54Z
+
+Updated again. @xabbuh using a DTO is exactly what I thought when improving this article.
+
+@weaverryan I can't find your minor comment.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-27T08:35:37Z
+
+@WouterJ you say "updated again" but I can't see any new commits 😕
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-27T08:49:27Z
+
+@javiereguiluz as it was a very small typo fix, I merged it into the previous commit: https://github.com/symfony/symfony-docs/pull/6040/commits/94e21ff80bff77063efc0924ff84331c2ad7250c#diff-bcae3aaf74848d919ee531cad0d95547R192
