@@ -211,9 +211,6 @@ Overridden Options
 choice_name
 ~~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``choice_name`` option was introduced in Symfony 2.7.
-
 **type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
 
 By default the name of each field is the id of the entity, if it can be read
@@ -222,9 +219,6 @@ fall back to using increasing integers.
 
 choice_value
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``choice_value`` option was introduced in Symfony 2.7.
 
 **type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
 
