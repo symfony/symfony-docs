@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-23T06:22:59Z
+
+@Vehsamrak technically AsseticBundle is not "deprecated" but "not officially included". Anyway, I agree with your proposal 👍
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-23T06:44:27Z
+
+👍 At least, this now matches the kernel from the Standard Edition. I also suggest that we merge this into the `2.8` branch where the bundle was removed from the Symfony Standard Edition.
