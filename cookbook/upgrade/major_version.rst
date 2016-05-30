@@ -93,7 +93,7 @@ done!
 .. sidebar:: Using the Weak Deprecations Mode
 
     Sometimes, you can't fix all deprecations (e.g. something was deprecated
-    in 2.6 and you still need to support 2.3). In these cases, you can still
+    in 2.8 and you still need to support 2.7). In these cases, you can still
     use the bridge to fix as many deprecations as possible and then switch
     to the weak test mode to make your tests pass again. You can do this by
     using the ``SYMFONY_DEPRECATIONS_HELPER`` env variable:
