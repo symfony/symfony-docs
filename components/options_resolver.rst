@@ -430,7 +430,7 @@ if you need to use other options during normalization::
         {
             // ...
             $resolver->setNormalizer('host', function (Options $options, $value) {
-                if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
+                if ('http://' !== substr($value, 0, 7) && 'https://' !== substr($value, 0, 8)) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
                     } else {
