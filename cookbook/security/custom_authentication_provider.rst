@@ -127,7 +127,7 @@ set an authenticated token in the token storage if successful.
 
         public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager)
         {
-            $this->tokenStorage          = $tokenStorage;
+            $this->tokenStorage = $tokenStorage;
             $this->authenticationManager = $authenticationManager;
         }
 
@@ -224,7 +224,7 @@ the ``PasswordDigest`` header value matches with the user's password.
         public function __construct(UserProviderInterface $userProvider, CacheItemPoolInterface $cachePool)
         {
             $this->userProvider = $userProvider;
-            $this->cachePool    = $cachePool;
+            $this->cachePool = $cachePool;
         }
 
         public function authenticate(TokenInterface $token)
@@ -411,7 +411,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
                 arguments:
                     - '' # User Provider
-                    - '@cache'
+                    - '@cache.app'
                 public: false
 
             wsse.security.authentication.listener:
@@ -433,7 +433,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                     public="false"
                 >
                     <argument /> <!-- User Provider -->
-                    <argument type="service" id="cache"></argument>
+                    <argument type="service" id="cache.app"></argument>
                 </service>
 
                 <service id="wsse.security.authentication.listener"
@@ -456,7 +456,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             'AppBundle\Security\Authentication\Provider\WsseProvider',
             array(
                 '', // User Provider
-                new Reference('cache'),
+                new Reference('cache.app'),
             )
         );
         $definition->setPublic(false);
