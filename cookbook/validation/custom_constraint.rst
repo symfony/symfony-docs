@@ -158,7 +158,7 @@ Constraint Validators with Dependencies
 If your constraint validator has dependencies, such as a database connection,
 it will need to be configured as a service in the Dependency Injection
 Container. This service must include the ``validator.constraint_validator``
-tag and may include an ``alias`` attribute:
+tag and should include an ``alias`` attribute to be used in the validatedBy method of your validator class:
 
 .. configuration-block::
 
@@ -193,6 +193,9 @@ the constraint, with ``Validator`` appended. You can override this in your const
     {
         return 'Fully\Qualified\ConstraintValidator\Class\Name'; // or 'alias_name' if provided
     }
+
+Make sure to use the 'alias_name' when you have configured your validator as a service. Otherwise your validator class
+will be simply instantiated without your dependencies.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
