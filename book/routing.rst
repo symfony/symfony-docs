@@ -1553,6 +1553,18 @@ a template helper function:
             Read this blog post.
         </a>
 
+.. tip::
+
+    If you are generating the route inside a script tag, you might need to properly escape it for Javascript
+
+    .. code-block:: javascript
+
+        <script>
+        var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
+        </script>
+
+    For more information, see the Twig documentation.
+
 .. index::
    single: Routing; Absolute URLs
 
