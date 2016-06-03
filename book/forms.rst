@@ -1125,7 +1125,7 @@ the choice is ultimately up to you.
 .. caution::
 
     When the name of your form class matches any of the built-in field types,
-    your form might not be rendered correctly. A form
+    your form won't be rendered correctly. A form
     ``AppBundle\\Form\\Type\\PasswordType`` to change a user password for
     instance will be mistaken for the built-in ``PasswordType`` field type and
     won't be rendered correctly. You can still use the class name of your choice
