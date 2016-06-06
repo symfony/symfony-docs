@@ -6,3 +6,4 @@ Validation
 
     custom_constraint
     severity
+    validation-group-service-resolver
