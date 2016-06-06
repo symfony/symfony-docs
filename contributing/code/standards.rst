@@ -153,12 +153,18 @@ Structure
   that are not intended to be instantiated from the outside and thus are not
   concerned by the `PSR-0`_ and `PSR-4`_ autoload standards;
 
+* Declare the class inheritance and all the implemented interfaces on the same
+  line as the class name;
+
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
   The exceptions to this rule are the class constructor and the ``setUp`` and
   ``tearDown`` methods of PHPUnit tests, which should always be the first methods
   to increase readability;
+
+* Declare all the arguments on the same line as the method/function name, no
+  matter how many arguments there are;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
