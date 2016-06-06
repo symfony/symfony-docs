@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-01T13:43:51Z
+
+👍 this is easy to check: https://github.com/symfony/symfony/blob/2.3/src/Symfony/Component/Console/Application.php#L859-877
+
+@julienfalque thanks.
