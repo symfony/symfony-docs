@@ -20,9 +20,9 @@ Most third-party bundles define their Symfony dependencies using the ``~2.N`` or
 
     {
         "require": {
-            "symfony/framework-bundle": "~2.3",
-            "symfony/finder": "~2.3",
-            "symfony/validator": "~2.3"
+            "symfony/framework-bundle": "~2.7",
+            "symfony/finder": "~2.7",
+            "symfony/validator": "~2.7"
         }
     }
 
@@ -37,9 +37,9 @@ The above example can be updated to work with Symfony 3 as follows:
 
     {
         "require": {
-            "symfony/framework-bundle": "~2.3|~3.0",
-            "symfony/finder": "~2.3|~3.0",
-            "symfony/validator": "~2.3|~3.0"
+            "symfony/framework-bundle": "~2.7|~3.0",
+            "symfony/finder": "~2.7|~3.0",
+            "symfony/validator": "~2.7|~3.0"
         }
     }
 
@@ -143,11 +143,15 @@ following recommended configuration as the starting point of your own configurat
             - php: 5.3.3
               env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' SYMFONY_DEPRECATIONS_HELPER=weak
             - php: 5.6
-              env: SYMFONY_VERSION='2.3.*'
+              env: SYMFONY_VERSION='2.7.*'
             - php: 5.6
-              env: DEPENDENCIES='dev' SYMFONY_VERSION='2.8.*@dev'
+              env: SYMFONY_VERSION='2.8.*'
             - php: 5.6
-              env: SYMFONY_VERSION='3.0.*@dev'
+              env: SYMFONY_VERSION='3.0.*'
+            - php: 5.6
+              env: SYMFONY_VERSION='3.1.*'
+            - php: 5.6
+              env: DEPENDENCES='dev' SYMFONY_VERSION='3.2.*@dev'
 
     before_install:
         - composer self-update
