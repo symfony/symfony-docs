@@ -254,6 +254,7 @@
 
   * :doc:`/cookbook/validation/custom_constraint`
   * :doc:`/cookbook/validation/severity`
+  * :doc:`/cookbook/validation/group_service_resolver`
 
 * :doc:`/cookbook/web_server/index`
 

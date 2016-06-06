@@ -177,8 +177,8 @@ Symfony, you should precede your description of the change with a
 
 .. code-block:: rst
 
-    .. versionadded:: 2.3
-        The ``askHiddenResponse`` method was introduced in Symfony 2.3.
+    .. versionadded:: 2.7
+        The ``askHiddenResponse`` method was introduced in Symfony 2.7.
 
     You can also ask a question and hide the response. This is particularly [...]
 
@@ -187,9 +187,9 @@ how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 2.3
+    .. versionadded:: 2.7
         The ``include()`` function is a new Twig feature that's available in
-        Symfony 2.3. Prior, the ``{% include %}`` tag was used.
+        Symfony 2.7. Prior, the ``{% include %}`` tag was used.
 
 Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
