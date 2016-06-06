@@ -637,8 +637,9 @@ large or whether you tried to submit text in a number field.
 
 .. seealso::
 
-    To see how to use a service with dependencies to resolve ``validation_groups``
-    checkout cookbook article :doc:`/cookbook/validation/validation-group-service-resolver`.
+    To see how to use a service to resolve ``validation_groups`` dynamically
+    read the :doc:`/cookbook/validation/validation-group-service-resolver`
+    chapter in the cookbook.
 
 .. index::
    single: Forms; Built-in field types
