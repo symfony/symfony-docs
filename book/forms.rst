@@ -1130,12 +1130,13 @@ the choice is ultimately up to you.
 
 .. caution::
 
-    When the name of your form class matches any of the built-in field types,
-    your form won't be rendered correctly. A form
+    When the name of your form class matches any registered field type that has
+    its own theme fragment, your form won't be rendered correctly. A form
     ``AppBundle\\Form\\Type\\PasswordType`` to change a user password for
     instance will be mistaken for the built-in ``PasswordType`` field type and
-    won't be rendered correctly. You can still use the class name of your choice
-    by overriding the ``getBlockPrefix`` method of your form class::
+    will be rendered incorrectly using the ``password_widget`` theme fragment.
+    You can still use the class name of your choice by overriding the
+    ``getBlockPrefix`` method of your form class::
 
         public function getBlockPrefix()
         {
