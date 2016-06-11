@@ -290,7 +290,7 @@ from the command line, you need to set the helper input stream::
         $commandTester = new CommandTester($command);
 
         $helper = $command->getHelper('question');
-        $helper->setInputStream($this->getInputStream('Test\\n'));
+        $helper->setInputStream($this->getInputStream("Test\n"));
         // Equals to a user inputting "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
