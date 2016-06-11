@@ -28,9 +28,13 @@ New Documentation
 * `#6583 <https://github.com/symfony/symfony-docs/pull/6583>`_ Adding a description for the use_microseconds parameter introduced in MonologBundle v2.11 (jorgelbg)
 * `#6582 <https://github.com/symfony/symfony-docs/pull/6582>`_ Advanced YAML component usage (dantleech)
 * `#6594 <https://github.com/symfony/symfony-docs/pull/6594>`_  Allowed to return null for query_builder (JonEastman)
+* `#6502 <https://github.com/symfony/symfony-docs/pull/6502>`_ Added the json() shortcut to the controller chapter (dfridrich, javiereguiluz)
+* `#6593 <https://github.com/symfony/symfony-docs/pull/6593>`_ Adding the payload parameter to the callback examples (jorgelbg)
 * `#6405 <https://github.com/symfony/symfony-docs/pull/6405>`_ Added the explanation about addClassesToCompile() method (javiereguiluz)
 * `#6539 <https://github.com/symfony/symfony-docs/pull/6539>`_ Documented the "autoescape" TwigBundle config option (javiereguiluz)
 * `#5574 <https://github.com/symfony/symfony-docs/pull/5574>`_ [2.7] Update Twig docs for asset features (javiereguiluz, WouterJ)
+* `#6433 <https://github.com/symfony/symfony-docs/pull/6433>`_ Documented the detectCorrupted and corruptedMessage options (javiereguiluz)
+* `#6406 <https://github.com/symfony/symfony-docs/pull/6406>`_ Added a note about the new "disabled" option for PHPUnitBridge (javiereguiluz)
 * `#6302 <https://github.com/symfony/symfony-docs/pull/6302>`_ [Form] add ``choice_translation_domain`` option to date types (HeahDude)
 
 Fixed Documentation
@@ -72,6 +76,7 @@ Minor Documentation Changes
 * `#6401 <https://github.com/symfony/symfony-docs/pull/6401>`_ Added Link to Cmder (c33s)
 * `#6391 <https://github.com/symfony/symfony-docs/pull/6391>`_ Fix mem leak in example doctrine testing (nicolas-grekas)
 * `#6087 <https://github.com/symfony/symfony-docs/pull/6087>`_ Add a note about needing to install proxy-manager (mcfedr)
+* `#6569 <https://github.com/symfony/symfony-docs/pull/6569>`_ [Reference] change namespace to point to new class (xabbuh)
 * `#6553 <https://github.com/symfony/symfony-docs/pull/6553>`_ EntityType: query_builder link to usage (weaverryan)
 * `#6572 <https://github.com/symfony/symfony-docs/pull/6572>`_ Edited BowerPHP tip (SecondeJK)
 * `#6575 <https://github.com/symfony/symfony-docs/pull/6575>`_ Rename command logging services (sroze)
