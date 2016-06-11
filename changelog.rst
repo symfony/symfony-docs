@@ -13,6 +13,64 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+May, 2016
+---------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#6040 <https://github.com/symfony/symfony-docs/pull/6040>`_ Remove old File Upload article + improve the new one (WouterJ)
+* `#6412 <https://github.com/symfony/symfony-docs/pull/6412>`_ added a maintenance document (fabpot)
+* `#6554 <https://github.com/symfony/symfony-docs/pull/6554>`_ Adding information about using the date type as usable date picker field (weaverryan)
+* `#6583 <https://github.com/symfony/symfony-docs/pull/6583>`_ Adding a description for the use_microseconds parameter introduced in MonologBundle v2.11 (jorgelbg)
+* `#6582 <https://github.com/symfony/symfony-docs/pull/6582>`_ Advanced YAML component usage (dantleech)
+* `#6405 <https://github.com/symfony/symfony-docs/pull/6405>`_ Added the explanation about addClassesToCompile() method (javiereguiluz)
+* `#6539 <https://github.com/symfony/symfony-docs/pull/6539>`_ Documented the "autoescape" TwigBundle config option (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#6578 <https://github.com/symfony/symfony-docs/pull/6578>`_ [Cookbook][Profiler] Fix arguments for Profiler::find() (hason)
+* `#6561 <https://github.com/symfony/symfony-docs/pull/6561>`_ About Templating Naming Pattern (raulconti)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#6620 <https://github.com/symfony/symfony-docs/pull/6620>`_ Move PSR to correct place on index page (WouterJ)
+* `#6609 <https://github.com/symfony/symfony-docs/pull/6609>`_ Use a better escaping mechanism for data-prototype attr (javiereguiluz)
+* `#6380 <https://github.com/symfony/symfony-docs/pull/6380>`_ [book] [validation] Constraints can be applied to an entire class too (sustmi)
+* `#6367 <https://github.com/symfony/symfony-docs/pull/6367>`_ Simplified the contribution article for Symfony Docs (javiereguiluz)
+* `#6419 <https://github.com/symfony/symfony-docs/pull/6419>`_ Update routing.rst (tamtamchik)
+* `#6598 <https://github.com/symfony/symfony-docs/pull/6598>`_ [Yaml] use static Yaml API (xabbuh)
+* `#6589 <https://github.com/symfony/symfony-docs/pull/6589>`_ Clarify signed requests in the ESI renderer (WouterJ)
+* `#6596 <https://github.com/symfony/symfony-docs/pull/6596>`_ Fixed query_builder option (HeahDude)
+* `#6595 <https://github.com/symfony/symfony-docs/pull/6595>`_ Added a note about "encoding vs. hashing" passwords (javiereguiluz)
+* `#6581 <https://github.com/symfony/symfony-docs/pull/6581>`_ [#6431] changing "Simple Example" to use implode/explode (mccullagh)
+* `#6585 <https://github.com/symfony/symfony-docs/pull/6585>`_ 6555 link to Download instructions page & Windows executable (snoek09)
+* `#6588 <https://github.com/symfony/symfony-docs/pull/6588>`_ Update configuration.rst (superhaggis)
+* `#6591 <https://github.com/symfony/symfony-docs/pull/6591>`_ 5953 use kernel events constants (snoek09)
+* `#6592 <https://github.com/symfony/symfony-docs/pull/6592>`_ [Form] Making the name property private to be more realistic (weaverryan)
+* `#6541 <https://github.com/symfony/symfony-docs/pull/6541>`_ Trusted proxies were removed when URL signing took over (rawkode)
+* `#6401 <https://github.com/symfony/symfony-docs/pull/6401>`_ Added Link to Cmder (c33s)
+* `#6391 <https://github.com/symfony/symfony-docs/pull/6391>`_ Fix mem leak in example doctrine testing (nicolas-grekas)
+* `#6087 <https://github.com/symfony/symfony-docs/pull/6087>`_ Add a note about needing to install proxy-manager (mcfedr)
+* `#6553 <https://github.com/symfony/symfony-docs/pull/6553>`_ EntityType: query_builder link to usage (weaverryan)
+* `#6572 <https://github.com/symfony/symfony-docs/pull/6572>`_ Edited BowerPHP tip (SecondeJK)
+* `#6575 <https://github.com/symfony/symfony-docs/pull/6575>`_ Rename command logging services (sroze)
+* `#6568 <https://github.com/symfony/symfony-docs/pull/6568>`_ fix RequestDataCollector class namespace (xabbuh)
+* `#6562 <https://github.com/symfony/symfony-docs/pull/6562>`_ Remove extra spaces in Nginx template (bocharsky-bw)
+* `#6511 <https://github.com/symfony/symfony-docs/pull/6511>`_ [DependencyInjection] Improved "optional argument" documentation (dantleech)
+* `#6455 <https://github.com/symfony/symfony-docs/pull/6455>`_ Editing the Doctrine section to improve accuracy and readability (natechicago)
+* `#6535 <https://github.com/symfony/symfony-docs/pull/6535>`_ Improved the description of the Twig global variables (javiereguiluz)
+* `#6530 <https://github.com/symfony/symfony-docs/pull/6530>`_ [DependencyInjection] Unquote services FQCN in parent-services examples (chalasr)
+* `#6517 <https://github.com/symfony/symfony-docs/pull/6517>`_ Add a warning about using same user for cli and web server (pasdeloup)
+* `#6504 <https://github.com/symfony/symfony-docs/pull/6504>`_ Improved the docs for the DependencyInjection component (javiereguiluz)
+* `#6506 <https://github.com/symfony/symfony-docs/pull/6506>`_ Added a tip about routes and container parameters (javiereguiluz)
+* `#6518 <https://github.com/symfony/symfony-docs/pull/6518>`_ Add details about chmod +a vs setfacl (pasdeloup)
+* `#6525 <https://github.com/symfony/symfony-docs/pull/6525>`_ [Contributing] use more precise version checker URL (xabbuh)
+* `#6528 <https://github.com/symfony/symfony-docs/pull/6528>`_ Fixed a minor indentation issue (javiereguiluz)
+
+
 April, 2016
 -----------
 
