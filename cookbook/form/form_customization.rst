@@ -1055,7 +1055,7 @@ form, modify the ``use`` tag and add the following:
         {{ block('base_form_widget_simple') }}
 
         {% if help is defined %}
-            <span class="help">{{ help }}</span>
+            <span class="help-block">{{ help }}</span>
         {% endif %}
     {% endblock %}
 
@@ -1070,7 +1070,7 @@ the following:
         {{ parent() }}
 
         {% if help is defined %}
-            <span class="help">{{ help }}</span>
+            <span class="help-block">{{ help }}</span>
         {% endif %}
     {% endblock %}
 
