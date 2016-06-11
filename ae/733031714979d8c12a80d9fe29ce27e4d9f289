@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-04-06T15:41:32Z
+
+Thank you for writing the docs, @iltar! It's looking great. I'm afraid I've decorated your PR a bit with some comments, but they are mostly minor style comments.
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-11T06:30:10Z
+
+@fabpot in the example I'm writing the `UserValueResolver` which I've based on the PR in the SensioFrameworkExtraBundle. While we're at the subject, should I add this code to a PR for 3.1, wait for 3.2 or is this something specific enough that people should implement them self?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2016-04-11T12:38:29Z
+
+I think it makes sense to add this feature directly in Symfony... that's one reason we made things more flexible. Submit this to master, that could be merged into 3.1 or 3.2.
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-15T10:06:00Z
+
+Anything left to fix in this PR?
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-18T08:30:00Z
+
+@HeahDude I've rewritten it a bit with an example, I'm hoping this is easier to understand
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2016-04-29T13:04:29Z
+
+great work @iltar , thank you 👍
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-29T13:52:03Z
+
+I've rebased against the current master and added the fixes in https://github.com/symfony/symfony-docs/pull/6438/commits/55a87b50dcbc5ede77436bca3d9fa90165afd2a2
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-05-06T06:05:10Z
+
+Any last checks? I'd say this is ready to be merged :smile:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T10:47:00Z
+
+This looks ready to me. 👍
