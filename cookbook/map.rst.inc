@@ -17,6 +17,7 @@
   * :doc:`/cookbook/bundles/extension`
   * :doc:`/cookbook/bundles/configuration`
   * :doc:`/cookbook/bundles/prepend_extension`
+  * :doc:`/cookbook/bundles/tests`
 
 * :doc:`/cookbook/cache/index`
 

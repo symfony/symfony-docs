@@ -12,3 +12,4 @@ Bundles
     extension
     configuration
     prepend_extension
+    tests
