@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-29T17:53:11Z
+
+I basically like the idea to make use of the new Cache component in this example. Thanks for the heads up @Nyholm! I just left some minor comments about changes we should imo make to better fit with how the PSR-6 cache system is integrated in Symfony.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-29T17:53:57Z
+
+@weaverryan @WouterJ By the way, we need to pay attention to merge this into the `3.1` branch.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-05-29T18:27:37Z
+
+Thank you for your comments. I'll update the pr tomorrow.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-05-31T07:57:57Z
+
+I've just pushed some changes to the PR.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-01T08:27:55Z
+
+👍 Great work @Nyholm!
