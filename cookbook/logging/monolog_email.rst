@@ -25,9 +25,9 @@ it is broken down.
                     # action_level: error
                     # excluded_404s:
                     #     - ^/
-                    handler:      buffered
-                buffered:
-                    type:    buffer
+                    handler:      deduplicated
+                deduplicated:
+                    type:    deduplication
                     handler: swift
                 swift:
                     type:       swift_mailer
@@ -35,8 +35,10 @@ it is broken down.
                     to_email:   'error@example.com'
                     # or list of recipients
                     # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
-                    subject:    An Error Occurred!
+                    subject:    'An Error Occurred! %%message%%'
                     level:      debug
+                    formatter:  monolog.formatter.html
+                    content_type: text/html
 
     .. code-block:: xml
 
@@ -49,8 +51,9 @@ it is broken down.
                                 http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
-                <!--
-                To also log 400 level errors (but not 404's):
+                <!-- 
+                500 errors are logged at the critical level,
+                to also log 400 level errors (but not 404's):
                 action-level="error"
                 And add this child inside this monolog:handler
                 <monolog:excluded-404>^/</monolog:excluded-404>
@@ -59,23 +62,25 @@ it is broken down.
                     name="mail"
                     type="fingers_crossed"
                     action-level="critical"
-                    handler="buffered"
+                    handler="deduplicated"
                 />
                 <monolog:handler
-                    name="buffered"
-                    type="buffer"
+                    name="deduplicated"
+                    type="deduplication"
                     handler="swift"
-                />
+                >
                 <monolog:handler
                     name="swift"
                     type="swift_mailer"
                     from-email="error@example.com"
-                    subject="An Error Occurred!"
-                    level="debug">
+                    subject="An Error Occurred! %%message%%"
+                    level="debug"
+                    formatter="monolog.formatter.html"
+                    content-type="text/html">
 
                     <monolog:to-email>error@example.com</monolog:to-email>
 
-                    <!-- or multiple to-email elements -->
+                    <!-- or list of recipients -->
                     <!--
                     <monolog:to-email>dev1@example.com</monolog:to-email>
                     <monolog:to-email>dev2@example.com</monolog:to-email>
@@ -92,26 +97,29 @@ it is broken down.
             'handlers' => array(
                 'mail' => array(
                     'type'         => 'fingers_crossed',
+                    // 500 errors are logged at the critical level
                     'action_level' => 'critical',
                     // to also log 400 level errors (but not 404's):
                     // 'action_level' => 'error',
                     // 'excluded_404s' => array(
                     //     '^/',
                     // ),
-                    'handler'      => 'buffered',
+                    'handler'      => 'deduplicated',
                 ),
-                'buffered' => array(
-                    'type'    => 'buffer',
+                'deduplicated' => array(
+                    'type'    => 'deduplication',
                     'handler' => 'swift',
                 ),
                 'swift' => array(
-                    'type'       => 'swift_mailer',
-                    'from_email' => 'error@example.com',
-                    'to_email'   => 'error@example.com',
+                    'type'         => 'swift_mailer',
+                    'from_email'   => 'error@example.com',
+                    'to_email'     => 'error@example.com',
                     // or a list of recipients
                     // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
-                    'subject'    => 'An Error Occurred!',
-                    'level'      => 'debug',
+                    'subject'      => 'An Error Occurred! %%message%%',
+                    'level'        => 'debug',
+                    'formatter'    => 'monolog.formatter.html',
+                    'content_type' => 'text/html',
                 ),
             ),
         ));
@@ -121,7 +129,7 @@ it is only triggered when the action level, in this case ``critical`` is reached
 The ``critical`` level is only triggered for 5xx HTTP code errors. If this level
 is reached once, the ``fingers_crossed`` handler will log all messages
 regardless of their level. The ``handler`` setting means that the output
-is then passed onto the ``buffered`` handler.
+is then passed onto the ``deduplicated`` handler.
 
 .. tip::
 
@@ -129,12 +137,16 @@ is then passed onto the ``buffered`` handler.
     set the ``action_level`` to ``error`` instead of ``critical``. See the
     code above for an example.
 
-The ``buffered`` handler simply keeps all the messages for a request and
-then passes them onto the nested handler in one go. If you do not use this
-handler then each message will be emailed separately. This is then passed
-to the ``swift`` handler. This is the handler that actually deals with
-emailing you the error. The settings for this are straightforward, the
-to and from addresses and the subject.
+The ``deduplicated`` handler simply keeps all the messages for a request and
+then passes them onto the nested handler in one go, but only if the records are
+unique over a given period of time (60 seconds by default). If the records are
+duplicates they are simply discarded. Adding this handler reduces the amount of
+notifications to a manageable level, specially in critical failure scenarios.
+
+The messages are then passed to the ``swift`` handler. This is the handler that
+actually deals with emailing you the error. The settings for this are
+straightforward, the to and from addresses, the formatter, the content type 
+and the subject.
 
 You can combine these handlers with other handlers so that the errors still
 get logged on the server as well as the emails being sent:
@@ -160,20 +172,22 @@ get logged on the server as well as the emails being sent:
                     handler:      grouped
                 grouped:
                     type:    group
-                    members: [streamed, buffered]
+                    members: [streamed, deduplicated]
                 streamed:
                     type:  stream
                     path:  '%kernel.logs_dir%/%kernel.environment%.log'
                     level: debug
-                buffered:
-                    type:    buffer
+                deduplicated:
+                    type:    deduplication
                     handler: swift
                 swift:
                     type:       swift_mailer
                     from_email: 'error@example.com'
                     to_email:   'error@example.com'
-                    subject:    An Error Occurred!
+                    subject:    'An Error Occurred! %%message%%'
                     level:      debug
+                    formatter:  monolog.formatter.html
+                    content_type: text/html
 
     .. code-block:: xml
 
@@ -196,7 +210,7 @@ get logged on the server as well as the emails being sent:
                     type="group"
                 >
                     <member type="stream"/>
-                    <member type="buffered"/>
+                    <member type="deduplicated"/>
                 </monolog:handler>
                 <monolog:handler
                     name="stream"
@@ -204,17 +218,28 @@ get logged on the server as well as the emails being sent:
                     level="debug"
                 />
                 <monolog:handler
-                    name="buffered"
-                    type="buffer"
+                    name="deduplicated"
+                    type="deduplication"
                     handler="swift"
                 />
                 <monolog:handler
                     name="swift"
+                    type="swift_mailer"
                     from-email="error@example.com"
-                    to-email="error@example.com"
-                    subject="An Error Occurred!"
+                    subject="An Error Occurred! %%message%%"
                     level="debug"
-                />
+                    formatter="monolog.formatter.html"
+                    content-type="text/html">
+
+                    <monolog:to-email>error@example.com</monolog:to-email>
+
+                    <!-- or list of recipients -->
+                    <!--
+                    <monolog:to-email>dev1@example.com</monolog:to-email>
+                    <monolog:to-email>dev2@example.com</monolog:to-email>
+                    ...
+                    -->
+                </monolog:handler>
             </monolog:config>
         </container>
 
@@ -230,29 +255,33 @@ get logged on the server as well as the emails being sent:
                 ),
                 'grouped' => array(
                     'type'    => 'group',
-                    'members' => array('streamed', 'buffered'),
+                    'members' => array('streamed', 'deduplicated'),
                 ),
                 'streamed'  => array(
                     'type'  => 'stream',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
                 ),
-                'buffered'    => array(
-                    'type'    => 'buffer',
-                    'handler' => 'swift',
+                'deduplicated' => array(
+                    'type'     => 'deduplication',
+                    'handler'  => 'swift',
                 ),
                 'swift' => array(
-                    'type'       => 'swift_mailer',
-                    'from_email' => 'error@example.com',
-                    'to_email'   => 'error@example.com',
-                    'subject'    => 'An Error Occurred!',
-                    'level'      => 'debug',
+                    'type'         => 'swift_mailer',
+                    'from_email'   => 'error@example.com',
+                    'to_email'     => 'error@example.com',
+                    // or a list of recipients
+                    // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
+                    'subject'      => 'An Error Occurred! %%message%%',
+                    'level'        => 'debug',
+                    'formatter'    => 'monolog.formatter.html',
+                    'content_type' => 'text/html',
                 ),
             ),
         ));
 
 This uses the ``group`` handler to send the messages to the two
-group members, the ``buffered`` and the ``stream`` handlers. The messages will
+group members, the ``deduplicated`` and the ``stream`` handlers. The messages will
 now be both written to the log file and emailed.
 
 .. _Monolog: https://github.com/Seldaek/monolog
