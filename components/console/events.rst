@@ -86,6 +86,36 @@ C/C++ standard.::
         }
     });
 
+The ``ConsoleEvents::EXCEPTION`` Event
+--------------------------------------
+
+**Typical Purposes**: Handle exceptions thrown during the execution of a
+command.
+
+Whenever an exception is thrown by a command, the ``ConsoleEvents::EXCEPTION``
+event is dispatched. A listener can wrap or change the exception or do
+anything useful before the exception is thrown by the application.
+
+Listeners receive a
+:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` event::
+
+    use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+    use Symfony\Component\Console\ConsoleEvents;
+
+    $dispatcher->addListener(ConsoleEvents::EXCEPTION, function (ConsoleExceptionEvent $event) {
+        $output = $event->getOutput();
+
+        $command = $event->getCommand();
+
+        $output->writeln(sprintf('Oops, exception thrown while running command <info>%s</info>', $command->getName()));
+
+        // get the current exit code (the exception code or the exit code set by a ConsoleEvents::TERMINATE event)
+        $exitCode = $event->getExitCode();
+
+        // change the exception to another one
+        $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
+    });
+
 The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------
 
@@ -123,35 +153,5 @@ Listeners receive a
     This event is also dispatched when an exception is thrown by the command.
     It is then dispatched just after the ``ConsoleEvents::EXCEPTION`` event.
     The exit code received in this case is the exception code.
-
-The ``ConsoleEvents::EXCEPTION`` Event
---------------------------------------
-
-**Typical Purposes**: Handle exceptions thrown during the execution of a
-command.
-
-Whenever an exception is thrown by a command, the ``ConsoleEvents::EXCEPTION``
-event is dispatched. A listener can wrap or change the exception or do
-anything useful before the exception is thrown by the application.
-
-Listeners receive a
-:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` event::
-
-    use Symfony\Component\Console\Event\ConsoleExceptionEvent;
-    use Symfony\Component\Console\ConsoleEvents;
-
-    $dispatcher->addListener(ConsoleEvents::EXCEPTION, function (ConsoleExceptionEvent $event) {
-        $output = $event->getOutput();
-
-        $command = $event->getCommand();
-
-        $output->writeln(sprintf('Oops, exception thrown while running command <info>%s</info>', $command->getName()));
-
-        // get the current exit code (the exception code or the exit code set by a ConsoleEvents::TERMINATE event)
-        $exitCode = $event->getExitCode();
-
-        // change the exception to another one
-        $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
-    });
 
 .. _`reserved exit codes`: http://www.tldp.org/LDP/abs/html/exitcodes.html
