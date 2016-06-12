@@ -93,9 +93,9 @@ as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony reverse proxy.
 Types of Caches
 ~~~~~~~~~~~~~~~
 
-But a gateway cache isn't the only type of cache. In fact, the HTTP cache
-headers sent by your application are consumed and interpreted by up to three
-different types of caches:
+A gateway cache isn't the only type of cache. In fact, the HTTP cache headers
+sent by your application are consumed and interpreted by up to three different
+types of caches:
 
 * *Browser caches*: Every browser comes with its own local cache that is
   mainly useful for when you hit "back" or for images and other assets.
