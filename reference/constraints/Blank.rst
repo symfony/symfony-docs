@@ -3,8 +3,16 @@ Blank
 
 Validates that a value is blank, defined as equal to a blank string or equal
 to ``null``. To force that a value strictly be equal to ``null``, see the
-:doc:`/reference/constraints/IsNull` constraint. To force that a value is
-*not* blank, see :doc:`/reference/constraints/NotBlank`.
+:doc:`/reference/constraints/IsNull` constraint.
+
+
+.. tip::
+
+    To force that a value is *not* blank, see
+    :doc:`/reference/constraints/NotBlank`. But be careful as ``NotBlank`` is
+    *not* strictly the opposite of ``Blank``. Emtpy array and strictly
+    ``false`` are considered blank by the ``NotBlank`` validator but not by the
+    ``Blank`` validator.
 
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
