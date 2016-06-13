@@ -347,11 +347,6 @@ also get a lot of shortcut methods, like ``render()``::
 Learn more about these shortcut methods and how they work in the
 :doc:`Controller </book/controller>` chapter.
 
-.. tip::
-
-    For more advanced users, you can also
-    :doc:`register your controllers as services </cookbook/controller/service>`.
-
 Create the Template
 ~~~~~~~~~~~~~~~~~~~
 

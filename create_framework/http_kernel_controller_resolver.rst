@@ -196,4 +196,3 @@ ever and it still has less than 40 lines of code.
 
 .. _`reflection`: http://php.net/reflection
 .. _`FrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`controllers as services`: http://symfony.com/doc/current/cookbook/controller/service.html
