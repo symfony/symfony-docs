@@ -164,12 +164,15 @@ Array Expansion and Inlining
 ............................
 
 The YAML format supports two kind of representation for arrays, the expanded
-one, and the inline one. By default, the dumper uses the inline
+one, and the inline one. By default, the dumper uses the expanded
 representation:
 
 .. code-block:: yaml
 
-    { foo: bar, bar: { foo: bar, bar: baz } }
+    foo: bar
+    bar:
+        foo: bar
+        bar: baz
 
 The second argument of the :method:`Symfony\\Component\\Yaml\\Yaml::dump`
 method customizes the level at which the output switches from the expanded
