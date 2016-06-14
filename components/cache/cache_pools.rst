@@ -119,7 +119,7 @@ replication::
 
     $cache = new ChainAdapter(array($apcCache, $fileCache));
 
-when an item is not found in the first adapters but is found in the next ones,
+When an item is not found in the first adapters but is found in the next ones,
 the ``ChainAdapter`` ensures that the fetched item is saved in all the adapters
 where it was missing. Since it's not possible to know the expiry date and time
 of a cache item, the second optional argument of ``ChainAdapter`` is the default
@@ -142,7 +142,7 @@ The adapter accepts two additional optional arguments: the namespace (``''`` by
 default) and the default lifetime (``0`` by default).
 
 Another use case for this adapter is to get statistics and metrics about the
-cache hits and misses thanks to the ``getHits()`` and ``getMisses()`` methods.
+cache hits (``getHits()``) and misses (``getMisses()``).
 
 Doctrine Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -193,7 +193,8 @@ returns ``true`` if there is a cache item identified by the given key::
 Saving Cache Items
 ------------------
 
-The most common method to save cache items is ``save($item)``, which stores the
+The most common method to save cache items is
+:method:`Psr\\Cache\\CacheItemPoolInterface::save`, which stores the
 item in the cache immediately (it returns ``true`` if the item was saved or
 ``false`` if some error occurred)::
 
@@ -204,8 +205,10 @@ item in the cache immediately (it returns ``true`` if the item was saved or
 
 Sometimes you may prefer to not save the objects immediately in order to
 increase the application performance. In those cases, use the
-``saveDeferred($item)`` method to mark cache items as "ready to be persisted"
-and then call to ``commit()`` method when you are ready to persist them all::
+:method:`Psr\\Cache\\CacheItemPoolInterface::saveDeferred` method to mark cache
+items as "ready to be persisted" and then call to
+:method:`Psr\\Cache\\CacheItemPoolInterface::commit` method when you are ready
+to persist them all::
 
     // ...
     $isQueued = $cache->saveDeferred($userFriends);
@@ -225,22 +228,23 @@ Removing Cache Items
 --------------------
 
 Cache Pools include methods to delete a cache item, some of them or all of them.
-The most common is ``deleteItem($key)``, which deletes the cache item identified
-by the given key (it returns ``true`` when the item is successfully deleted or
-doesn't exist and ``false`` otherwise)::
+The most common is :method:`Psr\\Cache\\CacheItemPoolInterface::deleteItem`,
+which deletes the cache item identified by the given key (it returns ``true``
+when the item is successfully deleted or doesn't exist and ``false`` otherwise)::
 
     // ...
     $isDeleted = $cache->deleteItem('user_'.$userId);
 
-Use the ``deleteItems(array($key1, $key2, ...))`` method to delete several cache
-items simultaneously (it returns ``true`` only if all the items have been deleted,
-even when any or some of them don't exist)::
+Use the :method:`Psr\\Cache\\CacheItemPoolInterface::deleteItems` method to
+delete several cache items simultaneously (it returns ``true`` only if all the
+items have been deleted, even when any or some of them don't exist)::
 
     // ...
     $areDeleted = $cache->deleteItems(array('category1', 'category2'));
 
-Finally, to remove all the cache items stored in the pool, use the ``clear()``
-method (which returns ``true`` when all items are successfully deleted)::
+Finally, to remove all the cache items stored in the pool, use the
+:method:`Psr\\Cache\\CacheItemPoolInterface::clear` method (which returns ``true``
+when all items are successfully deleted)::
 
     // ...
     $cacheIsEmpty = $cache->clear();

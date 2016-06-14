@@ -6,8 +6,8 @@
 Cache Items
 ===========
 
-Cache items are each of the information units stored in the cache as a key/value
-pair. In the Cache component they are represented by the
+Cache items are the information units stored in the cache as a key/value pair.
+In the Cache component they are represented by the
 :class:`Symfony\\Component\\Cache\\CacheItem` class.
 
 Cache Item Keys and Values
@@ -33,7 +33,8 @@ argument is the key of the item::
     // $cache pool object was created before
     $numProducts = $cache->getItem('stats.num_products');
 
-Then, use the ``set($value)`` method to set the data stored in the cache item::
+Then, use the :method:`Psr\\Cache\\CacheItemInterface::set` method to set
+the data stored in the cache item::
 
     // storing a simple integer
     $numProducts->set(4711);
@@ -47,8 +48,7 @@ Then, use the ``set($value)`` method to set the data stored in the cache item::
 .. note::
 
     Creating a cache item and setting its value is not enough to save it in the
-    cache. You must execute the ``save($cacheItem)`` method explicitly on the
-    cache pool.
+    cache. You must execute the ``save()`` method explicitly on the cache pool.
 
 The key and the value of any given cache item can be obtained with the
 corresponding *getter* methods::
@@ -86,7 +86,7 @@ Cache Item Hits and Misses
 --------------------------
 
 Using a cache mechanism is important to improve the application performance, but
-it should not be required to make the application work. In fact, the Cache
+it should not be required to make the application work. In fact, the PSR-6
 standard states that caching errors should not result in application failures.
 
 In practice this means that the ``getItem()`` method always returns an object
@@ -109,7 +109,8 @@ for cache hits::
     $latestNews = $cache->getItem('latest_news');
 
     if (!$latestNews->isHit()) {
-        $news = //... do some heavy computation
+        // do some heavy computation
+        $news = ...;
         $cache->save($latestNews->set($news));
     } else {
         $news = $latestNews->get();

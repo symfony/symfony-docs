@@ -18,25 +18,23 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/cache`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/cache).
 
-.. note::
-
-    In Symfony applications this component is integrated (and enabled by
-    default) through the FrameworkBundle.
-
 Key Concepts
 ------------
 
 Before starting to use the Cache component, it's important that you learn the
 meaning of some key concepts:
 
-* **Item**, a single unit of information stored as a key/value pair, where the
-  key is the unique identifier of the information and the value is its contents;
-* **Pool**, a logical repository of cache items. All cache operations (saving
-  items, looking for items, etc.) are performed through the pool. Applications
-  can define as many pools as needed.
-* **Adapter**, it implements the actual caching mechanism to store the
-  information in the filesystem, in a database, etc. The component provides
-  several ready to use adapters for common caching backends (Redis, APCu, etc.)
+**Item**
+    A single unit of information stored as a key/value pair, where the key is
+    the unique identifier of the information and the value is its contents;
+**Pool**
+    A logical repository of cache items. All cache operations (saving items,
+    looking for items, etc.) are performed through the pool. Applications can
+    define as many pools as needed.
+**Adapter**
+    It implements the actual caching mechanism to store the information in the
+    filesystem, in a database, etc. The component provides several ready to use
+    adapters for common caching backends (Redis, APCu, etc.)
 
 Basic Usage
 -----------
@@ -61,13 +59,23 @@ Now you can create, retrieve, updated and delete items using this cache pool::
 
     // retrieve the cache item
     $numProducts = $cache->getItem('stats.num_products');
-    // check whether the item exists in the cache
-    $isCached = $numProducts->isHit();
+    if (!$numProducts->isHit()) {
+        // ... item does not exists in the cache
+    }
     // retrieve the value stored by the item
     $total = $numProducts->get();
 
     // remove the cache item
     $cache->deleteItem('stats.num_products');
+
+Advanced Usage
+--------------
+
+.. toctree::
+    :maxdepth: 1
+
+    cache_items
+    cache_pools
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
 .. _Packagist: https://packagist.org/packages/symfony/cache
