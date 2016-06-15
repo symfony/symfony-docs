@@ -35,7 +35,7 @@ useful when :ref:`a form has multiple submit buttons
 Inherited Options
 -----------------
 
-.. include:: /reference/forms/types/options/button_attr.rst.inc
+.. include:: /reference/forms/types/options/submit_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 
