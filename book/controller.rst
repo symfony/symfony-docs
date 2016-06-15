@@ -795,8 +795,6 @@ You can pass:
 
 * Path to file in ``$file`` parameter
 
-* String with file content in ``$file`` and appropriate ``$fileName``
-
 Example usage::
 
     use Symfony\Component\HttpFoundation\File\File;
@@ -815,12 +813,6 @@ Example usage::
     public function pathFileAction()
     {
         return $this->file('/path/to/my/picture.jpg');
-    }
-
-    // You can send nonexistent files too (this will be sent with inline disposition)
-    public function helloFileAction()
-    {
-        return $this->file('Hello, world!', 'hello.txt', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
 .. seealso::
