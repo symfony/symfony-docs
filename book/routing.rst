@@ -548,9 +548,10 @@ URL          Route     Parameters
    single: Routing; Requirements
 
 .. _book-routing-requirements:
+.. _adding-requirements:
 
-Adding Requirements
-~~~~~~~~~~~~~~~~~~~
+Route Requirements
+~~~~~~~~~~~~~~~~~~
 
 Take a quick look at the routes that have been created so far:
 
@@ -564,7 +565,7 @@ Take a quick look at the routes that have been created so far:
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", defaults={"page" = 1})
+             * @Route("/blog/{page}", name="blog_list", defaults={"page" = 1})
              */
             public function indexAction($page)
             {
@@ -572,7 +573,7 @@ Take a quick look at the routes that have been created so far:
             }
 
             /**
-             * @Route("/blog/{slug}")
+             * @Route("/blog/{slug}", name="blog_show")
              */
             public function showAction($slug)
             {
@@ -583,7 +584,7 @@ Take a quick look at the routes that have been created so far:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        blog:
+        blog_list:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:index, page: 1 }
 
@@ -600,7 +601,7 @@ Take a quick look at the routes that have been created so far:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog/{page}">
+            <route id="blog_list" path="/blog/{page}">
                 <default key="_controller">AppBundle:Blog:index</default>
                 <default key="page">1</default>
             </route>
@@ -617,7 +618,7 @@ Take a quick look at the routes that have been created so far:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
+        $collection->add('blog_list', new Route('/blog/{page}', array(
             '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
         )));
@@ -629,23 +630,23 @@ Take a quick look at the routes that have been created so far:
         return $collection;
 
 Can you spot the problem? Notice that both routes have patterns that match
-URLs that look like ``/blog/*``. The Symfony router will always choose the
-**first** matching route it finds. In other words, the ``blog_show`` route
+URLs that look like ``/blog/*``. **The Symfony router will always choose the
+*first* matching route it finds.** In other words, the ``blog_show`` route
 will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
-the first route (``blog``) and return a nonsense value of ``my-blog-post``
-to the ``{page}`` parameter.
+the first route named ``blog_list`` and the variable ``$page`` will get a nonsense
+value of ``my-blog-post``.
 
-======================  ========  ===============================
-URL                     Route     Parameters
-======================  ========  ===============================
-``/blog/2``             ``blog``  ``{page}`` = ``2``
-``/blog/my-blog-post``  ``blog``  ``{page}`` = ``"my-blog-post"``
-======================  ========  ===============================
+======================  =============  ===============================
+URL                     Route          Parameters
+======================  =============  ===============================
+``/blog/2``             ``blog_list``  ``{page}`` = ``2``
+``/blog/my-blog-post``  ``blog_list``  ``{page}`` = ``"my-blog-post"``
+======================  =============  ===============================
 
 The answer to the problem is to add route *requirements*. The routes in this
 example would work perfectly if the ``/blog/{page}`` path *only* matched
 URLs where the ``{page}`` portion is an integer. Fortunately, regular expression
-requirements can easily be added for each parameter. For example:
+requirements can easily be added for each parameter. For example::
 
 .. configuration-block::
 
@@ -656,9 +657,13 @@ requirements can easily be added for each parameter. For example:
         // ...
 
         /**
-         * @Route("/blog/{page}", defaults={"page": 1}, requirements={
-         *     "page": "\d+"
-         * })
+         * @Route("/blog/{page}",
+         *     name="blog_list",
+         *     defaults={"page": 1},
+         *     requirements={
+         *         "page": "\d+"
+         *     }
+         * )
          */
         public function indexAction($page)
         {
@@ -668,7 +673,7 @@ requirements can easily be added for each parameter. For example:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        blog:
+        blog_list:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:index, page: 1 }
             requirements:
@@ -683,7 +688,7 @@ requirements can easily be added for each parameter. For example:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog/{page}">
+            <route id="blog_list" path="/blog/{page}">
                 <default key="_controller">AppBundle:Blog:index</default>
                 <default key="page">1</default>
                 <requirement key="page">\d+</requirement>
@@ -697,7 +702,7 @@ requirements can easily be added for each parameter. For example:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
+        $collection->add('blog_list', new Route('/blog/{page}', array(
             '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
         ), array(
@@ -707,7 +712,7 @@ requirements can easily be added for each parameter. For example:
         return $collection;
 
 The ``\d+`` requirement is a regular expression that says that the value of
-the ``{page}`` parameter must be a digit (i.e. a number). The ``blog`` route
+the ``{page}`` parameter must be a digit (i.e. a number). The ``blog_list`` route
 will still match on a URL like ``/blog/2`` (because 2 is a number), but it
 will no longer match a URL like ``/blog/my-blog-post`` (because ``my-blog-post``
 is *not* a number).
@@ -718,18 +723,19 @@ As a result, a URL like ``/blog/my-blog-post`` will now properly match the
 ========================  =============  ===============================
 URL                       Route          Parameters
 ========================  =============  ===============================
-``/blog/2``               ``blog``       ``{page}`` = ``2``
+``/blog/2``               ``blog_list``  ``{page}`` = ``2``
 ``/blog/my-blog-post``    ``blog_show``  ``{slug}`` = ``my-blog-post``
 ``/blog/2-my-blog-post``  ``blog_show``  ``{slug}`` = ``2-my-blog-post``
 ========================  =============  ===============================
 
-.. sidebar:: Earlier Routes always Win
+.. caution:: Earlier Routes always Win
 
-    What this all means is that the order of the routes is very important.
-    If the ``blog_show`` route were placed above the ``blog`` route, the
-    URL ``/blog/2`` would match ``blog_show`` instead of ``blog`` since the
-    ``{slug}`` parameter of ``blog_show`` has no requirements. By using proper
-    ordering and clever requirements, you can accomplish just about anything.
+    What this all means is that the **order of the routes is very
+    important**. If the ``blog_show`` route were placed above the
+    ``blog_list`` route, the URL ``/blog/2`` would match ``blog_show``
+    instead of ``blog_list`` since the ``{slug}`` placeholder of
+    ``blog_show`` has no requirements. By using proper ordering and
+    clever requirements, you can accomplish just about anything.
 
 Since the parameter requirements are regular expressions, the complexity
 and flexibility of each requirement is entirely up to you. Suppose the homepage
@@ -746,12 +752,15 @@ URL:
         class MainController extends Controller
         {
             /**
-             * @Route("/{_locale}", defaults={"_locale": "en"}, requirements={
-             *     "_locale": "en|fr"
+             * @Route("/{_locale}", name="homepage",
+             *     defaults={"_locale": "en"},
+             *     requirements={
+             *           "_locale": "en|fr"
              * })
              */
             public function homepageAction($_locale)
             {
+                // ...
             }
         }
 
@@ -822,10 +831,17 @@ Adding HTTP Method Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the URL, you can also match on the *method* of the incoming
-request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you create an API for
-your blog and you have 2 routes: One for displaying a post (on a GET or HEAD
-request) and one for updating a post (on a PUT request). This can be
-accomplished with the following route configuration:
+request (i.e. GET, HEAD, POST, PUT, DELETE) using the ``@Method`` annotation
+or the ``methods`` array in YAML.
+
+.. versionadded:: 2.2
+    The ``methods`` option was introduced in Symfony 2.2. Use the ``_method``
+    requirement in older versions.
+
+you're creating an API for your blog and you have 2 routes: one for
+displaying a post (on a GET or HEAD request) and one for updating a post
+(on a PUT request). This can be accomplished with the following route
+configuration::
 
 .. configuration-block::
 
@@ -840,7 +856,7 @@ accomplished with the following route configuration:
         class BlogApiController extends Controller
         {
             /**
-             * @Route("/api/posts/{id}")
+             * @Route("/api/posts/{id}", name="api_post_show")
              * @Method({"GET","HEAD"})
              */
             public function showAction($id)
@@ -849,7 +865,7 @@ accomplished with the following route configuration:
             }
 
             /**
-             * @Route("/api/posts/{id}")
+             * @Route("/api/posts/{id}", name="api_post_edit")
              * @Method("PUT")
              */
             public function editAction($id)
@@ -906,19 +922,22 @@ accomplished with the following route configuration:
 
         return $collection;
 
-.. versionadded:: 2.2
-    The ``methods`` option was introduced in Symfony 2.2. Use the ``_method``
-    requirement in older versions.
-
 Despite the fact that these two routes have identical paths
-(``/api/posts/{id}``), the first route will match only GET or HEAD requests and
-the second route will match only PUT requests. This means that you can display
-and edit the post with the same URL, while using distinct controllers for the
-two actions.
+(``/api/posts/{id}``), the first route will match only GET or HEAD
+requests and the second route will match only PUT requests. This means
+that you can display and edit the post with the same URL, while using
+distinct controllers for the two actions.
 
 .. note::
 
-    If no ``methods`` are specified, the route will match on *all* methods.
+    If no ``@Method`` or ``methods`` parameter is specified, the route
+    will match on *all* methods.
+
+.. seealso::
+
+    Most browsers only support GET and POST requests. To build a form that uses
+    a different HTTP method (e.g. PUT), see cookbook article
+    :doc:`/cookbook/routing/method_parameters`.
 
 Adding a Host Requirement
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -941,7 +960,7 @@ Advanced Routing Example
 
 At this point, you have everything you need to create a powerful routing
 structure in Symfony. The following is an example of just how flexible the
-routing system can be:
+routing system can be::
 
 .. configuration-block::
 
@@ -955,6 +974,7 @@ routing system can be:
             /**
              * @Route(
              *     "/articles/{_locale}/{year}/{title}.{_format}",
+             *     name="article_show",
              *     defaults={"_format": "html"},
              *     requirements={
              *         "_locale": "en|fr",
@@ -965,6 +985,7 @@ routing system can be:
              */
             public function showAction($_locale, $year, $title)
             {
+                // ...
             }
         }
 
@@ -1021,10 +1042,13 @@ routing system can be:
 
         return $collection;
 
-As you've seen, this route will only match if the ``{_locale}`` portion of
-the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
-route also shows how you can use a dot between placeholders instead of
-a slash. URLs matching this route might look like:
+The route named ``article_show`` will only match if the ``{_locale}``
+portion of the URL is either ``en`` or ``fr``, if the ``{year}`` is
+a number and if the ``{_format}`` portion of the URL is either ``html``
+or ``rss``. We can also notice how the **dot can be used between
+placeholders** instead of a slash.
+
+URLs matching this route might look like:
 
 * ``/articles/en/2010/my-post``
 * ``/articles/fr/2010/my-post.rss``
@@ -1034,28 +1058,33 @@ a slash. URLs matching this route might look like:
 
 .. sidebar:: The Special ``_format`` Routing Parameter
 
-    This example also highlights the special ``_format`` routing parameter.
-    When using this parameter, the matched value becomes the "request format"
-    of the ``Request`` object.
+    This example also highlights the special ``_format`` routing
+    parameter. When using this parameter, the matched value becomes the
+    "request format" of the ``Request`` object which is ultimately used
+    for such things as setting the ``Content-Type`` of the response (e.g.
+    a ``json`` request format translates into a ``Content-Type`` of
+    ``application/json``).
 
-    Ultimately, the request format is used for such things as setting the
-    ``Content-Type`` of the response (e.g. a ``json`` request format translates
-    into a ``Content-Type`` of ``application/json``). It can also be used in the
-    controller to render a different template for each value of ``_format``.
-    The ``_format`` parameter is a very powerful way to render the same content
-    in different formats.
+    As like any regular route placeholder special ``_format`` routing
+    parameter is also accessible as arguments to your controller and therefore
+    available inside the controller where it can be used to render a different
+    template for each value of ``_format``. So, the ``_format`` parameter is a
+    very powerful way to render the same content in different formats.
 
-    In Symfony versions previous to 3.0, it is possible to override the request
-    format by adding a query parameter named ``_format`` (for example:
-    ``/foo/bar?_format=json``). Relying on this behavior not only is considered
-    a bad practice but it will complicate the upgrade of your applications to
-    Symfony 3.
+    In Symfony versions previous to 3.0, it is possible to override the
+    request format by adding a query parameter named ``_format`` (for
+    example: ``/foo/bar?_format=json``). Relying on this behavior not
+    only is considered a bad practice but it will complicate the upgrade
+    of your applications to Symfony 3.
 
 .. note::
 
-    Sometimes you want to make certain parts of your routes globally configurable.
-    Symfony provides you with a way to do this by leveraging service container
-    parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`".
+    Sometimes you want to make certain parts of your routes globally
+    configurable. Symfony provides you with a way to do this by
+    leveraging service container parameters. Read more about this in the
+    cookbook article :doc:`/cookbook/routing/service_container_parameters`.
+
+.. _book-special-routing-parameters:
 
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1347,7 +1376,7 @@ your application:
     contact               GET       /contact
     contact_process       POST      /contact
     article_show          ANY       /articles/{_locale}/{year}/{title}.{_format}
-    blog                  ANY       /blog/{page}
+    blog_list             ANY       /blog/{page}
     blog_show             ANY       /blog/{slug}
 
 You can also get very specific information on a single route by including
@@ -1448,7 +1477,7 @@ Generating URLs with Query Strings
 The ``generate`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
-    $this->get('router')->generate('blog', array(
+    $this->get('router')->generate('blog_list', array(
         'page' => 2,
         'category' => 'Symfony'
     ));
