@@ -24,6 +24,7 @@
 /components/routing /components/routing/introduction
 /cookbook/console/generating_urls /cookbook/console/sending_emails
 /components/yaml /components/yaml/introduction
+/components/serializer /components/serializer/introduction
 /components/templating /components/templating/introduction
 /cookbook/upgrading /cookbook/upgrade/index
 /cookbook/security/voters_data_permission /cookbook/security/voters
