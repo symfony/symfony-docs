@@ -445,9 +445,7 @@ You can also get the objects related to the latest request::
 
     $crawler = $client->getCrawler();
 
-If your requests are not insulated, you can also access the ``Container`` and
-the ``Kernel``::
-
+    // you can also retrieve Container and Kernel instances
     $container = $client->getContainer();
     $kernel = $client->getKernel();
 
