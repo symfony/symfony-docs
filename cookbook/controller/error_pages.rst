@@ -300,6 +300,127 @@ This approach allows you to create centralized and layered error handling:
 instead of catching (and handling) the same exceptions in various controllers
 time and again, you can have just one (or several) listeners deal with them.
 
+A centralized error handling that also allows to log exceptions might look like this::
+
+    // src/AppBundle/EventListener/ExceptionListener.php
+    namespace AppBundle\EventListener;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+    use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+
+    class ExceptionListener
+    {
+        private $logger;
+
+        public function __construct(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
+        }
+
+        public function onKernelException(GetResponseForExceptionEvent $event)
+        {
+            // Get the exception object from the received event
+            $exception = $event->getException();
+            $message = sprintf(
+                'Error: %s. Code: %s',
+                $exception->getMessage(),
+                $exception->getCode()
+            );
+
+            // Log the exception to the configured log file (i.e. app.log)
+            $this->logger->error($message);
+
+            // Customize the response object to display the exception details
+            $response = new Response();
+            $response->setContent($message);
+
+            // HttpExceptionInterface is a special type of exception that
+            // holds status code and header details
+            if ($exception instanceof HttpExceptionInterface) {
+                $response->setStatusCode($exception->getStatusCode());
+                $response->headers->replace($exception->getHeaders());
+            } else {
+                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            // Send the modified response object to the event
+            $event->setResponse($response);
+        }
+    }
+
+Now, you need to register your listener:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.exception_listener:
+                class: AppBundle\EventListener\ExceptionListener
+                arguments: ["@logger"]
+                tags:
+                    - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <service id="app.exception_listener" class="AppBundle\EventListener\ExceptionListener">
+            <argument type="service" id="logger" />
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        </service>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('app.exception_listener', 'AppBundle\EventListener\ExceptionListener')
+            ->addArgument(new Reference('logger'))
+            ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
+        ;
+
+Finally, you need to add a new handler that will log the exceptions to the configured log file (app.log):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        monolog:
+            handlers:
+                applog:
+                    type: stream
+                    path: /path/to/app.log
+                    level: error
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+            <monolog:config>
+                <monolog:handler
+                    name="applog"
+                    type="stream"
+                    path="/path/to/app.log"
+                    level="error"
+                />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'applog' => array(
+                    'type'  => 'stream',
+                    'path'  => '/path/to/app.log',
+                    'level' => 'error',
+                ),
+            ),
+        ));
+
 .. tip::
 
     See :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener`
