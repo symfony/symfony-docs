@@ -95,7 +95,7 @@ Registering your Form Type Extension as a Service
 -------------------------------------------------
 
 The next step is to make Symfony aware of your extension. All you
-need to do is to declare it as a service by using the ``form.type_extension``
+need to do is to declare it as a service by using the ``extended_type`` or ``extended-type``
 tag:
 
 .. configuration-block::
