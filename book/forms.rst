@@ -1054,8 +1054,7 @@ that will house the logic for building the task form::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', SubmitType::class)
-            ;
+                ->add('save', SubmitType::class);
         }
     }
 
