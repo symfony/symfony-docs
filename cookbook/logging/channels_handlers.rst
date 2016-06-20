@@ -25,7 +25,7 @@ Switching a Channel to a different Handler
 
 Now, suppose you want to log the ``security`` channel to a different file.
 To do this, just create a new handler and configure it to log only messages
-from the ``security`` channel. (This handler MUST be a top level handler, not a handler that is nested inside a Group, Buffer, Filter, or FingersCrossed Handler). You might add this in ``config.yml`` to log
+from the ``security`` channel. You might add this in ``config.yml`` to log
 in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
 
 .. configuration-block::
@@ -94,6 +94,10 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
                 ),
             ),
         ));
+
+.. caution::
+
+    The 'channels' configuration only works for top level handlers. Handlers that are nested inside a Group, Buffer, Filter, FingersCrossed, or other such Handler will ignore this configuration and will process every message passed to them.
 
 YAML Specification
 ------------------
