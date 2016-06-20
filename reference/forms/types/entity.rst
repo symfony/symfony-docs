@@ -207,8 +207,8 @@ The value of this option can either be a ``QueryBuilder`` object, a Closure or
 passed the ``EntityRepository`` of the entity as the only argument and should
 return a ``QueryBuilder``.
 
-If you'd like to display an empty list of entries, you can return ``null`` in
-the Closure.
+If you'd like to use default loading of all entries, you can return ``null`` in
+the Closure as well.
 
 .. versionadded:: 2.8
     Returning ``null`` in the Closure was introduced in Symfony 2.8.
