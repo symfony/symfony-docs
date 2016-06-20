@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-19T09:56:38Z
+
+👍 I think you're correct. We decided to only document the static API, so let's also use that in the descriptions as well.
+
+Status: reviewed
+
+/cc @xabbuh we may want to get the argument values in sync in Symfony core?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-20T07:47:41Z
+
+👍
+
+@WouterJ Would be nice. But I have no idea how to do that without breaking BC (you could argue that technically the spaces don't matter but people seem to rely on it).
