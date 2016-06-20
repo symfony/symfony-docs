@@ -31,9 +31,13 @@ characters long::
 
     use Symfony\Component\Validator\Validation;
     use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
 
     $validator = Validation::createValidator();
-    $violations = $validator->validateValue('Bernhard', new Length(array('min' => 10)));
+    $violations = $validator->validate('Bernhard', array(
+        new Length(array('min' => 10)),
+        new NotBlank()
+    ));
 
     if (0 !== count($violations)) {
         // there are errors, now you can show them
