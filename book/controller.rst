@@ -781,7 +781,7 @@ There are also special classes to make certain kinds of responses easier:
 File helper
 ~~~~~~~~~~~
 
-If you want to serve file use
+If you want to serve file use the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper::
 
@@ -789,7 +789,7 @@ helper::
 
 You can pass:
 
-* Instance of
+* An instance of
   :class:`Symfony\\Component\\HttpFoundation\\File`
   in ``$file`` parameter (you can customize ``$fileName`` and ``$disposition``)
 
