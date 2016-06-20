@@ -202,7 +202,10 @@ Path
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
-    $finder->path('some/special/dir');
+    // matches files that contain "data" anywhere in their paths (files or directories)
+    $finder->path('data');
+    // for example this will match data/*.xml and data.xml if they exist
+    $finder->path('data')->name('*.xml');
 
 On all platforms slash (i.e. ``/``) should be used as the directory separator.
 

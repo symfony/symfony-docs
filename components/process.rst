@@ -43,7 +43,7 @@ The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
-methods returns the new outputs since the last call.
+methods return the new output since the last call.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
