@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-19T09:51:51Z
+
+Hi @soyuka! What about changing the code example on line 205 with something like this instead:
+```diff
+-     $finder->path('some/special/dir');
++     // matches files in the data/ directory and its subdirectories.
++     $finder->path('data');
+```
+
+I don't think we should add a whole new paragraph and code example for such information. It can perfectly be included in the code example imo. However, I would like to hear your and others opinions about it. If you agree, can you please update the PR?
+
+Status: needs work
+
+---------------------------------------------------------------------------
+
+by soyuka at 2016-06-19T10:02:33Z
+
+My point is that, `path` method will match the directory containing files too.
+
+Saying:
+
+> matches files in the data/ directory and its subdirectories.
+
+isn't sufficient imo, because it'll also match a `data` file. Or when filtered by `name` it'll match the file if it exists or sub directories.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-19T11:35:08Z
+
+I agree with @WouterJ but I also understand what @soyuka says. This is really tricky. What about this proposal:
+
+```php
+// matches files that contain "data" anywhere in their paths (including filenames)
+$finder->path('data');
+```
+
+---------------------------------------------------------------------------
+
+by soyuka at 2016-06-19T15:16:18Z
+
+@javiereguiluz +1, but may we add an example that combines `path` and `name`? I think that adding `name` helps to understand the usage finality:
+
+```php
+// matches files that contain "data" anywhere in their paths (files or directories)
+$finder->path('data');
+// for example this will match data/*.xml and data.xml if they exists
+$finder->path('data')->name('*.xml');
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-19T17:39:03Z
+
+@soyuka  +1 I like your proposal because to me this looks impossible to explain in just 1 sentence.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-19T17:42:37Z
+
+Actually, after reading your proposal, it's the first time I understand the problem this PR tries to solve. 👍 to update the example with that.
+
+Can you please update your PR?
+
+---------------------------------------------------------------------------
+
+by soyuka at 2016-06-19T19:27:04Z
+
+Github does weird things sorry about that, updated with my last example l205 and removed the previous paragraph.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-20T07:38:06Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-20T08:02:16Z
+
+👍
