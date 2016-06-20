@@ -120,11 +120,11 @@ and others are just conventions followed by most developers):
 Type                             Directory                      Mandatory?
 ===============================  =============================  ================
 Commands                         ``Command/``                   Yes
-Controllers                      ``Controller/``                Yes
+Controllers                      ``Controller/``                No
 Service Container Extensions     ``DependencyInjection/``       Yes
 Event Listeners                  ``EventListener/``             No
 Model classes [1]                ``Model/``                     No
-Configuration                    ``Resources/config/``          Yes
+Configuration                    ``Resources/config/``          No
 Web Resources (CSS, JS, images)  ``Resources/public/``          Yes
 Translation files                ``Resources/translations/``    Yes
 Templates                        ``Resources/views/``           Yes
