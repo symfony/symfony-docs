@@ -218,7 +218,7 @@ Creating an Uploader Service
 ----------------------------
 
 To avoid logic in controllers, making them big, you can extract the upload
-logic to a seperate service::
+logic to a separate service::
 
     // src/AppBundle/FileUploader.php
     namespace AppBundle;
