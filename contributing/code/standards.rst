@@ -109,12 +109,12 @@ example containing most features described below:
          * @param mixed $value     Some value to check against
          * @param bool  $theSwitch Some switch to control the method's flow
          *
-         * @return bool|null The resultant check if $theSwitch isn't false, null otherwise
+         * @return bool|void The resultant check if $theSwitch isn't false, void otherwise
          */
         private function reverseBoolean($value = null, $theSwitch = false)
         {
             if (!$theSwitch) {
-                return null;
+                return;
             }
 
             return !$value;
