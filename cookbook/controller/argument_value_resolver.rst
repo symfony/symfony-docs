@@ -44,7 +44,7 @@ Symfony ships with four value resolvers in the HttpKernel component:
 Adding a Custom Value Resolver
 ------------------------------
 
-Adding a new value resolver requires creatign one class and one service
+Adding a new value resolver requires creating one class and one service
 definition. In the next example, you'll create a value resolver to inject the
 ``User`` object from the security system. Given you write the following
 controller::
@@ -189,13 +189,13 @@ subrequests.
 
 .. tip::
 
-    As you see in the ``UserValueResolver::supports()`` method, the user may
-    not be available (e.g. when the controller is not behind a firewall). In
-    these cases, the resolver will not be executed. If no argument value is
-    resolved, an exception will be throwed.
+    As you can see in the ``UserValueResolver::supports()`` method, the user
+    may not be available (e.g. when the controller is not behind a firewall).
+    In these cases, the resolver will not be executed. If no argument value
+    is resolved, an exception will be thrown.
 
     To prevent this, you can add a default value in the controller (e.g. ``User
-    $user = null``). The ``DefaultValueResolver`` is executed as last resolver
-    and will use the default value if no value is resolved already.
+    $user = null``). The ``DefaultValueResolver`` is executed as the last
+    resolver and will use the default value if no value was already resolved.
 
 .. _`yield`: http://php.net/manual/en/language.generators.syntax.php
