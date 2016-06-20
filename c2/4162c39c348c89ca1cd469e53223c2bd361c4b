@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by Txumari at 2016-05-21T13:46:45Z
+
+I'm new here, but I think should be change the buffered explanation with the new handler deduplicated (The ``deduplicated`` handler simply keeps...)
+
+---------------------------------------------------------------------------
+
+by jorgelbg at 2016-05-21T16:06:39Z
+
+Fixed the typos, and amended the commit. Thanks @javiereguiluz @xabbuh
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T16:25:57Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T16:58:04Z
+
+👍
+
+(by the way, I really dislike the "deduplication" word ... but that's something we cannot change)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-21T17:06:59Z
+
+I agree with @Txumari here, after this code block we talk about the buffered handler a couple times. We should change it to deduplicated handler (and also change the description).
+
+---------------------------------------------------------------------------
+
+by jorgelbg at 2016-05-21T19:11:26Z
+
+Should we mantain some information about the `buffer` handler? its still a valid handler according to https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md#wrappers--special-handlers but honestly the `deduplication` handler does also the buffering + deduplication of messages. The final example use the `group` and `buffer`.
+
+---------------------------------------------------------------------------
+
+by jorgelbg at 2016-05-23T07:36:36Z
+
+I've updated the explanation and fixed the mentions of the `buffered` handler, also changed the last example in the doc, that talked about combining the handlers to store the messages on the server and also send the logs by email.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-11T07:58:44Z
+
+:+1: I like it
+
+Status: Reviewed
