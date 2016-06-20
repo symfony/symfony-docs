@@ -687,7 +687,7 @@ the documentation for each type.
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
 
-        ->add('dueDate', 'date', array(
+        ->add('dueDate', DateType::class, array(
             'widget' => 'single_text',
             'required' => false
         ))
@@ -1143,8 +1143,8 @@ the choice is ultimately up to you.
             return 'app_bundle_password';
         }
 
-    Read the chapter ":doc:`/cookbook/form/create_custom_field_type.html`" for
-    more information.
+    Read the ":doc:`/cookbook/form/create_custom_field_type`" chapter for more
+    information.
 
 .. tip::
 
