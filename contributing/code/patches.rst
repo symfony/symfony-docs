@@ -14,8 +14,7 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.5.9 or above;
-* `PHPUnit`_ 4.2 or above.
+* PHP version 5.5.9 or above.
 
 .. caution::
 
@@ -365,4 +364,3 @@ before merging.
 .. _`fabbot`: http://fabbot.io
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
-.. _PHPUnit: https://phpunit.de/manual/current/en/installation.html
