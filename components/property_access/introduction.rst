@@ -24,8 +24,7 @@ Usage
 The entry point of this component is the
 :method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor>`
 factory. This factory will create a new instance of the
-:class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` class with the
-default configuration::
+:class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` class::
 
     use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -46,7 +45,12 @@ method. This is done using the index notation that is used in PHP::
     var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
     var_dump($accessor->getValue($person, '[age]')); // null
 
-As you can see, the method will return ``null`` if the index does not exists.
+.. caution::
+
+    As you can see, the method return ``null`` if the index does not exist.
+    To make it throw an exception, you need to enable the feature by setting the second argument of
+    :method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor()>`
+    to ``true``.
 
 You can also use multi dimensional arrays::
 
@@ -179,7 +183,7 @@ Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At last, ``getValue`` can use the magic ``__call`` method, but you need to
-enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
+enable this feature by setting the first argument of :method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor()>`::
 
     // ...
     class Person
@@ -205,17 +209,10 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::createPropertyAccessorBuilder()
-        ->enableMagicCall()
-        ->getPropertyAccessor();
+    $accessor = PropertyAccess::createPropertyAccessor(true);
 
     var_dump($accessor->getValue($person, 'wouter')); // array(...)
 
-.. caution::
-
-    The ``__call`` feature is disabled by default, you can enable it by calling
-    :method:`PropertyAccessorBuilder::enableMagicCall<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall>`
-    see `Enable other Features`_.
 
 Writing to Arrays
 -----------------
@@ -270,10 +267,7 @@ can use setters, the magic ``__set`` method or properties to set values::
     var_dump($person->getLastName()); // 'de Jong'
     var_dump($person->children); // array(Person());
 
-You can also use ``__call`` to set values but you need to enable the feature,
-see `Enable other Features`_.
-
-.. code-block:: php
+You can also use ``__call`` to set values but you need to enable the feature by setting the first argument of :method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor()>`::
 
     // ...
     class Person
@@ -298,9 +292,7 @@ see `Enable other Features`_.
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::createPropertyAccessorBuilder()
-        ->enableMagicCall()
-        ->getPropertyAccessor();
+    $accessor = PropertyAccess::createPropertyAccessor(true)
 
     $accessor->setValue($person, 'wouter', array(...));
 
@@ -320,6 +312,12 @@ instead::
     if ($accessor->isReadable($person, 'firstName')) {
         // ...
     }
+
+.. caution::
+
+    Calling :method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor()>`
+    with an array for an invalid index would always return ``true``.
+    To make it return ``false``, set the second argument (``$throwExceptionOnInvalidIndex``) argument to ``true``.
 
 The same is possible for :method:`PropertyAccessor::setValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue>`:
 Call the
@@ -365,11 +363,13 @@ You can also mix objects and arrays::
     var_dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
 
-Enable other Features
-~~~~~~~~~~~~~~~~~~~~~
+Using multiple configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` can be
-configured to enable extra features. To do that you could use the
+The :method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor()>`
+method allows you to get a property accessor configured from the passed arguments.
+
+For using several property accessor configured independently, use the
 :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
 
     // ...
@@ -378,19 +378,26 @@ configured to enable extra features. To do that you could use the
     // Enable magic __call
     $accessorBuilder->enableMagicCall();
 
-    // Disable magic __call
-    $accessorBuilder->disableMagicCall();
-
     // Check if magic __call handling is enabled
-    $accessorBuilder->isMagicCallEnabled(); // true or false
+    $accessorBuilder->isMagicCallEnabled(); // true
 
-    // At the end get the configured property accessor
+    // Get the property accessor with magic __call enabled
     $accessor = $accessorBuilder->getPropertyAccessor();
 
     // Or all in one
     $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
+
+    // Disable magic __call
+    $accessorBuilder->disableMagicCall();
+
+    // Enable exception on invalid indexes
+    $accessorBuilder->enableExceptionOnInvalidIndex();
+
+    // Get the newly configured property accessor
+    $accessor = $accessorBuilder->getPropertyAccessor();
+
 
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
