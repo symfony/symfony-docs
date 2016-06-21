@@ -188,6 +188,13 @@ allows you to return a list of extensions to register::
             $validator = $this->getMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
             $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
+            $metadata = $this->getMockBuilder('Symfony\Component\Validator\Mapping\ClassMetadata')
+                ->disableOriginalConstructor()
+                ->getMock();
+            $validator
+                ->method('getMetadataFor')
+                ->will($this->returnValue($metadata));
+
             return array(
                 new ValidatorExtension($validator),
             );
