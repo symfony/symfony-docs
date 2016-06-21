@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-01T13:45:47Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2016-06-06T20:07:09Z
+
+Thanks @kix for taking the time to submit this PR, it looks like the root problem has been fixed: phpspec/prophecy#275
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2016-06-07T11:24:39Z
+
+I think that this PR can be closed, PHPUnit can be installed on Symfony 3.1 since the new release of Prophecy this morning.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-08T07:16:18Z
+
+Imo it's still a good idea to recommend not to add PHPUnit to the project's requirements.
