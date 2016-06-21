@@ -17,8 +17,9 @@ it has its own excellent `documentation`_.
 
 .. note::
 
-    It's recommended to use the latest stable PHPUnit version (you will have
-    to use version 4.2 or higher to test the Symfony core code itself).
+    It's recommended to use the latest stable PHPUnit version, `installed as
+    PHAR`_ (you will have to use version 4.2 or higher to test the Symfony core 
+    code itself).
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``Tests/`` subdirectory of your bundles. If you follow
@@ -921,3 +922,4 @@ Learn more
 
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
 .. _`documentation`: https://phpunit.de/manual/current/en/
+.. _`installed as PHAR`: https://phpunit.de/manual/current/en/installation.html#installation.phar
