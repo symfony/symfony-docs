@@ -27,7 +27,7 @@ First, enable form login under your firewall:
                     anonymous: ~
                     form_login:
                         login_path: login
-                        check_path: login
+                        check_path: check
 
     .. code-block:: xml
 
@@ -42,7 +42,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="main">
                     <anonymous />
-                    <form-login login-path="login" check-path="login" />
+                    <form-login login-path="login" check-path="check" />
                 </firewall>
             </config>
         </srv:container>
@@ -56,7 +56,7 @@ First, enable form login under your firewall:
                     'anonymous'  => null,
                     'form_login' => array(
                         'login_path' => 'login',
-                        'check_path' => 'login',
+                        'check_path' => 'check',
                     ),
                 ),
             ),
@@ -111,6 +111,9 @@ configuration (``login``):
         login:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }
+        
+        check:
+            path:     /check
 
     .. code-block:: xml
 
@@ -124,6 +127,9 @@ configuration (``login``):
             <route id="login" path="/login">
                 <default key="_controller">AppBundle:Security:login</default>
             </route>
+            
+            <route id="login" path="/check">
+            </route>
         </routes>
 
     ..  code-block:: php
@@ -136,6 +142,8 @@ configuration (``login``):
         $collection->add('login', new Route('/login', array(
             '_controller' => 'AppBundle:Security:login',
         )));
+        
+        $collection->add('login', new Route('/check', array()));
 
         return $collection;
 
@@ -264,7 +272,7 @@ To review the whole process:
    user to the login form (``/login``);
 #. The ``/login`` page renders login form via the route and controller created
    in this example;
-#. The user submits the login form to ``/login``;
+#. The user submits the login form to ``/check``;
 #. The security system intercepts the request, checks the user's submitted
    credentials, authenticates the user if they are correct, and sends the
    user back to the login form if they are not.
