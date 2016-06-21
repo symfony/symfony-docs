@@ -144,8 +144,7 @@ Structure
   inside a statement-group (like an ``if`` statement);
 
 * Use ``return null;`` when a function explicitly returns ``null`` values and
-  use ``return;`` when the function returns ``void`` values (available from
-  PHP 7.1);
+  use ``return;`` when the function returns ``void`` values;
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
