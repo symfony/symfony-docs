@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-21T07:55:57Z
+
+👍
+
+Status: reviewed
+
+Moreover, the [Tests section](http://symfony.com/doc/current/contributing/code/tests.html) of the contribution guide already uses the PHPUnit wrapper instead of the real PHPUnit binary.
