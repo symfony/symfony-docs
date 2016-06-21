@@ -160,7 +160,7 @@ Structure
 
 * Declare public methods first, then protected ones and finally private ones.
   The exceptions to this rule are the class constructor and the ``setUp`` and
-  ``tearDown`` methods of PHPUnit tests, which should always be the first methods
+  ``tearDown`` methods of PHPUnit tests, which must always be the first methods
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
@@ -169,11 +169,11 @@ Structure
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
 
-* Exception and error message strings should be concatenated using :phpfunction:`sprintf`.
+* Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
 
-* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` should be
+* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` must be
   switched to opt-in via ``@`` operator.
-  Read more at :ref:`contributing-code-conventions-deprecations`;
+  Read more at :ref:`contributing-code-conventions-deprecations`.
 
 Naming Conventions
 ------------------

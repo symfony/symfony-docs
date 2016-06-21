@@ -113,22 +113,23 @@ them under the ``cache/`` or ``log/`` directory of the host application. Tools
 can generate files in the bundle directory structure, but only if the generated
 files are going to be part of the repository.
 
-The following classes and files have specific emplacements:
+The following classes and files have specific emplacements (some are mandatory
+and others are just conventions followed by most developers):
 
-===============================  =============================
-Type                             Directory
-===============================  =============================
-Commands                         ``Command/``
-Controllers                      ``Controller/``
-Service Container Extensions     ``DependencyInjection/``
-Event Listeners                  ``EventListener/``
-Model classes [1]                ``Model/``
-Configuration                    ``Resources/config/``
-Web Resources (CSS, JS, images)  ``Resources/public/``
-Translation files                ``Resources/translations/``
-Templates                        ``Resources/views/``
-Unit and Functional Tests        ``Tests/``
-===============================  =============================
+===============================  =============================  ================
+Type                             Directory                      Mandatory?
+===============================  =============================  ================
+Commands                         ``Command/``                   Yes
+Controllers                      ``Controller/``                No
+Service Container Extensions     ``DependencyInjection/``       Yes
+Event Listeners                  ``EventListener/``             No
+Model classes [1]                ``Model/``                     No
+Configuration                    ``Resources/config/``          No
+Web Resources (CSS, JS, images)  ``Resources/public/``          Yes
+Translation files                ``Resources/translations/``    Yes
+Templates                        ``Resources/views/``           Yes
+Unit and Functional Tests        ``Tests/``                     No
+===============================  =============================  ================
 
 [1] See :doc:`/cookbook/doctrine/mapping_model_classes` for how to handle the
 mapping with a compiler pass.
