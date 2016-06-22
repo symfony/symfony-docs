@@ -147,10 +147,10 @@ would look like this::
             }
 
             // you know $subject is a Post object, thanks to supports
-            /** @var Post $post */
+            /* @var Post $post */
             $post = $subject;
 
-            switch($attribute) {
+            switch ($attribute) {
                 case self::VIEW:
                     return $this->canView($post, $user);
                 case self::EDIT:
