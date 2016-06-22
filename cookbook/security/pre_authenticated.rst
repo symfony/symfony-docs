@@ -14,9 +14,9 @@ authenticated when reaching your application.
 .. caution::
 
     :doc:`User impersonation </cookbook/security/impersonating_user>` is not
-    compatible with pre Authenticated firewalls. The reason is that
+    compatible with pre-authenticated firewalls. The reason is that
     impersonation requires the authentication state to be maintained server-side
-    but pre Authenticated information (``SSL_CLIENT_S_DN_Email``, ``REMOTE_USER``
+    but pre-authenticated information (``SSL_CLIENT_S_DN_Email``, ``REMOTE_USER``
     or other) is sent in each request.
 
 X.509 Client Certificate Authentication
