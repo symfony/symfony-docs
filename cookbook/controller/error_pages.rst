@@ -214,6 +214,8 @@ will be passed two parameters:
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
     instance which may be ``null`` in some circumstances.
 
+Extending from the Default ExceptionController Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Instead of creating a new exception controller from scratch you can, of course,
 also extend the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
 In that case, you might want to override one or both of the ``showAction()`` and
@@ -268,6 +270,81 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
     And then configure ``twig.exception_controller`` using the controller as
     services syntax (e.g. ``app.exception_controller:showAction``).
+
+To create your own controller logic extending from the ExceptionController, simply
+create a controller with the specified method you want to override. In this
+example, the exceptions will be overwritten by a response in json format::
+        
+  # src/AppBundle/Controller/ExceptionController.php
+  
+  namespace AppBundle\Controller;
+
+  use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
+  use Symfony\Component\HttpFoundation\Request;
+  use Symfony\Component\HttpKernel\Exception\FlattenException;
+  use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+  use Symfony\Component\HttpFoundation\JsonResponse;
+
+  class ExceptionController extends BaseExceptionController
+  {
+      /**
+       * {@inheritdoc}
+       */
+      public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
+      {
+          $code = $exception->getStatusCode();
+
+          return new JsonResponse(array(
+              'response_type' => 'error',
+              'message' => 'An exception was thrown.',
+          ), $code);
+      }
+  }
+  
+To use the custom controller, we need to load the Twig service in the class, as
+the original class does. To do it, add the service pointing to the controller
+and set the arguments to load the specific needed services::
+  
+  # app/config/services.yml
+  app.twig.exception_controller:
+      class: AppBundle\Controller\ExceptionController
+      arguments: [@twig, %kernel.debug%]
+        
+To finally enable the custom exception controller, set the :ref:`twig.exception_controller 
+<config-twig-exception-controller>` configuration option to point to the service controller.
+  
+  .. configuration-block::
+  
+      .. code-block:: yaml
+  
+          # app/config/config.yml
+          twig:
+              exception_controller:  app.twig.exception_controller:showAction
+  
+      .. code-block:: xml
+  
+          <!-- app/config/config.xml -->
+          <?xml version="1.0" encoding="UTF-8" ?>
+          <container xmlns="http://symfony.com/schema/dic/services"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:twig="http://symfony.com/schema/dic/twig"
+              xsi:schemaLocation="http://symfony.com/schema/dic/services
+                  http://symfony.com/schema/dic/services/services-1.0.xsd
+                  http://symfony.com/schema/dic/twig
+                  http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+  
+              <twig:config>
+                  <twig:exception-controller>app.twig.exception_controller:showAction</twig:exception-controller>
+              </twig:config>
+          </container>
+  
+      .. code-block:: php
+  
+          // app/config/config.php
+          $container->loadFromExtension('twig', array(
+              'exception_controller' => 'app.twig.exception_controller:showAction',
+              // ...
+          ));
 
 .. _use-kernel-exception-event:
 
