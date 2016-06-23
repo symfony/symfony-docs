@@ -10,14 +10,16 @@ A bundle is similar to a plugin in other software, but even better. The key
 difference is that *everything* is a bundle in Symfony, including both the
 core framework functionality and the code written for your application.
 Bundles are first-class citizens in Symfony. This gives you the flexibility
-to use pre-built features packaged in `third-party bundles`_ or to distribute
-your own bundles. It makes it easy to pick and choose which features to enable
-in your application and to optimize them the way you want.
+to use pre-built features packaged in third-party bundles that you can find at
+`KnpBundles.com`_, or to distribute your own bundles. It makes it easy to pick
+and choose which features to enable in your application and to optimize them
+the way you want.
 
 .. note::
 
    While you'll learn the basics here, an entire cookbook entry is devoted
-   to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
+   to the organization and best practices of
+   :doc:`bundles </cookbook/bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a BlogBundle, a ForumBundle or
@@ -26,6 +28,9 @@ bundles). Each directory contains everything related to that feature, including
 PHP files, templates, stylesheets, JavaScript files, tests and anything else.
 Every aspect of a feature exists in a bundle and every feature lives in a
 bundle.
+
+Registering a Bundle
+--------------------
 
 Bundles used in your applications must be enabled by registering them in
 the ``registerBundles()`` method of the ``AppKernel`` class::
@@ -62,21 +67,11 @@ are used by your application (including the core Symfony bundles).
    A bundle can live *anywhere* as long as it can be autoloaded (via the
    autoloader configured at ``app/autoload.php``).
 
-Creating a Bundle
------------------
+Creating a Bundle by Hand
+-------------------------
 
-The Symfony Standard Edition comes with a handy task that creates a fully-functional
-bundle for you. Of course, creating a bundle by hand is pretty easy as well.
-
-To show you how simple the bundle system is, create a new bundle called
-AcmeTestBundle and enable it.
-
-.. tip::
-
-    The ``Acme`` portion is just a dummy name that should be replaced by
-    some "vendor" name that represents you or your organization (e.g.
-    ABCTestBundle for some company named ``ABC``).
-
+Creating a bundle by hand is pretty easy. To show how simple the bundle
+system is, create a new bundle called AcmeTestBundle and enable it.
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
 
@@ -88,13 +83,6 @@ called ``AcmeTestBundle.php``::
     class AcmeTestBundle extends Bundle
     {
     }
-
-.. tip::
-
-   The name AcmeTestBundle follows the standard
-   :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
-   also choose to shorten the name of the bundle to simply TestBundle by naming
-   this class TestBundle (and naming the file ``TestBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
@@ -117,30 +105,42 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
 
 And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
 
-And as easy as this is, Symfony also provides a command-line interface for
-generating a basic bundle skeleton:
+.. note::
+
+    The ``Acme`` portion is just a dummy name that should be replaced by
+    some "vendor" name that represents you or your organization (e.g.
+    ABCTestBundle for some company named ``ABC``). The name AcmeTestBundle
+    follows the standard :ref:`Bundle naming conventions <bundles-naming-conventions>`.
+    You could also choose to shorten the name of the bundle to simply
+    TestBundle by naming this class TestBundle (and naming the file
+    ``TestBundle.php``).
+
+Creating a Bundle with a Console Command
+----------------------------------------
+
+As easy as creating a bundle by hand is, Symfony also provides a command-line
+interface for generating a basic bundle skeleton:
 
 .. code-block:: bash
 
     $ php app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates a basic controller, template and routing
-resource that can be customized. You'll learn more about Symfony's command-line
-tools later.
+resource that can be customized.
 
-.. tip::
+.. note::
 
    Whenever creating a new bundle or using a third-party bundle, always make
    sure the bundle has been enabled in ``registerBundles()``. When using
-   the ``generate:bundle`` command, this is done for you.
+   the ``generate:bundle`` console command, this is done for you.
 
 Bundle Directory Structure
 --------------------------
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
-of the most common elements of a bundle:
+between all Symfony bundles. Take a look at AcmeDemoBundle, of the Symfony Demo
+application, as it contains some of the most common elements of a bundle:
 
 ``Controller/``
     Contains the controllers of the bundle (e.g. ``RandomController.php``).
@@ -151,7 +151,8 @@ of the most common elements of a bundle:
     necessary).
 
 ``Resources/config/``
-    Houses configuration, including routing configuration (e.g. ``routing.yml``).
+    Houses configuration, including default configuration files, routing and
+    security configuration.
 
 ``Resources/views/``
     Holds templates organized by controller name (e.g. ``Hello/index.html.twig``).
@@ -172,4 +173,4 @@ create and validate forms, create translations for your application, write
 tests and much more. Each of these has their own place and role within the
 bundle.
 
-_`third-party bundles`: http://knpbundles.com
+.. _`KnpBundles.com`: http://knpbundles.com
