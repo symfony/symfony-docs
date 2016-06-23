@@ -5,8 +5,7 @@
 The Form Component
 ==================
 
-    The Form component allows you to easily create, process and reuse HTML
-    forms.
+    The Form component allows you to easily create, process and reuse forms.
 
 The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
