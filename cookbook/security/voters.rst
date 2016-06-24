@@ -97,7 +97,7 @@ edit a particular object. Here's an example implementation:
                 throw new \LogicException('The user is somehow not our User class!');
             }
 
-            switch($attribute) {
+            switch ($attribute) {
                 case self::VIEW:
                     // the data object could have for example a method isPrivate()
                     // which checks the Boolean attribute $private
