@@ -101,7 +101,7 @@ method::
         },
         'group_by' => function($category, $key, $index) {
             // randomly assign things into 2 groups
-            return rand(0, 1) == 1 ? 'Group A' : 'Group B'
+            return rand(0, 1) == 1 ? 'Group A' : 'Group B';
         },
         'preferred_choices' => function($category, $key, $index) {
             return $category->getName() == 'Cat2' || $category->getName() == 'Cat3';
