@@ -256,6 +256,6 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
-.. _`default.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/default.vcl?rev=3.0
-.. _`builtin.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/builtin.vcl?rev=4.0
+.. _`default.vcl`: https://github.com/varnish/Varnish-Cache/blob/3.0/bin/varnishd/default.vcl
+.. _`builtin.vcl`: https://github.com/varnish/Varnish-Cache/blob/4.1/bin/varnishd/builtin.vcl
 .. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html
