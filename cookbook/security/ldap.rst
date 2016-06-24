@@ -287,7 +287,7 @@ Configuration example for form login
                     # ...
                     form_login_ldap:
                         login_path: login
-                        login_check: login_check
+                        check_path: login_check
                         # ...
                         service: ldap
                         dn_string: 'uid={username},dc=example,dc=com'
@@ -306,7 +306,7 @@ Configuration example for form login
                 <firewall name="main">
                     <form-login-ldap
                             login-path="login"
-                            login-check="login_check"
+                            check-path="login_check"
                             service="ldap"
                             dn-string="uid={username},dc=example,dc=com" />
                 </firewall>
@@ -320,7 +320,7 @@ Configuration example for form login
                 'main' => array(
                     'form_login_ldap' => array(
                         'login_path' => 'login',
-                        'login_check' => 'login_check',
+                        'check_path' => 'login_check',
                         'service' => 'ldap',
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
