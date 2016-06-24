@@ -18,8 +18,7 @@ it has its own excellent `documentation`_.
 .. note::
 
     It's recommended to use the latest stable PHPUnit version, `installed as
-    PHAR`_ (you will have to use version 4.2 or higher to test the Symfony core 
-    code itself).
+    PHAR`_.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``tests/`` directory of your application. If you follow
