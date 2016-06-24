@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-22T07:15:42Z
+
+👍
+
+Some quick questions: does the PHPUnit wrapper used by Symfony itself affect us here? Should we rewrite everything to forget about the regular PHPUnit and explain instead how to use "the Symfony's PHPUnit" ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-22T07:55:57Z
+
+No, the chapter itself otherwise is fine. Using the PHPUnit wrapper to test your own application is not necessary. We need it for the core to be able to test everything from our code base (as PHPUnit depends on, for example, `symfony/yaml` itself).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-22T07:58:35Z
+
+OK then.
+
+Status: reviewed.
