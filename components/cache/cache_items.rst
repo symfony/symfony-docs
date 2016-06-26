@@ -38,17 +38,14 @@ the data stored in the cache item::
 
     // storing a simple integer
     $numProducts->set(4711);
+    $cache->save($numProducts);
 
     // storing an array
     $numProducts->set(array(
         'category1' => 4711,
         'category2' => 2387,
     ));
-
-.. note::
-
-    Creating a cache item and setting its value is not enough to save it in the
-    cache. You must execute the ``save()`` method explicitly on the cache pool.
+    $cache->save($numProducts);
 
 The key and the value of any given cache item can be obtained with the
 corresponding *getter* methods::
