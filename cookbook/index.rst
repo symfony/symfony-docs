@@ -26,7 +26,7 @@ The Cookbook
     request/index
     routing/index
     security/index
-    serializer
+    serializer/index
     service_container/index
     session/index
     symfony1

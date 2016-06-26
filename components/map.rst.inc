@@ -140,9 +140,10 @@
   * :doc:`/components/security/authorization`
   * :doc:`/components/security/secure_tools`
 
-* **Serializer**
+* :doc:`/components/serializer/index`
 
-  * :doc:`/components/serializer`
+  * :doc:`/components/serializer/introduction`
+  * :doc:`/components/serializer/encoders`
 
 * **Stopwatch**
 

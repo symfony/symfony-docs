@@ -10,6 +10,7 @@
 /cookbook/email /cookbook/email/email
 /cookbook/gmail /cookbook/email/gmail
 /cookbook/console /components/console
+/cookbook/serializer /cookbook/serializer/introduction
 /cookbook/tools/autoloader /components/class_loader
 /cookbook/tools/finder /components/finder
 /cookbook/service_container/parentservices /components/dependency_injection/parentservices
@@ -26,6 +27,7 @@
 /components/yaml /components/yaml/introduction
 /components/templating /components/templating/introduction
 /components/filesystem /components/filesystem/introduction
+/components/serializer /components/serializer/introduction
 /cmf/reference/configuration/block /cmf/bundles/block/configuration
 /cmf/reference/configuration/content /cmf/bundles/content/configuration
 /cmf/reference/configuration/core /cmf/bundles/core/configuration

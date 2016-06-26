@@ -187,9 +187,10 @@
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/access_control`
 
-* **Serializer**
+* :doc:`/cookbook/serializer/index`
 
-  * :doc:`/cookbook/serializer`
+  * :doc:`/cookbook/serializer/introduction`
+  * :doc:`/cookbook/serializer/custom_encoders`
 
 * :doc:`/cookbook/service_container/index`
 

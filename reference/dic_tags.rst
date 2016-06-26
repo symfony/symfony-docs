@@ -946,7 +946,7 @@ serializer.encoder
 The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
 and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
 
-For more details, see :doc:`/cookbook/serializer`.
+For more details, see :doc:`/cookbook/serializer/introduction`.
 
 .. _reference-dic-tags-serializer-normalizer:
 
@@ -958,7 +958,7 @@ serializer.normalizer
 The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
-For more details, see :doc:`/cookbook/serializer`.
+For more details, see :doc:`/cookbook/serializer/introduction`.
 
 swiftmailer.default.plugin
 --------------------------

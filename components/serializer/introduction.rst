@@ -44,7 +44,7 @@ Usage
 
 Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
-which Encoders and Normalizer are going to be available::
+which encoders and normalizers are going to be available::
 
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -57,10 +57,14 @@ which Encoders and Normalizer are going to be available::
     $serializer = new Serializer($normalizers, $encoders);
 
 The preferred normalizer is the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`, but other
-normalizers are available.
-To read more about them, refer to the `Normalizers`_ section of this page. All
-the examples shown below use the ``ObjectNormalizer``.
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`,
+but other normalizers are available. All the examples shown below use
+the ``ObjectNormalizer``.
+
+.. seealso::
+
+    Read the dedicated sections to learn more about :doc:`/components/serializer/encoders`
+    and `Normalizers`_.
 
 Serializing an Object
 ---------------------
