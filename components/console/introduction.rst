@@ -548,7 +548,7 @@ returns the returned code from the command (return value from command's
 
     If you want to suppress the output of the executed command, pass a
     :class:`Symfony\\Component\\Console\\Output\\NullOutput` as the second
-    argument to ``$command->execute()``.
+    argument to ``$command->run()``.
 
 .. caution::
 
