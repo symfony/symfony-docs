@@ -126,6 +126,9 @@ Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
 to use for your projects.
 
+Note that if you install a specific version, you will want to make sure 
+you refer to the same version of the documentation.
+
 .. _book-creating-applications-without-the-installer:
 
 Creating Symfony Applications without the Installer
