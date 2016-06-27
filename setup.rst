@@ -89,6 +89,9 @@ optional second argument of the ``new`` command:
     # use the most recent 'lts' version (Long Term Support version)
     $ symfony new my_project_name lts
 
+Each version has its *own* documentation, which you can select on any documentation
+page.
+
 .. note::
 
     Read the :doc:`Symfony Release process </contributing/community/releases>`
