@@ -5,7 +5,5 @@ Security
     :maxdepth: 2
 
     introduction
-    firewall
-    authentication
-    authorization
+    core/index
     secure_tools
