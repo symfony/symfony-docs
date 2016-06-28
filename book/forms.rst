@@ -1935,6 +1935,10 @@ but here's a short example:
 
 .. tip::
 
+    The ``constraints``  is not valid if you are using :ref:`form classes <book-form-creating-form-classes>`.
+
+.. tip::
+
     If you are using validation groups, you need to either reference the
     ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
