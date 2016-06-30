@@ -1060,19 +1060,170 @@ a slash. URLs matching this route might look like:
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As you've seen, each routing parameter or default value is eventually available
-as an argument in the controller method. Additionally, there are three parameters
-that are special: each adds a unique piece of functionality inside your application:
+In the examples until now we have seen, beside regular placeholders like
+``{slug}``, also three special ones: ``_controller``, ``_format``,  and
+``_locale``. Each of this special routing parameters adds a unique piece
+of functionality inside application:
 
 ``_controller``
-    As you've seen, this parameter is used to determine which controller is
-    executed when the route is matched.
+    Used to determine which controller is executed when the route is
+    matched.
 
 ``_format``
-    Used to set the request format (:ref:`read more <book-routing-format-param>`).
+    Used to set the request format
+    (:ref:`read more <book-routing-format-param>`).
 
 ``_locale``
-    Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
+    Used to set the locale on the request
+    (:ref:`read more <book-translation-locale-url>`).
+
+There is also a fourth special routing parameter:
+
+``_route``
+    It holds the name of the route that was matched.
+
+    In the following example, the ``_route`` would be ``homepage``::
+
+    .. configuration-block::
+
+        .. code-block:: php-annotations
+
+            // src/AppBundle/Controller/MainController.php
+
+            // ...
+            class MainController extends Controller
+            {
+                /**
+                 * @Route("/", name="homepage")
+                 */
+                public function homepageAction()
+                {
+                    // ...
+                }
+            }
+
+        .. code-block:: yaml
+
+            # app/config/routing.yml
+            homepage:
+                path:      /
+                defaults:  { _controller: AppBundle:Main:homepage }
+
+Special Routing Parameters and Controller Arguments
+---------------------------------------------------
+
+To review: When executing controller method, Symfony matches each method
+argument with a placeholder from the route. So the value for ``{slug}``
+placeholder is passed to ``$slug`` method argument and therefore available
+for use in the controller. We just have to make sure that the name of the
+placeholder is the same as the name of the argument variable.
+
+What we haven't mentioned yet is that in reality, **the entire ``defaults``
+collection is merged with the parameter values to form a single array.**
+Each key of that resulting array is available as an argument on the
+controller and therefore available inside the controller
+
+What does this mean?
+
+* Each routing placeholder, regular, like ``{slug}``, or special one, like
+  ``_locale`` is eventually available as an argument on the controller;
+
+* Since the placeholders and ``defaults`` collection are merged together,
+  even the ``$_controller`` variable is available and :doc:`every default
+  value for extra parameters </cookbook/routing/extra_information>` that we
+  specify in the ``defaults`` collection but not as route parameters.
+
+What does this mean for the the advanced example above? Let's look at it again::
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/ArticleController.php
+
+        // ...
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route(
+             *     "/articles/{_locale}/{year}/{title}.{_format}",
+             *     name="article_show",
+             *     defaults={"_format": "html"},
+             *     requirements={
+             *         "_locale": "en|fr",
+             *         "_format": "html|rss",
+             *         "year": "\d+"
+             *     }
+             * )
+             */
+            public function showAction($_locale, $year, $title)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        article_show:
+          path:     /articles/{_locale}/{year}/{title}.{_format}
+          defaults: { _controller: AppBundle:Article:show, _format: html }
+          requirements:
+              _locale:  en|fr
+              _format:  html|rss
+              year:     \d+
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="article_show"
+                path="/articles/{_locale}/{year}/{title}.{_format}">
+
+                <default key="_controller">AppBundle:Article:show</default>
+                <default key="_format">html</default>
+                <requirement key="_locale">en|fr</requirement>
+                <requirement key="_format">html|rss</requirement>
+                <requirement key="year">\d+</requirement>
+
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add(
+            'article_show',
+            new Route('/articles/{_locale}/{year}/{title}.{_format}', array(
+                '_controller' => 'AppBundle:Article:show',
+                '_format'     => 'html',
+            ), array(
+                '_locale' => 'en|fr',
+                '_format' => 'html|rss',
+                'year'    => '\d+',
+            ))
+        );
+
+        return $collection;
+
+Any combination (in any order) of the following variables could be used
+as arguments to the ``showAction()`` method:
+
+* ``$_locale``
+* ``$year``
+* ``$title``
+* ``$_format``
+* ``$_controller``
+* ``$_route``
 
 .. index::
    single: Routing; Controllers
@@ -1083,11 +1234,21 @@ that are special: each adds a unique piece of functionality inside your applicat
 Controller Naming Pattern
 -------------------------
 
-Every route must have a ``_controller`` parameter, which dictates which
-controller should be executed when that route is matched. This parameter
-uses a simple string pattern called the *logical controller name*, which
-Symfony maps to a specific PHP method and class. The pattern has three parts,
-each separated by a colon:
+There are three ways to refer to a controller method:
+
+* Logical controller name;
+
+* Fully-qualified class name and method;
+
+* A special single colon (:) notation, for example ``service_name:indexAction``,
+  used to refer to a controller that's defined as a service which is
+  explained here: (see :doc:`/cookbook/controller/service`).
+
+Using YAML every route must have a ``_controller`` parameter, which
+dictates which controller should be executed when that route is matched.
+This parameter uses a simple string pattern called the **logical
+controller name**, which Symfony maps to a specific controller and
+controller class. The pattern has three parts, each separated by a colon:
 
     **bundle**:**controller**:**action**
 
@@ -1099,75 +1260,14 @@ Bundle     Controller Class    Method Name
 AppBundle  ``BlogController``  ``showAction``
 =========  ==================  ==============
 
-The controller might look like this::
+Notice that Symfony adds the string ``Controller`` to the class name: ``Blog``
+=> ``BlogController``, and ``Action`` to the method name: ``show`` =>
+``showAction``.
 
-    // src/AppBundle/Controller/BlogController.php
-    namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class BlogController extends Controller
-    {
-        public function showAction($slug)
-        {
-            // ...
-        }
-    }
-
-Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
-=> ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
-
-You could also refer to this controller using its fully-qualified class name
-and method: ``AppBundle\Controller\BlogController::showAction``. But if you
-follow some simple conventions, the logical name is more concise and allows
-more flexibility.
-
-.. note::
-
-   In addition to using the logical name or the fully-qualified class name,
-   Symfony supports a third way of referring to a controller. This method
-   uses just one colon separator (e.g. ``service_name:indexAction``) and
-   refers to the controller as a service (see :doc:`/cookbook/controller/service`).
-
-Route Parameters and Controller Arguments
------------------------------------------
-
-The route parameters (e.g. ``{slug}``) are especially important because
-each is made available as an argument to the controller method::
-
-    public function showAction($slug)
-    {
-        // ...
-    }
-
-In reality, the entire ``defaults`` collection is merged with the parameter
-values to form a single array. Each key of that array is available as an
-argument on the controller.
-
-In other words, for each argument of your controller method, Symfony looks
-for a route parameter of that name and assigns its value to that argument.
-In the advanced example above, any combination (in any order) of the following
-variables could be used as arguments to the ``showAction()`` method:
-
-* ``$_locale``
-* ``$year``
-* ``$title``
-* ``$_format``
-* ``$_controller``
-* ``$_route``
-
-Since the placeholders and ``defaults`` collection are merged together, even
-the ``$_controller`` variable is available. For a more detailed discussion,
-see :ref:`route-parameters-controller-arguments`.
-
-.. tip::
-
-    The special ``$_route`` variable is set to the name of the route that was
-    matched.
-
-You can even add extra information to your route definition and access it
-within your controller. For more information on this topic,
-see :doc:`/cookbook/routing/extra_information`.
+You could also refer to this controller using its **fully-qualified
+class name and method**: ``AppBundle\Controller\BlogController::showAction``.
+But if you follow some simple conventions, the logical name is more
+concise and allows more flexibility.
 
 .. index::
    single: Routing; Importing routing resources
