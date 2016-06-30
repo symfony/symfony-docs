@@ -27,7 +27,8 @@ Full Default Configuration
                 main:
                     type:                fingers_crossed
                     action_level:        WARNING
-                    buffer_size:         30
+                    # by default buffer_size is unlimited, which could generate huge logs in some cases.
+                    buffer_size:         0
                     handler:             custom
                 console:
                     type:                console
