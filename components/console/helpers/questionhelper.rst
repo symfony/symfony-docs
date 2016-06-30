@@ -312,5 +312,7 @@ a string representing what the user would have typed.
 This way you can test any user interaction (even complex ones) by passing the appropriate inputs.
 
 .. note::
-    The :class:`Symfony\\Component\\Console\\Tester\\CommandTester` automatically simulates a user
-    hitting ``ENTER`` after each input, no need for passing an additional input.
+
+    The :class:`Symfony\\Component\\Console\\Tester\\CommandTester` automatically
+    simulates a user hitting ``ENTER`` after each input, no need for passing
+    an additional input.
