@@ -394,7 +394,7 @@ for the login page:
         firewalls:
             # order matters! This must be before the ^/ firewall
             login_firewall:
-                pattern:   ^/login$
+                pattern:   ^/login/$
                 anonymous: ~
             secured_area:
                 pattern:    ^/
