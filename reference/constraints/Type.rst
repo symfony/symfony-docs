@@ -20,6 +20,9 @@ option to validate this.
 Basic Usage
 -----------
 
+This will check if ``firstName`` is of type ``string`` and that ``age`` is an
+``integer``.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
@@ -31,6 +34,11 @@ Basic Usage
 
         class Author
         {
+            /**
+             * @Assert\Type("string")
+             */
+            protected $firstName;
+
             /**
              * @Assert\Type(
              *     type="integer",
@@ -45,6 +53,9 @@ Basic Usage
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
+                firstName:
+                    - Type: string
+
                 age:
                     - Type:
                         type: integer
@@ -59,6 +70,11 @@ Basic Usage
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="Type">
+                        <type>string</type>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="Type">
                         <option name="type">integer</option>
@@ -80,6 +96,8 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('firstName', new Assert\Type('string'));
+
                 $metadata->addPropertyConstraint('age', new Assert\Type(array(
                     'type'    => 'integer',
                     'message' => 'The value {{ value }} is not a valid {{ type }}.',
