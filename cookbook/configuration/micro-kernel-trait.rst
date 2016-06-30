@@ -201,7 +201,7 @@ to hold the kernel. Now it looks like this::
             // load the annotation routes
             $routes->mount(
                 '/',
-                $routes->import(__DIR__.'/../src/App/Controller/', 'annotation')
+                $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation')
             );
         }
     }
