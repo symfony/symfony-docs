@@ -98,7 +98,7 @@ make the following changes::
         // do not render as type="date", to avoid HTML5 date pickers
         'html5' => false,
 
-        // add a class that can eb selected in JavaScript
+        // add a class that can be selected in JavaScript
         'attr' => ['class' => 'js-datepicker'],
     ));
 

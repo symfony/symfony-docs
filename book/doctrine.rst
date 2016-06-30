@@ -43,7 +43,6 @@ information. By convention, this information is usually configured in an
 
     # app/config/parameters.yml
     parameters:
-        database_driver:    pdo_mysql
         database_host:      localhost
         database_name:      test_project
         database_user:      root
@@ -64,7 +63,7 @@ information. By convention, this information is usually configured in an
             # app/config/config.yml
             doctrine:
                 dbal:
-                    driver:   '%database_driver%'
+                    driver:   pdo_mysql
                     host:     '%database_host%'
                     dbname:   '%database_name%'
                     user:     '%database_user%'
@@ -84,7 +83,7 @@ information. By convention, this information is usually configured in an
 
                 <doctrine:config>
                     <doctrine:dbal
-                        driver="%database_driver%"
+                        driver="pdo_mysql"
                         host="%database_host%"
                         dbname="%database_name%"
                         user="%database_user%"
@@ -97,7 +96,7 @@ information. By convention, this information is usually configured in an
             // app/config/config.php
             $configuration->loadFromExtension('doctrine', array(
                 'dbal' => array(
-                    'driver'   => '%database_driver%',
+                    'driver'   => 'pdo_mysql',
                     'host'     => '%database_host%',
                     'dbname'   => '%database_name%',
                     'user'     => '%database_user%',

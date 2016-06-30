@@ -27,7 +27,7 @@ The following configuration code shows how you can configure two entity managers
                 default_connection: default
                 connections:
                     default:
-                        driver:   '%database_driver%'
+                        driver:   pdo_mysql
                         host:     '%database_host%'
                         port:     '%database_port%'
                         dbname:   '%database_name%'
@@ -35,7 +35,7 @@ The following configuration code shows how you can configure two entity managers
                         password: '%database_password%'
                         charset:  UTF8
                     customer:
-                        driver:   '%database_driver2%'
+                        driver:   pdo_mysql
                         host:     '%database_host2%'
                         port:     '%database_port2%'
                         dbname:   '%database_name2%'
@@ -68,7 +68,7 @@ The following configuration code shows how you can configure two entity managers
             <config>
                 <dbal default-connection="default">
                     <connection name="default"
-                        driver="%database_driver%"
+                        driver="pdo_mysql"
                         host="%database_host%"
                         port="%database_port%"
                         dbname="%database_name%"
@@ -78,7 +78,7 @@ The following configuration code shows how you can configure two entity managers
                     />
 
                     <connection name="customer"
-                        driver="%database_driver2%"
+                        driver="pdo_mysql"
                         host="%database_host2%"
                         port="%database_port2%"
                         dbname="%database_name2%"
@@ -108,7 +108,7 @@ The following configuration code shows how you can configure two entity managers
                 'default_connection' => 'default',
                 'connections' => array(
                     'default' => array(
-                        'driver'   => '%database_driver%',
+                        'driver'   => 'pdo_mysql',
                         'host'     => '%database_host%',
                         'port'     => '%database_port%',
                         'dbname'   => '%database_name%',
@@ -117,7 +117,7 @@ The following configuration code shows how you can configure two entity managers
                         'charset'  => 'UTF8',
                     ),
                     'customer' => array(
-                        'driver'   => '%database_driver2%',
+                        'driver'   => 'pdo_mysql',
                         'host'     => '%database_host2%',
                         'port'     => '%database_port2%',
                         'dbname'   => '%database_name2%',
