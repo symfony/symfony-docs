@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-28T07:31:14Z
+
+We need to update the other config formats too.
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-06-28T07:40:06Z
+
+Do you have any examples? I can add them while at it
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-28T08:02:23Z
+
+@iltar I mean the XML and PHP code blocks right below the YAML code blocks that you changed.
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-06-28T08:11:22Z
+
+It was early and I was lacking coffee :cry:
+
+I've updated the xml/php examples underneath the yml variants.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-28T09:08:17Z
+
+:) 👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-28T09:11:44Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by stof at 2016-06-28T09:27:07Z
+
+:+1:
