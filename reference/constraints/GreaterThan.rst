@@ -25,9 +25,9 @@ Basic Usage
 -----------
 
 The following constraints ensure that:
-- the number of ``siblings`` of a ``Person`` is greater than ``5``
-- the ``age`` of a ``Person`` class is greater than ``18``
 
+* the number of ``siblings`` of a ``Person`` is greater than ``5``
+* the ``age`` of a ``Person`` class is greater than ``18``
 
 .. configuration-block::
 

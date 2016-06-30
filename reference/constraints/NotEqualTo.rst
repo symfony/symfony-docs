@@ -28,10 +28,10 @@ options. To force that a value is equal, see
 
 Basic Usage
 -----------
+
 If you want to ensure that the ``firstName`` of a ``Person`` is not equal to
 ``Mary`` and that the ``age`` of a ``Person`` class is not ``15``, you could do
 the following:
-
 
 .. configuration-block::
 

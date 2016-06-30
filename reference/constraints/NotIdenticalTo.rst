@@ -30,8 +30,9 @@ Basic Usage
 -----------
 
 The following constraints ensure that:
-- ``firstName`` of ``Person`` is not equal to ``Mary`` *or* not of the same type
-- ``age`` of ``Person`` class is not equal to ``15`` *or* not of the same type
+
+* ``firstName`` of ``Person`` is not equal to ``Mary`` *or* not of the same type
+* ``age`` of ``Person`` class is not equal to ``15`` *or* not of the same type
 
 .. configuration-block::
 

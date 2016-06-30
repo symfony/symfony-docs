@@ -30,8 +30,9 @@ Basic Usage
 -----------
 
 The following constraints ensure that:
-- ``firstName`` of ``Person` class is equal to ``Mary`` *and* is a string
-- ``age`` is equal to``20`` *and* is of type integer
+
+* ``firstName`` of ``Person` class is equal to ``Mary`` *and* is a string
+* ``age`` is equal to``20`` *and* is of type integer
 
 .. configuration-block::
 
