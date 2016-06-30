@@ -26,8 +26,10 @@ To force that a value is *not* identical, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is equal to
-``20`` and an integer, you could do the following:
+The following constraints ensure that:
+
+* ``firstName`` of ``Person` class is equal to ``Mary`` *and* is a string
+* ``age`` is equal to``20`` *and* is of type integer
 
 .. configuration-block::
 
@@ -40,6 +42,11 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
 
         class Person
         {
+            /**
+             * @Assert\IdenticalTo("Mary")
+             */
+            protected $firstName;
+
             /**
              * @Assert\IdenticalTo(
              *     value = 20

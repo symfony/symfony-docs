@@ -47,6 +47,11 @@ If your valid choice list is simple, you can pass them in directly via the
         class Author
         {
             /**
+             * @Assert\Choice({"New York", "Berlin", "Tokyo"})
+             */
+            protected $city;
+
+            /**
              * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
              */
             protected $gender;
@@ -57,6 +62,7 @@ If your valid choice list is simple, you can pass them in directly via the
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
+                city: [New York, Berlin, Tokyo]
                 gender:
                     - Choice:
                         choices:  [male, female]
@@ -71,6 +77,13 @@ If your valid choice list is simple, you can pass them in directly via the
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
+                <property name="city">
+                    <constraint name="Choice">
+                        <value>New York</value>
+                        <value>Berlin</value>
+                        <value>Tokyo</value>
+                    </constraint>
+                </property>
                 <property name="gender">
                     <constraint name="Choice">
                         <option name="choices">
@@ -97,6 +110,11 @@ If your valid choice list is simple, you can pass them in directly via the
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint(
+                    'gender',
+                     new Assert\Choice(array('New York', 'Berlin', 'Tokyo'))
+                 );
+
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
                     'choices' => array('male', 'female'),
                     'message' => 'Choose a valid gender.',
