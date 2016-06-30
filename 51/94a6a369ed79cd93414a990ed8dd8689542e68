@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-26T10:03:33Z
+
+I picked the `master` branch ... but this should be merged on `2.3`. I'm sorry.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-26T14:08:18Z
+
+Can we also add an example that does not return `null`?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-20T09:49:29Z
+
+@xabbuh I've added the `void` return example.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-20T10:01:31Z
+
+👍
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-21T12:23:03Z
+
+Not related to this PR, but man, we really have to update the example with a more real example. It doesn't make sense at all anymore. 😄
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-22T07:56:31Z
+
+👍
