@@ -20,8 +20,10 @@ options. To force that a value is less than another value, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is less than or
-equal to ``80``, you could do the following:
+The following constraints ensure that:
+
+* the number of ``siblings`` of a ``Person`` is less than or equal to ``5``
+* the ``age`` is less than or equal to ``80``
 
 .. configuration-block::
 
@@ -35,6 +37,11 @@ equal to ``80``, you could do the following:
         class Person
         {
             /**
+             * @Assert\LessThanOrEqual(5)
+             */
+            protected $siblings;
+
+            /**
              * @Assert\LessThanOrEqual(
              *     value = 80
              * )
@@ -47,6 +54,8 @@ equal to ``80``, you could do the following:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                siblings:
+                    - LessThanOrEqual: 5
                 age:
                     - LessThanOrEqual:
                         value: 80
@@ -60,6 +69,11 @@ equal to ``80``, you could do the following:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="siblings">
+                    <constraint name="LessThanOrEqual">
+                        <value>5</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="LessThanOrEqual">
                         <option name="value">80</option>
@@ -80,6 +94,8 @@ equal to ``80``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('siblings', new Assert\LessThanOrEqual(5));
+
                 $metadata->addPropertyConstraint('age', new Assert\LessThanOrEqual(array(
                     'value' => 80,
                 )));

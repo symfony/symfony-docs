@@ -21,8 +21,10 @@ than another value, see :doc:`/reference/constraints/GreaterThan`.
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is less than
-``80``, you could do the following:
+The following constraints ensure that:
+
+* the number of ``siblings`` of a ``Person`` is less than or equal to ``5``
+* ``age`` is less than``80``
 
 .. configuration-block::
 
@@ -35,6 +37,12 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
 
         class Person
         {
+
+            /**
+             * @Assert\LessThan(5)
+             */
+            protected $siblings;
+
             /**
              * @Assert\LessThan(
              *     value = 80
@@ -48,6 +56,8 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                siblings:
+                    - LessThan: 5
                 age:
                     - LessThan:
                         value: 80
@@ -61,6 +71,11 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="siblings">
+                    <constraint name="LessThan">
+                        <value>5</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="LessThan">
                         <option name="value">80</option>
@@ -81,6 +96,8 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('siblings', new Assert\LessThan(5));
+
                 $metadata->addPropertyConstraint('age', new Assert\LessThan(array(
                     'value' => 80,
                 )));
