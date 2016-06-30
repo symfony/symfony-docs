@@ -1,0 +1,144 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-25T16:20:36Z
+
+**Update** the docs for the cache items has been added. Next chapter: cache pools.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-26T08:47:27Z
+
+**Update** in 599ed0a I've added an article about "Cache Pools". I have two questions:
+
+1) I don't know how to create cache pools. Please, someone share a snippet with me.
+
+2) What happens when you remove a cache item that doesn't exist? Do you get `true` as result?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2016-04-26T09:48:56Z
+
+This is how to create cache pools with FrameworkBundle: https://github.com/nicolas-grekas/symfony/blob/84b48de2998524558c1b027763f9af0dbc29f298/src/Symfony/Bundle/FrameworkBundle/Tests/DependencyInjection/Fixtures/yml/cache.yml
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2016-04-26T09:50:18Z
+
+It's also possible to override cache pools used by various Symfony services: https://github.com/symfony/symfony-docs/issues/6171#issuecomment-213302334
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-26T09:51:17Z
+
+@teohhanhui thanks ... but right now we are documenting the component. The integration with Symfony (and FrameworkBundle) will be documented later. So the question remains: how to create a cache pool with the Cache component?
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2016-04-26T09:56:06Z
+
+@javiereguiluz:
+> What happens when you remove a cache item that doesn't exist? Do you get true as result?
+
+From PSR-6:
+> If a Calling Library requests that one or more Items be deleted, or that a pool be cleared, it MUST NOT be considered an error condition if the specified key does not exist.
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2016-04-26T10:06:25Z
+
+If by "cache pool" you mean `Psr\Cache\CacheItemPoolInterface`, then just instantiate the adapters...
+
+On the other hand, cache pools as per the `cache.pool` DI tag are services processed by the compiler pass. They're conceptual. The actual instance is still one of the adapters.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-26T15:32:04Z
+
+**Update**: finished the first version of the doc for the Cache component.
+
+@tgalopin @nicolas-grekas when you have some time, please review the docs of this PR and tell me what you think. After that, I'll write the docs about integrating Cache in Symfony framework. Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-04-26T21:01:46Z
+
+:+1: good job thank you @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-27T13:33:29Z
+
+I've fixed everything reported by reviewers (thanks for the review!!). It's now ready for the Doc Maintainers to make the final review. Thanks.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-09T14:58:07Z
+
+I've simplified the explanation of the cache pools, as requested by doc maintainers.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-16T07:43:21Z
+
+I've done all the requested changes ... except the mentioned `$nonce` argument.
+
+---------------------------------------------------------------------------
+
+by GrahamCampbell at 2016-05-22T12:59:07Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by unexge at 2016-05-22T13:51:34Z
+
+maybe this case can be added as note to;
+
+```php
+$cache = new FilesystemAdapter('foo', 3600);
+
+$cacheItem = $cache->getItem('bar');
+
+$cacheItem->set('baz');
+
+// the cacheItem will not expire after 3600 seconds, it'll live forever
+$cache->save($cacheItem);
+
+// you need to call expiresAfter or expiresAt with null parameter if you want to use defaultLifetime
+$cacheItem->expiresAfter(null);
+
+// the cacheItem will expire after 3600 seconds
+$cache->save($cacheItem);
+```
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-06-17T15:52:13Z
+
+time to merge this one, features for 3.2 are coming :)
+
+---------------------------------------------------------------------------
+
+by eXtreme at 2016-06-21T10:53:02Z
+
+Finally merging something would be great because searching through these PRs, tests and DI config is not very helpful in understanding how to set it up correctly. AFAIR there even wasn't any "New in Symfony" article about this PSR6 cache.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-21T10:54:42Z
+
+@eXtreme you are right. And the "New in Sf" article about the Cache is pending too.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-26T10:42:47Z
+
+Status: reviewed 👍
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-26T10:43:14Z
+
+I've made all the requested changes. I beg Doc Maintainers to merge this before someone else asks for more changes 😄  Thanks!
