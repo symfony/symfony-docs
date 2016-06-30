@@ -229,6 +229,9 @@ level. For example::
         $output->writeln(...);
     }
 
+    // alternatively you can pass the verbosity level to writeln()
+    $output->writeln('...', OutputInterface::VERBOSITY_VERBOSE);
+
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
 
