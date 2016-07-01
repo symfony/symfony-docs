@@ -19,9 +19,6 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-Notes on Previous Versions
---------------------------
-
 Usage
 -----
 
