@@ -22,6 +22,11 @@ You can install the component in 2 different ways:
 Notes on Previous Versions
 --------------------------
 
+.. versionadded:: 2.6
+    This documentation was written for Symfony 2.6 and later. If you use an older
+    version, please `read the Symfony 2.5 documentation`_. For a list of changes,
+    see the `CHANGELOG`_.
+    
 Usage
 -----
 
