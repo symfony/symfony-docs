@@ -10,6 +10,9 @@ The Cache Component
     cache to your applications. It is designed to have a low overhead and it
     ships with ready to use adapters for the most common caching backends.
 
+.. versionadded:: 3.1
+    The Cache component was introduced in Symfony 3.1.
+
 Installation
 ------------
 
