@@ -7,6 +7,9 @@ The Ldap Component
 
     The Ldap component provides a means to connect to an LDAP server (OpenLDAP or Active Directory).
 
+.. versionadded:: 2.8
+    The Ldap component was introduced in Symfony 2.8.
+
 Installation
 ------------
 
