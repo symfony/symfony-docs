@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-03-10T16:19:15Z
+
+Could I get a review for these changes? Thanks!
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-03-10T16:34:19Z
+
+I left some very minor comments but I like your changes :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-18T10:15:16Z
+
+I've fixed most of the issues reported by reviewers.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T07:43:19Z
+
+@javiereguiluz Apart from the XML config examples this looks ready to me.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-21T14:15:40Z
+
+I've updated the examples to show the full XML config. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-05-21T14:32:52Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-30T19:38:20Z
+
+ping @weaverryan @WouterJ
