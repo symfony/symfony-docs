@@ -290,6 +290,7 @@ New Documentation
 ~~~~~~~~~~~~~~~~~
 
 * `#6515 <https://github.com/symfony/symfony-docs/pull/6515>`_ Added the documentation for the Cache component (javiereguiluz)
+* `#6623 <https://github.com/symfony/symfony-docs/pull/6623>`_ [Console] Adapt doc for easier testing of commands needing user inputs (chalasr)
 * `#6690 <https://github.com/symfony/symfony-docs/pull/6690>`_ Added an example for a different method of verbosity level usage. (smatyas)
 * `#6648 <https://github.com/symfony/symfony-docs/pull/6648>`_ Process: callbacks now allowed when output disabled (avindra)
 * `#6587 <https://github.com/symfony/symfony-docs/pull/6587>`_ Updating recommended email settings for monolog (jorgelbg)
