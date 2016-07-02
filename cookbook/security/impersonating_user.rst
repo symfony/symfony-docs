@@ -11,12 +11,13 @@ to understand a bug a user sees that you can't reproduce).
 .. caution::
 
     User impersonation is not compatible with
-    :doc:`pre Authenticated firewalls</cookbook/security/pre_authenticated>`. The
+    :doc:`pre authenticated firewalls </cookbook/security/pre_authenticated>`. The
     reason is that impersonation requires the authentication state to be maintained
-    server-side but pre-authenticated information (``SSL_CLIENT_S_DN_Email``,
+    server-side, but pre-authenticated information (``SSL_CLIENT_S_DN_Email``,
     ``REMOTE_USER`` or other) is sent in each request.
 
-This can be easily done by activating the ``switch_user`` firewall listener:
+Impersonating the user can be easily done by activating the ``switch_user``
+firewall listener:
 
 .. configuration-block::
 

@@ -15,7 +15,7 @@ authenticated when reaching your application.
 
     :doc:`User impersonation </cookbook/security/impersonating_user>` is not
     compatible with pre-authenticated firewalls. The reason is that
-    impersonation requires the authentication state to be maintained server-side
+    impersonation requires the authentication state to be maintained server-side,
     but pre-authenticated information (``SSL_CLIENT_S_DN_Email``, ``REMOTE_USER``
     or other) is sent in each request.
 
