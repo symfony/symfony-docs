@@ -13,6 +13,56 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+June, 2016
+----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#6587 <https://github.com/symfony/symfony-docs/pull/6587>`_ Updating recommended email settings for monolog (jorgelbg)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#6679 <https://github.com/symfony/symfony-docs/pull/6679>`_ Invalid PHP return statement (JohnnyEvo)
+* `#6675 <https://github.com/symfony/symfony-docs/pull/6675>`_ Update broken links to default VCL files (sgrodzicki)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#6597 <https://github.com/symfony/symfony-docs/pull/6597>`_ [Validator] Add shorter examples using the default option (alexmart)
+* `#6696 <https://github.com/symfony/symfony-docs/pull/6696>`_ Typo fix (jevgenijusr)
+* `#6614 <https://github.com/symfony/symfony-docs/pull/6614>`_ Updated the CS rule about return null; and return; (javiereguiluz)
+* `#6692 <https://github.com/symfony/symfony-docs/pull/6692>`_ Update date.rst - Fixes typo (fdarre)
+* `#6689 <https://github.com/symfony/symfony-docs/pull/6689>`_ Hard values for the driver option (iltar)
+* `#6685 <https://github.com/symfony/symfony-docs/pull/6685>`_ NullOutput should be passed to $command->run() (Ma27)
+* `#6676 <https://github.com/symfony/symfony-docs/pull/6676>`_ Removed 'html' from the component description (naroga)
+* `#6674 <https://github.com/symfony/symfony-docs/pull/6674>`_ CheckStyle in Voters cookbook (JakeFr)
+* `#6672 <https://github.com/symfony/symfony-docs/pull/6672>`_ [Book][Testing] remove Symfony core testing note (xabbuh)
+* `#6670 <https://github.com/symfony/symfony-docs/pull/6670>`_ Fix typo 'even' >> 'event' in event_listener.rst (kuusas)
+* `#6667 <https://github.com/symfony/symfony-docs/pull/6667>`_ [Contributing][Code] fix list item terminators (xabbuh)
+* `#6616 <https://github.com/symfony/symfony-docs/pull/6616>`_ Better explain the mandatory/convention location of some elements (rcousens, javiereguiluz)
+* `#6628 <https://github.com/symfony/symfony-docs/pull/6628>`_ Fix for #6625 (kix)
+* `#6668 <https://github.com/symfony/symfony-docs/pull/6668>`_ [Contributing][Code] remove PHPUnit requirement (xabbuh)
+* `#6654 <https://github.com/symfony/symfony-docs/pull/6654>`_ Update upload_file.rst (liubinas)
+* `#6650 <https://github.com/symfony/symfony-docs/pull/6650>`_ fix dumper default representation (Jamal Youssefi)
+* `#6652 <https://github.com/symfony/symfony-docs/pull/6652>`_ ``Finder::path()`` method matching directories and files (soyuka)
+* `#6662 <https://github.com/symfony/symfony-docs/pull/6662>`_ preg_match throw an warning (nicolae-stelian)
+* `#6658 <https://github.com/symfony/symfony-docs/pull/6658>`_ [Process] tweak a sentence (xabbuh)
+* `#6638 <https://github.com/symfony/symfony-docs/pull/6638>`_ swap terminate and exception event descriptions (xabbuh)
+* `#6615 <https://github.com/symfony/symfony-docs/pull/6615>`_ Minor grammar fix (aalaap)
+* `#6637 <https://github.com/symfony/symfony-docs/pull/6637>`_ Update security.rst (norbert-n)
+* `#6644 <https://github.com/symfony/symfony-docs/pull/6644>`_ [Console] Fix wrong quotes in QuestionHelper::setInputStream() (chalasr)
+* `#6645 <https://github.com/symfony/symfony-docs/pull/6645>`_ Fix bootstrap class name help-block (foaly-nr1)
+* `#6641 <https://github.com/symfony/symfony-docs/pull/6641>`_ [Book][Form] fix reference to renamed document (xabbuh)
+* `#6579 <https://github.com/symfony/symfony-docs/pull/6579>`_ Added callable validation_groups example (gnat42)
+* `#6626 <https://github.com/symfony/symfony-docs/pull/6626>`_ reflect the EOM of Symfony 2.3 (xabbuh)
+* `#6631 <https://github.com/symfony/symfony-docs/pull/6631>`_ Fix console.exception and console.terminate order (Julien Falque)
+* `#6629 <https://github.com/symfony/symfony-docs/pull/6629>`_ Update options_resolver.rst (atailouloute)
+* `#6627 <https://github.com/symfony/symfony-docs/pull/6627>`_ Fixed a typo in cookbook/security/entity_provider (michaeldegroot)
+* `#6618 <https://github.com/symfony/symfony-docs/pull/6618>`_ Added a note about coding standards and method arguments (javiereguiluz)
+
+
 May, 2016
 ---------
 
