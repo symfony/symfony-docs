@@ -19,8 +19,12 @@ June, 2016
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#6515 <https://github.com/symfony/symfony-docs/pull/6515>`_ Added the documentation for the Cache component (javiereguiluz)
 * `#6690 <https://github.com/symfony/symfony-docs/pull/6690>`_ Added an example for a different method of verbosity level usage. (smatyas)
+* `#6648 <https://github.com/symfony/symfony-docs/pull/6648>`_ Process: callbacks now allowed when output disabled (avindra)
 * `#6587 <https://github.com/symfony/symfony-docs/pull/6587>`_ Updating recommended email settings for monolog (jorgelbg)
+* `#6617 <https://github.com/symfony/symfony-docs/pull/6617>`_ [WSSE] - Using a PSR6 cache instead of file cache (Nyholm)
+* `#6438 <https://github.com/symfony/symfony-docs/pull/6438>`_ Added docs about ArgumentValueResolvers (iltar)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -51,6 +55,7 @@ Minor Documentation Changes
 * `#6650 <https://github.com/symfony/symfony-docs/pull/6650>`_ fix dumper default representation (Jamal Youssefi)
 * `#6652 <https://github.com/symfony/symfony-docs/pull/6652>`_ ``Finder::path()`` method matching directories and files (soyuka)
 * `#6662 <https://github.com/symfony/symfony-docs/pull/6662>`_ preg_match throw an warning (nicolae-stelian)
+* `#6651 <https://github.com/symfony/symfony-docs/pull/6651>`_ [#6438] some tweaks to the argument value resolver (xabbuh)
 * `#6658 <https://github.com/symfony/symfony-docs/pull/6658>`_ [Process] tweak a sentence (xabbuh)
 * `#6599 <https://github.com/symfony/symfony-docs/pull/6599>`_ Fixed null description of query_builder option (HeahDude)
 * `#6638 <https://github.com/symfony/symfony-docs/pull/6638>`_ swap terminate and exception event descriptions (xabbuh)
