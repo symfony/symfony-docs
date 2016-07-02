@@ -92,7 +92,7 @@ value and then a User object is created::
 
 Once you've :ref:`configured <cookbook-security-api-key-config>` everything,
 you'll be able to authenticate by adding an apikey parameter to the query
-string, like ``http://example.com/admin/foo?apikey=37b51d194a7513e45b56f6524f2d51f2``.
+string, like ``http://example.com/api/foo?apikey=37b51d194a7513e45b56f6524f2d51f2``.
 
 The authentication process has several steps, and your implementation will
 probably differ:
@@ -354,7 +354,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
 
             firewalls:
                 secured_area:
-                    pattern: ^/admin
+                    pattern: ^/api
                     stateless: true
                     simple_preauth:
                         authenticator: apikey_authenticator
@@ -377,7 +377,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
                 <!-- ... -->
 
                 <firewall name="secured_area"
-                    pattern="^/admin"
+                    pattern="^/api"
                     stateless="true"
                     provider="api_key_user_provider"
                 >
@@ -397,7 +397,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area'       => array(
-                    'pattern'        => '^/admin',
+                    'pattern'        => '^/api',
                     'stateless'      => true,
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
@@ -412,7 +412,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
             ),
         ));
 
-If you have defined `access_control`, make sure to add new entry:
+If you have defined ``access_control``, make sure to add a new entry:
 
 .. configuration-block::
 
@@ -423,7 +423,7 @@ If you have defined `access_control`, make sure to add new entry:
             # ...
             
             access_control:
-                - { path: ^/admin, roles: ROLE_API }
+                - { path: ^/api, roles: ROLE_API }
 
     .. code-block:: xml
 
@@ -435,9 +435,7 @@ If you have defined `access_control`, make sure to add new entry:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <rule path="^/admin"
-                role="ROLE_API"
-            />
+            <rule path="^/api" role="ROLE_API" />
         </srv:container>
 
     .. code-block:: php
@@ -446,7 +444,7 @@ If you have defined `access_control`, make sure to add new entry:
         $container->loadFromExtension('security', array(
             'access_control' => array(
                 array(
-                    'path' => '^/admin',
+                    'path' => '^/api',
                     'role' => 'ROLE_API',
                 ),
             ),
@@ -484,7 +482,7 @@ configuration or set it to ``false``:
 
             firewalls:
                 secured_area:
-                    pattern: ^/admin
+                    pattern: ^/api
                     stateless: false
                     simple_preauth:
                         authenticator: apikey_authenticator
@@ -507,7 +505,7 @@ configuration or set it to ``false``:
                 <!-- ... -->
 
                 <firewall name="secured_area"
-                    pattern="^/admin"
+                    pattern="^/api"
                     stateless="false"
                     provider="api_key_user_provider"
                 >
@@ -526,7 +524,7 @@ configuration or set it to ``false``:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area'       => array(
-                    'pattern'        => '^/admin',
+                    'pattern'        => '^/api',
                     'stateless'      => false,
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
