@@ -19,6 +19,7 @@ June, 2016
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#6690 <https://github.com/symfony/symfony-docs/pull/6690>`_ Added an example for a different method of verbosity level usage. (smatyas)
 * `#6587 <https://github.com/symfony/symfony-docs/pull/6587>`_ Updating recommended email settings for monolog (jorgelbg)
 
 Fixed Documentation
@@ -32,7 +33,9 @@ Minor Documentation Changes
 
 * `#6597 <https://github.com/symfony/symfony-docs/pull/6597>`_ [Validator] Add shorter examples using the default option (alexmart)
 * `#6696 <https://github.com/symfony/symfony-docs/pull/6696>`_ Typo fix (jevgenijusr)
+* `#6693 <https://github.com/symfony/symfony-docs/pull/6693>`_ Add missing parameter (rodnaph)
 * `#6614 <https://github.com/symfony/symfony-docs/pull/6614>`_ Updated the CS rule about return null; and return; (javiereguiluz)
+* `#6680 <https://github.com/symfony/symfony-docs/pull/6680>`_ Fix ldap security examples (jvasseur)
 * `#6692 <https://github.com/symfony/symfony-docs/pull/6692>`_ Update date.rst - Fixes typo (fdarre)
 * `#6689 <https://github.com/symfony/symfony-docs/pull/6689>`_ Hard values for the driver option (iltar)
 * `#6685 <https://github.com/symfony/symfony-docs/pull/6685>`_ NullOutput should be passed to $command->run() (Ma27)
@@ -49,11 +52,13 @@ Minor Documentation Changes
 * `#6652 <https://github.com/symfony/symfony-docs/pull/6652>`_ ``Finder::path()`` method matching directories and files (soyuka)
 * `#6662 <https://github.com/symfony/symfony-docs/pull/6662>`_ preg_match throw an warning (nicolae-stelian)
 * `#6658 <https://github.com/symfony/symfony-docs/pull/6658>`_ [Process] tweak a sentence (xabbuh)
+* `#6599 <https://github.com/symfony/symfony-docs/pull/6599>`_ Fixed null description of query_builder option (HeahDude)
 * `#6638 <https://github.com/symfony/symfony-docs/pull/6638>`_ swap terminate and exception event descriptions (xabbuh)
 * `#6615 <https://github.com/symfony/symfony-docs/pull/6615>`_ Minor grammar fix (aalaap)
 * `#6637 <https://github.com/symfony/symfony-docs/pull/6637>`_ Update security.rst (norbert-n)
 * `#6644 <https://github.com/symfony/symfony-docs/pull/6644>`_ [Console] Fix wrong quotes in QuestionHelper::setInputStream() (chalasr)
 * `#6645 <https://github.com/symfony/symfony-docs/pull/6645>`_ Fix bootstrap class name help-block (foaly-nr1)
+* `#6642 <https://github.com/symfony/symfony-docs/pull/6642>`_ do not reference unused interface (xabbuh)
 * `#6641 <https://github.com/symfony/symfony-docs/pull/6641>`_ [Book][Form] fix reference to renamed document (xabbuh)
 * `#6579 <https://github.com/symfony/symfony-docs/pull/6579>`_ Added callable validation_groups example (gnat42)
 * `#6626 <https://github.com/symfony/symfony-docs/pull/6626>`_ reflect the EOM of Symfony 2.3 (xabbuh)
