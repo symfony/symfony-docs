@@ -11,6 +11,14 @@ box, Symfony supports most authentication mechanisms.
 These requests are called *pre authenticated* requests because the user is already
 authenticated when reaching your application.
 
+.. caution::
+
+    :doc:`User impersonation </cookbook/security/impersonating_user>` is not
+    compatible with pre-authenticated firewalls. The reason is that
+    impersonation requires the authentication state to be maintained server-side
+    but pre-authenticated information (``SSL_CLIENT_S_DN_Email``, ``REMOTE_USER``
+    or other) is sent in each request.
+
 X.509 Client Certificate Authentication
 ---------------------------------------
 
@@ -152,9 +160,3 @@ key in the ``remote_user`` firewall configuration.
     See :ref:`the previous note <cookbook-security-pre-authenticated-user-provider-note>`
     for more information.
 
-.. caution::
-
-    :doc:`User impersonation </cookbook/security/impersonating_user>` is not
-    compatible with ``REMOTE_USER`` based authentication. The reason is that
-    impersonation requires the authentication state to be maintained server-side
-    but ``REMOTE_USER`` information is sent by the browser in each request.
