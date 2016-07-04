@@ -10,7 +10,7 @@ class, the metadata is defined by the class itself. When validating simple value
 the metadata must be passed to the validation methods.
 
 Class metadata can be defined in a configuration file or in the class itself.
-The Validator component retrieves that metadata using a set of loaders.
+The Validator component collects that metadata using a set of loaders.
 
 .. seealso::
 
@@ -54,12 +54,13 @@ In this example, the validation metadata is retrieved executing the
 
 .. tip::
 
-    You can call this method multiple times to add several method names. You can
-    also use :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addMethodMappings`
+    Instead of calling ``addMethodMapping()`` multiple times to add several
+    method names, you can also use
+    :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addMethodMappings`
     to set an array of supported method names.
 
-The FileLoaders
----------------
+The File Loaders
+----------------
 
 The component also provides two file loaders, one to load YAML files and one to
 load XML files. Use
@@ -146,7 +147,7 @@ Caching
 
 Using many loaders to load metadata from different places is convenient, but it
 can slow down your application because each file needs to be parsed, validated
-and converted to a :class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata`
+and converted into a :class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata`
 instance. To solve this problem, you can cache the ``ClassMetadata`` information.
 
 The Validator component comes with an
