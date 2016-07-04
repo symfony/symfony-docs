@@ -96,8 +96,8 @@ prefixed classes included in doc block comments (``/** ... */``). For example::
     use Symfony\Component\Validator\Constraints as Assert;
     // ...
 
-  class User
-  {
+    class User
+    {
         /**
         * @Assert\NotBlank()
         */
