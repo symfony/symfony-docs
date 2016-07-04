@@ -36,7 +36,7 @@ characters long::
     $validator = Validation::createValidator();
     $violations = $validator->validate('Bernhard', array(
         new Length(array('min' => 10)),
-        new NotBlank()
+        new NotBlank(),
     ));
 
     if (0 !== count($violations)) {
