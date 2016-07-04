@@ -235,7 +235,7 @@ returning the result of the ROT13 transformation uppercased::
 
     namespace Acme;
 
-    class UppercaseTransformer implements TransformerInterface
+    class UppercaseRot13Transformer implements TransformerInterface
     {
         private $transformer;
 
@@ -316,13 +316,13 @@ and a Twitter client using it:
                 class:    Acme\TwitterClient
                 autowire: true
 
-            uppercase_transformer:
-                class:    Acme\UppercaseTransformer
+            uppercase_rot13_transformer:
+                class:    Acme\UppercaseRot13Transformer
                 autowire: true
 
             uppercase_twitter_client:
                 class:     Acme\TwitterClient
-                arguments: ['@uppercase_transformer']
+                arguments: ['@uppercase_rot13_transformer']
 
     .. code-block:: xml
 
@@ -336,9 +336,9 @@ and a Twitter client using it:
                     <autowiring-type>Acme\TransformerInterface</autowiring-type>
                 </service>
                 <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
-                <service id="uppercase_transformer" class="Acme\UppercaseTransformer" autowire="true" />
+                <service id="uppercase_rot13_transformer" class="Acme\UppercaseRot13Transformer" autowire="true" />
                 <service id="uppercase_twitter_client" class="Acme\TwitterClient">
-                    <argument type="service" id="uppercase_transformer" />
+                    <argument type="service" id="uppercase_rot13_transformer" />
                 </service>
             </services>
         </container>
@@ -357,12 +357,12 @@ and a Twitter client using it:
         $definition2->setAutowired(true);
         $container->setDefinition('twitter_client', $definition2);
 
-        $definition3 = new Definition('Acme\UppercaseTransformer');
+        $definition3 = new Definition('Acme\UppercaseRot13Transformer');
         $definition3->setAutowired(true);
-        $container->setDefinition('uppercase_transformer', $definition3);
+        $container->setDefinition('uppercase_rot13_transformer', $definition3);
 
         $definition4 = new Definition('Acme\TwitterClient');
-        $definition4->addArgument(new Reference('uppercase_transformer'));
+        $definition4->addArgument(new Reference('uppercase_rot13_transformer'));
         $container->setDefinition('uppercase_twitter_client', $definition4);
 
 This deserves some explanations. You now have two services implementing the
@@ -378,9 +378,9 @@ Fortunately, the ``autowiring_types`` key is here to specify which implementatio
 to use by default. This key can take a list of types if necessary.
 
 Thanks to this setting, the ``rot13_transformer`` service is automatically injected
-as an argument of the ``uppercase_transformer`` and ``twitter_client`` services. For
+as an argument of the ``uppercase_rot13_transformer`` and ``twitter_client`` services. For
 the ``uppercase_twitter_client``, we use a standard service definition to inject
-the specific ``uppercase_transformer`` service.
+the specific ``uppercase_rot13_transformer`` service.
 
 As for other RAD features such as the FrameworkBundle controller or annotations,
 keep in mind to not use autowiring in public bundles nor in large projects with
