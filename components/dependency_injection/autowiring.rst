@@ -317,7 +317,7 @@ and a Twitter client using it:
                 autowire: true
 
             uppercase_rot13_transformer:
-                class:    Acme\UppercaseRot13Transformer
+                class:    Acme\UppercaseTransformer
                 autowire: true
 
             uppercase_twitter_client:
