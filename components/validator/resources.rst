@@ -96,10 +96,13 @@ prefixed classes included in doc block comments (``/** ... */``). For example::
     use Symfony\Component\Validator\Constraints as Assert;
     // ...
 
-    /**
-     * @Assert\NotBlank()
-     */
-    protected $name;
+  class User
+  {
+        /**
+        * @Assert\NotBlank()
+        */
+        protected $name;
+    }
 
 To enable the annotation loader, call the
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping`
@@ -118,7 +121,7 @@ To disable the annotation loader after it was enabled, call
 .. note::
 
     In order to use the annotation loader, you should have installed the
-    ``doctrine/annotations`` and ``doctrine/cache`` packages from _Packagist.
+    ``doctrine/annotations`` and ``doctrine/cache`` packages from `Packagist`_.
 
 Using Multiple Loaders
 ----------------------
@@ -198,4 +201,4 @@ this custom implementation using
     and caches using the ``add*Mapping()`` methods anymore. You now have to
     inject them into your custom metadata factory yourself.
 
-.. _Packagist: https://packagist.org
+.. _`Packagist`: https://packagist.org
