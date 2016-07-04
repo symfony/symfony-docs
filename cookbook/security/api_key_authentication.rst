@@ -53,7 +53,7 @@ value and then a User object is created::
             // $apiKey = $request->headers->get('apikey');
 
             if (!$apiKey) {
-                throw new BadCredentialsException('No API key found');
+                throw new BadCredentialsException();
 
                 // or to just skip api key authentication
                 // return null;
@@ -64,6 +64,11 @@ value and then a User object is created::
                 $apiKey,
                 $providerKey
             );
+        }
+
+        public function supportsToken(TokenInterface $token, $providerKey)
+        {
+            return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
         }
 
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
@@ -97,11 +102,6 @@ value and then a User object is created::
                 $user->getRoles()
             );
         }
-
-        public function supportsToken(TokenInterface $token, $providerKey)
-        {
-            return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
-        }
     }
 
 .. versionadded:: 2.8
@@ -111,7 +111,7 @@ value and then a User object is created::
 
 Once you've :ref:`configured <cookbook-security-api-key-config>` everything,
 you'll be able to authenticate by adding an apikey parameter to the query
-string, like ``http://example.com/admin/foo?apikey=37b51d194a7513e45b56f6524f2d51f2``.
+string, like ``http://example.com/api/foo?apikey=37b51d194a7513e45b56f6524f2d51f2``.
 
 The authentication process has several steps, and your implementation will
 probably differ:
@@ -196,7 +196,7 @@ The ``$userProvider`` might look something like this::
                 null,
                 // the roles for the user - you may choose to determine
                 // these dynamically somehow based on the user
-                array('ROLE_USER')
+                array('ROLE_API')
             );
         }
 
@@ -268,6 +268,7 @@ would allow you to have custom data on the ``User`` object.
 
 Finally, just make sure that ``supportsClass()`` returns ``true`` for User
 objects with the same class as whatever user you return in ``loadUserByUsername()``.
+
 If your authentication is stateless like in this example (i.e. you expect
 the user to send the API key with every request and so you don't save the
 login to the session), then you can simply throw the ``UnsupportedUserException``
@@ -281,7 +282,7 @@ exception in ``refreshUser()``.
 Handling Authentication Failure
 -------------------------------
 
-In order for your ``ApiKeyAuthenticator`` to correctly display a 403
+In order for your ``ApiKeyAuthenticator`` to correctly display a 401
 http status when either bad credentials or authentication fails you will
 need to implement the :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface` on your
 Authenticator. This will provide a method ``onAuthenticationFailure`` which
@@ -308,7 +309,7 @@ you can use to create an error ``Response``.
                 // this contains information about *why* authentication failed
                 // use it, or return your own message
                 strtr($exception->getMessageKey(), $exception->getMessageData()),
-                403
+                401
             );
         }
     }
@@ -377,7 +378,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
 
             firewalls:
                 secured_area:
-                    pattern: ^/admin
+                    pattern: ^/api
                     stateless: true
                     simple_preauth:
                         authenticator: apikey_authenticator
@@ -400,7 +401,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
                 <!-- ... -->
 
                 <firewall name="secured_area"
-                    pattern="^/admin"
+                    pattern="^/api"
                     stateless="true"
                     provider="api_key_user_provider"
                 >
@@ -420,7 +421,7 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area'       => array(
-                    'pattern'        => '^/admin',
+                    'pattern'        => '^/api',
                     'stateless'      => true,
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
@@ -431,6 +432,44 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
             'providers' => array(
                 'api_key_user_provider'  => array(
                     'id' => 'api_key_user_provider',
+                ),
+            ),
+        ));
+
+If you have defined ``access_control``, make sure to add a new entry:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            
+            access_control:
+                - { path: ^/api, roles: ROLE_API }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <rule path="^/api" role="ROLE_API" />
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'access_control' => array(
+                array(
+                    'path' => '^/api',
+                    'role' => 'ROLE_API',
                 ),
             ),
         ));
@@ -467,7 +506,7 @@ configuration or set it to ``false``:
 
             firewalls:
                 secured_area:
-                    pattern: ^/admin
+                    pattern: ^/api
                     stateless: false
                     simple_preauth:
                         authenticator: apikey_authenticator
@@ -490,7 +529,7 @@ configuration or set it to ``false``:
                 <!-- ... -->
 
                 <firewall name="secured_area"
-                    pattern="^/admin"
+                    pattern="^/api"
                     stateless="false"
                     provider="api_key_user_provider"
                 >
@@ -509,7 +548,7 @@ configuration or set it to ``false``:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area'       => array(
-                    'pattern'        => '^/admin',
+                    'pattern'        => '^/api',
                     'stateless'      => false,
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
