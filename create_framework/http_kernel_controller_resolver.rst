@@ -43,10 +43,10 @@ component:
 
     $ composer require symfony/http-kernel
 
-The HttpKernel component has many interesting features, but the one we need
-right now is the *controller resolver*. A controller resolver knows how to
-determine the controller to execute and the arguments to pass to it, based on
-a Request object. All controller resolvers implement the following interface::
+The HttpKernel component has many interesting features, but the ones we need
+right now are the *controller resolver* and *argument resolver*. A controller resolver knows how to
+determine the controller to execute and the argument resolver determines the arguments to pass to it,
+based on a Request object. All controller resolvers implement the following interface::
 
     namespace Symfony\Component\HttpKernel\Controller;
 
@@ -57,6 +57,14 @@ a Request object. All controller resolvers implement the following interface::
 
         function getArguments(Request $request, $controller);
     }
+
+.. caution::
+
+    The ``getArguments()`` method in the :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolver`
+    and respective interface :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolverInterface`
+    are deprecated as of 3.1 and will be removed in 4.0. You can use the
+    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which uses the
+    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface` instead.
 
 The ``getController()`` method relies on the same convention as the one we
 have defined earlier: the ``_controller`` request attribute must contain the
@@ -74,10 +82,11 @@ resolver from HttpKernel::
 
     use Symfony\Component\HttpKernel;
 
-    $resolver = new HttpKernel\Controller\ControllerResolver();
+    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
-    $controller = $resolver->getController($request);
-    $arguments = $resolver->getArguments($request, $controller);
+    $controller = $controllerResolver->getController($request);
+    $arguments = $argumentResolver->getArguments($request, $controller);
 
     $response = call_user_func_array($controller, $arguments);
 
@@ -140,14 +149,12 @@ method is not defined, an argument has no matching attribute, ...).
 
 .. note::
 
-    With the great flexibility of the default controller resolver, you might
-    wonder why someone would want to create another one (why would there be an
-    interface if not?). Two examples: in Symfony, ``getController()`` is
-    enhanced to support
-    :doc:`controllers as services </cookbook/controller/service>`; and in
-    `FrameworkExtraBundle`_, ``getArguments()`` is enhanced to support
-    parameter converters, where request attributes are converted to objects
-    automatically.
+    With the great flexibility of the default controller resolver and argument
+    resolver, you might wonder why someone would want to create another one
+    (why would there be an interface if not?). Two examples: in Symfony,
+    ``getController()`` is enhanced to support :doc:`controllers as services </cookbook/controller/service>`;
+    and ``getArguments()`` provides an extension point to alter or enhance
+    the resolving of arguments.
 
 Let's conclude with the new version of our framework::
 
@@ -174,13 +181,18 @@ Let's conclude with the new version of our framework::
     $context = new Routing\RequestContext();
     $context->fromRequest($request);
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
-    $resolver = new HttpKernel\Controller\ControllerResolver();
+
+    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
+
+    $controller = $controllerResolver->getController($request);
+    $arguments = $argumentResolver->getArguments($request, $controller);
 
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
 
-        $controller = $resolver->getController($request);
-        $arguments = $resolver->getArguments($request, $controller);
+        $controller = $controllerResolver->getController($request);
+        $arguments = $argumentResolver->getArguments($request, $controller);
 
         $response = call_user_func_array($controller, $arguments);
     } catch (Routing\Exception\ResourceNotFoundException $e) {
@@ -192,7 +204,7 @@ Let's conclude with the new version of our framework::
     $response->send();
 
 Think about it once more: our framework is more robust and more flexible than
-ever and it still has less than 40 lines of code.
+ever and it still has less than 50 lines of code.
 
 .. _`reflection`: http://php.net/reflection
 .. _`FrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

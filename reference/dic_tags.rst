@@ -24,6 +24,7 @@ Tag Name                                  Usage
 `assetic.templating.twig`_                Remove this service if Twig templating is disabled
 `auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
+`controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
 `doctrine.event_subscriber`_              Add a Doctrine event subscriber
@@ -349,6 +350,15 @@ console.command
 
 For details on registering your own commands in the service container, read
 :ref:`the cookbook article<cookbook-console-dic>`.
+
+controller.argument_value_resolver
+----------------------------------
+
+**Purpose**: Register a value resolver for controller arguments such as ``Request``
+
+Value resolvers implement the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
+and are used to resolve argument values for controllers as described here:
+:doc:`/cookbook/controller/argument_value_resolver`.
 
 data_collector
 --------------
