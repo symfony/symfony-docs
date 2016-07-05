@@ -292,19 +292,19 @@ Importing Configuration with ``imports``
 
 So far, you've placed your ``app.mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the AcmeHelloBundle, it
+course, since the ``Mailer`` class itself lives inside the AppBundle, it
 makes more sense to put the ``app.mailer`` container definition inside the
 bundle as well.
 
 First, move the ``app.mailer`` container definition into a new container resource
-file inside AcmeHelloBundle. If the ``Resources`` or ``Resources/config``
+file inside AppBundle. If the ``Resources`` or ``Resources/config``
 directories don't exist, create them.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         parameters:
             app.mailer.transport: sendmail
 
@@ -315,7 +315,7 @@ directories don't exist, create them.
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -335,7 +335,7 @@ directories don't exist, create them.
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
@@ -356,7 +356,7 @@ configuration.
 
         # app/config/config.yml
         imports:
-            - { resource: '@AcmeHelloBundle/Resources/config/services.yml' }
+            - { resource: '@AppBundle/Resources/config/services.yml' }
 
     .. code-block:: xml
 
@@ -368,23 +368,23 @@ configuration.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
-                <import resource="@AcmeHelloBundle/Resources/config/services.xml"/>
+                <import resource="@AppBundle/Resources/config/services.xml"/>
             </imports>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
-        $loader->import('@AcmeHelloBundle/Resources/config/services.php');
+        $loader->import('@AppBundle/Resources/config/services.php');
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHelloBundle`` syntax resolves the directory path
-of the AcmeHelloBundle bundle. This helps you specify the path to the resource
-without worrying later if you move the AcmeHelloBundle to a different directory.
+file. The special ``@AppBundle`` syntax resolves the directory path
+of the AppBundle bundle. This helps you specify the path to the resource
+without worrying later if you move the AppBundle to a different directory.
 
 .. index::
    single: Service Container; Extension configuration
@@ -644,7 +644,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         # app/config/config.yml
         services:
             my_mailer:
-                class:        Acme\HelloBundle\Mailer
+                class:        AppBundle\Mailer
                 arguments:    ["@=service('mailer_configuration').getMailerMethod()"]
 
     .. code-block:: xml
@@ -658,7 +658,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
             >
 
             <services>
-                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                <service id="my_mailer" class="AppBundle\Mailer">
                     <argument type="expression">service('mailer_configuration').getMailerMethod()</argument>
                 </service>
             </services>
@@ -671,7 +671,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
-            'Acme\HelloBundle\Mailer',
+            'AppBundle\Mailer',
             array(new Expression('service("mailer_configuration").getMailerMethod()'))
         ));
 
@@ -693,7 +693,7 @@ via a ``container`` variable. Here's another example:
 
         services:
             my_mailer:
-                class:     Acme\HelloBundle\Mailer
+                class:     AppBundle\Mailer
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
@@ -706,7 +706,7 @@ via a ``container`` variable. Here's another example:
             >
 
             <services>
-                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                <service id="my_mailer" class="AppBundle\Mailer">
                     <argument type="expression">container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
                 </service>
             </services>
@@ -718,7 +718,7 @@ via a ``container`` variable. Here's another example:
         use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
-            'Acme\HelloBundle\Mailer',
+            'AppBundle\Mailer',
             array(new Expression(
                 "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
             ))
@@ -820,7 +820,7 @@ inject the ``request_stack`` service and access the ``Request`` by calling
 the :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
 method::
 
-    namespace Acme\HelloBundle\Newsletter;
+    namespace AppBundle\Newsletter;
 
     use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -848,15 +848,15 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         services:
             newsletter_manager:
-                class:     Acme\HelloBundle\Newsletter\NewsletterManager
+                class:     AppBundle\Newsletter\NewsletterManager
                 arguments: ["@request_stack"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -865,7 +865,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
             <services>
                 <service
                     id="newsletter_manager"
-                    class="Acme\HelloBundle\Newsletter\NewsletterManager"
+                    class="AppBundle\Newsletter\NewsletterManager"
                 >
                     <argument type="service" id="request_stack"/>
                 </service>
@@ -874,13 +874,13 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $container->setDefinition('newsletter_manager', new Definition(
-            'Acme\HelloBundle\Newsletter\NewsletterManager',
+            'AppBundle\Newsletter\NewsletterManager',
             array(new Reference('request_stack'))
         ));
 
