@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-04T11:44:03Z
+
+@jevgenijusr This change looks good to me. Can you also update the following code blocks for the XML and PHP formats accordingly?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-04T15:43:49Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-04T15:49:31Z
+
+@jevgenijusr this looks like a bug. Thanks for fixing it!  However, shouldn't we use `Rot13Transformer` instead of `UppercaseTransformer` ? That's what's used in the first part of the article.
+
+---------------------------------------------------------------------------
+
+by jevgenijusr at 2016-07-04T17:39:21Z
+
+@javiereguiluz Thanks, I think we should use `UppercaseRot13Transformer` instead, small change in the end :)
