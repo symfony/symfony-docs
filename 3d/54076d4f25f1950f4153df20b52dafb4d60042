@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-01T15:06:14Z
+
+👍
+
+Status: reviewed
+
+Let's merge this into 2.8: We don't document 2.6 version changes in the 2.8 docs (we only document changes in versions that didn't reach end of life when the stable version was released).
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-07-01T15:14:49Z
+
+@WouterJ oh, ignore my previous comment then :) Sorry ! and thanks for review
