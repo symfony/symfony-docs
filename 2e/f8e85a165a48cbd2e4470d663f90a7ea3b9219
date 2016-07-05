@@ -1,0 +1,149 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-01T13:48:52Z
+
+@iltar thanks for this contribution. We'll need to change a bit the "tone" (some parts read too informal) but so far contents are very promising. Thanks!
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-01T13:52:46Z
+
+@javiereguiluz sure thing! I'm not too experienced with the language style so I'm firstly making sure the contents is up-to-date so it can be fine-tuned afterwards. This is always the hardest part for me writing documentation.
+
+When writing code, you have codestyle, but when you're writing texts it's almost freestyle ;)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-01T13:55:25Z
+
+@iltar you are doing great! It's just a matter of minor "cosmetic changes". But for now don't worry about them :smile:
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-01T14:00:25Z
+
+@javiereguiluz is the array shorthand notation preferred or do you want the full notation?
+
+edit - for now I will keep amending so I can see if I make parse errors without too many issues, phpstorm only shows me highlights, no validation
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-01T14:14:49Z
+
+@iltar we still use `array()` in the docs.
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-06T13:02:40Z
+
+*So the PR is merged and the previous comments are addressed. I will open a new PR once I'm done writing some initial docs about the actual feature.*
+
+I think everything code related is fixed in this PR so it's up to the text itself now
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-04-06T16:18:47Z
+
+@iltar Is this supposed to be merged before #6438 or the other way around?
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-06T17:06:38Z
+
+@xabbuh it doesn't really matter, one describes the feature, the other makes sure the documentation doesn't trigger deprecations in your code.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-04-11T17:09:29Z
+
+We also need to doc the new `controller_argument.value_resolver` tag (https://github.com/symfony/symfony-docs/blob/master/reference/dic_tags.rst).
+
+@iltar great job - I'm really excited about the possibilities of this feature!
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-11T17:12:33Z
+
+Ah, I will add it here with some extra information. Any other places I might have missed?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-04-11T17:12:43Z
+
+Just a random comment: why defining such a long tag? `controller_argument.value_resolver` Why not something like `controller.argument_resolver` ?
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-11T17:15:29Z
+
+@javiereguiluz about the first part you're probably right, `controller` sounds better for this. About the second part, that would imply your own argument resolver, but that's not the same as a value resolver. I can make a PR to rename the tag to:
+ - `controller.value_resolver`
+ - `controller.argument_value_resolver`
+ - `controller.argument_value`
+
+Any preferences?
+
+/cc @fabpot
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-04-15T10:08:50Z
+
+Broken build is related to:
+```rst
+:doc:`/cookbook/controller/argument_value_resolver`
+```
+
+This will be solved as soon as #6438 is merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-11T20:00:09Z
+
+Merged #6438 now. Can you please rebase?
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-06-12T10:01:49Z
+
+@WouterJ rebase is done and checks pass now
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-12T10:19:35Z
+
+Can you please also fix the outstanding comments (both from me and others)? Sorry for not reviewing it before asking you to rebase.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-04T07:31:28Z
+
+@iltar Is this still a work in progress from your point of view?
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-07-04T07:39:42Z
+
+@xabbuh I totally forgot to fix the title! No, this should be finished.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-04T11:57:34Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by iltar at 2016-07-04T12:08:38Z
+
+Fixed a merge conflict and the feedback, can you please check it 1 time if everything went fine? I had a small issue inbetween
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-05T08:44:21Z
+
+👍 still looks good to me
+
+Status: Reviewed
+
+Note to merger: This needs to be merged in the `3.1` branch.
