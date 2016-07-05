@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-02T10:25:46Z
+
+👍 Looks indeed like this is missing. Maybe we can remove the command output, I don't think it's very usefull and it'll be outdated as soon as we add new branches (and takes much space). This can be done while merging, but feel free to update this PR if you have time.
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-07-02T10:27:19Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by chancegarcia at 2016-07-02T17:32:39Z
+
+removed the command output and squashed my history down so all my changes are in a single commit.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-02T17:53:27Z
+
+@chancegarcia looks like something went wrong with squashing (seems like you squashed on master or so). can you please rebase against 2.7?
+
+```
+$ git rebase --onto origin/2.7 origin/master
+```
+
+---------------------------------------------------------------------------
+
+by chancegarcia at 2016-07-02T18:00:24Z
+
+ran  `$  git rebase --onto origin/2.7 origin/master` then force updated by branch.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-02T18:02:28Z
+
+Looking perfect now. Thanks for your quick responses!
