@@ -60,11 +60,11 @@ based on a Request object. All controller resolvers implement the following inte
 
 .. caution::
 
-    The ``getArguments()`` method in the :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolver`
-    and respective interface :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolverInterface`
-    are deprecated as of 3.1 and will be removed in 4.0. You can use the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which uses the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface` instead.
+    The ``getArguments()`` method is deprecated as of Symfony 3.1. and will be
+    removed in 4.0. You can use the
+    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which
+    uses the :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface`
+    instead.
 
 The ``getController()`` method relies on the same convention as the one we
 have defined earlier: the ``_controller`` request attribute must contain the
@@ -142,10 +142,10 @@ Let's just inject the ``$year`` request attribute for our controller::
         }
     }
 
-The controller resolver also takes care of validating the controller callable
-and its arguments. In case of a problem, it throws an exception with a nice
-message explaining the problem (the controller class does not exist, the
-method is not defined, an argument has no matching attribute, ...).
+The resolvers also take care of validating the controller callable and its
+arguments. In case of a problem, it throws an exception with a nice message
+explaining the problem (the controller class does not exist, the method is not
+defined, an argument has no matching attribute, ...).
 
 .. note::
 
