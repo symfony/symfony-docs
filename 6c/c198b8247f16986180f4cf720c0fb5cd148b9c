@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-27T08:20:13Z
+
+👍  in the book we should always use AppBundle (in the components doc it's a different story). Thanks @JhonnyL.
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-28T07:33:57Z
+
+👎
+
+This section is about placing file service configuration inside a bundle. This isn't usefull for the AppBundle at all, it's meant for bundles that have to be shared. This is why we used another bundle name here.
+
+Thinking about this, I think we might would want to remove this section from the book chapter (it's document in the Bundles section of the cookbook already). We can then discuss the `import` statement by just creating a secondary file in `app/config/` with some service definitions (e.g. `/app/config/mailer_services.yml`) and import this into `app/config/services.yml`.
+
+If you agree, can you maybe make these changes?
+
+Status: Needs Work
+
+---------------------------------------------------------------------------
+
+by JhonnyL at 2016-06-28T08:04:57Z
+
+@WouterJ Ok, so I should remove the section Importing _Configuration via Container Extensions_ all together.
+
+What about the changes in _Using the Expression Language_, those are valid right? Also, does it really add any value to use different service ids for those examples? `app.mailer` vs `my_mailer`
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-02T11:49:17Z
+
+On second thought, let's first merge this PR as is and then remove/rewrite some parts of the book article to make it shorter: 👍
+
+ > Also, does it really add any value to use different service ids for those examples? app.mailer vs my_mailer
+
+No, it doesn't. I think we updated everything to the best practices on the 2.3 version, but we forgot to do it for the expression language stuff (which was added in a newer version). It would be great if you can also change the service ID name.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-02T11:49:23Z
+
+Status: reviewed
