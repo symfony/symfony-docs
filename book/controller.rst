@@ -256,7 +256,7 @@ The controller has a single argument, ``$name``, which corresponds to the
 ``{name}`` placeholder from the matched route (e.g. ``ryan`` if you go to
 ``/hello/ryan``). When executing the controller, Symfony matches each argument
 with a placeholder from the route. So the value for ``{name}`` is passed
-to ``$name``. Just make sure they the name of the placeholder is the
+to ``$name``. Just make sure that the name of the placeholder is the
 same as the name of the argument variable.
 
 Take the following more-interesting example, where the controller has two
