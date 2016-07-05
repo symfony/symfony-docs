@@ -208,6 +208,7 @@ subsystem isn't able to find itself the interface implementation to register:
 
             <services>
                 <service id="rot13_transformer" class="Acme\Rot13Transformer" />
+
                 <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
             </services>
         </container>
@@ -217,12 +218,11 @@ subsystem isn't able to find itself the interface implementation to register:
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition1 = new Definition('Acme\Rot13Transformer');
-        $container->setDefinition('rot13_transformer', $definition1);
+        $container->register('rot13_transformer', 'Acme\Rot13Transformer');
 
-        $definition2 = new Definition('Acme\TwitterClient');
-        $definition2->setAutowired(true);
-        $container->setDefinition('twitter_client', $definition2);
+        $clientDefinition = new Definition('Acme\TwitterClient');
+        $clientDefinition->setAutowired(true);
+        $container->setDefinition('twitter_client', $clientDefinition);
 
 The autowiring subsystem detects that the ``rot13_transformer`` service implements
 the ``TransformerInterface`` and injects it automatically. Even when using
@@ -238,7 +238,7 @@ returning the result of the ROT13 transformation uppercased::
 
     namespace Acme;
 
-    class UppercaseRot13Transformer implements TransformerInterface
+    class UppercaseTransformer implements TransformerInterface
     {
         private $transformer;
 
@@ -255,7 +255,7 @@ returning the result of the ROT13 transformation uppercased::
 
 This class is intended to decorate any transformer and return its value uppercased.
 
-We can now refactor the controller to add another endpoint leveraging this new
+The controller can now be refactored to add a new endpoint using this uppercase
 transformer::
 
     namespace Acme\Controller;
@@ -319,13 +319,13 @@ and a Twitter client using it:
                 class:    Acme\TwitterClient
                 autowire: true
 
-            uppercase_rot13_transformer:
-                class:    Acme\UppercaseRot13Transformer
+            uppercase_transformer:
+                class:    Acme\UppercaseTransformer
                 autowire: true
 
             uppercase_twitter_client:
                 class:     Acme\TwitterClient
-                arguments: ['@uppercase_rot13_transformer']
+                arguments: ['@uppercase_transformer']
 
     .. code-block:: xml
 
@@ -338,10 +338,15 @@ and a Twitter client using it:
                 <service id="rot13_transformer" class="Acme\Rot13Transformer">
                     <autowiring-type>Acme\TransformerInterface</autowiring-type>
                 </service>
+
                 <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
-                <service id="uppercase_rot13_transformer" class="Acme\UppercaseRot13Transformer" autowire="true" />
+
+                <service id="uppercase_transformer" class="Acme\UppercaseTransformer"
+                    autowire="true"
+                />
+
                 <service id="uppercase_twitter_client" class="Acme\TwitterClient">
-                    <argument type="service" id="uppercase_rot13_transformer" />
+                    <argument type="service" id="uppercase_transformer" />
                 </service>
             </services>
         </container>
@@ -352,21 +357,22 @@ and a Twitter client using it:
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition1 = new Definition('Acme\Rot13Transformer');
-        $definition1->setAutowiringTypes(array('Acme\TransformerInterface'));
-        $container->setDefinition('rot13_transformer', $definition1);
+        $rot13Definition = new Definition('Acme\Rot13Transformer');
+        $rot13Definition->setAutowiringTypes(array('Acme\TransformerInterface'));
+        $container->setDefinition('rot13_transformer', $rot13Definition);
 
-        $definition2 = new Definition('Acme\TwitterClient');
-        $definition2->setAutowired(true);
-        $container->setDefinition('twitter_client', $definition2);
+        $clientDefinition = new Definition('Acme\TwitterClient');
+        $clientDefinition->setAutowired(true);
+        $container->setDefinition('twitter_client', $clientDefinition);
 
-        $definition3 = new Definition('Acme\UppercaseRot13Transformer');
-        $definition3->setAutowired(true);
-        $container->setDefinition('uppercase_rot13_transformer', $definition3);
+        $uppercaseDefinition = new Definition('Acme\UppercaseTransformer');
+        $uppercaseDefinition->setAutowired(true);
+        $container->setDefinition('uppercase_transformer', $uppercaseDefinition);
 
-        $definition4 = new Definition('Acme\TwitterClient');
-        $definition4->addArgument(new Reference('uppercase_rot13_transformer'));
-        $container->setDefinition('uppercase_twitter_client', $definition4);
+        $uppercaseClientDefinition = new Definition('Acme\TwitterClient', array(
+            new Reference('uppercase_transformer'),
+        ));
+        $container->setDefinition('uppercase_twitter_client', $uppercaseClientDefinition);
 
 This deserves some explanations. You now have two services implementing the
 ``TransformerInterface``. The autowiring subsystem cannot guess which one
@@ -381,9 +387,9 @@ Fortunately, the ``autowiring_types`` key is here to specify which implementatio
 to use by default. This key can take a list of types if necessary.
 
 Thanks to this setting, the ``rot13_transformer`` service is automatically injected
-as an argument of the ``uppercase_rot13_transformer`` and ``twitter_client`` services. For
-the ``uppercase_twitter_client``, we use a standard service definition to inject
-the specific ``uppercase_rot13_transformer`` service.
+as an argument of the ``uppercase_transformer`` and ``twitter_client`` services. For
+the ``uppercase_twitter_client``, a standard service definition is used to
+inject the specific ``uppercase_transformer`` service.
 
 As for other RAD features such as the FrameworkBundle controller or annotations,
 keep in mind to not use autowiring in public bundles nor in large projects with
