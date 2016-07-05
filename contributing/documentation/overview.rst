@@ -107,6 +107,12 @@ your project:
     upstream  https://github.com/symfony/symfony-docs.git (fetch)
     upstream  https://github.com/symfony/symfony-docs.git (push)
 
+Fetch all the commits of the upstream branches by executing this command:
+
+.. code-block:: bash
+
+    $ git fetch upstream
+
 The purpose of this step is to allow you work simultaneously on the official
 Symfony repository and on your own fork. You'll see this in action in a moment.
 
@@ -208,6 +214,7 @@ contribution to the Symfony docs:
 
     # create a new branch based on the oldest maintained version
     $ cd projects/symfony-docs/
+    $ git fetch upstream
     $ git checkout -b my_changes upstream/2.7
 
     # ... do your changes
