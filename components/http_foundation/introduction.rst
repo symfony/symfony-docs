@@ -134,6 +134,12 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
     Returns the parameter value converted to integer;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDate`
+    Returns the parameter value converted to a DateTime object;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDateTime`
+    Returns the parameter value converted to a DateTime object while also parsing the time;
+
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
