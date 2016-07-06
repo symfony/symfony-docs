@@ -615,11 +615,11 @@ A routing configuration map provides this information in a readable format:
     # app/config/routing.yml
     blog_list:
         path:     /blog
-        defaults: { _controller: AppBundle:Blog:list }
+        defaults: { _controller: 'AppBundle:Blog:list' }
 
     blog_show:
         path:     /blog/show/{id}
-        defaults: { _controller: AppBundle:Blog:show }
+        defaults: { _controller: 'AppBundle:Blog:show' }
 
 Now that Symfony is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
