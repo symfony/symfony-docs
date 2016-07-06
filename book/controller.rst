@@ -533,6 +533,14 @@ console command:
 
 For more information, see the :doc:`/book/service_container` chapter.
 
+.. tip::
+
+    To get a container configuration parameter in controller you can use the
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getParameter`
+    method::
+
+        $from = $this->getParameter('app.mailer.from');
+
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
