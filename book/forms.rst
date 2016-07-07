@@ -1091,7 +1091,20 @@ that will house the logic for building the task form::
                 ->add('save', SubmitType::class)
             ;
         }
+
+        public function getName()
+        {
+            return 'app_task';
+        }
     }
+
+.. caution::
+
+    The ``getName()`` method returns the identifier of this form "type". These
+    identifiers must be unique in the application. Unless you want to override
+    a built-in type, they should be different from the default Symfony types
+    and from any type defined by a third-party bundle installed in your application.
+    Consider prefixing your types with ``app_`` to avoid identifier collisions.
 
 This new class contains all the directions needed to create the task form. It can
 be used to quickly build a form object in the controller::
