@@ -98,6 +98,7 @@ Full Default Configuration
                     type="fingers_crossed"
                     action-level="warning"
                     handler="custom"
+                    buffer-size="0"
                 />
                 <monolog:handler
                     name="console"
