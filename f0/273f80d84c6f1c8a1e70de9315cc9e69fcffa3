@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-05T15:59:36Z
+
+👍 Looks completely valid to me: https://github.com/doctrine/cache/blob/master/lib/Doctrine/Common/Cache/SQLite3Cache.php
+
+Thanks for submitting the fix and congratz with your first contribution! (it looks perfect)
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-05T16:07:18Z
+
+👍 nice catch! Thanks @ReDnAxE.
