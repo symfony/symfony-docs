@@ -123,9 +123,9 @@ is primarily an HTML file that uses a template-like PHP syntax:
     </html>
 
 By convention, the file that contains all the application logic - ``index.php`` -
-is known as a "controller". The term :term:`controller` is a word you'll hear
-a lot, regardless of the language or framework you use. It refers simply
-to the area of *your* code that processes user input and prepares the response.
+is known as a "controller". The term controller is a word you'll hear a lot,
+regardless of the language or framework you use. It refers simply to the area
+of *your* code that processes user input and prepares the response.
 
 In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
@@ -312,8 +312,8 @@ to security...
 A "Front Controller" to the Rescue
 ----------------------------------
 
-The solution is to use a :term:`front controller`: a single PHP file through
-which *all* requests are processed. With a front controller, the URIs for the
+The solution is to use a front controller: a single PHP file through which
+*all* requests are processed. With a front controller, the URIs for the
 application change slightly, but start to become more flexible:
 
 .. code-block:: text

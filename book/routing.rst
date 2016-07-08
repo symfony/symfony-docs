@@ -1554,6 +1554,30 @@ a template helper function:
     The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
     to 2.8, you had to use the ``generate()`` helper method.
 
+.. tip::
+
+    If you are generating the route inside a ``<script>`` element, it's a good
+    practice to escape it for JavaScript:
+
+    .. configuration-block::
+
+        .. code-block:: html+twig
+
+            <script>
+            var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
+            </script>
+
+        .. code-block:: html+php
+        
+            <script>
+            var route = "<?php echo $view->escape(
+                $view['router']->path('blow_show', array(
+                    'slug' => 'my-blog-post',
+                )),
+                'js'
+            ) ?>";
+            </script>
+
 .. index::
    single: Routing; Absolute URLs
 

@@ -39,13 +39,13 @@ the service container makes writing good code so easy.
 What is a Service?
 ------------------
 
-Put simply, a :term:`Service` is any PHP object that performs some sort of
-"global" task. It's a purposefully-generic name used in computer science
-to describe an object that's created for a specific purpose (e.g. delivering
-emails). Each service is used throughout your application whenever you need
-the specific functionality it provides. You don't have to do anything special
-to make a service: simply write a PHP class with some code that accomplishes
-a specific task. Congratulations, you've just created a service!
+Put simply, a service is any PHP object that performs some sort of "global"
+task. It's a purposefully-generic name used in computer science to describe an
+object that's created for a specific purpose (e.g. delivering emails). Each
+service is used throughout your application whenever you need the specific
+functionality it provides. You don't have to do anything special to make a
+service: simply write a PHP class with some code that accomplishes a specific
+task. Congratulations, you've just created a service!
 
 .. note::
 
@@ -72,8 +72,8 @@ are key to being a good developer in almost any language.
 What is a Service Container?
 ----------------------------
 
-A :term:`Service Container` (or *dependency injection container*) is simply
-a PHP object that manages the instantiation of services (i.e. objects).
+A service container (or *dependency injection container*) is simply a PHP
+object that manages the instantiation of services (i.e. objects).
 
 For example, suppose you have a simple PHP class that delivers email messages.
 Without a service container, you must manually create the object whenever
