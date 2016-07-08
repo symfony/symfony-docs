@@ -58,18 +58,8 @@ recommended to use the :class:`Symfony\\Component\\Validator\\Validation` class:
     $validator = Validation::createValidator();
 
 This ``$validator`` object can validate simple variables such as strings, numbers
-and arrays, but it can't validate objects. To do so, use the
-:class:`Symfony\\Component\\Validator\\ValidatorBuilder` class to configure the
-``Validator`` class::
-
-    use Symfony\Component\Validator\Validation;
-
-    $validator = Validation::createValidatorBuilder()
-        // ... build a custom instance of the Validator
-        ->getValidator();
-
-In the next sections, you'll learn about all the validator features that you
-can configure:
+and arrays, but it can't validate objects. To do so, configure the
+``Validator`` class as explained in the next sections:
 
 * :doc:`/components/validator/resources`
 * :doc:`/components/validator/metadata`

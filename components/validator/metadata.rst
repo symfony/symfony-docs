@@ -64,13 +64,6 @@ Then, add the Validator component configuration to the class::
         }
     }
 
-.. note::
-
-    The keen-eyed among you will have noticed that the prefix of the getter
-    (``get`` or ``is``) is omitted in the mapping. This allows you to move the
-    constraint to a property with the same name later (or vice versa) without
-    changing your validation logic.
-
 Classes
 -------
 
