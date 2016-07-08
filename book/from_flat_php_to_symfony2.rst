@@ -44,8 +44,8 @@ persisted to the database. Writing in flat PHP is quick and dirty:
             <ul>
                 <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
                 <li>
-                    <a href="/show.php?id=<?php echo $row['id'] ?>">
-                        <?php echo $row['title'] ?>
+                    <a href="/show.php?id=<?= $row['id'] ?>">
+                        <?= $row['title'] ?>
                     </a>
                 </li>
                 <?php endwhile ?>
@@ -113,8 +113,8 @@ is primarily an HTML file that uses a template-like PHP syntax:
             <ul>
                 <?php foreach ($posts as $post): ?>
                 <li>
-                    <a href="/show.php?id=<?php echo $post['id'] ?>">
-                        <?php echo $post['title'] ?>
+                    <a href="/show.php?id=<?= $post['id'] ?>">
+                        <?= $post['title'] ?>
                     </a>
                 </li>
                 <?php endforeach ?>
@@ -205,10 +205,10 @@ that by creating a new ``layout.php`` file:
     <!DOCTYPE html>
     <html>
         <head>
-            <title><?php echo $title ?></title>
+            <title><?= $title ?></title>
         </head>
         <body>
-            <?php echo $content ?>
+            <?= $content ?>
         </body>
     </html>
 
@@ -224,8 +224,8 @@ the layout:
         <ul>
             <?php foreach ($posts as $post): ?>
             <li>
-                <a href="/show.php?id=<?php echo $post['id'] ?>">
-                    <?php echo $post['title'] ?>
+                <a href="/show.php?id=<?= $post['id'] ?>">
+                    <?= $post['title'] ?>
                 </a>
             </li>
             <?php endforeach ?>
@@ -284,11 +284,11 @@ the individual blog post:
     <?php $title = $post['title'] ?>
 
     <?php ob_start() ?>
-        <h1><?php echo $post['title'] ?></h1>
+        <h1><?= $post['title'] ?></h1>
 
-        <div class="date"><?php echo $post['created_at'] ?></div>
+        <div class="date"><?= $post['created_at'] ?></div>
         <div class="body">
-            <?php echo $post['body'] ?>
+            <?= $post['body'] ?>
         </div>
     <?php $content = ob_get_clean() ?>
 
@@ -575,11 +575,11 @@ database and the Templating component to render a template and return a
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->path(
+            <a href="<?= $view['router']->path(
                 'blog_show',
                 array('id' => $post->getId())
             ) ?>">
-                <?php echo $post->getTitle() ?>
+                <?= $post->getTitle() ?>
             </a>
         </li>
         <?php endforeach ?>
@@ -593,13 +593,13 @@ The layout is nearly identical:
     <!DOCTYPE html>
     <html>
         <head>
-            <title><?php echo $view['slots']->output(
+            <title><?= $view['slots']->output(
                 'title',
                 'Default title'
             ) ?></title>
         </head>
         <body>
-            <?php echo $view['slots']->output('_content') ?>
+            <?= $view['slots']->output('_content') ?>
         </body>
     </html>
 
