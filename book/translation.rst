@@ -51,9 +51,9 @@ to learn even more. Overall, the process has several steps:
 Configuration
 -------------
 
-Translations are handled by a ``translator`` :term:`service` that uses the
-user's locale to lookup and return translated messages. Before using it,
-enable the ``translator`` in your configuration:
+Translations are handled by a ``translator`` service that uses the user's
+locale to lookup and return translated messages. Before using it, enable the
+``translator`` in your configuration:
 
 .. configuration-block::
 
@@ -482,10 +482,11 @@ need it::
             $request = $event->getRequest();
 
             // some logic to determine the $locale
-            $request->getSession()->set('_locale', $locale);
+            $request->setLocale($locale);
         }
 
-Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
+Read :doc:`/cookbook/session/locale_sticky_session` for more information on making
+the user's locale "sticky" to their session.
 
 .. note::
 

@@ -31,7 +31,7 @@ directories::
 
     foreach ($finder as $file) {
         // Dump the absolute path
-        var_dump($file->getRealpath());
+        var_dump($file->getRealPath());
 
         // Dump the relative path to the file, omitting the filename
         var_dump($file->getRelativePath());
@@ -159,7 +159,7 @@ You can also define your own sorting algorithm with ``sort()`` method::
 
     $sort = function (\SplFileInfo $a, \SplFileInfo $b)
     {
-        return strcmp($a->getRealpath(), $b->getRealpath());
+        return strcmp($a->getRealPath(), $b->getRealPath());
     };
 
     $finder->sort($sort);
@@ -202,7 +202,10 @@ Path
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
-    $finder->path('some/special/dir');
+    // matches files that contain "data" anywhere in their paths (files or directories)
+    $finder->path('data');
+    // for example this will match data/*.xml and data.xml if they exist
+    $finder->path('data')->name('*.xml');
 
 On all platforms slash (i.e. ``/``) should be used as the directory separator.
 

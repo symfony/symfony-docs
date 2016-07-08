@@ -33,11 +33,6 @@ is straightforward::
 
     $loader->register();
 
-.. note::
-
-    The autoloader is automatically registered in a Symfony application
-    (see ``app/autoload.php``).
-
 Use :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix` or
 :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefixes` to register
 your classes::

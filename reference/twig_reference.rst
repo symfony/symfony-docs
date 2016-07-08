@@ -107,7 +107,8 @@ asset
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`book-templating-assets`. For asset versioning, see :ref:`reference-framework-assets-version`.
+:ref:`book-templating-assets`. For asset versioning, see
+:ref:`reference-framework-assets-version`.
 
 assets_version
 ~~~~~~~~~~~~~~
@@ -351,12 +352,17 @@ absolute_url
 ``path``
     **type**: ``string``
 
-Returns the absolute URL for the given absolute path. This is useful to convert
-an existing path:
+Returns the absolute URL from the passed relative path. For example, assume
+you're on the following page in your app:
+``http://example.com/products/hover-board``.
 
 .. code-block:: jinja
 
-    {{ absolute_url(asset(path)) }}
+    {{ absolute_url('/human.txt') }}
+    {# http://example.com/human.txt #}
+
+    {{ absolute_url('products_icon.png') }}
+    {# http://example.com/products/products_icon.png #}
 
 relative_path
 ~~~~~~~~~~~~~
@@ -368,10 +374,17 @@ relative_path
 ``path``
     **type**: ``string``
 
-Returns a relative path for the given absolute path (based on the current
-request path). For instance, if the current path is
-``/article/news/welcome.html``, the relative path for ``/article/image.png`` is
-``../images.png``.
+Returns the relative path from the passed absolute URL. For example, assume
+you're on the following page in your app:
+``http://example.com/products/hover-board``.
+
+.. code-block:: jinja
+
+    {{ relative_path('http://example.com/human.txt') }}
+    {# ../human.txt #}
+
+    {{ relative_path('http://example.com/products/products_icon.png') }}
+    {# products_icon.png #}
 
 expression
 ~~~~~~~~~~

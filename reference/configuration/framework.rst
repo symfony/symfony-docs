@@ -85,7 +85,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
-* `property_accessor`_
+* `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
 * `validation`_
@@ -1052,10 +1052,6 @@ Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``version`` value
 before each deployment so that the query parameters change.
 
-It's also possible to set the version value on an asset-by-asset basis (instead
-of using the global version - e.g. ``v2`` - set here). See
-:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
-
 You can also control how the query string works via the `version_format`_
 option.
 
@@ -1268,8 +1264,8 @@ for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
 
-property_accessor
-~~~~~~~~~~~~~~~~~
+property_access
+~~~~~~~~~~~~~~~
 
 magic_call
 ..........

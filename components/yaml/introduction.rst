@@ -95,16 +95,20 @@ acts as a thin wrapper that simplifies common uses.
 Reading YAML Files
 ~~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\Yaml\\Parser::parse` method parses a YAML
+The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
 string and converts it to a PHP array:
 
 .. code-block:: php
 
-    use Symfony\Component\Yaml\Parser;
+    use Symfony\Component\Yaml\Yaml;
 
-    $yaml = new Parser();
+    $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
 
-    $value = $yaml->parse(file_get_contents('/path/to/file.yml'));
+.. caution::
+
+    Because it is currently possible to pass a filename to this method, you
+    must validate the input first. Passing a filename is deprecated in
+    Symfony 2.2, and was removed in Symfony 3.0.
 
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
@@ -116,85 +120,67 @@ error occurred:
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
-        $value = $yaml->parse(file_get_contents('/path/to/file.yml'));
+        $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
     } catch (ParseException $e) {
         printf("Unable to parse the YAML string: %s", $e->getMessage());
     }
 
-.. tip::
-
-    As the parser is re-entrant, you can use the same parser object to load
-    different YAML strings.
-
-It may also be convenient to use the
-:method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method:
-
-.. code-block:: php
-
-    use Symfony\Component\Yaml\Yaml;
-
-    $yaml = Yaml::parse(file_get_contents('/path/to/file.yml'));
-
-The :method:`Symfony\\Component\\Yaml\\Yaml::parse` static method takes a YAML string.
-Internally, it constructs a :class:`Symfony\\Component\\Yaml\\Parser` object and calls
-the :method:`Symfony\\Component\\Yaml\\Parser::parse` method.
-
 .. _components-yaml-dump:
+
+Objects for Mappings
+....................
+
+Yaml :ref:`mappings <yaml-format-collections>` are basically associative
+arrays. You can instruct the parser to return mappings as objects (i.e.
+``\stdClass`` instances) by setting the fourth argument to ``true``::
+
+    $object = Yaml::parse('{"foo": "bar"}', false, false, true);
+    echo get_class($object); // stdClass
+    echo $object->foo; // bar
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\Yaml\\Dumper::dump` method dumps any PHP
+The :method:`Symfony\\Component\\Yaml\\Yaml::dump` method dumps any PHP
 array to its YAML representation:
 
 .. code-block:: php
 
-    use Symfony\Component\Yaml\Dumper;
+    use Symfony\Component\Yaml\Yaml;
 
     $array = array(
         'foo' => 'bar',
         'bar' => array('foo' => 'bar', 'bar' => 'baz'),
     );
 
-    $dumper = new Dumper();
-
-    $yaml = $dumper->dump($array);
+    $yaml = Yaml::dump($array);
 
     file_put_contents('/path/to/file.yml', $yaml);
-
-.. note::
-
-    Of course, the Symfony Yaml dumper is not able to dump resources. Also,
-    even if the dumper is able to dump PHP objects, it is considered to be a
-    not supported feature.
 
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
 
-If you only need to dump one array, you can use the
-:method:`Symfony\\Component\\Yaml\\Yaml::dump` static method shortcut:
-
-.. code-block:: php
-
-    use Symfony\Component\Yaml\Yaml;
-
-    $yaml = Yaml::dump($array, $inline);
+Array Expansion and Inlining
+............................
 
 The YAML format supports two kind of representation for arrays, the expanded
-one, and the inline one. By default, the dumper uses the inline
+one, and the inline one. By default, the dumper uses the expanded
 representation:
 
 .. code-block:: yaml
 
-    { foo: bar, bar: { foo: bar, bar: baz } }
+    foo: bar
+    bar:
+        foo: bar
+        bar: baz
 
-The second argument of the :method:`Symfony\\Component\\Yaml\\Dumper::dump`
+The second argument of the :method:`Symfony\\Component\\Yaml\\Yaml::dump`
 method customizes the level at which the output switches from the expanded
 representation to the inline one:
 
 .. code-block:: php
 
-    echo $dumper->dump($array, 1);
+    echo Yaml::dump($array, 1);
 
 .. code-block:: yaml
 
@@ -203,7 +189,7 @@ representation to the inline one:
 
 .. code-block:: php
 
-    echo $dumper->dump($array, 2);
+    echo Yaml::dump($array, 2);
 
 .. code-block:: yaml
 
@@ -211,6 +197,58 @@ representation to the inline one:
     bar:
         foo: bar
         bar: baz
+
+Indentation
+...........
+
+By default the YAML component will use 4 spaces for indentation. This can be
+changed using the third argument as follows::
+
+    // use 8 spaces for indentation
+    echo Yaml::dump($array, 2, 8);
+
+.. code-block:: yaml
+
+    foo: bar
+    bar:
+            foo: bar
+            bar: baz
+
+Invalid Types and Object Serialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default the YAML component will encode any "unsupported" type (i.e.
+resources and objects) as ``null``.
+
+Instead of encoding as ``null`` you can choose to throw an exception if an invalid
+type is encountered in either the dumper or parser as follows::
+
+    // throw an exception if a resource or object is encountered
+    Yaml::dump($data, 2, 4, true);
+
+    // throw an exception if an encoded object is found in the YAML string
+    Yaml::parse($yaml, true);
+
+However, you can activate object support using the next argument::
+
+    $object = new \stdClass();
+    $object->foo = 'bar';
+
+    $dumped = Yaml::dump($object, 2, 4, false, true);
+    // !!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
+
+    $parsed = Yaml::parse($dumped, false, true);
+    var_dump(is_object($parsed)); // true
+    echo $parsed->foo; // bar
+
+The YAML component uses PHP's ``serialize()`` method to generate a string
+representation of the object.
+
+.. caution::
+
+    Object serialization is specific to this implementation, other PHP YAML
+    parsers will likely not recognize the ``php/object`` tag and non-PHP
+    implementations certainly won't - use with discretion!
 
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml

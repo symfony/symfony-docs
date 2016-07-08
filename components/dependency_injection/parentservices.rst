@@ -67,7 +67,7 @@ The service config for these classes would look something like this:
                     - [setEmailFormatter, ['@my_email_formatter']]
 
             greeting_card_manager:
-                class: 'GreetingCardManager'
+                class: GreetingCardManager
                 calls:
                     - [setMailer, ['@my_mailer']]
                     - [setEmailFormatter, ['@my_email_formatter']]
@@ -196,11 +196,11 @@ a parent for a service.
                     - [setEmailFormatter, ['@my_email_formatter']]
 
             newsletter_manager:
-                class:  "NewsletterManager"
+                class:  NewsletterManager
                 parent: mail_manager
 
             greeting_card_manager:
-                class:  "GreetingCardManager"
+                class:  GreetingCardManager
                 parent: mail_manager
 
     .. code-block:: xml
@@ -323,13 +323,13 @@ to the ``NewsletterManager`` class, the config would look like this:
                     - [setEmailFormatter, ['@my_email_formatter']]
 
             newsletter_manager:
-                class:  'NewsletterManager'
+                class:  NewsletterManager
                 parent: mail_manager
                 calls:
                     - [setMailer, ['@my_alternative_mailer']]
 
             greeting_card_manager:
-                class:  'GreetingCardManager'
+                class:  GreetingCardManager
                 parent: mail_manager
 
     .. code-block:: xml
@@ -384,7 +384,7 @@ to the ``NewsletterManager`` class, the config would look like this:
 
         $mailManager = new Definition();
         $mailManager
-            ->setAbstract(true);
+            ->setAbstract(true)
             ->addMethodCall('setMailer', array(
                 new Reference('my_mailer'),
             ))

@@ -26,11 +26,11 @@ websites, or is it? In this chapter, you'll see how the Symfony cache
 system works and why this is the best possible approach.
 
 The Symfony cache system is different because it relies on the simplicity
-and power of the HTTP cache as defined in the :term:`HTTP specification`.
-Instead of reinventing a caching methodology, Symfony embraces the standard
-that defines basic communication on the Web. Once you understand the fundamental
-HTTP validation and expiration caching models, you'll be ready to master
-the Symfony cache system.
+and power of the HTTP cache as defined in the `HTTP specification`_. Instead of
+reinventing a caching methodology, Symfony embraces the standard that defines
+basic communication on the Web. Once you understand the fundamental HTTP
+validation and expiration caching models, you'll be ready to master the Symfony
+cache system.
 
 For the purposes of learning how to cache with Symfony, the
 subject is covered in four steps:
@@ -93,9 +93,9 @@ as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony reverse proxy.
 Types of Caches
 ~~~~~~~~~~~~~~~
 
-But a gateway cache isn't the only type of cache. In fact, the HTTP cache
-headers sent by your application are consumed and interpreted by up to three
-different types of caches:
+A gateway cache isn't the only type of cache. In fact, the HTTP cache headers
+sent by your application are consumed and interpreted by up to three different
+types of caches:
 
 * *Browser caches*: Every browser comes with its own local cache that is
   mainly useful for when you hit "back" or for images and other assets.
@@ -1198,10 +1198,11 @@ One great advantage of the ESI renderer is that you can make your application
 as dynamic as needed and at the same time, hit the application as little as
 possible.
 
-.. tip::
+.. caution::
 
-    The listener only responds to local IP addresses or
-    :doc:`trusted proxies </cookbook/request/load_balancer_reverse_proxy>`.
+    The fragment listener only responds to signed requests. Requests are only
+    signed when using the fragment renderer and the ``render_esi`` Twig
+    function.
 
 .. note::
 
@@ -1250,3 +1251,4 @@ Learn more from the Cookbook
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
 .. _`ESI`: http://www.w3.org/TR/esi-lang
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`HTTP specification`: http://www.w3.org/Protocols/rfc2616/rfc2616.html

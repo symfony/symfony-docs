@@ -14,8 +14,7 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.5.9 or above;
-* `PHPUnit`_ 4.2 or above.
+* PHP version 5.5.9 or above.
 
 .. caution::
 
@@ -113,16 +112,18 @@ Choose the right Branch
 Before working on a patch, you must determine on which branch you need to
 work:
 
-* ``2.3``, if you are fixing a bug for an existing feature (you may have
-  to choose a higher branch if the feature you are fixing was introduced
-  in a later version);
-* ``master``, if you are adding a new feature.
+* ``2.7``, if you are fixing a bug for an existing feature or want to make a
+  change that falls into the :doc:`list of acceptable changes in patch versions
+  </contributing/code/maintenance>` (you may have to choose a higher branch if
+  the feature you are fixing was introduced in a later version);
+
+ * ``master``, if you are adding a new feature.
 
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a patch
-    for the ``2.3`` branch, the patch will also be applied by the core team on
+    for the ``2.7`` branch, the patch will also be applied by the core team on
     the ``master`` branch.
 
 Create a Topic Branch
@@ -135,18 +136,18 @@ topic branch:
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the ``2.3`` branch, first track the remote
-``2.3`` branch locally:
+Or, if you want to provide a bugfix for the ``2.7`` branch, first track the remote
+``2.7`` branch locally:
 
 .. code-block:: bash
 
-    $ git checkout -t origin/2.3
+    $ git checkout -t origin/2.7
 
-Then create a new branch off the ``2.3`` branch to work on the bugfix:
+Then create a new branch off the ``2.7`` branch to work on the bugfix:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME 2.3
+    $ git checkout -b BRANCH_NAME 2.7
 
 .. tip::
 
@@ -234,7 +235,7 @@ while to finish your changes):
 
 .. tip::
 
-    Replace ``master`` with the branch you selected previously (e.g. ``2.3``)
+    Replace ``master`` with the branch you selected previously (e.g. ``2.7``)
     if you are working on a bugfix
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
@@ -261,8 +262,8 @@ You can now make a pull request on the ``symfony/symfony`` GitHub repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.3`` if you want
-    the core team to pull a bugfix based on the ``2.3`` branch.
+    Take care to point your pull request towards ``symfony:2.7`` if you want
+    the core team to pull a bugfix based on the ``2.7`` branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -333,7 +334,7 @@ Rework your Patch
 
 Based on the feedback on the pull request, you might need to rework your
 patch. Before re-submitting the patch, rebase with ``upstream/master`` or
-``upstream/2.3``, don't merge; and force the push to the origin:
+``upstream/2.7``, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 
@@ -363,4 +364,3 @@ before merging.
 .. _`fabbot`: http://fabbot.io
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
-.. _PHPUnit: https://phpunit.de/manual/current/en/installation.html

@@ -31,6 +31,9 @@ can do anything, including creating and assigning validation errors.
 Configuration
 -------------
 
+.. versionadded:: 3.1
+    The ``$payload`` parameter was introduced in Symfony 3.1.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
@@ -46,7 +49,7 @@ Configuration
             /**
              * @Assert\Callback
              */
-            public function validate(ExecutionContextInterface $context)
+            public function validate(ExecutionContextInterface $context, $payload)
             {
                 // ...
             }
@@ -103,7 +106,7 @@ field those errors should be attributed::
         // ...
         private $firstName;
 
-        public function validate(ExecutionContextInterface $context)
+        public function validate(ExecutionContextInterface $context, $payload)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array(/* ... */);
@@ -123,7 +126,7 @@ Static Callbacks
 You can also use the constraint with static methods. Since static methods don't
 have access to the object instance, they receive the object as the first argument::
 
-    public static function validate($object, ExecutionContextInterface $context)
+    public static function validate($object, ExecutionContextInterface $context, $payload)
     {
         // somehow you have an array of "fake names"
         $fakeNames = array(/* ... */);
@@ -151,7 +154,7 @@ Suppose your validation function is ``Vendor\Package\Validator::validate()``::
 
     class Validator
     {
-        public static function validate($object, ExecutionContextInterface $context)
+        public static function validate($object, ExecutionContextInterface $context, $payload)
         {
             // ...
         }
@@ -220,7 +223,7 @@ You can then use the following configuration to invoke this validator:
 .. note::
 
     The Callback constraint does *not* support global callback functions
-    nor is it possible to specify a global function or a :term:`service` method
+    nor is it possible to specify a global function or a service method
     as callback. To validate using a service, you should
     :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
     and add that new constraint to your class.
@@ -240,7 +243,7 @@ constructor of the Callback constraint::
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $callback = function ($object, ExecutionContextInterface $context) {
+            $callback = function ($object, ExecutionContextInterface $context, $payload) {
                 // ...
             };
 

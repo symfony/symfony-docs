@@ -15,7 +15,8 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `placeholder`_                                                            |
+| Options              | - `choice_translation_domain`_                                              |
+|                      | - `placeholder`_                                                            |
 |                      | - `hours`_                                                                  |
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
@@ -81,12 +82,10 @@ values.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
 placeholder
 ~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` | ``array``
 

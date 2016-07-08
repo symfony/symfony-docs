@@ -1,9 +1,6 @@
 label_format
 ~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The ``label_format`` option was introduced in Symfony 2.6.
-
 **type**: ``string`` **default**: ``null``
 
 Configures the string used as the label of the field, in case the ``label``

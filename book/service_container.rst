@@ -39,13 +39,13 @@ the service container makes writing good code so easy.
 What is a Service?
 ------------------
 
-Put simply, a :term:`Service` is any PHP object that performs some sort of
-"global" task. It's a purposefully-generic name used in computer science
-to describe an object that's created for a specific purpose (e.g. delivering
-emails). Each service is used throughout your application whenever you need
-the specific functionality it provides. You don't have to do anything special
-to make a service: simply write a PHP class with some code that accomplishes
-a specific task. Congratulations, you've just created a service!
+Put simply, a service is any PHP object that performs some sort of "global"
+task. It's a purposefully-generic name used in computer science to describe an
+object that's created for a specific purpose (e.g. delivering emails). Each
+service is used throughout your application whenever you need the specific
+functionality it provides. You don't have to do anything special to make a
+service: simply write a PHP class with some code that accomplishes a specific
+task. Congratulations, you've just created a service!
 
 .. note::
 
@@ -72,8 +72,8 @@ are key to being a good developer in almost any language.
 What is a Service Container?
 ----------------------------
 
-A :term:`Service Container` (or *dependency injection container*) is simply
-a PHP object that manages the instantiation of services (i.e. objects).
+A service container (or *dependency injection container*) is simply a PHP
+object that manages the instantiation of services (i.e. objects).
 
 For example, suppose you have a simple PHP class that delivers email messages.
 Without a service container, you must manually create the object whenever
@@ -292,19 +292,19 @@ Importing Configuration with ``imports``
 
 So far, you've placed your ``app.mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the AcmeHelloBundle, it
+course, since the ``Mailer`` class itself lives inside the AppBundle, it
 makes more sense to put the ``app.mailer`` container definition inside the
 bundle as well.
 
 First, move the ``app.mailer`` container definition into a new container resource
-file inside AcmeHelloBundle. If the ``Resources`` or ``Resources/config``
+file inside AppBundle. If the ``Resources`` or ``Resources/config``
 directories don't exist, create them.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         parameters:
             app.mailer.transport: sendmail
 
@@ -315,7 +315,7 @@ directories don't exist, create them.
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -335,7 +335,7 @@ directories don't exist, create them.
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
@@ -356,7 +356,7 @@ configuration.
 
         # app/config/config.yml
         imports:
-            - { resource: '@AcmeHelloBundle/Resources/config/services.yml' }
+            - { resource: '@AppBundle/Resources/config/services.yml' }
 
     .. code-block:: xml
 
@@ -368,23 +368,23 @@ configuration.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
-                <import resource="@AcmeHelloBundle/Resources/config/services.xml"/>
+                <import resource="@AppBundle/Resources/config/services.xml"/>
             </imports>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
-        $loader->import('@AcmeHelloBundle/Resources/config/services.php');
+        $loader->import('@AppBundle/Resources/config/services.php');
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHelloBundle`` syntax resolves the directory path
-of the AcmeHelloBundle bundle. This helps you specify the path to the resource
-without worrying later if you move the AcmeHelloBundle to a different directory.
+file. The special ``@AppBundle`` syntax resolves the directory path
+of the AppBundle bundle. This helps you specify the path to the resource
+without worrying later if you move the AppBundle to a different directory.
 
 .. index::
    single: Service Container; Extension configuration
@@ -644,7 +644,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         # app/config/config.yml
         services:
             my_mailer:
-                class:        Acme\HelloBundle\Mailer
+                class:        AppBundle\Mailer
                 arguments:    ["@=service('mailer_configuration').getMailerMethod()"]
 
     .. code-block:: xml
@@ -658,7 +658,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
             >
 
             <services>
-                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                <service id="my_mailer" class="AppBundle\Mailer">
                     <argument type="expression">service('mailer_configuration').getMailerMethod()</argument>
                 </service>
             </services>
@@ -671,7 +671,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
-            'Acme\HelloBundle\Mailer',
+            'AppBundle\Mailer',
             array(new Expression('service("mailer_configuration").getMailerMethod()'))
         ));
 
@@ -693,7 +693,7 @@ via a ``container`` variable. Here's another example:
 
         services:
             my_mailer:
-                class:     Acme\HelloBundle\Mailer
+                class:     AppBundle\Mailer
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
@@ -706,7 +706,7 @@ via a ``container`` variable. Here's another example:
             >
 
             <services>
-                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                <service id="my_mailer" class="AppBundle\Mailer">
                     <argument type="expression">container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
                 </service>
             </services>
@@ -718,7 +718,7 @@ via a ``container`` variable. Here's another example:
         use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
-            'Acme\HelloBundle\Mailer',
+            'AppBundle\Mailer',
             array(new Expression(
                 "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
             ))
@@ -822,7 +822,7 @@ add it as an argument to the methods that need the request or inject the
 :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
 method::
 
-    namespace Acme\HelloBundle\Newsletter;
+    namespace AppBundle\Newsletter;
 
     use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -850,15 +850,15 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         services:
             newsletter_manager:
-                class:     Acme\HelloBundle\Newsletter\NewsletterManager
+                class:     AppBundle\Newsletter\NewsletterManager
                 arguments: ["@request_stack"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -867,7 +867,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
             <services>
                 <service
                     id="newsletter_manager"
-                    class="Acme\HelloBundle\Newsletter\NewsletterManager"
+                    class="AppBundle\Newsletter\NewsletterManager"
                 >
                     <argument type="service" id="request_stack"/>
                 </service>
@@ -876,13 +876,13 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $container->setDefinition('newsletter_manager', new Definition(
-            'Acme\HelloBundle\Newsletter\NewsletterManager',
+            'AppBundle\Newsletter\NewsletterManager',
             array(new Reference('request_stack'))
         ));
 
@@ -893,15 +893,75 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
     argument of your action method. See
     :ref:`book-controller-request-argument` for details.
 
-Making References optional
+Making References Optional
 --------------------------
 
 Sometimes, one of your services may have an optional dependency, meaning
 that the dependency is not required for your service to work properly. In
 the example above, the ``app.mailer`` service *must* exist, otherwise an exception
 will be thrown. By modifying the ``app.newsletter_manager`` service definition,
-you can make this reference optional. The container will then inject it if
-it exists and do nothing if it doesn't:
+you can make this reference optional, there are two strategies for doing this.
+
+Setting Missing Dependencies to null
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the ``null`` strategy to explicitly set the argument to ``null``
+if the service does not exist:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.mailer">
+                <!-- ... -->
+                </service>
+
+                <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
+                    <argument type="service" id="app.mailer" on-invalid="null" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\DependencyInjection\ContainerInterface;
+
+        $container->setDefinition('app.mailer', ...);
+
+        $container->setDefinition('app.newsletter_manager', new Definition(
+            'AppBundle\Newsletter\NewsletterManager',
+            array(
+                new Reference(
+                    'app.mailer',
+                    ContainerInterface::NULL_ON_INVALID_REFERENCE
+                )
+            )
+        ));
+
+.. note::
+
+    The "null" strategy is not currently supported by the YAML driver.
+
+Ignoring Missing Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The behavior of ignoring missing dependencies is the same as the "null"
+behavior except when used within a method call, in which case the method call
+itself will be removed.
+
+In the following example the container will inject a service using a method
+call if the service exists and remove the method call if it does not:
 
 .. configuration-block::
 
@@ -928,7 +988,9 @@ it exists and do nothing if it doesn't:
                 </service>
 
                 <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                    <argument type="service" id="app.mailer" on-invalid="ignore" />
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" on-invalid="ignore"/>
+                    </call>
                 </service>
             </services>
         </container>
@@ -943,13 +1005,12 @@ it exists and do nothing if it doesn't:
         $container->setDefinition('app.mailer', ...);
 
         $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
-            array(
-                new Reference(
-                    'app.mailer',
-                    ContainerInterface::IGNORE_ON_INVALID_REFERENCE
-                )
-            )
+            'AppBundle\Newsletter\NewsletterManager'
+        ))->addMethodCall('setMailer', array(
+            new Reference(
+                'my_mailer',
+                ContainerInterface::IGNORE_ON_INVALID_REFERENCE
+            ),
         ));
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
@@ -982,7 +1043,7 @@ which you can access inside a standard controller as follows::
 
 In Symfony, you'll constantly use services provided by the Symfony core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
-sending emails (``mailer``), or accessing information on the request (``request``).
+sending emails (``mailer``), or accessing information on the request through the request stack (``request_stack``).
 
 You can take this a step further by using these services inside services that
 you've created for your application. Beginning by modifying the ``NewsletterManager``

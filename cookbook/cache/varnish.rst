@@ -24,6 +24,21 @@ Remember to configure :ref:`framework.trusted_proxies <reference-framework-trust
 in the Symfony configuration so that Varnish is seen as a trusted proxy and the
 :ref:`X-Forwarded <varnish-x-forwarded-headers>` headers are used.
 
+Varnish, in its default configuration, sends the ``X-Forwarded-For`` header but
+does not filter out the ``Forwarded`` header. If you have access to the Varnish
+configuration file, you can configure Varnish to remove the ``Forwarded``
+header:
+
+.. code-block:: varnish4
+
+    sub vcl_recv {
+        remove req.http.Forwarded;
+    }
+
+If you do not have access to your Varnish configuration, you can instead
+configure Symfony to distrust the ``Forwarded`` header as detailed in
+:ref:`the cookbook <cookbook-request-untrust-header>`.
+
 .. _varnish-x-forwarded-headers:
 
 Routing and X-FORWARDED Headers
@@ -241,6 +256,6 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
-.. _`default.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/default.vcl?rev=3.0
-.. _`builtin.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/builtin.vcl?rev=4.0
+.. _`default.vcl`: https://github.com/varnish/Varnish-Cache/blob/3.0/bin/varnishd/default.vcl
+.. _`builtin.vcl`: https://github.com/varnish/Varnish-Cache/blob/4.1/bin/varnishd/builtin.vcl
 .. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html

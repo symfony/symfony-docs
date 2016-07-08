@@ -139,7 +139,7 @@ For the configuration example in the previous section, the array passed to your
         array(
             'twitter' => array(
                 'client_id' => 123,
-                'client_secret' => '$secret',
+                'client_secret' => 'your_secret',
             ),
         ),
     )
@@ -155,7 +155,7 @@ beneath it, the incoming array might look like this::
         array(
             'twitter' => array(
                 'client_id' => 123,
-                'client_secret' => '$secret',
+                'client_secret' => 'your_secret',
             ),
         ),
         // values from config_dev.yml
@@ -373,7 +373,7 @@ can place it anywhere you like. You should return this path as the base path::
         }
     }
 
-Assume the XSD file is called ``hello-1.0.xsd``, the schema location will be
+Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 ``http://acme_company.com/schema/dic/hello/hello-1.0.xsd``:
 
 .. code-block:: xml

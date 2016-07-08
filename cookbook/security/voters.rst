@@ -150,7 +150,7 @@ would look like this::
             /** @var Post $post */
             $post = $subject;
 
-            switch($attribute) {
+            switch ($attribute) {
                 case self::VIEW:
                     return $this->canView($post, $user);
                 case self::EDIT:

@@ -312,7 +312,7 @@ and password ``admin`` (which has been encoded).
     |  1 | admin    | $2a$08$jHZj/wJfcVKlIwr5AvR78euJxYK7Ku5kURNhNx.7.CSIJ3Pq6LEPC | admin@example.com  |         1 |
     +----+----------+--------------------------------------------------------------+--------------------+-----------+
 
-.. sidebar:: Do you need to a Salt property?
+.. sidebar:: Do you need to use a Salt property?
 
     If you use ``bcrypt``, no. Otherwise, yes. All passwords must be hashed
     with a salt, but ``bcrypt`` does this internally. Since this tutorial
@@ -429,7 +429,6 @@ interface only requires one method: ``loadUserByUsername($username)``::
     namespace AppBundle\Entity;
 
     use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
-    use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\ORM\EntityRepository;
 
     class UserRepository extends EntityRepository implements UserLoaderInterface

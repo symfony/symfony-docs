@@ -19,9 +19,6 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-Notes on Previous Versions
---------------------------
-
 Usage
 -----
 
@@ -379,12 +376,11 @@ is thrown::
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
-    $resolver->setAllowedValues(array(
-        // ...
-        $resolver->setAllowedValues('transport', function ($value) {
-            // return true or false
-        });
-    ));
+    
+    // ...
+    $resolver->setAllowedValues('transport', function ($value) {
+        // return true or false
+    });
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 to add additional allowed values without erasing the ones already set.
@@ -431,7 +427,7 @@ if you need to use other options during normalization::
         {
             // ...
             $resolver->setNormalizer('host', function (Options $options, $value) {
-                if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
+                if ('http://' !== substr($value, 0, 7) && 'https://' !== substr($value, 0, 8)) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
                     } else {

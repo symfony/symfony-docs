@@ -27,7 +27,7 @@ Each part will be explained in the next section.
             always_authenticate_before_granting:  false
             erase_credentials:    true
             access_decision_manager:
-                strategy:             affirmative
+                strategy:             affirmative # One of affirmative, consensus, unanimous
                 allow_if_all_abstain:  false
                 allow_if_equal_granted_denied:  true
             acl:
@@ -99,6 +99,16 @@ Each part will be explained in the next section.
                         # name of a non-default entity manager
                         manager_name:       ~
 
+                my_ldap_provider:
+                    ldap:
+                        service:            ~
+                        base_dn:            ~
+                        search_dn:          ~
+                        search_password:    ~
+                        default_roles:      'ROLE_USER'
+                        uid_key:            'sAMAccountName'
+                        filter:             '({uid_key}={username})'
+
                 # Example custom provider
                 my_some_custom_provider:
                     id:                   ~
@@ -131,6 +141,10 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     http_basic:
                         provider: some_key_from_above
+                    http_basic_ldap:
+                        provider:  some_key_from_above
+                        service:   ldap
+                        dn_string: '{username}'
                     http_digest:
                         provider: some_key_from_above
                     guard:
@@ -181,6 +195,50 @@ Each part will be explained in the next section.
                         # by default, a session must exist before submitting an authentication request
                         # if false, then Request::hasPreviousSession is not called during authentication
                         require_previous_session: true
+
+                    form_login_ldap:
+                        # submit the login form here
+                        check_path: /login_check
+
+                        # the user is redirected here when they need to log in
+                        login_path: /login
+
+                        # if true, forward the user to the login form instead of redirecting
+                        use_forward: false
+
+                        # login success redirecting options (read further below)
+                        always_use_default_target_path: false
+                        default_target_path:            /
+                        target_path_parameter:          _target_path
+                        use_referer:                    false
+
+                        # login failure redirecting options (read further below)
+                        failure_path:    /foo
+                        failure_forward: false
+                        failure_path_parameter: _failure_path
+                        failure_handler: some.service.id
+                        success_handler: some.service.id
+
+                        # field names for the username and password fields
+                        username_parameter: _username
+                        password_parameter: _password
+
+                        # csrf token options
+                        csrf_parameter:       _csrf_token
+                        csrf_token_id:        authenticate
+                        csrf_token_generator: my.csrf_token_generator.id
+
+                        # by default, the login form *must* be a POST, not a GET
+                        post_only:      true
+                        remember_me:    false
+
+                        # by default, a session must exist before submitting an authentication request
+                        # if false, then Request::hasPreviousSession is not called during authentication
+                        # new in Symfony 2.3
+                        require_previous_session: true
+
+                        service:   ~
+                        dn_string: '{username}'
 
                     remember_me:
                         token_provider: name
@@ -348,6 +406,72 @@ all the other firewalls.
 The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
+
+.. _reference-security-ldap:
+
+LDAP functionality
+------------------
+
+There are several options for connecting against an LDAP server,
+using the ``form_login_ldap`` and ``http_basic_ldap`` authentication
+providers or the ``ldap`` user provider.
+
+For even more details, see :doc:`/cookbook/security/ldap`.
+
+Authentication
+~~~~~~~~~~~~~~
+
+You can authenticate to an LDAP server using the LDAP variants of the
+``form_login`` and ``http_basic`` authentication providers. Simply use
+``form_login_ldap`` and ``http_basic_ldap``, which will attempt to
+``bind`` against a LDAP server instead of using password comparison.
+
+Both authentication providers have the same arguments as their normal
+counterparts, with the addition of two configuration keys:
+
+service
+.......
+
+**type**: ``string`` **default**: ``ldap``
+
+This is the name of your configured LDAP client.
+
+dn_string
+.........
+
+**type**: ``string`` **default**: ``{username}``
+
+This is the string which will be used as the bind DN. The ``{username}``
+placeholder will be replaced with the user-provided value (his login).
+Depending on your LDAP server's configuration, you may need to override
+this value.
+
+User provider
+~~~~~~~~~~~~~
+
+Users will still be fetched from the configured user provider. If you
+wish to fetch your users from a LDAP server, you will need to use the
+``ldap`` user provider, in addition to one of the two authentication
+providers (``form_login_ldap`` or ``http_basic_ldap``).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            providers:
+                my_ldap_users:
+                    ldap:
+                        service: ldap
+                        base_dn: 'dc=symfony,dc=com'
+                        search_dn: '%ldap.search_dn%'
+                        search_password: '%ldap.search_password%'
+                        default_roles: ''
+                        uid_key: 'uid'
+                        filter: '(&({uid_key}={username})(objectclass=person)(ou=Users))'
 
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------

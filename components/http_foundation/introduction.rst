@@ -128,9 +128,6 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
     Returns the parameter value converted to boolean;
 
-    .. versionadded:: 2.6
-        The ``getBoolean()`` method was introduced in Symfony 2.6.
-
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
@@ -477,14 +474,18 @@ non-ASCII filenames is more involving. The
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::makeDisposition`
 abstracts the hard work behind a simple API::
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-    $d = $response->headers->makeDisposition(
+    $fileContent = ...; // the generated file content
+    $response = new Response($fileContent);
+
+    $disposition = $response->headers->makeDisposition(
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
         'foo.pdf'
     );
 
-    $response->headers->set('Content-Disposition', $d);
+    $response->headers->set('Content-Disposition', $disposition);
 
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
@@ -506,6 +507,7 @@ if it should::
 With the ``BinaryFileResponse``, you can still set the ``Content-Type`` of the sent file,
 or change its ``Content-Disposition``::
 
+    // ...
     $response->headers->set('Content-Type', 'text/plain');
     $response->setContentDisposition(
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,

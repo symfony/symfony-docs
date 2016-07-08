@@ -43,12 +43,31 @@ The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
-methods returns the new outputs since the last call.
+methods return the new output since the last call.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
+
+.. versionadded:: 3.1
+    Support for streaming the output of a process was introduced in
+    Symfony 3.1.
+
+You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
+foreach construct to get the output while it is generated. By default, the loop waits
+for new output before going to the next iteration::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
+    foreach ($process as $type => $data) {
+        if ($process::OUT === $type) {
+            echo "\nRead from stdout: ".$data;
+        } else { // $process::ERR === $type
+            echo "\nRead from stderr: ".$data;
+        }
+    }
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
@@ -127,6 +146,50 @@ are done doing other stuff::
     The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
     which means that your code will halt at this line until the external
     process is completed.
+
+Streaming to the Standard Input of a Process
+--------------------------------------------
+
+.. versionadded:: 3.1
+    Support for streaming the input of a process was introduced in
+    Symfony 3.1.
+
+Before a process is started, you can specify its standard input using either the
+:method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument
+of the constructor. The provided input can be a string, a stream resource or a
+Traversable object::
+
+    $process = new Process('cat');
+    $process->setInput('foobar');
+    $process->run();
+
+When this input is fully written to the subprocess standard input, the corresponding
+pipe is closed.
+
+In order to write to a subprocess standard input while it is running, the component
+provides the :class:`Symfony\\Component\\Process\\InputStream` class::
+
+    $input = new InputStream();
+    $input->write('foo');
+
+    $process = new Process('cat');
+    $process->setInput($input);
+    $process->start();
+
+    // ... read process output or do other things
+
+    $input->write('bar');
+    $input->close();
+
+    $process->wait();
+
+    // will echo: foobar
+    echo $process->getOutput();
+
+The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
+stream resources or Traversable objects as argument. As shown in the above example,
+you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
+method when you are done writing to the standard input of the subprocess.
 
 Stopping a Process
 ------------------
@@ -302,9 +365,15 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     You can not enable or disable the output while the process is running.
 
     If you disable the output, you cannot access ``getOutput``,
-    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
-    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
-    methods or use ``setIdleTimeout``.
+    ``getIncrementalOutput``, ``getErrorOutput``, ``getIncrementalErrorOutput`` or
+    ``setIdleTimeout``.
+
+    However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
+    methods to handle process output in a streaming fashion.
+
+    .. versionadded:: 3.1
+        The ability to pass a callback to these methods when output is disabled
+        was added in Symfony 3.1.
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992

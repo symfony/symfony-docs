@@ -616,6 +616,12 @@ Now the form will skip your validation constraints. It will still validate
 basic integrity constraints, such as checking whether an uploaded file was too
 large or whether you tried to submit text in a number field.
 
+.. seealso::
+
+    To see how to use a service to resolve ``validation_groups`` dynamically
+    read the :doc:`/cookbook/validation/group_service_resolver`
+    chapter in the cookbook.
+
 .. index::
    single: Forms; Built-in field types
 
@@ -986,7 +992,7 @@ In :ref:`book-form-creating-form-classes` you will learn how to move the
 form building code into separate classes. When using an external form class
 in the controller, you can pass the action and method as form options::
 
-    use AppBundle\Form\Type\TaskType;
+    use AppBundle\Form\TaskType;
     // ...
 
     $form = $this->createForm(TaskType::class, $task, array(
@@ -1034,8 +1040,8 @@ However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the task form::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -1057,7 +1063,7 @@ This new class contains all the directions needed to create the task form. It ca
 be used to quickly build a form object in the controller::
 
     // src/AppBundle/Controller/DefaultController.php
-    use AppBundle\Form\Type\TaskType;
+    use AppBundle\Form\TaskType;
 
     public function newAction()
     {
@@ -1178,7 +1184,7 @@ Define your form type as a service.
         # src/AppBundle/Resources/config/services.yml
         services:
             app.form.type.task:
-                class: AppBundle\Form\Type\TaskType
+                class: AppBundle\Form\TaskType
                 arguments: ["@app.my_service"]
                 tags:
                     - { name: form.type }
@@ -1192,7 +1198,7 @@ Define your form type as a service.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
+                <service id="app.form.type.task" class="AppBundle\Form\TaskType">
                     <tag name="form.type" />
                     <argument type="service" id="app.my_service"></argument>
                 </service>
@@ -1204,7 +1210,7 @@ Define your form type as a service.
         // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.form.type.task', 'AppBundle\Form\Type\TaskType')
+        $container->register('app.form.type.task', 'AppBundle\Form\TaskType')
             ->addArgument(new Reference('app.my_service'))
             ->addTag('form.type')
 
@@ -1312,8 +1318,8 @@ Next, add a new ``category`` property to the ``Task`` class::
 Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
 
-    // src/AppBundle/Form/Type/CategoryType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/CategoryType.php
+    namespace AppBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -1337,12 +1343,10 @@ create a form class so that a ``Category`` object can be modified by the user::
 The end goal is to allow the ``Category`` of a ``Task`` to be modified right
 inside the task form itself. To accomplish this, add a ``category`` field
 to the ``TaskType`` object whose type is an instance of the new ``CategoryType``
-class:
-
-.. code-block:: php
+class::
 
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\CategoryType;
+    use AppBundle\Form\CategoryType;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -1917,10 +1921,9 @@ HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.
 
 There's still much more to learn about the powerful world of forms, such as
-how to handle
-:doc:`file uploads with Doctrine </cookbook/doctrine/file_uploads>` or how
-to create a form where a dynamic number of sub-forms can be added (e.g. a
-todo list where you can keep adding more fields via JavaScript before submitting).
+how to handle :doc:`file uploads </cookbook/controller/upload_file>` or how to
+create a form where a dynamic number of sub-forms can be added (e.g. a todo
+list where you can keep adding more fields via JavaScript before submitting).
 See the cookbook for these topics. Also, be sure to lean on the
 :doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.
@@ -1928,8 +1931,8 @@ includes examples of how to use each field type and its options.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/doctrine/file_uploads`
-* :doc:`FileType Reference </reference/forms/types/file>`
+* :doc:`/cookbook/controller/upload_file`
+* :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/dynamic_form_modification`

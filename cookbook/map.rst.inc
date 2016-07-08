@@ -56,6 +56,7 @@
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
   * :doc:`/cookbook/controller/upload_file`
+  * :doc:`/cookbook/controller/argument_value_resolver`
 
 * **Debugging**
 
@@ -71,7 +72,6 @@
 
 * :doc:`/cookbook/doctrine/index`
 
-  * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
   * :doc:`/cookbook/doctrine/event_listeners_subscribers`
   * :doc:`/cookbook/doctrine/dbal`
@@ -118,7 +118,7 @@
   * :doc:`/cookbook/form/use_empty_data`
   * :doc:`/cookbook/form/direct_submit`
   * (Validation) :doc:`/cookbook/validation/custom_constraint`
-  * (Doctrine) :doc:`/cookbook/doctrine/file_uploads`
+  * (Controller) :doc:`/cookbook/controller/upload_file`
 
 * :doc:`/cookbook/frontend/index`
 
@@ -164,6 +164,7 @@
 * :doc:`Security Authentication (Identifying/Logging in the User) </cookbook/security/index>`
 
   * :doc:`/cookbook/security/form_login_setup`
+  * :doc:`/cookbook/security/ldap`
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/guard-authentication`
   * :doc:`/cookbook/security/remember_me`
@@ -249,6 +250,7 @@
 
   * :doc:`/cookbook/validation/custom_constraint`
   * :doc:`/cookbook/validation/severity`
+  * :doc:`/cookbook/validation/group_service_resolver`
 
 * :doc:`/cookbook/web_server/index`
 

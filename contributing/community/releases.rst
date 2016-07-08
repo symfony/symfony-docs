@@ -48,6 +48,11 @@ type of the release. This maintenance is divided into:
   be fixed. The end of this period is referenced as being the *end of life* of
   a release.
 
+.. note::
+
+    The :doc:`maintenance document </contributing/code/maintenance>` describes
+    the boundaries of acceptable changes during maintenance.
+
 Symfony Versions
 ----------------
 
@@ -187,4 +192,4 @@ version is published every two years and there is a year to upgrade.
 .. _SensioLabs:     http://sensiolabs.com/
 .. _roadmap notification: https://symfony.com/roadmap
 .. _extended to September 2014: https://symfony.com/blog/extended-maintenance-for-symfony-2-4
-.. _timeline calculator: https://symfony.com/roadmap
+.. _timeline calculator: https://symfony.com/roadmap#checker

@@ -8,6 +8,7 @@ The Components
     asset/index
     browser_kit/index
     class_loader/index
+    cache/index
     config/index
     console/index
     css_selector
@@ -22,6 +23,7 @@ The Components
     http_foundation/index
     http_kernel/index
     intl
+    ldap
     options_resolver
     phpunit_bridge
     process

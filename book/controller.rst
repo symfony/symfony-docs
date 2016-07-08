@@ -256,7 +256,7 @@ The controller has a single argument, ``$name``, which corresponds to the
 ``{name}`` placeholder from the matched route (e.g. ``ryan`` if you go to
 ``/hello/ryan``). When executing the controller, Symfony matches each argument
 with a placeholder from the route. So the value for ``{name}`` is passed
-to ``$name``. Just make sure they the name of the placeholder is the
+to ``$name``. Just make sure that the name of the placeholder is the
 same as the name of the argument variable.
 
 Take the following more-interesting example, where the controller has two
@@ -321,42 +321,42 @@ Keep the following guidelines in mind while you develop.
 
 #. **The order of the controller arguments does not matter**
 
-    Symfony matches the parameter **names** from the route to the variable
-    **names** of the controller. The arguments of the controller could be
-    totally reordered and still work perfectly::
+   Symfony matches the parameter **names** from the route to the variable
+   **names** of the controller. The arguments of the controller could be
+   totally reordered and still work perfectly::
 
-        public function indexAction($lastName, $firstName)
-        {
-            // ...
-        }
+       public function indexAction($lastName, $firstName)
+       {
+           // ...
+       }
 
 #. **Each required controller argument must match up with a routing parameter**
 
-    The following would throw a ``RuntimeException`` because there is no
-    ``foo`` parameter defined in the route::
+   The following would throw a ``RuntimeException`` because there is no
+   ``foo`` parameter defined in the route::
 
-        public function indexAction($firstName, $lastName, $foo)
-        {
-            // ...
-        }
+       public function indexAction($firstName, $lastName, $foo)
+       {
+           // ...
+       }
 
-    Making the argument optional, however, is perfectly ok. The following
-    example would not throw an exception::
+   Making the argument optional, however, is perfectly ok. The following
+   example would not throw an exception::
 
-        public function indexAction($firstName, $lastName, $foo = 'bar')
-        {
-            // ...
-        }
+       public function indexAction($firstName, $lastName, $foo = 'bar')
+       {
+           // ...
+       }
 
 #. **Not all routing parameters need to be arguments on your controller**
 
-    If, for example, the ``lastName`` weren't important for your controller,
-    you could omit it entirely::
+   If, for example, the ``lastName`` weren't important for your controller,
+   you could omit it entirely::
 
-        public function indexAction($firstName)
-        {
-            // ...
-        }
+       public function indexAction($firstName)
+       {
+           // ...
+       }
 
 .. tip::
 
@@ -431,10 +431,6 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
         // return $this->redirect($this->generateUrl('homepage'));
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
-
 By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the third argument::
 
@@ -500,8 +496,8 @@ The Symfony templating engine is explained in great detail in the
 .. sidebar:: Templating Naming Pattern
 
     You can also put templates in the ``Resources/views`` directory of a bundle and
-    reference them with a special shortcut syntax like ``@AppBundle/Hello/index.html.twig``
-    or ``@AppBundle/layout.html.twig``. These would live in at ``Resources/views/Hello/index.html.twig``
+    reference them with a special shortcut syntax like ``@App/Hello/index.html.twig``
+    or ``@App/layout.html.twig``. These would live in at ``Resources/views/Hello/index.html.twig``
     and ``Resources/views/layout.html.twig`` inside the bundle respectively.
 
 .. index::
@@ -536,6 +532,14 @@ console command:
     $ php bin/console debug:container
 
 For more information, see the :doc:`/book/service_container` chapter.
+
+.. tip::
+
+    To get a container configuration parameter in controller you can use the
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getParameter`
+    method::
+
+        $from = $this->getParameter('app.mailer.from');
 
 .. index::
    single: Controller; Managing errors
@@ -762,9 +766,9 @@ headers and content that's sent back to the client::
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
-    // create a JSON-response with a 200 status code
-    $response = new Response(json_encode(array('name' => $name)));
-    $response->headers->set('Content-Type', 'application/json');
+    // create a CSS-response with a 200 status code
+    $response = new Response('<style> ... </style>');
+    $response->headers->set('Content-Type', 'text/css');
 
 There are also special classes to make certain kinds of responses easier:
 
@@ -777,6 +781,30 @@ There are also special classes to make certain kinds of responses easier:
 * For streamed responses, there is
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
+
+JSON Helper
+~~~~~~~~~~~
+
+.. versionadded:: 3.1
+    The ``json()`` helper was introduced in Symfony 3.1.
+
+Returning JSON contents is increasingly popular for API-based applications. For
+that reason, the base controller class defines a ``json()`` method which creates
+a ``JsonResponse`` and encodes the given contents automatically::
+
+    // ...
+    public function indexAction()
+    {
+        // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+        return $this->json(array('username' => 'jane.doe'));
+
+        // the shortcut defines three optional arguments
+        // return $this->json($data, $status = 200, $headers = array(), $context = array());
+    }
+
+If the :doc:`serializer service </cookbook/serializer>` is enabled in your
+application, contents passed to ``json()`` are encoded with it. Otherwise,
+the :phpfunction:`json_encode` function is used.
 
 .. seealso::
 

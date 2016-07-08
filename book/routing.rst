@@ -805,6 +805,13 @@ Path     Parameters
 ``/es``  *won't match this route*
 =======  ========================
 
+.. tip::
+
+    The route requirements can also include container parameters, as explained
+    in :doc:`this article </cookbook/routing/service_container_parameters>`.
+    This comes in handy when the regular expression is very complex and used
+    repeatedly in your application.
+
 .. index::
    single: Routing; Method requirement
 
@@ -1542,6 +1549,30 @@ a template helper function:
         )) ?>">
             Read this blog post.
         </a>
+
+.. tip::
+
+    If you are generating the route inside a ``<script>`` element, it's a good
+    practice to escape it for JavaScript:
+
+    .. configuration-block::
+
+        .. code-block:: html+twig
+
+            <script>
+            var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
+            </script>
+
+        .. code-block:: html+php
+        
+            <script>
+            var route = "<?php echo $view->escape(
+                $view['router']->path('blow_show', array(
+                    'slug' => 'my-blog-post',
+                )),
+                'js'
+            ) ?>";
+            </script>
 
 .. index::
    single: Routing; Absolute URLs

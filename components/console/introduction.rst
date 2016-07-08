@@ -143,7 +143,7 @@ Coloring the Output
     By default, the Windows command console doesn't support output coloring. The
     Console component disables output coloring for Windows systems, but if your
     commands invoke other scripts which emit color sequences, they will be
-    wrongly displayed as raw escape characters. Install the `ConEmu`_, `ANSICON`_
+    wrongly displayed as raw escape characters. Install the `Cmder`_, `ConEmu`_, `ANSICON`_
     or `Mintty`_ (used by default in GitBash and Cygwin) free applications
     to add coloring support to your Windows command console.
 
@@ -224,6 +224,9 @@ level. For example::
     if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
         $output->writeln(...);
     }
+
+    // alternatively you can pass the verbosity level to writeln()
+    $output->writeln('...', OutputInterface::VERBOSITY_VERBOSE);
 
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
@@ -548,7 +551,7 @@ returns the returned code from the command (return value from command's
 
     If you want to suppress the output of the executed command, pass a
     :class:`Symfony\\Component\\Console\\Output\\NullOutput` as the second
-    argument to ``$command->execute()``.
+    argument to ``$command->run()``.
 
 .. caution::
 
@@ -577,6 +580,7 @@ Learn More!
 * :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
+.. _Cmder: http://cmder.net/
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/

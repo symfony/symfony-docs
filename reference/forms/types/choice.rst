@@ -19,7 +19,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `choice_name`_                                                             |
 |             | - `choice_translation_domain`_                                               |
 |             | - `choice_value`_                                                            |
-|             | - `choices_as_values`_                                                       |
+|             | - `choices_as_values`_ (deprecated)                                          |
 |             | - `expanded`_                                                                |
 |             | - `group_by`_                                                                |
 |             | - `multiple`_                                                                |
@@ -101,7 +101,7 @@ method::
         },
         'group_by' => function($category, $key, $index) {
             // randomly assign things into 2 groups
-            return rand(0, 1) == 1 ? 'Group A' : 'Group B'
+            return rand(0, 1) == 1 ? 'Group A' : 'Group B';
         },
         'preferred_choices' => function($category, $key, $index) {
             return $category->getName() == 'Cat2' || $category->getName() == 'Cat3';
@@ -167,8 +167,6 @@ is the item's label and the array value is the item's value::
 
     $builder->add('inStock', ChoiceType::class, array(
         'choices' => array('In Stock' => true, 'Out of Stock' => false),
-        // always include this
-        'choices_as_values' => true,
     ));
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
@@ -195,43 +193,8 @@ would replace the ``choices`` option.
 choices_as_values
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: false
-
-.. versionadded:: 2.7
-
-    The ``choices_as_values`` option was introduced in Symfony 2.7.
-
-The ``choices_as_values`` option was added to keep backward compatibility with the
-*old* way of handling the ``choices`` option. When set to ``false`` (or omitted),
-the choice keys are used as the underlying value and the choice values are shown
-to the user.
-
-* Before 2.7 (and deprecated now)::
-
-    $builder->add('gender', 'choice', array(
-        // Shows "Male" to the user, returns "m" when selected
-        'choices'  => array('m' => 'Male', 'f' => 'Female'),
-        // before 2.7, this option didn't actually exist, but the
-        // behavior was equivalent to setting this to false in 2.7.
-        'choices_as_values' => false,
-    ));
-
-* Since 2.7::
-
-    $builder->add('gender', ChoiceType::class, array(
-        // Shows "Male" to the user, returns "m" when selected
-        'choices' => array('Male' => 'm', 'Female' => 'f'),
-        'choices_as_values' => true,
-    ));
-
-In Symfony 3.0, the ``choices_as_values`` option doesn't exist, but the ``choice``
-type behaves as if it were set to true:
-
-* Default for 3.0::
-
-    $builder->add('gender', ChoiceType::class, array(
-        'choices' => array('Male' => 'm', 'Female' => 'f'),
-    ));
+This option is deprecated and you should remove it from your 3.x projects (removing
+it will have *no* effect). For its purpose in 2.x, see the 2.7 documentation.
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 

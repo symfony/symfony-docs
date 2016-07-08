@@ -113,7 +113,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
             <ul>
                 <?php foreach ($posts as $post): ?>
                 <li>
-                    <a href="/read?id=<?php echo $post['id'] ?>">
+                    <a href="/show.php?id=<?php echo $post['id'] ?>">
                         <?php echo $post['title'] ?>
                     </a>
                 </li>
@@ -123,9 +123,9 @@ is primarily an HTML file that uses a template-like PHP syntax:
     </html>
 
 By convention, the file that contains all the application logic - ``index.php`` -
-is known as a "controller". The term :term:`controller` is a word you'll hear
-a lot, regardless of the language or framework you use. It refers simply
-to the area of *your* code that processes user input and prepares the response.
+is known as a "controller". The term controller is a word you'll hear a lot,
+regardless of the language or framework you use. It refers simply to the area
+of *your* code that processes user input and prepares the response.
 
 In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
@@ -148,7 +148,7 @@ of the application are isolated in a new file called ``model.php``::
         return $link;
     }
 
-    function close_database_connection($link)
+    function close_database_connection(&$link)
     {
         $link = null;
     }
@@ -224,7 +224,7 @@ the layout:
         <ul>
             <?php foreach ($posts as $post): ?>
             <li>
-                <a href="/read?id=<?php echo $post['id'] ?>">
+                <a href="/show.php?id=<?php echo $post['id'] ?>">
                     <?php echo $post['title'] ?>
                 </a>
             </li>
@@ -254,9 +254,13 @@ an individual blog result based on a given id::
     function get_post_by_id($id)
     {
         $link = open_database_connection();
-        $id = intval($id);
-        $result = $link->query('SELECT created_at, title, body FROM post WHERE id = '.$id);
-        $row = $result->fetch(PDO::FETCH_ASSOC);
+
+        $query = 'SELECT created_at, title, body FROM post WHERE  id=:id';
+        $statement = $link->prepare($query);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
 
         close_database_connection($link);
 
@@ -294,9 +298,7 @@ Creating the second page is now very easy and no code is duplicated. Still,
 this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
-but this can't really be done easily yet. Worse, had you forgotten to clean
-the ``id`` parameter via the ``intval()`` function, your
-entire database would be at risk for an SQL injection attack.
+but this can't really be done easily yet.
 
 Another major problem is that each individual controller file must include
 the ``model.php`` file. What if each controller file suddenly needed to include
@@ -310,8 +312,8 @@ to security...
 A "Front Controller" to the Rescue
 ----------------------------------
 
-The solution is to use a :term:`front controller`: a single PHP file through
-which *all* requests are processed. With a front controller, the URIs for the
+The solution is to use a front controller: a single PHP file through which
+*all* requests are processed. With a front controller, the URIs for the
 application change slightly, but start to become more flexible:
 
 .. code-block:: text
@@ -357,7 +359,7 @@ on the requested URI::
     } elseif ('/index.php/show' === $uri && isset($_GET['id'])) {
         show_action($_GET['id']);
     } else {
-        header('Status: 404 Not Found');
+        header('HTTP/1.1 404 Not Found');
         echo '<html><body><h1>Page Not Found</h1></body></html>';
     }
 
@@ -417,7 +419,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "3.0.*"
+            "symfony/symfony": "3.1.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]

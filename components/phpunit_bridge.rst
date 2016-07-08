@@ -20,10 +20,6 @@ It comes with the following features:
 
 * Provides a ``ClockMock`` helper class for time-sensitive tests.
 
-.. versionadded:: 2.7
-    The PHPUnit Bridge was introduced in Symfony 2.7. It is however possible to
-    install the bridge in any Symfony application (even 2.3).
-
 Installation
 ------------
 
@@ -112,7 +108,7 @@ PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
 
 Making Tests Fail
------------------
+~~~~~~~~~~~~~~~~~
 
 By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices
 will make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to
@@ -121,6 +117,18 @@ number of deprecation notices is reached (``0`` is the default value). You can
 also set the value ``"weak"`` which will make the bridge ignore any deprecation
 notices. This is useful to projects that must use deprecated interfaces for
 backward compatibility reasons.
+
+Disabling the Deprecation Helper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.1
+    The ability to disable the deprecation helper was introduced in Symfony
+    3.1.
+
+Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
+completely disable the deprecation helper. This is useful to make use of the
+rest of features provided by this component without getting errors or messages
+related to deprecations.
 
 Time-sensitive Tests
 --------------------
@@ -214,14 +222,14 @@ record, can be slow to execute and unreliable due to the conditions of the
 network. For that reason, this component also provides mocks for these PHP
 functions:
 
-* :phpfunction:`checkdnsrr()`
-* :phpfunction:`dns_check_record()`
-* :phpfunction:`getmxrr()`
-* :phpfunction:`dns_get_mx()`
-* :phpfunction:`gethostbyaddr()`
-* :phpfunction:`gethostbyname()`
-* :phpfunction:`gethostbynamel()`
-* :phpfunction:`dns_get_record()`
+* :phpfunction:`checkdnsrr`
+* :phpfunction:`dns_check_record`
+* :phpfunction:`getmxrr`
+* :phpfunction:`dns_get_mx`
+* :phpfunction:`gethostbyaddr`
+* :phpfunction:`gethostbyname`
+* :phpfunction:`gethostbynamel`
+* :phpfunction:`dns_get_record`
 
 Use Case
 ~~~~~~~~
@@ -266,8 +274,10 @@ the data you expect to get for the given hosts::
             // ...
     }
 
-The ``withMockedHosts()`` method can return any number of hosts with different
-configuration, so you can simulate diverse network conditions::
+The ``withMockedHosts()`` method configuration is defined as an array. The keys
+are the mocked hosts and the values are arrays of DNS records in the same format
+returned by :phpfunction:`dns_get_record`, so you can simulate diverse network
+conditions::
 
     DnsMock::withMockedHosts(array(
         'example.com' => array(
@@ -287,10 +297,10 @@ Troubleshooting
 
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
 "by convention" and assume that the namespace of the tested class can be
-obtained just by removing the ``\Tests\`` part from the test namespace. For
-example, if your test case fully-qualified class name (FQCN) is
-``App\Tests\Watch\DummyWatchTest``, it assumes the tested class FQCN is
-``App\Watch\DummyWatch``.
+obtained just by removing the ``Tests\`` part from the test namespace. I.e.
+that if the your test case fully-qualified class name (FQCN) is
+``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
+is ``App\Watch``.
 
 If this convention doesn't work for your application, configure the mocked
 namespaces in the ``phpunit.xml`` file, as done for example in the
@@ -323,4 +333,4 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
-.. _`Travis CI`: https://travis-ci.com/
+.. _`Travis CI`: https://travis-ci.org/

@@ -91,7 +91,7 @@ example containing most features described below:
             );
 
             if (true === $dummy) {
-                return;
+                return null;
             }
 
             if ('string' === $dummy) {
@@ -109,7 +109,7 @@ example containing most features described below:
          * @param mixed $value     Some value to check against
          * @param bool  $theSwitch Some switch to control the method's flow
          *
-         * @return bool|null The resultant check if $theSwitch isn't false, null otherwise
+         * @return bool|void The resultant check if $theSwitch isn't false, void otherwise
          */
         private function reverseBoolean($value = null, $theSwitch = false)
         {
@@ -143,8 +143,8 @@ Structure
 * Add a blank line before ``return`` statements, unless the return is alone
   inside a statement-group (like an ``if`` statement);
 
-* Use just ``return;`` instead of ``return null;`` when a function must return
-  void early;
+* Use ``return null;`` when a function explicitly returns ``null`` values and
+  use ``return;`` when the function returns ``void`` values;
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
@@ -153,21 +153,30 @@ Structure
   that are not intended to be instantiated from the outside and thus are not
   concerned by the `PSR-0`_ and `PSR-4`_ autoload standards;
 
+* Declare the class inheritance and all the implemented interfaces on the same
+  line as the class name;
+
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
   The exceptions to this rule are the class constructor and the ``setUp`` and
-  ``tearDown`` methods of PHPUnit tests, which should always be the first methods
+  ``tearDown`` methods of PHPUnit tests, which must always be the first methods
   to increase readability;
+
+* Declare all the arguments on the same line as the method/function name, no
+  matter how many arguments there are;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
 
-* Exception and error message strings should be concatenated using :phpfunction:`sprintf`.
+* Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
 
-* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` should be
+* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` must be
   switched to opt-in via ``@`` operator.
-  Read more at :ref:`contributing-code-conventions-deprecations`;
+  Read more at :ref:`contributing-code-conventions-deprecations`.
+
+* Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
+  which return or throw something.
 
 Naming Conventions
 ------------------

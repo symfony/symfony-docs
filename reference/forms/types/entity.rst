@@ -17,15 +17,15 @@ objects from the database.
 |             | - `em`_                                                          |
 |             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                     |
-| options     | - `data_class`_                                                  |
+| Overridden  | - `choice_name`_                                                 |
+| options     | - `choice_value`_                                                |
+|             | - `choices`_                                                     |
+|             | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
 | options     |                                                                  |
 |             | - `choice_attr`_                                                 |
-|             | - `choice_name`_                                                 |
 |             | - `choice_translation_domain`_                                   |
-|             | - `choice_value`_                                                |
 |             | - `expanded`_                                                    |
 |             | - `group_by`_                                                    |
 |             | - `multiple`_                                                    |
@@ -61,25 +61,29 @@ be listed inside the choice field::
     // ...
 
     $builder->add('users', EntityType::class, array(
+        // query choices from this entity
         'class' => 'AppBundle:User',
+
+        // use the User.username property as the visible option string
         'choice_label' => 'username',
+
+        // used to render a select box, check boxes or radios
+        // 'multiple' => true,
+        // 'expanded' => true,
     ));
 
-In this case, all ``User`` objects will be loaded from the database and
-rendered as either a ``select`` tag, a set or radio buttons or a series
-of checkboxes (this depends on the ``multiple`` and ``expanded`` values).
-Because of the `choice_label`_ option, the ``username`` property (usually by calling
-``getUsername()``) will be used as the text to display in the field.
+This will build a ``select`` drop-down containing *all* of the ``User`` objects
+in the database. To render radio buttons or checkboxes instead, change the
+`multiple`_ and `expanded`_ options.
 
-If you omit the ``choice_label`` option, then your entity *must* have a ``__toString()``
-method.
+.. _ref-form-entity-query-builder:
 
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to specify a custom query to use when fetching the entities
+If you want to create a custom query to use when fetching the entities
 (e.g. you only want to return some entities, or need to order them), use
-the ``query_builder`` option. The easiest way to use the option is as follows::
+the `query_builder`_ option::
 
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -91,6 +95,7 @@ the ``query_builder`` option. The easiest way to use the option is as follows::
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
+        'choice_label' => 'username',
     ));
 
 .. _reference-forms-entity-choices:
@@ -98,8 +103,9 @@ the ``query_builder`` option. The easiest way to use the option is as follows::
 Using Choices
 ~~~~~~~~~~~~~
 
-If you already have the exact collection of entities that you want included
-in the choice element, you can simply pass them via the ``choices`` key.
+If you already have the exact collection of entities that you want to include
+in the choice element, just pass them via the ``choices`` key.
+
 For example, if you have a ``$group`` variable (passed into your form perhaps
 as a form option) and ``getUsers`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
@@ -120,7 +126,7 @@ Field Options
 choice_label
 ~~~~~~~~~~~~
 
-**type**: ``string`` or ``callable``
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath`
 
 This is the property that should be used for displaying the entities as text in
 the HTML element::
@@ -147,7 +153,7 @@ method. You can also pass a callback function for more control::
     ));
 
 The method is called for each entity in the list and passed to the function. For
-more detais, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
+more details, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
 
 .. note::
 
@@ -186,16 +192,47 @@ instead of the ``default`` entity manager.
 query_builder
 ~~~~~~~~~~~~~
 
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
+**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure **default**: ``null``
 
-If specified, this is used to query the subset of options (and their
-order) that should be used for the field. The value of this option can
-either be a ``QueryBuilder`` object or a Closure. If using a Closure,
-it should take a single argument, which is the ``EntityRepository`` of
-the entity and return an instance of ``QueryBuilder``.
+Allows you to create a custom query for your choices. See
+:ref:`ref-form-entity-query-builder` for an example.
+
+The value of this option can either be a ``QueryBuilder`` object, a Closure or
+``null`` (which will load all entities). When using a Closure, you will be
+passed the ``EntityRepository`` of the entity as the only argument and should
+return a ``QueryBuilder``. Returning ``null`` in the Closure will result in
+loading all entities.
 
 Overridden Options
 ------------------
+
+choice_name
+~~~~~~~~~~~
+
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
+
+By default the name of each field is the id of the entity, if it can be read
+from the class metadata by an internal id reader. Otherwise the process will
+fall back to using increasing integers.
+
+choice_value
+~~~~~~~~~~~~
+
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
+
+As for the ``choice_name`` option, ``choice_value`` uses the id by default.
+It allows an optimization in the :class:``Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\Loader\\DoctrineChoiceLoader`` which will
+only load the ids passed as values while the form submission.
+It prevents all non submitted entities to be loaded from the database, even
+when defining the ``query_builder`` option.
+If it may be useful to set this option using an entity's property as string
+value (e.g for some API), you will gain performances by letting this option set
+by default.
+
+.. note::
+
+    If the id cannot be read, for BC, the component checks if the class implements
+    ``__toString()`` and will use an incremental integer otherwise.
 
 choices
 ~~~~~~~
@@ -221,11 +258,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
-.. include:: /reference/forms/types/options/choice_name.rst.inc
-
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
-
-.. include:: /reference/forms/types/options/choice_value.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 

@@ -8,6 +8,7 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 2
 
     form_login_setup
+    ldap
     entity_provider
     guard-authentication
     remember_me
