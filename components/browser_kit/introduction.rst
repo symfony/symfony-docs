@@ -112,7 +112,7 @@ Cookies
 Retrieving Cookies
 ~~~~~~~~~~~~~~~~~~
 
-The ``Crawler`` object exposes cookies (if any) through a
+The ``Client`` implementation exposes cookies (if any) through a
 :class:`Symfony\\Component\\BrowserKit\\CookieJar`, which allows you to store and
 retrieve any cookie while making requests with the client::
 
@@ -123,7 +123,7 @@ retrieve any cookie while making requests with the client::
     $crawler = $client->request('GET', 'http://symfony.com');
 
     // Get the cookie Jar
-    $cookieJar = $crawler->getCookieJar();
+    $cookieJar = $client->getCookieJar();
 
     // Get a cookie by name
     $cookie = $cookieJar->get('name_of_the_cookie');
@@ -155,7 +155,7 @@ Looping Through Cookies
     $crawler = $client->request('GET', 'http://symfony.com');
 
     // Get the cookie Jar
-    $cookieJar = $crawler->getCookieJar();
+    $cookieJar = $client->getCookieJar();
 
     // Get array with all cookies
     $cookies = $cookieJar->all();
