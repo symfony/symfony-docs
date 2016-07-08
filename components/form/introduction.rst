@@ -359,10 +359,12 @@ and then access it whenever you need to build a form.
     this object in some more "global" way so you can access it from anywhere.
 
 Exactly how you gain access to your one form factory is up to you. If you're
-using a :term:`Service Container`, then you should add the form factory to
-your container and grab it out whenever you need to. If your application
-uses global or static variables (not usually a good idea), then you can store
-the object on some static class or do something similar.
+using a service container (like provided with the
+:doc:`DependencyInjection component </components/dependency_injection/introduction>`),
+then you should add the form factory to your container and grab it out whenever
+you need to. If your application uses global or static variables (not usually a
+good idea), then you can store the object on some static class or do something
+similar.
 
 Regardless of how you architect your application, just remember that you
 should only have one form factory and that you'll need to be able to access
