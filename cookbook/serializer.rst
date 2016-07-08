@@ -176,10 +176,10 @@ In addition to the ``@Groups`` annotation, the Serializer component also
 supports Yaml or XML files. These files are automatically loaded when being
 stored in one of the following locations:
 
- * The ``serialization.yml`` or ``serialization.xml`` file in
-   the ``Resources/config/`` directory of a bundle;
- * All ``*.yml`` and ``*.xml`` files in the ``Resources/config/serialization/``
-   directory of a bundle.
+* The ``serialization.yml`` or ``serialization.xml`` file in
+  the ``Resources/config/`` directory of a bundle;
+* All ``*.yml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+  directory of a bundle.
 
 .. _cookbook-serializer-enabling-metadata-cache:
 
