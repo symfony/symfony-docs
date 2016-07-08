@@ -1471,7 +1471,7 @@ system. Take the ``blog_show`` example route from earlier::
     // /blog/my-blog-post
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
-and any wildcards (e.g. ``slug`` = ``my-blog-post``) used in the path for that
+and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
 route. With this information, any URL can easily be generated::
 
     class MainController extends Controller
@@ -1535,7 +1535,7 @@ Generating URLs from a Template
 
 The most common place to generate a URL is from within a template when linking
 between pages in your application. This is done just as before, but using
-a template helper function:
+the ``path()`` function to generate a relative URL:
 
 .. configuration-block::
 
@@ -1576,8 +1576,6 @@ a template helper function:
                 'js'
             ) ?>";
             </script>
-
-The ``path()`` method generates relative URLs.
 
 .. index::
    single: Routing; Absolute URLs
