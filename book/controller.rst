@@ -782,6 +782,12 @@ There are also special classes to make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
+.. seealso::
+
+    Now that you know the basics you can continue your research on Symfony
+    ``Request`` and ``Response`` object in the
+    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+
 JSON Helper
 ~~~~~~~~~~~
 
@@ -806,11 +812,41 @@ If the :doc:`serializer service </cookbook/serializer>` is enabled in your
 application, contents passed to ``json()`` are encoded with it. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
-.. seealso::
+File helper
+~~~~~~~~~~~
 
-    Now that you know the basics you can continue your research on Symfony
-    ``Request`` and ``Response`` object in the
-    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+.. versionadded:: 3.2
+    The ``file()`` helper was introduced in Symfony 3.2.
+
+You can use :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+to serve a file from inside a controller::
+
+    $this->file($file, $fileName = null, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+You can pass an :phpclass:`SplFileInfo` instance (like
+:class:`Symfony\\Component\\HttpFoundation\\File`) or the path to a file as
+first argument. Using the second and third arguments, you can customize the
+send filename and the disposition.
+
+.. code-block:: php
+
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    public function fileAction()
+    {
+        // load file from the file system
+        $file = new File('some_file.pdf');
+
+        // send the file as attachment to browser
+        return $this->file($file, 'custom_name.pdf');
+    }
+
+    public function pathFileAction()
+    {
+        // serve file from specified path
+        return $this->file('/path/to/my/picture.jpg');
+    }
 
 Creating Static Pages
 ---------------------
