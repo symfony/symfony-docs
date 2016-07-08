@@ -73,6 +73,12 @@ Before diving into this, test it out!
     replace ``http://localhost:8000`` with your host name - like
     ``http://symfony.dev/app_dev.php/lucky/number``.
 
+.. tip::
+    if you cant see your page try to clear cache using command
+    ``php bin/console  cache:clear --env=prod``
+    For more information look at 
+    ``http://symfony.com/doc/current/book/configuration.html#environments``
+
 If you see a lucky number being printed back to you, congratulations! But
 before you run off to play the lottery, check out how this works.
 
