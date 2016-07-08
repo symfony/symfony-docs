@@ -1555,15 +1555,27 @@ a template helper function:
 
 .. tip::
 
-    If you are generating the route inside a script tag, you might need to properly escape it for Javascript
+    If you are generating the route inside a ``<script>`` element, it's a good
+    practice to escape it for JavaScript:
 
-    .. code-block:: javascript
+    .. configuration-block::
 
-        <script>
-        var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
-        </script>
+        .. code-block:: html+twig
 
-    For more information, see the Twig documentation.
+            <script>
+            var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
+            </script>
+
+        .. code-block:: html+php
+        
+            <script>
+            var route = "<?php echo $view->escape(
+                $view['router']->generate('blow_show', array(
+                    'slug' => 'my-blog-post',
+                )),
+                'js'
+            ) ?>";
+            </script>
 
 .. index::
    single: Routing; Absolute URLs
