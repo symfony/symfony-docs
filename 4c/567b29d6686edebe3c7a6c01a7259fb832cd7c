@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-05-13T14:42:29Z
+
+Hmm, I wonder if there is some breaking changes between 1.0 and 2.0 that we have in the docs? If there are none, I would just remove the version number here (`composer require ocramius/proxy-manager`).
+
+---------------------------------------------------------------------------
+
+by stof at 2016-05-13T14:50:03Z
+
+@WouterJ the main BC break is that version 2 requires PHP 7 (which is why listing it as an explicit version is a bad idea btw)
