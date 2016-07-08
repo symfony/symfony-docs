@@ -1169,11 +1169,11 @@ each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-=========  ==================  ==============
-Bundle     Controller Class    Method Name
-=========  ==================  ==============
-AppBundle  ``BlogController``  ``showAction``
-=========  ==================  ==============
+=============  ==================  ==============
+Bundle         Controller Class    Method Name
+=============  ==================  ==============
+``AppBundle``  ``BlogController``  ``showAction``
+=============  ==================  ==============
 
 The controller might look like this::
 
@@ -1468,7 +1468,7 @@ system. Take the ``blog_show`` example route from earlier::
     // /blog/my-blog-post
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
-and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
+and any wildcards (e.g. ``slug`` = ``my-blog-post``) used in the path for that
 route. With this information, any URL can easily be generated::
 
     class MainController extends Controller
@@ -1507,7 +1507,7 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 
         var url = Routing.generate(
             'blog_show',
-            {"slug": 'my-blog-post'}
+            {'slug': 'my-blog-post'}
         );
 
     For more information, see the documentation for that bundle.
@@ -1573,6 +1573,8 @@ a template helper function:
                 'js'
             ) ?>";
             </script>
+
+The ``path()`` method generates relative URLs.
 
 .. index::
    single: Routing; Absolute URLs
