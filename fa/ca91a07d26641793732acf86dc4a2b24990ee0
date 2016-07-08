@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-07T18:48:08Z
+
+👍
+
+Status: reviewed
+
+---
+
+The Symfony API shows that this method belongs to the Client and not the Crawler: http://api.symfony.com/3.0/search.html?search=getCookieJar
