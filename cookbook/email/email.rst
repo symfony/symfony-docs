@@ -72,19 +72,19 @@ can modify the values in that file, or set the values directly here.
 
 The following configuration attributes are available:
 
-* ``transport``         (``smtp``, ``mail``, ``sendmail``, or ``gmail``)
+* ``transport`` (``smtp``, ``mail``, ``sendmail``, or ``gmail``)
 * ``username``
 * ``password``
 * ``host``
 * ``port``
-* ``encryption``        (``tls``, or ``ssl``)
-* ``auth_mode``         (``plain``, ``login``, or ``cram-md5``)
+* ``encryption`` (``tls``, or ``ssl``)
+* ``auth_mode`` (``plain``, ``login``, or ``cram-md5``)
 * ``spool``
 
   * ``type`` (how to queue the messages, ``file`` or ``memory`` is supported, see :doc:`/cookbook/email/spool`)
   * ``path`` (where to store the messages)
-* ``delivery_address``  (an email address where to send ALL emails)
-* ``disable_delivery``  (set to true to disable delivery completely)
+* ``delivery_address`` (an email address where to send ALL emails)
+* ``disable_delivery`` (set to true to disable delivery completely)
 
 Sending Emails
 --------------
@@ -131,9 +131,9 @@ template might look something like this:
 .. code-block:: html+jinja
 
     {# app/Resources/views/Emails/registration.html.twig #}
-    Hi {{ name }}
-    
     <h3>You did it! You registered!</h3>
+
+    Hi {{ name }}! You're successfully registered.
 
     {# example, assuming you have a route named "login" #}
     To login, go to: <a href="{{ url('login') }}">...</a>.
