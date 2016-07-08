@@ -131,6 +131,8 @@ template might look something like this:
 .. code-block:: html+jinja
 
     {# app/Resources/views/Emails/registration.html.twig #}
+    Hi {{ name }}
+    
     <h3>You did it! You registered!</h3>
 
     {# example, assuming you have a route named "login" #}
