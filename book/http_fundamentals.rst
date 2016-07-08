@@ -334,8 +334,8 @@ breaking all of your links?) and the fact that each file *must* manually
 include some set of core files so that security, database connections and
 the "look" of the site can remain consistent.
 
-A much better solution is to use a :term:`front controller`: a single PHP
-file that handles every request coming into your application. For example:
+A much better solution is to use a front controller: a single PHP file that
+handles every request coming into your application. For example:
 
 +------------------------+------------------------+
 | ``/index.php``         | executes ``index.php`` |
@@ -401,8 +401,8 @@ the same simple pattern for every request:
 
 Each "page" of your site is defined in a routing configuration file that
 maps different URLs to different PHP functions. The job of each PHP function,
-called a :term:`controller`, is to use information from the request - along
-with many other tools Symfony makes available - to create and return a ``Response``
+called a controller, is to use information from the request - along with many
+other tools Symfony makes available - to create and return a ``Response``
 object. In other words, the controller is where *your* code goes: it's where
 you interpret the request and create a response.
 
