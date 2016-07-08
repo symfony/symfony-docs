@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-03-05T13:29:59Z
+
+@sfdumi do you have some time to finish this PR? It does also need a rebase as some changes are conflicting now.
+
+If you don't have much time or need some help, feel free to comment and we'll take it over from here.
+
+---------------------------------------------------------------------------
+
+by sfdumi at 2016-03-06T16:07:23Z
+
+I can do the changes, but it is not clear for all of them if they should be done or not (eg: the first one).
+
+@WouterJ can you please clarify what needs to be done?
