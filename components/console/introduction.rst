@@ -228,10 +228,6 @@ level. For example::
     // alternatively you can pass the verbosity level to writeln()
     $output->writeln('...', OutputInterface::VERBOSITY_VERBOSE);
 
-.. versionadded:: 2.8
-    The ability to pass the verbosity level to the ``writeln()`` method was
-    introduced in Symfony 2.8.
-
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
 
