@@ -548,6 +548,10 @@ For more information, see the :doc:`/book/service_container` chapter.
 
         $from = $this->getParameter('app.mailer.from');
 
+    .. versionadded:: 2.7
+        The ``Controller::getParameter()`` method was introduced in Symfony
+        2.7. Use ``$this->container->getParameter()`` in versions prior to 2.7.
+
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
