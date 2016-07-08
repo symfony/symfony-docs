@@ -31,7 +31,7 @@ directories::
 
     foreach ($finder as $file) {
         // Dump the absolute path
-        var_dump($file->getRealpath());
+        var_dump($file->getRealPath());
 
         // Dump the relative path to the file, omitting the filename
         var_dump($file->getRelativePath());
@@ -159,7 +159,7 @@ You can also define your own sorting algorithm with ``sort()`` method::
 
     $sort = function (\SplFileInfo $a, \SplFileInfo $b)
     {
-        return strcmp($a->getRealpath(), $b->getRealpath());
+        return strcmp($a->getRealPath(), $b->getRealPath());
     };
 
     $finder->sort($sort);

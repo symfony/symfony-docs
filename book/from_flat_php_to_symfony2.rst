@@ -254,9 +254,13 @@ an individual blog result based on a given id::
     function get_post_by_id($id)
     {
         $link = open_database_connection();
-        $id = intval($id);
-        $result = $link->query('SELECT created_at, title, body FROM post WHERE id = '.$id);
-        $row = $result->fetch(PDO::FETCH_ASSOC);
+
+        $query = 'SELECT created_at, title, body FROM post WHERE  id=:id';
+        $statement = $link->prepare($query);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
 
         close_database_connection($link);
 
@@ -294,9 +298,7 @@ Creating the second page is now very easy and no code is duplicated. Still,
 this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
-but this can't really be done easily yet. Worse, had you forgotten to clean
-the ``id`` parameter via the ``intval()`` function, your
-entire database would be at risk for an SQL injection attack.
+but this can't really be done easily yet.
 
 Another major problem is that each individual controller file must include
 the ``model.php`` file. What if each controller file suddenly needed to include

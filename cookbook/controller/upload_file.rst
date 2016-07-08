@@ -136,7 +136,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                 // Move the file to the directory where brochures are stored
                 $file->move(
-                    $this->container->getParameter('brochures_directory'),
+                    $this->getParameter('brochures_directory'),
                     $fileName
                 );
 
@@ -404,7 +404,7 @@ Now, register this class as a Doctrine listener:
 
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Reference;
-        
+
         // ...
         $definition = new Definition(
             'AppBundle\EventListener\BrochureUploaderListener',
