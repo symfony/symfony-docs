@@ -147,7 +147,7 @@ the class namespace as a parameter:
         app.slugger:
             class: '%slugger.class%'
 
-This practice is cumbersome and completely unnecessary for your own services:
+This practice is cumbersome and completely unnecessary for your own services.
 
 .. best-practice::
 
