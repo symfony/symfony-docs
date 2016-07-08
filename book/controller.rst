@@ -842,7 +842,7 @@ The ``file()`` helper provides some arguments to configure its behavior::
         return $this->file($file, 'custom_name.pdf');
 
         // display the file contents in the browser instead of downloading it
-        $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
 Creating Static Pages
