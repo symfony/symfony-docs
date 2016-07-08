@@ -241,7 +241,7 @@ your controller::
             'form' => $form->createView(),
         ));
     }
-    
+
 .. caution::
 
     Be aware that the ``createView()`` method should be called *after* ``handleRequest``
@@ -463,173 +463,18 @@ Validation is a very powerful feature of Symfony and has its own
    single: Forms; Validation groups
 
 .. _book-forms-validation-groups:
-
-Validation Groups
-~~~~~~~~~~~~~~~~~
-
-If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
-you'll need to specify which validation group(s) your form should use::
-
-    $form = $this->createFormBuilder($users, array(
-        'validation_groups' => array('registration'),
-    ))->add(...);
-
-If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``setDefaultOptions()``
-method::
-
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'validation_groups' => array('registration'),
-        ));
-    }
-
-In both of these cases, *only* the ``registration`` validation group will
-be used to validate the underlying object.
-
-.. index::
-   single: Forms; Disabling validation
-
-Disabling Validation
-~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was introduced in Symfony 2.3.
-
-Sometimes it is useful to suppress the validation of a form altogether. For
-these cases you can set the ``validation_groups`` option to ``false``::
-
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'validation_groups' => false,
-        ));
-    }
-
-Note that when you do that, the form will still run basic integrity checks,
-for example whether an uploaded file was too large or whether non-existing
-fields were submitted. If you want to suppress validation, you can use the
-:ref:`POST_SUBMIT event <cookbook-dynamic-form-modification-suppressing-form-validation>`.
-
-.. index::
-   single: Forms; Validation groups based on submitted data
-
 .. _book-form-validation-groups:
+.. _book-form-disabling-validation:
+.. _book-form-groups-based-on-the-submitted-data:
+.. _book-form-groups-based-on-the-clicked-button:
 
-Groups based on the Submitted Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. tip::
 
-If you need some advanced logic to determine the validation groups (e.g.
-based on submitted data), you can set the ``validation_groups`` option
-to an array callback::
-
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-    // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'validation_groups' => array(
-                'AppBundle\Entity\Client',
-                'determineValidationGroups',
-            ),
-        ));
-    }
-
-This will call the static method ``determineValidationGroups()`` on the
-``Client`` class after the form is submitted, but before validation is executed.
-The Form object is passed as an argument to that method (see next example).
-You can also define whole logic inline by using a ``Closure``::
-
-    use AppBundle\Entity\Client;
-    use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-    // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'validation_groups' => function (FormInterface $form) {
-                $data = $form->getData();
-
-                if (Client::TYPE_PERSON == $data->getType()) {
-                    return array('person');
-                }
-
-                return array('company');
-            },
-        ));
-    }
-
-Using the ``validation_groups`` option overrides the default validation
-group which is being used. If you want to validate the default constraints
-of the entity as well you have to adjust the option as follows::
-
-    use AppBundle\Entity\Client;
-    use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-    // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'validation_groups' => function (FormInterface $form) {
-                $data = $form->getData();
-
-                if (Client::TYPE_PERSON == $data->getType()) {
-                    return array('Default', 'person');
-                }
-
-                return array('Default', 'company');
-            },
-        ));
-    }
-
-You can find more information about how the validation groups and the default constraints
-work in the book section about :ref:`validation groups <book-validation-validation-groups>`.
-
-.. index::
-   single: Forms; Validation groups based on clicked button
-
-Groups based on the Clicked Button
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
-
-When your form contains multiple submit buttons, you can change the validation
-group depending on which button is used to submit the form. For example,
-consider a form in a wizard that lets you advance to the next step or go back
-to the previous step. Also assume that when returning to the previous step,
-the data of the form should be saved, but not validated.
-
-First, we need to add the two buttons to the form::
-
-    $form = $this->createFormBuilder($task)
-        // ...
-        ->add('nextStep', 'submit')
-        ->add('previousStep', 'submit')
-        ->getForm();
-
-Then, we configure the button for returning to the previous step to run
-specific validation groups. In this example, we want it to suppress validation,
-so we set its ``validation_groups`` option to false::
-
-    $form = $this->createFormBuilder($task)
-        // ...
-        ->add('previousStep', 'submit', array(
-            'validation_groups' => false,
-        ))
-        ->getForm();
-
-Now the form will skip your validation constraints. It will still validate
-basic integrity constraints, such as checking whether an uploaded file was too
-large or whether you tried to submit text in a number field.
+    Read the :doc:`/cookbook/validation/validation_groups` article to learn how
+    to dynamically select the constraints to apply for a given form (e.g. to
+    validate in a different way users who sign up and users who just updated
+    their profile) and how to define the order in which constraints should be
+    validated.
 
 .. index::
    single: Forms; Built-in field types
@@ -676,7 +521,7 @@ the documentation for each type.
     is left blank. If you don't want this behavior, either
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
-    
+
         ->add('dueDate', 'date', array(
             'widget' => 'single_text',
             'required' => false
