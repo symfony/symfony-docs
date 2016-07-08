@@ -27,7 +27,8 @@ Full Default Configuration
                 main:
                     type:                fingers_crossed
                     action_level:        WARNING
-                    # by default buffer_size is unlimited, which could generate huge logs in some cases.
+                    # By default, buffer_size is unlimited (0), which could
+                    # generate huge logs.
                     buffer_size:         0
                     handler:             custom
                 console:
@@ -93,6 +94,9 @@ Full Default Configuration
                     bubble="false"
                     formatter="my_formatter"
                 />
+
+                <!-- By default, buffer-size is unlimited (0), which could
+                     generate huge logs. -->
                 <monolog:handler
                     name="main"
                     type="fingers_crossed"
@@ -100,10 +104,12 @@ Full Default Configuration
                     handler="custom"
                     buffer-size="0"
                 />
+
                 <monolog:handler
                     name="console"
                     type="console"
                 />
+
                 <monolog:handler
                     name="custom"
                     type="service"
