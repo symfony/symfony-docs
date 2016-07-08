@@ -101,7 +101,7 @@ to get this information output:
 
     Acme Console Application version 1.2
 
-If you do not provide both arguments then it will just output:
+If you do not provide a console name then it will just output:
 
 .. code-block:: text
 
