@@ -10,8 +10,8 @@ into the architecture now.
 Understanding the Directory Structure
 -------------------------------------
 
-The directory structure of a Symfony :term:`application` is rather flexible,
-but the recommended structure is as follows:
+The directory structure of a Symfony application is rather flexible, but the
+recommended structure is as follows:
 
 ``app/``
     The application configuration, templates and translations.
@@ -26,8 +26,9 @@ The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
-stylesheets and JavaScript files. It is also where each :term:`front controller`
-lives, such as the production controller shown here::
+stylesheets and JavaScript files. It is also where each front controller (the
+file that handles all requests to your application) lives, such as the
+production controller shown here::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
@@ -72,7 +73,7 @@ Understanding the Bundle System
 -------------------------------
 
 This section introduces one of the greatest and most powerful features of
-Symfony, the :term:`bundle` system.
+Symfony: The bundle system.
 
 A bundle is kind of like a plugin in other software. So why is it
 called a *bundle* and not a *plugin*? This is because *everything* is a
@@ -179,8 +180,8 @@ defines the configuration for a specific bundle. For example, ``framework``
 configures the FrameworkBundle while ``swiftmailer`` configures the
 SwiftmailerBundle.
 
-Each :term:`environment` can override the default configuration by providing
-a specific configuration file. For example, the ``dev`` environment loads
+Each environment can override the default configuration by providing a
+specific configuration file. For example, the ``dev`` environment loads
 the ``config_dev.yml`` file, which loads the main configuration (i.e.
 ``config.yml``) and then modifies it to add some debugging tools:
 
