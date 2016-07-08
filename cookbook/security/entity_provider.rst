@@ -52,7 +52,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
      * @ORM\Table(name="app_users")
      * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
      */
-    class User implements UserInterface, \Serializable
+    class User implements UserInterface
     {
         /**
          * @ORM\Column(type="integer")
@@ -112,30 +112,6 @@ For this entry, suppose that you already have a ``User`` entity inside an
 
         public function eraseCredentials()
         {
-        }
-
-        /** @see \Serializable::serialize() */
-        public function serialize()
-        {
-            return serialize(array(
-                $this->id,
-                $this->username,
-                $this->password,
-                // see section on salt below
-                // $this->salt,
-            ));
-        }
-
-        /** @see \Serializable::unserialize() */
-        public function unserialize($serialized)
-        {
-            list (
-                $this->id,
-                $this->username,
-                $this->password,
-                // see section on salt below
-                // $this->salt
-            ) = unserialize($serialized);
         }
     }
 
