@@ -35,13 +35,11 @@ the `ProxyManager bridge`_:
 .. note::
 
     If you're using the full-stack framework, the proxy manager bridge is
-    already included but the actual proxy manager needs to be included.
-    So, run:
+    already included but the actual proxy manager still needs to be installed:
 
     .. code-block:: bash
     
-        $ composer require ocramius/proxy-manager:~1.0 # for PHP 5
-        $ composer require ocramius/proxy-manager:~2.0 # for PHP 7
+        $ composer require ocramius/proxy-manager
 
     Afterwards compile your container and check to make sure that you get
     a proxy for your lazy services.
