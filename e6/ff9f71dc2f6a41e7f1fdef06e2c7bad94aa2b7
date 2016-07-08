@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-06-29T15:22:32Z
+
+@WouterJ I am more concerned about the link to the glossary in the navigation. Would be bad if a link led to a non-existing page.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-06-29T16:09:45Z
+
+:+1:, but only after Javier is able to remove the Glosaary link on http://symfony.com/doc/current/index.html
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-06-29T17:17:03Z
+
+Ah, missed that link. Indeed, we should wait until the link is removed from the index
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-07-21T18:02:51Z
+
+ping @javiereguiluz Did you already create a PR to remove the glossary link?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-08-22T09:23:47Z
+
+I'm sorry to bother you again, @javiereguiluz, but what is the status of this?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-10-05T10:35:35Z
+
+ping @javiereguiluz :)
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2016-03-06T11:43:28Z
+
+:+1:
+
+Ping @javiereguiluz - only this needs to be done here: https://github.com/symfony/symfony-docs/pull/5464#issuecomment-116745229
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-08T09:23:36Z
+
+The glossary has now been unlinked from the Symfony Docs index (it will be public after the next deployment).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-08T09:36:36Z
+
+Thanks @javiereguiluz! I've rebased this PR, it's ready to merge once symfony.com is redeployed.
+
+status: reviewed
