@@ -175,6 +175,9 @@ Structure
   switched to opt-in via ``@`` operator.
   Read more at :ref:`contributing-code-conventions-deprecations`.
 
+* Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
+  which return or throw something.
+
 Naming Conventions
 ------------------
 
