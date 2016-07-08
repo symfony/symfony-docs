@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by zhil at 2016-06-30T19:15:02Z
+
+according to https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php default value is unlimited, not 30
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-07T06:41:12Z
+
+looks like the XML example would need to be updated too
+
+---------------------------------------------------------------------------
+
+by zhil at 2016-07-07T08:37:52Z
+
+@xabbuh I have updated xml as well
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-07T18:57:09Z
+
+👍
+
+Status: reviewed
+
+---
+
+@zhil a very nice catch in a very important document. We must be extra-careful in the configuration references to not make any mistake.
