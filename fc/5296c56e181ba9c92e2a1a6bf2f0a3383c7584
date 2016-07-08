@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-02-12T07:21:05Z
+
+@mikaelz thanks for your contribution. However, in this case, I'm not sure about the proposed changes. It seems like *You did it! You registered!* is the heading of this email, so there is no need to add a new one before it.
+
+---------------------------------------------------------------------------
+
+by mikaelz at 2016-02-12T10:00:32Z
+
+IN the controller there is name variable defined and not used in the view.
+It would be a good example how to pass variable from controller to view.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-12T12:18:32Z
+
+As this cookbook article focuses on sending e-mails, I would rather not pass the `name` variable to the template.
