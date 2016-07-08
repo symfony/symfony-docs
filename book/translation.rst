@@ -51,9 +51,9 @@ to learn even more. Overall, the process has several steps:
 Configuration
 -------------
 
-Translations are handled by a ``translator`` :term:`service` that uses the
-user's locale to lookup and return translated messages. Before using it,
-enable the ``translator`` in your configuration:
+Translations are handled by a ``translator`` service that uses the user's
+locale to lookup and return translated messages. Before using it, enable the
+``translator`` in your configuration:
 
 .. configuration-block::
 
