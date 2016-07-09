@@ -836,6 +836,7 @@ The ``file()`` helper provides some arguments to configure its behavior::
     {
         // load the file from the filesystem
         $file = new File('/path/to/some_file.pdf');
+
         return $this->file($file);
 
         // rename the downloaded file
