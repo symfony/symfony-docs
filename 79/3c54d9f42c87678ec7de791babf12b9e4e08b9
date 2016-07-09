@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-20T11:28:17Z
+
+Thank you for this suggestion @shkkmo. I think you are right with what you suggest. I just think we should maybe not embed it into this paragraph, but add it to its own `caution` block or the like to make it more outstanding and easier to spot. What do you think?
+
+---------------------------------------------------------------------------
+
+by shkkmo at 2016-06-20T13:47:28Z
+
+Sure, didn't know where to added it, but it is definitely a gotcha that i
+couldn't figure out till u dug into the source code. How do i add a caution
+block?
+On Jun 20, 2016 7:28 AM, "Christian Flothmann" <notifications@github.com>
+wrote:
+
+> Thank you for this suggestion @shkkmo <https://github.com/shkkmo>. I
+> think you are right with what you suggest. I just think we should maybe not
+> embed it into this paragraph, but add it to its own caution block or the
+> like to make it more outstanding and easier to spot. What do you think?
+>
+> —
+> You are receiving this because you were mentioned.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/6656#issuecomment-227117283>,
+> or mute the thread
+> <https://github.com/notifications/unsubscribe/ABLK8TBtzO16c6SEvmfnf2WW7DxuOauPks5qNnlUgaJpZM4I36GU>
+> .
+>
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-20T15:13:04Z
+
+It will look like this:
+
+```rst
+.. caution::
+
+    A handler that should log only messages for certain channels must be
+    a top-level handler. Handlers nested in filters, groups or other handlers
+    will receive every messages regardless of the channel.
+```
+
+I think the best place would be just below the configuration block.
+
+---------------------------------------------------------------------------
+
+by shkkmo at 2016-06-20T17:49:20Z
+
+@xabbuh Is this better?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-09T15:09:43Z
+
+👍
+
+Status: reviewed
+
+@shkkmo thanks for contributing this improvement. There are some very minor syntax issues in your pull request, but contributors can easily fix them when merging your work. Thanks!
