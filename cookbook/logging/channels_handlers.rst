@@ -95,6 +95,10 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
             ),
         ));
 
+.. caution::
+
+    The 'channels' configuration only works for top level handlers. Handlers that are nested inside a Group, Buffer, Filter, FingersCrossed, or other such Handler will ignore this configuration and will process every message passed to them.
+
 YAML Specification
 ------------------
 
