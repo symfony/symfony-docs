@@ -1,0 +1,63 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-21T06:53:25Z
+
+I'm divided about this proposal. I like it and I think it's better ... but it would require us to change lots of PHP examples in the entire documentation and this `<?=` is only "always available" since PHP 5.4:
+
+![php_short_tag](https://cloud.githubusercontent.com/assets/73419/16220479/7388523c-378d-11e6-9b41-85e35ec9afa6.png)
+
+However, Symfony 2.7 and 2.8 still require PHP >= 5.3.9, so this would require us to introduce a lot of differences between the doc versions. I don't know if it's worth it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-21T06:58:50Z
+
+As the examples you change here are examples of how you might have written code before using Symfony I think we can still stick with the old syntax.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-21T11:58:19Z
+
+I'm 👍 on this PR. I think we should also do it in the rest of the docs:
+
+ * It's a simple search & replace for `<?php echo` to `<?=`, so the amount of required changes is not a blocker
+ * PHP 5.4 has reached end of life for [almost a year](http://php.net/supported-versions.php)
+ * It makes PHP templates a bit nicer
+ * When applying this to the 2.7 branch, we avoid any merge conflicts
+
+---------------------------------------------------------------------------
+
+by dr-matt-smith at 2016-06-21T12:23:13Z
+
+okay .. matt ..
+
+On Jun 21, 2016, at 07:58 AM, Christian Flothmann <notifications@github.com> wrote:
+
+As the examples you change here are examples of how you might have written code before using Symfony I think we can still stick with the old syntax.
+—
+You are receiving this because you authored the thread.
+Reply to this email directly, view it on GitHub, or mute the thread.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-09T10:03:40Z
+
+ping @xabbuh @javiereguiluz @weaverryan can we please decide what we do with this?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-09T10:33:27Z
+
+I change my vote from -1 to +0  😄
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-07-09T11:02:16Z
+
+I don't care too much. So this gets a +0 from me. Feel free to merge, Wouter. :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-09T15:07:26Z
+
+Status: reviewed
