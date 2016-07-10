@@ -1,0 +1,67 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-09-11T07:52:21Z
+
+@WouterJ in my opinion, your proposal makes a lot of sense for the explained reasons. :+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-12-18T11:17:22Z
+
+Updated the PR, noting that constant values may only be changed when not targetted for configuration usage, because of the Yaml and XML limitation.
+
+---------------------------------------------------------------------------
+
+by Tobion at 2015-12-18T11:31:19Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-18T12:44:35Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-12-18T12:44:44Z
+
+ping @symfony/deciders
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-02-09T16:59:10Z
+
+What do we do here?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-02-21T21:35:11Z
+
+I've left some comments and am :+1: after those. If Wouter agrees to make those or @xabbuh would be thumbsup after the changes, then we can merge (and make the changes if not already made by then).
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2016-03-06T11:42:31Z
+
+Very nice improvements!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-03-06T21:13:29Z
+
+ping @xabbuh - can you review and give this a thumbs up/down?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-06-12T10:04:41Z
+
+Updated the PR, all comments should be fixed now.
+
+Status: Needs Review
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-05T20:55:48Z
+
+Status: reviewed
