@@ -199,15 +199,7 @@ cookbook article :doc:`/cookbook/configuration/web_server_configuration`.
     `Nginx`_ web server and virtual host.
 
 When you are finished working on your Symfony application, you can stop the
-<<<<<<< 2dc8c63868d4d5677c0ec3350d6bdac807452b2f
 server by pressing `Ctrl+C` from terminal.
-=======
-server with the ``server:stop`` command::
-
-.. code-block:: bash
-
-    $ php app/console server:stop
->>>>>>> made some new changes, corrected mistakes, undo some foolish deletions
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
@@ -318,53 +310,6 @@ them all at once::
 
 Depending on the complexity of your project, this update process can take up to
 several minutes to complete.
-
-<<<<<<< 2dc8c63868d4d5677c0ec3350d6bdac807452b2f
-.. tip::
-
-    Symfony provides a command to check whether your project's dependencies
-    contain any known security vulnerability:
-
-    .. code-block:: bash
-
-        $ php app/console security:check
-
-    A good security practice is to execute this command regularly to be able to
-    update or replace compromised dependencies as soon as possible.
-=======
-Using Source Control
---------------------
-
-If you're using a version control system like `Git`_, you can safely commit all
-your project's code. The reason is that Symfony applications already contain a
-``.gitignore`` file specially prepared for Symfony.
-
-For specific instructions on how best to set up your project to be stored
-in Git, see cookbook article :doc:`/cookbook/workflow/new_project_git`.
-
-Checking out a Versioned Symfony Application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When using Composer to manage application's dependencies, it's recommended to
-ignore the entire ``vendor/`` directory before committing its code to the
-repository. This means that when checking out a Symfony application from a Git
-repository, there will be no ``vendor/`` directory and the application won't
-work out-of-the-box.
-
-In order to make it work, check out the Symfony application and then execute the
-``install`` Composer command to download and install all the dependencies required
-by the application::
-
-.. code-block:: bash
-
-    $ cd my_project_name/
-    $ composer install
-
-How does Composer know which specific dependencies to install? Because when a
-Symfony application is committed to a repository, the ``composer.json`` and
-``composer.lock`` files are also committed. These files tell Composer which
-dependencies (and which specific versions) to install for the application.
->>>>>>> made some new changes, corrected mistakes, undo some foolish deletions
 
 Installing the Symfony Demo Application
 ---------------------------------------
