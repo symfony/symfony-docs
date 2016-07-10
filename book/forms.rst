@@ -241,7 +241,7 @@ your controller::
             'form' => $form->createView(),
         ));
     }
-    
+
 .. caution::
 
     Be aware that the ``createView()`` method should be called *after* ``handleRequest``
@@ -686,7 +686,7 @@ the documentation for each type.
     is left blank. If you don't want this behavior, either
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
-    
+
         ->add('dueDate', 'date', array(
             'widget' => 'single_text',
             'required' => false
@@ -1130,6 +1130,24 @@ the choice is ultimately up to you.
                 'data_class' => 'AppBundle\Entity\Task',
             ));
         }
+
+.. caution::
+
+    When the name of your form type class matches any registered field type that
+    has its own theme fragment, your form won't be rendered correctly. A form
+    type named ``AppBundle\\Form\\Type\\PasswordType`` to change a user password
+    for instance will be mistaken for the built-in ``PasswordType`` field type
+    and will be rendered incorrectly using the ``password_widget`` theme
+    fragment. You can still use the class name of your choice by overriding the
+    ``getBlockPrefix`` method of your form class::
+
+        public function getBlockPrefix()
+        {
+            return 'app_password';
+        }
+
+    Read the ":doc:`/cookbook/form/create_custom_field_type`" chapter for more
+    information.
 
 .. tip::
 
