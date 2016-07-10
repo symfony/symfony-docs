@@ -311,7 +311,7 @@ There are also special classes to make certain types of responses easier to crea
 
     The ``Request`` and ``Response`` classes are part of a standalone component
     called :doc:`symfony/http-foundation </components/http_foundation/introduction>`
-    that yo can use in *any8 PHP project. This also contains classes for handling
+    that yo can use in *any* PHP project. This also contains classes for handling
     sessions, file uploads and more.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
