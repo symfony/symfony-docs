@@ -194,39 +194,16 @@ return a ``QueryBuilder``.
 Overridden Options
 ------------------
 
-choice_name
-~~~~~~~~~~~
+.. include:: /reference/forms/types/options/choice_name.rst.inc
 
-.. versionadded:: 2.7
-    The ``choice_name`` option was introduced in Symfony 2.7.
+In the ``EntityType``, this defaults to the ``id`` of the entity, if it can
+be read. Otherwise, it falls back to using auto-incrementing integers.
 
-**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
+.. include:: /reference/forms/types/options/choice_value.rst.inc
 
-By default the name of each field is the id of the entity, if it can be read
-from the class metadata by an internal id reader. Otherwise the process will
-fall back to using increasing integers.
-
-choice_value
-~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``choice_value`` option was introduced in Symfony 2.7.
-
-**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
-
-As for the ``choice_name`` option, ``choice_value`` uses the id by default.
-It allows an optimization in the :class:``Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\Loader\\DoctrineChoiceLoader`` which will
-only load the ids passed as values while the form submission.
-It prevents all non submitted entities to be loaded from the database, even
-when defining the ``query_builder`` option.
-If it may be useful to set this option using an entity's property as string
-value (e.g for some API), you will gain performances by letting this option set
-by default.
-
-.. note::
-
-    If the id cannot be read, for BC, the component checks if the class implements
-    ``__toString()`` and will use an incremental integer otherwise.
+In the ``EntityType``, this is overridden to use the ``id`` by default. When the
+``id`` is used, Doctrine only queries for the objects for the ids that were actually
+submitted.
 
 choices
 ~~~~~~~
