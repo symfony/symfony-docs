@@ -1,5 +1,5 @@
 .. index::
-   single: Page creation
+   single: Create your First Page in Symfony
 
 .. _creating-pages-in-symfony2:
 .. _creating-pages-in-symfony:
@@ -13,10 +13,13 @@ simple two-step process:
 #. *Create a route*: A route is the URL (e.g. ``/about``) to your page and
    points to a controller;
 
-#. *Create a controller*: A controller is the function you write that builds
-   the page. You take the incoming request information and use it to create
-   a Symfony ``Response`` object, which can hold HTML content, a JSON string
-   or anything else.
+#. *Create a controller*: A controller is the PHP function you write that
+   builds the page. You take the incoming request information and use it to
+   create a Symfony ``Response`` object, which can hold HTML content, a JSON
+   string or even a binary file like an image or PDF. The only rule is that
+   a controller *must* return a Symfony
+   :ref:`Response <component-http-foundation-response>` object (and you'll even
+   learn to bend this rule eventually).
 
 Just like on the web, every interaction is initiated by an HTTP request.
 Your job is pure and simple: understand that request and return a response.
@@ -32,9 +35,10 @@ Creating a Page: Route and Controller
     Before continuing, make sure you've read the :doc:`Installation </book/installation>`
     chapter and can access your new Symfony app in the browser.
 
-Suppose you want to create a page - ``/lucky/number`` - that generates a
-lucky (well, random) number and prints it. To do that, create a class and
-a method inside of it that will be executed when someone goes to ``/lucky/number``::
+Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
+random) number and prints it. To do that, create a "Controller class" and a
+"controller" method inside of it that will be executed when someone goes to
+``/lucky/number``::
 
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
@@ -57,19 +61,19 @@ a method inside of it that will be executed when someone goes to ``/lucky/number
         }
     }
 
-Before diving into this, test it out!
+Before diving into this, test it out! If you are using PHP's internal web server
+go to:
 
     http://localhost:8000/lucky/number
 
-.. tip::
+If you set up a virtual host in Apache or Nginx replace ``http://localhost:8000``
+with your host name and add ``app_dev.php`` to make sure Symfony loads in the "dev"
+environment:
 
-    If you set up a proper virtual host in
-    :doc:`Apache or Nginx </cookbook/configuration/web_server_configuration>`,
-    replace ``http://localhost:8000`` with your host name - like
-    ``http://symfony.dev/app_dev.php/lucky/number``.
+    http://symfony.dev/app_dev.php/lucky/number
 
-If you see a lucky number being printed back to you, congratulations! But
-before you run off to play the lottery, check out how this works.
+If you see a lucky number being printed back to you, congratulations! But before
+you run off to play the lottery, check out how this works.
 
 The ``@Route`` above ``numberAction()`` is called an *annotation* and it
 defines the URL pattern. You can also write routes in YAML (or other formats):
@@ -119,7 +123,8 @@ Try this out in your browser:
 
     http://localhost:8000/api/lucky/number
 
-You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`::
+You can even shorten this with the handy
+:class:`Symfony\\Component\\HttpFoundation\\JsonResponse`::
 
     // src/AppBundle/Controller/LuckyController.php
     // ...
@@ -140,7 +145,7 @@ You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundat
                 'lucky_number' => rand(0, 100),
             );
 
-            // calls json_encode and sets the Content-Type header
+            // calls json_encode() and sets the Content-Type header
             return new JsonResponse($data);
         }
     }
@@ -207,7 +212,7 @@ at the end:
 
         return $collection;
 
-Because of the ``{count}`` "placeholder", the URL to the page is *different*:
+Because of the ``{count}`` "wildcard" placeholder, the URL to the page is *different*:
 it now works for URLs matching ``/lucky/number/*`` - for example ``/lucky/number/5``.
 The best part is that you can access this value and use it in your controller::
 
@@ -236,27 +241,25 @@ The best part is that you can access this value and use it in your controller::
         // ...
     }
 
-Try it by going to ``/lucky/number/XX`` - replacing XX with *any* number:
+Try it by printing *7* lucky numbers:
 
     http://localhost:8000/lucky/number/7
 
-You should see *7* lucky numbers printed out! You can get the value of any
-``{placeholder}`` in your route by adding a ``$placeholder`` argument to
-your controller. Just make sure they have the same name.
+**You can get the value of any ``{placeholder}`` in your route by adding
+a ``$placeholder`` argument to your controller. Just make sure that the placeholder
+(e.g. ``{id}``) matches the argument name (e.g. ``$id``).**
 
 The routing system can do a *lot* more, like supporting multiple placeholders
 (e.g. ``/blog/{category}/{page})``), making placeholders optional and forcing
 placeholder to match a regular expression (e.g. so that ``{count}`` *must*
-be a number).
-
-Find out about all of this and become a routing expert in the
+be a number). Find out about all of this and become a routing expert in the
 :doc:`Routing </book/routing>` chapter.
 
 Rendering a Template (with the Service Container)
 -------------------------------------------------
 
 If you're returning HTML from your controller, you'll probably want to render
-a template. Fortunately, Symfony comes with Twig: a templating language that's
+a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
 So far, ``LuckyController`` doesn't extend any base class. The easiest way
@@ -278,8 +281,8 @@ Using the ``templating`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This doesn't change anything, but it *does* give you access to Symfony's
-:doc:`container </book/service_container>`: an array-like object that gives
-you access to *every* useful object in the system. These useful objects are
+:doc:`service container </book/service_container>`: an array-like object that
+gives you access to *every* useful object in the system. These useful objects are
 called *services*, and Symfony ships with a service object that can render
 Twig templates, another that can log messages and many more.
 
@@ -311,12 +314,15 @@ To render a Twig template, use a service called ``templating``::
 
 You'll learn a lot more about the important "service container" as you keep
 reading. For now, you just need to know that it holds a lot of objects, and
-you can ``get()`` any object by using its nickname, like ``templating`` or
-``logger``. The ``templating`` service is an instance of :class:`Symfony\\Bundle\\TwigBundle\\TwigEngine`
-and this has a ``render()`` method.
+you can :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
+any object by using its nickname, like ``templating`` or ``logger``.
+The ``templating`` service is an instance of
+:class:`Symfony\\Bundle\\TwigBundle\\TwigEngine` and this has a
+:method:`Symfony\\Bundle\\TwigBundle\\TwigEngine::render` method.
 
 But this can get even easier! By extending the ``Controller`` class, you
-also get a lot of shortcut methods, like ``render()``::
+also get a lot of shortcut methods, like
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`::
 
     // src/AppBundle/Controller/LuckyController.php
     // ...
@@ -337,25 +343,20 @@ also get a lot of shortcut methods, like ``render()``::
         return new Response($html);
         */
 
-        // render: a shortcut that does the same as above
+        // render(): a shortcut that does the same as above
         return $this->render(
             'lucky/number.html.twig',
             array('luckyNumberList' => $numbersList)
         );
     }
 
-Learn more about these shortcut methods and how they work in the
+You will learn more about these shortcut methods and how they work in the
 :doc:`Controller </book/controller>` chapter.
-
-.. tip::
-
-    For more advanced users, you can also
-    :doc:`register your controllers as services </cookbook/controller/service>`.
 
 Create the Template
 ~~~~~~~~~~~~~~~~~~~
 
-If you refresh now, you'll get an error:
+If you refresh your browser now, you'll get an error:
 
     Unable to find template "lucky/number.html.twig"
 
@@ -382,23 +383,25 @@ a ``number.html.twig`` file inside of it:
             <h1>Lucky Numbers: <?php echo $view->escape($luckyNumberList) ?>
         <?php $view['slots']->stop() ?>
 
-Welcome to Twig! This simple file already shows off the basics: like how
-the ``{{ variableName }}`` syntax is used to print something. The ``luckyNumberList``
-is a variable that you're passing into the template from the ``render`` call
-in your controller.
+Welcome to Twig! This simple file already shows off the basics:
 
-The ``{% extends 'base.html.twig' %}`` points to a layout file that lives
-at `app/Resources/views/base.html.twig`_ and came with your new project.
-It's *really* basic (an unstyled HTML structure) and it's yours to customize.
-The ``{% block body %}`` part uses Twig's :ref:`inheritance system <twig-inheritance>`
-to put the content into the middle of the ``base.html.twig`` layout.
+* The ``{{ variableName }}`` syntax is used to print something. In this template,
+  ``luckyNumberList`` is a variable that you're passing into the template from the
+  ``render`` call in the controller.
+
+* The ``{% extends 'base.html.twig' %}`` points to a layout file that lives
+  at `app/Resources/views/base.html.twig`_ and came with your new project. It's
+  *really* basic (an unstyled HTML structure) and it's yours to customize.
+
+* The ``{% block body %}`` part uses Twig's :ref:`inheritance system <twig-inheritance>`
+  to put the content into the middle of the ``base.html.twig`` layout.
 
 Refresh to see your template in action!
 
-    http://localhost:8000/lucky/number/9
+    http://localhost:8000/lucky/number/7
 
-If you view the source code, you now have a basic HTML structure thanks to
-``base.html.twig``.
+If you view the source code of the displayed page, you now have a basic HTML
+structure thanks to ``base.html.twig``.
 
 This is just the surface of Twig's power. When you're ready to master its
 syntax, loop over arrays, render other templates and other cool things, read
@@ -440,13 +443,13 @@ see the :doc:`Bundles </book/bundles>` chapter.
 So what about the other directories in the project?
 
 ``vendor/``
-    Vendor (i.e. third-party) libraries and bundles are downloaded here by
-    the `Composer`_ package manager.
+    Third-party (i.e. "vendor") libraries live here! These are typically downloaded
+    via the `Composer`_ package manager.
 
 ``web/``
     This is the document root for the project and contains any publicly accessible
-    files, like CSS, images and the Symfony front controllers that execute
-    the app (``app_dev.php`` and ``app.php``).
+    files, like CSS, images and the Symfony development and production front controllers
+    that execute the app (``app_dev.php`` and ``app.php``).
 
 .. seealso::
 
@@ -542,7 +545,7 @@ use the handy ``app/console`` command:
 
 There's a lot more power behind Symfony's configuration system, including
 environments, imports and parameters. To learn all of it, see the
-:doc:`Configuration </book/configuration>` chapter.
+:doc:`Configuring Symfony (and Environments) </book/configuration>` chapter.
 
 What's Next?
 ------------
@@ -556,7 +559,8 @@ Ok, time to finish mastering the fundamentals by reading these chapters:
 * :doc:`/book/routing`
 * :doc:`/book/templating`
 
-Then, in the :doc:`Symfony Book </book/index>`, learn about the :doc:`service container </book/service_container>`,
+Then, in the :doc:`Symfony Book </book/index>`, learn about the
+:doc:`service container </book/service_container>`,
 the :doc:`form system </book/forms>`, using :doc:`Doctrine </book/doctrine>`
 (if you need to query a database) and more!
 
@@ -565,6 +569,9 @@ There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
 
 Have fun!
 
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/2.7/app/Resources/views/base.html.twig
+.. _`KnpBundles.com`: http://knpbundles.com
 .. _`Composer`: https://getcomposer.org
 .. _`find open source bundles`: http://knpbundles.com
