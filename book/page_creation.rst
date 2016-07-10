@@ -61,37 +61,24 @@ random) number and prints it. To do that, create a "Controller class" and a
         }
     }
 
-"Controller class" is a convenient way to group several "controllers" together.
-
 Before diving into this, test it out! If you are using PHP's internal web server
 go to:
 
     http://localhost:8000/lucky/number
 
-If you set up a proper virtual host in Apache or Nginx replace ``http://localhost:8000``
-with your host name and add the name of the development front controller file you
-are using ``web/app_dev.php``:
+If you set up a virtual host in Apache or Nginx replace ``http://localhost:8000``
+with your host name and add ``app_dev.php`` to make sure Symfony loads in the "dev"
+environment:
 
     http://symfony.dev/app_dev.php/lucky/number
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works.
 
-The ``@Route`` above ``numberAction()`` method is called an :term:`annotation`
-and defines the route so that :doc:`Router </book/routing>` can match the incoming URL
-(``http://localhost:8000/lucky/number``) to a specific route (``/lucky/number``)
-and therefore returns information about the route, including the controller method
-that should be executed. The correct controller from the matched route is executed
-and the code inside the controller creates and returns the appropriate ``Response``
-object.
-
-.. note::
-
-    You can also write routes in YAML, XML or PHP: you will learn about
-    this in the :doc:`Routing </book/routing>` chapter. If you look closer
-    the above example has tabs that show you how each format looks - all three additional
-    formats use routing configuration file to define routes. Actually, most
-    routing examples in the docs have tabs that show you how each format looks.
+The ``@Route`` above ``numberAction()`` method is called an *annotation* and it
+defines the URL pattern. You can also write routes in YAML (or other formats):
+read about this in the :doc:`routing </book/routing>` chapter. Actually, most
+routing examples in the docs have tabs that show you how each format looks.
 
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
