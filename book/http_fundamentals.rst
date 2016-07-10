@@ -278,7 +278,7 @@ the user is connecting via a secured connection (i.e. HTTPS).
     prepare and store context-specific information about the request.
 
 Symfony Response Object
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony also provides a :class:`Symfony\\Component\\HttpFoundation\\Response`
 class: a simple PHP representation of an HTTP response message. This allows your
@@ -290,7 +290,7 @@ needs to be returned to the client::
     $response = new Response();
 
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
-    $response->setStatusCode(Response::HTTP_OK);;
+    $response->setStatusCode(Response::HTTP_OK);
 
     // set a HTTP response header
     $response->headers->set('Content-Type', 'text/html');
@@ -306,6 +306,7 @@ There are also special classes to make certain types of responses easier to crea
   files and sending file downloads);
 
 * :ref:`StreamedResponse <streaming-response>` (for streaming any other large responses);
+
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
@@ -413,7 +414,7 @@ The Symfony Application Flow
 When you let Symfony handle each request, life is much easier. Symfony follows
 the same simple pattern for every request:
 
-_request-flow-figure:
+.. _request-flow-figure:
 
 .. figure:: /images/request-flow.png
    :align: center
@@ -534,7 +535,7 @@ Symfony Framework, or just one piece of Symfony all by itself.
 .. index::
     single: Symfony Components
 
-_standalone-tools-the-symfony2-components:
+.. _standalone-tools-the-symfony2-components:
 
 Standalone Tools: The Symfony *Components*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -575,7 +576,7 @@ Each one of these components is decoupled and can be used in *any* PHP project,
 regardless of whether or not you use the Symfony Framework. Every part is
 made to be used if needed and replaced when necessary.
 
-_the-full-solution-the-symfony2-framework:
+.. _the-full-solution-the-symfony2-framework:
 
 The Full Solution: The Symfony *Framework*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -601,11 +602,11 @@ sensible defaults. For more advanced users, the sky is the limit.
 
 .. _`xkcd`: http://xkcd.com/
 .. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest
-.. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
-.. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-.. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
+.. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+.. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+.. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Swift Mailer`: http://swiftmailer.org/

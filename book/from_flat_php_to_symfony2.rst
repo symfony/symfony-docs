@@ -607,7 +607,7 @@ database and the Templating component to render a template and return a
         <?php endforeach ?>
     </ul>
 
-The layout ``layout.php`` is nearly identical:
+The ``layout.php`` file is nearly identical:
 
 .. code-block:: html+php
 
