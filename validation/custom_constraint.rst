@@ -199,6 +199,7 @@ Now, when Symfony looks for the ``ContainsAlphanumericValidator`` validator, it 
 load this service from the container.
 
 .. note::
+
     In earlier versions of Symfony, the tag required an ``alias`` key (usually set
     to the class name). This is still allowed your constraint's ``validateBy``
     method can return this alias (instead of a class name).
