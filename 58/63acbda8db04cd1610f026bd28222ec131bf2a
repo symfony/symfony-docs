@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-06-20T10:33:44Z
+
+Could we move this PR forward? @WouterJ if you like we can reword the caution note, but I'd like to clearly say *"don't use this ... unless you know what you are doing"*. Experts will skip this note anyway, but newcomers need strong advice from us.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2016-07-02T14:01:32Z
+
+On second read, I think these changes are perfect. 👍
+
+status: reviewed
