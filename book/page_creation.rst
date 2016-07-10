@@ -25,7 +25,7 @@ Just like on the web, every interaction is initiated by an HTTP request.
 Your job is pure and simple: understand that request and return a response.
 
 .. index::
-   single:: Page creation; Example
+   single: Page creation; Example
 
 Creating a Page: Route and Controller
 -------------------------------------
@@ -432,15 +432,13 @@ The ``app/`` directory also holds a few other things, like the cache directory
 which you'll use to enable new bundles (and one of a *very* short list of
 PHP files in ``app/``).
 
-The ``src/`` directory has just one directory ``src/AppBundle`` and everything
-lives inside of it.  Is where your code lives. It's a set of files within a
-directory that implement a single feature. Symfony Standard Edition comes with
-``AppBundle`` but there is nothing special about ``AppBundle``. Your project can
-have as many bundles as you want, you can even use third-party bundles written
-by other that you can find at `KnpBundles.com`_. So, a :term:`bundle` is like a
-"plugin" in other software, but even better. To find out more about bundles and
-why you might create multiple bundles (hint: sharing code between projects), see
-the :doc:`Bundles </book/bundles>` chapter.
+The ``src/`` directory has just one directory - ``src/AppBundle`` -
+and everything lives inside of it. A bundle is like a "plugin" and you can
+`find open source bundles`_ and install them into your project. But even
+*your* code lives in a bundle - typically ``AppBundle`` (though there's
+nothing special about ``AppBundle``). To find out more about bundles and
+why you might create multiple bundles (hint: sharing code between projects),
+see the :doc:`Bundles </book/bundles>` chapter.
 
 So what about the other directories in the project?
 

@@ -413,12 +413,12 @@ Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
 .. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
-.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`Composer`: https://getcomposer.org/
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
-.. _`Git`: http://git-scm.com/
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
+.. _`Git`: http://git-scm.com/
+.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
