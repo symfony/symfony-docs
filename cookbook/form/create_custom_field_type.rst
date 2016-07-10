@@ -98,6 +98,15 @@ the class name of your type. For more information, see
     (``GenderType`` -> ``gender``). This can be controlled by overriding ``getBlockPrefix()``
     in ``GenderType``.
 
+.. caution::
+
+    When the name of your form class matches any of the built-in field types,
+    your form might not be rendered correctly. A form type named
+    ``AppBundle\Form\PasswordType`` will have the same block name as the
+    built-in ``PasswordType`` and won't be rendered correctly. Override the
+    ``getBlockPrefix()`` method to return a unique block prefix (e.g.
+    ``app_password``) to avoid collisions.
+
 In this case, since the parent field is ``ChoiceType``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``ChoiceType``.
 But for the sake of this example, suppose that when your field is "expanded"

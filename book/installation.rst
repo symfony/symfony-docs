@@ -1,5 +1,5 @@
 .. index::
-   single: Installation
+   single: Installing and Configuring Symfony
 
 Installing and Configuring Symfony
 ==================================
@@ -78,7 +78,7 @@ with the ``new`` command:
     c:\> cd projects/
     c:\projects\> php symfony new my_project_name
 
-This command creates a new directory called ``my_project_name`` that contains a
+This command creates a new directory called ``my_project_name/`` that contains a
 fresh new project based on the most recent stable Symfony version available. In
 addition, the installer checks if your system meets the technical requirements
 to execute Symfony applications. If not, you'll see the list of changes needed
@@ -93,7 +93,7 @@ to meet those requirements.
 .. note::
 
     If the installer doesn't work for you or doesn't output anything, make sure
-    that the `Phar extension`_ is installed and enabled on your computer.
+    that the PHP `Phar extension`_ is installed and enabled on your computer.
 
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,7 +147,7 @@ Start with :doc:`installing Composer globally </cookbook/composer>`.
 Creating a Symfony Application with Composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once Composer is installed on your computer, execute the ``create-project``
+Once Composer is installed on your computer, execute the ``create-project`` Composer
 command to create a new Symfony application based on its latest stable version:
 
 .. code-block:: bash
@@ -155,7 +155,7 @@ command to create a new Symfony application based on its latest stable version:
     $ composer create-project symfony/framework-standard-edition my_project_name
 
 If you need to base your application on a specific Symfony version, provide that
-version as the second argument of the ``create-project`` command:
+version as the second argument of the ``create-project`` Composer command:
 
 .. code-block:: bash
 
@@ -190,18 +190,14 @@ Instead of the Welcome Page, you may see a blank page or an error page.
 This is caused by a directory permission misconfiguration. There are several
 possible solutions depending on your operating system. All of them are
 explained in the :ref:`Setting up Permissions <book-installation-permissions>`
-section.
+section of this chapter.
+
+PHP's internal web server is great for developing, but should **not** be used on
+production. Instead, use Apache or Nginx. See :doc:`/cookbook/configuration/web_server_configuration`.
 
 .. note::
 
-    PHP's internal web server is available in PHP 5.4 or higher versions. If you
-    still use the legacy PHP 5.3 version, you'll have to configure a *virtual host*
-    in your web server.
-
-The ``server:run`` command is only suitable while developing the application. In
-order to run Symfony applications on production servers, you'll have to configure
-your `Apache`_ or `Nginx`_ web server as explained in
-:doc:`/cookbook/configuration/web_server_configuration`.
+    PHP's internal web server is available in PHP 5.4 or higher versions.
 
 When you are finished working on your Symfony application, you can stop the
 server by pressing `Ctrl+C` from terminal.
@@ -360,9 +356,9 @@ Symfony project packages "distributions", which are fully-functional application
 that include the Symfony core libraries, a selection of useful bundles, a
 sensible directory structure and some default configuration. In fact, when you
 created a Symfony application in the previous sections, you actually downloaded the
-default distribution provided by Symfony, which is called *Symfony Standard Edition*.
+default distribution provided by Symfony, which is called `Symfony Standard Edition`_.
 
-The *Symfony Standard Edition* is by far the most popular distribution and it's
+The Symfony Standard Edition is by far the most popular distribution and it's
 also the best choice for developers starting with Symfony. However, the Symfony
 Community has published other popular distributions that you may use in your
 applications:
@@ -372,7 +368,7 @@ applications:
   developers to add CMS functionality to applications built with the Symfony
   Framework.
 * The `Symfony REST Edition`_ shows how to build an application that provides a
-  RESTful API using the FOSRestBundle and several other related bundles.
+  RESTful API using the `FOSRestBundle`_ and several other related bundles.
 
 Using Source Control
 --------------------
@@ -425,10 +421,8 @@ a wide variety of articles about solving specific problems with Symfony.
 .. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`explained in this post`: http://fabien.potencier.org/signing-project-releases.html
 .. _`Composer`: https://getcomposer.org/
-.. _`Composer download page`: https://getcomposer.org/download/
-.. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
-.. _`Nginx`: http://wiki.nginx.org/Symfony
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition

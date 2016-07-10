@@ -69,13 +69,14 @@ In HTTP-speak, this HTTP request would actually look something like this:
 
 This simple message communicates *everything* necessary about exactly which
 resource the client is requesting. The first line of an HTTP request is the
-most important and contains two things: the URI and the HTTP method.
+most important, because it contains two important things: the HTTP method (GET)
+and the URL (``/``).
 
 The URI (e.g. ``/``, ``/contact``, etc) is the unique address or location
 that identifies the resource the client wants. The HTTP method (e.g. ``GET``)
-defines what you want to *do* with the resource. The HTTP methods are the
-*verbs* of the request and define the few common ways that you can act upon
-the resource:
+defines what the client wants to *do* with the resource. The HTTP methods (also
+known as verbs) define the few common ways that the client can act upon the
+resource - the most common HTTP methods are:
 
 +----------+---------------------------------------+
 | *GET*    | Retrieve the resource from the server |
@@ -96,18 +97,18 @@ delete a specific blog entry, for example:
 
 .. note::
 
-    There are actually nine HTTP methods (also known as verbs) defined by
-    the HTTP specification, but many of them are not widely used or supported.
-    In reality, many modern browsers only support ``POST`` and ``GET`` in 
-    HTML forms. Various others are however supported in XMLHttpRequests,
-    as well as by Symfony's router.  
+    There are actually nine HTTP methods defined by the HTTP specification,
+    but many of them are not widely used or supported. In reality, many
+    modern browsers only support ``POST`` and ``GET`` in HTML forms. Various
+    others are however supported in `XMLHttpRequest`_, as well as by Symfony's
+    :doc:`Routing component </components/routing/introduction>`.
 
 In addition to the first line, an HTTP request invariably contains other
-lines of information called request headers. The headers can supply a wide
-range of information such as the requested ``Host``, the response formats
-the client accepts (``Accept``) and the application the client is using to
-make the request (``User-Agent``). Many other headers exist and can be found
-on Wikipedia's `List of HTTP header fields`_ article.
+lines of information called request **headers**. The headers can supply a wide
+range of information such as the host of the resource being requested (``Host``),
+the response formats the client accepts (``Accept``) and the application the
+client is using to make the request (``User-Agent``). Many other headers exist
+and can be found on Wikipedia's `List of HTTP header fields`_ article.
 
 Step 2: The Server Returns a Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,18 +139,17 @@ like this:
 The HTTP response contains the requested resource (the HTML content in this
 case), as well as other information about the response. The first line is
 especially important and contains the HTTP response status code (200 in this
-case). The status code communicates the overall outcome of the request back
-to the client. Was the request successful? Was there an error? Different
-status codes exist that indicate success, an error, or that the client needs
-to do something (e.g. redirect to another page). A full list can be found
-on Wikipedia's `List of HTTP status codes`_ article.
+case). The status code communicates the overall outcome of the request back to the
+client. Was the request successful? Was there an error? Different status codes exist
+that indicate success, an error, or that the client needs to do something (e.g.
+redirect to another page). A full list can be found on Wikipedia's `List of HTTP status codes`_
+article.
 
 Like the request, an HTTP response contains additional pieces of information
-known as HTTP headers. For example, one important HTTP response header is
-``Content-Type``. The body of the same resource could be returned in multiple
+known as HTTP headers. The body of the same resource could be returned in multiple
 different formats like HTML, XML, or JSON and the ``Content-Type`` header uses
 Internet Media Types like ``text/html`` to tell the client which format is
-being returned. You can see a `list of common media types`_ from IANA.
+being returned. You can see a `List of common media types`_ from IANA.
 
 Many other headers exist, some of which are very powerful. For example, certain
 headers can be used to create a powerful caching system.
@@ -196,7 +196,7 @@ from the HTTP request and using it to create an HTTP response. Instead of
 parsing the raw HTTP request message, PHP prepares superglobal variables
 such as ``$_SERVER`` and ``$_GET`` that contain all the information from
 the request. Similarly, instead of returning the HTTP-formatted text response,
-you can use the ``header()`` function to create response headers and simply
+you can use the PHP ``header()`` function to create response headers and simply
 print out the actual content that will be the content portion of the response
 message. PHP will create a true HTTP response and return it to the client:
 
@@ -215,6 +215,10 @@ Requests and Responses in Symfony
 
 Symfony provides an alternative to the raw PHP approach via two classes that
 allow you to interact with the HTTP request and response in an easier way.
+
+Symfony Request Object
+~~~~~~~~~~~~~~~~~~~~~~
+
 The :class:`Symfony\\Component\\HttpFoundation\\Request` class is a simple
 object-oriented representation of the HTTP request message. With it, you
 have all the request information at your fingertips::
@@ -226,17 +230,17 @@ have all the request information at your fingertips::
     // the URI being requested (e.g. /about) minus any query parameters
     $request->getPathInfo();
 
-    // retrieve GET and POST variables respectively
+    // retrieve $_GET and $_POST variables respectively
     $request->query->get('foo');
     $request->request->get('bar', 'default value if bar does not exist');
 
-    // retrieve SERVER variables
+    // retrieve $_SERVER variables
     $request->server->get('HTTP_HOST');
 
     // retrieves an instance of UploadedFile identified by foo
     $request->files->get('foo');
 
-    // retrieve a COOKIE value
+    // retrieve a $_COOKIE value
     $request->cookies->get('PHPSESSID');
 
     // retrieve an HTTP request header, with normalized, lowercase keys
@@ -273,9 +277,13 @@ the user is connecting via a secured connection (i.e. HTTPS).
     ``attributes`` property exists entirely to be a place where you can
     prepare and store context-specific information about the request.
 
-Symfony also provides a ``Response`` class: a simple PHP representation of
-an HTTP response message. This allows your application to use an object-oriented
-interface to construct the response that needs to be returned to the client::
+Symfony Response Object
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony also provides a :class:`Symfony\\Component\\HttpFoundation\\Response`
+class: a simple PHP representation of an HTTP response message. This allows your
+application to use an object-oriented interface to construct the response that
+needs to be returned to the client::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -283,23 +291,34 @@ interface to construct the response that needs to be returned to the client::
 
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
     $response->setStatusCode(Response::HTTP_OK);
+
+    // set a HTTP response header
     $response->headers->set('Content-Type', 'text/html');
 
-    // prints the HTTP headers followed by the content
+    // print the HTTP headers followed by the content
     $response->send();
+
+There are also special classes to make certain types of responses easier to create:
+
+* :ref:`JsonResponse <component-http-foundation-json-response>`;
+
+* :ref:`BinaryFileResponse <component-http-foundation-serving-files>` (for streaming
+  files and sending file downloads);
+
+* :ref:`StreamedResponse <streaming-response>` (for streaming any other large responses);
+
+.. tip::
+
+    The ``Request`` and ``Response`` classes are part of a standalone component
+    called :doc:`symfony/http-foundation </components/http_foundation/introduction>`
+    that yo can use in *any* PHP project. This also contains classes for handling
+    sessions, file uploads and more.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
 the response. Even as you learn the many powerful features in Symfony, keep
 in mind that the goal of your application is always *to interpret a request
 and create the appropriate response based on your application logic*.
-
-.. tip::
-
-    The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called HttpFoundation. This component can be
-    used entirely independently of Symfony and also provides classes for handling
-    sessions and file uploads.
 
 The Journey from the Request to the Response
 --------------------------------------------
@@ -315,6 +334,9 @@ content with security. How can you manage all of this and still keep your
 code organized and maintainable?
 
 Symfony was created to solve these problems so that you don't have to.
+
+.. index::
+    single: Front controller; Origins
 
 The Front Controller
 ~~~~~~~~~~~~~~~~~~~~
@@ -347,9 +369,8 @@ handles every request coming into your application. For example:
 
 .. tip::
 
-    Using Apache's ``mod_rewrite`` (or equivalent with other web servers),
-    the URLs can easily be cleaned up to be just ``/``, ``/contact`` and
-    ``/blog``.
+    By using rewrite rules in your :doc:`web server configuration </cookbook/configuration/web_server_configuration>`,
+    the ``index.php`` won't be needed and you will have beautiful, clean URLs (e.g. ``/show``).
 
 Now, every request is handled exactly the same way. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
@@ -384,6 +405,9 @@ on that value. This can get ugly quickly::
 Solving this problem can be difficult. Fortunately it's *exactly* what Symfony
 is designed to do.
 
+.. index::
+    single: HTTP; Symfony request flow
+
 The Symfony Application Flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -396,8 +420,8 @@ the same simple pattern for every request:
    :align: center
    :alt: Symfony request flow
 
-   Incoming requests are interpreted by the routing and passed to controller
-   functions that return ``Response`` objects.
+   Incoming requests are interpreted by the :doc:`Routing component </book/routing>` and
+   passed to PHP functions that return ``Response`` objects.
 
 Each "page" of your site is defined in a routing configuration file that
 maps different URLs to different PHP functions. The job of each PHP function,
@@ -408,13 +432,17 @@ you interpret the request and create a response.
 
 It's that easy! To review:
 
-* Each request executes a front controller file;
+* Each request executes the same, single file (called a "front controller");
 
-* The routing system determines which PHP function should be executed based
-  on information from the request and routing configuration you've created;
+* The front controller boots Symfony, and passes it request information;
 
-* The correct PHP function is executed, where your code creates and returns
-  the appropriate ``Response`` object.
+* The router matches the incoming URL to a specific route and returns information
+  about the route, including the controller (i.e. function) that should be executed;
+
+* The controller (function) is executed: this is where *your* code creates and
+  returns the appropriate ``Response`` object;
+
+* The HTTP headers and content of the ``Response`` object are sent back to the client.
 
 A Symfony Request in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -460,9 +488,10 @@ by adding an entry for ``/contact`` to your routing configuration file:
         return $collection;
 
 When someone visits the ``/contact`` page, this route is matched, and the
-specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
-the ``AppBundle:Main:contact`` string is a short syntax that points to a
-specific PHP method ``contactAction`` inside a class called ``MainController``::
+specified controller is executed. As you'll learn in the
+:ref:`routing chapter <controller-string-syntax>`, the ``AppBundle:Main:contact``
+string is a short syntax that points to a specific controller - ``contactAction()`` -
+inside a controller class called - ``MainController``::
 
     // src/AppBundle/Controller/MainController.php
     namespace AppBundle\Controller;
@@ -477,9 +506,9 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
         }
     }
 
-In this very simple example, the controller simply creates a
+In this example, the controller creates a
 :class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
-``<h1>Contact us!</h1>``. In the :doc:`controller chapter </book/controller>`,
+``<h1>Contact us!</h1>``. In the :doc:`Controller chapter </book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -504,7 +533,7 @@ tools. With Symfony, nothing is imposed on you: you're free to use the full
 Symfony Framework, or just one piece of Symfony all by itself.
 
 .. index::
-   single: Symfony Components
+    single: Symfony Components
 
 .. _standalone-tools-the-symfony2-components:
 
@@ -522,8 +551,8 @@ regardless of how your project is developed. To name a few:
 
 :doc:`Routing </components/routing/introduction>`
     Powerful and fast routing system that allows you to map a specific URI
-    (e.g. ``/contact``) to some information about how that request should be handled
-    (e.g. execute the ``contactAction()`` method).
+    (e.g. ``/contact``) to information about how that request should be handled (e.g.
+    that the ``contactAction()`` controller method should be executed).
 
 :doc:`Form </components/form/introduction>`
     A full-featured and flexible framework for creating forms and handling form
@@ -572,11 +601,12 @@ by using a Symfony distribution, which provides a project skeleton with
 sensible defaults. For more advanced users, the sky is the limit.
 
 .. _`xkcd`: http://xkcd.com/
+.. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
-.. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
-.. _`list of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
+.. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+.. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Swift Mailer`: http://swiftmailer.org/
