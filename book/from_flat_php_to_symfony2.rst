@@ -630,7 +630,7 @@ The ``layout.php`` file is nearly identical:
     The show ``show.php`` template is left as an exercise: updating it should be
     really similar to updating the ``list.php`` template.
 
-When Symfony's engine (called the :term:`Kernel`) boots up, it needs a map so
+When Symfony's engine (called the Kernel) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
 A routing configuration map - ``app/config/routing.yml`` - provides this information
 in a readable format:
@@ -660,7 +660,7 @@ have to touch it::
     $kernel->handle(Request::createFromGlobals())->send();
 
 The front controller's only job is to initialize Symfony's engine (called the
-:term:`Kernel`) and pass it a ``Request`` object to handle. The Symfony core
+Kernel) and pass it a ``Request`` object to handle. The Symfony core
 asks the router to inspect the request. The router matches the incoming URL
 to a specific route and returns information about the route, including the
 controller that should be executed. The correct controller from the matched
