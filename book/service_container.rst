@@ -275,10 +275,10 @@ be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
 External service configuration can be imported in two different ways. The first
-method, commonly used to import container configuration from the bundles you've
-created - is via the ``imports`` directive. The second method, although slightly more
-complex offers more flexibility and is commonly used to import third-party bundle
-configuration. Read on to learn more about both methods.
+method, commonly used to import other resources, is via the ``imports``
+directive. The second method, using dependency injection extensions, is used by
+third-party bundles to load the configuration. Read on to learn more about both
+methods.
 
 .. index::
    single: Service Container; Imports
@@ -289,20 +289,16 @@ Importing Configuration with ``imports``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 So far, you've placed your ``app.mailer`` service container definition directly
-in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the AppBundle, it
-makes more sense to put the ``app.mailer`` container definition inside the
-bundle as well.
-
-First, move the ``app.mailer`` container definition into a new container resource
-file inside AppBundle. If the ``Resources`` or ``Resources/config``
-directories don't exist, create them.
+in the services configuration file (e.g. ``app/config/services.yml``). If your
+application ends up having many services, this file becomes huge and hard to
+maintain. To avoid this, you can split your service configuration into multiple
+service files:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/services.yml
+        # app/config/services/mailer.yml
         parameters:
             app.mailer.transport: sendmail
 
@@ -313,7 +309,7 @@ directories don't exist, create them.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/services.xml -->
+        <!-- app/config/services/mailer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -333,7 +329,7 @@ directories don't exist, create them.
 
     .. code-block:: php
 
-        // src/AppBundle/Resources/config/services.php
+        // app/config/services/mailer.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
@@ -343,22 +339,22 @@ directories don't exist, create them.
             array('%app.mailer.transport%')
         ));
 
-The definition itself hasn't changed, only its location. Of course the service
-container doesn't know about the new resource file. Fortunately, you can
-easily import the resource file using the ``imports`` key in the application
-configuration.
+The definition itself hasn't changed, only its location. To make the service
+container load the definitions in this resource file, use the ``imports`` key
+in any already loaded resource (e.g. ``app/config/services.yml`` or
+``app/config/config.yml``):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         imports:
-            - { resource: '@AppBundle/Resources/config/services.yml' }
+            - { resource: services/mailer.yml }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -366,23 +362,19 @@ configuration.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
-                <import resource="@AppBundle/Resources/config/services.xml"/>
+                <import resource="services/mailer.xml"/>
             </imports>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
-        $loader->import('@AppBundle/Resources/config/services.php');
+        // app/config/services.php
+        $loader->import('services/mailer.php');
+
+The ``resource`` location, for files, is either a relative path from the
+current file or an absolute path.
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
-
-The ``imports`` directive allows your application to include service container
-configuration resources from any other location (most commonly from bundles).
-The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AppBundle`` syntax resolves the directory path
-of the AppBundle bundle. This helps you specify the path to the resource
-without worrying later if you move the AppBundle to a different directory.
 
 .. index::
    single: Service Container; Extension configuration
@@ -392,31 +384,14 @@ without worrying later if you move the AppBundle to a different directory.
 Importing Configuration via Container Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When developing in Symfony, you'll most commonly use the ``imports`` directive
-to import container configuration from the bundles you've created specifically
-for your application. Third-party bundle container configuration, including
-Symfony core services, are usually loaded using another method that's more
-flexible and easy to configure in your application.
+Third-party bundle container configuration, including Symfony core services,
+are usually loaded using another method that's more flexible and easy to
+configure in your application.
 
-Here's how it works. Internally, each bundle defines its services very much
-like you've seen so far. Namely, a bundle uses one or more configuration
-resource files (usually XML) to specify the parameters and services for that
-bundle. However, instead of importing each of these resources directly from
-your application configuration using the ``imports`` directive, you can simply
-invoke a *service container extension* inside the bundle that does the work for
-you. A service container extension is a PHP class created by the bundle author
-to accomplish two things:
-
-* import all service container resources needed to configure the services for
-  the bundle;
-
-* provide semantic, straightforward configuration so that the bundle can
-  be configured without interacting with the flat parameters of the bundle's
-  service container configuration.
-
-In other words, a service container extension configures the services for
-a bundle on your behalf. And as you'll see in a moment, the extension provides
-a sensible, high-level interface for configuring the bundle.
+Internally, each bundle defines its services like you've seen so far. However,
+these files aren't imported using the ``import`` directive. These bundles use a
+*dependency injection extension* to load the files. The extension also allows
+bundles to provide configuration to dynamically load some services.
 
 Take the FrameworkBundle - the core Symfony Framework bundle - as an
 example. The presence of the following code in your application configuration
@@ -428,10 +403,8 @@ invokes the service container extension inside the FrameworkBundle:
 
         # app/config/config.yml
         framework:
-            secret:          xxxxxxxxxx
-            form:            true
-            csrf_protection: true
-            router:        { resource: '%kernel.root_dir%/config/routing.yml' }
+            secret: xxxxxxxxxx
+            form:   true
             # ...
 
     .. code-block:: xml
@@ -441,15 +414,13 @@ invokes the service container extension inside the FrameworkBundle:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
 
             <framework:config secret="xxxxxxxxxx">
                 <framework:form />
-                <framework:csrf-protection />
-                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+
                 <!-- ... -->
             </framework>
         </container>
@@ -458,51 +429,31 @@ invokes the service container extension inside the FrameworkBundle:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'secret'          => 'xxxxxxxxxx',
-            'form'            => array(),
-            'csrf-protection' => array(),
-            'router'          => array(
-                'resource' => '%kernel.root_dir%/config/routing.php',
-            ),
+            'secret' => 'xxxxxxxxxx',
+            'form'   => array(),
 
             // ...
         ));
 
-When the configuration is parsed, the container looks for an extension that
-can handle the ``framework`` configuration directive. The extension in question,
-which lives in the FrameworkBundle, is invoked and the service configuration
-for the FrameworkBundle is loaded. If you remove the ``framework`` key
-from your application configuration file entirely, the core Symfony services
-won't be loaded. The point is that you're in control: the Symfony Framework
-doesn't contain any magic or perform any actions that you don't have control
-over.
+When the resources are parsed, the container looks for an extension that
+can handle the ``framework`` directive. The extension in question, which lives
+in the FrameworkBundle, is invoked and the service configuration for the
+FrameworkBundle is loaded.
 
-Of course you can do much more than simply "activate" the service container
-extension of the FrameworkBundle. Each extension allows you to easily
-customize the bundle, without worrying about how the internal services are
-defined.
-
-In this case, the extension allows you to customize the ``error_handler``,
-``csrf_protection``, ``router`` configuration and much more. Internally,
-the FrameworkBundle uses the options specified here to define and configure
-the services specific to it. The bundle takes care of creating all the necessary
-``parameters`` and ``services`` for the service container, while still allowing
-much of the configuration to be easily customized. As a bonus, most
-service container extensions are also smart enough to perform validation -
-notifying you of options that are missing or the wrong data type.
+The settings under the ``framework`` directive (e.g. ``form: true``) indicate
+that the extension should load all services related to the Form component. If
+form was disabled, these services wouldn't be loaded and Form integration would
+not be available.
 
 When installing or configuring a bundle, see the bundle's documentation for
 how the services for the bundle should be installed and configured. The options
 available for the core bundles can be found inside the :doc:`Reference Guide </reference/index>`.
 
-.. note::
+.. seealso::
 
-   Natively, the service container only recognizes the ``parameters``,
-   ``services``, and ``imports`` directives. Any other directives
-   are handled by a service container extension.
-
-If you want to expose user friendly configuration in your own bundles, read the
-":doc:`/cookbook/bundles/extension`" cookbook recipe.
+    If you want to use dependency injection extensions in your own shared
+    bundles and provide user friendly configuration, take a look at the
+    ":doc:`/cookbook/bundles/extension`" cookbook recipe.
 
 .. index::
    single: Service Container; Referencing services
