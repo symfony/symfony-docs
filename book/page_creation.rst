@@ -35,69 +35,31 @@ Creating a Page: Route and Controller
     Before continuing, make sure you've read the :doc:`Installation </book/installation>`
     chapter and can access your new Symfony app in the browser.
 
-Suppose you want to create a page ``/lucky/number`` that generates a lucky (well,
+Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
 random) number and prints it. To do that, create a "Controller class" and a
 "controller" method inside of it that will be executed when someone goes to
 ``/lucky/number``::
 
-.. configuration-block::
+    // src/AppBundle/Controller/LuckyController.php
+    namespace AppBundle\Controller;
 
-    .. code-block:: php-annotations
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\HttpFoundation\Response;
 
-        // src/AppBundle/Controller/LuckyController.php
-        namespace AppBundle\Controller;
-
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-        use Symfony\Component\HttpFoundation\Response;
-
-        class LuckyController
+    class LuckyController
+    {
+        /**
+         * @Route("/lucky/number")
+         */
+        public function numberAction()
         {
-            /**
-             * @Route("/lucky/number")
-             */
-            public function numberAction()
-            {
-                $number = rand(0, 100);
+            $number = rand(0, 100);
 
-                return new Response(
-                    '<html><body>Lucky number: '.$number.'</body></html>'
-                );
-            }
+            return new Response(
+                '<html><body>Lucky number: '.$number.'</body></html>'
+            );
         }
-
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        lucky_number:
-            path:     /lucky/number
-            defaults: { _controller: AppBundle:Lucky:number }
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="lucky_number" path="/lucky/number">
-                <default key="_controller">AppBundle:Lucky:number</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('lucky_number', new Route('/lucky/number', array(
-            '_controller' => 'AppBundle:Lucky:number',
-        )));
-
-        return $collection;
+    }
 
 "Controller class" is a convenient way to group several "controllers" together.
 
