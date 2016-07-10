@@ -13,7 +13,7 @@ simple two-step process:
 #. *Create a route*: A route is the URL (e.g. ``/about``) to your page and
    points to a controller;
 
-#. *Create a controller*: A :term:`controller` is the PHP function you write that
+#. *Create a controller*: A controller is the PHP function you write that
    builds the page. You take the incoming request information and use it to
    create a Symfony ``Response`` object, which can hold HTML content, a JSON
    string or even a binary file like an image or PDF. The only rule is that
@@ -24,21 +24,16 @@ simple two-step process:
 Just like on the web, every interaction is initiated by an HTTP request.
 Your job is pure and simple: understand that request and return a response.
 
+.. index::
+   single:: Page creation; Example
+
 Creating a Page: Route and Controller
 -------------------------------------
 
 .. tip::
 
-    Before continuing, make sure you've read the
-    :doc:`Installation </book/installation>` chapter, installed
-    `Symfony Standard Edition`_ and can access your new Symfony app in the
-    browser either using PHP's internal web server or by setting proper
-    virtual host in Apache or Nginx.
-
-    Using PHP's internal web server is only suitable while developing the
-    application. In order to run Symfony applications on production servers,
-    you'll have to configure your Apache or Nginx web server and virtual
-    host as explained in :doc:`/cookbook/configuration/web_server_configuration`.
+    Before continuing, make sure you've read the :doc:`Installation </book/installation>`
+    chapter and can access your new Symfony app in the browser.
 
 Suppose you want to create a page ``/lucky/number`` that generates a lucky (well,
 random) number and prints it. To do that, create a "Controller class" and a
