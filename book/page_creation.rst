@@ -75,10 +75,15 @@ environment:
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works.
 
-The ``@Route`` above ``numberAction()`` method is called an *annotation* and it
+The ``@Route`` above ``numberAction()`` is called an *annotation* and it
 defines the URL pattern. You can also write routes in YAML (or other formats):
 read about this in the :doc:`routing </book/routing>` chapter. Actually, most
 routing examples in the docs have tabs that show you how each format looks.
+
+The method below the annotation - ``numberAction`` - is called the *controller*
+and is where you build the page. The only rule is that a controller *must*
+return a Symfony :ref:`Response <component-http-foundation-response>` object
+(and you'll even learn to bend this rule eventually).
 
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,8 +155,8 @@ Dynamic URL Patterns: /lucky/number/{count}
 
 Woh, you're doing great! But Symfony's routing can do a lot more. Suppose
 now that you want a user to be able to go to ``/lucky/number/5`` to generate
-*5* lucky numbers at once. Update the route to have a "wildcard" placeholders
-``{counter}`` at the end::
+*5* lucky numbers at once. Update the route to have a ``{wildcard}`` part
+at the end:
 
 .. configuration-block::
 
@@ -207,7 +212,7 @@ now that you want a user to be able to go to ``/lucky/number/5`` to generate
 
         return $collection;
 
-Because of the ``{count}`` "wildcard" placeholders, the URL to the page is *different*:
+Because of the ``{count}`` "wildcard" placeholder, the URL to the page is *different*:
 it now works for URLs matching ``/lucky/number/*`` - for example ``/lucky/number/5``.
 The best part is that you can access this value and use it in your controller::
 
@@ -241,8 +246,8 @@ Try it by printing *7* lucky numbers:
     http://localhost:8000/lucky/number/7
 
 **You can get the value of any ``{placeholder}`` in your route by adding
-a ``$placeholder`` argument to your controller. Just make sure they have
-the same name.**
+a ``$placeholder`` argument to your controller. Just make sure that the placeholder
+(e.g. ``{id}``) matches the argument name (e.g. ``$id``).**
 
 The routing system can do a *lot* more, like supporting multiple placeholders
 (e.g. ``/blog/{category}/{page})``), making placeholders optional and forcing
@@ -356,7 +361,7 @@ If you refresh your browser now, you'll get an error:
     Unable to find template "lucky/number.html.twig"
 
 Fix that by creating a new ``app/Resources/views/lucky`` directory and putting
-a ``number.html.twig`` file inside of it::
+a ``number.html.twig`` file inside of it:
 
 .. configuration-block::
 
@@ -380,14 +385,13 @@ a ``number.html.twig`` file inside of it::
 
 Welcome to Twig! This simple file already shows off the basics:
 
-* ``{{ variableName }}`` syntax is used to print a variable that you're
-  passing into the template from the array list in ``render()`` method in your
-  controller.
+* The ``{{ variableName }}`` syntax is used to print something. In this template,
+  ``luckyNumberList`` is a variable that you're passing into the template from the
+  ``render`` call in the controller.
 
 * The ``{% extends 'base.html.twig' %}`` points to a layout file that lives
-  at `app/Resources/views/base.html.twig`_ and came with your new project
-  Symfony Standard Edition. It's *really* basic (an unstyled HTML structure)
-  and it's yours to customize.
+  at `app/Resources/views/base.html.twig`_ and came with your new project. It's
+  *really* basic (an unstyled HTML structure) and it's yours to customize.
 
 * The ``{% block body %}`` part uses Twig's :ref:`inheritance system <twig-inheritance>`
   to put the content into the middle of the ``base.html.twig`` layout.
@@ -441,8 +445,8 @@ the :doc:`Bundles </book/bundles>` chapter.
 So what about the other directories in the project?
 
 ``vendor/``
-    Location to which vendor (i.e. third-party) libraries and bundles are
-    downloaded by the `Composer`_ package manager.
+    Third-party (i.e. "vendor") libraries live here! These are typically downloaded
+    via the `Composer`_ package manager.
 
 ``web/``
     This is the document root for the project and contains any publicly accessible
@@ -452,15 +456,14 @@ So what about the other directories in the project?
 .. seealso::
 
     Symfony is flexible. If you need to, you can easily override the default
-    directory structure. See cookbook article
-    :doc:`/cookbook/configuration/override_dir_structure`.
+    directory structure. See :doc:`/cookbook/configuration/override_dir_structure`.
 
 Application Configuration
 -------------------------
 
-Symfony Standard Edition comes with several built-in bundles (open your
-``app/AppKernel.php`` file) and you'll probably install more. The main configuration
-file for bundles is ``app/config/config.yml``::
+Symfony comes with several built-in bundles (open your ``app/AppKernel.php``
+file) and you'll probably install more. The main configuration file for bundles
+is ``app/config/config.yml``:
 
 .. configuration-block::
 
@@ -530,8 +533,8 @@ file for bundles is ``app/config/config.yml``::
 
         // ...
 
-The ``framework`` key configures ``FrameworkBundle``, the ``twig`` key configures
-``TwigBundle`` and so on. A *lot* of behavior in Symfony can be controlled just
+The ``framework`` key configures FrameworkBundle, the ``twig`` key configures
+TwigBundle and so on. A *lot* of behavior in Symfony can be controlled just
 by changing one option in this configuration file. To find out how, see the
 :doc:`Configuration Reference </reference/index>` section.
 

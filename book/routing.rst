@@ -1133,8 +1133,6 @@ a slash. URLs matching this route might look like:
     Symfony provides you with a way to do this by leveraging service container
     parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`".
 
-.. book-special-routing-parameters:
-
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
