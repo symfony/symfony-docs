@@ -152,9 +152,7 @@ later how you can configure a service that has multiple instances in the
     In this example, the controller extends Symfony's base Controller, which
     gives you access to the service container itself. You can then use the
     ``get`` method to locate and retrieve the ``app.mailer`` service from
-    the service container. You can also define your :doc:`controllers as services </cookbook/controller/service>`.
-    This is a bit more advanced and not necessary, but it allows you to inject
-    only the services you need into your controller.
+    the service container.
 
 .. _book-service-container-parameters:
 
