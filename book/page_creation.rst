@@ -574,3 +574,4 @@ Have fun!
 .. _`app/Resources/views/base.html.twig`: https://github.com/symfony/symfony-standard/blob/2.7/app/Resources/views/base.html.twig
 .. _`KnpBundles.com`: http://knpbundles.com
 .. _`Composer`: https://getcomposer.org
+.. _`find open source bundles`: http://knpbundles.com
