@@ -119,7 +119,8 @@ the route ``_controller`` value:
 .. tip::
 
     You can also use annotations to configure routing using a controller
-    defined as a service. See the `FrameworkExtraBundle documentation`_ for
+    defined as a service. Make sure you specify the service ID in the
+    ``@Route`` annotation. See the `FrameworkExtraBundle documentation`_ for
     details.
 
 .. tip::
@@ -335,4 +336,4 @@ controller:
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
-.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/routing.html
+.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/routing.html#controller-as-service

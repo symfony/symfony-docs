@@ -1169,11 +1169,11 @@ each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-=========  ==================  ==============
-Bundle     Controller Class    Method Name
-=========  ==================  ==============
-AppBundle  ``BlogController``  ``showAction``
-=========  ==================  ==============
+=============  ==================  ==============
+Bundle         Controller Class    Method Name
+=============  ==================  ==============
+``AppBundle``  ``BlogController``  ``showAction``
+=============  ==================  ==============
 
 The controller might look like this::
 
@@ -1507,7 +1507,7 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 
         var url = Routing.generate(
             'blog_show',
-            {"slug": 'my-blog-post'}
+            {'slug': 'my-blog-post'}
         );
 
     For more information, see the documentation for that bundle.
@@ -1532,7 +1532,7 @@ Generating URLs from a Template
 
 The most common place to generate a URL is from within a template when linking
 between pages in your application. This is done just as before, but using
-a template helper function:
+the ``path()`` function to generate a relative URL:
 
 .. configuration-block::
 
