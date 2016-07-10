@@ -102,7 +102,7 @@ the code that prepares the HTML "presentation"::
     require 'templates/list.php';
 
 
-The HTML code is now stored in a separate ``templates/list.php`` file, which
+The HTML code is now stored in a separate file ``templates/list.php``, which
 is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
@@ -338,9 +338,8 @@ application change slightly, but start to become more flexible:
 
 .. tip::
 
-    Using Apache's ``mod_rewrite`` (or equivalent with other web servers),
-    the URL can easily be cleaned up - ``index.php`` portion removed -
-    to be just ``/show``.
+    By using rewrite rules in your :doc:`web server configuration </cookbook/configuration/web_server_configuration>`,
+    the ``index.php`` won't be needed and you will have beautiful, clean URLs (e.g. ``/show``).
 
 When using a front controller, a single PHP file (``index.php`` in this case)
 renders *every* request. For the blog post show page, ``/index.php/show`` will
@@ -375,10 +374,7 @@ on the requested URI::
     }
 
 For organization, both controllers (formerly ``index.php`` and ``show.php``)
-are now PHP functions and each has been moved into a separate file named
-``controllers.php``. The job of each PHP function, now called a
-:term:`controller`, is to use information from the ``Request`` object to create
-and return a ``Response`` object::
+are now PHP functions and each has been moved into a separate file named ``controllers.php``::
 
     // controllers.php
     function list_action()
@@ -397,15 +393,11 @@ As a front controller, ``index.php`` has taken on an entirely new role, one
 that includes loading the core libraries and routing the application so that
 one of the two controllers (the ``list_action()`` and ``show_action()``
 functions) is called. In reality, the front controller is beginning to look and
-act a lot like Symfony's mechanism for handling and routing requests.
+act a lot like how Symfony handles and routes requests.
 
-.. note::
-
-    Though similarly named, a "front controller" is different from the PHP functions
-    called "controllers" talked about in this chapter. A front controller is a short PHP
-    file through which all requests are directed. "Controller" functions are grouped in
-    several files and they hold your code which creates and returns the appropriate
-    ``Response`` object. Controllers are also called *actions*.
+But but careful not to confuse the terms *front controller* and *controller*. Your
+app will usually have just *one* front controller, which boots your code. You will
+have *many* controller functions: one for each page.
 
 .. tip::
 
@@ -458,7 +450,7 @@ into a ``vendor/`` directory:
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as
-the files mentioned in the ``autoload`` section of your ``composer.json``.
+the files mentioned in the autoload section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony provides
@@ -535,6 +527,8 @@ allowing HTTP headers and content to be added via an object-oriented interface.
 And while the responses in this application are simple, this flexibility
 will pay dividends as your application grows.
 
+.. _the-sample-application-in-symfony2:
+
 The Sample Application in Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -583,12 +577,11 @@ them for you. Here's the same sample application, now built in Symfony::
         }
     }
 
-First we have a "controller class" which is a convenient way to group several
-"controllers" together. So methods inside a controller class are controllers
-also called *actions*. They hold code which creates and returns the appropriate
-``Response`` object.
+Notice, both controller functions now live inside a "controller class". This is a
+nice way to group related pages. The controller functions are also sometimes called
+*actions*.
 
-The two controllers are still lightweight. Each uses the
+The two controllers (or actions) are still lightweight. Each uses the
 :doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
 ``Response`` object. The list ``list.php`` template is now quite a bit simpler:
@@ -634,12 +627,12 @@ The layout ``layout.php`` is nearly identical:
 
 .. note::
 
-    The show ``show.php`` template is left as an exercise, as it should be trivial to
-    create based on the list ``list.php`` template.
+    The show ``show.php`` template is left as an exercise: updating it should be
+    really similar to updating the ``list.php`` template.
 
 When Symfony's engine (called the :term:`Kernel`) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map ``app/config/routing.yml`` provides this information
+A routing configuration map - ``app/config/routing.yml`` - provides this information
 in a readable format:
 
 .. code-block:: yaml
@@ -655,8 +648,7 @@ in a readable format:
 
 Now that Symfony is handling all the mundane tasks, the front controller
 ``web/app.php`` is dead simple. And since it does so little, you'll never
-have to touch it once it's created (and if you use a `Symfony distribution`_,
-you won't even need to create it!)::
+have to touch it::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
@@ -667,21 +659,23 @@ you won't even need to create it!)::
     $kernel = new AppKernel('prod', false);
     $kernel->handle(Request::createFromGlobals())->send();
 
-Front controller's only job is to initialize Symfony's engine (called the
+The front controller's only job is to initialize Symfony's engine (called the
 :term:`Kernel`) and pass it a ``Request`` object to handle. The Symfony core
 asks the router to inspect the request. The router matches the incoming URL
 to a specific route and returns information about the route, including the
 controller that should be executed. The correct controller from the matched
-route is executed and the code inside the controller creates and returns the
+route is executed and your code inside the controller creates and returns the
 appropriate ``Response`` object. The HTTP headers and content of the ``Response``
 object are sent back to the client.
+
+It's a beautiful thing.
 
 .. figure:: /images/request-flow.png
    :align: center
    :alt: Symfony request flow
 
-PHP Templates versus Twig Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Better Templates
+~~~~~~~~~~~~~~~~
 
 If you choose to use it, Symfony comes standard with a templating engine
 called `Twig`_ that makes templates faster to write and easier to read.
@@ -726,15 +720,14 @@ And rewriting ``layout.html.php`` template in Twig would look like this:
 
 Twig is well-supported in Symfony. And while PHP templates will always
 be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`Templating chapter </book/templating>`.
-
+be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
 
 Where Symfony Delivers
 ----------------------
 
 In the upcoming chapters, you'll learn more about how each piece of Symfony
-works and the recommended organization of a project. For now, have a look
-at how migrating the blog from flat PHP to Symfony has improved life:
+works and how you can organize your project. For now, celebrate at how migrating
+the blog from flat PHP to Symfony has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
@@ -769,14 +762,12 @@ Learn more from the Cookbook
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/service`
 
-
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`SQL injection attack`: https://en.wikipedia.org/wiki/SQL_injection
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/
-.. _`Symfony distribution`: https://github.com/symfony/symfony-standard
-.. _`Twig`: http://twig.sensiolabs.org
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`KnpBundles.com`: http://knpbundles.com/
+.. _`Twig`: http://twig.sensiolabs.org
