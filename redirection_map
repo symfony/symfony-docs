@@ -114,3 +114,8 @@
 /cookbook/console/request_context /console/request_context
 /cookbook/console/style /console/style
 /cookbook/console/usage /console/usage
+/cookbook/controller/csrf_token_validation /controller/csrf_token_validation
+/cookbook/controller/error_pages /controller/error_pages
+/cookbook/controller/forwarding /controller/forwarding
+/cookbook/controller/service /controller/service
+/cookbook/controller/upload_file /controller/upload_file
