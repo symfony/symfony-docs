@@ -234,3 +234,6 @@
 /cookbook/upgrade/major_version /upgrade/minor_version
 /cookbook/upgrade/minor_version /upgrade/major_version
 /cookbook/upgrade/patch_version /upgrade/bundles
+/cookbook/validation/custom_constraint /validation/custom_constraint
+/cookbook/validation/group_service_resolver /validation/group_service_resolver
+/cookbook/validation/severity /validation/severity
