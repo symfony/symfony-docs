@@ -172,3 +172,17 @@
 /cookbook/psr7 /psr/psr7
 /cookbook/request/load_balancer_reverse_proxy /request/load_balancer_reverse_proxy
 /cookbook/request/mime_type /request/mime_type
+/cookbook/routing/conditions /routing/conditions
+/cookbook/routing/custom_route_loader /routing/custom_route_loader
+/cookbook/routing/debug /routing/debug
+/cookbook/routing/external_resources /routing/external_resources
+/cookbook/routing/extra_information /routing/extra_information
+/cookbook/routing/method_parameters /routing/method_parameters
+/cookbook/routing/optional_placeholders /routing/optional_placeholders
+/cookbook/routing/redirect_in_config /routing/redirect_in_config
+/cookbook/routing/redirect_trailing_slash /routing/redirect_trailing_slash
+/cookbook/routing/requirements /routing/requirements
+/cookbook/routing/routing_from_database /routing/routing_from_database
+/cookbook/routing/scheme /routing/scheme
+/cookbook/routing/service_container_parameters /routing/service_container_parameters
+/cookbook/routing/slash_in_parameter /routing/slash_in_parameter
