@@ -169,3 +169,4 @@
 /cookbook/profiler/matchers /profiler/matchers
 /cookbook/profiler/profiling_data /profiler/profiling_data
 /cookbook/profiler/storage /profiler/storage
+/cookbook/psr7 /psr/psr7
