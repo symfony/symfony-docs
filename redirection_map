@@ -88,3 +88,11 @@
 /cookbook/assetic/php /assetic/php
 /cookbook/assetic/uglifyjs /assetic/uglifyjs
 /cookbook/assetic/yuicompressor /assetic/yuicompressor
+/cookbook/bundles/best_practices /bundles/best_practices
+/cookbook/bundles/configuration /bundles/configuration
+/cookbook/bundles/extension /bundles/extension
+/cookbook/bundles/inheritance /bundles/inheritance
+/cookbook/bundles/installation /bundles/installation
+/cookbook/bundles/override /bundles/override
+/cookbook/bundles/prepend_extension /bundles/prepend_extension
+/cookbook/bundles/remove /bundles/remove
