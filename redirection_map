@@ -137,3 +137,9 @@
 /cookbook/doctrine/registration_form /doctrine/registration_form
 /cookbook/doctrine/resolve_target_entity /doctrine/resolve_target_entity
 /cookbook/doctrine/reverse_engineering /doctrine/reverse_engineering
+/cookbook/email/cloud /email/cloud
+/cookbook/email/dev_environment /email/dev_environment
+/cookbook/email/email /email/email
+/cookbook/email/gmail /email/gmail
+/cookbook/email/spool /email/spool
+/cookbook/email/testing /email/testing
