@@ -223,3 +223,10 @@
 /cookbook/templating/PHP /templating/PHP
 /cookbook/templating/render_without_controller /templating/render_without_controller
 /cookbook/templating/twig_extension /templating/twig_extension
+/cookbook/testing/bootstrap /testing/bootstrap
+/cookbook/testing/database /testing/database
+/cookbook/testing/doctrine /testing/doctrine
+/cookbook/testing/http_authentication /testing/http_authentication
+/cookbook/testing/insulating_clients /testing/insulating_clients
+/cookbook/testing/profiling /testing/profiling
+/cookbook/testing/simulating_authentication /testing/simulating_authentication
