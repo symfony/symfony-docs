@@ -23,6 +23,16 @@ Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 * :doc:`quick_tour/the_controller` >
 * :doc:`quick_tour/the_architecture`
 
+Topics
+------
+
+.. toctree::
+    :hidden:
+
+    controller
+
+* :doc:`/controller`
+
 Book
 ----
 

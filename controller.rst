@@ -791,73 +791,6 @@ There are also special classes to make certain kinds of responses easier:
     ``Request`` and ``Response`` object in the
     :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
-Creating Static Pages
----------------------
-
-You can create a static page without even creating a controller (only a route
-and template are needed). See cookbook article
-:doc:`/cookbook/templating/render_without_controller`.
-
-.. index::
-   single: Controller; Forwarding
-
-Forwarding to Another Controller
---------------------------------
-
-Though not very common, you can also forward to another controller
-internally with the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
-method. Instead of redirecting the user's browser, this makes an "internal" sub-request
-and calls the defined controller. The ``forward()`` method returns the ``Response``
-object that's returned from *that* controller::
-
-    public function indexAction($name)
-    {
-        $response = $this->forward('AppBundle:Something:fancy', array(
-            'name'  => $name,
-            'color' => 'green',
-        ));
-
-        // ... further modify the response or return it directly
-
-        return $response;
-    }
-
-The array passed to the method becomes the arguments for the resulting controller.
-The target controller method might look something like this::
-
-    public function fancyAction($name, $color)
-    {
-        // ... create and return a Response object
-    }
-
-Just like when creating a controller for a route, the order of the arguments of
-``fancyAction()`` doesn't matter: the matching is done by name.
-
-.. _checking-the-validity-of-a-csrf-token:
-
-Validating a CSRF Token
------------------------
-
-Sometimes, you want to use CSRF protection in an action where you don't want to
-use the Symfony Form component. If, for example, you're doing a DELETE action,
-you can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isCsrfTokenValid`
-method to check the CSRF token::
-
-    if ($this->isCsrfTokenValid('token_id', $submittedToken)) {
-        // ... do something, like deleting an object
-    }
-
-.. versionadded:: 2.6
-    The ``isCsrfTokenValid()`` shortcut method was introduced in Symfony 2.6.
-    It is equivalent to executing the following code:
-
-    .. code-block:: php
-
-        use Symfony\Component\Security\Csrf\CsrfToken;
-
-        $this->get('security.csrf.token_manager')
-            ->isTokenValid(new CsrfToken('token_id', 'TOKEN'));
-
 Final Thoughts
 --------------
 
@@ -880,5 +813,3 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
-
-.. _`Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
