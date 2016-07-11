@@ -4,7 +4,6 @@ DependencyInjection
 .. toctree::
     :maxdepth: 2
 
-    introduction
     types
     parameters
     definitions
