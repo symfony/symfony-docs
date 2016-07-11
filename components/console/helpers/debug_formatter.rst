@@ -125,7 +125,7 @@ notify this to the users::
         $debugFormatter->stop(
             spl_object_hash($process),
             'Some command description',
-            $process->isSuccessfull()
+            $process->isSuccessful()
         )
     );
 
