@@ -125,3 +125,15 @@
 /cookbook/deployment/heroku /deployment/heroku
 /cookbook/deployment/platformsh /deployment/platformsh
 /cookbook/deployment/tools /deployment/tools
+/cookbook/doctrine/common_extensions /doctrine/common_extensions
+/cookbook/doctrine/console /doctrine/console
+/cookbook/doctrine/custom_dql_functions /doctrine/custom_dql_functions
+/cookbook/doctrine/dbal /doctrine/dbal
+/cookbook/doctrine/event_listeners_subscribers /doctrine/event_listeners_subscribers
+/cookbook/doctrine/mapping_model_classes /doctrine/mapping_model_classes
+/cookbook/doctrine/mongodb_session_storage /doctrine/mongodb_session_storage
+/cookbook/doctrine/multiple_entity_managers /doctrine/multiple_entity_managers
+/cookbook/doctrine/pdo_session_storage /doctrine/pdo_session_storage
+/cookbook/doctrine/registration_form /doctrine/registration_form
+/cookbook/doctrine/resolve_target_entity /doctrine/resolve_target_entity
+/cookbook/doctrine/reverse_engineering /doctrine/reverse_engineering
