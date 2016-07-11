@@ -208,3 +208,4 @@
 /cookbook/security/securing_services /security/securing_services
 /cookbook/security/target_path /security/target_path
 /cookbook/security/voters /security/voters
+/cookbook/serializer /serializer
