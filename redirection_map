@@ -119,3 +119,4 @@
 /cookbook/controller/forwarding /controller/forwarding
 /cookbook/controller/service /controller/service
 /cookbook/controller/upload_file /controller/upload_file
+/cookbook/debugging /debug/debugging
