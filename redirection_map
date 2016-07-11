@@ -209,3 +209,5 @@
 /cookbook/security/target_path /security/target_path
 /cookbook/security/voters /security/voters
 /cookbook/serializer /serializer
+/cookbook/service_container/compiler_passes /service_container/compiler_passes
+/cookbook/service_container/scopes /service_container/scopes
