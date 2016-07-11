@@ -96,3 +96,5 @@
 /cookbook/bundles/override /bundles/override
 /cookbook/bundles/prepend_extension /bundles/prepend_extension
 /cookbook/bundles/remove /bundles/remove
+/cookbook/cache/form_csrf_caching
+/cookbook/cache/varnish
