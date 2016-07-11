@@ -98,3 +98,4 @@
 /cookbook/bundles/remove /bundles/remove
 /cookbook/cache/form_csrf_caching
 /cookbook/cache/varnish
+/cookbook/composer /composer/installation
