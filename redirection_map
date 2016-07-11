@@ -63,3 +63,17 @@
 /create_framework/http-kernel-httpkernel-class /create_framework/http_kernel_httpkernel_class
 /create_framework/dependency-injection /create_framework/dependency_injection
 /cookbook/doctrine/file_uploads /cookbook/controller/upload_file
+/book/installation /installation
+/book/page_creation /page_creation
+/book/controller /controller
+/book/routing /routing
+/book/templating /templating
+/book/bundles /bundles
+/book/doctrine /doctrine
+/book/testing /testing
+/book/validation /validation
+/book/forms /forms
+/book/security /security
+/book/http_cache /http_cache
+/book/translation /translation
+/book/service_container /service_container
