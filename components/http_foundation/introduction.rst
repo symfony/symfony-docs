@@ -128,6 +128,9 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
     Returns the parameter value converted to boolean;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDate`
+    Returns the parameter value converted to a DateTime object;
+
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
