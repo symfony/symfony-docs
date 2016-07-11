@@ -7,3 +7,5 @@ Controller
     error_pages
     service
     upload_file
+    forwarding
+    csrf_token_validation

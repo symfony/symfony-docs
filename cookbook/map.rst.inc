@@ -55,6 +55,8 @@
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
   * :doc:`/cookbook/controller/upload_file`
+  * :doc:`/cookbook/controller/forwarding`
+  * :doc:`/cookbook/controller/csrf_token_validation`
 
 * **Debugging**
 
