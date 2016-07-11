@@ -6,3 +6,10 @@ Service Container
 
     scopes
     compiler_passes
+    import
+    expression_language
+    request
+    optional_dependencies
+    third_party
+    tags
+    debug
