@@ -160,6 +160,11 @@
   * :doc:`/cookbook/routing/redirect_trailing_slash`
   * :doc:`/cookbook/routing/extra_information`
   * :doc:`/cookbook/routing/routing_from_database`
+  * :doc:`/cookbook/routing/optional_placeholders`
+  * :doc:`/cookbook/routing/requirements`
+  * :doc:`/cookbook/routing/conditions`
+  * :doc:`/cookbook/routing/external_resources`
+  * :doc:`/cookbook/routing/debug`
 
 * :doc:`Security Authentication (Identifying/Logging in the User) </cookbook/security/index>`
 

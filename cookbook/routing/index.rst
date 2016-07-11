@@ -13,3 +13,8 @@ Routing
     redirect_trailing_slash
     extra_information
     routing_from_database
+    optional_placeholders
+    requirements
+    conditions
+    external_resources
+    debug
