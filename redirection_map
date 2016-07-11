@@ -107,3 +107,10 @@
 /cookbook/configuration/override_dir_structure /configuration/override_dir_structure
 /cookbook/configuration/using_parameters_in_dic /configuration/using_parameters_in_dic
 /cookbook/configuration/web_server_configuration /configuration/web_server_configuration
+/cookbook/console/command_in_controller /console/command_in_controller
+/cookbook/console/commands_as_services /console/commands_as_services
+/cookbook/console/console_command /console/console_command
+/cookbook/console/logging /console/logging
+/cookbook/console/request_context /console/request_context
+/cookbook/console/style /console/style
+/cookbook/console/usage /console/usage
