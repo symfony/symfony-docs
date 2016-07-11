@@ -218,3 +218,8 @@
 /cookbook/session/proxy_examples /session/proxy_examples
 /cookbook/session/sessions_directory /session/sessions_directory
 /cookbook/symfony1 /introduction/symfony1
+/cookbook/templating/global_variables /templating/global_variables
+/cookbook/templating/namespaced_paths /templating/namespaced_paths
+/cookbook/templating/PHP /templating/PHP
+/cookbook/templating/render_without_controller /templating/render_without_controller
+/cookbook/templating/twig_extension /templating/twig_extension
