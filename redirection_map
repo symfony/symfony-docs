@@ -77,3 +77,8 @@
 /book/http_cache /http_cache
 /book/translation /translation
 /book/service_container /service_container
+/book/http_fundamentals /http_fundamentals
+/book/from_flat_php_to_symfony2 /introduction/from_flat_php_to_symfony2
+/book/configuration /configuration/configuration
+/book/propel /propel/propel
+/book/performance /performance/performance
