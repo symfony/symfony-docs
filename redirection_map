@@ -237,3 +237,4 @@
 /cookbook/validation/custom_constraint /validation/custom_constraint
 /cookbook/validation/group_service_resolver /validation/group_service_resolver
 /cookbook/validation/severity /validation/severity
+/cookbook/web_server/built_in /web_server/built_in
