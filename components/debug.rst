@@ -74,7 +74,7 @@ and more useful::
     back to a regular PHP response.
 
 Debugging a Class Loader
-========================
+------------------------
 
 The :class:`Symfony\\Component\\Debug\\DebugClassLoader` attempts to
 throw more helpful exceptions when a class isn't found by the registered
