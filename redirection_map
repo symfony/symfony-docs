@@ -82,3 +82,9 @@
 /book/configuration /configuration/configuration
 /book/propel /propel/propel
 /book/performance /performance/performance
+/cookbook/assetic/apply_to_option /assetic/apply_to_option
+/cookbook/assetic/asset_management /assetic/asset_management
+/cookbook/assetic/jpeg_optimize /assetic/jpeg_optimize
+/cookbook/assetic/php /assetic/php
+/cookbook/assetic/uglifyjs /assetic/uglifyjs
+/cookbook/assetic/yuicompressor /assetic/yuicompressor
