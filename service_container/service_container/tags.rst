@@ -2,8 +2,8 @@
     single: DependencyInjection; Tags
     single: Service Container; Tags
 
-How to Work with Tags
-=====================
+How to Work with Service Tags
+=============================
 
 In the same way that a blog post on the web might be tagged with things such
 as "Symfony" or "PHP", services configured in your container can also be

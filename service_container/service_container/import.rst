@@ -2,8 +2,8 @@
     single: DependencyInjection; Importing Resources
     single: Service Container; Importing Resources
 
-How to Import Configuration Resources
-=====================================
+How to Import Configuration Files/Resources
+===========================================
 
 .. tip::
 

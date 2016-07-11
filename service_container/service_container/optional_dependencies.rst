@@ -1,5 +1,5 @@
-How to Make References Optional
-===============================
+How to Make Service Arguments/References Optional
+=================================================
 
 Sometimes, one of your services may have an optional dependency, meaning
 that the dependency is not required for your service to work properly. In

@@ -2,8 +2,8 @@
     single: DependencyInjection; Debug
     single: Service Container; Debug
 
-How to Debug the Service Container
-==================================
+How to Debug the Service Container & List Services
+==================================================
 
 You can find out what services are registered with the container using the
 console. To show all services and the class for each service, run:
