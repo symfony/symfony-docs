@@ -1,3 +1,9 @@
+.. toctree::
+    :hidden:
+    :glob:
+
+    class_loader/*
+
 .. index::
     single: Components; ClassLoader
 

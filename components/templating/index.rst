@@ -1,8 +1,11 @@
-Templating
-==========
+.. index::
+    single: Templating; Templating Helpers
+
+The Templating Component
+========================
 
 .. toctree::
-    :maxdepth: 2
+    :hidden:
 
-    introduction
-    helpers/index
+    slotshelper
+    assetshelper

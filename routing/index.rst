@@ -18,3 +18,4 @@ Routing
     conditions
     external_resources
     debug
+    hostname_pattern
