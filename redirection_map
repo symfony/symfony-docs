@@ -143,3 +143,7 @@
 /cookbook/email/gmail /email/gmail
 /cookbook/email/spool /email/spool
 /cookbook/email/testing /email/testing
+/cookbook/event_dispatcher/before_after_filters /event_dispatcher/before_after_filters
+/cookbook/event_dispatcher/class_extension /event_dispatcher/class_extension
+/cookbook/event_dispatcher/event_listener /event_dispatcher/event_listener
+/cookbook/event_dispatcher/method_behavior /event_dispatcher/method_behavior
