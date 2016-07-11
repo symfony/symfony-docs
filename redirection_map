@@ -148,3 +148,13 @@
 /cookbook/event_dispatcher/event_listener /event_dispatcher/event_listener
 /cookbook/event_dispatcher/method_behavior /event_dispatcher/method_behavior
 /cookbook/expressions /expressions/expressions
+/cookbook/form/create_custom_field_type /form/create_custom_field_type
+/cookbook/form/create_form_type_extension /form/create_form_type_extension
+/cookbook/form/data_transformers /form/data_transformers
+/cookbook/form/direct_submit /form/direct_submit
+/cookbook/form/dynamic_form_modification /form/dynamic_form_modification
+/cookbook/form/form_collections /form/form_collections
+/cookbook/form/form_customization /form/form_customization
+/cookbook/form/inherit_data_option /form/inherit_data_option
+/cookbook/form/unit_testing /form/unit_testing
+/cookbook/form/use_empty_data /form/use_empty_data
