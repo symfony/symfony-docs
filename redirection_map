@@ -230,3 +230,7 @@
 /cookbook/testing/insulating_clients /testing/insulating_clients
 /cookbook/testing/profiling /testing/profiling
 /cookbook/testing/simulating_authentication /testing/simulating_authentication
+/cookbook/upgrade/bundles /upgrade/patch_version
+/cookbook/upgrade/major_version /upgrade/minor_version
+/cookbook/upgrade/minor_version /upgrade/major_version
+/cookbook/upgrade/patch_version /upgrade/bundles
