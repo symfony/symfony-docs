@@ -571,14 +571,14 @@ returns the returned code from the command (return value from command's
     command from the Web, refactor your code and move the logic to a new
     class.
 
-Learn More!
------------
+Learn More
+----------
 
-* :doc:`/components/console/usage`
-* :doc:`/components/console/single_command_tool`
-* :doc:`/components/console/changing_default_command`
-* :doc:`/components/console/events`
-* :doc:`/components/console/console_arguments`
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    console/*
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _Cmder: http://cmder.net/

@@ -512,6 +512,15 @@ with some other dispatchers:
 * :doc:`/components/event_dispatcher/traceable_dispatcher` (provided by the
   :doc:`HttpKernel component </components/http_kernel>`)
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    event_dispatcher/*
+
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback

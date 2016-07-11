@@ -38,13 +38,14 @@ used separately:
 ``symfony/security-acl``
     It provides a fine grained permissions mechanism based on Access Control Lists.
 
-Sections
---------
+Learn More
+----------
 
-* :doc:`/components/security/firewall`
-* :doc:`/components/security/authentication`
-* :doc:`/components/security/authorization`
-* :doc:`/components/security/secure_tools`
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    security/*
 
 .. _Packagist: https://packagist.org/packages/symfony/security
 .. _`CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery

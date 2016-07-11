@@ -702,6 +702,15 @@ method to access the list of errors. It returns a
     This is useful, for example, if you want to use PHP's ``array_`` function
     on the form errors.
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    form/*
+
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html

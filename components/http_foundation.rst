@@ -596,6 +596,15 @@ Session
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    http_foundation/*
+
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
 .. _Nginx: http://wiki.nginx.org/XSendfile
 .. _Apache: https://tn123.org/mod_xsendfile/

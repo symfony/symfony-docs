@@ -253,6 +253,15 @@ representation of the object.
     parsers will likely not recognize the ``php/object`` tag and non-PHP
     implementations certainly won't - use with discretion!
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    yaml/*
+
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
 .. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html

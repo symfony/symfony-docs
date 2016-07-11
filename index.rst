@@ -33,18 +33,6 @@ Topics
 
 * :doc:`/controller`
 
-Book
-----
-
-Dive into Symfony with the topical guides:
-
-.. include:: /map.rst.inc
-
-Cookbook
---------
-
-Read the :doc:`Cookbook </index>`.
-
 Best Practices
 --------------
 

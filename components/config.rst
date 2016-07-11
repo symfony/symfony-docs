@@ -20,11 +20,13 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-Sections
---------
+Learn More
+----------
 
-* :doc:`/components/config/resources`
-* :doc:`/components/config/caching`
-* :doc:`/components/config/definition`
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    config/*
 
 .. _Packagist: https://packagist.org/packages/symfony/config

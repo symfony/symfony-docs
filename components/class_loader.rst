@@ -50,6 +50,16 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+Learn More
+----------
+
+.. toctree::
+    :glob:
+    :maxdepth: 1
+
+    class_loader/class_loader
+    class_loader/*
+
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/
 .. _PSR-4: http://www.php-fig.org/psr/psr-4/
 .. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
