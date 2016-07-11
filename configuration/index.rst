@@ -4,6 +4,7 @@ Configuration
 .. toctree::
     :maxdepth: 2
 
+    configuration
     environments
     override_dir_structure
     using_parameters_in_dic
