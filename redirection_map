@@ -99,3 +99,11 @@
 /cookbook/cache/form_csrf_caching
 /cookbook/cache/varnish
 /cookbook/composer /composer/installation
+/cookbook/configuration/apache_router /configuration/apache_router
+/cookbook/configuration/configuration_organization /configuration/configuration_organization
+/cookbook/configuration/environments /configuration/environments
+/cookbook/configuration/external_parameters /configuration/external_parameters
+/cookbook/configuration/front_controllers_and_kernel /configuration/front_controllers_and_kernel
+/cookbook/configuration/override_dir_structure /configuration/override_dir_structure
+/cookbook/configuration/using_parameters_in_dic /configuration/using_parameters_in_dic
+/cookbook/configuration/web_server_configuration /configuration/web_server_configuration
