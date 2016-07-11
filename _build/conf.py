@@ -16,7 +16,7 @@ import sys, os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.append(os.path.abspath('_theme/_exts'))
+sys.path.append(os.path.abspath('../_theme/_exts'))
 
 # adding PhpLexer
 from sphinx.highlighting import lexers
@@ -75,7 +75,7 @@ copyright = ''
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_theme']
+exclude_patterns = ['_build']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
@@ -279,4 +279,3 @@ texinfo_documents = [
 
 # Use PHP syntax highlighting in code examples by default
 highlight_language='php'
-
