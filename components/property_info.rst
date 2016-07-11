@@ -1,5 +1,5 @@
 .. index::
-single: PropertyInfo
+    single: PropertyInfo
     single: Components; PropertyInfo
 
 The PropertyInfo Component
@@ -19,7 +19,7 @@ mutator methods such as  ``getProperty()``, ``isProperty()``, ``setProperty()``,
 ``addProperty()``, ``removeProperty()``, etc.
 
 .. versionadded:: 2.8
-The PropertyInfo component was introduced in Symfony 2.8.
+    The PropertyInfo component was introduced in Symfony 2.8.
 
 .. _`components-property-information-installation`:
 
