@@ -17,15 +17,7 @@
 /cookbook/service_container/tags /components/dependency_injection/tags
 /reference/configuration/mongodb /bundles/DoctrineMongoDBBundle/config
 /reference/YAML /components/yaml
-/components/dependency_injection /components/dependency_injection/introduction
-/components/event_dispatcher /components/event_dispatcher/introduction
-/components/http_foundation /components/http_foundation/introduction
-/components/console /components/console/introduction
-/components/routing /components/routing/introduction
 /cookbook/console/generating_urls /cookbook/console/sending_emails
-/components/yaml /components/yaml/introduction
-/components/templating /components/templating/introduction
-/components/filesystem /components/filesystem/introduction
 /cmf/reference/configuration/block /cmf/bundles/block/configuration
 /cmf/reference/configuration/content /cmf/bundles/content/configuration
 /cmf/reference/configuration/core /cmf/bundles/core/configuration

@@ -460,7 +460,6 @@ Learn more
     :glob:
 
     /service_container/*
-    /service_container/service_container/*
 
 * :doc:`/components/dependency_injection/parameters`
 * :doc:`/components/dependency_injection/compilation`
