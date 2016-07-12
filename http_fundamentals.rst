@@ -12,21 +12,20 @@ understanding a basic Request-Response flow in HTTP is not difficult. This
 chapter will walk you through the HTTP fundamental basics and what this means
 for Symfony.
 
-HTTP is Simple
---------------
+Requests and Responses in HTTP
+------------------------------
 
-HTTP (Hypertext Transfer Protocol to the geeks) is a text language that allows
-two machines to communicate with each other. That's it! For example, when
-checking for the latest `xkcd`_ comic, the following (approximate) conversation
-takes place:
+HTTP (Hypertext Transfer Protocol) is a text language that allows two machines
+to communicate with each other. For example, when checking for the latest
+`xkcd`_ comic, the following (approximate) conversation takes place:
 
 .. image:: /images/http-xkcd.png
    :align: center
 
 And while the actual language used is a bit more formal, it's still dead-simple.
-HTTP is the term used to describe this simple text-based language. No matter
-how you develop on the web, the goal of your server is *always* to understand
-simple text requests, and return simple text responses.
+HTTP is the term used to describe this simple text-based language. The goal of
+your server is *always* to understand simple text requests and return simple
+text responses.
 
 Symfony is built from the ground up around that reality. Whether you realize
 it or not, HTTP is something you use every day. With Symfony, you'll learn
@@ -35,8 +34,8 @@ how to master it.
 .. index::
    single: HTTP; Request-response paradigm
 
-Step1: The Client Sends a Request
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 1: The Client Sends a Request
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every conversation on the web starts with a *request*. The request is a text
 message created by a client (e.g. a browser, a smartphone app, etc) in a
@@ -61,7 +60,7 @@ In HTTP-speak, this HTTP request would actually look something like this:
 This simple message communicates *everything* necessary about exactly which
 resource the client is requesting. The first line of an HTTP request is the
 most important, because it contains two important things: the HTTP method (GET)
-and the URL (``/``).
+and the URI (``/``).
 
 The URI (e.g. ``/``, ``/contact``, etc) is the unique address or location
 that identifies the resource the client wants. The HTTP method (e.g. ``GET``)
@@ -69,15 +68,14 @@ defines what the client wants to *do* with the resource. The HTTP methods (also
 known as verbs) define the few common ways that the client can act upon the
 resource - the most common HTTP methods are:
 
-+----------+---------------------------------------+
-| *GET*    | Retrieve the resource from the server |
-+----------+---------------------------------------+
-| *POST*   | Create a resource on the server       |
-+----------+---------------------------------------+
-| *PUT*    | Update the resource on the server     |
-+----------+---------------------------------------+
-| *DELETE* | Delete the resource from the server   |
-+----------+---------------------------------------+
+**GET**
+    Retrieve the resource from the server;
+**POST**
+    Create a resource on the server;
+**PUT**/**PATCH**
+    Update the resource on the server;
+**DELETE**
+    Delete the resource from the server.
 
 With this in mind, you can imagine what an HTTP request might look like to
 delete a specific blog entry, for example:
@@ -91,8 +89,7 @@ delete a specific blog entry, for example:
     There are actually nine HTTP methods defined by the HTTP specification,
     but many of them are not widely used or supported. In reality, many
     modern browsers only support ``POST`` and ``GET`` in HTML forms. Various
-    others are however supported in `XMLHttpRequest`_, as well as by Symfony's
-    :doc:`Routing component </components/routing/introduction>`.
+    others are however supported in `XMLHttpRequest`_.
 
 In addition to the first line, an HTTP request invariably contains other
 lines of information called request **headers**. The headers can supply a wide
@@ -130,15 +127,17 @@ like this:
 The HTTP response contains the requested resource (the HTML content in this
 case), as well as other information about the response. The first line is
 especially important and contains the HTTP response status code (200 in this
-case). The status code communicates the overall outcome of the request back to the
-client. Was the request successful? Was there an error? Different status codes exist
-that indicate success, an error, or that the client needs to do something (e.g.
-redirect to another page). A full list can be found on Wikipedia's `List of HTTP status codes`_
-article.
+case).
+
+The status code communicates the overall outcome of the request back to the
+client. Was the request successful? Was there an error? Different status codes
+exist that indicate success, an error or that the client needs to do something
+(e.g. redirect to another page). A full list can be found on Wikipedia's
+`List of HTTP status codes`_ article.
 
 Like the request, an HTTP response contains additional pieces of information
 known as HTTP headers. The body of the same resource could be returned in multiple
-different formats like HTML, XML, or JSON and the ``Content-Type`` header uses
+different formats like HTML, XML or JSON and the ``Content-Type`` header uses
 Internet Media Types like ``text/html`` to tell the client which format is
 being returned. You can see a `List of common media types`_ from IANA.
 
@@ -157,14 +156,11 @@ type of application you build (web, mobile, JSON API) or the development
 philosophy you follow, the end goal of an application is **always** to understand
 each request and create and return the appropriate response.
 
-Symfony is architected to match this reality.
-
-.. tip::
+.. seealso::
 
     To learn more about the HTTP specification, read the original `HTTP 1.1 RFC`_
     or the `HTTP Bis`_, which is an active effort to clarify the original
-    specification. A great tool to check both the request and response headers
-    while browsing is the `Live HTTP Headers`_ extension for Firefox.
+    specification.
 
 .. index::
    single: Symfony Fundamentals; Requests and responses
