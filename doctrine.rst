@@ -1435,6 +1435,7 @@ Learn more
 ~~~~~~~~~~
 
 .. toctree::
+    :maxdepth: 1
     :glob:
 
     doctrine/*

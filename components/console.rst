@@ -579,6 +579,7 @@ Learn More
     :glob:
 
     console/*
+    console/helpers/index
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _Cmder: http://cmder.net/

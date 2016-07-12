@@ -1426,10 +1426,45 @@ Good luck!
 Learn More
 ----------
 
-.. toctree::
-    :glob:
+Authentication (Identifying/Logging in the User)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    security/*
+.. toctree::
+    :maxdepth: 1
+
+    security/form_login_setup
+    security/ldap
+    security/entity_provider
+    security/guard-authentication
+    security/remember_me
+    security/impersonating_user
+    security/form_login
+    security/custom_provider
+    security/custom_password_authenticator
+    security/api_key_authentication
+    security/custom_authentication_provider
+    security/pre_authenticated
+    security/target_path
+    security/csrf_in_login_form
+    security/named_encoders
+    security/multiple_user_providers
+    security/multiple_guard_authenticators
+    security/firewall_restriction
+    security/host_restriction
+    security/user_checkers
+
+Authorization (Denying Access)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+    :maxdepth: 1
+
+    security/voters
+    security/acl
+    security/acl_advanced
+    security/force_https
+    security/securing_services
+    security/access_control
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories

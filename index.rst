@@ -6,7 +6,18 @@ Symfony Documentation
 .. toctree::
     :hidden:
 
+    bundles/index
     changelog
+    page_creation
+    introduction/from_flat_php_to_symfony2
+    introduction/symfony1
+    propel/propel
+    psr/psr7
+    upgrade/index
+    web_server/index
+    web_services/index
+    workflow/index
+    composer/installation
 
 Quick Tour
 ----------
@@ -27,6 +38,7 @@ Getting Started
 ---------------
 
 .. toctree::
+    :maxdepth: 1
 
     installation
     http_fundamentals
@@ -38,11 +50,17 @@ Topics
 ------
 
 .. toctree::
+    :maxdepth: 1
 
     bundles
+    console
+    debug
     doctrine
+    email
+    event_dispatcher
     forms
     http_cache
+    logging
     routing
     security
     serializer
@@ -50,6 +68,20 @@ Topics
     testing
     translation
     validation
+
+Advanced Topics
+---------------
+
+.. toctree::
+    :maxdepth: 1
+
+    assetic
+    bundles
+    configuration
+    deployment
+    expressions
+    frontend
+    performance
 
 Best Practices
 --------------

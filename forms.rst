@@ -1966,9 +1966,15 @@ Learn more
 ----------
 
 .. toctree::
+    :hidden:
+
+    form/use_virtuals_forms
+
+.. toctree::
+    :maxdepth: 1
     :glob:
 
-    /form/*
+    form/*
 
 * :doc:`/controller/upload_file`
 * :doc:`/reference/forms/types`
