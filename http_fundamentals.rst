@@ -279,17 +279,16 @@ and create the appropriate response based on your application logic*.
 The Journey from the Request to the Response
 --------------------------------------------
 
-Like HTTP itself, the ``Request`` and ``Response`` objects are pretty simple.
-The hard part of building an application is writing what comes in between.
-In other words, the real work comes in writing the code that interprets the
-request information and creates the response.
+Like HTTP itself, using the ``Request`` and ``Response`` objects is pretty
+simple. The hard part of building an application is writing what comes in
+between. In other words, the real work comes in writing the code that
+interprets the request information and creates the response.
 
 Your application probably does many things, like sending emails, handling
 form submissions, saving things to a database, rendering HTML pages and protecting
 content with security. How can you manage all of this and still keep your
-code organized and maintainable?
-
-Symfony was created to solve these problems so that you don't have to.
+code organized and maintainable? Symfony was created to help you with these
+problems.
 
 .. index::
     single: Front controller; Origins
@@ -298,13 +297,7 @@ The Front Controller
 ~~~~~~~~~~~~~~~~~~~~
 
 Traditionally, applications were built so that each "page" of a site was
-its own physical file:
-
-.. code-block:: text
-
-    index.php
-    contact.php
-    blog.php
+its own physical file (e.g. ``index.php``, ``contact.php``, etc.).
 
 There are several problems with this approach, including the inflexibility
 of the URLs (what if you wanted to change ``blog.php`` to ``news.php`` without
@@ -325,14 +318,16 @@ handles every request coming into your application. For example:
 
 .. tip::
 
-    By using rewrite rules in your :doc:`web server configuration </cookbook/configuration/web_server_configuration>`,
-    the ``index.php`` won't be needed and you will have beautiful, clean URLs (e.g. ``/show``).
+    By using rewrite rules in your
+    :doc:`web server configuration </cookbook/configuration/web_server_configuration>`,
+    the ``index.php`` won't be needed and you will have beautiful, clean URLs
+    (e.g. ``/show``).
 
 Now, every request is handled exactly the same way. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
 is done internally. This solves both problems with the original approach.
-Almost all modern web apps do this - including apps like WordPress.
+Almost all modern web apps do this.
 
 Stay Organized
 ~~~~~~~~~~~~~~
