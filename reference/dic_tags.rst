@@ -187,7 +187,7 @@ Finally, apply the filter:
     {% endjavascripts %}
 
 You can also apply your filter via the ``assetic.filters.my_filter.apply_to``
-config option as it's described here: :doc:`/cookbook/assetic/apply_to_option`.
+config option as it's described here: :doc:`/assetic/apply_to_option`.
 In order to do that, you must define your filter service in a separate xml
 config file and point to this file's path via the ``assetic.filters.my_filter.resource``
 configuration key.
@@ -359,7 +359,7 @@ data_collector
 **Purpose**: Create a class that collects custom data for the profiler
 
 For details on creating your own custom data collection, read the cookbook
-article: :doc:`/cookbook/profiler/data_collector`.
+article: :doc:`/profiler/data_collector`.
 
 doctrine.event_listener
 -----------------------
@@ -367,7 +367,7 @@ doctrine.event_listener
 **Purpose**: Add a Doctrine event listener
 
 For details on creating Doctrine event listeners, read the cookbook article:
-:doc:`/cookbook/doctrine/event_listeners_subscribers`.
+:doc:`/doctrine/event_listeners_subscribers`.
 
 doctrine.event_subscriber
 -------------------------
@@ -375,7 +375,7 @@ doctrine.event_subscriber
 **Purpose**: Add a Doctrine event subscriber
 
 For details on creating Doctrine event subscribers, read the cookbook article:
-:doc:`/cookbook/doctrine/event_listeners_subscribers`.
+:doc:`/doctrine/event_listeners_subscribers`.
 
 .. _dic-tags-form-type:
 
@@ -385,7 +385,7 @@ form.type
 **Purpose**: Create a custom form field type
 
 For details on creating your own custom form type, read the cookbook article:
-:doc:`/cookbook/form/create_custom_field_type`.
+:doc:`/form/create_custom_field_type`.
 
 form.type_extension
 -------------------
@@ -393,7 +393,7 @@ form.type_extension
 **Purpose**: Create a custom "form extension"
 
 For details on creating Form type extensions, read the cookbook article:
-:doc:`/cookbook/form/create_form_type_extension`
+:doc:`/form/create_form_type_extension`
 
 .. _reference-dic-type_guesser:
 
@@ -583,7 +583,7 @@ During the execution of a Symfony application, different events are triggered
 and you can also dispatch custom events. This tag allows you to *hook* your own
 classes into any of those events.
 
-For a full example of this listener, read the :doc:`/cookbook/event_dispatcher/event_listener`
+For a full example of this listener, read the :doc:`/event_dispatcher/event_listener`
 cookbook entry.
 
 Core Event Listener Reference
@@ -879,7 +879,7 @@ of your configuration and tag it with ``routing.loader``:
             ->addTag('routing.loader')
         ;
 
-For more information, see :doc:`/cookbook/routing/custom_route_loader`.
+For more information, see :doc:`/routing/custom_route_loader`.
 
 routing.expression_language_provider
 ------------------------------------
@@ -934,7 +934,7 @@ When you call ``isGranted`` on Symfony's authorization checker, a system of "vot
 is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
-For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
+For more information, read the cookbook article: :doc:`/security/voters`.
 
 .. _reference-dic-tags-serializer-encoder:
 
@@ -946,7 +946,7 @@ serializer.encoder
 The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
 and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
 
-For more details, see :doc:`/cookbook/serializer`.
+For more details, see :doc:`/serializer`.
 
 .. _reference-dic-tags-serializer-normalizer:
 
@@ -958,7 +958,7 @@ serializer.normalizer
 The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
-For more details, see :doc:`/cookbook/serializer`.
+For more details, see :doc:`/serializer`.
 
 swiftmailer.default.plugin
 --------------------------
@@ -1290,7 +1290,7 @@ configuration and tag it with ``twig.extension``:
 
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the cookbook article:
-:doc:`/cookbook/templating/twig_extension`.
+:doc:`/templating/twig_extension`.
 
 Before writing your own extensions, have a look at the
 `Twig official extension repository`_ which already includes several
@@ -1387,7 +1387,7 @@ validator.constraint_validator
 **Purpose**: Create your own custom validation constraint
 
 This tag allows you to create and register your own custom validation constraint.
-For more information, read the cookbook article: :doc:`/cookbook/validation/custom_constraint`.
+For more information, read the cookbook article: :doc:`/validation/custom_constraint`.
 
 validator.initializer
 ---------------------

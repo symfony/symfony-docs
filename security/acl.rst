@@ -14,7 +14,7 @@ the ACL system comes in.
     Using ACL's isn't trivial, and for simpler use cases, it may be overkill.
     If your permission logic could be described by just writing some code (e.g.
     to check if a Blog is owned by the current User), then consider using
-    :doc:`voters </cookbook/security/voters>`. A voter is passed the object
+    :doc:`voters </security/voters>`. A voter is passed the object
     being voted on, which you can use to make complex decisions and effectively
     implement your own ACL. Enforcing authorization (e.g. the ``isGranted``
     part) will look similar to what you see in this entry, but your voter

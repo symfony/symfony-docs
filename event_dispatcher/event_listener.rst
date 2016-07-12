@@ -132,7 +132,7 @@ they are listening to.
 In a given subscriber, different methods can listen to the same event. The order
 in which methods are executed is defined by the ``priority`` parameter of each
 method (the higher the priority the earlier the method is called). To learn more
-about event subscribers, read :doc:`/components/event_dispatcher/introduction`.
+about event subscribers, read :doc:`/components/event_dispatcher`.
 
 The following example shows an event subscriber that defines several methods which
 listen to the same ``kernel.exception`` event::

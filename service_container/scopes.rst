@@ -5,7 +5,7 @@ How to Work with Scopes
 =======================
 
 This article is all about scopes, a somewhat advanced topic related to the
-:doc:`/book/service_container`. If you've ever gotten an error mentioning
+:doc:`/service_container`. If you've ever gotten an error mentioning
 "scopes" when creating services, then this article is for you.
 
 .. note::

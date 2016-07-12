@@ -6,7 +6,7 @@ How to Use HTTP Methods beyond GET and POST in Routes
 
 The HTTP method of a request is one of the requirements that can be checked
 when seeing if it matches a route. This is introduced in the routing chapter
-of the book ":doc:`/book/routing`" with examples using GET and POST. You can
+of the book ":doc:`/routing`" with examples using GET and POST. You can
 also use other HTTP verbs in this way. For example, if you have a blog post
 entry then you could use the same URL path to show it, make changes to it and
 delete it by matching on GET, PUT and DELETE.

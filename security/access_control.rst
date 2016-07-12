@@ -146,7 +146,7 @@ options:
     If access is denied, the system will try to authenticate the user if not
     already (e.g. redirect the user to the login page). If the user is already
     logged in, the 403 "access denied" error page will be shown. See
-    :doc:`/cookbook/controller/error_pages` for more information.
+    :doc:`/controller/error_pages` for more information.
 
 .. _book-security-securing-ip:
 

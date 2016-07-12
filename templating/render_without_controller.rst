@@ -130,7 +130,7 @@ other variables in your route, you can control exactly how your page is cached:
 
 The ``maxAge`` and ``sharedAge`` values are used to modify the Response
 object created in the controller. For more information on caching, see
-:doc:`/book/http_cache`.
+:doc:`/http_cache`.
 
 There is also a ``private`` variable (not shown here). By default, the Response
 will be made public, as long as ``maxAge`` or ``sharedAge`` are passed.

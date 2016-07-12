@@ -5,7 +5,7 @@ DebugBundle Configuration ("debug")
 ===================================
 
 The DebugBundle allows greater integration of the
-:doc:`VarDumper component </components/var_dumper/introduction>` in the
+:doc:`VarDumper component </components/var_dumper>` in the
 Symfony full-stack framework and can be configured under the ``debug`` key
 in your application configuration. When using XML, you must use the
 ``http://symfony.com/schema/dic/debug`` namespace.

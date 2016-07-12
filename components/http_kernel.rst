@@ -82,7 +82,7 @@ Framework - works.
 
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
 is really simple and involves creating an
-:doc:`event dispatcher </components/event_dispatcher/introduction>` and a
+:doc:`event dispatcher </components/event_dispatcher>` and a
 :ref:`controller resolver <component-http-kernel-resolve-controller>` (explained
 below). To complete your working kernel, you'll add more event listeners
 to the events discussed below::
@@ -182,7 +182,7 @@ attributes).
     This class executes the routing layer, which returns an *array* of information
     about the matched request, including the ``_controller`` and any placeholders
     that are in the route's pattern (e.g. ``{slug}``). See
-    :doc:`Routing component </components/routing/introduction>`.
+    :doc:`Routing component </components/routing>`.
 
     This array of information is stored in the :class:`Symfony\\Component\\HttpFoundation\\Request`
     object's ``attributes`` array. Adding the routing information here doesn't
@@ -579,7 +579,7 @@ Creating an Event Listener
 As you've seen, you can create and attach event listeners to any of the events
 dispatched during the ``HttpKernel::handle`` cycle. Typically a listener is a PHP
 class with a method that's executed, but it can be anything. For more information
-on creating and attaching event listeners, see :doc:`/components/event_dispatcher/introduction`.
+on creating and attaching event listeners, see :doc:`/components/event_dispatcher`.
 
 The name of each of the "kernel" events is defined as a constant on the
 :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Additionally, each

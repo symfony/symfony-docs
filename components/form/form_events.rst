@@ -6,7 +6,7 @@ Form Events
 
 The Form component provides a structured process to let you customize your
 forms, by making use of the
-:doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
+:doc:`EventDispatcher component </components/event_dispatcher>`.
 Using form events, you may modify information or fields at different steps
 of the workflow: from the population of the form to the submission of the
 data from the request.

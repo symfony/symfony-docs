@@ -62,7 +62,7 @@ Symfony to use your own session handler instead of the default one:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <framework:config>
-                <framework:session handler-id="app.session_handler" ... />
+                <framework:session handler-id="app.session_handler" />
             </framework:config>
         </container>
 

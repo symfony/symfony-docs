@@ -4,7 +4,7 @@
 Creating and Using Templates
 ============================
 
-As you know, the :doc:`controller </book/controller>` is responsible for
+As you know, the :doc:`controller </controller>` is responsible for
 handling each request that comes into a Symfony application. In reality,
 the controller delegates most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
@@ -683,7 +683,7 @@ Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
 Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services </book/service_container>`.
+that as much code as possible lives in reusable :doc:`services </service_container>`.
 
 .. _book-templating-hinclude:
 
@@ -1092,7 +1092,7 @@ advantage of Symfony's template inheritance.
     and JavaScript assets in Symfony. Symfony also packages another library,
     called Assetic, which follows this philosophy but allows you to do much
     more interesting things with those assets. For more information on
-    using Assetic see :doc:`/cookbook/assetic/asset_management`.
+    using Assetic see :doc:`/assetic/asset_management`.
 
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
@@ -1244,7 +1244,7 @@ automatically:
 .. tip::
 
     You can add your own global template variables. See the cookbook example
-    on :doc:`Global Variables </cookbook/templating/global_variables>`.
+    on :doc:`Global Variables </templating/global_variables>`.
 
 .. index::
    single: Templating; The templating service
@@ -1388,7 +1388,7 @@ subdirectory.
 .. note::
 
     You can also override templates from within a bundle by using bundle
-    inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
+    inheritance. For more information, see :doc:`/bundles/inheritance`.
 
 .. _templating-overriding-core-templates:
 
@@ -1701,12 +1701,13 @@ Overall, the topic of templating should be thought of as a powerful tool
 that's at your disposal. In some cases, you may not need to render a template,
 and in Symfony, that's absolutely fine.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
-* :doc:`/cookbook/templating/PHP`
-* :doc:`/cookbook/controller/error_pages`
-* :doc:`/cookbook/templating/twig_extension`
+.. toctree::
+    :glob:
+
+    /templating/*
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`KnpBundles.com`: http://knpbundles.com

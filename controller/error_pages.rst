@@ -9,7 +9,7 @@ In Symfony applications, all errors are treated as exceptions, no matter if they
 are just a 404 Not Found error or a fatal error triggered by throwing some
 exception in your code.
 
-In the :doc:`development environment </cookbook/configuration/environments>`,
+In the :doc:`development environment </configuration/environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
 with lots of debug information to help you quickly discover the root problem:
 
@@ -344,7 +344,7 @@ before, but also requires a thorough understanding of Symfony internals. Suppose
 that your code throws specialized exceptions with a particular meaning to your
 application domain.
 
-:doc:`Writing your own event listener </cookbook/event_dispatcher/event_listener>`
+:doc:`Writing your own event listener </event_dispatcher/event_listener>`
 for the ``kernel.exception`` event allows you to have a closer look at the exception
 and take different actions depending on it. Those actions might include logging
 the exception, redirecting the user to another page or rendering specialized
@@ -373,4 +373,3 @@ time and again, you can have just one (or several) listeners deal with them.
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
 .. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php
-.. _`development environment`: http://symfony.com/doc/current/cookbook/configuration/environments.html

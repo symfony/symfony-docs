@@ -131,7 +131,7 @@ Templates                        ``Resources/views/``           Yes
 Unit and Functional Tests        ``Tests/``                     No
 ===============================  =============================  ================
 
-[1] See :doc:`/cookbook/doctrine/mapping_model_classes` for how to handle the
+[1] See :doc:`/doctrine/mapping_model_classes` for how to handle the
 mapping with a compiler pass.
 
 Classes
@@ -362,7 +362,7 @@ Retrieve the configuration parameters in your code from the container::
     $container->getParameter('acme_blog.author.email');
 
 Even if this mechanism is simple enough, you should consider using the more
-advanced :doc:`semantic bundle configuration </cookbook/bundles/configuration>`.
+advanced :doc:`semantic bundle configuration </bundles/configuration>`.
 
 Versioning
 ----------
@@ -381,7 +381,7 @@ be :ref:`defined as private <container-private-services>`.
 .. seealso::
 
     You can learn much more about service loading in bundles reading this article:
-    :doc:`How to Load Service Configuration inside a Bundle </cookbook/bundles/extension>`.
+    :doc:`How to Load Service Configuration inside a Bundle </bundles/extension>`.
 
 Composer Metadata
 -----------------
@@ -466,7 +466,7 @@ API is being used. The following code, would work for *all* users::
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/bundles/extension`
+* :doc:`/bundles/extension`
 
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/

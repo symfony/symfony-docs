@@ -14,7 +14,7 @@ Installing Symfony
 ------------------
 
 Before continuing reading this chapter, make sure to have installed both PHP
-and Symfony as explained in the :doc:`installation chapter </book/installation>`
+and Symfony as explained in the :doc:`installation chapter </installation>`
 of the Symfony book.
 
 Understanding the Fundamentals
@@ -129,7 +129,7 @@ of the ``Default`` controller when the user browses the ``/`` path of the applic
 
     In addition to PHP annotations, routes can be configured in YAML, XML
     or PHP files, as explained in
-    :doc:`the Routing chapter of the Symfony book </book/routing>`. This
+    :doc:`the Routing chapter of the Symfony book </routing>`. This
     flexibility is one of the main features of Symfony, a framework that
     never imposes a particular configuration format on you.
 

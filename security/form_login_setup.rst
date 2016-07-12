@@ -255,7 +255,7 @@ The form can look like anything, but has a few requirements:
 .. caution::
 
     This login form is currently not protected against CSRF attacks. Read
-    :doc:`/cookbook/security/csrf_in_login_form` on how to protect your login
+    :doc:`/security/csrf_in_login_form` on how to protect your login
     form.
 
 And that's it! When you submit the form, the security system will automatically
@@ -284,7 +284,7 @@ can all be customized, allowing you to, for example, redirect the user to
 a specific URL.
 
 For more details on this and how to customize the form login process in general,
-see :doc:`/cookbook/security/form_login`.
+see :doc:`/security/form_login`.
 
 .. _book-security-common-pitfalls:
 
@@ -467,7 +467,7 @@ main firewall is enough.
 
 As routing is done *before* security, 404 error pages are not covered by
 any firewall. This means you can't check for security or even access the
-user object on these pages. See :doc:`/cookbook/controller/error_pages`
+user object on these pages. See :doc:`/controller/error_pages`
 for more details.
 
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

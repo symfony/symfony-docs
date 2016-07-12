@@ -44,7 +44,7 @@ to learn even more. Overall, the process has several steps:
 
 #. Determine, :ref:`set and manage the user's locale <book-translation-user-locale>`
    for the request and optionally
-   :doc:`on the user's entire session </cookbook/session/locale_sticky_session>`.
+   :doc:`on the user's entire session </session/locale_sticky_session>`.
 
 .. _book-translation-configuration:
 
@@ -443,7 +443,7 @@ need it::
             $request->setLocale($locale);
         }
 
-Read :doc:`/cookbook/session/locale_sticky_session` for more information on making
+Read :doc:`/session/locale_sticky_session` for more information on making
 the user's locale "sticky" to their session.
 
 .. note::
@@ -529,7 +529,7 @@ in your application.
 
 .. tip::
 
-    Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
+    Read :doc:`/routing/service_container_parameters` to learn how to
     avoid hardcoding the ``_locale`` requirement in all your routes.
 
 .. index::

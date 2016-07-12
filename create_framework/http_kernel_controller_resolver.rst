@@ -144,7 +144,7 @@ method is not defined, an argument has no matching attribute, ...).
     wonder why someone would want to create another one (why would there be an
     interface if not?). Two examples: in Symfony, ``getController()`` is
     enhanced to support
-    :doc:`controllers as services </cookbook/controller/service>`; and in
+    :doc:`controllers as services </controller/service>`; and in
     `FrameworkExtraBundle`_, ``getArguments()`` is enhanced to support
     parameter converters, where request attributes are converted to objects
     automatically.

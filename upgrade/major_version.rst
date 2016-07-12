@@ -25,7 +25,7 @@ There are a couple of steps to upgrading a major version:
 
 During the lifecycle of a major release, new features are added and method
 signatures and public API usages are changed. However,
-:doc:`minor versions </cookbook/upgrade/minor_version>` should not contain any
+:doc:`minor versions </upgrade/minor_version>` should not contain any
 backwards incompatible changes. To accomplish this, the "old" (e.g. functions,
 classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
@@ -37,7 +37,7 @@ using these deprecated features in the last version before the major (e.g.
 
 To help you with this, deprecation notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
-:doc:`dev environment </cookbook/configuration/environments>`
+:doc:`dev environment </configuration/environments>`
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /images/cookbook/deprecations-in-profiler.png
@@ -136,9 +136,9 @@ Next, use Composer to download new versions of the libraries:
 
     $ composer update symfony/symfony
 
-.. include:: /cookbook/upgrade/_update_dep_errors.rst.inc
+.. include:: /upgrade/_update_dep_errors.rst.inc
 
-.. include:: /cookbook/upgrade/_update_all_packages.rst.inc
+.. include:: /upgrade/_update_all_packages.rst.inc
 
 .. _upgrade-major-symfony-after:
 

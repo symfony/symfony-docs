@@ -5,7 +5,7 @@ Configuring a Web Server
 ========================
 
 The preferred way to develop your Symfony application is to use
-:doc:`PHP's internal web server </cookbook/web_server/built_in>`. However,
+:doc:`PHP's internal web server </web_server/built_in>`. However,
 when using an older PHP version or when running the application in the production
 environment, you'll need to use a fully-featured web server. This article
 describes several ways to use Symfony with Apache or Nginx.

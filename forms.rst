@@ -13,7 +13,7 @@ learning the most important features of the form library along the way.
 
    The Symfony Form component is a standalone library that can be used outside
    of Symfony projects. For more information, see the
-   :doc:`Form component documentation </components/form/introduction>` on
+   :doc:`Form component documentation </components/form>` on
    GitHub.
 
 .. index::
@@ -457,7 +457,7 @@ corresponding errors printed out with the form.
            )) ?>
 
 Validation is a very powerful feature of Symfony and has its own
-:doc:`dedicated chapter </book/validation>`.
+:doc:`dedicated chapter </validation>`.
 
 .. index::
    single: Forms; Validation groups
@@ -638,7 +638,7 @@ large or whether you tried to submit text in a number field.
 .. seealso::
 
     To see how to use a service to resolve ``validation_groups`` dynamically
-    read the :doc:`/cookbook/validation/group_service_resolver`
+    read the :doc:`/validation/group_service_resolver`
     chapter in the cookbook.
 
 .. index::
@@ -655,7 +655,7 @@ the common form fields and data types you'll encounter:
 .. include:: /reference/forms/types/map.rst.inc
 
 You can also create your own custom field types. This topic is covered in
-the ":doc:`/cookbook/form/create_custom_field_type`" article of the cookbook.
+the ":doc:`/form/create_custom_field_type`" article of the cookbook.
 
 .. index::
    single: Forms; Field type options
@@ -1044,7 +1044,7 @@ to the ``form()`` or the ``form_start()`` helper:
     The form will be submitted in a normal POST request, but Symfony's router
     is capable of detecting the ``_method`` parameter and will interpret it as
     a PUT, PATCH or DELETE request. Read the cookbook chapter
-    ":doc:`/cookbook/routing/method_parameters`" for more information.
+    ":doc:`/routing/method_parameters`" for more information.
 
 .. index::
    single: Forms; Creating form classes
@@ -1174,7 +1174,7 @@ easy to use in your application.
 .. note::
 
     Services and the service container will be handled
-    :doc:`later on in this book </book/service_container>`. Things will be
+    :doc:`later on in this book </service_container>`. Things will be
     more clear after reading that chapter.
 
 .. configuration-block::
@@ -1273,7 +1273,7 @@ you can fetch it from the form::
 
     $task = $form->getData();
 
-For more information, see the :doc:`Doctrine ORM chapter </book/doctrine>`.
+For more information, see the :doc:`Doctrine ORM chapter </doctrine>`.
 
 The key thing to understand is that when the form is submitted, the submitted
 data is transferred to the underlying object immediately. If you want to
@@ -1433,7 +1433,7 @@ You can also embed a collection of forms into one form (imagine a ``Category``
 form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
-For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
+For more information see the ":doc:`/form/form_collections`" cookbook
 entry and the :doc:`collection </reference/forms/types/collection>` field type reference.
 
 .. index::
@@ -1532,7 +1532,7 @@ To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
 
-For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
+For a more extensive discussion, see :doc:`/form/form_customization`.
 
 .. index::
    single: Forms; Template fragment naming
@@ -1835,7 +1835,7 @@ section.
     CSRF tokens are meant to be different for every user. This is why you
     need to be cautious if you try to cache pages with forms including this
     kind of protection. For more information, see
-    :doc:`/cookbook/cache/form_csrf_caching`.
+    :doc:`/cache/form_csrf_caching`.
 
 .. index::
    single: Forms; With no class
@@ -1906,7 +1906,7 @@ The only missing piece is validation. Usually, when you call ``$form->isValid()`
 the object is validated by reading the constraints that you applied to that
 class. If your form is mapped to an object (i.e. you're using the ``data_class``
 option or passing an object to your form), this is almost always the approach
-you want to use. See :doc:`/book/validation` for more details.
+you want to use. See :doc:`/validation` for more details.
 
 .. _form-option-constraints:
 
@@ -1955,24 +1955,24 @@ HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.
 
 There's still much more to learn about the powerful world of forms, such as
-how to handle :doc:`file uploads </cookbook/controller/upload_file>` or how to
+how to handle :doc:`file uploads </controller/upload_file>` or how to
 create a form where a dynamic number of sub-forms can be added (e.g. a todo
 list where you can keep adding more fields via JavaScript before submitting).
 See the cookbook for these topics. Also, be sure to lean on the
 :doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
-* :doc:`/cookbook/controller/upload_file`
-* :doc:`File Field Reference </reference/forms/types/file>`
-* :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
-* :doc:`/cookbook/form/form_customization`
-* :doc:`/cookbook/form/dynamic_form_modification`
-* :doc:`/cookbook/form/data_transformers`
-* :doc:`/cookbook/security/csrf_in_login_form`
-* :doc:`/cookbook/cache/form_csrf_caching`
+.. toctree::
+    :glob:
+
+    /form/*
+
+* :doc:`/controller/upload_file`
+* :doc:`/reference/forms/types`
+* :doc:`/cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php

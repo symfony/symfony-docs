@@ -103,7 +103,7 @@ by your security.
 .. tip::
 
     You can also match a request against other details of the request (e.g. host). For more
-    information and examples read :doc:`/cookbook/security/firewall_restriction`.
+    information and examples read :doc:`/security/firewall_restriction`.
 
 All other URLs will be handled by the ``default`` firewall (no ``pattern``
 key means it matches *all* URLs). You can think of the firewall like your
@@ -277,9 +277,9 @@ But who can you login as? Where do users come from?
 
 .. tip::
 
-    Want to use a traditional login form? Great! See :doc:`/cookbook/security/form_login_setup`.
+    Want to use a traditional login form? Great! See :doc:`/security/form_login_setup`.
     What other methods are supported? See the :doc:`Configuration Reference </reference/configuration/security>`
-    or :doc:`build your own </cookbook/security/custom_authentication_provider>`.
+    or :doc:`build your own </security/custom_authentication_provider>`.
 
 .. tip::
 
@@ -295,8 +295,8 @@ B) Configuring how Users are Loaded
 When you type in your username, Symfony needs to load that user's information
 from somewhere. This is called a "user provider", and you're in charge of
 configuring it. Symfony has a built-in way to
-:doc:`load users from the database </cookbook/security/entity_provider>`,
-or you can :doc:`create your own user provider </cookbook/security/custom_provider>`.
+:doc:`load users from the database </security/entity_provider>`,
+or you can :doc:`create your own user provider </security/custom_provider>`.
 
 The easiest (but most limited) way, is to configure Symfony to load hardcoded
 users directly from the ``security.yml`` file itself. This is called an "in memory"
@@ -371,7 +371,7 @@ probably only need one. If you *do* have multiple, you can configure which
 
 .. seealso::
 
-    See :doc:`/cookbook/security/multiple_user_providers` for
+    See :doc:`/security/multiple_user_providers` for
     all the details about multiple providers setup.
 
 Try to login using username ``admin`` and password ``kitten``. You should
@@ -425,8 +425,8 @@ To fix this, add an ``encoders`` key:
         ));
 
 User providers load user information and put it into a ``User`` object. If
-you :doc:`load users from the database </cookbook/security/entity_provider>`
-or :doc:`some other source </cookbook/security/custom_provider>`, you'll
+you :doc:`load users from the database </security/entity_provider>`
+or :doc:`some other source </security/custom_provider>`, you'll
 use your own custom User class. But when you use the "in memory" provider,
 it gives you a ``Symfony\Component\Security\Core\User\User`` object.
 
@@ -449,7 +449,7 @@ Loading Users from the Database
 ...............................
 
 If you'd like to load your users via the Doctrine ORM, that's easy! See
-:doc:`/cookbook/security/entity_provider` for all the details.
+:doc:`/security/entity_provider` for all the details.
 
 .. _book-security-encoding-user-password:
 .. _c-encoding-the-users-password:
@@ -511,7 +511,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
+.. include:: /security/_ircmaxwell_password-compat.rst.inc
 
 Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, since 2.7 you can use the built-in command:
@@ -602,7 +602,7 @@ before inserting them into the database? Don't worry, see
     for examples.
 
     It's also possible to use different hashing algorithms on a user-by-user
-    basis. See :doc:`/cookbook/security/named_encoders` for more details.
+    basis. See :doc:`/security/named_encoders` for more details.
 
 D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -613,10 +613,10 @@ basic auth and loads users right from the ``security.yml`` file.
 Your next steps depend on your setup:
 
 * Configure a different way for your users to login, like a :ref:`login form <book-security-form-login>`
-  or :doc:`something completely custom </cookbook/security/custom_authentication_provider>`;
+  or :doc:`something completely custom </security/custom_authentication_provider>`;
 
-* Load users from a different source, like the :doc:`database </cookbook/security/entity_provider>`
-  or :doc:`some other source </cookbook/security/custom_provider>`;
+* Load users from a different source, like the :doc:`database </security/entity_provider>`
+  or :doc:`some other source </security/custom_provider>`;
 
 * Learn how to deny access, load the User object and deal with roles in the
   :ref:`Authorization <security-authorization>` section.
@@ -823,7 +823,7 @@ the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admi
     host name and HTTP methods. It can also be used to redirect a user to
     the ``https`` version of a URL pattern.
 
-    To learn about all of this, see :doc:`/cookbook/security/access_control`.
+    To learn about all of this, see :doc:`/security/access_control`.
 
 .. _`book-security-securing-controller`:
 
@@ -928,7 +928,7 @@ used to secure a controller. For example, suppose you have a service (i.e. a
 PHP class) whose job is to send emails. You can restrict use of this class - no
 matter where it's being used from - to only certain users.
 
-For more information see :doc:`/cookbook/security/securing_services`.
+For more information see :doc:`/security/securing_services`.
 
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -959,7 +959,7 @@ special attributes like this:
 
 * ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
   if they are logged in because of a "remember me cookie". Even if you don't
-  use the :doc:`remember me functionality </cookbook/security/remember_me>`,
+  use the :doc:`remember me functionality </security/remember_me>`,
   you can use this to check if the user is logged in.
 
 * ``IS_AUTHENTICATED_FULLY``: This is similar to ``IS_AUTHENTICATED_REMEMBERED``,
@@ -968,7 +968,7 @@ special attributes like this:
 
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
   this - this is useful when *whitelisting* URLs to guarantee access - some
-  details are in :doc:`/cookbook/security/access_control`.
+  details are in :doc:`/security/access_control`.
 
 .. _book-security-template-expression:
 
@@ -1006,12 +1006,12 @@ other users. Also, as the admin user, you yourself want to be able to edit
 
 To accomplish this you have 2 options:
 
-* :doc:`Voters </cookbook/security/voters>` allow you to write own business logic
+* :doc:`Voters </security/voters>` allow you to write own business logic
   (e.g. the user can edit this post because they were the creator) to determine
   access. You'll probably want this option - it's flexible enough to solve the
   above situation.
 
-* :doc:`ACLs </cookbook/security/acl>` allow you to create a database structure
+* :doc:`ACLs </security/acl>` allow you to create a database structure
   where you can assign *any* arbitrary user *any* access (e.g. EDIT, VIEW)
   to *any* object in your system. Use this if you need an admin user to be
   able to grant customized access across your system via some admin interface.
@@ -1415,7 +1415,7 @@ parts are when you have custom requirements: like a custom authentication
 strategy (e.g. API tokens), complex authorization logic and many other things
 (because security is complex!).
 
-Fortunately, there are a lot of :doc:`Security Cookbook Articles </cookbook/security/index>`
+Fortunately, there are a lot of :doc:`Security Cookbook Articles </security/index>`
 aimed at describing many of these situations. Also, see the
 :doc:`Security Reference Section </reference/configuration/security>`. Many
 of the options don't have specific details, but seeing the full possible
@@ -1423,15 +1423,13 @@ configuration tree may be useful.
 
 Good luck!
 
-Learn More from the Cookbook
-----------------------------
+Learn More
+----------
 
-* :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
-* :doc:`Impersonating a User </cookbook/security/impersonating_user>`
-* :doc:`/cookbook/security/voters`
-* :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
-* :doc:`/cookbook/security/remember_me`
-* :doc:`/cookbook/security/multiple_user_providers`
+.. toctree::
+    :glob:
+
+    security/*
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories

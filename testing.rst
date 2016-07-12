@@ -498,7 +498,7 @@ To get the Profiler for the last request, do the following::
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the
-:doc:`/cookbook/testing/profiling` cookbook entry.
+:doc:`/testing/profiling` cookbook entry.
 
 Redirecting
 ~~~~~~~~~~~
@@ -716,7 +716,7 @@ their type::
 Adding and Removing Forms to a Collection
 .........................................
 
-If you use a :doc:`Collection of Forms </cookbook/form/form_collections>`,
+If you use a :doc:`Collection of Forms </form/form_collections>`,
 you can't add fields to an existing form with
 ``$form['task[tags][0][name]'] = 'foo';``. This results in an error
 ``Unreachable field "…"`` because ``$form`` can only be used in order to
@@ -916,13 +916,14 @@ section:
 Learn more
 ----------
 
+.. toctree::
+    :glob:
+
+    testing/*
+
 * :doc:`The chapter about tests in the Symfony Framework Best Practices </best_practices/tests>`
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`
-* :doc:`/cookbook/testing/http_authentication`
-* :doc:`/cookbook/testing/insulating_clients`
-* :doc:`/cookbook/testing/profiling`
-* :doc:`/cookbook/testing/bootstrap`
 
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
 .. _`documentation`: https://phpunit.de/manual/current/en/

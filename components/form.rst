@@ -53,7 +53,7 @@ support for very important features:
 
 The Symfony Form component relies on other libraries to solve these problems.
 Most of the time you will use Twig and the Symfony
-:doc:`HttpFoundation </components/http_foundation/introduction>`,
+:doc:`HttpFoundation </components/http_foundation>`,
 Translation and Validator components, but you can replace any of these with
 a different library of your choice.
 
@@ -106,7 +106,7 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
     .. note::
 
         For more information about the HttpFoundation component or how to
-        install it, see :doc:`/components/http_foundation/introduction`.
+        install it, see :doc:`/components/http_foundation`.
 
 CSRF Protection
 ~~~~~~~~~~~~~~~
@@ -221,7 +221,7 @@ To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\Twig
 where you define your :ref:`form themes <cookbook-form-customization-form-themes>`
 (i.e. resources/files that define form HTML markup).
 
-For general details on rendering forms, see :doc:`/cookbook/form/form_customization`.
+For general details on rendering forms, see :doc:`/form/form_customization`.
 
 .. note::
 
@@ -244,7 +244,7 @@ with Symfony's Translation component, or add the 2 Twig filters yourself,
 via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
-Translation and :doc:`Config </components/config/introduction>` components
+Translation and :doc:`Config </components/config>` components
 installed. If you're using Composer, you could get the latest 2.7 version
 of each of these by adding the following to your ``composer.json`` file:
 
@@ -285,7 +285,7 @@ to your ``Twig_Environment`` instance::
 Depending on how your translations are being loaded, you can now add string
 keys, such as field labels, and their translations to your translation files.
 
-For more details on translations, see :doc:`/book/translation`.
+For more details on translations, see :doc:`/translation`.
 
 Validation
 ~~~~~~~~~~
@@ -308,7 +308,7 @@ install the latest 2.7 version, add this to your ``composer.json``:
     }
 
 If you're not familiar with Symfony's Validator component, read more about
-it: :doc:`/book/validation`. The Form component comes with a
+it: :doc:`/validation`. The Form component comes with a
 :class:`Symfony\\Component\\Form\\Extension\\Validator\\ValidatorExtension`
 class, which automatically applies validation to your data on bind. These
 errors are then mapped to the correct field and rendered.
@@ -363,7 +363,7 @@ and then access it whenever you need to build a form.
 
 Exactly how you gain access to your one form factory is up to you. If you're
 using a service container (like provided with the
-:doc:`DependencyInjection component </components/dependency_injection/introduction>`),
+:doc:`DependencyInjection component </components/dependency_injection>`),
 then you should add the form factory to your container and grab it out whenever
 you need to. If your application uses global or static variables (not usually a
 good idea), then you can store the object on some static class or do something

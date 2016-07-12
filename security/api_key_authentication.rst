@@ -143,7 +143,7 @@ user provider.
 The User Provider
 ~~~~~~~~~~~~~~~~~
 
-The ``$userProvider`` can be any user provider (see :doc:`/cookbook/security/custom_provider`).
+The ``$userProvider`` can be any user provider (see :doc:`/security/custom_provider`).
 In this example, the ``$apiKey`` is used to somehow find the username for
 the user. This work is done in a ``getUsernameForApiKey()`` method, which
 is created entirely custom for this use-case (i.e. this isn't a method that's
@@ -234,7 +234,7 @@ Now register your user provider as a service:
 .. note::
 
     Read the dedicated article to learn
-    :doc:`how to create a custom user provider </cookbook/security/custom_provider>`.
+    :doc:`how to create a custom user provider </security/custom_provider>`.
 
 The logic inside ``getUsernameForApiKey()`` is up to you. You may somehow transform
 the API key (e.g. ``37b51d``) into a username (e.g. ``jondoe``) by looking
@@ -340,7 +340,7 @@ First, register it as a service.
         $definition->setPublic(false);
         $container->setDefinition('apikey_authenticator', $definition);
 
-Now, activate it and your custom user provider (see :doc:`/cookbook/security/custom_provider`)
+Now, activate it and your custom user provider (see :doc:`/security/custom_provider`)
 in the ``firewalls`` section of your security configuration
 using the ``simple_preauth`` and ``provider`` keys respectively:
 
@@ -634,7 +634,7 @@ of the user to make sure it's not out-of-date. But regardless of your requiremen
     You'll also want to make sure that your ``User`` object is being serialized
     correctly. If your ``User`` object has private properties, PHP can't serialize
     those. In this case, you may get back a User object that has a ``null``
-    value for each property. For an example, see :doc:`/cookbook/security/entity_provider`.
+    value for each property. For an example, see :doc:`/security/entity_provider`.
 
 Only Authenticating for Certain URLs
 ------------------------------------

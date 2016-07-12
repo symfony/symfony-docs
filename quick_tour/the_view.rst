@@ -262,7 +262,7 @@ Symfony provides the ``asset()`` function to deal with them easily:
 
 The ``asset()`` function looks for the web assets inside the ``web/`` directory.
 If you store them in another directory, read
-:doc:`this article </cookbook/assetic/asset_management>`
+:doc:`this article </assetic/asset_management>`
 to learn how to manage web assets.
 
 Using the ``asset()`` function, your application is more portable. The reason

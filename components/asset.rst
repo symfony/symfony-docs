@@ -177,7 +177,7 @@ that path over and over again::
 Request Context Aware Assets
 ............................
 
-If you are also using the :doc:`HttpFoundation </components/http_foundation/introduction>`
+If you are also using the :doc:`HttpFoundation </components/http_foundation>`
 component in your project (for instance, in a Symfony application), the ``PathPackage``
 class can take into account the context of the current request::
 

@@ -16,8 +16,8 @@ in your application and to optimize them the way you want.
 
 .. note::
 
-   While you'll learn the basics here, an entire cookbook entry is devoted
-   to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
+    While you'll learn the basics here, an entire cookbook entry is devoted
+    to the organization and best practices of :doc:`bundles </bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a BlogBundle, a ForumBundle or

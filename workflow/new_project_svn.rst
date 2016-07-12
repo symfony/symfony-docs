@@ -9,9 +9,9 @@ How to Create and Store a Symfony Project in Subversion
 .. tip::
 
     This entry is specifically about Subversion, and based on principles found
-    in :doc:`/cookbook/workflow/new_project_git`.
+    in :doc:`/workflow/new_project_git`.
 
-Once you've read through :doc:`/book/page_creation` and become familiar with
+Once you've read through :doc:`/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. The
 preferred method to manage Symfony projects is using `Git`_ but some prefer
 to use `Subversion`_ which is totally fine!. In this cookbook article, you'll
@@ -48,7 +48,7 @@ Initial Project Setup
 
 To get started, you'll need to download Symfony and get the basic Subversion setup.
 First, download and get your Symfony project running by following the
-:doc:`Installation </book/installation>` chapter.
+:doc:`Installation </installation>` chapter.
 
 Once you have your new project directory and things are working, follow along
 with these steps:
@@ -105,14 +105,14 @@ At this point, you have a fully-functional Symfony project stored in your
 Subversion repository. The development can start with commits in the Subversion
 repository.
 
-You can continue to follow along with the :doc:`/book/page_creation` chapter
+You can continue to follow along with the :doc:`/page_creation` chapter
 to learn more about how to configure and develop inside your application.
 
 .. tip::
 
     The Symfony Standard Edition comes with some example functionality. To
     remove the sample code, follow the instructions in the
-    ":doc:`/cookbook/bundles/remove`" article.
+    ":doc:`/bundles/remove`" article.
 
 .. include:: _vendor_deps.rst.inc
 

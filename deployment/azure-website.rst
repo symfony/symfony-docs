@@ -392,7 +392,7 @@ MySQL database.
 
 This command builds the tables and indexes for your MySQL database. If your
 Symfony application is more complex than a basic Symfony Standard Edition, you
-may have additional commands to execute for setup (see :doc:`/cookbook/deployment/tools`).
+may have additional commands to execute for setup (see :doc:`/deployment/tools`).
 
 Make sure that your application is running by browsing the ``app.php`` front
 controller with your web browser and the following URL:

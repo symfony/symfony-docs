@@ -754,7 +754,7 @@ You can also override the markup for an entire field row using the same method:
 How to Customize a Collection Prototype
 ---------------------------------------
 
-When using a :doc:`collection of forms </cookbook/form/form_collections>`,
+When using a :doc:`collection of forms </form/form_collections>`,
 the prototype can be overridden with a completely custom prototype by
 overriding a block. For example, if your form field is named ``tasks``, you
 will be able to change the widget for each task as follows:
@@ -811,7 +811,7 @@ Customizing Error Output
    The Form component only handles *how* the validation errors are rendered,
    and not the actual validation error messages. The error messages themselves
    are determined by the validation constraints you apply to your objects.
-   For more information, see the chapter on :doc:`validation </book/validation>`.
+   For more information, see the chapter on :doc:`validation </validation>`.
 
 There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered

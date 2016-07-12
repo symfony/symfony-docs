@@ -5,7 +5,7 @@ How to Use Voters to Check User Permissions
 ===========================================
 
 In Symfony, you can check the permission to access data by using the
-:doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming
+:doc:`ACL module </security/acl>`, which is a bit overwhelming
 for many applications. A much easier solution is to work with custom voters,
 which are like simple conditional statements.
 

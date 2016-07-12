@@ -104,4 +104,4 @@ role:
         ));
 
 It is also possible to specify using HTTPS in the routing configuration,
-see :doc:`/cookbook/routing/scheme` for more details.
+see :doc:`/routing/scheme` for more details.

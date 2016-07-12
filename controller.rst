@@ -212,7 +212,7 @@ to the controller:
         return $collection;
 
 Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
-if you're using the :doc:`built-in web server </cookbook/web_server/built_in>`)
+if you're using the :doc:`built-in web server </web_server/built_in>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
 simply creating a controller method and an associated route.
@@ -361,7 +361,7 @@ Keep the following guidelines in mind while you develop.
 .. tip::
 
     You can also pass other variables from your route to your controller
-    arguments. See :doc:`/cookbook/routing/extra_information`.
+    arguments. See :doc:`/routing/extra_information`.
 
 
 .. index::
@@ -442,7 +442,7 @@ To redirect to an *external* site, use ``redirect()`` and pass it the external U
         return $this->redirect('http://symfony.com/doc');
     }
 
-For more information, see the :doc:`Routing chapter </book/routing>`.
+For more information, see the :doc:`Routing chapter </routing>`.
 
 .. tip::
 
@@ -487,7 +487,7 @@ To learn how to render different templating formats read the :ref:`template-form
 section of the Creating and Using Templates chapter.
 
 The Symfony templating engine is explained in great detail in the
-:doc:`Creating and Using Templates chapter </book/templating>`.
+:doc:`Creating and Using Templates chapter </templating>`.
 
 .. sidebar:: Templating Naming Pattern
 
@@ -530,7 +530,7 @@ console command:
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``container:debug``.
 
-For more information, see the :doc:`/book/service_container` chapter.
+For more information, see the :doc:`/service_container` chapter.
 
 .. tip::
 
@@ -583,7 +583,7 @@ error page is shown to the developer (i.e. when you're using the ``app_dev.php``
 front controller - see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see
-the ":doc:`/cookbook/controller/error_pages`" cookbook recipe.
+the ":doc:`/controller/error_pages`" cookbook recipe.
 
 .. index::
    single: Controller; The session
@@ -808,8 +808,10 @@ In other chapters, you'll see how the controller can be used to persist and
 fetch objects from a database, process form submissions, handle caching and
 more.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
-* :doc:`/cookbook/controller/error_pages`
-* :doc:`/cookbook/controller/service`
+.. toctree::
+    :glob:
+
+    /controller/*

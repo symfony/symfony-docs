@@ -29,7 +29,7 @@ The Symfony EventDispatcher component implements the `Mediator`_ pattern
 in a simple and effective way to make all these things possible and to make
 your projects truly extensible.
 
-Take a simple example from :doc:`the HttpKernel component </components/http_kernel/introduction>`.
+Take a simple example from :doc:`the HttpKernel component </components/http_kernel>`.
 Once a ``Response`` object has been created, it may be useful to allow other
 elements in the system to modify it (e.g. add some cache headers) before
 it's actually used. To make this possible, the Symfony kernel throws an
@@ -192,7 +192,7 @@ determine which instance is passed.
     When you are using the
     :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher`
     and the
-    :doc:`DependencyInjection component </components/dependency_injection/introduction>`,
+    :doc:`DependencyInjection component </components/dependency_injection>`,
     you can use the
     :class:`Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass`
     to tag services as event listeners::
@@ -510,7 +510,7 @@ with some other dispatchers:
 * :doc:`/components/event_dispatcher/container_aware_dispatcher`
 * :doc:`/components/event_dispatcher/immutable_dispatcher`
 * :doc:`/components/event_dispatcher/traceable_dispatcher` (provided by the
-  :doc:`HttpKernel component </components/http_kernel/introduction>`)
+  :doc:`HttpKernel component </components/http_kernel>`)
 
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
 .. _Closures: http://php.net/manual/en/functions.anonymous.php

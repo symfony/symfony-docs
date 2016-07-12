@@ -8,7 +8,7 @@ Sending emails with Symfony is pretty straightforward thanks to the
 SwiftmailerBundle, which leverages the power of the `Swift Mailer`_ library.
 
 To functionally test that an email was sent, and even assert the email subject,
-content or any other headers, you can use :doc:`the Symfony Profiler </cookbook/profiler/index>`.
+content or any other headers, you can use :doc:`the Symfony Profiler </profiler/index>`.
 
 Start with an easy controller action that sends an email::
 
@@ -28,7 +28,7 @@ Start with an easy controller action that sends an email::
 
 .. note::
 
-    Don't forget to enable the profiler as explained in :doc:`/cookbook/testing/profiling`.
+    Don't forget to enable the profiler as explained in :doc:`/testing/profiling`.
 
 In your functional test, use the ``swiftmailer`` collector on the profiler
 to get information about the messages sent on the previous request::

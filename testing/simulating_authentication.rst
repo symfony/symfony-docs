@@ -9,7 +9,7 @@ It could become an issue especially when ``form_login`` is used, since
 it requires additional requests to fill in and submit the form.
 
 One of the solutions is to configure your firewall to use ``http_basic`` in
-the test environment as explained in :doc:`/cookbook/testing/http_authentication`.
+the test environment as explained in :doc:`/testing/http_authentication`.
 Another way would be to create a token yourself and store it in a session.
 While doing this, you have to make sure that an appropriate cookie is sent
 with a request. The following example demonstrates this technique::
@@ -58,5 +58,5 @@ with a request. The following example demonstrates this technique::
 
 .. note::
 
-    The technique described in :doc:`/cookbook/testing/http_authentication`
+    The technique described in :doc:`/testing/http_authentication`
     is cleaner and therefore the preferred way.

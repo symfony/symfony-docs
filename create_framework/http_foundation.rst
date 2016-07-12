@@ -76,7 +76,7 @@ unit test for the above code::
 
     If our application were just slightly bigger, we would have been able to
     find even more problems. If you are curious about them, read the
-    :doc:`/book/from_flat_php_to_symfony2` chapter of the book.
+    :doc:`/introduction/from_flat_php_to_symfony2` chapter of the book.
 
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework

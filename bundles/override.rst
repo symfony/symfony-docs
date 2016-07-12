@@ -13,7 +13,7 @@ Templates
 For information on overriding templates, see
 
 * :ref:`overriding-bundle-templates`.
-* :doc:`/cookbook/bundles/inheritance`
+* :doc:`/bundles/inheritance`
 
 Routing
 -------
@@ -31,7 +31,7 @@ Controllers
 
 Assuming the third-party bundle involved uses non-service controllers (which
 is almost always the case), you can easily override controllers via bundle
-inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
+inheritance. For more information, see :doc:`/bundles/inheritance`.
 If the controller is a service, see the next section on how to override it.
 
 Services & Configuration
@@ -89,7 +89,7 @@ something beyond just the class name, you should use a compiler pass::
 In this example you fetch the service definition of the original service, and set
 its class name to your own class.
 
-See :doc:`/cookbook/service_container/compiler_passes` for information on how to use
+See :doc:`/service_container/compiler_passes` for information on how to use
 compiler passes. If you want to do something beyond just overriding the class,
 like adding a method call, you can only use the compiler pass method.
 
@@ -192,7 +192,7 @@ can override the translations from any translation file, as long as it is in
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
 
-    Translation files are also not aware of :doc:`bundle inheritance </cookbook/bundles/inheritance>`.
+    Translation files are also not aware of :doc:`bundle inheritance </bundles/inheritance>`.
     If you want to override translations from the parent bundle, be sure that the
     parent bundle is loaded before the child bundle in the ``AppKernel`` class.
 

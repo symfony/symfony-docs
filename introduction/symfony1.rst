@@ -359,7 +359,7 @@ You can now access this from a controller, for example::
 
 In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
-the chapter titled ":doc:`/book/service_container`".
+the chapter titled ":doc:`/service_container`".
 
 .. _`Composer`: https://getcomposer.org
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard

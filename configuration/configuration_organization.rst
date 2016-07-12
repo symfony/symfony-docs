@@ -5,7 +5,7 @@ How to Organize Configuration Files
 ===================================
 
 The default Symfony Standard Edition defines three
-:doc:`execution environments </cookbook/configuration/environments>` called
+:doc:`execution environments </configuration/environments>` called
 ``dev``, ``prod`` and ``test``. An environment simply represents a way to
 execute the same codebase with different configurations.
 
@@ -211,7 +211,7 @@ Advanced Techniques
 -------------------
 
 Symfony loads configuration files using the
-:doc:`Config component </components/config/introduction>`, which provides some
+:doc:`Config component </components/config>`, which provides some
 advanced features.
 
 Mix and Match Configuration Formats
@@ -370,4 +370,4 @@ doesn't exist:
 As you've seen, there are lots of ways to organize your configuration files. You
 can choose one of these or even create your own custom way of organizing the
 files. Don't feel limited by the Standard Edition that comes with Symfony. For even
-more customization, see ":doc:`/cookbook/configuration/override_dir_structure`".
+more customization, see ":doc:`/configuration/override_dir_structure`".

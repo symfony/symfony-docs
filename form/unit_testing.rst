@@ -162,7 +162,7 @@ Adding Custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
+:doc:`form extensions </form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` only loads the core form extension, which means an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`

@@ -4,7 +4,7 @@
 How to Customize your Form Login
 ================================
 
-Using a :doc:`form login </cookbook/security/form_login_setup>` for authentication
+Using a :doc:`form login </security/form_login_setup>` for authentication
 is a common, and flexible, method for handling authentication in Symfony.
 Pretty much every aspect of the form login can be customized. The full, default
 configuration is shown in the next section.
@@ -37,7 +37,7 @@ in several ways.
     requested. Sometimes, this can cause problems, like if a background Ajax
     request "appears" to be the last visited URL, causing the user to be
     redirected there. For information on controlling this behavior, see
-    :doc:`/cookbook/security/target_path`.
+    :doc:`/security/target_path`.
 
 Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~

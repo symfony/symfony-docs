@@ -69,7 +69,7 @@ and more useful::
 
 .. note::
 
-    If the :doc:`HttpFoundation component </components/http_foundation/introduction>` is
+    If the :doc:`HttpFoundation component </components/http_foundation` is
     available, the handler uses a Symfony Response object; if not, it falls
     back to a regular PHP response.
 

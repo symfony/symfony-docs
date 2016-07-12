@@ -8,7 +8,7 @@ Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
 Suppose that Symfony 2.7 version hasn't been released yet and you want to create
-a new project to test its features. First, :doc:`install the Composer </cookbook/composer>`
+a new project to test its features. First, :doc:`install the Composer </composer>`
 package manager. Then, open a command console, enter your project's directory and
 execute the following command:
 
@@ -56,7 +56,7 @@ If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constr
 by ``"2.7.0-beta1"`` to install a specific beta number or ``2.7.*@beta`` to get
 the most recent beta version.
 
-After upgrading the Symfony version, read the :doc:`Symfony Upgrading Guide </cookbook/upgrade/index>`
+After upgrading the Symfony version, read the :doc:`Symfony Upgrading Guide </upgrade/index>`
 to learn how you should proceed to update your application's code in case the new
 Symfony version has deprecated some of its features.
 

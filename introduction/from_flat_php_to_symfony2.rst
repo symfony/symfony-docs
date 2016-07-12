@@ -244,7 +244,7 @@ the ``templates/layout.php``:
 You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-uses a :doc:`Templating </components/templating/introduction>` component
+uses a :doc:`Templating </components/templating>` component
 that allows this to be accomplished cleanly and easily. You'll see it in
 action shortly.
 
@@ -534,8 +534,8 @@ a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone
-:doc:`Routing </components/routing/introduction>` and
-:doc:`Templating </components/templating/introduction>` components, which already
+:doc:`Routing </components/routing>` and
+:doc:`Templating </components/templating>` components, which already
 solve these problems.
 
 Instead of re-solving common problems, you can let Symfony take care of
@@ -579,7 +579,7 @@ nice way to group related pages. The controller functions are also sometimes cal
 *actions*.
 
 The two controllers (or actions) are still lightweight. Each uses the
-:doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
+:doc:`Doctrine ORM library </doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
 ``Response`` object. The list ``list.php`` template is now quite a bit simpler:
 
@@ -717,7 +717,7 @@ And rewriting ``layout.html.php`` template in Twig would look like this:
 
 Twig is well-supported in Symfony. And while PHP templates will always
 be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
+be discussed. For more information, see the :doc:`templating chapter </templating>`.
 
 Where Symfony Delivers
 ----------------------
@@ -732,13 +732,13 @@ the blog from flat PHP to Symfony has improved life:
 
 * 100% of the code you write is for *your* application. You **don't need
   to develop or maintain low-level utilities** such as autoloading,
-  :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
+  :doc:`routing </routing>`, or rendering :doc:`controllers </controller>`;
 
 * Symfony gives you **access to open source tools** such as `Doctrine`_ and the
-  :doc:`Templating </components/templating/introduction>`,
-  :doc:`Security </components/security/introduction>`,
-  :doc:`Form </components/form/introduction>`, `Validator`_ and
-  :doc:`Translation </components/translation/introduction>` components (to name
+  :doc:`Templating </components/templating>`,
+  :doc:`Security </components/security>`,
+  :doc:`Form </components/form>`, `Validator`_ and
+  :doc:`Translation </components/translation>` components (to name
   a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the Routing
@@ -747,7 +747,7 @@ the blog from flat PHP to Symfony has improved life:
 * Symfony's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony's internal HTTP cache** or
   more powerful tools such as `Varnish`_. This is covered in a later chapter
-  all about :doc:`caching </book/http_cache>`.
+  all about :doc:`caching </http_cache>`.
 
 And perhaps best of all, by using Symfony, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony community**!
@@ -756,8 +756,8 @@ A good selection of Symfony community tools can be found on `KnpBundles.com`_.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/templating/PHP`
-* :doc:`/cookbook/controller/service`
+* :doc:`/templating/PHP`
+* :doc:`/controller/service`
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org

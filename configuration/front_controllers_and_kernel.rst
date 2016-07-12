@@ -5,7 +5,7 @@
 Understanding how the Front Controller, Kernel and Environments Work together
 =============================================================================
 
-The section :doc:`/cookbook/configuration/environments` explained the basics
+The section :doc:`/configuration/environments` explained the basics
 on how Symfony uses environments to run your application with different configuration
 settings. This section will explain a bit more in-depth what happens when
 your application is bootstrapped. To hook into this process, you need to understand
@@ -45,8 +45,8 @@ to `decorate`_ the kernel with additional features. Examples include:
 * Configuring the autoloader or adding additional autoloading mechanisms;
 * Adding HTTP level caching by wrapping the kernel with an instance of
   :ref:`AppCache <symfony-gateway-cache>`;
-* Enabling (or skipping) the :doc:`ClassCache </cookbook/debugging>`;
-* Enabling the :doc:`Debug Component </components/debug/introduction>`.
+* Enabling (or skipping) the :doc:`ClassCache </debugging>`;
+* Enabling the :doc:`Debug Component </components/debug>`.
 
 The front controller can be chosen by requesting URLs like:
 
@@ -67,7 +67,7 @@ as the default one.
     Pretty much every other web server should be able to achieve a
     behavior similar to that of the RewriteRule described above.
     Check your server documentation for details or see
-    :doc:`/cookbook/configuration/web_server_configuration`.
+    :doc:`/configuration/web_server_configuration`.
 
 .. note::
 
@@ -131,7 +131,7 @@ independently (for example, the admin UI, the front-end UI and database migratio
 .. note::
 
     There's a lot more the ``AppKernel`` can be used for, for example
-    :doc:`overriding the default directory structure </cookbook/configuration/override_dir_structure>`.
+    :doc:`overriding the default directory structure </configuration/override_dir_structure>`.
     But odds are high that you don't need to change things like this on the
     fly by having several ``AppKernel`` implementations.
 
@@ -144,7 +144,7 @@ This method is responsible for loading the application's
 configuration from the right *environment*.
 
 Environments have been covered extensively
-:doc:`in the previous chapter </cookbook/configuration/environments>`,
+:doc:`in the previous chapter </configuration/environments>`,
 and you probably remember that the Symfony Standard Edition comes with three
 of them - ``dev``, ``prod`` and ``test``.
 

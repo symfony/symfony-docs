@@ -4,7 +4,7 @@
 How to use Expressions in Security, Routing, Services, and Validation
 =====================================================================
 
-In Symfony 2.4, a powerful :doc:`ExpressionLanguage </components/expression_language/introduction>`
+In Symfony 2.4, a powerful :doc:`ExpressionLanguage </components/expression_language>`
 component was added to Symfony. This allows us to add highly customized
 logic inside configuration.
 

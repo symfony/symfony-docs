@@ -198,4 +198,4 @@ available for the core bundles can be found inside the :doc:`Reference Guide </r
 
     If you want to use dependency injection extensions in your own shared
     bundles and provide user friendly configuration, take a look at the
-    ":doc:`/cookbook/bundles/extension`" cookbook recipe.
+    ":doc:`/bundles/extension`" cookbook recipe.

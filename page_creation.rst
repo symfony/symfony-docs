@@ -32,7 +32,7 @@ Creating a Page: Route and Controller
 
 .. tip::
 
-    Before continuing, make sure you've read the :doc:`Installation </book/installation>`
+    Before continuing, make sure you've read the :doc:`Installation </installation>`
     chapter and can access your new Symfony app in the browser.
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
@@ -77,7 +77,7 @@ you run off to play the lottery, check out how this works.
 
 The ``@Route`` above ``numberAction()`` is called an *annotation* and it
 defines the URL pattern. You can also write routes in YAML (or other formats):
-read about this in the :doc:`routing </book/routing>` chapter. Actually, most
+read about this in the :doc:`routing </routing>` chapter. Actually, most
 routing examples in the docs have tabs that show you how each format looks.
 
 The method below the annotation - ``numberAction`` - is called the *controller*
@@ -253,7 +253,7 @@ The routing system can do a *lot* more, like supporting multiple placeholders
 (e.g. ``/blog/{category}/{page})``), making placeholders optional and forcing
 placeholder to match a regular expression (e.g. so that ``{count}`` *must*
 be a number). Find out about all of this and become a routing expert in the
-:doc:`Routing </book/routing>` chapter.
+:doc:`Routing </routing>` chapter.
 
 Rendering a Template (with the Service Container)
 -------------------------------------------------
@@ -281,7 +281,7 @@ Using the ``templating`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This doesn't change anything, but it *does* give you access to Symfony's
-:doc:`service container </book/service_container>`: an array-like object that
+:doc:`service container </service_container>`: an array-like object that
 gives you access to *every* useful object in the system. These useful objects are
 called *services*, and Symfony ships with a service object that can render
 Twig templates, another that can log messages and many more.
@@ -351,7 +351,7 @@ also get a lot of shortcut methods, like
     }
 
 You will learn more about these shortcut methods and how they work in the
-:doc:`Controller </book/controller>` chapter.
+:doc:`Controller </controller>` chapter.
 
 Create the Template
 ~~~~~~~~~~~~~~~~~~~
@@ -405,7 +405,7 @@ structure thanks to ``base.html.twig``.
 
 This is just the surface of Twig's power. When you're ready to master its
 syntax, loop over arrays, render other templates and other cool things, read
-the :doc:`Templating </book/templating>` chapter.
+the :doc:`Templating </templating>` chapter.
 
 Exploring the Project
 ---------------------
@@ -438,7 +438,7 @@ and everything lives inside of it. A bundle is like a "plugin" and you can
 *your* code lives in a bundle - typically ``AppBundle`` (though there's
 nothing special about ``AppBundle``). To find out more about bundles and
 why you might create multiple bundles (hint: sharing code between projects),
-see the :doc:`Bundles </book/bundles>` chapter.
+see the :doc:`Bundles </bundles>` chapter.
 
 So what about the other directories in the project?
 
@@ -454,7 +454,7 @@ So what about the other directories in the project?
 .. seealso::
 
     Symfony is flexible. If you need to, you can easily override the default
-    directory structure. See :doc:`/cookbook/configuration/override_dir_structure`.
+    directory structure. See :doc:`/configuration/override_dir_structure`.
 
 Application Configuration
 -------------------------
@@ -545,7 +545,7 @@ use the handy ``app/console`` command:
 
 There's a lot more power behind Symfony's configuration system, including
 environments, imports and parameters. To learn all of it, see the
-:doc:`Configuring Symfony (and Environments) </book/configuration>` chapter.
+:doc:`/configuration/configuration` chapter.
 
 What's Next?
 ------------
@@ -555,16 +555,16 @@ way of building beautiful, functional, fast and maintainable apps.
 
 Ok, time to finish mastering the fundamentals by reading these chapters:
 
-* :doc:`/book/controller`
-* :doc:`/book/routing`
-* :doc:`/book/templating`
+* :doc:`/controller`
+* :doc:`/routing`
+* :doc:`/templating`
 
-Then, in the :doc:`Symfony Book </book/index>`, learn about the
-:doc:`service container </book/service_container>`,
-the :doc:`form system </book/forms>`, using :doc:`Doctrine </book/doctrine>`
+Then, in the :doc:`Symfony Book </index>`, learn about the
+:doc:`service container </service_container>`,
+the :doc:`form system </forms>`, using :doc:`Doctrine </doctrine>`
 (if you need to query a database) and more!
 
-There's also a :doc:`Cookbook </cookbook/index>` *packed* with more advanced
+There's also a :doc:`Cookbook </index>` *packed* with more advanced
 "how to" articles to solve *a lot* of problems.
 
 Have fun!

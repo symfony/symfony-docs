@@ -34,7 +34,7 @@ Some notable or interesting tasks include:
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see
-  :doc:`/cookbook/doctrine/reverse_engineering`.
+  :doc:`/doctrine/reverse_engineering`.
 
 * ``doctrine:mapping:info`` - tells you all of the entities that Doctrine
   is aware of and whether or not there are any basic errors with the mapping.

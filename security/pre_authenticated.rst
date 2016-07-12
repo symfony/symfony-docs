@@ -13,7 +13,7 @@ authenticated when reaching your application.
 
 .. caution::
 
-    :doc:`User impersonation </cookbook/security/impersonating_user>` is not
+    :doc:`User impersonation </security/impersonating_user>` is not
     compatible with pre-authenticated firewalls. The reason is that
     impersonation requires the authentication state to be maintained server-side,
     but pre-authenticated information (``SSL_CLIENT_S_DN_Email``, ``REMOTE_USER``
@@ -94,8 +94,8 @@ in the x509 firewall configuration respectively.
     object of your choice. For more information on creating or configuring a user
     provider, see:
 
-    * :doc:`/cookbook/security/custom_provider`
-    * :doc:`/cookbook/security/entity_provider`
+    * :doc:`/security/custom_provider`
+    * :doc:`/security/entity_provider`
 
 REMOTE_USER Based Authentication
 --------------------------------

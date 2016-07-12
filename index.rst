@@ -38,22 +38,12 @@ Book
 
 Dive into Symfony with the topical guides:
 
-.. toctree::
-    :hidden:
-
-    book/index
-
-.. include:: /book/map.rst.inc
+.. include:: /map.rst.inc
 
 Cookbook
 --------
 
-.. toctree::
-    :hidden:
-
-    cookbook/index
-
-Read the :doc:`Cookbook </cookbook/index>`.
+Read the :doc:`Cookbook </index>`.
 
 Best Practices
 --------------

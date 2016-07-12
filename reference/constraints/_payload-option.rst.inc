@@ -11,6 +11,6 @@ The configured payload is not used by the Validator component, but its processin
 is completely up to you.
 
 For example, you may want to use
-:doc:`several error levels </cookbook/validation/severity>` to present failed
+:doc:`several error levels </validation/severity>` to present failed
 constraints differently in the front-end depending on the severity of the
 error.

@@ -11,7 +11,7 @@ How to Create and Store a Symfony Project in Git
     Though this entry is specifically about Git, the same generic principles
     will apply if you're storing your project in Subversion.
 
-Once you've read through :doc:`/book/page_creation` and become familiar with
+Once you've read through :doc:`/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. In this
 cookbook article, you'll learn the best way to start a new Symfony project
 that's stored using the `Git`_ source control management system.
@@ -20,7 +20,7 @@ Initial Project Setup
 ---------------------
 
 To get started, you'll need to download Symfony and get things running. See
-the :doc:`/book/installation` chapter for details.
+the :doc:`/installation` chapter for details.
 
 Once your project is running, just follow these simple steps:
 
@@ -63,14 +63,14 @@ At this point, you have a fully-functional Symfony project that's correctly
 committed to Git. You can immediately begin development, committing the new
 changes to your Git repository.
 
-You can continue to follow along with the :doc:`/book/page_creation` chapter
+You can continue to follow along with the :doc:`/page_creation` chapter
 to learn more about how to configure and develop inside your application.
 
 .. tip::
 
     The Symfony Standard Edition comes with some example functionality. To
     remove the sample code, follow the instructions in the
-    ":doc:`/cookbook/bundles/remove`" article.
+    ":doc:`/bundles/remove`" article.
 
 .. _cookbook-managing-vendor-libraries:
 

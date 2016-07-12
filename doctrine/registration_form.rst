@@ -16,7 +16,7 @@ example) and then save it.
     form and other user management functionality.
 
 If you don't already have a ``User`` entity and a working login system,
-first start with :doc:`/cookbook/security/entity_provider`.
+first start with :doc:`/security/entity_provider`.
 
 Your ``User`` entity will probably at least have the following fields:
 
@@ -203,7 +203,7 @@ There are just three fields: ``email``, ``username`` and ``plainPassword``
 .. tip::
 
     To explore more things about the Form component, read the
-    :doc:`chapter about forms </book/forms>` in the book.
+    :doc:`chapter about forms </forms>` in the book.
 
 Handling the Form Submission
 ----------------------------
@@ -369,7 +369,7 @@ Next, create the template:
             <button type="submit">Register!</button>
         <?php echo $view['form']->end($form) ?>
 
-See :doc:`/cookbook/form/form_customization` for more details.
+See :doc:`/form/form_customization` for more details.
 
 Update your Database Schema
 ---------------------------

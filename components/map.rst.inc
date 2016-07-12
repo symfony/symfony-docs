@@ -34,7 +34,6 @@
 
 * :doc:`/components/dependency_injection`
 
-  * :doc:`/components/dependency_injection/introduction`
   * :doc:`/components/dependency_injection/types`
   * :doc:`/components/dependency_injection/parameters`
   * :doc:`/components/dependency_injection/definitions`
