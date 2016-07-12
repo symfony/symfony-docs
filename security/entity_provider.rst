@@ -475,7 +475,7 @@ For more details on these methods, see :class:`Symfony\\Component\\Security\\Cor
 .. tip::
 
     Don't forget to add the repository class to the
-    :ref:`mapping definition of your entity <book-doctrine-custom-repository-classes>`.
+    :doc:`mapping definition of your entity </doctrine/repository>`.
 
 To finish this, just remove the ``property`` key from the user provider in
 ``security.yml``:
