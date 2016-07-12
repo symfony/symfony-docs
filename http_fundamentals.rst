@@ -6,20 +6,11 @@
 Symfony and HTTP Fundamentals
 =============================
 
-Congratulations! By learning about Symfony, you're well on your way towards
-being a more *productive*, *well-rounded* and *popular* web developer (actually,
-you're on your own for the last part). Symfony is built to get back to
-basics: to develop tools that let you develop faster and build more robust
-applications, while staying out of your way. Symfony is built on the best
-ideas from many technologies: the tools and concepts you're about to learn
-represent the efforts of thousands of people, over many years. In other words,
-you're not just learning "Symfony", you're learning the fundamentals of the
-web, development best practices and how to use many amazing new PHP libraries,
-inside or independently of Symfony. So, get ready.
-
-True to the Symfony philosophy, this chapter begins by explaining the fundamental
-concept common to web development: HTTP. Regardless of your background or
-preferred programming language, this chapter is a **must-read** for everyone.
+Symfony is built using the HTTP Response-Request flow. This means that knowing
+HTTP fundamentals is an important part of understanding Symfony. Fortunately,
+understanding a basic Request-Response flow in HTTP is not difficult. This
+chapter will walk you through the HTTP fundamental basics and what this means
+for Symfony.
 
 HTTP is Simple
 --------------
