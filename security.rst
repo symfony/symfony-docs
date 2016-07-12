@@ -1415,11 +1415,10 @@ parts are when you have custom requirements: like a custom authentication
 strategy (e.g. API tokens), complex authorization logic and many other things
 (because security is complex!).
 
-Fortunately, there are a lot of :doc:`Security Cookbook Articles </security/index>`
-aimed at describing many of these situations. Also, see the
-:doc:`Security Reference Section </reference/configuration/security>`. Many
-of the options don't have specific details, but seeing the full possible
-configuration tree may be useful.
+Fortunately, there are a lot of Security Cookbook Articles aimed at describing
+many of these situations. Also, see the :doc:`Security Reference Section
+</reference/configuration/security>`. Many of the options don't have specific
+details, but seeing the full possible configuration tree may be useful.
 
 Good luck!
 
@@ -1433,9 +1432,7 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
-    security/ldap
     security/entity_provider
-    security/guard-authentication
     security/remember_me
     security/impersonating_user
     security/form_login
@@ -1448,10 +1445,8 @@ Authentication (Identifying/Logging in the User)
     security/csrf_in_login_form
     security/named_encoders
     security/multiple_user_providers
-    security/multiple_guard_authenticators
     security/firewall_restriction
     security/host_restriction
-    security/user_checkers
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

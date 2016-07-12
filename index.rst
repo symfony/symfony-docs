@@ -82,6 +82,9 @@ Advanced Topics
     expressions
     frontend
     performance
+    profiler
+    request
+    session
 
 Best Practices
 --------------

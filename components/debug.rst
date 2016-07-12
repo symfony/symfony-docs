@@ -73,6 +73,8 @@ and more useful::
     available, the handler uses a Symfony Response object; if not, it falls
     back to a regular PHP response.
 
+.. _component-debug-class-loader:
+
 Debugging a Class Loader
 ------------------------
 
