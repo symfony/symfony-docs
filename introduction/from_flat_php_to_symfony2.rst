@@ -336,10 +336,7 @@ application change slightly, but start to become more flexible:
     /index.php          => Blog post list page (index.php executed)
     /index.php/show     => Blog post show page (index.php executed)
 
-.. tip::
-
-    By using rewrite rules in your :doc:`web server configuration </cookbook/configuration/web_server_configuration>`,
-    the ``index.php`` won't be needed and you will have beautiful, clean URLs (e.g. ``/show``).
+.. include:: includes/_rewrite_rule_tip.rst.inc
 
 When using a front controller, a single PHP file (``index.php`` in this case)
 renders *every* request. For the blog post show page, ``/index.php/show`` will
