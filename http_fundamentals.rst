@@ -6,11 +6,11 @@
 Symfony and HTTP Fundamentals
 =============================
 
-Symfony is built using the HTTP Response-Request flow. This means that knowing
-HTTP fundamentals is an important part of understanding Symfony. Fortunately,
-understanding a basic Request-Response flow in HTTP is not difficult. This
-chapter will walk you through the HTTP fundamental basics and what this means
-for Symfony.
+Symfony is modeled after the HTTP Response-Request flow. This means that
+knowing HTTP fundamentals is an important part of understanding Symfony.
+Fortunately, understanding a basic Request-Response flow in HTTP is not
+difficult. This chapter will walk you through the HTTP fundamental basics and
+what this means for Symfony.
 
 Requests and Responses in HTTP
 ------------------------------
@@ -24,8 +24,7 @@ to communicate with each other. For example, when checking for the latest
 
 And while the actual language used is a bit more formal, it's still dead-simple.
 HTTP is the term used to describe this simple text-based language. The goal of
-your server is *always* to understand simple text requests and return simple
-text responses.
+your server is *always* to understand text requests and return text responses.
 
 Symfony is built from the ground up around that reality. Whether you realize
 it or not, HTTP is something you use every day. With Symfony, you'll learn
@@ -69,13 +68,13 @@ known as verbs) define the few common ways that the client can act upon the
 resource - the most common HTTP methods are:
 
 **GET**
-    Retrieve the resource from the server;
+    Retrieve the resource from the server (e.g. when visiting a page);
 **POST**
-    Create a resource on the server;
+    Create a resource on the server (e.g. when submitting a form);
 **PUT**/**PATCH**
-    Update the resource on the server;
+    Update the resource on the server (used by APIs);
 **DELETE**
-    Delete the resource from the server.
+    Delete the resource from the server (used by APIs).
 
 With this in mind, you can imagine what an HTTP request might look like to
 delete a specific blog entry, for example:
@@ -132,8 +131,7 @@ case).
 The status code communicates the overall outcome of the request back to the
 client. Was the request successful? Was there an error? Different status codes
 exist that indicate success, an error or that the client needs to do something
-(e.g. redirect to another page). A full list can be found on Wikipedia's
-`List of HTTP status codes`_ article.
+(e.g. redirect to another page). Check out the `list of HTTP status codes`_.
 
 Like the request, an HTTP response contains additional pieces of information
 known as HTTP headers. The body of the same resource could be returned in multiple
@@ -354,19 +352,21 @@ other tools Symfony makes available - to create and return a ``Response``
 object. In other words, the controller is where *your* code goes: it's where
 you interpret the request and create a response.
 
-It's that easy! To review:
+Conclusion
+----------
 
-* Each request executes the same, single file (called a "front controller");
+To review what you've learned so far:
 
-* The front controller boots Symfony, and passes it request information;
-
-* The router matches the incoming URL to a specific route and returns information
-  about the route, including the controller (i.e. function) that should be executed;
-
-* The controller (function) is executed: this is where *your* code creates and
-  returns the appropriate ``Response`` object;
-
-* The HTTP headers and content of the ``Response`` object are sent back to the client.
+#. A client sends an HTTP request;
+#. Each request executes the same, single file (called a "front controller");
+#. The front controller boots Symfony and passes the request information;
+#. The router matches the request URI to a specific route and returns
+   information about the route, including the controller (usually a PHP method)
+   that should be executed;
+#. The controller (PHP method) is executed: this is where *your* code creates
+   and returns the appropriate ``Response`` object;
+#. Symfony turns your ``Response`` object into the text headers and content
+   (i.e. the HTTP response), which are sent back to the client.
 
 Symfony provides a powerful set of tools for rapidly developing web applications
 without imposing on your application. Normal users can quickly start development
@@ -379,7 +379,7 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
-.. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+.. _`list of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Swift Mailer`: http://swiftmailer.org/
