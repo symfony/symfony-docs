@@ -427,6 +427,8 @@ method::
 If the Response is not modified, it sets the status code to 304 and removes the
 actual response content.
 
+.. _redirect-response:
+
 Redirecting the User
 ~~~~~~~~~~~~~~~~~~~~
 

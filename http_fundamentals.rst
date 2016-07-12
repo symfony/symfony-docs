@@ -6,11 +6,12 @@
 Symfony and HTTP Fundamentals
 =============================
 
-Symfony is modeled after the HTTP Response-Request flow. This means that
-knowing HTTP fundamentals is an important part of understanding Symfony.
-Fortunately, understanding a basic Request-Response flow in HTTP is not
-difficult. This chapter will walk you through the HTTP fundamental basics and
-what this means for Symfony.
+Great news! While you're learning Symfony, you're *also* learning the fundamentals
+of the *web*. Symfony is closely modeled after the HTTP Request-Response flow: that
+*fundamental* paradigm that's behind almost *all* communication on the web.
+
+In this chapter, you'll walk through the HTTP fundamentals and find out how these
+are applied throughout Symfony.
 
 Requests and Responses in HTTP
 ------------------------------
@@ -261,6 +262,12 @@ needs to be returned to the client::
     // print the HTTP headers followed by the content
     $response->send();
 
+There are also several response *sub-classes* to help you return
+:ref:`JSON <component-http-foundation-json-response>`,
+:ref:`redirect <redirect-response>`,
+:ref:`stream file downloads <component-http-foundation-serving-files>`
+and more.
+
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
@@ -314,18 +321,33 @@ handles every request coming into your application. For example:
 | ``/index.php/blog``    | executes ``index.php`` |
 +------------------------+------------------------+
 
-.. tip::
-
-    By using rewrite rules in your
-    :doc:`web server configuration </cookbook/configuration/web_server_configuration>`,
-    the ``index.php`` won't be needed and you will have beautiful, clean URLs
-    (e.g. ``/show``).
+.. include:: includes/_rewrite_rule_tip.rst.inc
 
 Now, every request is handled exactly the same way. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
-is done internally. This solves both problems with the original approach.
-Almost all modern web apps do this.
+is done internally.
+
+A very simple front controller might look like this::
+
+    // index.php
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+
+    $request = Request::createFromGlobals();
+    $path = $request->getPathInfo(); // the URI path being requested
+
+    if (in_array($path, array('', '/'))) {
+        $response = new Response('Welcome to the homepage.');
+    } elseif ('/contact' === $path) {
+        $response = new Response('Contact us');
+    } else {
+        $response = new Response('Page not found.', Response::HTTP_NOT_FOUND);
+    }
+    $response->send();
+
+This is better, but this is still a lot of repeated work! Fortunately, Symfony can
+help once again.
 
 .. index::
     single: HTTP; Symfony request flow
@@ -333,8 +355,9 @@ Almost all modern web apps do this.
 The Symfony Application Flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony will operate in this front-controller file to handle each incoming
-request. Symfony follows the same simple pattern for every request:
+A Symfony framework application *also* uses a front-controller file. But inside,
+*Symfony* is responsible for handling each incoming request and figuring out what
+to do:
 
 .. _request-flow-figure:
 
@@ -345,33 +368,24 @@ request. Symfony follows the same simple pattern for every request:
    Incoming requests are interpreted by the :doc:`Routing component </book/routing>` and
    passed to PHP functions that return ``Response`` objects.
 
-Each "page" of your site is defined in a routing configuration file that
-maps different URLs to different PHP functions. The job of each PHP function,
-called a controller, is to use information from the request - along with many
-other tools Symfony makes available - to create and return a ``Response``
-object. In other words, the controller is where *your* code goes: it's where
-you interpret the request and create a response.
+This may not make sense yet, but as you keep reading, you'll learn about :ref:`routes </routing>`
+and :ref:`controllers </controller>`: the two fundamental parts to creating a page.
+But as you go along, don't forget that no matter *how* complex your app gets, your
+job is always the same: read information from the Request and use it to create a
+Response.
 
-Conclusion
-----------
+Summary: The Request-Response Flow
+----------------------------------
 
-To review what you've learned so far:
+Here's what we've learned s ofar:
 
-#. A client sends an HTTP request;
+#. A client (e.g. a browser) sends an HTTP request;
 #. Each request executes the same, single file (called a "front controller");
 #. The front controller boots Symfony and passes the request information;
-#. The router matches the request URI to a specific route and returns
-   information about the route, including the controller (usually a PHP method)
-   that should be executed;
-#. The controller (PHP method) is executed: this is where *your* code creates
-   and returns the appropriate ``Response`` object;
+#. Internally, Symfony uses *routes* and *controllers* to create the Response for
+   the page (we'll learn about these soon!);
 #. Symfony turns your ``Response`` object into the text headers and content
    (i.e. the HTTP response), which are sent back to the client.
-
-Symfony provides a powerful set of tools for rapidly developing web applications
-without imposing on your application. Normal users can quickly start development
-by using a Symfony distribution, which provides a project skeleton with
-sensible defaults. For more advanced users, the sky is the limit.
 
 .. _`xkcd`: http://xkcd.com/
 .. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest
