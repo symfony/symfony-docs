@@ -232,6 +232,7 @@ your controller::
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // the $task object will now contain the submitted data!
             // ... perform some action, such as saving the task to the database
 
             return $this->redirectToRoute('task_success');
@@ -257,7 +258,7 @@ your controller::
 This controller follows a common pattern for handling forms, and has three
 possible paths:
 
-#. When initially loading the page in a browser, the form is simply created and
+#. When initially loading the page in a browser, the form is created and
    rendered. :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes that the form was not submitted and does nothing.
    :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted` returns ``false``
@@ -268,7 +269,7 @@ possible paths:
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated. If it is invalid (validation is covered in the next section),
    :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns
-   ``false``, so the form is rendered together with all validation errors;
+   ``false`` and the form is rendered again, but now with validation errors;
 
 #. When the user submits the form with valid data, the submitted data is again
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
@@ -286,7 +287,7 @@ possible paths:
 
     If you need more control over exactly when your form is submitted or which
     data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
-    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+    method. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
 
 .. index::
    single: Forms; Validation
@@ -388,11 +389,14 @@ object.
 That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
+Validation is a very powerful feature of Symfony and has its own
+:doc:`dedicated chapter </book/validation>`.
+
 .. _book-forms-html5-validation-disable:
 
 .. sidebar:: HTML5 Validation
 
-   As of HTML5, many browsers can natively enforce certain validation constraints
+   Thanks to HTML5, many browsers can natively enforce certain validation constraints
    on the client side. The most common validation is activated by rendering
    a ``required`` attribute on fields that are required. For browsers that
    support HTML5, this will result in a native browser message being displayed
@@ -419,9 +423,6 @@ corresponding errors printed out with the form.
            <?php echo $view['form']->form($form, array(
                'attr' => array('novalidate' => 'novalidate'),
            )) ?>
-
-Validation is a very powerful feature of Symfony and has its own
-:doc:`dedicated chapter </validation>`.
 
 .. index::
    single: Forms; Built-in field types
