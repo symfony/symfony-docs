@@ -19,7 +19,7 @@ can be.
     This chapter is all about the Doctrine ORM, which aims to let you map
     objects to a relational database (such as *MySQL*, *PostgreSQL* or
     *Microsoft SQL*). If you prefer to use raw database queries, this is
-    easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
+    easy, and explained in the ":doc:`/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
     more information, read the "`DoctrineMongoDBBundle`_"
@@ -108,7 +108,7 @@ information. By convention, this information is usually configured in an
     easily keep different versions of the file on each server. You can also
     easily store database configuration (or any sensitive information) outside
     of your project, like inside your Apache configuration, for example. For
-    more information, see :doc:`/cookbook/configuration/external_parameters`.
+    more information, see :doc:`/configuration/external_parameters`.
 
 Now that Doctrine can connect to your database, the following command
 can automatically generate an empty ``test_project`` database for you:
@@ -525,7 +525,7 @@ a controller, this is pretty easy. Add the following method to the
     method of the controller. This method is a shortcut to get the
     ``doctrine`` service. You can work with Doctrine anywhere else
     by injecting that service in the service. See
-    :doc:`/book/service_container` for more on creating your own services.
+    :doc:`/service_container` for more on creating your own services.
 
 Take a look at the previous example in more detail:
 
@@ -1403,7 +1403,7 @@ Doctrine's `Lifecycle Events documentation`_.
     If you need to do some heavier lifting - like performing logging or sending
     an email - you should register an external class as an event listener
     or subscriber and give it access to whatever resources you need. For
-    more information, see :doc:`/cookbook/doctrine/event_listeners_subscribers`.
+    more information, see :doc:`/doctrine/event_listeners_subscribers`.
 
 .. _book-doctrine-field-types:
 
@@ -1434,11 +1434,11 @@ lifecycle.
 Learn more
 ~~~~~~~~~~
 
-For more information about Doctrine, see the *Doctrine* section of the
-:doc:`cookbook </cookbook/index>`. Some useful articles might be:
+.. toctree::
+    :glob:
 
-* :doc:`/cookbook/doctrine/common_extensions`
-* :doc:`/cookbook/doctrine/console`
+    doctrine/*
+
 * `DoctrineFixturesBundle`_
 * `DoctrineMongoDBBundle`_
 

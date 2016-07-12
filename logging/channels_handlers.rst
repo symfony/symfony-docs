@@ -176,4 +176,4 @@ the automatically registered logger service ``monolog.logger.foo``.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/logging/monolog`
+* :doc:`/logging/monolog`

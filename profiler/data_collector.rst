@@ -4,7 +4,7 @@
 How to Create a custom Data Collector
 =====================================
 
-The :doc:`Symfony Profiler </cookbook/profiler/index>` delegates data collection
+The :doc:`Symfony Profiler </profiler/index>` delegates data collection
 to some special classes called data collectors. Symfony comes bundled with a few
 of them, but you can easily create your own.
 
@@ -24,7 +24,7 @@ The
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName`
 method returns the name of the data collector and must be unique in the
 application. This value is also used to access the information later on (see
-:doc:`/cookbook/testing/profiling` for instance).
+:doc:`/testing/profiling` for instance).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect`

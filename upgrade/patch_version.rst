@@ -23,4 +23,4 @@ update.
     It is recommended to update to a new patch version as soon as possible, as
     important bugs and security leaks may be fixed in these new releases.
 
-.. include:: /cookbook/upgrade/_update_all_packages.rst.inc
+.. include:: /upgrade/_update_all_packages.rst.inc

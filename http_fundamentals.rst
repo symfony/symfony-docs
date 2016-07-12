@@ -271,7 +271,7 @@ and more.
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
-    called :doc:`symfony/http-foundation </components/http_foundation/introduction>`
+    called :doc:`symfony/http-foundation </components/http_foundation>`
     that you can use in *any* PHP project. This also contains classes for handling
     sessions, file uploads and more.
 
@@ -321,7 +321,7 @@ handles every request coming into your application. For example:
 | ``/index.php/blog``    | executes ``index.php`` |
 +------------------------+------------------------+
 
-.. include:: includes/_rewrite_rule_tip.rst.inc
+.. include:: /includes/_rewrite_rule_tip.rst.inc
 
 Now, every request is handled exactly the same way. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
@@ -365,7 +365,7 @@ to do:
    :align: center
    :alt: Symfony request flow
 
-   Incoming requests are interpreted by the :doc:`Routing component </book/routing>` and
+   Incoming requests are interpreted by the :doc:`Routing component </routing>` and
    passed to PHP functions that return ``Response`` objects.
 
 This may not make sense yet, but as you keep reading, you'll learn about :ref:`routes </routing>`

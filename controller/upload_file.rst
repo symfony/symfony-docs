@@ -84,7 +84,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
 
 Now, update the template that renders the form to display the new ``brochure``
 field (the exact template code to add depends on the method used by your application
-to :doc:`customize form rendering </cookbook/form/form_customization>`):
+to :doc:`customize form rendering </form/form_customization>`):
 
 .. configuration-block::
 
@@ -313,7 +313,7 @@ Using a Doctrine Listener
 -------------------------
 
 If you are using Doctrine to store the Product entity, you can create a
-:doc:`Doctrine listener </cookbook/doctrine/event_listeners_subscribers>` to
+:doc:`Doctrine listener </doctrine/event_listeners_subscribers>` to
 automatically upload the file when persisting the entity::
 
     // src/AppBundle/EventListener/BrochureUploadListener.php

@@ -9,7 +9,7 @@ The DependencyInjection Component
     the way objects are constructed in your application.
 
 For an introduction to Dependency Injection and service containers see
-:doc:`/book/service_container`.
+:doc:`/service_container`.
 
 Installation
 ------------
@@ -189,7 +189,7 @@ for the services rather than using PHP to define the services as in the
 above examples. In anything but the smallest applications it makes sense
 to organize the service definitions by moving them into one or more configuration
 files. To do this you also need to install
-:doc:`the Config component </components/config/introduction>`.
+:doc:`the Config component </components/config>`.
 
 Loading an XML config file::
 
@@ -214,7 +214,7 @@ Loading a YAML config file::
 .. note::
 
     If you want to load YAML config files then you will also need to install
-    :doc:`the Yaml component </components/yaml/introduction>`.
+    :doc:`the Yaml component </components/yaml>`.
 
 If you *do* want to use PHP to create the services then you can move this
 into a separate config file and load it in a similar way::

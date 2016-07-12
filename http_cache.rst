@@ -262,7 +262,7 @@ misses.
     your traffic increases.
 
     For more information on using Varnish with Symfony, see the
-    :doc:`How to use Varnish </cookbook/cache/varnish>` cookbook chapter.
+    :doc:`How to use Varnish </cache/varnish>` cookbook chapter.
 
 .. note::
 
@@ -1245,7 +1245,10 @@ Varnish.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/cache/varnish`
+.. toctree::
+    :glob:
+
+    cache/*
 
 .. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/

@@ -11,7 +11,7 @@ to understand a bug a user sees that you can't reproduce).
 .. caution::
 
     User impersonation is not compatible with
-    :doc:`pre authenticated firewalls </cookbook/security/pre_authenticated>`. The
+    :doc:`pre authenticated firewalls </security/pre_authenticated>`. The
     reason is that impersonation requires the authentication state to be maintained
     server-side, but pre-authenticated information (``SSL_CLIENT_S_DN_Email``,
     ``REMOTE_USER`` or other) is sent in each request.
@@ -184,7 +184,7 @@ is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserE
 passed to the listener, and you can use this to get the user that you are now impersonating.
 
 The cookbook article about
-:doc:`Making the Locale "Sticky" during a User's Session </cookbook/session/locale_sticky_session>`
+:doc:`Making the Locale "Sticky" during a User's Session </session/locale_sticky_session>`
 does not update the locale when you impersonate a user. The following code sample will show
 how to change the sticky locale:
 

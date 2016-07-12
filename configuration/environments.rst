@@ -140,7 +140,7 @@ either the ``app.php`` (for the ``prod`` environment) or the ``app_dev.php``
 
    The given URLs assume that your web server is configured to use the ``web/``
    directory of the application as its root. Read more in
-   :doc:`Installing Symfony </book/installation>`.
+   :doc:`Installing Symfony </installation>`.
 
 If you open up one of these files, you'll quickly see that the environment
 used by each is explicitly set::
@@ -179,7 +179,7 @@ this code and changing the environment string.
     and ``false`` for the ``prod`` environment.
 
     Internally, the value of the debug mode becomes the ``kernel.debug``
-    parameter used inside the :doc:`service container </book/service_container>`.
+    parameter used inside the :doc:`service container </service_container>`.
     If you look inside the application configuration file, you'll see the
     parameter used, for example, to turn logging on or off when using the
     Doctrine DBAL:
@@ -378,9 +378,9 @@ includes the following:
 .. note::
 
     You can easily change the directory location and name. For more information
-    read the article :doc:`/cookbook/configuration/override_dir_structure`.
+    read the article :doc:`/configuration/override_dir_structure`.
 
 Going further
 -------------
 
-Read the article on :doc:`/cookbook/configuration/external_parameters`.
+Read the article on :doc:`/configuration/external_parameters`.

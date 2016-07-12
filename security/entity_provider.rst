@@ -291,12 +291,12 @@ name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
+.. include:: /security/_ircmaxwell_password-compat.rst.inc
 
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add users, you can implement a :doc:`registration form </cookbook/doctrine/registration_form>`
+To add users, you can implement a :doc:`registration form </doctrine/registration_form>`
 or add some `fixtures`_. This is just a normal entity, so there's nothing
 tricky, *except* that you need to encode each user's password. But don't
 worry, Symfony gives you a service that will do this for you. See :ref:`security-encoding-password`
@@ -411,7 +411,7 @@ template to customize them further).
     not be deserialized correctly from the session on each request.
 
 Congrats! Your database-loading security system is all setup! Next, add a
-true :doc:`login form </cookbook/security/form_login>` instead of HTTP Basic
+true :doc:`login form </security/form_login>` instead of HTTP Basic
 or keep reading for other topics.
 
 .. _authenticating-someone-with-a-custom-entity-provider:

@@ -166,4 +166,4 @@ so that the severity is added as an additional HTML class:
 
 .. seealso::
 
-    For more information on customizing form rendering, see :doc:`/cookbook/form/form_customization`.
+    For more information on customizing form rendering, see :doc:`/form/form_customization`.

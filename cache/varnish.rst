@@ -78,9 +78,9 @@ authentication, have Varnish remove the corresponding header from requests to
 prevent clients from bypassing the cache. In practice, you will need sessions
 at least for some parts of the site, e.g. when using forms with
 :ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to
-:doc:`only start a session when actually needed </cookbook/session/avoid_session_start>`
+:doc:`only start a session when actually needed </session/avoid_session_start>`
 and clear the session when it is no longer needed. Alternatively, you can look
-into :doc:`/cookbook/cache/form_csrf_caching`.
+into :doc:`/cache/form_csrf_caching`.
 
 Cookies created in JavaScript and used only in the frontend, e.g. when using
 Google Analytics, are nonetheless sent to the server. These cookies are not

@@ -72,7 +72,7 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
     }
 
 In a few rare cases, you may want a bundle to be *only* enabled in the development
-:doc:`environment </cookbook/configuration/environments>`. For example,
+:doc:`environment </configuration/environments>`. For example,
 the DoctrineFixturesBundle helps to load dummy data - something you probably
 only want to do while developing. To only load this bundle in the ``dev``
 and ``test`` environments, register the bundle in this way::

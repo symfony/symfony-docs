@@ -4,7 +4,7 @@
 How to Call a Command from a Controller
 =======================================
 
-The :doc:`Console component documentation </components/console/introduction>`
+The :doc:`Console component documentation </components/console>`
 covers how to create a console command. This cookbook article covers how
 to use a console command directly from your controller.
 
@@ -21,7 +21,7 @@ their code. Instead, you can execute the command directly.
     overhead.
 
 Imagine you want to send spooled Swift Mailer messages by
-:doc:`using the swiftmailer:spool:send command </cookbook/email/spool>`.
+:doc:`using the swiftmailer:spool:send command </email/spool>`.
 Run this command from inside your controller via::
 
     // src/AppBundle/Controller/SpoolController.php

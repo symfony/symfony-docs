@@ -22,7 +22,7 @@ Manually Logging from a Console Command
 ---------------------------------------
 
 This one is really simple. When you create a console command within the full-stack
-framework as described in ":doc:`/cookbook/console/console_command`", your command
+framework as described in ":doc:`/console/console_command`", your command
 extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`.
 This means that you can simply access the standard logger service through the
 container and use it to do the logging::

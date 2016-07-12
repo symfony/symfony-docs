@@ -249,7 +249,7 @@ workflow looks like the following from inside a controller::
 
     This example uses an ``AuthorType`` form class, which is not shown here.
 
-For more information, see the :doc:`Forms </book/forms>` chapter.
+For more information, see the :doc:`Forms </forms>` chapter.
 
 .. index::
    pair: Validation; Configuration
@@ -320,7 +320,7 @@ Symfony packages many of the most commonly-needed constraints:
 .. include:: /reference/constraints/map.rst.inc
 
 You can also create your own custom constraints. This topic is covered in
-the ":doc:`/cookbook/validation/custom_constraint`" article of the cookbook.
+the ":doc:`/validation/custom_constraint`" article of the cookbook.
 
 .. index::
    single: Validation; Constraints configuration
@@ -1297,10 +1297,13 @@ getter methods of your object. And while you'll most commonly use the validation
 framework indirectly when using forms, remember that it can be used anywhere
 to validate any object.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
-* :doc:`/cookbook/validation/custom_constraint`
+.. toctree::
+    :glob:
+
+    /validation/*
 
 .. _Validator: https://github.com/symfony/validator
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303

@@ -5,7 +5,7 @@ How to Include External Routing Resources
 =========================================
 
 All routes are loaded via a single configuration file - usually ``app/config/routing.yml``
-(see `Creating Routes`_ above). However, if you use routing annotations,
+(see :ref:`routing-creating-routes`). However, if you use routing annotations,
 you'll need to point the router to the controllers with the annotations.
 This can be done by "importing" directories into the routing configuration:
 

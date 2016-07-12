@@ -104,7 +104,7 @@ bundle configuration would look like:
 
 .. seealso::
 
-    Read more about the extension in :doc:`/cookbook/bundles/extension`.
+    Read more about the extension in :doc:`/bundles/extension`.
 
 .. tip::
 
@@ -118,14 +118,14 @@ bundle configuration would look like:
 .. seealso::
 
     For parameter handling within a dependency injection container see
-    :doc:`/cookbook/configuration/using_parameters_in_dic`.
+    :doc:`/configuration/using_parameters_in_dic`.
 
 
 Processing the ``$configs`` Array
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First things first, you have to create an extension class as explained in
-:doc:`extension`.
+:doc:`/bundles/extension`.
 
 Whenever a user includes the ``acme_social`` key (which is the DI alias) in a
 configuration file, the configuration under it is added to an array of
@@ -285,7 +285,7 @@ to allow one ``Extension`` class to modify the configuration passed to another
 bundle's ``Extension`` class, as if the end-developer has actually placed that
 configuration in their ``app/config/config.yml`` file. This can be achieved
 using a prepend extension. For more details, see
-:doc:`/cookbook/bundles/prepend_extension`.
+:doc:`/bundles/prepend_extension`.
 
 Dump the Configuration
 ----------------------

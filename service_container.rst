@@ -31,7 +31,7 @@ the service container makes writing good code so easy.
 .. tip::
 
     If you want to know a lot more after reading this chapter, check out
-    the :doc:`DependencyInjection component documentation </components/dependency_injection/introduction>`.
+    the :doc:`DependencyInjection component documentation </components/dependency_injection>`.
 
 .. index::
    single: Service Container; What is a service?
@@ -145,7 +145,7 @@ As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
-":doc:`/cookbook/service_container/scopes`" cookbook article.
+":doc:`/service_container/scopes`" cookbook article.
 
 .. note::
 
@@ -456,15 +456,17 @@ Injecting the dependency by the setter method just needs a change of syntax:
 Learn more
 ----------
 
+.. toctree::
+    :glob:
+
+    /service_container/*
+    /service_container/service_container/*
+
 * :doc:`/components/dependency_injection/parameters`
 * :doc:`/components/dependency_injection/compilation`
 * :doc:`/components/dependency_injection/definitions`
 * :doc:`/components/dependency_injection/factories`
 * :doc:`/components/dependency_injection/parentservices`
-* :doc:`/components/dependency_injection/tags`
-* :doc:`/cookbook/controller/service`
-* :doc:`/cookbook/service_container/scopes`
-* :doc:`/cookbook/service_container/compiler_passes`
 * :doc:`/components/dependency_injection/advanced`
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture

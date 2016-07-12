@@ -4,7 +4,7 @@
 How to Create a Console Command
 ===============================
 
-The Console page of the Components section (:doc:`/components/console/introduction`) covers
+The Console page of the Components section (:doc:`/components/console`) covers
 how to create a console command. This cookbook article covers the differences
 when creating console commands within the Symfony Framework.
 
@@ -76,7 +76,7 @@ Register Commands in the Service Container
 -------------------------------------------
 
 Just like controllers, commands can be declared as services. See the
-:doc:`dedicated cookbook entry </cookbook/console/commands_as_services>`
+:doc:`dedicated cookbook entry </console/commands_as_services>`
 for details.
 
 Getting Services from the Service Container

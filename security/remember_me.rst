@@ -287,4 +287,4 @@ your controller using annotations:
       they are not, yet, fully authenticated.
 
 For more information on securing services or methods in this way,
-see :doc:`/cookbook/security/securing_services`.
+see :doc:`/security/securing_services`.

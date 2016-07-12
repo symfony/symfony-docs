@@ -132,7 +132,7 @@ The extension alias (configuration key) can also be used:
 
 .. note::
 
-    See the cookbook article: :doc:`/cookbook/bundles/extension` for
+    See the cookbook article: :doc:`/bundles/extension` for
     information on adding configuration for your own bundle.
 
 .. index::
@@ -192,7 +192,7 @@ cached files and allow them to rebuild:
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
+    be accessed directly through the browser. See the :doc:`testing chapter </testing>`
     for more details.
 
 .. tip::

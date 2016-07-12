@@ -642,7 +642,7 @@ form_theme
 
 Sets the resources to override the form theme for the given form view instance.
 You can use ``_self`` as resources to set it to the current resource. More
-information in :doc:`/cookbook/form/form_customization`.
+information in :doc:`/form/form_customization`.
 
 trans
 ~~~~~
@@ -758,7 +758,7 @@ Those bundles can have other Twig extensions:
   documentation`_;
 * **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
   ``{% image %}`` tags. You can read more about them in
-  :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
+  :doc:`the Assetic Documentation </assetic/asset_management>`.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

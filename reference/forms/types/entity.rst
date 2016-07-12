@@ -151,7 +151,7 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
 
     When passing a string, the ``choice_label`` option is a property path. So you
     can use anything supported by the
-    :doc:`PropertyAccessor component </components/property_access/introduction>`
+    :doc:`PropertyAccessor component </components/property_access>`
 
     For example, if the translations property is actually an associative
     array of objects, each with a name property, then you could do this::
@@ -244,7 +244,7 @@ type:
     helpful to read the documentation for the
     :doc:`/reference/forms/types/collection` as well. In addition, there
     is a complete example in the cookbook article
-    :doc:`/cookbook/form/form_collections`.
+    :doc:`/form/form_collections`.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 

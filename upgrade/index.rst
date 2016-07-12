@@ -13,7 +13,7 @@ There are three types of upgrades, all needing a little different preparation:
 .. toctree::
     :maxdepth: 2
 
-    /cookbook/upgrade/patch_version
-    /cookbook/upgrade/minor_version
-    /cookbook/upgrade/major_version
-    /cookbook/upgrade/bundles
+    /upgrade/patch_version
+    /upgrade/minor_version
+    /upgrade/major_version
+    /upgrade/bundles

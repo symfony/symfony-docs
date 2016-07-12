@@ -90,7 +90,7 @@ Loader too. The default loaders are:
 * :class:`Symfony\\Component\\Translation\\Loader\\JsonFileLoader` - to load
   catalogs from JSON files.
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
-  catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml/introduction>`).
+  catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml>`).
 
 All file loaders require the :doc:`Config component </components/config/index>`.
 

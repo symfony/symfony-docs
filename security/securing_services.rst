@@ -22,7 +22,7 @@ checking the current user's role::
 
 You can also secure *any* service by injecting the ``security.authorization_checker``
 service into it. For a general introduction to injecting dependencies into
-services see the :doc:`/book/service_container` chapter of the book. For
+services see the :doc:`/service_container` chapter of the book. For
 example, suppose you have a ``NewsletterManager`` class that sends out emails
 and you want to restrict its use to only users who have some
 ``ROLE_NEWSLETTER_ADMIN`` role. Before you add security, the class looks

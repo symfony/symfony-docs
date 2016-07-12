@@ -264,7 +264,7 @@ without actually printing.
     The MonologBridge provides a :class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler`
     class that allows you to display messages on the console. This is cleaner
     than wrapping your output calls in conditions. For an example use in
-    the Symfony Framework, see :doc:`/cookbook/logging/monolog_console`.
+    the Symfony Framework, see :doc:`/logging/monolog_console`.
 
 Using Command Arguments
 -----------------------

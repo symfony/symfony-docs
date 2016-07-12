@@ -149,6 +149,8 @@ which controller should be executed. The whole process looks like this:
 .. index::
    single: Routing; Creating routes
 
+.. _routing-creating-routes:
+
 Creating Routes
 ---------------
 
@@ -463,7 +465,7 @@ a slash. URLs matching this route might look like:
 
     Sometimes you want to make certain parts of your routes globally configurable.
     Symfony provides you with a way to do this by leveraging service container
-    parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`".
+    parameters. Read more about this in ":doc:`/routing/service_container_parameters`".
 
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -535,7 +537,7 @@ more flexibility.
    In addition to using the logical name or the fully-qualified class name,
    Symfony supports a third way of referring to a controller. This method
    uses just one colon separator (e.g. ``service_name:indexAction``) and
-   refers to the controller as a service (see :doc:`/cookbook/controller/service`).
+   refers to the controller as a service (see :doc:`/controller/service`).
 
 Route Parameters and Controller Arguments
 -----------------------------------------
@@ -575,7 +577,7 @@ see :ref:`route-parameters-controller-arguments`.
 
 You can even add extra information to your route definition and access it
 within your controller. For more information on this topic,
-see :doc:`/cookbook/routing/extra_information`.
+see :doc:`/routing/extra_information`.
 
 .. index::
    single: Routing; Generating URLs
@@ -752,7 +754,7 @@ to ``generate()``:
     The host that's used when generating an absolute URL is automatically
     detected using the current ``Request`` object. When generating absolute
     URLs from outside the web context (for instance in a console command) this
-    doesn't work. See :doc:`/cookbook/console/request_context` to learn how to
+    doesn't work. See :doc:`/console/request_context` to learn how to
     solve this problem.
 
 Summary
@@ -764,16 +766,12 @@ to specify beautiful URLs and keeps the functionality of your application
 decoupled from those URLs. Routing is a bidirectional mechanism, meaning that it
 should also be used to generate URLs.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
-* :doc:`/cookbook/routing/scheme`
-* :doc:`/cookbook/routing/slash_in_parameter`
-* :doc:`/cookbook/routing/redirect_in_config`
-* :doc:`/cookbook/routing/method_parameters`
-* :doc:`/cookbook/routing/service_container_parameters`
-* :doc:`/cookbook/routing/custom_route_loader`
-* :doc:`/cookbook/routing/redirect_trailing_slash`
-* :doc:`/cookbook/routing/extra_information`
+.. toctree::
+    :glob:
+
+    routing/*
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

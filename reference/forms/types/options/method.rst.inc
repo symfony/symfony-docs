@@ -22,7 +22,7 @@ is used to decide whether to process the form submission in the
     When the method is PUT, PATCH, or DELETE, Symfony will automatically
     render a ``_method`` hidden field in your form. This is used to "fake"
     these HTTP methods, as they're not supported on standard browsers. For
-    more information, see :doc:`/cookbook/routing/method_parameters`.
+    more information, see :doc:`/routing/method_parameters`.
 
 .. note::
 

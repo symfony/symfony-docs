@@ -250,4 +250,4 @@ option, but with the additional ``authenticator`` key that points to the
 new service. For details, see :ref:`reference-security-firewall-form-login`.
 
 If creating a login form in general is new to you or you don't understand
-the ``check_path`` or ``login_path`` options, see :doc:`/cookbook/security/form_login`.
+the ``check_path`` or ``login_path`` options, see :doc:`/security/form_login`.

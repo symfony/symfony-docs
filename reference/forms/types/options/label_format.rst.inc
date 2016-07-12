@@ -44,4 +44,4 @@ The default value (``null``) results in a
 
     The ``label_format`` option is evaluated in the form theme. Make sure to
     update your templates in case you
-    :doc:`customized form theming </cookbook/form/form_customization>`.
+    :doc:`customized form theming </form/form_customization>`.

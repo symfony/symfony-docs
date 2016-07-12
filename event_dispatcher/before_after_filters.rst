@@ -11,7 +11,7 @@ or hooks.
 In symfony1, this was achieved with the preExecute and postExecute methods.
 Most major frameworks have similar methods but there is no such thing in Symfony.
 The good news is that there is a much better way to interfere with the
-Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
+Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher>`.
 
 Token Validation Example
 ------------------------
@@ -102,7 +102,7 @@ Creating an Event Listener
 
 Next, you'll need to create an event listener, which will hold the logic
 that you want executed before your controllers. If you're not familiar with
-event listeners, you can learn more about them at :doc:`/cookbook/event_dispatcher/event_listener`::
+event listeners, you can learn more about them at :doc:`/event_dispatcher/event_listener`::
 
     // src/AppBundle/EventListener/TokenListener.php
     namespace AppBundle\EventListener;

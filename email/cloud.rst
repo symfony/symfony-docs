@@ -7,7 +7,7 @@ How to Use the Cloud to Send Emails
 Requirements for sending emails from a production system differ from your
 development setup as you don't want to be limited in the number of emails,
 the sending rate or the sender address. Thus,
-:doc:`using Gmail </cookbook/email/gmail>` or similar services is not an
+:doc:`using Gmail </email/gmail>` or similar services is not an
 option. If setting up and maintaining your own reliable mail server causes
 you a headache there's a simple solution: Leverage the cloud to send your
 emails.

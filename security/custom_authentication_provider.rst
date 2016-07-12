@@ -10,12 +10,12 @@ How to Create a custom Authentication Provider
     you through that process. But depending on your needs, you may be able
     to solve your problem in a simpler, or via a community bundle:
 
-    * :doc:`/cookbook/security/custom_password_authenticator`
-    * :doc:`/cookbook/security/api_key_authentication`
+    * :doc:`/security/custom_password_authenticator`
+    * :doc:`/security/api_key_authentication`
     * To authenticate via OAuth using a third-party service such as Google, Facebook
       or Twitter, try using the `HWIOAuthBundle`_ community bundle.
 
-If you have read the chapter on :doc:`/book/security`, you understand the
+If you have read the chapter on :doc:`/security`, you understand the
 distinction Symfony makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
 in the authentication process, and how to implement a custom authentication

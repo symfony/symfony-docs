@@ -124,7 +124,7 @@ Using Configuration to Change the Services
 
 The Extension is also the class that handles the configuration for that
 particular bundle (e.g. the configuration in ``app/config/config.yml``). To
-read more about it, see the ":doc:`/cookbook/bundles/configuration`" article.
+read more about it, see the ":doc:`/bundles/configuration`" article.
 
 Adding Classes to Compile
 -------------------------

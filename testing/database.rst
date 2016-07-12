@@ -13,7 +13,7 @@ your test always has the same data to work with.
 
 .. note::
 
-    If you want to test your queries directly, see :doc:`/cookbook/testing/doctrine`.
+    If you want to test your queries directly, see :doc:`/testing/doctrine`.
 
 Mocking the ``Repository`` in a Unit Test
 -----------------------------------------

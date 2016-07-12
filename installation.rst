@@ -100,7 +100,7 @@ can create Symfony applications with `Composer`_, the dependency manager used by
 modern PHP applications.
 
 If you don't have Composer installed in your computer, start by
-:doc:`installing Composer globally </cookbook/composer>`. Then, execute the
+:doc:`installing Composer globally </composer/installation>`. Then, execute the
 ``create-project`` command to create a new Symfony application based on its
 latest stable version:
 
@@ -152,7 +152,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 
     PHP's internal web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
-    See :doc:`/cookbook/configuration/web_server_configuration`.
+    See :doc:`/configuration/web_server_configuration`.
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------

@@ -317,7 +317,7 @@ Creating a Reusable issue_selector Field
 
 In the above example, you applied the transformer to a normal ``text`` field. But
 if you do this transformation a lot, it might be better to
-:doc:`create a custom field type </cookbook/form/create_custom_field_type>`.
+:doc:`create a custom field type </form/create_custom_field_type>`.
 that does this automatically.
 
 First, create the custom field type class::
