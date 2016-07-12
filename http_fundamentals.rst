@@ -329,41 +329,14 @@ and the routing of different URLs to different parts of your application
 is done internally. This solves both problems with the original approach.
 Almost all modern web apps do this.
 
-Stay Organized
-~~~~~~~~~~~~~~
-
-Inside your front controller, you have to figure out which code should be
-executed and what the content to return should be. To figure this out, you'll
-need to check the incoming URI and execute different parts of your code depending
-on that value. This can get ugly quickly::
-
-    // index.php
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
-
-    $request = Request::createFromGlobals();
-    $path = $request->getPathInfo(); // the URI path being requested
-
-    if (in_array($path, array('', '/'))) {
-        $response = new Response('Welcome to the homepage.');
-    } elseif ('/contact' === $path) {
-        $response = new Response('Contact us');
-    } else {
-        $response = new Response('Page not found.', Response::HTTP_NOT_FOUND);
-    }
-    $response->send();
-
-Solving this problem can be difficult. Fortunately it's *exactly* what Symfony
-is designed to do.
-
 .. index::
     single: HTTP; Symfony request flow
 
 The Symfony Application Flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you let Symfony handle each request, life is much easier. Symfony follows
-the same simple pattern for every request:
+Symfony will operate in this front-controller file to handle each incoming
+request. Symfony follows the same simple pattern for every request:
 
 .. _request-flow-figure:
 
