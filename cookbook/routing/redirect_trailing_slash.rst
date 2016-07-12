@@ -17,6 +17,7 @@ new URL with a 301 response status code::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
     class RedirectingController extends Controller
     {
@@ -27,6 +28,11 @@ new URL with a 301 response status code::
 
             $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
 
+            try{
+              $this->get('router')->match(str_replace('/app_dev.php', '', $url))
+            }catch(ResourceNotFoundException $e){
+              throw $this->createNotFoundException();
+            }
             return $this->redirect($url, 301);
         }
     }
