@@ -206,7 +206,7 @@ allow you to interact with the HTTP request and response in an easier way.
 Symfony Request Object
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\HttpFoundation\\Request` class is a simple
+The :class:`Symfony\\Component\\HttpFoundation\\Request` class is an
 object-oriented representation of the HTTP request message. With it, you
 have all the request information at your fingertips::
 
@@ -218,14 +218,14 @@ have all the request information at your fingertips::
     $request->getPathInfo();
 
     // retrieve $_GET and $_POST variables respectively
-    $request->query->get('foo');
-    $request->request->get('bar', 'default value if bar does not exist');
+    $request->query->get('id');
+    $request->request->get('category', 'default category');
 
     // retrieve $_SERVER variables
     $request->server->get('HTTP_HOST');
 
-    // retrieves an instance of UploadedFile identified by foo
-    $request->files->get('foo');
+    // retrieves an instance of UploadedFile identified by "attachment"
+    $request->files->get('attachment');
 
     // retrieve a $_COOKIE value
     $request->cookies->get('PHPSESSID');
@@ -234,35 +234,13 @@ have all the request information at your fingertips::
     $request->headers->get('host');
     $request->headers->get('content_type');
 
-    $request->getMethod();    // GET, POST, PUT, DELETE, HEAD
+    $request->getMethod();    // e.g. GET, POST, PUT, DELETE or HEAD
     $request->getLanguages(); // an array of languages the client accepts
 
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
 the user is connecting via a secured connection (i.e. HTTPS).
-
-.. sidebar:: ParameterBags and Request Attributes
-
-    As seen above, the ``$_GET`` and ``$_POST`` variables are accessible via
-    the public ``query`` and ``request`` properties respectively. Each of
-    these objects is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
-    object, which has methods like
-    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`,
-    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`,
-    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all` and more.
-    In fact, every public property used in the previous example is some instance
-    of the ParameterBag.
-
-    .. _book-fundamentals-attributes:
-
-    The Request class also has a public ``attributes`` property, which holds
-    special data related to how the application works internally. For the
-    Symfony Framework, the ``attributes`` holds the values returned by the
-    matched route, like ``_controller``, ``id`` (if you have an ``{id}``
-    wildcard), and even the name of the matched route (``_route``). The
-    ``attributes`` property exists entirely to be a place where you can
-    prepare and store context-specific information about the request.
 
 Symfony Response Object
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -285,20 +263,11 @@ needs to be returned to the client::
     // print the HTTP headers followed by the content
     $response->send();
 
-There are also special classes to make certain types of responses easier to create:
-
-* :ref:`JsonResponse <component-http-foundation-json-response>`;
-
-* :ref:`BinaryFileResponse <component-http-foundation-serving-files>` (for streaming
-  files and sending file downloads);
-
-* :ref:`StreamedResponse <streaming-response>` (for streaming any other large responses);
-
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
     called :doc:`symfony/http-foundation </components/http_foundation/introduction>`
-    that yo can use in *any* PHP project. This also contains classes for handling
+    that you can use in *any* PHP project. This also contains classes for handling
     sessions, file uploads and more.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
