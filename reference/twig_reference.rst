@@ -38,7 +38,7 @@ render
     **type**: ``array`` **default**: ``[]``
 
 Renders the fragment for the given controller (using the `controller`_ function)
-or URI. For more information, see :ref:`templating-embedding-controller`.
+or URI. For more information, see :doc:`/templating/embedding_controllers`.
 
 The render strategy can be specified in the ``strategy`` key of the options.
 
@@ -62,7 +62,7 @@ render_esi
 
 Generates an ESI tag when possible or falls back to the behavior of
 `render`_ function instead. For more information, see
-:ref:`templating-embedding-controller`.
+:doc:`/templating/embedding_controllers`.
 
 .. tip::
 

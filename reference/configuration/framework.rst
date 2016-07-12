@@ -1143,7 +1143,7 @@ is disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
-    See :ref:`book-templating-hinclude` for more information about hinclude.
+    See :doc:`/templating/hinclude` for more information about hinclude.
 
 .. _reference-templating-form:
 
