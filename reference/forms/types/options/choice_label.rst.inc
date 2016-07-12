@@ -32,7 +32,7 @@ This method is called for *each* choice, passing you the choice ``$value`` and t
 ``$key`` from the choices array (``$index`` is related to `choice_value`_). This
 will give you:
 
-.. image:: /images/reference/form/choice-example2.png
+.. image:: /_images/reference/form/choice-example2.png
    :align: center
 
 If your choice values are objects, then ``choice_label`` can also be a

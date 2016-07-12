@@ -491,7 +491,7 @@ helper functions:
         <input type="submit" />
     {{ form_end(form) }}
 
-.. image:: /images/book/form-simple.png
+.. image:: /_images/form/simple-form.png
     :align: center
 
 That's it! By printing ``form_widget(form)``, each field in the form is

@@ -171,7 +171,7 @@ then its dump representation::
     );
     dump($var);
 
-.. image:: /images/components/var_dumper/01-simple.png
+.. image:: /_images/components/var_dumper/01-simple.png
 
 .. note::
 
@@ -188,7 +188,7 @@ then its dump representation::
     $var .= "this string is not UTF-8 valid, thus the `b` prefix.\n";
     dump($var);
 
-.. image:: /images/components/var_dumper/02-multi-line-str.png
+.. image:: /_images/components/var_dumper/02-multi-line-str.png
 
 .. code-block:: php
 
@@ -202,7 +202,7 @@ then its dump representation::
     $var = new PropertyExample();
     dump($var);
 
-.. image:: /images/components/var_dumper/03-object.png
+.. image:: /_images/components/var_dumper/03-object.png
 
 .. note::
 
@@ -220,7 +220,7 @@ then its dump representation::
     $var->undeclaredProperty = 'Runtime added dynamic properties have `"` around their name.';
     dump($var);
 
-.. image:: /images/components/var_dumper/04-dynamic-property.png
+.. image:: /_images/components/var_dumper/04-dynamic-property.png
 
 .. code-block:: php
 
@@ -232,7 +232,7 @@ then its dump representation::
     $var->aCircularReference = $var;
     dump($var);
 
-.. image:: /images/components/var_dumper/05-soft-ref.png
+.. image:: /_images/components/var_dumper/05-soft-ref.png
 
 .. code-block:: php
 
@@ -245,7 +245,7 @@ then its dump representation::
     );
     dump($var);
 
-.. image:: /images/components/var_dumper/06-constants.png
+.. image:: /_images/components/var_dumper/06-constants.png
 
 .. code-block:: php
 
@@ -258,7 +258,7 @@ then its dump representation::
     $var[3][] = "are dumped using `&number` prefixes.";
     dump($var);
 
-.. image:: /images/components/var_dumper/07-hard-ref.png
+.. image:: /_images/components/var_dumper/07-hard-ref.png
 
 .. code-block:: php
 
@@ -268,7 +268,7 @@ then its dump representation::
     $var[] = "properties that describe their internal state.";
     dump($var);
 
-.. image:: /images/components/var_dumper/08-virtual-property.png
+.. image:: /_images/components/var_dumper/08-virtual-property.png
 
 .. code-block:: php
 
@@ -281,6 +281,6 @@ then its dump representation::
     );
     dump($var);
 
-.. image:: /images/components/var_dumper/09-cut.png
+.. image:: /_images/components/var_dumper/09-cut.png
 
 .. _Packagist: https://packagist.org/packages/symfony/var-dumper

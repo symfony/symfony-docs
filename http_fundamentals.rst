@@ -20,7 +20,7 @@ HTTP (Hypertext Transfer Protocol) is a text language that allows two machines
 to communicate with each other. For example, when checking for the latest
 `xkcd`_ comic, the following (approximate) conversation takes place:
 
-.. image:: /images/http-xkcd.png
+.. image:: /_images/http/xkcd-full.png
    :align: center
 
 And while the actual language used is a bit more formal, it's still dead-simple.
@@ -45,7 +45,7 @@ and then waits for the response.
 Take a look at the first part of the interaction (the request) between a
 browser and the xkcd web server:
 
-.. image:: /images/http-xkcd-request.png
+.. image:: /_images/http/xkcd-request.png
    :align: center
 
 In HTTP-speak, this HTTP request would actually look something like this:
@@ -107,7 +107,7 @@ client needs (via the URI) and what the client wants to do with that resource
 prepares the resource and returns it in an HTTP response. Consider the response
 from the xkcd web server:
 
-.. image:: /images/http-xkcd.png
+.. image:: /_images/http/xkcd-full.png
    :align: center
 
 Translated into HTTP, the response sent back to the browser will look something

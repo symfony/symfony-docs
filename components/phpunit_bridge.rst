@@ -42,7 +42,7 @@ Once the component installed, it automatically registers a
 called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`. After
 running your PHPUnit tests, you will get a report similar to this one:
 
-.. image:: /images/components/phpunit_bridge/report.png
+.. image:: /_images/components/phpunit_bridge/report.png
 
 The summary includes:
 

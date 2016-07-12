@@ -13,7 +13,7 @@ instance a process or HTTP request. For example, if you used it to output
 the results of running ``ls -la`` on a UNIX system, it might output something
 like this:
 
-.. image:: /images/components/console/debug_formatter.png
+.. image:: /_images/components/console/debug_formatter.png
    :align: center
 
 Using the debug_formatter

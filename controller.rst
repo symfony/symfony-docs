@@ -76,7 +76,7 @@ your custom code in the controller function:
 Creating a page is as easy as creating a controller (#5) and making a route
 that maps a URL to that controller (#4).
 
-.. image:: /images/http-xkcd-request.png
+.. image:: /_images/http/xkcd-request.png
    :align: center
 
 .. note::

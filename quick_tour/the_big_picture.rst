@@ -175,14 +175,14 @@ look at the bottom of any Symfony rendered page. You should notice a small
 bar with the Symfony logo. This is the "web debug toolbar" and it is a Symfony
 developer's best friend!
 
-.. image:: /images/quick_tour/web_debug_toolbar.png
+.. image:: /_images/quick_tour/web_debug_toolbar.png
    :align: center
 
 But what you see initially is only the tip of the iceberg; click on any
 of the bar sections to open the profiler and get much more detailed information
 about the request, the query parameters, security details and database queries:
 
-.. image:: /images/quick_tour/profiler.png
+.. image:: /_images/quick_tour/profiler.png
    :align: center
 
 This tool provides so much internal information about your application that
