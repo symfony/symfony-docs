@@ -181,9 +181,9 @@ PHP? In reality, PHP abstracts you a bit from the whole process::
 As strange as it sounds, this small application is in fact taking information
 from the HTTP request and using it to create an HTTP response. Instead of
 parsing the raw HTTP request message, PHP prepares superglobal variables
-such as ``$_SERVER`` and ``$_GET`` that contain all the information from
-the request. Similarly, instead of returning the HTTP-formatted text response,
-you can use the PHP ``header()`` function to create response headers and simply
+(such as ``$_SERVER`` and ``$_GET``) that contain all the information from the
+request. Similarly, instead of returning the HTTP-formatted text response, you
+can use the PHP :phpfunction:`header` function to create response headers and
 print out the actual content that will be the content portion of the response
 message. PHP will create a true HTTP response and return it to the client:
 
