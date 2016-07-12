@@ -377,7 +377,7 @@ Response.
 Summary: The Request-Response Flow
 ----------------------------------
 
-Here's what we've learned s ofar:
+Here's what we've learned so far:
 
 #. A client (e.g. a browser) sends an HTTP request;
 #. Each request executes the same, single file (called a "front controller");
