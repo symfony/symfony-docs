@@ -116,8 +116,8 @@ be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
 In practice, Symfony uses this value for generating the
-:ref:`CSRF tokens <forms-csrf>`, for encrypting the cookies used in the
-:doc:`remember me functionality </security/remember_me>` and for
+:doc:`CSRF tokens </form/csrf_protection>`, for encrypting the cookies used
+in the :doc:`remember me functionality </security/remember_me>` and for
 creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
 
 This option becomes the service container parameter named ``kernel.secret``,
@@ -410,7 +410,7 @@ csrf_protection
 
 .. seealso::
 
-    For more information about CSRF protection in forms, see :ref:`forms-csrf`.
+    For more information about CSRF protection in forms, see :doc:`/form/csrf_protection`.
 
 .. _reference-csrf_protection-enabled:
 
@@ -437,7 +437,7 @@ field_name
 
 **type**: ``string`` **default**: ``"_token"``
 
-The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
+The name of the hidden field used to render the :doc:`CSRF token </form/csrf_protection>`.
 
 esi
 ~~~
