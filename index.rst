@@ -18,20 +18,38 @@ Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 
     quick_tour/index
 
-* :doc:`quick_tour/the_big_picture` >
-* :doc:`quick_tour/the_view` >
-* :doc:`quick_tour/the_controller` >
+* :doc:`quick_tour/the_big_picture`
+* :doc:`quick_tour/the_view`
+* :doc:`quick_tour/the_controller`
 * :doc:`quick_tour/the_architecture`
+
+Getting Started
+---------------
+
+.. toctree::
+
+    installation
+    http_fundamentals
+    routing
+    controller
+    templating
 
 Topics
 ------
 
 .. toctree::
-    :hidden:
 
-    controller
-
-* :doc:`/controller`
+    bundles
+    doctrine
+    forms
+    http_cache
+    routing
+    security
+    serializer
+    service_container
+    testing
+    translation
+    validation
 
 Best Practices
 --------------
