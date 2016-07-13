@@ -519,4 +519,3 @@ have the cache will be considered stale.
 
     In the full-stack framework the compilation and caching of the container
     is taken care of for you.
-
