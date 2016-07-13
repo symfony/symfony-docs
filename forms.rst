@@ -210,7 +210,10 @@ it into a format that's suitable for being rendered in an HTML form.
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The second job of a form is to translate user-submitted data back to the
+By default, the form will submit a POST request back to the same controller that
+renders it.
+
+Here, the second job of a form is to translate user-submitted data back to the
 properties of an object. To make this happen, the submitted data from the
 user must be written into the Form object. Add the following functionality to
 your controller::
@@ -231,9 +234,16 @@ your controller::
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // the $task object will now contain the submitted data!
+        if ($form->isSubmitted() && $form->()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $task = $form->getData();
+
             // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            // $em = $this->getDoctrine()->getManager();
+            // $em->persist($task);
+            // $em->flush();
 
             return $this->redirectToRoute('task_success');
         }
@@ -437,8 +447,8 @@ the common form fields and data types you'll encounter:
 
 .. include:: /reference/forms/types/map.rst.inc
 
-You can also create your own custom field types. This topic is covered in
-the ":doc:`/form/create_custom_field_type`" article of the cookbook.
+You can also create your own custom field types. See
+:doc:`/form/create_custom_field_type` for info.
 
 .. index::
    single: Forms; Field type options
@@ -689,57 +699,6 @@ the choice is ultimately up to you.
     In addition, the data of an unmapped field can also be modified directly::
 
         $form->get('dueDate')->setData(new \DateTime());
-
-.. index::
-   pair: Forms; Doctrine
-
-Forms and Doctrine
-------------------
-
-The goal of a form is to translate data from an object (e.g. ``Task``) to an
-HTML form and then translate user-submitted data back to the original object. As
-such, the topic of persisting the ``Task`` object to the database is entirely
-unrelated to the topic of forms. But, if you've configured the ``Task`` class
-to be persisted via Doctrine (i.e. you've added
-:ref:`mapping metadata <book-doctrine-adding-mapping>` for it), then persisting
-it after a form submission can be done when the form is valid::
-
-    if ($form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($task);
-        $em->flush();
-
-        return $this->redirectToRoute('task_success');
-    }
-
-If, for some reason, you don't have access to your original ``$task`` object,
-you can fetch it from the form::
-
-    $task = $form->getData();
-
-For more information, see the :doc:`Doctrine ORM chapter </doctrine>`.
-
-The key thing to understand is that when the form is submitted, the submitted
-data is transferred to the underlying object immediately. If you want to
-persist that data, you simply need to persist the object itself (which already
-contains the submitted data).
-
-Final Thoughts
---------------
-
-You now know all of the building blocks necessary to build complex and
-functional forms for your application. When building forms, keep in mind that
-the first goal of a form is to translate data from an object (``Task``) to an
-HTML form so that the user can modify that data. The second goal of a form is to
-take the data submitted by the user and to re-apply it to the object.
-
-There's still much more to learn about the powerful world of forms, such as
-how to handle :doc:`file uploads </controller/upload_file>` or how to
-create a form where a dynamic number of sub-forms can be added (e.g. a todo
-list where you can keep adding more fields via JavaScript before submitting).
-See the cookbook for these topics. Also, be sure to lean on the
-:doc:`field type reference documentation </reference/forms/types>`, which
-includes examples of how to use each field type and its options.
 
 Learn more
 ----------
