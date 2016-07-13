@@ -152,7 +152,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 
     PHP's internal web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
-    See :doc:`/configuration/web_server_configuration`.
+    See :doc:`/setup/web_server_configuration`.
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------

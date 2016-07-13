@@ -98,7 +98,7 @@
 /cookbook/configuration/front_controllers_and_kernel /configuration/front_controllers_and_kernel
 /cookbook/configuration/override_dir_structure /configuration/override_dir_structure
 /cookbook/configuration/using_parameters_in_dic /configuration/using_parameters_in_dic
-/cookbook/configuration/web_server_configuration /configuration/web_server_configuration
+/cookbook/configuration/web_server_configuration /setup/web_server_configuration
 /cookbook/console/command_in_controller /console/command_in_controller
 /cookbook/console/commands_as_services /console/commands_as_services
 /cookbook/console/console_command /console/console_command
