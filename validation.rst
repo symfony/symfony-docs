@@ -166,7 +166,7 @@ will appear.
     Most of the time, you won't interact directly with the ``validator``
     service or need to worry about printing out the errors. Most of the time,
     you'll use validation indirectly when handling submitted form data. For
-    more information, see the :ref:`book-validation-forms`.
+    more information, see the :ref:`book-forms-form-validation`.
 
 You could also pass the collection of errors into a template::
 
