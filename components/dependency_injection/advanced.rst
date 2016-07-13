@@ -10,12 +10,11 @@ Marking Services as Public / Private
 ------------------------------------
 
 When defining services, you'll usually want to be able to access these definitions
-within your application code. These services are called ``public``. For
-example, the ``doctrine`` service registered with the container when using
-the DoctrineBundle is a public service. This means that you can fetch it
-from the container using the ``get()`` method::
+within your application code. These services are called *public*. For
+example, the ``doctrine`` service is a public service. This means that you can
+fetch it from the container using the ``get()`` method::
 
-   $doctrine = $container->get('doctrine');
+    $doctrine = $container->get('doctrine');
 
 In some cases, a service *only* exists to be injected into another service
 and is *not* intended to be fetched directly from the container as shown
@@ -73,7 +72,8 @@ However, if a service has been marked as private, you can still alias it
 
 .. note::
 
-   Services are by default public.
+    Services are by default public, but it's considered a good practice to mark
+    as much services private as possible.
 
 Aliasing
 --------
@@ -87,10 +87,11 @@ services.
     .. code-block:: yaml
 
         services:
-           foo:
-             class: Example\Foo
-           bar:
-             alias: foo
+           app.phpmailer:
+             class: AppBundle\Mail\PhpMailer
+
+           app.mailer:
+             alias: app.phpmailer
 
     .. code-block:: xml
 
@@ -100,9 +101,9 @@ services.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="foo" class="Example\Foo" />
+                <service id="app.phpmailer" class="AppBundle\PhpMailer" />
 
-                <service id="bar" alias="foo" />
+                <service id="app.mailer" alias="app.phpmailer" />
             </services>
         </container>
 
@@ -110,14 +111,14 @@ services.
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('foo', new Definition('Example\Foo'));
+        $container->setDefinition('app.phpmailer', new Definition('AppBundle\PhpMailer'));
 
-        $containerBuilder->setAlias('bar', 'foo');
+        $containerBuilder->setAlias('app.mailer', 'app.phpmailer');
 
-This means that when using the container directly, you can access the ``foo``
-service by asking for the ``bar`` service like this::
+This means that when using the container directly, you can access the
+``app.phpmailer`` service by asking for the ``app.mailer`` service like this::
 
-    $container->get('bar'); // Would return the foo service
+    $container->get('app.mailer'); // Would return a PhpMailer instance
 
 .. tip::
 
@@ -126,95 +127,6 @@ service by asking for the ``bar`` service like this::
     .. code-block:: yaml
 
         services:
-           foo:
-             class: Example\Foo
-           bar: '@foo'
+            # ...
 
-Decorating Services
--------------------
-
-When overriding an existing definition, the old service is lost:
-
-.. code-block:: php
-
-    $container->register('foo', 'FooService');
-
-    // this is going to replace the old definition with the new one
-    // old definition is lost
-    $container->register('foo', 'CustomFooService');
-
-Most of the time, that's exactly what you want to do. But sometimes,
-you might want to decorate the old one instead. In this case, the
-old service should be kept around to be able to reference it in the
-new one. This configuration replaces ``foo`` with a new one, but keeps
-a reference of the old one  as ``bar.inner``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-       bar:
-         public: false
-         class: stdClass
-         decorates: foo
-         arguments: ["@bar.inner"]
-
-    .. code-block:: xml
-
-        <service id="bar" class="stdClass" decorates="foo" public="false">
-            <argument type="service" id="bar.inner" />
-        </service>
-
-    .. code-block:: php
-
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('bar', 'stdClass')
-            ->addArgument(new Reference('bar.inner'))
-            ->setPublic(false)
-            ->setDecoratedService('foo');
-
-Here is what's going on here: the ``setDecoratedService()`` method tells
-the container that the ``bar`` service should replace the ``foo`` service,
-renaming ``foo`` to ``bar.inner``.
-By convention, the old ``foo`` service is going to be renamed ``bar.inner``,
-so you can inject it into your new service.
-
-.. note::
-    The generated inner id is based on the id of the decorator service
-    (``bar`` here), not of the decorated service (``foo`` here).  This is
-    mandatory to allow several decorators on the same service (they need to have
-    different generated inner ids).
-
-    Most of the time, the decorator should be declared private, as you will not
-    need to retrieve it as ``bar`` from the container. The visibility of the
-    decorated ``foo`` service (which is an alias for ``bar``) will still be the
-    same as the original ``foo`` visibility.
-
-You can change the inner service name if you want to:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-       bar:
-         class: stdClass
-         public: false
-         decorates: foo
-         decoration_inner_name: bar.wooz
-         arguments: ["@bar.wooz"]
-
-    .. code-block:: xml
-
-        <service id="bar" class="stdClass" decorates="foo" decoration-inner-name="bar.wooz" public="false">
-            <argument type="service" id="bar.wooz" />
-        </service>
-
-    .. code-block:: php
-
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('bar', 'stdClass')
-            ->addArgument(new Reference('bar.wooz'))
-            ->setPublic(false)
-            ->setDecoratedService('foo', 'bar.wooz');
+            app.mailer: '@app.phpmailer'
