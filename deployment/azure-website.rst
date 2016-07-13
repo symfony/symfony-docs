@@ -18,7 +18,7 @@ with your credentials. Once you're connected to your `Azure Portal`_ interface,
 scroll down to the bottom and select the **New** panel. On this panel, click
 **Web Site** and choose **Custom Create**:
 
-.. image:: /images/cookbook/deployment/azure-website/step-01.png
+.. image:: /_images/deployment/azure-website/step-01.png
    :alt: Create a new custom Azure Website
 
 Step 1: Create Web Site
@@ -26,7 +26,7 @@ Step 1: Create Web Site
 
 Here, you will be prompted to fill in some basic information.
 
-.. image:: /images/cookbook/deployment/azure-website/step-02.png
+.. image:: /_images/deployment/azure-website/step-02.png
    :alt: Setup the Azure Website
 
 For the URL, enter the URL that you would like to use for your Symfony application,
@@ -46,7 +46,7 @@ database name and a region. The MySQL database storage is provided by Microsoft
 in partnership with ClearDB. Choose the same region you selected for the hosting
 plan configuration in the previous step.
 
-.. image:: /images/cookbook/deployment/azure-website/step-03.png
+.. image:: /_images/deployment/azure-website/step-03.png
    :alt: Setup the MySQL database
 
 Agree to the terms and conditions and click on the right arrow to continue.
@@ -57,7 +57,7 @@ Step 3: Where Is your Source Code
 Now, on the third step, select a **Local Git repository** item and click
 on the right arrow to configure your Azure Website credentials.
 
-.. image:: /images/cookbook/deployment/azure-website/step-04.png
+.. image:: /_images/deployment/azure-website/step-04.png
    :alt: Setup a local Git repository
 
 Step 4: New Username and Password
@@ -67,20 +67,20 @@ Great! You're now on the final step. Create a username and a secure password:
 these will become essential identifiers to connect to the FTP server and
 also to push your application code to the Git repository.
 
-.. image:: /images/cookbook/deployment/azure-website/step-05.png
+.. image:: /_images/deployment/azure-website/step-05.png
    :alt: Configure Azure Website credentials
 
 Congratulations! Your Azure Website is now up and running. You can check
 it by browsing to the Website url you configured in the first step. You should
 see the following display in your web browser:
 
-.. image:: /images/cookbook/deployment/azure-website/step-06.png
+.. image:: /_images/deployment/azure-website/step-06.png
    :alt: Azure Website is running
 
 The Microsoft Azure portal also provides a complete control panel for the Azure
 Website.
 
-.. image:: /images/cookbook/deployment/azure-website/step-07.png
+.. image:: /_images/deployment/azure-website/step-07.png
    :alt: Azure Website Control Panel
 
 Your Azure Website is ready! But to run a Symfony site, you need to configure
@@ -103,7 +103,7 @@ supported by the PHP core team, but you can update it easily in Azure.
 To update your PHP version on Azure, go to the **Configure** tab of the control
 panel and select the version you want.
 
-.. image:: /images/cookbook/deployment/azure-website/step-08.png
+.. image:: /_images/deployment/azure-website/step-08.png
    :alt: Enabling the most recent PHP runtime from Azure Website Control Panel
 
 Click the **Save** button in the bottom bar to save your changes and restart
@@ -120,7 +120,7 @@ the web server.
     run from an Azure Website to verify that PHP 5.5 is running with
     OPCache enabled.
 
-    .. image:: /images/cookbook/deployment/azure-website/step-09.png
+    .. image:: /_images/deployment/azure-website/step-09.png
        :alt: OPCache Configuration
 
 Tweaking php.ini Configuration Settings
@@ -182,7 +182,7 @@ explorer, a command line prompt, a log stream and a configuration settings summa
 page. Of course, this section can only be accessed if you're logged in to
 your main Azure Website account.
 
-.. image:: /images/cookbook/deployment/azure-website/step-10.png
+.. image:: /_images/deployment/azure-website/step-10.png
    :alt: The Kudu Panel
 
 From the Kudu front page, click on the **Debug Console** navigation item in the
@@ -201,7 +201,7 @@ new directory must be created under the main directory ``site/wwwroot``.
 
 The whole process and output should look like this:
 
-.. image:: /images/cookbook/deployment/azure-website/step-11.png
+.. image:: /_images/deployment/azure-website/step-11.png
    :alt: Executing commands in the online Kudu Console prompt
 
 To complete the activation of the ``php_intl.dll`` extension, you must tell
@@ -212,7 +212,7 @@ the **Configure** tab of the main Azure Website Control panel.
 In the **app settings** section, register the ``PHP_EXTENSIONS`` environment
 variable with the value ``ext\php_intl.dll`` as shown in the screenshot below:
 
-.. image:: /images/cookbook/deployment/azure-website/step-12.png
+.. image:: /_images/deployment/azure-website/step-12.png
    :alt: Registering custom PHP extensions
 
 Hit "save" to confirm your changes and restart the web server. The PHP ``Intl``
@@ -220,7 +220,7 @@ extension should now be available in your web server environment. The following
 screenshot of a :phpfunction:`phpinfo` page verifies the ``intl`` extension is
 properly enabled:
 
-.. image:: /images/cookbook/deployment/azure-website/step-13.png
+.. image:: /_images/deployment/azure-website/step-13.png
    :alt: Intl extension is enabled
 
 Great! The PHP environment setup is now complete. Next, you'll learn how
@@ -245,7 +245,7 @@ following command in your terminal:
 In the Azure Website Control panel, browse the **Deployment** tab to get the
 Git repository URL where you should push your code:
 
-.. image:: /images/cookbook/deployment/azure-website/step-14.png
+.. image:: /_images/deployment/azure-website/step-14.png
    :alt: Git deployment panel
 
 Now, you'll want to connect your local Symfony application with this remote
@@ -296,7 +296,7 @@ Git repository.
 The deployment with Git should produce an output similar to the screenshot
 below:
 
-.. image:: /images/cookbook/deployment/azure-website/step-15.png
+.. image:: /_images/deployment/azure-website/step-15.png
    :alt: Deploying files to the Git Azure Website repository
 
 The code of the Symfony application has now been deployed to the Azure Website
@@ -339,7 +339,7 @@ the values of some Symfony settings like database credentials, locale, mailer
 credentials, CSRF token protection, etc. These parameters come from the
 ``app/config/parameters.yml.dist`` file.
 
-.. image:: /images/cookbook/deployment/azure-website/step-16.png
+.. image:: /_images/deployment/azure-website/step-16.png
    :alt: Configuring Symfony global parameters
 
 The most important thing in this cookbook is to correctly set up your database
@@ -347,7 +347,7 @@ settings. You can get your MySQL database settings on the right sidebar of the
 **Azure Website Dashboard** panel. Simply click on the
 **View Connection Strings** link to make them appear in a pop-in.
 
-.. image:: /images/cookbook/deployment/azure-website/step-17.png
+.. image:: /_images/deployment/azure-website/step-17.png
    :alt: MySQL database settings
 
 The displayed MySQL database settings should be something similar to the code
@@ -377,7 +377,7 @@ doesn't provide a built-in mailer service. You should consider configuring
 the host-name and credentials of some other third-party mailing service if
 your application needs to send emails.
 
-.. image:: /images/cookbook/deployment/azure-website/step-18.png
+.. image:: /_images/deployment/azure-website/step-18.png
    :alt: Configuring Symfony
 
 Your Symfony application is now configured and should be almost operational. The

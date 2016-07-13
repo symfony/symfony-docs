@@ -452,7 +452,7 @@ In the above example, the transformer was used as a "model" transformer.
 In fact, there are two different types of transformers and three different
 types of underlying data.
 
-.. image:: /images/cookbook/form/DataTransformersTypes.png
+.. image:: /_images/form/data-transformer-types.png
    :align: center
 
 In any form, the three different types of data are:

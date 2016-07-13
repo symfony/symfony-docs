@@ -820,7 +820,7 @@ To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
 You will get this output:
 
-.. image:: /images/book/translation/debug_1.png
+.. image:: /_images/translation/debug_1.png
     :align: center
 
 It indicates that the message ``Symfony2 is great`` is unused because it is translated,
@@ -828,7 +828,7 @@ but you haven't used it anywhere yet.
 
 Now, if you translate the message in one of your templates, you will get this output:
 
-.. image:: /images/book/translation/debug_2.png
+.. image:: /_images/translation/debug_2.png
     :align: center
 
 The state is empty which means the message is translated in the ``fr`` locale and used in one or more templates.
@@ -836,7 +836,7 @@ The state is empty which means the message is translated in the ``fr`` locale an
 If you delete the message ``Symfony2 is great`` from your translation file for the ``fr`` locale
 and run the command, you will get:
 
-.. image:: /images/book/translation/debug_3.png
+.. image:: /_images/translation/debug_3.png
     :align: center
 
 The state indicates the message is missing because it is not translated in the ``fr`` locale
@@ -847,7 +847,7 @@ This is a special case because the untranslated message id equals its translatio
 If you copy the content of the translation file in the ``en`` locale, to the translation file
 in the ``fr`` locale and run the command, you will get:
 
-.. image:: /images/book/translation/debug_4.png
+.. image:: /_images/translation/debug_4.png
     :align: center
 
 You can see that the translations of the message are identical in the ``fr`` and ``en`` locales

@@ -14,7 +14,7 @@ simple schema.
 .. _component-serializer-encoders:
 .. _component-serializer-normalizers:
 
-.. image:: /images/components/serializer/serializer_workflow.png
+.. image:: /_images/components/serializer/serializer_workflow.png
 
 As you can see in the picture above, an array is used as a man in
 the middle. This way, Encoders will only deal with turning specific

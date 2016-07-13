@@ -244,7 +244,7 @@ must *map* your database tables to specific PHP classes, and the columns
 on those tables must be mapped to specific properties on their corresponding
 PHP classes.
 
-.. image:: /images/book/doctrine_image_1.png
+.. image:: /_images/doctrine/mapping_single_entity.png
    :align: center
 
 You'll provide this mapping information in the form of "metadata", a collection
@@ -646,7 +646,7 @@ to easily fetch objects based on multiple conditions::
     When you render any page, you can see how many queries were made in the
     bottom right corner of the web debug toolbar.
 
-    .. image:: /images/book/doctrine_web_debug_toolbar.png
+    .. image:: /_images/doctrine/web_debug_toolbar.png
        :align: center
        :scale: 50
        :width: 350
@@ -1106,7 +1106,7 @@ In other words, the related ``Category`` object will be stored in the
 relationship by storing the category's id in the ``category_id`` column
 of the ``product`` table.
 
-.. image:: /images/book/doctrine_image_2.png
+.. image:: /_images/doctrine/mapping_relations.png
    :align: center
 
 The metadata above the ``Category`` entity's ``$products`` property is less
@@ -1189,7 +1189,7 @@ Doctrine silently makes a second query to find the ``Category`` that's related
 to this ``Product``. It prepares the ``$category`` object and returns it to
 you.
 
-.. image:: /images/book/doctrine_image_3.png
+.. image:: /_images/doctrine/mapping_relations_proxy.png
    :align: center
 
 What's important is the fact that you have easy access to the product's related

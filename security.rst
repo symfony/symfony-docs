@@ -113,7 +113,7 @@ key takes care of this. In fact, if you go to the homepage right now, you'll
 have access and you'll see that you're "authenticated" as ``anon.``. Don't
 be fooled by the "Yes" next to Authenticated, you're just an anonymous user:
 
-.. image:: /images/book/security_anonymous_wdt.png
+.. image:: /_images/security/anonymous_wdt.png
    :align: center
 
 You'll learn later how to deny access to certain URLs or controllers.
@@ -268,7 +268,7 @@ user to be logged in to access this URL:
 
 Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
 
-.. image:: /images/book/security_http_basic_popup.png
+.. image:: /_images/security/http_basic_popup.png
    :align: center
 
 But who can you login as? Where do users come from?
@@ -437,7 +437,7 @@ but in a second, you'll change this to use ``bcrypt``.
 If you refresh now, you'll be logged in! The web debug toolbar even tells
 you who you are and what roles you have:
 
-.. image:: /images/book/symfony_loggedin_wdt.png
+.. image:: /_images/security/symfony_loggedin_wdt.png
    :align: center
 
 Because this URL requires ``ROLE_ADMIN``, if you had logged in as ``ryan``,

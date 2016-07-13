@@ -38,13 +38,13 @@ The Form Workflow
 The Form Submission Workflow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: /images/components/form/general_flow.png
+.. image:: /_images/components/form/general_flow.png
     :align: center
 
 1) Pre-populating the Form (``FormEvents::PRE_SET_DATA`` and ``FormEvents::POST_SET_DATA``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: /images/components/form/set_data_flow.png
+.. image:: /_images/components/form/set_data_flow.png
     :align: center
 
 Two events are dispatched during pre-population of a form, when
@@ -121,7 +121,7 @@ View data        Normalized data transformed using a view transformer
 2) Submitting a Form (``FormEvents::PRE_SUBMIT``, ``FormEvents::SUBMIT`` and ``FormEvents::POST_SUBMIT``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: /images/components/form/submission_flow.png
+.. image:: /_images/components/form/submission_flow.png
     :align: center
 
 Three events are dispatched when

@@ -136,7 +136,7 @@ a matter of browsing the project directory and executing this command:
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
 
-.. image:: /images/quick_tour/welcome.png
+.. image:: /_images/quick_tour/welcome.png
    :align: center
    :alt:   Symfony Welcome Page
 

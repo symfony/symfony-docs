@@ -13,14 +13,14 @@ In the :doc:`development environment </configuration/environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
 with lots of debug information to help you quickly discover the root problem:
 
-.. image:: /images/cookbook/controller/error_pages/exceptions-in-dev-environment.png
+.. image:: /_images/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in the development environment
 
 Since these pages contain a lot of sensitive internal information, Symfony won't
 display them in the production environment. Instead, it'll show a simple and
 generic **error page**:
 
-.. image:: /images/cookbook/controller/error_pages/errors-in-prod-environment.png
+.. image:: /_images/controller/error_pages/errors-in-prod-environment.png
    :alt: A typical error page in the production environment
 
 Error pages for the production environment can be customized in different ways

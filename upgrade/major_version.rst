@@ -40,7 +40,7 @@ using a deprecated feature. When visiting your application in the
 :doc:`dev environment </configuration/environments>`
 in your browser, these notices are shown in the web dev toolbar:
 
-.. image:: /images/cookbook/deprecations-in-profiler.png
+.. image:: /_images/install/deprecations-in-profiler.png
 
 Of course ultimately, you want to stop using the deprecated functionality.
 Sometimes, this is easy: the warning might tell you exactly what to change.

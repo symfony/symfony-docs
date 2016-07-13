@@ -156,7 +156,7 @@ helper functions:
         <?php echo $view['form']->widget($form) ?>
         <?php echo $view['form']->end($form) ?>
 
-.. image:: /images/book/form-simple.png
+.. image:: /_images/form/simple-form.png
     :align: center
 
 .. note::
@@ -671,7 +671,7 @@ the date as a string in the box)::
 
     ->add('dueDate', 'date', array('widget' => 'single_text'))
 
-.. image:: /images/book/form-simple2.png
+.. image:: /_images/form/simple-form-2.png
     :align: center
 
 Each field type has a number of different options that can be passed to it.
