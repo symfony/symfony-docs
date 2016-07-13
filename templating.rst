@@ -1701,6 +1701,13 @@ Overall, the topic of templating should be thought of as a powerful tool
 that's at your disposal. In some cases, you may not need to render a template,
 and in Symfony, that's absolutely fine.
 
+Final Thoughts
+--------------
+
+The templating system is just *one* of the many tools in Symfony. And its job is
+simple: allow us to render dynamic & complex HTML output so that this can ultimately
+be returned to the user, sent in an email or something else.
+
 Learn more
 ----------
 
