@@ -205,7 +205,7 @@ That exists!
 
 You can control how your bundles behave via the ``app/config/config.yml`` file.
 That file - and other details like environments & parameters - are discussed in
-the :doc:`/configuration/configuration` chapter.
+the :doc:`/configuration` chapter.
 
 What's Next?
 ------------

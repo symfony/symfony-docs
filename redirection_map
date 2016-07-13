@@ -71,7 +71,7 @@
 /book/service_container /service_container
 /book/http_fundamentals /introduction/http_fundamentals
 /book/from_flat_php_to_symfony2 /introduction/from_flat_php_to_symfony2
-/book/configuration /configuration/configuration
+/book/configuration /configuration
 /book/propel /propel/propel
 /book/performance /performance/performance
 /cookbook/assetic/apply_to_option /assetic/apply_to_option
