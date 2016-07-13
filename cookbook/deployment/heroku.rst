@@ -121,7 +121,7 @@ create the ``Procfile`` file and to add it to the repository:
 
 .. code-block:: bash
 
-    $ echo "web: bin/heroku-php-apache2 web/" > Procfile
+    $ echo "web: vendor/bin/heroku-php-apache2 web/" > Procfile
     $ git add .
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
