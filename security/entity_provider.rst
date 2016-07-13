@@ -299,7 +299,7 @@ Creating your First User
 To add users, you can implement a :doc:`registration form </doctrine/registration_form>`
 or add some `fixtures`_. This is just a normal entity, so there's nothing
 tricky, *except* that you need to encode each user's password. But don't
-worry, Symfony gives you a service that will do this for you. See :ref:`security-encoding-password`
+worry, Symfony gives you a service that will do this for you. See :doc:`/security/password_encoding`
 for details.
 
 Below is an export of the ``app_users`` table from MySQL with user ``admin``
