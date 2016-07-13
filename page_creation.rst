@@ -10,10 +10,10 @@ Create your First Page in Symfony
 Creating a new page - whether it's an HTML page or a JSON endpoint - is a
 simple two-step process:
 
-#. *Create a route*: A route is the URL (e.g. ``/about``) to your page and
+#. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
    points to a controller;
 
-#. *Create a controller*: A controller is the PHP function you write that
+#. **Create a controller**: A controller is the PHP function you write that
    builds the page. You take the incoming request information and use it to
    create a Symfony ``Response`` object, which can hold HTML content, a JSON
    string or even a binary file like an image or PDF.
@@ -78,7 +78,7 @@ to creating a page?
    defines the URL pattern for this page. You'll learn more about :doc:`routing </routing>`
    in its own section, including how to make *variable* URLs;
 
-#. *Create a controller*: The method below the route - ``numberAction`` - is called
+#. *Create a controller*: The method below the route - ``numberAction()`` - is called
    the *controller*: this is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controllers>`
    in their own section, including how to return JSON responses;
