@@ -336,7 +336,7 @@ application change slightly, but start to become more flexible:
     /index.php          => Blog post list page (index.php executed)
     /index.php/show     => Blog post show page (index.php executed)
 
-.. include:: /includes/_rewrite_rule_tip.rst.inc
+.. include:: /_includes/_rewrite_rule_tip.rst.inc
 
 When using a front controller, a single PHP file (``index.php`` in this case)
 renders *every* request. For the blog post show page, ``/index.php/show`` will
