@@ -7,7 +7,7 @@ How to Inject Instances into the Container
 When using the container in your application, you sometimes need to inject
 an instance instead of configuring the container to create a new instance.
 
-For instance, if you're using the :doc:`HttpKernel </components/http_kernel/introduction>`
+For instance, if you're using the :doc:`HttpKernel </components/http_kernel>`
 component with the DependencyInjection component, then the ``kernel``
 service is injected into the container from within the ``Kernel`` class::
 

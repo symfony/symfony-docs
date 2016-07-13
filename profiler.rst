@@ -1,0 +1,7 @@
+Profiler
+========
+
+.. toctree::
+    :glob:
+
+    profiler/*

@@ -12,7 +12,7 @@ Installer**, which has to be installed before creating your first project.
 
     Use the Symfony Installer to create new Symfony-based projects.
 
-Read the :doc:`installation chapter </book/installation>` of the Symfony Book to
+Read the :doc:`installation chapter </installation>` of the Symfony Book to
 learn how to install and use the Symfony Installer.
 
 .. _linux-and-mac-os-x-systems:
@@ -125,7 +125,7 @@ more concise and easier to understand.
 .. note::
 
     Another reason to create a new bundle is when you're overriding something
-    in a vendor's bundle (e.g. a controller). See :doc:`/cookbook/bundles/inheritance`.
+    in a vendor's bundle (e.g. a controller). See :doc:`/bundles/inheritance`.
 
 All in all, this is the typical directory structure of a Symfony application
 that follows these best practices:
@@ -165,7 +165,7 @@ Extending the Directory Structure
 
 If your project or infrastructure requires some changes to the default directory
 structure of Symfony, you can
-:doc:`override the location of the main directories </cookbook/configuration/override_dir_structure>`:
+:doc:`override the location of the main directories </configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
 
 .. _`Composer`: https://getcomposer.org/

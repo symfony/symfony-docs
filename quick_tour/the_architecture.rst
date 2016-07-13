@@ -237,7 +237,7 @@ Extending Bundles
 .................
 
 If you follow these conventions, then you can use
-:doc:`bundle inheritance </cookbook/bundles/inheritance>` to override files,
+:doc:`bundle inheritance </bundles/inheritance>` to override files,
 controllers or templates. For example, you can create a bundle - NewBundle
 - and specify that it overrides AppBundle. When Symfony loads the
 ``AppBundle:Default:index`` controller, it will first look for the
@@ -313,7 +313,7 @@ around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony master. Ready to dig into these
-topics now? Look no further - go to the official :doc:`/book/index` and
+topics now? Look no further - go to the official :doc:`/index` and
 pick any topic you want.
 
 .. _`Composer`:   https://getcomposer.org
