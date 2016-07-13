@@ -12,8 +12,6 @@ Getting and Setting Service Definitions
 
 There are some helpful methods for working with the service definitions::
 
-To find out if there is a definition for a service id::
-
     // find out if there is an "app.mailer" definition
     $container->hasDefinition('app.mailer');
     // find out if there is an "app.mailer" definition or alias
