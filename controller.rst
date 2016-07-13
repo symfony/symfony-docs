@@ -483,7 +483,8 @@ creating unnecessarily deep structures::
 Templates are a generic way to render content in *any* format. And while in
 most cases you'll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.
-To learn how to render different templating formats read the :ref:`template-formats`
+
+To learn how to render different templating formats read the :doc:`/templating/formats`
 section of the Creating and Using Templates chapter.
 
 The Symfony templating engine is explained in great detail in the

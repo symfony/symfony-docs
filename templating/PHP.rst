@@ -9,6 +9,11 @@ plain PHP code if you want. Both templating engines are supported equally in
 Symfony. Symfony adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
 
+.. tip::
+
+    If you choose *not* use Twig and you disable it, you'll need to implement
+    your own exception handler via the ``kernel.exception`` event.
+
 Rendering PHP Templates
 -----------------------
 
