@@ -467,7 +467,7 @@ Validation is a very powerful feature of Symfony and has its own
 Validation Groups
 ~~~~~~~~~~~~~~~~~
 
-If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
+If your object takes advantage of :doc:`validation groups </validation/groups>`,
 you'll need to specify which validation group(s) your form should use::
 
     $form = $this->createFormBuilder($users, array(
@@ -595,7 +595,7 @@ of the entity as well you have to adjust the option as follows::
     }
 
 You can find more information about how the validation groups and the default constraints
-work in the book section about :ref:`validation groups <book-validation-validation-groups>`.
+work in the book section about :doc:`validation groups </validation/groups>`.
 
 .. index::
    single: Forms; Validation groups based on clicked button
@@ -1899,6 +1899,8 @@ an array.
     a better choice, since it returns the data (usually an object) after
     it's been transformed by the Form component.
 
+.. _booking-validation-forms:
+
 Adding Validation
 ~~~~~~~~~~~~~~~~~
 
@@ -1915,7 +1917,7 @@ simple array of your submitted data, how can you add constraints to the data of
 your form?
 
 The answer is to setup the constraints yourself, and attach them to the individual
-fields. The overall approach is covered a bit more in the :ref:`validation chapter <book-validation-raw-values>`,
+fields. The overall approach is covered a bit more in the :doc:`validation chapter </validation/raw_values>`,
 but here's a short example:
 
 .. code-block:: php
