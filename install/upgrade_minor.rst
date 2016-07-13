@@ -41,9 +41,9 @@ Next, use Composer to download new versions of the libraries:
 
     $ composer update symfony/symfony
 
-.. include:: /upgrade/_update_dep_errors.rst.inc
+.. include:: /install/_update_dep_errors.rst.inc
 
-.. include:: /upgrade/_update_all_packages.rst.inc
+.. include:: /install/_update_all_packages.rst.inc
 
 .. _`upgrade-minor-symfony-code`:
 
