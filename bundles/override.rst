@@ -126,9 +126,9 @@ combines them into one validation metadata tree. This means you are able to
 add new constraints to a property, but you cannot override them.
 
 To override this, the 3rd party bundle needs to have configuration for
-:ref:`validation groups <book-validation-validation-groups>`. For instance,
-the FOSUserBundle has this configuration. To create your own validation, add
-the constraints to a new validation group:
+:doc:`validation groups </validation/groups>`. For instance, the FOSUserBundle
+has this configuration. To create your own validation, add the constraints
+to a new validation group:
 
 .. configuration-block::
 
