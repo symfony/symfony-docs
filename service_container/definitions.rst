@@ -111,7 +111,7 @@ any method calls in the definitions as well::
 
     There are more examples of specific ways of working with definitions
     in the PHP code blocks of the Service Container articles such as
-    :doc:`/components/dependency_injection/factories` and
+    :doc:`/service_container/factories` and
     :doc:`/components/dependency_injection/parentservices`.
 
 .. note::
