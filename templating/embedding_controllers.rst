@@ -96,4 +96,4 @@ Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
 Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services </book/service_container>`.
+that as much code as possible lives in reusable :doc:`services </service_container>`.

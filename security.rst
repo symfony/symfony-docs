@@ -1331,10 +1331,10 @@ Other Security Related Topics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
-    :maxdepth:
+    :maxdepth: 1
 
-    password_encoding
-    security_checker
+    security/password_encoding
+    security/security_checker
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

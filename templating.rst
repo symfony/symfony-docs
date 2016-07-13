@@ -966,7 +966,6 @@ Learn more
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`functions`: http://twig.sensiolabs.org/doc/functions/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`hinclude.js`: http://mnot.github.io/hinclude/
 .. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html

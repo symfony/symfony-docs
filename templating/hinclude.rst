@@ -149,3 +149,5 @@ Or you can also specify a string to display as the default content:
                 'default'  => 'Loading...',
             )
         ) ?>
+
+.. _`hinclude.js`: http://mnot.github.io/hinclude/
