@@ -98,18 +98,13 @@ it:
 
     {{ title|upper }}
 
-Twig comes with a long list of `tags`_ and `filters`_ that are available
-by default. You can even `add your own extensions`_ to Twig as needed.
+Twig comes with a long list of `tags`_, `filters`_ and `functions`_ that are available
+by default. You can even add your own *custom* filters, functions (and more) via
+a :doc:`Twig Extension </templating/twig_extension>`.
 
-.. tip::
-
-    Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag <reference-dic-tags-twig-extension>`.
-
-As you'll see throughout the documentation, Twig also supports functions
-and new functions can be easily added. For example, the following uses a
-standard ``for`` tag and the ``cycle`` function to print ten div tags, with
-alternating ``odd``, ``even`` classes:
+Twig code will look similar to PHP code, with subtle, nice differences. The following
+example uses a standard ``for`` tag and the ``cycle`` function to print ten div tags,
+with alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+twig
 
@@ -120,11 +115,6 @@ alternating ``odd``, ``even`` classes:
     {% endfor %}
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
-
-.. tip::
-
-    If you *do* choose to not use Twig and you disable it, you'll need to implement
-    your own exception handler via the ``kernel.exception`` event.
 
 .. sidebar:: Why Twig?
 
@@ -157,22 +147,11 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
 Twig Template Caching
 ~~~~~~~~~~~~~~~~~~~~~
 
-Twig is fast. Each Twig template is compiled down to a native PHP class
-that is rendered at runtime. The compiled classes are located in the
-``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
-environment, such as ``dev`` or ``prod``) and in some cases can be useful
-while debugging. See :ref:`environments-summary` for more information on
-environments.
-
-When ``debug`` mode is enabled (common in the ``dev`` environment), a Twig
-template will be automatically recompiled when changes are made to it. This
-means that during development you can happily make changes to a Twig template
-and instantly see the changes without needing to worry about clearing any
-cache.
-
-When ``debug`` mode is disabled (common in the ``prod`` environment), however,
-you must clear the Twig cache directory so that the Twig templates will
-regenerate. Remember to do this when deploying your application.
+Twig is fast because each template is compiled to a native PHP class and cached.
+But don't worry: this happens automatically and doesn't require *you* to do anything.
+And while you're developing, Twig is smart enough to re-compile you templates after
+you make any changes. That means Twig is fast in production, but easy to use while
+developing.
 
 .. index::
    single: Templating; Inheritance
@@ -336,9 +315,10 @@ Notice that since the child template didn't define a ``sidebar`` block, the
 value from the parent template is used instead. Content within a ``{% block %}``
 tag in a parent template is always used by default.
 
-You can use as many levels of inheritance as you want. In the next section,
-a common three-level inheritance model will be explained along with how templates
-are organized inside a Symfony project.
+.. tip::
+
+    You can use as many levels of inheritance as you want! See :doc:`/templating/inheritance`
+    for more info.
 
 When working with template inheritance, here are some tips to keep in mind:
 
@@ -387,7 +367,7 @@ By default, templates can live in two different locations:
     well as templates that override third party bundle templates
     (see :doc:`/templating/overriding`).
 
-``path/to/bundle/Resources/views/``
+``vendor/path/to/CoolBundle/Resources/views/``
     Each third party bundle houses its templates in its ``Resources/views/``
     directory (and subdirectories). When you plan to share your bundle, you should
     put the templates in the bundle instead of the ``app/`` directory.
@@ -404,9 +384,9 @@ to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony uses a **bundle**:**directory**:**filename** string syntax for
-templates that live inside a bundle. This allows for several types of
-templates, each which lives in a specific location:
+*If* you need to refer to a template that lives in a bundle, Symfony uses a **bundle**:**directory**:**filename**
+string syntax. This allows for several types of templates, each which lives in a
+specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
   template for a specific page. The three parts of the string, each separated
@@ -935,30 +915,35 @@ is by default "web").
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
 
-Final Thoughts
---------------
+Referencing the Request, User or Session
+----------------------------------------
 
-The templating engine in Symfony is a powerful tool that can be used each time
-you need to generate presentational content in HTML, XML or any other format.
-And though templates are a common way to generate content in a controller,
-their use is not mandatory. The ``Response`` object returned by a controller
-can be created with or without the use of a template::
+Symfony also gives you a global ``app`` variable in Twig that can be used to access
+the current user, the Request and more.
 
-    // creates a Response object whose content is the rendered template
-    $response = $this->render('article/index.html.twig');
+See :doc:`/templating/app_variable` for details.
 
-    // creates a Response object whose content is simple text
-    $response = new Response('response content');
+Output Escaping
+---------------
 
-Symfony's templating engine is very flexible and two different template
-renderers are available by default: the traditional *PHP* templates and the
-sleek and powerful *Twig* templates. Both support a template hierarchy and
-come packaged with a rich set of helper functions capable of performing
-the most common tasks.
+Twig performs automatic "output escaping" when rendering any content in order to
+protect you from Cross Site Scripting (XSS) attacks.
 
-Overall, the topic of templating should be thought of as a powerful tool
-that's at your disposal. In some cases, you may not need to render a template,
-and in Symfony, that's absolutely fine.
+Suppose ``description`` equals ``I <3 this product``:
+
+.. code-block:: twig
+
+    <!-- outupt escaping is on automatically -->
+    {{ description }} <!-- I &lt3 this product -->
+
+    <!-- disable output escaping with the raw filter -->
+    {{ description|raw }} <!-- I <3 this product -->
+
+.. caution::
+
+    PHP templates do not automatically escape content.
+
+For more details, see :doc:`/templating/escaping`.
 
 Learn more
 ----------
@@ -972,6 +957,7 @@ Learn more
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
+.. _`functions`: http://twig.sensiolabs.org/doc/functions/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`hinclude.js`: http://mnot.github.io/hinclude/
 .. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
