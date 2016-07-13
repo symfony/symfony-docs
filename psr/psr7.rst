@@ -4,7 +4,7 @@
 The PSR-7 Bridge
 ================
 
-    The PSR-7 bridge converts :doc:`HttpFoundation </components/http_foundation/index>`
+    The PSR-7 bridge converts :doc:`HttpFoundation </components/http_foundation>`
     objects from and to objects implementing HTTP message interfaces defined
     by the `PSR-7`_.
 

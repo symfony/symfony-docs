@@ -361,15 +361,15 @@ to do:
 
 .. _request-flow-figure:
 
-.. figure:: /images/request-flow.png
+.. figure:: /_images/http/request-flow.png
    :align: center
    :alt: Symfony request flow
 
    Incoming requests are interpreted by the :doc:`Routing component </routing>` and
    passed to PHP functions that return ``Response`` objects.
 
-This may not make sense yet, but as you keep reading, you'll learn about :ref:`routes </routing>`
-and :ref:`controllers </controller>`: the two fundamental parts to creating a page.
+This may not make sense yet, but as you keep reading, you'll learn about :doc:`routes </routing>`
+and :doc:`controllers </controller>`: the two fundamental parts to creating a page.
 But as you go along, don't forget that no matter *how* complex your app gets, your
 job is always the same: read information from the Request and use it to create a
 Response.

@@ -4,7 +4,7 @@
 How to Create a custom Data Collector
 =====================================
 
-The :doc:`Symfony Profiler </profiler/index>` delegates data collection
+The :doc:`Symfony Profiler </profiler>` delegates data collection
 to some special classes called data collectors. Symfony comes bundled with a few
 of them, but you can easily create your own.
 

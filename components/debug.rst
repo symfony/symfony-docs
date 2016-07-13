@@ -33,7 +33,7 @@ Enabling them all is as easy as it can get::
 
 The :method:`Symfony\\Component\\Debug\\Debug::enable` method registers an
 error handler, an exception handler and
-:doc:`a special class loader </components/debug/class_loader>`.
+:ref:`a special class loader <component-debug-class-loader>`.
 
 Read the following sections for more information about the different available
 tools.
@@ -69,7 +69,7 @@ and more useful::
 
 .. note::
 
-    If the :doc:`HttpFoundation component </components/http_foundation` is
+    If the :doc:`HttpFoundation component </components/http_foundation>` is
     available, the handler uses a Symfony Response object; if not, it falls
     back to a regular PHP response.
 

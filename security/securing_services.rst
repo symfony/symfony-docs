@@ -144,7 +144,7 @@ You can also secure method calls in any service with annotations by using the
 optional `JMSSecurityExtraBundle`_ bundle. This bundle is not included in the
 Symfony Standard Distribution, but you can choose to install it.
 
-To enable the annotations functionality, :ref:`tag <book-service-container-tags>`
+To enable the annotations functionality, :doc:`tag </service_container/tags>`
 the service you want to secure with the ``security.secure_service`` tag
 (you can also automatically enable this functionality for all services, see
 the :ref:`sidebar <securing-services-annotations-sidebar>` below):

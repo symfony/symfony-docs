@@ -95,7 +95,7 @@ URL                     Route     Parameters
 ======================  ========  ===============================
 
 The answer to the problem is to add route *requirements* or route *conditions*
-(see :ref:`book-routing-conditions`). The routes in this example would work
+(see :doc:`/routing/conditions`). The routes in this example would work
 perfectly if the ``/blog/{page}`` path *only* matched URLs where the ``{page}``
 portion is an integer. Fortunately, regular expression requirements can easily
 be added for each parameter. For example:
@@ -373,5 +373,5 @@ Adding a Host Requirement
 -------------------------
 
 You can also match on the HTTP *host* of the incoming request. For more
-information, see :doc:`/components/routing/hostname_pattern` in the Routing
+information, see :doc:`/routing/hostname_pattern` in the Routing
 component documentation.

@@ -92,7 +92,7 @@ Loader too. The default loaders are:
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
   catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml>`).
 
-All file loaders require the :doc:`Config component </components/config/index>`.
+All file loaders require the :doc:`Config component </components/config>`.
 
 You can also :doc:`create your own Loader </components/translation/custom_formats>`,
 in case the format is not already supported by one of the default loaders.

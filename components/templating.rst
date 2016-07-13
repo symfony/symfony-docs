@@ -141,8 +141,8 @@ The Templating component can be easily extended via helpers. Helpers are PHP obj
 provide features useful in a template context. The component has
 2 built-in helpers:
 
-* :doc:`/components/templating/helpers/assetshelper`
-* :doc:`/components/templating/helpers/slotshelper`
+* :doc:`/components/templating/assetshelper`
+* :doc:`/components/templating/slotshelper`
 
 Before you can use these helpers, you need to register them using
 :method:`Symfony\\Component\\Templating\\PhpEngine::set`::
