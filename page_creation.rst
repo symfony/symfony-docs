@@ -52,7 +52,7 @@ random) number and prints it. To do that, create a "Controller class" and a
          */
         public function numberAction()
         {
-            $number = rand(0, 100);
+            $number = mt_rand(0, 100);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'
@@ -117,7 +117,7 @@ variable so we can render that::
          */
         public function numberAction()
         {
-            $number = rand(0, 100);
+            $number = mt_rand(0, 100);
 
             return $this->render('lucky/number.html.twig', array(
                 'number' => $number
@@ -126,7 +126,7 @@ variable so we can render that::
     }
 
 Finally, template files should live in the ``app/Resources/view`` directory. Create
-a a new ``app/Resources/views/lucky`` directory with a new ``number.html.twig`` file
+a new ``app/Resources/views/lucky`` directory with a new ``number.html.twig`` file
 inside:
 
 .. code-block:: twig
@@ -166,7 +166,7 @@ So what about the other directories in the project?
     package manager.
 
 ``web/``
-    This is the document root for your project: but any publicly accessible files
+    This is the document root for your project: put any publicly accessible files
     here (e.g. CSS, JS and images).
 
 Bundles & Configuration
@@ -184,11 +184,11 @@ Bundles are registered in your ``app/AppKernel.php`` file (a rare PHP file in th
     {
         public function registerBundles()
         {
-            $bundles = [
+            $bundles = array(
                 new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
                 new Symfony\Bundle\TwigBundle\TwigBundle(),
                 // ...
-            ];
+            );
             // ...
 
             return $bundles;
