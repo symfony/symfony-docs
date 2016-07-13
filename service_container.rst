@@ -105,7 +105,7 @@ for you. In order for this to work, you must *teach* the container how to
 create the ``Mailer`` service. This is done via configuration, which can
 be specified in YAML, XML or PHP:
 
-.. include:: includes/service_container/_my_mailer.rst.inc
+.. include:: /_includes/service_container/_my_mailer.rst.inc
 
 .. note::
 

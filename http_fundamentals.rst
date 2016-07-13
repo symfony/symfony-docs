@@ -321,7 +321,7 @@ handles every request coming into your application. For example:
 | ``/index.php/blog``    | executes ``index.php`` |
 +------------------------+------------------------+
 
-.. include:: /includes/_rewrite_rule_tip.rst.inc
+.. include:: /_includes/_rewrite_rule_tip.rst.inc
 
 Now, every request is handled exactly the same way. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
