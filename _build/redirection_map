@@ -252,6 +252,7 @@
 /components/dependency_injection/introduction /components/dependency_injection
 /components/dependency_injection/index /components/dependency_injection
 /components/dependency_injection/factories /service_container/factories
+/components/dependency_injection/lazy_services /service_container/lazy_services
 /components/event_dispatcher/introduction /components/event_dispatcher
 /components/expression_language/introduction /components/expression_language
 /components/expression_language/index /components/expression_language
