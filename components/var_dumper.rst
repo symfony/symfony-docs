@@ -283,4 +283,13 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/09-cut.png
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    var_dumper/*
+
 .. _Packagist: https://packagist.org/packages/symfony/var-dumper

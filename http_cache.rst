@@ -1242,10 +1242,11 @@ of relying only on Symfony documentation and code examples, you have access
 to a world of knowledge related to HTTP caching and gateway caches such as
 Varnish.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
 .. toctree::
+    :maxdepth: 1
     :glob:
 
     cache/*

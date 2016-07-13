@@ -201,4 +201,13 @@ method is used.
         new CustomEngine(...),
     ));
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    templating/*
+
 .. _Packagist: https://packagist.org/packages/symfony/templating

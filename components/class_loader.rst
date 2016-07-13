@@ -1,9 +1,3 @@
-.. toctree::
-    :hidden:
-    :glob:
-
-    class_loader/*
-
 .. index::
     single: Components; ClassLoader
 
@@ -35,7 +29,7 @@ which makes it possible
 :doc:`to cache the results of a class loader </components/class_loader/cache_class_loader>`.
 
 When using the :doc:`Debug component </components/debug>`, you
-can also use a special :doc:`DebugClassLoader </components/debug/class_loader>`
+can also use a special :ref:`DebugClassLoader <component-debug-class-loader>`
 that eases debugging by throwing more helpful exceptions when a class could
 not be found by a class loader.
 
@@ -49,6 +43,16 @@ You can install the component in 2 different ways:
 * Use the official Git repository (https://github.com/symfony/class-loader).
 
 .. include:: /components/require_autoload.rst.inc
+
+Learn More
+----------
+
+.. toctree::
+    :glob:
+    :maxdepth: 1
+
+    class_loader/class_loader
+    class_loader/*
 
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/
 .. _PSR-4: http://www.php-fig.org/psr/psr-4/

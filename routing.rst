@@ -770,6 +770,7 @@ Learn more
 ----------
 
 .. toctree::
+    :maxdepth: 1
     :glob:
 
     routing/*

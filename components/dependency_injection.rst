@@ -286,5 +286,13 @@ config files:
             ->register('newsletter_manager', 'NewsletterManager')
             ->addMethodCall('setMailer', array(new Reference('mailer')));
 
-.. _Packagist: https://packagist.org/packages/symfony/dependency-injection
+Learn More
+----------
 
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    dependency_injection/*
+
+.. _Packagist: https://packagist.org/packages/symfony/dependency-injection

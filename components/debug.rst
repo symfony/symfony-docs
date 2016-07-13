@@ -73,8 +73,10 @@ and more useful::
     available, the handler uses a Symfony Response object; if not, it falls
     back to a regular PHP response.
 
+.. _component-debug-class-loader:
+
 Debugging a Class Loader
-========================
+------------------------
 
 The :class:`Symfony\\Component\\Debug\\DebugClassLoader` attempts to
 throw more helpful exceptions when a class isn't found by the registered

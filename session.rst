@@ -1,0 +1,7 @@
+Sessions
+========
+
+.. toctree::
+    :glob:
+
+    session/*

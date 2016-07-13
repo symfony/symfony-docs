@@ -346,6 +346,15 @@ when installing an existing Symfony application:
     # now Composer will ask you for the values of any undefined parameter
     $ ...
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    install/*
+
 .. _`Composer`: https://getcomposer.org/
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard

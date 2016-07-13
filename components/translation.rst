@@ -212,6 +212,15 @@ Usage
 
 Read how to use the Translation component in :doc:`/components/translation/usage`.
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    translation/*
+
 .. _Packagist: https://packagist.org/packages/symfony/translation
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
