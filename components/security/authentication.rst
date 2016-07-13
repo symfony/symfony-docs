@@ -316,7 +316,7 @@ the ``switch_user`` firewall listener.
 .. seealso::
 
     For more information on switching users, see
-    :doc:`/cookbook/security/impersonating_user`.
+    :doc:`/security/impersonating_user`.
 
 .. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
 .. _`BasePasswordEncoder::checkPasswordLength`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/BasePasswordEncoder.php

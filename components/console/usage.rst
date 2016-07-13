@@ -139,7 +139,7 @@ commands, then you can run ``help`` like this:
 
 If you have commands using ``:`` to namespace commands then you just have
 to type the shortest unambiguous text for each part. If you have created the
-``demo:greet`` as shown in :doc:`/components/console/introduction` then you
+``demo:greet`` as shown in :doc:`/components/console` then you
 can run it with:
 
 .. code-block:: bash

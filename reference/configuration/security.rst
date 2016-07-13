@@ -316,7 +316,7 @@ Form Login Configuration
 When using the ``form_login`` authentication listener beneath a firewall,
 there are several common options for configuring the "form login" experience.
 
-For even more details, see :doc:`/cookbook/security/form_login`.
+For even more details, see :doc:`/security/form_login`.
 
 The Login Form and Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -416,7 +416,7 @@ There are several options for connecting against an LDAP server,
 using the ``form_login_ldap`` and ``http_basic_ldap`` authentication
 providers or the ``ldap`` user provider.
 
-For even more details, see :doc:`/cookbook/security/ldap`.
+For even more details, see :doc:`/security/ldap`.
 
 Authentication
 ~~~~~~~~~~~~~~

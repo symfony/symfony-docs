@@ -46,7 +46,7 @@ replace the intl classes:
 Composer automatically exposes these classes in the global namespace.
 
 If you don't use Composer but the
-:doc:`Symfony ClassLoader component </components/class_loader/introduction>`,
+:doc:`Symfony ClassLoader component </components/class_loader>`,
 you need to expose them manually by adding the following lines to your autoload
 code::
 

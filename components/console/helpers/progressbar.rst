@@ -7,7 +7,7 @@ Progress Bar
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
-.. image:: /images/components/console/progressbar.gif
+.. image:: /_images/components/console/progressbar.gif
 
 To display progress details, use the
 :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`, pass it a total
