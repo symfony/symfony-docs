@@ -217,7 +217,7 @@ class namespace is ``App\Watch``.
 
 If this convention doesn't work for your application, you can also configure
 the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
-:doc:`HttpKernel Component </components/http_kernel/introduction>`:
+:doc:`HttpKernel Component </components/http_kernel>`:
 
 .. code-block:: xml
 
