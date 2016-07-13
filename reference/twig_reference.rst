@@ -642,7 +642,7 @@ form_theme
 
 Sets the resources to override the form theme for the given form view instance.
 You can use ``_self`` as resources to set it to the current resource. More
-information in :doc:`/cookbook/form/form_customization`.
+information in :doc:`/form/form_customization`.
 
 trans
 ~~~~~
@@ -749,8 +749,7 @@ The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
 Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong
-  to the Twig core. You can read more in `the official Twig Extensions
-  documentation`_.
+  to the Twig core. You can read more in `the official Twig Extensions documentation`_.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

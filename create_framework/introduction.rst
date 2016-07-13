@@ -94,7 +94,7 @@ Dependency Management
 
 To install the Symfony Components that you need for your framework, you are going
 to use `Composer`_, a project dependency manager for PHP. If you don't have it
-yet, :doc:`download and install Composer </cookbook/composer>` now.
+yet, :doc:`download and install Composer </composer/installation>` now.
 
 Our Project
 -----------

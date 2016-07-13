@@ -16,7 +16,7 @@ Table Helper
 
 When building a console application it may be useful to display tabular data:
 
-.. image:: /images/components/console/table.png
+.. image:: /_images/components/console/table.png
 
 To display a table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
 set headers, rows and render::

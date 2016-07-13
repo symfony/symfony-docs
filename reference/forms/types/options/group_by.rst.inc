@@ -38,7 +38,7 @@ Take the following example::
 This groups the dates that are within 3 days into "Soon" and everything else into
 a "Later" group:
 
-.. image:: /images/reference/form/choice-example5.png
+.. image:: /_images/reference/form/choice-example5.png
    :align: center
 
 If you return ``null``, the option won't be grouped. You can also pass a string

@@ -328,7 +328,7 @@ Form Login Configuration
 When using the ``form_login`` authentication listener beneath a firewall,
 there are several common options for configuring the "form login" experience.
 
-For even more details, see :doc:`/cookbook/security/form_login`.
+For even more details, see :doc:`/security/form_login`.
 
 The Login Form and Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
