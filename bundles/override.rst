@@ -114,7 +114,7 @@ and registering it as a service, and tagging it with ``form.type`` (you *could*
 do this in earlier version).
 
 Instead, you should use a "form type extension" to modify the existing form type.
-For more information, see :doc:`/cookbook/form/create_form_type_extension`.
+For more information, see :doc:`/form/create_form_type_extension`.
 
 .. _override-validation:
 

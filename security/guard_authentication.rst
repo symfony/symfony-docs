@@ -15,7 +15,7 @@ Create a User and a User Provider
 ---------------------------------
 
 No matter how you authenticate, you need to create a User class that implements ``UserInterface``
-and configure a :doc:`user provider </cookbook/security/custom_provider>`. In this
+and configure a :doc:`user provider </security/custom_provider>`. In this
 example, users are stored in the database via Doctrine, and each user has an ``apiKey``
 property they use to access their account via the API::
 
@@ -134,8 +134,8 @@ Next, make sure you've configured a "user provider" for the user:
 
 That's it! Need more information about this step, see:
 
-* :doc:`/cookbook/security/entity_provider`
-* :doc:`/cookbook/security/custom_provider`
+* :doc:`/security/entity_provider`
+* :doc:`/security/custom_provider`
 
 Step 1) Create the Authenticator Class
 --------------------------------------

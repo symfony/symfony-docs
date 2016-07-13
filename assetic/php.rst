@@ -4,7 +4,7 @@
 Combining, Compiling and Minimizing Web Assets with PHP Libraries
 =================================================================
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
+.. include:: /assetic/_standard_edition_warning.rst.inc
 
 The official Symfony Best Practices recommend to use Assetic to
 :doc:`manage web assets </best_practices/web-assets>`, unless you are

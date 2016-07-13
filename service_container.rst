@@ -145,7 +145,7 @@ As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
-":doc:`/cookbook/service_container/shared`" cookbook article.
+":doc:`/service_container/shared`" cookbook article.
 
 .. note::
 

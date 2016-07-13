@@ -6,7 +6,7 @@ How to Create a Custom Form Password Authenticator
 
 .. tip::
 
-    Check out :doc:`/cookbook/security/guard-authentication` for a simpler and more
+    Check out :doc:`/security/guard_authentication` for a simpler and more
     flexible way to accomplish custom authentication tasks like this.
 
 Imagine you want to allow access to your website only between 2pm and 4pm

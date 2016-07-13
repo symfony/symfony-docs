@@ -35,7 +35,7 @@ much more concise:
 Using Assetic
 -------------
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
+.. include:: /assetic/_standard_edition_warning.rst.inc
 
 These days, you probably can't simply create static CSS and JavaScript files
 and include them in your template. Instead, you'll probably want to combine

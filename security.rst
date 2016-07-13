@@ -1414,7 +1414,9 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
+    security/ldap
     security/entity_provider
+    security/guard_authentication
     security/remember_me
     security/impersonating_user
     security/form_login
@@ -1427,8 +1429,10 @@ Authentication (Identifying/Logging in the User)
     security/csrf_in_login_form
     security/named_encoders
     security/multiple_user_providers
+    security/multiple_guard_authenticators
     security/firewall_restriction
     security/host_restriction
+    security/user_checkers
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

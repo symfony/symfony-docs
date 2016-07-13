@@ -12,7 +12,7 @@ How to Work with Scopes
     Use the ``request_stack`` service (introduced in Symfony 2.4) instead of
     the ``request`` service/scope and use the ``shared`` setting (introduced in
     Symfony 2.8) instead of the ``prototype`` scope
-    (:doc:`read more about shared services </cookbook/service_container/shared>`).
+    (:doc:`read more about shared services </service_container/shared>`).
 
 This article is all about scopes, a somewhat advanced topic related to the
 :doc:`/service_container`. If you've ever gotten an error mentioning

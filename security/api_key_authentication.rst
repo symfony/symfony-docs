@@ -6,7 +6,7 @@ How to Authenticate Users with API Keys
 
 .. tip::
 
-    Check out :doc:`/cookbook/security/guard-authentication` for a simpler and more
+    Check out :doc:`/security/guard_authentication` for a simpler and more
     flexible way to accomplish custom authentication tasks like this.
 
 Nowadays, it's quite usual to authenticate the user via an API key (when developing

@@ -1,7 +1,7 @@
 Assetic
 =======
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
+.. include:: /assetic/_standard_edition_warning.rst.inc
 
 .. toctree::
     :maxdepth: 1

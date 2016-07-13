@@ -428,7 +428,7 @@ There are several options for connecting against an LDAP server,
 using the ``form_login_ldap`` and ``http_basic_ldap`` authentication
 providers or the ``ldap`` user provider.
 
-For even more details, see :doc:`/cookbook/security/ldap`.
+For even more details, see :doc:`/security/ldap`.
 
 Authentication
 ~~~~~~~~~~~~~~
