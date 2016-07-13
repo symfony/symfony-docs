@@ -11,9 +11,6 @@ Symfony Documentation
     page_creation
     introduction/from_flat_php_to_symfony2
     introduction/symfony1
-    propel/propel
-    psr/psr7
-    upgrade/index
     web_server/index
     web_services/index
     workflow/index
