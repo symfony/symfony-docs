@@ -75,10 +75,10 @@ Advanced Usage
 --------------
 
 .. toctree::
+    :glob:
     :maxdepth: 1
 
-    cache_items
-    cache_pools
+    cache/*
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
 .. _Packagist: https://packagist.org/packages/symfony/cache
