@@ -15,7 +15,7 @@ which has a ``getMailerMethod()`` method on it, which will return a string
 like ``sendmail`` based on some configuration. Remember that the first argument
 to the ``my_mailer`` service is the simple string ``sendmail``:
 
-.. include:: /_includes/service_container/_service_container_my_mailer.rst.inc
+.. include:: /_includes/service_container/_my_mailer.rst.inc
 
 But instead of hardcoding this, how could we get this value from the ``getMailerMethod()``
 of the new ``mailer_configuration`` service? One way is to use an expression:

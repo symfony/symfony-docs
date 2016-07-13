@@ -12,7 +12,7 @@ them by executing any piece of code.
 Internal events provided by Symfony itself are defined in the
 :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Third-party bundles
 and libraries also trigger lots of events and your own application can trigger
-:doc:`custom events </components/event_dispatcher/index>`.
+:doc:`custom events </components/event_dispatcher>`.
 
 All the examples shown in this article use the same ``KernelEvents::EXCEPTION``
 event for consistency purposes. In your own application, you can use any event
