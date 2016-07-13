@@ -27,7 +27,7 @@ depending on the request values::
     };
 
     $form = $formFactory->createBuilder()
-        // add form fields
+        // ... add form fields
         ->addEventListener(FormEvents::PRE_SUBMIT, $listener);
 
     // ...
@@ -310,18 +310,22 @@ Creating and binding an event listener to the form is very easy::
 When you have created a form type class, you can use one of its methods as a
 callback for better readability::
 
-    // ...
+    // src/AppBundle/Form/SubscriptionType.php
+    namespace AppBundle\Form;
 
+    // ...
     class SubscriptionType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('username', 'text');
-            $builder->add('show_email', 'checkbox');
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                array($this, 'onPreSetData')
-            );
+            $builder
+                ->add('username', 'text')
+                ->add('show_email', 'checkbox')
+                ->addEventListener(
+                    FormEvents::PRE_SET_DATA,
+                    array($this, 'onPreSetData')
+                )
+            ;
         }
 
         public function onPreSetData(FormEvent $event)
@@ -340,6 +344,9 @@ Event subscribers have different uses:
 * Regrouping multiple listeners inside a single class.
 
 .. code-block:: php
+
+    // src/AppBundle/Form/EventListener/AddEmailFieldListener.php
+    namespace AppBundle\Form\EventListener;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\FormEvent;
@@ -388,8 +395,9 @@ Event subscribers have different uses:
         }
     }
 
-To register the event subscriber, use the addEventSubscriber() method::
+To register the event subscriber, use the ``addEventSubscriber()`` method::
 
+    use AppBundle\Form\EventListener\AddEmailFieldListener;
     // ...
 
     $form = $formFactory->createBuilder()

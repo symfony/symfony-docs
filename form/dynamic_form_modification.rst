@@ -25,8 +25,7 @@ how to customize your form based on three common use-cases:
    field.
 
 If you wish to learn more about the basics behind form events, you can
-take a look at the :doc:`Form Events </components/form/form_events>`
-documentation.
+take a look at the :doc:`Form Events </form/events>` documentation.
 
 .. _cookbook-form-events-underlying-data:
 

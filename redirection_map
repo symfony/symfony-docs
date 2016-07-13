@@ -254,8 +254,10 @@
 /components/expression_language/index /components/expression_language
 /components/filesystem/introduction /components/filesystem
 /components/filesystem/index /components/filesystem
+/components/form/form_events /form/events
 /components/form/introduction /components/form
 /components/form/index /components/form
+/components/form/type_guesser /form/type_guesser
 /components/http_foundation/introduction /components/http_foundation
 /components/http_kernel/introduction /components/http_kernel
 /components/http_kernel/index /components/http_kernel
