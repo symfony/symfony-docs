@@ -467,6 +467,5 @@ Learn more
 * :doc:`/components/dependency_injection/definitions`
 * :doc:`/components/dependency_injection/factories`
 * :doc:`/components/dependency_injection/parentservices`
-* :doc:`/components/dependency_injection/advanced`
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture

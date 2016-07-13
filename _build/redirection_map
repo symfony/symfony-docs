@@ -247,6 +247,7 @@
 /components/debug/class_loader /components/debug
 /components/debug/introduction /components/debug
 /components/debug/index /components/debug
+/components/dependency_injection/advanced /service_container/alias_private
 /components/dependency_injection/introduction /components/dependency_injection
 /components/dependency_injection/index /components/dependency_injection
 /components/event_dispatcher/introduction /components/event_dispatcher

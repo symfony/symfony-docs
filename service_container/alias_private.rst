@@ -1,8 +1,8 @@
 .. index::
     single: DependencyInjection; Advanced configuration
 
-Advanced Container Configuration
-================================
+Service Aliases & Private Services
+==================================
 
 .. _container-private-services:
 
@@ -128,5 +128,4 @@ This means that when using the container directly, you can access the
 
         services:
             # ...
-
             app.mailer: '@app.phpmailer'
