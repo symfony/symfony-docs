@@ -185,4 +185,4 @@ will be applied.
 
 Of course, you'll usually work with validation indirectly through the form
 library. For information on how to use validation groups inside forms, see
-:ref:`book-forms-validation-groups`.
+:doc:`/form/validation_groups`.

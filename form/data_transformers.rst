@@ -289,7 +289,7 @@ Now, when you create your ``TaskType``, you'll need to pass in the entity manage
 .. note::
 
     To make this step easier (especially if ``TaskType`` is embedded into other
-    form type classes), you might choose to :ref:`register your form type as a service <form-as-services>`.
+    form type classes), you might choose to :doc:`register your form type as a service </form/form_dependencies>`.
 
 Cool, you're done! Your user will be able to enter an issue number into the
 text field and it will be transformed back into an Issue object. This means

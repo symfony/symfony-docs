@@ -1,5 +1,3 @@
-.. _form-as-services:
-
 How to Access Services or Config from Inside a Form
 ===================================================
 

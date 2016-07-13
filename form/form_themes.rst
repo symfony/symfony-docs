@@ -97,6 +97,8 @@ For a more extensive discussion, see :doc:`/form/form_customization`.
 .. index::
     single: Forms; Template fragment naming
 
+.. _form-template-blocks:
+
 Form Fragment Naming
 --------------------
 
@@ -174,6 +176,8 @@ override the default error rendering for *all* fields, copy and customize the
 
 .. index::
     single: Forms; Global Theming
+
+.. _forms-theming-global:
 
 Global Form Theming
 -------------------

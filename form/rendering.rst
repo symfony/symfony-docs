@@ -42,7 +42,7 @@ the other functions do?
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag by
-default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
+default. In the :doc:`/form/form_themes` section, you'll learn how the ``form_row``
 output can be customized on many different levels.
 
 .. tip::
