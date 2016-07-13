@@ -4,7 +4,7 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
-.. include:: /cookbook/assetic/_standard_edition_warning.inc
+.. include:: /assetic/_standard_edition_warning.rst.inc
 
 Full Default Configuration
 --------------------------

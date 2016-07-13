@@ -159,7 +159,7 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
 
     When passing a string, the ``choice_label`` option is a property path. So you
     can use anything supported by the
-    :doc:`PropertyAccessor component </components/property_access/introduction>`
+    :doc:`PropertyAccessor component </components/property_access>`
 
     For example, if the translations property is actually an associative
     array of objects, each with a name property, then you could do this::
@@ -206,33 +206,16 @@ loading all entities.
 Overridden Options
 ------------------
 
-choice_name
-~~~~~~~~~~~
+.. include:: /reference/forms/types/options/choice_name.rst.inc
 
-**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
+In the ``EntityType``, this defaults to the ``id`` of the entity, if it can
+be read. Otherwise, it falls back to using auto-incrementing integers.
 
-By default the name of each field is the id of the entity, if it can be read
-from the class metadata by an internal id reader. Otherwise the process will
-fall back to using increasing integers.
+.. include:: /reference/forms/types/options/choice_value.rst.inc
 
-choice_value
-~~~~~~~~~~~~
-
-**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: id
-
-As for the ``choice_name`` option, ``choice_value`` uses the id by default.
-It allows an optimization in the :class:``Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\Loader\\DoctrineChoiceLoader`` which will
-only load the ids passed as values while the form submission.
-It prevents all non submitted entities to be loaded from the database, even
-when defining the ``query_builder`` option.
-If it may be useful to set this option using an entity's property as string
-value (e.g for some API), you will gain performances by letting this option set
-by default.
-
-.. note::
-
-    If the id cannot be read, for BC, the component checks if the class implements
-    ``__toString()`` and will use an incremental integer otherwise.
+In the ``EntityType``, this is overridden to use the ``id`` by default. When the
+``id`` is used, Doctrine only queries for the objects for the ids that were actually
+submitted.
 
 choices
 ~~~~~~~
@@ -272,7 +255,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
     helpful to read the documentation for the
     :doc:`/reference/forms/types/collection` as well. In addition, there
     is a complete example in the cookbook article
-    :doc:`/cookbook/form/form_collections`.
+    :doc:`/form/form_collections`.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
