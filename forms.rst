@@ -400,7 +400,7 @@ That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
 Validation is a very powerful feature of Symfony and has its own
-:doc:`dedicated chapter </book/validation>`.
+:doc:`dedicated chapter </validation>`.
 
 .. _book-forms-html5-validation-disable:
 

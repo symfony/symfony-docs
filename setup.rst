@@ -354,6 +354,7 @@ Learn More
     :glob:
 
     install/*
+    setup/*
 
 .. _`Composer`: https://getcomposer.org/
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs

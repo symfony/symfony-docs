@@ -207,8 +207,8 @@ In other words, the related ``Category`` object will be stored in the
 relationship by storing the category's id in the ``category_id`` column
 of the ``product`` table.
 
-.. image:: /images/book/doctrine_image_2.png
-:align: center
+.. image:: /_images/doctrine/mapping_relations.png
+    :align: center
 
 The metadata above the ``Category`` entity's ``$products`` property is less
 complicated. It simply tells Doctrine to look at the ``Product.category``
@@ -289,7 +289,7 @@ Doctrine silently makes a second query to find the ``Category`` that's related
 to this ``Product``. It prepares the ``$category`` object and returns it to
 you.
 
-.. image:: /images/book/doctrine_image_3.png
+.. image:: /_images/doctrine/mapping_relations_proxy.png
     :align: center
 
 What's important is the fact that you have easy access to the product's related

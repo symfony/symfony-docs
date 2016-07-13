@@ -186,6 +186,8 @@ In the above example, you used the ``form_theme`` helper (in Twig) to "import"
 the custom form fragments into *just* that form. You can also tell Symfony
 to import form customizations across your entire project.
 
+.. _forms-theming-twig:
+
 Twig
 ~~~
 

@@ -64,12 +64,12 @@ subdirectory.
 .. note::
 
     You can also override templates from within a bundle by using bundle
-    inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
+    inheritance. For more information, see :doc:`/bundles/inheritance`.
 
 .. _templating-overriding-core-templates:
 
 .. index::
-single: Template; Overriding exception templates
+    single: Template; Overriding exception templates
 
 Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
