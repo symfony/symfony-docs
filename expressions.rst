@@ -11,8 +11,8 @@ logic inside configuration.
 The Symfony Framework leverages expressions out of the box in the following
 ways:
 
-* :ref:`Configuring services <book-services-expressions>`;
-* :ref:`Route matching conditions <book-routing-conditions>`;
+* :doc:`Configuring services </service_container/expression_language>`;
+* :doc:`Route matching conditions </routing/conditions>`;
 * :ref:`Checking security <book-security-expressions>` (explained below) and
   :ref:`access controls with allow_if <book-security-allow-if>`;
 * :doc:`Validation </reference/constraints/Expression>`.

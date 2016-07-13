@@ -139,7 +139,7 @@ which controller should be executed. The whole process looks like this:
 #. The Symfony Kernel executes the controller, which ultimately returns
    a ``Response`` object.
 
-.. figure:: /images/request-flow.png
+.. figure:: /_images/http/request-flow.png
    :align: center
    :alt: Symfony request flow
 
@@ -201,7 +201,7 @@ file:
     Even though all routes are loaded from a single file, it's common practice
     to include additional routing resources. To do so, just point out in the
     main routing configuration file which external files should be included.
-    See the :ref:`routing-include-external-resources` section for more
+    See the :doc:`/routing/external_resources` section for more
     information.
 
 Basic Route Configuration

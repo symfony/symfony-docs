@@ -8,7 +8,7 @@ Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
 Suppose that Symfony 2.7 version hasn't been released yet and you want to create
-a new project to test its features. First, :doc:`install the Composer </composer>`
+a new project to test its features. First, :doc:`install the Composer </composer/installation>`
 package manager. Then, open a command console, enter your project's directory and
 execute the following command:
 

@@ -36,7 +36,7 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-To use the ``ObjectNormalizer``, the :doc:`PropertyAccess component </components/property_access/index>`
+To use the ``ObjectNormalizer``, the :doc:`PropertyAccess component </components/property_access>`
 must also be installed.
 
 Usage
@@ -502,7 +502,7 @@ Normalizers
 There are several types of normalizers available:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    This normalizer leverages the :doc:`PropertyAccess Component </components/property_access/index>`
+    This normalizer leverages the :doc:`PropertyAccess Component </components/property_access>`
     to read and write in the object. It means that it can access to properties
     directly and through getters, setters, hassers, adders and removers. It supports
     calling the constructor during the denormalization process.

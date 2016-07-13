@@ -14,7 +14,7 @@ This article is all about scopes, a somewhat advanced topic related to the
     is to inject the ``request_stack`` service instead and access the current
     Request by calling the
     :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
-    method (see :ref:`book-container-request-stack`). The rest of this entry
+    method (see :doc:`/service_container/request`). The rest of this entry
     talks about scopes in a theoretical and more advanced way. If you're
     dealing with scopes for the ``request`` service, simply inject ``request_stack``.
 

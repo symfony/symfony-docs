@@ -681,7 +681,7 @@ strict_requirements
 **type**: ``mixed`` **default**: ``true``
 
 Determines the routing generator behaviour. When generating a route that
-has specific :ref:`requirements <book-routing-requirements>`, the generator
+has specific :doc:`requirements </routing/requirements>`, the generator
 can behave differently in case the used parameters do not meet these requirements.
 
 The value can be one of:

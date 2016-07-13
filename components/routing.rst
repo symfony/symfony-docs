@@ -91,7 +91,7 @@ A full route definition can contain up to seven parts:
    are the least commonly needed.
 
 #. A host. This is matched against the host of the request. See
-   :doc:`/components/routing/hostname_pattern` for more details.
+   :doc:`/routing/hostname_pattern` for more details.
 
 #. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
 
@@ -188,8 +188,8 @@ with this class via its constructor::
 .. _components-routing-http-foundation:
 
 Normally you can pass the values from the ``$_SERVER`` variable to populate the
-:class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
-:doc:`HttpFoundation </components/http_foundation/index>` component, you can use its
+:class:`Symfony\\Component\\Routing\\RequestContext`. But if you use the
+:doc:`HttpFoundation </components/http_foundation>` component, you can use its
 :class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 

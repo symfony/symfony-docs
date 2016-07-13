@@ -667,7 +667,7 @@ object are sent back to the client.
 
 It's a beautiful thing.
 
-.. figure:: /images/request-flow.png
+.. figure:: /_images/http/request-flow.png
    :align: center
    :alt: Symfony request flow
 
