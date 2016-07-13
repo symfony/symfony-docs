@@ -79,7 +79,7 @@ Advanced Topics
     profiler
     request
     session
-    set_up
+    setup
 
 Best Practices
 --------------

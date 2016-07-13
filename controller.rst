@@ -212,7 +212,7 @@ to the controller:
         return $collection;
 
 Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
-if you're using the :doc:`built-in web server </set_up/built_in_web_server>`)
+if you're using the :doc:`built-in web server </setup/built_in_web_server>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
 simply creating a controller method and an associated route.

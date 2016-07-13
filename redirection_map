@@ -55,7 +55,7 @@
 /create_framework/http-kernel-httpkernel-class /create_framework/http_kernel_httpkernel_class
 /create_framework/dependency-injection /create_framework/dependency_injection
 /cookbook/doctrine/file_uploads /cookbook/controller/upload_file
-/book/installation /installation
+/book/installation /setup
 /book/page_creation /page_creation
 /book/controller /controller
 /book/routing /routing
@@ -90,7 +90,7 @@
 /cookbook/bundles/remove /bundles/remove
 /cookbook/cache/form_csrf_caching
 /cookbook/cache/varnish
-/cookbook/composer /set_up/composer
+/cookbook/composer /setup/composer
 /cookbook/configuration/apache_router /configuration/apache_router
 /cookbook/configuration/configuration_organization /configuration/configuration_organization
 /cookbook/configuration/environments /configuration/environments
@@ -229,11 +229,11 @@
 /cookbook/validation/custom_constraint /validation/custom_constraint
 /cookbook/validation/group_service_resolver /validation/group_service_resolver
 /cookbook/validation/severity /validation/severity
-/cookbook/web_server/built_in /set_up/built_in_web_server
+/cookbook/web_server/built_in /setup/built_in_web_server
 /cookbook/web_services/php_soap_extension /web_services/php_soap_extension
-/cookbook/workflow/homestead /set_up/homestead
-/cookbook/workflow/new_project_git /set_up/new_project_git
-/cookbook/workflow/new_project_svn /set_up/new_project_svn
+/cookbook/workflow/homestead /setup/homestead
+/cookbook/workflow/new_project_git /setup/new_project_git
+/cookbook/workflow/new_project_svn /setup/new_project_svn
 /components/asset/index /components/asset
 /components/asset/introduction /components/asset
 /components/browser_kit/index /components/browser_kit

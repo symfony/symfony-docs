@@ -140,7 +140,7 @@ either the ``app.php`` (for the ``prod`` environment) or the ``app_dev.php``
 
    The given URLs assume that your web server is configured to use the ``web/``
    directory of the application as its root. Read more in
-   :doc:`Installing Symfony </installation>`.
+   :doc:`Installing Symfony </setup>`.
 
 If you open up one of these files, you'll quickly see that the environment
 used by each is explicitly set::

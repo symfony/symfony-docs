@@ -9,7 +9,7 @@ How to Create and Store a Symfony Project in Subversion
 .. tip::
 
     This entry is specifically about Subversion, and based on principles found
-    in :doc:`/set_up/new_project_git`.
+    in :doc:`/setup/new_project_git`.
 
 Once you've read through :doc:`/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. The
@@ -48,7 +48,7 @@ Initial Project Setup
 
 To get started, you'll need to download Symfony and get the basic Subversion setup.
 First, download and get your Symfony project running by following the
-:doc:`Installation </installation>` chapter.
+:doc:`Installation </setup>` chapter.
 
 Once you have your new project directory and things are working, follow along
 with these steps:

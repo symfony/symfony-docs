@@ -32,7 +32,7 @@ Creating a Page: Route and Controller
 
 .. tip::
 
-    Before continuing, make sure you've read the :doc:`Installation </installation>`
+    Before continuing, make sure you've read the :doc:`Setup </setup>`
     chapter and can access your new Symfony app in the browser.
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,

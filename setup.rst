@@ -1,8 +1,8 @@
 .. index::
-   single: Installing and Configuring Symfony
+   single: Installing and Setting up Symfony
 
-Installing the Symfony Framework
-================================
+Installing & Setting up the Symfony Framework
+=============================================
 
 This article explains how to install Symfony in different ways and how to solve
 the most common issues that may appear during the installation process.
@@ -100,7 +100,7 @@ can create Symfony applications with `Composer`_, the dependency manager used by
 modern PHP applications.
 
 If you don't have Composer installed in your computer, start by
-:doc:`installing Composer globally </set_up/composer>`. Then, execute the
+:doc:`installing Composer globally </setup/composer>`. Then, execute the
 ``create-project`` command to create a new Symfony application based on its
 latest stable version:
 
