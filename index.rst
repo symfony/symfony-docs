@@ -10,7 +10,6 @@ Symfony Documentation
     changelog
     page_creation
     introduction/from_flat_php_to_symfony2
-    introduction/symfony1
     web_services/index
 
 Quick Tour
