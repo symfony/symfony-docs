@@ -1,5 +1,5 @@
 .. index::
-   single: Workflow; Subversion
+   single: Set Up; Subversion
 
 .. _how-to-create-and-store-a-symfony2-project-in-subversion:
 
@@ -9,7 +9,7 @@ How to Create and Store a Symfony Project in Subversion
 .. tip::
 
     This entry is specifically about Subversion, and based on principles found
-    in :doc:`/workflow/new_project_git`.
+    in :doc:`/setup/new_project_git`.
 
 Once you've read through :doc:`/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. The

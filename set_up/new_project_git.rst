@@ -1,5 +1,5 @@
 .. index::
-   single: Workflow; Git
+   single: Set Up; Git
 
 .. _how-to-create-and-store-a-symfony2-project-in-git:
 
