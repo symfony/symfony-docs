@@ -64,7 +64,8 @@ On the other hand, the bridge provide a factory interface called
 :class:`Symfony\\Bridge\\PsrHttpMessage\\HttpFoundationFactoryInterface`
 that builds HttpFoundation objects from objects implementing PSR-7 interfaces.
 
-The next snippet explain how to convert an object implementing the :class:`Psr\\Http\\Message\\ServerRequestInterface`
+The next snippet explain how to convert an object implementing the
+:class:`Psr\\Http\\Message\\ServerRequestInterface`
 interface to a :class:`Symfony\\Component\\HttpFoundation\\Request` instance::
 
     use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;

@@ -1,8 +1,5 @@
-.. index::
-    single: Upgrading
-
-Upgrading
-=========
+Install and Upgrade
+===================
 
 So a new Symfony release has come out and you want to upgrade, great! Fortunately,
 because Symfony protects backwards-compatibility very closely, this *should*
@@ -13,7 +10,7 @@ There are three types of upgrades, all needing a little different preparation:
 .. toctree::
     :maxdepth: 2
 
-    /upgrade/patch_version
-    /upgrade/minor_version
-    /upgrade/major_version
-    /upgrade/bundles
+    /cookbook/upgrade/patch_version
+    /cookbook/upgrade/minor_version
+    /cookbook/upgrade/major_version
+    /cookbook/upgrade/bundles
