@@ -1,8 +1,8 @@
 .. index::
     single: Doctrine; Associations
 
-How to Work with Associations
-=============================
+How to Work with Doctrine Associations / Relations
+==================================================
 
 Suppose that each product in your application belongs to exactly one category.
 In this case, you'll need a ``Category`` class, and a way to relate a

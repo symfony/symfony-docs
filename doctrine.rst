@@ -6,12 +6,13 @@ Databases and Doctrine
 
 One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Although
-the Symfony full-stack Framework doesn't integrate any ORM by default,
-the Symfony Standard Edition, which is the most widely used distribution,
-comes integrated with `Doctrine`_, a library whose sole goal is to give
-you powerful tools to make this easy. In this chapter, you'll learn the
-basic philosophy behind Doctrine and see how easy working with a database
-can be.
+the Symfony Framework doesn't integrate any component to work with databases,
+it provides tight integration with a third-party library called `Doctrine`_.
+Doctrine's sole goal is to give you powerful tools to make database interactions
+easy and flexible.
+
+In this chapter, you'll learn how to start leveraging Doctrine in your Symfony projects
+to give you rich database interactions.
 
 .. note::
 
@@ -609,6 +610,8 @@ repository object for an entity class via::
 
 Once you have a repository object, you can access all sorts of helpful methods::
 
+    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+
     // query for a single product by its primary key (usually "id")
     $product = $repository->find($productId);
 
@@ -629,6 +632,8 @@ Once you have a repository object, you can access all sorts of helpful methods::
 
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
 to easily fetch objects based on multiple conditions::
+
+    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
 
     // query for a single product matching the given name and price
     $product = $repository->findOneBy(
@@ -712,6 +717,8 @@ Querying for Objects
 You've already seen how the repository object allows you to run basic queries
 without any work::
 
+    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+
     $product = $repository->find($productId);
     $product = $repository->findOneByName('Keyboard');
 
@@ -792,6 +799,15 @@ normal ``Query`` object, which can be used to get the result of the query.
 For more information on Doctrine's Query Builder, consult Doctrine's
 `Query Builder`_ documentation.
 
+Organizing Custom Queries into Repository Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All the queries in the previous sections were written directly in your controller.
+But for organization, Doctrine provides special repository classes that allow you
+to keep all your query logic in one, central place.
+
+see :doc:`/doctrine/repository` for info.
+
 Configuration
 -------------
 
@@ -811,19 +827,23 @@ the ``length``, ``nullable`` behavior, ``name`` and other options. To see a
 list of all available types and more information, see Doctrine's
 `Mapping Types documentation`_.
 
-Summary
--------
+Relationships and Associations
+------------------------------
 
-With Doctrine, you can focus on your objects and how they're used in your
+Doctrine provides all the functionality you need to manager database relationships
+(also known as associations). For info, see :doc:`/doctrine/associations`.
+
+Final Thoughts
+--------------
+
+With Doctrine, you can focus on your *objects* and how they're used in your
 application and worry about database persistence second. This is because
 Doctrine allows you to use any PHP object to hold your data and relies on
 mapping metadata information to map an object's data to a particular database
 table.
 
-And even though Doctrine revolves around a simple concept, it's incredibly
-powerful, allowing you to create complex queries and subscribe to events
-that allow you to take different actions as objects go through their persistence
-lifecycle.
+Doctrine has a lot more complex features to learn, like relationshps, complex queries,
+and event listeners.
 
 Learn more
 ~~~~~~~~~~
