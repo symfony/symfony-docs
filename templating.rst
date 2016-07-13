@@ -945,6 +945,13 @@ Suppose ``description`` equals ``I <3 this product``:
 
 For more details, see :doc:`/templating/escaping`.
 
+Final Thoughts
+--------------
+
+The templating system is just *one* of the many tools in Symfony. And its job is
+simple: allow us to render dynamic & complex HTML output so that this can ultimately
+be returned to the user, sent in an email or something else.
+
 Learn more
 ----------
 
