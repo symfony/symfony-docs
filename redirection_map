@@ -153,7 +153,7 @@
 /cookbook/frontend/bower /frontend/bower
 /cookbook/install/unstable_versions /install/unstable_versions
 /cookbook/logging/channels_handlers /logging/channels_handlers
-/cookbook/logging/monolog /logging/monolog
+/cookbook/logging/monolog /logging
 /cookbook/logging/monolog_console /logging/monolog_console
 /cookbook/logging/monolog_email /logging/monolog_email
 /cookbook/logging/monolog_regex_based_excludes /logging/monolog_regex_based_excludes
