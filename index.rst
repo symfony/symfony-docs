@@ -6,12 +6,7 @@ Symfony Documentation
 .. toctree::
     :hidden:
 
-    bundles/index
     changelog
-    page_creation
-    introduction/from_flat_php_to_symfony2
-    introduction/symfony1
-    web_services/index
 
 Quick Tour
 ----------
@@ -35,10 +30,11 @@ Getting Started
     :maxdepth: 1
 
     setup
-    http_fundamentals
+    page_creation
     routing
     controller
     templating
+    configuration
 
 Topics
 ------
@@ -46,40 +42,31 @@ Topics
 .. toctree::
     :maxdepth: 1
 
+    assetic
     bundles
     console
-    debug
     doctrine
+    debug
+    deployment
     email
     event_dispatcher
+    expressions
     forms
+    frontend
     http_cache
     logging
+    performance
+    profiler
+    request
     routing
     security
+    session
+    setup
     serializer
     service_container
     testing
     translation
     validation
-
-Advanced Topics
----------------
-
-.. toctree::
-    :maxdepth: 1
-
-    assetic
-    bundles
-    configuration
-    deployment
-    expressions
-    frontend
-    performance
-    profiler
-    request
-    session
-    setup
 
 Best Practices
 --------------

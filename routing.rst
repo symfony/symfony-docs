@@ -690,5 +690,3 @@ Learn more
     :glob:
 
     routing/*
-
-.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
