@@ -288,7 +288,3 @@ Learn More
     console/helpers/index
 
 .. _Packagist: https://packagist.org/packages/symfony/console
-.. _Cmder: http://cmder.net/
-.. _ConEmu: https://conemu.github.io/
-.. _ANSICON: https://github.com/adoxa/ansicon/releases
-.. _Mintty: https://mintty.github.io/

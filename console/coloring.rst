@@ -64,3 +64,8 @@ You can also set these colors and options directly inside the tagname::
 
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</>');
+
+.. _Cmder: http://cmder.net/
+.. _ConEmu: https://conemu.github.io/
+.. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _Mintty: https://mintty.github.io/
