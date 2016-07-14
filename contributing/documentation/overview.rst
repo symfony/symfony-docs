@@ -140,8 +140,8 @@ even remove any content and do your best to comply with the
 .. code-block:: bash
 
     # if the modified content existed before
-    $ git add book/installation.rst
-    $ git commit book/installation.rst
+    $ git add setup.rst
+    $ git commit setup.rst
 
 **Step 6.** **Push** the changes to your forked repository:
 

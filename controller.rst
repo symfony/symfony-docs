@@ -212,7 +212,7 @@ to the controller:
         return $collection;
 
 Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
-if you're using the :doc:`built-in web server </set_up/built_in_web_server>`)
+if you're using the :doc:`built-in web server </setup/built_in_web_server>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
 simply creating a controller method and an associated route.
@@ -479,7 +479,8 @@ creating unnecessarily deep structures::
 Templates are a generic way to render content in *any* format. And while in
 most cases you'll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.
-To learn how to render different templating formats read the :ref:`template-formats`
+
+To learn how to render different templating formats read the :doc:`/templating/formats`
 section of the Creating and Using Templates chapter.
 
 The Symfony templating engine is explained in great detail in the
@@ -754,6 +755,7 @@ abstraction around the HTTP response - the text-based message filled with
 headers and content that's sent back to the client::
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
@@ -762,10 +764,7 @@ headers and content that's sent back to the client::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-There are also special classes to make certain kinds of responses easier:
-
-* For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
-  See :ref:`component-http-foundation-json-response`.
+There are special classes that make certain kinds of responses easier:
 
 * For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
   See :ref:`component-http-foundation-serving-files`.
@@ -786,9 +785,8 @@ JSON Helper
 .. versionadded:: 3.1
     The ``json()`` helper was introduced in Symfony 3.1.
 
-Returning JSON contents is increasingly popular for API-based applications. For
-that reason, the base controller class defines a ``json()`` method which creates
-a ``JsonResponse`` and encodes the given contents automatically::
+To return JSON from a controller, use the ``json()`` helper method on the base controller.
+This returns a special ``JsonResponse`` object that encodes the data automatically::
 
     // ...
     public function indexAction()

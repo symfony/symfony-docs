@@ -98,18 +98,13 @@ it:
 
     {{ title|upper }}
 
-Twig comes with a long list of `tags`_ and `filters`_ that are available
-by default. You can even `add your own extensions`_ to Twig as needed.
+Twig comes with a long list of `tags`_, `filters`_ and `functions`_ that are available
+by default. You can even add your own *custom* filters, functions (and more) via
+a :doc:`Twig Extension </templating/twig_extension>`.
 
-.. tip::
-
-    Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag <reference-dic-tags-twig-extension>`.
-
-As you'll see throughout the documentation, Twig also supports functions
-and new functions can be easily added. For example, the following uses a
-standard ``for`` tag and the ``cycle`` function to print ten div tags, with
-alternating ``odd``, ``even`` classes:
+Twig code will look similar to PHP code, with subtle, nice differences. The following
+example uses a standard ``for`` tag and the ``cycle`` function to print ten div tags,
+with alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+twig
 
@@ -120,11 +115,6 @@ alternating ``odd``, ``even`` classes:
     {% endfor %}
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
-
-.. tip::
-
-    If you *do* choose to not use Twig and you disable it, you'll need to implement
-    your own exception handler via the ``kernel.exception`` event.
 
 .. sidebar:: Why Twig?
 
@@ -157,22 +147,11 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
 Twig Template Caching
 ~~~~~~~~~~~~~~~~~~~~~
 
-Twig is fast. Each Twig template is compiled down to a native PHP class
-that is rendered at runtime. The compiled classes are located in the
-``var/cache/{environment}/twig`` directory (where ``{environment}`` is the
-environment, such as ``dev`` or ``prod``) and in some cases can be useful
-while debugging. See :ref:`environments-summary` for more information on
-environments.
-
-When ``debug`` mode is enabled (common in the ``dev`` environment), a Twig
-template will be automatically recompiled when changes are made to it. This
-means that during development you can happily make changes to a Twig template
-and instantly see the changes without needing to worry about clearing any
-cache.
-
-When ``debug`` mode is disabled (common in the ``prod`` environment), however,
-you must clear the Twig cache directory so that the Twig templates will
-regenerate. Remember to do this when deploying your application.
+Twig is fast because each template is compiled to a native PHP class and cached.
+But don't worry: this happens automatically and doesn't require *you* to do anything.
+And while you're developing, Twig is smart enough to re-compile you templates after
+you make any changes. That means Twig is fast in production, but easy to use while
+developing.
 
 .. index::
    single: Templating; Inheritance
@@ -336,9 +315,10 @@ Notice that since the child template didn't define a ``sidebar`` block, the
 value from the parent template is used instead. Content within a ``{% block %}``
 tag in a parent template is always used by default.
 
-You can use as many levels of inheritance as you want. In the next section,
-a common three-level inheritance model will be explained along with how templates
-are organized inside a Symfony project.
+.. tip::
+
+    You can use as many levels of inheritance as you want! See :doc:`/templating/inheritance`
+    for more info.
 
 When working with template inheritance, here are some tips to keep in mind:
 
@@ -385,9 +365,9 @@ By default, templates can live in two different locations:
     The application's ``views`` directory can contain application-wide base templates
     (i.e. your application's layouts and templates of the application bundle) as
     well as templates that override third party bundle templates
-    (see :ref:`overriding-bundle-templates`).
+    (see :doc:`/templating/overriding`).
 
-``path/to/bundle/Resources/views/``
+``vendor/path/to/CoolBundle/Resources/views/``
     Each third party bundle houses its templates in its ``Resources/views/``
     directory (and subdirectories). When you plan to share your bundle, you should
     put the templates in the bundle instead of the ``app/`` directory.
@@ -404,9 +384,9 @@ to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony uses a **bundle**:**directory**:**filename** string syntax for
-templates that live inside a bundle. This allows for several types of
-templates, each which lives in a specific location:
+*If* you need to refer to a template that lives in a bundle, Symfony uses a **bundle**:**directory**:**filename**
+string syntax. This allows for several types of templates, each which lives in a
+specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
   template for a specific page. The three parts of the string, each separated
@@ -431,7 +411,7 @@ templates, each which lives in a specific location:
   colons in the middle of the string when the "controller" subdirectory part is
   missing.
 
-In the :ref:`overriding-bundle-templates` section, you'll find out how each
+In the :doc:`/templating/overriding` section, you'll find out how each
 template living inside the AcmeBlogBundle, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
@@ -462,7 +442,7 @@ of these two *engines* should be used. The first part of the extension,
 generate. Unlike the engine, which determines how Symfony parses the template,
 this is simply an organizational tactic used in case the same resource needs
 to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
-or any other format. For more information, read the :ref:`template-formats`
+or any other format. For more information, read the :doc:`/templating/formats`
 section.
 
 .. note::
@@ -578,259 +558,6 @@ you set `with_context`_ to false).
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
-
-.. index::
-   single: Templating; Embedding action
-
-.. _templating-embedding-controller:
-
-Embedding Controllers
-~~~~~~~~~~~~~~~~~~~~~
-
-In some cases, you need to do more than include a simple template. Suppose
-you have a sidebar in your layout that contains the three most recent articles.
-Retrieving the three articles may include querying the database or performing
-other heavy logic that can't be done from within a template.
-
-The solution is to simply embed the result of an entire controller from your
-template. First, create a controller that renders a certain number of recent
-articles::
-
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
-
-    // ...
-
-    class ArticleController extends Controller
-    {
-        public function recentArticlesAction($max = 3)
-        {
-            // make a database call or other logic
-            // to get the "$max" most recent articles
-            $articles = ...;
-
-            return $this->render(
-                'article/recent_list.html.twig',
-                array('articles' => $articles)
-            );
-        }
-    }
-
-The ``recent_list`` template is perfectly straightforward:
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        {# app/Resources/views/article/recent_list.html.twig #}
-        {% for article in articles %}
-            <a href="/article/{{ article.slug }}">
-                {{ article.title }}
-            </a>
-        {% endfor %}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/article/recent_list.html.php -->
-        <?php foreach ($articles as $article): ?>
-            <a href="/article/<?php echo $article->getSlug() ?>">
-                <?php echo $article->getTitle() ?>
-            </a>
-        <?php endforeach ?>
-
-.. note::
-
-    Notice that the article URL is hardcoded in this example
-    (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
-    you'll learn how to do this correctly.
-
-To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **bundle**:**controller**:**action**):
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        {# app/Resources/views/base.html.twig #}
-
-        {# ... #}
-        <div id="sidebar">
-            {{ render(controller(
-                'AppBundle:Article:recentArticles',
-                { 'max': 3 }
-            )) }}
-        </div>
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/base.html.php -->
-
-        <!-- ... -->
-        <div id="sidebar">
-            <?php echo $view['actions']->render(
-                new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'AppBundle:Article:recentArticles',
-                    array('max' => 3)
-                )
-            ) ?>
-        </div>
-
-Whenever you find that you need a variable or a piece of information that
-you don't have access to in a template, consider rendering a controller.
-Controllers are fast to execute and promote good code organization and reuse.
-Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services </service_container>`.
-
-.. _book-templating-hinclude:
-
-Asynchronous Content with hinclude.js
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
-As the embedded content comes from another page (or controller for that matter),
-Symfony uses a version of the standard ``render`` function to configure ``hinclude``
-tags:
-
-.. configuration-block::
-
-    .. code-block:: twig
-
-        {{ render_hinclude(controller('...')) }}
-        {{ render_hinclude(url('...')) }}
-
-    .. code-block:: php
-
-        <?php echo $view['actions']->render(
-            new ControllerReference('...'),
-            array('renderer' => 'hinclude')
-        ) ?>
-
-        <?php echo $view['actions']->render(
-            $view['router']->url('...'),
-            array('renderer' => 'hinclude')
-        ) ?>
-
-.. note::
-
-   hinclude.js_ needs to be included in your page to work.
-
-.. note::
-
-    When using a controller instead of a URL, you must enable the Symfony
-    ``fragments`` configuration:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/config.yml
-            framework:
-                # ...
-                fragments: { path: /_fragment }
-
-        .. code-block:: xml
-
-            <!-- app/config/config.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-                <!-- ... -->
-                <framework:config>
-                    <framework:fragments path="/_fragment" />
-                </framework:config>
-            </container>
-
-        .. code-block:: php
-
-            // app/config/config.php
-            $container->loadFromExtension('framework', array(
-                // ...
-                'fragments' => array('path' => '/_fragment'),
-            ));
-
-Default content (while loading or if JavaScript is disabled) can be set globally
-in your application configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating:
-                hinclude_default_template: hinclude.html.twig
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- ... -->
-            <framework:config>
-                <framework:templating hinclude-default-template="hinclude.html.twig" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'templating' => array(
-                'hinclude_default_template' => array(
-                    'hinclude.html.twig',
-                ),
-            ),
-        ));
-
-You can define default templates per ``render`` function (which will override
-any global default template that is defined):
-
-.. configuration-block::
-
-    .. code-block:: twig
-
-        {{ render_hinclude(controller('...'),  {
-            'default': 'default/content.html.twig'
-        }) }}
-
-    .. code-block:: php
-
-        <?php echo $view['actions']->render(
-            new ControllerReference('...'),
-            array(
-                'renderer' => 'hinclude',
-                'default'  => 'default/content.html.twig',
-            )
-        ) ?>
-
-Or you can also specify a string to display as the default content:
-
-.. configuration-block::
-
-    .. code-block:: twig
-
-        {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
-
-    .. code-block:: php
-
-        <?php echo $view['actions']->render(
-            new ControllerReference('...'),
-            array(
-                'renderer' => 'hinclude',
-                'default'  => 'Loading...',
-            )
-        ) ?>
 
 .. index::
    single: Templating; Linking to pages
@@ -1178,509 +905,42 @@ is by default "web").
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
 
-Global Template Variables
--------------------------
+Referencing the Request, User or Session
+----------------------------------------
 
-During each request, Symfony will set a global template variable ``app``
-in both Twig and PHP template engines by default. The ``app`` variable
-is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
-instance which will give you access to some application specific variables
-automatically:
+Symfony also gives you a global ``app`` variable in Twig that can be used to access
+the current user, the Request and more.
 
-``app.user``
-    The representation of the current user or ``null`` if there is none. The
-    value stored in this variable can be a :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-    object, any other object which implements a ``__toString()`` method or even
-    a regular string.
-``app.request``
-    The :class:`Symfony\\Component\\HttpFoundation\\Request` object that represents
-    the current request (depending on your application, this can be a sub-request
-    or a regular request, as explained later).
-``app.session``
-    The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` object that
-    represents the current user's session or ``null`` if there is none.
-``app.environment``
-    The name of the current environment (``dev``, ``prod``, etc).
-``app.debug``
-    True if in debug mode. False otherwise.
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        <p>Username: {{ app.user.username }}</p>
-        {% if app.debug %}
-            <p>Request method: {{ app.request.method }}</p>
-            <p>Application Environment: {{ app.environment }}</p>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
-        <?php if ($app->getDebug()): ?>
-            <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
-            <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
-        <?php endif ?>
-
-.. tip::
-
-    You can add your own global template variables. See the cookbook example
-    on :doc:`Global Variables </templating/global_variables>`.
-
-.. index::
-   single: Templating; The templating service
-
-Configuring and Using the ``templating`` Service
-------------------------------------------------
-
-The heart of the template system in Symfony is the templating ``Engine``.
-This special object is responsible for rendering templates and returning
-their content. When you render a template in a controller, for example,
-you're actually using the templating engine service. For example::
-
-    return $this->render('article/index.html.twig');
-
-is equivalent to::
-
-    use Symfony\Component\HttpFoundation\Response;
-
-    $engine = $this->container->get('templating');
-    $content = $engine->render('article/index.html.twig');
-
-    return $response = new Response($content);
-
-.. _template-configuration:
-
-The templating engine (or "service") is preconfigured to work automatically
-inside Symfony. It can, of course, be configured further in the application
-configuration file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            templating: { engines: ['twig'] }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- ... -->
-            <framework:config>
-                <framework:templating>
-                    <framework:engine>twig</framework:engine>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-
-            'templating' => array(
-                'engines' => array('twig'),
-            ),
-        ));
-
-Several configuration options are available and are covered in the
-:doc:`Configuration Appendix </reference/configuration/framework>`.
-
-.. note::
-
-   The ``twig`` engine is mandatory to use the webprofiler (as well as many
-   third-party bundles).
-
-.. index::
-    single: Template; Overriding templates
-
-.. _overriding-bundle-templates:
-
-Overriding Bundle Templates
----------------------------
-
-The Symfony community prides itself on creating and maintaining high quality
-bundles (see `KnpBundles.com`_) for a large number of different features.
-Once you use a third-party bundle, you'll likely need to override and customize
-one or more of its templates.
-
-Suppose you've installed the imaginary open-source AcmeBlogBundle in your
-project. And while you're really happy with everything, you want to override
-the blog "list" page to customize the markup specifically for your application.
-By digging into the ``Blog`` controller of the AcmeBlogBundle, you find the
-following::
-
-    public function indexAction()
-    {
-        // some logic to retrieve the blogs
-        $blogs = ...;
-
-        $this->render(
-            'AcmeBlogBundle:Blog:index.html.twig',
-            array('blogs' => $blogs)
-        );
-    }
-
-When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony actually
-looks in two different locations for the template:
-
-#. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
-#. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
-
-To override the bundle template, just copy the ``index.html.twig`` template
-from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
-(the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
-to create it). You're now free to customize the template.
-
-.. caution::
-
-    If you add a template in a new location, you *may* need to clear your
-    cache (``php bin/console cache:clear``), even if you are in debug mode.
-
-This logic also applies to base bundle templates. Suppose also that each
-template in AcmeBlogBundle inherits from a base template called
-``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony will look in
-the following two places for the template:
-
-#. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
-#. ``src/Acme/BlogBundle/Resources/views/layout.html.twig``
-
-Once again, to override the template, just copy it from the bundle to
-``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're now free to
-customize this copy as you see fit.
-
-If you take a step back, you'll see that Symfony always starts by looking in
-the ``app/Resources/{BUNDLE_NAME}/views/`` directory for a template. If the
-template doesn't exist there, it continues by checking inside the
-``Resources/views`` directory of the bundle itself. This means that all bundle
-templates can be overridden by placing them in the correct ``app/Resources``
-subdirectory.
-
-.. note::
-
-    You can also override templates from within a bundle by using bundle
-    inheritance. For more information, see :doc:`/bundles/inheritance`.
-
-.. _templating-overriding-core-templates:
-
-.. index::
-    single: Template; Overriding exception templates
-
-Overriding Core Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Since the Symfony Framework itself is just a bundle, core templates can be
-overridden in the same way. For example, the core TwigBundle contains
-a number of different "exception" and "error" templates that can be overridden
-by copying each from the ``Resources/views/Exception`` directory of the
-TwigBundle to, you guessed it, the
-``app/Resources/TwigBundle/views/Exception`` directory.
-
-.. index::
-   single: Templating; Three-level inheritance pattern
-
-Three-level Inheritance
------------------------
-
-One common way to use inheritance is to use a three-level approach. This
-method works perfectly with the three different types of templates that were just
-covered:
-
-* Create an ``app/Resources/views/base.html.twig`` file that contains the main
-  layout for your application (like in the previous example). Internally, this
-  template is called ``base.html.twig``;
-
-* Create a template for each "section" of your site. For example, the blog
-  functionality would have a template called ``blog/layout.html.twig`` that
-  contains only blog section-specific elements;
-
-  .. code-block:: html+twig
-
-      {# app/Resources/views/blog/layout.html.twig #}
-      {% extends 'base.html.twig' %}
-
-      {% block body %}
-          <h1>Blog Application</h1>
-
-          {% block content %}{% endblock %}
-      {% endblock %}
-
-* Create individual templates for each page and make each extend the appropriate
-  section template. For example, the "index" page would be called something
-  close to ``blog/index.html.twig`` and list the actual blog posts.
-
-  .. code-block:: html+twig
-
-      {# app/Resources/views/blog/index.html.twig #}
-      {% extends 'blog/layout.html.twig' %}
-
-      {% block content %}
-          {% for entry in blog_entries %}
-              <h2>{{ entry.title }}</h2>
-              <p>{{ entry.body }}</p>
-          {% endfor %}
-      {% endblock %}
-
-Notice that this template extends the section template (``blog/layout.html.twig``)
-which in turn extends the base application layout (``base.html.twig``). This is
-the common three-level inheritance model.
-
-When building your application, you may choose to follow this method or simply
-make each page template extend the base application template directly
-(e.g. ``{% extends 'base.html.twig' %}``). The three-template model is a
-best-practice method used by vendor bundles so that the base template for a
-bundle can be easily overridden to properly extend your application's base
-layout.
-
-.. index::
-   single: Templating; Output escaping
+See :doc:`/templating/app_variable` for details.
 
 Output Escaping
 ---------------
 
-When generating HTML from a template, there is always a risk that a template
-variable may output unintended HTML or dangerous client-side code. The result
-is that dynamic content could break the HTML of the resulting page or allow
-a malicious user to perform a `Cross Site Scripting`_ (XSS) attack. Consider
-this classic example:
+Twig performs automatic "output escaping" when rendering any content in order to
+protect you from Cross Site Scripting (XSS) attacks.
 
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        Hello {{ name }}
-
-    .. code-block:: html+php
-
-        Hello <?php echo $name ?>
-
-Imagine the user enters the following code for their name:
-
-.. code-block:: html
-
-    <script>alert('hello!')</script>
-
-Without any output escaping, the resulting template will cause a JavaScript
-alert box to pop up:
-
-.. code-block:: html
-
-    Hello <script>alert('hello!')</script>
-
-And while this seems harmless, if a user can get this far, that same user
-should also be able to write JavaScript that performs malicious actions
-inside the secure area of an unknowing, legitimate user.
-
-The answer to the problem is output escaping. With output escaping on, the
-same template will render harmlessly, and literally print the ``script``
-tag to the screen:
-
-.. code-block:: html
-
-    Hello &lt;script&gt;alert(&#39;hello!&#39;)&lt;/script&gt;
-
-The Twig and PHP templating systems approach the problem in different ways.
-If you're using Twig, output escaping is on by default and you're protected.
-In PHP, output escaping is not automatic, meaning you'll need to manually
-escape where necessary.
-
-Output Escaping in Twig
-~~~~~~~~~~~~~~~~~~~~~~~
-
-If you're using Twig templates, then output escaping is on by default. This
-means that you're protected out-of-the-box from the unintentional consequences
-of user-submitted code. By default, the output escaping assumes that content
-is being escaped for HTML output.
-
-In some cases, you'll need to disable output escaping when you're rendering
-a variable that is trusted and contains markup that should not be escaped.
-Suppose that administrative users are able to write articles that contain
-HTML code. By default, Twig will escape the article body.
-
-To render it normally, add the ``raw`` filter:
+Suppose ``description`` equals ``I <3 this product``:
 
 .. code-block:: twig
 
-    {{ article.body|raw }}
+    <!-- outupt escaping is on automatically -->
+    {{ description }} <!-- I &lt3 this product -->
 
-You can also disable output escaping inside a ``{% block %}`` area or
-for an entire template. For more information, see `Output Escaping`_ in
-the Twig documentation.
+    <!-- disable output escaping with the raw filter -->
+    {{ description|raw }} <!-- I <3 this product -->
 
-Output Escaping in PHP
-~~~~~~~~~~~~~~~~~~~~~~
+.. caution::
 
-Output escaping is not automatic when using PHP templates. This means that
-unless you explicitly choose to escape a variable, you're not protected. To
-use output escaping, use the special ``escape()`` view method:
+    PHP templates do not automatically escape content.
 
-.. code-block:: html+php
-
-    Hello <?php echo $view->escape($name) ?>
-
-By default, the ``escape()`` method assumes that the variable is being rendered
-within an HTML context (and thus the variable is escaped to be safe for HTML).
-The second argument lets you change the context. For example, to output something
-in a JavaScript string, use the ``js`` context:
-
-.. code-block:: html+php
-
-    var myMsg = 'Hello <?php echo $view->escape($name, 'js') ?>';
-
-.. index::
-   single: Templating; Formats
-
-Debugging
----------
-
-When using PHP, you can use the
-:ref:`dump() function from the VarDumper component <components-var-dumper-dump>`
-if you need to quickly find the value of a variable passed. This is useful,
-for example, inside your controller::
-
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
-
-    // ...
-
-    class ArticleController extends Controller
-    {
-        public function recentListAction()
-        {
-            $articles = ...;
-            dump($articles);
-
-            // ...
-        }
-    }
-
-.. note::
-
-    The output of the ``dump()`` function is then rendered in the web developer
-    toolbar.
-
-The same mechanism can be used in Twig templates thanks to ``dump`` function:
-
-.. code-block:: html+twig
-
-    {# app/Resources/views/article/recent_list.html.twig #}
-    {{ dump(articles) }}
-
-    {% for article in articles %}
-        <a href="/article/{{ article.slug }}">
-            {{ article.title }}
-        </a>
-    {% endfor %}
-
-The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
-is ``true``. By default this means that the variables will be dumped in the
-``dev`` environment but not the ``prod`` environment.
-
-Syntax Checking
----------------
-
-You can check for syntax errors in Twig templates using the ``lint:twig``
-console command:
-
-.. code-block:: bash
-
-    # You can check by filename:
-    $ php bin/console lint:twig app/Resources/views/article/recent_list.html.twig
-
-    # or by directory:
-    $ php bin/console lint:twig app/Resources/views
-
-.. _template-formats:
-
-Template Formats
-----------------
-
-Templates are a generic way to render content in *any* format. And while in
-most cases you'll use templates to render HTML content, a template can just
-as easily generate JavaScript, CSS, XML or any other format you can dream of.
-
-For example, the same "resource" is often rendered in several formats.
-To render an article index page in XML, simply include the format in the
-template name:
-
-* *XML template name*: ``article/index.xml.twig``
-* *XML template filename*: ``index.xml.twig``
-
-In reality, this is nothing more than a naming convention and the template
-isn't actually rendered differently based on its format.
-
-In many cases, you may want to allow a single controller to render multiple
-different formats based on the "request format". For that reason, a common
-pattern is to do the following::
-
-    public function indexAction(Request $request)
-    {
-        $format = $request->getRequestFormat();
-
-        return $this->render('article/index.'.$format.'.twig');
-    }
-
-The ``getRequestFormat`` on the ``Request`` object defaults to ``html``,
-but can return any other format based on the format requested by the user.
-The request format is most often managed by the routing, where a route can
-be configured so that ``/contact`` sets the request format to ``html`` while
-``/contact.xml`` sets the format to ``xml``. For more information, see the
-:ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
-
-To create links that include the format parameter, include a ``_format``
-key in the parameter hash:
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
-            PDF Version
-        </a>
-
-    .. code-block:: html+php
-
-        <a href="<?php echo $view['router']->path('article_show', array(
-            'id' => 123,
-            '_format' => 'pdf',
-        )) ?>">
-            PDF Version
-        </a>
+For more details, see :doc:`/templating/escaping`.
 
 Final Thoughts
 --------------
 
-The templating engine in Symfony is a powerful tool that can be used each time
-you need to generate presentational content in HTML, XML or any other format.
-And though templates are a common way to generate content in a controller,
-their use is not mandatory. The ``Response`` object returned by a controller
-can be created with or without the use of a template::
-
-    // creates a Response object whose content is the rendered template
-    $response = $this->render('article/index.html.twig');
-
-    // creates a Response object whose content is simple text
-    $response = new Response('response content');
-
-Symfony's templating engine is very flexible and two different template
-renderers are available by default: the traditional *PHP* templates and the
-sleek and powerful *Twig* templates. Both support a template hierarchy and
-come packaged with a rich set of helper functions capable of performing
-the most common tasks.
-
-Overall, the topic of templating should be thought of as a powerful tool
-that's at your disposal. In some cases, you may not need to render a template,
-and in Symfony, that's absolutely fine.
+The templating system is just *one* of the many tools in Symfony. And its job is
+simple: allow us to render dynamic & complex HTML output so that this can ultimately
+be returned to the user, sent in an email or something else.
 
 Learn more
 ----------
@@ -1692,13 +952,10 @@ Learn more
     /templating/*
 
 .. _`Twig`: http://twig.sensiolabs.org
-.. _`KnpBundles.com`: http://knpbundles.com
-.. _`Cross Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
-.. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
+.. _`functions`: http://twig.sensiolabs.org/doc/functions/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`hinclude.js`: http://mnot.github.io/hinclude/
 .. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
 .. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html

@@ -1,8 +1,8 @@
 .. index::
-   single: Installing and Configuring Symfony
+   single: Installing and Setting up Symfony
 
-Installing the Symfony Framework
-================================
+Installing & Setting up the Symfony Framework
+=============================================
 
 This article explains how to install Symfony in different ways and how to solve
 the most common issues that may appear during the installation process.
@@ -107,7 +107,7 @@ can create Symfony applications with `Composer`_, the dependency manager used by
 modern PHP applications.
 
 If you don't have Composer installed in your computer, start by
-:doc:`installing Composer globally </set_up/composer>`. Then, execute the
+:doc:`installing Composer globally </setup/composer>`. Then, execute the
 ``create-project`` command to create a new Symfony application based on its
 latest stable version:
 
@@ -138,7 +138,7 @@ a matter of browsing the project directory and executing this command:
 .. code-block:: bash
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -159,7 +159,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 
     PHP's internal web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
-    See :doc:`/configuration/web_server_configuration`.
+    See :doc:`/setup/web_server_configuration`.
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
@@ -304,7 +304,7 @@ install the Symfony Demo application anywhere in your system executing the
     $ symfony demo
 
 Once downloaded, enter into the ``symfony_demo/`` directory, run the PHP's
-built-in web server (``php app/console server:run``) and access to the
+built-in web server (``php bin/console server:run``) and access to the
 ``http://localhost:8000`` URL to start using the Symfony Demo application.
 
 .. _installing-a-symfony2-distribution:
@@ -328,6 +328,8 @@ you may use in your applications:
 * The `Symfony REST Edition`_ shows how to build an application that provides a
   RESTful API using the `FOSRestBundle`_ and several other related bundles.
 
+.. _install-existing-app:
+
 Installing an Existing Symfony Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -335,9 +337,9 @@ When working collaboratively in a Symfony application, it's uncommon to create
 a new Symfony application as explained in the previous sections. Instead,
 someone else has already created and submitted it to a shared repository.
 
-It's recommended to not submit some files (``parameters.yml``) and directories
-(``vendor/``, cache, logs) to the repository, so you'll have to do the following
-when installing an existing Symfony application:
+It's recommended to not submit some files (:ref:`parameters.yml <config-parameters-yml>`)
+and directories (``vendor/``, cache, logs) to the repository, so you'll have to do
+the following when installing an existing Symfony application:
 
 .. code-block:: bash
 
@@ -360,6 +362,7 @@ Learn More
     :glob:
 
     install/*
+    setup/*
 
 .. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/

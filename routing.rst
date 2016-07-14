@@ -94,9 +94,8 @@ for you to use in your controller (keep reading). The ``blog_show`` is the
 internal name of the route, which doesn't have any meaning yet and just needs
 to be unique. Later, you'll use it to generate URLs.
 
-If you don't want to use annotations, because you don't like them or because
-you don't want to depend on the SensioFrameworkExtraBundle, you can also use
-Yaml, XML or PHP. In these formats, the ``_controller`` parameter is a special
+If you don't want to use annotations, you can also use YAML, XML or PHP. In these
+formats, the ``_controller`` parameter is a special
 key that tells Symfony which controller should be executed when a URL matches
 this route. The ``_controller`` string is called the
 :ref:`logical name <controller-string-syntax>`. It follows a pattern that
@@ -272,8 +271,8 @@ will be explained shortly in the :ref:`controller-string-syntax` section.
 .. index::
    single: Routing; Placeholders
 
-Routing with Placeholders
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Dynamic Routing with Placeholders
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Of course the routing system supports much more interesting routes. Many
 routes will contain one or more named "wildcard" placeholders:

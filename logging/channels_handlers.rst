@@ -171,8 +171,3 @@ You can also configure additional channels without the need to tag your services
 
 With this, you can now send log messages to the ``foo`` channel by using
 the automatically registered logger service ``monolog.logger.foo``.
-
-Learn more from the Cookbook
-----------------------------
-
-* :doc:`/logging/monolog`

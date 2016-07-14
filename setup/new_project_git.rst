@@ -20,7 +20,7 @@ Initial Project Setup
 ---------------------
 
 To get started, you'll need to download Symfony and get things running. See
-the :doc:`/installation` chapter for details.
+the :doc:`/setup` chapter for details.
 
 Once your project is running, just follow these simple steps:
 

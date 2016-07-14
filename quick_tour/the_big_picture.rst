@@ -14,7 +14,7 @@ Installing Symfony
 ------------------
 
 Before continuing reading this chapter, make sure to have installed both PHP
-and Symfony as explained in the :doc:`installation chapter </installation>`
+and Symfony as explained in the :doc:`setup chapter </setup>`
 of the Symfony book.
 
 Understanding the Fundamentals
