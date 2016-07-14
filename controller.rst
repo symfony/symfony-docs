@@ -766,15 +766,17 @@ abstraction around the HTTP response - the text-based message filled with
 headers and content that's sent back to the client::
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
-    // create a JSON-response with a 200 status code
-    $response = new Response(json_encode(array('name' => $name)));
-    $response->headers->set('Content-Type', 'application/json');
+    // JsonResponse is a sub-class of Response
+    $response = new JsonResponse(array('name' => $name));
+    // set a header!
+    $response->headers->set('X-Rate-Limit', 10);
 
-There are also special classes to make certain kinds of responses easier:
+There are special classes that make certain kinds of responses easier:
 
 * For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
   See :ref:`component-http-foundation-json-response`.
