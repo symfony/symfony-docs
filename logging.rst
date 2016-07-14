@@ -229,7 +229,7 @@ debugging much easier!
 
 .. note::
 
-    If you want to override the ``monolog`` configuration via in another config
+    If you want to override the ``monolog`` configuration via another config
     file, you will need to redefine the entire ``handlers`` stack. The configuration
     from the two files cannot be merged because the order matters and a merge does
     not allow to control the order.
@@ -237,7 +237,7 @@ debugging much easier!
 All Built-in Handlers
 ---------------------
 
-Monolog comes with *many* built-in handles for emailing logs, sending them to Loggly,
+Monolog comes with *many* built-in handlers for emailing logs, sending them to Loggly,
 or notifying you in Slack. These are documented inside of MonologBundle itself. For
 a full list, see `Monolog Configuration`_.
 
