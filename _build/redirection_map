@@ -14,7 +14,7 @@
 /cookbook/tools/finder /components/finder
 /cookbook/service_container/parentservices /service_container/parent_services
 /cookbook/service_container/factories /service_container/factories
-/cookbook/service_container/tags /components/dependency_injection/tags
+/cookbook/service_container/tags /service_container/tags
 /reference/configuration/mongodb /bundles/DoctrineMongoDBBundle/config
 /reference/YAML /components/yaml
 /cookbook/console/generating_urls /cookbook/console/sending_emails
@@ -256,6 +256,7 @@
 /components/dependency_injection/parameters /service_container/parameters
 /components/dependency_injection/parent_services /service_container/parent_services
 /components/dependency_injection/synthetic_services /service_container/synthetic_services
+/components/dependency_injection/tags /service_container/tags
 /components/event_dispatcher/introduction /components/event_dispatcher
 /components/expression_language/introduction /components/expression_language
 /components/expression_language/index /components/expression_language
