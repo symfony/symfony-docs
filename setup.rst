@@ -329,9 +329,9 @@ When working collaboratively in a Symfony application, it's uncommon to create
 a new Symfony application as explained in the previous sections. Instead,
 someone else has already created and submitted it to a shared repository.
 
-It's recommended to not submit some files (``parameters.yml``) and directories
-(``vendor/``, cache, logs) to the repository, so you'll have to do the following
-when installing an existing Symfony application:
+It's recommended to not submit some files (:ref:`parameters.yml <config-parameters-yml>`)
+and directories (``vendor/``, cache, logs) to the repository, so you'll have to do
+the following when installing an existing Symfony application:
 
 .. code-block:: bash
 

@@ -4,12 +4,14 @@
 Configuring Symfony (and Environments)
 ======================================
 
-An application consists of a collection of bundles representing all the
-features and capabilities of your application. Each bundle can be customized
-via configuration files written in YAML, XML or PHP. By default, the main
-configuration file lives in the ``app/config/`` directory and is called
-either ``config.yml``, ``config.xml`` or ``config.php`` depending on which
-format you prefer:
+Every Symfony application consists of a collection of bundles that add useful tools
+(:doc:`services </service_container>`) to your project. Each bundle can be customized
+via configuration files that live - by default - in the ``app/config`` directory.
+
+Configuration: config.yml
+-------------------------
+
+The main configuration file is called ``config.yml``:
 
 .. configuration-block::
 
@@ -19,6 +21,7 @@ format you prefer:
         imports:
             - { resource: parameters.yml }
             - { resource: security.yml }
+            - { resource: services.yml }
 
         framework:
             secret:          '%secret%'
@@ -50,6 +53,7 @@ format you prefer:
             <imports>
                 <import resource="parameters.yml" />
                 <import resource="security.yml" />
+                <import resource="services.yml" />
             </imports>
 
             <framework:config secret="%secret%">
@@ -68,6 +72,7 @@ format you prefer:
         // app/config/config.php
         $this->import('parameters.yml');
         $this->import('security.yml');
+        $this->import('services.yml');
 
         $container->loadFromExtension('framework', array(
             'secret' => '%secret%',
@@ -85,55 +90,36 @@ format you prefer:
 
         // ...
 
-.. note::
-
-    You'll learn exactly how to load each file/format in the next section
-    `Environments`_.
-
-Each top-level entry like ``framework`` or ``twig`` defines the configuration
-for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony FrameworkBundle and includes configuration for the
-routing, templating, and other core systems.
-
-For now, don't worry about the specific configuration options in each section.
-The configuration file ships with sensible defaults. As you read more and
-explore each part of Symfony, you'll learn about the specific configuration
-options of each feature.
+Most top-level keys - like ``framework`` and ``twig`` - are configuration for a
+specific bundle (i.e. ``FrameworkBundle`` and ``TwigBundle``).
 
 .. sidebar:: Configuration Formats
 
-    Throughout the chapters, all configuration examples will be shown in all
-    three formats (YAML, XML and PHP). Each has its own advantages and
-    disadvantages. The choice of which to use is up to you:
+    Throughout the chapters, all configuration examples will be shown in
+    three formats (YAML, XML and PHP). YAML is used by default, but you can
+    choose whatever you like best. There is no performance difference:
 
-    * *YAML*: Simple, clean and readable (learn more about YAML in
-      ":doc:`/components/yaml/yaml_format`");
+    * :doc:`/components/yaml/yaml_format`: Simple, clean and readable;
 
-    * *XML*: More powerful than YAML at times and supports IDE autocompletion;
+    * *XML*: More powerful than YAML at times & supports IDE autocompletion;
 
     * *PHP*: Very powerful but less readable than standard configuration formats.
 
-Default Configuration Dump
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configuration Reference & Dumping
+---------------------------------
 
-You can dump the default configuration for a bundle in YAML to the console using
-the ``config:dump-reference`` command. Here is an example of dumping the default
-FrameworkBundle configuration:
+There are *two* ways to know *what* keys you can configure:
+
+#. Use the :doc:`Reference Section </reference/index>`;
+
+#. Use the ``config:dump`` command;
+
+For example, if you want to configure something in Twig, you can see an example
+dump of all available configuration options by running:
 
 .. code-block:: bash
 
-    $ php app/console config:dump-reference FrameworkBundle
-
-The extension alias (configuration key) can also be used:
-
-.. code-block:: bash
-
-    $ php app/console config:dump-reference framework
-
-.. note::
-
-    See the cookbook article: :doc:`/bundles/extension` for
-    information on adding configuration for your own bundle.
+    $ php app/console config:dump-reference twig
 
 .. index::
    single: Environments; Introduction
@@ -142,120 +128,108 @@ The extension alias (configuration key) can also be used:
 .. _page-creation-environments:
 .. _book-page-creation-prod-cache-clear:
 
-Environments
-------------
+The imports Key: Loading other Configuration Files
+--------------------------------------------------
 
-An application can run in various environments. The different environments
-share the same PHP code (apart from the front controller), but use different
-configuration. For instance, a ``dev`` environment will log warnings and
-errors, while a ``prod`` environment will only log errors. Some files are
-rebuilt on each request in the ``dev`` environment (for the developer's convenience),
-but cached in the ``prod`` environment. All environments live together on
-the same machine and execute the same application.
-
-A Symfony project generally begins with three environments (``dev``, ``test``
-and ``prod``), though creating new environments is easy. You can view your
-application in different environments simply by changing the front controller
-in your browser. To see the application in the ``dev`` environment, access
-the application via the development front controller:
-
-.. code-block:: text
-
-    http://localhost/app_dev.php/random/10
-
-If you'd like to see how your application will behave in the production environment,
-call the ``prod`` front controller instead:
-
-.. code-block:: text
-
-    http://localhost/app.php/random/10
-
-Since the ``prod`` environment is optimized for speed; the configuration,
-routing and Twig templates are compiled into flat PHP classes and cached.
-When viewing changes in the ``prod`` environment, you'll need to clear these
-cached files and allow them to rebuild:
-
-.. code-block:: bash
-
-    $ php app/console cache:clear --env=prod --no-debug
-
-.. note::
-
-   If you open the ``web/app.php`` file, you'll find that it's configured explicitly
-   to use the ``prod`` environment::
-
-       $kernel = new AppKernel('prod', false);
-
-   You can create a new front controller for a new environment by copying
-   this file and changing ``prod`` to some other value.
-
-.. note::
-
-    The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing chapter </testing>`
-    for more details.
-
-.. tip::
-
-    When using the ``server:run`` command to start a server,
-    ``http://localhost:8000/`` will use the dev front controller of your
-    application.
-
-.. index::
-   single: Environments; Configuration
-
-Environment Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The ``AppKernel`` class is responsible for actually loading the configuration
-file of your choice::
-
-    // app/AppKernel.php
-    public function registerContainerConfiguration(LoaderInterface $loader)
-    {
-        $loader->load(
-            __DIR__.'/config/config_'.$this->getEnvironment().'.yml'
-        );
-    }
-
-You already know that the ``.yml`` extension can be changed to ``.xml`` or
-``.php`` if you prefer to use either XML or PHP to write your configuration.
-Notice also that each environment loads its own configuration file. Consider
-the configuration file for the ``dev`` environment.
+Symfony's main configuration file is ``app/config/config.yml``. But, for organization,
+it *also* loads other configuration files via its ``imports`` key:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # app/config/config.yml
         imports:
-            - { resource: config.yml }
+            - { resource: parameters.yml }
+            - { resource: security.yml }
+            - { resource: services.yml }
+        # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <imports>
+                <import resource="parameters.yml" />
+                <import resource="security.yml" />
+                <import resource="services.yml" />
+            </imports>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $this->import('parameters.yml');
+        $this->import('security.yml');
+        $this->import('services.yml');
+
+        // ...
+
+The ``imports`` key works a lot like the PHP ``include`` function: the contents of
+``parameters.yml``, ``security.yml`` and ``services.yml`` are read and loaded. You
+can also load XML files or PHP files.
+
+The parameters key: Parameters (Variables)
+------------------------------------------
+
+Another special key is called ``parameters``: it's used to define *variables* that
+can be referenced in *any* other configuration file. For example, in ``config.yml``,
+a ``locale`` parameter is defined and then referenced below under the ``framework``
+key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        # ...
+
+        parameters:
+            locale: en
 
         framework:
-            router:   { resource: '%kernel.root_dir%/config/routing_dev.yml' }
-            profiler: { only_exceptions: false }
+            # ...
+
+            # any string surrounded by two % is replaced by that parameter value
+            default_locale:  "%locale%"
 
         # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-            <imports>
-                <import resource="config.xml" />
-            </imports>
+            <!-- ... -->
+            <parameters>
+                <parameter key="locale">en</parameter>
+            </parameters>
 
-            <framework:config>
-                <framework:router resource="%kernel.root_dir%/config/routing_dev.xml" />
-                <framework:profiler only-exceptions="false" />
+            <framework:config default-locale="%locale%">
+                <!-- ... -->
             </framework:config>
 
             <!-- ... -->
@@ -263,31 +237,140 @@ the configuration file for the ``dev`` environment.
 
     .. code-block:: php
 
-        // app/config/config_dev.php
-        $loader->import('config.php');
+        // app/config/config.php
+        // ...
+
+        $container->setParameter('locale', 'en');
 
         $container->loadFromExtension('framework', array(
-            'router' => array(
-                'resource' => '%kernel.root_dir%/config/routing_dev.php',
-            ),
-            'profiler' => array('only-exceptions' => false),
+            'default_locale' => '%en%',
+            // ...
         ));
 
         // ...
 
-The ``imports`` key is similar to a PHP ``include`` statement and guarantees
-that the main configuration file (``config.yml``) is loaded first. The rest
-of the file tweaks the default configuration for increased logging and other
-settings conducive to a development environment.
+You can define whatever parameter names you want under the ``parameters`` key of
+any configuration file. To reference a parameter, surround its name with two percent
+signs - e.g. ``%locale%``.
 
-Both the ``prod`` and ``test`` environments follow the same model: each environment
-imports the base configuration file and then modifies its configuration values
-to fit the needs of the specific environment. This is just a convention,
-but one that allows you to reuse most of your configuration and customize
-just pieces of it between environments.
+.. seealso::
+
+    You can also set parameters dynamically, like from environment variables.
+    See :doc:`/configuration/external_parameters`.
+
+For more information about parameters - including how to reference them from inside
+a controller - see :ref:`book-service-container-parameters`.
+
+.. _config-parameters-yml:
+
+The Special parameters.yml File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On the surface, ``parameters.yml`` is just like any other configuration file: it
+is imported by ``config.yml`` and defines several parameters:
+
+.. code-block:: yaml
+
+    parameters:
+        # ...
+        database_user:      root
+        database_password:  ~
+
+Not surprisingly, these are referenced from inside of ``config.yml`` and help to
+configure DoctrineBundle and other parts of Symfony:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        doctrine:
+            dbal:
+                driver:   pdo_mysql
+                # ...
+                user:     '%database_user%'
+                password: '%database_password%'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <doctrine:dbal
+                    driver="pdo_mysql"
+
+                    user="%database_user%"
+                    password="%database_password%" />
+            </doctrine:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $configuration->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'driver'   => 'pdo_mysql',
+                // ...
+
+                'user'     => '%database_user%',
+                'password' => '%database_password%',
+            ),
+        ));
+
+But the ``parameters.yml`` file *is* special: it contains any value that you do
+not want to commit to your repository or that changes on each server. Database configuration
+is a perfect example of both.
+
+Because of that, **parameters.yml is not committed to your version control**. In fact,
+the ``.gitignore`` file that comes with Symfony prevents it from being committed.
+
+However, a ``parameters.yml.dist`` file *is* committed (with dummy values). This file
+isn't read by Symfony: it's just a template for what keys the ``parameters.yml``
+file you should. If you add or remove keys to ``parameters.yml``, you should add
+and remove them from ``parameters.yml.dist``.
+
+.. sidebar:: The Incenteev Parameter Handler
+
+    When you clone a new project, you will need to create the ``parameters.yml``
+    file from the committed ``parameters.yml.dist`` file. To help with this, after
+    you run ``composer install``, a script will automatically create this file by
+    interactively asking you to supply the value for each key in ``parameters.yml.dist``.
+    For more details - or to remove or control this behavior - see the
+    `Incenteev Parameter Handler`_ documentation.
+
+Environments & the Other Config Files (e.g. config_dev.yml)
+-----------------------------------------------------------
+
+You have just *one* app, but whether you realize it or not, you need it to behave
+*differently* at different times:
+
+* While **developing**, you want your app to log everything and expose nice debugging
+  tools;
+
+* After deploying to **production**, you want that *same* app to be optimized for
+  speed and only log errors.
+
+How can you make *one* application behave in two different ways? With *environments*.
+
+If you see the nice web debug toolbar at the bottom of your browser, then you're
+already running your application in the ``dev`` environment. After you deploy, you'll
+use the ``prod`` environment.
+
+To learn more about *how* to execute and control each environment, see
+:doc:`/configuration/environments`.
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
     configuration/*
+
+.. _`Incenteev Parameter Handler`: https://github.com/Incenteev/ParameterHandler
