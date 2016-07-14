@@ -6,7 +6,11 @@ Symfony Documentation
 .. toctree::
     :hidden:
 
+    bundles/index
     changelog
+    page_creation
+    introduction/from_flat_php_to_symfony2
+    web_services/index
 
 Quick Tour
 ----------
@@ -18,32 +22,63 @@ Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 
     quick_tour/index
 
-* :doc:`quick_tour/the_big_picture` >
-* :doc:`quick_tour/the_view` >
-* :doc:`quick_tour/the_controller` >
+* :doc:`quick_tour/the_big_picture`
+* :doc:`quick_tour/the_view`
+* :doc:`quick_tour/the_controller`
 * :doc:`quick_tour/the_architecture`
 
-Book
-----
-
-Dive into Symfony with the topical guides:
+Getting Started
+---------------
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
-    book/index
+    setup
+    http_fundamentals
+    routing
+    controller
+    templating
 
-.. include:: /book/map.rst.inc
-
-Cookbook
---------
+Topics
+------
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
-    cookbook/index
+    bundles
+    console
+    debug
+    doctrine
+    email
+    event_dispatcher
+    forms
+    http_cache
+    logging
+    routing
+    security
+    serializer
+    service_container
+    testing
+    translation
+    validation
 
-Read the :doc:`Cookbook </cookbook/index>`.
+Advanced Topics
+---------------
+
+.. toctree::
+    :maxdepth: 1
+
+    assetic
+    bundles
+    configuration
+    deployment
+    expressions
+    frontend
+    performance
+    profiler
+    request
+    session
+    setup
 
 Best Practices
 --------------

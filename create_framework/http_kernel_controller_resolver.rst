@@ -152,7 +152,7 @@ defined, an argument has no matching attribute, ...).
     With the great flexibility of the default controller resolver and argument
     resolver, you might wonder why someone would want to create another one
     (why would there be an interface if not?). Two examples: in Symfony,
-    ``getController()`` is enhanced to support :doc:`controllers as services </cookbook/controller/service>`;
+    ``getController()`` is enhanced to support :doc:`controllers as services </controller/service>`;
     and ``getArguments()`` provides an extension point to alter or enhance
     the resolving of arguments.
 
@@ -208,4 +208,3 @@ ever and it still has less than 50 lines of code.
 
 .. _`reflection`: http://php.net/reflection
 .. _`FrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`controllers as services`: http://symfony.com/doc/current/cookbook/controller/service.html

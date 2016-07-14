@@ -45,7 +45,7 @@ transport
 The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
-* gmail (see :doc:`/cookbook/email/gmail`)
+* gmail (see :doc:`/email/gmail`)
 * mail
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)
@@ -98,7 +98,7 @@ values are ``plain``, ``login``, ``cram-md5``, or ``null``.
 spool
 ~~~~~
 
-For details on email spooling, see :doc:`/cookbook/email/spool`.
+For details on email spooling, see :doc:`/email/spool`.
 
 type
 ....

@@ -38,7 +38,7 @@ render
     **type**: ``array`` **default**: ``[]``
 
 Renders the fragment for the given controller (using the `controller`_ function)
-or URI. For more information, see :ref:`templating-embedding-controller`.
+or URI. For more information, see :doc:`/templating/embedding_controllers`.
 
 The render strategy can be specified in the ``strategy`` key of the options.
 
@@ -62,7 +62,7 @@ render_esi
 
 Generates an ESI tag when possible or falls back to the behavior of
 `render`_ function instead. For more information, see
-:ref:`templating-embedding-controller`.
+:doc:`/templating/embedding_controllers`.
 
 .. tip::
 
@@ -614,7 +614,7 @@ form_theme
 
 Sets the resources to override the form theme for the given form view instance.
 You can use ``_self`` as resources to set it to the current resource. More
-information in :doc:`/cookbook/form/form_customization`.
+information in :doc:`/form/form_customization`.
 
 trans
 ~~~~~
@@ -720,8 +720,7 @@ The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
 Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong
-  to the Twig core. You can read more in `the official Twig Extensions
-  documentation`_.
+  to the Twig core. You can read more in `the official Twig Extensions documentation`_.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

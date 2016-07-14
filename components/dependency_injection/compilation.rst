@@ -31,7 +31,7 @@ Managing Configuration with Extensions
 --------------------------------------
 
 As well as loading configuration directly into the container as shown in
-:doc:`/components/dependency_injection/introduction`, you can manage it
+:doc:`/components/dependency_injection`, you can manage it
 by registering extensions with the container. The first step in the compilation
 process is to load configuration from any extension classes registered with
 the container. Unlike the configuration loaded directly, they are only processed
@@ -154,7 +154,7 @@ will look like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config component </components/config/introduction>` to
+to use :doc:`the Config component </components/config>` to
 merge and validate the config values. Using the configuration processing
 you could access the config value this way::
 
@@ -213,7 +213,7 @@ The XML version of the config would then look like this:
 
     In the Symfony full-stack Framework there is a base Extension class
     which implements these methods as well as a shortcut method for processing
-    the configuration. See :doc:`/cookbook/bundles/extension` for more details.
+    the configuration. See :doc:`/bundles/extension` for more details.
 
 The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
@@ -302,7 +302,7 @@ method is called by implementing
         }
     }
 
-For more details, see :doc:`/cookbook/bundles/prepend_extension`, which
+For more details, see :doc:`/bundles/prepend_extension`, which
 is specific to the Symfony Framework, but contains more details about this
 feature.
 
@@ -393,7 +393,7 @@ You then need to register your custom pass with the container::
 .. note::
 
     Compiler passes are registered differently if you are using the full-stack
-    framework, see :doc:`/cookbook/service_container/compiler_passes` for
+    framework, see :doc:`/service_container/compiler_passes` for
     more details.
 
 Controlling the Pass Ordering

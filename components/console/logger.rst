@@ -75,7 +75,7 @@ may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterf
 instance.
 
 By default, the console logger behaves like the
-:doc:`Monolog's Console Handler </cookbook/logging/monolog_console>`.
+:doc:`Monolog's Console Handler </logging/monolog_console>`.
 The association between the log level and the verbosity can be configured
 through the second parameter of the :class:`Symfony\\Component\\Console\\ConsoleLogger`
 constructor::

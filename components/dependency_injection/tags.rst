@@ -175,7 +175,7 @@ run when the container is compiled::
 .. note::
 
     Compiler passes are registered differently if you are using the full-stack
-    framework. See :doc:`/cookbook/service_container/compiler_passes` for
+    framework. See :doc:`/service_container/compiler_passes` for
     more details.
 
 .. tip::

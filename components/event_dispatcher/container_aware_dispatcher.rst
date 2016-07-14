@@ -10,7 +10,7 @@ Introduction
 The :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher`
 is a special ``EventDispatcher`` implementation which is coupled to the
 service container that is part of
-:doc:`the DependencyInjection component </components/dependency_injection/introduction>`.
+:doc:`the DependencyInjection component </components/dependency_injection>`.
 It allows services to be specified as event listeners making the ``EventDispatcher``
 extremely powerful.
 
