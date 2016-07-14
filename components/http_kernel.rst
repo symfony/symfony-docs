@@ -83,9 +83,9 @@ Framework - works.
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
 is really simple and involves creating an
 :doc:`event dispatcher </components/event_dispatcher>` and a
-:ref:`controller and argument resolver <component-http-kernel-resolve-controller>` (explained
-below). To complete your working kernel, you'll add more event listeners
-to the events discussed below::
+:ref:`controller and argument resolver <component-http-kernel-resolve-controller>`
+(explained below). To complete your working kernel, you'll add more event
+listeners to the events discussed below::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\HttpKernel;

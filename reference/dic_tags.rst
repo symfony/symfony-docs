@@ -362,7 +362,7 @@ controller.argument_value_resolver
 Value resolvers implement the
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
 and are used to resolve argument values for controllers as described here:
-:doc:`/cookbook/controller/argument_value_resolver`.
+:doc:`/controller/argument_value_resolver`.
 
 data_collector
 --------------

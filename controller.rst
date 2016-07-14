@@ -792,7 +792,7 @@ This returns a special ``JsonResponse`` object that encodes the data automatical
         // return $this->json($data, $status = 200, $headers = array(), $context = array());
     }
 
-If the :doc:`serializer service </cookbook/serializer>` is enabled in your
+If the :doc:`serializer service </serializer>` is enabled in your
 application, contents passed to ``json()`` are encoded with it. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
