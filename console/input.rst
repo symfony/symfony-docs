@@ -86,13 +86,16 @@ You can access the ``names`` argument as an array::
 
 There are three argument variants you can use:
 
-===========================  ===========================================================================================================
-Mode                         Value
-===========================  ===========================================================================================================
-``InputArgument::REQUIRED``  The argument is required
-``InputArgument::OPTIONAL``  The argument is optional and therefore can be omitted
-``InputArgument::IS_ARRAY``  The argument can contain an indefinite number of arguments and must be used at the end of the argument list
-===========================  ===========================================================================================================
+``InputArgument::REQUIRED``
+    The argument is mandatory. The command doesn't run if the argument isn't
+    provided;
+
+``InputArgument::OPTIONAL``
+    The argument is optional and therefore can be omitted;
+
+``InputArgument::IS_ARRAY``
+    The argument can contain any number of values. For that reason, it must be
+    used at the end of the argument list
 
 You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
 
@@ -108,19 +111,9 @@ Using Command Options
 ---------------------
 
 Unlike arguments, options are not ordered (meaning you can specify them in any
-order) and are specified with two dashes (e.g. ``--yell`` - you can also
-declare a one-letter shortcut that you can call with a single dash like
-``-y``). Options are *always* optional, and can be setup to accept a value
-(e.g. ``--dir=src``) or simply as a boolean flag without a value (e.g.
-``--yell``).
-
-.. tip::
-
-    There is nothing forbidding you to create a command with an option that
-    optionally accepts a value. However, there is no way you can distinguish
-    when the option was used without a value (``command --yell``) or when it
-    wasn't used at all (``command``). In both cases, the value retrieved for
-    the option will be ``null``.
+order) and are specified with two dashes (e.g. ``--yell``). Options are
+*always* optional, and can be setup to accept a value (e.g. ``--dir=src``) or
+simply as a boolean flag without a value (e.g.  ``--yell``).
 
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::
@@ -162,16 +155,33 @@ flag:
     $ php app/console app:greet Fabien --yell --iterations=5
     $ php app/console app:greet --yell --iterations=5 Fabien
 
-There are 4 option variants you can use:
+.. tip::
 
-===============================  =====================================================================================
-Option                           Value
-===============================  =====================================================================================
-``InputOption::VALUE_IS_ARRAY``  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
-``InputOption::VALUE_NONE``      Do not accept input for this option (e.g. ``--yell``)
-``InputOption::VALUE_REQUIRED``  This value is required (e.g. ``--iterations=5``), the option itself is still optional
-``InputOption::VALUE_OPTIONAL``  This option may or may not have a value (e.g. ``--yell`` or ``--yell=loud``)
-===============================  =====================================================================================
+     You can also declare a one-letter shortcut that you can call with a single
+     dash, like ``-i``::
+
+        $this
+            // ...
+            ->addOption(
+                'iterations',
+                'i',
+                InputOption::VALUE_REQUIRED,
+                'How many times should the message be printed?',
+                1
+            );
+
+There are four option variants you can use:
+
+``InputOption::VALUE_IS_ARRAY``
+    This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``);
+``InputOption::VALUE_NONE``
+    Do not accept input for this option (e.g. ``--yell``);
+``InputOption::VALUE_REQUIRED``
+    This value is required (e.g. ``--iterations=5``), the option itself is
+    still optional;
+``InputOption::VALUE_OPTIONAL``
+    This option may or may not have a value (e.g. ``--yell`` or
+    ``--yell=loud``).
 
 You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
@@ -185,3 +195,11 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
             'Which colors do you like?',
             array('blue', 'red')
         );
+
+.. tip::
+
+    There is nothing forbidding you to create a command with an option that
+    optionally accepts a value. However, there is no way you can distinguish
+    when the option was used without a value (``command --language``) or when
+    it wasn't used at all (``command``). In both cases, the value retrieved for
+    the option will be ``null``.

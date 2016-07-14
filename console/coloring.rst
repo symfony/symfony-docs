@@ -1,5 +1,5 @@
-Coloring the Output
-===================
+How to Color and Style the Console Output
+=========================================
 
 By using colors in the command output, you can distinguish different types of
 output (e.g. important messages, titles, comments, etc.).

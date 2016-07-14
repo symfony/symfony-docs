@@ -18,11 +18,6 @@ Value                                        Meaning                            
 ``OutputInterface::VERBOSITY_DEBUG``         Debug messages                      ``-vvv``
 ===========================================  ==================================  =====================
 
-.. tip::
-
-    The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
-    level or above is used.
-
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
 
@@ -83,3 +78,8 @@ without actually printing.
     class that allows you to display messages on the console. This is cleaner
     than wrapping your output calls in conditions. For an example use in
     the Symfony Framework, see :doc:`/logging/monolog_console`.
+
+.. tip::
+
+    The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
+    level or above is used.
