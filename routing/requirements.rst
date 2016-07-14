@@ -4,29 +4,26 @@
 How to Define Route Requirements
 ================================
 
-Take a quick look at the routes that have been created so far:
+:ref:`Route requirements <routing-requirements>` can be used to make a specific route
+*only* match under specific conditions. The simplest example involves restricting
+a routing ``{wildcard}`` to only match some regular expression:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
+        namespace AppBundle\Controller;
 
-        // ...
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", defaults={"page" = 1})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
              */
-            public function indexAction($page)
-            {
-                // ...
-            }
-
-            /**
-             * @Route("/blog/{slug}")
-             */
-            public function showAction($slug)
+            public function listAction($page)
             {
                 // ...
             }
@@ -35,13 +32,11 @@ Take a quick look at the routes that have been created so far:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        blog:
+        blog_list:
             path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
-
-        blog_show:
-            path:      /blog/{slug}
-            defaults:  { _controller: AppBundle:Blog:show }
+            defaults:  { _controller: AppBundle:Blog:list }
+            requirements:
+                page: '\d+'
 
     .. code-block:: xml
 
@@ -52,14 +47,12 @@ Take a quick look at the routes that have been created so far:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
-                <default key="page">1</default>
+            <route id="blog_list" path="/blog/{page}">
+                <default key="_controller">AppBundle:Blog:list</default>
+                <requirement key="page">\d+</requirement>
             </route>
 
-            <route id="blog_show" path="/blog/{slug}">
-                <default key="_controller">AppBundle:Blog:show</default>
-            </route>
+            <!-- ... -->
         </routes>
 
     .. code-block:: php
@@ -69,120 +62,25 @@ Take a quick look at the routes that have been created so far:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
-            'page'        => 1,
+        $collection->add('blog_list', new Route('/blog/{page}', array(
+            '_controller' => 'AppBundle:Blog:list',
+        ), array(
+            'page' => '\d+'
         )));
-
-        $collection->add('blog_show', new Route('/blog/{show}', array(
-            '_controller' => 'AppBundle:Blog:show',
-        )));
-
-        return $collection;
-
-Can you spot the problem? Notice that both routes have patterns that match
-URLs that look like ``/blog/*``. The Symfony router will always choose the
-**first** matching route it finds. In other words, the ``blog_show`` route
-will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
-the first route (``blog``) and return a nonsense value of ``my-blog-post``
-to the ``{page}`` parameter.
-
-======================  ========  ===============================
-URL                     Route     Parameters
-======================  ========  ===============================
-``/blog/2``             ``blog``  ``{page}`` = ``2``
-``/blog/my-blog-post``  ``blog``  ``{page}`` = ``"my-blog-post"``
-======================  ========  ===============================
-
-The answer to the problem is to add route *requirements* or route *conditions*
-(see :doc:`/routing/conditions`). The routes in this example would work
-perfectly if the ``/blog/{page}`` path *only* matched URLs where the ``{page}``
-portion is an integer. Fortunately, regular expression requirements can easily
-be added for each parameter. For example:
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/AppBundle/Controller/BlogController.php
 
         // ...
 
-        /**
-         * @Route("/blog/{page}", defaults={"page": 1}, requirements={
-         *     "page": "\d+"
-         * })
-         */
-        public function indexAction($page)
-        {
-            // ...
-        }
-
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        blog:
-            path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
-            requirements:
-                page:  \d+
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
-                <default key="page">1</default>
-                <requirement key="page">\d+</requirement>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
-            'page'        => 1,
-        ), array(
-            'page' => '\d+',
-        )));
-
         return $collection;
 
-The ``\d+`` requirement is a regular expression that says that the value of
-the ``{page}`` parameter must be a digit (i.e. a number). The ``blog`` route
-will still match on a URL like ``/blog/2`` (because 2 is a number), but it
-will no longer match a URL like ``/blog/my-blog-post`` (because ``my-blog-post``
-is *not* a number).
-
-As a result, a URL like ``/blog/my-blog-post`` will now properly match the
-``blog_show`` route.
-
-========================  =============  ===============================
-URL                       Route          Parameters
-========================  =============  ===============================
-``/blog/2``               ``blog``       ``{page}`` = ``2``
-``/blog/my-blog-post``    ``blog_show``  ``{slug}`` = ``my-blog-post``
-``/blog/2-my-blog-post``  ``blog_show``  ``{slug}`` = ``2-my-blog-post``
-========================  =============  ===============================
+Thanks to the ``\d+`` requirement (i.e. a "digit" of any length), ``/blog/2`` will
+match this route but ``/blog/some-string`` will *not* match.
 
 .. sidebar:: Earlier Routes always Win
 
-    What this all means is that the order of the routes is very important.
-    If the ``blog_show`` route were placed above the ``blog`` route, the
-    URL ``/blog/2`` would match ``blog_show`` instead of ``blog`` since the
-    ``{slug}`` parameter of ``blog_show`` has no requirements. By using proper
-    ordering and clever requirements, you can accomplish just about anything.
+    Why would you ever care about requirements? If a request matches *two* routes,
+    then the first route always wins. By adding requirements to the first route,
+    you can make each route match in just the right situations. See :ref:`routing-requirements`
+    for an example.
 
 Since the parameter requirements are regular expressions, the complexity
 and flexibility of each requirement is entirely up to you. Suppose the homepage
@@ -270,6 +168,8 @@ Path     Parameters
 
 .. index::
     single: Routing; Method requirement
+
+.. _routing-method-requirement:
 
 Adding HTTP Method Requirements
 -------------------------------
@@ -368,6 +268,12 @@ two actions.
 .. note::
 
     If no ``methods`` are specified, the route will match on *all* methods.
+
+.. tip::
+
+    If you're using HTML forms and HTTP methods *other* than ``GET`` and ``POST``,
+    you'll need to include a ``_method`` parameter to *fake* the HTTP method. See
+    :doc:`/form/action_method` for more information.
 
 Adding a Host Requirement
 -------------------------

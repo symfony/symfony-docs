@@ -24,8 +24,8 @@ areas of your application. By the end of this chapter, you'll be able to:
 .. index::
    single: Routing; Basics
 
-Routing in Action
------------------
+Routing Examples
+----------------
 
 A *route* is a map from a URL path to a controller. For example, suppose
 you want to match any URL like ``/blog/my-post`` or ``/blog/all-about-symfony``
@@ -45,6 +45,148 @@ The route is simple:
         class BlogController extends Controller
         {
             /**
+             * Matches /blog exactly
+             *
+             * @Route("/blog", name="blog_list")
+             */
+            public function listAction()
+            {
+                // ...
+            }
+
+            /**
+             * Matches /blog/*
+             *
+             * @Route("/blog/{slug}", name="blog_show")
+             */
+            public function showAction($slug)
+            {
+                // $slug will equal the dynamic part of the URL
+                // e.g. at /blog/yay-routing, then $slug='yay-routing'
+
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        blog_list:
+            path:      /blog
+            defaults:  { _controller: AppBundle:Blog:list }
+
+        blog_show:
+            path:      /blog/{slug}
+            defaults:  { _controller: AppBundle:Blog:show }
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog">
+                <default key="_controller">AppBundle:Blog:list</default>
+            </route>
+
+            <route id="blog_show" path="/blog/{slug}">
+                <default key="_controller">AppBundle:Blog:show</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog_list', new Route('/blog', array(
+            '_controller' => 'AppBundle:Blog:list',
+        )));
+        $collection->add('blog_show', new Route('/blog/{slug}', array(
+            '_controller' => 'AppBundle:Blog:show',
+        )));
+
+        return $collection;
+
+Thanks to these two routes:
+
+* If the user goes to ``/blog``, the first route is matched and ``listAction()``
+  is executed;
+
+* If the user goes to ``/blog/*``, the second route is matched and ``showAction()``
+  is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable is
+  passed to ``showAction`` matching that value. For example, if the user goes to
+  ``/blog/yay-routing``, then ``$slug`` will equal ``yay-routing``.
+
+Whenever you have a ``{placeholder}`` in your route path, that portion becomes a
+wildcard: it matches *any* value. Your controller can now *also* have an argument
+called ``$placeholder`` (the wildcard and argument names *must* match).
+
+Each route also has an internal name: ``blog_list`` and ``blog_show``. These can
+be anything (as long as each is unique) and don't have any meaning yet.
+Later, you'll use it to generate URLs.
+
+.. sidebar:: Routing in Other Formats
+
+    The ``@Route`` above each method is called an *annotation*. If you'd rather
+    configure your routes in Yaml, XML or PHP, that's no problem!
+
+    In these formats, the ``_controller`` "defaults" value is a special key that
+    tells Symfony which controller should be executed when a URL matches this route.
+    The ``_controller`` string is called the
+    :ref:`logical name <controller-string-syntax>`. It follows a pattern that
+    points to a specific PHP class and method, in this case the
+    ``AppBundle\Controller\BlogController::listAction`` and
+    ``AppBundle\Controller\BlogController::showAction`` methods.
+
+This is the goal of the Symfony router: to map the URL of a request to a
+controller. Along the way, you'll learn all sorts of tricks that make mapping
+even the most complex URLs easy.
+
+.. _routing-requirements:
+
+Adding {placeholder} Requirements
+---------------------------------
+
+Imagine the ``blog_list`` route will contain a paginated list of blog posts, with
+URLs like ``/blog/2`` and ``/blog/3`` for pages 2 and 3. If you change the route's
+path to ``/blog/{page}``, you'll have a problem:
+
+* blog_list: ``/blog/{page}`` will match ``/blog/*``;
+* blog_show: ``/blog/{slug}`` will *also* match ``/blog/*``.
+
+When two routes match the same URL, the *first* route that's loaded wins. Unfortunately,
+that means that ``/blog/yay-routing`` will match the ``blog_list``. No good!
+
+To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match numbers
+(digits):
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/BlogController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             */
+            public function listAction($page)
+            {
+                // ...
+            }
+
+            /**
              * @Route("/blog/{slug}", name="blog_show")
              */
             public function showAction($slug)
@@ -56,9 +198,14 @@ The route is simple:
     .. code-block:: yaml
 
         # app/config/routing.yml
+        blog_list:
+            path:      /blog/{page}
+            defaults:  { _controller: AppBundle:Blog:list }
+            requirements:
+                page: '\d+'
+
         blog_show:
-            path:      /blog/{slug}
-            defaults:  { _controller: AppBundle:Blog:show }
+            # ...
 
     .. code-block:: xml
 
@@ -69,9 +216,12 @@ The route is simple:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_show" path="/blog/{slug}">
-                <default key="_controller">AppBundle:Blog:show</default>
+            <route id="blog_list" path="/blog/{page}">
+                <default key="_controller">AppBundle:Blog:list</default>
+                <requirement key="page">\d+</requirement>
             </route>
+
+            <!-- ... -->
         </routes>
 
     .. code-block:: php
@@ -81,215 +231,55 @@ The route is simple:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'AppBundle:Blog:show',
+        $collection->add('blog_list', new Route('/blog/{page}', array(
+            '_controller' => 'AppBundle:Blog:list',
+        ), array(
+            'page' => '\d+'
         )));
-
-        return $collection;
-
-The path defined by the ``blog_show`` route acts like ``/blog/*`` where
-the wildcard is given the name ``slug``. For the URL ``/blog/my-blog-post``,
-the ``slug`` variable gets a value of ``my-blog-post``, which is available
-for you to use in your controller (keep reading). The ``blog_show`` is the
-internal name of the route, which doesn't have any meaning yet and just needs
-to be unique. Later, you'll use it to generate URLs.
-
-If you don't want to use annotations, you can also use YAML, XML or PHP. In these
-formats, the ``_controller`` parameter is a special
-key that tells Symfony which controller should be executed when a URL matches
-this route. The ``_controller`` string is called the
-:ref:`logical name <controller-string-syntax>`. It follows a pattern that
-points to a specific PHP class and method, in this case the
-``AppBundle\Controller\BlogController::showAction`` method.
-
-Congratulations! You've just created your first route and connected it to
-a controller. Now, when you visit ``/blog/my-post``, the ``showAction`` controller
-will be executed and the ``$slug`` variable will be equal to ``my-post``.
-
-This is the goal of the Symfony router: to map the URL of a request to a
-controller. Along the way, you'll learn all sorts of tricks that make mapping
-even the most complex URLs easy.
-
-.. index::
-   single: Routing; Under the hood
-
-Routing: Under the Hood
------------------------
-
-When a request is made to your application, it contains an address to the
-exact "resource" that the client is requesting. This address is called the
-URL, (or URI), and could be ``/contact``, ``/blog/read-me``, or anything
-else. Take the following HTTP request for example:
-
-.. code-block:: text
-
-    GET /blog/my-blog-post
-
-The goal of the Symfony routing system is to parse this URL and determine
-which controller should be executed. The whole process looks like this:
-
-#. The request is handled by the Symfony front controller (e.g. ``app.php``);
-
-#. The Symfony core (i.e. Kernel) asks the router to inspect the request;
-
-#. The router matches the incoming URL to a specific route and returns information
-   about the route, including the controller that should be executed;
-
-#. The Symfony Kernel executes the controller, which ultimately returns
-   a ``Response`` object.
-
-.. figure:: /_images/http/request-flow.png
-   :align: center
-   :alt: Symfony request flow
-
-   The routing layer is a tool that translates the incoming URL into a specific
-   controller to execute.
-
-.. index::
-   single: Routing; Creating routes
-
-.. _routing-creating-routes:
-
-Creating Routes
----------------
-
-Symfony loads all the routes for your application from a single routing configuration
-file. The file is usually ``app/config/routing.yml``, but can be configured
-to be anything (including an XML or PHP file) via the application configuration
-file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            router: { resource: '%kernel.root_dir%/config/routing.yml' }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'router' => array(
-                'resource' => '%kernel.root_dir%/config/routing.php',
-            ),
-        ));
-
-.. tip::
-
-    Even though all routes are loaded from a single file, it's common practice
-    to include additional routing resources. To do so, just point out in the
-    main routing configuration file which external files should be included.
-    See the :doc:`/routing/external_resources` section for more
-    information.
-
-Basic Route Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Defining a route is easy, and a typical application will have lots of routes.
-A basic route consists of just two parts: the ``path`` to match and a
-``defaults`` array:
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/AppBundle/Controller/MainController.php
 
         // ...
-        class MainController extends Controller
-        {
-            /**
-             * @Route("/")
-             */
-            public function homepageAction()
-            {
-                // ...
-            }
-        }
-
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        _welcome:
-            path:      /
-            defaults:  { _controller: AppBundle:Main:homepage }
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="_welcome" path="/">
-                <default key="_controller">AppBundle:Main:homepage</default>
-            </route>
-
-        </routes>
-
-    ..  code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('_welcome', new Route('/', array(
-            '_controller' => 'AppBundle:Main:homepage',
-        )));
 
         return $collection;
 
-This route matches the homepage (``/``) and maps it to the
-``AppBundle:Main:homepage`` controller. The ``_controller`` string is
-translated by Symfony into an actual PHP function and executed. That process
-will be explained shortly in the :ref:`controller-string-syntax` section.
+The ``\d+`` is a regular expression that matches a *digit* of any length. Now:
 
-.. index::
-   single: Routing; Placeholders
+========================  =============  ===============================
+URL                       Route          Parameters
+========================  =============  ===============================
+``/blog/2``               ``blog_list``  ``$page`` = ``2``
+``/blog/yay-routing``     ``blog_show``  ``$slug`` = ``yay-routing``
+========================  =============  ===============================
 
-Dynamic Routing with Placeholders
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To learn about other route requirements - like HTTP method, hostname and dynamic
+expressions - see :doc:`/routing/requirements`.
 
-Of course the routing system supports much more interesting routes. Many
-routes will contain one or more named "wildcard" placeholders:
+Giving {placeholders} a Default Value
+-------------------------------------
+
+In the previous example, the ``blog_list`` has a path of ``/blog/{page}``. If the
+user goes to ``/blog/1``, it will match. But if the user goes to ``/blog``, it will
+**not** match. As soon as you add a ``{placeholder}`` to a route, it *must* have
+a value.
+
+So how can we make ``/blog_list`` once again match when the user goes to ``/blog``?
+By adding a *default* value:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
+        namespace AppBundle\Controller;
 
-        // ...
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{slug}")
+             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
              */
-            public function showAction($slug)
+            public function listAction($page = 1)
             {
                 // ...
             }
@@ -298,9 +288,14 @@ routes will contain one or more named "wildcard" placeholders:
     .. code-block:: yaml
 
         # app/config/routing.yml
+        blog_list:
+            path:      /blog/{page}
+            defaults:  { _controller: AppBundle:Blog:list, page: 1 }
+            requirements:
+                page: '\d+'
+
         blog_show:
-            path:      /blog/{slug}
-            defaults:  { _controller: AppBundle:Blog:show }
+            # ...
 
     .. code-block:: xml
 
@@ -311,9 +306,13 @@ routes will contain one or more named "wildcard" placeholders:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_show" path="/blog/{slug}">
-                <default key="_controller">AppBundle:Blog:show</default>
+            <route id="blog_list" path="/blog/{page}">
+                <default key="_controller">AppBundle:Blog:list</default>
+                <default key="page">1</default>
+                <requirement key="page">\d+</requirement>
             </route>
+
+            <!-- ... -->
         </routes>
 
     .. code-block:: php
@@ -323,21 +322,19 @@ routes will contain one or more named "wildcard" placeholders:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'AppBundle:Blog:show',
+        $collection->add('blog_list', new Route('/blog/{page}', array(
+            '_controller' => 'AppBundle:Blog:list',
+            'page' => 1,
+        ), array(
+            'page' => '\d+'
         )));
+
+        // ...
 
         return $collection;
 
-The path will match anything that looks like ``/blog/*``. Even better,
-the value matching the ``{slug}`` placeholder will be available inside your
-controller. In other words, if the URL is ``/blog/hello-world``, a ``$slug``
-variable, with a value of ``hello-world``, will be available in the controller.
-This can be used, for example, to load the blog post matching that string.
-
-The path will *not*, however, match simply ``/blog``. That's because,
-by default, all placeholders are required. This can be changed by adding
-a placeholder value to the ``defaults`` array.
+Now, when the user goes to ``/page``, the ``blog_list`` route will match and ``$page``
+will default to a value of ``1``.
 
 .. index::
    single: Routing; Advanced example
@@ -348,9 +345,7 @@ a placeholder value to the ``defaults`` array.
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-At this point, you have everything you need to create a powerful routing
-structure in Symfony. The following is an example of just how flexible the
-routing system can be:
+With all of this in mind, check out this advanced example:
 
 .. configuration-block::
 
@@ -492,11 +487,11 @@ that are special: each adds a unique piece of functionality inside your applicat
 Controller Naming Pattern
 -------------------------
 
-Every route must have a ``_controller`` parameter, which dictates which
-controller should be executed when that route is matched. This parameter
-uses a simple string pattern called the *logical controller name*, which
-Symfony maps to a specific PHP method and class. The pattern has three parts,
-each separated by a colon:
+If you use YAML, XML or PHP route configuration, then each route must have a
+``_controller`` parameter, which dictates which controller should be executed when
+that route is matched. This parameter uses a simple string pattern called the
+*logical controller name*, which Symfony maps to a specific PHP method and class.
+The pattern has three parts, each separated by a colon:
 
     **bundle**:**controller**:**action**
 
@@ -538,45 +533,62 @@ more flexibility.
    uses just one colon separator (e.g. ``service_name:indexAction``) and
    refers to the controller as a service (see :doc:`/controller/service`).
 
-Route Parameters and Controller Arguments
------------------------------------------
+.. index::
+   single: Routing; Creating routes
 
-The route parameters (e.g. ``{slug}``) are especially important because
-each is made available as an argument to the controller method::
+.. _routing-creating-routes:
 
-    public function showAction($slug)
-    {
-        // ...
-    }
+Loading Routes
+--------------
 
-In reality, the entire ``defaults`` collection is merged with the parameter
-values to form a single array. Each key of that array is available as an
-argument on the controller.
+Symfony loads all the routes for your application from a *single* routing configuration
+file: ``app/config/routing.yml``. But from inside of this file, you can load any
+*other* routing files you want. In fact, by default, Symfony loads annotation route
+configuration from your AppBundle's ``Controller/`` directory, which is how Symfony
+sees our annotation routes:
 
-In other words, for each argument of your controller method, Symfony looks
-for a route parameter of that name and assigns its value to that argument.
-In the advanced example above, any combination (in any order) of the following
-variables could be used as arguments to the ``showAction()`` method:
+.. configuration-block::
 
-* ``$_locale``
-* ``$year``
-* ``$title``
-* ``$_format``
-* ``$_controller``
-* ``$_route``
+    .. code-block:: yaml
 
-Since the placeholders and ``defaults`` collection are merged together, even
-the ``$_controller`` variable is available. For a more detailed discussion,
-see :ref:`route-parameters-controller-arguments`.
+        # app/config/routing.yml
+        app:
+            resource: "@AppBundle/Controller/"
+            type:     annotation
 
-.. tip::
+    .. code-block:: xml
 
-    The special ``$_route`` variable is set to the name of the route that was
-    matched.
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
-You can even add extra information to your route definition and access it
-within your controller. For more information on this topic,
-see :doc:`/routing/extra_information`.
+            <!-- the type is required to enable the annotation reader for this resource -->
+            <import resource="@AppBundle/Controller/" type="annotation"/>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            // second argument is the type, which is required to enable
+            // the annotation reader for this resource
+            $loader->import("@AppBundle/Controller/", "annotation")
+        );
+
+        return $collection;
+
+For more details on loading routes, including how to prefix the paths of loaded routes,
+see :doc:`/routing/external_resources`.
+
+The path will *not*, however, match simply ``/blog``. That's because,
+by default, all placeholders are required. This can be changed by adding
+a placeholder value to the ``defaults`` array.
 
 .. index::
    single: Routing; Generating URLs
@@ -585,22 +597,8 @@ Generating URLs
 ---------------
 
 The routing system should also be used to generate URLs. In reality, routing
-is a bidirectional system: mapping the URL to a controller+parameters and
-a route+parameters back to a URL. The
-:method:`Symfony\\Component\\Routing\\Router::match` and
-:method:`Symfony\\Component\\Routing\\Router::generate` methods form this bidirectional
-system. Take the ``blog_show`` example route from earlier::
-
-    $params = $this->get('router')->match('/blog/my-blog-post');
-    // array(
-    //     'slug'        => 'my-blog-post',
-    //     '_controller' => 'AppBundle:Blog:show',
-    // )
-
-    $uri = $this->get('router')->generate('blog_show', array(
-        'slug' => 'my-blog-post'
-    ));
-    // /blog/my-blog-post
+is a bidirectional system: mapping the URL to a controller and
+a route back to a URL.
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
 and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
@@ -612,6 +610,7 @@ route. With this information, any URL can easily be generated::
         {
             // ...
 
+            // /blog/my-blog-post
             $url = $this->generateUrl(
                 'blog_show',
                 array('slug' => 'my-blog-post')
@@ -629,23 +628,6 @@ route. With this information, any URL can easily be generated::
             'blog_show',
             array('slug' => 'my-blog-post')
         );
-
-In an upcoming section, you'll learn how to generate URLs from inside templates.
-
-.. tip::
-
-    If the front-end of your application uses Ajax requests, you might want
-    to be able to generate URLs in JavaScript based on your routing configuration.
-    By using the `FOSJsRoutingBundle`_, you can do exactly that:
-
-    .. code-block:: javascript
-
-        var url = Routing.generate(
-            'blog_show',
-            {'slug': 'my-blog-post'}
-        );
-
-    For more information, see the documentation for that bundle.
 
 .. index::
    single: Routing; Generating URLs in a template
@@ -685,29 +667,40 @@ the ``path()`` function to generate a relative URL:
             Read this blog post.
         </a>
 
-.. tip::
+Generating URLs in JavaScript
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    If you are generating the route inside a ``<script>`` element, it's a good
-    practice to escape it for JavaScript:
+If you're in a Twig template, you can use the same ``path`` function to set JavaScript
+variables. The ``escape`` function helps escape any non-JavaScript-safe values:
 
-    .. configuration-block::
+.. configuration-block::
 
-        .. code-block:: html+twig
+    .. code-block:: html+twig
 
-            <script>
-            var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
-            </script>
+        <script>
+        var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
+        </script>
 
-        .. code-block:: html+php
-        
-            <script>
-            var route = "<?php echo $view->escape(
-                $view['router']->generate('blow_show', array(
-                    'slug' => 'my-blog-post',
-                )),
-                'js'
-            ) ?>";
-            </script>
+    .. code-block:: html+php
+
+        <script>
+        var route = "<?php echo $view->escape(
+            $view['router']->generate('blow_show', array(
+                'slug' => 'my-blog-post',
+            )),
+            'js'
+        ) ?>";
+        </script>
+
+But if you *actually* need to generate routes in pure JavaScript, consider using
+the `FOSJsRoutingBundle`_. It makes the following possible:
+
+.. code-block:: javascript
+
+    var url = Routing.generate(
+        'blog_show',
+        {'slug': 'my-blog-post'}
+    );
 
 .. index::
    single: Routing; Absolute URLs
@@ -716,7 +709,7 @@ Generating Absolute URLs
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the router will generate relative URLs (e.g. ``/blog``). From
-a controller, simply pass ``UrlGeneratorInterface::ABSOLUTE_URL`` to the third argument of the ``generateUrl()``
+a controller, pass ``UrlGeneratorInterface::ABSOLUTE_URL`` to the third argument of the ``generateUrl()``
 method::
 
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -724,9 +717,8 @@ method::
     $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), UrlGeneratorInterface::ABSOLUTE_URL);
     // http://www.example.com/blog/my-blog-post
 
-From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
-rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
-to ``generate()``:
+From a template, in Twig, use the ``url()`` function (which generates an absolute URL)
+rather than the ``path()`` function (which generates a relative URL):
 
 .. configuration-block::
 
