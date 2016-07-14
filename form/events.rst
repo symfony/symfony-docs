@@ -27,7 +27,7 @@ depending on the request values::
     };
 
     $form = $formFactory->createBuilder()
-        // add form fields
+        // ... add form fields
         ->addEventListener(FormEvents::PRE_SUBMIT, $listener);
 
     // ...
@@ -300,21 +300,26 @@ Creating and binding an event listener to the form is very easy::
 When you have created a form type class, you can use one of its methods as a
 callback for better readability::
 
+    // src/AppBundle/Form/SubscriptionType.php
+    namespace AppBundle\Form;
+
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\FormEvents;
 
     // ...
-
     class SubscriptionType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('username', TextType::class);
-            $builder->add('show_email', CheckboxType::class);
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                array($this, 'onPreSetData')
-            );
+            $builder
+                ->add('username', TextType::class)
+                ->add('show_email', CheckboxType::class)
+                ->addEventListener(
+                    FormEvents::PRE_SET_DATA,
+                    array($this, 'onPreSetData')
+                )
+            ;
         }
 
         public function onPreSetData(FormEvent $event)
@@ -333,6 +338,9 @@ Event subscribers have different uses:
 * Regrouping multiple listeners inside a single class.
 
 .. code-block:: php
+
+    // src/AppBundle/Form/EventListener/AddEmailFieldListener.php
+    namespace AppBundle\Form\EventListener;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\FormEvent;
@@ -382,10 +390,11 @@ Event subscribers have different uses:
         }
     }
 
-To register the event subscriber, use the addEventSubscriber() method::
+To register the event subscriber, use the ``addEventSubscriber()`` method::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+        use AppBundle\Form\EventListener\AddEmailFieldListener;
 
     // ...
 

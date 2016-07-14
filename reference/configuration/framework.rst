@@ -115,8 +115,8 @@ be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
 In practice, Symfony uses this value for generating the
-:ref:`CSRF tokens <forms-csrf>`, for encrypting the cookies used in the
-:doc:`remember me functionality </security/remember_me>` and for
+:doc:`CSRF tokens </form/csrf_protection>`, for encrypting the cookies used
+in the :doc:`remember me functionality </security/remember_me>` and for
 creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
 
 This option becomes the service container parameter named ``kernel.secret``,
@@ -399,7 +399,7 @@ csrf_protection
 
 .. seealso::
 
-    For more information about CSRF protection in forms, see :ref:`forms-csrf`.
+    For more information about CSRF protection in forms, see :doc:`/form/csrf_protection`.
 
 .. _reference-csrf_protection-enabled:
 
@@ -1114,7 +1114,7 @@ is disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
-    See :ref:`book-templating-hinclude` for more information about hinclude.
+    See :doc:`/templating/hinclude` for more information about hinclude.
 
 .. _reference-templating-form:
 
@@ -1128,7 +1128,7 @@ resources
 
 A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
-:ref:`the form book chapter <book-forms-theming-twig>`.
+:ref:`the form book chapter <forms-theming-twig>`.
 
 Assume you have custom global form themes in
 ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
@@ -1189,7 +1189,7 @@ Assume you have custom global form themes in
 
 .. seealso::
 
-    See :ref:`book-forms-theming-global` for more information.
+    See :ref:`forms-theming-global` for more information.
 
 .. _reference-templating-cache:
 
