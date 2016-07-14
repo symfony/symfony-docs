@@ -172,4 +172,13 @@ create and validate forms, create translations for your application, write
 tests and much more. Each of these has their own place and role within the
 bundle.
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    bundles/*
+
 _`third-party bundles`: http://knpbundles.com
