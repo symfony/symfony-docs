@@ -344,7 +344,7 @@ before, but also requires a thorough understanding of Symfony internals. Suppose
 that your code throws specialized exceptions with a particular meaning to your
 application domain.
 
-:doc:`Writing your own event listener </event_dispatcher/event_listener>`
+:doc:`Writing your own event listener </event_dispatcher>`
 for the ``kernel.exception`` event allows you to have a closer look at the exception
 and take different actions depending on it. Those actions might include logging
 the exception, redirecting the user to another page or rendering specialized
