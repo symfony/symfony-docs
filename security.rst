@@ -22,7 +22,7 @@ sections:
 
 These are followed by a number of small (but still captivating) sections,
 like :ref:`logging out <book-security-logging-out>` and
-:ref:`encoding user passwords <security-encoding-password>`.
+:doc:`encoding user passwords </security/password_encoding>`.
 
 .. _book-security-firewalls:
 
@@ -591,7 +591,7 @@ It will give you something like this:
 Everything will now work exactly like before. But if you have dynamic users
 (e.g. from a database), how can you programmatically encode the password
 before inserting them into the database? Don't worry, see
-:ref:`security-encoding-password` for details.
+:doc:`/security/password_encoding` for details.
 
 .. tip::
 
@@ -1201,45 +1201,6 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``).
     browser cache or restarting your browser usually helps. Some web developer
     tools might be helpful here too.
 
-.. _`security-encoding-password`:
-
-Dynamically Encoding a Password
--------------------------------
-
-.. note::
-
-    For historical reasons, Symfony uses the term *"password encoding"* when it
-    should really refer to *"password hashing"*. The "encoders" are in fact
-    `cryptographic hash functions`_.
-
-If, for example, you're storing users in the database, you'll need to encode
-the users' passwords before inserting them. No matter what algorithm you
-configure for your user object, the hashed password can always be determined
-in the following way from a controller::
-
-    // whatever *your* User object is
-    $user = new AppBundle\Entity\User();
-    $plainPassword = 'ryanpass';
-    $encoder = $this->container->get('security.password_encoder');
-    $encoded = $encoder->encodePassword($user, $plainPassword);
-
-    $user->setPassword($encoded);
-
-In order for this to work, just make sure that you have the encoder for your
-user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
-key in ``app/config/security.yml``.
-
-The ``$encoder`` object also has an ``isPasswordValid`` method, which takes
-the ``User`` object as the first argument and the plain password to check
-as the second argument.
-
-.. caution::
-
-    When you allow a user to submit a plaintext password (e.g. registration
-    form, change password form), you *must* have validation that guarantees
-    that the password is 4096 characters or fewer. Read more details in
-    :ref:`How to implement a simple Registration Form <cookbook-registration-password-max>`.
-
 .. _security-role-hierarchy:
 
 Hierarchical Roles
@@ -1296,98 +1257,6 @@ rules by creating a role hierarchy:
 In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
-
-Stateless Authentication
-------------------------
-
-By default, Symfony relies on a cookie (the Session) to persist the security
-context of the user. But if you use certificates or HTTP authentication for
-instance, persistence is not needed as credentials are available for each
-request. In that case, and if you don't need to store anything else between
-requests, you can activate the stateless authentication (which means that no
-cookie will be ever created by Symfony):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            # ...
-
-            firewalls:
-                main:
-                    http_basic: ~
-                    stateless:  true
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main" stateless="true">
-                    <http-basic />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'firewalls' => array(
-                'main' => array('http_basic' => null, 'stateless' => true),
-            ),
-        ));
-
-.. note::
-
-    If you use a form login, Symfony will create a cookie even if you set
-    ``stateless`` to ``true``.
-
-.. _book-security-checking-vulnerabilities:
-
-Checking for Known Security Vulnerabilities in Dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When using lots of dependencies in your Symfony projects, some of them may
-contain security vulnerabilities. That's why Symfony includes a command called
-``security:check`` that checks your ``composer.lock`` file to find any known
-security vulnerability in your installed dependencies:
-
-.. code-block:: bash
-
-    $ php app/console security:check
-
-A good security practice is to execute this command regularly to be able to
-update or replace compromised dependencies as soon as possible. Internally,
-this command uses the public `security advisories database`_ published by the
-FriendsOfPHP organization.
-
-.. tip::
-
-    The ``security:check`` command terminates with a non-zero exit code if
-    any of your dependencies is affected by a known security vulnerability.
-    Therefore, you can easily integrate it in your build process.
-
-.. note::
-
-    To enable the ``security:check`` command, make sure the
-    `SensioDistributionBundle`_ is installed.
-
-    .. code-block:: bash
-
-        $ composer require 'sensio/distribution-bundle'
 
 Final Words
 -----------
@@ -1447,8 +1316,14 @@ Authorization (Denying Access)
     security/securing_services
     security/access_control
 
+Other Security Related Topics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+    :maxdepth: 1
+
+    security/password_encoding
+    security/security_checker
+
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`cryptographic hash functions`: https://en.wikipedia.org/wiki/Cryptographic_hash_function
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
-.. _`SensioDistributionBundle`: https://packagist.org/packages/sensio/distribution-bundle

@@ -67,7 +67,7 @@ as the default one.
     Pretty much every other web server should be able to achieve a
     behavior similar to that of the RewriteRule described above.
     Check your server documentation for details or see
-    :doc:`/configuration/web_server_configuration`.
+    :doc:`/setup/web_server_configuration`.
 
 .. note::
 

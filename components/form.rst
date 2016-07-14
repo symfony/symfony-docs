@@ -522,7 +522,7 @@ That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and error message (if there is one). As easy
 as this is, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
-to do that in the ":ref:`form-rendering-template`" section.
+to do that in the ":doc:`/form/rendering`" section.
 
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -742,15 +742,6 @@ method to access the list of errors. It returns a
 
     This is useful, for example, if you want to use PHP's ``array_`` function
     on the form errors.
-
-Learn More
-----------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    form/*
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org

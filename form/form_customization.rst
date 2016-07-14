@@ -83,7 +83,7 @@ just one line:
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
-rendering in general, see :ref:`form-rendering-template`.
+rendering in general, see :doc:`/form/rendering`.
 
 .. _cookbook-form-customization-form-themes:
 

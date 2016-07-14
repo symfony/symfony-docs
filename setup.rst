@@ -1,8 +1,8 @@
 .. index::
-   single: Installing and Configuring Symfony
+   single: Installing and Setting up Symfony
 
-Installing the Symfony Framework
-================================
+Installing & Setting up the Symfony Framework
+=============================================
 
 This article explains how to install Symfony in different ways and how to solve
 the most common issues that may appear during the installation process.
@@ -102,7 +102,7 @@ can create Symfony applications with `Composer`_, the dependency manager used by
 modern PHP applications.
 
 If you don't have Composer installed in your computer, start by
-:doc:`installing Composer globally </set_up/composer>`. Then, execute the
+:doc:`installing Composer globally </setup/composer>`. Then, execute the
 ``create-project`` command to create a new Symfony application based on its
 latest stable version:
 
@@ -154,7 +154,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 
     PHP's internal web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
-    See :doc:`/configuration/web_server_configuration`.
+    See :doc:`/setup/web_server_configuration`.
 
 Checking Symfony Application Configuration and Setup
 ----------------------------------------------------
@@ -324,6 +324,8 @@ you may use in your applications:
 * The `Symfony REST Edition`_ shows how to build an application that provides a
   RESTful API using the `FOSRestBundle`_ and several other related bundles.
 
+.. _install-existing-app:
+
 Installing an Existing Symfony Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -331,9 +333,9 @@ When working collaboratively in a Symfony application, it's uncommon to create
 a new Symfony application as explained in the previous sections. Instead,
 someone else has already created and submitted it to a shared repository.
 
-It's recommended to not submit some files (``parameters.yml``) and directories
-(``vendor/``, cache, logs) to the repository, so you'll have to do the following
-when installing an existing Symfony application:
+It's recommended to not submit some files (:ref:`parameters.yml <config-parameters-yml>`)
+and directories (``vendor/``, cache, logs) to the repository, so you'll have to do
+the following when installing an existing Symfony application:
 
 .. code-block:: bash
 
@@ -356,6 +358,7 @@ Learn More
     :glob:
 
     install/*
+    setup/*
 
 .. _`Composer`: https://getcomposer.org/
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs

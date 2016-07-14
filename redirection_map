@@ -55,7 +55,7 @@
 /create_framework/http-kernel-httpkernel-class /create_framework/http_kernel_httpkernel_class
 /create_framework/dependency-injection /create_framework/dependency_injection
 /cookbook/doctrine/file_uploads /cookbook/controller/upload_file
-/book/installation /installation
+/book/installation /setup
 /book/page_creation /page_creation
 /book/controller /controller
 /book/routing /routing
@@ -69,9 +69,9 @@
 /book/http_cache /http_cache
 /book/translation /translation
 /book/service_container /service_container
-/book/http_fundamentals /http_fundamentals
+/book/http_fundamentals /introduction/http_fundamentals
 /book/from_flat_php_to_symfony2 /introduction/from_flat_php_to_symfony2
-/book/configuration /configuration/configuration
+/book/configuration /configuration
 /book/propel /propel/propel
 /book/performance /performance/performance
 /cookbook/assetic/apply_to_option /assetic/apply_to_option
@@ -88,9 +88,9 @@
 /cookbook/bundles/override /bundles/override
 /cookbook/bundles/prepend_extension /bundles/prepend_extension
 /cookbook/bundles/remove /bundles/remove
-/cookbook/cache/form_csrf_caching
-/cookbook/cache/varnish
-/cookbook/composer /set_up/composer
+/cookbook/cache/form_csrf_caching /cache/form_csrf_caching
+/cookbook/cache/varnish /cache/varnish
+/cookbook/composer /setup/composer
 /cookbook/configuration/apache_router /configuration/apache_router
 /cookbook/configuration/configuration_organization /configuration/configuration_organization
 /cookbook/configuration/environments /configuration/environments
@@ -99,7 +99,7 @@
 /cookbook/configuration/micro-kernel-trait /configuration/micro_kernel_trait
 /cookbook/configuration/override_dir_structure /configuration/override_dir_structure
 /cookbook/configuration/using_parameters_in_dic /configuration/using_parameters_in_dic
-/cookbook/configuration/web_server_configuration /configuration/web_server_configuration
+/cookbook/configuration/web_server_configuration /setup/web_server_configuration
 /cookbook/console/command_in_controller /console/command_in_controller
 /cookbook/console/commands_as_services /console/commands_as_services
 /cookbook/console/console_command /console/console_command
@@ -154,7 +154,7 @@
 /cookbook/frontend/bower /frontend/bower
 /cookbook/install/unstable_versions /install/unstable_versions
 /cookbook/logging/channels_handlers /logging/channels_handlers
-/cookbook/logging/monolog /logging/monolog
+/cookbook/logging/monolog /logging
 /cookbook/logging/monolog_console /logging/monolog_console
 /cookbook/logging/monolog_email /logging/monolog_email
 /cookbook/logging/monolog_regex_based_excludes /logging/monolog_regex_based_excludes
@@ -235,11 +235,11 @@
 /cookbook/validation/custom_constraint /validation/custom_constraint
 /cookbook/validation/group_service_resolver /validation/group_service_resolver
 /cookbook/validation/severity /validation/severity
-/cookbook/web_server/built_in /set_up/built_in_web_server
+/cookbook/web_server/built_in /setup/built_in_web_server
 /cookbook/web_services/php_soap_extension /web_services/php_soap_extension
-/cookbook/workflow/homestead /set_up/homestead
-/cookbook/workflow/new_project_git /set_up/new_project_git
-/cookbook/workflow/new_project_svn /set_up/new_project_svn
+/cookbook/workflow/homestead /setup/homestead
+/cookbook/workflow/new_project_git /setup/new_project_git
+/cookbook/workflow/new_project_svn /setup/new_project_svn
 /components/asset/index /components/asset
 /components/asset/introduction /components/asset
 /components/browser_kit/index /components/browser_kit
@@ -260,8 +260,10 @@
 /components/expression_language/index /components/expression_language
 /components/filesystem/introduction /components/filesystem
 /components/filesystem/index /components/filesystem
+/components/form/form_events /form/events
 /components/form/introduction /components/form
 /components/form/index /components/form
+/components/form/type_guesser /form/type_guesser
 /components/http_foundation/introduction /components/http_foundation
 /components/http_kernel/introduction /components/http_kernel
 /components/http_kernel/index /components/http_kernel

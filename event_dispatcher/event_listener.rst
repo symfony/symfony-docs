@@ -220,7 +220,7 @@ Request Events, Checking Types
 ------------------------------
 
 A single page can make several requests (one master request, and then multiple
-sub-requests - typically by :ref:`templating-embedding-controller`). For the core
+sub-requests - typically by :doc:`/templating/embedding_controllers`). For the core
 Symfony events, you might need to check to see if the event is for a "master" request
 or a "sub request"::
 

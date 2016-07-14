@@ -24,25 +24,26 @@ Create a PHPDoc Type Guesser
 In this section, you are going to build a guesser that reads information about
 fields from the PHPDoc of the properties. At first, you need to create a class
 which implements :class:`Symfony\\Component\\Form\\FormTypeGuesserInterface`.
-This interface requires 4 methods:
+This interface requires four methods:
 
-* :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessType` -
-  tries to guess the type of a field;
-* :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessRequired` -
-  tries to guess the value of the :ref:`required <reference-form-option-required>`
-  option;
-* :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessMaxLength` -
-  tries to guess the value of the :ref:`max_length <reference-form-option-max_length>`
-  option;
-* :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern` -
-  tries to guess the value of the :ref:`pattern <reference-form-option-pattern>`
-  option.
+:method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessType`
+    Tries to guess the type of a field;
+:method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessRequired`
+    Tries to guess the value of the :ref:`required <reference-form-option-required>`
+    option;
+:method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessMaxLength`
+    Tries to guess the value of the :ref:`max_length <reference-form-option-max_length>`
+    option;
+:method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern`
+    Tries to guess the value of the :ref:`pattern <reference-form-option-pattern>`
+    option.
 
 Start by creating the class and these methods. Next, you'll learn how to fill each on.
 
 .. code-block:: php
 
-    namespace Acme\Form;
+    // src/AppBundle/Form/TypeGuesser/PHPDocTypeGuesser.php
+    namespace AppBundle\Form\TypeGuesser;
 
     use Symfony\Component\Form\FormTypeGuesserInterface;
 
@@ -72,7 +73,7 @@ When guessing a type, the method returns either an instance of
 :class:`Symfony\\Component\\Form\\Guess\\TypeGuess` or nothing, to determine
 that the type guesser cannot guess the type.
 
-The ``TypeGuess`` constructor requires 3 options:
+The ``TypeGuess`` constructor requires three options:
 
 * The type name (one of the :doc:`form types </reference/forms/types>`);
 * Additional options (for instance, when the type is ``entity``, you also
@@ -84,10 +85,10 @@ The ``TypeGuess`` constructor requires 3 options:
   ``VERY_HIGH_CONFIDENCE``. After all type guessers have been executed, the
   type with the highest confidence is used.
 
-With this knowledge, you can easily implement the ``guessType`` method of the
+With this knowledge, you can easily implement the ``guessType()`` method of the
 ``PHPDocTypeGuesser``::
 
-    namespace Acme\Form;
+    namespace AppBundle\Form\TypeGuesser;
 
     use Symfony\Component\Form\Guess\Guess;
     use Symfony\Component\Form\Guess\TypeGuess;
@@ -144,6 +145,8 @@ With this knowledge, you can easily implement the ``guessType`` method of the
 
             return $phpdocTags;
         }
+
+        // ...
     }
 
 This type guesser can now guess the field type for a property if it has
@@ -152,8 +155,8 @@ PHPdoc!
 Guessing Field Options
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The other 3 methods (``guessMaxLength``, ``guessRequired`` and
-``guessPattern``) return a :class:`Symfony\\Component\\Form\\Guess\\ValueGuess`
+The other three methods (``guessMaxLength()``, ``guessRequired()`` and
+``guessPattern()``) return a :class:`Symfony\\Component\\Form\\Guess\\ValueGuess`
 instance with the value of the option. This constructor has 2 arguments:
 
 * The value of the option;
@@ -165,7 +168,7 @@ set.
 
 .. caution::
 
-    You should be very careful using the ``guessPattern`` method. When the
+    You should be very careful using the ``guessPattern()`` method. When the
     type is a float, you cannot use it to determine a min or max value of the
     float (e.g. you want a float to be greater than ``5``, ``4.512313`` is not valid
     but ``length(4.512314) > length(5)`` is, so the pattern will succeed). In
@@ -174,22 +177,60 @@ set.
 Registering a Type Guesser
 --------------------------
 
-The last thing you need to do is registering your custom type guesser by using
-:method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuesser` or
-:method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuessers`::
 
-    use Symfony\Component\Form\Forms;
-    use Acme\Form\PHPDocTypeGuesser;
+The last thing you need to do is registering your custom type guesser by
+creating a service and tagging it as ``form.type_guesser``:
 
-    $formFactory = Forms::createFormFactoryBuilder()
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+
+            app.phpdoc_type_guesser:
+                class: AppBundle\Form\TypeGuesser\PHPDocTypeGuesser
+                tags:
+                    - { name: form.type_guesser }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+
+                <service class="AppBundle\Form\TypeGuesser\PHPDocTypeGuesser">
+                    <tag name="form.type_guesser"/>
+                </service>
+
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container->register('AppBundle\Form\TypeGuesser\PHPDocTypeGuesser')
+            ->addTag('form.type_guesser')
+        ;
+
+
+.. sidebar:: Registering a Type Guesser in the Component
+
+    If you're using the Form component standalone in your PHP project, use
+    :method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuesser` or
+    :method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuessers` of
+    the ``FormFactoryBuilder`` to register new type guessers::
+
+        use Symfony\Component\Form\Forms;
+        use Acme\Form\PHPDocTypeGuesser;
+
+        $formFactory = Forms::createFormFactoryBuilder()
+            // ...
+            ->addTypeGuesser(new PHPDocTypeGuesser())
+            ->getFormFactory();
+
         // ...
-        ->addTypeGuesser(new PHPDocTypeGuesser())
-        ->getFormFactory();
-
-    // ...
-
-.. note::
-
-    When you use the Symfony Framework, you need to register your type guesser
-    and tag it with ``form.type_guesser``. For more information see
-    :ref:`the tag reference <reference-dic-type_guesser>`.

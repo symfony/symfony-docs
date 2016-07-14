@@ -12,7 +12,7 @@ Templates
 
 For information on overriding templates, see
 
-* :ref:`overriding-bundle-templates`.
+* :doc:`/templating/overriding`.
 * :doc:`/bundles/inheritance`
 
 Routing

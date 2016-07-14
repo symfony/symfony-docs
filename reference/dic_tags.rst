@@ -410,7 +410,7 @@ metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
 .. seealso::
 
     For information on how to create your own type guesser, see
-    :doc:`/components/form/type_guesser`.
+    :doc:`/form/type_guesser`.
 
 kernel.cache_clearer
 --------------------

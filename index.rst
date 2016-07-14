@@ -34,7 +34,7 @@ Getting Started
 .. toctree::
     :maxdepth: 1
 
-    installation
+    setup
     http_fundamentals
     routing
     controller
@@ -79,7 +79,7 @@ Advanced Topics
     profiler
     request
     session
-    set_up
+    setup
 
 Best Practices
 --------------

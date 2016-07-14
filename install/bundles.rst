@@ -50,8 +50,8 @@ The above example can be updated to work with Symfony 3 as follows:
     that your bundle is compatible with any future Symfony version). Use instead
     ``~2.N|~3.0`` or ``^2.N|~3.0`` to make your bundle future-proof.
 
-Looking for Deprecations and Fix Them
--------------------------------------
+Look for Deprecations and Fix Them
+----------------------------------
 
 Besides allowing users to use your bundle with Symfony 3, your bundle must stop using
 any feature deprecated by the 2.8 version because they are removed in 3.0 (you'll get
