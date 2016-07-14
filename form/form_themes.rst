@@ -100,7 +100,7 @@ For a more extensive discussion, see :doc:`/form/form_customization`.
 .. _form-template-blocks:
 
 Form Fragment Naming
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 In Symfony, every part of a form that is rendered - HTML form elements, errors,
 labels, etc. - is defined in a base theme, which is a collection of blocks
@@ -151,7 +151,7 @@ to be overridden (e.g. ``textarea_widget``).
    single: Forms; Template fragment inheritance
 
 Template Fragment Inheritance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 In some cases, the fragment you want to customize will appear to be missing.
 For example, there is no ``textarea_errors`` fragment in the default themes
@@ -180,7 +180,7 @@ override the default error rendering for *all* fields, copy and customize the
 .. _book-forms-theming-global:
 
 Global Form Theming
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 In the above example, you used the ``form_theme`` helper (in Twig) to "import"
 the custom form fragments into *just* that form. You can also tell Symfony

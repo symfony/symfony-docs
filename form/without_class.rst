@@ -63,7 +63,7 @@ an array.
 .. _booking-validation-forms:
 
 Adding Validation
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The only missing piece is validation. Usually, when you call ``$form->isValid()``,
 the object is validated by reading the constraints that you applied to that

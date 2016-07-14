@@ -5,7 +5,7 @@ How to Define the Validation Groups to Use
 ==========================================
 
 Validation Groups
-~~~~~~~~~~~~~~~~~
+-----------------
 
 If your object takes advantage of :doc:`validation groups </validation/groups>`,
 you'll need to specify which validation group(s) your form should use::

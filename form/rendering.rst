@@ -63,7 +63,7 @@ output can be customized on many different levels.
    single: Forms; Rendering each field by hand
 
 Rendering each Field by Hand
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The ``form_row`` helper is great because you can very quickly render each
 field of your form (and the markup used for the "row" can be customized as
@@ -179,7 +179,7 @@ the ``full_name`` value:
         <?php echo $form['task']->vars['full_name'] ?>
 
 Twig Template Function Reference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 If you're using Twig, a full reference of the form rendering functions is
 available in the :doc:`reference manual </reference/forms/twig_reference>`.

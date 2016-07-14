@@ -12,7 +12,7 @@ is easy and natural with the Form component.
 .. _forms-embedding-single-object:
 
 Embedding a Single Object
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
 of course, by creating the ``Category`` object::
@@ -140,7 +140,7 @@ The ``Category`` instance is accessible naturally via ``$task->getCategory()``
 and can be persisted to the database or used however you need.
 
 Embedding a Collection of Forms
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 You can also embed a collection of forms into one form (imagine a ``Category``
 form with many ``Product`` sub-forms). This is done by using the ``collection``
