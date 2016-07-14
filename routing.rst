@@ -94,7 +94,7 @@ for you to use in your controller (keep reading). The ``blog_show`` is the
 internal name of the route, which doesn't have any meaning yet and just needs
 to be unique. Later, you'll use it to generate URLs.
 
-If you don't want to use annotations, you can also use Yaml, XML or PHP. In these
+If you don't want to use annotations, you can also use YAML, XML or PHP. In these
 formats, the ``_controller`` parameter is a special
 key that tells Symfony which controller should be executed when a URL matches
 this route. The ``_controller`` string is called the

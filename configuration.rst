@@ -325,29 +325,32 @@ configure DoctrineBundle and other parts of Symfony:
             ),
         ));
 
-But the ``parameters.yml`` file *is* special: it contains any value that you do
-not want to commit to your repository or that changes on each server. Database configuration
-is a perfect example of both.
+But the ``parameters.yml`` file *is* special: it defines the values that usually
+change on each server. For example, the database credentials on your local
+development machine might be different from your workmates. That's why this file
+is not committed to the shared repository and is only stored on your machine.
 
 Because of that, **parameters.yml is not committed to your version control**. In fact,
 the ``.gitignore`` file that comes with Symfony prevents it from being committed.
 
 However, a ``parameters.yml.dist`` file *is* committed (with dummy values). This file
-isn't read by Symfony: it's just a template for what keys the ``parameters.yml``
-file you should. If you add or remove keys to ``parameters.yml``, you should add
-and remove them from ``parameters.yml.dist``.
+isn't read by Symfony: it's just a reference so that Symfony knows which parameters
+need to be defined in the ``parameters.yml`` file. If you add or remove keys to
+``parameters.yml``, add or remove them from ``parameters.yml.dist`` too so both
+files are always in sync.
 
-.. sidebar:: The Incenteev Parameter Handler
+.. sidebar:: The Interactive Parameter Handler
 
-    When you clone a new project, you will need to create the ``parameters.yml``
-    file from the committed ``parameters.yml.dist`` file. To help with this, after
-    you run ``composer install``, a script will automatically create this file by
-    interactively asking you to supply the value for each key in ``parameters.yml.dist``.
-    For more details - or to remove or control this behavior - see the
+    When you :ref:`install an existing Symfony project <install-existing-app>`, you
+    will need to create the ``parameters.yml`` file using the committed ``parameters.yml.dist``
+    file as a reference. To help with this, after you run ``composer install``, a
+    Symfony script will automatically create this file by interactively asking you
+    to supply the value for each parameter defined in ``parameters.yml.dist``. For
+    more details - or to remove or control this behavior - see the
     `Incenteev Parameter Handler`_ documentation.
 
-Environments & the Other Config Files (e.g. config_dev.yml)
------------------------------------------------------------
+Environments & the Other Config Files
+-------------------------------------
 
 You have just *one* app, but whether you realize it or not, you need it to behave
 *differently* at different times:
@@ -360,9 +363,8 @@ You have just *one* app, but whether you realize it or not, you need it to behav
 
 How can you make *one* application behave in two different ways? With *environments*.
 
-If you see the nice web debug toolbar at the bottom of your browser, then you're
-already running your application in the ``dev`` environment. After you deploy, you'll
-use the ``prod`` environment.
+You've probably already been using the ``dev`` environment without even knowing it.
+After you deploy, you'll use the ``prod`` environment.
 
 To learn more about *how* to execute and control each environment, see
 :doc:`/configuration/environments`.

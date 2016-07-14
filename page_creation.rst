@@ -208,7 +208,7 @@ Bundles are registered in your ``app/AppKernel.php`` file (a rare PHP file in th
 
 For example, ``TwigBundle`` is responsible for adding the Twig tool to your app!
 
-Eventually, you'll download and add more, third-party bundles to your app in order
+Eventually, you'll download and add more third-party bundles to your app in order
 to get even more tools. Imagine a bundle that helps you create paginated lists.
 That exists!
 

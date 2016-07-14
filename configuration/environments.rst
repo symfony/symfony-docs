@@ -138,7 +138,7 @@ either ``app.php`` (for the ``prod`` environment) or ``app_dev.php``
 
 If you don't have *either* filename in your URL, then it's up to your web server
 to decide *which* file to execute behind the scenes. If you're using the built-in
-PHP web server, it knows use the ``app_dev.php`` file. On production, you'll
+PHP web server, it knows to use the ``app_dev.php`` file. On production, you'll
 :doc:`configure your web server </setup/web_server_configuration>` to use ``app.php``.
 Either way: *one of these two files is always executed*.
 

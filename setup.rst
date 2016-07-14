@@ -322,6 +322,8 @@ you may use in your applications:
 * The `Symfony REST Edition`_ shows how to build an application that provides a
   RESTful API using the `FOSRestBundle`_ and several other related bundles.
 
+.. _install-existing-app:
+
 Installing an Existing Symfony Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
