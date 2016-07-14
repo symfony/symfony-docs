@@ -8,7 +8,7 @@ The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
 making the container more efficient by resolving parameters and removing
 unused services. Also, certain features - like using
-:doc:`parent services </components/dependency_injection/parentservices>`
+:doc:`parent services </service_container/parent_services>`
 - require the container to be compiled.
 
 It is compiled by running::

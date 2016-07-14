@@ -12,7 +12,7 @@
 /cookbook/console /components/console
 /cookbook/tools/autoloader /components/class_loader
 /cookbook/tools/finder /components/finder
-/cookbook/service_container/parentservices /components/dependency_injection/parentservices
+/cookbook/service_container/parentservices /service_container/parent_services
 /cookbook/service_container/factories /service_container/factories
 /cookbook/service_container/tags /components/dependency_injection/tags
 /reference/configuration/mongodb /bundles/DoctrineMongoDBBundle/config
@@ -254,6 +254,7 @@
 /components/dependency_injection/factories /service_container/factories
 /components/dependency_injection/lazy_services /service_container/lazy_services
 /components/dependency_injection/parameters /service_container/parameters
+/components/dependency_injection/parent_services /service_container/parent_services
 /components/event_dispatcher/introduction /components/event_dispatcher
 /components/expression_language/introduction /components/expression_language
 /components/expression_language/index /components/expression_language
