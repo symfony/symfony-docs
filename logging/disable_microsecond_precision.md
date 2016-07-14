@@ -1,5 +1,5 @@
 How to Disable Microseconds Precision (for a Performance Boost)
----------------------------------------------------------------
+===============================================================
 
 .. versionadded:: 2.11
     The ``use_microseconds`` option was introduced in MonologBundle 2.11.

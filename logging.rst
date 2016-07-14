@@ -18,7 +18,7 @@ your controller::
         
         $logger->critical('I left the oven on!', array(
             // include extra "context" info in your logs
-            'cause' => 'in_hurry'
+            'cause' => 'in_hurry',
         ));
 
         // ...
@@ -26,7 +26,7 @@ your controller::
 
 The ``logger`` service has different methods for different logging levels/priorities.
 You can configure the logger to do different things based on the *level* of a message
-(e.g. :doc:`email me when an error occurs </logging/monolog_email>`).
+(e.g. :doc:`send an email when an error occurs </logging/monolog_email>`).
 
 See LoggerInterface_ for a list of all of the methods on the logger.
 
