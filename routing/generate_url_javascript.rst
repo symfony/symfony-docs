@@ -31,3 +31,5 @@ the `FOSJsRoutingBundle`_. It makes the following possible:
     var url = Routing.generate('blog_show', {
         'slug': 'my-blog-post'
     });
+
+.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
