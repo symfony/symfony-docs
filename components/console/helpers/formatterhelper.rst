@@ -6,7 +6,7 @@ Formatter Helper
 
 The Formatter helpers provides functions to format the output with colors.
 You can do more advanced things with this helper than you can in
-:ref:`components-console-coloring`.
+:doc:`/console/coloring`.
 
 The :class:`Symfony\\Component\\Console\\Helper\\FormatterHelper` is included
 in the default helper set, which you can get by calling
