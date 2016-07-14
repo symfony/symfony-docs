@@ -134,7 +134,7 @@ Later, you'll use it to generate URLs.
 .. sidebar:: Routing in Other Formats
 
     The ``@Route`` above each method is called an *annotation*. If you'd rather
-    configure your routes in Yaml, XML or PHP, that's no problem!
+    configure your routes in YAML, XML or PHP, that's no problem!
 
     In these formats, the ``_controller`` "defaults" value is a special key that
     tells Symfony which controller should be executed when a URL matches this route.
@@ -150,8 +150,8 @@ even the most complex URLs easy.
 
 .. _routing-requirements:
 
-Adding {placeholder} Requirements
----------------------------------
+Adding {wildcard} Requirements
+------------------------------
 
 Imagine the ``blog_list`` route will contain a paginated list of blog posts, with
 URLs like ``/blog/2`` and ``/blog/3`` for pages 2 and 3. If you change the route's
@@ -648,41 +648,7 @@ Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To generate URLs inside Twig, see the templating chapter: :ref:`book-templating-pages`.
-
-Generating URLs in JavaScript
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you're in a Twig template, you can use the same ``path`` function to set JavaScript
-variables. The ``escape`` function helps escape any non-JavaScript-safe values:
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        <script>
-        var route = "{{ path('blog_show', {'slug': 'my-blog-post'})|escape('js') }}";
-        </script>
-
-    .. code-block:: html+php
-
-        <script>
-        var route = "<?php echo $view->escape(
-            $view['router']->generate('blow_show', array(
-                'slug' => 'my-blog-post',
-            )),
-            'js'
-        ) ?>";
-        </script>
-
-But if you *actually* need to generate routes in pure JavaScript, consider using
-the `FOSJsRoutingBundle`_. It makes the following possible:
-
-.. code-block:: javascript
-
-    var url = Routing.generate(
-        'blog_show',
-        {'slug': 'my-blog-post'}
-    );
+If you also need to generate URLs in JavaScript, see :doc:`/routing/generate_url_javascript`.
 
 .. index::
    single: Routing; Absolute URLs
