@@ -30,9 +30,9 @@ method of the bundle definition class::
     }
 
 One of the most common use-cases of compiler passes is to work with tagged services
-(read more about tags in the components section  ":doc:`/components/dependency_injection/tags`").
-If you are using custom tags in a bundle then by convention, tag names consist
-of the name of the bundle (lowercase, underscores as separators), followed
-by a dot, and finally the "real" name. For example, if you want to introduce
-some sort of "transport" tag in your AcmeMailerBundle, you should call it
+(read more about tags in ":doc:`/service_container/tags`"). If you are using
+custom tags in a bundle then by convention, tag names consist of the name of
+the bundle (lowercase, underscores as separators), followed by a dot, and
+finally the "real" name. For example, if you want to introduce some sort of
+"transport" tag in your AcmeMailerBundle, you should call it
 ``acme_mailer.transport``.
