@@ -67,7 +67,6 @@ Topics
     testing
     translation
     validation
-    web_services/index
 
 Best Practices
 --------------
