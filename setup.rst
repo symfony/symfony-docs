@@ -138,7 +138,7 @@ a matter of browsing the project directory and executing this command:
 .. code-block:: bash
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -304,7 +304,7 @@ install the Symfony Demo application anywhere in your system executing the
     $ symfony demo
 
 Once downloaded, enter into the ``symfony_demo/`` directory, run the PHP's
-built-in web server (``php app/console server:run``) and access to the
+built-in web server (``php bin/console server:run``) and access to the
 ``http://localhost:8000`` URL to start using the Symfony Demo application.
 
 .. _installing-a-symfony2-distribution:
