@@ -355,7 +355,11 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    install/*
+    setup/homestead
+    setup/new_project_git
+    setup/built_in_web_server
+    setup/web_server_configuration
+    setup/composer
     setup/*
 
 .. _`Composer`: https://getcomposer.org/
