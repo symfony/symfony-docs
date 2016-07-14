@@ -257,6 +257,7 @@
 /components/dependency_injection/parent_services /service_container/parent_services
 /components/dependency_injection/synthetic_services /service_container/synthetic_services
 /components/dependency_injection/tags /service_container/tags
+/components/dependency_injection/types /service_container/injection_types
 /components/event_dispatcher/introduction /components/event_dispatcher
 /components/expression_language/introduction /components/expression_language
 /components/expression_language/index /components/expression_language
