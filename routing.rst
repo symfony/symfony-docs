@@ -647,25 +647,7 @@ But if you pass extra ones, they will be added to the URI as a query string::
 Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The most common place to generate a URL is from within a template when linking
-between pages in your application. This is done just as before, but using
-the ``path()`` function to generate a relative URL:
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        <a href="{{ path('blog_show', {'slug': 'my-blog-post'}) }}">
-          Read this blog post.
-        </a>
-
-    .. code-block:: html+php
-
-        <a href="<?php echo $view['router']->generate('blog_show', array(
-            'slug' => 'my-blog-post',
-        )) ?>">
-            Read this blog post.
-        </a>
+To generate URLs inside Twig, see the templating chapter: :ref:`book-templating-pages`.
 
 Generating URLs in JavaScript
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -716,29 +698,6 @@ method::
 
     $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), UrlGeneratorInterface::ABSOLUTE_URL);
     // http://www.example.com/blog/my-blog-post
-
-From a template, in Twig, use the ``url()`` function (which generates an absolute URL)
-rather than the ``path()`` function (which generates a relative URL):
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        <a href="{{ url('blog_show', {'slug': 'my-blog-post'}) }}">
-          Read this blog post.
-        </a>
-
-    .. code-block:: html+php
-
-        <?php
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-        ?>
-
-        <a href="<?php echo $view['router']->generate('blog_show', array(
-            'slug' => 'my-blog-post',
-        ), UrlGeneratorInterface::ABSOLUTE_URL) ?>">
-            Read this blog post.
-        </a>
 
 .. note::
 
