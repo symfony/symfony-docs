@@ -169,7 +169,7 @@
 /cookbook/routing/debug /routing/debug
 /cookbook/routing/external_resources /routing/external_resources
 /cookbook/routing/extra_information /routing/extra_information
-/cookbook/routing/method_parameters /routing/method_parameters
+/cookbook/routing/method_parameters /routing/requirements
 /cookbook/routing/optional_placeholders /routing/optional_placeholders
 /cookbook/routing/redirect_in_config /routing/redirect_in_config
 /cookbook/routing/redirect_trailing_slash /routing/redirect_trailing_slash

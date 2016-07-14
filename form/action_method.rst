@@ -59,5 +59,5 @@ to the ``form()`` or the ``form_start()`` helper functions:
     will insert a hidden field with the name ``_method`` that stores this method.
     The form will be submitted in a normal POST request, but Symfony's router
     is capable of detecting the ``_method`` parameter and will interpret it as
-    a PUT, PATCH or DELETE request. Read the cookbook chapter
-    ":doc:`/routing/method_parameters`" for more information.
+    a PUT, PATCH or DELETE request. See the :ref:`configuration-framework-http_method_override`
+    option.
