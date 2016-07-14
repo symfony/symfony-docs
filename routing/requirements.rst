@@ -281,3 +281,9 @@ Adding a Host Requirement
 You can also match on the HTTP *host* of the incoming request. For more
 information, see :doc:`/routing/hostname_pattern` in the Routing
 component documentation.
+
+Adding Dynamic Requirements with Expressions
+--------------------------------------------
+
+For really complex requirements, you can use dynamic expressions to match *any*
+information on the request. See :doc:`/routing/conditions`.
