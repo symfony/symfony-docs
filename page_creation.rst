@@ -83,6 +83,15 @@ to creating a page?
    return a ``Response`` object. You'll learn more about :doc:`controllers </controllers>`
    in their own section, including how to return JSON responses;
 
+The Web Debug Toolbar: Debugging Dream
+--------------------------------------
+
+If your page is working, then you should *also* see a bar along the bottom of your
+browser. This is called the Web Debug Toolbar: and it's your debugging best friend.
+You'll learn more about all the information it holds along the way, but feel free
+to experiment: hover over and click the different icons to get information about
+routing, performance, logging and more.
+
 Rendering a Template (with the Service Container)
 -------------------------------------------------
 
