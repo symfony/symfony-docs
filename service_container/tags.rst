@@ -69,7 +69,7 @@ parameter).
 Creating custom Tags
 --------------------
 
-Tags on there own don't actually alter the functionality of your services in
+Tags on their own don't actually alter the functionality of your services in
 any way. But if you choose to, you can ask a container builder for a list of
 all services that were tagged with some specific tag. This is useful in
 compiler passes where you can find these services and use or modify them in

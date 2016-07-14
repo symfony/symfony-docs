@@ -5,7 +5,7 @@ How to Decorating Services
 ==========================
 
 When overriding an existing definition (e.g. when applying the `Decorator pattern`_),
-the old service is lost:
+the original service is lost:
 
 .. configuration-block::
 
@@ -15,8 +15,8 @@ the old service is lost:
             app.mailer:
                 class: AppBundle\Mailer
 
-            # this is going to replace the old app.mailer definition with the
-            # new one, the old definition is lost
+            # this replaces the old app.mailer definition with the new one, the
+            # old definition is lost
             app.mailer:
                 class AppBundle\DecoratingMailer
 
@@ -31,8 +31,8 @@ the old service is lost:
 
                 <service id="app.mailer" class="AppBundle\Mailer" />
 
-                <!-- this is going to replace the old app.mailer definition
-                     with the new one, the old definition is lost -->
+                <!-- this replaces the old app.mailer definition with the new
+                     one, the old definition is lost -->
                 <service id="app.mailer" class="AppBundle\DecoratingMailer" />
 
             </service>
@@ -42,8 +42,8 @@ the old service is lost:
 
         $container->register('mailer', 'AppBundle\Mailer');
 
-        // this is going to replace the old app.mailer definition with the new
-        // one, the old definition is lost
+        // this replaces the old app.mailer definition with the new one, the
+        // old definition is lost
         $container->register('mailer', 'AppBundle\DecoratingMailer');
 
 Most of the time, that's exactly what you want to do. But sometimes,
@@ -97,8 +97,8 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
             ->setPublic(false)
         ;
 
-Here is what's going on here: the decorates option tells the container that the
-``app.decorating_mailer`` service should replace the ``app.mailer`` service. By
+Here is what's going on here: the ``decorates`` option tells the container that
+the ``app.decorating_mailer`` service replaces the ``app.mailer`` service. By
 convention, the old ``app.mailer`` service is renamed to
 ``app.decorating_mailer.inner``, so you can inject it into your new service.
 

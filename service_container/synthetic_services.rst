@@ -4,8 +4,8 @@
 How to Inject Instances into the Container
 ------------------------------------------
 
-When using the container in your application, you sometimes need to inject
-an instance instead of configuring the container to create a new instance.
+In some applications, you may need to inject a class instance as service,
+instead of configuring the container to create a new instance.
 
 For instance, the ``kernel`` service in Symfony is injected into the container
 from within the ``Kernel`` class::
