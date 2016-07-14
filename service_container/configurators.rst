@@ -1,8 +1,8 @@
 .. index::
    single: DependencyInjection; Service configurators
 
-Configuring Services with a Service Configurator
-================================================
+How to Configure a Service with a Configurator
+==============================================
 
 The *service configurator* is a feature of the service container that allows
 you to use a callable to configure a service after its instantiation.

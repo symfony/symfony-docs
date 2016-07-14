@@ -1,8 +1,8 @@
 .. index::
     single: DependencyInjection; Advanced configuration
 
-Service Aliases & Private Services
-==================================
+How to Create Service Aliases and Mark Services as Private
+==========================================================
 
 .. _container-private-services:
 

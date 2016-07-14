@@ -1,8 +1,8 @@
 .. index::
     single: Service Container; Decoration
 
-How to Decorating Services
-==========================
+How to Decorate Services
+========================
 
 When overriding an existing definition (e.g. when applying the `Decorator pattern`_),
 the original service is lost:
