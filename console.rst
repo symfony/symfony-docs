@@ -199,7 +199,7 @@ the ``generate()`` method of the ``app.admin_generator`` service and the admin
 will be created.
 
 Command Lifecycle
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Commands have three lifecycle methods that are invoked when running the
 command:
@@ -223,54 +223,67 @@ command:
 Testing Commands
 ----------------
 
-When testing commands used as part of the full-stack framework,
-:class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>`
-should be used instead of
-:class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`::
+Symfony provides several tools to help you test your commands. The most
+useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
+class. It uses special input and output classes to ease testing without a real
+console::
 
-    use Symfony\Component\Console\Tester\CommandTester;
+    // tests/AppBundle/Command/GenerateAdminCommandTest.php
+    namespace Tests\AppBundle\Command;
+
+    use AppBundle\Command\GenerateAdminCommand;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use AppBundle\Command\GreetCommand;
+    use Symfony\Component\Console\Tester\CommandTester;
 
-    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    class GenerateAdminCommandTest extends \PHPUnit_Framework_TestCase
     {
         public function testExecute()
         {
-            // mock the Kernel or create one depending on your needs
-            $application = new Application($kernel);
-            $application->add(new GreetCommand());
+            $application = new Application();
+            $application->add(new GenerateAdminCommand());
 
-            $command = $application->find('demo:greet');
+            $command = $application->find('app:generate-admin');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(
-                array(
-                    'name'    => 'Fabien',
-                    '--yell'  => true,
-                )
-            );
+            $commandTester->execute(array(
+                'command'  => $command->getName(),
 
-            $this->assertRegExp('/.../', $commandTester->getDisplay());
+                // pass arguments to the helper
+                'username' => 'Wouter',
+
+                // prefix the key with a double slash when passing options,
+                // e.g: '--some-option' => 'option_value',
+            ));
+
+            // the output of the command in the console
+            $output = $commandTester->getDisplay();
+            $this->assertContains('Username: Wouter', $output);
 
             // ...
         }
     }
 
+.. tip::
+
+    You can also test a whole console application by using
+    :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
+
 .. note::
 
-    In the specific case above, the ``name`` parameter and the ``--yell`` option
-    are not mandatory for the command to work, but are shown so you can see
-    how to customize them when calling the command.
+    When using the Console component in a standalone project, use
+    :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
+    instead of
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>`
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`::
 
+    // ...
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-    use AppBundle\Command\GreetCommand;
 
-    class ListCommandTest extends KernelTestCase
+    class GenerateAdminCommandTest extends KernelTestCase
     {
         public function testExecute()
         {
@@ -278,18 +291,17 @@ you can extend your test from
             $kernel->boot();
 
             $application = new Application($kernel);
-            $application->add(new GreetCommand());
+            $application->add(new GenerateAdminCommand());
 
-            $command = $application->find('demo:greet');
+            $command = $application->find('app:generate-admin');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(
-                array(
-                    'name'    => 'Fabien',
-                    '--yell'  => true,
-                )
-            );
+            $commandTester->execute(array(
+                'command'  => $command->getName(),
+                'username' => 'Wouter',
+            ));
 
-            $this->assertRegExp('/.../', $commandTester->getDisplay());
+            $output = $commandTester->getDisplay();
+            $this->assertContains('Username: Wouter', $output);
 
             // ...
         }
