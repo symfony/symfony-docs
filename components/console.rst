@@ -22,60 +22,10 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-Creating a basic Command
-------------------------
+Creating an Application File
+----------------------------
 
-To make a console command that greets you from the command line, create ``GreetCommand.php``
-and add the following to it::
-
-    namespace Acme\Console\Command;
-
-    use Symfony\Component\Console\Command\Command;
-    use Symfony\Component\Console\Input\InputArgument;
-    use Symfony\Component\Console\Input\InputInterface;
-    use Symfony\Component\Console\Input\InputOption;
-    use Symfony\Component\Console\Output\OutputInterface;
-
-    class GreetCommand extends Command
-    {
-        protected function configure()
-        {
-            $this
-                ->setName('demo:greet')
-                ->setDescription('Greet someone')
-                ->addArgument(
-                    'name',
-                    InputArgument::OPTIONAL,
-                    'Who do you want to greet?'
-                )
-                ->addOption(
-                   'yell',
-                   null,
-                   InputOption::VALUE_NONE,
-                   'If set, the task will yell in uppercase letters'
-                )
-            ;
-        }
-
-        protected function execute(InputInterface $input, OutputInterface $output)
-        {
-            $name = $input->getArgument('name');
-            if ($name) {
-                $text = 'Hello '.$name;
-            } else {
-                $text = 'Hello';
-            }
-
-            if ($input->getOption('yell')) {
-                $text = strtoupper($text);
-            }
-
-            $output->writeln($text);
-        }
-    }
-
-You also need to create the file to run at the command line which creates
-an ``Application`` and adds commands to it::
+At first, you need to create a file to run commands from the console::
 
     #!/usr/bin/env php
     <?php
@@ -83,34 +33,20 @@ an ``Application`` and adds commands to it::
 
     require __DIR__.'/vendor/autoload.php';
 
-    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $application = new Application();
-    $application->add(new GreetCommand());
+
+    // ... register commands
+
     $application->run();
 
-Test the new console command by running the following
+See the :doc:`/console` article for information about how to create commands.
+You can register the commands using
+:method:`Symfony\\Component\\Console\\Application::add`::
 
-.. code-block:: bash
-
-    $ php application.php demo:greet Fabien
-
-This will print the following to the command line:
-
-.. code-block:: text
-
-    Hello Fabien
-
-You can also use the ``--yell`` option to make everything uppercase:
-
-.. code-block:: bash
-
-    $ php application.php demo:greet Fabien --yell
-
-This prints::
-
-    HELLO FABIEN
+    // ...
+    $application->add(new GenerateAdminCommand());
 
 Learn More
 ----------
@@ -119,7 +55,8 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    console/*
-    console/helpers/index
+    /console
+    /components/console/*
+    /components/console/helpers/index
 
 .. _Packagist: https://packagist.org/packages/symfony/console
