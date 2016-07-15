@@ -85,7 +85,7 @@ to creating a page?
 
 #. *Create a controller*: The method below the route - ``numberAction()`` - is called
    the *controller*: this is a function where *you* build the page and ultimately
-   return a ``Response`` object. You'll learn more about :doc:`controllers </controllers>`
+   return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses;
 
 The Web Debug Toolbar: Debugging Dream
@@ -251,6 +251,15 @@ the :doc:`form system </forms>`, using :doc:`Doctrine </doctrine>`
 
 Have fun!
 
-.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
+Related Topics
+--------------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    introduction/*
+
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Composer`: https://getcomposer.org
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page

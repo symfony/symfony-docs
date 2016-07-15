@@ -15,9 +15,9 @@ the most common issues that may appear during the installation process.
 Creating Symfony Applications
 -----------------------------
 
-Symfony provides a dedicated application called **Symfony Installer** to ease
+Symfony provides a dedicated application called the **Symfony Installer** to ease
 the creation of Symfony applications. This installer is a PHP 5.4 compatible
-application that has to be installed in your system only once:
+executable that needs to be installed on your system only once:
 
 .. code-block:: bash
 
@@ -31,7 +31,7 @@ application that has to be installed in your system only once:
 .. note::
 
     In Linux and macOS, a global ``symfony`` command is created. In Windows,
-    move the ``symfony`` file to some directory included in the ``PATH``
+    move the ``symfony`` file to a directory that's included in the ``PATH``
     environment variable to create the global command or move it to any other
     directory convenient for you:
 
@@ -133,7 +133,7 @@ Running the Symfony Application
 
 Symfony leverages the internal PHP web server (available since PHP 5.4) to run
 applications while developing them. Therefore, running a Symfony application is
-a matter of browsing the project directory and executing this command:
+a matter of browsing to the project directory and executing this command:
 
 .. code-block:: bash
 
@@ -149,8 +149,7 @@ Welcome Page of Symfony:
 
 If you see a blank page or an error page instead of the Welcome Page, there is
 a directory permission misconfiguration. The solution to this problem is
-explained in the :ref:`Setting up Permissions <book-installation-permissions>`
-section.
+explained in the :doc:`/setup/file_permissions`.
 
 When you are finished working on your Symfony application, stop the server by
 pressing ``Ctrl+C`` from the terminal or command console.
@@ -176,94 +175,20 @@ before moving on:
 
 .. _book-installation-permissions:
 
-Setting up Permissions
-----------------------
+Fixing Permissions Problems
+---------------------------
 
-One important Symfony requirement is that the ``var`` directory must be
-writable both by the web server and the command line user.
-
-On Linux and macOS systems, if your web server user is different from your
-command line user, you need to configure permissions properly to avoid issues.
-There are several ways to achieve that:
-
-1. Use the same user for the CLI and the web server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Edit your web server configuration (commonly ``httpd.conf`` or ``apache2.conf``
-for Apache) and set its user to be the same as your CLI user (e.g. for Apache,
-update the ``User`` and ``Group`` directives).
-
-.. caution::
-
-    If this solution is used in a production server, be sure this user only has
-    limited privileges (no access to private data or servers, execution of
-    unsafe binaries, etc.) as a compromised server would give to the hacker
-    those privileges.
-
-2. Using ACL on a system that supports ``chmod +a`` (macOS)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-On macOS systems, the ``chmod`` command supports the ``+a`` flag to define an
-ACL. Use the following script to determine your web server user and grant the
-needed permissions:
-
-.. code-block:: bash
-
-    $ rm -rf var/cache/* var/logs/* var/sessions/*
-
-    $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-    $ sudo chmod -R +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
-    $ sudo chmod -R +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
-
-3. Using ACL on a system that supports ``setfacl`` (Linux/BSD)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Most Linux and BSD distributions don't support ``chmod +a``, but do support
-another utility called ``setfacl``. You may need to install ``setfacl`` and
-`enable ACL support`_ on your disk partition before using it. Then, use the
-following script to determine your web server user and grant the needed permissions:
-
-.. code-block:: bash
-
-    $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-    # if this doesn't work, try adding `-n` option
-    $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
-    $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
-
-.. note::
-
-    setfacl isn't available on NFS mount points. However, storing cache and logs
-    over NFS is strongly discouraged for performance reasons.
-
-4. Without using ACL
-~~~~~~~~~~~~~~~~~~~~
-
-If none of the previous methods work for you, change the umask so that the
-cache and log directories are group-writable or world-writable (depending
-if the web server user and the command line user are in the same group or not).
-To achieve this, put the following line at the beginning of the ``bin/console``,
-``web/app.php`` and ``web/app_dev.php`` files::
-
-    umask(0002); // This will let the permissions be 0775
-
-    // or
-
-    umask(0000); // This will let the permissions be 0777
-
-.. note::
-
-    Changing the umask is not thread-safe, so the ACL methods are recommended
-    when they are available.
+If you have any file permission errors or see a white screen, then read
+:doc:`/setup/file_permissions` for more information.
 
 .. _installation-updating-vendors:
 
 Updating Symfony Applications
 -----------------------------
 
-At this point, you've created a fully-functional Symfony application in which
-you'll start to develop your own project. A Symfony application depends on
-a number of third-party libraries stored in the ``vendor/`` directory and
-managed by Composer.
+At this point, you've created a fully-functional Symfony application! Every Symfony
+app depends on a number of third-party libraries stored in the ``vendor/`` directory
+and managed by Composer.
 
 Updating those libraries frequently is a good practice to prevent bugs and
 security vulnerabilities. Execute the ``update`` Composer command to update them
@@ -287,46 +212,30 @@ complexity of your project):
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
 
-Installing the Symfony Demo Application
----------------------------------------
-
-The `Symfony Demo application`_ is a fully-functional application that shows the
-recommended way to develop Symfony applications. The application has been
-conceived as a learning tool for Symfony newcomers and its source code contains
-tons of comments and helpful notes.
-
-If you have installed the Symfony Installer as explained in the above sections,
-install the Symfony Demo application anywhere in your system executing the
-``demo`` command:
-
-.. code-block:: bash
-
-    $ symfony demo
-
-Once downloaded, enter into the ``symfony_demo/`` directory, run the PHP's
-built-in web server (``php bin/console server:run``) and access to the
-``http://localhost:8000`` URL to start using the Symfony Demo application.
-
 .. _installing-a-symfony2-distribution:
 
-Installing a Symfony Distribution
----------------------------------
+Installing the Symfony Demo or Other Distributions
+--------------------------------------------------
 
-Symfony distributions are fully-functional applications that include the Symfony
-core libraries, a selection of useful bundles, a sensible directory structure
-and some default configuration. In fact, when you created a Symfony application
-in the previous sections, you actually downloaded the default distribution
-provided by Symfony, which is called `Symfony Standard Edition`_.
+You've already downloaded the Symfony Standard Edition: the default starting project
+for all Symfony apps. You'll use this project throughout the documentation to build
+your app!
 
-The Symfony Standard Edition is the best choice for developers starting with
-Symfony. However, the Symfony Community has published other distributions that
-you may use in your applications:
+Symfony also provides some other projects and starting skeletons that you can use:
 
-* The `Symfony CMF Standard Edition`_ to get started with the `Symfony CMF`_
-  project, which is a project that makes it easier for developers to add CMS
-  functionality to Symfony applications.
-* The `Symfony REST Edition`_ shows how to build an application that provides a
-  RESTful API using the `FOSRestBundle`_ and several other related bundles.
+`The Symfony Demo Application`_
+    This is a fully-functional application that shows the recommended way to develop
+    Symfony applications. The app has been conceived as a learning tool for Symfony
+    newcomers and its source code contains tons of comments and helpful notes.
+
+`The Symfony CMF Standard Edition`_
+    The `Symfony CMF`_ is a project that helps make it easier for developers to add
+    CMS functionality to their Symfony applications. This is a starting project
+    containing the Symfony CMF.
+
+`Symfony REST Edition`_
+    Shows how to build an application that provides a RESTful API using the
+    `FOSRestBundle`_ and several other related Bundles.
 
 .. _install-existing-app:
 
@@ -354,6 +263,11 @@ the following when installing an existing Symfony application:
     # now Composer will ask you for the values of any undefined parameter
     $ ...
 
+Keep Going!
+-----------
+
+With setup behind you, it's time to :doc:`create your first page in Symfony </page_creation>`.
+
 Learn More
 ----------
 
@@ -361,17 +275,20 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    install/*
+    setup/homestead
+    setup/new_project_git
+    setup/built_in_web_server
+    setup/web_server_configuration
+    setup/composer
     setup/*
 
 .. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
-.. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
-.. _`Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
+.. _`The Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
 .. _`Git`: http://git-scm.com/
 .. _`Phar extension`: http://php.net/manual/en/intro.phar.php
-.. _`Symfony Demo application`: https://github.com/symfony/symfony-demo
+.. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo

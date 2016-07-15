@@ -8,40 +8,10 @@ You can define parameters in the service container which can then be used
 directly or as part of service definitions. This can help to separate out
 values that you will want to change more regularly.
 
-Getting and Setting Container Parameters
-----------------------------------------
-
-Working with container parameters is straightforward using the container's
-accessor methods for parameters. You can check if a parameter has been defined
-in the container with::
-
-     $container->hasParameter('mailer.transport');
-
-You can retrieve a parameter set in the container with::
-
-    $container->getParameter('mailer.transport');
-
-and set a parameter in the container with::
-
-    $container->setParameter('mailer.transport', 'sendmail');
-
-.. caution::
-
-    The used ``.`` notation is just a
-    :ref:`Symfony convention <service-naming-conventions>` to make parameters
-    easier to read. Parameters are just flat key-value elements, they can't
-    be organized into a nested array
-
-.. note::
-
-    You can only set a parameter before the container is compiled. To learn
-    more about compiling the container see
-    :doc:`/components/dependency_injection/compilation`.
-
 Parameters in Configuration Files
 ---------------------------------
 
-You can also use the ``parameters`` section of a config file to set parameters:
+Use the ``parameters`` section of a config file to set parameters:
 
 .. configuration-block::
 
@@ -66,16 +36,14 @@ You can also use the ``parameters`` section of a config file to set parameters:
 
         $container->setParameter('mailer.transport', 'sendmail');
 
-As well as retrieving the parameter values directly from the container you
-can use them in the config files. You can refer to parameters elsewhere
-by surrounding them with percent (``%``) signs, e.g. ``%mailer.transport%``.
-One use for this is to inject the values into your services. This allows
-you to configure different versions of services between applications or
-multiple services based on the same class but configured differently
-within a single application. You could inject the choice of mail transport
-into the ``Mailer`` class directly. But declaring it as a parameter makes
-it easier to change rather than being tied up and hidden with the service
-definition:
+You can refer to parameters elsewhere in any config file by surrounding them
+with percent (``%``) signs, e.g. ``%mailer.transport%``. One use for this is
+to inject the values into your services. This allows you to configure different
+versions of services between applications or multiple services based on the
+same class but configured differently within a single application. You could
+inject the choice of mail transport into the ``Mailer`` class directly. But
+declaring it as a parameter makes it easier to change rather than being tied up
+and hidden with the service definition:
 
 .. configuration-block::
 
@@ -85,8 +53,8 @@ definition:
             mailer.transport: sendmail
 
         services:
-            mailer:
-                class:     Mailer
+            app.mailer:
+                class:     AppBundle\Mailer
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
@@ -101,7 +69,7 @@ definition:
             </parameters>
 
             <services>
-                <service id="mailer" class="Mailer">
+                <service id="app.mailer" class="AppBundle\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -113,8 +81,7 @@ definition:
 
         $container->setParameter('mailer.transport', 'sendmail');
 
-        $container
-            ->register('mailer', 'Mailer')
+        $container->register('app.mailer', 'AppBundle\Mailer')
             ->addArgument('%mailer.transport%');
 
 .. caution::
@@ -139,9 +106,6 @@ definition:
 
         <parameter key="mailer.transport">sendmail</parameter>
 
-If you were using this elsewhere as well, then you would only need to change
-the parameter value in one place if needed.
-
 .. note::
 
     The percent sign inside a parameter or argument, as part of the string,
@@ -161,6 +125,34 @@ the parameter value in one place if needed.
 
             ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
 
+Getting and Setting Container Parameters in PHP
+-----------------------------------------------
+
+Working with container parameters is straightforward using the container's
+accessor methods for parameters::
+
+    // check if a parameter is defined
+    $container->hasParameter('mailer.transport');
+
+    // get value of a parameter
+    $container->getParameter('mailer.transport');
+
+    // add a new parameter
+    $container->setParameter('mailer.transport', 'sendmail');
+
+.. caution::
+
+    The used ``.`` notation is just a
+    :ref:`Symfony convention <service-naming-conventions>` to make parameters
+    easier to read. Parameters are just flat key-value elements, they can't
+    be organized into a nested array
+
+.. note::
+
+    You can only set a parameter before the container is compiled. To learn
+    more about compiling the container see
+    :doc:`/components/dependency_injection/compilation`.
+
 .. _component-di-parameters-array:
 
 Array Parameters
@@ -175,10 +167,8 @@ for all parameters that are arrays.
     .. code-block:: yaml
 
         parameters:
-            my_mailer.gateways:
-                - mail1
-                - mail2
-                - mail3
+            my_mailer.gateways: [mail1, mail2, mail3]
+
             my_multilang.language_fallback:
                 en:
                     - en
@@ -200,11 +190,13 @@ for all parameters that are arrays.
                     <parameter>mail2</parameter>
                     <parameter>mail3</parameter>
                 </parameter>
+
                 <parameter key="my_multilang.language_fallback" type="collection">
                     <parameter key="en" type="collection">
                         <parameter>en</parameter>
                         <parameter>fr</parameter>
                     </parameter>
+
                     <parameter key="fr" type="collection">
                         <parameter>fr</parameter>
                         <parameter>en</parameter>
@@ -226,7 +218,7 @@ for all parameters that are arrays.
 Constants as Parameters
 -----------------------
 
-The container also has support for setting PHP constants as parameters.
+The XML and PHP formats also have support for setting PHP constants as parameters.
 To take advantage of this feature, map the name of your constant to a parameter
 key and define the type as ``constant``.
 
@@ -250,10 +242,10 @@ key and define the type as ``constant``.
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
-.. note::
+.. tip::
 
-    This does not work for YAML configurations. If you're using YAML, you
-    can import an XML file to take advantage of this functionality:
+    If you're using YAML, you can :doc:`import an XML file </service_container/import>`
+    to take advantage of this functionality:
 
     .. code-block:: yaml
 
