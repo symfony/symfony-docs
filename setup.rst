@@ -259,7 +259,7 @@ the following when installing an existing Symfony application:
 Keep Going!
 -----------
 
-With setup behind you, it's time to :doc:`Create your First Page in Symfony </page_creation>`.
+With setup behind you, it's time to :doc:`create your first page in Symfony </page_creation>`.
 
 Learn More
 ----------
