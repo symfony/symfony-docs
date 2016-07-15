@@ -23,7 +23,18 @@ Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 * :doc:`quick_tour/the_controller`
 * :doc:`quick_tour/the_architecture`
 
-.. include:: /getting_started/index
+Getting Started
+---------------
+
+.. toctree::
+    :maxdepth: 1
+
+    setup
+    page_creation
+    routing
+    controller
+    templating
+    configuration
 
 Topics
 ------
