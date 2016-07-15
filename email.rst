@@ -152,7 +152,7 @@ The ``$message`` object supports many more options, such as including attachment
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic
 of `Creating Messages`_ in great detail in its documentation.
 
-Learn More
+Learn more
 ----------
 
 .. toctree::

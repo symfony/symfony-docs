@@ -139,6 +139,12 @@ file since there will be fewer files to monitor for changes. Of course if this
 feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
 is no longer a reason to use a bootstrap file.
 
+Learn more
+----------
+
+* :doc:`/cache/varnish`
+* :doc:`/cache/form_csrf_caching`
+
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: http://php.net/manual/en/book.opcache.php
 .. _`APC`: http://php.net/manual/en/book.apc.php
