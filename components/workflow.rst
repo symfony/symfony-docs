@@ -8,7 +8,7 @@ The Workflow Component
     The Workflow component provides tools for managing a workflow or finite state
     machine.
 
-.. versionadded:: 2.8
+.. versionadded:: 3.2
     The Workflow component was introduced in Symfony 3.2.
 
 Installation
