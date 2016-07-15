@@ -26,11 +26,36 @@ HTTP headers: ``Expires`` or ``Cache-Control``.
         annotations. See the `FrameworkExtraBundle documentation`_.
 
 .. index::
+    single: Cache; Cache-Control header
+    single: HTTP headers; Cache-Control
+
+Expiration with the ``Cache-Control`` Header
+--------------------------------------------
+
+Most of the time, you will use the ``Cache-Control`` header. Recall that the
+``Cache-Control`` header is used to specify many different cache directives::
+
+    // Sets the number of seconds after which the response
+    // should no longer be considered fresh
+    $response->setSharedMaxAge(600);
+
+The ``Cache-Control`` header would take on the following format (it may have
+additional directives):
+
+.. code-block:: text
+
+    Cache-Control: public, s-maxage=600
+
+.. index::
     single: Cache; Expires header
     single: HTTP headers; Expires
 
 Expiration with the ``Expires`` Header
 --------------------------------------
+
+An alternative to the ``Cache-Control`` header is ``Expires``. There's no advantage
+or disadvantage to either: they're just different ways to set expiration caching
+on your response.
 
 According to the HTTP specification, "the ``Expires`` header field gives
 the date/time after which the response is considered stale." The ``Expires``
@@ -59,34 +84,6 @@ need to rely on the local clock to evaluate the ``Expires`` header making
 the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
 servers should not send ``Expires`` dates more than one year in the future."
-
-.. index::
-    single: Cache; Cache-Control header
-    single: HTTP headers; Cache-Control
-
-Expiration with the ``Cache-Control`` Header
---------------------------------------------
-
-Because of the ``Expires`` header limitations, most of the time, you should
-use the ``Cache-Control`` header instead. Recall that the ``Cache-Control``
-header is used to specify many different cache directives. For expiration,
-there are two directives, ``max-age`` and ``s-maxage``. The first one is
-used by all caches, whereas the second one is only taken into account by
-shared caches::
-
-    // Sets the number of seconds after which the response
-    // should no longer be considered fresh
-    $response->setMaxAge(600);
-
-    // Same as above but only for shared caches
-    $response->setSharedMaxAge(600);
-
-The ``Cache-Control`` header would take on the following format (it may have
-additional directives):
-
-.. code-block:: text
-
-    Cache-Control: max-age=600, s-maxage=600
 
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
