@@ -189,6 +189,8 @@ Notice that each service was given a tag named ``app.mail_transport``. This is
 the custom tag that you'll use in your compiler pass. The compiler pass is what
 makes this tag "mean" something.
 
+.. _service-container-compiler-pass-tags:
+
 Create a Compiler Pass
 ~~~~~~~~~~~~~~~~~~~~~~
 

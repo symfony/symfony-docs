@@ -1158,7 +1158,7 @@ resources
 
 A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
-:ref:`the form book chapter <forms-theming-twig>`.
+:ref:`the form book chapter <book-forms-theming-twig>`.
 
 Assume you have custom global form themes in
 ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
@@ -1219,7 +1219,7 @@ Assume you have custom global form themes in
 
 .. seealso::
 
-    See :ref:`forms-theming-global` for more information.
+    See :ref:`book-forms-theming-global` for more information.
 
 .. _reference-templating-cache:
 
