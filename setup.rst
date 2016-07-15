@@ -259,15 +259,16 @@ the following when installing an existing Symfony application:
 Keep Going!
 -----------
 
-With setup behind you, it's time to :doc:`create your first page in Symfony </page_creation>`.
+With setup behind you, it's time to :doc:`Create your first page in Symfony </page_creation>`.
 
-Learn More
-----------
+Go Deeper with Setup
+--------------------
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
+    page_creation
     setup/homestead
     setup/new_project_git
     setup/built_in_web_server
