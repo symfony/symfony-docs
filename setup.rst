@@ -274,11 +274,10 @@ Learn More
     setup/web_server_configuration
     setup/composer
     setup/*
-    install/*
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
-.. _`Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
+.. _`The Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle

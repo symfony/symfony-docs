@@ -62,4 +62,4 @@ messages and 2 spaces on the left and right).
 
 The exact "style" you use in the block is up to you. In this case, you're using
 the pre-defined ``error`` style, but there are other styles, or you can create
-your own. See :ref:`components-console-coloring`.
+your own. See :doc:`/console/coloring`.

@@ -25,7 +25,7 @@ There are a couple of steps to upgrading a major version:
 
 During the lifecycle of a major release, new features are added and method
 signatures and public API usages are changed. However,
-:doc:`minor versions </install/upgrade_minor>` should not contain any
+:doc:`minor versions </setup/upgrade_minor>` should not contain any
 backwards incompatible changes. To accomplish this, the "old" (e.g. functions,
 classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
