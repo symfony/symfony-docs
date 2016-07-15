@@ -29,7 +29,7 @@ How to Cache Most of the Page and still be able to Use CSRF Protection
 ----------------------------------------------------------------------
 
 To cache a page that contains a CSRF token, you can use more advanced caching
-techniques like :doc:`ESI fragments </cache/esi>`, where you cache the full
+techniques like :doc:`ESI fragments </http_cache/esi>`, where you cache the full
 page and embedding the form inside an ESI tag with no cache at all.
 
 Another option would be to load the form via an uncached AJAX request, but

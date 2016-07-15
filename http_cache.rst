@@ -15,7 +15,7 @@ Caching on the Shoulders of Giants
 With HTTP Caching, you cache the full output of a page (i.e. the response) and bypass
 your application *entirely* on subsequent requests. Of course, caching entire responses
 isn't always possible for highly dynamic sites, or is it? With
-:doc:`Edge Side Includes (ESI) </cache/esi>`, you can use the power of HTTP caching
+:doc:`Edge Side Includes (ESI) </http_cache/esi>`, you can use the power of HTTP caching
 on only *fragments* of your site.
 
 The Symfony cache system is different because it relies on the simplicity
@@ -76,7 +76,7 @@ but is a great way to start.
 
 .. tip::
 
-    For details on setting up Varnish, see :doc:`/cache/varnish`.
+    For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
 Enabling the proxy is easy: each application comes with a caching kernel (``AppCache``)
 that wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
@@ -153,7 +153,7 @@ information about cache hits and misses.
     
     Fortunately, since all reverse proxies are effectively the same, you should
     be able to switch to something more robust - like Varnish - without any problems.
-    See :doc:`How to use Varnish </cache/varnish>`
+    See :doc:`How to use Varnish </http_cache/varnish>`
 
 .. index::
    single: Cache; HTTP
@@ -242,7 +242,7 @@ for debugging information about cache hits and misses.
 
 .. tip::
 
-    The URI of the request is used as the cache key (unless you :doc:`vary </cache/cache_vary>`).
+    The URI of the request is used as the cache key (unless you :doc:`vary </http_cache/cache_vary>`).
 
 This is *super* performant and simple to use. But, cache *invalidation* is not supported.
 If your content change, you'll need to wait until your cache expires for the page
@@ -257,7 +257,7 @@ If you need to set cache headers for many different controller actions, check ou
 `FOSHttpCacheBundle`_. It provides a way to define cache headers based on the URL
 pattern and other request properties.
 
-Finally, for more information about expiration caching, see :doc:`/cache/expiration`.
+Finally, for more information about expiration caching, see :doc:`/http_cache/expiration`.
 
 .. _http-cache-validation-intro:
 
@@ -276,7 +276,7 @@ If you need to see updated content *immediately*, you either need to
 :ref:`invalidate <http-cache-invalidation>` your cache *or* use the validation
 caching model.
 
-For details, see :doc:`/cache/validation`.
+For details, see :doc:`/http_cache/validation`.
 
 .. index::
    single: Cache; Safe methods
@@ -331,13 +331,13 @@ Cache invalidation is *not* part of the HTTP specification. Still, it can be rea
 useful to delete various HTTP cache entries as soon as some content on your site
 is updated.
 
-For details, see :doc:`/cache/cache_invalidation`.
+For details, see :doc:`/http_cache/cache_invalidation`.
 
 Using Edge Side Includes
 ------------------------
 
 When pages contain dynamic parts, you may not be able to cache entire pages,
-but only parts of it. Read :doc:`/cache/esi` to find out how to configure
+but only parts of it. Read :doc:`/http_cache/esi` to find out how to configure
 different cache strategies for specific parts of your page.
 
 Summary
@@ -357,7 +357,7 @@ Learn more
     :maxdepth: 1
     :glob:
 
-    cache/*
+    http_cache/*
 
 .. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
