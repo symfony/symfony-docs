@@ -8,9 +8,6 @@ The PropertyInfo Component
     The PropertyInfo component extracts information about PHP class properties
     using metadata from popular sources, like `Reflection`_ and `PHP Documentation`_.
 
-.. versionadded:: 2.8
-    The PropertyInfo component was introduced in Symfony 2.8.
-
 Installation
 ------------
 
