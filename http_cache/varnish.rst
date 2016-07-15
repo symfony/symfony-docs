@@ -7,7 +7,7 @@ How to Use Varnish to Speed up my Website
 Because Symfony's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
-cached content fast and including support for :doc:`Edge Side Includes </cache/esi>`.
+cached content fast and including support for :doc:`Edge Side Includes </http_cache/esi>`.
 
 .. index::
     single: Varnish; configuration
@@ -80,7 +80,7 @@ at least for some parts of the site, e.g. when using forms with
 :doc:`CSRF Protection </form/csrf_protection>`. In this situation, make sure to
 :doc:`only start a session when actually needed </session/avoid_session_start>`
 and clear the session when it is no longer needed. Alternatively, you can look
-into :doc:`/cache/form_csrf_caching`.
+into :doc:`/http_cache/form_csrf_caching`.
 
 Cookies created in JavaScript and used only in the frontend, e.g. when using
 Google Analytics, are nonetheless sent to the server. These cookies are not
@@ -168,7 +168,7 @@ using Varnish 3:
 Enable Edge Side Includes (ESI)
 -------------------------------
 
-As explained in the :doc:`Edge Side Includes chapter </cache/esi>`, Symfony
+As explained in the :doc:`Edge Side Includes chapter </http_cache/esi>`, Symfony
 detects whether it talks to a reverse proxy that understands ESI or not. When
 you use the Symfony reverse proxy, you don't need to do anything. But to make
 Varnish instead of Symfony resolve the ESI tags, you need some configuration

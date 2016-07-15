@@ -142,8 +142,8 @@ is no longer a reason to use a bootstrap file.
 Learn more
 ----------
 
-* :doc:`/cache/varnish`
-* :doc:`/cache/form_csrf_caching`
+* :doc:`/http_cache/varnish`
+* :doc:`/http_cache/form_csrf_caching`
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: http://php.net/manual/en/book.opcache.php

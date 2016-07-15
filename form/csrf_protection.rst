@@ -67,6 +67,6 @@ section.
     CSRF tokens are meant to be different for every user. This is why you
     need to be cautious if you try to cache pages with forms including this
     kind of protection. For more information, see
-    :doc:`/cache/form_csrf_caching`.
+    :doc:`/http_cache/form_csrf_caching`.
 
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
