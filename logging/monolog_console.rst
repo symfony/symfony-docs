@@ -5,7 +5,7 @@ How to Configure Monolog to Display Console Messages
 ====================================================
 
 It is possible to use the console to print messages for certain
-:ref:`verbosity levels <verbosity-levels>` using the
+:doc:`verbosity levels </console/verbosity>` using the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance that
 is passed when a command gets executed.
 

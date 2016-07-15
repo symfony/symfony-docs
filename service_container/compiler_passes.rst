@@ -32,9 +32,9 @@ is not needed when implementing the ``process()`` method in the extension)::
     }
 
 One of the most common use-cases of compiler passes is to work with tagged services
-(read more about tags in the components section  ":doc:`/components/dependency_injection/tags`").
-If you are using custom tags in a bundle then by convention, tag names consist
-of the name of the bundle (lowercase, underscores as separators), followed
-by a dot and finally the "real" name. For example, if you want to introduce
-some sort of "mail_transport" tag in your AppBundle, you should call it
-``app.mail_transport``.
+(read more about tags in ":doc:`/service_container/tags`"). If you are using
+custom tags in a bundle then by convention, tag names consist of the name of
+the bundle (lowercase, underscores as separators), followed by a dot, and
+finally the "real" name. For example, if you want to introduce some sort of
+"transport" tag in your AcmeMailerBundle, you should call it
+``acme_mailer.transport``.

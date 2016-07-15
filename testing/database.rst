@@ -27,7 +27,7 @@ class.
 .. tip::
 
     It is possible (and a good idea) to inject your repository directly by
-    registering your repository as a :doc:`factory service </components/dependency_injection/factories>`.
+    registering your repository as a :doc:`factory service </service_container/factories>`.
     This is a little bit more work to setup, but makes testing easier as you
     only need to mock the repository.
 
