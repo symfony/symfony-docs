@@ -673,6 +673,38 @@ method::
     doesn't work. See :doc:`/console/request_context` to learn how to
     solve this problem.
 
+Troubleshooting
+---------------
+
+Here are some common errors you might see while working with routing:
+
+    Controller "AppBundle\Controller\BlogController::showAction()" requires that you
+    provide a value for the "$slug" argument.
+
+This happens when your controller method has an argument (e.g. ``$slug``)::
+
+    public function showAction($slug)
+    {
+        // ..
+    }
+
+But your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``).
+Add a ``{slug}`` to your route path: ``/blog/show/{slug}`` or give the argument
+a default value (i.e. ``$slug = null``).
+
+    Some mandatory parameters are missing ("slug") to generate a URL for route
+    "blog_show".
+
+This means that you're trying to generate a URL to the ``blog_show`` route but you
+are *not* passing a ``slug`` value (which is required, because it has a ``{slug}``)
+wildcard in the route path. To fix this, pass a ``slug`` value when generating the
+route::
+
+    $this->generateUrl('blog_show', array('slug' => 'slug-value'));
+
+    // or, in Twig
+    // {{ path('blog_show', {'slug': 'slug-value'}) }}
+
 Summary
 -------
 
