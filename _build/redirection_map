@@ -44,7 +44,7 @@
 /cookbook/security/voters_data_permission /cookbook/security/voters
 /cookbook/configuration/pdo_session_storage /cookbook/doctrine/pdo_session_storage
 /cookbook/configuration/mongodb_session_storage /cookbook/doctrine/mongodb_session_storage
-/cookbook/service_container/event_listener /cookbook/event_dispatcher/event_listener
+/cookbook/service_container/event_listener /event_dispatcher
 /create_framework/http-foundation /create_framework/http_foundation
 /create_framework/front-controller /create_framework/front_controller
 /create_framework/http-kernel-controller-resolver /create_framework/http_kernel_controller_resolver
@@ -137,7 +137,7 @@
 /cookbook/email/testing /email/testing
 /cookbook/event_dispatcher/before_after_filters /event_dispatcher/before_after_filters
 /cookbook/event_dispatcher/class_extension /event_dispatcher/class_extension
-/cookbook/event_dispatcher/event_listener /event_dispatcher/event_listener
+/cookbook/event_dispatcher/event_listener /event_dispatcher
 /cookbook/event_dispatcher/method_behavior /event_dispatcher/method_behavior
 /cookbook/expressions /expressions/expressions
 /cookbook/form/create_custom_field_type /form/create_custom_field_type
