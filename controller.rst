@@ -7,7 +7,7 @@ Controller
 A controller is a PHP function you create that reads information from the Symfony's
 ``Request`` object and creates and returns a ``Response`` object. The response could
 be an HTML page, JSON, XML, a file download, a redirect, a 404 error or anything
-else you can dream up. The controller contains whatever arbitrary logic
+else you can dream up. The controller executes whatever arbitrary logic
 *your application* needs to render the content of a page.
 
 See how simple this is by looking at a Symfony controller in action.
@@ -174,10 +174,10 @@ and ``redirect()`` methods::
 
         // do a permanent - 301 redirect
         return $this->redirectToRoute('homepage', array(), 301);
-        
+
         // redirect to a route with parameters
         return $this->redirectToRoute('blog_show', array('slug' => 'my-page'));
-        
+
         // redirect externally
         return $this->redirect('http://symfony.com/doc');
     }
@@ -419,7 +419,7 @@ read any flash messages from the session:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views.base.html.twig #}
+        {# app/Resources/views/base.html.twig #}
         {% for flash_message in app.session.flashBag.get('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
@@ -541,7 +541,7 @@ this gives two things:
 
 A) Shortcut methods (like ``render()`` and ``redirectToRoute``);
 
-B) Access to *all* of the useful objects (services) in the system via the 
+B) Access to *all* of the useful objects (services) in the system via the
    :ref:`get() <controller-accessing-services>` method.
 
 In other chapters, you'll learn how to use specific services from inside your controller
