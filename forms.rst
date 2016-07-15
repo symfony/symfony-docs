@@ -726,7 +726,7 @@ Learn more
 
 * :doc:`/controller/upload_file`
 * :doc:`/reference/forms/types`
-* :doc:`/cache/form_csrf_caching`
+* :doc:`/http_cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
