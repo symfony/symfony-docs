@@ -210,7 +210,7 @@ complexity of your project):
 Installing the Symfony Demo or Other Distributions
 --------------------------------------------------
 
-You've already downloaded the Symfony Standard Edition: the default starting project
+You've already downloaded the `Symfony Standard Edition`_: the default starting project
 for all Symfony apps. You'll use this project throughout the documentation to build
 your app!
 
@@ -226,7 +226,7 @@ Symfony also provides some other projects and starting skeletons that you can us
     CMS functionality to their Symfony applications. This is a starting project
     containing the Symfony CMF.
 
-`Symfony REST Edition`_
+`The Symfony REST Edition`_
     Shows how to build an application that provides a RESTful API using the
     `FOSRestBundle`_ and several other related Bundles.
 
@@ -276,11 +276,10 @@ Learn More
     setup/*
 
 .. _`Composer`: https://getcomposer.org/
+.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
+.. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
 .. _`The Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
-.. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
+.. _`The Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
-.. _`Git`: http://git-scm.com/
-.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
-.. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
