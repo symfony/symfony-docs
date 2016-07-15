@@ -243,8 +243,7 @@ type:
     If you are working with a collection of Doctrine entities, it will be
     helpful to read the documentation for the
     :doc:`/reference/forms/types/collection` as well. In addition, there
-    is a complete example in the cookbook article
-    :doc:`/form/form_collections`.
+    is a complete example in the :doc:`/form/form_collections` article.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 

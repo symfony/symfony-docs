@@ -90,8 +90,6 @@ optional second argument of the ``new`` command:
     to better understand why there are several Symfony versions and which one
     to use for your projects.
 
-.. _book-creating-applications-without-the-installer:
-
 Creating Symfony Applications with Composer
 -------------------------------------------
 
@@ -165,8 +163,6 @@ before moving on:
 .. code-block:: text
 
     http://localhost:8000/config.php
-
-.. _book-installation-permissions:
 
 Fixing Permissions Problems
 ---------------------------

@@ -12,7 +12,7 @@ option. If setting up and maintaining your own reliable mail server causes
 you a headache there's a simple solution: Leverage the cloud to send your
 emails.
 
-This cookbook shows how easy it is to integrate
+This article shows how easy it is to integrate
 `Amazon's Simple Email Service (SES)`_ into Symfony.
 
 .. note::

@@ -33,20 +33,20 @@ Symfony Framework. You can read the
 :doc:`Translation component documentation </components/translation/usage>`
 to learn even more. Overall, the process has several steps:
 
-#. :ref:`Enable and configure <book-translation-configuration>` Symfony's
+#. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
 
 #. Abstract strings (i.e. "messages") by wrapping them in calls to the
-   ``Translator`` (":ref:`book-translation-basic`");
+   ``Translator`` (":ref:`translation-basic`");
 
-#. :ref:`Create translation resources/files <book-translation-resources>`
+#. :ref:`Create translation resources/files <translation-resources>`
    for each supported locale that translate each message in the application;
 
 #. Determine, :doc:`set and manage the user's locale </translation/locale>`
    for the request and optionally
    :doc:`on the user's entire session </session/locale_sticky_session>`.
 
-.. _book-translation-configuration:
+.. _translation-configuration:
 
 Configuration
 -------------
@@ -89,13 +89,13 @@ locale to lookup and return translated messages. Before using it, enable the
             'translator' => array('fallbacks' => array('en')),
         ));
 
-See :ref:`book-translation-fallback` for details on the ``fallbacks`` key
+See :ref:`translation-fallback` for details on the ``fallbacks`` key
 and what Symfony does when it doesn't find a translation.
 
 The locale used in translations is the one stored on the request. This is
-typically set via a ``_locale`` attribute on your routes (see :ref:`book-translation-locale-url`).
+typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
 
-.. _book-translation-basic:
+.. _translation-basic:
 
 Basic Translation
 -----------------
@@ -116,7 +116,7 @@ for example, that you're translating a simple message from inside a controller::
         return new Response($translated);
     }
 
-.. _book-translation-resources:
+.. _translation-resources:
 
 When this code is executed, Symfony will attempt to translate the message
 "Symfony is great" based on the ``locale`` of the user. For this to work,
@@ -155,11 +155,11 @@ different formats, XLIFF being the recommended format:
         );
 
 For information on where these files should be located, see
-:ref:`book-translation-resource-locations`.
+:ref:`translation-resource-locations`.
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
-the message inside your :ref:`templates <book-translation-tags>`.
+the message inside your :ref:`templates <translation-tags>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,7 +170,7 @@ To actually translate the message, Symfony uses a simple process:
 
 * A catalog (e.g. big collection) of translated messages is loaded from translation
   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-  :ref:`fallback locale <book-translation-fallback>` are also loaded and
+  :ref:`fallback locale <translation-fallback>` are also loaded and
   added to the catalog if they don't already exist. The end result is a large
   "dictionary" of translations.
 
@@ -199,7 +199,7 @@ will try to look up the exact message, including the variable portions
 (e.g. *"Hello Ryan"* or *"Hello Fabien"*).
 
 For details on how to handle this situation, see :ref:`component-translation-placeholders`
-in the components documentation. For how to do this in templates, see :ref:`book-translation-tags`.
+in the components documentation. For how to do this in templates, see :ref:`translation-tags`.
 
 Pluralization
 -------------
@@ -213,7 +213,7 @@ plural, based on some variable:
     There are 5 apples.
 
 To handle this, use the :method:`Symfony\\Component\\Translation\\Translator::transChoice`
-method or the ``transchoice`` tag/filter in your :ref:`template <book-translation-tags>`.
+method or the ``transchoice`` tag/filter in your :ref:`template <translation-tags>`.
 
 For much more information, see :ref:`component-translation-pluralization`
 in the Translation component documentation.
@@ -224,7 +224,7 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony provides native
 support for both Twig and PHP templates.
 
-.. _book-translation-tags:
+.. _translation-tags:
 
 Twig Templates
 ~~~~~~~~~~~~~~
@@ -266,7 +266,7 @@ You can also specify the message domain and pass some additional variables:
         {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
 
-.. _book-translation-filters:
+.. _translation-filters:
 
 The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:
@@ -329,7 +329,7 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
-.. _book-translation-resource-locations:
+.. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
 ---------------------------------------------
@@ -389,7 +389,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         $ php app/console cache:clear
 
-.. _book-translation-fallback:
+.. _translation-fallback:
 
 Fallback Translation Locales
 ----------------------------

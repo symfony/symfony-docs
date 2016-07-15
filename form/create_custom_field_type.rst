@@ -102,7 +102,7 @@ Creating a Template for the Field
 
 Each field type is rendered by a template fragment, which is determined in
 part by the value of your ``getName()`` method. For more information, see
-:ref:`cookbook-form-customization-form-themes`.
+:ref:`form-customization-form-themes`.
 
 In this case, since the parent field is ``choice``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``choice``
@@ -260,7 +260,7 @@ section explains how more complex field types solve this problem.
     The ``placeholder`` option was introduced in Symfony 2.6 and replaces
     ``empty_value``, which is available prior to 2.6.
 
-.. _form-cookbook-form-field-service:
+.. _form-field-service:
 
 Creating your Field Type as a Service
 -------------------------------------

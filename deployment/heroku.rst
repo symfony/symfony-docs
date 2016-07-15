@@ -4,7 +4,7 @@
 Deploying to Heroku Cloud
 =========================
 
-This step by step cookbook describes how to deploy a Symfony web application to
+This step by step article describes how to deploy a Symfony web application to
 the Heroku cloud platform. Its contents are based on `the original article`_
 published by Heroku.
 

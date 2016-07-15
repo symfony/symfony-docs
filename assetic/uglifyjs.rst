@@ -9,7 +9,7 @@ to combine and minify JavaScript assets so that they require less HTTP requests
 and make your site load faster. `UglifyCSS`_ is a CSS compressor/beautifier
 that is very similar to UglifyJS.
 
-In this cookbook, the installation, configuration and usage of UglifyJS is
+In this article, the installation, configuration and usage of UglifyJS is
 shown in detail. UglifyCSS works pretty much the same way and is only
 talked about briefly.
 
@@ -234,14 +234,14 @@ apply this filter when debug mode is off (e.g. ``app.php``):
         <?php endforeach ?>
 
 To try this out, switch to your ``prod`` environment (``app.php``). But before
-you do, don't forget to :ref:`clear your cache <book-page-creation-prod-cache-clear>`
-and :ref:`dump your assetic assets <cookbook-assetic-dump-prod>`.
+you do, don't forget to :ref:`clear your cache <page-creation-prod-cache-clear>`
+and :ref:`dump your assetic assets <assetic-dump-prod>`.
 
 .. tip::
 
     Instead of adding the filters to the asset tags, you can also configure which
     filters to apply for each file in your application configuration file.
-    See :ref:`cookbook-assetic-apply-to` for more details.
+    See :ref:`assetic-apply-to` for more details.
 
 Install, Configure and Use UglifyCSS
 ------------------------------------

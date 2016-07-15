@@ -21,10 +21,10 @@ sections:
 #. Fetching the current User object.
 
 These are followed by a number of small (but still captivating) sections,
-like :ref:`logging out <book-security-logging-out>` and
+like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
 
-.. _book-security-firewalls:
+.. _security-firewalls:
 
 1) Initial security.yml Setup (Authentication)
 ----------------------------------------------
@@ -273,7 +273,7 @@ Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
 
 But who can you login as? Where do users come from?
 
-.. _book-security-form-login:
+.. _security-form-login:
 
 .. tip::
 
@@ -443,17 +443,13 @@ you who you are and what roles you have:
 Because this URL requires ``ROLE_ADMIN``, if you had logged in as ``ryan``,
 this would deny you access. More on that later (:ref:`security-authorization-access-control`).
 
-.. _book-security-user-entity:
-
 Loading Users from the Database
 ...............................
 
 If you'd like to load your users via the Doctrine ORM, that's easy! See
 :doc:`/security/entity_provider` for all the details.
 
-.. _book-security-encoding-user-password:
-.. _c-encoding-the-users-password:
-.. _encoding-the-user-s-password:
+.. _security-encoding-user-password:
 
 C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -612,7 +608,7 @@ basic auth and loads users right from the ``security.yml`` file.
 
 Your next steps depend on your setup:
 
-* Configure a different way for your users to login, like a :ref:`login form <book-security-form-login>`
+* Configure a different way for your users to login, like a :ref:`login form <security-form-login>`
   or :doc:`something completely custom </security/custom_authentication_provider>`;
 
 * Load users from a different source, like the :doc:`database </security/entity_provider>`
@@ -645,8 +641,6 @@ The process of authorization has two different sides:
     ACL system to give these meaning. This might come in handy if you need
     to check if user A can "EDIT" some object B (e.g. a Product with id 5).
     See :ref:`security-secure-objects`.
-
-.. _book-security-roles:
 
 Roles
 ~~~~~
@@ -690,7 +684,7 @@ There are **two** ways to deny access to something:
    allows you to protect URL patterns (e.g. ``/admin/*``). This is easy,
    but less flexible;
 
-#. :ref:`in your code via the security.authorization_checker service <book-security-securing-controller>`.
+#. :ref:`in your code via the security.authorization_checker service <security-securing-controller>`.
 
 .. _security-authorization-access-control:
 
@@ -759,7 +753,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
         ));
 
 This is great for securing entire sections, but you'll also probably want
-to :ref:`secure your individual controllers <book-security-securing-controller>`
+to :ref:`secure your individual controllers <security-securing-controller>`
 as well.
 
 You can define as many URL patterns as you need - each is a regular expression.
@@ -813,7 +807,7 @@ Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of simply ``/admin`` (without
 the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
 
-.. _security-book-access-control-explanation:
+.. _security-access-control-explanation:
 
 .. sidebar:: Understanding how ``access_control`` Works
 
@@ -825,7 +819,7 @@ the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admi
 
     To learn about all of this, see :doc:`/security/access_control`.
 
-.. _`book-security-securing-controller`:
+.. _security-securing-controller:
 
 Securing Controllers and other Code
 ...................................
@@ -863,10 +857,10 @@ is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
 That's it! If the user isn't logged in yet, they will be asked to login (e.g.
 redirected to the login page). If they *are* logged in, but do *not* have the
 ``ROLE_ADMIN`` role, they'll be shown the 403 access denied page (which you can
-:ref:`customize <cookbook-error-pages-by-status-code>`). If they are logged in
+:ref:`customize <controller-error-pages-by-status-code>`). If they are logged in
 and have the correct roles, the code will be executed.
 
-.. _book-security-securing-controller-annotations:
+.. _security-securing-controller-annotations:
 
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
 using annotations::
@@ -884,7 +878,7 @@ using annotations::
 
 For more information, see the `FrameworkExtraBundle documentation`_.
 
-.. _book-security-template:
+.. _security-template:
 
 Access Control in Templates
 ...........................
@@ -970,7 +964,7 @@ special attributes like this:
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/security/access_control`.
 
-.. _book-security-template-expression:
+.. _security-template-expression:
 
 You can also use expressions inside your templates:
 
@@ -992,7 +986,7 @@ You can also use expressions inside your templates:
             <a href="...">Delete</a>
         <?php endif; ?>
 
-For more details on expressions and security, see :ref:`book-security-expressions`.
+For more details on expressions and security, see :ref:`expressions-security`.
 
 .. _security-secure-objects:
 
@@ -1103,7 +1097,7 @@ key:
             <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
         <?php endif; ?>
 
-.. _book-security-logging-out:
+.. _security-logging-out:
 
 Logging Out
 -----------
@@ -1281,10 +1275,10 @@ parts are when you have custom requirements: like a custom authentication
 strategy (e.g. API tokens), complex authorization logic and many other things
 (because security is complex!).
 
-Fortunately, there are a lot of Security Cookbook Articles aimed at describing
-many of these situations. Also, see the :doc:`Security Reference Section
-</reference/configuration/security>`. Many of the options don't have specific
-details, but seeing the full possible configuration tree may be useful.
+Fortunately, there are a lot of articles aimed at describing many of these
+situations. Also, see the :doc:`Security Reference Section </reference/configuration/security>`.
+Many of the options don't have specific details, but seeing the full possible
+configuration tree may be useful.
 
 Good luck!
 

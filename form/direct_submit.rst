@@ -35,9 +35,9 @@ submissions::
 
 .. tip::
 
-    To see more about this method, read :ref:`book-form-handling-form-submissions`.
+    To see more about this method, read :ref:`form-handling-form-submissions`.
 
-.. _cookbook-form-call-submit-directly:
+.. _form-call-submit-directly:
 
 Calling Form::submit() manually
 -------------------------------
@@ -91,7 +91,7 @@ method, pass the submitted data directly to
     parameter to ``submit()``. Passing ``false`` will remove any missing fields
     within the form object. Otherwise, the mising fields will be set to ``null``.
 
-.. _cookbook-form-submit-request:
+.. _form-submit-request:
 
 Passing a Request to Form::submit() (Deprecated)
 ------------------------------------------------

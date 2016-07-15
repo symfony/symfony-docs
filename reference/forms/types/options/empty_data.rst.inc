@@ -29,4 +29,4 @@ selected, you can do it like this::
 .. note::
 
     If you want to set the ``empty_data`` option for your entire form class,
-    see the cookbook article :doc:`/form/use_empty_data`.
+    see the :doc:`/form/use_empty_data` article.

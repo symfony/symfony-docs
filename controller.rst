@@ -159,8 +159,6 @@ method is just a helper method that generates the URL for a given route::
 
     $url = $this->generateUrl('blog_show', array('slug' => 'slug-value'));
 
-.. _book-redirecting-users-browser:
-
 Redirecting
 ~~~~~~~~~~~
 
@@ -315,13 +313,13 @@ error page is shown to the developer (i.e. when you're using the ``app_dev.php``
 front controller - see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see
-the ":doc:`/controller/error_pages`" cookbook recipe.
+the :doc:`/controller/error_pages` article.
 
 .. index::
    single: Controller; The session
    single: Session
 
-.. _book-controller-request-argument:
+.. _controller-request-argument:
 
 The Request object as a Controller Argument
 -------------------------------------------
@@ -455,7 +453,7 @@ read any flash messages from the session:
 The Request and Response Object
 -------------------------------
 
-As mentioned :ref:`earlier <book-controller-request-argument>`, the framework will
+As mentioned :ref:`earlier <controller-request-argument>`, the framework will
 pass the ``Request`` object to any controller argument that is type-hinted with
 the ``Request`` class::
 

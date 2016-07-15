@@ -159,4 +159,4 @@ Or, use the from within another form::
         }
     }
 
-Read :ref:`form-cookbook-form-field-service` for more information.
+Read :ref:`form-field-service` for more information.

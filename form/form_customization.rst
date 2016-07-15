@@ -85,7 +85,7 @@ The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
 rendering in general, see :doc:`/form/rendering`.
 
-.. _cookbook-form-customization-form-themes:
+.. _form-customization-form-themes:
 
 What are Form Themes?
 ---------------------
@@ -201,7 +201,7 @@ in this file.
 In PHP a theme is a folder and the fragments are individual template files in
 this folder.
 
-.. _cookbook-form-customization-sidebar:
+.. _form-customization-sidebar:
 
 .. sidebar:: Knowing which Block to Customize
 
@@ -223,7 +223,7 @@ this folder.
 
     For more information on this topic, see :ref:`form-template-blocks`.
 
-.. _cookbook-form-theming-methods:
+.. _form-theming-methods:
 
 Form Theming
 ------------
@@ -247,8 +247,6 @@ the customized form block can live:
 +--------------------------------------+-----------------------------------+-------------------------------------------+
 
 Both methods have the same effect but are better in different situations.
-
-.. _cookbook-form-twig-theming-self:
 
 Method 1: Inside the same Template as the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -286,8 +284,6 @@ is most useful when making form customizations that are specific to a single
 form in your application. If you want to reuse a form customization across
 several (or all) forms in your application, read on to the next section.
 
-.. _cookbook-form-twig-separate-template:
-
 Method 2: Inside a separate Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -308,8 +304,6 @@ can now re-use the form customization across many templates:
 Now that you've created the customized form block, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the template via the ``form_theme`` tag:
-
-.. _cookbook-form-twig-theme-import-template:
 
 .. code-block:: html+twig
 
@@ -354,8 +348,6 @@ different than the one of your main form. Just specify both your themes:
 
     {% form_theme form.child 'form/fields_child.html.twig' %}
 
-.. _cookbook-form-php-theming:
-
 Form Theming in PHP
 -------------------
 
@@ -379,11 +371,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the theme via the ``setTheme`` helper method:
-
-.. _cookbook-form-php-theme-import-template:
-
-.. code-block:: php
+tell Symfony to use the theme via the ``setTheme`` helper method::
 
     <?php $view['form']->setTheme($form, array(':form')); ?>
 
@@ -406,8 +394,6 @@ method:
     ``Bundle:Directory``. As the form directory lives in the
     ``app/Resources/views`` directory, the ``Bundle`` part is empty, resulting
     in ``:form``.
-
-.. _cookbook-form-twig-import-base-blocks:
 
 Referencing base Form Blocks (Twig specific)
 --------------------------------------------
@@ -465,8 +451,6 @@ the base block by using the ``parent()`` Twig function:
     It is not possible to reference the base block when using PHP as the
     templating engine. You have to manually copy the content from the base block
     to your new template file.
-
-.. _cookbook-form-global-theming:
 
 Making Application-wide Customizations
 --------------------------------------
@@ -749,7 +733,7 @@ You can also override the markup for an entire field row using the same method:
             <?php echo $view['form']->widget($form) ?>
         </div>
 
-.. _cookbook-form-custom-prototype:
+.. _form-custom-prototype:
 
 How to Customize a Collection Prototype
 ---------------------------------------
@@ -798,11 +782,11 @@ Other common Customizations
 So far, this recipe has shown you several different ways to customize a single
 piece of how a form is rendered. The key is to customize a specific fragment that
 corresponds to the portion of the form you want to control (see
-:ref:`naming form blocks <cookbook-form-customization-sidebar>`).
+:ref:`naming form blocks <form-customization-sidebar>`).
 
 In the next sections, you'll see how you can make several common form customizations.
 To apply these customizations, use one of the methods described in the
-:ref:`cookbook-form-theming-methods` section.
+:ref:`form-theming-methods` section.
 
 Customizing Error Output
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -868,7 +852,7 @@ and customize the ``form_errors`` fragment.
 
 .. tip::
 
-    See :ref:`cookbook-form-theming-methods` for how to apply this customization.
+    See :ref:`form-theming-methods` for how to apply this customization.
 
 You can also customize the error output for just one specific field type.
 To customize *only* the markup used for these errors, follow the same directions
@@ -968,7 +952,7 @@ class to the ``div`` element around each row:
 
 .. tip::
 
-    See :ref:`cookbook-form-theming-methods` for how to apply this customization.
+    See :ref:`form-theming-methods` for how to apply this customization.
 
 Adding a "Required" Asterisk to Field Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1026,7 +1010,7 @@ original template:
 
 .. tip::
 
-    See :ref:`cookbook-form-theming-methods` for how to apply this customization.
+    See :ref:`form-theming-methods` for how to apply this customization.
 
 .. sidebar:: Using CSS only
 
@@ -1107,7 +1091,7 @@ To render a help message below a field, pass in a ``help`` variable:
 
 .. tip::
 
-    See :ref:`cookbook-form-theming-methods` for how to apply this customization.
+    See :ref:`form-theming-methods` for how to apply this customization.
 
 Using Form Variables
 --------------------

@@ -36,10 +36,10 @@ the user's locale "sticky" to their session.
     (like above), the URL (see next) or call ``setLocale()`` directly on the
     ``translator`` service.
 
-See the :ref:`book-translation-locale-url` section below about setting the
+See the :ref:`translation-locale-url` section below about setting the
 locale via routing.
 
-.. _book-translation-locale-url:
+.. _translation-locale-url:
 
 The Locale and the URL
 ----------------------
@@ -117,7 +117,7 @@ application.
 .. index::
     single: Translations; Fallback and default locale
 
-.. _book-translation-default-locale:
+.. _translation-default-locale:
 
 Setting a Default Locale
 ------------------------

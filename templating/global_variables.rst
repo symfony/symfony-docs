@@ -46,7 +46,7 @@ It's that easy!
 Using Service Container Parameters
 ----------------------------------
 
-You can also take advantage of the built-in :ref:`book-service-container-parameters`
+You can also take advantage of the built-in :ref:`service-container-parameters`
 system, which lets you isolate or reuse the value:
 
 .. code-block:: yaml
