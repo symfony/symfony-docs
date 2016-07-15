@@ -104,3 +104,9 @@ Additionally, you have access to a number of functions inside the expression:
     via a remember-me cookie and ``is_fully_authenticated`` *only* returns
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
+
+Learn more
+----------
+
+* :doc:`/service_container/expression_language`
+* :doc:`/reference/constraints/Expression`

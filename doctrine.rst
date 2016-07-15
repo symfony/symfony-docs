@@ -846,7 +846,7 @@ Doctrine has a lot more complex features to learn, like relationshps, complex qu
 and event listeners.
 
 Learn more
-~~~~~~~~~~
+----------
 
 .. toctree::
     :maxdepth: 1

@@ -371,6 +371,9 @@ After you deploy, you'll use the ``prod`` environment.
 To learn more about *how* to execute and control each environment, see
 :doc:`/configuration/environments`.
 
+Learn more
+----------
+
 .. toctree::
     :maxdepth: 1
     :glob:
