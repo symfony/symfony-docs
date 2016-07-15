@@ -220,12 +220,6 @@ command:
     This method is executed after ``interact()`` and ``initialize()``.
     It contains the logic you want the command to execute.
 
-Invoking other Commands
------------------------
-
-See :ref:`calling-existing-command` if you need to implement a command that runs
-other dependent commands.
-
 Testing Commands
 ----------------
 
