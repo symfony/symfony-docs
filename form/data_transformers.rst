@@ -335,7 +335,7 @@ Define the form type as a service in your configuration files.
 .. tip::
 
     For more information about defining form types as services, read
-    :ref:`register your form type as a service <form-as-services>`.
+    :doc:`register your form type as a service </form/form_dependencies>`.
 
 Now, you can easily use your ``TaskType``::
 
