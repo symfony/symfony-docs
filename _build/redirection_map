@@ -7,7 +7,7 @@
 /cookbook/doctrine/mongodb /bundles/DoctrineMongoDBBundle/index
 /cookbook/form/dynamic_form_generation /cookbook/form/dynamic_form_modification
 /cookbook/form/simple_signup_form_with_mongodb /bundles/DoctrineMongoDBBundle/form
-/cookbook/email /cookbook/email/email
+/cookbook/email /email
 /cookbook/gmail /cookbook/email/gmail
 /cookbook/console /components/console
 /cookbook/tools/autoloader /components/class_loader
@@ -131,7 +131,7 @@
 /cookbook/doctrine/reverse_engineering /doctrine/reverse_engineering
 /cookbook/email/cloud /email/cloud
 /cookbook/email/dev_environment /email/dev_environment
-/cookbook/email/email /email/email
+/cookbook/email/email /email
 /cookbook/email/gmail /email/gmail
 /cookbook/email/spool /email/spool
 /cookbook/email/testing /email/testing
