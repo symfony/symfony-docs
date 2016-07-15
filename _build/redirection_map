@@ -151,7 +151,11 @@
 /cookbook/form/unit_testing /form/unit_testing
 /cookbook/form/use_empty_data /form/use_empty_data
 /cookbook/frontend/bower /frontend/bower
-/cookbook/install/unstable_versions /install/unstable_versions
+/cookbook/install/unstable_versions /setup/unstable_versions
+/cookbook/install/bundles /setup/bundles
+/cookbook/install/upgrade_major /setup/upgrade_major
+/cookbook/install/upgrade_minor /setup/upgrade_minor
+/cookbook/install/upgrade_patch /setup/upgrade_patch
 /cookbook/logging/channels_handlers /logging/channels_handlers
 /cookbook/logging/monolog /logging
 /cookbook/logging/monolog_console /logging/monolog_console
@@ -287,3 +291,4 @@
 /components/var_dumper/index /components/var_dumper
 /components/yaml/introduction /components/yaml
 /components/yaml/index /components/yaml
+/install/bundles setup/bundles

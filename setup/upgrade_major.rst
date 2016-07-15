@@ -136,9 +136,9 @@ Next, use Composer to download new versions of the libraries:
 
     $ composer update symfony/symfony
 
-.. include:: /install/_update_dep_errors.rst.inc
+.. include:: /setup/_update_dep_errors.rst.inc
 
-.. include:: /install/_update_all_packages.rst.inc
+.. include:: /setup/_update_all_packages.rst.inc
 
 .. _upgrade-major-symfony-after:
 
