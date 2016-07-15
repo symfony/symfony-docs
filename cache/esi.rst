@@ -2,6 +2,8 @@
     single: Cache; ESI
     single: ESI
 
+.. _edge-side-includes:
+
 Working with Edge Side Includes
 ===============================
 

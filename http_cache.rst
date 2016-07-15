@@ -259,7 +259,7 @@ pattern and other request properties.
 
 Finally, for more information about expiration caching, see :doc:`/cache/expiration`.
 
-.. _http-cache-expiration-intro:
+.. _http-cache-validation-intro:
 
 Validation Caching
 ~~~~~~~~~~~~~~~~~~
@@ -331,7 +331,7 @@ Cache invalidation is *not* part of the HTTP specification. Still, it can be rea
 useful to delete various HTTP cache entries as soon as some content on your site
 is updated.
 
-For details, see :doc:`/cache/cache_invalidation.rst`.
+For details, see :doc:`/cache/cache_invalidation`.
 
 Using Edge Side Includes
 ------------------------
