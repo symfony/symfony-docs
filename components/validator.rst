@@ -16,3 +16,5 @@ You can install the component in 2 different ways:
 * Use the official Git repository (https://github.com/symfony/validator).
 
 For more information, see the code in the Git Repository.
+
+.. _Packagist: https://packagist.org/packages/symfony/validator
