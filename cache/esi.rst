@@ -6,8 +6,8 @@ Working with Edge Side Includes
 ===============================
 
 Gateway caches are a great way to make your website perform better. But they
-have one limitation: they can only cache whole pages. If you can't cache
-whole pages or if parts of a page has "more" dynamic parts, you are out of
+have one limitation: they can only cache whole pages. If your pages contain
+dynamic sections, such as the user name or a shopping cart, you are out of
 luck. Fortunately, Symfony provides a solution for these cases, based on a
 technology called `ESI`_, or Edge Side Includes. Akamai wrote this specification
 almost 10 years ago and it allows specific parts of a page to have a different
@@ -33,7 +33,7 @@ as this is the only useful one outside of Akamai context:
 
 .. note::
 
-    Notice from the example that each ESI tag has a fully-qualified URL.
+    Notice from the example that each ESI tag requires a fully-qualified URL.
     An ESI tag represents a page fragment that can be fetched via the given
     URL.
 

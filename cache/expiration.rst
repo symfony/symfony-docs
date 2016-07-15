@@ -4,10 +4,10 @@
 HTTP Cache Expiration
 =====================
 
-The `expiration model`_ is the more efficient and straightforward of the two
+The `expiration model`_ is the most efficient and straightforward of the two
 caching models and should be used whenever possible. When a response is cached
-with an expiration, the cache will store the response and return it directly
-without hitting the application until it expires.
+with an expiration, the cache returns it directly without hitting the application
+until the cached response expires.
 
 The expiration model can be accomplished using one of two, nearly identical,
 HTTP headers: ``Expires`` or ``Cache-Control``.

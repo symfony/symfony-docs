@@ -78,9 +78,9 @@ To see a simple implementation, generate the ETag as the md5 of the content::
     }
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
-method compares the ``If-None-Match`` sent with the ``Request`` with the
-``ETag`` header set on the ``Response``. If the two match, the method
-automatically sets the ``Response`` status code to 304.
+method compares the ``If-None-Match`` header with the ``ETag`` response header.
+If the two match, the method automatically sets the ``Response`` status code
+to 304.
 
 .. note::
 
@@ -156,9 +156,9 @@ header value::
     }
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
-method compares the ``If-Modified-Since`` header sent by the request with
-the ``Last-Modified`` header set on the response. If they are equivalent,
-the ``Response`` will be set to a 304 status code.
+method compares the ``If-Modified-Since`` header with the ``Last-Modified``
+response header. If they are equivalent, the ``Response`` will be set to a
+304 status code.
 
 .. note::
 
