@@ -7,7 +7,7 @@ How to Use Varnish to Speed up my Website
 Because Symfony's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
-cached content fast and including support for :ref:`Edge Side Includes <edge-side-includes>`.
+cached content fast and including support for :doc:`Edge Side Includes </cache/esi>`.
 
 .. index::
     single: Varnish; configuration
@@ -168,12 +168,12 @@ using Varnish 3:
 Enable Edge Side Includes (ESI)
 -------------------------------
 
-As explained in the :ref:`Edge Side Includes section <edge-side-includes>`,
-Symfony detects whether it talks to a reverse proxy that understands ESI or
-not. When you use the Symfony reverse proxy, you don't need to do anything.
-But to make Varnish instead of Symfony resolve the ESI tags, you need some
-configuration in Varnish. Symfony uses the ``Surrogate-Capability`` header
-from the `Edge Architecture`_ described by Akamai.
+As explained in the :doc:`Edge Side Includes chapter </cache/esi>`, Symfony
+detects whether it talks to a reverse proxy that understands ESI or not. When
+you use the Symfony reverse proxy, you don't need to do anything. But to make
+Varnish instead of Symfony resolve the ESI tags, you need some configuration
+in Varnish. Symfony uses the ``Surrogate-Capability`` header from the `Edge Architecture`_
+described by Akamai.
 
 .. note::
 
