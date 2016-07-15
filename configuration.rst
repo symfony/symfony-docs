@@ -182,6 +182,8 @@ The ``imports`` key works a lot like the PHP ``include`` function: the contents 
 ``parameters.yml``, ``security.yml`` and ``services.yml`` are read and loaded. You
 can also load XML files or PHP files.
 
+.. _config-parameter-intro:
+
 The parameters key: Parameters (Variables)
 ------------------------------------------
 
