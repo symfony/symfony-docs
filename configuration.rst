@@ -371,8 +371,28 @@ After you deploy, you'll use the ``prod`` environment.
 To learn more about *how* to execute and control each environment, see
 :doc:`/configuration/environments`.
 
+Keep Going!
+-----------
+
+Congratulations! You've tackled the basics in Symfony. Next, learn about *each*
+part of Symfony individually by following the guides. Check out:
+
+* :doc:`/forms`
+* :doc:`/doctrine`
+* :doc:`/service_container`
+* :doc:`/security`
+* :doc:`/email`
+* :doc:`/logging`
+
+And the many other topics.
+
 Learn more
 ----------
+
+.. toctree::
+    :hidden:
+
+    forms
 
 .. toctree::
     :maxdepth: 1

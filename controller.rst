@@ -548,8 +548,18 @@ In other chapters, you'll learn how to use specific services from inside your co
 that will help you persist and fetch objects from a database, process form submissions,
 handle caching and more.
 
-Learn more
-----------
+Keep Going!
+-----------
+
+Next, learn all about :doc:`rendering templates with Twig </templating>`.
+
+Learn more about Controllers
+----------------------------
+
+.. toctree::
+    :hidden:
+
+    templating
 
 .. toctree::
     :maxdepth: 1

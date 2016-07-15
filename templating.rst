@@ -952,8 +952,18 @@ The templating system is just *one* of the many tools in Symfony. And its job is
 simple: allow us to render dynamic & complex HTML output so that this can ultimately
 be returned to the user, sent in an email or something else.
 
+Keep Going!
+-----------
+
+Before diving into the rest of Symfony, check out the :doc:`configuration system </configuration>`.
+
 Learn more
 ----------
+
+.. toctree::
+    :hidden:
+
+    configuration
 
 .. toctree::
     :maxdepth: 1

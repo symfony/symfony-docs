@@ -714,8 +714,18 @@ to specify beautiful URLs and keeps the functionality of your application
 decoupled from those URLs. Routing is a bidirectional mechanism, meaning that it
 should also be used to generate URLs.
 
-Learn more
-----------
+Keep Going!
+-----------
+
+Routing, check! Now, uncover the power of :doc:`controllers </controller>`.
+
+Learn more about Routing
+------------------------
+
+.. toctree::
+    :hidden:
+
+    controller
 
 .. toctree::
     :maxdepth: 1

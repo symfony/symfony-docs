@@ -265,10 +265,14 @@ Go Deeper with Setup
 --------------------
 
 .. toctree::
+    :hidden:
+
+    page_creation
+
+.. toctree::
     :maxdepth: 1
     :glob:
 
-    page_creation
     setup/homestead
     setup/new_project_git
     setup/built_in_web_server
