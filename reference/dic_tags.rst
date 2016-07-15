@@ -351,7 +351,7 @@ console.command
 **Purpose**: Add a command to the application
 
 For details on registering your own commands in the service container, read
-:ref:`the cookbook article<cookbook-console-dic>`.
+:doc:`/console/commands_as_services`.
 
 data_collector
 --------------

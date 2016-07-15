@@ -101,7 +101,7 @@ output stream (to write messages to the console)::
 
         // output a message without moving to a new line (the message will
         // apear on one line)
-        $output->write('You\'re about to');
+        $output->write('You are about to ');
         $output->write('generate an admin user.');
     }
 
@@ -114,7 +114,7 @@ Now, try executing the command:
     ===============
 
     Whoa!
-    You're about to generate an admin user.
+    You are about to generate an admin user.
 
 Console Input
 -------------
@@ -219,6 +219,8 @@ command:
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
     It contains the logic you want the command to execute.
+
+.. _console-testing-commands:
 
 Testing Commands
 ----------------
