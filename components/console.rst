@@ -22,10 +22,10 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-Creating an Application File
-----------------------------
+Creating a Console Application
+------------------------------
 
-At first, you need to create a file to run commands from the console::
+First, you need to create a PHP script to define the console application::
 
     #!/usr/bin/env php
     <?php
@@ -41,12 +41,13 @@ At first, you need to create a file to run commands from the console::
 
     $application->run();
 
-See the :doc:`/console` article for information about how to create commands.
-You can register the commands using
+Then, you can register the commands using
 :method:`Symfony\\Component\\Console\\Application::add`::
 
     // ...
     $application->add(new GenerateAdminCommand());
+
+See the :doc:`/console` article for information about how to create commands.
 
 Learn More
 ----------

@@ -5,31 +5,27 @@ Console Commands
 ================
 
 The Symfony framework provide lots of commands through the ``app/console`` file
-(e.g. the common ``app/console cache:clear`` command). These commands are
-created using the :doc:`Console component </components/console>`. This allows
-you to add custom commands as well, for instance to manage admin users.
+(e.g. the well-known ``app/console cache:clear`` command). These commands are
+created with the :doc:`Console component </components/console>` and you can
+also use it to create your own commands.
 
 Creating a Command
 ------------------
 
-Each command will have its own command class that manages the logic. It serves
-as a controller for the console, except that it doesn't work with the HTTP
-Request/Response flow, but with Input/Output streams.
+Commands are defined in classes which must be created in the ``Command`` namespace
+of your bundle (e.g. ``AppBundle\Command``) and their names must end with the
+``Command`` suffix.
 
-Your command has to be in the ``Command`` namespace of your bundle (e.g.
-``AppBundle\Command``) and the name has to end with ``Command``.
+For example, a command called ``CreateUser`` must follow this structure::
 
-For instance, assume you create a command to generate new admin users (you'll
-learn about the methods soon)::
-
-    // src/AppBundle/Command/GenerateAdminCommand.php
+    // src/AppBundle/Command/CreateUserCommand.php
     namespace AppBundle\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GenerateAdminCommand extends Command
+    class CreateUserCommand extends Command
     {
         protected function configure()
         {
@@ -45,76 +41,68 @@ learn about the methods soon)::
 Configuring the Command
 -----------------------
 
-First of all, you need to configure the name of the command in ``configure()``.
-Besides the name, you can configure things like the help message and
-:doc:`input options and arguments </console/input>`.
-
-::
+First of all, you must configure the name of the command in the ``configure()``
+method. Then you can optionally define a help message and the
+:doc:`input options and arguments </console/input>`::
 
     // ...
     protected function configure()
     {
         $this
             // the name of the command (the part after "app/console")
-            ->setName('app:generate-admin')
+            ->setName('app:create-users')
 
-            // the shot description shown while running "php app/console list"
-            ->setDescription('Generates new admin users.')
+            // the short description shown while running "php app/console list"
+            ->setDescription('Creates new users.')
 
-            // the help message shown when running the command with the
-            // "--help" option
-            ->setHelp(<<<EOT
-    This command allows you to generate admins.
-
-    ...
-    EOT
-            )
+            // the full command description shown when running the command with
+            // the "--help" option
+            ->setHelp("This command allows you to create users...")
         ;
     }
 
 Executing the Command
 ---------------------
 
-After configuring, you can execute the command in the terminal:
+After configuring the command, you can execute it in the terminal:
 
 .. code-block:: bash
 
-    $ php app/console app:generate-admin
+    $ php app/console app:create-users
 
 As you might expect, this command will do nothing as you didn't write any logic
-yet. When running the command, the ``execute()`` method will be executed. This
-method has access to the input stream (e.g. options and arguments) and the
-output stream (to write messages to the console)::
+yet. Add your own logic inside the ``execute()`` method, which has access to the
+input stream (e.g. options and arguments) and the output stream (to write
+messages to the console)::
 
     // ...
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // outputs multiple lines to the console
+        // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([
-            'Admin Generator',
-            '===============',
+            'User Creator',
+            '============',
             '',
         ]);
 
-        // output a single line
+        // outputs a message followed by a "\n"
         $output->writeln('Whoa!');
 
-        // output a message without moving to a new line (the message will
-        // apear on one line)
+        // outputs a message without adding a "\n" at the end of the line
         $output->write('You are about to ');
-        $output->write('generate an admin user.');
+        $output->write('create a user.');
     }
 
 Now, try executing the command:
 
 .. code-block:: bash
 
-    $ php app/console app:generate-admin
-    Admin Generator
-    ===============
+    $ php app/console app:create-user
+    User Creator
+    ============
 
     Whoa!
-    You are about to generate an admin user.
+    You are about to create a user.
 
 Console Input
 -------------
@@ -128,7 +116,7 @@ Use input options or arguments to pass information to the command::
     {
         $this
             // configure an argument
-            ->addArgument('username', InputArgument::REQUIRED, 'The username of the admin.')
+            ->addArgument('username', InputArgument::REQUIRED, 'The username of the user.')
             // ...
         ;
     }
@@ -137,8 +125,8 @@ Use input options or arguments to pass information to the command::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln([
-            'Admin Generator',
-            '===============',
+            'User Creator',
+            '============',
             '',
         ]);
 
@@ -150,9 +138,9 @@ Now, you can pass the username to the command:
 
 .. code-block:: bash
 
-    $ php app/console app:generate-admin Wouter
-    Admin Generator
-    ===============
+    $ php app/console app:create-user Wouter
+    User Creator
+    ============
 
     Username: Wouter
 
@@ -164,15 +152,15 @@ Now, you can pass the username to the command:
 Getting Services from the Service Container
 -------------------------------------------
 
-To actually generate a new admin user, the command has to access some
-:doc:`services </service_container>`. This can be done by extending
-:class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
+To actually create a new user, the command has to access to some
+:doc:`services </service_container>`. This can be done by making the command
+extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
 instead::
 
     // ...
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-    class GenerateAdminCommand extends ContainerAwareCommand
+    class CreateUserCommand extends ContainerAwareCommand
     {
         // ...
 
@@ -181,22 +169,16 @@ instead::
             // ...
 
             // access the container using getContainer()
-            $adminGenerator = $this->getContainer()->get('app.admin_generator');
+            $userManager = $this->getContainer()->get('app.user_manager');
+            $userManager->create($input->getArgument('username'));
 
-            $generatedPassword = md5(uniqid());
-
-            $output->writeln('Generated password: '.$generatedPassword);
-
-            // for instance, generate an admin like this
-            $adminGenerator->generate($input->getArgument('username'), $generatedPassword);
-
-            $output->writeln('Admin successfully generated!');
+            $output->writeln('User successfully generated!');
         }
     }
 
 Now, once you created the required services and logic, the command will execute
-the ``generate()`` method of the ``app.admin_generator`` service and the admin
-will be created.
+the ``generate()`` method of the ``app.user_manager`` service and the user will
+be created.
 
 Command Lifecycle
 -----------------
@@ -230,21 +212,21 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    // tests/AppBundle/Command/GenerateAdminCommandTest.php
+    // tests/AppBundle/Command/CreateUserCommandTest.php
     namespace Tests\AppBundle\Command;
 
-    use AppBundle\Command\GenerateAdminCommand;
+    use AppBundle\Command\CreateUserCommand;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
-    class GenerateAdminCommandTest extends \PHPUnit_Framework_TestCase
+    class CreateUserCommandTest extends \PHPUnit_Framework_TestCase
     {
         public function testExecute()
         {
             $application = new Application();
-            $application->add(new GenerateAdminCommand());
+            $application->add(new CreateUserCommand());
 
-            $command = $application->find('app:generate-admin');
+            $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
             $commandTester->execute(array(
                 'command'  => $command->getName(),
@@ -285,7 +267,7 @@ you can extend your test from
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-    class GenerateAdminCommandTest extends KernelTestCase
+    class CreateUserCommandTest extends KernelTestCase
     {
         public function testExecute()
         {
@@ -293,9 +275,9 @@ you can extend your test from
             $kernel->boot();
 
             $application = new Application($kernel);
-            $application->add(new GenerateAdminCommand());
+            $application->add(new CreateUserCommand());
 
-            $command = $application->find('app:generate-admin');
+            $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
             $commandTester->execute(array(
                 'command'  => $command->getName(),
