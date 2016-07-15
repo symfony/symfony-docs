@@ -71,8 +71,8 @@ In this section, you'll learn how to contribute to the Symfony documentation for
 the first time. The next section will explain the shorter process you'll follow
 in the future for every contribution after your first one.
 
-Let's imagine that you want to improve the installation chapter of the Symfony
-book. In order to make your changes, follow these steps:
+Let's imagine that you want to improve the Setup guide. In order to make your
+changes, follow these steps:
 
 **Step 1.** Go to the official Symfony documentation repository located at
 `github.com/symfony/symfony-docs`_ and click on the **Fork** button to `fork the

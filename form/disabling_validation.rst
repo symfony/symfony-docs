@@ -22,4 +22,4 @@ these cases you can set the ``validation_groups`` option to ``false``::
 Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
 fields were submitted. If you want to suppress validation, you can use the
-:ref:`POST_SUBMIT event <cookbook-dynamic-form-modification-suppressing-form-validation>`.
+:ref:`POST_SUBMIT event <form-dynamic-form-modification-suppressing-form-validation>`.

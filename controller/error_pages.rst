@@ -44,7 +44,7 @@ Overriding the Default Error Templates
 When the error page loads, an internal :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`
 is used to render a Twig template to show the user.
 
-.. _cookbook-error-pages-by-status-code:
+.. _controller-error-pages-by-status-code:
 
 This controller uses the HTTP status code, the request format and the following
 logic to determine the template filename:

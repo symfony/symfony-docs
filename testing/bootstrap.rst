@@ -4,9 +4,9 @@ How to Customize the Bootstrap Process before Running Tests
 Sometimes when running tests, you need to do additional bootstrap work before
 running those tests. For example, if you're running a functional test and
 have introduced a new translation resource, then you will need to clear your
-cache before running those tests. This cookbook covers how to do that.
+cache before running those tests.
 
-First, add the following file::
+To do this, first add the following file::
 
     // app/tests.bootstrap.php
     if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {

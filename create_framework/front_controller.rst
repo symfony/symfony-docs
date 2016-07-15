@@ -67,7 +67,7 @@ routing all client requests to a single PHP script.
 .. tip::
 
     Exposing a single PHP script to the end user is a design pattern called
-    the ":ref:`front controller <book-from_flat_php-front-controller>`".
+    the ":ref:`front controller <from_flat_php-front-controller>`".
 
 Such a script might look like the following::
 

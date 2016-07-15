@@ -140,7 +140,7 @@ a few other methods and your ``security.yml`` file needs to be configured
 properly to work with the ``User`` entity. For a more complete example, see
 the :ref:`Entity Provider <security-crete-user-entity>` article.
 
-.. _cookbook-registration-password-max:
+.. _registration-password-max:
 
 .. sidebar:: Why the 4096 Password Limit?
 
@@ -203,7 +203,7 @@ There are just three fields: ``email``, ``username`` and ``plainPassword``
 .. tip::
 
     To explore more things about the Form component, read the
-    :doc:`chapter about forms </forms>` in the book.
+    :doc:`/forms` guide.
 
 Handling the Form Submission
 ----------------------------
@@ -296,7 +296,7 @@ encoder in the security configuration:
 
 In this case the recommended ``bcrypt`` algorithm is used. To learn more
 about how to encode the users password have a look into the
-:ref:`security chapter <book-security-encoding-user-password>`.
+:ref:`security chapter <security-encoding-user-password>`.
 
 .. note::
 

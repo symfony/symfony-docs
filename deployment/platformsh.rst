@@ -4,7 +4,7 @@
 Deploying to Platform.sh
 ========================
 
-This step-by-step cookbook describes how to deploy a Symfony web application to
+This step-by-step article describes how to deploy a Symfony web application to
 `Platform.sh`_. You can read more about using Symfony with Platform.sh on the
 official `Platform.sh documentation`_.
 

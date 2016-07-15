@@ -266,7 +266,7 @@ fully authenticated.
 
 This path **must** be accessible by a normal, un-authenticated user, else
 you may create a redirect loop. For details, see
-":ref:`Avoid Common Pitfalls <book-security-common-pitfalls>`".
+":ref:`Avoid Common Pitfalls <security-common-pitfalls>`".
 
 check_path
 ..........
@@ -433,7 +433,7 @@ persisting the encoded password alone is enough.
 Firewall Context
 ----------------
 
-Most applications will only need one :ref:`firewall <book-security-firewalls>`.
+Most applications will only need one :ref:`firewall <security-firewalls>`.
 But if your application *does* use multiple firewalls, you'll notice that
 if you're authenticated in one firewall, you're not automatically authenticated
 in another. In other words, the systems don't share a common "context":

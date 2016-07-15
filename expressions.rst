@@ -13,14 +13,14 @@ ways:
 
 * :doc:`Configuring services </service_container/expression_language>`;
 * :doc:`Route matching conditions </routing/conditions>`;
-* :ref:`Checking security <book-security-expressions>` (explained below) and
-  :ref:`access controls with allow_if <book-security-allow-if>`;
+* :ref:`Checking security <expressions-security>` (explained below) and
+  :ref:`access controls with allow_if <security-allow-if>`;
 * :doc:`Validation </reference/constraints/Expression>`.
 
 For more information about how to create and work with expressions, see
 :doc:`/components/expression_language/syntax`.
 
-.. _book-security-expressions:
+.. _expressions-security:
 
 Security: Complex Access Controls with Expressions
 --------------------------------------------------
@@ -48,7 +48,7 @@ that method is invented for this example).
 This uses an expression and you can learn more about the expression language
 syntax, see :doc:`/components/expression_language/syntax`.
 
-.. _book-security-expression-variables:
+.. _security-expression-variables:
 
 Inside the expression, you have access to a number of variables:
 

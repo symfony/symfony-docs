@@ -358,24 +358,24 @@ data_collector
 
 **Purpose**: Create a class that collects custom data for the profiler
 
-For details on creating your own custom data collection, read the cookbook
-article: :doc:`/profiler/data_collector`.
+For details on creating your own custom data collection, read the
+:doc:`/profiler/data_collector` article.
 
 doctrine.event_listener
 -----------------------
 
 **Purpose**: Add a Doctrine event listener
 
-For details on creating Doctrine event listeners, read the cookbook article:
-:doc:`/doctrine/event_listeners_subscribers`.
+For details on creating Doctrine event listeners, read the
+:doc:`/doctrine/event_listeners_subscribers` article.
 
 doctrine.event_subscriber
 -------------------------
 
 **Purpose**: Add a Doctrine event subscriber
 
-For details on creating Doctrine event subscribers, read the cookbook article:
-:doc:`/doctrine/event_listeners_subscribers`.
+For details on creating Doctrine event subscribers, read the
+:doc:`/doctrine/event_listeners_subscribers` article.
 
 .. _dic-tags-form-type:
 
@@ -384,16 +384,16 @@ form.type
 
 **Purpose**: Create a custom form field type
 
-For details on creating your own custom form type, read the cookbook article:
-:doc:`/form/create_custom_field_type`.
+For details on creating your own custom form type, read the
+:doc:`/form/create_custom_field_type` article.
 
 form.type_extension
 -------------------
 
 **Purpose**: Create a custom "form extension"
 
-For details on creating Form type extensions, read the cookbook article:
-:doc:`/form/create_form_type_extension`
+For details on creating Form type extensions, read the
+:doc:`/form/create_form_type_extension` article.
 
 .. _reference-dic-type_guesser:
 
@@ -402,7 +402,7 @@ form.type_guesser
 
 **Purpose**: Add your own logic for "form type guessing"
 
-This tag allows you to add your own logic to the :ref:`Form Guessing <book-forms-field-guessing>`
+This tag allows you to add your own logic to the :ref:`form guessing <forms-field-guessing>`
 process. By default, form guessing is done by "guessers" based on the validation
 metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
 (if you're using Propel).
@@ -708,7 +708,7 @@ channel when injecting the logger in a service.
 
     If you use MonologBundle 2.4 or higher, you can configure custom channels
     in the configuration and retrieve the corresponding logger service from
-    the service container directly (see :ref:`cookbook-monolog-channels-config`).
+    the service container directly (see :ref:`monolog-channels-config`).
 
 .. _dic_tags-monolog-processor:
 
@@ -934,7 +934,7 @@ When you call ``isGranted`` on Symfony's authorization checker, a system of "vot
 is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
-For more information, read the cookbook article: :doc:`/security/voters`.
+For more information, read the :doc:`/security/voters` article.
 
 .. _reference-dic-tags-serializer-encoder:
 
@@ -1289,8 +1289,8 @@ configuration and tag it with ``twig.extension``:
         ;
 
 For information on how to create the actual Twig Extension class, see
-`Twig's documentation`_ on the topic or read the cookbook article:
-:doc:`/templating/twig_extension`.
+`Twig's documentation`_ on the topic or read the
+:doc:`/templating/twig_extension` article.
 
 Before writing your own extensions, have a look at the
 `Twig official extension repository`_ which already includes several
@@ -1387,7 +1387,7 @@ validator.constraint_validator
 **Purpose**: Create your own custom validation constraint
 
 This tag allows you to create and register your own custom validation constraint.
-For more information, read the cookbook article: :doc:`/validation/custom_constraint`.
+For more information, read the :doc:`/validation/custom_constraint` article.
 
 validator.initializer
 ---------------------

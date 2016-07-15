@@ -45,8 +45,8 @@ It will also detect the following translator usages in PHP templates:
         {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured
-``en`` as the fallback locale (see :ref:`book-translation-configuration` and
-:ref:`book-translation-fallback` for how to configure these). And suppose
+``en`` as the fallback locale (see :ref:`translation-configuration` and
+:ref:`translation-fallback` for how to configure these). And suppose
 you've already setup some translations for the ``fr`` locale inside an AcmeDemoBundle:
 
 .. configuration-block::

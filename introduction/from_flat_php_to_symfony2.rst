@@ -317,7 +317,7 @@ As it stands now, that code would need to be added to every controller file.
 If you forget to include something in one file, hopefully it doesn't relate
 to security...
 
-.. _book-from_flat_php-front-controller:
+.. _from_flat_php-front-controller:
 
 A "Front Controller" to the Rescue
 ----------------------------------
@@ -752,12 +752,6 @@ the blog from flat PHP to Symfony has improved life:
 And perhaps best of all, by using Symfony, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony community**!
 A good selection of Symfony community tools can be found on `KnpBundles.com`_.
-
-Learn more from the Cookbook
-----------------------------
-
-* :doc:`/templating/PHP`
-* :doc:`/controller/service`
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org

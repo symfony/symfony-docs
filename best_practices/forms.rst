@@ -72,7 +72,7 @@ Registering Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also
-:ref:`register your form type as a service <form-cookbook-form-field-service>`.
+:ref:`register your form type as a service <form-field-service>`.
 But this is *not* recommended unless you plan to reuse the new form type in many
 places or embed it in other forms directly or via the
 :doc:`collection type </reference/forms/types/collection>`.
@@ -171,9 +171,8 @@ all of the fields:
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See the :doc:`/form/form_customization` cookbook article for more information
-on this and how you can control *how* the form renders at a global level
-using form theming.
+See :doc:`/form/form_customization` for more information on this and how you
+can control *how* the form renders at a global level using form theming.
 
 Handling Form Submits
 ---------------------

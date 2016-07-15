@@ -124,9 +124,8 @@ dump of all available configuration options by running:
 .. index::
    single: Environments; Introduction
 
-.. _environments-summary:
 .. _page-creation-environments:
-.. _book-page-creation-prod-cache-clear:
+.. _page-creation-prod-cache-clear:
 
 The imports Key: Loading other Configuration Files
 --------------------------------------------------
@@ -261,7 +260,7 @@ signs - e.g. ``%locale%``.
     See :doc:`/configuration/external_parameters`.
 
 For more information about parameters - including how to reference them from inside
-a controller - see :ref:`book-service-container-parameters`.
+a controller - see :ref:`service-container-parameters`.
 
 .. _config-parameters-yml:
 

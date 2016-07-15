@@ -92,5 +92,5 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
 
     If you define a controller as a service then you can get the ``Request``
     object without injecting the container by having it passed in as an
-    argument of your action method. See
-    :ref:`book-controller-request-argument` for details.
+    argument of your action method. See :ref:`controller-request-argument` for
+    details.

@@ -6,7 +6,7 @@ Authentication and Firewalls (i.e. Getting the User's Credentials)
 
 You can configure Symfony to authenticate your users using any method you
 want and to load user information from any source. This is a complex topic, but
-the :doc:`Security Cookbook Section </security>` has a lot of information about
+the :doc:`Security guide</security>` has a lot of information about
 this.
 
 Regardless of your needs, authentication is configured in ``security.yml``,

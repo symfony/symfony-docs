@@ -6,7 +6,7 @@ How to Secure any Service or Method in your Application
 =======================================================
 
 In the security chapter, you can see how to
-:ref:`secure a controller <book-security-securing-controller>` by requesting
+:ref:`secure a controller <security-securing-controller>` by requesting
 the ``security.authorization_checker`` service from the Service Container and
 checking the current user's role::
 
@@ -22,11 +22,10 @@ checking the current user's role::
 
 You can also secure *any* service by injecting the ``security.authorization_checker``
 service into it. For a general introduction to injecting dependencies into
-services see the :doc:`/service_container` chapter of the book. For
-example, suppose you have a ``NewsletterManager`` class that sends out emails
-and you want to restrict its use to only users who have some
-``ROLE_NEWSLETTER_ADMIN`` role. Before you add security, the class looks
-something like this::
+services see the :doc:`/service_container` article. For example, suppose you
+have a ``NewsletterManager`` class that sends out emails and you want to
+restrict its use to only users who have some ``ROLE_NEWSLETTER_ADMIN`` role.
+Before you add security, the class looks something like this::
 
     // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;

@@ -73,8 +73,7 @@ from the "Registration" are validated.
 
 .. seealso::
 
-    You can read more about this in :doc:`the Form chapter </form/data_based_validation>`
-    of the book.
+    You can read more about this in :doc:`/form/data_based_validation`.
 
 Form Variables
 --------------

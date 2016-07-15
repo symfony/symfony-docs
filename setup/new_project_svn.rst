@@ -14,9 +14,9 @@ How to Create and Store a Symfony Project in Subversion
 Once you've read through :doc:`/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. The
 preferred method to manage Symfony projects is using `Git`_ but some prefer
-to use `Subversion`_ which is totally fine!. In this cookbook article, you'll
-learn how to manage your project using `SVN`_ in a similar manner you
-would do with `Git`_.
+to use `Subversion`_ which is totally fine!. In this article, you'll learn how
+to manage your project using `SVN`_ in a similar manner you would do with
+`Git`_.
 
 .. tip::
 

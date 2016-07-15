@@ -210,7 +210,7 @@ of the master page.
 With ESI, the full page cache will be valid for 600 seconds, but the news
 component cache will only last for 60 seconds.
 
-.. _book-http_cache-fragments:
+.. _http_cache-fragments:
 
 When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of

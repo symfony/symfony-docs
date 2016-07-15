@@ -37,7 +37,7 @@ header:
 
 If you do not have access to your Varnish configuration, you can instead
 configure Symfony to distrust the ``Forwarded`` header as detailed in
-:ref:`the cookbook <cookbook-request-untrust-header>`.
+:ref:`How to Configure Symfony to Work behind a Load Balancer or a Reverse Proxy <request-untrust-header>`.
 
 .. _varnish-x-forwarded-headers:
 
