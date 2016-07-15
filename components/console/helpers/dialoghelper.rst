@@ -288,4 +288,4 @@ input stream.
 .. seealso::
 
     You find more information about testing commands in the console component
-    docs about :ref:`testing console commands <component-console-testing-commands>`.
+    docs about :ref:`testing console commands <console-testing-commands>`.
