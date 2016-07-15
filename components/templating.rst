@@ -208,6 +208,8 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    templating/*
+    /components/templating/*
+    /templating
+    /templating/*
 
 .. _Packagist: https://packagist.org/packages/symfony/templating

@@ -467,3 +467,9 @@ the whole form or specific field(s)::
 
 .. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
 .. _Packagist: https://packagist.org/packages/symfony/dom-crawler
+
+Learn more
+----------
+
+* :doc:`/testing`
+* :doc:`/components/css_selector`

@@ -324,4 +324,7 @@ document inside a template::
     echo $packages->getUrl('/resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
 
+Learn more
+----------
+
 .. _Packagist: https://packagist.org/packages/symfony/asset
