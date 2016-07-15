@@ -68,7 +68,7 @@ The point is, you can set ``empty_data`` to the exact "new" object that you want
 .. tip::
 
     In order to pass arguments to the ``BlogType`` constructor, you'll need to
-    :ref:`register it as a service and tag with form.type <form-as-services>`.
+    :doc:`register it as a service and tag with form.type </form/form_dependencies>`.
 
 Option 2: Provide a Closure
 ---------------------------
