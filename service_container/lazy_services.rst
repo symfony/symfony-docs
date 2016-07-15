@@ -26,23 +26,20 @@ Installation
 ------------
 
 In order to use the lazy service instantiation, you will first need to install
-the `ProxyManager bridge`_:
+the ``ocramius/proxy-manager`` package:
 
 .. code-block:: bash
 
-    $ composer require symfony/proxy-manager-bridge:~2.3
+    $ composer require ocramius/proxy-manager
 
 .. note::
 
-    If you're using the full-stack framework, the proxy manager bridge is
-    already included but the actual proxy manager still needs to be installed:
+    If you're not using the full-stack framework, you also have to install the
+    `ProxyManager bridge`_
 
     .. code-block:: bash
-    
-        $ composer require ocramius/proxy-manager
 
-    Afterwards compile your container and check to make sure that you get
-    a proxy for your lazy services.
+        $ composer require symfony/proxy-manager-bridge:~2.3
 
 Configuration
 -------------
@@ -54,9 +51,9 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: yaml
 
         services:
-           foo:
-             class: Acme\Foo
-             lazy: true
+           app.twig_extension:
+             class: AppBundle\Twig\AppExtension
+             lazy:  true
 
     .. code-block:: xml
 
@@ -66,7 +63,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="foo" class="Acme\Foo" lazy="true" />
+                <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" lazy="true" />
             </services>
         </container>
 
@@ -74,28 +71,23 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition('Acme\Foo');
+        $definition = new Definition('AppBundle\Twig\AppExtension');
         $definition->setLazy(true);
-        $container->setDefinition('foo', $definition);
 
-You can then require the service from the container::
+        $container->setDefinition('app.twig_extension', $definition);
 
-    $service = $container->get('foo');
+Once you inject the service into another service, a virtual `proxy`_ with the
+same signature of the class representing the service should be injected. The
+same happends when calling ``Container::get()`` directly.
 
-At this point the retrieved ``$service`` should be a virtual `proxy`_ with
-the same signature of the class representing the service. You can also inject
-the service just like normal into other services. The object that's actually
-injected will be the proxy.
+The actual class will be instantiated as soon as you try to interact with the
+service (e.g. call one of its methods).
 
 To check if your proxy works you can simply check the interface of the
-received object.
+received object::
 
-.. code-block:: php
-
-    var_dump(class_implements($service));
-
-If the class implements the ``ProxyManager\Proxy\LazyLoadingInterface``
-your lazy loaded services are working.
+    dump(class_implements($service));
+    // the output should include "ProxyManager\Proxy\LazyLoadingInterface"
 
 .. note::
 
@@ -103,15 +95,11 @@ your lazy loaded services are working.
     `ocramius/proxy-manager`_, the container will just skip over the ``lazy``
     flag and simply instantiate the service as it would normally do.
 
-The proxy gets initialized and the actual service is instantiated as soon
-as you interact in any way with this object.
-
 Additional Resources
 --------------------
 
 You can read more about how proxies are instantiated, generated and initialized
 in the `documentation of ProxyManager`_.
-
 
 .. _`ProxyManager bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/ProxyManager
 .. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern

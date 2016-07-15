@@ -645,9 +645,11 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+php
 
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
         <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
+
+.. versionadded:: 2.8
+    The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
+    to 2.8, you had to use the ``generate()`` helper method.
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
@@ -726,8 +728,6 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
-            <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8,
-                 you had to use generate(). -->
             <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">

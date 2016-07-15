@@ -102,7 +102,7 @@ Creating an Event Listener
 
 Next, you'll need to create an event listener, which will hold the logic
 that you want executed before your controllers. If you're not familiar with
-event listeners, you can learn more about them at :doc:`/event_dispatcher/event_listener`::
+event listeners, you can learn more about them at :doc:`/event_dispatcher`::
 
     // src/AppBundle/EventListener/TokenListener.php
     namespace AppBundle\EventListener;

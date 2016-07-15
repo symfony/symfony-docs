@@ -149,7 +149,7 @@ named ``kernel.http_method_override``.
 
 .. seealso::
 
-    For more information, see :doc:`/routing/method_parameters`.
+    For more information, see :doc:`/form/action_method`.
 
 .. caution::
 

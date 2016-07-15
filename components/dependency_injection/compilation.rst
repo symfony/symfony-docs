@@ -8,7 +8,7 @@ The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
 making the container more efficient by resolving parameters and removing
 unused services. Also, certain features - like using
-:doc:`parent services </components/dependency_injection/parentservices>`
+:doc:`parent services </service_container/parent_services>`
 - require the container to be compiled.
 
 It is compiled by running::
@@ -47,7 +47,7 @@ and can be registered with the container with::
 The main work of the extension is done in the ``load`` method. In the ``load``
 method you can load configuration from one or more configuration files as
 well as manipulate the container definitions using the methods shown in
-:doc:`/components/dependency_injection/definitions`.
+:doc:`/service_container/definitions`.
 
 The ``load`` method is passed a fresh container to set up, which is then
 merged afterwards into the container it is registered with. This allows
@@ -341,7 +341,7 @@ edit service definitions of other extensions as well as retrieving information
 about service definitions.
 
 The container's parameters and definitions can be manipulated using the
-methods described in :doc:`/components/dependency_injection/definitions`.
+methods described in :doc:`/service_container/definitions`.
 
 .. note::
 
@@ -563,4 +563,3 @@ have the cache will be considered stale.
 
     In the full-stack framework the compilation and caching of the container
     is taken care of for you.
-

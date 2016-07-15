@@ -19,11 +19,14 @@ The most common way to inject dependencies is via a class's constructor.
 To do this you need to add an argument to the constructor signature to accept
 the dependency::
 
+    namespace AppBundle\Mail\NewsletterManager;
+
+    // ...
     class NewsletterManager
     {
         protected $mailer;
 
-        public function __construct(\Mailer $mailer)
+        public function __construct(MailerInterface $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -39,11 +42,11 @@ service container configuration:
     .. code-block:: yaml
 
        services:
-            my_mailer:
-                # ...
-            newsletter_manager:
+            # ...
+
+            app.newsletter_manager:
                 class:     NewsletterManager
-                arguments: ['@my_mailer']
+                arguments: ['@mailer']
 
     .. code-block:: xml
 
@@ -53,12 +56,10 @@ service container configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_mailer">
-                    <!-- ... -->
-                </service>
+                <!-- ... -->
 
-                <service id="newsletter_manager" class="NewsletterManager">
-                    <argument type="service" id="my_mailer"/>
+                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
+                    <argument type="service" id="mailer"/>
                 </service>
             </services>
         </container>
@@ -68,10 +69,10 @@ service container configuration:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('my_mailer', ...);
-        $container->setDefinition('newsletter_manager', new Definition(
-            'NewsletterManager',
-            array(new Reference('my_mailer'))
+        // ...
+        $container->setDefinition('app.newsletter_manager', new Definition(
+            'AppBundle\Mail\NewsletterManager',
+            array(new Reference('mailer'))
         ));
 
 .. tip::
@@ -104,11 +105,12 @@ Setter Injection
 Another possible injection point into a class is by adding a setter method
 that accepts the dependency::
 
+    // ...
     class NewsletterManager
     {
-        protected $mailer;
+        private $mailer;
 
-        public function setMailer(\Mailer $mailer)
+        public function setMailer(MailerInterface $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -121,12 +123,12 @@ that accepts the dependency::
     .. code-block:: yaml
 
        services:
-            my_mailer:
-                # ...
-            newsletter_manager:
-                class:     NewsletterManager
+            # ...
+
+            app.newsletter_manager:
+                class: AppBundle\Mail\NewsletterManager
                 calls:
-                    - [setMailer, ['@my_mailer']]
+                    - [setMailer, ['@mailer']]
 
     .. code-block:: xml
 
@@ -136,13 +138,11 @@ that accepts the dependency::
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_mailer">
-                    <!-- ... -->
-                </service>
+                <!-- ... -->
 
-                <service id="newsletter_manager" class="NewsletterManager">
+                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
                     <call method="setMailer">
-                        <argument type="service" id="my_mailer" />
+                        <argument type="service" id="mailer" />
                     </call>
                 </service>
             </services>
@@ -153,10 +153,10 @@ that accepts the dependency::
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('my_mailer', ...);
-        $container->setDefinition('newsletter_manager', new Definition(
-            'NewsletterManager'
-        ))->addMethodCall('setMailer', array(new Reference('my_mailer')));
+        // ...
+        $container->register('app.newsletter_manager', 'AppBundle\Mail\NewsletterManager')
+            ->addMethodCall('setMailer', array(new Reference('mailer')))
+        ;
 
 This time the advantages are:
 
@@ -182,6 +182,7 @@ Property Injection
 
 Another possibility is just setting public fields of the class directly::
 
+    // ...
     class NewsletterManager
     {
         public $mailer;
@@ -194,12 +195,12 @@ Another possibility is just setting public fields of the class directly::
     .. code-block:: yaml
 
        services:
-            my_mailer:
-                # ...
-            newsletter_manager:
-                class: NewsletterManager
+            # ...
+
+            app.newsletter_manager:
+                class: AppBundle\Mail\NewsletterManager
                 properties:
-                    mailer: '@my_mailer'
+                    mailer: '@mailer'
 
     .. code-block:: xml
 
@@ -209,12 +210,10 @@ Another possibility is just setting public fields of the class directly::
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_mailer">
-                    <!-- ... -->
-                </service>
+                <!-- ... -->
 
-                <service id="newsletter_manager" class="NewsletterManager">
-                    <property name="mailer" type="service" id="my_mailer" />
+                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
+                    <property name="mailer" type="service" id="mailer" />
                 </service>
             </services>
         </container>
@@ -224,10 +223,10 @@ Another possibility is just setting public fields of the class directly::
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('my_mailer', ...);
-        $container->setDefinition('newsletter_manager', new Definition(
-            'NewsletterManager'
-        ))->setProperty('mailer', new Reference('my_mailer'));
+        // ...
+        $container->register('newsletter_manager', 'AppBundle\Mail\NewsletterManager')
+            ->setProperty('mailer', new Reference('mailer'))
+        ;
 
 There are mainly only disadvantages to using property injection, it is similar
 to setter injection but with these additional important problems:
@@ -242,4 +241,3 @@ to setter injection but with these additional important problems:
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
 as in a third party library, which uses public properties for its dependencies.
-
