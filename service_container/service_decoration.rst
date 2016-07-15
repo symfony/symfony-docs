@@ -163,11 +163,6 @@ convention, the old ``app.mailer`` service is renamed to
 Decoration Priority
 -------------------
 
-.. versionadded:: 2.8
-    The ability to define the decoration priority was introduced in Symfony 2.8.
-    Prior to Symfony 2.8, the priority depends on the order in
-    which definitions are found.
-
 If you want to apply more than one decorator to a service, you can control their
 order by configuring the priority of decoration, this can be any integer number
 (decorators with higher priorities will be applied first).
