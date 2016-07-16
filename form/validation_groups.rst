@@ -18,8 +18,8 @@ you'll need to specify which validation group(s) your form should use::
     The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
     the method was called ``setDefaultOptions()``.
 
-If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``configureOptions()``
+If you're creating :ref:`form classes <form-creating-form-classes>` (a good
+practice), then you'll need to add the following to the ``configureOptions()``
 method::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -28,7 +28,7 @@ Loading users via a Doctrine entity has 2 basic steps:
 
 Afterwards, you can learn more about :ref:`forbidding inactive users <security-advanced-user-interface>`,
 :ref:`using a custom query <authenticating-someone-with-a-custom-entity-provider>`
-and :ref:`user serialization to the session <cookbook-security-serialize-equatable>`
+and :ref:`user serialization to the session <security-serialize-equatable>`
 
 .. _security-crete-user-entity:
 .. _the-data-model:
@@ -140,14 +140,14 @@ For this entry, suppose that you already have a ``User`` entity inside an
     }
 
 To make things shorter, some of the getter and setter methods aren't shown.
-But you can :ref:`generate <book-doctrine-generating-getters-and-setters>` these
+But you can :ref:`generate <doctrine-generating-getters-and-setters>` these
 by running:
 
 .. code-block:: bash
 
     $ php app/console doctrine:generate:entities AppBundle/Entity/User
 
-Next, make sure to :ref:`create the database table <book-doctrine-creating-the-database-tables-schema>`:
+Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: bash
 
@@ -180,7 +180,7 @@ decide to implement :ref:`AdvancedUserInterface <security-advanced-user-interfac
 On each request, the ``id`` is used to query for a fresh ``User`` object
 from the database.
 
-Want to know more? See :ref:`cookbook-security-serialize-equatable`.
+Want to know more? See :ref:`security-serialize-equatable`.
 
 .. _authenticating-someone-against-a-database:
 .. _security-config-entity-provider:
@@ -510,7 +510,7 @@ This tells Symfony to *not* query automatically for the User. Instead, when
 someone logs in, the ``loadUserByUsername()`` method on ``UserRepository``
 will be called.
 
-.. _`cookbook-security-serialize-equatable`:
+.. _security-serialize-equatable:
 
 Understanding serialize and how a User is Saved in the Session
 --------------------------------------------------------------

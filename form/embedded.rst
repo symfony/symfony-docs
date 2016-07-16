@@ -146,5 +146,5 @@ You can also embed a collection of forms into one form (imagine a ``Category``
 form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
-For more information see the ":doc:`/form/form_collections`" cookbook
-entry and the :doc:`CollectionType </reference/forms/types/collection>` reference.
+For more information see the :doc:`/form/form_collections` article and the
+:doc:`CollectionType </reference/forms/types/collection>` reference.

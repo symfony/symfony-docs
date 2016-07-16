@@ -83,7 +83,7 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 
     If you need more control over exactly when your form is submitted or which
     data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
-    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+    for this. Read more about it :ref:`form-call-submit-directly`.
 
 .. sidebar:: Integration with the HttpFoundation Component
 
@@ -218,7 +218,7 @@ The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
 to Twig, which gives you access to the Twig functions for rendering forms.
 To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\TwigRendererEngine`,
-where you define your :ref:`form themes <cookbook-form-customization-form-themes>`
+where you define your :ref:`form themes <form-customization-form-themes>`
 (i.e. resources/files that define form HTML markup).
 
 For general details on rendering forms, see :doc:`/form/form_customization`.
@@ -494,8 +494,8 @@ builder:
 .. tip::
 
     In this example, the default data is an array. Later, when you use the
-    :ref:`data_class <book-forms-data-class>` option to bind data directly
-    to objects, your default data will be an instance of that object.
+    :ref:`data_class <form-data-class>` option to bind data directly to
+    objects, your default data will be an instance of that object.
 
 .. _component-form-intro-rendering-form:
 

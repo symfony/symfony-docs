@@ -434,7 +434,7 @@ a slash. URLs matching this route might look like:
 * ``/articles/fr/2010/my-post.rss``
 * ``/articles/en/2013/my-latest-post.html``
 
-.. _book-routing-format-param:
+.. _routing-format-param:
 
 .. sidebar:: The Special ``_format`` Routing Parameter
 
@@ -473,10 +473,10 @@ that are special: each adds a unique piece of functionality inside your applicat
     executed when the route is matched.
 
 ``_format``
-    Used to set the request format (:ref:`read more <book-routing-format-param>`).
+    Used to set the request format (:ref:`read more <routing-format-param>`).
 
 ``_locale``
-    Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
+    Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
 .. index::
    single: Routing; Controllers
@@ -647,7 +647,7 @@ But if you pass extra ones, they will be added to the URI as a query string::
 Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To generate URLs inside Twig, see the templating chapter: :ref:`book-templating-pages`.
+To generate URLs inside Twig, see the templating chapter: :ref:`templating-pages`.
 If you also need to generate URLs in JavaScript, see :doc:`/routing/generate_url_javascript`.
 
 .. index::
@@ -714,8 +714,18 @@ to specify beautiful URLs and keeps the functionality of your application
 decoupled from those URLs. Routing is a bidirectional mechanism, meaning that it
 should also be used to generate URLs.
 
-Learn more
-----------
+Keep Going!
+-----------
+
+Routing, check! Now, uncover the power of :doc:`controllers </controller>`.
+
+Learn more about Routing
+------------------------
+
+.. toctree::
+    :hidden:
+
+    controller
 
 .. toctree::
     :maxdepth: 1

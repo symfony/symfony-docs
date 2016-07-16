@@ -16,8 +16,8 @@ in your application and to optimize them the way you want.
 
 .. note::
 
-    While you'll learn the basics here, an entire cookbook entry is devoted
-    to the organization and best practices of :doc:`bundles </bundles/best_practices>`.
+    While you'll learn the basics here, an entire article is devoted to the
+    organization and best practices of :doc:`bundles </bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a BlogBundle, a ForumBundle or
@@ -166,12 +166,12 @@ of the most common elements of a bundle:
 A bundle can be as small or large as the feature it implements. It contains
 only the files you need and nothing else.
 
-As you move through the book, you'll learn how to persist objects to a database,
-create and validate forms, create translations for your application, write
-tests and much more. Each of these has their own place and role within the
-bundle.
+As you move through the guides, you'll learn how to persist objects to a
+database, create and validate forms, create translations for your application,
+write tests and much more. Each of these has their own place and role within
+the bundle.
 
-Learn More
+Learn more
 ----------
 
 .. toctree::

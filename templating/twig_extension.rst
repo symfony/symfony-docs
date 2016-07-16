@@ -23,7 +23,7 @@ Create the Extension Class
 
 .. note::
 
-    This cookbook describes how to write a custom Twig extension as of
+    This article describes how to write a custom Twig extension as of
     Twig 1.12. If you are using an older version, please read
     `Twig extensions documentation legacy`_.
 

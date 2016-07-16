@@ -58,7 +58,7 @@ You can of course also use this trick when rendering embedded controllers
 from within a template. But since the purpose of rendering a controller from
 within a template is typically to prepare some data in a custom controller,
 this is probably only useful if you'd like to cache this page partial (see
-:ref:`cookbook-templating-no-controller-caching`).
+:ref:`templating-no-controller-caching`).
 
 .. configuration-block::
 
@@ -76,7 +76,7 @@ this is probably only useful if you'd like to cache this page partial (see
             $view['router']->generate('acme_privacy', array(), UrlGeneratorInterface::ABSOLUTE_URL)
         ) ?>
 
-.. _cookbook-templating-no-controller-caching:
+.. _templating-no-controller-caching:
 
 Caching the static Template
 ---------------------------

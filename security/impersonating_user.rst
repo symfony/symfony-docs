@@ -183,10 +183,9 @@ The firewall dispatches the ``security.switch_user`` event right after the imper
 is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
 passed to the listener, and you can use this to get the user that you are now impersonating.
 
-The cookbook article about
-:doc:`Making the Locale "Sticky" during a User's Session </session/locale_sticky_session>`
-does not update the locale when you impersonate a user. The following code sample will show
-how to change the sticky locale:
+The :doc:`/session/locale_sticky_session` article does not update the locale
+when you impersonate a user. The following code sample will show how to change
+the sticky locale:
 
 .. configuration-block::
 

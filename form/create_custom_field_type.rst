@@ -97,8 +97,7 @@ Creating a Template for the Field
 ---------------------------------
 
 Each field type is rendered by a template fragment, which is determined in part by
-the class name of your type. For more information, see
-:ref:`cookbook-form-customization-form-themes`.
+the class name of your type. For more information, see :ref:`form-customization-form-themes`.
 
 .. note::
 
@@ -268,7 +267,7 @@ But this only works because the ``GenderType`` is very simple. What if
 the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
 
-.. _form-cookbook-form-field-service:
+.. _form-field-service:
 
 Creating your Field Type as a Service
 -------------------------------------

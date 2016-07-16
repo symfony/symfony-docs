@@ -133,4 +133,4 @@ Next, register this as a service and tag it with ``form.type``:
 That's it! Your controller - where you create the form - doesn't need to change
 at all: Symfony is smart enough to load the ``TaskType`` from the container.
 
-Read :ref:`form-cookbook-form-field-service` for more information.
+Read :ref:`form-field-service` for more information.

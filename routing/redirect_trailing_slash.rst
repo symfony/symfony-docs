@@ -4,7 +4,7 @@
 Redirect URLs with a Trailing Slash
 ===================================
 
-The goal of this cookbook is to demonstrate how to redirect URLs with a
+The goal of this article is to demonstrate how to redirect URLs with a
 trailing slash to the same URL without a trailing slash
 (for example ``/en/blog/`` to ``/en/blog``).
 

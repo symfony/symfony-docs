@@ -257,7 +257,7 @@ great, your user can't actually add any new tags yet.
     for example in ``app/autoload.php``) or render each form field by hand
     using ``form_row``.
 
-.. _cookbook-form-collections-new-prototype:
+.. _form-collections-new-prototype:
 
 Allowing "new" Tags with the "Prototype"
 ----------------------------------------
@@ -418,7 +418,7 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     If you want to customize the HTML code in the prototype, read
-    :ref:`cookbook-form-custom-prototype`.
+    :ref:`form-custom-prototype`.
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
@@ -564,7 +564,7 @@ you will learn about next!).
     If you have a one-to-many relationship, then the workaround is similar,
     except that you can simply call ``setTask`` from inside ``addTag``.
 
-.. _cookbook-form-collections-remove:
+.. _form-collections-remove:
 
 Allowing Tags to be Removed
 ---------------------------

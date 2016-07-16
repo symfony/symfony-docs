@@ -14,8 +14,6 @@ configuration is optimized for two main purposes:
 * Be as similar as possible as the production environment to avoid problems
   when deploying the project.
 
-.. _cookbook-debugging-disable-bootstrap:
-
 Disabling the Bootstrap File and Class Caching
 ----------------------------------------------
 

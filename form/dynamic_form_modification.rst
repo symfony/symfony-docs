@@ -7,18 +7,18 @@ How to Dynamically Modify Forms Using Form Events
 Often times, a form can't be created statically. In this entry, you'll learn
 how to customize your form based on three common use-cases:
 
-1) :ref:`cookbook-form-events-underlying-data`
+1) :ref:`form-events-underlying-data`
 
    Example: you have a "Product" form and need to modify/add/remove a field
     based on the data on the underlying Product being edited.
 
-2) :ref:`cookbook-form-events-user-data`
+2) :ref:`form-events-user-data`
 
    Example: you create a "Friend Message" form and need to build a drop-down
    that contains only users that are friends with the *current* authenticated
    user.
 
-3) :ref:`cookbook-form-events-submitted-data`
+3) :ref:`form-events-submitted-data`
 
    Example: on a registration form, you have a "country" field and a "state"
    field which should populate dynamically based on the value in the "country"
@@ -27,7 +27,7 @@ how to customize your form based on three common use-cases:
 If you wish to learn more about the basics behind form events, you can
 take a look at the :doc:`Form Events </form/events>` documentation.
 
-.. _cookbook-form-events-underlying-data:
+.. _form-events-underlying-data:
 
 Customizing your Form Based on the Underlying Data
 --------------------------------------------------
@@ -75,8 +75,6 @@ once the object has been created. To do this, you can rely on Symfony's
 system to analyze the data on the object and modify the form based on the
 Product object's data. In this entry, you'll learn how to add this level of
 flexibility to your forms.
-
-.. _`cookbook-forms-event-listener`:
 
 Adding an Event Listener to a Form Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -136,8 +134,6 @@ the event listener might look like the following::
     full list of form events via the
     :class:`Symfony\\Component\\Form\\FormEvents` class.
 
-.. _`cookbook-forms-event-subscriber`:
-
 Adding an Event Subscriber to a Form Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -195,7 +191,7 @@ class::
     }
 
 
-.. _cookbook-form-events-user-data:
+.. _form-events-user-data:
 
 How to dynamically Generate Forms Based on user Data
 ----------------------------------------------------
@@ -396,7 +392,7 @@ You can also easily embed the form type into another form::
         $builder->add('message', FriendMessageFormType::class);
     }
 
-.. _cookbook-form-events-submitted-data:
+.. _form-events-submitted-data:
 
 Dynamic Generation for Submitted Forms
 --------------------------------------
@@ -655,7 +651,7 @@ The major benefit of submitting the whole form to just extract the updated
 ``position`` field is that no additional server-side code is needed; all the
 code from above to generate the submitted form can be reused.
 
-.. _cookbook-dynamic-form-modification-suppressing-form-validation:
+.. _form-dynamic-form-modification-suppressing-form-validation:
 
 Suppressing Form Validation
 ---------------------------
