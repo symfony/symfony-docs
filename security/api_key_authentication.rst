@@ -98,7 +98,7 @@ value and then a User object is created::
         }
     }
 
-Once you've :ref:`configured <cookbook-security-api-key-config>` everything,
+Once you've :ref:`configured <security-api-key-config>` everything,
 you'll be able to authenticate by adding an apikey parameter to the query
 string, like ``http://example.com/api/foo?apikey=37b51d194a7513e45b56f6524f2d51f2``.
 
@@ -266,7 +266,7 @@ exception in ``refreshUser()``.
 .. note::
 
     If you *do* want to store authentication data in the session so that
-    the key doesn't need to be sent on every request, see :ref:`cookbook-security-api-key-session`.
+    the key doesn't need to be sent on every request, see :ref:`security-api-key-session`.
 
 Handling Authentication Failure
 -------------------------------
@@ -303,7 +303,7 @@ you can use to create an error ``Response``.
         }
     }
 
-.. _cookbook-security-api-key-config:
+.. _security-api-key-config:
 
 Configuration
 -------------
@@ -471,7 +471,7 @@ store the authentication information in the session, which isn't necessary
 since the client will send the ``apikey`` on each request. If you *do* need
 to store authentication in the session, keep reading!
 
-.. _cookbook-security-api-key-session:
+.. _security-api-key-session:
 
 Storing Authentication in the Session
 -------------------------------------

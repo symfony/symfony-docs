@@ -96,7 +96,7 @@ That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
-.. _cookbook-request-untrust-header:
+.. _request-untrust-header:
 
 My Reverse Proxy Sends X-Forwarded-For but Does not Filter the Forwarded Header
 -------------------------------------------------------------------------------

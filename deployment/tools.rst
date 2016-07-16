@@ -95,7 +95,7 @@ Basic scripting
     the deploying of your project.
 
 Platform as a Service Providers
-    The Symfony Cookbook includes detailed articles for some of the most well-known
+    This guide includes detailed articles for some of the most well-known
     Platform as a Service (PaaS) providers:
 
     * :doc:`Microsoft Azure </deployment/azure-website>`

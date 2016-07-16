@@ -165,8 +165,9 @@ delivery_whitelist
 
 Used in combination with ``delivery_address``. If set, emails matching any
 of these patterns will be delivered like normal, as well as being sent to
-``delivery_address``. For details, see
-:ref:`the cookbook entry <sending-to-a-specified-address-but-with-exceptions>`.
+``delivery_address``. For details, see the
+:ref:`How to Work with Emails during Development <sending-to-a-specified-address-but-with-exceptions>`
+article.
 
 disable_delivery
 ~~~~~~~~~~~~~~~~

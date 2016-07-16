@@ -10,8 +10,8 @@ How to Define Controllers as Services
     They are used by some developers for very specific use cases, such as
     DDD (*domain-driven design*) and Hexagonal Architecture applications.
 
-In the book, you've learned how easily a controller can be used when it
-extends the base
+In the :doc:`/controller` guide, you've learned how easily a controller can be
+used when it extends the base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class. While
 this works fine, controllers can also be specified as services. Even if you don't
 specify your controllers as services, you might see them being used in some

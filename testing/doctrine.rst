@@ -11,8 +11,6 @@ that's meant to be tested against a real database connection.
 Fortunately, you can easily test your queries against a real database, as
 described below.
 
-.. _cookbook-doctrine-repo-functional-test:
-
 Functional Testing
 ------------------
 

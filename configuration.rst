@@ -124,9 +124,8 @@ dump of all available configuration options by running:
 .. index::
    single: Environments; Introduction
 
-.. _environments-summary:
 .. _page-creation-environments:
-.. _book-page-creation-prod-cache-clear:
+.. _page-creation-prod-cache-clear:
 
 The imports Key: Loading other Configuration Files
 --------------------------------------------------
@@ -261,7 +260,7 @@ signs - e.g. ``%locale%``.
     See :doc:`/configuration/external_parameters`.
 
 For more information about parameters - including how to reference them from inside
-a controller - see :ref:`book-service-container-parameters`.
+a controller - see :ref:`service-container-parameters`.
 
 .. _config-parameters-yml:
 
@@ -370,6 +369,29 @@ After you deploy, you'll use the ``prod`` environment.
 
 To learn more about *how* to execute and control each environment, see
 :doc:`/configuration/environments`.
+
+Keep Going!
+-----------
+
+Congratulations! You've tackled the basics in Symfony. Next, learn about *each*
+part of Symfony individually by following the guides. Check out:
+
+* :doc:`/forms`
+* :doc:`/doctrine`
+* :doc:`/service_container`
+* :doc:`/security`
+* :doc:`/email`
+* :doc:`/logging`
+
+And the many other topics.
+
+Learn more
+----------
+
+.. toctree::
+    :hidden:
+
+    forms
 
 .. toctree::
     :maxdepth: 1

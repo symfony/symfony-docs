@@ -71,4 +71,4 @@ of the entity as well you have to adjust the option as follows::
     }
 
 You can find more information about how the validation groups and the default constraints
-work in the book section about :doc:`validation groups </validation/groups>`.
+work in the article about :doc:`validation groups </validation/groups>`.

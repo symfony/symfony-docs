@@ -17,7 +17,7 @@ code.
 .. note::
 
     How to render templates is covered in the
-    :ref:`controller <controller-rendering-templates>` page of the book.
+    :ref:`controller <controller-rendering-templates>` article.
 
 .. index::
    single: Templating; What is a template?
@@ -562,7 +562,7 @@ you set `with_context`_ to false).
 .. index::
    single: Templating; Linking to pages
 
-.. _book-templating-pages:
+.. _templating-pages:
 
 Linking to Pages
 ~~~~~~~~~~~~~~~~
@@ -747,7 +747,7 @@ correctly:
 .. index::
    single: Templating; Linking to assets
 
-.. _book-templating-assets:
+.. _templating-assets:
 
 Linking to Assets
 ~~~~~~~~~~~~~~~~~
@@ -942,8 +942,18 @@ The templating system is just *one* of the many tools in Symfony. And its job is
 simple: allow us to render dynamic & complex HTML output so that this can ultimately
 be returned to the user, sent in an email or something else.
 
+Keep Going!
+-----------
+
+Before diving into the rest of Symfony, check out the :doc:`configuration system </configuration>`.
+
 Learn more
 ----------
+
+.. toctree::
+    :hidden:
+
+    configuration
 
 .. toctree::
     :maxdepth: 1

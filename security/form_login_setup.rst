@@ -281,7 +281,7 @@ a specific URL.
 For more details on this and how to customize the form login process in general,
 see :doc:`/security/form_login`.
 
-.. _book-security-common-pitfalls:
+.. _security-common-pitfalls:
 
 Avoid Common Pitfalls
 ---------------------

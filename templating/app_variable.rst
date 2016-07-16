@@ -47,5 +47,5 @@ automatically:
 
 .. tip::
 
-    You can add your own global template variables. See the cookbook example
-    on :doc:`Global Variables </templating/global_variables>`.
+    You can add your own global template variables, see
+    :doc:`/templating/global_variables`.

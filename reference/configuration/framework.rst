@@ -293,7 +293,7 @@ method.
 .. seealso::
 
     You can read more information about the default locale in
-    :ref:`book-translation-default-locale`.
+    :ref:`translation-default-locale`.
 
 trusted_hosts
 ~~~~~~~~~~~~~
@@ -470,7 +470,7 @@ fragments
 .. seealso::
 
     Learn more about fragments in the
-    :ref:`HTTP Cache article <book-http_cache-fragments>`.
+    :ref:`HTTP Cache article <http_cache-fragments>`.
 
 .. _reference-fragments-enabled:
 
@@ -1079,7 +1079,7 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
     All percentage signs (``%``) in the format string must be doubled to
     escape the character. Without escaping, values might inadvertently be
-    interpreted as :ref:`book-service-container-parameters`.
+    interpreted as :ref:`service-container-parameters`.
 
 .. tip::
 
@@ -1128,7 +1128,7 @@ resources
 
 A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
-:ref:`the form book chapter <book-forms-theming-twig>`.
+:ref:`the form article <forms-theming-twig>`.
 
 Assume you have custom global form themes in
 ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
@@ -1403,7 +1403,7 @@ has to implement the ``Doctrine\Common\Cache\Cache`` interface.
 
 .. seealso::
 
-    For more information, see :ref:`cookbook-serializer-enabling-metadata-cache`.
+    For more information, see :ref:`serializer-enabling-metadata-cache`.
 
 .. _reference-serializer-enable_annotations:
 
@@ -1416,7 +1416,7 @@ If this option is enabled, serialization groups can be defined using annotations
 
 .. seealso::
 
-    For more information, see :ref:`cookbook-serializer-using-serialization-groups-annotations`.
+    For more information, see :ref:`serializer-using-serialization-groups-annotations`.
 
 name_converter
 ..............

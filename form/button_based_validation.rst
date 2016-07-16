@@ -36,5 +36,4 @@ large or whether you tried to submit text in a number field.
 .. seealso::
 
     To see how to use a service to resolve ``validation_groups`` dynamically
-    read the :doc:`/validation/group_service_resolver`
-    chapter in the cookbook.
+    read the :doc:`/validation/group_service_resolver` article.

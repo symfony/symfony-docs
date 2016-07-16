@@ -93,7 +93,7 @@ that your current sessions aren't lost when you clear Symfony's cache.
     Using a different session save handler is an excellent (yet more complex)
     method of session management available within Symfony. See
     :doc:`/components/http_foundation/session_configuration` for a
-    discussion of session save handlers. There are also entries in the cookbook
+    discussion of session save handlers. There are also articles
     about storing sessions in a :doc:`relational database </doctrine/pdo_session_storage>`
     or a :doc:`NoSQL database </doctrine/mongodb_session_storage>`.
 

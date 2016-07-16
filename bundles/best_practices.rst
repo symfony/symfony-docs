@@ -13,7 +13,7 @@ This article is all about how to structure your **reusable bundles** so that
 they're easy to configure and extend. Many of these recommendations do not
 apply to application bundles because you'll want to keep those as simple
 as possible. For application bundles, just follow the practices shown throughout
-the book and cookbook.
+the guides.
 
 .. seealso::
 
@@ -414,10 +414,11 @@ The ``composer.json`` file should include at least the following metadata:
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
 * :doc:`/bundles/extension`
+* :doc:`/bundles/configuration`
 
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/

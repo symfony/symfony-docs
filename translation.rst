@@ -33,20 +33,20 @@ Symfony Framework. You can read the
 :doc:`Translation component documentation </components/translation/usage>`
 to learn even more. Overall, the process has several steps:
 
-#. :ref:`Enable and configure <book-translation-configuration>` Symfony's
+#. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
 
 #. Abstract strings (i.e. "messages") by wrapping them in calls to the
-   ``Translator`` (":ref:`book-translation-basic`");
+   ``Translator`` (":ref:`translation-basic`");
 
-#. :ref:`Create translation resources/files <book-translation-resources>`
+#. :ref:`Create translation resources/files <translation-resources>`
    for each supported locale that translate each message in the application;
 
-#. Determine, :ref:`set and manage the user's locale <book-translation-user-locale>`
+#. Determine, :doc:`set and manage the user's locale </translation/locale>`
    for the request and optionally
    :doc:`on the user's entire session </session/locale_sticky_session>`.
 
-.. _book-translation-configuration:
+.. _translation-configuration:
 
 Configuration
 -------------
@@ -89,13 +89,13 @@ locale to lookup and return translated messages. Before using it, enable the
             'translator' => array('fallbacks' => array('en')),
         ));
 
-See :ref:`book-translation-fallback` for details on the ``fallbacks`` key
+See :ref:`translation-fallback` for details on the ``fallbacks`` key
 and what Symfony does when it doesn't find a translation.
 
 The locale used in translations is the one stored on the request. This is
-typically set via a ``_locale`` attribute on your routes (see :ref:`book-translation-locale-url`).
+typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
 
-.. _book-translation-basic:
+.. _translation-basic:
 
 Basic Translation
 -----------------
@@ -116,7 +116,7 @@ for example, that you're translating a simple message from inside a controller::
         return new Response($translated);
     }
 
-.. _book-translation-resources:
+.. _translation-resources:
 
 When this code is executed, Symfony will attempt to translate the message
 "Symfony is great" based on the ``locale`` of the user. For this to work,
@@ -155,11 +155,11 @@ different formats, XLIFF being the recommended format:
         );
 
 For information on where these files should be located, see
-:ref:`book-translation-resource-locations`.
+:ref:`translation-resource-locations`.
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
-the message inside your :ref:`templates <book-translation-tags>`.
+the message inside your :ref:`templates <translation-tags>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,7 +170,7 @@ To actually translate the message, Symfony uses a simple process:
 
 * A catalog (e.g. big collection) of translated messages is loaded from translation
   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-  :ref:`fallback locale <book-translation-fallback>` are also loaded and
+  :ref:`fallback locale <translation-fallback>` are also loaded and
   added to the catalog if they don't already exist. The end result is a large
   "dictionary" of translations.
 
@@ -199,7 +199,7 @@ will try to look up the exact message, including the variable portions
 (e.g. *"Hello Ryan"* or *"Hello Fabien"*).
 
 For details on how to handle this situation, see :ref:`component-translation-placeholders`
-in the components documentation. For how to do this in templates, see :ref:`book-translation-tags`.
+in the components documentation. For how to do this in templates, see :ref:`translation-tags`.
 
 Pluralization
 -------------
@@ -213,7 +213,7 @@ plural, based on some variable:
     There are 5 apples.
 
 To handle this, use the :method:`Symfony\\Component\\Translation\\Translator::transChoice`
-method or the ``transchoice`` tag/filter in your :ref:`template <book-translation-tags>`.
+method or the ``transchoice`` tag/filter in your :ref:`template <translation-tags>`.
 
 For much more information, see :ref:`component-translation-pluralization`
 in the Translation component documentation.
@@ -224,7 +224,7 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony provides native
 support for both Twig and PHP templates.
 
-.. _book-translation-tags:
+.. _translation-tags:
 
 Twig Templates
 ~~~~~~~~~~~~~~
@@ -266,7 +266,7 @@ You can also specify the message domain and pass some additional variables:
         {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
 
-.. _book-translation-filters:
+.. _translation-filters:
 
 The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:
@@ -329,7 +329,7 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
-.. _book-translation-resource-locations:
+.. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
 ---------------------------------------------
@@ -434,7 +434,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         $ php bin/console cache:clear
 
-.. _book-translation-fallback:
+.. _translation-fallback:
 
 Fallback Translation Locales
 ----------------------------
@@ -458,281 +458,11 @@ checks translation resources for several locales:
     add the missing translation to the log file. For details, 
     see :ref:`reference-framework-translator-logging`.
 
-.. _book-translation-user-locale:
-
 Handling the User's Locale
 --------------------------
 
-The locale of the current user is stored in the request and is accessible
-via the ``request`` object::
-
-    use Symfony\Component\HttpFoundation\Request;
-
-    public function indexAction(Request $request)
-    {
-        $locale = $request->getLocale();
-    }
-
-To set the user's locale, you may want to create a custom event listener
-so that it's set before any other parts of the system (i.e. the translator)
-need it::
-
-        public function onKernelRequest(GetResponseEvent $event)
-        {
-            $request = $event->getRequest();
-
-            // some logic to determine the $locale
-            $request->setLocale($locale);
-        }
-
-Read :doc:`/session/locale_sticky_session` for more information on making
-the user's locale "sticky" to their session.
-
-.. note::
-
-    Setting the locale using ``$request->setLocale()`` in the controller
-    is too late to affect the translator. Either set the locale via a listener
-    (like above), the URL (see next) or call ``setLocale()`` directly on
-    the ``translator`` service.
-
-See the :ref:`book-translation-locale-url` section below about setting the
-locale via routing.
-
-.. _book-translation-locale-url:
-
-The Locale and the URL
-~~~~~~~~~~~~~~~~~~~~~~
-
-Since you can store the locale of the user in the session, it may be tempting
-to use the same URL to display a resource in different languages based
-on the user's locale. For example, ``http://www.example.com/contact`` could
-show content in English for one user and French for another user. Unfortunately,
-this violates a fundamental rule of the Web: that a particular URL returns
-the same resource regardless of the user. To further muddy the problem, which
-version of the content would be indexed by search engines?
-
-A better policy is to include the locale in the URL. This is fully-supported
-by the routing system using the special ``_locale`` parameter:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        contact:
-            path:     /{_locale}/contact
-            defaults: { _controller: AppBundle:Contact:index }
-            requirements:
-                _locale: en|fr|de
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">AppBundle:Contact:index</default>
-                <requirement key="_locale">en|fr|de</requirement>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('contact', new Route(
-            '/{_locale}/contact',
-            array(
-                '_controller' => 'AppBundle:Contact:index',
-            ),
-            array(
-                '_locale'     => 'en|fr|de',
-            )
-        ));
-
-        return $collection;
-
-When using the special ``_locale`` parameter in a route, the matched locale
-will *automatically be set on the Request* and can be retrieved via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getLocale` method.
-In other words, if a user
-visits the URI ``/fr/contact``, the locale ``fr`` will automatically be set
-as the locale for the current request.
-
-You can now use the locale to create routes to other translated pages
-in your application.
-
-.. tip::
-
-    Read :doc:`/routing/service_container_parameters` to learn how to
-    avoid hardcoding the ``_locale`` requirement in all your routes.
-
-.. index::
-   single: Translations; Fallback and default locale
-
-.. _book-translation-default-locale:
-
-Setting a Default Locale
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-What if the user's locale hasn't been determined? You can guarantee that a
-locale is set on each user's request by defining a ``default_locale`` for
-the framework:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            default_locale: en
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config default-locale="en" />
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'default_locale' => 'en',
-        ));
-
-.. _book-translation-constraint-messages:
-
-Translating Constraint Messages
--------------------------------
-
-If you're using validation constraints with the Form component, then translating
-the error messages is easy: simply create a translation resource for the
-``validators`` :ref:`domain <using-message-domains>`.
-
-To start, suppose you've created a plain-old-PHP object that you need to
-use somewhere in your application::
-
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
-
-    class Author
-    {
-        public $name;
-    }
-
-Add constraints through any of the supported methods. Set the message option to the
-translation source text. For example, to guarantee that the ``$name`` property is
-not empty, add the following:
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/AppBundle/Entity/Author.php
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank(message = "author.name.not_blank")
-             */
-            public $name;
-        }
-
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
-            properties:
-                name:
-                    - NotBlank: { message: 'author.name.not_blank' }
-
-    .. code-block:: xml
-
-        <!-- src/AppBundle/Resources/config/validation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
-                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
-            <class name="AppBundle\Entity\Author">
-                <property name="name">
-                    <constraint name="NotBlank">
-                        <option name="message">author.name.not_blank</option>
-                    </constraint>
-                </property>
-            </class>
-        </constraint-mapping>
-
-    .. code-block:: php
-
-        // src/AppBundle/Entity/Author.php
-
-        // ...
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\NotBlank;
-
-        class Author
-        {
-            public $name;
-
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
-            {
-                $metadata->addPropertyConstraint('name', new NotBlank(array(
-                    'message' => 'author.name.not_blank',
-                )));
-            }
-        }
-
-Create a translation file under the ``validators`` catalog for the constraint
-messages, typically in the ``Resources/translations/`` directory of the
-bundle.
-
-.. configuration-block::
-
-    .. code-block:: xml
-
-        <!-- validators.en.xlf -->
-        <?xml version="1.0"?>
-        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-            <file source-language="en" datatype="plaintext" original="file.ext">
-                <body>
-                    <trans-unit id="author.name.not_blank">
-                        <source>author.name.not_blank</source>
-                        <target>Please enter an author name.</target>
-                    </trans-unit>
-                </body>
-            </file>
-        </xliff>
-
-    .. code-block:: yaml
-
-        # validators.en.yml
-        author.name.not_blank: Please enter an author name.
-
-    .. code-block:: php
-
-        // validators.en.php
-        return array(
-            'author.name.not_blank' => 'Please enter an author name.',
-        );
+Translating happens based on the user's locale. Read :doc:`/translation/locale`
+to learn more about how to handle it.
 
 Translating Database Content
 ----------------------------
@@ -744,167 +474,10 @@ For more information, see the documentation for these libraries.
 Debugging Translations
 ----------------------
 
-When maintaining a bundle, you may use or remove the usage of a translation
-message without updating all message catalogues. The ``debug:translation``
-command helps you to find these missing or unused translation messages for a
-given locale. It shows you a table with the result when translating the
-message in the given locale and the result when the fallback would be used.
-On top of that, it also shows you when the translation is the same as the
-fallback translation (this could indicate that the message was not correctly
-translated).
-
-Thanks to the messages extractors, the command will detect the translation
-tag or filter usages in Twig templates:
-
-.. code-block:: jinja
-
-    {% trans %}Symfony2 is great{% endtrans %}
-
-    {{ 'Symfony2 is great'|trans }}
-
-    {{ 'Symfony2 is great'|transchoice(1) }}
-
-    {% transchoice 1 %}Symfony2 is great{% endtranschoice %}
-
-It will also detect the following translator usages in PHP templates:
-
-.. code-block:: php
-
-    $view['translator']->trans("Symfony2 is great");
-
-    $view['translator']->transChoice('Symfony2 is great', 1);
-
-.. caution::
-
-    The extractors are not able to inspect the messages translated outside templates which means
-    that translator usages in form labels or inside your controllers won't be detected.
-    Dynamic translations involving variables or expressions are not detected in templates,
-    which means this example won't be analyzed:
-
-    .. code-block:: jinja
-
-        {% set message = 'Symfony2 is great' %}
-        {{ message|trans }}
-
-Suppose your application's default_locale is ``fr`` and you have configured ``en`` as the fallback locale
-(see :ref:`book-translation-configuration` and :ref:`book-translation-fallback` for how to configure these).
-And suppose you've already setup some translations for the ``fr`` locale inside an AcmeDemoBundle:
-
-.. configuration-block::
-
-    .. code-block:: xml
-
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.xliff -->
-        <?xml version="1.0"?>
-        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-            <file source-language="en" datatype="plaintext" original="file.ext">
-                <body>
-                    <trans-unit id="1">
-                        <source>Symfony2 is great</source>
-                        <target>J'aime Symfony2</target>
-                    </trans-unit>
-                </body>
-            </file>
-        </xliff>
-
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
-
-    .. code-block:: php
-
-        // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
-        return array(
-            'Symfony2 is great' => 'J\'aime Symfony2',
-        );
-
-and for the ``en`` locale:
-
-.. configuration-block::
-
-    .. code-block:: xml
-
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.en.xliff -->
-        <?xml version="1.0"?>
-        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-            <file source-language="en" datatype="plaintext" original="file.ext">
-                <body>
-                    <trans-unit id="1">
-                        <source>Symfony2 is great</source>
-                        <target>Symfony2 is great</target>
-                    </trans-unit>
-                </body>
-            </file>
-        </xliff>
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
-        Symfony2 is great: Symfony2 is great
-
-    .. code-block:: php
-
-        // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
-        return array(
-            'Symfony2 is great' => 'Symfony2 is great',
-        );
-
-To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
-
-.. code-block:: bash
-
-    $ php bin/console debug:translation fr AcmeDemoBundle
-
-You will get this output:
-
-.. image:: /_images/translation/debug_1.png
-    :align: center
-
-It indicates that the message ``Symfony2 is great`` is unused because it is translated,
-but you haven't used it anywhere yet.
-
-Now, if you translate the message in one of your templates, you will get this output:
-
-.. image:: /_images/translation/debug_2.png
-    :align: center
-
-The state is empty which means the message is translated in the ``fr`` locale and used in one or more templates.
-
-If you delete the message ``Symfony2 is great`` from your translation file for the ``fr`` locale
-and run the command, you will get:
-
-.. image:: /_images/translation/debug_3.png
-    :align: center
-
-The state indicates the message is missing because it is not translated in the ``fr`` locale
-but it is still used in the template.
-Moreover, the message in the ``fr`` locale equals to the message in the ``en`` locale.
-This is a special case because the untranslated message id equals its translation in the ``en`` locale.
-
-If you copy the content of the translation file in the ``en`` locale, to the translation file
-in the ``fr`` locale and run the command, you will get:
-
-.. image:: /_images/translation/debug_4.png
-    :align: center
-
-You can see that the translations of the message are identical in the ``fr`` and ``en`` locales
-which means this message was probably copied from French to English and maybe you forgot to translate it.
-
-By default all domains are inspected, but it is possible to specify a single domain:
-
-.. code-block:: bash
-
-    $ php bin/console debug:translation en AcmeDemoBundle --domain=messages
-
-When bundles have a lot of messages, it is useful to display only the unused
-or only the missing messages, by using the ``--only-unused`` or ``--only-missing`` switches:
-
-.. code-block:: bash
-
-    $ php bin/console debug:translation en AcmeDemoBundle --only-unused
-    $ php bin/console debug:translation en AcmeDemoBundle --only-missing
+When you work with many translation messages in different languages, it can
+be hard to keep track which translations are missing and which are not used
+anymore. Read :doc:`/translation/debug` to find out how to identify these
+messages.
 
 Summary
 -------
@@ -924,6 +497,15 @@ steps:
 
 * Manage the user's locale, which is stored on the request, but can also
   be set on the user's session.
+
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /translation/*
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
