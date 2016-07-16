@@ -87,8 +87,8 @@ your application:
 Introducing Assetic
 -------------------
 
-Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
-:ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
+Assetic combines two major ideas: :ref:`assets <assetic-assets>` and
+:ref:`filters <assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
 these files before they are served to the browser. This allows a separation
 between the asset files stored in the application and the files actually presented
@@ -117,7 +117,7 @@ load them from anywhere) before serving them. This means you can:
 
 * Run image optimizations on your images
 
-.. _cookbook-assetic-assets:
+.. _assetic-assets:
 
 Assets
 ------
@@ -126,12 +126,12 @@ Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.
 
-You can use Assetic to process :ref:`CSS stylesheets <cookbook-assetic-including-css>`,
-:ref:`JavaScript files <cookbook-assetic-including-javascript>` and
-:ref:`images <cookbook-assetic-including-image>`. The philosophy
+You can use Assetic to process :ref:`CSS stylesheets <assetic-including-css>`,
+:ref:`JavaScript files <assetic-including-javascript>` and
+:ref:`images <assetic-including-image>`. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.
 
-.. _cookbook-assetic-including-javascript:
+.. _assetic-including-javascript:
 
 Including JavaScript Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,7 +172,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. tip::
 
-    You can also include CSS stylesheets: see :ref:`cookbook-assetic-including-css`.
+    You can also include CSS stylesheets: see :ref:`assetic-including-css`.
 
 In this example, all files in the ``Resources/public/js/`` directory of the
 AppBundle will be loaded and served from a different location. The actual
@@ -184,9 +184,9 @@ rendered tag might simply look like:
 
 This is a key point: once you let Assetic handle your assets, the files are
 served from a different location. This *will* cause problems with CSS files
-that reference images by their relative path. See :ref:`cookbook-assetic-cssrewrite`.
+that reference images by their relative path. See :ref:`assetic-cssrewrite`.
 
-.. _cookbook-assetic-including-css:
+.. _assetic-including-css:
 
 Including CSS Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -229,7 +229,7 @@ except with the ``stylesheets`` tag:
 
 But because Assetic changes the paths to your assets, this *will* break any
 background images (or other paths) that uses relative paths, unless you use
-the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
+the :ref:`cssrewrite <assetic-cssrewrite>` filter.
 
 .. note::
 
@@ -240,7 +240,7 @@ the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
     that there is a known issue that causes the ``cssrewrite`` filter to fail
     when using the ``@AppBundle`` syntax for CSS stylesheets.
 
-.. _cookbook-assetic-including-image:
+.. _assetic-including-image:
 
 Including Images
 ~~~~~~~~~~~~~~~~
@@ -272,7 +272,7 @@ You can also use Assetic for image optimization. More information in
     `LiipImagineBundle`_ community bundle, which allows to compress and
     manipulate images (rotate, resize, watermark, etc.) before serving them.
 
-.. _cookbook-assetic-cssrewrite:
+.. _assetic-cssrewrite:
 
 Fixing CSS Paths with the ``cssrewrite`` Filter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -333,7 +333,7 @@ the JavaScript files.
     If you're new to Assetic and try to use your application in the ``prod``
     environment (by using the ``app.php`` controller), you'll likely see
     that all of your CSS and JS breaks. Don't worry! This is on purpose.
-    For details on using Assetic in the ``prod`` environment, see :ref:`cookbook-assetic-dumping`.
+    For details on using Assetic in the ``prod`` environment, see :ref:`assetic-dumping`.
 
 And combining files doesn't only apply to *your* files. You can also use Assetic to
 combine third party assets, such as jQuery, with your own into a single file:
@@ -437,7 +437,7 @@ with the ``@named_asset`` notation:
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
-.. _cookbook-assetic-filters:
+.. _assetic-filters:
 
 Filters
 -------
@@ -557,7 +557,7 @@ done from the template and is relative to the public document root:
     via configuration on each deployment. For more information, see the
     :ref:`reference-framework-assets-version` configuration option.
 
-.. _cookbook-assetic-dumping:
+.. _assetic-dumping:
 
 Dumping Asset Files
 -------------------
@@ -591,7 +591,7 @@ by Symfony (as the asset files are in the ``dev`` environment). This is on
 purpose - letting Symfony generate these files dynamically in a production
 environment is just too slow.
 
-.. _cookbook-assetic-dump-prod:
+.. _assetic-dump-prod:
 
 Instead, each time you use your application in the ``prod`` environment (and therefore,
 each time you deploy), you should run the following command:

@@ -4,7 +4,7 @@
 Deploying to fortrabbit
 =======================
 
-This step-by-step cookbook describes how to deploy a Symfony web application to
+This step-by-step article describes how to deploy a Symfony web application to
 `fortrabbit`_. You can read more about using Symfony with fortrabbit on the
 official fortrabbit `Symfony install guide`_.
 

@@ -12,8 +12,8 @@ Installer**, which has to be installed before creating your first project.
 
     Use the Symfony Installer to create new Symfony-based projects.
 
-Read the :doc:`installation & setup chapter </setup>` of the Symfony Book to
-learn how to install and use the Symfony Installer.
+Read the :doc:`/setup` article learn how to install and use the Symfony
+Installer.
 
 .. _linux-and-mac-os-x-systems:
 .. _windows-systems:

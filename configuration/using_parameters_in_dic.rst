@@ -5,7 +5,7 @@ Using Parameters within a Dependency Injection Class
 ----------------------------------------------------
 
 You have seen how to use configuration parameters within
-:ref:`Symfony service containers <book-service-container-parameters>`.
+:ref:`Symfony service containers <service-container-parameters>`.
 There are special cases such as when you want, for instance, to use the
 ``%kernel.debug%`` parameter to make the services in your bundle enter
 debug mode. For this case there is more work to do in order

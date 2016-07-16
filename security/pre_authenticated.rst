@@ -83,7 +83,7 @@ the user provider, and sets the ``SSL_CLIENT_S_DN`` as credentials in the
 You can override these by setting the ``user`` and the ``credentials`` keys
 in the x509 firewall configuration respectively.
 
-.. _cookbook-security-pre-authenticated-user-provider-note:
+.. _security-pre-authenticated-user-provider-note:
 
 .. note::
 
@@ -154,6 +154,6 @@ key in the ``remote_user`` firewall configuration.
 .. note::
 
     Just like for X509 authentication, you will need to configure a "user provider".
-    See :ref:`the previous note <cookbook-security-pre-authenticated-user-provider-note>`
+    See :ref:`the previous note <security-pre-authenticated-user-provider-note>`
     for more information.
 

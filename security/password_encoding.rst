@@ -36,6 +36,6 @@ as the second argument.
     When you allow a user to submit a plaintext password (e.g. registration
     form, change password form), you *must* have validation that guarantees
     that the password is 4096 characters or fewer. Read more details in
-    :ref:`How to implement a simple Registration Form <cookbook-registration-password-max>`.
+    :ref:`How to implement a simple Registration Form <registration-password-max>`.
 
 .. _`cryptographic hash functions`: https://en.wikipedia.org/wiki/Cryptographic_hash_function

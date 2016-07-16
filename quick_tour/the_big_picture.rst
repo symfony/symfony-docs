@@ -14,8 +14,7 @@ Installing Symfony
 ------------------
 
 Before continuing reading this chapter, make sure to have installed both PHP
-and Symfony as explained in the :doc:`setup chapter </setup>`
-of the Symfony book.
+and Symfony as explained in the :doc:`/setup` article.
 
 Understanding the Fundamentals
 ------------------------------
@@ -128,10 +127,9 @@ of the ``Default`` controller when the user browses the ``/`` path of the applic
 .. tip::
 
     In addition to PHP annotations, routes can be configured in YAML, XML
-    or PHP files, as explained in
-    :doc:`the Routing chapter of the Symfony book </routing>`. This
-    flexibility is one of the main features of Symfony, a framework that
-    never imposes a particular configuration format on you.
+    or PHP files, as explained in the :doc:`/routing` guide. This flexibility
+    is one of the main features of Symfony, a framework that never imposes a
+    particular configuration format on you.
 
 Templates
 ~~~~~~~~~
@@ -240,7 +238,8 @@ In this example, the ``config_dev.yml`` configuration file imports the common
 with its own options.
 
 For more details on environments, see
-:ref:`the "Environments" section <page-creation-environments>` of the book.
+:ref:`the "Environments" section <page-creation-environments>` of the
+Configuration guide.
 
 Final Thoughts
 --------------

@@ -4,7 +4,7 @@
 Deploying to Microsoft Azure Website Cloud
 ==========================================
 
-This step by step cookbook describes how to deploy a small Symfony web
+This step by step article describes how to deploy a small Symfony web
 application to the Microsoft Azure Website cloud platform. It will explain how
 to set up a new Azure website including configuring the right PHP version and
 global environment variables. The document also shows how to you can leverage
@@ -150,15 +150,15 @@ Website repository.
 
 .. note::
 
-    This cookbook has a section dedicated to explaining how to configure your
-    Azure Website Git repository and how to push the commits to be deployed. See
-    `Deploying from Git`_. You can also learn more about configuring PHP
-    internal settings on the official `PHP MSDN documentation`_ page.
+    `Deploying from Git`_ is dedicated to explaining how to configure your
+    Azure Website Git repository and how to push the commits to be deployed.
+    You can also learn more about configuring PHP internal settings on the
+    official `PHP MSDN documentation`_ page.
 
 Enabling the PHP intl Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the tricky part of the guide! At the time of writing this cookbook,
+This is the tricky part of the guide! At the time of writing this article,
 Microsoft Azure Website provided the ``intl`` extension, but it's not enabled
 by default. To enable the ``intl`` extension, there is no need to upload
 any DLL files as the ``php_intl.dll`` file already exists on Azure. In fact,
@@ -342,7 +342,7 @@ credentials, CSRF token protection, etc. These parameters come from the
 .. image:: /_images/deployment/azure-website/step-16.png
    :alt: Configuring Symfony global parameters
 
-The most important thing in this cookbook is to correctly set up your database
+The most important thing in this article is to correctly set up your database
 settings. You can get your MySQL database settings on the right sidebar of the
 **Azure Website Dashboard** panel. Simply click on the
 **View Connection Strings** link to make them appear in a pop-in.

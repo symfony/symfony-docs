@@ -179,7 +179,7 @@ you'll use to crawl your site::
     $crawler = $client->request('GET', '/post/hello-world');
 
 The ``request()`` method (read
-:ref:`more about the request method <book-testing-request-method-sidebar>`)
+:ref:`more about the request method <testing-request-method-sidebar>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
 be used to select elements in the response, click on links and submit forms.
 
@@ -308,7 +308,7 @@ returns a ``Crawler`` instance.
     test generates URLs using the Symfony router, it won't detect any change
     made to the application URLs which may impact the end users.
 
-.. _book-testing-request-method-sidebar:
+.. _testing-request-method-sidebar:
 
 .. sidebar:: More about the ``request()`` Method:
 
@@ -358,7 +358,7 @@ giving you a nice API for uploading files.
 .. tip::
 
     You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler <book-testing-crawler>` section below.
+    :ref:`Crawler <testing-crawler>` section below.
 
 The ``request`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
@@ -488,7 +488,7 @@ To get the Profiler for the last request, do the following::
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the
-:doc:`/testing/profiling` cookbook entry.
+:doc:`/testing/profiling` article.
 
 Redirecting
 ~~~~~~~~~~~
@@ -512,7 +512,7 @@ will no longer be followed::
 .. index::
    single: Tests; Crawler
 
-.. _book-testing-crawler:
+.. _testing-crawler:
 
 The Crawler
 -----------

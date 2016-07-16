@@ -279,6 +279,9 @@ its name:
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
+Learn more
+----------
+
 .. toctree::
     :maxdepth: 1
     :glob:

@@ -20,7 +20,7 @@ to give you rich database interactions.
     This chapter is all about the Doctrine ORM, which aims to let you map
     objects to a relational database (such as *MySQL*, *PostgreSQL* or
     *Microsoft SQL*). If you prefer to use raw database queries, this is
-    easy, and explained in the ":doc:`/doctrine/dbal`" cookbook entry.
+    easy, and explained in the ":doc:`/doctrine/dbal`" article.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
     more information, read the "`DoctrineMongoDBBundle`_"
@@ -277,7 +277,7 @@ just a simple PHP class.
 .. index::
     single: Doctrine; Adding mapping metadata
 
-.. _book-doctrine-adding-mapping:
+.. _doctrine-adding-mapping:
 
 Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -389,7 +389,7 @@ directly inside the ``Product`` class via DocBlock annotations:
 
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
-see the :ref:`book-doctrine-field-types` section.
+see the :ref:`doctrine-field-types` section.
 
 .. seealso::
 
@@ -427,7 +427,7 @@ see the :ref:`book-doctrine-field-types` section.
         class Product
         // ...
 
-.. _book-doctrine-generating-getters-and-setters:
+.. _doctrine-generating-getters-and-setters:
 
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -487,7 +487,7 @@ mapping information) of a bundle or an entire namespace:
     # generates all entities of bundles in the Acme namespace
     $ php bin/console doctrine:generate:entities Acme
 
-.. _book-doctrine-creating-the-database-tables-schema:
+.. _doctrine-creating-the-database-tables-schema:
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -673,7 +673,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
 .. note::
 
     Of course, you can also issue complex queries, which you'll learn more
-    about in the :ref:`book-doctrine-queries` section.
+    about in the :ref:`doctrine-queries` section.
 
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
 to easily fetch objects based on multiple conditions::
@@ -754,7 +754,7 @@ As you might expect, the ``remove()`` method notifies Doctrine that you'd
 like to remove the given object from the database. The actual ``DELETE`` query,
 however, isn't actually executed until the ``flush()`` method is called.
 
-.. _`book-doctrine-queries`:
+.. _doctrine-queries:
 
 Querying for Objects
 --------------------
@@ -860,7 +860,7 @@ Doctrine is highly configurable, though you probably won't ever need to worry
 about most of its options. To find out more about configuring Doctrine, see
 the Doctrine section of the :doc:`config reference </reference/configuration/doctrine>`.
 
-.. _book-doctrine-field-types:
+.. _doctrine-field-types:
 
 Doctrine Field Types Reference
 ------------------------------
@@ -891,7 +891,7 @@ Doctrine has a lot more complex features to learn, like relationshps, complex qu
 and event listeners.
 
 Learn more
-~~~~~~~~~~
+----------
 
 .. toctree::
     :maxdepth: 1

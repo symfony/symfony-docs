@@ -316,6 +316,9 @@ information to your log entries.
 
 See :doc:`/logging/processors` for details.
 
+Learn more
+----------
+
 .. toctree::
     :maxdepth: 1
     :glob:
