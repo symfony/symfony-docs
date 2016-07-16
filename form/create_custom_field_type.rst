@@ -164,7 +164,7 @@ link for details), create a ``gender_widget`` block to handle this:
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
-    be ``gender_widget`` (see :ref:`cookbook-form-customization-form-themes`).
+    be ``gender_widget`` (see :ref:`form-customization-form-themes`).
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
