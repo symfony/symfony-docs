@@ -93,7 +93,7 @@ the user::
 How it Works
 ------------
 
-Great! Now you just need to setup some :ref:`cookbook-security-password-authenticator-config`.
+Great! Now you just need to setup some :ref:`security-password-authenticator-config`.
 But first, you can find out more about what each method in this class does.
 
 1) createToken
@@ -137,7 +137,7 @@ This is a service that is already available in Symfony and it uses the password 
 that is configured in the security configuration (e.g. ``security.yml``) under
 the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthenticator``.
 
-.. _cookbook-security-password-authenticator-config:
+.. _security-password-authenticator-config:
 
 Configuration
 -------------

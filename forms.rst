@@ -108,7 +108,7 @@ from inside a controller::
 .. tip::
 
    This example shows you how to build your form directly in the controller.
-   Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
+   Later, in the ":ref:`form-creating-form-classes`" section, you'll learn
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
 
@@ -127,7 +127,7 @@ Finally, you added a submit button with a custom label for submitting the form t
 the server.
 
 Symfony comes with many built-in types that will be discussed shortly
-(see :ref:`book-forms-type-reference`).
+(see :ref:`forms-type-reference`).
 
 .. index::
   single: Forms; Basic template rendering
@@ -205,7 +205,7 @@ it into a format that's suitable for being rendered in an HTML form.
 .. index::
   single: Forms; Handling form submissions
 
-.. _book-form-handling-form-submissions:
+.. _form-handling-form-submissions:
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -291,12 +291,12 @@ possible paths:
 
     If you need more control over exactly when your form is submitted or which
     data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
-    method. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+    method. Read more about it :ref:`form-call-submit-directly`.
 
 .. index::
    single: Forms; Validation
 
-.. _book-forms-form-validation:
+.. _forms-form-validation:
 
 Form Validation
 ---------------
@@ -396,7 +396,7 @@ corresponding errors printed out with the form.
 Validation is a very powerful feature of Symfony and has its own
 :doc:`dedicated chapter </validation>`.
 
-.. _book-forms-html5-validation-disable:
+.. _forms-html5-validation-disable:
 
 .. sidebar:: HTML5 Validation
 
@@ -431,7 +431,7 @@ Validation is a very powerful feature of Symfony and has its own
 .. index::
    single: Forms; Built-in field types
 
-.. _book-forms-type-reference:
+.. _forms-type-reference:
 
 Built-in Field Types
 --------------------
@@ -471,7 +471,7 @@ the documentation for each type.
     any field. By default, the ``required`` option is set to ``true``, meaning
     that HTML5-ready browsers will apply client-side validation if the field
     is left blank. If you don't want this behavior, either
-    :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
+    :ref:`disable HTML5 validation <forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
 
         ->add('dueDate', 'date', array(
@@ -505,7 +505,7 @@ the documentation for each type.
 .. index::
    single: Forms; Field type guessing
 
-.. _book-forms-field-guessing:
+.. _forms-field-guessing:
 
 Field Type Guessing
 -------------------
@@ -580,7 +580,7 @@ passing the option in the options field array::
 .. index::
    single: Forms; Creating form classes
 
-.. _book-form-creating-form-classes:
+.. _form-creating-form-classes:
 
 Creating Form Classes
 ---------------------
@@ -627,7 +627,7 @@ Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.
 
-.. _book-forms-data-class:
+.. _form-data-class:
 
 .. sidebar:: Setting the ``data_class``
 
@@ -706,7 +706,7 @@ Learn more
 
 * :doc:`/controller/upload_file`
 * :doc:`/reference/forms/types`
-* :doc:`/cache/form_csrf_caching`
+* :doc:`/http_cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php

@@ -9,10 +9,10 @@ is used to enforce access.
 Each ``access_control`` has several options that configure two different
 things:
 
-#. :ref:`should the incoming request match this access control entry <security-book-access-control-matching-options>`
-#. :ref:`once it matches, should some sort of access restriction be enforced <security-book-access-control-enforcement-options>`:
+#. :ref:`should the incoming request match this access control entry <security-access-control-matching-options>`
+#. :ref:`once it matches, should some sort of access restriction be enforced <security-access-control-enforcement-options>`:
 
-.. _security-book-access-control-matching-options:
+.. _security-access-control-matching-options:
 
 1. Matching Options
 -------------------
@@ -122,7 +122,7 @@ will match any ``ip``, ``host`` or ``method``:
 |                 |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
 +-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 
-.. _security-book-access-control-enforcement-options:
+.. _security-access-control-enforcement-options:
 
 2. Access Enforcement
 ---------------------
@@ -147,8 +147,6 @@ options:
     already (e.g. redirect the user to the login page). If the user is already
     logged in, the 403 "access denied" error page will be shown. See
     :doc:`/controller/error_pages` for more information.
-
-.. _book-security-securing-ip:
 
 Matching access_control By IP
 -----------------------------
@@ -241,7 +239,7 @@ address):
 
 * The second access rule is not examined as the first rule matched.
 
-.. _book-security-allow-if:
+.. _security-allow-if:
 
 Securing by an Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -288,9 +286,7 @@ and functions including ``request``, which is the Symfony
 :ref:`component-http-foundation-request`).
 
 For a list of the other functions and variables, see
-:ref:`functions and variables <book-security-expression-variables>`.
-
-.. _book-security-securing-channel:
+:ref:`functions and variables <security-expression-variables>`.
 
 Forcing a Channel (http, https)
 -------------------------------

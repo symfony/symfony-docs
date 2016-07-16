@@ -103,7 +103,7 @@ execute the second command only.
 
     If you want to use annotations, you must remove the XML (or YAML) files
     after running these two commands. This is necessary as
-    :ref:`it is not possible to mix mapping configuration formats <book-doctrine-adding-mapping>`
+    :ref:`it is not possible to mix mapping configuration formats <doctrine-adding-mapping>`
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 

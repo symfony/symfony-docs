@@ -173,7 +173,7 @@ apply this filter when debug mode is off.
     example in the ``yui_js`` filter ``apply_to: "\.js$"``. To only have the filter
     applied in production, add this to the ``config_prod`` file rather than the
     common config file. For details on applying filters by file extension,
-    see :ref:`cookbook-assetic-apply-to`.
+    see :ref:`assetic-apply-to`.
 
 .. _`YUI Compressor`: http://yui.github.io/yuicompressor/
 .. _`Download the JAR`: https://github.com/yui/yuicompressor/releases

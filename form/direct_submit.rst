@@ -31,9 +31,9 @@ submissions::
 
 .. tip::
 
-    To see more about this method, read :ref:`book-form-handling-form-submissions`.
+    To see more about this method, read :ref:`form-handling-form-submissions`.
 
-.. _cookbook-form-call-submit-directly:
+.. _form-call-submit-directly:
 
 Calling Form::submit() manually
 -------------------------------

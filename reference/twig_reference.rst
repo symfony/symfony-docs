@@ -107,7 +107,7 @@ asset
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`book-templating-assets`. For asset versioning, see
+:ref:`templating-assets`. For asset versioning, see
 :ref:`reference-framework-assets-version`.
 
 assets_version
@@ -121,7 +121,7 @@ assets_version
     **type**: ``string`` | ``null`` **default**: ``null``
 
 Returns the current version of the package, more information in
-:ref:`book-templating-assets`.
+:ref:`templating-assets`.
 
 form
 ~~~~
@@ -273,12 +273,12 @@ is_granted
 
 Returns ``true`` if the current user has the required role. Optionally,
 an object can be pasted to be used by the voter. More information can be
-found in :ref:`book-security-template`.
+found in :ref:`security-template`.
 
 .. note::
 
     You can also pass in the field to use ACE for a specific field. Read
-    more about this in :ref:`cookbook-security-acl-field_scope`.
+    more about this in :ref:`security-acl-field_scope`.
 
 logout_path
 ~~~~~~~~~~~
@@ -322,7 +322,7 @@ path
 
 Returns the relative URL (without the scheme and host) for the given route.
 If ``relative`` is enabled, it'll create a path relative to the current
-path. More information in :ref:`book-templating-pages`.
+path. More information in :ref:`templating-pages`.
 
 url
 ~~~
@@ -340,7 +340,7 @@ url
 
 Returns the absolute URL (with scheme and host) for the given route. If
 ``schemeRelative`` is enabled, it'll create a scheme-relative URL. More
-information in :ref:`book-templating-pages`.
+information in :ref:`templating-pages`.
 
 absolute_url
 ~~~~~~~~~~~~
@@ -390,7 +390,7 @@ expression
 ~~~~~~~~~~
 
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
-Twig. See ":ref:`Template Expressions <book-security-template-expression>`".
+Twig. See ":ref:`Template Expressions <security-template-expression>`".
 
 .. _reference-twig-filters:
 
@@ -430,7 +430,7 @@ trans
     **type**: ``string`` **default**: ``null``
 
 Translates the text into the current language. More information in
-:ref:`Translation Filters <book-translation-filters>`.
+:ref:`Translation Filters <translation-filters>`.
 
 transchoice
 ~~~~~~~~~~~
@@ -451,7 +451,7 @@ transchoice
     **type**: ``string`` **default**: ``null``
 
 Translates the text with pluralization support. More information in
-:ref:`Translation Filters <book-translation-filters>`.
+:ref:`Translation Filters <translation-filters>`.
 
 yaml_encode
 ~~~~~~~~~~~
@@ -630,7 +630,7 @@ trans
 ``locale`` *(optional)*
     **type**: ``string`` **default**: ``string``
 
-Renders the translation of the content. More information in :ref:`book-translation-tags`.
+Renders the translation of the content. More information in :ref:`translation-tags`.
 
 transchoice
 ~~~~~~~~~~~
@@ -649,7 +649,7 @@ transchoice
     **type**: ``string`` **default**: ``null``
 
 Renders the translation of the content with pluralization support, more
-information in :ref:`book-translation-tags`.
+information in :ref:`translation-tags`.
 
 trans_default_domain
 ~~~~~~~~~~~~~~~~~~~~

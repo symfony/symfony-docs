@@ -161,7 +161,7 @@ will appear.
     Most of the time, you won't interact directly with the ``validator``
     service or need to worry about printing out the errors. Most of the time,
     you'll use validation indirectly when handling submitted form data. For
-    more information, see the :ref:`book-forms-form-validation`.
+    more information, see the :ref:`forms-form-validation`.
 
 You could also pass the collection of errors into a template::
 
@@ -202,8 +202,6 @@ Inside the template, you can output the list of errors exactly as needed:
 
 .. index::
    pair: Validation; Configuration
-
-.. _book-validation-configuration:
 
 Configuration
 -------------
@@ -269,12 +267,12 @@ Symfony packages many of the most commonly-needed constraints:
 .. include:: /reference/constraints/map.rst.inc
 
 You can also create your own custom constraints. This topic is covered in
-the ":doc:`/validation/custom_constraint`" article of the cookbook.
+the :doc:`/validation/custom_constraint` article.
 
 .. index::
    single: Validation; Constraints configuration
 
-.. _book-validation-constraint-configuration:
+.. _validation-constraint-configuration:
 
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
