@@ -60,8 +60,6 @@ an array.
     a better choice, since it returns the data (usually an object) after
     it's been transformed by the Form component.
 
-.. _booking-validation-forms:
-
 Adding Validation
 -----------------
 
