@@ -1189,7 +1189,7 @@ Assume you have custom global form themes in
 
 .. seealso::
 
-    See :ref:`book-forms-theming-global` for more information.
+    See :ref:`forms-theming-global` for more information.
 
 .. _reference-templating-cache:
 
