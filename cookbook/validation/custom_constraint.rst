@@ -247,3 +247,46 @@ not to the property:
         <class name="AppBundle\Entity\AcmeEntity">
             <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
         </class>
+
+Target Aware Constraints
+........................
+        
+Because of class inheritance, the validator may being called on an instance of a
+subclass of the one you actually defined the constraint on.
+
+In most cases, you will be using class constraints to check invariants
+on the given instance only. Therefore, this shouldn't be an issue.
+
+However, you may sometimes want to check invariants on the whole set of
+instances of the class or refering to another mapping specification of the
+class.
+
+A good example of this, is the :doc:`/reference/constraints/UniqueEntity`
+constraint which needs to access the Doctrine Repository of the class on which
+the constraint was declared.
+
+For these use cases, make your Constraint class implements the
+:class:`Symfony\\Component\\Validator\\Constraints\\TargetAwareConstraintInterface`
+interface and use the
+:class:`Symfony\\Component\\Validator\\Constraints\\TargetAwareConstraintTrait`
+trait::
+
+    // src/AppBundle/Validator/Constraints/RegisteredInstances.php
+    namespace AppBundle\Validator\Constraints;
+
+    use Symfony\Component\Validator\Constraint;
+    use Symfony\Component\Validator\Constraints\TargetAwareConstraintInterface;
+    use Symfony\Component\Validator\Constraints\TargetAwareConstraintTrait;
+
+    // ...
+
+    class RegisteredInstances extends Constraint implements TargetAwareConstraintInterface
+    {
+        use TargetAwareConstraintTrait;
+
+        // ...
+    }
+
+With these two, your constraint will be automatically fed the name of the class
+in its target option. You can then easily access the name of the class to
+produce whatever behavior you need.
