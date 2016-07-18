@@ -250,9 +250,9 @@ Try it by printing *7* lucky numbers:
 
     http://localhost:8000/lucky/number/7
 
-**You can get the value of any ``{placeholder}`` in your route by adding
-a ``$placeholder`` argument to your controller. Just make sure that the placeholder
-(e.g. ``{id}``) matches the argument name (e.g. ``$id``).**
+**You can get the value of any** ``{placeholder}`` **in your route by adding
+a** ``$placeholder`` **argument to your controller. Just make sure that the placeholder
+(e.g.** ``{id}`` **) matches the argument name (e.g.** ``$id`` **).**
 
 The routing system can do a *lot* more, like supporting multiple placeholders
 (e.g. ``/blog/{category}/{page})``), making placeholders optional and forcing
