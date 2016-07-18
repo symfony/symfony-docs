@@ -40,6 +40,8 @@ collects the method and accepted content types from the request::
     namespace AppBundle\DataCollector;
 
     use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class RequestCollector extends DataCollector
     {
