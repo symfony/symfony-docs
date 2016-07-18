@@ -175,6 +175,7 @@ developer's best friend!
 
 .. image:: /_images/quick_tour/web_debug_toolbar.png
    :align: center
+   :class: with-browser
 
 But what you see initially is only the tip of the iceberg; click on any
 of the bar sections to open the profiler and get much more detailed information
@@ -182,6 +183,7 @@ about the request, the query parameters, security details and database queries:
 
 .. image:: /_images/quick_tour/profiler.png
    :align: center
+   : class: with-browser
 
 This tool provides so much internal information about your application that
 you may be worried about your visitors accessing sensible information. Symfony

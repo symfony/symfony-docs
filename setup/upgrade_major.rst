@@ -41,6 +41,8 @@ using a deprecated feature. When visiting your application in the
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /_images/install/deprecations-in-profiler.png
+   :align: center
+   :class: with-browser
 
 Of course ultimately, you want to stop using the deprecated functionality.
 Sometimes, this is easy: the warning might tell you exactly what to change.

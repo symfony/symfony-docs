@@ -39,6 +39,8 @@ while you're reading the Symfony documentation.
 and you'll be redirected to GitHub:
 
 .. image:: /_images/contributing/docs-github-edit-page.png
+   :align: center
+   :class: with-browser
 
 **Step 2.** Edit the contents, describe your changes and click on the
 **Propose file change** button.
@@ -48,6 +50,8 @@ and you'll be redirected to GitHub:
 also display a preview of your changes:
 
 .. image:: /_images/contributing/docs-github-create-pr.png
+   :align: center
+   :class: with-browser
 
 If everything is correct, click on the **Create pull request** button.
 
