@@ -16,7 +16,7 @@ variables. The ``escape`` function helps escape any non-JavaScript-safe values:
 
         <script>
         var route = "<?php echo $view->escape(
-            $view['router']->path('blow_show', array(
+            $view['router']->generate('blog_show', array(
                 'slug' => 'my-blog-post',
             )),
             'js'
