@@ -45,7 +45,11 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    security/*
+    /components/security/*
+    /security
+    /security/*
+    /reference/configuration/security
+    /reference/constraints/UserPassword
 
 .. _Packagist: https://packagist.org/packages/symfony/security
 .. _`CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery

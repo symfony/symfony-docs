@@ -389,11 +389,6 @@ Learn more
 ----------
 
 .. toctree::
-    :hidden:
-
-    forms
-
-.. toctree::
     :maxdepth: 1
     :glob:
 

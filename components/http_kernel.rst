@@ -702,6 +702,15 @@ look like this::
         // ...
     }
 
+Learn more
+----------
+
+.. toctree::
+   :maxlength: 1
+   :glob:
+
+   /reference/events
+
 .. _Packagist: https://packagist.org/packages/symfony/http-kernel
 .. _reflection: http://php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle

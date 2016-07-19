@@ -17,4 +17,15 @@ You can install the component in 2 different ways:
 
 For more information, see the code in the Git Repository.
 
+Learn more
+----------
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   /validation
+   /validation/*
+   /reference/constraints/*
+
 .. _Packagist: https://packagist.org/packages/symfony/validator

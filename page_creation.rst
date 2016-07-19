@@ -224,8 +224,8 @@ way of building beautiful, functional, fast and maintainable apps.
 
 Ok, time to finish mastering the fundamentals by reading these chapters:
 
-* :doc:`/controller`
 * :doc:`/routing`
+* :doc:`/controller`
 * :doc:`/templating`
 
 Then, learn about other important topics like the

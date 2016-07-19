@@ -139,6 +139,7 @@ Welcome Page of Symfony:
 .. image:: /_images/quick_tour/welcome.png
    :align: center
    :alt:   Symfony Welcome Page
+   :class: with-browser
 
 If you see a blank page or an error page instead of the Welcome Page, there is
 a directory permission misconfiguration. The solution to this problem is
