@@ -213,7 +213,6 @@ creating a service and tagging it as ``form.type_guesser``:
             ->addTag('form.type_guesser')
         ;
 
-
 .. sidebar:: Registering a Type Guesser in the Component
 
     If you're using the Form component standalone in your PHP project, use
