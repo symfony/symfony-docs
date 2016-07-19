@@ -224,5 +224,12 @@ also delete all the cookies::
     // delete history
     $client->restart();
 
+Learn more
+----------
+
+* :doc:`/testing`
+* :doc:`/components/css_selector`
+* :doc:`/components/dom_crawler`
+
 .. _`Packagist`: https://packagist.org/packages/symfony/browser-kit
 .. _`Goutte`: https://github.com/fabpot/Goutte

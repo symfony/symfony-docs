@@ -603,7 +603,12 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    http_foundation/*
+    /components/http_foundation/*
+    /controller
+    /controller/*
+    /request/*
+    /session/*
+    /http_cache/*
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
 .. _Nginx: http://wiki.nginx.org/XSendfile

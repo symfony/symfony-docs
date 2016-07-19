@@ -28,5 +28,8 @@ Learn More
     :glob:
 
     config/*
+    /bundles/configuration
+    /bundles/extension
+    /bundles/prepend_extension
 
 .. _Packagist: https://packagist.org/packages/symfony/config

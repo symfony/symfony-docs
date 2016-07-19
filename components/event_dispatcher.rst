@@ -519,7 +519,11 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    event_dispatcher/*
+    /components/event_dispatcher/*
+    /event_dispatcher/*
+
+* :ref:`The kernel.event_listener tag <dic-tags-kernel-event-listener>`
+* :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`
 
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
