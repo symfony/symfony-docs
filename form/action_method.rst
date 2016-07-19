@@ -49,7 +49,9 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
         <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
-            'action' => $view['router']->generate('target_route'),
+            // The path() method was introduced in Symfony 2.8. Prior to 2.8,
+            // you had to use generate().
+            'action' => $view['router']->path('target_route'),
             'method' => 'GET',
         )) ?>
 

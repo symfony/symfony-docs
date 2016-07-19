@@ -72,8 +72,11 @@ this is probably only useful if you'd like to cache this page partial (see
         use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
         ?>
 
+        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
+             passed as the third argument. -->
         <?php echo $view['actions']->render(
-            $view['router']->generate('acme_privacy', array(), UrlGeneratorInterface::ABSOLUTE_URL)
+            $view['router']->url('acme_privacy', array())
         ) ?>
 
 .. _templating-no-controller-caching:
