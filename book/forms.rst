@@ -1280,6 +1280,15 @@ data is transferred to the underlying object immediately. If you want to
 persist that data, you simply need to persist the object itself (which already
 contains the submitted data).
 
+Using Doctrine metadata for validation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you've defined a `length` property of your Doctrine entity, a corresponding
+`maxlength` attribute will be added automatically when rendering the form.
+However, this only accounts for client-side validation on compatible browsers.
+For true server-side validation, you still need to define corresponding rules,
+as explained in :doc:`/book/validation`. Currently, it is not possible to re-use
+Doctrine mapping metadata for validation directly.
+
 .. index::
    single: Forms; Embedded forms
 
