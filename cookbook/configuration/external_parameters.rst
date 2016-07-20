@@ -68,7 +68,7 @@ You can now reference these parameters wherever you need them.
 
         doctrine:
             dbal:
-                driver    pdo_mysql
+                driver:   pdo_mysql
                 dbname:   symfony_project
                 user:     '%database.user%'
                 password: '%database.password%'
