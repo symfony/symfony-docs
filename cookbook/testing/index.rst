@@ -11,3 +11,5 @@ Testing
     database
     doctrine
     bootstrap
+    database_speed_up
+    
