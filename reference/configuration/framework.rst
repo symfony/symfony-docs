@@ -116,8 +116,8 @@ be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
 In practice, Symfony uses this value for generating the
-:ref:`CSRF tokens <forms-csrf>`, for encrypting the cookies used in the
-:doc:`remember me functionality </cookbook/security/remember_me>` and for
+:doc:`CSRF tokens </form/csrf_protection>`, for encrypting the cookies used
+in the :doc:`remember me functionality </security/remember_me>` and for
 creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
 
 This option becomes the service container parameter named ``kernel.secret``,
@@ -148,7 +148,7 @@ named ``kernel.http_method_override``.
 
 .. seealso::
 
-    For more information, see :doc:`/cookbook/routing/method_parameters`.
+    For more information, see :doc:`/form/action_method`.
 
 .. caution::
 
@@ -176,7 +176,7 @@ trusted_proxies
 **type**: ``array``
 
 Configures the IP addresses that should be trusted as proxies. For more
-details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
+details, see :doc:`/request/load_balancer_reverse_proxy`.
 
 .. versionadded:: 2.3
     CIDR notation support was introduced in Symfony 2.3, so you can whitelist
@@ -289,7 +289,7 @@ setting should be present in your ``test`` environment (usually via
 
 .. seealso::
 
-    For more information, see :doc:`/book/testing`.
+    For more information, see :doc:`/testing`.
 
 default_locale
 ~~~~~~~~~~~~~~
@@ -304,7 +304,7 @@ method.
 .. seealso::
 
     You can read more information about the default locale in
-    :ref:`book-translation-default-locale`.
+    :ref:`translation-default-locale`.
 
 trusted_hosts
 ~~~~~~~~~~~~~
@@ -403,14 +403,14 @@ settings is configured.
 
 .. seealso::
 
-    For more details, see :doc:`/book/forms`.
+    For more details, see :doc:`/forms`.
 
 csrf_protection
 ~~~~~~~~~~~~~~~
 
 .. seealso::
 
-    For more information about CSRF protection in forms, see :ref:`forms-csrf`.
+    For more information about CSRF protection in forms, see :doc:`/form/csrf_protection`.
 
 .. _reference-csrf_protection-enabled:
 
@@ -437,7 +437,7 @@ field_name
 
 **type**: ``string`` **default**: ``"_token"``
 
-The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
+The name of the hidden field used to render the :doc:`CSRF token </form/csrf_protection>`.
 
 esi
 ~~~
@@ -493,7 +493,7 @@ fragments
 .. seealso::
 
     Learn more about fragments in the
-    :ref:`HTTP Cache article <book-http_cache-fragments>`.
+    :ref:`HTTP Cache article <http_cache-fragments>`.
 
 .. _reference-fragments-enabled:
 
@@ -582,7 +582,7 @@ The DSN where to store the profiling information.
 
 .. seealso::
 
-    See :doc:`/cookbook/profiler/storage` for more information about the
+    See :doc:`/profiler/storage` for more information about the
     profiler storage.
 
 username
@@ -615,7 +615,7 @@ instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
 
 .. seealso::
 
-    See :doc:`/cookbook/profiler/matchers` for more information about using
+    See :doc:`/profiler/matchers` for more information about using
     matchers to enable/disable the profiler.
 
 ip
@@ -681,7 +681,7 @@ strict_requirements
 **type**: ``mixed`` **default**: ``true``
 
 Determines the routing generator behaviour. When generating a route that
-has specific :ref:`requirements <book-routing-requirements>`, the generator
+has specific :doc:`requirements </routing/requirements>`, the generator
 can behave differently in case the used parameters do not meet these requirements.
 
 The value can be one of:
@@ -724,7 +724,7 @@ installation.
 .. seealso::
 
     You can see an example of the usage of this in
-    :doc:`/cookbook/doctrine/pdo_session_storage`.
+    :doc:`/doctrine/pdo_session_storage`.
 
 name
 ....
@@ -812,7 +812,7 @@ save_path
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
-For more information, see :doc:`/cookbook/session/sessions_directory`.
+For more information, see :doc:`/session/sessions_directory`.
 
 You can also set this value to the ``save_path`` of your ``php.ini`` by
 setting the value to ``null``:
@@ -1108,7 +1108,7 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
     All percentage signs (``%``) in the format string must be doubled to
     escape the character. Without escaping, values might inadvertently be
-    interpreted as :ref:`book-service-container-parameters`.
+    interpreted as :ref:`service-container-parameters`.
 
 .. tip::
 
@@ -1143,7 +1143,7 @@ is disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
-    See :ref:`book-templating-hinclude` for more information about hinclude.
+    See :doc:`/templating/hinclude` for more information about hinclude.
 
 .. _reference-templating-form:
 
@@ -1157,7 +1157,7 @@ resources
 
 A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
-:ref:`the form book chapter <book-forms-theming-twig>`.
+:ref:`the form chapter <forms-theming-twig>`.
 
 Assume you have custom global form themes in
 ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
@@ -1218,7 +1218,7 @@ Assume you have custom global form themes in
 
 .. seealso::
 
-    See :ref:`book-forms-theming-global` for more information.
+    See :ref:`forms-theming-global` for more information.
 
 .. _reference-templating-cache:
 
@@ -1285,7 +1285,7 @@ found.
 
 .. seealso::
 
-    For more details, see :doc:`/book/translation`.
+    For more details, see :doc:`/translation`.
 
 .. _reference-framework-translator-logging:
 
@@ -1395,7 +1395,7 @@ API. The ``api`` option is used to switch between the different implementations:
     The support for the native 2.4 API has been dropped since Symfony 2.7.
 
 To capture these logs in the ``prod`` environment, configure a
-:doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for
+:doc:`channel handler </logging/channels_handlers>` in ``config_prod.yml`` for
 the ``translation`` channel and set its ``level`` to ``debug``.
 
 annotations
@@ -1462,7 +1462,7 @@ has to implement the ``Doctrine\Common\Cache\Cache`` interface.
 
 .. seealso::
 
-    For more information, see :ref:`cookbook-serializer-enabling-metadata-cache`.
+    For more information, see :ref:`serializer-enabling-metadata-cache`.
 
 .. _reference-serializer-enable_annotations:
 
@@ -1475,7 +1475,7 @@ If this option is enabled, serialization groups can be defined using annotations
 
 .. seealso::
 
-    For more information, see :ref:`cookbook-serializer-using-serialization-groups-annotations`.
+    For more information, see :ref:`serializer-using-serialization-groups-annotations`.
 
 Full Default Configuration
 --------------------------

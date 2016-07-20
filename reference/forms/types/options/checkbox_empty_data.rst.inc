@@ -5,4 +5,4 @@ empty_data
 
 This option determines what value the field will return when the ``placeholder``
 choice is selected. In the checkbox and the radio type, the value of ``empty_data``
-is overriden by the value returned by the data transformer (see :doc:`/cookbook/form/data_transformers`).
+is overriden by the value returned by the data transformer (see :doc:`/form/data_transformers`).

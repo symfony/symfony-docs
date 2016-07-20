@@ -67,7 +67,7 @@ the ``choices`` option::
 
 This will create a ``select`` drop-down like this:
 
-.. image:: /images/reference/form/choice-example1.png
+.. image:: /_images/reference/form/choice-example1.png
    :align: center
 
 If the user selects ``No``, the form will return ``false`` for this field. Similarly,
@@ -149,7 +149,7 @@ You can easily "group" options in a select by passing a multi-dimensional choice
         'choices_as_values' => true,
     );
 
-.. image:: /images/reference/form/choice-example4.png
+.. image:: /_images/reference/form/choice-example4.png
    :align: center
 
 To get fancier, use the `group_by`_ option.

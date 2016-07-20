@@ -40,7 +40,7 @@ be especially useful if your values are objects::
 
 This will "prefer" the "now" and "tomorrow" choices only:
 
-.. image:: /images/reference/form/choice-example3.png
+.. image:: /_images/reference/form/choice-example3.png
    :align: center
 
 Finally, if your values are objects, you can also specify a property path string

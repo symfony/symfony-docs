@@ -92,3 +92,9 @@ Several pseudo-classes are not yet supported:
   name (e.g. ``li:first-of-type``) but not with ``*``.
 
 .. _Packagist: https://packagist.org/packages/symfony/css-selector
+
+Learn more
+----------
+
+* :doc:`/testing`
+* :doc:`/components/dom_crawler`

@@ -135,8 +135,7 @@ datatypes as determined by PHP's ``is_`` functions.
 * :phpfunction:`string <is_string>`
 
 Also, you can use ``ctype_`` functions from corresponding
-`built-in PHP extension <http://php.net/book.ctype.php>`_. Consider
-`a list of ctype functions <http://php.net/ref.ctype.php>`_:
+`built-in PHP extension`_. Consider `a list of ctype functions`_:
 
 * :phpfunction:`alnum <ctype_alnum>`
 * :phpfunction:`alpha <ctype_alpha>`
@@ -161,3 +160,6 @@ message
 The message if the underlying data is not of the given type.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _built-in PHP extension: http://php.net/book.ctype.php
+.. _a list of ctype functions: http://php.net/ref.ctype.php

@@ -8,7 +8,7 @@ The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
 making the container more efficient by resolving parameters and removing
 unused services. Also, certain features - like using
-:doc:`parent services </components/dependency_injection/parentservices>`
+:doc:`parent services </service_container/parent_services>`
 - require the container to be compiled.
 
 It is compiled by running::
@@ -31,7 +31,7 @@ Managing Configuration with Extensions
 --------------------------------------
 
 As well as loading configuration directly into the container as shown in
-:doc:`/components/dependency_injection/introduction`, you can manage it
+:doc:`/components/dependency_injection`, you can manage it
 by registering extensions with the container. The first step in the compilation
 process is to load configuration from any extension classes registered with
 the container. Unlike the configuration loaded directly, they are only processed
@@ -47,7 +47,7 @@ and can be registered with the container with::
 The main work of the extension is done in the ``load`` method. In the ``load``
 method you can load configuration from one or more configuration files as
 well as manipulate the container definitions using the methods shown in
-:doc:`/components/dependency_injection/definitions`.
+:doc:`/service_container/definitions`.
 
 The ``load`` method is passed a fresh container to set up, which is then
 merged afterwards into the container it is registered with. This allows
@@ -154,7 +154,7 @@ will look like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config component </components/config/introduction>` to
+to use :doc:`the Config component </components/config>` to
 merge and validate the config values. Using the configuration processing
 you could access the config value this way::
 
@@ -213,7 +213,7 @@ The XML version of the config would then look like this:
 
     In the Symfony full-stack Framework there is a base Extension class
     which implements these methods as well as a shortcut method for processing
-    the configuration. See :doc:`/cookbook/bundles/extension` for more details.
+    the configuration. See :doc:`/bundles/extension` for more details.
 
 The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
@@ -302,7 +302,7 @@ method is called by implementing
         }
     }
 
-For more details, see :doc:`/cookbook/bundles/prepend_extension`, which
+For more details, see :doc:`/bundles/prepend_extension`, which
 is specific to the Symfony Framework, but contains more details about this
 feature.
 
@@ -331,10 +331,10 @@ being compiled::
     }
 
 The container's parameters and definitions can be manipulated using the
-methods described in the :doc:`/components/dependency_injection/definitions`.
-One common thing to do in a compiler pass is to search for all services
-that have a certain tag in order to process them in some way or dynamically
-plug each into some other service.
+methods described in the :doc:`/service_container/definitions`. One common
+thing to do in a compiler pass is to search for all services that have a
+certain tag in order to process them in some way or dynamically plug each into
+some other service.
 
 Registering a Compiler Pass
 ---------------------------
@@ -350,7 +350,7 @@ will then be called when the container is compiled::
 .. note::
 
     Compiler passes are registered differently if you are using the full-stack
-    framework, see :doc:`/cookbook/service_container/compiler_passes` for
+    framework, see :doc:`/service_container/compiler_passes` for
     more details.
 
 Controlling the Pass Ordering
@@ -519,4 +519,3 @@ have the cache will be considered stale.
 
     In the full-stack framework the compilation and caching of the container
     is taken care of for you.
-
