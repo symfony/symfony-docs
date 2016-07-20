@@ -30,14 +30,14 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php app/console debug:router article_show
+    $ php bin/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:
 
 .. code-block:: bash
 
-    $ php app/console router:match /blog/my-latest-post
+    $ php bin/console router:match /blog/my-latest-post
 
 This command will print which route the URL matches.
 

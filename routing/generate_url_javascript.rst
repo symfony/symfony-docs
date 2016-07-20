@@ -23,10 +23,6 @@ variables. The ``escape`` function helps escape any non-JavaScript-safe values:
         ) ?>";
         </script>
 
-.. versionadded:: 2.8
-    The ``path()`` PHP templating helper was introduced in Symfony 2.8. Prior
-    to 2.8, you had to use the ``generate()`` helper method.
-
 But if you *actually* need to generate routes in pure JavaScript, consider using
 the `FOSJsRoutingBundle`_. It makes the following possible:
 
