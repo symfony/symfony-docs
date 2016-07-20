@@ -13,9 +13,6 @@ the command by running the following from the root of your project.
 
     $ php app/console debug:router
 
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``router:debug``.
-
 This command will print a helpful list of *all* the configured routes in
 your application:
 
