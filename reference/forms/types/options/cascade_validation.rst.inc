@@ -19,7 +19,7 @@ the data from ``CategoryType`` to also be validated.
     Instead of using this option, it is recommended that you use the :doc:`Valid </reference/constraints/Valid>`
     constraint in your model to force validation on a child object stored
     on a property. This cascades only the validation but not the use of
-    the :ref:`validation_groups <book-forms-validation-groups>` option on child forms. You can read more
+    the :doc:`validation_groups </form/validation_groups>` option on child forms. You can read more
     about this in the section about :ref:`Embedding a Single Object <forms-embedding-single-object>`.
 
 .. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc

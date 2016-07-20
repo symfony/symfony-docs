@@ -69,8 +69,7 @@ To use the class, use ``createForm()`` and pass the fully qualified class name::
 Registering Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also
-:ref:`register your form type as a service <form-cookbook-form-field-service>`.
+You can also :ref:`register your form type as a service <form-field-service>`.
 This is only needed if your form type requires some dependencies to be injected
 by the container, otherwise it is unnecessary overhead and therefore *not*
 recommended to do this for all form type classes.
@@ -166,9 +165,8 @@ all of the fields:
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See the :doc:`/cookbook/form/form_customization` cookbook article for more information
-on this and how you can control *how* the form renders at a global level
-using form theming.
+See :doc:`/form/form_customization` for more information on this and how you
+can control *how* the form renders at a global level using form theming.
 
 Handling Form Submits
 ---------------------

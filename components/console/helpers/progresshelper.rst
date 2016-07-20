@@ -17,7 +17,7 @@ Progress Helper
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
-.. image:: /images/components/console/progress.png
+.. image:: /_images/components/console/progress.png
 
 To display progress details, use the :class:`Symfony\\Component\\Console\\Helper\\ProgressHelper`,
 pass it a total number of units, and advance the progress as your command executes::

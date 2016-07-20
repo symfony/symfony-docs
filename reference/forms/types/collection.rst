@@ -43,8 +43,8 @@ photos).
 
     If you are working with a collection of Doctrine entities, pay special
     attention to the `allow_add`_, `allow_delete`_ and `by_reference`_ options.
-    You can also see a complete example in the cookbook article
-    :doc:`/cookbook/form/form_collections`.
+    You can also see a complete example in the :doc:`/form/form_collections`
+    article.
 
 Basic Usage
 -----------
@@ -236,7 +236,7 @@ example for more details.
 The `prototype`_ option can be used to help render a prototype item that
 can be used - with JavaScript - to create new form items dynamically on
 the client side. For more information, see the above example and
-:ref:`cookbook-form-collections-new-prototype`.
+:ref:`form-collections-new-prototype`.
 
 .. caution::
 
@@ -256,7 +256,7 @@ that you can implement a "delete" button via JavaScript which simply removes
 a form element from the DOM. When the user submits the form, its absence
 from the submitted data will mean that it's removed from the final array.
 
-For more information, see :ref:`cookbook-form-collections-remove`.
+For more information, see :ref:`form-collections-remove`.
 
 .. caution::
 
@@ -266,7 +266,7 @@ For more information, see :ref:`cookbook-form-collections-remove`.
     on your application logic, when one of those objects is removed, you
     may want to delete it or at least remove its foreign key reference to
     the main object. None of this is handled automatically. For more
-    information, see :ref:`cookbook-form-collections-remove`.
+    information, see :ref:`form-collections-remove`.
 
 delete_empty
 ~~~~~~~~~~~~
@@ -362,7 +362,7 @@ rendering your form, having the entire "form row" may be easier for you.
     of the element (e.g. ``div`` or ``table``) that surrounds your collection.
 
 For details on how to actually use this option, see the above example as
-well as :ref:`cookbook-form-collections-new-prototype`.
+well as :ref:`form-collections-new-prototype`.
 
 prototype_data
 ~~~~~~~~~~~~~~

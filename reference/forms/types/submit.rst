@@ -28,8 +28,7 @@ A submit button.
 The Submit button has an additional method
 :method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` that lets
 you check whether this button was used to submit the form. This is especially
-useful when :ref:`a form has multiple submit buttons
-<book-form-submitting-multiple-buttons>`::
+useful when :doc:`a form has multiple submit buttons </form/multiple_buttons>`::
 
     if ($form->get('save')->isClicked()) {
         // ...
@@ -77,8 +76,7 @@ from the "Registration" are validated.
 
 .. seealso::
 
-    You can read more about this in :ref:`the Form chapter <book-form-validation-groups>`
-    of the book.
+    You can read more about this in :doc:`/form/data_based_validation`.
 
 Form Variables
 --------------

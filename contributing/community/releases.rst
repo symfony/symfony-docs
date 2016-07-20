@@ -89,7 +89,7 @@ Schedule
 
 Below is the schedule for the first few versions that use this release model:
 
-.. image:: /images/contributing/release-process.jpg
+.. image:: /_images/contributing/release-process.jpg
    :align: center
 
 * **Yellow** represents the Development phase
