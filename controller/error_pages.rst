@@ -15,6 +15,8 @@ with lots of debug information to help you quickly discover the root problem:
 
 .. image:: /_images/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in the development environment
+   :align: center
+   :class: with-browser
 
 Since these pages contain a lot of sensitive internal information, Symfony won't
 display them in the production environment. Instead, it'll show a simple and
@@ -22,6 +24,8 @@ generic **error page**:
 
 .. image:: /_images/controller/error_pages/errors-in-prod-environment.png
    :alt: A typical error page in the production environment
+   :align: center
+   :class: with-browser
 
 Error pages for the production environment can be customized in different ways
 depending on your needs:
@@ -251,19 +255,19 @@ will be passed two parameters:
 Instead of creating a new exception controller from scratch you can, of course,
 also extend the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
 In that case, you might want to override one or both of the ``showAction()`` and
-``findTemplate()`` methods. The latter one locates the template to be used. 
+``findTemplate()`` methods. The latter one locates the template to be used.
 
 .. note::
-  
+
     In case of extending the
     :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` you
     may configure a service to pass the Twig environment and the ``debug`` flag
-    to the constructor. 
-    
+    to the constructor.
+
     .. configuration-block::
-    
+
         .. code-block:: yaml
-    
+
             # app/config/services.yml
             services:
                 app.exception_controller:

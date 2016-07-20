@@ -8,7 +8,7 @@ On Linux and macOS systems, if your web server user is different from your
 command line user, you need to configure permissions properly to avoid issues.
 There are several ways to achieve that:
 
-1. Use the same user for the CLI and the web server
+1. Use the same User for the CLI and the Web Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Edit your web server configuration (commonly ``httpd.conf`` or ``apache2.conf``
@@ -22,7 +22,7 @@ update the ``User`` and ``Group`` directives).
     unsafe binaries, etc.) as a compromised server would give to the hacker
     those privileges.
 
-2. Using ACL on a system that supports ``chmod +a`` (macOS)
+2. Using ACL on a System that Supports ``chmod +a`` (macOS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On macOS systems, the ``chmod`` command supports the ``+a`` flag to define an
@@ -38,7 +38,7 @@ needed permissions:
     $ sudo chmod -R +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
     $ sudo chmod -R +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
 
-3. Using ACL on a system that supports ``setfacl`` (Linux/BSD)
+3. Using ACL on a System that Supports ``setfacl`` (Linux/BSD)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most Linux and BSD distributions don't support ``chmod +a``, but do support
@@ -58,7 +58,7 @@ following script to determine your web server user and grant the needed permissi
     setfacl isn't available on NFS mount points. However, storing cache and logs
     over NFS is strongly discouraged for performance reasons.
 
-4. Without using ACL
+4. Without Using ACL
 ~~~~~~~~~~~~~~~~~~~~
 
 If none of the previous methods work for you, change the umask so that the

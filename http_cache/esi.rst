@@ -149,7 +149,10 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
         <!-- ... or a URL -->
         <?php echo $view['actions']->render(
-            $view['router']->generate('latest_news', array('maxPerPage' => 5)),
+            $view['router']->path(
+                'latest_news',
+                array('maxPerPage' => 5)
+            ),
             array('strategy' => 'esi'),
         ) ?>
 

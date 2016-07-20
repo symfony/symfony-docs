@@ -651,5 +651,14 @@ you indicate that you're expecting an array instead of a single object.
     A popular alternative to the Symfony Serializer Component is the third-party
     library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /serializer
+
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
