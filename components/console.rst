@@ -49,7 +49,7 @@ Then, you can register the commands using
 
 See the :doc:`/console` article for information about how to create commands.
 
-Learn More
+Learn more
 ----------
 
 .. toctree::
@@ -59,5 +59,6 @@ Learn More
     /console
     /components/console/*
     /components/console/helpers/index
+    /console/*
 
 .. _Packagist: https://packagist.org/packages/symfony/console

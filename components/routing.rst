@@ -346,4 +346,17 @@ automatically in the background if you want to use it. A basic example of the
     are saved in the ``cache_dir``. This means your script must have write
     permissions for that location.
 
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /routing
+    /routing/*
+    /controller
+    /controller/*
+    /configuration/apache_router
+
 .. _Packagist: https://packagist.org/packages/symfony/routing

@@ -49,7 +49,9 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', array(
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <a href="<?php echo $view['router']->path('article_show', array(
             'id' => 123,
             '_format' => 'pdf',
         )) ?>">

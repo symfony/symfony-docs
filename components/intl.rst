@@ -333,6 +333,18 @@ to the current default locale::
 
 That's all you need to know for now. Have fun coding!
 
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /reference/forms/types/country
+    /reference/forms/types/currency
+    /reference/forms/types/language
+    /reference/forms/types/locale
+
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _Icu component: https://packagist.org/packages/symfony/icu
 .. _intl extension: http://www.php.net/manual/en/book.intl.php

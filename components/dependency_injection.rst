@@ -293,6 +293,7 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    dependency_injection/*
+    /components/dependency_injection/*
+    /dependency_injection/*
 
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection
