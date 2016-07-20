@@ -33,9 +33,10 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
         {
             $resolver->setDefaults(array(
                 'choices' => array(
-                    'm' => 'Male',
-                    'f' => 'Female',
-                )
+                    'Male' => 'm',
+                    'Female' => 'f',
+                ),
+                'choices_as_values' => true,
             ));
         }
 
