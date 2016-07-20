@@ -166,9 +166,9 @@ form::
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
-submission for you. If the user had submitted an invalid username or password,
-this controller reads the form submission error from the security system so
-that it can be displayed back to the user.
+submission for you. If the user submits an invalid username or password,
+this controller reads the form submission error from the security system,
+so that it can be displayed back to the user.
 
 In other words, your job is to *display* the login form and any login errors
 that may have occurred, but the security system itself takes care of checking
