@@ -399,14 +399,6 @@ that's available to you with or without the use of the base
 action is to look in the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
 
-.. seealso::
-
-    If you're curious about how a controller would work that did *not*
-    extend this base ``Controller`` class, check out cookbook article
-    :doc:`Controllers as Services </cookbook/controller/service>`.
-    This is optional, but can give you more control over the exact
-    objects/dependencies that are injected into your controller.
-
 .. index::
    single: Controller; Redirecting
 
