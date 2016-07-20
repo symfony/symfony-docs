@@ -720,6 +720,15 @@ method to access the list of errors. It returns a
     // a FormErrorIterator instance representing the form tree structure
     $errors = $form->getErrors(true, false);
 
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /form/*
+
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html

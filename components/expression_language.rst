@@ -119,6 +119,9 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    expression_language/*
+    /expressions
+    /components/expression_language/*
+    /service_container/expression_language
+    /reference/constraints/Expression
 
 .. _Packagist: https://packagist.org/packages/symfony/expression-language

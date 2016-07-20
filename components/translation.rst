@@ -219,7 +219,10 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    translation/*
+    /components/translation/*
+    /translation
+    /translation/*
+    /validation/translation
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
