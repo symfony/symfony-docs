@@ -120,18 +120,18 @@ The page name should not include the file extension (``.rst``). For example:
 
 .. code-block:: rst
 
-    :doc:`/book/controller`
+    :doc:`/controller`
 
-    :doc:`/components/event_dispatcher/introduction`
+    :doc:`/components/event_dispatcher`
 
-    :doc:`/cookbook/configuration/environments`
+    :doc:`/configuration/environments`
 
 The title of the linked page will be automatically used as the text of the link.
 If you want to modify that title, use this alternative syntax:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email </cookbook/email/spool>`
+    :doc:`Spooling Email </email/spool>`
 
 .. note::
 
@@ -143,7 +143,7 @@ If you want to modify that title, use this alternative syntax:
 
         :doc:`controller`
 
-        :doc:`event_dispatcher/introduction`
+        :doc:`event_dispatcher`
 
         :doc:`environments`
 

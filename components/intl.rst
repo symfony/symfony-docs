@@ -46,7 +46,7 @@ replace the intl classes:
 Composer automatically exposes these classes in the global namespace.
 
 If you don't use Composer but the
-:doc:`Symfony ClassLoader component </components/class_loader/introduction>`,
+:doc:`Symfony ClassLoader component </components/class_loader>`,
 you need to expose them manually by adding the following lines to your autoload
 code::
 
@@ -332,6 +332,18 @@ to the current default locale::
     // => array('AFN' => 'Afghanische Afghani', ...)
 
 That's all you need to know for now. Have fun coding!
+
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /reference/forms/types/country
+    /reference/forms/types/currency
+    /reference/forms/types/language
+    /reference/forms/types/locale
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _Icu component: https://packagist.org/packages/symfony/icu

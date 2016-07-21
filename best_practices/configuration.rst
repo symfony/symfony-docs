@@ -78,7 +78,7 @@ add an extra layer of configuration that's not needed because you don't need
 or want these configuration values to change on each server.
 
 The configuration options defined in the ``config.yml`` file usually vary from
-one :doc:`environment </cookbook/configuration/environments>` to another. That's
+one :doc:`environment </configuration/environments>` to another. That's
 why Symfony already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
 files so that you can override specific values for each environment.
 
@@ -160,7 +160,7 @@ Semantic Configuration: Don't Do It
 
     Don't define a semantic dependency injection configuration for your bundles.
 
-As explained in :doc:`/cookbook/bundles/extension` article, Symfony bundles
+As explained in :doc:`/bundles/extension` article, Symfony bundles
 have two choices on how to handle configuration: normal service configuration
 through the ``services.yml`` file and semantic configuration through a special
 ``*Extension`` class.
@@ -176,7 +176,7 @@ Moving Sensitive Options Outside of Symfony Entirely
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
 through environment variables. Learn how to do it in the following article:
-:doc:`/cookbook/configuration/external_parameters`
+:doc:`/configuration/external_parameters`.
 
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html

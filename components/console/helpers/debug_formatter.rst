@@ -10,7 +10,7 @@ instance a process or HTTP request. For example, if you used it to output
 the results of running ``ls -la`` on a UNIX system, it might output something
 like this:
 
-.. image:: /images/components/console/debug_formatter.png
+.. image:: /_images/components/console/debug_formatter.png
    :align: center
 
 Using the debug_formatter
@@ -33,7 +33,7 @@ multiple programs at the same time. When using the
 .. tip::
 
     This information is often too verbose to be shown by default. You can use
-    :ref:`verbosity levels <verbosity-levels>` to only show it when in
+    :doc:`verbosity levels </console/verbosity>` to only show it when in
     debugging mode (``-vvv``).
 
 Starting a Program

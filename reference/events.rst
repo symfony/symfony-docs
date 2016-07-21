@@ -4,7 +4,7 @@ Symfony Framework Events
 When the Symfony Framework (or anything using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`)
 handles a request, a few core events are dispatched so that you can add
 listeners throughout the process. These are called the "kernel events".
-For a larger explanation, see :doc:`/components/http_kernel/introduction`.
+For a larger explanation, see :doc:`/components/http_kernel`.
 
 Kernel Events
 -------------

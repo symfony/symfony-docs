@@ -8,9 +8,6 @@
 Cache a Class Loader
 ====================
 
-Introduction
-------------
-
 Finding the file for a particular class can be an expensive task. Luckily,
 the ClassLoader component comes with two classes to cache the mapping
 from a class to its containing file. Both the :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader`

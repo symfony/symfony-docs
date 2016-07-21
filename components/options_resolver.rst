@@ -684,5 +684,4 @@ That's it! You now have all the tools and knowledge needed to easily process
 options in your code.
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
-.. _Form component: http://symfony.com/doc/current/components/form/introduction.html
 .. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md#260
