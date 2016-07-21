@@ -16,7 +16,7 @@ Creating a Custom User Checker
 ------------------------------
 
 User checkers are classes that must implement the
-:class:`Symfony\\Component\\Security\\Core\\UserCheckerInterface`. This interface
+:class:`Symfony\\Component\\Security\\Core\\User\\UserCheckerInterface`. This interface
 defines two methods called ``checkPreAuth()`` and ``checkPostAuth()`` to
 perform checks before and after user authentication. If one or more conditions
 are not met, an exception should be thrown which extends the
