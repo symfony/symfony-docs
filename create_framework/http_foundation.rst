@@ -76,7 +76,7 @@ unit test for the above code::
 
     If our application were just slightly bigger, we would have been able to
     find even more problems. If you are curious about them, read the
-    :doc:`/book/from_flat_php_to_symfony2` chapter of the book.
+    :doc:`/introduction/from_flat_php_to_symfony2` chapter of the book.
 
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
@@ -281,7 +281,7 @@ cases by yourself. Why not using a technology that already works?
 
     If you want to learn more about the HttpFoundation component, you can have
     a look at the :namespace:`Symfony\\Component\\HttpFoundation` API or read
-    its dedicated :doc:`documentation </components/http_foundation/index>`.
+    its dedicated :doc:`documentation </components/http_foundation>`.
 
 Believe or not but we have our first framework. You can stop now if you want.
 Using just the Symfony HttpFoundation component already allows you to write
