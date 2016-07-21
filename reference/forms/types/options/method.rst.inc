@@ -18,8 +18,8 @@ is used to decide whether to process the form submission in the
 
     When the method is PUT, PATCH, or DELETE, Symfony will automatically
     render a ``_method`` hidden field in your form. This is used to "fake"
-    these HTTP methods, as they're not supported on standard browsers. For
-    more information, see :doc:`/cookbook/routing/method_parameters`.
+    these HTTP methods, as they're not supported on standard browsers. This can
+    be useful when using :ref:`method routing requirements <routing-method-requirement>`.
 
 .. note::
 

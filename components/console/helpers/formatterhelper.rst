@@ -6,7 +6,7 @@ Formatter Helper
 
 The Formatter helpers provides functions to format the output with colors.
 You can do more advanced things with this helper than you can in
-:ref:`components-console-coloring`.
+:doc:`/console/coloring`.
 
 The :class:`Symfony\\Component\\Console\\Helper\\FormatterHelper` is included
 in the default helper set, which you can get by calling
@@ -62,4 +62,4 @@ messages and 2 spaces on the left and right).
 
 The exact "style" you use in the block is up to you. In this case, you're using
 the pre-defined ``error`` style, but there are other styles, or you can create
-your own. See :ref:`components-console-coloring`.
+your own. See :doc:`/console/coloring`.
