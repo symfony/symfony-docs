@@ -54,6 +54,16 @@ configuration:
 
 The ``type`` option tells Homestead to use the Symfony nginx configuration.
 
+Please note that if you are just using Symfony components, you should change ``type`` option to ``laravel``:
+
+.. code-block:: yaml
+
+    # ...
+    sites:
+        - map: symfony-demo.dev
+          to: /home/vagrant/projects/symfony_demo/web
+          type: laravel
+
 At last, edit the hosts file on your local machine to map ``symfony-demo.dev``
 to ``192.168.10.10`` (which is the IP used by Homestead)::
 
