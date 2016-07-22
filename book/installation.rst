@@ -334,10 +334,27 @@ of the Symfony Installer anywhere in your system:
     # Windows
     c:\projects\> php symfony demo
 
+.. note::
+
+    Apart from the :doc:`usual Symfony application requirements </reference/requirements>`,
+    the Symfony Demo application needs the PDO-SQLite PHP extension to be enabled.
+
 Once downloaded, enter into the ``symfony_demo/`` directory and run the PHP's
 built-in web server executing the ``php app/console server:run`` command. Access
 to the ``http://localhost:8000`` URL in your browser to start using the Symfony
 Demo application.
+
+.. tip::
+
+    The application will run with the lastest version available of Symfony. If we
+    want to run it with a previous version, we should change the Symfony dependency.
+
+    For example, for using Symfony 2.8.0 we would proceed as follows:
+
+    .. code-block:: bash
+
+        $ cd symfony_demo
+        $ composer require symfony/symfony:2.8.0
 
 .. _installing-a-symfony2-distribution:
 
