@@ -265,6 +265,14 @@ If there are any issues, correct them now before moving on.
 
         setfacl isn't available on NFS mount points. However, setting cache
         and logs over NFS is strongly not recommended for performance.
+        
+    .. note::
+
+        When not using PHP's built-in web server, make sure that the web server
+        process runs with your user account or to configure advanced rules (like ACLs).
+        
+        http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html.
+        
 
     **4. Without using ACL**
 
