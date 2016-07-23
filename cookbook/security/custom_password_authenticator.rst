@@ -37,11 +37,21 @@ the user::
     {
         private $encoder;
 
+        /**
+         * @param UserPasswordEncoderInterface $encoder
+         */
         public function __construct(UserPasswordEncoderInterface $encoder)
         {
             $this->encoder = $encoder;
         }
 
+        /**
+         * @param TokenInterface $token
+         * @param UserProviderInterface $userProvider
+         * @param string $providerKey
+         * @return UsernamePasswordToken
+         * @throws CustomUserMessageAuthenticationException
+         */
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
             try {
@@ -78,12 +88,24 @@ the user::
             throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
 
+        /**
+         * @param TokenInterface $token
+         * @param string $providerKey
+         * @return bool
+         */
         public function supportsToken(TokenInterface $token, $providerKey)
         {
             return $token instanceof UsernamePasswordToken
                 && $token->getProviderKey() === $providerKey;
         }
 
+        /**
+         * @param Request $request
+         * @param string $username
+         * @param string $password
+         * @param string $providerKey
+         * @return UsernamePasswordToken
+         */
         public function createToken(Request $request, $username, $password, $providerKey)
         {
             return new UsernamePasswordToken($username, $password, $providerKey);
@@ -180,12 +202,12 @@ Now, configure your ``TimeAuthenticator`` as a service:
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
-        
+
         // ...
 
         $container->setDefinition('time_authenticator', new Definition(
             'Acme\HelloBundle\Security\TimeAuthenticator',
-            array(new Reference('security.password_encoder'))
+            [new Reference('security.password_encoder')]
         ));
 
 Then, activate it in the ``firewalls`` section of the security configuration
@@ -237,19 +259,19 @@ using the ``simple_form`` key:
 
         // ..
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area'    => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area' => [
                     'pattern'     => '^/admin',
-                    'simple_form' => array(
+                    'simple_form' => [
                         'provider'      => ...,
                         'authenticator' => 'time_authenticator',
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The ``simple_form`` key has the same options as the normal ``form_login``
 option, but with the additional ``authenticator`` key that points to the

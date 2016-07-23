@@ -40,17 +40,17 @@ to use HTTPS then you could use the following configuration:
         .. code-block:: php
 
             // app/config/security.php
-            $container->loadFromExtension('security', array(
+            $container->loadFromExtension('security', [
                 // ...
 
-                'access_control' => array(
-                    array(
+                'access_control' => [
+                    [
                         'path'             => '^/secure',
                         'role'             => 'ROLE_ADMIN',
                         'requires_channel' => 'https',
-                    ),
-                ),
-            ));
+                    ],
+                ],
+            ]);
 
 The login form itself needs to allow anonymous access, otherwise users will
 be unable to authenticate. To force it to use HTTPS you can still use
@@ -91,17 +91,17 @@ role:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'access_control' => array(
-                array(
+            'access_control' => [
+                [
                     'path'             => '^/login',
                     'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     'requires_channel' => 'https',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 It is also possible to specify using HTTPS in the routing configuration,
 see :doc:`/cookbook/routing/scheme` for more details.

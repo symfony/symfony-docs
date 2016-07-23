@@ -58,19 +58,19 @@ provider available in the Security component:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'secured_area' => array(
+            'firewalls' => [
+                'secured_area' => [
                     // ...
-                    'form_login' => array(
+                    'form_login' => [
                         // ...
                         'csrf_token_generator' => 'security.csrf.token_manager',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
@@ -165,20 +165,20 @@ After this, you have protected your login form against CSRF attacks.
         .. code-block:: php
 
             // app/config/security.php
-            $container->loadFromExtension('security', array(
+            $container->loadFromExtension('security', [
                 // ...
 
-                'firewalls' => array(
-                    'secured_area' => array(
+                'firewalls' => [
+                    'secured_area' => [
                         // ...
-                        'form_login' => array(
+                        'form_login' => [
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
                             'csrf_token_id'     => 'a_private_string'
-                        ),
-                    ),
-                ),
-            ));
+                        ],
+                    ],
+                ],
+            ]);
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Forging Login Requests`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests

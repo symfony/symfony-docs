@@ -5,19 +5,19 @@ How to Restrict Firewalls to a Specific Request
 ===============================================
 
 When using the Security component, you can create firewalls that match certain request options.
-In most cases, matching against the URL is sufficient, but in special cases you can further 
+In most cases, matching against the URL is sufficient, but in special cases you can further
 restrict the initialization of a firewall against other options of the request.
 
 .. note::
 
-    You can use any of these restrictions individually or mix them together to get 
-    your desired firewall configuration. 
+    You can use any of these restrictions individually or mix them together to get
+    your desired firewall configuration.
 
 Restricting by Pattern
 ----------------------
 
-This is the default restriction and restricts a firewall to only be initialized if the request URL 
-matches the configured ``pattern``. 
+This is the default restriction and restricts a firewall to only be initialized if the request URL
+matches the configured ``pattern``.
 
 .. configuration-block::
 
@@ -55,25 +55,25 @@ matches the configured ``pattern``.
         // app/config/security.php
 
         // ...
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area' => [
                     'pattern' => '^/admin',
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
-The ``pattern`` is a regular expression. In this example, the firewall will only be 
+The ``pattern`` is a regular expression. In this example, the firewall will only be
 activated if the URL starts (due to the ``^`` regex character) with ``/admin``. If
-the URL does not match this pattern, the firewall will not be activated and subsequent 
+the URL does not match this pattern, the firewall will not be activated and subsequent
 firewalls will have the opportunity to be matched for this request.
 
 Restricting by Host
 -------------------
 
-If matching against the ``pattern`` only is not enough, the request can also be matched against 
-``host``. When the configuration option ``host`` is set, the firewall will be restricted to 
+If matching against the ``pattern`` only is not enough, the request can also be matched against
+``host``. When the configuration option ``host`` is set, the firewall will be restricted to
 only initialize if the host from the request matches against the configuration.
 
 .. configuration-block::
@@ -112,14 +112,14 @@ only initialize if the host from the request matches against the configuration.
         // app/config/security.php
 
         // ...
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area' => [
                     'host' => '^admin\.example\.com$',
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 The ``host`` (like the ``pattern``) is a regular expression. In this example,
 the firewall will only be activated if the host is equal exactly (due to
@@ -170,14 +170,14 @@ the provided HTTP methods.
         // app/config/security.php
 
         // ...
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area' => array(
-                    'methods' => array('GET', 'POST'),
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area' => [
+                    'methods' => ['GET', 'POST'],
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 In this example, the firewall will only be activated if the HTTP method of the
 request is either ``GET`` or ``POST``. If the method is not in the array of the

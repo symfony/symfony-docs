@@ -74,7 +74,10 @@ provider.
         public $digest;
         public $nonce;
 
-        public function __construct(array $roles = array())
+        /**
+         * @param array $roles
+         */
+        public function __construct(array $roles = [])
         {
             parent::__construct($roles);
 
@@ -82,6 +85,9 @@ provider.
             $this->setAuthenticated(count($roles) > 0);
         }
 
+        /**
+         * @return string
+         */
         public function getCredentials()
         {
             return '';
@@ -122,15 +128,30 @@ set an authenticated token in the token storage if successful.
 
     class WsseListener implements ListenerInterface
     {
+
+        /**
+         * @var TokenStorageInterface $tokenStorage
+         */
         protected $tokenStorage;
+
+        /**
+         * @var AuthenticationManagerInterface $authenticationManager
+         */
         protected $authenticationManager;
 
+        /**
+         * @param TokenStorageInterface $tokenStorage
+         * @param AuthenticationManagerInterface $authenticationManager
+         */
         public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager)
         {
             $this->tokenStorage = $tokenStorage;
             $this->authenticationManager = $authenticationManager;
         }
 
+        /**
+         * @param GetResponseEvent $event
+         */
         public function handle(GetResponseEvent $event)
         {
             $request = $event->getRequest();
@@ -218,15 +239,31 @@ the ``PasswordDigest`` header value matches with the user's password.
 
     class WsseProvider implements AuthenticationProviderInterface
     {
+        /**
+         * @var UserProviderInterface $userProvider
+         */
         private $userProvider;
+
+        /**
+         * @var CacheItemPoolInterface $cachePool
+         */
         private $cachePool;
 
+        /**
+         * @param UserProviderInterface $userProvider
+         * @param CacheItemPoolInterface $cachePool
+         */
         public function __construct(UserProviderInterface $userProvider, CacheItemPoolInterface $cachePool)
         {
             $this->userProvider = $userProvider;
             $this->cachePool = $cachePool;
         }
 
+        /**
+         * @param TokenInterface $token
+         * @throws AuthenticationException
+         * @return WsseUserToken
+         */
         public function authenticate(TokenInterface $token)
         {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
@@ -246,6 +283,13 @@ the ``PasswordDigest`` header value matches with the user's password.
          *
          * For more information specific to the logic here, see
          * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129
+         *
+         * @param string $digest
+         * @param string $nonce
+         * @param string $created
+         * @param string $secret
+         * @throws NonceExpiredException
+         * @return bool
          */
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
@@ -261,13 +305,13 @@ the ``PasswordDigest`` header value matches with the user's password.
 
             // Try to fetch the cache item from pool
             $cacheItem = $this->cachePool->getItem(md5($nonce));
-            
+
             // Validate that the nonce is *not* in cache
             // if it is, this could be a replay attack
             if ($cacheItem->isHit()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
-            
+
             // Store the item in cache for 5 minutes
             $cacheItem->set(null)->expiresAfter(300);
             $this->cachePool->save($cacheItem);
@@ -278,6 +322,10 @@ the ``PasswordDigest`` header value matches with the user's password.
             return hash_equals($expected, $digest);
         }
 
+        /**
+         * @param TokenInterface $token
+         * @return bool
+         */
         public function supports(TokenInterface $token)
         {
             return $token instanceof WsseUserToken;
@@ -323,6 +371,14 @@ create a class which implements
 
     class WsseFactory implements SecurityFactoryInterface
     {
+        /**
+         * @param ContainerBuilder $container
+         * @param string $id
+         * @param array $config
+         * @param string $userProvider
+         * @param string $defaultEntryPoint
+         * @return array
+         */
         public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
@@ -334,19 +390,28 @@ create a class which implements
             $listenerId = 'security.authentication.listener.wsse.'.$id;
             $listener = $container->setDefinition($listenerId, new DefinitionDecorator('wsse.security.authentication.listener'));
 
-            return array($providerId, $listenerId, $defaultEntryPoint);
+            return [$providerId, $listenerId, $defaultEntryPoint];
         }
 
+        /**
+         * @return string
+         */
         public function getPosition()
         {
             return 'pre_auth';
         }
 
+        /**
+         * @return string
+         */
         public function getKey()
         {
             return 'wsse';
         }
 
+        /**
+         * @param NodeDefinition $node
+         */
         public function addConfiguration(NodeDefinition $node)
         {
         }
@@ -454,20 +519,20 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
         $definition = new Definition(
             'AppBundle\Security\Authentication\Provider\WsseProvider',
-            array(
+            [
                 '', // User Provider
                 new Reference('cache.app'),
-            )
+            ]
         );
         $definition->setPublic(false);
         $container->setDefinition('wsse.security.authentication.provider', $definition)
 
         $definition = new Definition(
             'AppBundle\Security\Firewall\WsseListener',
-            array(
+            [
                 new Reference('security.token_storage'),
                 new Reference('security.authentication.manager'),
-            )
+            ]
         );
         $definition->setPublic(false);
         $container->setDefinition('wsse.security.authentication.listener', $definition);
@@ -486,6 +551,9 @@ factory in your bundle class:
 
     class AppBundle extends Bundle
     {
+        /**
+         * @param ContainerBuilder $container
+         */
         public function build(ContainerBuilder $container)
         {
             parent::build($container);
@@ -536,17 +604,17 @@ You are finished! You can now define parts of your app as under WSSE protection.
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'wsse_secured' => array(
+            'firewalls' => [
+                'wsse_secured' => [
                     'pattern'   => '^/api/',
                     'stateless' => true,
                     'wsse'      => true,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Congratulations! You have written your very own custom security authentication
 provider!
@@ -575,6 +643,9 @@ the ``addConfiguration`` method.
     {
         // ...
 
+        /**
+         * @param NodeDefinition $node
+         */
         public function addConfiguration(NodeDefinition $node)
         {
           $node
@@ -593,6 +664,14 @@ in order to put it to use.
 
     class WsseFactory implements SecurityFactoryInterface
     {
+        /**
+         * @param ContainerBuilder $container
+         * @param string $id
+         * @param array $config
+         * @param string $userProvider
+         * @param string $defaultEntryPoint
+         * @return array 
+         */
         public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
@@ -655,19 +734,19 @@ set to any desirable value per firewall.
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'wsse_secured' => array(
+            'firewalls' => [
+                'wsse_secured' => [
                     'pattern'   => '^/api/',
                     'stateless' => true,
-                    'wsse'      => array(
+                    'wsse'      => [
                         'lifetime' => 30,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.

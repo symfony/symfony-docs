@@ -77,11 +77,11 @@ First, you need to configure the connection the ACL system is supposed to use:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'acl', array(
+        $container->loadFromExtension('security', 'acl', [
             // ...
 
             'connection' => 'default',
-        ));
+        ]);
 
 .. note::
 
@@ -126,6 +126,9 @@ Creating an ACL and Adding an ACE
     {
         // ...
 
+        /**
+         * @param Post $post
+         */
         public function addCommentAction(Post $post)
         {
             $comment = new Comment();
@@ -189,6 +192,10 @@ Checking Access
     {
         // ...
 
+        /**
+         * @param Comment $comment
+         * @throws AccessDeniedException
+         */
         public function editCommentAction(Comment $comment)
         {
             $authorizationChecker = $this->get('security.authorization_checker');

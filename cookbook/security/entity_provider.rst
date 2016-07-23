@@ -88,11 +88,17 @@ For this entry, suppose that you already have a ``User`` entity inside an
             // $this->salt = md5(uniqid(null, true));
         }
 
+        /**
+         * @return string
+         */
         public function getUsername()
         {
             return $this->username;
         }
 
+        /**
+         * @return string
+         */
         public function getSalt()
         {
             // you *may* need a real salt depending on your encoder
@@ -100,14 +106,20 @@ For this entry, suppose that you already have a ``User`` entity inside an
             return null;
         }
 
+        /**
+         * @return string
+         */
         public function getPassword()
         {
             return $this->password;
         }
 
+        /**
+         * @return array
+         */
         public function getRoles()
         {
-            return array('ROLE_USER');
+            return ['ROLE_USER'];
         }
 
         public function eraseCredentials()
@@ -117,13 +129,13 @@ For this entry, suppose that you already have a ``User`` entity inside an
         /** @see \Serializable::serialize() */
         public function serialize()
         {
-            return serialize(array(
+            return serialize([
                 $this->id,
                 $this->username,
                 $this->password,
                 // see section on salt below
                 // $this->salt,
-            ));
+            ]);
         }
 
         /** @see \Serializable::unserialize() */
@@ -255,33 +267,33 @@ the username and then check the password (more on passwords in a moment):
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'encoders' => array(
-                'AppBundle\Entity\User' => array(
+        $container->loadFromExtension('security', [
+            'encoders' => [
+                'AppBundle\Entity\User' => [
                     'algorithm' => 'bcrypt',
-                ),
-            ),
+                ],
+            ],
 
             // ...
 
-            'providers' => array(
-                'our_db_provider' => array(
-                    'entity' => array(
+            'providers' => [
+                'our_db_provider' => [
+                    'entity' => [
                         'class'    => 'AppBundle:User',
                         'property' => 'username',
-                    ),
-                ),
-            ),
-            'firewalls' => array(
-                'main' => array(
+                    ],
+                ],
+            ],
+            'firewalls' => [
+                'main' => [
                     'pattern'    => '^/',
                     'http_basic' => null,
                     'provider'   => 'our_db_provider',
-                ),
-            ),
+                ],
+            ],
 
             // ...
-        ));
+        ]);
 
 First, the ``encoders`` section tells Symfony to expect that the passwords
 in the database will be encoded using ``bcrypt``. Second, the ``providers``
@@ -367,10 +379,10 @@ so you only need the new interface::
         // serialize and unserialize must be updated - see below
         public function serialize()
         {
-            return serialize(array(
+            return serialize([
                 // ...
                 $this->isActive
-            ));
+            ]);
         }
         public function unserialize($serialized)
         {
@@ -487,17 +499,17 @@ To finish this, just remove the ``property`` key from the user provider in
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'providers' => array(
-                'our_db_provider' => array(
-                    'entity' => array(
+            'providers' => [
+                'our_db_provider' => [
+                    'entity' => [
                         'class' => 'AppBundle:User',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 This tells Symfony to *not* query automatically for the User. Instead, when
 someone logs in, the ``loadUserByUsername()`` method on ``UserRepository``
