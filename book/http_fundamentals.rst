@@ -173,7 +173,8 @@ Symfony is architected to match this reality.
     To learn more about the HTTP specification, read the original `HTTP 1.1 RFC`_
     or the `HTTP Bis`_, which is an active effort to clarify the original
     specification. A great tool to check both the request and response headers
-    while browsing is the `Live HTTP Headers`_ extension for Firefox or `Live HTTP Headers (Chrome)`_ extension for Chrome.
+    while browsing is the `Live HTTP Headers`_ extension for Firefox or
+    `Live HTTP Headers (Chrome)`_ extension for Chrome.
 
 .. index::
    single: Symfony Fundamentals; Requests and responses
