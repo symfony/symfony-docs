@@ -173,7 +173,8 @@ Symfony is architected to match this reality.
     To learn more about the HTTP specification, read the original `HTTP 1.1 RFC`_
     or the `HTTP Bis`_, which is an active effort to clarify the original
     specification. A great tool to check both the request and response headers
-    while browsing is the `Live HTTP Headers`_ extension for Firefox.
+    while browsing is the `Live HTTP Headers`_ extension for Firefox or
+    `Live HTTP Headers (Chrome)`_ extension for Chrome.
 
 .. index::
    single: Symfony Fundamentals; Requests and responses
@@ -605,6 +606,7 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
+.. _`Live HTTP Headers (Chrome)`: https://chrome.google.com/webstore/detail/live-http-headers/iaiioopjkcekapmldfgbebdclcnpgnlo
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 .. _`List of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
