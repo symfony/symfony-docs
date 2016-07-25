@@ -325,6 +325,8 @@ on the event object that's passed to listeners on this event.
     those to objects, which are then stored in the ``attributes`` property of
     the ``Request`` object. Read the next section to see why this is important.
 
+.. _component-http-kernel-kernel-controller-arguments:
+
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -371,6 +373,13 @@ of arguments that should be passed when executing that callable.
     Symfony but customization is the key here. By implementing the
     ``ArgumentValueResolverInterface`` yourself and passing this to the
     ``ArgumentResolver``, you can extend this functionality.
+
+.. versionadded:: 3.1
+     The ``kernel.controller_arguments`` event was introduced in Symfony 3.1.
+
+Once controller arguments have been resolved by Symfony, the
+``kernel.controller_arguments`` event is triggered. This allows to modify or
+replace the arguments and the controller to fit your application needs.
 
 .. _component-http-kernel-calling-controller:
 
