@@ -1066,6 +1066,10 @@ it will likely be convenient for each ``Category`` object to automatically
 own a collection of its related ``Product`` objects.
 
 .. note::
+    To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
+    `Association Updates`_ documentation.
+
+.. note::
 
     The code in the constructor is important.  Rather than being instantiated
     as a traditional ``array``, the ``$products`` property must be of a type
@@ -1447,6 +1451,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Basic Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
+.. _`Association Updates`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
 .. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
 .. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
