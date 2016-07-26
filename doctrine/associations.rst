@@ -176,6 +176,11 @@ own a collection of its related ``Product`` objects.
     you uncomfortable, don't worry. Just imagine that it's an ``array``
     and you'll be in good shape.
 
+.. seealso::
+
+    To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
+    `Association Updates` documentation.
+
 .. tip::
 
    The targetEntity value in the metadata used above can reference any entity
@@ -407,3 +412,4 @@ Doctrine's `Association Mapping Documentation`_.
     statement, which *imports* the ``ORM`` annotations prefix.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
+.. _`Association Updates`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
