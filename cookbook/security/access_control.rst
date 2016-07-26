@@ -64,30 +64,30 @@ Take the following ``access_control`` entries as an example:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'access_control' => array(
-                array(
+            'access_control' => [
+                [
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_IP',
                     'ip' => '127.0.0.1',
-                ),
-                array(
+                ],
+                [
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_HOST',
                     'host' => 'symfony\.com$',
-                ),
-                array(
+                ],
+                [
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_METHOD',
                     'methods' => 'POST, PUT',
-                ),
-                array(
+                ],
+                [
                     'path' => '^/admin',
                     'role' => 'ROLE_USER',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
@@ -205,20 +205,20 @@ pattern so that it is only accessible by requests from the local server itself:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'access_control' => array(
-                array(
+            'access_control' => [
+                [
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     'ips' => '127.0.0.1, ::1'
-                ),
-                array(
+                ],
+                [
                     'path' => '^/internal',
                     'role' => 'ROLE_NO_ACCESS'
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Here is how it works when the path is ``/internal/something`` coming from
 the external IP address ``10.0.0.1``:
@@ -271,12 +271,12 @@ key:
 
     .. code-block:: php
 
-            'access_control' => array(
-                array(
+            'access_control' => [
+                [
                     'path' => '^/_internal/secure',
                     'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
-                ),
-            ),
+                ],
+            ],
 
 In this case, when the user tries to access any URL starting with ``/_internal/secure``,
 they will only be granted access if the IP address is ``127.0.0.1`` or if
@@ -329,12 +329,12 @@ the user will be redirected to ``https``:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'access_control' => array(
-                array(
+        $container->loadFromExtension('security', [
+            'access_control' => [
+                [
                     'path' => '^/cart/checkout',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     'requires_channel' => 'https',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);

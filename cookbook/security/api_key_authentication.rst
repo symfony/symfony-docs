@@ -38,6 +38,12 @@ value and then a User object is created::
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
+        /**
+         * @param Request $request
+         * @param string $providerKey
+         * @throws BadCredentialsException
+         * @return PreAuthenticatedToken
+         */
         public function createToken(Request $request, $providerKey)
         {
             // look for an apikey query parameter
@@ -60,11 +66,24 @@ value and then a User object is created::
             );
         }
 
+        /**
+         * @param TokenInterface $token
+         * @param string $providerKey
+         * @return bool
+         */
         public function supportsToken(TokenInterface $token, $providerKey)
         {
             return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
         }
 
+        /**
+         * @param TokenInterface $token
+         * @param UserProviderInterface $userProvider
+         * @param string $providerKey
+         * @throws InvalidArgumentException
+         * @throws CustomUserMessageAuthenticationException
+         * @return PreAuthenticatedToken
+         */
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
             if (!$userProvider instanceof ApiKeyUserProvider) {
@@ -169,6 +188,10 @@ The ``$userProvider`` might look something like this::
 
     class ApiKeyUserProvider implements UserProviderInterface
     {
+        /**
+         * @param string $apiKey
+         * @return string
+         */
         public function getUsernameForApiKey($apiKey)
         {
             // Look up the username based on the token in the database, via
@@ -178,6 +201,10 @@ The ``$userProvider`` might look something like this::
             return $username;
         }
 
+        /**
+         * @param string $username
+         * @return User
+         */
         public function loadUserByUsername($username)
         {
             return new User(
@@ -185,10 +212,14 @@ The ``$userProvider`` might look something like this::
                 null,
                 // the roles for the user - you may choose to determine
                 // these dynamically somehow based on the user
-                array('ROLE_API')
+                ['ROLE_API']
             );
         }
 
+        /**
+         * @param UserInterface $user
+         * @throws UnsupportedUserException
+         */
         public function refreshUser(UserInterface $user)
         {
             // this is used for storing authentication in the session
@@ -198,6 +229,10 @@ The ``$userProvider`` might look something like this::
             throw new UnsupportedUserException();
         }
 
+        /**
+         * @param string $class
+         * @return bool
+         */
         public function supportsClass($class)
         {
             return 'Symfony\Component\Security\Core\User\User' === $class;
@@ -292,6 +327,11 @@ you can use to create an error ``Response``.
     {
         // ...
 
+        /**
+         * @param Request $request
+         * @param AuthenticationException $exception
+         * @return Response
+         */
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
             return new Response(
@@ -407,23 +447,23 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
 
         // ..
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area'       => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area'       => [
                     'pattern'        => '^/api',
                     'stateless'      => true,
-                    'simple_preauth' => array(
+                    'simple_preauth' => [
                         'authenticator'  => 'apikey_authenticator',
-                    ),
+                    ],
                     'provider' => 'api_key_user_provider',
-                ),
-            ),
-            'providers' => array(
-                'api_key_user_provider'  => array(
+                ],
+            ],
+            'providers' => [
+                'api_key_user_provider'  => [
                     'id' => 'api_key_user_provider',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 If you have defined ``access_control``, make sure to add a new entry:
 
@@ -434,7 +474,7 @@ If you have defined ``access_control``, make sure to add a new entry:
         # app/config/security.yml
         security:
             # ...
-            
+
             access_control:
                 - { path: ^/api, roles: ROLE_API }
 
@@ -454,14 +494,14 @@ If you have defined ``access_control``, make sure to add a new entry:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'access_control' => array(
-                array(
+        $container->loadFromExtension('security', [
+            'access_control' => [
+                [
                     'path' => '^/api',
                     'role' => 'ROLE_API',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 That's it! Now, your ``ApiKeyAuthenticator`` should be called at the beginning
 of each request and your authentication process will take place.
@@ -534,23 +574,23 @@ configuration or set it to ``false``:
         // app/config/security.php
 
         // ..
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area'       => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area'       => [
                     'pattern'        => '^/api',
                     'stateless'      => false,
-                    'simple_preauth' => array(
+                    'simple_preauth' => [
                         'authenticator'  => 'apikey_authenticator',
-                    ),
+                    ],
                     'provider' => 'api_key_user_provider',
-                ),
-            ),
-            'providers' => array(
-                'api_key_user_provider' => array(
+                ],
+            ],
+            'providers' => [
+                'api_key_user_provider' => [
                     'id' => 'api_key_user_provider',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Even though the token is being stored in the session, the credentials - in this
 case the API key (i.e. ``$token->getCredentials()``) - are not stored in the session
@@ -563,6 +603,15 @@ to see if the stored token has a valid User object that can be used::
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
         // ...
+
+        /**
+         * @param TokenInterface $token
+         * @param UserProviderInterface $userProvider
+         * @param string$providerKey
+         * @throws InvalidArgumentException
+         * @throws CustomUserMessageAuthenticationException
+         * @return PreAuthenticatedToken
+         */
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
             if (!$userProvider instanceof ApiKeyUserProvider) {
@@ -628,6 +677,10 @@ of the user to make sure it's not out-of-date. But regardless of your requiremen
     {
         // ...
 
+        /**
+         * @param UserInterface $user
+         * @return UserInterface
+         */
         public function refreshUser(UserInterface $user)
         {
             // $user is the User that you set in the token inside authenticateToken()
@@ -669,13 +722,24 @@ current URL is before creating the token in ``createToken()``::
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
+        /**
+         * @var HttpUtils $httpUtils
+         */
         protected $httpUtils;
 
+        /**
+         * @param HttpUtils $httpUtils
+         */
         public function __construct(HttpUtils $httpUtils)
         {
             $this->httpUtils = $httpUtils;
         }
 
+        /**
+         * @param Request $request
+         * @param string $providerKey
+         * @return mixed
+         */
         public function createToken(Request $request, $providerKey)
         {
             // set the only URL where we should look for auth information
@@ -740,9 +804,9 @@ service:
 
         $definition = new Definition(
             'AppBundle\Security\ApiKeyAuthenticator',
-            array(
+            [
                 new Reference('security.http_utils')
-            )
+            ]
         );
         $definition->setPublic(false);
         $container->setDefinition('apikey_authenticator', $definition);
