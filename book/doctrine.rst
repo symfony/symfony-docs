@@ -1066,6 +1066,7 @@ it will likely be convenient for each ``Category`` object to automatically
 own a collection of its related ``Product`` objects.
 
 .. note::
+
     To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
     `Association Updates`_ documentation.
 
