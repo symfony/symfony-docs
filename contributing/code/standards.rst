@@ -178,7 +178,7 @@ Structure
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
 
-* Do not use spaces inside/around offset accessors.
+* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor.
 
 Naming Conventions
 ------------------
