@@ -451,7 +451,7 @@ the base block by using the ``parent()`` Twig function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/Form/fields.html.twig #}
+    {# app/Resources/views/form/fields.html.twig #}
     {% extends 'form_div_layout.html.twig' %}
 
     {% block integer_widget %}
@@ -558,7 +558,7 @@ PHP
 ~~~
 
 By using the following configuration, any customized form fragments inside the
-``app/Resources/views/Form`` folder will be used globally when a
+``app/Resources/views/form`` folder will be used globally when a
 form is rendered.
 
 .. configuration-block::
@@ -570,7 +570,7 @@ form is rendered.
             templating:
                 form:
                     resources:
-                        - 'AppBundle:Form'
+                        - ':form'
             # ...
 
     .. code-block:: xml
@@ -579,7 +579,7 @@ form is rendered.
         <framework:config>
             <framework:templating>
                 <framework:form>
-                    <resource>AppBundle:Form</resource>
+                    <resource>:form</resource>
                 </framework:form>
             </framework:templating>
             <!-- ... -->
@@ -593,7 +593,7 @@ form is rendered.
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'AppBundle:Form',
+                        ':form',
                     ),
                 ),
              ),
@@ -685,7 +685,7 @@ customize the ``name`` field only:
 
         <?php echo $view['form']->widget($form['name']); ?>
 
-        <!-- app/Resources/views/Form/_product_name_widget.html.php -->
+        <!-- app/Resources/views/form/_product_name_widget.html.php -->
         <div class="text_widget">
             <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
@@ -742,7 +742,7 @@ You can also override the markup for an entire field row using the same method:
 
         <?php echo $view['form']->row($form['name']); ?>
 
-        <!-- app/Resources/views/Form/_product_name_row.html.php -->
+        <!-- app/Resources/views/form/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
