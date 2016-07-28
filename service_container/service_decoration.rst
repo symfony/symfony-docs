@@ -125,11 +125,11 @@ convention, the old ``app.mailer`` service is renamed to
 
         .. code-block:: yaml
 
-        services:
-            app.mailer:
-                # ...
-                decoration_inner_name: app.decorating_mailer.wooz
-                arguments: ['@app.decorating_mailer.wooz']
+            services:
+                app.mailer:
+                    # ...
+                    decoration_inner_name: app.decorating_mailer.wooz
+                    arguments: ['@app.decorating_mailer.wooz']
 
         .. code-block:: xml
 
