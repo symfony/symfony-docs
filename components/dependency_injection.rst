@@ -294,6 +294,6 @@ Learn More
     :glob:
 
     /components/dependency_injection/*
-    /dependency_injection/*
+    /service_container/*
 
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection

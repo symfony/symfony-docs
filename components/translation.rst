@@ -222,7 +222,7 @@ Learn More
     /components/translation/*
     /translation
     /translation/*
-    /validation/translation
+    /validation/translations
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
