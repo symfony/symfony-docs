@@ -1090,11 +1090,12 @@ the choice is ultimately up to you.
     following to your form type class::
 
         use Symfony\Component\OptionsResolver\OptionsResolver;
+        use AppBundle\Entity\Task;
 
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 
@@ -1324,6 +1325,7 @@ create a form class so that a ``Category`` object can be modified by the user::
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use AppBundle\Entity\Category;
 
     class CategoryType extends AbstractType
     {
@@ -1335,7 +1337,7 @@ create a form class so that a ``Category`` object can be modified by the user::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Category',
+                'data_class' => Category::class,
             ));
         }
     }
@@ -1764,6 +1766,7 @@ that all un-rendered fields are output.
 The CSRF token can be customized on a form-by-form basis. For example::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use AppBundle\Entity\Task;
 
     class TaskType extends AbstractType
     {
@@ -1772,7 +1775,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class'      => 'AppBundle\Entity\Task',
+                'data_class'      => Task::class,
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
