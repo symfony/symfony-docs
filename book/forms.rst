@@ -241,7 +241,7 @@ your controller::
             'form' => $form->createView(),
         ));
     }
-    
+
 .. caution::
 
     Be aware that the ``createView()`` method should be called *after* ``handleRequest``
@@ -686,7 +686,7 @@ the documentation for each type.
     is left blank. If you don't want this behavior, either
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
-    
+
         ->add('dueDate', 'date', array(
             'widget' => 'single_text',
             'required' => false
@@ -1711,7 +1711,7 @@ to define form output.
 PHP
 ...
 
-To automatically include the customized templates from the ``app/Resources/views/Form``
+To automatically include the customized templates from the ``app/Resources/views/form``
 directory created earlier in *all* templates, modify your application configuration
 file:
 
@@ -1724,7 +1724,7 @@ file:
             templating:
                 form:
                     resources:
-                        - 'Form'
+                        - ':form'
         # ...
 
     .. code-block:: xml
@@ -1740,7 +1740,7 @@ file:
             <framework:config>
                 <framework:templating>
                     <framework:form>
-                        <framework:resource>Form</framework:resource>
+                        <framework:resource>:form</framework:resource>
                     </framework:form>
                 </framework:templating>
                 <!-- ... -->
@@ -1754,14 +1754,14 @@ file:
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'Form',
+                        ':form',
                     ),
                 ),
             ),
             // ...
         ));
 
-Any fragments inside the ``app/Resources/views/Form`` directory are now used
+Any fragments inside the ``app/Resources/views/form`` directory are now used
 globally to define form output.
 
 .. index::
