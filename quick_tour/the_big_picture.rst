@@ -183,7 +183,7 @@ about the request, the query parameters, security details and database queries:
 
 .. image:: /_images/quick_tour/profiler.png
    :align: center
-   : class: with-browser
+   :class: with-browser
 
 This tool provides so much internal information about your application that
 you may be worried about your visitors accessing sensible information. Symfony

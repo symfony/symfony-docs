@@ -746,7 +746,7 @@ Learn more
 ----------
 
 .. toctree::
-   :maxlength: 1
+   :maxdepth: 1
    :glob:
 
    /reference/events
