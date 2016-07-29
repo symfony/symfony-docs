@@ -475,6 +475,10 @@ that are special: each adds a unique piece of functionality inside your applicat
 ``_format``
     Used to set the request format (:ref:`read more <routing-format-param>`).
 
+``_fragment``
+    Used to set the fragment identifier, the optional last part of a URL that
+    starts with a ``#`` character and is used to identify a portion of a document.
+
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
