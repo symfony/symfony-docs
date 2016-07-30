@@ -133,3 +133,25 @@ If the global variable you want to set is more complicated - say an object -
 then you won't be able to use the above method. Instead, you'll need to create
 a :ref:`Twig Extension <reference-dic-tags-twig-extension>` and return the
 global variable as one of the entries in the ``getGlobals`` method.
+
+.. note::
+``getGlobals`` is deprecated as of Twig v1.23 and removed in v2.0.
+
+Using an Event Listener Together with the @Template Annotation
+--------------------------------------------------------------
+
+If you're using the :doc:`@Template </bundles/SensioFrameworkExtraBundle/annotations/view.html>`
+annotation from the :doc:`/bundles/SensioFrameworkExtraBundle` you can hook
+into `kernel.view` right before the template listener kicks in, take a look at the
+dedicated page about :doc:`Event Listeners </event_dispatcher.html>`.
+
+Here is an example of changing the parameters when you have your listener set up:
+
+.. code-block:: php
+
+  public function onKernelView(GetResponseForControllerResultEvent $event)
+  {
+      $params = $event->getControllerResult();
+      $params['sadface'] = 'You need me everywhere!';
+      $event->setControllerResult($params);
+  }
