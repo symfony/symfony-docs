@@ -141,8 +141,7 @@ global variable as one of the entries in the ``getGlobals`` method.
 Using an Event Listener Together with the @Template Annotation
 --------------------------------------------------------------
 
-If you're using the `@Template <http://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/annotations/view.html>`_
-annotation from `SensioFrameworkExtraBundle <http://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/index.html>`_ you can hook
+If you're using the `@Template`_ annotation from `SensioFrameworkExtraBundle`_ you can hook
 into `kernel.view` right before the template listener kicks in, take a look at the
 dedicated page about :doc:`Event Listeners </event_dispatcher.html>`_.
 
@@ -156,3 +155,6 @@ Here is an example of changing the parameters when you have your listener set up
       $params['sadface'] = 'You need me everywhere!';
       $event->setControllerResult($params);
   }
+
+.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle
