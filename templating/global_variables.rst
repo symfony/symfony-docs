@@ -135,7 +135,8 @@ a :ref:`Twig Extension <reference-dic-tags-twig-extension>` and return the
 global variable as one of the entries in the ``getGlobals`` method.
 
 .. note::
-``getGlobals`` is deprecated as of Twig v1.23 and removed in v2.0.
+
+    ``getGlobals`` is deprecated as of Twig v1.23 and removed in v2.0.
 
 Using an Event Listener Together with the @Template Annotation
 --------------------------------------------------------------
