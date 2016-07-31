@@ -52,4 +52,4 @@ dependencies:
 hooks:
     build: |
       pip install git+https://github.com/fabpot/sphinx-php.git
-      make html
+      make -C _build html
