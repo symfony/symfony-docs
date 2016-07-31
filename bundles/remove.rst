@@ -1,25 +1,16 @@
 .. index::
-    single: Bundle; Removing AcmeDemoBundle
+    single: Bundle; Removing a bundle
 
-How to Remove the AcmeDemoBundle
-================================
-
-The Symfony Standard Edition comes with a complete demo that lives inside a
-bundle called AcmeDemoBundle. It is a great boilerplate to refer to while
-starting a project, but you'll probably want to eventually remove it.
-
-.. tip::
-
-    This article uses the AcmeDemoBundle as an example, but you can use
-    these steps to remove any bundle.
+How to Remove a Bundle
+======================
 
 1. Unregister the Bundle in the ``AppKernel``
 ---------------------------------------------
 
 To disconnect the bundle from the framework, you should remove the bundle from
-the ``AppKernel::registerBundles()`` method. The bundle is normally found in
-the ``$bundles`` array but the AcmeDemoBundle is only registered in the
-development environment and you can find it inside the if statement below::
+the ``AppKernel::registerBundles()`` method. The bundle will likely be found in
+the ``$bundles`` array declaration or added to it in a later statement if the
+bundle is only registered in the development environment::
 
     // app/AppKernel.php
 
@@ -28,7 +19,9 @@ development environment and you can find it inside the if statement below::
     {
         public function registerBundles()
         {
-            $bundles = array(...);
+            $bundles = array(
+              new Acme\DemoBundle\AcmeDemoBundle(),
+            );
 
             if (in_array($this->getEnvironment(), array('dev', 'test'))) {
                 // comment or remove this line:
@@ -48,8 +41,8 @@ that refers to the bundle.
 2.1 Remove Bundle Routing
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The routing for the AcmeDemoBundle can be found in ``app/config/routing_dev.yml``.
-Remove the ``_acme_demo`` entry at the bottom of this file.
+Remove routing references for the bundle, these can likely be found in either
+``app/config/routing.yml`` or ``app/config/routing_dev.yml``.
 
 2.2 Remove Bundle Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,18 +53,13 @@ quickly spot bundle configuration by looking for an ``acme_demo`` (or whatever
 the name of the bundle is, e.g. ``fos_user`` for the FOSUserBundle) string in
 the configuration files.
 
-The AcmeDemoBundle doesn't have configuration. However, the bundle is
-used in the configuration for the ``app/config/security.yml`` file. You can
-use it as a boilerplate for your own security, but you **can** also remove
-everything: it doesn't matter to Symfony if you remove it or not.
-
 3. Remove the Bundle from the Filesystem
 ----------------------------------------
 
 Now you have removed every reference to the bundle in your application, you
-should remove the bundle from the filesystem. The bundle is located in the
-``src/Acme/DemoBundle`` directory. You should remove this directory and you
-can remove the ``Acme`` directory as well.
+should remove the bundle from the filesystem. The bundle will be located in within
+src/ for example the ``src/Acme/DemoBundle`` directory. You should remove this
+directory, and any parent directories that are now empty (e.g. ``src/Acme/``).
 
 .. tip::
 
@@ -90,11 +78,6 @@ Remove the assets of the bundle in the web/ directory (e.g.
 
 4. Remove Integration in other Bundles
 --------------------------------------
-
-.. note::
-
-    This doesn't apply to the AcmeDemoBundle - no other bundles depend
-    on it, so you can skip this step.
 
 Some bundles rely on other bundles, if you remove one of the two, the other
 will probably not work. Be sure that no other bundles, third party or self-made,
