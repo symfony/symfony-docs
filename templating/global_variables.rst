@@ -143,7 +143,7 @@ Using an Event Listener Together with the @Template Annotation
 
 If you're using the `@Template`_ annotation from `SensioFrameworkExtraBundle`_ you can hook
 into ``kernel.view`` right before the template listener kicks in, take a look at the
-dedicated page about :doc:`Event Listeners </event_dispatcher.html>`_.
+dedicated page about :doc:`Event Listeners </event_dispatcher.html>`.
 
 Here is an example of changing the parameters when you have your listener set up:
 
@@ -157,4 +157,4 @@ Here is an example of changing the parameters when you have your listener set up
   }
 
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
