@@ -165,7 +165,7 @@
 /cookbook/profiler/matchers /profiler/matchers
 /cookbook/profiler/profiling_data /profiler/profiling_data
 /cookbook/profiler/storage /profiler/storage
-/cookbook/psr7 /psr/psr7
+/cookbook/psr7 /request/psr7
 /cookbook/request/load_balancer_reverse_proxy /request/load_balancer_reverse_proxy
 /cookbook/request/mime_type /request/mime_type
 /cookbook/routing/conditions /routing/conditions
