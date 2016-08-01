@@ -88,8 +88,8 @@
 /cookbook/bundles/override /bundles/override
 /cookbook/bundles/prepend_extension /bundles/prepend_extension
 /cookbook/bundles/remove /bundles/remove
-/cookbook/cache/form_csrf_caching /cache/form_csrf_caching
-/cookbook/cache/varnish /cache/varnish
+/cookbook/cache/form_csrf_caching /http_cache/form_csrf_caching
+/cookbook/cache/varnish /http_cache/varnish
 /cookbook/composer /setup/composer
 /cookbook/configuration/apache_router /configuration/apache_router
 /cookbook/configuration/configuration_organization /configuration/configuration_organization
