@@ -114,6 +114,7 @@
 /cookbook/debugging /debug/debugging
 /cookbook/deployment/azure-website /cookbook/azure-website
 /cookbook/deployment/fortrabbit /deployment/fortrabbit
+/cookbook/deployment/index /deployment
 /cookbook/deployment/heroku /deployment/heroku
 /cookbook/deployment/platformsh /deployment/platformsh
 /cookbook/deployment/tools /deployment/tools
