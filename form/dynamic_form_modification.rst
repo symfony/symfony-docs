@@ -32,8 +32,8 @@ take a look at the :doc:`Form Events </form/events>` documentation.
 Customizing your Form Based on the Underlying Data
 --------------------------------------------------
 
-Before jumping right into dynamic form generation, recall what
-a bare form class looks like:
+Before starting with dynamic form generation, recall what
+a bare form class looks like::
 
     // src/AppBundle/Form/Type/ProductType.php
     namespace AppBundle\Form\Type;
