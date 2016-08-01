@@ -286,6 +286,7 @@
 /components/dependency_injection/factories /service_container/factories
 /components/dependency_injection/lazy_services /service_container/lazy_services
 /components/dependency_injection/parameters /service_container/parameters
+/components/dependency_injection/parentservices /service_container/parent_services
 /components/dependency_injection/parent_services /service_container/parent_services
 /components/dependency_injection/synthetic_services /service_container/synthetic_services
 /components/dependency_injection/tags /service_container/tags
