@@ -73,7 +73,7 @@
 /book/from_flat_php_to_symfony2 /introduction/from_flat_php_to_symfony2
 /book/configuration /configuration
 /book/propel /propel/propel
-/book/performance /performance/performance
+/book/performance /performance
 /cookbook/assetic/apply_to_option /assetic/apply_to_option
 /cookbook/assetic/asset_management /assetic/asset_management
 /cookbook/assetic/jpeg_optimize /assetic/jpeg_optimize
