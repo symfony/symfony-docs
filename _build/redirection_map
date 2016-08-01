@@ -106,7 +106,7 @@
 /cookbook/configuration/web_server_configuration /setup/web_server_configuration
 /cookbook/console/command_in_controller /console/command_in_controller
 /cookbook/console/commands_as_services /console/commands_as_services
-/cookbook/console/console_command /console/console_command
+/cookbook/console/console_command /console
 /cookbook/console/index /console
 /cookbook/console/logging /console/logging
 /cookbook/console/request_context /console/request_context
