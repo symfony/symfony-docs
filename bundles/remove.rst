@@ -20,7 +20,7 @@ bundle is only registered in the development environment::
         public function registerBundles()
         {
             $bundles = array(
-              new Acme\DemoBundle\AcmeDemoBundle(),
+                new Acme\DemoBundle\AcmeDemoBundle(),
             );
 
             if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -41,8 +41,9 @@ that refers to the bundle.
 2.1 Remove Bundle Routing
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Remove routing references for the bundle, these can likely be found in either
-``app/config/routing.yml`` or ``app/config/routing_dev.yml``.
+*Some* bundles require you to import routing configuration. Check for references
+to the bundle in ``app/config/routing.yml`` and ``app/config/routing_dev.yml``.
+If you find any references, remove them completely.
 
 2.2 Remove Bundle Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -57,8 +58,8 @@ the configuration files.
 ----------------------------------------
 
 Now you have removed every reference to the bundle in your application, you
-should remove the bundle from the filesystem. The bundle will be located in within
-src/ for example the ``src/Acme/DemoBundle`` directory. You should remove this
+should remove the bundle from the filesystem. The bundle will be located in
+`src/` for example the ``src/Acme/DemoBundle`` directory. You should remove this
 directory, and any parent directories that are now empty (e.g. ``src/Acme/``).
 
 .. tip::
