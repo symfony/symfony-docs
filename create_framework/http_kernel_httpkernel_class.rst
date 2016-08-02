@@ -64,10 +64,8 @@ attributes with route parameters.
 Our code is now much more concise and surprisingly more robust and more
 powerful than ever. For instance, use the built-in ``ExceptionListener`` to
 make your error management configurable::
-
-    use Symfony\Component\Debug\Exception\FlattenException;
     
-    $errorHandler = function (FlattenException $exception) {
+    $errorHandler = function (Symfony\Component\Debug\Exception\FlattenException $exception) {
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());
