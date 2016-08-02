@@ -131,7 +131,7 @@ Use input options or arguments to pass information to the command::
         ]);
 
         // retrieve the argument value using getArgument()
-        $this->writeln('Username: '.$input->getArgument('username'));
+        $output->writeln('Username: '.$input->getArgument('username'));
     }
 
 Now, you can pass the username to the command:

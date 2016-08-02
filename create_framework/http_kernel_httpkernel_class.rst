@@ -68,8 +68,8 @@ attributes with route parameters.
 Our code is now much more concise and surprisingly more robust and more
 powerful than ever. For instance, use the built-in ``ExceptionListener`` to
 make your error management configurable::
-
-    $errorHandler = function (HttpKernel\Exception\FlattenException $exception) {
+    
+    $errorHandler = function (Symfony\Component\Debug\Exception\FlattenException $exception) {
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());
@@ -92,7 +92,7 @@ The error controller reads as follows::
     namespace Calendar\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Exception\FlattenException;
+    use Symfony\Component\Debug\Exception\FlattenException;
 
     class ErrorController
     {
