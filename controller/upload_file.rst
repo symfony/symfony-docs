@@ -418,7 +418,7 @@ Now, register this class as a Doctrine listener:
         ));
         $container->setDefinition('app.doctrine_brochure_listener', $definition);
 
-This listeners is now automatically executed when persisting a new Product
+This listener is now automatically executed when persisting a new Product
 entity. This way, you can remove everything related to uploading from the
 controller.
 

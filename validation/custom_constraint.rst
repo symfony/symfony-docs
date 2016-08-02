@@ -167,7 +167,7 @@ Constraint Validators with Dependencies
 If your constraint validator has dependencies, such as a database connection,
 it will need to be configured as a service in the Dependency Injection
 Container. This service must include the ``validator.constraint_validator``
-tag and should include an ``alias`` attribute to be used in the validatedBy method of your validator class:
+tag so that the validation system knows about it::
 
 .. configuration-block::
 
@@ -175,36 +175,34 @@ tag and should include an ``alias`` attribute to be used in the validatedBy meth
 
         # app/config/services.yml
         services:
-            validator.unique.your_validator_name:
-                class: Fully\Qualified\Validator\Class\Name
+            validator.contains_alphanumeric:
+                class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
                 tags:
-                    - { name: validator.constraint_validator, alias: alias_name }
+                    - { name: validator.constraint_validator }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="validator.unique.your_validator_name" class="Fully\Qualified\Validator\Class\Name">
+        <service id="validator.contains_alphanumeric" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <tag name="validator.constraint_validator" alias="alias_name" />
+            <tag name="validator.constraint_validator" />
         </service>
 
     .. code-block:: php
 
         // app/config/services.php
         $container
-            ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
-            ->addTag('validator.constraint_validator', array('alias' => 'alias_name'));
+            ->register('validator.contains_alphanumeric', 'AppBundle\Validator\Constraints\ContainsAlphanumericValidator')
+            ->addTag('validator.constraint_validator');
 
-As mentioned above, Symfony will automatically look for a class named after
-the constraint, with ``Validator`` appended. You can override this in your constraint class::
+Now, when Symfony looks for the ``ContainsAlphanumericValidator`` validator, it will
+load this service from the container.
 
-    public function validatedBy()
-    {
-        return 'Fully\Qualified\ConstraintValidator\Class\Name'; // or 'alias_name' if provided
-    }
+.. note::
 
-Make sure to use the 'alias_name' when you have configured your validator as a service. Otherwise your validator class
-will be simply instantiated without your dependencies.
+    In earlier versions of Symfony, the tag required an ``alias`` key (usually set
+    to the class name). This is still allowed your constraint's ``validateBy``
+    method can return this alias (instead of a class name).
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
