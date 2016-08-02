@@ -220,8 +220,8 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
         // somehow create a Response object, like by rendering a template
         $response = $this->render('blog/index.html.twig', []);
 
-        // cache for 600 seconds
-        $response->setSharedMaxAge(600);
+        // cache for 3600 seconds
+        $response->setSharedMaxAge(3600);
 
         // (optional) set a custom Cache-Control directive
         $response->headers->addCacheControlDirective('must-revalidate', true);
