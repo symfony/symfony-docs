@@ -258,27 +258,26 @@ link displayed for Platform.sh service.
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
 
-Build Documentation Locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Build the Documentation Locally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Alternatively you can build the documentation in your own computer following
 these steps:
 
-**Step 1.** Install `pip`_ as explained in the `pip installation`_ article.
+1. Install `pip`_ as explained in the `pip installation`_ article.
+2. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
+  (depending on your system, you may need to execute this command as root user):
 
-**Step 2.** Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
-(depending on your system, you may need to execute this command as root user):
+  .. code-block:: bash
 
-.. code-block:: bash
+        $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
 
-    $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
+3. Run the following command to build the documentation in HTML format:
 
-**Step 3.** Run the following command to build the documentation in HTML format:
+   .. code-block:: bash
 
-.. code-block:: bash
-
-    $ cd _build/
-    $ make html
+       $ cd _build/
+       $ make html
 
 The generated documentation is available in the ``_build/html`` directory.
 
