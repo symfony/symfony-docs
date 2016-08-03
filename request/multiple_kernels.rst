@@ -102,7 +102,7 @@ new API kernel. According to the previous code, this config must be defined in
 the ``app/config/api/`` directory.
 
 The new configuration can be created from scratch when you load just a few
-bundles, because it it will be very simple. Otherwise, duplicate the existing
+bundles, because it will be very simple. Otherwise, duplicate the existing
 config files or better, import them and override the needed options:
 
 .. code-block:: yaml
