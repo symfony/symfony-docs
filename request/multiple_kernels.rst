@@ -46,7 +46,7 @@ class instead of the usual ``AppKernel`` class::
 
     // web/api.php
     // ...
-    $kernel = new ApiKernel('prod', true);
+    $kernel = new ApiKernel('prod', false);
     // ...
 
     // web/api_dev.php
