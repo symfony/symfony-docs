@@ -334,3 +334,7 @@ definitely don't want you to waste your time!
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh
 .. _`roadmap`: https://symfony.com/roadmap
+.. _`pip`: https://pip.pypa.io/en/stable/
+.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
+.. _`Sphinx`: http://sphinx-doc.org/
+.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
