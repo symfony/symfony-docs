@@ -40,11 +40,11 @@ the original service is lost:
 
     .. code-block:: php
 
-        $container->register('mailer', 'AppBundle\Mailer');
+        $container->register('app.mailer', 'AppBundle\Mailer');
 
         // this replaces the old app.mailer definition with the new one, the
         // old definition is lost
-        $container->register('mailer', 'AppBundle\DecoratingMailer');
+        $container->register('app.mailer', 'AppBundle\DecoratingMailer');
 
 Most of the time, that's exactly what you want to do. But sometimes,
 you might want to decorate the old one instead. In this case, the
