@@ -161,6 +161,13 @@ each request and create and return the appropriate response.
     or the `HTTP Bis`_, which is an active effort to clarify the original
     specification.
 
+.. tip::
+
+    A useful resource to learn the HTTP specification in practice is to check
+    out the HTTP headers sent and received by your browser. Install the
+    "Live HTTP Headers" extension to easily inspect them (`Firefox extension`_,
+    `Chrome extension`_).
+
 .. index::
    single: Symfony Fundamentals; Requests and responses
 
@@ -391,7 +398,8 @@ Here's what we've learned so far:
 .. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
-.. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
+.. _`Firefox extension`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
+.. _`Chrome extension`: https://chrome.google.com/webstore/detail/live-http-headers/iaiioopjkcekapmldfgbebdclcnpgnlo
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 .. _`list of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
