@@ -273,8 +273,14 @@ these steps:
 
     $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
 
-**Step 3.** Run ``make html`` and view the generated documentation in the
-``_build/html`` directory.
+**Step 3.** Run the following command to build the documentation in HTML format:
+
+.. code-block:: bash
+
+    $ cd _build/
+    $ make html
+
+The generated documentation is available in the ``_build/html`` directory.
 
 Frequently Asked Questions
 --------------------------
