@@ -125,36 +125,3 @@ This should feel familiar, as it's the same syntax you use in service configurat
                  'user_management' => '@app.user_management',
              ),
         ));
-
-Using a Twig Extension
-----------------------
-
-If the global variable you want to set is more complicated - say an object -
-then you won't be able to use the above method. Instead, you'll need to create
-a :ref:`Twig Extension <reference-dic-tags-twig-extension>` and return the
-global variable as one of the entries in the ``getGlobals`` method.
-
-.. note::
-
-    ``getGlobals`` is deprecated as of Twig v1.23 and removed in v2.0.
-
-Using an Event Listener Together with the @Template Annotation
---------------------------------------------------------------
-
-If you're using the `@Template`_ annotation from `SensioFrameworkExtraBundle`_ you can hook
-into ``kernel.view`` right before the template listener kicks in, take a look at the
-dedicated page about :doc:`Event Listeners </event_dispatcher>`.
-
-Here is an example of changing the parameters when you have your listener set up:
-
-.. code-block:: php
-
-  public function onKernelView(GetResponseForControllerResultEvent $event)
-  {
-      $params = $event->getControllerResult();
-      $params['sadface'] = 'You need me everywhere!';
-      $event->setControllerResult($params);
-  }
-
-.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
