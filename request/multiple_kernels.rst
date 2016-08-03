@@ -63,7 +63,7 @@ and make the needed changes.
 
 In this example, the changes of the new ``ApiKernel`` would be to load less
 bundles than ``AppKernel`` and to change the location of the cache, logs and
-config files to not mess with the regular application:
+config files to not mess with the regular application::
 
     // app/ApiKernel.php
     <?php
