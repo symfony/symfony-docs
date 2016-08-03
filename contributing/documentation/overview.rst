@@ -264,15 +264,16 @@ Build the Documentation Locally
 Alternatively you can build the documentation in your own computer following
 these steps:
 
-1. Install `pip`_ as explained in the `pip installation`_ article.
-2. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
+#. Install `pip`_ as explained in the `pip installation`_ article.
+
+#. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
   (depending on your system, you may need to execute this command as root user):
 
   .. code-block:: bash
 
         $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
 
-3. Run the following command to build the documentation in HTML format:
+#. Run the following command to build the documentation in HTML format:
 
    .. code-block:: bash
 
