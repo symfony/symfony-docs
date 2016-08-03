@@ -277,8 +277,7 @@ these steps:
 
    .. code-block:: bash
 
-       $ cd _build/
-       $ make html
+       $ _build\make html
 
 The generated documentation is available in the ``_build/html`` directory.
 
