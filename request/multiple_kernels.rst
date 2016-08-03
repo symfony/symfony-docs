@@ -42,7 +42,7 @@ example, you can create ``web/api_dev.php`` and ``web/api.php`` (or
 configuration).
 
 Then, update the code of the new front controllers to instantiate the new kernel
-class instead of the usual ``AppKernel`` class:
+class instead of the usual ``AppKernel`` class::
 
     // web/api.php
     // ...
