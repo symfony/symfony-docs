@@ -24,10 +24,7 @@ These are some of the common use cases for creating multiple kernels:
 * A highly sensitive application could define two kernels. The first one would
   only load the routes that match the parts of the application exposed to the
   public. The second kernel would load the rest of the application and its
-  access would be protected by the web server;
-* An application that uses a bundle which doesn't allow multiple instances could
-  define two identical kernels to define a different bundle configuration for
-  each of them.
+  access would be protected by the web server.
 
 Adding a new Kernel to the Application
 --------------------------------------
