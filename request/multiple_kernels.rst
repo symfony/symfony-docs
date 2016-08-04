@@ -11,14 +11,23 @@ response.
 
 This single kernel approach is a convenient default provided by the Symfony
 Standard edition, but Symfony applications can define any number of kernels.
-This is useful to execute the same application using a different configuration
-and a different set of bundles for each kernel:
+Whereas :doc:`environments </configuration/environments>` execute the same
+application with different configurations, kernels can execute different parts
+of the same application.
 
-* An application that defines an API could create an ``ApiKernel`` to not have
-  to load all the bundles enabled in the regular web application. This will
-  improve the API performance;
-* A bundle that doesn't allow multiple instances can define multiple
-  configurations in different files loaded by each kernel.
+These are some of the common use cases for creating multiple kernels:
+
+* An application that defines an API could define two kernels for performance
+  reasons. The first kernel would serve the regular application and the second
+  one would only respond to the API requests, loading less bundles and enabling
+  less features;
+* A highly sensitive application could define two kernels. The first one would
+  only load the routes that match the parts of the application exposed to the
+  public. The second kernel would load the rest of the application and its
+  access would be protected by the web server;
+* An application that uses a bundle which doesn't allow multiple instances could
+  define two identical kernels to define a different bundle configuration for
+  each of them.
 
 Adding a new Kernel to the Application
 --------------------------------------
