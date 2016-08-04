@@ -261,8 +261,8 @@ link displayed for Platform.sh service.
 Build the Documentation Locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Alternatively you can build the documentation in your own computer following
-these steps:
+Alternatively you can build the documentation in your own computer for testing
+purposes following these steps:
 
 #. Install `pip`_ as explained in the `pip installation`_ article.
 
@@ -277,6 +277,10 @@ these steps:
 
    .. code-block:: bash
 
+       # Linux and macOS
+       $ ./_build/make html
+
+       # Windows
        $ _build\make html
 
 The generated documentation is available in the ``_build/html`` directory.
