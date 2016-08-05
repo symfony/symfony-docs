@@ -99,7 +99,6 @@ To override the 404 error template for HTML pages, create a new
     {% block body %}
         <h1>Page not found</h1>
 
-        {# example security usage, see below #}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {# ... #}
         {% endif %}
