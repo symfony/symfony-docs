@@ -42,6 +42,7 @@ Minor Documentation Changes
 
 * `#6778 <https://github.com/symfony/symfony-docs/pull/6778>`_ fix syntax errors (xabbuh)
 * `#6777 <https://github.com/symfony/symfony-docs/pull/6777>`_ fix code block indentation (xabbuh)
+* `#109 <https://github.com/symfony/symfony-docs/pull/109>`_ after merge fixes (xabbuh)
 * `#107 <https://github.com/symfony/symfony-docs/pull/107>`_ fix bugs due to choosing the wrong base branch (xabbuh)
 * `#108 <https://github.com/symfony/symfony-docs/pull/108>`_ fix another bug due to choosing the wrong branch (xabbuh)
 * `#105 <https://github.com/symfony/symfony-docs/pull/105>`_ fix bugs due to choosing the wrong base branch (xabbuh)
@@ -104,7 +105,7 @@ Minor Documentation Changes
 * `#6613 <https://github.com/symfony/symfony-docs/pull/6613>`_ Clarify documentation on serving files (raphaelm)
 * `#6721 <https://github.com/symfony/symfony-docs/pull/6721>`_ [Finder] Fixed typo in RealPath method on SplFileInfo class (acrobat)
 * `#6716 <https://github.com/symfony/symfony-docs/pull/6716>`_ Typo fix "they the name" => "that the name" (jevgenijusr)
-* `#6702 <https://github.com/symfony/symfony-docs/pull/6702>`_ Removed empty `Notes on previous versions` (mickaelandrieu)
+* `#6702 <https://github.com/symfony/symfony-docs/pull/6702>`_ Removed empty ``Notes on previous versions`` (mickaelandrieu)
 * `#6709 <https://github.com/symfony/symfony-docs/pull/6709>`_ Fix URL in http basic screenshot (WouterJ)
 * `#6706 <https://github.com/symfony/symfony-docs/pull/6706>`_ Update "How to Authenticate Users with API Keys" (gondo, WouterJ)
 * `#5892 <https://github.com/symfony/symfony-docs/pull/5892>`_ Updated the session proxy article (javiereguiluz)
