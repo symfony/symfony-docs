@@ -3,8 +3,8 @@
 
 .. _how-to-deploy-a-symfony2-application:
 
-Deployment
-==========
+How to Deploy a Symfony Application
+===================================
 
 Deploying a Symfony application can be a complex and varied task depending on
 the setup and the requirements of your application. This article is not a step-
@@ -59,6 +59,16 @@ control system.
 This makes updating your files *easier*, but you still need to worry about
 manually taking other steps (see `Common Post-Deployment Tasks`_).
 
+Using Platforms as a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The specific deployment steps vary greatly from one service provider to another,
+so check out the dedicated article for the service of your choose:
+
+* :doc:`Microsoft Azure </deployment/azure-website>`
+* :doc:`Heroku </deployment/heroku>`
+* :doc:`Platform.sh </deployment/platformsh>`
+
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -92,14 +102,6 @@ Bundles
 Basic scripting
     You can of course use shell, `Ant`_ or any other build tool to script
     the deploying of your project.
-
-Platform as a Service Providers
-    This guide includes detailed articles for some of the most well-known
-    Platform as a Service (PaaS) providers:
-
-    * :doc:`Microsoft Azure </deployment/azure-website>`
-    * :doc:`Heroku </deployment/heroku>`
-    * :doc:`Platform.sh </deployment/platformsh>`
 
 Common Post-Deployment Tasks
 ----------------------------
