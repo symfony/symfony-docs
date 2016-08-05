@@ -607,7 +607,7 @@ Template Modifications
 
 The ``allow_delete`` option has one consequence: if an item of a collection
 isn't sent on submission, the related data is removed from the collection
-on the server. The solution is thus to remove the form element from the DOM.
+on the server. The solution is to remove the form element from the DOM.
 
 First, add a "delete this tag" link to each tag form:
 
