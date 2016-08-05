@@ -24,7 +24,10 @@ New Documentation
 * `#5672 <https://github.com/symfony/symfony-docs/pull/5672>`_ Add constants to BC promise (WouterJ)
 * `#6707 <https://github.com/symfony/symfony-docs/pull/6707>`_ Describe serialization config location in cookbook (jcrombez, WouterJ)
 * `#6726 <https://github.com/symfony/symfony-docs/pull/6726>`_ Use getParameter method in controllers (peterkokot)
+* `#6727 <https://github.com/symfony/symfony-docs/pull/6727>`_ Updated the condition to display console name (mickaelandrieu)
 * `#6701 <https://github.com/symfony/symfony-docs/pull/6701>`_ [CS] Avoid using useless expressions (phansys)
+* `#6422 <https://github.com/symfony/symfony-docs/pull/6422>`_ Documented the ArgumentResolver along the ControllerResolver (iltar)
+* `#6705 <https://github.com/symfony/symfony-docs/pull/6705>`_ [Process] Introduce InputStream and iterator for output (nicolas-grekas)
 * `#6673 <https://github.com/symfony/symfony-docs/pull/6673>`_ Caution about impersonation not compatible with pre authenticated (pasdeloup)
 
 Fixed Documentation
@@ -32,6 +35,7 @@ Fixed Documentation
 
 * `#6634 <https://github.com/symfony/symfony-docs/pull/6634>`_ Update custom_constraint.rst (axelvnk)
 * `#6719 <https://github.com/symfony/symfony-docs/pull/6719>`_ [Components][Browser-Kit]Fix typo with CookieJar  (Denis-Florin Rendler)
+* `#6717 <https://github.com/symfony/symfony-docs/pull/6717>`_ Cache Component: Fix SQLite3Cache instanciation (ReDnAxE)
 * `#6687 <https://github.com/symfony/symfony-docs/pull/6687>`_ Namespace fix (JhonnyL)
 * `#6714 <https://github.com/symfony/symfony-docs/pull/6714>`_ UppercaseRot13Transformer wrong class name used (jevgenijusr)
 * `#6704 <https://github.com/symfony/symfony-docs/pull/6704>`_ Encountered an error when following the steps for contribution (chancegarcia)
@@ -103,12 +107,14 @@ Minor Documentation Changes
 * `#6700 <https://github.com/symfony/symfony-docs/pull/6700>`_ Update monolog.rst (zhil)
 * `#6720 <https://github.com/symfony/symfony-docs/pull/6720>`_ [Component][ClassLoader]Remove invalid note (rendler-denis)
 * `#6613 <https://github.com/symfony/symfony-docs/pull/6613>`_ Clarify documentation on serving files (raphaelm)
+* `#6723 <https://github.com/symfony/symfony-docs/pull/6723>`_ Require latest Symfony version (yhoiseth)
 * `#6721 <https://github.com/symfony/symfony-docs/pull/6721>`_ [Finder] Fixed typo in RealPath method on SplFileInfo class (acrobat)
 * `#6716 <https://github.com/symfony/symfony-docs/pull/6716>`_ Typo fix "they the name" => "that the name" (jevgenijusr)
 * `#6702 <https://github.com/symfony/symfony-docs/pull/6702>`_ Removed empty ``Notes on previous versions`` (mickaelandrieu)
 * `#6709 <https://github.com/symfony/symfony-docs/pull/6709>`_ Fix URL in http basic screenshot (WouterJ)
 * `#6706 <https://github.com/symfony/symfony-docs/pull/6706>`_ Update "How to Authenticate Users with API Keys" (gondo, WouterJ)
 * `#5892 <https://github.com/symfony/symfony-docs/pull/5892>`_ Updated the session proxy article (javiereguiluz)
+* `#6699 <https://github.com/symfony/symfony-docs/pull/6699>`_ [Cache] add versionadded directive (xabbuh)
 * `#6697 <https://github.com/symfony/symfony-docs/pull/6697>`_ [Asset] add versionadded directive (xabbuh)
 * `#6698 <https://github.com/symfony/symfony-docs/pull/6698>`_ [Ldap] add versionadded directive (xabbuh)
 
