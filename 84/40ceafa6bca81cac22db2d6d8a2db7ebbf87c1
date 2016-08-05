@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by keradus at 2016-07-23T20:24:30Z
+
+codebase is following the rule (I checked 2.7 branch)
+:+1: after fixing punctuation
+
+---------------------------------------------------------------------------
+
+by stof at 2016-07-25T10:13:42Z
+
+:+1: this is indeed a rule we apply
+
+---------------------------------------------------------------------------
+
+by phansys at 2016-07-26T16:32:33Z
+
+I'm thinking how to reword this rule in order to express what we really want, by instance:
+"Do not use spaces around offset accessors (``[`` and ``]``), at least that their surrounding expressions are part of another separated expresion."
+Otherwise, it can be currently interpreted as `$foo = []` is not good, same for `$foo[] = 'value'` or `$bar = ['foo' => ['baz]]`.
+
+---------------------------------------------------------------------------
+
+by keradus at 2016-07-26T19:49:30Z
+
+> Otherwise, it can be currently interpreted as `$foo = []`
+
+here braces are not offset accessors, they are short array syntax
+
+> $foo[] = 'value'
+
+here, indeed, should be no spaces except space after `]`.
+
+> `$bar = ['foo' => ['baz]]`
+
+again short array syntax
+
+----------------
+
+so in general, sth like:
+`Do not use spaces around `[` offset accessor and before `]` offset accessor.`
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-03T07:42:47Z
+
+👍
+
+Status: reviewed
