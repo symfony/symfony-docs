@@ -186,6 +186,7 @@ New Documentation
 * `#6744 <https://github.com/symfony/symfony-docs/pull/6744>`_ [Form] Ambiguous block prefixes render incorrectly (foaly-nr1)
 * `#6611 <https://github.com/symfony/symfony-docs/pull/6611>`_ Discourage the use of controllers as services (javiereguiluz)
 * `#5672 <https://github.com/symfony/symfony-docs/pull/5672>`_ Add constants to BC promise (WouterJ)
+* `#6737 <https://github.com/symfony/symfony-docs/pull/6737>`_ Document the file() controller helper (javiereguiluz)
 * `#6707 <https://github.com/symfony/symfony-docs/pull/6707>`_ Describe serialization config location in cookbook (jcrombez, WouterJ)
 * `#6726 <https://github.com/symfony/symfony-docs/pull/6726>`_ Use getParameter method in controllers (peterkokot)
 * `#6727 <https://github.com/symfony/symfony-docs/pull/6727>`_ Updated the condition to display console name (mickaelandrieu)
@@ -203,6 +204,7 @@ Fixed Documentation
 * `#6687 <https://github.com/symfony/symfony-docs/pull/6687>`_ Namespace fix (JhonnyL)
 * `#6714 <https://github.com/symfony/symfony-docs/pull/6714>`_ UppercaseRot13Transformer wrong class name used (jevgenijusr)
 * `#6704 <https://github.com/symfony/symfony-docs/pull/6704>`_ Encountered an error when following the steps for contribution (chancegarcia)
+* `#6708 <https://github.com/symfony/symfony-docs/pull/6708>`_ Routes should be just imported, not mounted (OndraM)
 * `#6708 <https://github.com/symfony/symfony-docs/pull/6708>`_ Routes should be just imported, not mounted (OndraM)
 
 Minor Documentation Changes
@@ -224,6 +226,7 @@ Minor Documentation Changes
 * `#100 <https://github.com/symfony/symfony-docs/pull/100>`_ Add file extension to SOAP article (WouterJ)
 * `#92 <https://github.com/symfony/symfony-docs/pull/92>`_ Make usage of "The" in the edition list consistent (WouterJ)
 * `#91 <https://github.com/symfony/symfony-docs/pull/91>`_ Create a section for "Getting Started" so we can generate a book (javiereguiluz)
+* `#86 <https://github.com/symfony/symfony-docs/pull/86>`_ bootstrapping Workflow component docs (weaverryan)
 * `#77 <https://github.com/symfony/symfony-docs/pull/77>`_ Proofing the controller chapter (weaverryan)
 * `#90 <https://github.com/symfony/symfony-docs/pull/90>`_ Fixed doc build issues (javiereguiluz)
 * `#82 <https://github.com/symfony/symfony-docs/pull/82>`_ Bootstrapping property info doc (weaverryan)
