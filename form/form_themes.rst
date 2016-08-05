@@ -271,7 +271,7 @@ to define form output.
 PHP
 ...
 
-To automatically include the customized templates from the ``app/Resources/views/Form``
+To automatically include the customized templates from the ``app/Resources/views/form``
 directory created earlier in *all* templates, modify your application configuration
 file:
 
@@ -284,7 +284,7 @@ file:
             templating:
                 form:
                     resources:
-                        - 'Form'
+                        - 'form'
         # ...
 
     .. code-block:: xml
@@ -300,7 +300,7 @@ file:
             <framework:config>
                 <framework:templating>
                     <framework:form>
-                        <framework:resource>Form</framework:resource>
+                        <framework:resource>form</framework:resource>
                     </framework:form>
                 </framework:templating>
                 <!-- ... -->
@@ -314,14 +314,14 @@ file:
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'Form',
+                        'form',
                     ),
                 ),
             ),
             // ...
         ));
 
-Any fragments inside the ``app/Resources/views/Form`` directory are now used
+Any fragments inside the ``app/Resources/views/form`` directory are now used
 globally to define form output.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
