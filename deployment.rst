@@ -68,6 +68,7 @@ so check out the dedicated article for the service of your choose:
 * :doc:`Microsoft Azure </deployment/azure-website>`
 * :doc:`Heroku </deployment/heroku>`
 * :doc:`Platform.sh </deployment/platformsh>`
+* :doc:`fortrabbit </deployment/fortrabbit>`
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,15 +195,6 @@ are simple and more complex tools and one can make the deployment as easy
 Don't forget that deploying your application also involves updating any dependency
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
-
-Learn More
-----------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    deployment/*
 
 .. _`Capifony`: http://capifony.org/
 .. _`Capistrano`: http://capistranorb.com/
