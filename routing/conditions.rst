@@ -1,5 +1,5 @@
 .. index::
-    :single: Routing; Conditions
+    single: Routing; Conditions
 
 How to Restrict Route Matching through Conditions
 =================================================

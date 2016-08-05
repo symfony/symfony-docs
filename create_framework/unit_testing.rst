@@ -52,16 +52,19 @@ resolver. Modify the framework to make use of them::
 
     use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
     use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+    use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
     class Framework
     {
         protected $matcher;
         protected $resolver;
+        protected $argumentResolver;
 
-        public function __construct(UrlMatcherInterface $matcher, ControllerResolverInterface $resolver)
+        public function __construct(UrlMatcherInterface $matcher, ControllerResolverInterface $resolver, ArgumentResolverInterface $argumentResolver)
         {
             $this->matcher = $matcher;
             $this->resolver = $resolver;
+            $this->argumentResolver = $argumentResolver;
         }
 
         // ...
@@ -100,9 +103,10 @@ We are now ready to write our first test::
                 ->method('getContext')
                 ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
             ;
-            $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+            $controllerResolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+            $argumentResolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface');
 
-            return new Framework($matcher, $resolver);
+            return new Framework($matcher, $controllerResolver, $argumentResolver);
         }
     }
 
@@ -141,6 +145,7 @@ Response::
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+    use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
     public function testControllerResponse()
     {
@@ -161,9 +166,10 @@ Response::
             ->method('getContext')
             ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
         ;
-        $resolver = new ControllerResolver();
+        $controllerResolver = new ControllerResolver();
+        $argumentResolver = new ArgumentResolver();
 
-        $framework = new Framework($matcher, $resolver);
+        $framework = new Framework($matcher, $controllerResolver, $argumentResolver);
 
         $response = $framework->handle(new Request());
 
