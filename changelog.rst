@@ -19,6 +19,7 @@ July, 2016
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#6744 <https://github.com/symfony/symfony-docs/pull/6744>`_ [Form] Ambiguous block prefixes render incorrectly (foaly-nr1)
 * `#6611 <https://github.com/symfony/symfony-docs/pull/6611>`_ Discourage the use of controllers as services (javiereguiluz)
 * `#5672 <https://github.com/symfony/symfony-docs/pull/5672>`_ Add constants to BC promise (WouterJ)
 * `#6707 <https://github.com/symfony/symfony-docs/pull/6707>`_ Describe serialization config location in cookbook (jcrombez, WouterJ)
@@ -32,13 +33,16 @@ Fixed Documentation
 * `#6634 <https://github.com/symfony/symfony-docs/pull/6634>`_ Update custom_constraint.rst (axelvnk)
 * `#6719 <https://github.com/symfony/symfony-docs/pull/6719>`_ [Components][Browser-Kit]Fix typo with CookieJar  (Denis-Florin Rendler)
 * `#6687 <https://github.com/symfony/symfony-docs/pull/6687>`_ Namespace fix (JhonnyL)
+* `#6714 <https://github.com/symfony/symfony-docs/pull/6714>`_ UppercaseRot13Transformer wrong class name used (jevgenijusr)
 * `#6704 <https://github.com/symfony/symfony-docs/pull/6704>`_ Encountered an error when following the steps for contribution (chancegarcia)
+* `#6708 <https://github.com/symfony/symfony-docs/pull/6708>`_ Routes should be just imported, not mounted (OndraM)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * `#6778 <https://github.com/symfony/symfony-docs/pull/6778>`_ fix syntax errors (xabbuh)
 * `#6777 <https://github.com/symfony/symfony-docs/pull/6777>`_ fix code block indentation (xabbuh)
+* `#107 <https://github.com/symfony/symfony-docs/pull/107>`_ fix bugs due to choosing the wrong base branch (xabbuh)
 * `#108 <https://github.com/symfony/symfony-docs/pull/108>`_ fix another bug due to choosing the wrong branch (xabbuh)
 * `#105 <https://github.com/symfony/symfony-docs/pull/105>`_ fix bugs due to choosing the wrong base branch (xabbuh)
 * `#102 <https://github.com/symfony/symfony-docs/pull/102>`_ Updated the Global Composer Installation article (javiereguiluz)
@@ -53,6 +57,7 @@ Minor Documentation Changes
 * `#91 <https://github.com/symfony/symfony-docs/pull/91>`_ Create a section for "Getting Started" so we can generate a book (javiereguiluz)
 * `#77 <https://github.com/symfony/symfony-docs/pull/77>`_ Proofing the controller chapter (weaverryan)
 * `#90 <https://github.com/symfony/symfony-docs/pull/90>`_ Fixed doc build issues (javiereguiluz)
+* `#82 <https://github.com/symfony/symfony-docs/pull/82>`_ Bootstrapping property info doc (weaverryan)
 * `#79 <https://github.com/symfony/symfony-docs/pull/79>`_ Shortening the setup section (weaverryan)
 * `#81 <https://github.com/symfony/symfony-docs/pull/81>`_ Merging setup and install directories (weaverryan)
 * `#84 <https://github.com/symfony/symfony-docs/pull/84>`_ Bootstrapping the validator components (weaverryan)
@@ -79,6 +84,7 @@ Minor Documentation Changes
 * `#6600 <https://github.com/symfony/symfony-docs/pull/6600>`_ Removing some extra details from #6444 (weaverryan)
 * `#6715 <https://github.com/symfony/symfony-docs/pull/6715>`_ [Book] Remove DI extension info and link the cookbook article instead (WouterJ)
 * `#6745 <https://github.com/symfony/symfony-docs/pull/6745>`_ Branch fix (Talita Kocjan Zager, weaverryan)
+* `#6743 <https://github.com/symfony/symfony-docs/pull/6743>`_ Finishing #6252 (Talita Kocjan Zager, weaverryan)
 * `#6656 <https://github.com/symfony/symfony-docs/pull/6656>`_ Clarify usage of handler channel configuration (shkkmo)
 * `#6664 <https://github.com/symfony/symfony-docs/pull/6664>`_ replace occurrences of <?php echo with <?= (dr-matt-smith)
 * `#6740 <https://github.com/symfony/symfony-docs/pull/6740>`_ Add little comment indicating meaning of $firewall variable (ruslan-fidesio, WouterJ)
@@ -98,10 +104,12 @@ Minor Documentation Changes
 * `#6613 <https://github.com/symfony/symfony-docs/pull/6613>`_ Clarify documentation on serving files (raphaelm)
 * `#6721 <https://github.com/symfony/symfony-docs/pull/6721>`_ [Finder] Fixed typo in RealPath method on SplFileInfo class (acrobat)
 * `#6716 <https://github.com/symfony/symfony-docs/pull/6716>`_ Typo fix "they the name" => "that the name" (jevgenijusr)
+* `#6702 <https://github.com/symfony/symfony-docs/pull/6702>`_ Removed empty `Notes on previous versions` (mickaelandrieu)
 * `#6709 <https://github.com/symfony/symfony-docs/pull/6709>`_ Fix URL in http basic screenshot (WouterJ)
 * `#6706 <https://github.com/symfony/symfony-docs/pull/6706>`_ Update "How to Authenticate Users with API Keys" (gondo, WouterJ)
 * `#5892 <https://github.com/symfony/symfony-docs/pull/5892>`_ Updated the session proxy article (javiereguiluz)
 * `#6697 <https://github.com/symfony/symfony-docs/pull/6697>`_ [Asset] add versionadded directive (xabbuh)
+* `#6698 <https://github.com/symfony/symfony-docs/pull/6698>`_ [Ldap] add versionadded directive (xabbuh)
 
 
 June, 2016
