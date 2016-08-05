@@ -176,7 +176,9 @@ Structure
   Read more at :ref:`contributing-code-conventions-deprecations`;
 
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
-  which return or throw something.
+  which return or throw something;
+
+* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor.
 
 Naming Conventions
 ------------------

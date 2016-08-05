@@ -479,7 +479,7 @@ rendered.
         # app/config/config.yml
         twig:
             form_themes:
-		- 'form/fields.html.twig'
+                - 'form/fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -495,7 +495,7 @@ rendered.
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
-		'form/fields.html.twig',
+                'form/fields.html.twig',
             ),
 
             // ...
@@ -675,7 +675,7 @@ customize the ``name`` field only:
 
         <?php echo $view['form']->widget($form['name']); ?>
 
-        <!-- app/Resources/views/Form/_product_name_widget.html.php -->
+        <!-- app/Resources/views/form/_product_name_widget.html.php -->
         <div class="text_widget">
             <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
@@ -733,7 +733,7 @@ You can also override the markup for an entire field row using the same method:
 
         <?php echo $view['form']->row($form['name']); ?>
 
-        <!-- app/Resources/views/Form/_product_name_row.html.php -->
+        <!-- app/Resources/views/form/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>

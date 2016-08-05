@@ -81,7 +81,7 @@ extension. The service definition only requires the path to the class:
     # app/config/services.yml
     services:
         # ...
-        markdown:
+        app.markdown:
             class: AppBundle\Utils\Markdown
 
 And the ``Markdown`` class just needs to define one single method to transform
@@ -156,7 +156,7 @@ name is irrelevant because you never use it in your own code):
     services:
         app.twig.app_extension:
             class:     AppBundle\Twig\AppExtension
-            arguments: ['@markdown']
+            arguments: ['@app.markdown']
             public:    false
             tags:
                 - { name: twig.extension }
