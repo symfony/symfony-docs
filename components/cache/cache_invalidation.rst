@@ -1,6 +1,7 @@
 .. index::
    single: Cache; Invalidation
    single: Cache; Tags
+   single: Cache; Hierarchical
 
 Cache Invalidation
 ==================
@@ -10,13 +11,14 @@ change in the state of your model. The most basic kind of invalidation is direct
 items deletion. But when the state of a primary resource has spread accross
 several cached items, keeping them in sync can be difficult.
 
-The Symfony Cache component provides two mechanisms to help solve this problem:
+The Symfony Cache component provides three mechanisms to help solve this problem:
 
 * Tags based invalidation for managing data dependencies;
+* Hierarchical invalidation for context dependent data;
 * Expiration based invalidation for time related dependencies.
 
 .. versionadded:: 3.2
-    Tags based invalidation was introduced in Symfony 3.2.
+    Tags based and hierarchical invalidations were introduced in Symfony 3.2.
 
 Using Cache Tags
 ----------------
@@ -80,6 +82,48 @@ your fronts and have very fast invalidation checks::
         // Adapter for tags
         new RedisAdapter('redis://localhost')
     );
+
+Using Cache Hierarchies
+-----------------------
+
+By using adapters that implement
+:class:`Symfony\\Component\\Cache\\Adapter\\ContextAwareAdapterInterface`,
+you can create nested cache pools from existing ones. Each nested cache pool
+deals with its own set of cached items, but clearing their parents clears them
+recursively.
+
+Nested cache pools are derivated from their parents by calling
+:method:`Symfony\\Component\\Cache\\Adapter\\ContextAwareAdapterInterface::withContext`.
+The method takes a single ``$context`` argument, which is a string that
+identifies and isolates their cached items subsets. Appart from this, derivated
+pools share everything with their parents, esp. any database connection they might
+manage.
+
+You can use such contextualized hierarchies everywhere you would otherwise
+directly prefix your cache keys, this prefix being the "context" of the cached
+items that use it in their keys.
+
+For example, you could use hierachical pools to cache language dependent
+variations of your content::
+
+    $databaseCachePool = new PdoAdapter($pdoConnection);
+
+    $lang = 'en';
+    $enCachePool = $databaseCachePool->withContext($lang);
+
+    $lang = 'fr';
+    $frCachePool = $databaseCachePool->withContext($lang);
+
+    // Get the same "front-page" item but from different lang context
+    $enFrontPage = $enCachePool->getItem('front-page');
+    $frFrontPage = $frCachePool->getItem('front-page');
+
+    // This clears also $enCachePool and $frCachePool
+    $databaseCachePool->clear();
+
+.. note::
+
+    Invalidating by tags affects both parents and children pools.
 
 Using Cache Expiration
 ----------------------
