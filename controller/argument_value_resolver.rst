@@ -132,7 +132,7 @@ When all those requirements are met and ``true`` is returned, the
 ``supports()``.
 
 That's it! Now all you have to do is add the configuration for the service
-container. This can be done by tagging the service with ``controller.argument_resolver``
+container. This can be done by tagging the service with ``controller.argument_value_resolver``
 and adding a priority.
 
 .. configuration-block::
