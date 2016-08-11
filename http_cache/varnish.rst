@@ -32,7 +32,7 @@ header:
 .. code-block:: varnish4
 
     sub vcl_recv {
-        remove req.http.Forwarded;
+        unset req.http.Forwarded;
     }
 
 If you do not have access to your Varnish configuration, you can instead
