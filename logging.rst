@@ -327,5 +327,5 @@ Learn more
 
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
-.. _`logrotate`: https://fedorahosted.org/logrotate/
+.. _`logrotate`: https://github.com/logrotate/logrotate
 .. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php#L25
