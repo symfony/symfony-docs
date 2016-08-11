@@ -153,7 +153,8 @@ application as if they were Symfony Cache adapters::
     use Doctrine\Common\Cache\SQLite3Cache;
     use Symfony\Component\Cache\Adapter\DoctrineAdapter;
 
-    $doctrineCache = new SQLite3Cache(__DIR__.'/cache/data.sqlite');
+    $sqliteDatabase = new \SQLite3(__DIR__.'/cache/data.sqlite');
+    $doctrineCache = new SQLite3Cache($sqliteDatabase, 'tableName');
     $symfonyCache = new DoctrineAdapter($doctrineCache);
 
 This adapter also defines two optional arguments called  ``namespace`` (default:
