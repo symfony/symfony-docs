@@ -62,7 +62,7 @@ TwigBundle Configuration ("twig")
 
             <twig:config
                 auto-reload="%kernel.debug%"
-                autoescape="true"
+                autoescape="filename"
                 base-template-class="Twig_Template"
                 cache="%kernel.cache_dir%/twig"
                 charset="%kernel.charset%"
@@ -93,7 +93,7 @@ TwigBundle Configuration ("twig")
                  'pi'  => 3.14,
              ),
              'auto_reload'          => '%kernel.debug%',
-             'autoescape'           => true,
+             'autoescape'           => 'filename',
              'base_template_class'  => 'Twig_Template',
              'cache'                => '%kernel.cache_dir%/twig',
              'charset'              => '%kernel.charset%',
@@ -129,8 +129,7 @@ autoescape
 
 **type**: ``boolean`` or ``string`` **default**: ``'filename'``
 
-If set to ``true``, all template contents are escaped for HTML. If set to
-``false``, automatic escaping is disabled (you can still escape each content
+If set to ``false``, automatic escaping is disabled (you can still escape each content
 individually in the templates).
 
 .. caution::
