@@ -113,8 +113,11 @@ CSRF Protection
 
 Protection against CSRF attacks is built into the Form component, but you need
 to explicitly enable it or replace it with a custom solution. If you want to
-use the built-in support, require the Security CSRF component by executing
-``composer require symfony/security-csrf``.
+use the built-in support, first install the Security CSRF component:
+
+.. code-block:: bash
+
+    $ composer require symfony/security-csrf
 
 The following snippet adds CSRF protection to the form factory::
 
@@ -160,18 +163,12 @@ to easily render your form as HTML form fields (complete with field values,
 errors, and labels). If you use `Twig`_ as your template engine, the Form
 component offers a rich integration.
 
-To use the integration, you'll need the ``TwigBridge``, which provides integration
-between Twig and several Symfony components. If you're using Composer, you
-could install the latest 2.7 version by adding the following ``require``
-line to your ``composer.json`` file:
+To use the integration, you'll need the twig bridge, which provides integration
+between Twig and several Symfony components:
 
-.. code-block:: json
+.. code-block:: bash
 
-    {
-        "require": {
-            "symfony/twig-bridge": "2.7.*"
-        }
-    }
+    $ composer require symfony/twig-bridge
 
 The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
 that help you render the HTML widget, label and error for each field
@@ -245,17 +242,11 @@ via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
 Translation and :doc:`Config </components/config>` components
-installed. If you're using Composer, you could get the latest 2.7 version
-of each of these by adding the following to your ``composer.json`` file:
+installed:
 
-.. code-block:: json
+.. code-block:: bash
 
-    {
-        "require": {
-            "symfony/translation": "2.7.*",
-            "symfony/config": "2.7.*"
-        }
-    }
+    $ composer require symfony/translation symfony/config
 
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
 to your ``Twig_Environment`` instance::
@@ -296,16 +287,11 @@ no problem! Simply take the submitted/bound data of your form (which is an
 array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
-it's installed in your application. If you're using Composer and want to
-install the latest 2.7 version, add this to your ``composer.json``:
+it's installed in your application:
 
-.. code-block:: json
+.. code-block:: bash
 
-    {
-        "require": {
-            "symfony/validator": "2.7.*"
-        }
-    }
+    $ composer require symfony/validator
 
 If you're not familiar with Symfony's Validator component, read more about
 it: :doc:`/validation`. The Form component comes with a

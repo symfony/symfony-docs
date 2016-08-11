@@ -495,7 +495,6 @@ abstraction around the HTTP response - the text-based message filled with
 headers and content that's sent back to the client::
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\JsonResponse;
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
