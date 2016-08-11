@@ -78,7 +78,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
 Once you inject the service into another service, a virtual `proxy`_ with the
 same signature of the class representing the service should be injected. The
-same happends when calling ``Container::get()`` directly.
+same happens when calling ``Container::get()`` directly.
 
 The actual class will be instantiated as soon as you try to interact with the
 service (e.g. call one of its methods).
