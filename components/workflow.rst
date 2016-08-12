@@ -19,7 +19,7 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/workflow`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/workflow).
 
-For more information, see the code in the Git Repository.
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -29,11 +29,11 @@ define *places* (or *states*) and *transactions*. A transaction describes the ac
 
 .. image:: /_images/components/workflow/states_transactions.png
 
-A set of places and ``Transaction``s form a ``Definition``. A ``Workflow`` needs a ``Definition`` and a way to write
-the states to the objects, ie a ``MarkingStoreInterface``.
+A set of places and ``Transaction's`` creates a ``Definition``. A ``Workflow`` needs a ``Definition`` and a way to write
+the states to the objects, ie an instance of a ``MarkingStoreInterface``.
 
 Consider the following example for a blog post. A post can have places: 'draft', 'review', 'rejected', 'published'. You
-can define the workflow like this:
+can define the workflow like this::
 
     $states = ['draft', 'review', 'rejected', 'published'];
     $transactions[] = new Transition('to_review', ['draft', 'rejected'], 'review');
@@ -46,8 +46,7 @@ can define the workflow like this:
     $marking = new ScalarMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
 
-The ``Workflow`` can now help you do decide what actions that are allowed on a blog post.
-
+The ``Workflow`` can now help you do decide what actions that are allowed on a blog post.:
 
     $post = new \stdClass();
     $post->currentState = null;
