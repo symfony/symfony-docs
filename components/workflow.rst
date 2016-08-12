@@ -49,6 +49,7 @@ can define the workflow like this::
 The ``Workflow`` can now help you to decide what actions that are allowed on a blog post.
 
 .. code-block:: php
+
     $post = new \stdClass();
     $post->currentState = null;
     $workflow->can($post, 'publish'); // False
@@ -83,6 +84,7 @@ See example to make sure no blog post without title is moved to "review"::
     $workflow = new Workflow($definition, $marking, $dispatcher, 'blogpost');
 
 .. code-block:: php
+
     class BlogPostReviewListener implements EventSubscriberInterface
     {
         public function guardReview(GuardEvent $event)
