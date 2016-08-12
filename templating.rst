@@ -103,7 +103,7 @@ by default. You can even add your own *custom* filters, functions (and more) via
 a :doc:`Twig Extension </templating/twig_extension>`.
 
 Twig code will look similar to PHP code, with subtle, nice differences. The following
-example uses a standard ``for`` tag and the ``cycle`` function to print ten div tags,
+example uses a standard ``for`` tag and the ``cycle`` function to print eleven (0 to 10) div tags,
 with alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+twig
