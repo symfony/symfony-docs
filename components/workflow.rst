@@ -46,8 +46,9 @@ can define the workflow like this::
     $marking = new ScalarMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
 
-The ``Workflow`` can now help you do decide what actions that are allowed on a blog post.:
+The ``Workflow`` can now help you to decide what actions that are allowed on a blog post.
 
+.. code-block:: php
     $post = new \stdClass();
     $post->currentState = null;
     $workflow->can($post, 'publish'); // False
@@ -78,6 +79,10 @@ are dispatched:
 
 See example to make sure no blog post without title is moved to "review"::
 
+    $marking = new ScalarMarkingStore('currentState');
+    $workflow = new Workflow($definition, $marking, $dispatcher, 'blogpost');
+
+.. code-block:: php
     class BlogPostReviewListener implements EventSubscriberInterface
     {
         public function guardReview(GuardEvent $event)
@@ -101,7 +106,7 @@ See example to make sure no blog post without title is moved to "review"::
 
 With help from the ``EventDispatcher`` and the ``AuditTrailListener`` you could easily enable logging::
 
-    $logger = new PSR3Logger()
+    $logger = new PSR3Logger();
     $subscriber = new AuditTrailListener($logger);
     $dispatcher->addSubscriber($subscriber);
 
