@@ -505,17 +505,6 @@ you will learn about next!).
              */
             protected $tags;
 
-        .. code-block:: yaml
-
-            # src/AppBundle/Resources/config/doctrine/Task.orm.yml
-            AppBundle\Entity\Task:
-                type: entity
-                # ...
-                oneToMany:
-                    tags:
-                        targetEntity: Tag
-                        cascade:      [persist]
-
         .. code-block:: xml
 
             <!-- src/AppBundle/Resources/config/doctrine/Task.orm.xml -->

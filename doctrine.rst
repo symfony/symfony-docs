@@ -251,7 +251,7 @@ PHP classes.
 You'll provide this mapping information in the form of "metadata", a collection
 of rules that tells Doctrine exactly how the ``Product`` class and its
 properties should be *mapped* to a specific database table. This metadata
-can be specified in a number of different formats, including YAML, XML or
+can be specified in a number of different formats, including XML, or
 directly inside the ``Product`` class via DocBlock annotations:
 
 .. configuration-block::
@@ -292,26 +292,6 @@ directly inside the ``Product`` class via DocBlock annotations:
             private $description;
         }
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
-            type: entity
-            table: product
-            id:
-                id:
-                    type: integer
-                    generator: { strategy: AUTO }
-            fields:
-                name:
-                    type: string
-                    length: 100
-                price:
-                    type: decimal
-                    scale: 2
-                description:
-                    type: text
-
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
@@ -334,7 +314,7 @@ directly inside the ``Product`` class via DocBlock annotations:
 .. note::
 
     A bundle can accept only one metadata definition format. For example, it's
-    not possible to mix YAML metadata definitions with annotated PHP entity
+    not possible to mix XML metadata definitions with annotated PHP entity
     class definitions.
 
 .. tip::

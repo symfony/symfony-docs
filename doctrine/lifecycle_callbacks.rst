@@ -11,7 +11,7 @@ stages of the lifecycle of an entity (e.g. the entity is inserted, updated,
 deleted, etc).
 
 If you're using annotations for your metadata, start by enabling the lifecycle
-callbacks. This is not necessary if you're using YAML or XML for your mapping.
+callbacks. This is not necessary if you're using XML for your mapping.
 
 .. code-block:: php-annotations
 
@@ -41,15 +41,6 @@ the current date, only when the entity is first persisted (i.e. inserted):
         {
             $this->createdAt = new \DateTime();
         }
-
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
-            type: entity
-            # ...
-            lifecycleCallbacks:
-                prePersist: [setCreatedAtValue]
 
     .. code-block:: xml
 
