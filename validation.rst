@@ -111,6 +111,34 @@ following:
 .. index::
    single: Validation; Using the validator
 
+Retrieving a Validator instance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\Validator\\Validator` class is the main access
+point of the Validator component. To create a new instance of this class, it
+is recommended to use the :class:`Symfony\\Component\\Validator\\Validation`
+class.
+
+You can get a very basic ``Validator`` by calling
+:method:`Validation::createValidator() <Symfony\\Component\\Validator\\Validation::createValidator>`::
+
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidator();
+
+The created validator can be used to validate strings, arrays, numbers, but it
+can't validate classes. In order to achieve that, you have to configure the ``Validator``
+class. To do that, you can use the :class:`Symfony\\Component\\Validator\\ValidatorBuilder`.
+This class can be retrieved by using the
+:method:`Validation::createValidatorBuilder() <Symfony\\Component\\Validator\\Validation::createValidatorBuilder>`
+method::
+
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidatorBuilder()
+        // ... build a custom instance of the Validator
+        ->getValidator();
+        
 Using the ``validator`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
