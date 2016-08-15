@@ -6,68 +6,51 @@ Building a single Command Application
 
 When building a command line tool, you may not need to provide several commands.
 In such case, having to pass the command name each time is tedious. Fortunately,
-it is possible to remove this need by extending the application::
+it is possible to remove this need by declaring a single command application::
 
-    namespace Acme\Tool;
+  #!/usr/bin/env php
+  <?php
+  require __DIR__.'/vendor/autoload.php';
 
-    use Symfony\Component\Console\Application;
-    use Symfony\Component\Console\Input\InputInterface;
+  use Symfony\Component\Console\Application;
+  use Symfony\Component\Console\Input\InputArgument;
+  use Symfony\Component\Console\Input\InputInterface;
+  use Symfony\Component\Console\Input\InputOption;
+  use Symfony\Component\Console\Output\OutputInterface;
 
-    class MyApplication extends Application
-    {
-        /**
-         * Gets the name of the command based on input.
-         *
-         * @param InputInterface $input The input interface
-         *
-         * @return string The command name
-         */
-        protected function getCommandName(InputInterface $input)
-        {
-            // This should return the name of your command.
-            return 'my_command';
-        }
+  (new Application('echo', '1.0.0'))
+    ->register('echo')
+        ->addArgument('foo', InputArgument::OPTIONAL, 'The directory')
+        ->addOption('bar', null, InputOption::VALUE_REQUIRED)
+        ->setCode(function(InputInterface $input, OutputInterface $output) {
+            // output arguments and options
+        })
+    ->getApplication()
+    ->setDefaultCommand('echo', true) // Single command application
+    ->run();
 
-        /**
-         * Gets the default commands that should always be available.
-         *
-         * @return array An array of default Command instances
-         */
-        protected function getDefaultCommands()
-        {
-            // Keep the core default commands to have the HelpCommand
-            // which is used when using the --help option
-            $defaultCommands = parent::getDefaultCommands();
+The method :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
+accepts a boolean as second parameter. If true, the command ``echo`` will then
+always be used, without having to pass its name.
 
-            $defaultCommands[] = new MyCommand();
+Of course, you can still register a command as usual::
 
-            return $defaultCommands;
-        }
+  #!/usr/bin/env php
+  <?php
+  require __DIR__.'/vendor/autoload.php';
 
-        /**
-         * Overridden so that the application doesn't expect the command
-         * name to be the first argument.
-         */
-        public function getDefinition()
-        {
-            $inputDefinition = parent::getDefinition();
-            // clear out the normal first argument, which is the command name
-            $inputDefinition->setArguments();
+  use Symfony\Component\Console\Application;
+  use Symfony\Component\Console\Input\InputArgument;
+  use Symfony\Component\Console\Input\InputInterface;
+  use Symfony\Component\Console\Input\InputOption;
+  use Symfony\Component\Console\Output\OutputInterface;
 
-            return $inputDefinition;
-        }
-    }
+  use Acme\Command\DefaultCommand;
 
-When calling your console script, the command ``MyCommand`` will then always
-be used, without having to pass its name.
+  $application = new Application('echo', '1.0.0');
+  $command = new DefaultCommand();
 
-You can also simplify how you execute the application::
+  $application->add($command);
 
-    #!/usr/bin/env php
-    <?php
-    // command.php
-
-    use Acme\Tool\MyApplication;
-
-    $application = new MyApplication();
-    $application->run();
+  $application->setDefaultCommand($command->getName(), true);
+  $application->run();
