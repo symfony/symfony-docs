@@ -4,9 +4,14 @@
 How to Use the Workflow
 =======================
 
-The workflow component gives you an object oriented way to work with state
-machines. A state machine lets you define *places*  and *transitions*.
-A transition describes the action to get from one place to another.
+Using the workflow component will help you to keep your domain logic as
+configuration. Having domain logic in one place gives you a better overview
+and it is easier to maintain whenever the domain requirement changes since
+you do not have to edit all your controllers, twig templates and services.
+
+A workflow is a process or a lifecycle that your objects go through. Each
+step or stage in the process is called a *place*. You do also define *transitions*
+to that describes the action to get from one place to another.
 
 .. image:: /_images/components/workflow/states_transitions.png
 
@@ -16,32 +21,53 @@ instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreIn
 
 Consider the following example for a blog post. A post can have places:
 'draft', 'review', 'rejected', 'published'. You can define the workflow
-like this::
+like this:
 
-    use Symfony\Component\Workflow\Definition;
-    use Symfony\Component\Workflow\Transition;
-    use Symfony\Component\Workflow\Workflow;
-    use Symfony\Component\Workflow\MarkingStore\ScalarMarkingStore;
+.. code-block: yaml
 
-    $states = ['draft', 'review', 'rejected', 'published'];
-    $transitions[] = new Transition('to_review', ['draft', 'rejected'], 'review');
-    $transitions[] = new Transition('publish', 'review', 'published');
-    $transitions[] = new Transition('reject', 'review', 'rejected');
+    framework:
+        workflows:
+            blog_publishing:
+                marking_store:
+                    type: scalar # or 'property_accessor'
+                    arguments:
+                        - 'currentPlace'
+                supports:
+                    - AppBundle\Entity\BlogPost
+                places:
+                    - draft
+                    - review
+                    - rejected
+                    - published
+                transitions:
+                    to_review:
+                        from: draft
+                        to:   review
+                    publish:
+                        from: review
+                        to:   published
+                    reject:
+                        from: review
+                        to:   rejected
 
-    $definition = new Definition($states, $transitions);
-    $definition->setInitialPlace('draft');
+.. code-block: php
 
-    $marking = new ScalarMarkingStore('currentState');
-    $workflow = new Workflow($definition, $marking);
+    class BlogPost
+    {
+        // This property is used by the marking store
+        public $currentPlace;
+        public $title;
+        public $content
+    }
 
-The ``Workflow`` can now help you to decide what actions that are allowed
-on a blog post.
+With this workflow named ``blog_publishing`` you can get help to decide
+what actions that are allowed on a blog post.
 
 .. code-block:: php
 
-    // ...
-    $post = new \stdClass();
-    $post->currentState = null;
+    $post = new BlogPost();
+
+    $workflow = $this->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
     $workflow->can($post, 'to_draft'); // True
 
@@ -69,17 +95,12 @@ events are dispatched:
 
 See example to make sure no blog post without title is moved to "review"::
 
-    $marking = new ScalarMarkingStore('currentState');
-    $workflow = new Workflow($definition, $marking, $dispatcher, 'blogpost');
-
-.. code-block:: php
-
     class BlogPostReviewListener implements EventSubscriberInterface
     {
         public function guardReview(GuardEvent $event)
         {
             $post = $event->getSubject();
-            $title = $post->getTitle();
+            $title = $post->title;
 
             if (empty($title)) {
                 // Posts with no title should not be allowed
