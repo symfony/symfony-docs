@@ -80,5 +80,13 @@ supports the object you are trying to use it with::
     $post = new BlogPost();
     $workflow = $registry->get($post);
 
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /workflow
 
 .. _Packagist: https://packagist.org/packages/symfony/workflow

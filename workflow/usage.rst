@@ -29,7 +29,7 @@ like this:
         workflows:
             blog_publishing:
                 marking_store:
-                    type: scalar # or 'property_accessor'
+                    type: property_accessor # 'scalar' or 'state_machine'
                     arguments:
                         - 'currentPlace'
                 supports:
@@ -60,6 +60,11 @@ like this:
         public $content
     }
 
+.. note::
+
+The marking store type could be "property_accessor", "scalar" or "state_machine".
+The latter makes your workflow behave as a state machine.
+
 With this workflow named ``blog_publishing`` you can get help to decide
 what actions that are allowed on a blog post.
 
@@ -69,7 +74,7 @@ what actions that are allowed on a blog post.
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
-    $workflow->can($post, 'to_draft'); // True
+    $workflow->can($post, 'to_review'); // True
 
     // Update the currentState on the post
     try {
@@ -129,10 +134,3 @@ Usage in Twig
 [Show example of twig usage]
 
 [Maybe add a controll panel with buttons and if statements for publish, draft and reject]
-
-
-Workflows as State Machines
----------------------------
-
-Discuss how you can (or can't) use the workflow component as a state machine.
-

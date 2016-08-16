@@ -1,3 +1,6 @@
+.. index::
+    single: Workflow; Dumping Workflows
+
 How to Dump Workflows
 =====================
 
@@ -21,4 +24,6 @@ The result will look like this:
 .. note::
 
     The ``dot`` command is a part of Graphviz. You can download it and read
-    more about it on http://www.graphviz.org.
+    more about it on `Graphviz.org`_.
+
+.. Graphviz.org: http://www.graphviz.org
