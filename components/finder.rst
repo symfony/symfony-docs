@@ -41,7 +41,7 @@ directories::
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
-which extends :phpclass:`SplFileInfo` to provide methods to work with relative
+which extends PHP's own :phpclass:`SplFileInfo` to provide methods to work with relative
 paths.
 
 The above code prints the names of all the files in the current directory
