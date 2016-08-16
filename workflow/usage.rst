@@ -148,3 +148,9 @@ edit page. The links below will only be displayed when the action is allowed:
         <a href="...">Reject article</a>
     {% endif %}
 
+    {# Or loop through the enabled transistions #}
+    {% for transition in workflow_transitions(article) %}
+        <a href="...">{{ transition.name }}</a>
+    {% else %}
+        No actions available.
+    {% endfor %}
