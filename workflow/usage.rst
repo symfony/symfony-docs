@@ -131,6 +131,20 @@ could easily enable logging::
 Usage in Twig
 -------------
 
-[Show example of twig usage]
+Using your workflow in your Twig templates reduces the need of domain logic
+in the view layer. Consider this example of the control panel for our blog's
+edit page. The links below will only be displayed when the action is allowed:
 
-[Maybe add a controll panel with buttons and if statements for publish, draft and reject]
+.. code-block:: twig
+
+    <h3>Actions</h3>
+    {% if workflow_can(post, 'publish') %}
+        <a href="...">Publish article</a>
+    {% endif %}
+    {% if workflow_can(post, 'to_review') %}
+        <a href="...">Submit to review</a>
+    {% endif %}
+    {% if workflow_can(post, 'reject') %}
+        <a href="...">Reject article</a>
+    {% endif %}
+
