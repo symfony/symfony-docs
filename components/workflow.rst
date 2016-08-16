@@ -5,8 +5,8 @@
 The Workflow Component
 ======================
 
-    The Workflow component provides tools for managing a workflow or finite state
-    machine.
+    The Workflow component provides tools for managing a workflow or finite
+    state machine.
 
 .. versionadded:: 3.2
     The Workflow component was introduced in Symfony 3.2.
@@ -24,32 +24,42 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-The workflow component gives you an object oriented way to work with state machines. A state machine lets you
-define *places* (or *states*) and *transactions*. A transaction describes the action to get from one place to another.
+The workflow component gives you an object oriented way to work with state
+machines. A state machine lets you define *places*  and *transitions*.
+A transition describes the action to get from one place to another.
 
-.. image:: /_images/components/workflow/states_transactions.png
+.. image:: /_images/components/workflow/states_transitions.png
 
-A set of places and ``Transaction's`` creates a ``Definition``. A ``Workflow`` needs a ``Definition`` and a way to write
-the states to the objects, ie an instance of a ``MarkingStoreInterface``.
+A set of places and transitions creates a **definition**. A workflow needs
+a ``Definition`` and a way to write the states to the objects, (i.e. an
+instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.
 
-Consider the following example for a blog post. A post can have places: 'draft', 'review', 'rejected', 'published'. You
-can define the workflow like this::
+Consider the following example for a blog post. A post can have places:
+'draft', 'review', 'rejected', 'published'. You can define the workflow
+like this::
+
+    use Symfony\Component\Workflow\Definition;
+    use Symfony\Component\Workflow\Transition;
+    use Symfony\Component\Workflow\Workflow;
+    use Symfony\Component\Workflow\MarkingStore\ScalarMarkingStore;
 
     $states = ['draft', 'review', 'rejected', 'published'];
-    $transactions[] = new Transition('to_review', ['draft', 'rejected'], 'review');
-    $transactions[] = new Transition('publish', 'review', 'published');
-    $transactions[] = new Transition('reject', 'review', 'rejected');
+    $transitions[] = new Transition('to_review', ['draft', 'rejected'], 'review');
+    $transitions[] = new Transition('publish', 'review', 'published');
+    $transitions[] = new Transition('reject', 'review', 'rejected');
 
-    $definition = new Definition($states, $transactions);
+    $definition = new Definition($states, $transitions);
     $definition->setInitialPlace('draft');
 
     $marking = new ScalarMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
 
-The ``Workflow`` can now help you to decide what actions that are allowed on a blog post.
+The ``Workflow`` can now help you to decide what actions that are allowed
+on a blog post.
 
 .. code-block:: php
 
+    // ...
     $post = new \stdClass();
     $post->currentState = null;
     $workflow->can($post, 'publish'); // False
@@ -62,21 +72,20 @@ The ``Workflow`` can now help you to decide what actions that are allowed on a b
         // ...
     }
 
-    // See all the available transaction for the post in the current state
-    $transactions = $workflow->getEnabledTransitions($post);
+    // See all the available transition for the post in the current state
+    $transitions = $workflow->getEnabledTransitions($post);
 
-
-
-Using events
+Using Events
 ------------
 
-To make your workflows even more powerful you could construct the ``Workflow`` object with an ``EventDispatcher``. You
-can now create event listeners to block transactions ie depending on the data in the blog post. The following events
-are dispatched:
+To make your workflows even more powerful you could construct the ``Workflow``
+object with an ``EventDispatcher``. You can now create event listeners to
+block transitions ie depending on the data in the blog post. The following
+events are dispatched:
 
-* workflow.guard
-* workflow.[workflow name].guard
-* workflow.[workflow name].guard.[transaction name]
+* ``workflow.guard``
+* ``workflow.[workflow name].guard``
+* ``workflow.[workflow name].guard.[transition name]``
 
 See example to make sure no blog post without title is moved to "review"::
 
@@ -101,12 +110,13 @@ See example to make sure no blog post without title is moved to "review"::
         public static function getSubscribedEvents()
         {
             return array(
-                'workflow.blogpost.guad.to_review' => array('guardReview'),
+                'workflow.blogpost.guard.to_review' => array('guardReview'),
             );
         }
     }
 
-With help from the ``EventDispatcher`` and the ``AuditTrailListener`` you could easily enable logging::
+With help from the ``EventDispatcher`` and the ``AuditTrailListener`` you
+could easily enable logging::
 
     $logger = new PSR3Logger();
     $subscriber = new AuditTrailListener($logger);
@@ -115,8 +125,9 @@ With help from the ``EventDispatcher`` and the ``AuditTrailListener`` you could 
 Dumper
 ------
 
-To help you debug you could dump a representation of your workflow with the use of a ``DumperInterface``. Use the
-``GraphvizDumper`` to create a PNG image of the workflow defined above::
+To help you debug you could dump a representation of your workflow with
+the use of a ``DumperInterface``. Use the ``GraphvizDumper`` to create a
+PNG image of the workflow defined above::
 
     // dump-graph.php
     $dumper = new GraphvizDumper();
@@ -131,5 +142,9 @@ The result will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
 
+.. note::
+
+    The ``dot`` command is a part of Graphviz. You can download it and read
+    more about it on http://www.graphviz.org.
 
 .. _Packagist: https://packagist.org/packages/symfony/workflow
