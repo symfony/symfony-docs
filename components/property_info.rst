@@ -429,7 +429,7 @@ and :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`.
 If you have enabled the PropertyInfo component with the FrameworkBundle,
 you can automatically register your extractor class with the ``property_info``
 service by defining it as a service with one or more of the following
-:ref:`tags <book-service-container-tags>`:
+:doc:`tags </service_container/tags>`:
 
 * ``property_info.list_extractor`` if it provides list information.
 * ``property_info.type_extractor`` if it provides type information.
