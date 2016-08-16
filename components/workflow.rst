@@ -61,4 +61,24 @@ The ``Workflow`` can now help you to decide what actions that are allowed
 on a blog post depending on what *place* it is in. This will keep your domain
 logic in one place and not spread all over your application.
 
+When you start defining multiple workflows you should consider putting them
+in a ``Registry``. A registry will also help you to decide if a workflow
+supports the object you are trying to use it with::
+
+    use Symfony\Component\Workflow\Registry;
+    use Acme\Entity\BlogPost;
+    use Acme\Entity\Newsletter;
+
+    $blogWorkflow = ...
+    $newsletterWorkflow = ...
+
+    $registry = new Registry();
+    $registry->add($blogWorkflow, BlogPost::class);
+    $registry->add($newsletterWorkflow, Newsletter::class);
+
+    // ...
+    $post = new BlogPost();
+    $workflow = $registry->get($post);
+
+
 .. _Packagist: https://packagist.org/packages/symfony/workflow
