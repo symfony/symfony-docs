@@ -65,9 +65,9 @@ what actions that are allowed on a blog post.
 
 .. code-block:: php
 
-    $post = new BlogPost();
+    $post = new \BlogPost();
 
-    $workflow = $this->get('workflow.blog_publishing');
+    $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
     $workflow->can($post, 'to_draft'); // True
 
@@ -122,4 +122,17 @@ could easily enable logging::
     $logger = new PSR3Logger();
     $subscriber = new AuditTrailListener($logger);
     $dispatcher->addSubscriber($subscriber);
+
+Usage in Twig
+-------------
+
+[Show example of twig usage]
+
+[Maybe add a controll panel with buttons and if statements for publish, draft and reject]
+
+
+Workflows as State Machines
+---------------------------
+
+Discuss how you can (or can't) use the workflow component as a state machine.
 
