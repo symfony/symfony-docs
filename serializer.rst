@@ -101,6 +101,7 @@ Here is an example on how to load the
         services:
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+                public: false
                 tags:
                     - { name: serializer.normalizer }
 
@@ -108,7 +109,7 @@ Here is an example on how to load the
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
+            <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
                 <tag name="serializer.normalizer" />
             </service>
         </services>
@@ -121,6 +122,7 @@ Here is an example on how to load the
         $definition = new Definition(
             'Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer'
         ));
+        $definition->setPublic(false);
         $definition->addTag('serializer.normalizer');
         $container->setDefinition('get_set_method_normalizer', $definition);
 

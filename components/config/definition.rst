@@ -726,7 +726,7 @@ The builder is used for adding advanced validation rules to node definitions, li
                         ->isRequired()
                         ->validate()
                         ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
-                            ->thenInvalid('Invalid database driver "%s"')
+                            ->thenInvalid('Invalid database driver %s')
                         ->end()
                     ->end()
                 ->end()
