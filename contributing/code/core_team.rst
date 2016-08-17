@@ -183,6 +183,7 @@ discretion of the **Project Leader**.
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
 .. _VarDumper: https://github.com/symfony/var-dumper
+.. _Workflow: https://github.com/symfony/workflow
 .. _Yaml: https://github.com/symfony/yaml
 .. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
 .. _`fabpot`: https://github.com/fabpot/
