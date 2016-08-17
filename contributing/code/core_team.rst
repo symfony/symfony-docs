@@ -199,3 +199,4 @@ discretion of the **Project Leader**.
 .. _`aitboudad`: https://github.com/aitboudad/
 .. _`xabbuh`: https://github.com/xabbuh/
 .. _`javiereguiluz`: https://github.com/javiereguiluz/
+.. _`lyrixx`: https://github.com/lyrixx/
