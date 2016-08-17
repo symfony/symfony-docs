@@ -137,7 +137,7 @@ The following snippet adds CSRF protection to the form factory::
 
     $formFactory = Forms::createFormFactoryBuilder()
         // ...
-        ->addExtension(new CsrfExtension($csrfStorage))
+        ->addExtension(new CsrfExtension($csrfManager))
         ->getFormFactory();
 
 Internally, this extension will automatically add a hidden field to every
