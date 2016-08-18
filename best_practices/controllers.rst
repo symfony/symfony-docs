@@ -86,7 +86,7 @@ it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
 
 What does the Controller look like
-------------------------
+----------------------------------
 
 Considering all this, here is an example of what the controller should look like
 for the homepage of our app:
