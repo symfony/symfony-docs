@@ -1,7 +1,7 @@
 How to Access Services or Config from Inside a Form
 ===================================================
 
-Sometimes, you may need to access a :doc:`services </service_container>` or other
+Sometimes, you may need to access a :doc:`service </service_container>` or other
 configuration from inside of your form class. To do this, you have 2 options:
 
 1) Pass Options to your Form
@@ -44,7 +44,7 @@ create your form::
     }
 
 Finally, the ``entity_manager`` option is accessible in the ``$options`` argument
-if your ``buildForm`` method::
+of your ``buildForm`` method::
 
     // src/AppBundle/Form/TaskType.php
     // ...
