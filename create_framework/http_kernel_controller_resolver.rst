@@ -185,9 +185,6 @@ Let's conclude with the new version of our framework::
     $controllerResolver = new HttpKernel\Controller\ControllerResolver();
     $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
-    $controller = $controllerResolver->getController($request);
-    $arguments = $argumentResolver->getArguments($request, $controller);
-
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
 
