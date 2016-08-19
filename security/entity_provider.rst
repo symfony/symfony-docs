@@ -535,7 +535,7 @@ that the User has not changed between requests (it also calls your ``AdvancedUse
 methods if you implement it). Failing to serialize these may cause you to
 be logged out on each request. If your User implements the
 :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
-then instead of these properties being checked, your ``isEqualTo`` method
+then instead of these properties being checked, your :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo` method
 is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
