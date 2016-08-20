@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-08-07T20:05:57Z
+
+After the code example there's this note:
+
+> When using the Console component in a standalone project, use :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>` instead of :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>`
+
+Perhaps this note should be moved up, before the code example.
+
+---------------------------------------------------------------------------
+
+by kvdnberg at 2016-08-08T06:41:55Z
+
+@snoek09 That would be helpful but it doesn't change the fact that the sample itself is invalid. Either it needs to use the console application (as suggested in this PR) or it needs to provide a kernel parameter with the instantiation of the Application class.
+
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-08-08T07:16:07Z
+
+Fix looks fine to me. Thanks @kvdnberg :+1:
+
+Status: reviewed.
