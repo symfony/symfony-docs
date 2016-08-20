@@ -47,6 +47,7 @@ provide it with a set of information extractors.
     use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
     use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+    use Example\Namespace\YourAwesomeCoolClass;
 
     // a full list of extractors is shown further below
     $phpDocExtractor = new PhpDocExtractor();
@@ -70,6 +71,13 @@ provide it with a set of information extractors.
         $descriptionExtractors,
         $accessExtractors
     );
+
+    // see below for more examples
+    $class = YourAwesomeCoolClass::class;
+    $properties = $propertyInfo->getProperties($class);
+
+Extractor Ordering
+~~~~~~~~~~~~~~~~~~
 
 The order of extractor instances within an array matters: the first non-null
 result will be returned. That is why you must provide each category of extractors
@@ -122,21 +130,17 @@ class exposes public methods to extract four types of information:
 * :ref:`Property *description* <property-info-description>`: `getShortDescription()` and `getLongDescription()`
 * :ref:`Property *access* details <property-info-access>`: `isReadable()` and `isWritable()`
 
-list,
-type, description and access information. The first type of information is
-about the class, while the remaining three are about the individual properties.
-
 .. note::
 
-    When specifiying a class that the PropertyInfo component should work
-    with, use the fully-qualified class name. Do not directly pass an object
-    as some extractors (the
-    :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
-    is an example) may not automatically resolve objects to their class
-    names - use the ``get_class()`` function.
+    Be sure to pass a *class* name, not an object to the extractor methods::
 
-    Since the PropertyInfo component requires PHP 5.5 or greater, you can
-    also make use of the `class constant`_.
+    // bad! It may work, but not with all extractors
+    $propertyInfo->getProperties($awesomeObject);
+
+    // Good!
+    $propertyInfo->getProperties(get_class($awesomeObject));
+    $propertyInfo->getProperties('Example\Namespace\YourAwesomeClass');
+    $propertyInfo->getProperties(YourAwesomeClass::class);
 
 .. _property-info-list:
 
@@ -189,6 +193,8 @@ for a property.
       }
     */
 
+See :ref:`components-property-info-type` for info about the ``Type`` class.
+
 .. _property-info-description:
 
 Description Information
@@ -232,6 +238,11 @@ provide whether properties are readable or writable as booleans.
     $propertyInfo->isWritable($class, $property);
     // Example Result: bool(false)
 
+The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
+for getter/isser/setter method in addition to whether or not a property is public
+to determine if it's accessible. This based on how the :ref:`PropertyAccess </components/property_access>`
+works.
+
 .. tip::
 
     The main :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
@@ -248,10 +259,9 @@ Type Objects
 ------------
 
 Compared to the other extractors, type information extractors provide much
-more information than can be represented as simple scalar values - because
-of this, type extractors return an array of objects. The array will contain
-an instance of the :class:`Symfony\\Component\\PropertyInfo\\Type`
-class for each type that the property supports.
+more information than can be represented as simple scalar values. Because
+of this, type extractors return an array of :class:`Symfony\\Component\\PropertyInfo\\Type`
+objects for each type that the property supports.
 
 For example, if a property supports both ``integer`` and ``string`` (via
 the ``@return int|string`` annotation),
@@ -265,15 +275,12 @@ class.
     instance. The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor`
     is currently the only extractor that returns multiple instances in the array.
 
-Each object will provide 6 attributes; the first four (built-in type, nullable,
-class and collection) are scalar values and the last two (collection key
-type and collection value type) are more instances of the :class:`Symfony\\Component\\PropertyInfo\\Type`
-class again if collection is ``true``.
+Each object will provide 6 attributes, available in the 6 methods:
 
 .. _`components-property-info-type-builtin`:
 
-Built-in Type
-~~~~~~~~~~~~~
+Type::getBuiltInType()
+~~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::getBuiltinType() <Symfony\\Component\\PropertyInfo\\Type::getBuiltinType>`
 method will return the built-in PHP data type, which can be one of 9 possible
@@ -283,22 +290,22 @@ string values: ``array``, ``bool``, ``callable``, ``float``, ``int``, ``null``,
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
 
-Nullable
-~~~~~~~~
+Type::isNullable()
+~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::isNullable() <Symfony\\Component\\PropertyInfo\\Type::isNullable>`
 method will return a boolean value indicating whether the property parameter
 can be set to ``null``.
 
-Class
-~~~~~
+Type::getClassName()
+~~~~~~~~~~~~~~~~~~~~
 
 If the :ref:`built-in PHP data type <components-property-info-type-builtin>`
 is ``object``, the :method:`Type::getClassName() <Symfony\\Component\\PropertyInfo\\Type::getClassName>`
 method will return the fully-qualified class or interface name accepted.
 
-Collection
-~~~~~~~~~~
+Type::isCollection()
+~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::isCollection() <Symfony\\Component\\PropertyInfo\\Type::isCollection>`
 method will return a boolean value indicating if the property parameter is
@@ -310,8 +317,8 @@ this returns ``true`` if:
 * The mutator method the property is derived from has a prefix of ``add``
   or ``remove`` (which are defined as the list of array mutator prefixes).
 
-Collection Key & Value Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type::getCollectionKeyType() & Type::getCollectionValueType()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the property is a collection, additional type objects may be returned
 for both the key and value types of the collection (if the information is
@@ -344,13 +351,14 @@ Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\R
 provides list, type and access information from setter and accessor methods.
 It can also provide return and scalar types for PHP 7+.
 
-This service is automatically registered with the ``property_info`` service.
+This service is automatically registered with the ``property_info`` service in
+the Symfony Framework.
 
 .. code-block:: php
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
-    $reflectionExtractor = new ReflectionExtractor;
+    $reflectionExtractor = new ReflectionExtractor();
 
     // List information.
     $reflectionExtractor->getProperties($class);
@@ -370,13 +378,14 @@ PhpDocExtractor
 Using `phpDocumentor Reflection`_ to parse property and method annotations,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor`
 provides type and description information. This extractor is automatically
-registered with the ``property_info`` providing its dependencies are detected.
+registered with the ``property_info`` in the Symfony Framework *if* the dependent
+library is present.
 
 .. code-block:: php
 
     use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 
-    $phpDocExtractor = new PhpDocExtractor;
+    $phpDocExtractor = new PhpDocExtractor();
 
     // Type information.
     $phpDocExtractor->getTypes($class, $property);
@@ -391,10 +400,11 @@ SerializerExtractor
 
     This extractor depends on the `symfony/serializer`_ library.
 
-Using groups metadata from the :doc:`Serializer component </components/serializer>`,
+Using :ref:`groups metadata <serializer-using-serialization-groups-annotations>`
+from the :doc:`Serializer component </components/serializer>`,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
-provides list information. This extractor is not registered automatically
-with the ``property_info`` service.
+provides list information. This extractor is *not* registered automatically
+with the ``property_info`` service in the Symfony Framework.
 
 .. code-block:: php
 
@@ -421,9 +431,8 @@ DoctrineExtractor
 
 Using entity mapping data from `Doctrine ORM`_, the
 :class:`Symfony\\Bridge\\Doctrine\\PropertyInfo\\DoctrineExtractor`
-- located in the Doctrine bridge - provides list and type information.
-This extractor is not registered automatically with the ``property_info``
-service.
+provides list and type information. This extractor is not registered automatically
+with the ``property_info`` service in the Symfony Framework.
 
 .. code-block:: php
 
@@ -472,4 +481,3 @@ service by defining it as a service with one or more of the following
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
 .. _`doctrine/orm`: https://packagist.org/packages/doctrine/orm
-.. _`class constant`: http://php.net/manual/en/language.oop5.basic.php#language.oop5.basic.class.class
