@@ -240,7 +240,7 @@ provide whether properties are readable or writable as booleans.
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
 for getter/isser/setter method in addition to whether or not a property is public
-to determine if it's accessible. This based on how the :ref:`PropertyAccess </components/property_access>`
+to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
 works.
 
 .. tip::
