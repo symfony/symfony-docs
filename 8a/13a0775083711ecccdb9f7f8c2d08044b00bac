@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-08-03T11:00:09Z
+
+:+1:
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by yceruto at 2016-08-03T20:20:35Z
+
+I've tried this in Windows and not work for me :/
+
+```
+...\symfony-docs\_build>make html
+Running Sphinx v1.3.1
+making output directory...
+A Translator for the html builder is changed.
+loading pickled environment... not yet created
+building [mo]: targets for 0 po files that are out of date
+building [html]: targets for 0 source files that are out of date
+updating environment: 0 added, 0 changed, 0 removed
+WARNING: master file ...\symfony-docs\_build\index.rst not found
+looking for now-outdated files... none found
+no targets are out of date.
+build succeeded, 1 warning.
+
+Build finished. The HTML pages are in _build/html.
+```
+... and the path `_build/html` is empty.
+
+:question:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-03T20:24:47Z
+
+@yceruto the error seems to be in this line:
+
+```
+WARNING: master file ...\symfony-docs\_build\index.rst not found
+```
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-03T20:27:43Z
+
+`make html` should be run in `\symfony-docs`. (using `"_build/make" html` or `_build\make html`)
+
+---------------------------------------------------------------------------
+
+by yceruto at 2016-08-03T20:43:46Z
+
+@wouterj `symfony-docs>_build\make html` work perfect, thanks.
+
+On the other hand, inside `symfony-docs/_build/_theme/_templates/layout.html` was declared the main assets to external urls:
+* css `http://symfony.com/css/compiled/v5/all.css?v=4`
+* js `http://symfony.com/js/v5/all.js?v=4`
+
+this not work offline, any solution ?
+
+---------------------------------------------------------------------------
+
+by yceruto at 2016-08-03T20:58:22Z
+
+The same for all *.svg paths inside `http://symfony.com/css/compiled/v5/all.css`, they aren't offline.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2016-08-03T21:26:33Z
+
+I just created a separate issue for these questions, because they are out of scope of this PR. https://github.com/symfony/symfony-docs/issues/6844
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-05T09:03:40Z
+
+👍
