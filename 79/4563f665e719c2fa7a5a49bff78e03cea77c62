@@ -1,0 +1,90 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2015-12-15T07:16:34Z
+
+Good job! I left some minor comments but :+1:
+
+---------------------------------------------------------------------------
+
+by zanderbaldwin at 2015-12-15T10:54:49Z
+
+Considering I failed English at school, the only language I can speak, thanks!
+I'll try to finish this along with the edits within the next couple of days.
+
+---------------------------------------------------------------------------
+
+by zanderbaldwin at 2016-01-12T10:39:49Z
+
+Back in Europe, finally have internet access, any comments on this so far? /cc @dunglas.
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2016-03-06T11:50:43Z
+
+This looks good to me. Anything more that needs to be done?
+
+---------------------------------------------------------------------------
+
+by zanderbaldwin at 2016-03-06T12:44:36Z
+
+The *Creating Your Own Extractors* section could possibly be expanded but I could never figure out how to word it :P
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2016-03-06T13:15:29Z
+
+I think that might be next, advanced article.
+
+I'd add just this simple "How to use this" version. It's really missed at the moment.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-07-08T17:03:29Z
+
+Hi @zanderbaldwin!
+
+I'm sorry that it took so long before one of us reviewed this PR. I think it's a nice start. Can you please fix the comments I added to this PR and make sure lines are wrapped after the first word that crosses the 72th character (they are a bit too long atm)? Thanks already!
+
+If you don't have time, just comment and we'll continue this PR.
+
+status: needs work
+
+---------------------------------------------------------------------------
+
+by zanderbaldwin at 2016-07-20T15:15:57Z
+
+Hi guys, I've made the changes that were suggested. Does anyone have any other input?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2016-07-21T01:59:57Z
+
+Looks good to me. You did a very good job documenting this component, thank you!
+
+---------------------------------------------------------------------------
+
+by dunglas at 2016-08-16T11:24:40Z
+
+@zanderbaldwin can you rebase your PR?
+
+@xabbuh @wouterj @weaverryan can this PR be merged? It would be nice to have the doc for this component online.
+
+---------------------------------------------------------------------------
+
+by zanderbaldwin at 2016-08-16T11:35:13Z
+
+Rebased, though you might want to check that I've solved all the conflicts correctly...
+
+---------------------------------------------------------------------------
+
+by zanderbaldwin at 2016-08-16T12:05:38Z
+
+Got the build working, would you like the 5 commits squashed into 1?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2016-08-16T12:13:36Z
+
+Commits can be squashed by the merger.
+
+Status: reviewed
