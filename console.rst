@@ -216,7 +216,7 @@ console::
     namespace Tests\AppBundle\Command;
 
     use AppBundle\Command\CreateUserCommand;
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
     class CreateUserCommandTest extends \PHPUnit_Framework_TestCase
