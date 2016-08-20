@@ -65,10 +65,11 @@ Using Platforms as a Service
 The specific deployment steps vary greatly from one service provider to another,
 so check out the dedicated article for the service of your choose:
 
-* :doc:`Microsoft Azure </deployment/azure-website>`
-* :doc:`Heroku </deployment/heroku>`
-* :doc:`Platform.sh </deployment/platformsh>`
-* :doc:`fortrabbit </deployment/fortrabbit>`
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    deployment/*
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
