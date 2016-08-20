@@ -71,6 +71,8 @@ Active Core Members
   * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
     bundle.
 
+  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
@@ -181,6 +183,7 @@ discretion of the **Project Leader**.
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
 .. _VarDumper: https://github.com/symfony/var-dumper
+.. _Workflow: https://github.com/symfony/workflow
 .. _Yaml: https://github.com/symfony/yaml
 .. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
 .. _`fabpot`: https://github.com/fabpot/
@@ -197,3 +200,4 @@ discretion of the **Project Leader**.
 .. _`aitboudad`: https://github.com/aitboudad/
 .. _`xabbuh`: https://github.com/xabbuh/
 .. _`javiereguiluz`: https://github.com/javiereguiluz/
+.. _`lyrixx`: https://github.com/lyrixx/
