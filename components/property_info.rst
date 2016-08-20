@@ -5,18 +5,14 @@
 The PropertyInfo Component
 ==========================
 
-    The PropertyInfo component provides the functionality to get information
-    about class properties using metadata of popular sources.
+    The PropertyInfo component allows you to get information
+    about class properties by using different sources of metadata.
 
 While the :doc:`PropertyAccess component </components/property_access>`
 allows you to read and write values to/from objects and arrays, the PropertyInfo
-component works solely with class definitions to provide information such
-as data type and visibility about properties within that class.
-
-Similar to PropertyAccess, the PropertyInfo component combines both class
-properties (such as ``$property``) and properties defined via accessor and
-mutator methods such as  ``getProperty()``, ``isProperty()``, ``setProperty()``,
-``addProperty()``, ``removeProperty()``, etc.
+component works solely with class definitions to provide information about the
+data type and visibility - including via getter or setter methods - of the properties
+within that class.
 
 .. versionadded:: 2.8
     The PropertyInfo component was introduced in Symfony 2.8.
@@ -42,22 +38,40 @@ Additional dependencies may be required for some of the
 Usage
 -----
 
-The entry point of this component is a new instance of the
-:class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
-class, providing sets of information extractors.
+To use this component, create a new
+:class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor` instance and
+provide it with a set of information extractors.
 
 .. code-block:: php
 
     use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+    use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
+    use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+
+    // a full list of extractors is shown further below
+    $phpDocExtractor = new PhpDocExtractor();
+    $reflectionExtractor = new ReflectionExtractor();
+
+    // array of PropertyListExtractorInterface
+    $listExtractors = array($reflectionExtractor);
+
+    // array of PropertyTypeExtractorInterface
+    $typeExtractors = array($phpDocExtractor, $reflectionExtractor);
+
+    // array of PropertyDescriptionExtractorInterface
+    $descriptionExtractors = array($phpDocExtractor);
+
+    // array of PropertyAccessExtractorInterface
+    $accessExtractors = array($reflectionExtractor);
 
     $propertyInfo = new PropertyInfoExtractor(
-        $arrayOfListExtractors,
-        $arrayOfTypeExtractors,
-        $arrayOfDescriptionExtractors,
-        $arrayOfAccessExtractors
+        $listExtractors,
+        $typeExtractors,
+        $descriptionExtractors,
+        $accessExtractors
     );
 
-The order of extractor instances within an array matters, as the first non-null
+The order of extractor instances within an array matters: the first non-null
 result will be returned. That is why you must provide each category of extractors
 as a separate array, even if an extractor provides information for more than
 one category.
@@ -101,7 +115,14 @@ Extractable Information
 -----------------------
 
 The :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
-class exposes public methods to extract four types of information: list,
+class exposes public methods to extract four types of information:
+
+* :ref:`*List* of properties <property-info-list>`: `getProperties()`
+* :ref:`Property *type* <property-info-type>`: `getTypes()`
+* :ref:`Property *description* <property-info-description>`: `getShortDescription()` and `getLongDescription()`
+* :ref:`Property *access* details <property-info-access>`: `isReadable()` and `isWritable()`
+
+list,
 type, description and access information. The first type of information is
 about the class, while the remaining three are about the individual properties.
 
@@ -116,6 +137,8 @@ about the class, while the remaining three are about the individual properties.
 
     Since the PropertyInfo component requires PHP 5.5 or greater, you can
     also make use of the `class constant`_.
+
+.. _property-info-list:
 
 List Information
 ~~~~~~~~~~~~~~~~
@@ -136,6 +159,8 @@ containing each property name as a string.
         [2] => string(6) "active"
       }
     */
+
+.. _property-info-type:
 
 Type Information
 ~~~~~~~~~~~~~~~~
@@ -164,6 +189,8 @@ for a property.
       }
     */
 
+.. _property-info-description:
+
 Description Information
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -188,6 +215,8 @@ strings.
         These is the subsequent paragraph in the DocComment.
         It can span multiple lines.
     */
+
+.. _property-info-access:
 
 Access Information
 ~~~~~~~~~~~~~~~~~~
