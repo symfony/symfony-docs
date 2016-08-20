@@ -258,6 +258,33 @@ link displayed for Platform.sh service.
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
 
+Build the Documentation Locally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Alternatively you can build the documentation in your own computer for testing
+purposes following these steps:
+
+#. Install `pip`_ as explained in the `pip installation`_ article.
+
+#. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
+   (depending on your system, you may need to execute this command as root user):
+
+   .. code-block:: bash
+
+        $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
+
+#. Run the following command to build the documentation in HTML format:
+
+   .. code-block:: bash
+
+       # Linux and macOS
+       $ ./_build/make html
+
+       # Windows
+       $ _build\make html
+
+The generated documentation is available in the ``_build/html`` directory.
+
 Frequently Asked Questions
 --------------------------
 
@@ -316,3 +343,7 @@ definitely don't want you to waste your time!
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh
 .. _`roadmap`: https://symfony.com/roadmap
+.. _`pip`: https://pip.pypa.io/en/stable/
+.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
+.. _`Sphinx`: http://sphinx-doc.org/
+.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
