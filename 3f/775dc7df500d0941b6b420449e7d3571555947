@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-08-02T01:37:43Z
+
+One minor comment
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-05T10:49:27Z
+
+I've added the mini section about PaaS providers. This is ready to be merged. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-05T10:53:36Z
+
+So now we have 2 sections with a list of doc references, linking to exactly the same set of articles. Not sure if I like that...
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-05T10:59:01Z
+
+@wouterj 👍, I've removed the "Learn More" section because it only contained the PaaS articles.
