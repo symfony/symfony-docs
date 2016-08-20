@@ -198,7 +198,7 @@ expression or a CSS selector, then use the client to click on it. For example::
         ->eq(1) // select the second link in the list
         ->link()
     ;
-    
+
     // and click it
     $crawler = $client->click($link);
 
@@ -451,25 +451,20 @@ You can also get the objects related to the latest request::
 
     $crawler = $client->getCrawler();
 
-If your requests are not insulated, you can also access the ``Container`` and
-the ``Kernel``::
-
-    $container = $client->getContainer();
-    $kernel = $client->getKernel();
-
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-It's highly recommended that a functional test only tests the Response. But
+It's highly recommended that a functional test only tests the response. But
 under certain very rare circumstances, you might want to access some internal
 objects to write assertions. In such cases, you can access the Dependency
 Injection Container::
 
+    // will be the same container used in your test, unless you're using
+    // $client->insulate() or using real HTTP requests to test your application
     $container = $client->getContainer();
 
-Be warned that this does not work if you insulate the client or if you use an
-HTTP layer. For a list of services available in your application, use the
-``debug:container`` console task.
+For a list of services available in your application, use the ``debug:container``
+console task.
 
 .. tip::
 

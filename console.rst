@@ -216,7 +216,9 @@ console::
     namespace Tests\AppBundle\Command;
 
     use AppBundle\Command\CreateUserCommand;
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Component\Console\Application;
+    // use this if you're in the Symfony Framework
+    //use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
     class CreateUserCommandTest extends \PHPUnit_Framework_TestCase
@@ -224,6 +226,12 @@ console::
         public function testExecute()
         {
             $application = new Application();
+
+            // if you're in the Symfony framework, do this instead
+            // extend the KernelTestCase class
+            // self::bootKernel();
+            // $application = new Application(self::$kernel);
+
             $application->add(new CreateUserCommand());
 
             $command = $application->find('app:create-user');
@@ -250,13 +258,6 @@ console::
 
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
-
-.. note::
-
-    When using the Console component in a standalone project, use
-    :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
-    instead of
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>`
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from

@@ -328,4 +328,5 @@
 /components/var_dumper/index /components/var_dumper
 /components/yaml/introduction /components/yaml
 /components/yaml/index /components/yaml
+/deployment/tools /deployment
 /install/bundles /setup/bundles
