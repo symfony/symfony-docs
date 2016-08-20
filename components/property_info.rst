@@ -134,13 +134,13 @@ class exposes public methods to extract four types of information:
 
     Be sure to pass a *class* name, not an object to the extractor methods::
 
-    // bad! It may work, but not with all extractors
-    $propertyInfo->getProperties($awesomeObject);
+        // bad! It may work, but not with all extractors
+        $propertyInfo->getProperties($awesomeObject);
 
-    // Good!
-    $propertyInfo->getProperties(get_class($awesomeObject));
-    $propertyInfo->getProperties('Example\Namespace\YourAwesomeClass');
-    $propertyInfo->getProperties(YourAwesomeClass::class);
+        // Good!
+        $propertyInfo->getProperties(get_class($awesomeObject));
+        $propertyInfo->getProperties('Example\Namespace\YourAwesomeClass');
+        $propertyInfo->getProperties(YourAwesomeClass::class);
 
 .. _property-info-list:
 
