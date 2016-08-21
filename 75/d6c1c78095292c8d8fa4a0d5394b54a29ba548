@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-05T08:59:07Z
+
+Seems correct to me.
+
+👍
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-05T09:07:55Z
+
+I'm not sure about this change because I don't know the prevalence of this error. Is that common to have `/usr/local/bin/` missing?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-05T09:13:42Z
+
+Seems like this is normal on OSx PCs:
+
+ > What Gary suspects is true. Prior to Tiger the /usr/local directory was created during installation of the OS. But beginning with Tiger it is not. I'm not sure why this change was made but I've run into at least one software installer that failed on Tiger because it expected /usr/local to already be present.
+ > -- https://discussions.apple.com/thread/616992?start=0&tstart=0
+
+<!-- -->
+
+ > /usr/local does not exist on a standard plain OS X install
+ > -- http://apple.stackexchange.com/a/157981
+
+---------------------------------------------------------------------------
+
+by joelrfcosta at 2016-08-08T10:34:47Z
+
+Just like @wouterj said, on newer OS versions this was removed. Usually this is not noticed because we, as developers, already installed something in that folder.
