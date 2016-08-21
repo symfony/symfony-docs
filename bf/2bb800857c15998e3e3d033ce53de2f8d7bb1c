@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-12T09:44:22Z
+
+Wow, amazing catch!
+
+However, instead of making it a bit more complex (11 is more complex than 10), what about changing the code instead?
+
+```diff
+- {% for i in 0..10 %}
+-   <div class="{{ cycle(['odd', 'even'], i) }}">
++ {% for i in 1..10 %}
++   <div class="{{ cycle(['even', 'odd'], i) }}">
+      <!-- some HTML here -->
+    </div>
+  {% endfor %}
+```
+
+---------------------------------------------------------------------------
+
+by asandjivy at 2016-08-12T09:50:02Z
+
+Yes i thought about it.
+But maybe  just to specify that it is possible to count from 0 and the result is 11.
+If you prefer to start from 1, no problem ;)
+
+---------------------------------------------------------------------------
+
+by asandjivy at 2016-08-12T12:13:49Z
+
+My friend suggests: for i in 0 .. 9
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-14T11:20:25Z
+
+`0 .. 9` is fine for me as well, although I think `1 .. 10` is the most explaining (you can just look at the last number and know how many times the element is printed).
+
+Please note that we're specificly documenting Symfony here, not Twig. So we don't have to document the possibility to count from `0`, that's up to Twig's docs.
+
+---------------------------------------------------------------------------
+
+by asandjivy at 2016-08-16T07:58:51Z
+
+ok fine ;) let's go for 1 .. 10
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-17T09:13:22Z
+
+👍
+status: reviewed
+
+Thanks!
