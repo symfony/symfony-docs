@@ -73,6 +73,8 @@ some dependency into the ``BlogType`` when we instantiate it, then use that
 to instantiate the ``Blog`` class. The point is, you can set ``empty_data``
 to the exact "new" object that you want to use.
 
+.. _forms-empty-data-closure:
+
 Option 2: Provide a Closure
 ---------------------------
 

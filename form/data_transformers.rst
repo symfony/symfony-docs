@@ -13,8 +13,14 @@ to render the form, and then back into a ``DateTime`` object on submit.
 
 .. caution::
 
-    When a form field has the ``inherit_data`` option set, Data Transformers
+    When a form field has the ``inherit_data`` option set, data transformers
     won't be applied to that field.
+
+.. seealso::
+
+    If, instead of transforming the representation of a value, you need to map
+    values to a form field and back, you should use a data mapper. Check out
+    :doc:`/form/data_mappers`.
 
 .. _simple-example-sanitizing-html-on-user-input:
 
