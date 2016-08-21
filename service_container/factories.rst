@@ -93,7 +93,7 @@ configure the service container to use the
 
         $container->register('app.newsletter_manager_factory', 'AppBundle\Email\NewsletterManagerFactory');
 
-        $newsletterManager = new Definition();
+        $newsletterManager = new Definition('AppBundle\Email\NewsletterManager');
 
         // call a method on the specified service
         $newsletterManager->setFactory(array(
