@@ -108,7 +108,7 @@ with alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+twig
 
-    {% for i in 0..10 %}
+    {% for i in 1..10 %}
         <div class="{{ cycle(['odd', 'even'], i) }}">
           <!-- some HTML here -->
         </div>
