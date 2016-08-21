@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-17T20:32:34Z
+
+Thanks for updating the example! 👍
+status: reviewed
+
+ > But for me definition method is not the same as directly register service in containerBuidler.
+
+Unfortunately for you, the [`register()` method is hardcoded](https://github.com/symfony/dependency-injection/blob/master/ContainerBuilder.php#L682-L685). So it should work the same for you. (in other words, you might do something else wrong).
+
+You can ask for help using one of the [support channels](http://symfony.com/support).
