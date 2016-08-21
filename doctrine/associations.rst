@@ -168,7 +168,7 @@ own a collection of its related ``Product`` objects.
 
 .. note::
 
-    The code in the constructor is important.  Rather than being instantiated
+    The code in the constructor is important. Rather than being instantiated
     as a traditional ``array``, the ``$products`` property must be of a type
     that implements Doctrine's ``Collection`` interface. In this case, an
     ``ArrayCollection`` object is used. This object looks and acts almost
@@ -176,12 +176,17 @@ own a collection of its related ``Product`` objects.
     you uncomfortable, don't worry. Just imagine that it's an ``array``
     and you'll be in good shape.
 
+.. seealso::
+
+    To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
+    `Association Updates` documentation.
+
 .. tip::
 
-   The targetEntity value in the metadata used above can reference any entity
-   with a valid namespace, not just entities defined in the same namespace. To
-   relate to an entity defined in a different class or bundle, enter a full
-   namespace as the targetEntity.
+    The targetEntity value in the metadata used above can reference any entity
+    with a valid namespace, not just entities defined in the same namespace. To
+    relate to an entity defined in a different class or bundle, enter a full
+    namespace as the targetEntity.
 
 Now that you've added new properties to both the ``Product`` and ``Category``
 classes, tell Doctrine to generate the missing getter and setter methods for you:
@@ -407,3 +412,4 @@ Doctrine's `Association Mapping Documentation`_.
     statement, which *imports* the ``ORM`` annotations prefix.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
+.. _`Association Updates`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
