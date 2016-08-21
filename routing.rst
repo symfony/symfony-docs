@@ -333,7 +333,7 @@ By adding a *default* value:
 
         return $collection;
 
-Now, when the user goes to ``/page``, the ``blog_list`` route will match and ``$page``
+Now, when the user goes to ``/blog``, the ``blog_list`` route will match and ``$page``
 will default to a value of ``1``.
 
 .. index::
