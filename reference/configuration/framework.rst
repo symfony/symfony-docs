@@ -44,7 +44,6 @@ Configuration
     * `dsn`_
     * `username`_
     * `password`_
-    * `lifetime`_
     * `matcher`_
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
@@ -569,14 +568,6 @@ password
 **type**: ``string`` **default**: ``''``
 
 When needed, the password for the profiling storage.
-
-lifetime
-........
-
-**type**: ``integer`` **default**: ``86400``
-
-The lifetime of the profiling storage in seconds. The data will be deleted
-when the lifetime is expired.
 
 matcher
 .......
@@ -1476,7 +1467,6 @@ Full Default Configuration
                 dsn:                  file:%kernel.cache_dir%/profiler
                 username:
                 password:
-                lifetime:             86400
                 matcher:
                     ip:                   ~
 
