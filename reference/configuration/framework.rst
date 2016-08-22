@@ -42,8 +42,6 @@ Configuration
     * `only_exceptions`_
     * `only_master_requests`_
     * `dsn`_
-    * `username`_
-    * `password`_
     * `matcher`_
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
@@ -554,20 +552,6 @@ The DSN where to store the profiling information.
 
     See :doc:`/profiler/storage` for more information about the
     profiler storage.
-
-username
-........
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the username for the profiling storage.
-
-password
-........
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the password for the profiling storage.
 
 matcher
 .......
@@ -1465,8 +1449,6 @@ Full Default Configuration
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
-                username:
-                password:
                 matcher:
                     ip:                   ~
 
