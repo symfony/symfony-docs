@@ -76,7 +76,8 @@ call if the service exists and remove the method call if it does not:
         services:
             app.newsletter_manager:
                 class:     AppBundle\Newsletter\NewsletterManager
-                arguments: ['@?app.mailer']
+                calls:
+                    - [setMailer, ['@?app.mailer']]
 
     .. code-block:: xml
 
