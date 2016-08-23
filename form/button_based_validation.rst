@@ -4,9 +4,6 @@
 How to Choose Validation Groups Based on the Clicked Button
 ===========================================================
 
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
-
 When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,
 consider a form in a wizard that lets you advance to the next step or go back
@@ -17,8 +14,8 @@ First, we need to add the two buttons to the form::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('nextStep', 'submit')
-        ->add('previousStep', 'submit')
+        ->add('nextStep', SubmitType::class)
+        ->add('previousStep', SubmitType::class)
         ->getForm();
 
 Then, we configure the button for returning to the previous step to run
@@ -27,7 +24,7 @@ so we set its ``validation_groups`` option to false::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('previousStep', 'submit', array(
+        ->add('previousStep', SubmitType::class, array(
             'validation_groups' => false,
         ))
         ->getForm();

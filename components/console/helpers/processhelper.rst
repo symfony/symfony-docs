@@ -4,9 +4,6 @@
 Process Helper
 ==============
 
-.. versionadded:: 2.6
-    The Process Helper was introduced in Symfony 2.6.
-
 The Process Helper shows processes as they're running and reports
 useful information about process status.
 

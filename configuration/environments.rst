@@ -179,10 +179,10 @@ this code and changing the environment string.
     specifies if the application should run in "debug mode". Regardless
     of the environment, a Symfony application can be run with debug mode
     set to ``true`` or ``false``. This affects many things in the application,
-    such as if errors should be displayed or if cache files are
+    such as displaying stacktraces on error pages or if cache files are
     dynamically rebuilt on each request. Though not a requirement, debug mode
-    is generally set to ``true`` for the ``dev`` and ``test`` environments
-    and ``false`` for the ``prod`` environment.
+    is generally set to ``true`` for the ``dev`` and ``test`` environments and
+    ``false`` for the ``prod`` environment.
 
     Internally, the value of the debug mode becomes the ``kernel.debug``
     parameter used inside the :doc:`service container </service_container>`.
@@ -213,10 +213,6 @@ this code and changing the environment string.
                 // ...
             ));
 
-    As of Symfony 2.3, showing errors or not no longer depends on the debug
-    mode. You'll need to enable that in your front controller by calling
-    :method:`Symfony\\Component\\Debug\\Debug::enable`.
-
 Selecting the Environment for Console Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -227,13 +223,13 @@ behavior:
 .. code-block:: bash
 
     # 'dev' environment and debug enabled
-    $ php app/console command_name
+    $ php bin/console command_name
 
     # 'prod' environment (debug is always disabled for 'prod')
-    $ php app/console command_name --env=prod
+    $ php bin/console command_name --env=prod
 
     # 'test' environment and debug disabled
-    $ php app/console command_name --env=test --no-debug
+    $ php bin/console command_name --env=test --no-debug
 
 In addition to the ``--env`` and ``--debug`` options, the behavior of Symfony
 commands can also be controlled with environment variables. The Symfony console
@@ -348,13 +344,13 @@ Symfony takes advantage of caching in many ways: the application configuration,
 routing configuration, Twig templates and more are cached to PHP objects
 stored in files on the filesystem.
 
-By default, these cached files are largely stored in the ``app/cache`` directory.
+By default, these cached files are largely stored in the ``var/cache`` directory.
 However, each environment caches its own set of files:
 
 .. code-block:: text
 
-    <your-project>/
-    ├─ app/
+    your-project/
+    ├─ var/
     │  ├─ cache/
     │  │  ├─ dev/   # cache directory for the *dev* environment
     │  │  └─ prod/  # cache directory for the *prod* environment
@@ -363,7 +359,7 @@ However, each environment caches its own set of files:
 Sometimes, when debugging, it may be helpful to inspect a cached file to
 understand how something is working. When doing so, remember to look in
 the directory of the environment you're using (most commonly ``dev`` while
-developing and debugging). While it can vary, the ``app/cache/dev`` directory
+developing and debugging). While it can vary, the ``var/cache/dev`` directory
 includes the following:
 
 ``appDevDebugProjectContainer.php``

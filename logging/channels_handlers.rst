@@ -132,8 +132,7 @@ specified.
 Configure Additional Channels without Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With MonologBundle 2.4 you can configure additional channels without the
-need to tag your services:
+You can also configure additional channels without the need to tag your services:
 
 .. configuration-block::
 

@@ -10,16 +10,13 @@ console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
-    $ php app/console debug:container
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
+    $ php bin/console debug:container
 
 By default, only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
-    $ php app/console debug:container --show-private
+    $ php bin/console debug:container --show-private
 
 .. note::
 
@@ -33,4 +30,4 @@ its id:
 
 .. code-block:: bash
 
-    $ php app/console debug:container app.mailer
+    $ php bin/console debug:container app.mailer

@@ -6,10 +6,6 @@ The Filesystem Component
 
     The Filesystem component provides basic utilities for the filesystem.
 
-.. tip::
-
-    The lock handler feature was introduced in symfony 2.6.
-    :doc:`See the documentation for more information </components/filesystem/lock_handler>`.
 
 Installation
 ------------
@@ -239,9 +235,6 @@ isAbsolutePath
 dumpFile
 ~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``dumpFile()`` was introduced in Symfony 2.3.
-
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
 dump contents to a file. It does this in an atomic manner: it writes a temporary
 file first and then moves it to the new file location when it's finished.
@@ -251,8 +244,6 @@ complete new file (but never a partially-written file)::
     $fs->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
-
-A desired file mode can be passed as the third argument.
 
 Error Handling
 --------------

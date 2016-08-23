@@ -180,10 +180,6 @@ and ``redirect()`` methods::
         return $this->redirect('http://symfony.com/doc');
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this.
-
 For more information, see the :doc:`Routing chapter </routing>`.
 
 .. tip::
@@ -254,10 +250,7 @@ console command:
 
 .. code-block:: bash
 
-    $ php app/console debug:container
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
+    $ php bin/console debug:container
 
 For more information, see the :doc:`/service_container` chapter.
 
@@ -269,10 +262,6 @@ For more information, see the :doc:`/service_container` chapter.
     method::
 
         $from = $this->getParameter('app.mailer.from');
-
-    .. versionadded:: 2.7
-        The ``Controller::getParameter()`` method was introduced in Symfony
-        2.7. Use ``$this->container->getParameter()`` in versions prior to 2.7.
 
 .. index::
    single: Controller; Managing errors

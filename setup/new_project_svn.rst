@@ -75,24 +75,25 @@ with these steps:
    .. code-block:: bash
 
         $ cd myproject/
-        $ svn add --depth=empty app app/cache app/logs app/config web
+        $ svn add --depth=empty app var var/cache var/logs app/config web
 
         $ svn propset svn:ignore "vendor" .
-        $ svn propset svn:ignore "bootstrap*" app/
+        $ svn propset svn:ignore "bootstrap*" var/
         $ svn propset svn:ignore "parameters.yml" app/config/
-        $ svn propset svn:ignore "*" app/cache/
-        $ svn propset svn:ignore "*" app/logs/
+        $ svn propset svn:ignore "*" var/cache/
+        $ svn propset svn:ignore "*" var/logs/
+        $ svn propset svn:ignore "*" var/sessions/
 
         $ svn propset svn:ignore "bundles" web
 
-        $ svn ci -m "commit basic Symfony ignore list (vendor, app/bootstrap*, app/config/parameters.yml, app/cache/*, app/logs/*, web/bundles)"
+        $ svn ci -m "commit basic Symfony ignore list (vendor, var/bootstrap*, app/config/parameters.yml, var/cache/*, var/logs/*, web/bundles)"
 
 #. The rest of the files can now be added and committed to the project:
 
    .. code-block:: bash
 
         $ svn add --force .
-        $ svn ci -m "add basic Symfony Standard 2.X.Y"
+        $ svn ci -m "add basic Symfony Standard 3.X.Y"
 
 That's it! Since the ``app/config/parameters.yml`` file is ignored, you can
 store machine-specific settings like database passwords here without committing

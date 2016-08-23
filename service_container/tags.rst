@@ -189,11 +189,13 @@ Notice that each service was given a tag named ``app.mail_transport``. This is
 the custom tag that you'll use in your compiler pass. The compiler pass is what
 makes this tag "mean" something.
 
+.. _service-container-compiler-pass-tags:
+
 Create a Compiler Pass
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Your compiler pass can now ask the container for any services with the
-custom tag::
+You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
+container for any services with the ``acme_mailer.transport`` tag::
 
     // src/AppBundle/DependencyInjection/Compiler/MailTransportPass.php
     namespace AppBundle\DependencyInjection\Compiler;
@@ -243,6 +245,13 @@ bundle::
             $container->addCompilerPass(new MailTransportPass());
         }
     }
+
+.. tip::
+
+    When implementing the ``CompilerPassInterface`` in a service extension, you
+    do not need to register it. See the
+    :ref:`components documentation <components-di-compiler-pass>` for more
+    information.
 
 Adding Additional Attributes on Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

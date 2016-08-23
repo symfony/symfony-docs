@@ -95,7 +95,7 @@ the next section.
 For a more extensive discussion, see :doc:`/form/form_customization`.
 
 .. index::
-    single: Forms; Template fragment naming
+   single: Forms; Template fragment naming
 
 .. _form-template-blocks:
 
@@ -148,7 +148,7 @@ customize (e.g. ``widget``), you can construct the fragment name that needs
 to be overridden (e.g. ``textarea_widget``).
 
 .. index::
-    single: Forms; Template fragment inheritance
+   single: Forms; Template fragment inheritance
 
 Template Fragment Inheritance
 -----------------------------
@@ -175,7 +175,7 @@ override the default error rendering for *all* fields, copy and customize the
     :doc:`form type reference </reference/forms/types>` for each field type.
 
 .. index::
-    single: Forms; Global Theming
+   single: Forms; Global Theming
 
 .. _forms-theming-global:
 
@@ -189,7 +189,7 @@ to import form customizations across your entire project.
 .. _forms-theming-twig:
 
 Twig
-~~~
+....
 
 To automatically include the customized blocks from the ``fields.html.twig``
 template created earlier in *all* templates, modify your application configuration
@@ -269,7 +269,7 @@ to define form output.
         must point ``form_theme`` to a separate template.
 
 PHP
-~~~
+...
 
 To automatically include the customized templates from the ``app/Resources/views/form``
 directory created earlier in *all* templates, modify your application configuration

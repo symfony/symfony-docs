@@ -1,10 +1,6 @@
 Verbosity Levels
 ================
 
-.. versionadded:: 2.3
-   The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
-   in version 2.3
-
 The console has five verbosity levels. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
@@ -39,6 +35,12 @@ level. For example::
             if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
                 $output->writeln('User class: '.get_class($user));
             }
+
+            // alternatively you can pass the verbosity level to writeln()
+            $output->writeln(
+                'Will only be printed in verbose mode or higher',
+                OutputInterface::VERBOSITY_VERBOSE
+            );
         }
     }
 

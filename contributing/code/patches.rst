@@ -14,13 +14,13 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.3.9 or above.
+* PHP version 5.5.9 or above.
 
 .. caution::
 
-   Before Symfony 2.7, the minimal PHP version was 5.3.3. Please keep
-   this in mind, if you are working on a bug fix for earlier versions
-   of Symfony.
+   Before Symfony 2.7, the minimal PHP version was 5.3.3. Before Symfony 3.0,
+   minimal version was 5.3.9. Please keep this in mind, if you are working on a
+   bug fix for earlier versions of Symfony.
 
 Configure Git
 ~~~~~~~~~~~~~

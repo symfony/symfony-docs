@@ -31,7 +31,6 @@ Configuration
     * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
     * :ref:`enabled <reference-csrf_protection-enabled>`
-    * `field_name`_ (deprecated as of 2.4)
 * `esi`_
     * :ref:`enabled <reference-esi-enabled>`
 * `fragments`_
@@ -95,7 +94,6 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
-    * `api`_
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -104,6 +102,7 @@ Configuration
     * :ref:`enabled <reference-serializer-enabled>`
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+    * `name_converter`_
 
 secret
 ~~~~~~
@@ -134,9 +133,6 @@ out all the application users.
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ``http_method_override`` option was introduced in Symfony 2.3.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -177,10 +173,6 @@ trusted_proxies
 
 Configures the IP addresses that should be trusted as proxies. For more
 details, see :doc:`/request/load_balancer_reverse_proxy`.
-
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
-    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
 
@@ -226,9 +218,6 @@ using the following keys:
 * ``macvim``
 * ``emacs``
 * ``sublime``
-
-.. versionadded:: 2.3.14
-    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom URL string. If you do this, all percentage
 signs (``%``) must be doubled to escape that character. For example, if
@@ -427,18 +416,6 @@ If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
-field_name
-..........
-
-.. caution::
-
-    The ``framework.csrf_protection.field_name`` setting is deprecated as
-    of Symfony 2.4, use ``framework.form.csrf_protection.field_name`` instead.
-
-**type**: ``string`` **default**: ``"_token"``
-
-The name of the hidden field used to render the :doc:`CSRF token </form/csrf_protection>`.
-
 esi
 ~~~
 
@@ -540,12 +517,6 @@ and ``test`` environments.
 
 collect
 .......
-
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -772,7 +743,7 @@ This determines whether cookies should only be sent over secure connections.
 cookie_httponly
 ...............
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 This determines whether cookies should only be accessible through the HTTP
 protocol. This means that the cookie won't be accessible by scripting
@@ -1157,7 +1128,7 @@ resources
 
 A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
-:ref:`the form chapter <forms-theming-twig>`.
+:ref:`the form article <forms-theming-twig>`.
 
 Assume you have custom global form themes in
 ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
@@ -1274,12 +1245,6 @@ fallbacks
 
 **type**: ``string|array`` **default**: ``array('en')``
 
-.. versionadded:: 2.3.25
-    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
-    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
-    language defined as a string. Please note that you can still use the
-    old ``fallback`` option if you want define only one fallback.
-
 This option is used when the translation key for the current locale wasn't
 found.
 
@@ -1291,9 +1256,6 @@ found.
 
 logging
 .......
-
-.. versionadded:: 2.6
-    The ``logging`` option was introduced in Symfony 2.6.
 
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
@@ -1348,6 +1310,9 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
+cache provide from the Doctrine project.
+
 .. _reference-validation-enable_annotations:
 
 enable_annotations
@@ -1373,30 +1338,6 @@ strict_email
 If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
-
-api
-...
-
-**type**: ``string``
-
-Starting with Symfony 2.5, the Validator component introduced a new validation
-API. The ``api`` option is used to switch between the different implementations:
-
-``2.5``
-    Use the validation API introduced in Symfony 2.5.
-
-``2.5-bc`` or ``auto``
-    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
-    Symfony will use an API implementation that is compatible with both the
-    legacy ``2.4`` implementation and the ``2.5`` implementation.
-
-.. note::
-
-    The support for the native 2.4 API has been dropped since Symfony 2.7.
-
-To capture these logs in the ``prod`` environment, configure a
-:doc:`channel handler </logging/channels_handlers>` in ``config_prod.yml`` for
-the ``translation`` channel and set its ``level`` to ``debug``.
 
 annotations
 ~~~~~~~~~~~
@@ -1477,6 +1418,21 @@ If this option is enabled, serialization groups can be defined using annotations
 
     For more information, see :ref:`serializer-using-serialization-groups-annotations`.
 
+name_converter
+..............
+
+**type**: ``string``
+
+The name converter to use.
+The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
+name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
+value.
+
+.. seealso::
+
+    For more information, see
+    :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
+
 Full Default Configuration
 --------------------------
 
@@ -1494,7 +1450,6 @@ Full Default Configuration
 
             csrf_protection:
                 enabled:              false
-                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
 
             # form configuration
             form:

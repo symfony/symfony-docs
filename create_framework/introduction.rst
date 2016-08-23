@@ -69,7 +69,7 @@ Before You Start
 
 Reading about how to create a framework is not enough. You will have to follow
 along and actually type all the examples included in this tutorial. For that,
-you need a recent version of PHP (5.3.9 or later is good enough), a web server
+you need a recent version of PHP (5.5.9 or later is good enough), a web server
 (like Apache, NGinx or PHP's built-in web server), a good knowledge of PHP and
 an understanding of Object Oriented programming.
 
@@ -108,8 +108,8 @@ start with the simplest web application we can think of in PHP::
 
     printf('Hello %s', $input);
 
-If you have PHP 5.4, you can use the PHP built-in server to test this great
-application in a browser (``http://localhost:4321/index.php?name=Fabien``):
+You can use the PHP built-in server to test this great application in a browser
+(``http://localhost:4321/index.php?name=Fabien``):
 
 .. code-block:: bash
 

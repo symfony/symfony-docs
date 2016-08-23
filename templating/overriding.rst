@@ -40,7 +40,7 @@ to create it). You're now free to customize the template.
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your
-    cache (``php app/console cache:clear``), even if you are in debug mode.
+    cache (``php bin/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in AcmeBlogBundle inherits from a base template called

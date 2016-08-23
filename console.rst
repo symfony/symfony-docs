@@ -4,8 +4,8 @@
 Console Commands
 ================
 
-The Symfony framework provide lots of commands through the ``app/console`` script
-(e.g. the well-known ``app/console cache:clear`` command). These commands are
+The Symfony framework provide lots of commands through the ``bin/console`` script
+(e.g. the well-known ``bin/console cache:clear`` command). These commands are
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
@@ -49,10 +49,10 @@ method. Then you can optionally define a help message and the
     protected function configure()
     {
         $this
-            // the name of the command (the part after "app/console")
+            // the name of the command (the part after "bin/console")
             ->setName('app:create-users')
 
-            // the short description shown while running "php app/console list"
+            // the short description shown while running "php bin/console list"
             ->setDescription('Creates new users.')
 
             // the full command description shown when running the command with
@@ -68,7 +68,7 @@ After configuring the command, you can execute it in the terminal:
 
 .. code-block:: bash
 
-    $ php app/console app:create-users
+    $ php bin/console app:create-users
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
@@ -97,7 +97,7 @@ Now, try executing the command:
 
 .. code-block:: bash
 
-    $ php app/console app:create-user
+    $ php bin/console app:create-user
     User Creator
     ============
 
@@ -138,7 +138,7 @@ Now, you can pass the username to the command:
 
 .. code-block:: bash
 
-    $ php app/console app:create-user Wouter
+    $ php bin/console app:create-user Wouter
     User Creator
     ============
 

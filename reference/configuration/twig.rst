@@ -20,6 +20,9 @@ TwigBundle Configuration ("twig")
                 - bootstrap_3_layout.html.twig
                 - bootstrap_3_horizontal_layout.html.twig
 
+                # Foundation
+                - foundation_5_layout.html.twig
+
                 # Example:
                 - MyBundle::form.html.twig
 
@@ -38,7 +41,6 @@ TwigBundle Configuration ("twig")
                     value:                ~
             autoescape:                ~
 
-            # The following were added in Symfony 2.3.
             # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
             autoescape_service:        ~ # Example: '@my_service'
             autoescape_service_method: ~ # use in combination with autoescape_service option

@@ -431,7 +431,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.6.*"
+            "symfony/symfony": "3.0.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -594,7 +594,7 @@ database and the Templating component to render a template and return a
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?= $view['router']->generate(
+            <a href="<?php echo $view['router']->path(
                 'blog_show',
                 array('id' => $post->getId())
             ) ?>">

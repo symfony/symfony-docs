@@ -131,9 +131,6 @@ are done doing other stuff::
 Stopping a Process
 ------------------
 
-.. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
-
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
 two arguments: a timeout and a signal. Once the timeout is reached, the signal
@@ -169,10 +166,6 @@ To make your code work better on all platforms, you might want to use the
 
     $builder = new ProcessBuilder(array('ls', '-lsa'));
     $builder->getProcess()->run();
-
-.. versionadded:: 2.3
-    The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
-    method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
@@ -249,9 +242,6 @@ exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 Process Signals
 ---------------
 
-.. versionadded:: 2.3
-    The ``signal`` method was introduced in Symfony 2.3.
-
 When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
@@ -274,9 +264,6 @@ When running a program asynchronously, you can send it POSIX signals with the
 
 Process Pid
 -----------
-
-.. versionadded:: 2.3
-    The ``getPid`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method.

@@ -4,9 +4,6 @@
 How to Style a Console Command
 ==============================
 
-.. versionadded:: 2.7
-    Symfony Styles for console commands were introduced in Symfony 2.7.
-
 One of the most boring tasks when creating console commands is to deal with the
 styling of the command's input and output. Displaying titles and tables or asking
 questions to the user involves a lot of repetitive code.

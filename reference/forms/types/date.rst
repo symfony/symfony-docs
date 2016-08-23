@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; date
+   single: Forms; Fields; DateType
 
-date Field Type
-===============
+DateType Field
+==============
 
 A field that allows the user to modify date information via a variety of
 different HTML elements.
@@ -15,7 +15,8 @@ and can understand a number of different input formats via the `input`_ option.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `days`_                                                                   |
+| Options              | - `choice_translation_domain`_                                              |
+|                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `html5`_                                                                  |
@@ -38,9 +39,8 @@ and can understand a number of different input formats via the `input`_ option.
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -55,7 +55,10 @@ Suppose that you have a ``publishedAt`` field whose underlying date is a
 ``DateTime`` object. The following configures the ``date`` type for that
 field as **three different choice fields**::
 
-    $builder->add('publishedAt', 'date', array(
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
+
+    $builder->add('publishedAt', DateType::class, array(
         'widget' => 'choice',
     ));
 
@@ -69,7 +72,10 @@ For a better user experience, you may want to render a single text field and use
 some kind of "date picker" to help your user fill in the right format. To do that,
 use the ``single_text`` widget::
 
-    $builder->add('publishedAt', 'date', array(
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
+
+    $builder->add('publishedAt', DateType::class, array(
         // render as a single text box
         'widget' => 'single_text',
     ));
@@ -82,7 +88,10 @@ external JavaScript library.
 For example, suppose you want to use the `Bootstrap Datepicker`_ library. First,
 make the following changes::
 
-    $builder->add('publishedAt', 'date', array(
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
+
+    $builder->add('publishedAt', DateType::class, array(
         'widget' => 'single_text',
 
         // do not render as type="date", to avoid HTML5 date pickers
@@ -119,14 +128,12 @@ that Symfony should expect via the `format`_ option.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
 .. include:: /reference/forms/types/options/days.rst.inc
 
 placeholder
 ~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` | ``array``
 
@@ -134,14 +141,14 @@ If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
-    $builder->add('dueDate', 'date', array(
+    $builder->add('dueDate', DateType::class, array(
         'placeholder' => 'Select a value',
     ));
 
 Alternatively, you can use an array that configures different placeholder
 values for the year, month and day fields::
 
-    $builder->add('dueDate', 'date', array(
+    $builder->add('dueDate', DateType::class, array(
         'placeholder' => array(
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
         )
@@ -189,8 +196,7 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -205,8 +211,6 @@ type:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Field Variables
 ---------------

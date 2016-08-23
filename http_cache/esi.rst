@@ -138,23 +138,20 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
         <!-- app/Resources/views/static/about.html.php -->
 
-        // you can use a controller reference
-        use Symfony\Component\HttpKernel\Controller\ControllerReference;
+        <!-- you can use a controller reference -->
         <?php echo $view['actions']->render(
-            new ControllerReference(
+            new Symfony\Component\HttpKernel\Controller\ControllerReference(
                 'AppBundle:News:latest',
                 array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')
         ) ?>
 
-        // ... or a URL
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        <!-- ... or a URL -->
         <?php echo $view['actions']->render(
-            $view['router']->generate(
+            $view['router']->path(
                 'latest_news',
-                array('maxPerPage' => 5),
-                UrlGeneratorInterface::ABSOLUTE_URL
+                array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi'),
         ) ?>

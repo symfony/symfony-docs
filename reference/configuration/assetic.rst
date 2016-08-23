@@ -4,6 +4,8 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
+.. include:: /assetic/_standard_edition_warning.rst.inc
+
 Full Default Configuration
 --------------------------
 

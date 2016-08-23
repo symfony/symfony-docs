@@ -86,8 +86,9 @@ To enable caching, modify the code of your front controller. You can also make t
 changes to ``app_dev.php`` to add caching to the ``dev`` environment::
 
     // web/app.php
-    // ...
+    use Symfony\Component\HttpFoundation\Request;
 
+    // ...
     $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
 

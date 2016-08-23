@@ -1,9 +1,6 @@
 LessThan
 ========
 
-.. versionadded:: 2.3
-    The ``LessThan`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is less than another value, defined in the options. To
 force that a value is less than or equal to another value, see
 :doc:`/reference/constraints/LessThanOrEqual`. To force a value is greater
@@ -109,9 +106,6 @@ The following constraints ensure that:
 
 Comparing Dates
 ---------------
-
-.. versionadded:: 2.6
-    The feature to compare dates was introduced in Symfony 2.6.
 
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check

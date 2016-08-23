@@ -116,7 +116,7 @@ can automatically generate an empty ``test_project`` database for you:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:database:create
+    $ php bin/console doctrine:database:create
 
 .. sidebar:: Setting up the Database to be UTF8
 
@@ -128,12 +128,8 @@ can automatically generate an empty ``test_project`` database for you:
 
     .. code-block:: bash
 
-        $ php app/console doctrine:database:drop --force
-        $ php app/console doctrine:database:create
-
-    There's no way to configure these defaults inside Doctrine, as it tries to be
-    as agnostic as possible in terms of environment configuration. One way to solve
-    this problem is to configure server-level defaults.
+        $ php bin/console doctrine:database:drop --force
+        $ php bin/console doctrine:database:create
 
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to
     your configuration file  (typically ``my.cnf``):
@@ -144,6 +140,55 @@ can automatically generate an empty ``test_project`` database for you:
         # Version 5.5.3 introduced "utf8mb4", which is recommended
         collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
         character-set-server = utf8mb4            # Replaces utf8
+
+    You can also change the defaults for Doctrine so that the generated SQL
+    uses the correct character set.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            doctrine:
+                dbal:
+                    charset: utf8mb4
+                    default_table_options:
+                        charset: utf8mb4
+                        collate: utf8mb4_unicode_ci
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/doctrine
+                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config>
+                    <doctrine:dbal
+                        charset="utf8mb4">
+                            <doctrine:default-table-option name="charset">utf8mb4</doctrine:default-table-option>
+                            <doctrine:default-table-option name="collate">utf8mb4_unicode_ci</doctrine:default-table-option>
+                    </doctrine:dbal>
+                </doctrine:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $configuration->loadFromExtension('doctrine', array(
+                'dbal' => array(
+                    'charset' => 'utf8mb4',
+                    'default_table_options' => array(
+                        'charset' => 'utf8mb4'
+                        'collate' => 'utf8mb4_unicode_ci'
+                    )
+                ),
+            ));
 
     We recommend against MySQL's ``utf8`` character set, since it does not
     support 4-byte unicode characters, and strings containing them will be
@@ -227,7 +272,7 @@ just a simple PHP class.
 
     .. code-block:: bash
 
-        $ php app/console doctrine:generate:entity
+        $ php bin/console doctrine:generate:entity
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -396,7 +441,7 @@ the following command can generate these boilerplate methods automatically:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AppBundle/Entity/Product
+    $ php bin/console doctrine:generate:entities AppBundle/Entity/Product
 
 This command makes sure that all the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
@@ -437,10 +482,10 @@ mapping information) of a bundle or an entire namespace:
 .. code-block:: bash
 
     # generates all entities in the AppBundle
-    $ php app/console doctrine:generate:entities AppBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
     # generates all entities of bundles in the Acme namespace
-    $ php app/console doctrine:generate:entities Acme
+    $ php bin/console doctrine:generate:entities Acme
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -455,7 +500,7 @@ in your application. To do this, run:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 .. tip::
 
