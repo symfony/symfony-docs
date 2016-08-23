@@ -591,7 +591,10 @@ username
 
 **type**: ``string`` **default**: ``''``
 
-When needed, the username for the profiling storage.
+.. caution::
+
+    The ``framework.profiler.username`` setting is deprecated and will be 
+    removed as of Symfony 3.0.
 
 password
 ........
@@ -600,6 +603,11 @@ password
 
 When needed, the password for the profiling storage.
 
+.. caution::
+
+    The ``framework.profiler.password`` setting is deprecated and will be 
+    removed as of Symfony 3.0.
+
 lifetime
 ........
 
@@ -607,6 +615,11 @@ lifetime
 
 The lifetime of the profiling storage in seconds. The data will be deleted
 when the lifetime is expired.
+
+.. caution::
+
+    The ``framework.profiler.lifetime`` setting is deprecated and will be 
+    removed as of Symfony 3.0.
 
 matcher
 .......
