@@ -542,7 +542,7 @@ the closure::
         {
             parent::configureOptions($resolver);
 
-            $options->setDefault('host', function (Options $options, $previousValue) {
+            $resolver->setDefault('host', function (Options $options, $previousValue) {
                 if ('ssl' === $options['encryption']) {
                     return 'secure.example.org'
                 }
