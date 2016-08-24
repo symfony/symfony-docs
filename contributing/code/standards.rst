@@ -66,6 +66,7 @@ example containing most features described below:
             if (true === $dummy) {
                 return;
             }
+            
             if ('string' === $dummy) {
                 if ('values' === $mergedOptions['some_default']) {
                     $dummy = substr($dummy, 0, 5);
