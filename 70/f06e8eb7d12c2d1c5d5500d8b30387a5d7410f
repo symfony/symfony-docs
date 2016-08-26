@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-23T09:33:01Z
+
+Both `roles` and `role` is possible,but let's use `roles` indeed :)
+
+Status: reviewed
+👍
+
+---------------------------------------------------------------------------
+
+by asandjivy at 2016-08-23T09:42:49Z
+
+ok! i knew about ip | ips but i didn't know about role.
+Thank you :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-23T09:53:52Z
+
+@asandjivy fyi, most plural configuration options are possible in singular format as well (to support XML).
+
+---------------------------------------------------------------------------
+
+by asandjivy at 2016-08-23T13:15:39Z
+
+ok thanks :+1:
