@@ -42,9 +42,6 @@ Configuration
     * `only_exceptions`_
     * `only_master_requests`_
     * `dsn`_
-    * `username`_ (deprecated since 2.8)
-    * `password`_ (deprecated since 2.8)
-    * `lifetime`_ (deprecated since 2.8)
     * `matcher`_
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
@@ -555,41 +552,6 @@ The DSN where to store the profiling information.
 
     See :doc:`/profiler/storage` for more information about the
     profiler storage.
-
-username
-........
-
-.. caution::
-
-    The ``framework.profiler.username`` setting is deprecated since Symfony 2.8
-    and will be removed in Symfony 3.0.
-
-**type**: ``string`` **default**: ``''``
-
-password
-........
-
-.. caution::
-
-    The ``framework.profiler.password`` setting is deprecated since Symfony 2.8
-    and will be removed in Symfony 3.0.
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the password for the profiling storage.
-
-lifetime
-........
-
-.. caution::
-
-    The ``framework.profiler.lifetime`` setting is deprecated since Symfony 2.8
-    and will be removed in Symfony 3.0.
-
-**type**: ``integer`` **default**: ``86400``
-
-The lifetime of the profiling storage in seconds. The data will be deleted
-when the lifetime is expired.
 
 matcher
 .......
@@ -1487,9 +1449,6 @@ Full Default Configuration
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
-                username:             ~     # deprecated since 2.8, to be removed in 3.0.
-                password:             ~     # deprecated since 2.8, to be removed in 3.0.
-                lifetime:             86400 # deprecated since 2.8, to be removed in 3.0.
                 matcher:
                     ip:                   ~
 
