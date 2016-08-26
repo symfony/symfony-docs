@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by stof at 2016-08-22T10:20:47Z
+
+``username`` and ``password`` are gone as well
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-23T09:18:58Z
+
+👍 Thanks for updating these! We should also create another PR to add a `.. caution::` box that this options are deprecated and will be removed in Symfony 3.
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by jameshalsall at 2016-08-23T09:19:53Z
+
+I'll create another PR for the caution boxes
