@@ -131,7 +131,7 @@ Once Symfony has decided which ``access_control`` entry matches (if any),
 it then *enforces* access restrictions based on the ``roles``, ``allow_if`` and ``requires_channel``
 options:
 
-* ``role`` If the user does not have the given role(s), then access is denied
+* ``roles`` If the user does not have the given role(s), then access is denied
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown);
 
