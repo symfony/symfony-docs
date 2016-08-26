@@ -31,7 +31,7 @@ Configuration
     * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
     * :ref:`enabled <reference-csrf_protection-enabled>`
-    * `field_name`_ (deprecated as of 2.4)
+    * `field_name`_ (deprecated since 2.4)
 * `esi`_
     * :ref:`enabled <reference-esi-enabled>`
 * `fragments`_
@@ -43,9 +43,9 @@ Configuration
     * `only_exceptions`_
     * `only_master_requests`_
     * `dsn`_
-    * `username`_
-    * `password`_
-    * `lifetime`_
+    * `username`_ (deprecated since 2.8)
+    * `password`_ (deprecated since 2.8)
+    * `lifetime`_ (deprecated since 2.8)
     * `matcher`_
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
@@ -433,8 +433,8 @@ field_name
 
 .. caution::
 
-    The ``framework.csrf_protection.field_name`` setting is deprecated as
-    of Symfony 2.4, use ``framework.form.csrf_protection.field_name`` instead.
+    The ``framework.csrf_protection.field_name`` setting is deprecated since
+    Symfony 2.4, use ``framework.form.csrf_protection.field_name`` instead.
 
 **type**: ``string`` **default**: ``"_token"``
 
@@ -589,37 +589,37 @@ The DSN where to store the profiling information.
 username
 ........
 
-**type**: ``string`` **default**: ``''``
-
 .. caution::
 
-    The ``framework.profiler.username`` setting is deprecated and will be 
-    removed as of Symfony 3.0.
+    The ``framework.profiler.username`` setting is deprecated since Symfony 2.8
+    and will be removed in Symfony 3.0.
+
+**type**: ``string`` **default**: ``''``
 
 password
 ........
+
+.. caution::
+
+    The ``framework.profiler.password`` setting is deprecated since Symfony 2.8
+    and will be removed in Symfony 3.0.
 
 **type**: ``string`` **default**: ``''``
 
 When needed, the password for the profiling storage.
 
-.. caution::
-
-    The ``framework.profiler.password`` setting is deprecated and will be 
-    removed as of Symfony 3.0.
-
 lifetime
 ........
+
+.. caution::
+
+    The ``framework.profiler.lifetime`` setting is deprecated since Symfony 2.8
+    and will be removed in Symfony 3.0.
 
 **type**: ``integer`` **default**: ``86400``
 
 The lifetime of the profiling storage in seconds. The data will be deleted
 when the lifetime is expired.
-
-.. caution::
-
-    The ``framework.profiler.lifetime`` setting is deprecated and will be 
-    removed as of Symfony 3.0.
 
 matcher
 .......
@@ -1555,9 +1555,9 @@ Full Default Configuration
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
-                username:
-                password:
-                lifetime:             86400
+                username:             ~     # deprecated since 2.8, to be removed in 3.0.
+                password:             ~     # deprecated since 2.8, to be removed in 3.0.
+                lifetime:             86400 # deprecated since 2.8, to be removed in 3.0.
                 matcher:
                     ip:                   ~
 
