@@ -440,14 +440,9 @@ EventDispatcher Aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``EventDispatcher`` always passes the dispatched event, the event's
-name and a reference to itself to the listeners. This can be used in some
-advanced usages of the ``EventDispatcher`` like dispatching other events
-in listeners, event chaining or even lazy loading of more listeners into
-the dispatcher object as shown in the following examples.
-
-This can lead to some advanced applications of the ``EventDispatcher``
-including dispatching other events inside listeners, chaining events or even
-lazy loading listeners into the dispatcher object.
+name and a reference to itself to the listeners. This can lead to some advanced 
+applications of the ``EventDispatcher`` including dispatching other events inside
+listeners, chaining events or even lazy loading listeners into the dispatcher object.
 
 .. index::
    single: EventDispatcher; Dispatcher shortcuts
