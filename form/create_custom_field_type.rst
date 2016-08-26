@@ -388,14 +388,14 @@ configuration, using the field is now much easier::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('gender_code', 'gender', array(
+            $builder->add('gender_code', 'app_gender', array(
                 'placeholder' => 'Choose a gender',
             ));
         }
     }
 
 Notice that instead of instantiating a new instance, you can just refer to
-it by the alias used in your service configuration, ``gender``. Have fun!
+it by the alias used in your service configuration, ``app_gender``. Have fun!
 
 .. _`ChoiceType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/ChoiceType.php
 .. _`FieldType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/FieldType.php
