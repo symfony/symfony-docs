@@ -327,7 +327,7 @@ The Request object as a Controller Argument
 What if you need to read query parameters, grab a request header or get access
 to an uploaded file? All of that information is stored in Symfony's ``Request``
 object. To get it in your controller, just add it as an argument and
-**type-hint it with the `Request` class**::
+**type-hint it with the Request class**::
 
     use Symfony\Component\HttpFoundation\Request;
 
