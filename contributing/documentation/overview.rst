@@ -261,10 +261,10 @@ link displayed for Platform.sh service.
 Build the Documentation Locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Alternatively you can build the documentation in your own computer for testing
+Alternatively you can build the documentation on your own computer for testing
 purposes following these steps:
 
-#. Install `pip`_ as explained in the `pip installation`_ article.
+#. Install `pip`_ as explained in the `pip installation`_ article;
 
 #. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
    (depending on your system, you may need to execute this command as root user):
