@@ -64,7 +64,7 @@ current PHP SAPI:
 .. note::
 
     If you want to catch the dump output as a string, please read the
-    `advanced documentation <advanced>`_ which contains examples of it.
+    :doc:`advanced documentation </components/var_dumper/advanced>` which contains examples of it.
     You'll also learn how to change the format or redirect the output to
     wherever you want.
 
