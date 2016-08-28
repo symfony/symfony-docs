@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-25T15:34:16Z
+
+Thanks for the typo fix, that's correct!
+
+However, in reStructured Text (the markup language used), you can't nest inline markup. So your code doesn't work either (see also the [platform.sh build of this PR](http://pr-6913-6qmocelev2lwe.eu.platform.sh/controller.html#the-request-object-as-a-controller-argument)). Can you please update this PR (by adding a new commit to the patch-4 branch) to remove all markup around `Request` (so just making it bold, no literals or API references)? Thanks! (if you don't have the time, just comment and we'll do it during the merge)
+
+status: needs work
+
+---------------------------------------------------------------------------
+
+by rendler-denis at 2016-08-26T08:26:17Z
+
+Hello, @wouterj! Thanks for the heads-up. I wasn't aware of this limitation and I should have checked the deployment results. It is a good lesson for the future PRs.
+I updated the mark-up as you suggested.
+Thanks, Denis!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-26T08:46:40Z
+
+👍
+status: reviewed
+
+Thanks for your quick reactions! (if you have some time, please remove the single backticks around Request as well)
+
+---------------------------------------------------------------------------
+
+by rendler-denis at 2016-08-26T08:55:03Z
+
+@wouterj, changes done! :)
