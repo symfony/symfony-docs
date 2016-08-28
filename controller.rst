@@ -93,7 +93,7 @@ This controller is pretty straightforward:
 
 * *line 12*: Each action method in a controller class is suffixed with ``Action``
   (again, this isn't *required*, but some shortcuts rely on this). This method
-  is allowed to have a ``$name`` argument thanks to the ``{name}``
+  is allowed to have a ``$max`` argument thanks to the ``{max}``
   :doc:`wildcard in the route </routing>`.
 
 * *line 16*: The controller creates and returns a ``Response`` object.
@@ -327,7 +327,7 @@ The Request object as a Controller Argument
 What if you need to read query parameters, grab a request header or get access
 to an uploaded file? All of that information is stored in Symfony's ``Request``
 object. To get it in your controller, just add it as an argument and
-**type-hint it with the ``Request`` class**::
+**type-hint it with the Request class**::
 
     use Symfony\Component\HttpFoundation\Request;
 
