@@ -244,7 +244,7 @@ key:
         $container->setParameter('locale', 'en');
 
         $container->loadFromExtension('framework', array(
-            'default_locale' => '%en%',
+            'default_locale' => '%locale%',
             // ...
         ));
 
