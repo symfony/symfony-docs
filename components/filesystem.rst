@@ -245,8 +245,6 @@ complete new file (but never a partially-written file)::
 
 The ``file.txt`` file contains ``Hello World`` now.
 
-A desired file mode can be passed as the third argument.
-
 Error Handling
 --------------
 
