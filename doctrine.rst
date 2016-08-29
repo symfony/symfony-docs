@@ -557,8 +557,9 @@ Take a look at the previous example in more detail:
 
 .. note::
 
-    If ``flush()`` fails, an exception is thrown, which you can catch by wrapping
-    the ``flush()`` method in a ``try...catch`` block.
+    If the ``flush()`` call fails, a ``Doctrine\ORM\ORMException`` exception
+    is thrown, which you can catch by wrapping the ``flush()`` method in a
+    ``try...catch`` block.
 
 Whether creating or updating objects, the workflow is always the same. In
 the next section, you'll see how Doctrine is smart enough to automatically
