@@ -132,7 +132,7 @@ make sure the ``FormRegistry`` uses the created instance::
         protected function setUp()
         {
             // mock any dependencies
-            $this->entityManager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+            $this->entityManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
 
             parent::setUp();
         }
