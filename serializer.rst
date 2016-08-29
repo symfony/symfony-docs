@@ -226,6 +226,41 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
             ),
         ));
 
+Enabling a name converter
+-------------------------
+
+The use of a :ref:`name converter <component-serializer-converting-property-names-when-serializing-and-deserializing>` service can be defined in the configuration using the `name_converter` serializer parameter.
+
+The built-in :ref:`CamelCase to snake_case name converter <using-camelized-method-names-for-underscored-attributes>` can be enabled by using the `serializer.name_converter.camel_case_to_snake_case` value:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            serializer:
+                name_converter: 'serializer.name_converter.camel_case_to_snake_case'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <!-- ... -->
+            <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'serializer' => array(
+                'name_converter' => 'serializer.name_converter.camel_case_to_snake_case,
+            ),
+        ));
+
 Going Further with the Serializer Component
 -------------------------------------------
 
