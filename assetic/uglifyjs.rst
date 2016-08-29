@@ -26,13 +26,13 @@ The global installation method makes all your projects use the very same UglifyJ
 version, which simplifies its maintenance. Open your command console and execute
 the following command (you may need to run it as a root user):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ npm install -g uglify-js
 
 Now you can execute the global ``uglifyjs`` command anywhere on your system:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ uglifyjs --help
 
@@ -43,7 +43,7 @@ It's also possible to install UglifyJS inside your project only, which is useful
 when your project requires a specific UglifyJS version. To do this, install it
 without the ``-g`` option and specify the path where to put the module:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd /path/to/your/symfony/project
     $ npm install uglify-js --prefix app/Resources
@@ -55,7 +55,7 @@ an npm `package.json`_ file and specify your dependencies there.
 Now you can execute the ``uglifyjs`` command that lives in the ``node_modules``
 directory:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ "./app/Resources/node_modules/.bin/uglifyjs" --help
 
@@ -113,7 +113,7 @@ your JavaScripts:
     The path where UglifyJS is installed may vary depending on your system.
     To find out where npm stores the ``bin`` folder, execute the following command:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ npm bin -g
 
@@ -249,7 +249,7 @@ Install, Configure and Use UglifyCSS
 The usage of UglifyCSS works the same way as UglifyJS. First, make sure
 the node package is installed:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # global installation
     $ npm install -g uglifycss

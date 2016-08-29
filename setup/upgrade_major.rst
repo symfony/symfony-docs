@@ -67,7 +67,7 @@ you a nice summary of all deprecation notices at the end of the test report.
 
 All you need to do is install the PHPUnit bridge:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require --dev symfony/phpunit-bridge
 
@@ -134,7 +134,7 @@ Composer by modifying your ``composer.json`` file:
 
 Next, use Composer to download new versions of the libraries:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update symfony/symfony
 

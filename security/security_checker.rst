@@ -9,7 +9,7 @@ contain security vulnerabilities. That's why Symfony includes a command called
 ``security:check`` that checks your ``composer.lock`` file to find any known
 security vulnerability in your installed dependencies:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console security:check
 
@@ -29,7 +29,7 @@ FriendsOfPHP organization.
     To enable the ``security:check`` command, make sure the
     `SensioDistributionBundle`_ is installed.
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ composer require 'sensio/distribution-bundle'
 

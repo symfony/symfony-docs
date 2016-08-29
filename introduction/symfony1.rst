@@ -92,7 +92,7 @@ directory. This allows you to keep assets organized inside your bundle, but
 still make them available to the public. To make sure that all bundles are
 available, run the following command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console assets:install web
 
@@ -187,14 +187,14 @@ Using the Console
 In symfony1, the console is in the root directory of your project and is
 called ``symfony``:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php symfony
 
 In Symfony2, the console is now in the app sub-directory and is called
 ``console``:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console
 

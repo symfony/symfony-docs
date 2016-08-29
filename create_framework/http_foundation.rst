@@ -112,7 +112,7 @@ layer.
 
 To use this component, add it as a dependency of the project:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/http-foundation
 

@@ -441,7 +441,7 @@ content:
 Next, `download Composer`_ and then run the following command, which will download Symfony
 into a ``vendor/`` directory:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer install
 

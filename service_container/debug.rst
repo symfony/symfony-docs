@@ -8,7 +8,7 @@ How to Debug the Service Container & List Services
 You can find out what services are registered with the container using the
 console. To show all services and the class for each service, run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console debug:container
 
@@ -17,7 +17,7 @@ console. To show all services and the class for each service, run:
 
 By default, only public services are shown, but you can also view private services:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console debug:container --show-private
 
@@ -31,6 +31,6 @@ By default, only public services are shown, but you can also view private servic
 You can get more detailed information about a particular service by specifying
 its id:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console debug:container app.mailer
