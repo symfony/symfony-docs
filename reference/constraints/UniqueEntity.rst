@@ -132,7 +132,11 @@ message
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed when this constraint fails.
+The message that's displayed when this constraint fails. When using multiple
+fields, the ``{{ vallue }}`` parameter only contains the value of the first
+wrong field. Therefore, you cannot define a custom message that displays all
+the wrong values (e.g. the following won't work:
+``This {{ name }} name and {{ email }} email combination is in use. Change either of them``)
 
 em
 ~~
