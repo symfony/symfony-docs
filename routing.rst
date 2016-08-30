@@ -591,10 +591,6 @@ sees our annotation routes:
 For more details on loading routes, including how to prefix the paths of loaded routes,
 see :doc:`/routing/external_resources`.
 
-The path will *not*, however, match simply ``/blog``. That's because,
-by default, all placeholders are required. This can be changed by adding
-a placeholder value to the ``defaults`` array.
-
 .. index::
    single: Routing; Generating URLs
 
