@@ -3,9 +3,9 @@ by_reference
 
 **type**: ``boolean`` **default**: ``true``
 
-In most cases, if you have a ``name`` field, then you expect ``setName()``
-to be called on the underlying object. In some cases, however, ``setName()``
-may *not* be called. Setting ``by_reference=false`` ensures that the setter is
+In most cases, if you have an ``author`` field, then you expect ``setAuthor()``
+to be called on the underlying object. In some cases, however, ``setAuthor()``
+may *not* be called. Setting ``by_reference`` to ``false`` ensures that the setter is
 called in all cases.
 
 To explain this further, here's a simple example::
