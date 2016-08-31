@@ -136,10 +136,10 @@ The message that's displayed when this constraint fails. This message is always
 mapped to the first field causing the violation, even when using multiple fields
 in the constraint.
 
-When using a custom message, you can include the ``{{ value }}`` placeholder to
-display a string representation of the invalid entity. If the entity doesn't
-define the ``__toString()`` method, the following generic value will be used:
-*"Object of class __CLASS__ identified by <comma separated IDs>"*
+Messages can include the ``{{ value }}`` placeholder to display a string
+representation of the invalid entity. If the entity doesn't define the
+``__toString()`` method, the following generic value will be used: *"Object of
+class __CLASS__ identified by <comma separated IDs>"*
 
 em
 ~~
