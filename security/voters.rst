@@ -96,7 +96,7 @@ decides this using whatever logic you want.
 
 .. tip::
 
-    The ``denyAccessUnlessGranted()`` function and the ``isGranted()`` function
+    The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions
     are both just shortcuts of the Controller to call ``isGranted()`` on the ``security.authorization_checker``
     service.
 
