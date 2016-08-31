@@ -151,7 +151,6 @@ Listener Class Name                                                             
 ===================================================================================  ========
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`                  0
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`             0
-:class:`Symfony\\Bundle\\SecurityBundle\\EventListener\\ResponseListener`            0
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`             -100
 :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`        -128
 :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`  -128
