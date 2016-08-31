@@ -195,6 +195,18 @@ to hold the kernel. Now it looks like this::
             // load the annotation routes
             $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation');
         }
+
+        // optional, to use the standard Symfony cache directory
+        public function getCacheDir()
+        {
+            return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        }
+
+        // optional, to use the standard Symfony logs directory
+        public function getLogDir()
+        {
+            return dirname(__DIR__).'/var/logs';
+        }
     }
 
 Unlike the previous kernel, this loads an external ``app/config/config.yml`` file,
@@ -294,9 +306,7 @@ this:
     your-project/
     ├─ app/
     |  ├─ AppKernel.php
-    │  ├─ cache/
     │  ├─ config/
-    │  ├─ logs/
     │  └─ Resources
     |     └─ views
     |        ├─ base.html.twig
@@ -306,6 +316,9 @@ this:
     │  └─ App
     |     └─ Controller
     |        └─ MicroController.php
+    ├─ var/
+    |  ├─ cache/
+    │  └─ logs/
     ├─ vendor/
     │  └─ ...
     ├─ web/
