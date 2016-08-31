@@ -533,10 +533,10 @@ above). This gives us a "fresh" User object.
 But Symfony also uses the ``username``, ``salt``, and ``password`` to verify
 that the User has not changed between requests (it also calls your ``AdvancedUserInterface``
 methods if you implement it). Failing to serialize these may cause you to
-be logged out on each request. If your User implements the
+be logged out on each request. If your user implements the
 :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
 then instead of these properties being checked, your :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo` method
-is simply called, and you can check whatever properties you want. Unless
+is called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
 
