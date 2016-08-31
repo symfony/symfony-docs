@@ -12,15 +12,15 @@ application even faster.
 .. index::
    single: Performance; Byte code cache
 
-Use a Byte Code Cache (e.g. APC)
---------------------------------
+Use a Byte Code Cache (e.g. OPcache)
+------------------------------------
 
 One of the best (and easiest) things that you should do to improve your performance
 is to use a "byte code cache". The idea of a byte code cache is to remove
 the need to constantly recompile the PHP source code. There are a number of
 `byte code caches`_ available, some of which are open source. As of PHP 5.5,
 PHP comes with `OPcache`_ built-in. For older versions, the most widely used
-byte code cache is probably `APC`_
+byte code cache is `APC`_.
 
 Using a byte code cache really has no downside, and Symfony has been architected
 to perform really well in this type of environment.
@@ -43,6 +43,25 @@ your ``php.ini`` configuration.
 .. index::
    single: Performance; Autoloader
 
+Configure the PHP realpath cache
+--------------------------------
+
+PHP uses an internal cache to store the result of mapping file paths to their
+real and absolute file system paths. This increases the performance for
+applications like Symfony that open many PHP files, specially on Windows
+systems.
+
+By default PHP sets a default ``realpath_cache_size`` of ``16K`` which is too
+low for Symfony. Consider updating this value at least to ``4096K``. In
+addition, cached paths are only stored for ``120`` seconds. Consider updating
+this value too using the ``realpath_cache_ttl`` option:
+
+.. code-block:: ini
+
+  ; php.ini
+  realpath_cache_size=4096K
+  realpath_cache_ttl=600
+
 Use Composer's Class Map Functionality
 --------------------------------------
 
@@ -52,18 +71,25 @@ automatically find any new classes that you've placed in the registered
 directories.
 
 Unfortunately, this comes at a cost, as the loader iterates over all configured
-namespaces to find a particular file, making ``file_exists`` calls until it
+namespaces to find a particular file, making ``file_exists()`` calls until it
 finally finds the file it's looking for.
 
-The simplest solution is to tell Composer to build a "class map" (i.e. a
-big array of the locations of all the classes). This can be done from the
-command line, and might become part of your deploy process:
+The simplest solution is to tell Composer to build an optimized "class map",
+which is a big array of the locations of all the classes and it's stored
+in ``vendor/composer/autoload_classmap.php``.
+
+The class map can be generated from the command line, and might become part of
+your deploy process:
 
 .. code-block:: bash
 
-    $ composer dump-autoload --optimize
+    $ composer dump-autoload --optimize --no-dev --classmap-authoritative
 
-Internally, this builds the big class map array in ``vendor/composer/autoload_classmap.php``.
+The ``--optimize`` option dumps every PSR-0 and PSR-4 compatible class used in
+your application. The ``--no-dev`` option excludes the classes that are only
+needed in the development environment (e.g. tests). The ``--classmap-authoritative``
+option prevents Composer from scanning the file system for classes that are not
+found in the class map.
 
 Caching the Autoloader with APC
 -------------------------------
