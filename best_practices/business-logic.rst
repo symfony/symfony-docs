@@ -279,7 +279,7 @@ Data Fixtures
 As fixtures support is not enabled by default in Symfony, you should execute
 the following command to install the Doctrine fixtures bundle:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require "doctrine/doctrine-fixtures-bundle"
 
@@ -316,7 +316,7 @@ Assuming you have at least one fixtures class and that the database access
 is configured properly, you can load your fixtures by executing the following
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:fixtures:load
 

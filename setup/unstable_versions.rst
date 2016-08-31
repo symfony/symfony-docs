@@ -12,7 +12,7 @@ a new project to test its features. First, :doc:`install the Composer </setup/co
 package manager. Then, open a command console, enter your project's directory and
 execute the following command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=dev
 
@@ -23,7 +23,7 @@ in the ``my_project/`` directory and based on the most recent code found in the
 If you want to test a beta version, use ``beta`` as the value of the ``stability``
 option:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=beta
 
@@ -48,7 +48,7 @@ dependency as follows:
 Finally, open a command console, enter your project directory and execute the
 following command to update your project dependencies:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update symfony/symfony
 
@@ -67,7 +67,7 @@ Symfony version has deprecated some of its features.
     any issue in your application and allows you to test the new version with
     total confidence:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony

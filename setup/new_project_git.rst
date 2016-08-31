@@ -26,13 +26,13 @@ Once your project is running, just follow these simple steps:
 
 #. Initialize your Git repository:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ git init
 
 #. Add all of the initial files to Git:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ git add .
 
@@ -55,7 +55,7 @@ Once your project is running, just follow these simple steps:
 
 #. Create an initial commit with your started project:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ git commit -m "Initial commit"
 

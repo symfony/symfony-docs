@@ -162,7 +162,7 @@ for each entity manager.
 
 When working with multiple connections to create your databases:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # Play only with "default" connection
     $ php app/console doctrine:database:create
@@ -172,7 +172,7 @@ When working with multiple connections to create your databases:
 
 When working with multiple entity managers to update your schema:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # Play only with "default" mappings
     $ php app/console doctrine:schema:update --force

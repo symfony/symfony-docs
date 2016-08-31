@@ -143,13 +143,13 @@ To make things shorter, some of the getter and setter methods aren't shown.
 But you can :ref:`generate <doctrine-generating-getters-and-setters>` these
 by running:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:generate:entities AppBundle/Entity/User
 
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:schema:update --force
 
@@ -305,7 +305,7 @@ for details.
 Below is an export of the ``app_users`` table from MySQL with user ``admin``
 and password ``admin`` (which has been encoded).
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ mysql> SELECT * FROM app_users;
     +----+----------+--------------------------------------------------------------+--------------------+-----------+

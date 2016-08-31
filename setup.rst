@@ -14,10 +14,14 @@ Symfony provides a dedicated application called the **Symfony Installer** to eas
 the creation of Symfony applications. This installer is a PHP 5.4 compatible
 executable that needs to be installed on your system only once:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # Linux and macOS systems
     $ sudo mkdir -p /usr/local/bin
+    some
+    output
+
+    stuff
     $ sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
     $ sudo chmod a+x /usr/local/bin/symfony
 
@@ -31,7 +35,7 @@ executable that needs to be installed on your system only once:
     environment variable to create the global command or move it to any other
     directory convenient for you:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         # for example, if WAMP is used ...
         c:\> move symfony c:\wamp\bin\php
@@ -47,7 +51,7 @@ executable that needs to be installed on your system only once:
 Once the Symfony Installer is installed, create your first Symfony application
 with the ``new`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ symfony new my_project_name
 
@@ -68,7 +72,7 @@ Basing your Project on a Specific Symfony Version
 In case your project needs to be based on a specific Symfony version, use the
 optional second argument of the ``new`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # use the most recent version in any Symfony branch
     $ symfony new my_project_name 2.8
@@ -103,14 +107,14 @@ If you don't have Composer installed in your computer, start by
 ``create-project`` command to create a new Symfony application based on its
 latest stable version:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer create-project symfony/framework-standard-edition my_project_name
 
 You can also install any other Symfony version by passing a second argument to
 the ``create-project`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer create-project symfony/framework-standard-edition my_project_name "2.7.*"
 
@@ -127,7 +131,7 @@ Symfony leverages the internal PHP web server (available since PHP 5.4) to run
 applications while developing them. Therefore, running a Symfony application is
 a matter of browsing to the project directory and executing this command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd my_project_name/
     $ php app/console server:run
@@ -186,7 +190,7 @@ security vulnerabilities. Execute the ``update`` Composer command to update them
 all at once (this can take up to several minutes to complete depending on the
 complexity of your project):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd my_project_name/
     $ composer update
@@ -196,7 +200,7 @@ complexity of your project):
     Symfony provides a command to check whether your project's dependencies
     contain any known security vulnerability:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php app/console security:check
 
@@ -241,7 +245,7 @@ It's recommended to not submit some files (:ref:`parameters.yml <config-paramete
 and directories (``vendor/``, cache, logs) to the repository, so you'll have to do
 the following when installing an existing Symfony application:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # clone the project to download its contents
     $ cd projects/

@@ -60,14 +60,14 @@ the `symfony/phpunit-bridge package`_ and then run the test suite.
 
 First, install the component as a ``dev`` dependency of your bundle:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require --dev symfony/phpunit-bridge
 
 Then, run your test suite and look for the deprecation list displayed after the
 PHPUnit test report:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ phpunit
 
@@ -115,7 +115,7 @@ Composer.
 If your operating system supports symbolic links, just point the appropriate
 vendor directory to your local bundle root directory:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ ln -s /path/to/your/local/bundle/ vendor/you-vendor-name/your-bundle-name
 
