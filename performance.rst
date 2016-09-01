@@ -51,10 +51,10 @@ real and absolute file system paths. This increases the performance for
 applications like Symfony that open many PHP files, specially on Windows
 systems.
 
-By default PHP sets a default ``realpath_cache_size`` of ``16K`` which is too
-low for Symfony. Consider updating this value at least to ``4096K``. In
-addition, cached paths are only stored for ``120`` seconds. Consider updating
-this value too using the ``realpath_cache_ttl`` option in your ``php.ini`` file:
+By default PHP sets a ``realpath_cache_size`` of ``16K`` which is too low for
+Symfony. Consider updating this value at least to ``4096K``. In addition, cached
+paths are only stored for ``120`` seconds by default. Consider updating this
+value too using the ``realpath_cache_ttl`` option in your ``php.ini`` file:
 
 .. code-block:: ini
 
