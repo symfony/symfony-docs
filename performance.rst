@@ -54,13 +54,13 @@ systems.
 By default PHP sets a default ``realpath_cache_size`` of ``16K`` which is too
 low for Symfony. Consider updating this value at least to ``4096K``. In
 addition, cached paths are only stored for ``120`` seconds. Consider updating
-this value too using the ``realpath_cache_ttl`` option:
+this value too using the ``realpath_cache_ttl`` option in your ``php.ini`` file:
 
 .. code-block:: ini
 
-  ; php.ini
-  realpath_cache_size=4096K
-  realpath_cache_ttl=600
+    ; php.ini
+    realpath_cache_size=4096K
+    realpath_cache_ttl=600
 
 Use Composer's Class Map Functionality
 --------------------------------------
