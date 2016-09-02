@@ -35,6 +35,13 @@ number of units, and advance the progress as the command executes::
     // ensure that the progress bar is at 100%
     $progress->finish();
 
+.. tip::
+
+    You can also regress the progress bar (i.e. step backwards) by using the
+    ``$progress->regress()`` method. Like the ``advance()`` method you can also
+    pass a unit value to ``regress()`` to control how many steps the progress is
+    regressed by.
+
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
