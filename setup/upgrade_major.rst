@@ -5,9 +5,9 @@ Upgrading a Major Version (e.g. 2.7.0 to 3.0.0)
 ===============================================
 
 Every two years, Symfony releases a new major version release (the first number
-changes). These releases are the trickiest to upgrade, as they are allowed break
-backwards compatibility. However, Symfony makes this upgrade process as smooth
-as possible.
+changes). These releases are the trickiest to upgrade, as they are allowed to
+break backwards compatibility. However, Symfony makes this upgrade process as
+smooth as possible.
 
 This means that you can update most of your code before the major release is
 actually released. This is called making your code *future compatible*.
