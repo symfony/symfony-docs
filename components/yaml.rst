@@ -132,11 +132,25 @@ Objects for Mappings
 
 Yaml :ref:`mappings <yaml-format-collections>` are basically associative
 arrays. You can instruct the parser to return mappings as objects (i.e.
-``\stdClass`` instances) by setting the fourth argument to ``true``::
+``\stdClass`` instances) by passing the flag ``PARSE_OBJECT_FOR_MAP`` as second argument::
 
-    $object = Yaml::parse('{"foo": "bar"}', false, false, true);
+    $object = Yaml::parse('{"foo": "bar"}', YAML::PARSE_OBJECT_FOR_MAP);
     echo get_class($object); // stdClass
     echo $object->foo; // bar
+
+Parsing DateTime Objects
+........................
+
+If the content of a YAML string can be interpreted as a valid DateTime value, you
+can enforce to transform those strings into ``\DateTime`` PHP objects by using the
+``PARSE_DATETIME`` flag::
+
+    $date = Yaml::parse('2001-12-15 21:59:43.10 -5', Yaml::PARSE_DATETIME);
+    // $date = DateTime {
+    //     "date": "2001-12-15 21:59:43.100000"
+    //      "timezone_type": 1
+    //      "timezone": "-05:00"
+    //  }
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
@@ -214,6 +228,42 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
+Multi-line strings as scalar blocks
+...................................
+
+To dump multi-line strings including ``\n`` character to a scalar block
+in YAML, use the ``DUMP_MULTI_LINE_LITERAL_BLOCK`` flag::
+
+    $data = ['content' => "Lorem ipsum dolor sit amet\nconsectetur adipisicing\nelit sed do eiusmod"];
+    $dumpedData = Yaml::dump($data, 2, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+
+.. code-block:: yaml
+
+    content: |
+        Lorem ipsum dolor sit amet
+        consectetur adipisicing
+        elit sed do eiusmod
+
+Dump Objects as YAML Maps
+.........................
+
+You can easily dump PHP Objects as YAML map by passing ``DUMP_OBJECT_AS_MAP`` flag::
+
+    $object = new \stdClass();
+    $object->foo = 'foo';
+    $object->bar = new \StdClass();
+    Yaml::dump($object, 0, 4, Yaml::DUMP_OBJECT_AS_MAP);
+
+.. code-block:: yaml
+
+    { foo: foo, bar: {  } }
+
+.. tip::
+
+    You can combine flags with binary operators:
+    ``Yaml::DUMP_OBJECT_AS_MAP | YAML::DUMP_MULTI_LINE_LITERAL_BLOCK``
+
+
 Invalid Types and Object Serialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -224,20 +274,20 @@ Instead of encoding as ``null`` you can choose to throw an exception if an inval
 type is encountered in either the dumper or parser as follows::
 
     // throw an exception if a resource or object is encountered
-    Yaml::dump($data, 2, 4, true);
+    Yaml::dump($data, 2, 4, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE);
 
     // throw an exception if an encoded object is found in the YAML string
-    Yaml::parse($yaml, true);
+    Yaml::parse($yaml, Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE);
 
-However, you can activate object support using the next argument::
+However, you can activate object support using the ``DUMP_OBJECT`` and ``PARSE_OBJECT`` flags::
 
     $object = new \stdClass();
     $object->foo = 'bar';
 
-    $dumped = Yaml::dump($object, 2, 4, false, true);
+    $dumped = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT);
     // !!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
 
-    $parsed = Yaml::parse($dumped, false, true);
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT);
     var_dump(is_object($parsed)); // true
     echo $parsed->foo; // bar
 
