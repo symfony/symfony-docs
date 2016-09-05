@@ -18,7 +18,7 @@ Before Running the Tests
 
 To run the Symfony test suite, install the external dependencies used during the
 tests, such as Doctrine, Twig and Monolog. To do so,
-:doc:`install Composer </cookbook/composer>` and execute the following:
+:doc:`install Composer </setup/composer>` and execute the following:
 
 .. code-block:: bash
 

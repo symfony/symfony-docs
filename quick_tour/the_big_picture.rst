@@ -14,8 +14,7 @@ Installing Symfony
 ------------------
 
 Before continuing reading this chapter, make sure to have installed both PHP
-and Symfony as explained in the :doc:`installation chapter </book/installation>`
-of the Symfony book.
+and Symfony as explained in the :doc:`/setup` article.
 
 Understanding the Fundamentals
 ------------------------------
@@ -128,10 +127,9 @@ of the ``Default`` controller when the user browses the ``/`` path of the applic
 .. tip::
 
     In addition to PHP annotations, routes can be configured in YAML, XML
-    or PHP files, as explained in
-    :doc:`the Routing chapter of the Symfony book </book/routing>`. This
-    flexibility is one of the main features of Symfony, a framework that
-    never imposes a particular configuration format on you.
+    or PHP files, as explained in the :doc:`/routing` guide. This flexibility
+    is one of the main features of Symfony, a framework that never imposes a
+    particular configuration format on you.
 
 Templates
 ~~~~~~~~~
@@ -175,15 +173,17 @@ look at the bottom of any Symfony rendered page. You should notice a small
 bar with the Symfony logo. This is the "web debug toolbar" and it is a Symfony
 developer's best friend!
 
-.. image:: /images/quick_tour/web_debug_toolbar.png
+.. image:: /_images/quick_tour/web_debug_toolbar.png
    :align: center
+   :class: with-browser
 
 But what you see initially is only the tip of the iceberg; click on any
 of the bar sections to open the profiler and get much more detailed information
 about the request, the query parameters, security details and database queries:
 
-.. image:: /images/quick_tour/profiler.png
+.. image:: /_images/quick_tour/profiler.png
    :align: center
+   :class: with-browser
 
 This tool provides so much internal information about your application that
 you may be worried about your visitors accessing sensible information. Symfony
@@ -240,7 +240,8 @@ In this example, the ``config_dev.yml`` configuration file imports the common
 with its own options.
 
 For more details on environments, see
-:ref:`the "Environments" section <page-creation-environments>` of the book.
+:ref:`the "Environments" section <page-creation-environments>` of the
+Configuration guide.
 
 Final Thoughts
 --------------

@@ -225,7 +225,7 @@ You can then use the following configuration to invoke this validator:
     The Callback constraint does *not* support global callback functions
     nor is it possible to specify a global function or a service method
     as callback. To validate using a service, you should
-    :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
+    :doc:`create a custom validation constraint </validation/custom_constraint>`
     and add that new constraint to your class.
 
 When configuring the constraint via PHP, you can also pass a closure to the

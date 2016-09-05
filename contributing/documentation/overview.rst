@@ -38,7 +38,9 @@ while you're reading the Symfony documentation.
 **Step 1.** Click on the **edit this page** button on the upper right corner
 and you'll be redirected to GitHub:
 
-.. image:: /images/contributing/docs-github-edit-page.png
+.. image:: /_images/contributing/docs-github-edit-page.png
+   :align: center
+   :class: with-browser
 
 **Step 2.** Edit the contents, describe your changes and click on the
 **Propose file change** button.
@@ -47,7 +49,9 @@ and you'll be redirected to GitHub:
 (forking the repository first if this is your first contribution) and it will
 also display a preview of your changes:
 
-.. image:: /images/contributing/docs-github-create-pr.png
+.. image:: /_images/contributing/docs-github-create-pr.png
+   :align: center
+   :class: with-browser
 
 If everything is correct, click on the **Create pull request** button.
 
@@ -71,8 +75,8 @@ In this section, you'll learn how to contribute to the Symfony documentation for
 the first time. The next section will explain the shorter process you'll follow
 in the future for every contribution after your first one.
 
-Let's imagine that you want to improve the installation chapter of the Symfony
-book. In order to make your changes, follow these steps:
+Let's imagine that you want to improve the Setup guide. In order to make your
+changes, follow these steps:
 
 **Step 1.** Go to the official Symfony documentation repository located at
 `github.com/symfony/symfony-docs`_ and click on the **Fork** button to `fork the
@@ -140,8 +144,8 @@ even remove any content and do your best to comply with the
 .. code-block:: bash
 
     # if the modified content existed before
-    $ git add book/installation.rst
-    $ git commit book/installation.rst
+    $ git add setup.rst
+    $ git commit setup.rst
 
 **Step 6.** **Push** the changes to your forked repository:
 
@@ -161,7 +165,7 @@ Then, click on the big **New pull request** button. As GitHub cannot guess the
 exact changes that you want to propose, select the appropriate branches where
 changes should be applied:
 
-.. image:: /images/contributing/docs-pull-request-change-base.png
+.. image:: /_images/contributing/docs-pull-request-change-base.png
    :align: center
 
 In this example, the **base fork** should be ``symfony/symfony-docs`` and
@@ -241,7 +245,7 @@ Every GitHub Pull Request is automatically built and deployed by `Platform.sh`_
 on a single environment that you can access on your browser to review your
 changes.
 
-.. image:: /images/contributing/docs-pull-request-platformsh.png
+.. image:: /_images/contributing/docs-pull-request-platformsh.png
    :align: center
    :alt:   Platform.sh Pull Request Deployment
 
@@ -253,6 +257,33 @@ link displayed for Platform.sh service.
 
     Only Pull Requests to maintained branches are automatically built by
     Platform.sh. Check the `roadmap`_ for maintained branches.
+
+Build the Documentation Locally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Alternatively you can build the documentation on your own computer for testing
+purposes following these steps:
+
+#. Install `pip`_ as explained in the `pip installation`_ article;
+
+#. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
+   (depending on your system, you may need to execute this command as root user):
+
+   .. code-block:: bash
+
+        $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
+
+#. Run the following command to build the documentation in HTML format:
+
+   .. code-block:: bash
+
+       # Linux and macOS
+       $ ./_build/make html
+
+       # Windows
+       $ _build\make html
+
+The generated documentation is available in the ``_build/html`` directory.
 
 Frequently Asked Questions
 --------------------------
@@ -312,3 +343,7 @@ definitely don't want you to waste your time!
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`Platform.sh`: https://platform.sh
 .. _`roadmap`: https://symfony.com/roadmap
+.. _`pip`: https://pip.pypa.io/en/stable/
+.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
+.. _`Sphinx`: http://sphinx-doc.org/
+.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php

@@ -27,7 +27,7 @@ tutorial and the `reStructuredText Reference`_.
 Sphinx
 ------
 
-Sphinx is a build system that provides tools to create documentation from
+Sphinx_ is a build system that provides tools to create documentation from
 reStructuredText documents. As such, it adds new directives and interpreted text
 roles to the standard reST markup. Read more about the `Sphinx Markup Constructs`_.
 
@@ -120,18 +120,18 @@ The page name should not include the file extension (``.rst``). For example:
 
 .. code-block:: rst
 
-    :doc:`/book/controller`
+    :doc:`/controller`
 
-    :doc:`/components/event_dispatcher/introduction`
+    :doc:`/components/event_dispatcher`
 
-    :doc:`/cookbook/configuration/environments`
+    :doc:`/configuration/environments`
 
 The title of the linked page will be automatically used as the text of the link.
 If you want to modify that title, use this alternative syntax:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email </cookbook/email/spool>`
+    :doc:`Spooling Email </email/spool>`
 
 .. note::
 
@@ -143,7 +143,7 @@ If you want to modify that title, use this alternative syntax:
 
         :doc:`controller`
 
-        :doc:`event_dispatcher/introduction`
+        :doc:`event_dispatcher`
 
         :doc:`environments`
 
@@ -197,20 +197,6 @@ At this point, all the ``versionadded`` tags for Symfony versions that have
 reached end-of-maintenance will be removed. For example, if Symfony 2.5 were
 released today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
 tags would be removed from the new ``2.5`` branch.
-
-Testing Documentation
-~~~~~~~~~~~~~~~~~~~~~
-
-When submitting a new content to the documentation repository or when changing
-any existing resource, an automatic process will check if your documentation is
-free of syntax errors and is ready to be reviewed.
-
-Nevertheless, if you prefer to do this check locally on your own machine before
-submitting your documentation, follow these steps:
-
-* Install Sphinx_;
-* Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
-* Run ``make html`` and view the generated HTML in the ``_build/html`` directory.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/

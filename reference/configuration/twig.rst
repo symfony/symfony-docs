@@ -64,7 +64,7 @@ TwigBundle Configuration ("twig")
 
             <twig:config
                 auto-reload="%kernel.debug%"
-                autoescape="true"
+                autoescape="filename"
                 base-template-class="Twig_Template"
                 cache="%kernel.cache_dir%/twig"
                 charset="%kernel.charset%"
@@ -95,7 +95,7 @@ TwigBundle Configuration ("twig")
                  'pi'  => 3.14,
              ),
              'auto_reload'          => '%kernel.debug%',
-             'autoescape'           => true,
+             'autoescape'           => 'filename',
              'base_template_class'  => 'Twig_Template',
              'cache'                => '%kernel.cache_dir%/twig',
              'charset'              => '%kernel.charset%',
@@ -131,8 +131,7 @@ autoescape
 
 **type**: ``boolean`` or ``string`` **default**: ``'filename'``
 
-If set to ``true``, all template contents are escaped for HTML. If set to
-``false``, automatic escaping is disabled (you can still escape each content
+If set to ``false``, automatic escaping is disabled (you can still escape each content
 individually in the templates).
 
 .. caution::
@@ -225,7 +224,7 @@ This is the controller that is activated after an exception is thrown anywhere
 in your application. The default controller
 (:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`)
 is what's responsible for rendering specific templates under different error
-conditions (see :doc:`/cookbook/controller/error_pages`). Modifying this
+conditions (see :doc:`/controller/error_pages`). Modifying this
 option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
 you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).

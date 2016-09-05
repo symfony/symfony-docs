@@ -45,7 +45,7 @@ transport
 The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
-* gmail (see :doc:`/cookbook/email/gmail`)
+* gmail (see :doc:`/email/gmail`)
 * mail
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)
@@ -98,7 +98,7 @@ values are ``plain``, ``login``, ``cram-md5``, or ``null``.
 spool
 ~~~~~
 
-For details on email spooling, see :doc:`/cookbook/email/spool`.
+For details on email spooling, see :doc:`/email/spool`.
 
 type
 ....
@@ -165,8 +165,9 @@ delivery_whitelist
 
 Used in combination with ``delivery_address``. If set, emails matching any
 of these patterns will be delivered like normal, as well as being sent to
-``delivery_address``. For details, see
-:ref:`the cookbook entry <sending-to-a-specified-address-but-with-exceptions>`.
+``delivery_address``. For details, see the
+:ref:`How to Work with Emails during Development <sending-to-a-specified-address-but-with-exceptions>`
+article.
 
 disable_delivery
 ~~~~~~~~~~~~~~~~

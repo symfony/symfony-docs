@@ -1,0 +1,8 @@
+How to Use the virtual Form Field Option
+========================================
+
+.. caution::
+
+    As of Symfony 2.3, the ``virtual`` option is renamed to ``inherit_data``.
+    You can read everything about the new option in
+    ":doc:`/form/inherit_data_option`".
