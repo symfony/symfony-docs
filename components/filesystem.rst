@@ -195,6 +195,40 @@ support symbolic links, a third boolean argument is available::
     // does not support symbolic links
     $fs->symlink('/path/to/source', '/path/to/destination', true);
 
+readlink
+~~~~~~~~
+
+.. versionadded:: 3.2
+    The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method was introduced in Symfony 3.2.
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
+
+PHP's ``readlink()`` function returns the target of a symbolic link. However, its behavior
+is completely different under Windows and Unix. On Windows systems, ``readlink()``
+resolves recursively the children links of a link until a final target is found. On
+Unix-based systems ``readlink()`` only resolves the next link.
+
+The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provided
+by the Filesystem component always behaves in the same way::
+
+    // returns the next direct target of the link without considering the existence of the target
+    $fs->readlink('/path/to/link');
+
+    // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
+    $fs->readlink('/path/to/link', true);
+
+Its behavior is the following::
+
+    public function readlink($path, $canonicalize = false)
+
+* When ``$canonicalize`` is ``false``:
+    * if ``$path`` does not exist or is not a link, it returns ``null``.
+    * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
+
+* When ``$canonicalize`` is ``true``:
+    * if ``$path`` does not exist, it returns null.
+    * if ``$path`` exists, it returns its absolute fully resolved final version.
+
 makePathRelative
 ~~~~~~~~~~~~~~~~
 
