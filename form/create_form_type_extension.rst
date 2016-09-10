@@ -131,10 +131,10 @@ field type, you will use that as the ``extended_type``.
 .. tip::
 
     There is an optional tag attribute called ``priority``, which 
-    defaults to ``0`` and it controls the order in which the form  
+    defaults to ``0`` and controls the order in which the form  
     type extensions are loaded (the higher the priority, the earlier 
     an extension is loaded). This is useful when you need to guarantee 
-    that one extensions is loaded before or after another extension.
+    that one extension is loaded before or after another extension.
 
 Adding the extension Business Logic
 -----------------------------------
