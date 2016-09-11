@@ -195,7 +195,7 @@ Create a Compiler Pass
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
-container for any services with the ``acme_mailer.transport`` tag::
+container for any services with the ``app.mail_transport`` tag::
 
     // src/AppBundle/DependencyInjection/Compiler/MailTransportPass.php
     namespace AppBundle\DependencyInjection\Compiler;
