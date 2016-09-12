@@ -293,6 +293,53 @@ flag::
     //       Line
     //       String
 
+Syntax Validation
+~~~~~~~~~~~~~~~~~
+
+The syntax of YAML contents can be validated through the CLI using the
+:class:`Symfony\\Component\\Yaml\\Command\\LintCommand` command.
+
+First, install the Console component:
+
+.. code-block:: bash
+
+    $ composer require symfony/console
+
+Create a console application with ``lint:yaml`` as its only command::
+
+.. code-block:: php
+
+    // lint.php
+
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\Yaml\Command\LintCommand;
+
+    (new Application('yaml/lint'))
+        ->add(new LintCommand())
+        ->getApplication()
+        ->setDefaultCommand('lint:yaml', true)
+        ->run();
+
+Then, execute the script for validating contents:
+
+.. code-block:: bash
+
+    # validates a single file
+    $ php lint.php path/to/file.yml
+
+    # or all the files in a directory
+    $ php lint.php path/to/directory
+
+    # or contents passed to STDIN
+    $ cat path/to/file.yml | php lint.php
+
+The result is written to STDOUT and uses a plain text format by default.
+Add the ``--format`` option to get the output in JSON format:
+
+.. code-block:: bash
+
+    $ php lint.php path/to/file.yml --format json
+
 Learn More
 ----------
 
