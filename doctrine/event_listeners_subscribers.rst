@@ -134,14 +134,14 @@ a ``postPersist`` method, which will be called when the event is dispatched::
     {
         public function postPersist(LifecycleEventArgs $args)
         {
-            $entity = $args->getEntity();
+            $entity = $args->getObject();
 
             // only act on some "Product" entity
             if (!$entity instanceof Product) {
                 return;
             }
 
-            $entityManager = $args->getEntityManager();
+            $entityManager = $args->getObjectManager();
             // ... do something with the Product
         }
     }
@@ -198,11 +198,11 @@ interface and have an event method for each event it subscribes to::
 
         public function index(LifecycleEventArgs $args)
         {
-            $entity = $args->getEntity();
+            $entity = $args->getObject();
 
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
-                $entityManager = $args->getEntityManager();
+                $entityManager = $args->getObjectManager();
                 // ... do something with the Product
             }
         }
