@@ -335,7 +335,7 @@ Modified PHPUnit script
 .. versionadded:: 3.2
     The modified PHPUnit script script was introduced in Symfony 3.2.
 
-This bridges provides a modified version of phpunit that you can call by using
+This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
 
 * Does not embed ``symfony/yaml`` nor ``prophecy`` to prevent any conflicts with
@@ -352,7 +352,7 @@ The script writes the modified PHPUnit it builds in a directory that can be
 configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
 the ``simple-phpunit`` if it is not provided.
 
-If you have installed the bridge through composer, you can run it by calling e.g.:
+If you have installed the bridge through Composer, you can run it by calling e.g.:
 
 .. code-block:: bash
 
