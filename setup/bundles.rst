@@ -5,7 +5,7 @@ Upgrading a Third-Party Bundle for a Major Symfony Version
 ==========================================================
 
 Symfony 3 was released on November 2015. Although this version doesn't contain
-any new feature, it removes all the backwards compatibility layers included in
+any new features, it removes all the backwards compatibility layers included in
 the previous 2.8 version. If your bundle uses any deprecated feature and it's
 published as a third-party bundle, applications upgrading to Symfony 3 will no
 longer be able to use it.
