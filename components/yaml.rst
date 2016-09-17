@@ -127,17 +127,6 @@ error occurred:
 
 .. _components-yaml-dump:
 
-Objects for Mappings
-....................
-
-Yaml :ref:`mappings <yaml-format-collections>` are basically associative
-arrays. You can instruct the parser to return mappings as objects (i.e.
-``\stdClass`` instances) by setting the fourth argument to ``true``::
-
-    $object = Yaml::parse('{"foo": "bar"}', false, false, true);
-    echo get_class($object); // stdClass
-    echo $object->foo; // bar
-
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
@@ -214,30 +203,27 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
-Invalid Types and Object Serialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Advanced Usage: Flags
+---------------------
 
-By default the YAML component will encode any "unsupported" type (i.e.
-resources and objects) as ``null``.
+.. versionadded:: 3.1
+    Flags were introduced in Symfony 3.1 and replaced the earlier boolean
+    arguments.
 
-Instead of encoding as ``null`` you can choose to throw an exception if an invalid
-type is encountered in either the dumper or parser as follows::
+Object Parsing and Dumping
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // throw an exception if a resource or object is encountered
-    Yaml::dump($data, 2, 4, true);
-
-    // throw an exception if an encoded object is found in the YAML string
-    Yaml::parse($yaml, true);
-
-However, you can activate object support using the next argument::
+You can dump objects by using the ``DUMP_OBJECT`` flag::
 
     $object = new \stdClass();
     $object->foo = 'bar';
 
-    $dumped = Yaml::dump($object, 2, 4, false, true);
-    // !!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
+    $dumped = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT);
+    // !php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
 
-    $parsed = Yaml::parse($dumped, false, true);
+And parse them by using the ``PARSE_OBJECT`` flag::
+
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT);
     var_dump(is_object($parsed)); // true
     echo $parsed->foo; // bar
 
@@ -249,6 +235,63 @@ representation of the object.
     Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
     implementations certainly won't - use with discretion!
+
+.. _invalid-types-and-object-serialization:
+
+Handling Invalid Types
+~~~~~~~~~~~~~~~~~~~~~~
+
+By default the parser will encode invalid types as ``null``. You can make the
+parser throw exceptions by using the ``PARSE_EXCEPTION_ON_INVALID_TYPE``
+flag::
+
+    $yaml = '!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}';
+    Yaml::parse($yaml, Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE); // throws an exception
+
+Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
+
+    $data = new \stdClass(); // by default objects are invalid.
+    Yaml::parse($data, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
+
+.. _objects-for-mappings:
+
+    echo $yaml; // { foo: bar }
+
+Date Handling
+~~~~~~~~~~~~~
+
+By default the YAML parser will convert unquoted strings which look like a
+date or a date-time into a Unix timestamp; for example ``2016-05-27`` or
+``2016-05-27T02:59:43.1Z`` (ISO-8601_)::
+
+    Yaml::parse('2016-05-27'); // 1464307200
+
+You can make it convert to a ``DateTime`` instance by using the ``PARSE_DATETIME``
+flag::
+
+    $date = Yaml::parse('2016-05-27', Yaml::PARSE_DATETIME);
+    var_dump(get_class($date)); // DateTime
+
+Dumping Multi-line Literal Blocks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In YAML multiple lines can be represented as literal blocks, by default the
+dumper will encode multiple lines as an inline string::
+
+    $string = array("string" => "Multiple\nLine\nString");
+    $yaml = Yaml::dump($string);
+    echo $yaml; // string: "Multiple\nLine\nString"
+
+You can make it use a literal block with the ``DUMP_MULTI_LINE_LITERAL_BLOCK``
+flag::
+
+    $string = array("string" => "Multiple\nLine\nString");
+    $yaml = Yaml::dump($string, 2, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+    echo $yaml;
+    //  string: |
+    //       Multiple
+    //       Line
+    //       String
 
 Learn More
 ----------
@@ -262,3 +305,4 @@ Learn More
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
 .. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html
+.. _ISO-8601: http://www.iso.org/iso/iso8601
