@@ -210,6 +210,8 @@ Advanced Usage: Flags
     Flags were introduced in Symfony 3.1 and replaced the earlier boolean
     arguments.
 
+.. _objects-for-mappings:
+
 Object Parsing and Dumping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -252,8 +254,6 @@ Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
 
     $data = new \stdClass(); // by default objects are invalid.
     Yaml::parse($data, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
-
-.. _objects-for-mappings:
 
     echo $yaml; // { foo: bar }
 
