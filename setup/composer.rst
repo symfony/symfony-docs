@@ -10,7 +10,7 @@ Components in your PHP projects.
 
 Since this article was first published, Composer installation has improved a lot.
 Therefore, the original contents of this article have been removed and you are
-encourage to `install Composer`_ as explained in the official Composer documentation.
+encouraged to `install Composer`_ as explained in the official Composer documentation.
 
 .. _`Composer`: https://getcomposer.org/
 .. _`install Composer`: https://getcomposer.org/download/
