@@ -34,8 +34,8 @@ but usually you would simply extend the
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;
-
-    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+    
+    use Symfony\Component\DependencyInjection\Extension\Extension;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     class AcmeHelloExtension extends Extension
