@@ -143,6 +143,9 @@ form element.
         }
     }
 
+.. versionadded:: 3.2
+    As of 3.2 the callback no longer needs to be static.
+
 You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.
 
@@ -208,7 +211,7 @@ constraint.
             }
         }
 
-If the static callback is stored in a different class, for example ``Util``,
+If the callback is stored in a different class and is static, for example ``Util``,
 you can pass the class name and the method as an array.
 
 .. configuration-block::
