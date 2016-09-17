@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-05-27T13:13:22Z
+
+I've left some comments but this looks really nice. Thank you @dantleech.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-27T14:09:42Z
+
+Updated.
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-05-31T07:27:33Z
+
+Don't know why platform sh failed - it seems to have gone away now,
+
+Also I don't seem to be able to build the docs locally as `$ git submodule update --init` doesn't seem to do anything.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-06-26T12:36:58Z
+
+@dantleech Can you please rebase, it seems there are some conflicts. Thanks!
+
+---------------------------------------------------------------------------
+
+by dantleech at 2016-06-26T12:47:13Z
+
+Rebased
+
+On Sun, Jun 26, 2016 at 05:37:00AM -0700, Jules Pietri wrote:
+>    [1]@dantleech Can you please rebase, it seems there are some conflicts.
+>    Thanks!
+>
+>    —
+>    You are receiving this because you were mentioned.
+>    Reply to this email directly, [2]view it on GitHub, or [3]mute the thread.
+>
+>    Reverse link: [4]unknown
+>
+> References
+>
+>    Visible links
+>    1. https://github.com/dantleech
+>    2. https://github.com/symfony/symfony-docs/pull/6622#issuecomment-228599335
+>    3. https://github.com/notifications/unsubscribe/AAgZcQoWdHyH1k4cVymTyLdMBx9-BIRnks5qPnJsgaJpZM4IoXrx
+>    4. https://github.com/symfony/symfony-docs/pull/6622#issuecomment-228599335
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-06-26T12:54:46Z
+
+Looks good, thanks!
+
+Status: Needs Review
