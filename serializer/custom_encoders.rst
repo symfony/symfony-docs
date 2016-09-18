@@ -5,18 +5,18 @@ How to Create your Custom Encoder
 =================================
 
 The :doc:`Serializer Component </components/serializer>` uses Normalizers
-to transform any data to an array that can be then converted in whatever
-data-structured language you want thanks to Encoders.
+to transform any data to an array. Then, by leveraging *Encoders*, that data can
+be convereted into any data-structure (e.g. JSON).
 
 The Component provides several built-in encoders that are described
 :doc:`in their own section </serializer/encoders>` but you may want
-to use another language not supported.
+to use another structure that's not supported.
 
 Creating a new encoder
 ----------------------
 
 Imagine you want to serialize and deserialize Yaml. For that you'll have to
-create your own encoder that may use the
+create your own encoder that uses the
 :doc:`Yaml Component </components/yaml>`::
 
     namespace AppBundle\Encoder;
@@ -51,9 +51,9 @@ create your own encoder that may use the
 Registering it in your app
 --------------------------
 
-If you use the Symfony Framework then you probably want to register this encoder
-as a service in your app. Then you only need to tag it as `serializer.encoder` and it will be
-injected in the Serializer.
+If you use the Symfony Framework. then you probably want to register this encoder
+as a service in your app. Then, you only need to tag it with ``serializer.encoder``
+to inject your custom encoder into the Serializer.
 
 .. configuration-block::
 
