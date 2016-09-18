@@ -256,13 +256,13 @@ expressions - see :doc:`/routing/requirements`.
 Giving {placeholders} a Default Value
 -------------------------------------
 
-In the previous example, the ``blog_list`` has a path of ``/blog/{page}``. If the
-user goes to ``/blog/1``, it will match. But if the user goes to ``/blog``, it will
-**not** match. As soon as you add a ``{placeholder}`` to a route, it *must* have
-a value.
+In the previous example, the ``blog_list`` has a path of ``/blog/{page}``. If
+the user visits ``/blog/1``, it will match. But if they visit ``/blog``, it
+will **not** match. As soon as you add a ``{placeholder}`` to a route, it
+*must* have a value.
 
-So how can we make ``/blog_list`` once again match when the user goes to ``/blog``?
-By adding a *default* value:
+So how can you make ``blog_list`` once again match when the user visits
+``/blog``? By adding a *default* value:
 
 .. configuration-block::
 
@@ -309,6 +309,7 @@ By adding a *default* value:
             <route id="blog_list" path="/blog/{page}">
                 <default key="_controller">AppBundle:Blog:list</default>
                 <default key="page">1</default>
+
                 <requirement key="page">\d+</requirement>
             </route>
 
@@ -322,19 +323,23 @@ By adding a *default* value:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:list',
-            'page' => 1,
-        ), array(
-            'page' => '\d+'
-        )));
+        $collection->add('blog_list', new Route(
+            '/blog/{page}',
+            array(
+                '_controller' => 'AppBundle:Blog:list',
+                'page'        => 1,
+            ),
+            array(
+                'page' => '\d+'
+            )
+        ));
 
         // ...
 
         return $collection;
 
-Now, when the user goes to ``/blog``, the ``blog_list`` route will match and ``$page``
-will default to a value of ``1``.
+Now, when the user visits ``/blog``, the ``blog_list`` route will match and
+``$page`` will default to a value of ``1``.
 
 .. index::
    single: Routing; Advanced example

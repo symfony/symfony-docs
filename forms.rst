@@ -567,7 +567,7 @@ the correct values of a number of field options.
     guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
     from the Doctrine metadata (via the field's length).
 
-.. note::
+.. caution::
 
   These field options are *only* guessed if you're using Symfony to guess
   the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
