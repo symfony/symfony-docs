@@ -4,12 +4,12 @@
 How to Create your Custom Encoder
 =================================
 
-The :doc:`Serializer Component </components/serializer/index>` uses Normalizers
+The :doc:`Serializer Component </components/serializer>` uses Normalizers
 to transform any data to an array that can be then converted in whatever
 data-structured language you want thanks to Encoders.
 
 The Component provides several built-in encoders that are described
-:doc:`in their own section </components/serializer/encoders>` but you may want
+:doc:`in their own section </serializer/encoders>` but you may want
 to use another language not supported.
 
 Creating a new encoder
@@ -17,7 +17,7 @@ Creating a new encoder
 
 Imagine you want to serialize and deserialize Yaml. For that you'll have to
 create your own encoder that may use the
-:doc:`Yaml Component </components/yaml/index>`::
+:doc:`Yaml Component </components/yaml>`::
 
     namespace AppBundle\Encoder;
 
