@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-30T08:34:09Z
+
+👍  `getMock()` is deprecated since PHPUnit 5.4.0. However, I wonder if we should use `createMock()` or `getMockBuilder()`:
+
+> The PHPUnit\Framework\TestCase::getMock() method has been deprecated. Please use PHPUnit\Framework\TestCase::createMock() or PHPUnit\Framework\TestCase::getMockBuilder() instead.
+
+Source: https://github.com/sebastianbergmann/phpunit/wiki/Release-Announcement-for-PHPUnit-5.4.0#changes
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-08-30T09:14:43Z
+
+👍  for using `createMock()`
+
+---------------------------------------------------------------------------
+
+by ousmaneNdiaye at 2016-08-30T09:17:59Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by JohnnyEvo at 2016-08-30T09:42:36Z
+
+@ogizanagi Why use `createMock()` instead of `getMockBuilder()` ? I didn't know `createMock()` but `createMock()` doesn't invoke the constructor it seems to me, so it's possible that there are bad surprises.
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-08-30T09:52:05Z
+
+@JohnnyEvo : Right, but `ObjectManager` is an interface anyway. So using `->createMock()` won't cause any issue. Also unless you do partial mocking on concrete classes, most of the time the original constructor call is not necessary.
+
+---------------------------------------------------------------------------
+
+by JohnnyEvo at 2016-08-30T10:08:28Z
+
+Ok, thank you for your explanation 👍
