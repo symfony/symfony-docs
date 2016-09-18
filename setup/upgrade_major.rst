@@ -116,8 +116,8 @@ done!
 .. tip::
 
     Some members of the Symfony Community have developed a tool called
-    `Symfony-Upgrade-Fixer`_ which fixes some of the most common deprecations
-    automatically and can save you a lot of work.
+    `Symfony-Upgrade-Fixer`_ which automatically fixes some of the most common
+    deprecations found when upgrading from Symfony 2 to Symfony 3.
 
 .. _upgrade-major-symfony-composer:
 
