@@ -127,7 +127,7 @@ make sure the ``FormRegistry`` uses the created instance::
         protected function setUp()
         {
             // mock any dependencies
-            $this->entityManager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+            $this->entityManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
 
             parent::setUp();
         }
@@ -178,7 +178,7 @@ allows you to return a list of extensions to register::
 
         protected function getExtensions()
         {
-            $this->validator = $this->getMock(
+            $this->validator = $this->createMock(
                 'Symfony\Component\Validator\Validator\ValidatorInterface'
             );
             $this->validator
