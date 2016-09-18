@@ -185,7 +185,7 @@ allows you to return a list of extensions to register::
     {
         protected function getExtensions()
         {
-            $validator = $this->getMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
+            $validator = $this->createMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
             $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
             return array(

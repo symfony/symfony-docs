@@ -89,7 +89,7 @@ We are now ready to write our first test::
 
         private function getFrameworkForException($exception)
         {
-            $matcher = $this->getMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
+            $matcher = $this->createMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
             $matcher
                 ->expects($this->once())
                 ->method('match')
@@ -98,9 +98,9 @@ We are now ready to write our first test::
             $matcher
                 ->expects($this->once())
                 ->method('getContext')
-                ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
+                ->will($this->returnValue($this->createMock('Symfony\Component\Routing\RequestContext')))
             ;
-            $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+            $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
             return new Framework($matcher, $resolver);
         }
@@ -144,7 +144,7 @@ Response::
 
     public function testControllerResponse()
     {
-        $matcher = $this->getMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
+        $matcher = $this->createMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
         $matcher
             ->expects($this->once())
             ->method('match')
@@ -159,7 +159,7 @@ Response::
         $matcher
             ->expects($this->once())
             ->method('getContext')
-            ->will($this->returnValue($this->getMock('Symfony\Component\Routing\RequestContext')))
+            ->will($this->returnValue($this->createMock('Symfony\Component\Routing\RequestContext')))
         ;
         $resolver = new ControllerResolver();
 
