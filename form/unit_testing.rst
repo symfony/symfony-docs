@@ -183,7 +183,7 @@ allows you to return a list of extensions to register::
 
         protected function getExtensions()
         {
-            $this->validator = $this->getMock(
+            $this->validator = $this->createMock(
                 'Symfony\Component\Validator\Validator\ValidatorInterface'
             );
             $this->validator

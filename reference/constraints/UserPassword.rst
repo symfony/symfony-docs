@@ -24,7 +24,7 @@ password, but needs to enter their old password for security.
 Basic Usage
 -----------
 
-Suppose you have a ``PasswordChange`` class, that's used in a form where
+Suppose you have a ``ChangePassword`` class, that's used in a form where
 the user can change their password by entering their old password and a
 new password. This constraint will validate that the old password matches
 the user's current password:

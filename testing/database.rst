@@ -66,7 +66,7 @@ it's easy to pass a mock object within a test::
         public function testCalculateTotalSalary()
         {
             // First, mock the object to be used in the test
-            $employee = $this->getMock('\AppBundle\Entity\Employee');
+            $employee = $this->createMock('\AppBundle\Entity\Employee');
             $employee->expects($this->once())
                 ->method('getSalary')
                 ->will($this->returnValue(1000));

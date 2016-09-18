@@ -226,8 +226,8 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
             ),
         ));
 
-Going Further with the Serializer Component
--------------------------------------------
+Going Further with the Serializer
+---------------------------------
 
 `ApiPlatform`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
 hypermedia formats. It is built on top of the Symfony Framework and its Serializer
@@ -236,6 +236,12 @@ and a caching system.
 
 If you want to leverage the full power of the Symfony Serializer component,
 take a look at how this bundle works.
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    serializer/*
 
 .. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core
