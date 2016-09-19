@@ -20,10 +20,10 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-The :class:`Symfony\\Component\\Ldap\\LdapClient` class provides methods
+The :class:`Symfony\\Component\\Ldap\\Ldap` class provides methods
 to authenticate and query against an LDAP server.
 
-The :class:`Symfony\\Component\\Ldap\\LdapClient` class can be configured
+The :class:`Symfony\\Component\\Ldap\\Ldap` class can be configured
 using the following options:
 
 ``host``
@@ -35,11 +35,11 @@ using the following options:
 ``version``
     The version of the LDAP protocol to use
 
-``useSsl``
-    Whether or not to secure the connection using SSL
+``encryption``
+    Your encryption mechanism (``ssl``, ``tls`` or ``none``)
 
-``useStartTls``
-    Whether or not to secure the connection using StartTLS
+``connection_string``
+    You may use this option instead of
 
 ``optReferrals``
     Specifies whether to automatically follow referrals
@@ -47,26 +47,83 @@ using the following options:
 
 For example, to connect to a start-TLS secured LDAP server::
 
-    use Symfony\Component\Ldap\LdapClient;
+    use Symfony\Component\Ldap\Ldap;
 
-    $ldap = new LdapClient('my-server', 389, 3, false, true);
+    $ldap = Ldap::create('ext_ldap', array(
+        'host' => 'my-server',
+        'encryption' => 'ssl',
+    ));
 
-The :method:`Symfony\\Component\\Ldap\\LdapClient::bind` method
+Or you could directly specify a connection string::
+
+    use Symfony\Component\Ldap\Ldap;
+
+    $ldap = Ldap::create('ext_ldap', array('connection_string' => 'ldaps://my-server:636'));
+
+The :method:`Symfony\\Component\\Ldap\\Ldap::bind` method
 authenticates a previously configured connection using both the
 distinguished name (DN) and the password of a user::
 
-    use Symfony\Component\Ldap\LdapClient;
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
     $ldap->bind($dn, $password);
 
 Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
-:method:`Symfony\\Component\\Ldap\\LdapClient::find` method::
+:method:`Symfony\\Component\\Ldap\\Ldap::query` method::
 
-    use Symfony\Component\Ldap\LdapClient;
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
-    $ldap->find('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $results = $query->execute();
+
+    foreach ($results as $entry) {
+        // Do something with the results
+    }
+
+By default, LDAP entries are lazy-loaded. If you wish to fetch
+all entries in a single call and do something with the results'
+array, you may use the
+:method:`Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\Collection::toArray` method::
+
+    use Symfony\Component\Ldap\Ldap;
+    // ...
+
+    $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $results = $query->execute()->toArray();
+
+    // Do something with the results array
+
+Creating or updating entries
+----------------------------
+
+Since version 3.1, The Ldap component provides means to create
+new LDAP entries, update or even delete existing ones::
+
+    use Symfony\Component\Ldap\Ldap;
+    use Symfony\Component\Ldap\Entry;
+    // ...
+
+    $entry = new Entry('cn=Fabien Potencier,dc=symfony,dc=com', array(
+        'sn' => array('fabpot'),
+        'objectClass' => array('inetOrgPerson'),
+    ));
+
+    $em = $ldap->getEntryManager();
+
+    // Creating a new entry
+    $em->add($entry);
+
+    // Finding and updating an existing entry
+    $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $result = $query->execute();
+    $entry = $result[0];
+    $entry->addAttribute('email', array('fabpot@symfony.com'));
+    $em->update($entry);
+
+    // Removing an existing entry
+    $em->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap
