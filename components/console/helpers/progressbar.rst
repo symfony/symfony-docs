@@ -37,10 +37,9 @@ number of units, and advance the progress as the command executes::
 
 .. tip::
 
-    You can also regress the progress bar (i.e. step backwards) by using the
-    ``$progress->regress()`` method. Like the ``advance()`` method you can also
-    pass a unit value to ``regress()`` to control how many steps the progress is
-    regressed by.
+    You can also regress the progress bar (i.e. step backwards) by calling
+    ``$progress->advance()`` with a negative value. For example, if you call
+    ``$progress->advance(-2)`` then it will regress the progress bar 2 steps.
 
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
