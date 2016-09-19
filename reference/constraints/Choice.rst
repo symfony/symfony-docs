@@ -144,7 +144,7 @@ form element.
     }
 
 .. versionadded:: 3.2
-    As of 3.2 the callback no longer needs to be static.
+    As of Symfony 3.2 the callback no longer needs to be static.
 
 You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.
