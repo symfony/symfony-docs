@@ -186,7 +186,7 @@ Finally, create the template:
     .. code-block:: html+twig
 
         {# app/Resources/views/security/login.html.twig #}
-        {# ... you will probably extends your base template, like base.html.twig #}
+        {# ... you will probably extend your base template, like base.html.twig #}
 
         {% if error %}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
