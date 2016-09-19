@@ -173,7 +173,7 @@ Before diving into the specifics of the most common edge cases, the general
 recommendation is to **not rely on the Symfony Kernel version** to decide which
 code to use::
 
-    if (Kernel::VERSION_ID <= 20800) {
+    if (Kernel::VERSION_ID < 20800) {
         // code for Symfony 2.x
     } else {
         // code for Symfony 3.x
