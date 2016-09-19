@@ -73,6 +73,52 @@ LDAP server), you may query the LDAP server using the
 
     // ...
 
-    $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $results = $query->execute();
+
+    foreach ($results as $entry) {
+        // Do something with the results
+    }
+
+By default, LDAP entries are lazy-loaded. If you wish to fetch
+all entries in a single call and do something with the results'
+array, you may use the
+:method:`Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\Collection::toArray` method::
+
+    // ...
+
+    $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $results = $query->execute()->toArray();
+
+    // Do something with the results array
+
+Creating or updating entries
+----------------------------
+
+Since version 3.1, The Ldap component provides means to create
+new LDAP entries, update or even delete existing ones::
+
+    use Symfony\Component\Ldap\Entry;
+    // ...
+
+    $entry = new Entry('cn=Fabien Potencier,dc=symfony,dc=com', array(
+        'sn' => array('fabpot'),
+        'objectClass' => array('inetOrgPerson'),
+    ));
+
+    $em = $ldap->getEntryManager();
+
+    // Creating a new entry
+    $em->add($entry);
+
+    // Finding and updating an existing entry
+    $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $result = $query->execute();
+    $entry = $result[0];
+    $entry->addAttribute('email', array('fabpot@symfony.com'));
+    $em->update($entry);
+
+    // Removing an existing entry
+    $em->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap
