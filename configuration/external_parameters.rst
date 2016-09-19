@@ -21,6 +21,8 @@ applied to the resulting parameter name:
 * Parameter name is lowercased;
 * Double underscores are replaced with a period, as a period is not
   a valid character in an environment variable name.
+* Parameter value are automatically normalize with casts type
+  ``int``, ``float``, ``bool``, ``null``, ``JSON`` otherwise it will be a string.
 
 For example, if you're using Apache, environment variables can be set using
 the following ``VirtualHost`` configuration:
