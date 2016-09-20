@@ -117,8 +117,8 @@ A) Check Requirements
 Check if your server meets the requirements by running:
 
 .. code-block:: bash
-
-    $ php app/check.php
+
+    $ php bin/symfony_requirements
 
 B) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
