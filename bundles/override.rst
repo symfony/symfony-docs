@@ -37,39 +37,8 @@ If the controller is a service, see the next section on how to override it.
 Services & Configuration
 ------------------------
 
-In order to override/extend a service, there are two options. First, you can
-set the parameter holding the service's class name to your own class by setting
-it in ``app/config/config.yml``. This of course is only possible if the class name is
-defined as a parameter in the service config of the bundle containing the
-service. For example, to override the class used for Symfony's ``translator``
-service, you would override the ``translator.class`` parameter. Knowing exactly
-which parameter to override may take some research. For the translator, the
-parameter is defined and used in the ``Resources/config/translation.xml`` file
-in the core FrameworkBundle:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        parameters:
-            translator.class: Acme\HelloBundle\Translation\Translator
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="translator.class">Acme\HelloBundle\Translation\Translator</parameter>
-        </parameters>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->setParameter('translator.class', 'Acme\HelloBundle\Translation\Translator');
-
-Secondly, if the class is not available as a parameter, you want to make sure the
-class is always overridden when your bundle is used or if you need to modify
-something beyond just the class name, you should use a compiler pass::
+In order to override/extend a service and make sure its class is always
+overridden when your bundle is used, you should use a compiler pass::
 
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
     namespace Acme\DemoBundle\DependencyInjection\Compiler;
