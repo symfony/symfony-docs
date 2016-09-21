@@ -100,9 +100,9 @@ decides this using whatever logic you want.
 
 .. tip::
 
-    The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions
-    are both just shortcuts of the Controller to call ``isGranted()`` on the ``security.authorization_checker``
-    service.
+    The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions are both
+    just shortcuts of the ``Controller`` class to call ``isGranted()`` on
+    the ``security.authorization_checker`` service.
 
 Creating the custom Voter
 -------------------------
