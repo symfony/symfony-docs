@@ -57,7 +57,7 @@ is to ask Doctrine to introspect the database and generate the corresponding
 metadata files. Metadata files describe the entity class to generate based on
 table fields.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:mapping:import --force AcmeBlogBundle xml
 
@@ -90,7 +90,7 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 Once the metadata files are generated, you can ask Doctrine to build related
 entity classes by executing the following two commands.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:mapping:convert annotation ./src
     $ php bin/console doctrine:generate:entities AcmeBlogBundle

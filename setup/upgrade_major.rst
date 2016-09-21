@@ -4,9 +4,9 @@
 Upgrading a Major Version (e.g. 2.7.0 to 3.0.0)
 ===============================================
 
-Every few years, Symfony releases a new major version release (the first number
+Every two years, Symfony releases a new major version release (the first number
 changes). These releases are the trickiest to upgrade, as they are allowed to
-contain BC breaks. However, Symfony tries to make this upgrade process as
+break backwards compatibility. However, Symfony makes this upgrade process as
 smooth as possible.
 
 This means that you can update most of your code before the major release is
@@ -67,7 +67,7 @@ you a nice summary of all deprecation notices at the end of the test report.
 
 All you need to do is install the PHPUnit bridge:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require --dev symfony/phpunit-bridge
 
@@ -113,6 +113,12 @@ done!
 
     (you can also execute the command like ``SYMFONY_DEPRECATIONS_HELPER=weak phpunit``).
 
+.. tip::
+
+    Some members of the Symfony Community have developed a tool called
+    `Symfony-Upgrade-Fixer`_ which automatically fixes some of the most common
+    deprecations found when upgrading from Symfony 2 to Symfony 3.
+
 .. _upgrade-major-symfony-composer:
 
 2) Update to the New Major Version via Composer
@@ -134,7 +140,7 @@ Composer by modifying your ``composer.json`` file:
 
 Next, use Composer to download new versions of the libraries:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update symfony/symfony
 
@@ -152,3 +158,5 @@ There is a good chance that you're done now! However, the next major version
 Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
 included in the Symfony repository for any BC break that you need to be aware
 of.
+
+.. _`Symfony-Upgrade-Fixer`: https://github.com/umpirsky/Symfony-Upgrade-Fixer

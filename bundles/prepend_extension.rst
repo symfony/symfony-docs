@@ -131,3 +131,10 @@ The above would be the equivalent of writing the following into the
             // ...
             'use_acme_goodbye' => false,
         ));
+
+More than one Bundle using PrependExtensionInterface
+----------------------------------------------------
+
+If there is more than one bundle that prepends the same extension and defines
+the same key, the bundle that is registered **first** will take priority:
+next bundles won't override this specific config setting.

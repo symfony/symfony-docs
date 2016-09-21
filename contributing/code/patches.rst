@@ -27,7 +27,7 @@ Configure Git
 
 Set up your user information with your real name and a working email address:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git config --global user.name "Your Name"
     $ git config --global user.email you@example.com
@@ -53,14 +53,14 @@ Set up your user information with your real name and a working email address:
     repository. If you have already installed Git, you can check the value of
     this setting by typing:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ git config core.autocrlf
 
     This will return either "false", "input" or "true"; "true" and "false" being
     the wrong values. Change it to "input" by typing:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ git config --global core.autocrlf input
 
@@ -79,13 +79,13 @@ Get the Symfony source code:
 * After the "forking action" has completed, clone your fork locally
   (this will create a ``symfony`` directory):
 
-.. code-block:: bash
+.. code-block:: terminal
 
       $ git clone git@github.com:USERNAME/symfony.git
 
 * Add the upstream repository as a remote:
 
-.. code-block:: bash
+.. code-block:: terminal
 
       $ cd symfony
       $ git remote add upstream git://github.com/symfony/symfony.git
@@ -132,20 +132,20 @@ Create a Topic Branch
 Each time you want to work on a patch for a bug or on an enhancement, create a
 topic branch:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout -b BRANCH_NAME master
 
 Or, if you want to provide a bugfix for the ``2.7`` branch, first track the remote
 ``2.7`` branch locally:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout -t origin/2.7
 
 Then create a new branch off the ``2.7`` branch to work on the bugfix:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout -b BRANCH_NAME 2.7
 
@@ -225,7 +225,7 @@ Rebase your Patch
 Before submitting your patch, update your branch (needed if it takes you a
 while to finish your changes):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout master
     $ git fetch upstream
@@ -242,14 +242,14 @@ When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
 then continue the rebase:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git add ... # add resolved files
     $ git rebase --continue
 
 Check that all tests still pass and push your branch remotely:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git push --force origin BRANCH_NAME
 
@@ -336,7 +336,7 @@ Based on the feedback on the pull request, you might need to rework your
 patch. Before re-submitting the patch, rebase with ``upstream/master`` or
 ``upstream/2.7``, don't merge; and force the push to the origin:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git rebase -f upstream/master
     $ git push --force origin BRANCH_NAME

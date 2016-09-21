@@ -50,7 +50,7 @@ the following ``VirtualHost`` configuration:
     you must export these as shell variables. On a Unix system, you can run
     the following:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ export SYMFONY__DATABASE__USER=user
         $ export SYMFONY__DATABASE__PASSWORD=secret

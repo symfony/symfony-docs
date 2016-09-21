@@ -91,6 +91,7 @@ Next, make sure you've configured a "user provider" for the user:
                 your_db_provider:
                     entity:
                         class: AppBundle:User
+                        property: apiKey
 
             # ...
 
@@ -159,17 +160,9 @@ This requires you to implement six methods::
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
-    use Doctrine\ORM\EntityManager;
 
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
-        private $em;
-
-        public function __construct(EntityManager $em)
-        {
-            $this->em = $em;
-        }
-
         /**
          * Called on every request. Return whatever credentials you want,
          * or null to stop authentication.
@@ -193,8 +186,7 @@ This requires you to implement six methods::
 
             // if null, authentication will fail
             // if a User object, checkCredentials() is called
-            return $this->em->getRepository('AppBundle:User')
-                ->findOneBy(array('apiKey' => $apiKey));
+            return $userProvider->loadUserByUsername($apiKey);
         }
 
         public function checkCredentials($credentials, UserInterface $user)
@@ -258,15 +250,12 @@ To finish this, register the class as a service:
         services:
             app.token_authenticator:
                 class: AppBundle\Security\TokenAuthenticator
-                arguments: ['@doctrine.orm.entity_manager']
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.token_authenticator" class="AppBundle\Security\TokenAuthenticator">
-                <argument type="service" id="doctrine.orm.entity_manager"/>
-            </service>
+            <service id="app.token_authenticator" class="AppBundle\Security\TokenAuthenticator" />
         </services>
 
     .. code-block:: php
@@ -275,10 +264,7 @@ To finish this, register the class as a service:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.token_authenticator', new Definition(
-            'AppBundle\Security\TokenAuthenticator',
-            array(new Reference('doctrine.orm.entity_manager'))
-        ));
+        $container->setDefinition('app.token_authenticator', new Definition('AppBundle\Security\TokenAuthenticator'));
 
 Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
 

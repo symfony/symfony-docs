@@ -193,7 +193,7 @@ In the console prompt, type the following three commands to copy the original
 ``php_intl.dll`` extension file into a custom website ``ext/`` directory. This
 new directory must be created under the main directory ``site/wwwroot``.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd site\wwwroot
     $ mkdir ext
@@ -233,7 +233,7 @@ Deploying from Git
 First, make sure Git is correctly installed on your local machine using the
 following command in your terminal:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git --version
 
@@ -281,7 +281,7 @@ Website.
 Now, from the command line on your local machine, type the following at the
 root of your Symfony project:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git remote add azure https://<username>@<your-website-name>.scm.azurewebsites.net:443/<your-website-name>.git
     $ git push azure master
@@ -312,7 +312,7 @@ step is to configure the application and install the third party dependencies
 it requires that aren't tracked by Git. Switch back to the online **Console**
 of the Kudu application and execute the following commands in it:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd site\wwwroot
     $ curl -sS https://getcomposer.org/installer | php
@@ -386,7 +386,7 @@ command line interface if you're using Doctrine. In the online **Console** tool
 of the Kudu application, run the following command to mount the tables into your
 MySQL database.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:schema:update --force
 
@@ -397,7 +397,7 @@ may have additional commands to execute for setup (see :doc:`/deployment`).
 Make sure that your application is running by browsing the ``app.php`` front
 controller with your web browser and the following URL:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     http://<your-website-name>.azurewebsites.net/web/app.php
 

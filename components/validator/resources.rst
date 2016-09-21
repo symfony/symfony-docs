@@ -42,7 +42,7 @@ In this example, the validation metadata is retrieved executing the
     {
         protected $name;
 
-        public static function loadValidatorMatadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
             $metadata->addPropertyConstraint('name', new Assert\NotBlank());
             $metadata->addPropertyConstraint('name', new Asert\Length(array(

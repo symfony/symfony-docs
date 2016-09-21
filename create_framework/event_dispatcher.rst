@@ -17,7 +17,7 @@ pattern, the *Mediator*, to allow any kind of behaviors to be attached to our
 framework; the Symfony EventDispatcher Component implements a lightweight
 version of this pattern:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/event-dispatcher
 

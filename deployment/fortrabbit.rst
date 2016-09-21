@@ -203,7 +203,7 @@ file (optional) in the project root.
 
 Add fortrabbit as a (additional) Git remote and add your configuration changes:
 
-.. code-block:: bash
+.. code-block:: terminal
 
    $ git remote add fortrabbit git@deploy.eu2.frbit.com:<your-app>.git
    $ git add composer.json composer.lock
@@ -211,7 +211,7 @@ Add fortrabbit as a (additional) Git remote and add your configuration changes:
 
 Commit and push
 
-.. code-block:: bash
+.. code-block:: terminal
 
    $ git commit -m 'fortrabbit config'
    $ git push fortrabbit master -u
@@ -220,7 +220,7 @@ Commit and push
 
     Replace ``<your-app>`` with the name of your fortrabbit App.
 
-.. code-block:: bash
+.. code-block:: terminal
 
    Commit received, starting build of branch master
 
