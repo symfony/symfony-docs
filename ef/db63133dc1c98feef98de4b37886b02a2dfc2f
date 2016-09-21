@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-28T16:10:49Z
+
+I don't think it's really needed to link to it. However, you're the doc user and you probably wanted to check the API link here. So 👍  :)
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-29T14:13:56Z
+
+👍
+
+Unrelated to this ... but if we could make some minor changes in this paragraph when merging it:
+
+```
+If your User implements ... -> If your user implements ...
+```
+
+and this:
+
+```
+... is simply called, and ...-> ... is called, and ...
+```
+
+---------------------------------------------------------------------------
+
+by asandjivy at 2016-08-31T14:28:24Z
+
+ok done ;)
