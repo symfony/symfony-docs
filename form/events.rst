@@ -228,8 +228,7 @@ View data        Normalized data transformed using a view transformer
     information about the forms.
     The ``Symfony\Component\Form\Extension\Validator\EventListener\ValidationListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
-    automatically validate the denormalized object and to update the normalized
-    representation as well as the view representations.
+    automatically validate the denormalized object.
 
 Registering Event Listeners or Event Subscribers
 ------------------------------------------------
