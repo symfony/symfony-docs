@@ -24,7 +24,7 @@ Preparing your Application
 Deploying a Symfony application to Heroku doesn't require any change in its
 code, but it requires some minor tweaks to its configuration.
 
-By default, the Symfony app will log into your application's ``app/log/``
+By default, the Symfony app will log into your application's ``bin/log/``
 directory. This is not ideal as Heroku uses an `ephemeral file system`_. On
 Heroku, the best way to handle logging is using `Logplex`_. And the best way to
 send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily,
