@@ -108,14 +108,14 @@ via the ``config:dump-reference`` command:
 
 .. code-block:: terminal
 
-    $ bin/console config:dump-reference AsseticBundle
+    $ app/console config:dump-reference AsseticBundle
 
 Instead of the full bundle name, you can also pass the short name used as the root
 of the bundle's configuration:
 
 .. code-block:: terminal
 
-    $ bin/console config:dump-reference assetic
+    $ app/console config:dump-reference assetic
 
 The output will look like this:
 
