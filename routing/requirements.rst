@@ -167,8 +167,8 @@ Path     Parameters
     The option is automatically enabled whenever a route or a requirement uses any
     non-ASCII UTF-8 characters or a `PCRE Unicode property`_ (``\p{xx}``,
     ``\P{xx}`` or ``\X``). Note that this behavior is deprecated and a
-    `LogicException` will be thrown instead in 4.0 unless you explicitly turn
-    on the `utf8` option.
+    ``LogicException`` will be thrown instead in 4.0 unless you explicitly turn
+    on the ``utf8`` option.
 
 .. tip::
 
