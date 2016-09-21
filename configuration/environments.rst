@@ -224,7 +224,7 @@ By default, Symfony commands are executed in the ``dev`` environment and with th
 debug mode enabled. Use the ``--env`` and ``--no-debug`` options to modify this
 behavior:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # 'dev' environment and debug enabled
     $ php app/console command_name

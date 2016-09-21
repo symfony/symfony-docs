@@ -122,19 +122,19 @@ Now, when your app sends an email, it will not actually be sent but instead
 added to the spool. Sending the messages from the spool is done separately.
 There is a console command to send the messages in the spool:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console swiftmailer:spool:send --env=prod
 
 It has an option to limit the number of messages to be sent:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console swiftmailer:spool:send --message-limit=10 --env=prod
 
 You can also set the time limit in seconds:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console swiftmailer:spool:send --time-limit=10 --env=prod
 

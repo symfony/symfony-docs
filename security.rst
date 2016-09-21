@@ -512,7 +512,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
 Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, since 2.7 you can use the built-in command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console security:encode-password
 
@@ -1087,6 +1087,14 @@ key:
 Logging Out
 -----------
 
+.. caution::
+
+    Notice that when using http-basic authenticated firewalls, there is no
+    real  way to log out : the only way to *log out* is to have the browser
+    stop sending your name and password  on every request. Clearing your
+    browser cache or restarting your browser usually helps. Some web developer
+    tools might be helpful here too.
+
 Usually, you'll also want your users to be able to log out. Fortunately,
 the firewall can handle this automatically for you when you activate the
 ``logout`` config parameter:
@@ -1186,14 +1194,6 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``).
     and pointing it to a service id of a class that implements
     :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
     See :doc:`Security Configuration Reference </reference/configuration/security>`.
-
-.. caution::
-
-    Notice that when using http-basic authenticated firewalls, there is no
-    real  way to log out : the only way to *log out* is to have the browser
-    stop sending your name and password  on every request. Clearing your
-    browser cache or restarting your browser usually helps. Some web developer
-    tools might be helpful here too.
 
 .. _security-role-hierarchy:
 

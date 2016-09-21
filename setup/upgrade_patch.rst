@@ -8,7 +8,7 @@ When a new patch version is released (only the last number changed), it is a
 release that only contains bug fixes. This means that upgrading to a new patch
 version is *really* easy:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update symfony/symfony
 

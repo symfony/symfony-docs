@@ -25,7 +25,7 @@ Now that everything is correctly set up, you can create a new project based on
 Symfony. In your command console, browse to a directory where you have permission
 to create files and execute the following commands:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # Linux, Mac OS X
     $ cd projects/
@@ -145,7 +145,7 @@ that follows these best practices:
     If your Symfony installation doesn't come with a pre-generated AppBundle,
     you can generate it by hand executing this command:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php app/console generate:bundle --namespace=AppBundle --dir=src --format=annotation --no-interaction
 

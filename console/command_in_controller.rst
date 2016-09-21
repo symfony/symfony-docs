@@ -66,7 +66,7 @@ can be used to convert this to colorful HTML.
 
 First, require the package:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require sensiolabs/ansi-to-html
 

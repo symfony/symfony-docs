@@ -431,7 +431,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
     that includes a translation resource), be sure to clear your cache so
     that Symfony can discover the new translation resources:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php app/console cache:clear
 

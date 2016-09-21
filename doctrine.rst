@@ -114,7 +114,7 @@ information. By convention, this information is usually configured in an
 Now that Doctrine can connect to your database, the following command
 can automatically generate an empty ``test_project`` database for you:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:database:create
 
@@ -126,7 +126,7 @@ can automatically generate an empty ``test_project`` database for you:
     They might even remember to do it the very first time, but forget that
     it's all gone after running a relatively common command during development:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php app/console doctrine:database:drop --force
         $ php app/console doctrine:database:create
@@ -225,7 +225,7 @@ just a simple PHP class.
     simple entity classes for you. This will ask you interactive questions
     to help you build any entity:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php app/console doctrine:generate:entity
 
@@ -394,7 +394,7 @@ getter and setter methods (e.g. ``getName()``, ``setName($name)``) in order
 to access its properties in the rest of your application's code. Fortunately,
 the following command can generate these boilerplate methods automatically:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:generate:entities AppBundle/Entity/Product
 
@@ -434,7 +434,7 @@ doesn't replace your existing methods).
 You can also generate all known entities (i.e. any PHP class with Doctrine
 mapping information) of a bundle or an entire namespace:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # generates all entities in the AppBundle
     $ php app/console doctrine:generate:entities AppBundle
@@ -453,7 +453,7 @@ corresponding ``product`` table in your database. Fortunately, Doctrine can
 automatically create all the database tables needed for every known entity
 in your application. To do this, run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:schema:update --force
 

@@ -96,7 +96,7 @@ To test that it's working, create a very basic route for the AppBundle:
 
 Now generate the mod_rewrite rules:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console router:dump-apache -e=prod --no-debug
 

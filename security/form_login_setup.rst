@@ -70,8 +70,7 @@ First, enable form login under your firewall:
 
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form ``/login``. Implementing this login form
-visually is your job. First, create a new ``SecurityController`` inside a
-bundle::
+is your job. First, create a new ``SecurityController`` inside a bundle::
 
     // src/AppBundle/Controller/SecurityController.php
     namespace AppBundle\Controller;
@@ -139,8 +138,7 @@ configuration (``login``):
 
         return $collection;
 
-Great! Next, add the logic to ``loginAction`` that will display the login
-form::
+Great! Next, add the logic to ``loginAction`` that displays the login form::
 
     // src/AppBundle/Controller/SecurityController.php
 
@@ -154,14 +152,10 @@ form::
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render(
-            'security/login.html.twig',
-            array(
-                // last username entered by the user
-                'last_username' => $lastUsername,
-                'error'         => $error,
-            )
-        );
+        return $this->render('security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
     }
 
 Don't let this controller confuse you. As you'll see in a moment, when the
@@ -181,7 +175,7 @@ Finally, create the template:
     .. code-block:: html+twig
 
         {# app/Resources/views/security/login.html.twig #}
-        {# ... you will probably extends your base template, like base.html.twig #}
+        {# ... you will probably extend your base template, like base.html.twig #}
 
         {% if error %}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -236,13 +230,12 @@ Finally, create the template:
     It may contain more information - or even sensitive information - about
     the authentication failure, so use it wisely!
 
-The form can look like anything, but has a few requirements:
+The form can look like anything, but it usually follows some conventions:
 
-* The form must POST to the ``login`` route, since that's what you configured
-  under the ``form_login`` key in ``security.yml``.
-
-* The username must have the name ``_username`` and the password must have
-  the name ``_password``.
+* The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
+  that's what you configured under the ``form_login`` key in ``security.yml``;
+* The username field has the name ``_username`` and the password field has the
+  name ``_password``.
 
 .. tip::
 
@@ -380,64 +373,6 @@ fixes the problem:
         'access_control' => array(
             array('path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
             array('path' => '^/', 'role' => 'ROLE_ADMIN'),
-        ),
-
-Also, if your firewall does *not* allow for anonymous users (no ``anonymous``
-key), you'll need to create a special firewall that allows anonymous users
-for the login page:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-
-        # ...
-        firewalls:
-            # order matters! This must be before the ^/ firewall
-            login_firewall:
-                pattern:   ^/login$
-                anonymous: ~
-            secured_area:
-                pattern:    ^/
-                form_login: ~
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <firewall name="login_firewall" pattern="^/login$">
-                    <anonymous />
-                </firewall>
-
-                <firewall name="secured_area" pattern="^/">
-                    <form-login />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-
-        // ...
-        'firewalls' => array(
-            'login_firewall' => array(
-                'pattern'   => '^/login$',
-                'anonymous' => null,
-            ),
-            'secured_area' => array(
-                'pattern'    => '^/',
-                'form_login' => null,
-            ),
         ),
 
 3. Be Sure check_path Is Behind a Firewall

@@ -20,7 +20,7 @@ To run the Symfony test suite, install the external dependencies used during the
 tests, such as Doctrine, Twig and Monolog. To do so,
 :doc:`install Composer </setup/composer>` and execute the following:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update
 
@@ -32,7 +32,7 @@ Running the Tests
 Then, run the test suite from the Symfony root directory with the following
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php ./phpunit symfony
 
@@ -45,7 +45,7 @@ what's going on and if the tests are broken because of the new code.
     want to test a single component, type its path after the ``phpunit`` command,
     e.g.:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php ./phpunit src/Symfony/Component/Finder/
 

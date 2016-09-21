@@ -98,8 +98,8 @@ constructor::
 
     // ...
     $formatLevelMap = array(
-        LogLevel::CRITICAL => ConsoleLogger::INFO,
-        LogLevel::DEBUG    => ConsoleLogger::ERROR,
+        LogLevel::CRITICAL => ConsoleLogger::ERROR,
+        LogLevel::DEBUG    => ConsoleLogger::INFO,
     );
     $logger = new ConsoleLogger($output, array(), $formatLevelMap);
 

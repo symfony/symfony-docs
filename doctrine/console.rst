@@ -9,7 +9,7 @@ The Doctrine2 ORM integration offers several console commands under the
 ``doctrine`` namespace. To view the command list you can use the ``list``
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console list doctrine
 
@@ -18,7 +18,7 @@ about any of these commands (or any Symfony command) by running the ``help``
 command. For example, to get details about the ``doctrine:database:create``
 task, run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console help doctrine:database:create
 
@@ -28,7 +28,7 @@ Some notable or interesting tasks include:
   environment is configured efficiently for production. This should always
   be run in the ``prod`` environment:
 
-  .. code-block:: bash
+  .. code-block:: terminal
 
       $ php app/console doctrine:ensure-production-settings --env=prod
 

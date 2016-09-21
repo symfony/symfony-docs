@@ -22,7 +22,7 @@ Using the Finder Component
 
 **2.** Open a terminal and use Composer to grab the library.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/finder
 
@@ -62,7 +62,7 @@ Using all of the Components
 If you want to use all of the Symfony Components, then instead of adding
 them one by one, you can include the ``symfony/symfony`` package:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/symfony
 

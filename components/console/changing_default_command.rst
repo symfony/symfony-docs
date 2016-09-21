@@ -43,7 +43,7 @@ Executing the application and changing the default Command::
 
 Test the new default console command by running the following:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php application.php
 

@@ -85,7 +85,7 @@ front controller? As you might expect, there is a solution. We can solve all
 these issues and some more by using the Symfony dependency injection
 container:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/dependency-injection
 

@@ -252,7 +252,7 @@ need::
 What other services exist? To list all services, use the ``debug:container``
 console command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console debug:container
 

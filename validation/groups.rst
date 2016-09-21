@@ -1,8 +1,8 @@
 .. index::
     single: Validation; Groups
 
-How to Apply only a Subset of all Your Validation Constraints
-=============================================================
+How to Apply only a Subset of all Your Validation Constraints (Validation Groups)
+=================================================================================
 
 By default, when validating an object all constraints of this class will
 be checked whether or not they actually pass. In some cases, however, you

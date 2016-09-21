@@ -134,7 +134,7 @@ variable so we can render that::
         }
     }
 
-Finally, template files should live in the ``app/Resources/view`` directory. Create
+Finally, template files should live in the ``app/Resources/views`` directory. Create
 a new ``app/Resources/views/lucky`` directory with a new ``number.html.twig`` file
 inside:
 

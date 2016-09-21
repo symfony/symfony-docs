@@ -116,7 +116,7 @@ A) Check Requirements
 
 Check if your server meets the requirements by running:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/check.php
 
@@ -134,7 +134,7 @@ update the ``vendor/`` directory, then transfer that with your source
 code) or afterwards on the server. Either way, just update your vendors
 as you normally do:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer install --no-dev --optimize-autoloader
 
@@ -155,7 +155,7 @@ D) Clear your Symfony Cache
 
 Make sure you clear (and warm-up) your Symfony cache:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console cache:clear --env=prod --no-debug
 
@@ -164,7 +164,7 @@ E) Dump your Assetic Assets
 
 If you're using Assetic, you'll also want to dump your assets:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console assetic:dump --env=prod --no-debug
 

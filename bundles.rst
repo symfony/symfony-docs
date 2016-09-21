@@ -119,7 +119,7 @@ And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console generate:bundle --namespace=Acme/TestBundle
 

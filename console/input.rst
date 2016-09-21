@@ -52,7 +52,7 @@ You now have access to a ``last_name`` argument in your command::
 
 The command can now be used in either of the following ways:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console app:greet Fabien
     Hi Fabien!
@@ -73,7 +73,7 @@ to greet all your friends). Only the last argument can be a list::
 
 To use this, just specify as many names as you want:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console app:greet Fabien Ryan Bernhard
 
@@ -137,7 +137,7 @@ Next, use this in the command to print the message multiple times::
 Now, when you run the task, you can optionally specify a ``--iterations``
 flag:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # no --iterations provided, the default (1) is used
     $ php app/console app:greet Fabien
