@@ -12,7 +12,7 @@ can easily see if your system passes all requirements by running the
 a different ``php.ini`` configuration file, it's also a good idea to check
 your requirements from the command line via:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/check.php
 

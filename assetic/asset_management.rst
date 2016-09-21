@@ -513,7 +513,7 @@ environment is just too slow.
 Instead, each time you use your application in the ``prod`` environment (and therefore,
 each time you deploy), you should run the following command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console assetic:dump --env=prod --no-debug
 
@@ -565,7 +565,7 @@ the following change in your ``config_dev.yml`` file:
 Next, since Symfony is no longer generating these assets for you, you'll
 need to dump them manually. To do so, run the following command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console assetic:dump
 
@@ -574,7 +574,7 @@ environment. The big disadvantage is that you need to run this each time
 you update an asset. Fortunately, by using the ``assetic:watch`` command,
 assets will be regenerated automatically *as they change*:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console assetic:watch
 

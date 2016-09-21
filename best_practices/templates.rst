@@ -69,7 +69,7 @@ the Markdown contents of each post into HTML.
 To do this, first, install the excellent `Parsedown`_ Markdown parser as
 a new dependency of the project:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require erusev/parsedown
 

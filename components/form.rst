@@ -115,7 +115,7 @@ Protection against CSRF attacks is built into the Form component, but you need
 to explicitly enable it or replace it with a custom solution. If you want to
 use the built-in support, first install the Security CSRF component:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/security-csrf
 
@@ -166,7 +166,7 @@ component offers a rich integration.
 To use the integration, you'll need the twig bridge, which provides integration
 between Twig and several Symfony components:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/twig-bridge
 
@@ -244,7 +244,7 @@ To use the built-in integration, be sure that your project has Symfony's
 Translation and :doc:`Config </components/config>` components
 installed:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/translation symfony/config
 
@@ -289,7 +289,7 @@ array or object) and pass it through your own validation system.
 To use the integration with Symfony's Validator component, first make sure
 it's installed in your application:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/validator
 

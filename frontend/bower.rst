@@ -15,7 +15,7 @@ Installing Bower
 Bower_ is built on top of `Node.js`_. Make sure you have that installed and
 then run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ npm install -g bower
 
@@ -63,7 +63,7 @@ To create a ``bower.json`` file, just run ``bower init``. Now you're ready to
 start adding things to your project. For example, to add Bootstrap_ to your
 ``bower.json`` and download it, just run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ bower install --save bootstrap
 
@@ -123,7 +123,7 @@ Currently, you should probably *commit* the assets downloaded by Bower instead
 of adding the directory (e.g. ``web/assets/vendor``) to your ``.gitignore``
 file:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git add web/assets/vendor
 

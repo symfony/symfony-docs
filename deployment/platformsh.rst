@@ -140,7 +140,7 @@ Deploy your Application
 Now you need to add a remote to Platform.sh in your Git repository (copy the
 command that you see on the Platform.sh web UI):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git remote add platform [PROJECT-ID]@git.[CLUSTER].platform.sh:[PROJECT-ID].git
 
@@ -151,7 +151,7 @@ command that you see on the Platform.sh web UI):
 
 Commit the Platform.sh specific files created in the previous section:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git add .platform.app.yaml .platform/*
     $ git add app/config/config.yml app/config/parameters_platform.php
@@ -159,7 +159,7 @@ Commit the Platform.sh specific files created in the previous section:
 
 Push your code base to the newly added remote:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git push platform master
 

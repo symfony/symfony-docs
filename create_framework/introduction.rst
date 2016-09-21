@@ -84,7 +84,7 @@ classes, how you will reference external dependencies, etc.
 
 To store your new framework, create a directory somewhere on your machine:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ mkdir framework
     $ cd framework
@@ -111,7 +111,7 @@ start with the simplest web application we can think of in PHP::
 If you have PHP 5.4, you can use the PHP built-in server to test this great
 application in a browser (``http://localhost:4321/index.php?name=Fabien``):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php -S 127.0.0.1:4321
 

@@ -28,7 +28,7 @@ associated libraries. Therefore, before enabling the filters used in this articl
 you must install two libraries. Open a command console, browse to your project
 directory and execute the following commands:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require leafo/scssphp
     $ composer require patchwork/jsqueeze

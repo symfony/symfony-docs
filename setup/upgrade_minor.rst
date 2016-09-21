@@ -37,7 +37,7 @@ to use the new version:
 
 Next, use Composer to download new versions of the libraries:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update symfony/symfony
 

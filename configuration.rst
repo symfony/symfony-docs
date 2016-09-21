@@ -117,7 +117,7 @@ There are *two* ways to know *what* keys you can configure:
 For example, if you want to configure something in Twig, you can see an example
 dump of all available configuration options by running:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console config:dump twig
 

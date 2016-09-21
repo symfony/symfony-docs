@@ -87,7 +87,7 @@ contribute to Symfony.
 uses the ``projects/symfony-docs/`` directory to store the documentation; change
 this value accordingly):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd projects/
     $ git clone git://github.com/<YOUR GITHUB USERNAME>/symfony-docs.git
@@ -95,7 +95,7 @@ this value accordingly):
 **Step 3.** Add the original Symfony docs repository as a "Git remote" executing
 this command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd symfony-docs/
     $ git remote add upstream https://github.com/symfony/symfony-docs.git
@@ -103,7 +103,7 @@ this command:
 If things went right, you'll see the following when listing the "remotes" of
 your project:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git remote -v
     origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (fetch)
@@ -113,7 +113,7 @@ your project:
 
 Fetch all the commits of the upstream branches by executing this command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git fetch upstream
 
@@ -124,7 +124,7 @@ Symfony repository and on your own fork. You'll see this in action in a moment.
 memorable name for the new branch (if you are fixing a reported issue, use
 ``fix_XXX`` as the branch name, where ``XXX`` is the number of the issue):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout -b improve_install_chapter upstream/2.7
 
@@ -141,7 +141,7 @@ new feature, switch to the first Symfony version that included it, e.g.
 even remove any content and do your best to comply with the
 :doc:`/contributing/documentation/standards`. Then commit your changes!
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # if the modified content existed before
     $ git add setup.rst
@@ -149,7 +149,7 @@ even remove any content and do your best to comply with the
 
 **Step 6.** **Push** the changes to your forked repository:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git push origin improve_install_chapter
 
@@ -189,7 +189,7 @@ In case you are asked to add or modify something, don't create a new pull
 request. Instead, make sure that you are on the correct branch, make your
 changes and push the new changes:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ cd projects/symfony-docs/
     $ git checkout improve_install_chapter
@@ -214,7 +214,7 @@ your contributions will be much easier to complete.
 Here is a **checklist** of steps that will guide you through your next
 contribution to the Symfony docs:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # create a new branch based on the oldest maintained version
     $ cd projects/symfony-docs/
@@ -269,13 +269,13 @@ purposes following these steps:
 #. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
    (depending on your system, you may need to execute this command as root user):
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
 
 #. Run the following command to build the documentation in HTML format:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
        # Linux and macOS
        $ ./_build/make html

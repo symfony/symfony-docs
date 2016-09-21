@@ -50,7 +50,7 @@ Lastly, if you want to manipulate profiling data on a different machine than the
 one where the information was generated, use the ``profiler:export`` and
 ``profiler:import`` commands:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # on the production machine
     $ php app/console profiler:export > profile.data

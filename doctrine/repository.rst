@@ -57,7 +57,7 @@ Doctrine can generate empty repository classes for all the entities in your
 application via the same command used earlier to generate the missing getter
 and setter methods:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:generate:entities AppBundle
 
