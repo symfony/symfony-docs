@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-29T15:54:07Z
+
+This seems to work ... but it introduces some issues: comments are now considered prompts. For example, in this page: http://pr-6930-6qmocelev2lwe.eu.platform.sh/setup.html
+
+![highlight-error](https://cloud.githubusercontent.com/assets/73419/18057719/7325aadc-6e11-11e6-899c-b18a5517b437.png)
+
+I'm afraid it's "the curse of Sphinx": when someone tries to fix something ... they end up breaking more things 😭
+
+---------------------------------------------------------------------------
+
+by stof at 2016-08-29T15:59:30Z
+
+yeah, this is because a shell session does not have comments AFAIK
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-30T19:59:02Z
+
+status: needs work
+
+We can quite easily fix this by creating a custom lexer that will call the bash lexer for lines starting with `$`/`C:\>` and treats lines starting with `#` as a comment. Will work on this, as it should not be that hard.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-31T10:23:54Z
+
+Wow, love carsonbot :)
+
+@javiereguiluz I've updated the PR with a very simple custom lexer. As far as I can see, it works. It uses 2 new styles not yet defined by symfony.com: `Generic.Prompt` (`$` and `C:\>`) and `Generic.Output` (command output).
+
+Let me know if you like this change.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-02T08:13:21Z
+
+@wouterj we've updated symfony.com's Sphinx builder to include your TerminalLexer. Changes will be deployed soon and after that, it will be safe to merge this PR and regenerate the docs.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-05T07:31:25Z
+
+The changes have been implemented on symfony.com, so we can merge this PR and see how the new docs are generated. Thanks.
