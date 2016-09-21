@@ -179,7 +179,7 @@ own a collection of its related ``Product`` objects.
 .. seealso::
 
     To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
-    `Association Updates` documentation.
+    `Association Updates`_ documentation.
 
 .. tip::
 
