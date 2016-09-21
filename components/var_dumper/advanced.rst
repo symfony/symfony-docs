@@ -75,6 +75,9 @@ Before dumping it, you can further limit the resulting
     Removes internal objects' handles for sparser output (useful for tests).
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
+    .. versionadded:: 3.2
+        The ``seek()`` method was introduced in Symfony 3.2.
+
     Selects only subparts of already cloned arrays, objects or resources.
 
 Unlike the previous limits on cloners that remove data on purpose, these can
@@ -86,10 +89,6 @@ intermediate representation internally.
     When no limit is applied, a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
     object is as accurate as the native :phpfunction:`serialize` function,
     and thus could be used for purposes beyond debugging.
-
-.. versionadded:: 3.2
-    The :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek` method has been
-    added in Symfony 3.2
 
 Dumpers
 -------
