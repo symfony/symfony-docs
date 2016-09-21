@@ -204,7 +204,7 @@ How to Use the Voter in a Controller
 The registered voter will then always be asked as soon as the method ``isGranted()``
 from the authorization checker is called. When extending the base ``Controller``
 class, you can simply call the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::denyAccessUnlessGranted()`
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::denyAccessUnlessGranted`
 method::
 
     // src/AppBundle/Controller/PostController.php
