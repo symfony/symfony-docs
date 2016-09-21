@@ -66,13 +66,16 @@ Before dumping it, you can further limit the resulting
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object using the following methods:
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxDepth`
-    Allows limiting dumps in the depth dimension.
+    Limits dumps in the depth dimension.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxItemsPerDepth`
     Limits the number of items per depth level.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withRefHandles`
-    Allows removing internal objects' handles for sparser output (useful for tests).
+    Removes internal objects' handles for sparser output (useful for tests).
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
+    Selects only subparts of already cloned arrays, objects or resources.
 
 Unlike the previous limits on cloners that remove data on purpose, these can
 be changed back and forth before dumping since they do not affect the
@@ -82,7 +85,11 @@ intermediate representation internally.
 
     When no limit is applied, a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
     object is as accurate as the native :phpfunction:`serialize` function,
-    and thus could be for purposes beyond dumping for debugging.
+    and thus could be used for purposes beyond debugging.
+
+.. versionadded:: 3.2
+    The :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek` method has been
+    added in Symfony 3.2
 
 Dumpers
 -------
