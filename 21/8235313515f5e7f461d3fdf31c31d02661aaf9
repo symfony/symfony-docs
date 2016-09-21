@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-07T10:28:54Z
+
+@tgalopin thanks for providing this feature and for documenting it.
+
+There are some minor syntax issues in your docs:
+
+* code must be wrapped with two backticks (in Markdown is just one)
+* to enable the magic PHP highlighting, the line before the PHP code block must end with two colons `::`
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2016-09-07T12:31:45Z
+
+Updated
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-07T13:35:35Z
+
+👍
+
+Status: reviewed
