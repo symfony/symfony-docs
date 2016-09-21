@@ -120,10 +120,10 @@ call if the service exists and remove the method call if it does not:
         ));
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
-is optional. Of course, the ``NewsletterManager`` must also be rewritten to
-allow for an optional dependency::
+is optional. Of course, the ``NewsletterManager`` must also be rewritten by
+adding a ``setMailer()`` method::
 
-        public function __construct(Mailer $mailer = null)
+        public function setMailer(Mailer $mailer)
         {
             // ...
         }
