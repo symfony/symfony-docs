@@ -86,7 +86,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
-    * `paths`_
+    * :ref:`paths <reference-translator-paths>`_
 * `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
@@ -1316,12 +1316,18 @@ for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
 
+.. _reference-translator-paths:
+
 paths
 .....
 
 **type**: ``array`` **default**: ``[]``
 
-This option allows to define an array of paths where the component will look for translation files.
+.. versionadded:: 2.8
+    The ``paths`` option was introduced in Symfony 2.8.
+
+This option allows to define an array of paths where the component will look
+for translation files.
 
 property_access
 ~~~~~~~~~~~~~~~
