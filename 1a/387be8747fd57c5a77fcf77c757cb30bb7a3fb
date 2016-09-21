@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by rendler-denis at 2016-08-17T16:56:27Z
+
+I tried to do a PR into the 2.7 branch but it showed me about 300+ files changed so I wasn't certain if it would be ok :)
+I checked the ValidationListener before making the change and as far as I could check it never did anything else than to validate the object.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-28T16:13:59Z
+
+👍
+status: reviewed
+
+We should be able to easily merge this into 2.7 with the merge tool.
