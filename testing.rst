@@ -25,7 +25,7 @@ that should live in the ``tests/`` directory of your application. If you follow
 this rule, then you can run all of your application's tests with the following
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ phpunit
 
@@ -95,7 +95,7 @@ via the ``app/autoload.php`` file (as configured by default in the
 
 Running tests for a given file or directory is also very easy:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # run all tests of the application
     $ phpunit

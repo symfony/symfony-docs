@@ -27,7 +27,7 @@ To upgrade your libraries to new versions, run ``composer update``.
     If you want to add a new package to your application, run the composer
     ``require`` command:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ composer require doctrine/doctrine-fixtures-bundle
 

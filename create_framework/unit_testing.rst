@@ -117,7 +117,7 @@ are testing that our framework converts this exception to a 404 response.
 Executing this test is as simple as running ``phpunit`` from the
 ``example.com`` directory:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ phpunit
 
@@ -184,7 +184,7 @@ the one we have set in the controller.
 To check that we have covered all possible use cases, run the PHPUnit test
 coverage feature (you need to enable `XDebug`_ first):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ phpunit --coverage-html=cov/
 
@@ -194,7 +194,7 @@ been visited when the tests were executed).
 
 Alternatively you can output the result directly to the console:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ phpunit --coverage-text
 

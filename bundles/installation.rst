@@ -34,7 +34,7 @@ the bundle on the `Packagist.org`_ site.
 
 Now that you know the package name, you can install it via Composer:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require friendsofsymfony/user-bundle
 
@@ -42,7 +42,7 @@ This will choose the best version for your project, add it to ``composer.json``
 and download its code into the ``vendor/`` directory. If you need a specific
 version, include it as the second argument of the `composer require`_ command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require friendsofsymfony/user-bundle "~2.0"
 
@@ -106,14 +106,14 @@ in ``app/config/config.yml``. The bundle's documentation will tell you about
 the configuration, but you can also get a reference of the bundle's configuration
 via the ``config:dump-reference`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ bin/console config:dump-reference AsseticBundle
 
 Instead of the full bundle name, you can also pass the short name used as the root
 of the bundle's configuration:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ bin/console config:dump-reference assetic
 

@@ -45,7 +45,7 @@ want to support dynamic paths to allow embedding data directly into the URL
 
 To support this feature, add the Symfony Routing component as a dependency:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/routing
 

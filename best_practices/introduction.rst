@@ -74,7 +74,7 @@ best practices in mind. This project, called the Symfony Demo application, can
 be obtained through the Symfony Installer. First, `download and install`_ the
 installer and then execute this command to download the demo application:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ symfony demo
 

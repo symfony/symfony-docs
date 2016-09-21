@@ -374,7 +374,8 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
 
-    You can add other directories with the ``paths`` option in the configuration:
+    You can add other directories with the :refs:`paths <reference-translator-paths>`
+    option in the configuration:
 
     .. configuration-block::
 
@@ -430,7 +431,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
     that includes a translation resource), be sure to clear your cache so
     that Symfony can discover the new translation resources:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php bin/console cache:clear
 

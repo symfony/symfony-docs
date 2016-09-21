@@ -9,7 +9,7 @@ and get detailed information about your routes. A great way to see every
 route in your application is via the ``debug:router`` console command. Execute
 the command by running the following from the root of your project.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console debug:router
 
@@ -28,14 +28,14 @@ your application:
 You can also get very specific information on a single route by including
 the route name after the command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console router:match /blog/my-latest-post
 
