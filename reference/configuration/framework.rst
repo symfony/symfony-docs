@@ -596,6 +596,8 @@ username
 
 **type**: ``string`` **default**: ``''``
 
+When needed, the username for the profiling storage.
+
 password
 ........
 
