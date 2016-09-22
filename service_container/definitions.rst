@@ -96,7 +96,7 @@ fetched from the container::
 .. caution::
 
     Don't use ``get()`` to get a service that you want to inject as constructor
-    argument, the service is not yet availabe. Instead, use a
+    argument, the service is not yet available. Instead, use a
     ``Reference`` instance as shown above.
 
 Method Calls
