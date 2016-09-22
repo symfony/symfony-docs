@@ -226,7 +226,7 @@ With the ``Response`` class, you can easily tweak the response::
     To debug a response, cast it to a string; it will return the HTTP
     representation of the response (headers and content).
 
-Last but not the least, these classes, like every other class in the Symfony
+Last but not least, these classes, like every other class in the Symfony
 code, have been `audited`_ for security issues by an independent company. And
 being an Open-Source project also means that many other developers around the
 world have read the code and have already fixed potential security problems.
