@@ -374,7 +374,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
 
-    You can add other directories with the :refs:`paths <reference-translator-paths>`
+    You can add other directories with the :ref:`paths <reference-translator-paths>`
     option in the configuration:
 
     .. configuration-block::
