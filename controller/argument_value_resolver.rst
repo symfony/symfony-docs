@@ -172,7 +172,7 @@ and adding a priority.
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $defintion = new Definition(
+        $definition = new Definition(
             'AppBundle\ArgumentResolver\UserValueResolver',
             array(new Reference('security.token_storage'))
         );

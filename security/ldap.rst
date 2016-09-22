@@ -196,7 +196,7 @@ search_password
 
 **type**: ``string`` **default**: ``null``
 
-This is your read-only user's password, wich will be used to authenticate
+This is your read-only user's password, which will be used to authenticate
 against the LDAP server in order to fetch the user's information.
 
 default_roles
