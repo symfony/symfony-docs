@@ -162,7 +162,7 @@ to hold those associated objects.
 
 While the many-to-one mapping shown earlier was mandatory, this one-to-many
 mapping is optional. It is included here to help demonstrate Doctrine's range
-of relationship management capabailties. Plus, in the context of this application,
+of relationship management capabilities. Plus, in the context of this application,
 it will likely be convenient for each ``Category`` object to automatically
 own a collection of its related ``Product`` objects.
 
