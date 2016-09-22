@@ -82,7 +82,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
-    * :ref:`paths <reference-translator-paths>`_
+    * :ref:`paths <reference-translator-paths>`
 * `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
