@@ -82,7 +82,11 @@ directory to use for the search::
 Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
-    $finder->files()->in(__DIR__)->in('/elsewhere');
+    // search inside *both* directories
+    $finder->files()->in(array(__DIR__, '/elsewhere'));
+
+    // same as above
+    $finder->in(__DIR__)->in('/elsewhere');
 
 Use wildcard characters to search in the directories matching a pattern::
 
