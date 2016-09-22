@@ -311,7 +311,7 @@ trusted_hosts
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
-proxies, web frameworks, etc.). Basically, everytime the framework is
+proxies, web frameworks, etc.). Basically, every time the framework is
 generating an absolute URL (when sending an email to reset a password for
 instance), the host might have been manipulated by an attacker.
 

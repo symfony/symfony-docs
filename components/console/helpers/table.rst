@@ -222,7 +222,7 @@ This results in:
 .. tip::
 
     You can create a multiple-line page title using a header cell that spans
-    the enire table width::
+    the entire table width::
 
         $table->setHeaders(array(
             array(new TableCell('Main table title', array('colspan' => 3))),
