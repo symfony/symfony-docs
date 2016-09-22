@@ -1258,9 +1258,6 @@ paths
 
 **type**: ``array`` **default**: ``[]``
 
-.. versionadded:: 2.8
-    The ``paths`` option was introduced in Symfony 2.8.
-
 This option allows to define an array of paths where the component will look
 for translation files.
 
