@@ -175,7 +175,7 @@ Configuring the Environment in the Dashboard
 PHP Settings
 ~~~~~~~~~~~~
 
-The PHP version and enabled extensions are configuable under the PHP settings
+The PHP version and enabled extensions are configurable under the PHP settings
 of your App within the fortrabbit Dashboard.
 
 Environment Variables
@@ -187,7 +187,7 @@ config files get loaded. ENV vars are configuable in fortrabbit Dashboard as wel
 Document Root
 ~~~~~~~~~~~~~
 
-The document root is configuable for every custom domain you setup for your App.
+The document root is configurable for every custom domain you setup for your App.
 The default is ``/htdocs``, but for Symfony you probably want to change it to
 ``/htdocs/web``. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
 
