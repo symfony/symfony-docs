@@ -82,4 +82,4 @@ method, pass the submitted data directly to
     When submitting a form via a "PATCH" request, you may want to update only a few
     submitted fields. To achieve this, you may pass an optional second boolean
     parameter to ``submit()``. Passing ``false`` will remove any missing fields
-    within the form object. Otherwise, the mising fields will be set to ``null``.
+    within the form object. Otherwise, the missing fields will be set to ``null``.
