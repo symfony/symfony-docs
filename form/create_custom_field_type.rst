@@ -377,7 +377,7 @@ configuration::
     }
 
 Great! The ``GenderType`` is now fueled by the configuration parameters and
-registered as a service. Because you used the ``form.type`` alias in its configuration,
+registered as a service. Because you used the ``form.type`` tag in its configuration,
 your service will be used instead of creating a *new* ``GenderType``. In other words,
 your controller *does not need to change*, it still looks like this::
 
