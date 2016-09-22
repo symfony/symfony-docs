@@ -842,7 +842,7 @@ Doctrine allows you to use any PHP object to hold your data and relies on
 mapping metadata information to map an object's data to a particular database
 table.
 
-Doctrine has a lot more complex features to learn, like relationshps, complex queries,
+Doctrine has a lot more complex features to learn, like relationships, complex queries,
 and event listeners.
 
 Learn more

@@ -6,7 +6,7 @@ How to Create your Custom Encoder
 
 The :doc:`Serializer Component </components/serializer>` uses Normalizers
 to transform any data to an array. Then, by leveraging *Encoders*, that data can
-be convereted into any data-structure (e.g. JSON).
+be converted into any data-structure (e.g. JSON).
 
 The Component provides several built-in encoders that are described
 :doc:`in their own section </serializer/encoders>` but you may want

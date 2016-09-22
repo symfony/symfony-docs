@@ -50,7 +50,7 @@ The **minimum configuration** to get your application running under Apache is:
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # or run into problems when compiling LESS/Sass/CoffeeScript assets
         # <Directory /var/www/project>
         #     Options FollowSymlinks
         # </Directory>
@@ -88,7 +88,7 @@ and increase web server performance:
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # or run into problems when compiling LESS/Sass/CoffeeScript assets
         # <Directory /var/www/project>
         #     Options FollowSymlinks
         # </Directory>
@@ -200,7 +200,7 @@ directive to pass requests for PHP files to PHP FPM:
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # or run into problems when compiling LESS/Sass/CoffeeScript assets
         # <Directory /var/www/project>
         #     Options FollowSymlinks
         # </Directory>
@@ -236,7 +236,7 @@ should look something like this:
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # or run into problems when compiling LESS/Sass/CoffeeScript assets
         # <Directory /var/www/project>
         #     Options FollowSymlinks
         # </Directory>
