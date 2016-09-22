@@ -271,7 +271,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. note::
 
     This option expects an array of entity objects (that's actually the same as with
-    the ``ChoiceType`` field, whichs requires an array of the preferred "values").
+    the ``ChoiceType`` field, which requires an array of the preferred "values").
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 

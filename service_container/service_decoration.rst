@@ -154,7 +154,7 @@ convention, the old ``app.mailer`` service is renamed to
 
             use Symfony\Component\DependencyInjection\Reference;
 
-            $container->register('app.decorating_mailer', 'AppBundle\DeocratingMailer')
+            $container->register('app.decorating_mailer', 'AppBundle\DecoratingMailer')
                 ->setDecoratedService('foo', 'app.decorating_mailer.wooz')
                 ->addArgument(new Reference('app.decorating_mailer.wooz'))
                 // ...
