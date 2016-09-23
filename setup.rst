@@ -286,7 +286,7 @@ Go Deeper with Setup
 .. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
-.. _`The Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
+.. _`The Symfony CMF Standard Edition`: https://github.com/symfony-cmf/standard-edition
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`The Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
