@@ -470,7 +470,7 @@ Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As you've seen, each routing parameter or default value is eventually available
-as an argument in the controller method. Additionally, there are three parameters
+as an argument in the controller method. Additionally, there are four parameters
 that are special: each adds a unique piece of functionality inside your application:
 
 ``_controller``
@@ -479,6 +479,14 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 ``_format``
     Used to set the request format (:ref:`read more <routing-format-param>`).
+
+``_fragment``
+
+ .. versionadded:: 3.2
+    The ``_fragment`` parameter was introduced in Symfony 3.2.
+
+    Used to set the fragment identifier, the optional last part of a URL that
+    starts with a ``#`` character and is used to identify a portion of a document.
 
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
