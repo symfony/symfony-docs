@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-09-23T16:46:57Z
+
+I agree with @xabbuh on the short array syntax, but I like the other changes. 👍
+
+If you can update this PR to remove the short array syntax, please do so. Otherwise, we'll do while merging.
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2016-09-23T17:37:12Z
+
+Short array syntax reverted.
