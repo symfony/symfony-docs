@@ -86,7 +86,7 @@ to creating a page?
 #. *Create a controller*: The method below the route - ``numberAction()`` - is called
    the *controller*: this is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
-   in their own section, including how to return JSON responses;
+   in their own section, including how to return JSON responses.
 
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
@@ -134,7 +134,7 @@ variable so we can render that::
             $number = mt_rand(0, 100);
 
             return $this->render('lucky/number.html.twig', array(
-                'number' => $number
+                'number' => $number,
             ));
         }
     }
@@ -184,7 +184,7 @@ So what about the other directories in the project?
 
 ``var/``
     This is where automatically-created files are stored, like cache files
-    (``var/cache/``) and logs (``var/logs/``).
+    (``var/cache/``), logs (``var/logs/``) and sessions (``var/sessions/``).
 
 ``vendor/``
     Third-party (i.e. "vendor") libraries live here! These are downloaded via the `Composer`_
