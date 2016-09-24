@@ -81,7 +81,7 @@ to creating a page?
 #. *Create a controller*: The method below the route - ``numberAction()`` - is called
    the *controller*: this is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
-   in their own section, including how to return JSON responses;
+   in their own section, including how to return JSON responses.
 
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
@@ -129,7 +129,7 @@ variable so we can render that::
             $number = mt_rand(0, 100);
 
             return $this->render('lucky/number.html.twig', array(
-                'number' => $number
+                'number' => $number,
             ));
         }
     }
