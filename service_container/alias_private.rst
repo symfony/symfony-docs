@@ -134,7 +134,7 @@ Deprecating Services
 --------------------
 
 .. versionadded:: 2.8
-    The ``deprecated`` setting was introduced in Symfony 2.8.
+    The ``deprecated`` option was introduced in Symfony 2.8.
 
 Once you have decided to deprecate the use of a service (because it is outdated
 or you decided not to maintain it anymore), you can deprecate its definition:
