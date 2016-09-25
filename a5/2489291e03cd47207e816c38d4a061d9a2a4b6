@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-06-27T15:10:29Z
+
+I think this is a good idea. But can you please wrap this in a `tip` directive?
+
+---------------------------------------------------------------------------
+
+by mgkimsal at 2016-06-27T17:28:34Z
+
+Updated with tip syntax.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-07T19:00:02Z
+
+A while ago we updated the http://symfony.com/roadmap page to recommend to install the latest Symfony version and not the LTS:
+
+![recommended_versions](https://cloud.githubusercontent.com/assets/73419/16665941/b99ec74c-4485-11e6-8653-215e4bdf314c.png)
+
+We may need to update the /download page to avoid misunderstandings.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-03T07:56:43Z
+
+To be honest ... I'm not that sure that this `tip` is needed. I think it's too obvious ... but I'm willing to read other opinions about this. Thanks.
+
+---------------------------------------------------------------------------
+
+by mgkimsal at 2016-08-03T11:57:52Z
+
+@javie - it's not that obvious to me - it's precisely why i made the PR.  Others feel differently, and the suggestions were to do it another way, and now yours is 'not at all'.  I won't be gutted either way, but I will say it was confusing.  Seeing "hey, there's an LTS" then using it, then 2 paragraphs later on the same page commands not working... it was totally non-obvious as to what the issue was.
