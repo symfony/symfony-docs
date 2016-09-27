@@ -100,6 +100,7 @@ Next, register this as a service and tag it with ``form.type``:
         services:
             app.form.type.task:
                 class: AppBundle\Form\TaskType
+                arguments: ['@doctrine.orm.entity_manager']
                 tags:
                     - { name: form.type, alias: app_task }
 
@@ -113,6 +114,7 @@ Next, register this as a service and tag it with ``form.type``:
 
             <services>
                 <service id="app.form.type.task" class="AppBundle\Form\TaskType">
+                    <argument type="service" id="doctrine.orm.entity_manager"/>
                     <tag name="form.type" alias="app_task" />
                 </service>
             </services>
@@ -126,6 +128,7 @@ Next, register this as a service and tag it with ``form.type``:
                 'app.form.type.task',
                 'AppBundle\Form\TaskType'
             )
+            ->addArgument('@doctrine.orm.entity_manager')
             ->addTag('form.type', array(
                 'alias' => 'app_task',
             ))
