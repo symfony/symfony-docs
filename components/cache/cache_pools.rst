@@ -169,7 +169,7 @@ is ``getItem($key)``, which returns the cache item identified by the given key::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-    $cache = new FilesystemAdapter('app.cache')
+    $cache = new FilesystemAdapter('app.cache');
     $latestNews = $cache->getItem('latest_news');
 
 If no item is defined for the given key, the method doesn't return a ``null``
