@@ -27,7 +27,7 @@ FriendsOfPHP organization.
 .. note::
 
     To enable the ``security:check`` command, make sure the
-    `SensioDistributionBundle`_ is enabled in your application.
+    `SensioDistributionBundle`_ is installed and enabled in your application.
 
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`SensioDistributionBundle`: https://packagist.org/packages/sensio/distribution-bundle
+.. _`SensioDistributionBundle`: https://github.com/sensiolabs/SensioDistributionBundle
