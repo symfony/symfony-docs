@@ -4,36 +4,10 @@ Prevent Multiple Executions of a Console Command
 A simple but effective way to prevent multiple executions of the same command in
 a single server is to use **file locks**. The Filesystem component provides a
 :doc:`LockHandler </components/filesystem/lock_handler>` class that eases the
-creation and release of these locks::
+creation and release of these locks.
 
-    // ...
-    use Symfony\Component\Filesystem\LockHandler;
-
-    class UpdateContentsCommand extends Command
-    {
-        // ...
-
-        protected function execute(InputInterface $input, OutputInterface $output)
-        {
-            // create the lock (tip: use the command name as the lock name
-            // to ensure its uniqueness)
-            $lock = new LockHandler('update:contents');
-            if (!$lock->lock()) {
-                $output->writeln('The command is already running in another process.');
-
-                return 0;
-            }
-
-            // ...
-
-            // if not released explicitly, Symfony releases the lock
-            // automatically when the execution of the command ends
-            $lock->release();
-        }
-    }
-
-The Console component provides a PHP trait called ``LockableTrait`` that adds
-two convenient methods to lock and release commands::
+In addition, the Console component provides a PHP trait called ``LockableTrait``
+that adds two convenient methods to lock and release commands::
 
     // ...
     use Symfony\Component\Console\Command\LockableTrait;
