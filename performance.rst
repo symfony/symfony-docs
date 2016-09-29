@@ -6,8 +6,7 @@ Performance
 
 Symfony is fast, right out of the box. Of course, if you really need speed,
 there are many ways that you can make Symfony even faster. In this chapter,
-you'll explore many of the most common and powerful ways to make your Symfony
-application even faster.
+you'll explore some of the ways to make your Symfony application even faster.
 
 .. index::
    single: Performance; Byte code cache
@@ -15,12 +14,13 @@ application even faster.
 Use a Byte Code Cache (e.g. OPcache)
 ------------------------------------
 
-One of the best (and easiest) things that you should do to improve your performance
-is to use a "byte code cache". The idea of a byte code cache is to remove
-the need to constantly recompile the PHP source code. There are a number of
-`byte code caches`_ available, some of which are open source. As of PHP 5.5,
-PHP comes with `OPcache`_ built-in. For older versions, the most widely used
-byte code cache is `APC`_.
+The first thing that you should do to improve your performance is to use a
+"byte code cache". These caches store the compiled PHP files to avoid having
+to recompile them for every request.
+
+There are a number of `byte code caches`_ available, some of which are open
+source. As of PHP 5.5, PHP comes with `OPcache`_ built-in. For older versions,
+the most widely used byte code cache is `APC`_.
 
 Using a byte code cache really has no downside, and Symfony has been architected
 to perform really well in this type of environment.
@@ -28,22 +28,26 @@ to perform really well in this type of environment.
 Further Optimizations
 ~~~~~~~~~~~~~~~~~~~~~
 
-Byte code caches usually monitor the source files for changes. This ensures
-that if the source of a file changes, the byte code is recompiled automatically.
-This is really convenient, but obviously adds overhead.
+Most byte code caches monitor the source files for changes. This ensures that if
+the source of a file changes, the byte code is recompiled automatically.
+This is really convenient, but it adds overhead.
 
 For this reason, some byte code caches offer an option to disable these checks.
-Obviously, when disabling these checks, it will be up to the server admin
-to ensure that the cache is cleared whenever any source files change. Otherwise,
-the updates you've made won't be seen.
+For example, to disable these checks in APC, simply add ``apc.stat=0`` to your
+``php.ini`` configuration.
 
-For example, to disable these checks in APC, simply add ``apc.stat=0`` to
-your ``php.ini`` configuration.
+When disabling these checks, it will be up to the server administrators to
+ensure that the cache is cleared whenever any source files change. Otherwise,
+the updates you've made in the application won't be seen.
+
+For the same reasons, the byte code cache must also be cleared when deploying
+the application (for example by calling ``apc_clear_cache()`` PHP function when
+using APC and ``opcache_reset()`` when using OPCache).
 
 .. index::
    single: Performance; Autoloader
 
-Configure the PHP realpath cache
+Configure the PHP realpath Cache
 --------------------------------
 
 PHP uses an internal cache to store the result of mapping file paths to their
@@ -54,7 +58,7 @@ systems.
 By default PHP sets a ``realpath_cache_size`` of ``16K`` which is too low for
 Symfony. Consider updating this value at least to ``4096K``. In addition, cached
 paths are only stored for ``120`` seconds by default. Consider updating this
-value too using the ``realpath_cache_ttl`` option in your ``php.ini`` file:
+value too using the ``realpath_cache_ttl`` option:
 
 .. code-block:: ini
 
@@ -85,11 +89,14 @@ your deploy process:
 
     $ composer dump-autoload --optimize --no-dev --classmap-authoritative
 
-The ``--optimize`` option dumps every PSR-0 and PSR-4 compatible class used in
-your application. The ``--no-dev`` option excludes the classes that are only
-needed in the development environment (e.g. tests). The ``--classmap-authoritative``
-option prevents Composer from scanning the file system for classes that are not
-found in the class map.
+``--optimize``
+  Dumps every PSR-0 and PSR-4 compatible class used in your application.
+``--no-dev``
+  Excludes the classes that are only needed in the development environment
+  (e.g. tests).
+``--classmap-authoritative``
+  Prevents Composer from scanning the file system for classes that are not
+  found in the class map.
 
 Caching the Autoloader with APC
 -------------------------------
