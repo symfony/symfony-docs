@@ -363,7 +363,7 @@ With all of this in mind, check out this advanced example:
         {
             /**
              * @Route(
-             *     "/articles/{_locale}/{year}/{title}.{_format}",
+             *     "/articles/{_locale}/{year}/{slug}.{_format}",
              *     defaults={"_format": "html"},
              *     requirements={
              *         "_locale": "en|fr",
@@ -372,7 +372,7 @@ With all of this in mind, check out this advanced example:
              *     }
              * )
              */
-            public function showAction($_locale, $year, $title)
+            public function showAction($_locale, $year, $slug)
             {
             }
         }
@@ -381,7 +381,7 @@ With all of this in mind, check out this advanced example:
 
         # app/config/routing.yml
         article_show:
-          path:     /articles/{_locale}/{year}/{title}.{_format}
+          path:     /articles/{_locale}/{year}/{slug}.{_format}
           defaults: { _controller: AppBundle:Article:show, _format: html }
           requirements:
               _locale:  en|fr
@@ -398,7 +398,7 @@ With all of this in mind, check out this advanced example:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show"
-                path="/articles/{_locale}/{year}/{title}.{_format}">
+                path="/articles/{_locale}/{year}/{slug}.{_format}">
 
                 <default key="_controller">AppBundle:Article:show</default>
                 <default key="_format">html</default>
@@ -418,7 +418,7 @@ With all of this in mind, check out this advanced example:
         $collection = new RouteCollection();
         $collection->add(
             'article_show',
-            new Route('/articles/{_locale}/{year}/{title}.{_format}', array(
+            new Route('/articles/{_locale}/{year}/{slug}.{_format}', array(
                 '_controller' => 'AppBundle:Article:show',
                 '_format'     => 'html',
             ), array(
