@@ -120,7 +120,7 @@ Thanks to these two routes:
 
 * If the user goes to ``/blog/*``, the second route is matched and ``showAction()``
   is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable is
-  passed to ``showAction`` matching that value. For example, if the user goes to
+  passed to ``showAction()`` matching that value. For example, if the user goes to
   ``/blog/yay-routing``, then ``$slug`` will equal ``yay-routing``.
 
 Whenever you have a ``{placeholder}`` in your route path, that portion becomes a
@@ -502,11 +502,11 @@ The pattern has three parts, each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-=============  ==================  ==============
+=============  ==================  ================
 Bundle         Controller Class    Method Name
-=============  ==================  ==============
-``AppBundle``  ``BlogController``  ``showAction``
-=============  ==================  ==============
+=============  ==================  ================
+``AppBundle``  ``BlogController``  ``showAction()``
+=============  ==================  ================
 
 The controller might look like this::
 
@@ -524,7 +524,7 @@ The controller might look like this::
     }
 
 Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
-=> ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
+=> ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction()``).
 
 You could also refer to this controller using its fully-qualified class name
 and method: ``AppBundle\Controller\BlogController::showAction``. But if you
