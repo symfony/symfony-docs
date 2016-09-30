@@ -90,7 +90,7 @@ a view sub-system. This event is called *only* if the Controller does *not*
 return a ``Response`` object. The purpose of the event is to allow some
 other return value to be converted into a ``Response``.
 
-The value returned by the Controller is accessible via the ``getControllerResult``
+The value returned by the Controller is accessible via the ``getControllerResult()``
 method::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;

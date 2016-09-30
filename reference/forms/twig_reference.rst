@@ -136,7 +136,7 @@ form or collection of fields, each underlying form row will be rendered.
     {# render a widget, but add a "foo" class to it #}
     {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
 
-The second argument to ``form_widget`` is an array of variables. The most
+The second argument to ``form_widget()`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
 to the HTML widget. In some cases, certain types also have other template-related
 options that can be passed. These are discussed on a type-by-type basis.
@@ -159,7 +159,7 @@ label, errors and widget.
     {# render a field row, but display a label with text "foo" #}
     {{ form_row(form.name, {'label': 'foo'}) }}
 
-The second argument to ``form_row`` is an array of variables. The templates
+The second argument to ``form_row()`` is an array of variables. The templates
 provided in Symfony only allow to override the label as shown in the example
 above.
 
@@ -272,7 +272,7 @@ Look at the ``form_label`` as an example:
 This block makes use of several variables: ``compound``, ``label_attr``,
 ``required``, ``label``, ``name`` and ``translation_domain``. These variables
 are made available by the form rendering system. But more importantly, these
-are the variables that you can override when calling ``form_label`` (since
+are the variables that you can override when calling ``form_label()`` (since
 in this example, you're rendering the label).
 
 The exact variables available to override depends on which part of the form
@@ -284,8 +284,8 @@ be able to see what options you have available.
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the Form component calls ``buildView`` and
-    ``finishView`` on each "node" of your form tree. To see what "view"
+    object of your form when the Form component calls ``buildView()`` and
+    ``finishView()`` on each "node" of your form tree. To see what "view"
     variables a particular field has, find the source code for the form
     field (and its parent fields) and look at the above two functions.
 

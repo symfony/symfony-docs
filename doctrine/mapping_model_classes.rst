@@ -26,7 +26,7 @@ register the mappings for your model classes.
 .. versionadded:: 2.6
     Support for defining namespace aliases was introduced in Symfony 2.6.
     It is safe to define the aliases with older versions of Symfony as
-    the aliases are the last argument to ``createXmlMappingDriver`` and
+    the aliases are the last argument to ``createXmlMappingDriver()`` and
     are ignored by PHP if that argument doesn't exist.
 
 In your bundle class, write the following code to register the compiler pass.

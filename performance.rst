@@ -52,7 +52,7 @@ automatically find any new classes that you've placed in the registered
 directories.
 
 Unfortunately, this comes at a cost, as the loader iterates over all configured
-namespaces to find a particular file, making ``file_exists`` calls until it
+namespaces to find a particular file, making ``file_exists()`` calls until it
 finally finds the file it's looking for.
 
 The simplest solution is to tell Composer to build a "class map" (i.e. a

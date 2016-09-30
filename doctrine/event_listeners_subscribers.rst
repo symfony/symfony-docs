@@ -9,7 +9,7 @@ How to Register Event Listeners and Subscribers
 Doctrine packages a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
 :doc:`services </service_container>` and tell Doctrine to notify those
-objects whenever a certain action (e.g. ``prePersist``) happens within Doctrine.
+objects whenever a certain action (e.g. ``prePersist()``) happens within Doctrine.
 This could be useful, for example, to create an independent search index
 whenever an object in your database is saved.
 
@@ -122,7 +122,7 @@ Creating the Listener Class
 
 In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postPersist``. The class behind that service must have
-a ``postPersist`` method, which will be called when the event is dispatched::
+a ``postPersist()`` method, which will be called when the event is dispatched::
 
     // src/AppBundle/EventListener/SearchIndexer.php
     namespace AppBundle\EventListener;

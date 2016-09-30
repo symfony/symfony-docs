@@ -473,16 +473,16 @@ The two different types of transformers help convert to and from each of these
 types of data:
 
 **Model transformers**:
-    - ``transform``: "model data" => "norm data"
-    - ``reverseTransform``: "norm data" => "model data"
+    - ``transform()``: "model data" => "norm data"
+    - ``reverseTransform()``: "norm data" => "model data"
 
 **View transformers**:
-    - ``transform``: "norm data" => "view data"
-    - ``reverseTransform``: "view data" => "norm data"
+    - ``transform()``: "norm data" => "view data"
+    - ``reverseTransform()``: "view data" => "norm data"
 
 Which transformer you need depends on your situation.
 
-To use the view transformer, call ``addViewTransformer``.
+To use the view transformer, call ``addViewTransformer()``.
 
 So why Use the Model Transformer?
 ---------------------------------

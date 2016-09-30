@@ -44,7 +44,7 @@ create your form::
     }
 
 Finally, the ``entity_manager`` option is accessible in the ``$options`` argument
-of your ``buildForm`` method::
+of your ``buildForm()`` method::
 
     // src/AppBundle/Form/TaskType.php
     // ...

@@ -127,7 +127,7 @@ This will provide you with two new assertions:
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpMatchesFormat`
     is like the previous method but accepts placeholders in the expected dump,
-    based on the ``assertStringMatchesFormat`` method provided by PHPUnit.
+    based on the ``assertStringMatchesFormat()`` method provided by PHPUnit.
 
 Example::
 

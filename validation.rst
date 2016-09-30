@@ -114,7 +114,7 @@ following:
 Using the ``validator`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, to actually validate an ``Author`` object, use the ``validate`` method
+Next, to actually validate an ``Author`` object, use the ``validate()`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify if the data on the object satisfies those
@@ -463,7 +463,7 @@ Constraint Targets
 ------------------
 
 Constraints can be applied to a class property (e.g. ``name``), a public
-getter method (e.g. ``getFullName``) or an entire class. Property constraints
+getter method (e.g. ``getFullName()``) or an entire class. Property constraints
 are the most common and easy to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
@@ -563,7 +563,7 @@ as "getters".
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
 doesn't match the first name of the user (for security reasons). You can
-do this by creating an ``isPasswordLegal`` method, and then asserting that
+do this by creating an ``isPasswordLegal()`` method, and then asserting that
 this method must return ``true``:
 
 .. configuration-block::

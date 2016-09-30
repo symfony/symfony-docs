@@ -25,7 +25,7 @@ For more information about how to create and work with expressions, see
 Security: Complex Access Controls with Expressions
 --------------------------------------------------
 
-In addition to a role like ``ROLE_ADMIN``, the ``isGranted`` method also
+In addition to a role like ``ROLE_ADMIN``, the ``isGranted()`` method also
 accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     use Symfony\Component\ExpressionLanguage\Expression;
@@ -42,7 +42,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
 user object's ``isSuperAdmin()`` method returns ``true``, then access will
-be granted (note: your User object may not have an ``isSuperAdmin`` method,
+be granted (note: your User object may not have an ``isSuperAdmin()`` method,
 that method is invented for this example).
 
 This uses an expression and you can learn more about the expression language
@@ -59,12 +59,12 @@ Inside the expression, you have access to a number of variables:
     :ref:`role hierarchy <security-role-hierarchy>` but not including the
     ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``object``
-     The object (if any) that's passed as the second argument to ``isGranted``.
+     The object (if any) that's passed as the second argument to ``isGranted()``.
 ``token``
     The token object.
 ``trust_resolver``
     The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
-    object: you'll probably use the ``is_*`` functions below instead.
+    object: you'll probably use the ``is_*()`` functions below instead.
 
 Additionally, you have access to a number of functions inside the expression:
 
@@ -72,7 +72,7 @@ Additionally, you have access to a number of functions inside the expression:
     Returns ``true`` if the user is authenticated via "remember-me" or authenticated
     "fully" - i.e. returns true if the user is "logged in".
 ``is_anonymous``
-    Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with the ``isGranted`` function.
+    Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with the ``isGranted()`` function.
 ``is_remember_me``
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
 ``is_fully_authenticated``
@@ -83,9 +83,9 @@ Additionally, you have access to a number of functions inside the expression:
 
 .. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
-    The ``is_remember_me`` and ``is_authenticated_fully`` functions are *similar*
+    The ``is_remember_me()`` and ``is_authenticated_fully()`` functions are *similar*
     to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
-    with the ``isGranted`` function - but they are **not** the same. The
+    with the ``isGranted()`` function - but they are **not** the same. The
     following shows the difference::
 
         use Symfony\Component\ExpressionLanguage\Expression;
@@ -100,7 +100,7 @@ Additionally, you have access to a number of functions inside the expression:
 
     Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
     behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,
-    the ``is_remember_me`` function *only* returns true if the user is authenticated
+    the ``is_remember_me()`` function *only* returns true if the user is authenticated
     via a remember-me cookie and ``is_fully_authenticated`` *only* returns
     true if the user has actually logged in during this session (i.e. is
     full-fledged).

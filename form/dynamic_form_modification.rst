@@ -255,8 +255,8 @@ done in the constructor::
 .. note::
 
     You might wonder, now that you have access to the User (through the token
-    storage), why not just use it directly in ``buildForm`` and omit the
-    event listener? This is because doing so in the ``buildForm`` method
+    storage), why not just use it directly in ``buildForm()`` and omit the
+    event listener? This is because doing so in the ``buildForm()`` method
     would result in the whole form type being modified and not just this
     one form instance. This may not usually be a problem, but technically
     a single form type could be used on a single request to create many forms

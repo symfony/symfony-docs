@@ -59,7 +59,7 @@ You can also use the third argument of the helper to force an absolute URL:
 .. note::
 
     If you already set a URL in the constructor, using the third argument of
-    ``getUrl`` will not affect the generated URL.
+    ``getUrl()`` will not affect the generated URL.
 
 Versioning
 ----------

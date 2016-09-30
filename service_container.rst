@@ -151,7 +151,7 @@ later how you can configure a service that has multiple instances in the
 
     In this example, the controller extends Symfony's base Controller, which
     gives you access to the service container itself. You can then use the
-    ``get`` method to locate and retrieve the ``app.mailer`` service from
+    ``get()`` method to locate and retrieve the ``app.mailer`` service from
     the service container.
 
 .. _service-container-parameters:

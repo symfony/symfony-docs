@@ -5,7 +5,7 @@ Progress Helper
 ===============
 
 .. versionadded:: 2.3
-    The ``setCurrent`` method was introduced in Symfony 2.3.
+    The ``setCurrent()`` method was introduced in Symfony 2.3.
 
 .. caution::
 

@@ -255,14 +255,14 @@ your controller::
     
 .. caution::
 
-    Be aware that the ``createView()`` method should be called *after* ``handleRequest``
+    Be aware that the ``createView()`` method should be called *after* ``handleRequest()``
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
 
 .. versionadded:: 2.3
     The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
     was introduced in Symfony 2.3. Previously, the ``$request`` was passed
-    to the ``submit`` method - a strategy which is deprecated and will be
+    to the ``submit()`` method - a strategy which is deprecated and will be
     removed in Symfony 3.0. For details on that method, see :ref:`form-submit-request`.
 
 This controller follows a common pattern for handling forms, and has three
@@ -653,7 +653,7 @@ the choice is ultimately up to you.
 
     Every form needs to know the name of the class that holds the underlying
     data (e.g. ``AppBundle\Entity\Task``). Usually, this is just guessed
-    based off of the object passed to the second argument to ``createForm``
+    based off of the object passed to the second argument to ``createForm()``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
     good idea to explicitly specify the ``data_class`` option by adding the

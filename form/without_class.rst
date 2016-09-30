@@ -39,8 +39,8 @@ By default, a form actually assumes that you want to work with arrays of
 data, instead of an object. There are exactly two ways that you can change
 this behavior and tie the form to an object instead:
 
-#. Pass an object when creating the form (as the first argument to ``createFormBuilder``
-   or the second argument to ``createForm``);
+#. Pass an object when creating the form (as the first argument to ``createFormBuilder()``
+   or the second argument to ``createForm()``);
 
 #. Declare the ``data_class`` option on your form.
 

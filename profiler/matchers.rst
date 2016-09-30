@@ -104,7 +104,7 @@ matcher::
 
 .. versionadded:: 2.6
     The :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface` was
-    introduced in Symfony 2.6. Prior, you had to use the ``isGranted`` method of
+    introduced in Symfony 2.6. Prior, you had to use the ``isGranted()`` method of
     :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
 
 Then, configure a new service and set it as ``private`` because the application

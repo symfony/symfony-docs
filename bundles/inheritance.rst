@@ -40,7 +40,7 @@ simply by creating a file with the same name.
 Overriding Controllers
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you want to add some functionality to the ``registerAction`` of a
+Suppose you want to add some functionality to the ``registerAction()`` of a
 ``RegistrationController`` that lives inside FOSUserBundle. To do so,
 just create your own ``RegistrationController.php`` file, override the bundle's
 original method, and change its functionality::

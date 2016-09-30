@@ -41,7 +41,7 @@ feature allows to validate your objects dynamically.
 
 Suppose that, for security reasons, you want to validate that a password field
 doesn't match the first name of the user. First, create a public method called
-``isPasswordSafe`` to define this custom validation logic::
+``isPasswordSafe()`` to define this custom validation logic::
 
     public function isPasswordSafe()
     {

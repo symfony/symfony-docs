@@ -129,7 +129,7 @@ Using Expressions for Complex Security Restrictions
 
 If your security logic is a little bit more complex, you can use an :doc:`expression </components/expression_language>`
 inside ``@Security``. In the following example, a user can only access the
-controller if their email matches the value returned by the ``getAuthorEmail``
+controller if their email matches the value returned by the ``getAuthorEmail()``
 method on the ``Post`` object:
 
 .. code-block:: php
@@ -258,7 +258,7 @@ of magnitude easier than :doc:`ACLs </security/acl>` and will give
 you the flexibility you need in almost all cases.
 
 First, create a voter class. The following example shows a voter that implements
-the same ``getAuthorEmail`` logic you used above:
+the same ``getAuthorEmail()`` logic you used above:
 
 .. code-block:: php
 

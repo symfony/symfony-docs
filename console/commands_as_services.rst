@@ -14,7 +14,7 @@ While making life easier, this has some limitations:
 * There's no way to conditionally register your service based on the environment
   or availability of some dependencies;
 * You can't access the container in the ``configure()`` method (because
-  ``setContainer`` hasn't been called yet);
+  ``setContainer()`` hasn't been called yet);
 * You can't use the same class to create many commands (i.e. each with
   different configuration).
 

@@ -116,7 +116,7 @@ type
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
 This required option is the fully qualified class name or one of the PHP
-datatypes as determined by PHP's ``is_`` functions.
+datatypes as determined by PHP's ``is_()`` functions.
 
 * :phpfunction:`array <is_array>`
 * :phpfunction:`bool <is_bool>`
@@ -134,7 +134,7 @@ datatypes as determined by PHP's ``is_`` functions.
 * :phpfunction:`scalar <is_scalar>`
 * :phpfunction:`string <is_string>`
 
-Also, you can use ``ctype_`` functions from corresponding
+Also, you can use ``ctype_()`` functions from corresponding
 `built-in PHP extension`_. Consider `a list of ctype functions`_:
 
 * :phpfunction:`alnum <ctype_alnum>`

@@ -362,7 +362,7 @@ giving you a nice API for uploading files.
     You will learn more about the ``Link`` and ``Form`` objects in the
     :ref:`Crawler <testing-crawler>` section below.
 
-The ``request`` method can also be used to simulate form submissions directly
+The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
 
     // Directly submit a form (but using the Crawler is easier!)

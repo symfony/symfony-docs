@@ -630,7 +630,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
     Of course, you can also issue complex queries, which you'll learn more
     about in the :ref:`doctrine-queries` section.
 
-You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
+You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
 to easily fetch objects based on multiple conditions::
 
     $repository = $this->getDoctrine()->getRepository('AppBundle:Product');

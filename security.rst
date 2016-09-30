@@ -1064,7 +1064,7 @@ this is a quirk. If you're not logged in, the user is technically the string
 ``null`` for convenience.
 
 The point is this: always check to see if the user is logged in before using
-the User object, and use the ``isGranted`` method (or
+the User object, and use the ``isGranted()`` method (or
 :ref:`access_control <security-authorization-access-control>`) to do this::
 
     // yay! Use this to see if the user is logged in

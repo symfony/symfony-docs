@@ -65,17 +65,17 @@ class. In most cases, it's easier to extend the abstract class::
         }
     }
 
-The only method you **must** implement is the ``getExtendedType`` function.
+The only method you **must** implement is the ``getExtendedType()`` function.
 It is used to indicate the name of the form type that will be extended
 by your extension.
 
 .. tip::
 
-    The value you return in the ``getExtendedType`` method corresponds
-    to the value returned by the ``getName`` method in the form type class
+    The value you return in the ``getExtendedType()`` method corresponds
+    to the value returned by the ``getName()`` method in the form type class
     you wish to extend.
 
-In addition to the ``getExtendedType`` function, you will probably want
+In addition to the ``getExtendedType()`` function, you will probably want
 to override one of the following methods:
 
 * ``buildForm()``
@@ -169,9 +169,9 @@ the database::
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
 
-#. Override the ``configureOptions`` method in order to add an ``image_path``
+#. Override the ``configureOptions()`` method in order to add an ``image_path``
    option;
-#. Override the ``buildView`` methods in order to pass the image URL to the
+#. Override the ``buildView()`` methods in order to pass the image URL to the
    view.
 
 The logic is the following: when adding a form field of type ``file``,
@@ -317,7 +317,7 @@ You can modify several form types at once by specifying their common parent
 (:doc:`/reference/forms/types`). For example, several form types natively
 available in Symfony inherit from the ``text`` form type (such as ``email``,
 ``search``, ``url``, etc.). A form type extension applying to ``text``
-(i.e. whose ``getExtendedType`` method returns ``text``) would apply to all of
+(i.e. whose ``getExtendedType()`` method returns ``text``) would apply to all of
 these form types.
 
 In the same way, since **most** form types natively available in Symfony inherit
