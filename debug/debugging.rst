@@ -59,3 +59,28 @@ locations. To avoid problems, you can either tell your IDE to ignore the PHP
 cache files, or you can change the extension used by Symfony for these files::
 
     $kernel->loadClassCache('classes', '.php.cache');
+
+Using the VarDumper
+-------------------
+
+To ease the debugging of a variable in your application, you can use the
+``VarDumper`` component to dump the content of a variable. The component
+provides an alternative to the PHP ``var_dump`` function, in the form of
+``dump``.
+
+It is as easy as the code below::
+
+    // Create a variable with a value...
+    $myVar = ...;
+
+    // ... and dump it
+    dump($myVar);
+
+.. tip::
+
+    The dumper is not limited to scalar values. Arrays and objects can also be
+    visualized using the ``VarDumper``.
+
+If the dumper is used on a command line, the result is a formatted string.
+Otherwise, the result is a piece of HTML, which can be expanded to show nested
+structures in the dumped value.
