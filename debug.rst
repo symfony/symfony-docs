@@ -88,3 +88,28 @@ that can help you visualize and find the information.
 
     When in doubt how to use a console command, open the help section by
     appending the ``--help`` option.
+
+Using the VarDumper
+-------------------
+
+To ease the debugging of a variable in your application, you can use the
+``VarDumper`` component to dump the content of a variable. The component
+provides an alternative to the PHP ``var_dump`` function, in the form of
+``dump``.
+
+It is as easy as the code below::
+
+    // Create a variable with a value...
+    $myVar = ...;
+
+    // ... and dump it
+    dump($myVar);
+
+.. tip::
+
+    The dumper is not limited to scalar values. Arrays and objects can also be
+    visualized using the ``VarDumper``.
+
+If the dumper is used on a command line, the result is a formatted string.
+Otherwise, the result is a piece of HTML, which can be expanded to show nested
+structures in the dumped value.
