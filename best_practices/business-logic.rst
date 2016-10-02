@@ -35,7 +35,7 @@ and put things there:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony3-project/
     ├─ app/
     ├─ src/
     │  ├─ Acme/
@@ -180,7 +180,7 @@ The three entities defined by our sample blog application are a good example:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony3-project/
     ├─ ...
     └─ src/
        └─ AppBundle/
