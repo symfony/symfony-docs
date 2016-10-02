@@ -575,7 +575,7 @@ Creating links to other pages in your application is one of the most common
 jobs for a template. Instead of hardcoding URLs in templates, use the ``path``
 Twig function (or the ``router`` helper in PHP) to generate URLs based on
 the routing configuration. Later, if you want to modify the URL of a particular
-page, all you'll need to do is change the routing configuration; the templates
+page, all you'll need to do is change the routing configuration: the templates
 will automatically generate the new URL.
 
 First, link to the "_welcome" page, which is accessible via the following routing
@@ -706,7 +706,7 @@ route:
 
 In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, revisit the
-``recent_list`` template from the previous section and link to the articles
+``recent_list.html.twig`` template from the previous section and link to the articles
 correctly:
 
 .. configuration-block::
@@ -905,14 +905,14 @@ block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
 You will need to run the ``php app/console assets:install target [--symlink]``
-command, which moves (or symlinks) files into the correct location. (target
+command, which copies (or symlinks) files into the correct location. (target
 is by default "web").
 
 .. code-block:: html+twig
 
     <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
-The end result is a page that includes both the ``main.css`` and ``contact.css``
+The end result is a page that includes ``main.js`` and both the ``main.css`` and ``contact.css``
 stylesheets.
 
 Referencing the Request, User or Session
@@ -934,7 +934,7 @@ Suppose ``description`` equals ``I <3 this product``:
 .. code-block:: twig
 
     <!-- output escaping is on automatically -->
-    {{ description }} <!-- I &lt3 this product -->
+    {{ description }} <!-- I &lt;3 this product -->
 
     <!-- disable output escaping with the raw filter -->
     {{ description|raw }} <!-- I <3 this product -->

@@ -112,14 +112,14 @@ There are *two* ways to know *what* keys you can configure:
 
 #. Use the :doc:`Reference Section </reference/index>`;
 
-#. Use the ``config:dump`` command;
+#. Use the ``config:dump-reference`` command.
 
 For example, if you want to configure something in Twig, you can see an example
 dump of all available configuration options by running:
 
 .. code-block:: terminal
 
-    $ php app/console config:dump twig
+    $ php app/console config:dump-reference twig
 
 .. index::
    single: Environments; Introduction
@@ -183,7 +183,7 @@ can also load XML files or PHP files.
 
 .. _config-parameter-intro:
 
-The parameters key: Parameters (Variables)
+The parameters Key: Parameters (Variables)
 ------------------------------------------
 
 Another special key is called ``parameters``: it's used to define *variables* that
