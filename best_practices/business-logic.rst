@@ -15,7 +15,7 @@ Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony3-project/
     ├─ app/
     ├─ src/
     │  └─ AppBundle/
