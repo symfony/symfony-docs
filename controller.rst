@@ -188,6 +188,14 @@ For more information, see the :doc:`Routing chapter </routing>`.
 
 .. tip::
 
+    The ``redirect()`` method does not check it's input. If you use user input 
+    directly as it's parameter, you might open up your page to unvalidated 
+    redirects and forwards, which is in the OWASP top 10 of web application 
+    security flaws. For more information, see https://www.owasp.org/index.php/Open_redirect
+
+
+.. tip::
+
     The ``redirectToRoute()`` method is simply a shortcut that creates a
     ``Response`` object that specializes in redirecting the user. It's
     equivalent to::
