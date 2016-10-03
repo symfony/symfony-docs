@@ -21,7 +21,7 @@ How can the Expression Engine Help Me?
 --------------------------------------
 
 The purpose of the component is to allow users to use expressions inside
-configuration for more complex logic. For some examples, the Symfony2 Framework
+configuration for more complex logic. For some examples, the Symfony Framework
 uses expressions in security, for validation rules and in route matching.
 
 Besides using the component in the framework itself, the ExpressionLanguage
