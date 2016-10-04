@@ -6,8 +6,8 @@ How To Create Symfony Applications with Multiple Kernels
 
 In most Symfony applications, incoming requests are processed by the
 ``web/app.php`` front controller, which instantiates the ``app/AppKernel.php``
-class to create the application kernel that loads the bundles and generates the
-response.
+class to create the application kernel that loads the bundles and handles the
+request to generate the response.
 
 This single kernel approach is a convenient default provided by the Symfony
 Standard edition, but Symfony applications can define any number of kernels.
@@ -45,10 +45,8 @@ Step 1) Create a new Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of creating the new front controller from scratch, it's recommended to
-duplicate the existing ``web/app_dev.php`` and ``web/app.php`` files. For
-example, you can create ``web/api_dev.php`` and ``web/api.php`` (or
-``web/api/app_dev.php`` and ``web/api/app.php`` depending on your server
-configuration).
+duplicate the existing ones. For example, create ``web/api_dev.php`` from
+``web/app_dev.php`` and ``web/api.php`` from ``web/app.php``.
 
 Then, update the code of the new front controllers to instantiate the new kernel
 class instead of the usual ``AppKernel`` class::
@@ -121,6 +119,24 @@ config files or better, import them and override the needed options:
         - { resource: ../config_dev.yml }
 
     # override option values ...
+
+Executing Commands with a Different Kernel
+------------------------------------------
+
+The ``bin/console`` script used to run Symfony commands always uses the default
+``AppKernel`` class to build the application and load the commands. If you need
+to execute console commands using the new kernel, duplicate the ``bin/console``
+script and rename it (e.g. ``bin/api``).
+
+Then, replace the ``AppKernel`` instantiation by your own kernel instantiation
+(e.g. ``ApiKernel``) and now you can execute commands using the new kernel
+(e.g. ``php bin/api cache:clear``) Now you can use execute commands using the new kernel
+
+.. note::
+
+    The commands available for each console script (e.g. ``bin/console`` and
+    ``bin/api``) can differ because they depend on the bundles enabled for each
+    kernel, which could be different.
 
 Adding more Kernels to the Application
 --------------------------------------
