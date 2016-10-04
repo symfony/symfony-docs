@@ -112,7 +112,7 @@ and for the ``en`` locale:
 
 To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console debug:translation fr AcmeDemoBundle
 
@@ -162,7 +162,7 @@ to English and maybe you forgot to translate it.
 By default all domains are inspected, but it is possible to specify a single
 domain:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console debug:translation en AcmeDemoBundle --domain=messages
 
@@ -170,7 +170,7 @@ When bundles have a lot of messages, it is useful to display only the unused
 or only the missing messages, by using the ``--only-unused`` or ``--only-missing``
 switches:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console debug:translation en AcmeDemoBundle --only-unused
     $ php bin/console debug:translation en AcmeDemoBundle --only-missing

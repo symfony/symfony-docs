@@ -56,13 +56,13 @@ with these steps:
 #. Checkout the Subversion repository that will host this project. Suppose
    it is hosted on `Google code`_ and called ``myproject``:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
 #. Copy the Symfony project files in the Subversion folder:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ mv Symfony/* myproject/
 
@@ -72,7 +72,7 @@ with these steps:
    This makes use of the ``svn:ignore`` property, so that specific files can
    be ignored.
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ cd myproject/
         $ svn add --depth=empty app var var/cache var/logs app/config web
@@ -90,7 +90,7 @@ with these steps:
 
 #. The rest of the files can now be added and committed to the project:
 
-   .. code-block:: bash
+   .. code-block:: terminal
 
         $ svn add --force .
         $ svn ci -m "add basic Symfony Standard 3.X.Y"

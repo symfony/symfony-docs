@@ -82,6 +82,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
+    * :ref:`paths <reference-translator-paths>`
 * `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
@@ -204,21 +205,20 @@ ide
 
 **type**: ``string`` **default**: ``null``
 
-If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
-of the file paths in an exception message into a link, which will open that
-file in your IDE.
+Symfony can turn file paths seen in dumps and exception messages into links
+that will open in your preferred text editor or IDE.
 
-Symfony contains preconfigured URLs for some popular IDEs, you can set them
-using the following keys:
+Since every developer uses a different IDE, the recommended way to enable this
+feature is to configure it on a system level. This can be done by setting the
+``xdebug.file_link_format`` option in your ``php.ini`` configuration file.
 
-* ``textmate``
-* ``macvim``
-* ``emacs``
-* ``sublime``
+Alternatively, you can use this ``ide`` configuration key.
 
-You can also specify a custom URL string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if
-you use PHPstorm on the Mac OS platform, you will do something like:
+In both cases, the expected configuration value is a URL template that contains an
+``%f`` where the file path is expected and ``%l`` for the line number. When using
+the ``ide`` configuration key, percentages signs (``%``) must be escaped by
+doubling them. For example, if you use PHPstorm on the Mac OS platform, you will
+do something like:
 
 .. configuration-block::
 
@@ -250,16 +250,28 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. tip::
 
+    When running your app in a container or in a virtual machine, you can tell
+    Symfony to map files from the guest to the host by changing their prefix.
+    This map should be specified at the end of the URL template after a ``#``
+    using JSON-like key/values::
+
+        // /path/to/guest/.../file will be opened
+        // as /path/to/host/.../file on the host
+        // and /foo/.../file as /bar/.../file also
+        'myide://%f:%l#"/path/to/guest/":"/path/to/host/","/foo/":"/bar/"...'
+
+    .. versionadded:: 3.2
+        Guest to host mappings were introduced in Symfony 3.2.
+
+.. tip::
+
+    Symfony contains preconfigured URLs for some popular IDEs, you can set them
+    using the following values: ``textmate``, ``macvim``, ``emacs`` or ``sublime``.
+
+.. tip::
+
     If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
     be able to use this.
-
-Of course, since every developer uses a different IDE, it's better to set
-this on a system level. This can be done by setting the ``xdebug.file_link_format``
-in the ``php.ini`` configuration to the URL string.
-
-If you don't use Xdebug, another way is to set this URL string in the
-``SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT`` environment variable.
-If any of these configurations values are set, the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -299,7 +311,7 @@ trusted_hosts
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
-proxies, web frameworks, etc.). Basically, everytime the framework is
+proxies, web frameworks, etc.). Basically, every time the framework is
 generating an absolute URL (when sending an email to reset a password for
 instance), the host might have been manipulated by an attacker.
 
@@ -1239,6 +1251,16 @@ for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
 
+.. _reference-translator-paths:
+
+paths
+.....
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows to define an array of paths where the component will look
+for translation files.
+
 property_access
 ~~~~~~~~~~~~~~~
 
@@ -1527,6 +1549,7 @@ Full Default Configuration
                 enabled:              false
                 fallbacks:            [en]
                 logging:              "%kernel.debug%"
+                paths:                []
 
             # validation configuration
             validation:

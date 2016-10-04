@@ -276,7 +276,7 @@ up, it is your responsibility to clear the cache when you update your code
 or change its configuration. Execute this command to clear the cache in
 the ``prod`` environment:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console cache:clear --env=prod
 
@@ -293,13 +293,13 @@ your productivity by automating tedious and repetitive tasks.
 
 Run it without any arguments to learn more about its capabilities:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console
 
 The ``--help`` option helps you discover the usage of a command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console debug:router --help
 

@@ -39,7 +39,7 @@ instantiated.
 To solve this issue, and a bunch more, let's install and use the HttpKernel
 component:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/http-kernel
 

@@ -52,12 +52,12 @@ You now have access to a ``last_name`` argument in your command::
 
 The command can now be used in either of the following ways:
 
-.. code-block:: bash
+.. code-block:: terminal
 
-    $ php app/console app:greet Fabien
+    $ php bin/console app:greet Fabien
     Hi Fabien!
 
-    $ php app/console app:greet Fabien Potencier
+    $ php bin/console app:greet Fabien Potencier
     Hi Fabien Potencier!
 
 It is also possible to let an argument take a list of values (imagine you want
@@ -73,9 +73,9 @@ to greet all your friends). Only the last argument can be a list::
 
 To use this, just specify as many names as you want:
 
-.. code-block:: bash
+.. code-block:: terminal
 
-    $ php app/console app:greet Fabien Ryan Bernhard
+    $ php bin/console app:greet Fabien Ryan Bernhard
 
 You can access the ``names`` argument as an array::
 
@@ -137,13 +137,13 @@ Next, use this in the command to print the message multiple times::
 Now, when you run the task, you can optionally specify a ``--iterations``
 flag:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # no --iterations provided, the default (1) is used
-    $ php app/console app:greet Fabien
+    $ php bin/console app:greet Fabien
     Hi Fabien!
 
-    $ php app/console app:greet Fabien --iterations=5
+    $ php bin/console app:greet Fabien --iterations=5
     Hi Fabien
     Hi Fabien
     Hi Fabien
@@ -151,9 +151,9 @@ flag:
     Hi Fabien
 
     # the order of options isn't important
-    $ php app/console app:greet Fabien --iterations=5 --yell
-    $ php app/console app:greet Fabien --yell --iterations=5
-    $ php app/console app:greet --yell --iterations=5 Fabien
+    $ php bin/console app:greet Fabien --iterations=5 --yell
+    $ php bin/console app:greet Fabien --yell --iterations=5
+    $ php bin/console app:greet --yell --iterations=5 Fabien
 
 .. tip::
 

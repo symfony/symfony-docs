@@ -166,7 +166,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
     Now you just need to clear the cache and dump the assets again and your
     application should work:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php bin/console cache:clear --env=prod
         $ php bin/console assetic:dump --env=prod --no-debug

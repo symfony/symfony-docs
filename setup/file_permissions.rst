@@ -29,7 +29,7 @@ On macOS systems, the ``chmod`` command supports the ``+a`` flag to define an
 ACL. Use the following script to determine your web server user and grant the
 needed permissions:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ rm -rf var/cache/*
     $ rm -rf var/logs/*
@@ -46,7 +46,7 @@ another utility called ``setfacl``. You may need to install ``setfacl`` and
 `enable ACL support`_ on your disk partition before using it. Then, use the
 following script to determine your web server user and grant the needed permissions:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
     # if this doesn't work, try adding `-n` option

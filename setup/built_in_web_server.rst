@@ -21,7 +21,7 @@ Starting the Web Server
 Running a Symfony application using PHP's built-in web server is as easy as
 executing the ``server:start`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console server:start
 
@@ -31,7 +31,7 @@ your Symfony application.
 By default, the web server listens on port 8000 on the loopback device. You
 can change the socket passing an IP address and a port as a command-line argument:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console server:start 192.168.0.1:8080
 
@@ -49,7 +49,7 @@ can change the socket passing an IP address and a port as a command-line argumen
     You can use the ``server:status`` command to check if a web server is
     listening on a certain socket:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php bin/console server:status
 
@@ -73,7 +73,7 @@ can change the socket passing an IP address and a port as a command-line argumen
     to listen on the ``0.0.0.0:8000`` address (i.e. on all IP addresses that
     are assigned to the virtual machine):
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php bin/console server:start 0.0.0.0:8000
 
@@ -92,14 +92,14 @@ script when the command is executed in the ``prod`` or in the ``dev`` environmen
 Use the ``--router`` option in any other environment or to use another router
 script:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console server:start --env=test --router=app/config/router_test.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console server:start --docroot=public_html
 
@@ -109,7 +109,7 @@ Stopping the Server
 When you are finished, you can simply stop the web server using the ``server:stop``
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console server:stop
 
@@ -117,7 +117,7 @@ Like with the start command, if you omit the socket information, Symfony will
 stop the web server bound to ``localhost:8000``. Just pass the socket information
 when the web server listens to another IP address or to another port:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console server:stop 192.168.0.1:8080
 

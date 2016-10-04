@@ -12,7 +12,7 @@ Start by creating the ``Category`` entity. Since you know that you'll eventually
 need to persist category objects through Doctrine, you can let Doctrine create
 the class for you.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:generate:entity --no-interaction \
         --entity="AppBundle:Category" \
@@ -162,7 +162,7 @@ to hold those associated objects.
 
 While the many-to-one mapping shown earlier was mandatory, this one-to-many
 mapping is optional. It is included here to help demonstrate Doctrine's range
-of relationship management capabailties. Plus, in the context of this application,
+of relationship management capabilities. Plus, in the context of this application,
 it will likely be convenient for each ``Category`` object to automatically
 own a collection of its related ``Product`` objects.
 
@@ -179,7 +179,7 @@ own a collection of its related ``Product`` objects.
 .. seealso::
 
     To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
-    `Association Updates` documentation.
+    `Association Updates`_ documentation.
 
 .. tip::
 
@@ -191,7 +191,7 @@ own a collection of its related ``Product`` objects.
 Now that you've added new properties to both the ``Product`` and ``Category``
 classes, tell Doctrine to generate the missing getter and setter methods for you:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:generate:entities AppBundle
 
@@ -222,7 +222,7 @@ property to figure out how the relationship is mapped.
 Before you continue, be sure to tell Doctrine to add the new ``category``
 table, the new ``product.category_id`` column, and the new foreign key:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:schema:update --force
 

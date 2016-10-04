@@ -376,7 +376,7 @@ Update your Database Schema
 If you've updated the ``User`` entity during this tutorial, you have to update
 your database schema using this command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
    $ php bin/console doctrine:schema:update --force
 

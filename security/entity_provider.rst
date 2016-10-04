@@ -143,13 +143,13 @@ To make things shorter, some of the getter and setter methods aren't shown.
 But you can :ref:`generate <doctrine-generating-getters-and-setters>` these
 by running:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:generate:entities AppBundle/Entity/User
 
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console doctrine:schema:update --force
 
@@ -303,7 +303,7 @@ for details.
 Below is an export of the ``app_users`` table from MySQL with user ``admin``
 and password ``admin`` (which has been encoded).
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ mysql> SELECT * FROM app_users;
     +----+----------+--------------------------------------------------------------+--------------------+-----------+
@@ -533,10 +533,10 @@ above). This gives us a "fresh" User object.
 But Symfony also uses the ``username``, ``salt``, and ``password`` to verify
 that the User has not changed between requests (it also calls your ``AdvancedUserInterface``
 methods if you implement it). Failing to serialize these may cause you to
-be logged out on each request. If your User implements the
+be logged out on each request. If your user implements the
 :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
-then instead of these properties being checked, your ``isEqualTo`` method
-is simply called, and you can check whatever properties you want. Unless
+then instead of these properties being checked, your :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo` method
+is called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
 

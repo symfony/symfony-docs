@@ -66,7 +66,7 @@ Executing the Command
 
 After configuring the command, you can execute it in the terminal:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console app:create-users
 
@@ -95,7 +95,7 @@ messages to the console)::
 
 Now, try executing the command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console app:create-user
     User Creator
@@ -136,7 +136,7 @@ Use input options or arguments to pass information to the command::
 
 Now, you can pass the username to the command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console app:create-user Wouter
     User Creator
@@ -177,7 +177,7 @@ instead::
     }
 
 Now, once you created the required services and logic, the command will execute
-the ``generate()`` method of the ``app.user_manager`` service and the user will
+the ``create()`` method of the ``app.user_manager`` service and the user will
 be created.
 
 Command Lifecycle

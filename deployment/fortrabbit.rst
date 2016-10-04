@@ -175,7 +175,7 @@ Configuring the Environment in the Dashboard
 PHP Settings
 ~~~~~~~~~~~~
 
-The PHP version and enabled extensions are configuable under the PHP settings
+The PHP version and enabled extensions are configurable under the PHP settings
 of your App within the fortrabbit Dashboard.
 
 Environment Variables
@@ -187,7 +187,7 @@ config files get loaded. ENV vars are configuable in fortrabbit Dashboard as wel
 Document Root
 ~~~~~~~~~~~~~
 
-The document root is configuable for every custom domain you setup for your App.
+The document root is configurable for every custom domain you setup for your App.
 The default is ``/htdocs``, but for Symfony you probably want to change it to
 ``/htdocs/web``. You also do so in the fortrabbit Dashboard under ``Domain`` settings.
 
@@ -203,7 +203,7 @@ file (optional) in the project root.
 
 Add fortrabbit as a (additional) Git remote and add your configuration changes:
 
-.. code-block:: bash
+.. code-block:: terminal
 
    $ git remote add fortrabbit git@deploy.eu2.frbit.com:<your-app>.git
    $ git add composer.json composer.lock
@@ -211,7 +211,7 @@ Add fortrabbit as a (additional) Git remote and add your configuration changes:
 
 Commit and push
 
-.. code-block:: bash
+.. code-block:: terminal
 
    $ git commit -m 'fortrabbit config'
    $ git push fortrabbit master -u
@@ -220,7 +220,7 @@ Commit and push
 
     Replace ``<your-app>`` with the name of your fortrabbit App.
 
-.. code-block:: bash
+.. code-block:: terminal
 
    Commit received, starting build of branch master
 

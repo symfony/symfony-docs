@@ -923,7 +923,7 @@ Suppose ``description`` equals ``I <3 this product``:
 
 .. code-block:: twig
 
-    <!-- outupt escaping is on automatically -->
+    <!-- output escaping is on automatically -->
     {{ description }} <!-- I &lt3 this product -->
 
     <!-- disable output escaping with the raw filter -->

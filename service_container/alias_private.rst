@@ -30,9 +30,9 @@ to be *not* public (i.e. private):
     .. code-block:: yaml
 
         services:
-           foo:
-             class: Example\Foo
-             public: false
+            foo:
+                class: Example\Foo
+                public: false
 
     .. code-block:: xml
 
@@ -87,11 +87,11 @@ services.
     .. code-block:: yaml
 
         services:
-           app.phpmailer:
-             class: AppBundle\Mail\PhpMailer
+            app.phpmailer:
+                class: AppBundle\Mail\PhpMailer
 
-           app.mailer:
-             alias: app.phpmailer
+            app.mailer:
+                alias: app.phpmailer
 
     .. code-block:: xml
 

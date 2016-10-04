@@ -24,7 +24,7 @@ Preparing your Application
 Deploying a Symfony application to Heroku doesn't require any change in its
 code, but it requires some minor tweaks to its configuration.
 
-By default, the Symfony app will log into your application's ``app/log/``
+By default, the Symfony app will log into your application's ``var/log/``
 directory. This is not ideal as Heroku uses an `ephemeral file system`_. On
 Heroku, the best way to handle logging is using `Logplex`_. And the best way to
 send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily,
@@ -56,7 +56,7 @@ Creating a new Application on Heroku
 To create a new Heroku application that you can push to, use the CLI ``create``
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ heroku create
 
@@ -119,7 +119,7 @@ directory of the application and add just the following content:
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ echo "web: bin/heroku-php-apache2 web/" > Procfile
     $ git add .
@@ -147,7 +147,7 @@ environment variable named ``SYMFONY_ENV`` and use that environment if nothing
 else is explicitly set. As Heroku exposes all `config vars`_ as environment
 variables, you can issue a single command to prepare your app for a deployment:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ heroku config:set SYMFONY_ENV=prod
 
@@ -178,7 +178,7 @@ In this case, you need to confirm by typing ``yes`` and hitting ``<Enter>`` key
 
 Then, deploy your application executing this command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git push heroku master
 
@@ -230,7 +230,7 @@ And that's it! If you now open your browser, either by manually pointing
 it to the URL ``heroku create`` gave you, or by using the Heroku Toolbelt, the
 application will respond:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ heroku open
     Opening mighty-hamlet-1981... done
@@ -309,7 +309,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
     to use both buildpacks. To override buildpack auto-detection, you
     need to explicitly set the buildpack:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ heroku buildpacks:set heroku/nodejs
         Buildpack set. Next release on your-application will use heroku/nodejs.
