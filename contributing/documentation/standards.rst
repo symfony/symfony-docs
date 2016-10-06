@@ -179,7 +179,7 @@ In addition, documentation follows these rules:
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
 .. _`reserved by the IANA`: http://tools.ietf.org/html/rfc2606#section-3
 .. _`American English`: https://en.wikipedia.org/wiki/American_English
-.. _`American English Oxford Dictionary`: http://www.oxforddictionaries.com/definition/american_english/
+.. _`American English Oxford Dictionary`: http://en.oxforddictionaries.com/definition/american_english/
 .. _`headings and titles`: https://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: https://en.wikipedia.org/wiki/Serial_comma
 .. _`nosism`: https://en.wikipedia.org/wiki/Nosism
