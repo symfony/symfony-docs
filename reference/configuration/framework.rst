@@ -1439,20 +1439,20 @@ php_errors
 log
 ...
 
-**type**: ``boolean`` **default**: ``false``
-
 .. versionadded:: 3.2
     The ``log`` option was introduced in Symfony 3.2.
+
+**type**: ``boolean`` **default**: ``false``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 
 throw
 .....
 
-**type**: ``boolean`` **default**: ``%kernel.debug%``
-
 .. versionadded:: 3.2
     The ``throw`` option was introduced in Symfony 3.2.
+
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 Throw PHP errors as ``\ErrorException`` instances. The parameter
 ``debug.error_handler.throw_at`` controls the threshold.
