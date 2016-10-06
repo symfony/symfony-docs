@@ -189,6 +189,13 @@ adding a ``setDefined()`` method. The recommended check in this case would be::
         // code for the new OptionsResolver API
     }
 
+.. tip::
+
+    There is one case when you actually can rely on the
+    ``Symfony\Component\HttpKernel\Kernel::VERSION_ID`` constant: when trying
+    to detect the version of the ``symfony/http-kernel`` component, because it
+    is the component where this constant is defined.
+
 .. _`symfony/phpunit-bridge package`: https://github.com/symfony/phpunit-bridge
 .. _`Official Symfony Guide to Upgrade from 2.x to 3.0`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-3.0.md
 .. _`SensioLabs DeprecationDetector`: https://github.com/sensiolabs-de/deprecation-detector

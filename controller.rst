@@ -320,7 +320,7 @@ object. To get it in your controller, just add it as an argument and
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction($firstName, $lastName, Request $request)
+    public function indexAction(Request $request, $firstName, $lastName)
     {
         $page = $request->query->get('page', 1);
 

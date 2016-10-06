@@ -60,6 +60,10 @@ On POSIX filesystems, directories are created with a default mode value
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
+.. note::
+
+    This function ignores already existing directories.
+
 exists
 ~~~~~~
 
