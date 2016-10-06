@@ -536,6 +536,30 @@ There are several types of normalizers available:
     The ``JsonSerializableNormalizer``, ``DateTimeNormalizer`` and
     ``DataUriNormalizer`` normalizers were added in Symfony 3.1
 
+Encoders
+--------
+
+The Serializer component supports many formats out of the box:
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
+    This class encodes and decodes data in JSON_.
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
+    This class encodes and decodes data in XML_.
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`
+    This encoder encodes and decodes data in YAML_. This encoder requires the
+    :doc:`Yaml Component </components/yaml>`.
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
+    This encoder encodes and decodes data in CSV_.
+
+All these encoders are enabled by default when using the Symfony Standard Edition
+with the serializer enabled.
+
+.. versionadded:: 3.2
+    The ``YamlEncoder`` and ``CsvEncoder`` encoders were added in Symfony 3.2
+
 Handling Circular References
 ----------------------------
 
@@ -688,3 +712,7 @@ Learn more
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
+.. _JSON: http://www.json.org/
+.. _XML: https://www.w3.org/XML/
+.. _YAML: http://yaml.org/
+.. _CSV: https://tools.ietf.org/html/rfc4180
