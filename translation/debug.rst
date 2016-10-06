@@ -15,21 +15,21 @@ tag or filter usages in Twig templates:
 
 .. code-block:: jinja
 
-    {% trans %}Symfony2 is great{% endtrans %}
+    {% trans %}Symfony is great{% endtrans %}
 
-    {{ 'Symfony2 is great'|trans }}
+    {{ 'Symfony is great'|trans }}
 
-    {{ 'Symfony2 is great'|transchoice(1) }}
+    {{ 'Symfony is great'|transchoice(1) }}
 
-    {% transchoice 1 %}Symfony2 is great{% endtranschoice %}
+    {% transchoice 1 %}Symfony is great{% endtranschoice %}
 
 It will also detect the following translator usages in PHP templates:
 
 .. code-block:: php
 
-    $view['translator']->trans("Symfony2 is great");
+    $view['translator']->trans("Symfony is great");
 
-    $view['translator']->transChoice('Symfony2 is great', 1);
+    $view['translator']->transChoice('Symfony is great', 1);
 
 .. caution::
 
@@ -41,7 +41,7 @@ It will also detect the following translator usages in PHP templates:
 
     .. code-block:: jinja
 
-        {% set message = 'Symfony2 is great' %}
+        {% set message = 'Symfony is great' %}
         {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured
@@ -59,8 +59,8 @@ you've already setup some translations for the ``fr`` locale inside an AcmeDemoB
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
                     <trans-unit id="1">
-                        <source>Symfony2 is great</source>
-                        <target>J'aime Symfony2</target>
+                        <source>Symfony is great</source>
+                        <target>J'aime Symfony</target>
                     </trans-unit>
                 </body>
             </file>
@@ -70,13 +70,13 @@ you've already setup some translations for the ``fr`` locale inside an AcmeDemoB
     .. code-block:: yaml
 
         # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
+        Symfony is great: J'aime Symfony
 
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
         return array(
-            'Symfony2 is great' => 'J\'aime Symfony2',
+            'Symfony is great' => 'J\'aime Symfony',
         );
 
 and for the ``en`` locale:
@@ -91,8 +91,8 @@ and for the ``en`` locale:
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
                     <trans-unit id="1">
-                        <source>Symfony2 is great</source>
-                        <target>Symfony2 is great</target>
+                        <source>Symfony is great</source>
+                        <target>Symfony is great</target>
                     </trans-unit>
                 </body>
             </file>
@@ -101,13 +101,13 @@ and for the ``en`` locale:
     .. code-block:: yaml
 
         # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
-        Symfony2 is great: Symfony2 is great
+        Symfony is great: Symfony is great
 
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
         return array(
-            'Symfony2 is great' => 'Symfony2 is great',
+            'Symfony is great' => 'Symfony is great',
         );
 
 To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
@@ -128,7 +128,7 @@ It shows you a table with the result when translating the message in the ``fr``
 locale and the result when the fallback locale ``en`` would be used. On top
 of that, it will also show you when the translation is the same as the fallback
 translation (this could indicate that the message was not correctly translated).
-Furthermore, it indicates that the message ``Symfony2 is great`` is unused
+Furthermore, it indicates that the message ``Symfony is great`` is unused
 because it is translated, but you haven't used it anywhere yet.
 
 Now, if you translate the message in one of your templates, you will get this
@@ -140,7 +140,7 @@ output:
 The state is empty which means the message is translated in the ``fr`` locale
 and used in one or more templates.
 
-If you delete the message ``Symfony2 is great`` from your translation file
+If you delete the message ``Symfony is great`` from your translation file
 for the ``fr`` locale and run the command, you will get:
 
 .. image:: /_images/translation/debug_3.png
