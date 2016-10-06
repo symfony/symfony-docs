@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2016-08-29T08:49:12Z
+
+This PR will fix #6729
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-08-29T08:57:48Z
+
+@lyrixx would you mind to review it ?
+
+You're the best as it's your feature, thank you.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2016-08-29T09:24:05Z
+
+> @lyrixx would you mind to review it ?
+
+:+1: But I'm not good with the documentation ;)
+
+Anyway, thanks for the doc.
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-08-31T10:32:35Z
+
+~~@chalasr now Travis is complaining, probably cause of my use of `:method:` ... any idea ? We are close to "good enough",~~ thanks for your help !
+
+---------------------------------------------------------------------------
+
+by chalasr at 2016-08-31T10:57:08Z
+
+Status: reviewed
+
+👍
