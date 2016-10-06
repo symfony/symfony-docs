@@ -22,8 +22,8 @@ applied to the resulting parameter name:
 * Double underscores are replaced with a period, as a period is not
   a valid character in an environment variable name.
 
-For example, if you're using Apache, environment variables can be set using
-the following ``VirtualHost`` configuration:
+For example, if you're using Apache, environment variables can be set using the
+`SetEnv`_ directive with the following ``VirtualHost`` configuration:
 
 .. code-block:: apache
 
@@ -40,13 +40,41 @@ the following ``VirtualHost`` configuration:
         </Directory>
     </VirtualHost>
 
+For Nginx web servers, the environment variables can be set with `fastcgi_param`_
+directive. For example in the configuration file where the ``fastcgi_params``
+file is included:
+
+.. code-block:: nginx
+
+    server {
+        server_name domain.tld www.domain.tld;
+        root /var/www/project/web;
+
+        location / {
+            try_files $uri /app.php$is_args$args;
+        }
+
+        location ~ ^/app\.php(/|$) {
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_split_path_info ^(.+\.php)(/.*)$;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            fastcgi_param DOCUMENT_ROOT $realpath_root;
+            fastcgi_param SYMFONY__DATABASE__USER user;
+            fastcgi_param SYMFONY__DATABASE__PASSWORD secret;
+            internal;
+        }
+
+        # ...
+    }
+
 .. note::
 
-    The example above is for an Apache configuration, using the `SetEnv`_
-    directive. However, this will work for any web server which supports
-    the setting of environment variables.
+    The examples above are for an Apache and Nginx configuration. However, this
+    will work for any web server which supports the setting of environment
+    variables.
 
-    Also, in order for your console to work (which does not use Apache),
+    Also, in order for your console to work (which does not use web server),
     you must export these as shell variables. On a Unix system, you can run
     the following:
 
@@ -148,3 +176,4 @@ the Symfony service container.
     $container->setParameter('drupal.database.url', $db_url);
 
 .. _`SetEnv`: http://httpd.apache.org/docs/current/env.html
+.. _`fastcgi_param`: http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_param
