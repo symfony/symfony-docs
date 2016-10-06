@@ -324,3 +324,4 @@
 /components/yaml/index /components/yaml
 /deployment/tools /deployment
 /install/bundles /setup/bundles
+/form /forms
