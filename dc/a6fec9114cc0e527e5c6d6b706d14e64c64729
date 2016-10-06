@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by snoek09 at 2016-10-03T07:22:32Z
+
+AFAIK it's a naming convention.
+If this is changed here I feel it should be changed throughout the whole documentation.
+This will avoid confusion.
+
+Status: needs work.
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2016-10-03T07:31:02Z
+
+Yes, it's a naming convention for something internal, e.g. framework routes, etc. But I think a user should avoid using it, shouldn't it?
+
+Could anyone provide a link where this naming convention are explained here in docs?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-03T07:48:40Z
+
+I think @bocharsky-bw is right here. The leading `_` looks very wrong for doc examples ... but maybe I'm missing something here.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-03T20:37:39Z
+
+A `_` means "private" in languages like JavaScript and is used throughout the Symfony code base for special Symfony keys. This avoids possible conflicts. (e.g. the `_controller` request attribute).
+
+I personally also use the `_` prefix when loading routing resources, but that's also not the case here.
+
+So indeed, 👍 for removing the underscore prefix.
+
+👍
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-05T13:13:05Z
+
+Why do we actually not use `app.welcome` here?
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2016-10-05T13:19:21Z
+
+Good question! Actually, I don't see any prefixes in [Symfony Best Practices](http://symfony.com/doc/current/best_practices/controllers.html) for controllers. That's why I left this route name as simple as possible.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-05T13:25:08Z
+
+@bocharsky-bw I agree with you. We never recommend to add prefix to route names. We do that because unlike services (where Symfony creates dozes of them) there are almost no built-in routes, so all/most of them belong to your application.
