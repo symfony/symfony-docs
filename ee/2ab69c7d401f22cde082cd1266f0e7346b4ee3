@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-08-30T09:55:44Z
+
+Wonderful 👍 Thanks!
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2016-09-01T12:53:51Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-21T16:23:44Z
+
+This was first included in Symfony 3.1, wasn't it? I would also add a `versionadded` directive:
+
+```rst
+.. versionadded:: 3.1
+    The ability to include the invalid value into the message was introduced
+    in Symfony 3.1.
+```
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-04T11:21:26Z
+
+@xabbuh I've finally added the missing `versionadded` directive. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-04T12:25:12Z
+
+👍
+
+Status: Reviewed
