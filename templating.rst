@@ -578,7 +578,7 @@ the routing configuration. Later, if you want to modify the URL of a particular
 page, all you'll need to do is change the routing configuration: the templates
 will automatically generate the new URL.
 
-First, link to the "_welcome" page, which is accessible via the following routing
+First, link to the "welcome" page, which is accessible via the following routing
 configuration:
 
 .. configuration-block::
@@ -593,7 +593,7 @@ configuration:
         class WelcomeController extends Controller
         {
             /**
-             * @Route("/", name="_welcome")
+             * @Route("/", name="welcome")
              */
             public function indexAction()
             {
@@ -604,7 +604,7 @@ configuration:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        _welcome:
+        welcome:
             path:     /
             defaults: { _controller: AppBundle:Welcome:index }
 
@@ -617,7 +617,7 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_welcome" path="/">
+            <route id="welcome" path="/">
                 <default key="_controller">AppBundle:Welcome:index</default>
             </route>
         </routes>
@@ -629,7 +629,7 @@ configuration:
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
-        $collection->add('_welcome', new Route('/', array(
+        $collection->add('welcome', new Route('/', array(
             '_controller' => 'AppBundle:Welcome:index',
         )));
 
@@ -641,11 +641,11 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+twig
 
-        <a href="{{ path('_welcome') }}">Home</a>
+        <a href="{{ path('welcome') }}">Home</a>
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
+        <a href="<?php echo $view['router']->generate('welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
@@ -737,7 +737,7 @@ correctly:
 
     .. code-block:: html+twig
 
-        <a href="{{ url('_welcome') }}">Home</a>
+        <a href="{{ url('welcome') }}">Home</a>
 
     The same can be done in PHP templates by passing a third argument to
     the ``generate()`` method:
@@ -749,7 +749,7 @@ correctly:
         ?>
 
         <a href="<?php echo $view['router']->generate(
-            '_welcome',
+            'welcome',
             array(),
             UrlGeneratorInterface::ABSOLUTE_URL
         ) ?>">Home</a>
