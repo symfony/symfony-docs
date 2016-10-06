@@ -158,7 +158,7 @@ YAML uses the ISO-8601 standard to express dates:
 
 .. code-block:: yaml
 
-    2001-12-14t21:59:43.10-05:00
+    2001-12-14T21:59:43.10-05:00
 
 .. code-block:: yaml
 

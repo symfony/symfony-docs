@@ -85,10 +85,10 @@ it more difficult to know which template is being rendered. It also makes
 it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
 
-How the Controller Looks
-------------------------
+What does the Controller look like
+----------------------------------
 
-Considering all this, here is an example of how the controller should look
+Considering all this, here is an example of what the controller should look like
 for the homepage of our app:
 
 .. code-block:: php

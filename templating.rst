@@ -571,10 +571,10 @@ Creating links to other pages in your application is one of the most common
 jobs for a template. Instead of hardcoding URLs in templates, use the ``path``
 Twig function (or the ``router`` helper in PHP) to generate URLs based on
 the routing configuration. Later, if you want to modify the URL of a particular
-page, all you'll need to do is change the routing configuration; the templates
+page, all you'll need to do is change the routing configuration: the templates
 will automatically generate the new URL.
 
-First, link to the "_welcome" page, which is accessible via the following routing
+First, link to the "welcome" page, which is accessible via the following routing
 configuration:
 
 .. configuration-block::
@@ -589,7 +589,7 @@ configuration:
         class WelcomeController extends Controller
         {
             /**
-             * @Route("/", name="_welcome")
+             * @Route("/", name="welcome")
              */
             public function indexAction()
             {
@@ -600,7 +600,7 @@ configuration:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        _welcome:
+        welcome:
             path:     /
             defaults: { _controller: AppBundle:Welcome:index }
 
@@ -613,7 +613,7 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_welcome" path="/">
+            <route id="welcome" path="/">
                 <default key="_controller">AppBundle:Welcome:index</default>
             </route>
         </routes>
@@ -625,7 +625,7 @@ configuration:
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
-        $collection->add('_welcome', new Route('/', array(
+        $collection->add('welcome', new Route('/', array(
             '_controller' => 'AppBundle:Welcome:index',
         )));
 
@@ -637,11 +637,11 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+twig
 
-        <a href="{{ path('_welcome') }}">Home</a>
+        <a href="{{ path('welcome') }}">Home</a>
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->path('_welcome') ?>">Home</a>
+        <a href="<?php echo $view['router']->path('welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
@@ -702,7 +702,7 @@ route:
 
 In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, revisit the
-``recent_list`` template from the previous section and link to the articles
+``recent_list.html.twig`` template from the previous section and link to the articles
 correctly:
 
 .. configuration-block::
@@ -735,12 +735,12 @@ correctly:
 
         .. code-block:: html+twig
 
-            <a href="{{ url('_welcome') }}">Home</a>
+            <a href="{{ url('welcome') }}">Home</a>
 
         .. code-block:: html+php
 
             <a href="<?php echo $view['router']->url(
-                '_welcome',
+                'welcome',
                 array()
             ) ?>">Home</a>
 
@@ -895,14 +895,14 @@ block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
-command, which moves (or symlinks) files into the correct location. (target
+command, which copies (or symlinks) files into the correct location. (target
 is by default "web").
 
 .. code-block:: html+twig
 
     <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
-The end result is a page that includes both the ``main.css`` and ``contact.css``
+The end result is a page that includes ``main.js`` and both the ``main.css`` and ``contact.css``
 stylesheets.
 
 Referencing the Request, User or Session
@@ -924,7 +924,7 @@ Suppose ``description`` equals ``I <3 this product``:
 .. code-block:: twig
 
     <!-- output escaping is on automatically -->
-    {{ description }} <!-- I &lt3 this product -->
+    {{ description }} <!-- I &lt;3 this product -->
 
     <!-- disable output escaping with the raw filter -->
     {{ description|raw }} <!-- I <3 this product -->

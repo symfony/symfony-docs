@@ -100,7 +100,7 @@ Configuration
     * :ref:`enabled <reference-serializer-enabled>`
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
-    * `name_converter`_
+    * :ref:`name_converter <reference-serializer-name_converter>`
 * `php_errors`_
     * `log`_
     * `throw`_
@@ -1418,10 +1418,15 @@ If this option is enabled, serialization groups can be defined using annotations
 
     For more information, see :ref:`serializer-using-serialization-groups-annotations`.
 
+.. _reference-serializer-name_converter:
+
 name_converter
 ..............
 
 **type**: ``string``
+
+.. versionadded:: 2.8
+    The ``name_converter`` option was introduced in Symfony 2.8.
 
 The name converter to use.
 The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
