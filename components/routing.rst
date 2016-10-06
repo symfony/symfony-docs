@@ -359,7 +359,7 @@ routes with UTF-8 characters:
 
 .. configuration-block::
 
-  .. code-block:: php-annotations
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/DefaultController.php
         namespace AppBundle\Controller;
@@ -379,16 +379,16 @@ routes with UTF-8 characters:
                 // ...
             }
 
-  .. code-block:: yaml
+    .. code-block:: yaml
 
-      # routes.yml
-      route1:
-          path:     /category/{name}
-          defaults: { _controller: 'AppBundle:Default:category' }
-          options:
-              utf8: true
+        # app/config/routing.yml
+        route1:
+            path:     /category/{name}
+            defaults: { _controller: 'AppBundle:Default:category' }
+            options:
+                utf8: true
 
-  .. code-block:: xml
+    .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -403,26 +403,26 @@ routes with UTF-8 characters:
             </route>
         </routes>
 
-  .. code-block:: php
+    .. code-block:: php
 
-      // app/config/routing.php
-      use Symfony\Component\Routing\RouteCollection;
-      use Symfony\Component\Routing\Route;
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
 
-      $collection = new RouteCollection();
-      $collection->add('route1', new Route('/category/{name}',
-          array(
-              '_controller' => 'AppBundle:Default:category',
-          ),
-          array(),
-          array(
-              'utf8' => true,
-          )
-      );
+        $collection = new RouteCollection();
+        $collection->add('route1', new Route('/category/{name}',
+            array(
+                '_controller' => 'AppBundle:Default:category',
+            ),
+            array(),
+            array(
+                'utf8' => true,
+            )
+        );
 
-      // ...
+        // ...
 
-      return $collection;
+        return $collection;
 
 
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
@@ -431,9 +431,11 @@ byte character. This means that so the following URLs would match:
 ``/category/日本語``, ``/category/فارسی``, ``/category/한국어``, etc. In case you
 are wondering, this option also allows to include and match emojis in URLs.
 
+You can also include UTF-8 strings as routing requirements:
+
 .. configuration-block::
 
-  .. code-block:: php-annotations
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/DefaultController.php
         namespace AppBundle\Controller;
@@ -444,32 +446,32 @@ are wondering, this option also allows to include and match emojis in URLs.
         class DefaultController extends Controller
         {
             /**
-             *
-             * @Route(
-             *     "/category/{name}",
-             *     name="route2",
-             *     requirements={"default"="한국어"},
-             *     options={"utf8": true}
-             * )
-             *
-             */
+                *
+                * @Route(
+                *     "/category/{name}",
+                *     name="route2",
+                *     requirements={"default"="한국어"},
+                *     options={"utf8": true}
+                * )
+                *
+                */
             public function defaultAction()
             {
                 // ...
             }
 
-  .. code-block:: yaml
+    .. code-block:: yaml
 
-      # routes.yml
-      route2:
-          path:     /default/{default}
-          defaults: { _controller: 'AppBundle:Default:default' }
-          requirements:
-              default: "한국어"
-          options:
-              utf8: true
+        # app/config/routing.yml
+        route2:
+            path:     /default/{default}
+            defaults: { _controller: 'AppBundle:Default:default' }
+            requirements:
+                default: "한국어"
+            options:
+                utf8: true
 
-  .. code-block:: xml
+    .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -485,43 +487,43 @@ are wondering, this option also allows to include and match emojis in URLs.
             </route>
         </routes>
 
-  .. code-block:: php
+    .. code-block:: php
 
-      // app/config/routing.php
-      use Symfony\Component\Routing\RouteCollection;
-      use Symfony\Component\Routing\Route;
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
 
-      $collection = new RouteCollection();
-      $collection->add('route2', new Route('/default/{default}',
-          array(
-              '_controller' => 'AppBundle:Default:default',
-          ),
-          array(
-              'default' => '한국어',
-          ),
-          array(
-              'utf8' => true,
-          )
-      );
+        $collection = new RouteCollection();
+        $collection->add('route2', new Route('/default/{default}',
+            array(
+                '_controller' => 'AppBundle:Default:default',
+            ),
+            array(
+                'default' => '한국어',
+            ),
+            array(
+                'utf8' => true,
+            )
+        );
 
-      // ...
+        // ...
 
-      return $collection;
+        return $collection;
+    
+.. tip::
 
-
-This second example describes how you can use UTF-8 strings as a routing
-requirements.
+    In addition to UTF-8 characters, the Routing component also supports all
+    the `PCRE Unicode properties`_, which are escape sequences that match
+    generic character types. For example, ``\p{Lu}`` matches any uppercase
+    character in any language, ``\p{Greek}`` matches any Greek character,
+    ``\P{Han}`` matches any character not included in the Chinese Han script.
 
 .. note::
 
-    In Symfony 3.2 there is no need to set this ``utf8`` option explicitly.
-    As soon as Symfony finds a UTF-8 character in the route path or requirements,
-    it will turn the UTF-8 support automatically. In addition to UTF-8
-    characters, the Routing component also supports all the `PCRE Unicode properties`_,
-    which are escape sequences that match generic character types. For
-    example, ``\p{Lu}`` matches any uppercase character in any language,
-    ``\p{Greek}`` matches any Greek character, ``\P{Han}`` matches any character
-    not included in the Chinese Han script.
+    In Symfony 3.2 there is no need to set the ``utf8`` option explicitly. As
+    soon as Symfony finds a UTF-8 character in the route path or requirements,
+    it will turn the UTF-8 support automatically. However, this behaviour is
+    deprecated and setting the option will be required in Symfony 4.0.
 
 Learn more
 ----------
