@@ -28,14 +28,6 @@ To do this, add the repository class name to your entity's mapping definition:
             //...
         }
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
-            type: entity
-            repositoryClass: AppBundle\Entity\ProductRepository
-            # ...
-
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->

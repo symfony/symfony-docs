@@ -56,20 +56,6 @@ property on the ``Product`` class, annotated as follows:
             private $category;
         }
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
-            type: entity
-            # ...
-            manyToOne:
-                category:
-                    targetEntity: Category
-                    inversedBy: products
-                    joinColumn:
-                        name: category_id
-                        referencedColumnName: id
-
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
@@ -123,19 +109,6 @@ to hold those associated objects.
                 $this->products = new ArrayCollection();
             }
         }
-
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/doctrine/Category.orm.yml
-        AppBundle\Entity\Category:
-            type: entity
-            # ...
-            oneToMany:
-                products:
-                    targetEntity: Product
-                    mappedBy: category
-        # Don't forget to initialize the collection in
-        # the __construct() method of the entity
 
     .. code-block:: xml
 
