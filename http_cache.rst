@@ -192,7 +192,7 @@ These four headers are used to help cache your responses via *two* different mod
 
     All of the HTTP headers you'll read about are *not* invented by Symfony! They're
     part of an HTTP specification that's used by sites all over the web. To dig deeper
-    into HTTP Caching, check out the original documents `RFC 7234 - Caching`_ and 
+    into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and 
     `RFC 7232 - Conditional Requests`_.
 
     As a web developer, you are strongly urged to read the specification. Its
