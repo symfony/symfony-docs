@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-08-03T18:45:01Z
+
+This change looks good to me. But I think we should add a `versionadded` directive which explains that support for this parameter was introduced in 3.2.
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2016-08-04T12:40:58Z
+
+Thanks for the review @xabbuh, I added `versionadded`.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-29T14:57:33Z
+
+👍
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2016-08-29T19:55:19Z
+
+@javiereguiluz I updated the `versionadded` part. What do you think of the comment of stof? Should I add a new section near `Generating URLs with Query Strings`? Thanks.
