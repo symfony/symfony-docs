@@ -1,0 +1,76 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-09-01T08:58:54Z
+
+See #6890
+we now have to decide which one is better :)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-09-01T08:59:55Z
+
+or merge both since they aren't on the same page
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-09-01T11:59:03Z
+
+@nicolas-grekas my bad, didnt thank you have started something... as you like, I wont be sad if you close this one, my only interest is to see this feature documented ^^
+
+By the way, big thanks! From a business/e-commerce point of view, this feature is so useful :)
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-09-21T21:43:29Z
+
+Wow ... I feel so bad :(  thank you for this review, I will address comments tomorrow!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-21T22:03:07Z
+
+No need to worry. There's not much to change. :)
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-09-22T12:57:21Z
+
+Hi @xabbuh,
+
+I've adressed almost all comments except the one about complete all formats, let me know if this need more work :)
+
+Mickaël
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-22T13:16:19Z
+
+👍 (except for the missing config formats)
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-09-27T21:08:22Z
+
+@xabbuh thanks again for your time. Comments addressed ;)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-28T07:54:57Z
+
+@mickaelandrieu I left two last minor comments and indentation of the PHP code examples looks weird too. But overall this change looks ready to be merged. 👍
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-09-28T07:58:05Z
+
+@xabbuh I won't give up now :D let me improve again my contribution ;)
+
+edit: comments addressed (and PHP code cs fixed)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-28T17:31:28Z
+
+👍
+
+Status: Reviewed
