@@ -40,8 +40,8 @@ For example, if you're using Apache, environment variables can be set using the
         </Directory>
     </VirtualHost>
 
-For Nginx web servers, the environment variables can be set with `fastcgi_param`_
-directive. For example in the configuration file where the ``fastcgi_params``
+For Nginx web servers, the environment variables can be set with the `fastcgi_param`_
+directive. For example, in the configuration file where the ``fastcgi_params``
 file is included:
 
 .. code-block:: nginx
