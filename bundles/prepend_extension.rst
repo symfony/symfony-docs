@@ -2,7 +2,7 @@
    single: Configuration; Semantic
    single: Bundle; Extension configuration
 
-How to Simplify Configuration of multiple Bundles
+How to Simplify Configuration of Multiple Bundles
 =================================================
 
 When building reusable and extensible applications, developers are often
@@ -12,9 +12,9 @@ users to choose to remove functionality they are not using. Creating multiple
 bundles has the drawback that configuration becomes more tedious and settings
 often need to be repeated for various bundles.
 
-Using the below approach, it is possible to remove the disadvantage of the
-multiple bundle approach by enabling a single Extension to prepend the settings
-for any bundle. It can use the settings defined in the ``app/config/config.yml``
+It is possible to remove the disadvantage of the multiple bundle approach 
+by enabling a single Extension to prepend the settings for any bundle.
+It can use the settings defined in the ``app/config/config.yml``
 to prepend settings just as if they had been written explicitly by
 the user in the application configuration.
 

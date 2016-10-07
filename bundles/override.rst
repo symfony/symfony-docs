@@ -37,7 +37,7 @@ If the controller is a service, see the next section on how to override it.
 Services & Configuration
 ------------------------
 
-In order to override/extend a service, there are two options. First, you can
+In order to override or extend a service you have two options. First, you can
 set the parameter holding the service's class name to your own class by setting
 it in ``app/config/config.yml``. This of course is only possible if the class name is
 defined as a parameter in the service config of the bundle containing the
@@ -105,17 +105,16 @@ associations. Learn more about this feature and its limitations in
 Forms
 -----
 
-In order to override a form type, it has to be registered as a service (meaning
-it is tagged as ``form.type``). You can then override it as you would override any
-service as explained in `Services & Configuration`_. This, of course, will only
-work if the type is referred to by its alias rather than being instantiated,
-e.g.::
+Form types are referred to by their fully-qualified class name::
 
-    $builder->add('name', 'custom_type');
+    $builder->add('name', CustomType::class);
 
-rather than::
+This means that you cannot override this by creating a sub-class of ``CustomType``
+and registering it as a service and tagging it with ``form.type`` (you *could*
+do this in an earlier version).
 
-    $builder->add('name', new CustomType());
+Instead, you should use a "form type extension" to modify the existing form type.
+For more information, see :doc:`/form/create_form_type_extension`.
 
 .. _override-validation:
 
@@ -126,7 +125,7 @@ Symfony loads all validation configuration files from every bundle and
 combines them into one validation metadata tree. This means you are able to
 add new constraints to a property, but you cannot override them.
 
-To override this, the 3rd party bundle needs to have configuration for
+To overcome this, the 3rd party bundle needs to have configuration for
 :doc:`validation groups </validation/groups>`. For instance, the FOSUserBundle
 has this configuration. To create your own validation, add the constraints
 to a new validation group:
