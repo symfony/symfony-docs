@@ -59,7 +59,7 @@ Configuration
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             constraints:
-                - Callback: [validate]
+                - Callback: validate
 
     .. code-block:: xml
 
