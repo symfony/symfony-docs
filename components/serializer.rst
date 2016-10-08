@@ -663,19 +663,19 @@ property:
 
     .. code-block:: php-annotations
 
-    use Symfony\Component\Serializer\Annotation\MaxDepth;
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-    namespace Acme;
+        namespace Acme;
 
-    class MyObj
-    {
-        /**
-         * @MaxDepth(2)
-         */
-        public $foo;
+        class MyObj
+        {
+            /**
+             * @MaxDepth(2)
+             */
+            public $foo;
 
-        // ...
-    }
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -703,7 +703,7 @@ It is done automatically when using the Symfony Standard Edition. When using the
 to :ref:`the groups documentation <component-serializer-attributes-groups>` to learn how to do that.
 
 The check is only done if the `enable_max_depth` key of the serializer context is set to ``true``. In the following
-example, the third level is not serialized because it is deeper than the configured maximum depth (2).
+example, the third level is not serialized because it is deeper than the configured maximum depth (2)::
 
     $result = $serializer->normalize($level1, null, array('enable_max_depth' => true));
     /*
