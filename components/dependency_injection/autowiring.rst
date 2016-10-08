@@ -399,7 +399,7 @@ By default, the autowiring subsystem only injects dependencies in the constructo
 the service. Constructor injection should always be preferred; however, it is sometimes
 convenient to inject dependencies through methods (usually a setter method).
 
-.. versionadded:: 2.8
+.. versionadded:: 3.2
     Method autowiring was added in Symfony 3.2
 
 The ``*`` character can be used to ask the autowiring subsystem to inject dependencies
@@ -437,7 +437,7 @@ both in the constructor and in setter methods (starting with ``set``).
 
         $container->setDefinition('foo', $fooDefinition);
 
-Alternatively, the list of method to use for dependency injection can be configured explicitly:
+Alternatively, the list of methods to use for dependency injection can be configured explicitly:
 
 .. configuration-block::
 
@@ -466,7 +466,6 @@ Alternatively, the list of method to use for dependency injection can be configu
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
