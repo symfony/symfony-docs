@@ -120,7 +120,7 @@ Thanks to these two routes:
 
 * If the user goes to ``/blog/*``, the second route is matched and ``showAction()``
   is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable is
-  passed to ``showAction`` matching that value. For example, if the user goes to
+  passed to ``showAction()`` matching that value. For example, if the user goes to
   ``/blog/yay-routing``, then ``$slug`` will equal ``yay-routing``.
 
 Whenever you have a ``{placeholder}`` in your route path, that portion becomes a
@@ -363,7 +363,7 @@ With all of this in mind, check out this advanced example:
         {
             /**
              * @Route(
-             *     "/articles/{_locale}/{year}/{title}.{_format}",
+             *     "/articles/{_locale}/{year}/{slug}.{_format}",
              *     defaults={"_format": "html"},
              *     requirements={
              *         "_locale": "en|fr",
@@ -372,7 +372,7 @@ With all of this in mind, check out this advanced example:
              *     }
              * )
              */
-            public function showAction($_locale, $year, $title)
+            public function showAction($_locale, $year, $slug)
             {
             }
         }
@@ -381,7 +381,7 @@ With all of this in mind, check out this advanced example:
 
         # app/config/routing.yml
         article_show:
-          path:     /articles/{_locale}/{year}/{title}.{_format}
+          path:     /articles/{_locale}/{year}/{slug}.{_format}
           defaults: { _controller: AppBundle:Article:show, _format: html }
           requirements:
               _locale:  en|fr
@@ -398,7 +398,7 @@ With all of this in mind, check out this advanced example:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show"
-                path="/articles/{_locale}/{year}/{title}.{_format}">
+                path="/articles/{_locale}/{year}/{slug}.{_format}">
 
                 <default key="_controller">AppBundle:Article:show</default>
                 <default key="_format">html</default>
@@ -418,7 +418,7 @@ With all of this in mind, check out this advanced example:
         $collection = new RouteCollection();
         $collection->add(
             'article_show',
-            new Route('/articles/{_locale}/{year}/{title}.{_format}', array(
+            new Route('/articles/{_locale}/{year}/{slug}.{_format}', array(
                 '_controller' => 'AppBundle:Article:show',
                 '_format'     => 'html',
             ), array(
@@ -470,7 +470,7 @@ Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As you've seen, each routing parameter or default value is eventually available
-as an argument in the controller method. Additionally, there are three parameters
+as an argument in the controller method. Additionally, there are four parameters
 that are special: each adds a unique piece of functionality inside your application:
 
 ``_controller``
@@ -479,6 +479,13 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 ``_format``
     Used to set the request format (:ref:`read more <routing-format-param>`).
+
+``_fragment``
+    Used to set the fragment identifier, the optional last part of a URL that
+    starts with a ``#`` character and is used to identify a portion of a document.
+
+    .. versionadded:: 3.2
+        The ``_fragment`` parameter was introduced in Symfony 3.2.
 
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
@@ -502,11 +509,11 @@ The pattern has three parts, each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-=============  ==================  ==============
+=============  ==================  ================
 Bundle         Controller Class    Method Name
-=============  ==================  ==============
-``AppBundle``  ``BlogController``  ``showAction``
-=============  ==================  ==============
+=============  ==================  ================
+``AppBundle``  ``BlogController``  ``showAction()``
+=============  ==================  ================
 
 The controller might look like this::
 
@@ -524,7 +531,7 @@ The controller might look like this::
     }
 
 Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
-=> ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
+=> ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction()``).
 
 You could also refer to this controller using its fully-qualified class name
 and method: ``AppBundle\Controller\BlogController::showAction``. But if you

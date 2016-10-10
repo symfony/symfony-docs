@@ -100,7 +100,10 @@ Configuration
     * :ref:`enabled <reference-serializer-enabled>`
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
-    * `name_converter`_
+    * :ref:`name_converter <reference-serializer-name_converter>`
+* `php_errors`_
+    * `log`_
+    * `throw`_
 
 secret
 ~~~~~~
@@ -1415,10 +1418,15 @@ If this option is enabled, serialization groups can be defined using annotations
 
     For more information, see :ref:`serializer-using-serialization-groups-annotations`.
 
+.. _reference-serializer-name_converter:
+
 name_converter
 ..............
 
 **type**: ``string``
+
+.. versionadded:: 2.8
+    The ``name_converter`` option was introduced in Symfony 2.8.
 
 The name converter to use.
 The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
@@ -1429,6 +1437,30 @@ value.
 
     For more information, see
     :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
+
+php_errors
+~~~~~~~~~~
+
+log
+...
+
+.. versionadded:: 3.2
+    The ``log`` option was introduced in Symfony 3.2.
+
+**type**: ``boolean`` **default**: ``false``
+
+Use the application logger instead of the PHP logger for logging PHP errors.
+
+throw
+.....
+
+.. versionadded:: 3.2
+    The ``throw`` option was introduced in Symfony 3.2.
+
+**type**: ``boolean`` **default**: ``%kernel.debug%``
+
+Throw PHP errors as ``\ErrorException`` instances. The parameter
+``debug.error_handler.throw_at`` controls the threshold.
 
 Full Default Configuration
 --------------------------
@@ -1563,6 +1595,11 @@ Full Default Configuration
                 cache:                file
                 file_cache_dir:       '%kernel.cache_dir%/annotations'
                 debug:                '%kernel.debug%'
+
+            # PHP errors handling configuration
+            php_errors:
+                log:                  false
+                throw:                '%kernel.debug%'
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

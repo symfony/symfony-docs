@@ -15,7 +15,7 @@ Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony-project/
     ├─ app/
     ├─ src/
     │  └─ AppBundle/
@@ -35,7 +35,7 @@ and put things there:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony-project/
     ├─ app/
     ├─ src/
     │  ├─ Acme/
@@ -180,7 +180,7 @@ The three entities defined by our sample blog application are a good example:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony-project/
     ├─ ...
     └─ src/
        └─ AppBundle/
