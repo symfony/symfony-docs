@@ -259,7 +259,7 @@ your controller using annotations:
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function editAction($name)
     {
