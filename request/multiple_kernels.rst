@@ -138,6 +138,24 @@ Then, replace the ``AppKernel`` instantiation by your own kernel instantiation
     ``bin/api``) can differ because they depend on the bundles enabled for each
     kernel, which could be different.
 
+Rendering Templates Defined in a Different Kernel
+-------------------------------------------------
+
+If you follow the Symfony Best Practices, the templates of the default kernel
+will be stored in ``app/Resources/views/``. Trying to render those templates in
+a different kernel will result in a *There are no registered paths for
+namespace "__main__"* error.
+
+In order to solve this issue, add the following configuration to your kernel:
+
+.. code-block:: yaml
+
+    # api/config/config.yml
+    twig:
+        paths:
+            # allows to use app/Resources/views/ templates in the ApiKernel
+            "%kernel.root_dir%/../app/Resources/views": ~
+
 Adding more Kernels to the Application
 --------------------------------------
 
