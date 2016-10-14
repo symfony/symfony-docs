@@ -215,6 +215,11 @@ Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. This can be done by setting the
 ``xdebug.file_link_format`` option in your ``php.ini`` configuration file.
 
+.. tip::
+
+    Setting the ``xdebug.file_link_format`` ini option works even if the Xdebug
+    extension is not enabled.
+
 Alternatively, you can use this ``ide`` configuration key.
 
 In both cases, the expected configuration value is a URL template that contains an
@@ -255,13 +260,13 @@ do something like:
 
     When running your app in a container or in a virtual machine, you can tell
     Symfony to map files from the guest to the host by changing their prefix.
-    This map should be specified at the end of the URL template after a ``#``
-    using JSON-like key/values::
+    This map should be specified at the end of the URL template, using ``&`` and
+    ``>`` as guest-to-host separators::
 
         // /path/to/guest/.../file will be opened
         // as /path/to/host/.../file on the host
         // and /foo/.../file as /bar/.../file also
-        'myide://%f:%l#"/path/to/guest/":"/path/to/host/","/foo/":"/bar/"...'
+        'myide://%f:%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
 
     .. versionadded:: 3.2
         Guest to host mappings were introduced in Symfony 3.2.
