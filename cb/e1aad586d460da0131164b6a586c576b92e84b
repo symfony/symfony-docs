@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-09-18T21:43:51Z
+
+👍
+status: reviewed
+
+Thanks a lot for providing the docs along the code PR!
+
+---------------------------------------------------------------------------
+
+by jameshalsall at 2016-09-18T22:00:44Z
+
+Ah, actually I need to update this as the API changed slightly. I will fix it tomorrow.
+
+---------------------------------------------------------------------------
+
+by jameshalsall at 2016-09-19T08:35:26Z
+
+This has now been updated to reflect the new API.
+
+---------------------------------------------------------------------------
+
+by jameshalsall at 2016-10-12T18:07:03Z
+
+@wouterj this needs to be merged for the 3.2 release
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-12T18:09:42Z
+
+:+1:
