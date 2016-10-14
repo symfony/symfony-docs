@@ -830,7 +830,7 @@ list of all available types and more information, see Doctrine's
 Relationships and Associations
 ------------------------------
 
-Doctrine provides all the functionality you need to manager database relationships
+Doctrine provides all the functionality you need to manage database relationships
 (also known as associations). For info, see :doc:`/doctrine/associations`.
 
 Final Thoughts
