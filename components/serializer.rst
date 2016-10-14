@@ -631,11 +631,6 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
-.. seealso::
-
-    A popular alternative to the Symfony Serializer Component is the third-party
-    library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
-
 Learn more
 ----------
 
@@ -644,6 +639,11 @@ Learn more
     :glob:
 
     /serializer
+
+.. seealso::
+
+    A popular alternative to the Symfony Serializer Component is the third-party
+    library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
