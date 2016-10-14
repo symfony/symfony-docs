@@ -492,8 +492,8 @@ There are several types of normalizers available:
     the "get"/"set"/"has"/"remove" prefix and converted to lower case) to property
     values.
 
-    The ``ObjectNormalizer`` is the most powerful normalizer. It is a configured
-    by default when using the Symfony Standard Edition with the serializer enabled.
+    The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
+    default when using the Symfony Standard Edition with the serializer enabled.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
     This normalizer reads the content of the class by calling the "getters"

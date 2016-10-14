@@ -46,7 +46,7 @@ directory:
         twig:
             # ...
             paths:
-                "%kernel.root_dir%/../vendor/acme/foo-bar/templates": foo_bar
+                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': foo_bar
 
     .. code-block:: xml
 
@@ -96,9 +96,9 @@ specific template doesn't exist.
         twig:
             # ...
             paths:
-                "%kernel.root_dir%/../vendor/acme/themes/theme1": theme
-                "%kernel.root_dir%/../vendor/acme/themes/theme2": theme
-                "%kernel.root_dir%/../vendor/acme/themes/common": theme
+                '%kernel.root_dir%/../vendor/acme/themes/theme1': theme
+                '%kernel.root_dir%/../vendor/acme/themes/theme2': theme
+                '%kernel.root_dir%/../vendor/acme/themes/common': theme
 
     .. code-block:: xml
 
