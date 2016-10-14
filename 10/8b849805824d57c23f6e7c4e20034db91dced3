@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by a-ast at 2016-10-06T08:54:31Z
+
+@javiereguiluz, do you have an idea why checks failed after my second commit?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-06T09:12:33Z
+
+@a-ast I don't know why it's failing. Everything looks OK to me and the rendered page is working as expected:
+
+![new_links](https://cloud.githubusercontent.com/assets/73419/19146857/bc820858-8bb5-11e6-800b-2bb1d3712c98.png)
+
+👍  Thanks for this improvement.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-06T09:41:42Z
+
+The error is not related to this PR. Seems like a regression on platform.sh's side.
+
+status: reviewed
