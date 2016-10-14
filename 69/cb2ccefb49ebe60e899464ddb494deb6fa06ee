@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-07T19:03:35Z
+
+Won't this also redirect `/form/foo.html` to `/forms/foo.html`?
+
+@javiereguiluz I think you implemented the redirection logic. Can you please check this?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-14T09:58:28Z
+
+@xabbuh no, that won't happen. The exception listener takes the contents of https://github.com/symfony/symfony-docs/blob/master/_build/redirection_map and treats each entry as a separate URL, so only `/form` would be redirected to `/forms` and the rest of form articles will remain unaffected.
