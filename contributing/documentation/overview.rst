@@ -90,7 +90,7 @@ this value accordingly):
 .. code-block:: terminal
 
     $ cd projects/
-    $ git clone git://github.com/<YOUR GITHUB USERNAME>/symfony-docs.git
+    $ git clone git://github.com/YOUR-GITHUB-USERNAME/symfony-docs.git
 
 **Step 3.** Add the original Symfony docs repository as a "Git remote" executing
 this command:
@@ -106,8 +106,8 @@ your project:
 .. code-block:: terminal
 
     $ git remote -v
-    origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (fetch)
-    origin  git@github.com:<YOUR GITHUB USERNAME>/symfony-docs.git (push)
+    origin  git@github.com:YOUR-GITHUB-USERNAME/symfony-docs.git (fetch)
+    origin  git@github.com:YOUR-GITHUB-USERNAME/symfony-docs.git (push)
     upstream  https://github.com/symfony/symfony-docs.git (fetch)
     upstream  https://github.com/symfony/symfony-docs.git (push)
 
@@ -158,7 +158,7 @@ forked repository and ``improve_install_chapter`` is the name of the branch you
 created previously.
 
 **Step 7.** Everything is now ready to initiate a **pull request**. Go to your
-forked repository at ``https//github.com/<YOUR GITHUB USERNAME>/symfony-docs``
+forked repository at ``https//github.com/YOUR-GITHUB-USERNAME/symfony-docs``
 and click on the **Pull Requests** link located in the sidebar.
 
 Then, click on the big **New pull request** button. As GitHub cannot guess the
@@ -223,12 +223,14 @@ contribution to the Symfony docs:
 
     # ... do your changes
 
-    # add and commit your changes
-    $ git add xxx.rst     # (optional) only if this is a new content
+    # (optional) add your changes if this is a new content
+    $ git add xxx.rst
+
+    # commit your changes and push them to your fork
     $ git commit xxx.rst
     $ git push origin my_changes
 
-    # go to GitHub and create the Pull Request
+    # ... go to GitHub and create the Pull Request
 
     # (optional) make the changes requested by reviewers and commit them
     $ git commit xxx.rst
