@@ -74,7 +74,7 @@ file is included:
     will work for any web server which supports the setting of environment
     variables.
 
-    Also, in order for your console to work (which does not use web server),
+    Also, in order for your console to work (which does not use a web server),
     you must export these as shell variables. On a Unix system, you can run
     the following:
 
