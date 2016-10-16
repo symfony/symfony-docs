@@ -13,8 +13,13 @@ things like controllers, templates, and other files in a bundle's
 For example, suppose that you're installing the `FOSUserBundle`_, but you
 want to override its base ``layout.html.twig`` template, as well as one of
 its controllers. Suppose also that you have your own UserBundle where you want
-the overridden files to live. Start by registering the FOSUserBundle as the
-"parent" of your bundle::
+the overridden files to live. 
+
+.. note::
+
+    If you've just created your own UserBundle to make the overrides, make sure you register it in app/AppKernel.php
+
+Let's start by registering the FOSUserBundle as the "parent" of your bundle::
 
     // src/UserBundle/UserBundle.php
     namespace UserBundle;
