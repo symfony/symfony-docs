@@ -18,10 +18,6 @@ executable that needs to be installed on your system only once:
 
     # Linux and macOS systems
     $ sudo mkdir -p /usr/local/bin
-    some
-    output
-
-    stuff
     $ sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
     $ sudo chmod a+x /usr/local/bin/symfony
 
