@@ -46,7 +46,7 @@ disk: 512
 # Build time dependencies.
 dependencies:
   python:
-    sphinx: "~=1.3"
+    sphinx: "1.3.6"
 
 # The hooks that will be performed when the package is deployed.
 hooks:
