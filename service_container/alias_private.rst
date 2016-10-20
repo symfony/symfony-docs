@@ -22,8 +22,9 @@ above.
 
 .. _inlined-private-services:
 
-In these cases, to get a minor performance boost, you can set the service
-to be *not* public (i.e. private):
+In these cases, to get a minor performance boost and ensure the service will not
+be retrieved directly from the container, you can set the service to be *not*
+public (i.e. private):
 
 .. configuration-block::
 
@@ -54,18 +55,19 @@ to be *not* public (i.e. private):
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-What makes private services special is that, if they are only injected once,
-they are converted from services to inlined instantiations (e.g. ``new PrivateThing()``).
-This increases the container's performance.
+What makes private services special is that, since the container knows that the
+service will never be requested from outside, it can optimize whether and how it
+is instanciated. This increases the container's performance.
 
 Now that the service is private, you *should not* fetch the service directly
 from the container::
 
     $container->get('foo');
 
-This *may or may not work*, depending on if the service could be inlined.
-Simply said: A service can be marked as private if you do not want to access
-it directly from your code.
+This *may or may not work*, depending on how the container as optimized the
+service instanciation and, even in the cases where it works, is
+deprecated. Simply said: A service can be marked as private if you do not want
+to access it directly from your code.
 
 However, if a service has been marked as private, you can still alias it
 (see below) to access this service (via the alias).
