@@ -13,6 +13,17 @@ configuration is optimized for two main purposes.
 * Be as similar as possible as the production environment to avoid problems
   when deploying the project.
 
+Using Interactive Debug Tools
+-----------------------------
+
+Interactive debug tools allow you to walk through the code step by step,
+making it easier to indentify which step is causing problems. Symfony works
+with any PHP debug environment, among them:
+
+ * Xdebug_, the most well-known PHP debugger;
+ * PsySH_, a PHP REPL_ (Read-eval-print loop) debugger. Use the
+   FidryPsyshBundle_ for a dedicated Symfony integration of PsySH.
+
 Disabling the Bootstrap File and Class Caching
 ----------------------------------------------
 
@@ -121,3 +132,8 @@ You can also dump values from inside templates:
 
     {# dumps the variable to the web debug toolbar to not modify the template #}
     {% dump myVar %}
+
+.. _Xdebug: https://xdebug.org/
+.. _PsySH: http://psysh.org/
+.. _REPL: https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop
+.. _FidryPsyshBundle: https://github.com/theofidry/PsyshBundle
