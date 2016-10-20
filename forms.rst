@@ -493,7 +493,7 @@ the documentation for each type.
     :ref:`disable HTML5 validation <forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
 
-        ->add('dueDate', 'date', array(
+        ->add('dueDate', DateType::class, array(
             'widget' => 'single_text',
             'required' => false
         ))
