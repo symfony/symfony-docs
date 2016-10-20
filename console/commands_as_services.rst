@@ -30,7 +30,7 @@ with ``console.command``:
             app.command.my_command:
                 class: AppBundle\Command\MyCommand
                 tags:
-                    -  { name: console.command }
+                    - { name: console.command }
 
     .. code-block:: xml
 
@@ -137,7 +137,7 @@ inject the ``command.default_name`` parameter:
                 class: AppBundle\Command\MyCommand
                 arguments: ["%command.default_name%"]
                 tags:
-                    -  { name: console.command }
+                    - { name: console.command }
 
     .. code-block:: xml
 
