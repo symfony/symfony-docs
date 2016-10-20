@@ -83,5 +83,7 @@ that can help you visualize and find the information.
     fallback translation for all known messages, if translations exist for
     the given locale.
 
-When in doubt how to use a console command, open the help section by appending
-the ``--help`` option.
+.. tip::
+
+    When in doubt how to use a console command, open the help section by
+    appending the ``--help`` option.
