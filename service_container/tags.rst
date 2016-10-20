@@ -20,7 +20,7 @@ to be used for a specific purpose. Take the following example:
                 class: AppBundle\Extension\FooExtension
                 public: false
                 tags:
-                    -  { name: twig.extension }
+                    - { name: twig.extension }
 
     .. code-block:: xml
 
@@ -146,12 +146,12 @@ For example, you may add the following transports as services:
                 class: \Swift_SmtpTransport
                 arguments: ['%mailer_host%']
                 tags:
-                    -  { name: app.mail_transport }
+                    - { name: app.mail_transport }
 
             app.sendmail_transport:
                 class: \Swift_SendmailTransport
                 tags:
-                    -  { name: app.mail_transport }
+                    - { name: app.mail_transport }
 
     .. code-block:: xml
 
@@ -299,12 +299,12 @@ To answer this, change the service declaration:
                 class: \Swift_SmtpTransport
                 arguments: ['%mailer_host%']
                 tags:
-                    -  { name: app.mail_transport, alias: foo }
+                    - { name: app.mail_transport, alias: foo }
 
             app.sendmail_transport:
                 class: \Swift_SendmailTransport
                 tags:
-                    -  { name: app.mail_transport, alias: bar }
+                    - { name: app.mail_transport, alias: bar }
 
     .. code-block:: xml
 
