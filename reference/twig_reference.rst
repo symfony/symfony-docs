@@ -324,6 +324,10 @@ Returns the relative URL (without the scheme and host) for the given route.
 If ``relative`` is enabled, it'll create a path relative to the current
 path. More information in :ref:`templating-pages`.
 
+.. seealso::
+
+    Read :doc:`/routing` to learn more about the Routing component.
+
 url
 ~~~
 
@@ -341,6 +345,10 @@ url
 Returns the absolute URL (with scheme and host) for the given route. If
 ``schemeRelative`` is enabled, it'll create a scheme-relative URL. More
 information in :ref:`templating-pages`.
+
+.. seealso::
+
+    Read :doc:`/routing` to learn more about the Routing component.
 
 absolute_url
 ~~~~~~~~~~~~

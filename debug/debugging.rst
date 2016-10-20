@@ -56,5 +56,35 @@ by removing the call to ``loadClassCache()``::
     session.
 
 Some IDEs do not like the fact that some classes are stored in different
-locations. To avoid problems, you can tell your IDE to ignore the PHP cache
-file.
+locations. To avoid problems, you can either tell your IDE to ignore the PHP
+cache files, or you can change the extension used by Symfony for these files::
+
+    $kernel->loadClassCache('classes', '.php.cache');
+
+Useful Debugging Commands
+-------------------------
+
+When developing a large application, it can be hard to keep track of all the
+different services, routes and translations. Luckily, Symfony has some commands
+that can help you visualize and find the information.
+
+``debug:container``
+    Displays information about the contents of the Symfony container for all public
+    services. To find only those matching a name, append the name as an argument.
+
+``debug:config``
+    Shows all configured bundles, their class and their alias.
+
+``debug:router``
+    Displays information about all configured routes in the application as a
+    table with the name, method, scheme, host and path for each route.
+
+``debug:translation <locale>``
+    Shows a table of the translation key, the domain, the translation and the
+    fallback translation for all known messages, if translations exist for
+    the given locale.
+
+.. tip::
+
+    When in doubt how to use a console command, open the help section by
+    appending the ``--help`` option.
