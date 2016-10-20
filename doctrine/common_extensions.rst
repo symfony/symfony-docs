@@ -23,7 +23,7 @@ To do this, you have two options:
    with Symfony: `Install Gedmo Doctrine2 extensions in Symfony2`_
 
 .. _`DoctrineExtensions`: https://github.com/Atlantic18/DoctrineExtensions
-.. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
+.. _`StofDoctrineExtensionsBundle`: http://symfony.com/doc/master/bundles/StofDoctrineExtensionsBundle/index.html
 .. _`Sluggable`: https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/sluggable.md
 .. _`Translatable`: https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/translatable.md
 .. _`Timestampable`: https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/timestampable.md
