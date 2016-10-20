@@ -89,27 +89,35 @@ that can help you visualize and find the information.
     When in doubt how to use a console command, open the help section by
     appending the ``--help`` option.
 
-Using the VarDumper
--------------------
+Dumping Variables with the VarDumper
+------------------------------------
 
 To ease the debugging of a variable in your application, you can use the
-``VarDumper`` component to dump the content of a variable. The component
-provides an alternative to the PHP ``var_dump`` function, in the form of
-``dump``.
+:doc:`VarDumper component </components/var_dumper>` to dump the content of a
+variable. The component provides an alternative to the PHP :phpfunction:`var_dump()`
+function, in the form of ``dump()``::
 
-It is as easy as the code below::
-
-    // Create a variable with a value...
+    // create a variable with a value
     $myVar = ...;
 
-    // ... and dump it
+    // and dump it
     dump($myVar);
 
-.. tip::
-
-    The dumper is not limited to scalar values. Arrays and objects can also be
-    visualized using the ``VarDumper``.
+The dumper is not limited to scalar values. Arrays and objects can also be
+visualized using the VarDumper. One of the most important advantages of using
+``dump()`` is a nicer and more specialized dump of objects (e.g. Doctrine
+internals are filtered out when dumping a proxy entity).
 
 If the dumper is used on a command line, the result is a formatted string.
 Otherwise, the result is a piece of HTML, which can be expanded to show nested
 structures in the dumped value.
+
+You can also dump values from inside templates:
+
+.. code-block:: html+twig
+
+    {# dumps the variable inline as HTML #}
+    {{ dump(myVar) }}
+
+    {# dumps the variable to the web debug toolbar to not modify the template #}
+    {% dump myVar %}
