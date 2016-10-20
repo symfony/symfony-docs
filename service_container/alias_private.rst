@@ -64,7 +64,7 @@ from the container::
 
     $container->get('foo');
 
-This *may or may not work*, depending on how the container as optimized the
+This *may or may not work*, depending on how the container has optimized the
 service instanciation and, even in the cases where it works, is
 deprecated. Simply said: A service can be marked as private if you do not want
 to access it directly from your code.
