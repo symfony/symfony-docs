@@ -69,37 +69,6 @@ cache files, or you can change the extension used by Symfony for these files::
 
     $kernel->loadClassCache('classes', '.php.cache');
 
-Useful Debugging Commands
--------------------------
-
-When developing a large application, it can be hard to keep track of all the
-different services, routes and translations. Luckily, Symfony has some commands
-that can help you visualize and find the information.
-
-``debug:container``
-    Displays information about the contents of the Symfony container for all public
-    services. To find only those matching a name, append the name as an argument.
-
-``debug:config``
-    Shows all configured bundles, their class and their alias.
-
-``debug:event-dispatcher``
-    Displays information about all the registered listeners in the event dispatcher.
-
-``debug:router``
-    Displays information about all configured routes in the application as a
-    table with the name, method, scheme, host and path for each route.
-
-``debug:translation <locale>``
-    Shows a table of the translation key, the domain, the translation and the
-    fallback translation for all known messages, if translations exist for
-    the given locale.
-
-.. tip::
-
-    When in doubt how to use a console command, open the help section by
-    appending the ``--help`` option.
-
 Dumping Variables with the VarDumper
 ------------------------------------
 
@@ -132,6 +101,42 @@ You can also dump values from inside templates:
 
     {# dumps the variable to the web debug toolbar to not modify the template #}
     {% dump myVar %}
+
+Useful Debugging Commands
+-------------------------
+
+When developing a large application, it can be hard to keep track of all the
+different services, routes and translations. Luckily, Symfony has some commands
+that can help you visualize and find the information.
+
+``debug:container``
+    Displays information about the contents of the Symfony container for all public
+    services. To find only those matching a name, append the name as an argument.
+
+``debug:config``
+    Shows all configured bundles, their class and their alias.
+
+``debug:event-dispatcher``
+    Displays information about all the registered listeners in the event dispatcher.
+
+``debug:router``
+    Displays information about all configured routes in the application as a
+    table with the name, method, scheme, host and path for each route.
+
+``debug:translation <locale>``
+    Shows a table of the translation key, the domain, the translation and the
+    fallback translation for all known messages, if translations exist for
+    the given locale.
+
+.. tip::
+
+    When in doubt how to use a console command, open the help section by
+    appending the ``--help`` option.
+
+.. tip::
+
+    When in doubt how to use a console command, open the help section by
+    appending the ``--help`` option.
 
 .. _Xdebug: https://xdebug.org/
 .. _PsySH: http://psysh.org/
