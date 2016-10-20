@@ -21,8 +21,15 @@ New Documentation
 
 * `#6989 <https://github.com/symfony/symfony-docs/pull/6989>`_ Added paths options in Framework::translator configuration (mickaelandrieu)
 * `#6926 <https://github.com/symfony/symfony-docs/pull/6926>`_ [Serializer] Add information about name converter parameter (michaelperrin)
+* `#6891 <https://github.com/symfony/symfony-docs/pull/6891>`_ [VarDumper] Doc for the Data::seek() method (nicolas-grekas)
+* `#6890 <https://github.com/symfony/symfony-docs/pull/6890>`_ [Routing] Add doc about unicode requirements (nicolas-grekas)
+* `#6944 <https://github.com/symfony/symfony-docs/pull/6944>`_ Update doc about IDE file link format (nicolas-grekas)
+* `#6968 <https://github.com/symfony/symfony-docs/pull/6968>`_ [Console] Add multiple options for the output example (SpacePossum)
+* `#6956 <https://github.com/symfony/symfony-docs/pull/6956>`_ [Filesystem] Add documentation for the readlink method (tgalopin)
+* `#6973 <https://github.com/symfony/symfony-docs/pull/6973>`_ Callback doesn't have to be static (patrick-mcdougle)
 * `#6976 <https://github.com/symfony/symfony-docs/pull/6976>`_ [Finishing][Serializer] Document the encoders (Ener-Getick, weaverryan)
 * `#6622 <https://github.com/symfony/symfony-docs/pull/6622>`_ Documentation for YAML flags added in 3.1 (dantleech)
+* `#6962 <https://github.com/symfony/symfony-docs/pull/6962>`_ [Bridge/PhpUnit] doc bin/simple-phpunit (nicolas-grekas, weaverryan)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -81,6 +88,7 @@ Minor Documentation Changes
 * `#6941 <https://github.com/symfony/symfony-docs/pull/6941>`_ Mentioned the "Symfony Upgrade Fixer" in the upgrade article (javiereguiluz)
 * `#6936 <https://github.com/symfony/symfony-docs/pull/6936>`_ Improved the title of Validation Groups article to make it easier to find (javiereguiluz)
 * `#6925 <https://github.com/symfony/symfony-docs/pull/6925>`_ Method "$this->getMock()" is deprecated (JohnnyEvo)
+* `#6922 <https://github.com/symfony/symfony-docs/pull/6922>`_ [Config] Add ExprBuilder::ifEmpty() (ogizanagi)
 * `#6964 <https://github.com/symfony/symfony-docs/pull/6964>`_ Fix typo in validator example (svenluijten)
 * `#6945 <https://github.com/symfony/symfony-docs/pull/6945>`_ Fixed indentation issues in alias_private article (javiereguiluz)
 * `#6954 <https://github.com/symfony/symfony-docs/pull/6954>`_ Typo fix in tags.rst (NoScopie)
@@ -167,6 +175,7 @@ Minor Documentation Changes
 * `#6796 <https://github.com/symfony/symfony-docs/pull/6796>`_ Remove AcmeDemoBundle references (michaelcullum)
 * `#6786 <https://github.com/symfony/symfony-docs/pull/6786>`_ Subject-verb agreement (micheal)
 * `#6759 <https://github.com/symfony/symfony-docs/pull/6759>`_ Fix tense and sentence length (aalaap)
+* `#6748 <https://github.com/symfony/symfony-docs/pull/6748>`_ Fix web/front.php (ranqiangjun)
 * `#6820 <https://github.com/symfony/symfony-docs/pull/6820>`_ Fixed the main index page redirections (javiereguiluz)
 * `#6819 <https://github.com/symfony/symfony-docs/pull/6819>`_ Fixed the redirection for "upgrade" articles (javiereguiluz)
 * `#6812 <https://github.com/symfony/symfony-docs/pull/6812>`_ Fixed a Console article redirection (javiereguiluz)
