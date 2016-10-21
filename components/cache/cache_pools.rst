@@ -113,6 +113,9 @@ See the method's docblock for more options.
 PDO & Doctrine DBAL Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 3.2
+    The PDO & Doctrine DBAL adapter was introduced in Symfony 3.2.
+
 This adapter stores the cached items a SQL database accessed through a PDO or a
 Doctrine DBAL connection::
 
@@ -129,9 +132,6 @@ Doctrine DBAL connection::
         // an array of options for configuring the database connection
         $options = array()
     );
-
-.. versionadded:: 3.2
-    The PDO & Doctrine DBAL adapter was introduced in Symfony 3.2.
 
 Chain Cache Adapter
 ~~~~~~~~~~~~~~~~~~~
