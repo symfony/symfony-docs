@@ -18,9 +18,9 @@ It comes with the following features:
 
 * Displays the stack trace of a deprecation on-demand;
 
-* Provides a ``ClockMock`` helper class for time-sensitive tests.
+* Provides a ``ClockMock`` and ``DnsMock`` helper classes for time or network-sensitive tests.
 
-* Provides a modified version of phpunit that does not embed ``symfony/yaml`` nor
+* Provides a modified version of PHPUnit that does not embed ``symfony/yaml`` nor
   ``prophecy`` to prevent any conflicts with these dependencies.
 
 Installation
@@ -132,6 +132,28 @@ Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
 completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
+
+Write Assertions about Deprecations
+-----------------------------------
+
+When adding deprecations to your code, you might like writing tests that verify
+that they are triggered as required. To do so, the bridge provides the
+``@expectedDeprecation`` annotation that you can use on your test methods.
+It requires you to pass the expected message, given in the same format than for
+the `PHPUnit's assertStringMatchesFormat()`_ method. If you expect more than one
+deprecation message for a given test method, you can use the annotation several
+times (order matters)::
+
+    /**
+     * @group legacy
+     * @expectedDeprecation This "%s" method is deprecated.
+     * @expectedDeprecation The second argument of the "%s" method is deprecated.
+     */
+    public function testDeprecatedCode()
+    {
+        @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
+        @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
+    }
 
 Time-sensitive Tests
 --------------------
@@ -340,7 +362,7 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 * Does not embed ``symfony/yaml`` nor ``prophecy`` to prevent any conflicts with
   these dependencies;
-* Uses PHPUnit 4.8 when run with PHP <=5.5 and PHPUnit 5.1 when run with PHP >=5.6;
+* Uses PHPUnit 4.8 when run with PHP <=5.5 and PHPUnit 5.3 when run with PHP >=5.6;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
   env var is defined: the env var should specify a file name that will be used for
   storing skipped tests on a first run, and replay them on the second run;
@@ -358,8 +380,19 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     $ vendor/bin/simple-phpunit
 
+.. tip::
+
+    Set the ``SYMFONY_PHPUNIT_VERSION`` env var to e.g. ``5.5`` to change the
+    base version of PHPUnit to ``5.5`` instead of the default ``5.3``.
+
+.. tip::
+
+    Set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml`` if you need
+    ``prophecy`` but not ``symfony/yaml``.
+
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
+.. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
 .. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
