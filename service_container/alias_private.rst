@@ -194,8 +194,3 @@ occurrence of the ``%service_id%`` placeholder in your template.
 For service decorators (see above), if the definition does not modify the
 deprecated status, it will inherit the status from the definition that is
 decorated.
-
-.. caution::
-
-    The ability to "un-deprecate" a service is possible only when declaring the
-    definition in PHP.
