@@ -40,10 +40,7 @@ If ``$cache`` implements :class:`Symfony\\Component\\Cache\\TagAwareAdapterInter
 you can invalidate the cached items by calling
 :method:`Symfony\\Component\\Cache\\TagAwareAdapterInterface::invalidateTags`::
 
-    // invalidate all items related to `tag_2`
-    $cache->invalidateTags('tag_2');
-
-    // or invalidate all items related to `tag_1` or `tag_3`
+    // invalidate all items related to `tag_1` or `tag_3`
     $cache->invalidateTags(array('tag_1', 'tag_3'));
 
     // if you know the cache key, you can of course delete directly
