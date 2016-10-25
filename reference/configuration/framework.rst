@@ -274,12 +274,8 @@ do something like:
 .. tip::
 
     Symfony contains preconfigured URLs for some popular IDEs, you can set them
-    using the following values: ``textmate``, ``macvim``, ``emacs`` or ``sublime``.
-
-.. tip::
-
-    If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
-    be able to use this.
+    using the following values: ``phpstorm`` (requires `PhpStormProtocol`_),
+    ``sublime``, ``textmate``, ``macvim`` or ``emacs``.
 
 .. _reference-framework-test:
 
