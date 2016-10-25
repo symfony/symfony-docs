@@ -164,8 +164,8 @@ For example, if the JSON document has the following structure:
 .. code-block:: json
 
     {
-        "security" {
-            "credentials" {
+        "security": {
+            "credentials": {
                 "login": "dunglas",
                 "password": "MyPassword"
             }
