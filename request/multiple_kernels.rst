@@ -44,7 +44,7 @@ Symfony application.
 Step 1) Create a new Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of creating the new front controller from scratch, it's recommended to
+Instead of creating the new front controller from scratch, it's easier to
 duplicate the existing ones. For example, create ``web/api_dev.php`` from
 ``web/app_dev.php`` and ``web/api.php`` from ``web/app.php``.
 
@@ -65,16 +65,14 @@ Step 2) Create the new Kernel Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now you need to define the ``ApiKernel`` class used by the new front controller.
-The recommendation again is to duplicate the existing ``app/AppKernel.php`` file
-and make the needed changes.
+The easiest way to do this is by duplicating the existing  ``app/AppKernel.php``
+file and make the needed changes.
 
-In this example, the changes of the new ``ApiKernel`` would be to load less
-bundles than ``AppKernel`` and to change the location of the cache, logs and
-config files to not mess with the regular application::
+In this example, the ``ApiKernel`` will load less bundles than AppKernel. Be
+sure to also change the location of the cache, logs and configuration files so
+they don't collide with the files from ``AppKernel``::
 
     // app/ApiKernel.php
-    <?php
-
     use Symfony\Component\HttpKernel\Kernel;
     use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -104,9 +102,9 @@ config files to not mess with the regular application::
 Step 3) Define the Kernel Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finally, define the configuration used by the application when it executes the
-new API kernel. According to the previous code, this config must be defined in
-the ``app/config/api/`` directory.
+Finally, define the configuration files that the new ``ApiKernel`` will load.
+According to the above code, this config will live in the ``app/config/api/``
+directory.
 
 The new configuration can be created from scratch when you load just a few
 bundles, because it will be very simple. Otherwise, duplicate the existing
@@ -130,7 +128,8 @@ script and rename it (e.g. ``bin/api``).
 
 Then, replace the ``AppKernel`` instantiation by your own kernel instantiation
 (e.g. ``ApiKernel``) and now you can execute commands using the new kernel
-(e.g. ``php bin/api cache:clear``) Now you can use execute commands using the new kernel
+(e.g. ``php bin/api cache:clear``) Now you can use execute commands using the
+new kernel.
 
 .. note::
 
@@ -160,7 +159,7 @@ Adding more Kernels to the Application
 --------------------------------------
 
 If your application is very complex and you create several kernels, it's better
-to store them on their own directories instead of messing with lots of files in
+to store them in their own directories instead of messing with lots of files in
 the default ``app/`` directory:
 
 .. code-block:: text
