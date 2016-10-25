@@ -26,9 +26,7 @@ First, enable form login under your firewall:
                 main:
                     anonymous: ~
                     json_login:
-                        check_path:    login
-                        username_path: user.login
-                        password_path: user.password
+                        check_path: login
 
     .. code-block:: xml
 
@@ -43,7 +41,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="main">
                     <anonymous />
-                    <json-login check-path="login" username-path="user.login" password-path="user.password" />
+                    <json-login check-path="login" />
                 </firewall>
             </config>
         </srv:container>
@@ -57,8 +55,6 @@ First, enable form login under your firewall:
                     'anonymous'  => null,
                     'json_login' => array(
                         'check_path' => 'login',
-                        'username_path' => 'user.login',
-                        'password_path' => 'user.password',
                     ),
                 ),
             ),
@@ -155,14 +151,79 @@ check the user's credentials and either authenticate the user or throw an error:
 .. code-block:: json
 
     {
-        "user": {
-            "login": "dunglas",
-            "password": "MyPassword"
+        "login": "dunglas",
+        "password": "MyPassword"
+    }
+
+If the JSON document has a different structure, you can specify the path to
+access to the user and password properties using the ``username_path`` and
+``password_path`` keys (they default respectively to ``username`` and ``password``).
+
+For example, if the JSON document has the following structure:
+
+.. code-block:: json
+
+    {
+        "security":
+            "credentials": {
+                "login": "dunglas",
+                "password": "MyPassword"
+            }
         }
     }
 
-You can specify the path to access to the user and password in the JSON document
-using the ``username_path`` and the ``password_path`` keys. They default respectively
-to ``username`` and ``password``.
+The security configuration should be:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    anonymous: ~
+                    json_login:
+                        check_path:    login
+                        username_path: security.credentials.login
+                        password_path: security.credentials.password
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <anonymous />
+                    <json-login check-path="login"
+                                username-path="security.credentials.login"
+                                password-path="security.credentials.password" />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'main' => array(
+                    'anonymous'  => null,
+                    'json_login' => array(
+                        'check_path' => 'login',
+                        'username_path' => 'security.credentials.login',
+                        'password_path' => 'security.credentials.password',
+                    ),
+                ),
+            ),
+        ));
 
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
