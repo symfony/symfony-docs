@@ -58,7 +58,7 @@ Then, add the Validator component configuration to the class::
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $metadata->addGetterConstraint('passwordSafe', new Assert\True(array(
+            $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue(array(
                 'message' => 'The password cannot match your first name',
             )));
         }
