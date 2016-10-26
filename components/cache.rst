@@ -51,7 +51,7 @@ a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter
 
     $cache = new FilesystemAdapter();
 
-Now you can create, retrieve, updated and delete items using this cache pool::
+Now you can create, retrieve, update and delete items using this cache pool::
 
     // create a new item by trying to get it from the cache
     $numProducts = $cache->getItem('stats.num_products');
