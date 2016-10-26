@@ -136,6 +136,9 @@ field type, you will use that as the ``extended_type``.
     an extension is loaded). This is useful when you need to guarantee 
     that one extension is loaded before or after another extension.
 
+    .. versionadded:: 3.2
+        The ``priority`` attribute was introduced in Symfony 3.2.
+
 Adding the extension Business Logic
 -----------------------------------
 
