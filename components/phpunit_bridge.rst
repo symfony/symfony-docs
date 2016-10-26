@@ -139,7 +139,7 @@ Write Assertions about Deprecations
 When adding deprecations to your code, you might like writing tests that verify
 that they are triggered as required. To do so, the bridge provides the
 ``@expectedDeprecation`` annotation that you can use on your test methods.
-It requires you to pass the expected message, given in the same format than for
+It requires you to pass the expected message, given in the same format as for
 the `PHPUnit's assertStringMatchesFormat()`_ method. If you expect more than one
 deprecation message for a given test method, you can use the annotation several
 times (order matters)::
