@@ -36,8 +36,8 @@ Getters
 -------
 
 Constraints can also be applied to the value returned by any public *getter*
-method, which are the methods whose names start with ``get`` or ``is``. This
-feature allows to validate your objects dynamically.
+method, which are the methods whose names start with ``get``, ``has`` or ``is``.
+This feature allows to validate your objects dynamically.
 
 Suppose that, for security reasons, you want to validate that a password field
 doesn't match the first name of the user. First, create a public method called
