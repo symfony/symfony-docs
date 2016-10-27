@@ -131,18 +131,19 @@ You can easily "group" options in a select by passing a multi-dimensional choice
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
-
+    
     $builder->add('stockStatus', ChoiceType::class, [
-        'choices' => [
-            'Main Statuses' => [
-                'Yes' => 'stock_yes',
-                'No' => 'stock_no',
+            'choices' => [
+                'Main Statuses' => [
+                    'Yes' => 'stock_yes',
+                    'No' => 'stock_no',
+                ],
+                'Out of Stock Statuses' => [
+                    'Backordered' => 'stock_backordered',
+                    'Discontinued' => 'stock_discontinued',
+                ]
             ],
-            'Out of Stock Statuses' => [
-                'Backordered' => 'stock_backordered',
-                'Discontinued' => 'stock_discontinued',
-            ]
-        ],
+        ]
     );
 
 .. image:: /_images/reference/form/choice-example4.png
