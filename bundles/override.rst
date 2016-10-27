@@ -40,7 +40,7 @@ Services & Configuration
 If you want to modify service definitions of another bundle, you can use a compiler
 pass to change the class of the service or to modify method calls. In the following
 example, the implementing class for the ``original-service-id`` is changed to 
-``Acme\DemoBundle\YourService`.
+``Acme\DemoBundle\YourService``.
 
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
     namespace Acme\DemoBundle\DependencyInjection\Compiler;
