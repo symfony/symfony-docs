@@ -440,7 +440,7 @@ directly::
     $crawler = $client->request('GET', 'https://github.com/login');
 
     // select the form and fill in some values
-    $form = $crawler->selectButton('Log in')->form();
+    $form = $crawler->selectButton('Sign in')->form();
     $form['login'] = 'symfonyfan';
     $form['password'] = 'anypass';
 
