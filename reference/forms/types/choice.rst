@@ -135,19 +135,19 @@ Grouping Options
 
 You can easily "group" options in a select by passing a multi-dimensional choices array::
 
-    $builder->add('stockStatus', 'choice', [
-        'choices' => [
-            'Main Statuses' => [
+    $builder->add('stockStatus', 'choice', array(
+        'choices' => array(
+            'Main Statuses' => array(
                 'Yes' => 'stock_yes',
                 'No' => 'stock_no',
-            ],
-            'Out of Stock Statuses' => [
+            ),
+            'Out of Stock Statuses' => array(
                 'Backordered' => 'stock_backordered',
                 'Discontinued' => 'stock_discontinued',
-            ]
-        ],
+            ),
+        ),
         'choices_as_values' => true,
-    );
+    ));
 
 .. image:: /_images/reference/form/choice-example4.png
    :align: center
