@@ -1,0 +1,42 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-27T17:25:33Z
+
+Good catch, you're 100% correct! However, can you please revert the CS changes (you probably didn't do this on purpose):
+
+ * Please remove the trailing whitespace on line 134
+ * Please bring the indentation back one level again, just like it was originally. The final line would change from `);` to `]);` to fix the missing bracket.
+
+You can push commits to the branch of this PR to update this pull request.
+
+Also, if you have the time to do it, please change this to use the old `array()` syntax again to be consistent.
+
+If you don't have time to update your PR, we can also do these things during merging.
+
+status: needs work
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-27T17:26:37Z
+
+Oh and to answer your question:
+
+ > Do I have to send a PR for all branches or you ave a system to updated all affected branch automatically ?
+
+After some merges, we'll merge all branches from the oldest to the newest supported versions. So when submitting changes in the future, please submit the pull request against the oldest support version (2.7 now).
+
+Thanks for your PR!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-28T13:55:58Z
+
+👍 Thanks for your quick actions!
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-28T13:57:12Z
+
+👍
