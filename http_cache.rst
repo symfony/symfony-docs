@@ -19,7 +19,7 @@ isn't always possible for highly dynamic sites, or is it? With
 on only *fragments* of your site.
 
 The Symfony cache system is different because it relies on the simplicity
-and power of the HTTP cache as defined in the `HTTP specification`_. Instead of
+and power of the HTTP cache as defined in `RFC 7234 - Caching`_. Instead of
 reinventing a caching methodology, Symfony embraces the standard that defines
 basic communication on the Web. Once you understand the fundamental HTTP
 validation and expiration caching models, you'll be ready to master the Symfony
@@ -366,4 +366,3 @@ Learn more
 .. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
-.. _`HTTP specification`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
