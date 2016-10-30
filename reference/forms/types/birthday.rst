@@ -77,14 +77,14 @@ If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
-    $builder->add('birthdate', 'birthday', array(
+    $builder->add('birthdate', BirthdayType::class, array(
         'placeholder' => 'Select a value',
     ));
 
 Alternatively, you can use an array that configures different placeholder
 values for the year, month and day fields::
 
-    $builder->add('birthdate', 'birthday', array(
+    $builder->add('birthdate', BirthdayType::class, array(
         'placeholder' => array(
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
         )
