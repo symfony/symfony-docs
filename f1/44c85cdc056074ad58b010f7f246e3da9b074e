@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-27T14:52:11Z
+
+For the records, this will fix #7093.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-27T17:21:59Z
+
+👍 (except that we don't support 3.0 anymore, I suggest to merge it straight into 2.7)
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by mpdude at 2016-10-27T17:43:25Z
+
+@wouterj wait, I think for 2.7 it's still ok. Pick a 3.x branch of your choice.
+
+Should we add a note on 2.x that this is discouraged?
+
+---------------------------------------------------------------------------
+
+by mpdude at 2016-10-27T17:44:36Z
+
+Also, would it help to add a pointer to decorated services, or do they solve another problem?
+
+---------------------------------------------------------------------------
+
+by mpdude at 2016-10-27T21:56:30Z
+
+Possible duplicate of #6927 and #6912
