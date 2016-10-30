@@ -502,7 +502,7 @@ afterwards with the ``followRedirect()`` method::
     $crawler = $client->followRedirect();
 
 If you want the client to automatically follow all redirects, you can
-force him with the ``followRedirects()`` method::
+force them by calling the ``followRedirects()`` method before performing the request::
 
     $client->followRedirects();
 

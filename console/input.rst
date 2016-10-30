@@ -41,7 +41,7 @@ You now have access to a ``last_name`` argument in your command::
         {
             $text = 'Hi '.$input->getArgument('name');
 
-            $lastName = $input->getArgument('last_name')
+            $lastName = $input->getArgument('last_name');
             if ($lastName) {
                 $text .= ' '.$lastName;
             }
