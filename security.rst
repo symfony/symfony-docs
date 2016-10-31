@@ -1320,6 +1320,7 @@ Authorization (Denying Access)
     security/force_https
     security/securing_services
     security/access_control
+    security/access_denied_handler
 
 Other Security Related Topics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
