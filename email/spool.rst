@@ -144,13 +144,18 @@ at a regular interval.
 
 .. caution::
 
-    When you use the filesystem for spooling, messages are serialized with
-    the message class name. If the service is lazy loaded this class name
-    change on every cache clear. So if you send a mail, then you clear the
-    cache, the message will not be unserialisable.
+    When you create a message with swiftmailer, it generate a Swift_Message
+    class. If the swiftmailer service is lazy loaded, it generate instead a
+    proxy class named  Swift_Message_<someRandomCharacters>.
+
+    If you use the memory spool, this change is transparent and has no impart.
+    But when you use the filesystem spool, the message class is serialized on
+    a file with the randomized class name. The problem is that this random 
+    class name change on every cache clear. So if you send a mail, then you
+    clear the cache, the message will not be unserializable.
 
     On the next ``swiftmailer:spool:send`` an error will raise because the
     class ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
 
-    The solutions are either to use the memory spool or to load the
-    swiftmailer without ``lazy`` option.
+    The solutions are either to use the memory spool or to load the 
+    swiftmailer service without ``lazy`` option (see :doc:`/service_container/lazy_services`).
