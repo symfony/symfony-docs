@@ -164,16 +164,15 @@ This requires you to implement six methods::
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         /**
-         * Called on every request. Return whatever credentials you want, which
-         * will be passed to getUser().  Returning null skips all other authentication
-         * steps.  Throwing an AuthenticationException will cause authentication to fail, 
-         * calling onAuthenticationFailure().
+         * Called on every request. Return whatever credentials you want to
+         * be passed to getUser().  Returning null will cause authentication
+         * to be successful, skipping the rest of the authentication process.
          */
         public function getCredentials(Request $request)
         {
             if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-                // No token?  Cause authentication to fail.
-                throw new AuthenticationException();
+                // No token?
+                $token = null;
             }
 
             // What you return here will be passed to getUser() as $credentials
