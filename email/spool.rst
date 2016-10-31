@@ -141,3 +141,16 @@ You can also set the time limit in seconds:
 Of course you will not want to run this manually in reality. Instead, the
 console command should be triggered by a cron job or scheduled task and run
 at a regular interval.
+
+.. caution::
+
+    When you use the filesystem for spooling, messages are serialized with
+    the message class name. If the service is lazy loaded this class name
+    change on every cache clear. So if you send a mail, then you clear the
+    cache, the message will not be unserialisable.
+
+    On the next ``swiftmailer:spool:send`` an error will raise because the
+    class ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
+
+    The solutions are either to use the memory spool or to load the
+    swiftmailer without ``lazy`` option.
