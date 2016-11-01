@@ -130,12 +130,12 @@ are done doing other stuff::
 
     $process = new Process('ls -lsa');
     $process->start();
-    
+
     // ... do other things
     
     $process->wait();
     
-    // do things after the process has finished
+    // ... do things after the process has finished
 
 .. note::
 
