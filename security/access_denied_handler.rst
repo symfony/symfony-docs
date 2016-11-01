@@ -65,4 +65,4 @@ Then you must register your service :
         custom_handler.service.id:
             class: AppBundle\Security\AccessDeniedHandler
 
-That's it, now on the ``foo`` firewall, all ``AccessDeniedException`` will be notified to you service.
+That's it, now on the ``foo`` firewall, all ``AccessDeniedException`` will be notified to your service.
