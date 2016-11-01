@@ -58,7 +58,7 @@ You can use it to send a mail, log a message, or generally return a custom Respo
 
 Then you must register your service :
 
-.. code-block:: yml
+.. code-block:: yaml
 
     # app/config/services.yml
     services:
