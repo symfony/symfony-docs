@@ -139,7 +139,7 @@ Helpers
 
 The Templating component can be easily extended via helpers. Helpers are PHP objects that
 provide features useful in a template context. The component has
-a built-in helper:
+one built-in helper:
 
 * :doc:`/components/templating/slotshelper`
 
