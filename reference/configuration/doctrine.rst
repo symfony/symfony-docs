@@ -68,6 +68,7 @@ Full Default Configuration
                         profiling:            '%kernel.debug%'
                         driver_class:         ~
                         wrapper_class:        ~
+                        keep_slave:           false
                         options:
                             # an array of options
                             key:                  []
@@ -209,6 +210,7 @@ Full Default Configuration
                         logging="%kernel.debug%"
                         platform-service="MyOwnDatabasePlatformService"
                         server-version="5.6"
+                        keep-slave="false"
                     >
                         <doctrine:option key="foo">bar</doctrine:option>
                         <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
@@ -406,7 +408,6 @@ The following block shows all possible configuration keys:
                 types:
                     custom: Acme\HelloBundle\MyCustomType
                 # the DBAL keepSlave option
-                keep_slave:           false
 
     .. code-block:: xml
 
