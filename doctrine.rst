@@ -1,8 +1,8 @@
 .. index::
    single: Doctrine
 
-Databases and Doctrine
-======================
+Databases and the Doctrine ORM
+==============================
 
 One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Although
@@ -381,11 +381,6 @@ directly inside the ``Product`` class via DocBlock annotations:
     A bundle can accept only one metadata definition format. For example, it's
     not possible to mix YAML metadata definitions with annotated PHP entity
     class definitions.
-
-.. note::
-
-    If using the Doctrine ODM the mapping of the `id` field is slightly different.  You should define the field as normal, under the `fields` key, and add `id: true` to the definition.  See the `Doctrine MongoDB YAML Driver documentation <http://docs.doctrine-project.org/projects/doctrine-mongodb-odm/en/latest/reference/yml-mapping.html>`_ for more info.
-    Using the above format will result in the error "No identifier/primary key specified for Document '<document class>'. Every Document must have an identifier/primary key.".
 
 .. tip::
 
