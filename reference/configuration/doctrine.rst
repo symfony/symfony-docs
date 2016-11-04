@@ -68,6 +68,7 @@ Full Default Configuration
                         profiling:            '%kernel.debug%'
                         driver_class:         ~
                         wrapper_class:        ~
+                        # the DBAL keepSlave option
                         keep_slave:           false
                         options:
                             # an array of options
@@ -407,7 +408,6 @@ The following block shows all possible configuration keys:
                     enum: string
                 types:
                     custom: Acme\HelloBundle\MyCustomType
-                # the DBAL keepSlave option
 
     .. code-block:: xml
 
