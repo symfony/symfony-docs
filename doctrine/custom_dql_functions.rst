@@ -75,17 +75,68 @@ In Symfony, you can register your custom DQL functions as follows:
     orm directly will trigger the exception `Unrecognized option "dql" under "doctrine.orm"`.
     The `dql` configuration block must be defined under the named entity manager.
 
-.. code-block:: yaml
+    .. configuration-block::
 
-    # app/config/config.yml
-    doctrine:
-        orm:
-            # ...
-            entity_managers:
-                example_manager:
-                    # Place your functions here
-                    dql:
-                        datetime_functions:
-                            test_datetime: AppBundle\DQL\DatetimeFunction
+	.. code-block:: yaml
+
+	    # app/config/config.yml
+	    doctrine:
+		orm:
+		    # ...
+		    entity_managers:
+			example_manager:
+			    # Place your functions here
+			    dql:
+				datetime_functions:
+				    test_datetime: AppBundle\DQL\DatetimeFunction
+
+        .. code-block:: xml
+
+            # app/config/config.xml
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/doctrine
+                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config>
+                    <doctrine:orm>
+                        <!-- ... -->
+
+                        <doctrine:entity-manager name="example_manager">
+                            <!-- place your functions here -->
+                            <doctrine:dql>
+                                <doctrine:datetime-function name="test_datetime">
+                                    AppBundle\DQL\DatetimeFunction
+                                </doctrine:datetime-function>
+                            </doctrine:dql>
+                        </doctrine:entity-manager>
+                    </doctrine:orm>
+                </doctrine:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('doctrine', array(
+                'doctrine' => array(
+                    'orm' => array(
+                        // ...
+                        'entity_managers' => array(
+                            'example_manager' => array(
+                                // place your functions here
+                                'dql' => array(
+                                    'datetime_functions' => array(
+                                        'test_datetime' => 'AppBundle\DQL\DatetimeFunction',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ));
 
 .. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
