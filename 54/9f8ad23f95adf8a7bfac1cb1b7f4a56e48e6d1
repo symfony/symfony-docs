@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-27T12:12:25Z
+
+I don't think we should add the note in this specific place. The Doctrine chapter is one of the basic chapters and adding a note about the unrelated ODM package will probably cause more confusion. Actually we don't have anything related to the MongoDB Doctrine integration in the Symfony documentation itself. Probably this should rather be added to the ODM documentation instead.
+
+---------------------------------------------------------------------------
+
+by toby-griffiths at 2016-10-28T08:29:32Z
+
+@xabbuh I agree to an extent, but when the page relates to just Doctrine, rather than Doctrine ORM, then it can easily be misunderstood as applying to the various Doctrine packages, as it includes an ORM specific example.  I lost about 1/2 an hour trying to work out why this wasn't working for me using the MongoDB packages, so even a small note, or an updated example to include the ODM version would have help me save that wasted time.  Your thoughts?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-28T11:22:10Z
+
+@toby-griffiths What do you think about adding a general note at the top of the page stating that this chapter does cover the Doctrine ORM package specifically?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-28T14:08:48Z
+
+Thanks for reporting this issue @toby-griffiths! This clearly is something that confused you, so let's find a solution.
+
+I agree with @xabbuh that the current proposal may not be suited for the main Doctrine guide. Also, if we're adding ODM information in this chapter, we should also add docs for other ODMs than MongoDB imo. That'll increase complexity of this chapter, which we should avoid as it's the start guide.
+
+On the other hand, adding a tip indicating that this is for the ORM seems a bit too verbose to me. It'll take a couple of sentences + a distracting box to tell people it's only for the ORM (and many people reading this chapter for the first time won't even know what an ORM is).
+
+That's said, we still have this issue. What about adding "ORM" to the guide name: "Databases (Doctrine ORM)" in the sidebar and "Databases and the Doctrine ORM" as title (or the like)?
+
+---------------------------------------------------------------------------
+
+by toby-griffiths at 2016-10-31T08:00:48Z
+
+@xabbuh I'm not sure, as I (& therefore probably others) jump around the documentation, not reading it all, in search of the answers… putting it away from the example means people might miss it, although  @wouterj's suggestion to change the title seems like good enough solution, as you (almost) always read the title of the page to before it's content, to verify it's on the right topic.  It, therefore, might help prevent confusion.
+Alternatively, perhaps just a comment in the example code, but still this doesn't feel as clean a solution.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-01T09:50:46Z
+
+@toby-griffiths can you please update this PR to update the title of the article instead of adding this note? Thanks! (if you can't, just comment and we'll do it)
+
+/ping @javiereguiluz as you are the only one of us that's able to change the title name in the sidebar.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-03T15:49:46Z
+
+@wouterj the change has been made on symfony.com (it'll be available after the next deployment):
+
+![doctrine_orm](https://cloud.githubusercontent.com/assets/73419/19973431/7fba660e-a1e5-11e6-835a-c907a5778415.png)
+
+This PR has also been updated with your proposal.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-03T16:13:36Z
+
+:+1:
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by toby-griffiths at 2016-11-04T08:17:01Z
+
+Thanks :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-04T09:53:49Z
+
+👍
