@@ -28,10 +28,11 @@ the guides.
 Bundle Name
 -----------
 
-A bundle is also a PHP namespace. The namespace must follow the `PSR-0`_ or
-`PSR-4`_ interoperability standards for PHP namespaces and class names: it starts
-with a vendor segment, followed by zero or more category segments, and it ends
-with the namespace short name, which must end with a ``Bundle`` suffix.
+A bundle name is also a PHP namespace. The namespace must follow the `PSR-0`_
+or `PSR-4`_ interoperability standards for PHP namespaces and class names.
+The name starts with the vendor name, followed by zero or more category 
+segments/names, and it ends with the namespace short name which must end 
+with ``Bundle``.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
@@ -75,7 +76,7 @@ configuration options (see below for some usage examples).
 Directory Structure
 -------------------
 
-The basic directory structure of an AcmeBlogBundle must read as follows:
+The basic directory structure of an ``AcmeBlogBundle`` must read as follows:
 
 .. code-block:: text
 
@@ -105,15 +106,15 @@ that automated tools can rely on:
   bundles are published under the MIT license, but you can `choose any license`_;
 * ``Resources/doc/index.rst``: The root file for the Bundle documentation.
 
-The depth of sub-directories should be kept to the minimum for most used
-classes and files (two levels maximum).
+The depth of subdirectories should be kept to a minimum for the most used
+classes and files. Two levels is the maximum.
 
 The bundle directory is read-only. If you need to write temporary files, store
 them under the ``cache/`` or ``log/`` directory of the host application. Tools
 can generate files in the bundle directory structure, but only if the generated
 files are going to be part of the repository.
 
-The following classes and files have specific emplacements (some are mandatory
+The following classes and files have specific emplacements (some are mandatory 
 and others are just conventions followed by most developers):
 
 ===============================  =============================  ================
@@ -138,9 +139,9 @@ Classes
 -------
 
 The bundle directory structure is used as the namespace hierarchy. For
-instance, a ``ContentController`` controller is stored in
-``Acme/BlogBundle/Controller/ContentController.php`` and the fully qualified
-class name is ``Acme\BlogBundle\Controller\ContentController``.
+instance, a ``ContentController`` controller which is stored in
+``Acme/BlogBundle/Controller/ContentController.php`` would have the fully
+qualified class name of ``Acme\BlogBundle\Controller\ContentController``.
 
 All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.
 
@@ -158,8 +159,8 @@ Vendors
 A bundle must not embed third-party PHP libraries. It should rely on the
 standard Symfony autoloading instead.
 
-A bundle should not embed third-party libraries written in JavaScript, CSS or
-any other language.
+A bundle should also not embed third-party libraries written in JavaScript,
+CSS or any other language.
 
 Tests
 -----
@@ -185,7 +186,7 @@ All classes and functions must come with full PHPDoc.
 
 Extensive documentation should also be provided in the
 :doc:`reStructuredText </contributing/documentation/format>` format, under
-the ``Resources/doc/`` directory; the ``Resources/doc/index.rst`` file is
+the ``Resources/doc/`` directory. The ``Resources/doc/index.rst`` file is
 the only mandatory file and must be the entry point for the documentation.
 
 Installation Instructions
@@ -232,7 +233,6 @@ following standardized instructions in your ``README.md`` file.
             {
                 $bundles = array(
                     // ...
-
                     new <vendor>\<bundle-name>\<bundle-long-name>(),
                 );
 
@@ -399,8 +399,8 @@ The ``composer.json`` file should include at least the following metadata:
 ``name``
     Consists of the vendor and the short bundle name. If you are releasing the
     bundle on your own instead of on behalf of a company, use your personal name
-    (e.g. ``johnsmith/blog-bundle``). The bundle short name excludes the vendor
-    name and separates each word with an hyphen. For example: ``AcmeBlogBundle``
+    (e.g. ``johnsmith/blog-bundle``). Exclude the vendor name from the bundle
+    short name and separate each word with an hyphen. For example: ``AcmeBlogBundle``
     is transformed into ``blog-bundle`` and ``AcmeSocialConnectBundle`` is
     transformed into ``social-connect-bundle``.
 
@@ -412,10 +412,10 @@ The ``composer.json`` file should include at least the following metadata:
 
 ``license``
     ``MIT`` is the preferred license for Symfony bundles, but you can use any
-    other license.
+    license.
 
 ``autoload``
-    This information is used by Symfony to load the classes of the bundle. The
+    This information is used by Symfony to load the classes in the bundle. The
     `PSR-4`_ autoload standard is recommended for modern bundles, but `PSR-0`_
     standard is also supported.
 
