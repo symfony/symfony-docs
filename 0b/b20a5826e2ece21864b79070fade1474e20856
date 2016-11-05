@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-01T09:46:14Z
+
+👍
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-01T09:47:05Z
+
+If you have some time left, please also remove the `/components/templating/assetshelper` article (and the references to it).
+
+---------------------------------------------------------------------------
+
+by alexpts at 2016-11-01T10:33:36Z
+
+Ok, I ll pull project and prepare full PR for remove all deps.
+
+---------------------------------------------------------------------------
+
+by alexpts at 2016-11-01T17:19:14Z
+
+PR is ready.
+I think it need apply to 3.0 branch also.
