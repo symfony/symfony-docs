@@ -1,8 +1,8 @@
 .. index::
    single: Doctrine
 
-Databases and Doctrine
-======================
+Databases and the Doctrine ORM
+==============================
 
 One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Although
