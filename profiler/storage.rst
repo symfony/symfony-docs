@@ -50,5 +50,5 @@ directory. If you want to use another location to store the profiles, define the
         ));
 
 You can also create your own profile storage service implementing the
-:class:``Symfony\Component\HttpKernel\Profiler\ProfilerStorageInterface`` and
+:class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerStorageInterface` and
 overriding the ``profiler.storage`` service.
