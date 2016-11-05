@@ -10,20 +10,22 @@ change in the state of your model. The most basic kind of invalidation is direct
 items deletion. But when the state of a primary resource has spread accross
 several cached items, keeping them in sync can be difficult.
 
-The Symfony Cache component provides two mechanisms to help solve this problem:
+The Symfony Cache component provides two mechanisms to help solving this problem:
 
-* Tags based invalidation for managing data dependencies;
-* Expiration based invalidation for time related dependencies.
+* :ref:`Tags based invalidation <cache-component-tags>` for managing data dependencies;
+* :ref:`Expiration based invalidation <cache-component-expiration>` for time related dependencies.
 
-.. versionadded:: 3.2
-    Tags based invalidation was introduced in Symfony 3.2.
+.. _cache-component-tags:
 
 Using Cache Tags
 ----------------
 
+.. versionadded:: 3.2
+    Tags based invalidation was introduced in Symfony 3.2.
+
 To benefit from tags based invalidation, you need to attach the proper tags to
-each cached items. Each tag is a plain string identifier that you can use at any
-time to trigger the removal of all items that had this tag attached to them.
+each cached item. Each tag is a plain string identifier that you can use at any
+time to trigger the removal of all items associated with this tag.
 
 To attach tags to cached items, you need to use the
 :method:`Symfony\\Component\\Cache\\CacheItem::tag` method that is implemented by
@@ -36,14 +38,14 @@ cache items, as returned by cache adapters::
     $item->tag(array('tag_2', 'tag_3'));
     $cache->save($item);
 
-If ``$cache`` implements :class:`Symfony\\Component\\Cache\\TagAwareAdapterInterface`,
+If ``$cache`` implements :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface`,
 you can invalidate the cached items by calling
-:method:`Symfony\\Component\\Cache\\TagAwareAdapterInterface::invalidateTags`::
+:method:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface::invalidateTags`::
 
     // invalidate all items related to `tag_1` or `tag_3`
     $cache->invalidateTags(array('tag_1', 'tag_3'));
 
-    // if you know the cache key, you can of course delete directly
+    // if you know the cache key, you can also delete the item directly
     $cache->deleteItem('cache_key');
 
 Using tags invalidation is very useful when tracking cache keys becomes difficult.
@@ -77,6 +79,8 @@ your fronts and have very fast invalidation checks::
         // Adapter for tags
         new RedisAdapter('redis://localhost')
     );
+
+.. _cache-component-expiration:
 
 Using Cache Expiration
 ----------------------
