@@ -208,7 +208,7 @@ following standardized instructions in your ``README.md`` file.
         following command to download the latest stable version of this bundle:
 
         ```console
-        $ composer require <package-name> "~1"
+        $ composer require <package-name>
         ```
 
         This command requires you to have Composer installed globally, as explained
@@ -256,7 +256,7 @@ following standardized instructions in your ``README.md`` file.
 
         .. code-block:: terminal
 
-            $ composer require <package-name> "~1"
+            $ composer require <package-name>
 
         This command requires you to have Composer installed globally, as explained
         in the `installation chapter`_ of the Composer documentation.
