@@ -1,6 +1,9 @@
 Prevent Multiple Executions of a Console Command
 ================================================
 
+.. versionadded:: 3.2
+    The ``LockableTrait`` was introduced in Symfony 3.2.
+
 A simple but effective way to prevent multiple executions of the same command in
 a single server is to use **file locks**. The Filesystem component provides a
 :doc:`LockHandler </components/filesystem/lock_handler>` class that eases the
