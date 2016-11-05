@@ -96,7 +96,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
                 ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, array('label' => 'Create Task'))
+                ->add('save', SubmitType::class, array('label' => 'Create Post'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
