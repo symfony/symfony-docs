@@ -158,4 +158,4 @@ at a regular interval.
     the class ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
 
     The solutions are either to use the memory spool or to load the 
-    ``swiftmailer`` service without ``lazy`` option (see :doc:`/service_container/lazy_services`).
+    ``swiftmailer`` service without the ``lazy`` option (see :doc:`/service_container/lazy_services`).
