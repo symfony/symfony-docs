@@ -114,7 +114,7 @@ start with ``/**``, whereas regular PHP comments start with ``/*``.
 
 The first value of ``@Route()`` defines the URL that will trigger the execution
 of the action. As you don't have to add the host of your application to
-the URL (e.g. ```http://example.com``), these URLs are always relative and
+the URL (e.g. ``http://example.com``), these URLs are always relative and
 they are usually called *paths*. In this case, the ``/`` path refers to the
 application homepage. The second value of ``@Route()`` (e.g. ``name="homepage"``)
 is optional and sets the name of this route. For now this name is not needed,
