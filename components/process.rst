@@ -113,9 +113,9 @@ are done doing other stuff::
     $process->start();
 
     // ... do other things
-    
+
     $process->wait();
-    
+
     // ... do things after the process has finished
 
 .. note::
@@ -130,7 +130,7 @@ in the output and its type::
 
     $process = new Process('ls -lsa');
     $process->start();
-    
+
     $process->wait(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
