@@ -98,7 +98,7 @@ from inside a controller::
                 // If you use PHP 5.3 or 5.4 you must use
                 // ->add('task', 'Symfony\Component\Form\Extension\Core\Type\TextType')
                 ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, array('label' => 'Create Task'))
+                ->add('save', SubmitType::class, array('label' => 'Create Post'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(

@@ -185,7 +185,7 @@ That's it! Your Symfony application will be bootstrapped and deployed. You'll
 soon be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh
-.. _`Platform.sh documentation`: https://docs.platform.sh/toolstacks/symfony/symfony-getting-started
+.. _`Platform.sh documentation`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
