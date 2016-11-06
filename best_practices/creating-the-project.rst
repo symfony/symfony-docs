@@ -157,8 +157,7 @@ structure of Symfony, you can
 :doc:`override the location of the main directories </configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
 
-In addition, Symfony3 will use a slightly different directory structure when
-it's released:
+In addition, Symfony3 uses a slightly different directory structure:
 
 .. code-block:: text
 
