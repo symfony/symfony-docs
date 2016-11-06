@@ -297,7 +297,7 @@ Now you're ready to use this service in the controller::
     {
         // ...
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $file = $product->getBrochure();
             $fileName = $this->get('app.brochure_uploader')->upload($file);
 
