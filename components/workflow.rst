@@ -87,6 +87,6 @@ Learn more
     :maxdepth: 1
     :glob:
 
-    /workflow
+    /workflow/*
 
 .. _Packagist: https://packagist.org/packages/symfony/workflow

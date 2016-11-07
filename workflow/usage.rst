@@ -25,7 +25,7 @@ like this:
 
 .. configuration-block::
 
-    .. code-block: yaml
+    .. code-block:: yaml
 
         framework:
             workflows:
@@ -52,6 +52,7 @@ like this:
                         reject:
                             from: review
                             to:   rejected
+
 
 .. code-block: php
 
