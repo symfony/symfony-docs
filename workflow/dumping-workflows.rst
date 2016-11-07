@@ -24,6 +24,7 @@ The result will look like this:
 .. note::
 
     The ``dot`` command is a part of Graphviz. You can download it and read
-    more about it on `Graphviz.org`_:.
+    more about it on `Graphviz.org`_.
 
-.. Graphviz.org: http://www.graphviz.org
+
+.. _Graphviz.org: http://www.graphviz.org

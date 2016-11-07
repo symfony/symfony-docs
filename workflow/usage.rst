@@ -23,32 +23,35 @@ Consider the following example for a blog post. A post can have places:
 'draft', 'review', 'rejected', 'published'. You can define the workflow
 like this:
 
-.. code-block: yaml
+.. configuration-block::
 
-    framework:
-        workflows:
-            blog_publishing:
-                marking_store:
-                    type: property_accessor # 'scalar' or 'state_machine'
-                    arguments:
-                        - 'currentPlace'
-                supports:
-                    - AppBundle\Entity\BlogPost
-                places:
-                    - draft
-                    - review
-                    - rejected
-                    - published
-                transitions:
-                    to_review:
-                        from: draft
-                        to:   review
-                    publish:
-                        from: review
-                        to:   published
-                    reject:
-                        from: review
-                        to:   rejected
+    .. code-block: yaml
+
+        framework:
+            workflows:
+                blog_publishing:
+                    type: 'workflow' # or 'state_machine'
+                    marking_store:
+                        type: 'property_accessor' # or 'scalar' or 'state_machine'
+                        arguments:
+                            - 'currentPlace'
+                    supports:
+                        - AppBundle\Entity\BlogPost
+                    places:
+                        - draft
+                        - review
+                        - rejected
+                        - published
+                    transitions:
+                        to_review:
+                            from: draft
+                            to:   review
+                        publish:
+                            from: review
+                            to:   published
+                        reject:
+                            from: review
+                            to:   rejected
 
 .. code-block: php
 
@@ -62,8 +65,8 @@ like this:
 
 .. note::
 
-The marking store type could be "property_accessor", "scalar" or "state_machine".
-The latter makes your workflow behave as a state machine.
+    The marking store type could be "property_accessor" or "scalar".
+    A scalar marking type does not support a model being on multiple places.
 
 With this workflow named ``blog_publishing`` you can get help to decide
 what actions that are allowed on a blog post.
@@ -104,6 +107,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
+            /** @var Acme\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
