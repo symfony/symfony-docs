@@ -114,7 +114,7 @@ them under the ``cache/`` or ``log/`` directory of the host application. Tools
 can generate files in the bundle directory structure, but only if the generated
 files are going to be part of the repository.
 
-The following classes and files have specific emplacements (some are mandatory 
+The following classes and files have specific emplacements (some are mandatory
 and others are just conventions followed by most developers):
 
 ===============================  =============================  ================
