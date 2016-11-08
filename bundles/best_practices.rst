@@ -407,7 +407,7 @@ The ``composer.json`` file should include at least the following metadata:
     license.
 
 ``autoload``
-    This information is used by Symfony to load the classes in the bundle. The
+    This information is used by Symfony to load the classes of the bundle. The
     `PSR-4`_ autoload standard is recommended for modern bundles, but `PSR-0`_
     standard is also supported.
 
