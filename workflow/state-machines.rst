@@ -11,45 +11,59 @@ one place simultaneously. It is also worth noting that a workflow does not
 commonly have cyclic path in the definition graph but it is common for a state
 machine.
 
+Example of state machine
+------------------------
+
+Consider the states a GitHub pull request may have. We have an initial "start"
+state, a state for running tests on "travis", then we have the "review" state
+where we can require changes, reject or accept the pull request. At anytime we
+could also "update" the pull request which will result in another "travis" run.
+
+.. image:: /_images/components/workflow/pull_request.png
+
+Below is the configuration for the pull request state machine.
+
 .. configuration-block::
 
     .. code-block:: yaml
 
         framework:
             workflows:
-                blog_publishing:
-                    type:
-                        type: 'state_machine'
-                    supports:
-                        - AppBundle\Entity\BlogPost
-                    places:
-                        - draft
+                pull_request:
+                   type: 'state_machine'
+                   marking_store:
+                       type: scalar
+                   supports:
+                        - AppBundle\Entity\PullRequest
+                   places:
+                        - start
+                        - coding
+                        - travis
                         - review
-                        - rejected
-                        - published
-                    transitions:
-                        to_review:
-                            from: [draft, rejected]
-                            to:   review
-                        publish:
+                        - merged
+                        - closed
+                   transitions:
+                        submit:
+                            from: start
+                            to: travis
+                        update:
+                            from: [coding, travis, review]
+                            to: travis
+                        wait_for_reivew:
+                            from: travis
+                            to: review
+                        change_needed:
                             from: review
-                            to:   published
-                        reject:
+                            to: coding
+                        accepted:
                             from: review
-                            to:   rejected
+                            to: merged
+                        rejected:
+                            from: review
+                            to: closed
+                        reopened:
+                            from: closed
+                            to: review
 
-
-With the configuration above we allow an object in place ``draft`` **or**
-``rejected`` to be moved to ``review``. If the marking store had been of
-type ``scalar`` the object had to be in **both** places. ::
-
-    $workflow = $this->container->get('state_machine.blog_publishing');
-    $post = new \BlogPost();
-
-    $post->state = 'draft';
-    $workflow->can($post, 'to_review'); // True
-
-    $post->state = 'rejected';
-    $workflow->can($post, 'to_review'); // True
 
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net
