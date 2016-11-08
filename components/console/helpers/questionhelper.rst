@@ -209,6 +209,41 @@ convenient for passwords::
     like in the example above. In this case, a ``RuntimeException``
     would be thrown.
 
+Normalizing the Answer
+---------------------
+
+You can normalize the answer. For instance, in a previous example you asked for
+the bundle name. If the user accidentally adds spaces before and/or after the name we
+want to remove this from the answer. You can set the normalizer using
+:method:`Symfony\\Component\\Console\\Question\\Question::setNormalizer`
+method::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
+        $question->setNormalizer(function ($answer) {
+            if (!is_string($value)) { // $value can be null here
+                return $value;
+            }
+
+            return trim($value);
+        });
+
+        $name = $helper->ask($input, $output, $question);
+    }
+
+
+.. caution::
+
+    The normalizer is called before the validator and the returned value by the
+    normalizer is used as input for the validator (and not the original answer
+    of the user). The normalizer should not throw an exception if the answer is invalid;
+    for validation use a validator.
+
 Validating the Answer
 ---------------------
 
@@ -226,11 +261,12 @@ method::
         // ...
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setValidator(function ($answer) {
-            if ('Bundle' !== substr($answer, -6)) {
+            if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {
                 throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
+
             return $answer;
         });
         $question->setMaxAttempts(2);
