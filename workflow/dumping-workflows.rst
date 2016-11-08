@@ -14,12 +14,20 @@ PNG image of the workflow defined above::
 
 .. code-block:: bash
 
-    $ php dump-graph-php > out.dot
+    $ php dump-graph.php > out.dot
     $ dot -Tpng out.dot -o graph.png
 
 The result will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
+
+If you have configured your workflow with the Symfony framwork you may dump the dot file
+with the ``WorkflowDumpCommand``.
+
+.. code-block:: bash
+
+    $ php bin/console workflow:dump name > out.dot
+    $ dot -Tpng out.dot -o graph.png
 
 .. note::
 
