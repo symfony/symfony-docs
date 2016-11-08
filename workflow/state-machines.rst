@@ -41,9 +41,7 @@ machine.
 
 With the configuration above we allow an object in place ``draft`` **or**
 ``rejected`` to be moved to ``review``. If the marking store had been of
-type ``scalar`` the object had to be in **both** places.
-
-.. code-block:: php
+type ``scalar`` the object had to be in **both** places. ::
 
     $workflow = $this->container->get('state_machine.blog_publishing');
     $post = new \BlogPost();
@@ -53,9 +51,5 @@ type ``scalar`` the object had to be in **both** places.
 
     $post->state = 'rejected';
     $workflow->can($post, 'to_review'); // True
-
-
-
-
 
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net

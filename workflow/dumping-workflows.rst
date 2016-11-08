@@ -4,7 +4,7 @@
 How to Dump Workflows
 =====================
 
-To help you debug you could dump a representation of your workflow with
+To help you debug your workflows, you can dump a representation of your workflow with
 the use of a ``DumperInterface``. Use the ``GraphvizDumper`` to create a
 PNG image of the workflow defined above::
 
