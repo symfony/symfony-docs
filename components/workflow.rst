@@ -77,9 +77,21 @@ are trying to use it with::
     $registry->add($blogWorkflow, BlogPost::class);
     $registry->add($newsletterWorkflow, Newsletter::class);
 
-    // ...
+Usage
+-----
+
+When you have configured a ``Registry`` with your workflows you may use it as follows::
+
     $post = new BlogPost();
     $workflow = $registry->get($post);
+
+    $workflow->can($post, 'publish'); // False
+    $workflow->can($post, 'to_review'); // True
+
+    $workflow->apply($post, 'to_review');
+    $workflow->can($post, 'publish'); // True
+    $workflow->getEnabledTransitions($post); // ['publish', 'reject']
+
 
 Learn more
 ----------
