@@ -39,20 +39,20 @@ Consider the following example for a blog post. A post can have one of a number
 of predefined statuses (`draft`, `review`, `rejected`, `published`). In a workflow,
 these statuses are called **places**. You can define the workflow like this::
 
-    use Symfony\Component\Workflow\Definition;
+    use Symfony\Component\Workflow\DefinitionBuilder;
     use Symfony\Component\Workflow\Transition;
     use Symfony\Component\Workflow\Workflow;
     use Symfony\Component\Workflow\MarkingStore\ScalarMarkingStore;
 
-    $states = ['draft', 'review', 'rejected', 'published'];
+    $builder = new DefinitionBuilder();
+    $builder->addPlaces(['draft', 'review', 'rejected', 'published']);
 
     // Transitions are defined with a unique name, an origin place and a destination place
-    $transitions[] = new Transition('to_review', 'draft', 'review');
-    $transitions[] = new Transition('publish', 'review', 'published');
-    $transitions[] = new Transition('reject', 'review', 'rejected');
+    $builder->addTransition(new Transition('to_review', 'draft', 'review'));
+    $builder->addTransition(new Transition('publish', 'review', 'published'));
+    $builder->addTransition(new Transition('reject', 'review', 'rejected'));
 
-    $definition = new Definition($states, $transitions);
-    $definition->setInitialPlace('draft');
+    $definition = $builder->build();
 
     $marking = new ScalarMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);

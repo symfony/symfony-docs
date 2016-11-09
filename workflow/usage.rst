@@ -107,8 +107,7 @@ like this:
         $transitions[] = new Transition('publish', 'review', 'published');
         $transitions[] = new Transition('reject', 'review', 'rejected');
 
-        $definition = new Definition($states, $transitions);
-        $definition->setInitialPlace('draft');
+        $definition = new Definition($states, $transitions, 'draft');
 
         $marking = new PropertyAccessorMarkingStore('marking');
         $workflow = new Workflow($definition, $marking);
