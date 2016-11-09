@@ -33,8 +33,6 @@ Below is the configuration for the pull request state machine.
             workflows:
                 pull_request:
                    type: 'state_machine'
-                   marking_store:
-                       type: scalar
                    supports:
                         - AppBundle\Entity\PullRequest
                    places:
@@ -80,7 +78,7 @@ Below is the configuration for the pull request state machine.
 
             <framework:config>
                 <framework:workflow name="pull_request" type="state_machine">
-                    <framework:marking-store type="scalar"/>
+                    <framework:marking-store type="single_state"/>
 
                     <framework:support>AppBundle\Entity\PullRequest</framework:support>
 
@@ -145,7 +143,7 @@ Below is the configuration for the pull request state machine.
         use Symfony\Component\Workflow\Definition;
         use Symfony\Component\Workflow\Transition;
         use Symfony\Component\Workflow\StateMachine;
-        use Symfony\Component\Workflow\MarkingStore\ScalarMarkingStore;
+        use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 
         $states = ['start', 'coding', 'travis', 'review', 'merged', 'closed'];
         $transitions[] = new Transition('submit', 'start', 'travis');
@@ -160,7 +158,7 @@ Below is the configuration for the pull request state machine.
 
         $definition = new Definition($states, $transitions, 'start');
 
-        $marking = new ScalarMarkingStore('marking');
+        $marking = new SingleStateMarkingStore('marking');
         $stateMachine = new StateMachine($definition, $marking);
 
 

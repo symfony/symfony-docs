@@ -42,7 +42,7 @@ these statuses are called **places**. You can define the workflow like this::
     use Symfony\Component\Workflow\DefinitionBuilder;
     use Symfony\Component\Workflow\Transition;
     use Symfony\Component\Workflow\Workflow;
-    use Symfony\Component\Workflow\MarkingStore\ScalarMarkingStore;
+    use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 
     $builder = new DefinitionBuilder();
     $builder->addPlaces(['draft', 'review', 'rejected', 'published']);
@@ -54,7 +54,7 @@ these statuses are called **places**. You can define the workflow like this::
 
     $definition = $builder->build();
 
-    $marking = new ScalarMarkingStore('currentState');
+    $marking = new SingleStateMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
 
 The ``Workflow`` can now help you to decide what actions are allowed

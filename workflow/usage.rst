@@ -27,7 +27,7 @@ like this:
                 blog_publishing:
                     type: 'workflow' # or 'state_machine'
                     marking_store:
-                        type: 'property_accessor' # or 'scalar'
+                        type: 'multiple_state' # or 'single_state'
                         arguments:
                             - 'currentPlace'
                     supports:
@@ -61,7 +61,7 @@ like this:
 
             <framework:config>
                 <framework:workflow name="blog_publishing" type="workflow">
-                    <framework:marking-store type="scalar">
+                    <framework:marking-store type="single_state">
                       <framework:arguments>currentPlace</framework:arguments>
                     </framework:marking-store>
 
@@ -100,7 +100,7 @@ like this:
         use Symfony\Component\Workflow\Definition;
         use Symfony\Component\Workflow\Transition;
         use Symfony\Component\Workflow\StateMachine;
-        use Symfony\Component\Workflow\MarkingStore\PropertyAccessorMarkingStore;
+        use Symfony\Component\Workflow\MarkingStore\MultipleStateMarkingStore;
 
         $states = ['draft', 'review', 'rejected', 'published'];
         $transitions[] = new Transition('to_review', 'draft', 'review');
@@ -109,7 +109,7 @@ like this:
 
         $definition = new Definition($states, $transitions, 'draft');
 
-        $marking = new PropertyAccessorMarkingStore('marking');
+        $marking = new MultipleStateMarkingStore('marking');
         $workflow = new Workflow($definition, $marking);
 
 .. code-block:: php
@@ -124,8 +124,9 @@ like this:
 
 .. note::
 
-    The marking store type could be "property_accessor" or "scalar".
-    A scalar marking type does not support a model being on multiple places.
+    The marking store type could be "multiple_state" or "single_state".
+    A single state marking store does not support a model being on multiple places
+    at the same time.
 
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions that are allowed on a blog post. ::
