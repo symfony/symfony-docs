@@ -216,7 +216,7 @@ The links below will only be displayed when the action is allowed:
     {% endif %}
 
     {# Or loop through the enabled transistions #}
-    {% for transition in workflow_transitions(article) %}
+    {% for transition in workflow_transitions(post) %}
         <a href="...">{{ transition.name }}</a>
     {% else %}
         No actions available.
