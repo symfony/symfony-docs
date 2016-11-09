@@ -4,11 +4,6 @@
 How to Use the Workflow
 =======================
 
-Using the Workflow component will help you to keep your domain logic as
-configuration. Having domain logic in one place gives you a better overview
-and it is easier to maintain whenever the domain requirement changes since
-you do not have to edit all your controllers, twig templates and services.
-
 A workflow is a process or a lifecycle that your objects go through. Each
 step or stage in the process is called a *place*. You do also define *transitions*
 to that describes the action to get from one place to another.
