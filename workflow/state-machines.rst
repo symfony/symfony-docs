@@ -158,8 +158,7 @@ Below is the configuration for the pull request state machine.
         $transitions[] = new Transition('rejected', 'review', 'closed');
         $transitions[] = new Transition('reopened', 'closed', 'review');
 
-        $definition = new Definition($states, $transitions);
-        $definition->setInitialPlace('start');
+        $definition = new Definition($states, $transitions, 'start');
 
         $marking = new ScalarMarkingStore('marking');
         $stateMachine = new StateMachine($definition, $marking);
