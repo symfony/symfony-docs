@@ -171,8 +171,11 @@ This requires you to implement six methods::
         public function getCredentials(Request $request)
         {
             if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-                // No token? 
-                $token = '';
+                // No token?
+                // Throwing an exception will cause authentication
+                //   to fail and prevent other authenticators from
+                //   attempting to authenticate.
+                throw new AuthenticationException('No token provided.');
             }
 
             // What you return here will be passed to getUser() as $credentials
