@@ -66,4 +66,9 @@ Below is the configuration for the pull request state machine.
                             to: review
 
 
+You can now use this state machine by getting the ``state_machine.pull_request`` service::
+
+    $stateMachine = $this->container->get('state_machine.pull_request');
+
+
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net
