@@ -47,7 +47,7 @@ be configured so that ``/contact`` sets the request format to ``html`` while
 To create links that include the format parameter, include a ``_format``
 key in the parameter hash:
 
-.. configuration-block::  
+.. configuration-block::
 
     .. code-block:: html+twig
 
