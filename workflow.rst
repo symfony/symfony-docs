@@ -6,19 +6,19 @@ of how a blog post goes from draft, review and publish. Another example is when
 a user submits a series of different forms to complete a task. Such processes are
 best kept away from your models and should be defined in configuration.
 
-A **definition** of a workflow consist of places and actions how to get from one
+A **definition** of a workflow consist of places and actions to get from one
 place to another. The actions are called **transistions**. A workflow does also
 need to know each object's position in the workflow. That **marking store** writes
-to a property of object to remember the current place.
+to a property of the object to remember the current place.
 
 .. note::
 
     The terminology above is commonly used when discussing workflows and
     `Petri nets`_
 
-The workflow component does also support state machines. A state machine is a subset
+The Workflow component does also support state machines. A state machine is a subset
 of a workflow and its purpose is to hold a state of your model. Read more about the
-differences and specific features of state machine in :doc:`/workflow/state-machines`
+differences and specific features of state machine in :doc:`/workflow/state-machines`.
 
 Examples
 --------
@@ -34,12 +34,12 @@ workflow below descirbes the process to fill in a job application.
 
 When you fill in a job application in this examplethere are 4 to 7 steps depending
 on the what job you are applying for. Some jobs requires personality test, logic tests
-and/or formal requirements to be answered by the user. Some jobs don't. We use the
-``GuardEvent`` to decide what next steps that are allowed for a specific application.
+and/or formal requirements to be answered by the user. Some jobs don't. The
+``GuardEvent`` is used to decide what next steps are allowed for a specific application.
 
-By defining a workflow like this we have an over view how the process looks like. We
-do not have any of the process logic in our controllers, models or view. We can change
-the order of the steps by changing configuration only.
+By defining a workflow like this, there is an overview how the process looks like. The process
+logic is not mixed with the controllers, models or view. The order of the steps can be changed
+by changing the configuration only.
 
 
 .. toctree::

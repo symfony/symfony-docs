@@ -4,7 +4,7 @@
 How to Use the Workflow
 =======================
 
-Using the workflow component will help you to keep your domain logic as
+Using the Workflow component will help you to keep your domain logic as
 configuration. Having domain logic in one place gives you a better overview
 and it is easier to maintain whenever the domain requirement changes since
 you do not have to edit all your controllers, twig templates and services.
@@ -32,7 +32,7 @@ like this:
                 blog_publishing:
                     type: 'workflow' # or 'state_machine'
                     marking_store:
-                        type: 'property_accessor' # or 'scalar' or 'state_machine'
+                        type: 'property_accessor' # or 'scalar'
                         arguments:
                             - 'currentPlace'
                     supports:
@@ -54,7 +54,7 @@ like this:
                             to:   rejected
 
 
-.. code-block: php
+.. code-block:: php
 
     class BlogPost
     {
@@ -69,10 +69,10 @@ like this:
     The marking store type could be "property_accessor" or "scalar".
     A scalar marking type does not support a model being on multiple places.
 
-With this workflow named ``blog_publishing`` you can get help to decide
+With this workflow named ``blog_publishing``, you can get help to decide
 what actions that are allowed on a blog post. ::
 
-    $post = new \BlogPost();
+    $post = new \AppBundle\Entity\BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
@@ -93,7 +93,7 @@ Using Events
 
 To make your workflows even more powerful you could construct the ``Workflow``
 object with an ``EventDispatcher``. You can now create event listeners to
-block transitions ie depending on the data in the blog post. The following
+block transitions (i.e. depending on the data in the blog post). The following
 events are dispatched:
 
 * ``workflow.guard``
@@ -101,6 +101,9 @@ events are dispatched:
 * ``workflow.[workflow name].guard.[transition name]``
 
 See example to make sure no blog post without title is moved to "review"::
+
+    use Symfony\Component\Workflow\Event\GuardEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     class BlogPostReviewListener implements EventSubscriberInterface
     {
@@ -127,7 +130,9 @@ See example to make sure no blog post without title is moved to "review"::
 With help from the ``EventDispatcher`` and the ``AuditTrailListener`` you
 could easily enable logging::
 
-    $logger = new PSR3Logger();
+    use Symfony\Component\Workflow\EventListener\AuditTrailListener;
+
+    $logger = new AnyPsr3Logger();
     $subscriber = new AuditTrailListener($logger);
     $dispatcher->addSubscriber($subscriber);
 
@@ -135,8 +140,8 @@ Usage in Twig
 -------------
 
 Using your workflow in your Twig templates reduces the need of domain logic
-in the view layer. Consider this example of the control panel for our blog's
-edit page. The links below will only be displayed when the action is allowed:
+in the view layer. Consider this example of the control panel of the blog.
+The links below will only be displayed when the action is allowed:
 
 .. code-block:: twig
 

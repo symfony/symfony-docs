@@ -80,8 +80,9 @@ are trying to use it with::
 Usage
 -----
 
-When you have configured a ``Registry`` with your workflows you may use it as follows::
+When you have configured a ``Registry`` with your workflows, you may use it as follows::
 
+    // ...
     $post = new BlogPost();
     $workflow = $registry->get($post);
 
@@ -92,7 +93,6 @@ When you have configured a ``Registry`` with your workflows you may use it as fo
     $workflow->can($post, 'publish'); // True
     $workflow->getEnabledTransitions($post); // ['publish', 'reject']
 
-
 Learn more
 ----------
 
@@ -100,7 +100,6 @@ Learn more
     :maxdepth: 1
     :glob:
 
-    /workflow
     /workflow/*
 
 .. _Packagist: https://packagist.org/packages/symfony/workflow

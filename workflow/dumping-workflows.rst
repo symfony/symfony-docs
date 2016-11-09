@@ -12,7 +12,7 @@ PNG image of the workflow defined above::
     $dumper = new GraphvizDumper();
     echo $dumper->dump($definition);
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php dump-graph.php > out.dot
     $ dot -Tpng out.dot -o graph.png
@@ -21,10 +21,10 @@ The result will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
 
-If you have configured your workflow with the Symfony framwork you may dump the dot file
-with the ``WorkflowDumpCommand``.
+If you have configured your workflow with the Symfony framework, you may dump the dot file
+with the ``WorkflowDumpCommand``:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console workflow:dump name > out.dot
     $ dot -Tpng out.dot -o graph.png
@@ -33,6 +33,5 @@ with the ``WorkflowDumpCommand``.
 
     The ``dot`` command is a part of Graphviz. You can download it and read
     more about it on `Graphviz.org`_.
-
 
 .. _Graphviz.org: http://www.graphviz.org

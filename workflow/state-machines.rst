@@ -8,16 +8,17 @@ The workflow component is modelled after a *Workflow net* which is a subclass
 of a `Petri net`_. By adding further restrictions you can get a state machine.
 The most important one being that a state machine cannot be in more than
 one place simultaneously. It is also worth noting that a workflow does not
-commonly have cyclic path in the definition graph but it is common for a state
+commonly have cyclic path in the definition graph, but it is common for a state
 machine.
 
-Example of state machine
+Example of State Machine
 ------------------------
 
-Consider the states a GitHub pull request may have. We have an initial "start"
-state, a state for running tests on "travis", then we have the "review" state
-where we can require changes, reject or accept the pull request. At anytime we
-could also "update" the pull request which will result in another "travis" run.
+A pull request starts in an intial "start" state, a state for e.g. running
+tests on Travis. When this is finished, the pull request is in the "review"
+state, where contributors can require changes, reject or accept the
+pull request. At any time, you can also "update" the pull request, which
+will result in another Travis run.
 
 .. image:: /_images/components/workflow/pull_request.png
 
@@ -27,6 +28,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         framework:
             workflows:
                 pull_request:
@@ -65,6 +67,78 @@ Below is the configuration for the pull request state machine.
                             from: closed
                             to: review
 
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="utf-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+
+            <framework:config>
+                <framework:workflow name="pull_request" type="state_machine">
+                    <framework:marking-store type="scalar"/>
+
+                    <framework:support>AppBundle\Entity\PullRequest</framework:support>
+
+                    <framework:place>start</framework:place>
+                    <framework:place>coding</framework:place>
+                    <framework:place>travis</framework:place>
+                    <framework:place>review</framework:place>
+                    <framework:place>merged</framework:place>
+                    <framework:place>closed</framework:place>
+
+                    <framework:transition name="submit">
+                        <framework:from>start</framework:from>
+
+                        <framework:to>travis</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="update">
+                        <framework:from>coding</framework:from>
+                        <framework:from>travis</framework:from>
+                        <framework:from>review</framework:from>
+
+                        <framework:to>travis</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="wait_for_review">
+                        <framework:from>travis</framework:from>
+
+                        <framework:to>review</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="change_needed">
+                        <framework:from>review</framework:from>
+
+                        <framework:to>coding</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="accepted">
+                        <framework:from>review</framework:from>
+
+                        <framework:to>merged</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="rejected">
+                        <framework:from>review</framework:from>
+
+                        <framework:to>closed</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="reopened">
+                        <framework:from>closed</framework:from>
+
+                        <framework:to>review</framework:to>
+                    </framework:transition>
+
+                </framework:workflow>
+
+            </framework:config>
+        </container>
 
 You can now use this state machine by getting the ``state_machine.pull_request`` service::
 
