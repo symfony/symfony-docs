@@ -70,9 +70,7 @@ like this:
     A scalar marking type does not support a model being on multiple places.
 
 With this workflow named ``blog_publishing`` you can get help to decide
-what actions that are allowed on a blog post.
-
-.. code-block:: php
+what actions that are allowed on a blog post. ::
 
     $post = new \BlogPost();
 
