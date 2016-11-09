@@ -53,6 +53,70 @@ like this:
                             from: review
                             to:   rejected
 
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="utf-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+
+            <framework:config>
+                <framework:workflow name="blog_publishing" type="workflow">
+                    <framework:marking-store type="scalar">
+                      <framework:arguments>currentPlace</framework:arguments>
+                    </framework:marking-store>
+
+                    <framework:support>AppBundle\Entity\BlogPost</framework:support>
+
+                    <framework:place>draft</framework:place>
+                    <framework:place>review</framework:place>
+                    <framework:place>rejected</framework:place>
+                    <framework:place>published</framework:place>
+
+                    <framework:transition name="to_review">
+                        <framework:from>draft</framework:from>
+
+                        <framework:to>review</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="publish">
+                        <framework:from>review</framework:from>
+
+                        <framework:to>published</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="reject">
+                        <framework:from>review</framework:from>
+
+                        <framework:to>rejected</framework:to>
+                    </framework:transition>
+
+                </framework:workflow>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\Workflow\Definition;
+        use Symfony\Component\Workflow\Transition;
+        use Symfony\Component\Workflow\StateMachine;
+        use Symfony\Component\Workflow\MarkingStore\PropertyAccessorMarkingStore;
+
+        $states = ['draft', 'review', 'rejected', 'published'];
+        $transitions[] = new Transition('to_review', 'draft', 'review');
+        $transitions[] = new Transition('publish', 'review', 'published');
+        $transitions[] = new Transition('reject', 'review', 'rejected');
+
+        $definition = new Definition($states, $transitions);
+        $definition->setInitialPlace('draft');
+
+        $marking = new PropertyAccessorMarkingStore('marking');
+        $workflow = new Workflow($definition, $marking);
 
 .. code-block:: php
 
