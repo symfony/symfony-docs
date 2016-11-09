@@ -22,11 +22,13 @@ In many cases, you may want to allow a single controller to render multiple
 different formats based on the "request format". For that reason, a common
 pattern is to do the following::
 
-    public function indexAction(Request $request)
+    public function showAction(Request $request, Article $entity)
     {
         $format = $request->getRequestFormat();
 
-        return $this->render('article/index.'.$format.'.twig');
+        return $this->render('article/index.'.$format.'.twig', [
+          'entity' => $entity
+        ]);
     }
 
 The ``getRequestFormat()`` on the ``Request`` object defaults to ``html``,
