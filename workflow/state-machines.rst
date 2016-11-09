@@ -140,6 +140,31 @@ Below is the configuration for the pull request state machine.
             </framework:config>
         </container>
 
+    .. code-block:: php
+
+        use Symfony\Component\Workflow\Definition;
+        use Symfony\Component\Workflow\Transition;
+        use Symfony\Component\Workflow\StateMachine;
+        use Symfony\Component\Workflow\MarkingStore\ScalarMarkingStore;
+
+        $states = ['start', 'coding', 'travis', 'review', 'merged', 'closed'];
+        $transitions[] = new Transition('submit', 'start', 'travis');
+        $transitions[] = new Transition('update', 'coding', 'travis');
+        $transitions[] = new Transition('update', 'travis', 'travis');
+        $transitions[] = new Transition('update', 'review', 'travis');
+        $transitions[] = new Transition('wait_for_reivew', 'travis', 'review');
+        $transitions[] = new Transition('change_needed', 'review', 'coding');
+        $transitions[] = new Transition('accepted', 'review', 'merged');
+        $transitions[] = new Transition('rejected', 'review', 'closed');
+        $transitions[] = new Transition('reopened', 'closed', 'review');
+
+        $definition = new Definition($states, $transitions);
+        $definition->setInitialPlace('start');
+
+        $marking = new ScalarMarkingStore('marking');
+        $stateMachine = new StateMachine($definition, $marking);
+
+
 You can now use this state machine by getting the ``state_machine.pull_request`` service::
 
     $stateMachine = $this->container->get('state_machine.pull_request');
