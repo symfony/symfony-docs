@@ -21,7 +21,9 @@ isn't actually rendered differently based on its format.
 In many cases, you may want to allow a single controller to render multiple
 different formats based on the "request format". For that reason, a common
 pattern is to do the following::
-
+    /**
+     * @Route("/{_format}", name="article_show", defaults={"_format": "html"}, requirements={"_format": "html|pdf"}
+     */
     public function indexAction(Request $request)
     {
         $format = $request->getRequestFormat();
