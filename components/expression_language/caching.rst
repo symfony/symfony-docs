@@ -25,17 +25,23 @@ The ``evaluate()`` method needs to loop through the "nodes" (pieces of an
 expression saved in the ``ParsedExpression``) and evaluate them on the fly.
 
 To save time, the ``ExpressionLanguage`` caches the ``ParsedExpression`` so
-it can skip the tokenize and parse steps with duplicate expressions.
-The caching is done by a `CacheItemPoolInterface`_ instance (by default, it uses an
-:class:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter`).
-You can customize this by creating a custom ``Cache`` and injecting this
-in the object using the constructor::
+it can skip the tokenize and parse steps with duplicate expressions. The
+caching is done by a PSR-6 `CacheItemPoolInterface`_ instance (by default, it
+uses an :class:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter`). You can
+customize this by creating a custom cache pool or using one of the available
+ones and injecting this using the constructor::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
     use Symfony\Component\Cache\Adapter\RedisAdapter;
 
     $cache = new RedisAdapter(...);
     $language = new ExpressionLanguage($cache);
+
+.. versionadded:: 3.2
+    PSR-6 caching support was introduced in Symfony 3.2. Prior to version 3.2,
+    a
+    :class:`Symfony\\Component\\ExpressionLanguage\\ParserCache\\ParserCacheInterface`
+    instance had to be injected.
 
 .. seealso::
 
