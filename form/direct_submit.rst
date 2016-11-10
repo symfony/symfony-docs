@@ -22,7 +22,7 @@ submissions::
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // perform some action...
 
             return $this->redirectToRoute('task_success');
@@ -63,7 +63,7 @@ method, pass the submitted data directly to
         if ($request->isMethod('POST')) {
             $form->submit($request->request->get($form->getName()));
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // perform some action...
 
                 return $this->redirectToRoute('task_success');
@@ -115,7 +115,7 @@ a convenient shortcut to the previous example::
         if ($request->isMethod('POST')) {
             $form->submit($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // perform some action...
 
                 return $this->redirectToRoute('task_success');

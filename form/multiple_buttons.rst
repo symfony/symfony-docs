@@ -22,7 +22,7 @@ In your controller, use the button's
 :method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method for
 querying if the "Save and add" button was clicked::
 
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
         // ... perform some action, such as saving the task to the database
 
         $nextAction = $form->get('saveAndAdd')->isClicked()
