@@ -20,6 +20,7 @@ New Documentation
 ~~~~~~~~~~~~~~~~~
 
 * `#7023 <https://github.com/symfony/symfony-docs/pull/7023>`_ Added useful debug commands in the debug documentation (hiddewie)
+* `#6932 <https://github.com/symfony/symfony-docs/pull/6932>`_ Explain the limitations of the custom messages in UniqueEntity (javiereguiluz)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -40,6 +41,7 @@ Minor Documentation Changes
 * `#7085 <https://github.com/symfony/symfony-docs/pull/7085>`_ Update custom_authentication_provider.rst (BatsaxIV)
 * `#7083 <https://github.com/symfony/symfony-docs/pull/7083>`_ update github example (hootlex)
 * `#7082 <https://github.com/symfony/symfony-docs/pull/7082>`_ Update metadata.rst (fberthereau)
+* `#7078 <https://github.com/symfony/symfony-docs/pull/7078>`_ Simple typo fix (Renrhaf)
 * `#7077 <https://github.com/symfony/symfony-docs/pull/7077>`_ remove caution message (snoek09)
 * `#7061 <https://github.com/symfony/symfony-docs/pull/7061>`_ Change link to docs instead repo (mik-laj)
 * `#7066 <https://github.com/symfony/symfony-docs/pull/7066>`_ Remove erroneous placeholder text (regularjack)
@@ -50,6 +52,7 @@ Minor Documentation Changes
 * `#7035 <https://github.com/symfony/symfony-docs/pull/7035>`_ Redirect /form to /forms for consistency (wouterj)
 * `#7054 <https://github.com/symfony/symfony-docs/pull/7054>`_ Fix IS_AUTHENTICATED_FULLY annotation (mschobner)
 * `#7044 <https://github.com/symfony/symfony-docs/pull/7044>`_ Add Nginx configuration to environment variables (peterkokot)
+* `#6928 <https://github.com/symfony/symfony-docs/pull/6928>`_ Update the Apache Router article to deprecate it entirely (javiereguiluz)
 * `#7053 <https://github.com/symfony/symfony-docs/pull/7053>`_ Minor improvements for the contribution guide (javiereguiluz)
 * `#7050 <https://github.com/symfony/symfony-docs/pull/7050>`_ use single quotes for YAML strings (snoek09)
 * `#7047 <https://github.com/symfony/symfony-docs/pull/7047>`_ Fix typo in doctrine.rst (to manage) (lacyrhoades)
