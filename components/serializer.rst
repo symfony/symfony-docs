@@ -528,9 +528,9 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
 
-.. versionadded:: 3.2
-    Support for specifying datetime format during denormalization was added to
-    ``DateTimeNormalizer`` in Symfony 3.2
+    .. versionadded:: 3.2
+        Support for specifying datetime format during denormalization was
+        introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
