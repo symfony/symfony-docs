@@ -282,6 +282,58 @@ and :phpclass:`DOMNode` objects:
 
         $html = $crawler->html();
 
+Expression Evaluation
+~~~~~~~~~~~~~~~~~~~~~
+
+The ``evaluate()`` method evaluates the given XPath expression.
+The return value depends on if the expression operates on simple values
+(like HTML attributes), or a subset of the current document.
+If the expression evaluates to a scalar value, an array of results will be
+returned. If the expression evaluates to a DOM document, a new ``Crawler``
+instance will be returned.
+
+This behavior is best illustrated with examples::
+
+    use Symfony\Component\DomCrawler\Crawler;
+
+    $html = '<html>
+    <body>
+        <span id="article-100" class="article">Article 1</span>
+        <span id="article-101" class="article">Article 2</span>
+        <span id="article-102" class="article">Article 3</span>
+    </body>
+    </html>';
+
+    $crawler = new Crawler();
+    $crawler->addHtmlContent($html);
+
+    $crawler->filterXPath('//span[contains(@id, "article-")]')->evaluate('substring-after(@id, "-")');
+    // array:3 [
+    //   0 => "100"
+    //   1 => "101"
+    //   2 => "102"
+    // ]
+
+    $crawler->evaluate('substring-after(//span[contains(@id, "article-")]/@id, "-")');
+    // array:1 [
+    //   0 => "100"
+    // ]
+
+    $crawler->filterXPath('//span[@class="article"]')->evaluate('count(@id)');
+    // array:3 [
+    //   0 => 1.0
+    //   1 => 1.0
+    //   2 => 1.0
+    // ]
+
+    $crawler->evaluate('count(//span[@class="article"])');
+    // array:1 [
+    //   0 => 3.0
+    // ]
+
+    $crawler->evaluate('//span[1]');
+    // Symfony\Component\DomCrawler\Crawler { }
+
 Links
 ~~~~~
 
