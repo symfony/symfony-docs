@@ -13,78 +13,6 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
-October, 2016
--------------
-
-New Documentation
-~~~~~~~~~~~~~~~~~
-
-* `#6958 <https://github.com/symfony/symfony-docs/pull/6958>`_ [FrameworkBundle] add support for prioritizing form type extension tags (dmaicher)
-* `#7074 <https://github.com/symfony/symfony-docs/pull/7074>`_ [PhpUnitBridge] Doc for @expectedDeprecation & new configuration env vars (nicolas-grekas)
-* `#6947 <https://github.com/symfony/symfony-docs/pull/6947>`_ [Cache] Add chapter about invalidation, tags, etc. (nicolas-grekas)
-* `#7021 <https://github.com/symfony/symfony-docs/pull/7021>`_ [ServiceContainer] Remove implementation details of private services (lemoinem)
-* `#7023 <https://github.com/symfony/symfony-docs/pull/7023>`_ Added useful debug commands in the debug documentation (hiddewie)
-* `#6946 <https://github.com/symfony/symfony-docs/pull/6946>`_ [VarDumper] Adding semantics with metadata (nicolas-grekas)
-* `#6949 <https://github.com/symfony/symfony-docs/pull/6949>`_ Update ProgressBar docs with regress information (jameshalsall)
-* `#7019 <https://github.com/symfony/symfony-docs/pull/7019>`_ [Framework] Update link-to-source mapping definition (nicolas-grekas)
-* `#6938 <https://github.com/symfony/symfony-docs/pull/6938>`_ Document new utf8 option of Routing component (mickaelandrieu)
-* `#6932 <https://github.com/symfony/symfony-docs/pull/6932>`_ Explain the limitations of the custom messages in UniqueEntity (javiereguiluz)
-* `#6876 <https://github.com/symfony/symfony-docs/pull/6876>`_ Updated single command How to (mickaelandrieu)
-* `#6870 <https://github.com/symfony/symfony-docs/pull/6870>`_ [Debug] Added configuration reference for new debug options (lyrixx)
-* `#6783 <https://github.com/symfony/symfony-docs/pull/6783>`_ Routing: add explanation for the "_fragment" parameter (alexislefebvre)
-
-Fixed Documentation
-~~~~~~~~~~~~~~~~~~~
-
-* `#7049 <https://github.com/symfony/symfony-docs/pull/7049>`_ Fix the platform.sh builds (wouterj)
-
-Minor Documentation Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* `#7090 <https://github.com/symfony/symfony-docs/pull/7090>`_ Remove suggestion to change the `.class` parameters (mpdude)
-* `#7095 <https://github.com/symfony/symfony-docs/pull/7095>`_ Also mention "hasXXX" methods as validation targets (mpdude)
-* `#7091 <https://github.com/symfony/symfony-docs/pull/7091>`_ A bracket was missed (hpatoio)
-* `#7097 <https://github.com/symfony/symfony-docs/pull/7097>`_ link to specific HTTP Cache RFC (snoek09)
-* `#7098 <https://github.com/symfony/symfony-docs/pull/7098>`_ Improved Redirecting paragraph of Testing page (ShinDarth)
-* `#7100 <https://github.com/symfony/symfony-docs/pull/7100>`_ Update birthday.rst (angyvolin)
-* `#7020 <https://github.com/symfony/symfony-docs/pull/7020>`_ Added jQuery symfony-collection plugin to Form collection docs (hiddewie)
-* `#7086 <https://github.com/symfony/symfony-docs/pull/7086>`_ Update bug documentation input console /console/input.rst (Quiss)
-* `#7085 <https://github.com/symfony/symfony-docs/pull/7085>`_ Update custom_authentication_provider.rst (BatsaxIV)
-* `#7083 <https://github.com/symfony/symfony-docs/pull/7083>`_ update github example (hootlex)
-* `#7082 <https://github.com/symfony/symfony-docs/pull/7082>`_ Update metadata.rst (fberthereau)
-* `#7078 <https://github.com/symfony/symfony-docs/pull/7078>`_ Simple typo fix (Renrhaf)
-* `#7077 <https://github.com/symfony/symfony-docs/pull/7077>`_ remove caution message (snoek09)
-* `#7073 <https://github.com/symfony/symfony-docs/pull/7073>`_ Accept only array in TagAwareAdapter::invalidateTags() (Koc)
-* `#7048 <https://github.com/symfony/symfony-docs/pull/7048>`_ [#6938] tweak the wording a bit (xabbuh)
-* `#7061 <https://github.com/symfony/symfony-docs/pull/7061>`_ Change link to docs instead repo (mik-laj)
-* `#7066 <https://github.com/symfony/symfony-docs/pull/7066>`_ Remove erroneous placeholder text (regularjack)
-* `#7068 <https://github.com/symfony/symfony-docs/pull/7068>`_ Remove double spaces in some YAML configuration (michaelperrin)
-* `#7069 <https://github.com/symfony/symfony-docs/pull/7069>`_ use FCQN to reference the form type in add() (xabbuh)
-* `#6785 <https://github.com/symfony/symfony-docs/pull/6785>`_ Twig reference: Add links from routing functions to special routing parameters (alexislefebvre)
-* `#7043 <https://github.com/symfony/symfony-docs/pull/7043>`_ [Serializer] Move the see also block in the Learn More section (dunglas)
-* `#7035 <https://github.com/symfony/symfony-docs/pull/7035>`_ Redirect /form to /forms for consistency (wouterj)
-* `#7054 <https://github.com/symfony/symfony-docs/pull/7054>`_ Fix IS_AUTHENTICATED_FULLY annotation (mschobner)
-* `#7044 <https://github.com/symfony/symfony-docs/pull/7044>`_ Add Nginx configuration to environment variables (peterkokot)
-* `#6928 <https://github.com/symfony/symfony-docs/pull/6928>`_ Update the Apache Router article to deprecate it entirely (javiereguiluz)
-* `#7053 <https://github.com/symfony/symfony-docs/pull/7053>`_ Minor improvements for the contribution guide (javiereguiluz)
-* `#7050 <https://github.com/symfony/symfony-docs/pull/7050>`_ use single quotes for YAML strings (snoek09)
-* `#7047 <https://github.com/symfony/symfony-docs/pull/7047>`_ Fix typo in doctrine.rst (to manage) (lacyrhoades)
-* `#7046 <https://github.com/symfony/symfony-docs/pull/7046>`_ Fix incorrect callback validation example (mvar)
-* `#7034 <https://github.com/symfony/symfony-docs/pull/7034>`_ Changed RFC links from drafts to proposed standarts (a-ast)
-* `#7038 <https://github.com/symfony/symfony-docs/pull/7038>`_ Remove a dead link to the old PR header (dunglas)
-* `#7037 <https://github.com/symfony/symfony-docs/pull/7037>`_ Fix a typo in the serializer doc (dunglas)
-* `#7036 <https://github.com/symfony/symfony-docs/pull/7036>`_ Fix 404 error link for American English Oxford Dictionary (peterkokot)
-* `#6980 <https://github.com/symfony/symfony-docs/pull/6980>`_ Use strict comparison (greg0ire)
-* `#7025 <https://github.com/symfony/symfony-docs/pull/7025>`_ Update buisness-logic (zairigimad)
-* `#7027 <https://github.com/symfony/symfony-docs/pull/7027>`_ Remove dash prefix from route name (bocharsky-bw)
-* `#7028 <https://github.com/symfony/symfony-docs/pull/7028>`_ A few minor tweaks (bocharsky-bw)
-* `#7029 <https://github.com/symfony/symfony-docs/pull/7029>`_ refer to Symfony instead of Symfony2 (snoek09)
-* `#7031 <https://github.com/symfony/symfony-docs/pull/7031>`_ Capitalize the time designator (simoheinonen)
-* `#7018 <https://github.com/symfony/symfony-docs/pull/7018>`_ Reorder arguments: $request as the first argument (bocharsky-bw)
-* `#7014 <https://github.com/symfony/symfony-docs/pull/7014>`_ Add a note about Filesystem:mkdir behavior (mickaelandrieu)
-* `#6886 <https://github.com/symfony/symfony-docs/pull/6886>`_ Update controllers.rst (asandjivy)
-
-
 September, 2016
 ---------------
 
@@ -143,7 +71,7 @@ Minor Documentation Changes
 * `#6911 <https://github.com/symfony/symfony-docs/pull/6911>`_ Article about logout. (BorodinDemid)
 * `#6923 <https://github.com/symfony/symfony-docs/pull/6923>`_ Clarify by_reference use (jxmallett)
 * `#6942 <https://github.com/symfony/symfony-docs/pull/6942>`_ Updated the "Build a Login Form" article (javiereguiluz)
-* `#6931 <https://github.com/symfony/symfony-docs/pull/6931>`_ [Guard] Improve clarity using the configured provider (chalasr)
+* `#6931 <https://github.com/symfony/symfony-docs/pull/6931>`_ [Guard] Improve clarity using the configured provider (chalasr)
 * `#6933 <https://github.com/symfony/symfony-docs/pull/6933>`_ Misplaced paragraph about placeholders in routing.rst (antoin-m)
 * `#6930 <https://github.com/symfony/symfony-docs/pull/6930>`_ Use Terminal lexer for console examples (wouterj)
 * `#6893 <https://github.com/symfony/symfony-docs/pull/6893>`_ Update entity_provider.rst (asandjivy)
@@ -154,7 +82,7 @@ Minor Documentation Changes
 * `#6983 <https://github.com/symfony/symfony-docs/pull/6983>`_ Update voters.rst (seferov)
 * `#6986 <https://github.com/symfony/symfony-docs/pull/6986>`_ Fixed directory name typo (JoeThielen)
 * `#6988 <https://github.com/symfony/symfony-docs/pull/6988>`_ fix link role syntax (xabbuh)
-* `#6960 <https://github.com/symfony/symfony-docs/pull/6960>`_ [Reference] add back the option's description (xabbuh)
+* `#6960 <https://github.com/symfony/symfony-docs/pull/6960>`_ [Reference] add back the option's description (xabbuh)
 * `#6987 <https://github.com/symfony/symfony-docs/pull/6987>`_ Update input.rst (adyassine)
 * `#6974 <https://github.com/symfony/symfony-docs/pull/6974>`_ Fix minor typo in security chapter How to Build a Traditional Login Form (peterkokot)
 * `#6941 <https://github.com/symfony/symfony-docs/pull/6941>`_ Mentioned the "Symfony Upgrade Fixer" in the upgrade article (javiereguiluz)
@@ -402,7 +330,7 @@ Minor Documentation Changes
 * `#6674 <https://github.com/symfony/symfony-docs/pull/6674>`_ CheckStyle in Voters cookbook (JakeFr)
 * `#6672 <https://github.com/symfony/symfony-docs/pull/6672>`_ [Book][Testing] remove Symfony core testing note (xabbuh)
 * `#6670 <https://github.com/symfony/symfony-docs/pull/6670>`_ Fix typo 'even' >> 'event' in event_listener.rst (kuusas)
-* `#6667 <https://github.com/symfony/symfony-docs/pull/6667>`_ [Contributing][Code] fix list item terminators (xabbuh)
+* `#6667 <https://github.com/symfony/symfony-docs/pull/6667>`_ [Contributing][Code] fix list item terminators (xabbuh)
 * `#6616 <https://github.com/symfony/symfony-docs/pull/6616>`_ Better explain the mandatory/convention location of some elements (rcousens, javiereguiluz)
 * `#6628 <https://github.com/symfony/symfony-docs/pull/6628>`_ Fix for #6625 (kix)
 * `#6668 <https://github.com/symfony/symfony-docs/pull/6668>`_ [Contributing][Code] remove PHPUnit requirement (xabbuh)
@@ -1554,7 +1482,7 @@ Fixed Documentation
 
 - `6ba6ffd <https://github.com/symfony/symfony-docs/commit/6ba6ffdd75a36b4e1072e1a01d3765a590a06249>`_ #5058 Fix: assets_version instead of asset_version (sebastianblum)
 - `edf9b78 <https://github.com/symfony/symfony-docs/commit/edf9b78f03e8f184e7cc0a8f6e7c3c5586db814f>`_ #5118 Update logger.rst (jdecoster)
-- `adf5b90 <https://github.com/symfony/symfony-docs/commit/adf5b907a3cf171846ff4cc397fbf118ba8a2663>`_ #5110 [Serializer] Fix class name (iamluc)
+- `adf5b90 <https://github.com/symfony/symfony-docs/commit/adf5b907a3cf171846ff4cc397fbf118ba8a2663>`_ #5110 [Serializer] Fix class name (iamluc)
 - `d65880f <https://github.com/symfony/symfony-docs/commit/d65880f734daf9a982ec9754b903a213c89489e9>`_ #5092 Fixed a minor error introduced by the new redirectToRoute() method (javiereguiluz)
 - `206e613 <https://github.com/symfony/symfony-docs/commit/206e6131f0618971f99aac18a4e434b2485a056f>`_ #4304 [DX] Suggest a hint to any auth-check (larsborn)
 - `df9c3f4 <https://github.com/symfony/symfony-docs/commit/df9c3f47aa208154dcdef295ddd0ab134ebf52ca>`_ #5053 Correct RegisterListenersPass namespace (hacfi)
@@ -2074,7 +2002,7 @@ Minor Documentation Changes
 - `3e4c92a <https://github.com/symfony/symfony-docs/commit/3e4c92a12cf794dc09ccb640c2b1928213e06d80>`_ #4104 Use ${APACHE_LOG_DIR} instead of /var/log/apache2 (xamgreen)
 - `3da0776 <https://github.com/symfony/symfony-docs/commit/3da0776b502dd23b399c3e005a27e965dc70e46f>`_ #4338 ESI Variable Details Continuation (Farkie, weaverryan)
 - `7f461d2 <https://github.com/symfony/symfony-docs/commit/7f461d23ebc2cabf52380ca85582a581b7b0482b>`_ #4325 [Components][Form] Correct a typo (fabschurt)
-- `d162329 <https://github.com/symfony/symfony-docs/commit/d1623295fb561849de82815eebba7f9db4e82651>`_ #4276 [Components][HttpFoundation] Make a small grammatical adjustment (fabschurt)
+- `d162329 <https://github.com/symfony/symfony-docs/commit/d1623295fb561849de82815eebba7f9db4e82651>`_ #4276 [Components][HttpFoundation] Make a small grammatical adjustment (fabschurt)
 - `69bfac1 <https://github.com/symfony/symfony-docs/commit/69bfac17420c3a690ae170df530990859256d850>`_ #4322 [Components][DependencyInjection] Correct a typo: replace "then" by "the" (fabschurt)
 - `8073239 <https://github.com/symfony/symfony-docs/commit/80732390c57c0a65a37e62230a1d76f617831bdf>`_ #4318 [Cookbook][Bundles] Correct a typo: remove unnecessary "the" word (fabschurt)
 - `228111b <https://github.com/symfony/symfony-docs/commit/228111be589210136bac35dd70f1920f68996f54>`_ #4316 Remove horizontal scrollbar (ifdattic)
