@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-07T10:46:56Z
+
+👍
+status: reviewed
+
+Fyi, when we updated this doc, the template really only contained "Homepage.". At the moment it provides much more information. Maybe we should remove the `*...*` markup as well or even rewrite it with something like "The action just renders a template to welcome you to Symfony." or the like.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-07T11:02:50Z
+
+👍
+
+(and Wouter's comment makes a lot of sense too!)
