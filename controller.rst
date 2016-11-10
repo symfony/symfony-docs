@@ -380,7 +380,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
     {
         // ...
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // do some sort of processing
 
             $this->addFlash(

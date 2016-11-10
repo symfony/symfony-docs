@@ -316,7 +316,7 @@ You can also query in the other direction::
 
 In this case, the same things occur: you first query out for a single ``Category``
 object, and then Doctrine makes a second query to retrieve the related ``Product``
-objects, but only once/if you ask for them (i.e. when you call ``->getProducts()``).
+objects, but only once/if you ask for them (i.e. when you call ``getProducts()``).
 The ``$products`` variable is an array of all ``Product`` objects that relate
 to the given ``Category`` object via their ``category_id`` value.
 
@@ -365,7 +365,7 @@ Of course, if you know up front that you'll need to access both objects, you
 can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
-    // src/AppBundle/Entity/ProductRepository.php
+    // src/AppBundle/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($productId)
     {
         $query = $this->getEntityManager()
@@ -407,7 +407,7 @@ Doctrine's `Association Mapping Documentation`_.
 .. note::
 
     If you're using annotations, you'll need to prepend all annotations with
-    ``ORM\`` (e.g. ``ORM\OneToMany``), which is not reflected in Doctrine's
+    ``@ORM\`` (e.g. ``@ORM\OneToMany``), which is not reflected in Doctrine's
     documentation. You'll also need to include the ``use Doctrine\ORM\Mapping as ORM;``
     statement, which *imports* the ``ORM`` annotations prefix.
 

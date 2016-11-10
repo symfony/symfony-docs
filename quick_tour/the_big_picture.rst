@@ -80,7 +80,7 @@ information and then they render a template to show the results to the user.
 
 In this example, the ``index`` action is practically empty because it doesn't
 need to call any other method. The action just renders a template with the
-*Homepage.* content.
+*Homepage* content.
 
 Routing
 ~~~~~~~

@@ -171,7 +171,7 @@ In your controller, you'll create a new form from the ``TaskType``::
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 

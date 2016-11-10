@@ -11,7 +11,7 @@ Symfony will even inject the container.
 While making life easier, this has some limitations:
 
 * Your command must live in the ``Command`` directory;
-* There's no way to conditionally register your service based on the environment
+* There's no way to conditionally register your command based on the environment
   or availability of some dependencies;
 * You can't access the container in the ``configure()`` method (because
   ``setContainer`` hasn't been called yet);
