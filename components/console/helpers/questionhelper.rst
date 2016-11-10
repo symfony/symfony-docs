@@ -210,7 +210,7 @@ convenient for passwords::
     would be thrown.
 
 Normalizing the Answer
----------------------
+----------------------
 
 You can normalize the answer. For instance, in a previous example you asked for
 the bundle name. If the user accidentally adds spaces before and/or after the name we
