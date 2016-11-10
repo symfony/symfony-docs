@@ -142,7 +142,7 @@ their fully qualified class names::
     {
         // ...
 
-         $this->addClassesToCompile(array(
+        $this->addClassesToCompile(array(
             'AppBundle\\Manager\\UserManager',
             'AppBundle\\Utils\\Slugger',
             // ...
