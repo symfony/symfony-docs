@@ -21,7 +21,7 @@ To do this, add the repository class name to your entity's mapping definition:
         use Doctrine\ORM\Mapping as ORM;
 
         /**
-         * @ORM\Entity(repositoryClass="AppBundle\Entity\ProductRepository")
+         * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
          */
         class Product
         {
@@ -33,7 +33,7 @@ To do this, add the repository class name to your entity's mapping definition:
         # src/AppBundle/Resources/config/doctrine/Product.orm.yml
         AppBundle\Entity\Product:
             type: entity
-            repositoryClass: AppBundle\Entity\ProductRepository
+            repositoryClass: AppBundle\Repository\ProductRepository
             # ...
 
     .. code-block:: xml
@@ -47,7 +47,7 @@ To do this, add the repository class name to your entity's mapping definition:
 
             <entity
                 name="AppBundle\Entity\Product"
-                repository-class="AppBundle\Entity\ProductRepository">
+                repository-class="AppBundle\Repository\ProductRepository">
 
                 <!-- ... -->
             </entity>
@@ -72,8 +72,8 @@ entities, ordered alphabetically by name.
 
 .. code-block:: php
 
-    // src/AppBundle/Entity/ProductRepository.php
-    namespace AppBundle\Entity;
+    // src/AppBundle/Repository/ProductRepository.php
+    namespace AppBundle\Repository;
 
     use Doctrine\ORM\EntityRepository;
 

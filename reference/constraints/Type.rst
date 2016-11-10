@@ -72,7 +72,7 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
             <class name="AppBundle\Entity\Author">
                 <property name="firstName">
                     <constraint name="Type">
-                        <type>string</type>
+                        <option name="type">string</option>
                     </constraint>
                 </property>
                 <property name="age">

@@ -50,7 +50,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
 
     /**
      * @ORM\Table(name="app_users")
-     * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
+     * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
      */
     class User implements UserInterface, \Serializable
     {
@@ -425,8 +425,8 @@ To do this, make your ``UserRepository`` implement a special
 :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
 interface only requires one method: ``loadUserByUsername($username)``::
 
-    // src/AppBundle/Entity/UserRepository.php
-    namespace AppBundle\Entity;
+    // src/AppBundle/Repository/UserRepository.php
+    namespace AppBundle\Repository;
 
     use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Doctrine\ORM\EntityRepository;

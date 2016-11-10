@@ -13,6 +13,62 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+October, 2016
+-------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+* `#7023 <https://github.com/symfony/symfony-docs/pull/7023>`_ Added useful debug commands in the debug documentation (hiddewie)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+* `#7049 <https://github.com/symfony/symfony-docs/pull/7049>`_ Fix the platform.sh builds (wouterj)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* `#7090 <https://github.com/symfony/symfony-docs/pull/7090>`_ Remove suggestion to change the `.class` parameters (mpdude)
+* `#7095 <https://github.com/symfony/symfony-docs/pull/7095>`_ Also mention "hasXXX" methods as validation targets (mpdude)
+* `#7091 <https://github.com/symfony/symfony-docs/pull/7091>`_ A bracket was missed (hpatoio)
+* `#7097 <https://github.com/symfony/symfony-docs/pull/7097>`_ link to specific HTTP Cache RFC (snoek09)
+* `#7098 <https://github.com/symfony/symfony-docs/pull/7098>`_ Improved Redirecting paragraph of Testing page (ShinDarth)
+* `#7100 <https://github.com/symfony/symfony-docs/pull/7100>`_ Update birthday.rst (angyvolin)
+* `#7020 <https://github.com/symfony/symfony-docs/pull/7020>`_ Added jQuery symfony-collection plugin to Form collection docs (hiddewie)
+* `#7086 <https://github.com/symfony/symfony-docs/pull/7086>`_ Update bug documentation input console /console/input.rst (Quiss)
+* `#7085 <https://github.com/symfony/symfony-docs/pull/7085>`_ Update custom_authentication_provider.rst (BatsaxIV)
+* `#7083 <https://github.com/symfony/symfony-docs/pull/7083>`_ update github example (hootlex)
+* `#7082 <https://github.com/symfony/symfony-docs/pull/7082>`_ Update metadata.rst (fberthereau)
+* `#7077 <https://github.com/symfony/symfony-docs/pull/7077>`_ remove caution message (snoek09)
+* `#7061 <https://github.com/symfony/symfony-docs/pull/7061>`_ Change link to docs instead repo (mik-laj)
+* `#7066 <https://github.com/symfony/symfony-docs/pull/7066>`_ Remove erroneous placeholder text (regularjack)
+* `#7068 <https://github.com/symfony/symfony-docs/pull/7068>`_ Remove double spaces in some YAML configuration (michaelperrin)
+* `#7069 <https://github.com/symfony/symfony-docs/pull/7069>`_ use FCQN to reference the form type in add() (xabbuh)
+* `#6785 <https://github.com/symfony/symfony-docs/pull/6785>`_ Twig reference: Add links from routing functions to special routing parameters (alexislefebvre)
+* `#7043 <https://github.com/symfony/symfony-docs/pull/7043>`_ [Serializer] Move the see also block in the Learn More section (dunglas)
+* `#7035 <https://github.com/symfony/symfony-docs/pull/7035>`_ Redirect /form to /forms for consistency (wouterj)
+* `#7054 <https://github.com/symfony/symfony-docs/pull/7054>`_ Fix IS_AUTHENTICATED_FULLY annotation (mschobner)
+* `#7044 <https://github.com/symfony/symfony-docs/pull/7044>`_ Add Nginx configuration to environment variables (peterkokot)
+* `#7053 <https://github.com/symfony/symfony-docs/pull/7053>`_ Minor improvements for the contribution guide (javiereguiluz)
+* `#7050 <https://github.com/symfony/symfony-docs/pull/7050>`_ use single quotes for YAML strings (snoek09)
+* `#7047 <https://github.com/symfony/symfony-docs/pull/7047>`_ Fix typo in doctrine.rst (to manage) (lacyrhoades)
+* `#7046 <https://github.com/symfony/symfony-docs/pull/7046>`_ Fix incorrect callback validation example (mvar)
+* `#7034 <https://github.com/symfony/symfony-docs/pull/7034>`_ Changed RFC links from drafts to proposed standarts (a-ast)
+* `#7038 <https://github.com/symfony/symfony-docs/pull/7038>`_ Remove a dead link to the old PR header (dunglas)
+* `#7037 <https://github.com/symfony/symfony-docs/pull/7037>`_ Fix a typo in the serializer doc (dunglas)
+* `#7036 <https://github.com/symfony/symfony-docs/pull/7036>`_ Fix 404 error link for American English Oxford Dictionary (peterkokot)
+* `#6980 <https://github.com/symfony/symfony-docs/pull/6980>`_ Use strict comparison (greg0ire)
+* `#7025 <https://github.com/symfony/symfony-docs/pull/7025>`_ Update buisness-logic (zairigimad)
+* `#7027 <https://github.com/symfony/symfony-docs/pull/7027>`_ Remove dash prefix from route name (bocharsky-bw)
+* `#7028 <https://github.com/symfony/symfony-docs/pull/7028>`_ A few minor tweaks (bocharsky-bw)
+* `#7029 <https://github.com/symfony/symfony-docs/pull/7029>`_ refer to Symfony instead of Symfony2 (snoek09)
+* `#7031 <https://github.com/symfony/symfony-docs/pull/7031>`_ Capitalize the time designator (simoheinonen)
+* `#7018 <https://github.com/symfony/symfony-docs/pull/7018>`_ Reorder arguments: $request as the first argument (bocharsky-bw)
+* `#7014 <https://github.com/symfony/symfony-docs/pull/7014>`_ Add a note about Filesystem:mkdir behavior (mickaelandrieu)
+* `#6886 <https://github.com/symfony/symfony-docs/pull/6886>`_ Update controllers.rst (asandjivy)
+
+
 September, 2016
 ---------------
 
