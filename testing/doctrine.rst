@@ -18,8 +18,8 @@ If you need to actually execute a query, you will need to boot the kernel
 to get a valid connection. In this case, you'll extend the ``KernelTestCase``,
 which makes all of this quite easy::
 
-    // src/AppBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
-    namespace AppBundle\Tests\Entity;
+    // src/AppBundle/Tests/Repository/ProductRepositoryFunctionalTest.php
+    namespace AppBundle\Tests\Repository;
 
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
