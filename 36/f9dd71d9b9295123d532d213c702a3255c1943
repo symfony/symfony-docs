@@ -1,0 +1,60 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-06T09:41:32Z
+
+Do we do this everywhere else in the docs for Symfony 2.7? If so, are there other places we will have to update too?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-06T11:21:14Z
+
+👍
+status: reviewed
+
+A quick `git grep "isValid()"` shows there are more cases that needs to be fixed. Imo, this PR can be merged as is (and we can create a follow up PR fixing the other ones). However, if you have time, you can also include the other fixes in this PR.
+
+```
+best_practices/forms.rst:for clarity. This isn't technically needed, since ``isValid()`` first calls
+components/form.rst:        if ($form->isValid()) {
+components/form.rst:            if ($form->isValid()) {
+controller.rst:        if ($form->isValid()) {
+controller/upload_file.rst:        if ($form->isValid()) {
+form/direct_submit.rst:        if ($form->isValid()) {
+form/direct_submit.rst:            if ($form->isValid()) {
+form/direct_submit.rst:            if ($form->isValid()) {
+form/dynamic_form_modification.rst:            if ($form->isValid()) {
+form/form_collections.rst:            if ($form->isValid()) {
+form/form_collections.rst:            if ($editForm->isValid()) {
+form/multiple_buttons.rst:    if ($form->isValid()) {
+form/without_class.rst:        if ($form->isValid()) {
+reference/forms/types/file.rst:        if ($form->isValid()) {
+security/acl.rst:            if ($form->isValid()) {
+```
+
+---------------------------------------------------------------------------
+
+by yceruto at 2016-11-06T15:27:41Z
+
+Okay, I'll do it.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2016-11-06T17:34:11Z
+
+Updated!
+
+Status: Needs Review
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-06T23:27:22Z
+
+Awesome! Thanks for the great work & quick response!
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-07T07:55:13Z
+
+👍
