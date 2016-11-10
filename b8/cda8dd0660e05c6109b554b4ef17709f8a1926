@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------
+
+by MisatoTremor at 2015-01-14T09:49:31Z
+
+Changed it like @javiereguiluz said.
+I only swapped the two RFC duration strings, putting the shorter (and hopefully easier to understand) one in the intro text and the full example in the string input description.
+Also fixed the sorting of the options list to match the other type docs.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-06-22T13:34:15Z
+
+https://github.com/symfony/symfony/pull/16809#issuecomment-227728131 is merged now, can a maintainer please remove "On hold" label?
+
+@MisatoTremor What the status here?
+
+---------------------------------------------------------------------------
+
+by MisatoTremor at 2016-06-22T14:33:48Z
+
+@HeahDude
+Updated for 3.2
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-07-02T12:11:48Z
+
+👍 Thanks for writing the documentation for the feature @MisatoTremor!
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-07-04T07:51:47Z
+
+@MisatoTremor thanks for adding this form type and for providing the docs too. Today we've highlighted it in the Symfony blog (see [New in Symfony 3.2: DateInterval form type](http://symfony.com/blog/new-in-symfony-3-2-dateinterval-form-type)).
+
+When writing the blog post, I wondered if this type could be a bit easier to use. In particular, I wonder if the `input` option could be removed. If it's only used to tell the form type which format we are using (DateInterval, array or string) I think we can detect the format automatically. Do you think that would be possible? Thanks!
+
+---------------------------------------------------------------------------
+
+by MisatoTremor at 2016-07-04T10:22:16Z
+
+@javiereguiluz Thanks for the nice highlight! :)
+
+I've included the option according to other date/time types, but this indeed sounds like a great improvement. Maybe this could be done for the other types, too. Will look into into
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-07-10T16:37:13Z
+
+Thanks for the work @MisatoTremor - it's a really interesting component! And I'm sorry, I just peppered you with comments :)
+
+Status: Needs Work
+
+---------------------------------------------------------------------------
+
+by MisatoTremor at 2016-07-29T16:23:47Z
+
+@weaverryan Thank for your review Ryan. I applied all but one which I commented upon.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-08T12:04:21Z
+
+Hi @MisatoTremor! I'm sorry for the long delay, seems like this one slipped under our radar. As 3 doc members already reviewed this and you fixed their comments, I assume this one is ready to merge.
+
+/cc @symfony/team-symfony-docs
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-08T14:51:15Z
+
+👍  this is indeed ready to be merged. Thanks @MisatoTremor.
+
+---------------------------------------------------------------------------
+
+by MisatoTremor at 2016-11-09T12:19:16Z
+
+@wouterj I totally understand this. :) There's much to do and also more important sections. You all are doing a great job!
+
+Thanks for the update.
