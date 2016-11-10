@@ -19,8 +19,19 @@ October, 2016
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+* `#6958 <https://github.com/symfony/symfony-docs/pull/6958>`_ [FrameworkBundle] add support for prioritizing form type extension tags (dmaicher)
+* `#7074 <https://github.com/symfony/symfony-docs/pull/7074>`_ [PhpUnitBridge] Doc for @expectedDeprecation & new configuration env vars (nicolas-grekas)
+* `#6947 <https://github.com/symfony/symfony-docs/pull/6947>`_ [Cache] Add chapter about invalidation, tags, etc. (nicolas-grekas)
+* `#7021 <https://github.com/symfony/symfony-docs/pull/7021>`_ [ServiceContainer] Remove implementation details of private services (lemoinem)
 * `#7023 <https://github.com/symfony/symfony-docs/pull/7023>`_ Added useful debug commands in the debug documentation (hiddewie)
+* `#6946 <https://github.com/symfony/symfony-docs/pull/6946>`_ [VarDumper] Adding semantics with metadata (nicolas-grekas)
+* `#6949 <https://github.com/symfony/symfony-docs/pull/6949>`_ Update ProgressBar docs with regress information (jameshalsall)
+* `#7019 <https://github.com/symfony/symfony-docs/pull/7019>`_ [Framework] Update link-to-source mapping definition (nicolas-grekas)
+* `#6938 <https://github.com/symfony/symfony-docs/pull/6938>`_ Document new utf8 option of Routing component (mickaelandrieu)
 * `#6932 <https://github.com/symfony/symfony-docs/pull/6932>`_ Explain the limitations of the custom messages in UniqueEntity (javiereguiluz)
+* `#6876 <https://github.com/symfony/symfony-docs/pull/6876>`_ Updated single command How to (mickaelandrieu)
+* `#6870 <https://github.com/symfony/symfony-docs/pull/6870>`_ [Debug] Added configuration reference for new debug options (lyrixx)
+* `#6783 <https://github.com/symfony/symfony-docs/pull/6783>`_ Routing: add explanation for the "_fragment" parameter (alexislefebvre)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -43,6 +54,8 @@ Minor Documentation Changes
 * `#7082 <https://github.com/symfony/symfony-docs/pull/7082>`_ Update metadata.rst (fberthereau)
 * `#7078 <https://github.com/symfony/symfony-docs/pull/7078>`_ Simple typo fix (Renrhaf)
 * `#7077 <https://github.com/symfony/symfony-docs/pull/7077>`_ remove caution message (snoek09)
+* `#7073 <https://github.com/symfony/symfony-docs/pull/7073>`_ Accept only array in TagAwareAdapter::invalidateTags() (Koc)
+* `#7048 <https://github.com/symfony/symfony-docs/pull/7048>`_ [#6938] tweak the wording a bit (xabbuh)
 * `#7061 <https://github.com/symfony/symfony-docs/pull/7061>`_ Change link to docs instead repo (mik-laj)
 * `#7066 <https://github.com/symfony/symfony-docs/pull/7066>`_ Remove erroneous placeholder text (regularjack)
 * `#7068 <https://github.com/symfony/symfony-docs/pull/7068>`_ Remove double spaces in some YAML configuration (michaelperrin)
