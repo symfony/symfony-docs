@@ -62,7 +62,7 @@ TwigBundle Configuration ("twig")
 
             <twig:config
                 auto-reload="%kernel.debug%"
-                autoescape="filename"
+                autoescape="name"
                 base-template-class="Twig_Template"
                 cache="%kernel.cache_dir%/twig"
                 charset="%kernel.charset%"
@@ -93,7 +93,7 @@ TwigBundle Configuration ("twig")
                  'pi'  => 3.14,
              ),
              'auto_reload'          => '%kernel.debug%',
-             'autoescape'           => 'filename',
+             'autoescape'           => 'name',
              'base_template_class'  => 'Twig_Template',
              'cache'                => '%kernel.cache_dir%/twig',
              'charset'              => '%kernel.charset%',
@@ -127,7 +127,7 @@ compiled again automatically.
 autoescape
 ~~~~~~~~~~
 
-**type**: ``boolean`` or ``string`` **default**: ``'filename'``
+**type**: ``boolean`` or ``string`` **default**: ``'name'``
 
 If set to ``false``, automatic escaping is disabled (you can still escape each content
 individually in the templates).
@@ -141,9 +141,9 @@ individually in the templates).
 
 If set to a string, the template contents are escaped using the strategy with
 that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
-and ``filename``. The default value is ``filename``. This strategy escapes
-contents according to the filename extension (e.g. it uses ``html`` for
-``*.html.twig`` templates and ``js`` for ``*.js.html`` templates).
+and ``name``. The default value is ``name``. This strategy escapes contents
+according to the template name extension (e.g. it uses ``html`` for ``*.html.twig``
+templates and ``js`` for ``*.js.html`` templates).
 
 .. tip::
 
