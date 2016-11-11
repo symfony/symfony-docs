@@ -31,7 +31,7 @@ with the ``WorkflowDumpCommand``:
 
 .. note::
 
-    The ``dot`` command is a part of Graphviz. You can download it and read
+    The ``dot`` command is part of Graphviz. You can download it and read
     more about it on `Graphviz.org`_.
 
 .. _Graphviz.org: http://www.graphviz.org

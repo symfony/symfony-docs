@@ -11,8 +11,8 @@ one place simultaneously. It is also worth noting that a workflow does not
 commonly have cyclic path in the definition graph, but it is common for a state
 machine.
 
-Example of State Machine
-------------------------
+Example of a State Machine
+--------------------------
 
 A pull request starts in an intial "start" state, a state for e.g. running
 tests on Travis. When this is finished, the pull request is in the "review"

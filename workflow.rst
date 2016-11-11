@@ -27,20 +27,19 @@ The simples workflow looks like this. It contains two places and one transition.
 
 .. image:: /_images/components/workflow/simple.png
 
-Workflows could be more complicated when they describes a real business case. The
-workflow below descirbes the process to fill in a job application.
+Workflows could be more complicated when they describe a real business case. The
+workflow below describes the process to fill in a job application.
 
 .. image:: /_images/components/workflow/job_application.png
 
 When you fill in a job application in this example there are 4 to 7 steps depending
-on the what job you are applying for. Some jobs requires personality test, logic tests
+on the what job you are applying for. Some jobs require personality tests, logic tests
 and/or formal requirements to be answered by the user. Some jobs don't. The
 ``GuardEvent`` is used to decide what next steps are allowed for a specific application.
 
 By defining a workflow like this, there is an overview how the process looks like. The process
 logic is not mixed with the controllers, models or view. The order of the steps can be changed
 by changing the configuration only.
-
 
 .. toctree::
    :maxdepth: 1
