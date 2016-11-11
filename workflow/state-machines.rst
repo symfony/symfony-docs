@@ -52,16 +52,16 @@ Below is the configuration for the pull request state machine.
                         wait_for_reivew:
                             from: travis
                             to: review
-                        change_needed:
+                        request_change:
                             from: review
                             to: coding
-                        accepted:
+                        accept:
                             from: review
                             to: merged
-                        rejected:
+                        reject:
                             from: review
                             to: closed
-                        reopened:
+                        reopen:
                             from: closed
                             to: review
 
@@ -109,25 +109,25 @@ Below is the configuration for the pull request state machine.
                         <framework:to>review</framework:to>
                     </framework:transition>
 
-                    <framework:transition name="change_needed">
+                    <framework:transition name="request_change">
                         <framework:from>review</framework:from>
 
                         <framework:to>coding</framework:to>
                     </framework:transition>
 
-                    <framework:transition name="accepted">
+                    <framework:transition name="accept">
                         <framework:from>review</framework:from>
 
                         <framework:to>merged</framework:to>
                     </framework:transition>
 
-                    <framework:transition name="rejected">
+                    <framework:transition name="reject">
                         <framework:from>review</framework:from>
 
                         <framework:to>closed</framework:to>
                     </framework:transition>
 
-                    <framework:transition name="reopened">
+                    <framework:transition name="reopen">
                         <framework:from>closed</framework:from>
 
                         <framework:to>review</framework:to>
@@ -169,19 +169,19 @@ Below is the configuration for the pull request state machine.
                       'form' => 'travis',
                       'to' => 'review',
                     ),
-                    'change_needed'=> array(
+                    'request_change'=> array(
                       'form' => 'review',
                       'to' => 'coding',
                     ),
-                    'accepted'=> array(
+                    'accept'=> array(
                       'form' => 'review',
                       'to' => 'merged',
                     ),
-                    'rejected'=> array(
+                    'reject'=> array(
                       'form' => 'review',
                       'to' => 'closed',
                     ),
-                    'reopened'=> array(
+                    'reopen'=> array(
                       'form' => 'start',
                       'to' => 'review',
                     ),
