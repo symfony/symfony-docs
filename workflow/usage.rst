@@ -97,20 +97,41 @@ like this:
 
     .. code-block:: php
 
-        use Symfony\Component\Workflow\Definition;
-        use Symfony\Component\Workflow\Transition;
-        use Symfony\Component\Workflow\StateMachine;
-        use Symfony\Component\Workflow\MarkingStore\MultipleStateMarkingStore;
+        // app/config/config.php
 
-        $states = ['draft', 'review', 'rejected', 'published'];
-        $transitions[] = new Transition('to_review', 'draft', 'review');
-        $transitions[] = new Transition('publish', 'review', 'published');
-        $transitions[] = new Transition('reject', 'review', 'rejected');
-
-        $definition = new Definition($states, $transitions, 'draft');
-
-        $marking = new MultipleStateMarkingStore('marking');
-        $workflow = new Workflow($definition, $marking);
+                $container->loadFromExtension('framework', array(
+                    // ...
+                    'workflows' => array(
+                        'blog_publishing' => array(
+                          'type' => 'workflow', // or 'state_machine'
+                          'marking_store' => array(
+                            'type' => 'multiple_state', // or 'single_state'
+                            'arguments' => array('currentPlace')
+                          ),
+                          'supports' => array('AppBundle\Entity\BlogPost'),
+                          'places' => array(
+                            'draft',
+                            'review',
+                            'rejected',
+                            'published',
+                          ),
+                          'transitions' => array(
+                            'to_review'=> array(
+                              'form' => 'draft',
+                              'to' => 'review',
+                            ),
+                            'publish'=> array(
+                              'form' => 'review',
+                              'to' => 'published',
+                            ),
+                            'reject'=> array(
+                              'form' => 'review',
+                              'to' => 'rejected',
+                            ),
+                          ),
+                        ),
+                    ),
+                ));
 
 .. code-block:: php
 

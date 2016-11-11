@@ -140,31 +140,58 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: php
 
-        use Symfony\Component\Workflow\Definition;
-        use Symfony\Component\Workflow\Transition;
-        use Symfony\Component\Workflow\StateMachine;
-        use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
+        // app/config/config.php
 
-        $states = ['start', 'coding', 'travis', 'review', 'merged', 'closed'];
-        $transitions[] = new Transition('submit', 'start', 'travis');
-        $transitions[] = new Transition('update', 'coding', 'travis');
-        $transitions[] = new Transition('update', 'travis', 'travis');
-        $transitions[] = new Transition('update', 'review', 'travis');
-        $transitions[] = new Transition('wait_for_reivew', 'travis', 'review');
-        $transitions[] = new Transition('change_needed', 'review', 'coding');
-        $transitions[] = new Transition('accepted', 'review', 'merged');
-        $transitions[] = new Transition('rejected', 'review', 'closed');
-        $transitions[] = new Transition('reopened', 'closed', 'review');
-
-        $definition = new Definition($states, $transitions, 'start');
-
-        $marking = new SingleStateMarkingStore('marking');
-        $stateMachine = new StateMachine($definition, $marking);
-
+        $container->loadFromExtension('framework', array(
+            // ...
+            'workflows' => array(
+                'pull_request' => array(
+                  'type' => 'state_machine',
+                  'supports' => array('AppBundle\Entity\PullRequest'),
+                  'places' => array(
+                    'start',
+                    'coding',
+                    'travis',
+                    'review',
+                    'merged',
+                    'closed',
+                  ),
+                  'transitions' => array(
+                    'start'=> array(
+                      'form' => 'start',
+                      'to' => 'travis',
+                    ),
+                    'update'=> array(
+                      'form' => array('coding','travis','review'),
+                      'to' => 'travis',
+                    ),
+                    'wait_for_reivew'=> array(
+                      'form' => 'travis',
+                      'to' => 'review',
+                    ),
+                    'change_needed'=> array(
+                      'form' => 'review',
+                      'to' => 'coding',
+                    ),
+                    'accepted'=> array(
+                      'form' => 'review',
+                      'to' => 'merged',
+                    ),
+                    'rejected'=> array(
+                      'form' => 'review',
+                      'to' => 'closed',
+                    ),
+                    'reopened'=> array(
+                      'form' => 'start',
+                      'to' => 'review',
+                    ),
+                  ),
+                ),
+            ),
+        ));
 
 You can now use this state machine by getting the ``state_machine.pull_request`` service::
 
     $stateMachine = $this->container->get('state_machine.pull_request');
-
 
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net
