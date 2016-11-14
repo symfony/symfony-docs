@@ -468,7 +468,7 @@ a slash. URLs matching this route might look like:
 
 .. caution::
 
-    A route parameter name cannot start with a digit and cannot be longer than 32 characters.
+    A route placeholder name cannot start with a digit and cannot be longer than 32 characters.
 
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
