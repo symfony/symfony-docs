@@ -69,6 +69,7 @@ Configuration
     * `base_path`_
     * `base_urls`_
     * `packages`_
+    * `version_strategy`_
     * `version`_
     * `version_format`_
 * `templating`_
@@ -958,8 +959,25 @@ Each package can configure the following options:
 
 * :ref:`base_path <reference-assets-base-path>`
 * :ref:`base_urls <reference-assets-base-urls>`
+* :ref:`version_strategy <reference-framework-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
+
+.. _reference-templating-version-strategy:
+.. _reference-assets-version-strategy:
+
+version_strategy
+..............
+
+**type**: ``string`` **default**: ``null``
+
+This specifies a service id of a service to use as the version strategy for
+all rendered asset paths. Version strategies must implement
+:class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategy`.
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version``.
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -1030,6 +1048,10 @@ before each deployment so that the query parameters change.
 
 You can also control how the query string works via the `version_format`_
 option.
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version_strategy``.
 
 .. tip::
 
