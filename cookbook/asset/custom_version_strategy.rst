@@ -19,141 +19,35 @@ Symfony supports the basic asset versioning thanks to the
 options. If your application requires a more advanced versioning, you can create
 your own version strategy.
 
-Default Package
----------------
+Creating your Own Asset Version Strategy
+----------------------------------------
 
-The default package is used when you do not specify a package name in the
-:ref:`asset <reference-twig-function-asset>` Twig function. In order to
-override the version strategy used by the default package, it is necessary
-to add a compiler pass.
+The following example shows how to create a version strategy compatible with
+`gulp-buster`_. This tool defines a configuration file called ``busters.json``
+which maps each asset file to its content hash:
 
-This example shows how to integrate with `gulp-buster`_.
+.. code-block:: json
 
-.. note::
-
-    busters.json as referenced below is the output from gulp-buster which
-    maps each asset file to its hash. A small snippet of the file's format
-    (JSON object):
-
-    .. code-block:: json
-
-        {
-            "js/script.js": "f9c7afd05729f10f55b689f36bb20172",
-            "css/style.css": "91cd067f79a5839536b46c494c4272d8"
-        }
-
-Create Compiler Pass
-~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: php
-
-    // src/AppBundle/DependencyInjection/Compiler/OverrideAssetsDefaultPackagePass.php
-    namespace AppBundle\DependencyInjection\Compiler;
-
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Reference;
-
-    class OverrideAssetsDefaultPackagePass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
-        {
-            $definition = $container->getDefinition('assets._default_package');
-            $definition->replaceArgument(1, new Reference('app.assets.buster_version_strategy'));
-        }
+        "js/script.js": "f9c7afd05729f10f55b689f36bb20172",
+        "css/style.css": "91cd067f79a5839536b46c494c4272d8"
     }
-
-The code above fetches the service definition of the default package, and replaces
-its second argument (the version strategy).
-
-Register Compiler Pass
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: php
-
-    // src/AppBundle/AppBundle.php
-    namespace AppBundle;
-
-    use AppBundle\DependencyInjection\Compiler\OverrideAssetsDefaultPackagePass;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-    class AppBundle extends Bundle
-    {
-        public function build(ContainerBuilder $container)
-        {
-            parent::build($container);
-
-            // only register in prod environment
-            if ('prod' === $container->getParameter('kernel.environment')) {
-                $container->addCompilerPass(new OverrideAssetsDefaultPackagePass());
-            }
-        }
-    }
-
-See :doc:`/cookbook/service_container/compiler_passes` for more information
-on how to use compiler passes.
-
-Register Services
-~~~~~~~~~~~~~~~~~
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.assets.buster_version_strategy:
-                class: AppBundle\Asset\VersionStrategy\BusterVersionStrategy
-                arguments:
-                    - "%kernel.root_dir%/../busters.json"
-                    - "%%s?version=%%s"
-                public: false
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <service id="app.assets.buster_version_strategy" class="AppBundle\Asset\VersionStrategy\BusterVersionStrategy" public="false">
-                    <argument>%kernel.root_dir%/../busters.json</argument>
-                    <argument>%%s?version=%%s</argument>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $definition = new Definition(
-            'AppBundle\Asset\VersionStrategy\BusterVersionStrategy',
-            array(
-                '%kernel.root_dir%/../busters.json',
-                '%%s?version=%%s',
-            )
-        );
-        $definition->setPublic(false);
-
-        $container->setDefinition('app.assets.buster_version_strategy', $definition);
 
 Implement VersionStrategyInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: php
+Asset version strategies are PHP classes that implement the
+:class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategyInterface`.
+In this example, the constructor of the class takes as arguments the path to
+the manifest file generated by gulp-buster and the format of the generated
+version string::
 
-    // src/AppBundle/Asset/VersionStrategy/BusterVersionStrategy.php
+    // src/AppBundle/Asset/VersionStrategy/GulpBusterVersionStrategy.php
     namespace AppBundle\Asset\VersionStrategy;
 
     use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
-    class BusterVersionStrategy implements VersionStrategyInterface
+    class GulpBusterVersionStrategy implements VersionStrategyInterface
     {
         /**
          * @var string
@@ -213,5 +107,96 @@ Implement VersionStrategyInterface
             return $hashes;
         }
     }
+
+Register the Strategy Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After creating the strategy PHP class, register it as a Symfony service
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.assets.versioning.gulp_buster:
+                class: AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy
+                arguments:
+                    - "%kernel.root_dir%/../busters.json"
+                    - "%%s?version=%%s"
+                public: false
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="app.assets.versioning.gulp_buster"
+                 class="AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy" public="false">
+                    <argument>%kernel.root_dir%/../busters.json</argument>
+                    <argument>%%s?version=%%s</argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definition = new Definition(
+            'AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy',
+            array(
+                '%kernel.root_dir%/../busters.json',
+                '%%s?version=%%s',
+            )
+        );
+        $definition->setPublic(false);
+
+        $container->setDefinition('app.assets.versioning.gulp_buster', $definition);
+
+Finally, enable the new asset versioning for all the application assets or just
+for some :ref:`asset package <reference-framework-assets-packages>` thanks to
+the :ref:`version_strategy <reference-framework-assets-version_strategy>` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            assets:
+                version_strategy: 'app.assets.versioning.gulp_buster'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets version_strategy="app.assets.versioning.gulp_buster" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'assets' => array(
+                'version_strategy' => 'app.assets.versioning.gulp_buster',
+            ),
+        ));
 
 .. _`gulp-buster`: https://www.npmjs.com/package/gulp-buster
