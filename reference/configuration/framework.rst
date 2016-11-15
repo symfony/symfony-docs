@@ -967,13 +967,13 @@ Each package can configure the following options:
 .. _reference-assets-version-strategy:
 
 version_strategy
-..............
+................
 
 **type**: ``string`` **default**: ``null``
 
-This specifies a service id of a service to use as the version strategy for
+This specifies the id of the service to use as the version strategy for
 all rendered asset paths. Version strategies must implement
-:class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategy`.
+:class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategyInterface`.
 
 .. note::
 
