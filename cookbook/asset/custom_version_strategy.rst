@@ -7,54 +7,17 @@ How to Use a Custom Version Strategy for Assets
 .. versionadded:: 2.7
     The Asset component was introduced in Symfony 2.7.
 
-Symfony by default does not perform asset versioning. You can specify the
+Asset versioning is a technique that improves the performance of web
+applications by adding a version identifier to the URL of your static assets
+(CSS, JavaScript, images, etc.) When the content of the asset changes, the
+identifier changes and the browser is forced to download it again instead of
+using the cached version.
+
+Symfony supports the basic asset versioning thanks to the
 :ref:`version <reference-framework-assets-version>` and
 :ref:`version_format <reference-framework-assets-version-format>` configuration
-options to add a simple version to all assets (or a specific set of assets
-grouped as a :ref:`package <reference-framework-assets-packages>`):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            assets:
-                version: "20150530"
-                version_format: "%%s?version=%%s"
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
-            <framework:config>
-                <framework:assets
-                    version="20150530"
-                    version-format="%%s?version=%%s"
-                />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'assets' => array(
-                'version' => '20150530',
-                'version_format' => '%%s?version=%%s',
-            ),
-        ));
-
-However, if you require more control, you need to create a custom version
-strategy.
+options. If your application requires a more advanced versioning, you can create
+your own version strategy.
 
 Default Package
 ---------------
