@@ -14,7 +14,7 @@ Take the following paths as an example:
 
 .. code-block:: twig
 
-    {% extends "AppBundle::layout.html.twig" %}
+    {% extends "AppBundle:layout.html.twig" %}
     {{ include('AppBundle:Foo:bar.html.twig') }}
 
 With namespaced paths, the following works as well:
