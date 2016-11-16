@@ -184,10 +184,12 @@ Documentation
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the
-:doc:`reStructuredText </contributing/documentation/format>` format, under
-the ``Resources/doc/`` directory. The ``Resources/doc/index.rst`` file is
-the only mandatory file and must be the entry point for the documentation.
+Extensive documentation should also be provided in the ``Resources/doc/`` 
+directory. The index file (for example ``Resources/doc/index.rst`` or 
+``Resources/doc/index.md``) is the only mandatory file and must be the entry 
+point for the documentation. The 
+:doc:`reStructuredText (rST) </contributing/documentation/format>` is the most 
+common format as it's what's used to render the documentation on symfony.com
 
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
