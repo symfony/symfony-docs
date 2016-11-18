@@ -122,7 +122,7 @@ Creating the Listener Class
 
 In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postPersist``. The class behind that service must have
-a ``postPersist`` method, which will be called when the event is dispatched::
+a ``postPersist()`` method, which will be called when the event is dispatched::
 
     // src/AppBundle/EventListener/SearchIndexer.php
     namespace AppBundle\EventListener;
