@@ -11,17 +11,17 @@ executed through scheduled tasks, etc.
 In those cases, you can define the command as **hidden** by setting the
 ``setHidden()`` method to ``true`` in the command configuration::
 
-    // src/AppBundle/Command/FooCommand.php
+    // src/AppBundle/Command/LegacyCommand.php
     namespace AppBundle\Command;
 
     use Symfony\Component\Console\Command\Command;
 
-    class FooCommand extends Command
+    class LegacyCommand extends Command
     {
         protected function configure()
         {
             $this
-                ->setName('app:foo')
+                ->setName('app:legacy')
                 ->setHidden(true)
                 // ...
             ;
