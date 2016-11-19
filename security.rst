@@ -995,13 +995,13 @@ After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
 look like::
 
-    public function indexAction()
+    use Symfony\Component\Security\Core\User\UserInterface;
+
+    public function indexAction(UserInterface $user)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-
-        $user = $this->getUser();
 
         // the above is a shortcut for this
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -1011,6 +1011,11 @@ look like::
 
     The user will be an object and the class of that object will depend on
     your :ref:`user provider <security-user-providers>`.
+
+.. versionadded:: 3.2
+    The functionality to get the user via the method signature was introduced in
+    Symfony 3.2. You can still retrieve it by calling ``$this->getUser()`` if you
+    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
@@ -1032,7 +1037,15 @@ It's important to check if the user is authenticated first. If they're not,
 ``$user`` will either be ``null`` or the string ``anon.``. Wait, what? Yes,
 this is a quirk. If you're not logged in, the user is technically the string
 ``anon.``, though the ``getUser()`` controller shortcut converts this to
-``null`` for convenience.
+``null`` for convenience. When type-hinting the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+and being logged-in is optional, you can allow a null value for the argument::
+
+    public function indexAction(UserInterface $user = null)
+    {
+        // $user is null when not logged-in or anon.
+    }
+
 
 The point is this: always check to see if the user is logged in before using
 the User object, and use the ``isGranted`` method (or
