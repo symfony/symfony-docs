@@ -1015,7 +1015,8 @@ look like::
 .. versionadded:: 3.2
     The functionality to get the user via the method signature was introduced in
     Symfony 3.2. You can still retrieve it by calling ``$this->getUser()`` if you
-    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`.
+    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+    class.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
@@ -1045,7 +1046,6 @@ and being logged-in is optional, you can allow a null value for the argument::
     {
         // $user is null when not logged-in or anon.
     }
-
 
 The point is this: always check to see if the user is logged in before using
 the User object, and use the ``isGranted`` method (or
