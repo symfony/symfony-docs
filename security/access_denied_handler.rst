@@ -4,10 +4,10 @@
 How to Create a Custom Access Denied Handler
 ============================================
 
-When your application throws an ``AccessDeniedException``, you can catch this exception
+When your application throws an ``AccessDeniedException``, you can handle this exception
 with a service to return a custom response.
 
-On each firewall context you can define a custom access denied handler.
+Each firewall context can define its own custom access denied handler:
 
 .. configuration-block::
 
@@ -17,13 +17,13 @@ On each firewall context you can define a custom access denied handler.
         firewalls:
             foo:
                 # ...
-                access_denied_handler: custom_handler.service.id
+                access_denied_handler: app.security.access_denied_handler
 
     .. code-block:: xml
 
         <config>
           <firewall name="foo">
-            <access_denied_handler>custom_handler.service.id</access_denied_handler>
+            <access_denied_handler>app.security.access_denied_handler</access_denied_handler>
           </firewall>
         </config>
 
@@ -34,7 +34,7 @@ On each firewall context you can define a custom access denied handler.
             'firewalls' => array(
                 'foo' => array(
                     // ...
-                    'access_denied_handler' => 'custom_handler.service.id',
+                    'access_denied_handler' => 'app.security.access_denied_handler',
                 ),
             ),
         ));
@@ -42,8 +42,8 @@ On each firewall context you can define a custom access denied handler.
 
 Your handler must implement the 
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
-This interface defines one method called ``handle()`` that implements the logic you want
-to execute when access is denied to the current user (send a mail, log a message, or
+This interface defines one method called ``handle()`` that implements the logic to
+execute when access is denied to the current user (send a mail, log a message, or
 generally return a custom response).
 
 .. code-block:: php
@@ -59,18 +59,19 @@ generally return a custom response).
     {
         public function handle(Request $request, AccessDeniedException $accessDeniedException)
         {
-            // to some stuff...
+            // ...
+
             return new Response($content, 403);
         }
     }
 
-Then you must register your service :
+Then, register the service for the access denied handler:
 
 .. code-block:: yaml
 
     # app/config/services.yml
     services:
-        custom_handler.service.id:
+        app.security.access_denied_handler:
             class: AppBundle\Security\AccessDeniedHandler
 
-That's it, now on the ``foo`` firewall, all ``AccessDeniedException`` will be notified to your service.
+That's it! Any ``AccessDeniedException`` thrown by the ``foo`` firewall will now be handled by your service.
