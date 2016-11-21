@@ -182,12 +182,11 @@ and ``redirect()`` methods::
 
 For more information, see the :doc:`Routing chapter </routing>`.
 
-.. tip::
+.. caution::
 
-    The ``redirect()`` method does not check it's input. If you use user input 
-    directly as it's parameter, you might open up your page to unvalidated 
-    redirects and forwards, which is in the OWASP top 10 of web application 
-    security flaws. For more information, see https://www.owasp.org/index.php/Open_redirect
+    The ``redirect()`` method does not check its destination in any way. If you 
+    redirect to some URL provided by the end-users, your application may be open 
+    to the `unvalidated redirects security vulnerability`_.
 
 
 .. tip::
@@ -613,3 +612,5 @@ Learn more about Controllers
     :glob:
 
     controller/*
+
+.. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect
