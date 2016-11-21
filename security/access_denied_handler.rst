@@ -5,7 +5,7 @@ How to Create a Custom Access Denied Handler
 ============================================
 
 When your application throws an ``AccessDeniedException``, you can catch this exception
-with a service to return a custom Response.
+with a service to return a custom response.
 
 On each firewall context you can define a custom access denied handler.
 
@@ -44,7 +44,7 @@ Your handler must implement the
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` that implements the logic you want
 to execute when access is denied to the current user (send a mail, log a message, or
-generally return a custom Response).
+generally return a custom response).
 
 .. code-block:: php
 
