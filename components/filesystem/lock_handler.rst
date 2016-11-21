@@ -48,15 +48,19 @@ the file, so you can pass any value for this argument.
     to avoid name collisions, ``LockHandler`` also appends a hash to the name of
     the lock file.
 
-By default, the lock will be created in the temporary directory, but you can
-optionally select the directory where locks are created by passing it as the
-second argument of the constructor.
+By default, the lock will be created in the system's temporary directory, but
+you can optionally select the directory where locks are created by passing it as
+the second argument of the constructor.
 
 .. tip::
 
     Another way to configure the directory where the locks are created is to
-    define the ``TMPDIR`` environment variable. This is useful for example when
-    deploying a third-party Symfony application whose code can't be modified.
+    define a special environment variable, because PHP will use that value to
+    override the default temporary directory. In Unix-based systems, define the
+    ``TMPDIR`` variable. In Windows systems, define any of these variables:
+    ``TMP``, ``TEMP`` or ``USERPROFILE`` (they are checked in this order). This
+    technique is useful for example when deploying a third-party Symfony
+    application whose code can't be modified.
 
 The :method:`Symfony\\Component\\Filesystem\\LockHandler::lock` method tries to
 acquire the lock. If the lock is acquired, the method returns ``true``,
