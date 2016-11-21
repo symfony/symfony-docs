@@ -212,9 +212,10 @@ convenient for passwords::
 Normalizing the Answer
 ----------------------
 
-You can normalize the answer. For instance, in a previous example you asked for
-the bundle name. If the user accidentally adds spaces before and/or after the name we
-want to remove this from the answer. You can set the normalizer using
+Before validating the answer, you can "normalize" it to fix minor errors or
+tweak it as needed. For instance, in a previous example you asked for the bundle
+name. In case the user adds white spaces around the name by mistake, you can
+trim the name before validating it. To do so, configure a normalizer using the
 :method:`Symfony\\Component\\Console\\Question\\Question::setNormalizer`
 method::
 
@@ -224,13 +225,10 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
-        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-        $question->setNormalizer(function ($answer) {
-            if (!is_string($value)) { // $value can be null here
-                return $value;
-            }
-
-            return trim($value);
+        $question = new Question('Please enter the name of the bundle', 'AppBundle');
+        $question->setNormalizer(function ($value) {
+            // $value can be null here
+            return $value ? trim($value) : '';
         });
 
         $name = $helper->ask($input, $output, $question);
@@ -239,10 +237,9 @@ method::
 
 .. caution::
 
-    The normalizer is called before the validator and the returned value by the
-    normalizer is used as input for the validator (and not the original answer
-    of the user). The normalizer should not throw an exception if the answer is invalid;
-    for validation use a validator.
+    The normalizer is called first and the returned value is used as the input
+    of the validator. If the answer is invalid, don't throw exceptions in the
+    normalizer and let the validator handle those errors.
 
 Validating the Answer
 ---------------------
