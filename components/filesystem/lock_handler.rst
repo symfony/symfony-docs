@@ -52,6 +52,12 @@ By default, the lock will be created in the temporary directory, but you can
 optionally select the directory where locks are created by passing it as the
 second argument of the constructor.
 
+.. tip::
+
+    Another way to configure the directory where the locks are created is to
+    define the ``TMPDIR`` environment variable. This is useful for example when
+    deploying a third-party Symfony application whose code can't be modified.
+
 The :method:`Symfony\\Component\\Filesystem\\LockHandler::lock` method tries to
 acquire the lock. If the lock is acquired, the method returns ``true``,
 ``false`` otherwise. If the ``lock`` method is called several times on the same
