@@ -10,16 +10,12 @@ in one of your own bundles. Symfony gives you a very convenient way to override
 things like controllers, templates, and other files in a bundle's
 ``Resources/`` directory.
 
-For example, suppose that you're installing the `FOSUserBundle`_, but you
-want to override its base ``layout.html.twig`` template, as well as one of
-its controllers. Suppose also that you have your own UserBundle where you want
-the overridden files to live. 
+For example, suppose that you have installed `FOSUserBundle`_ but you want to
+override its base ``layout.html.twig`` template, as well as one of its
+controllers.
 
-.. note::
-
-    If you've just created your own UserBundle to make the overrides, make sure you register it in app/AppKernel.php
-
-Let's start by registering the FOSUserBundle as the "parent" of your bundle::
+First, create a new bundle called UserBundle and enable it in your application.
+Then, register the third-party FOSUserBundle as the "parent" of your bundle::
 
     // src/UserBundle/UserBundle.php
     namespace UserBundle;
