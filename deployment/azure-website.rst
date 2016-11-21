@@ -30,32 +30,36 @@ Here, you will be prompted to fill in some basic information.
 .. image:: /_images/deployment/azure-website/step-02.png
    :alt: Setup the Azure Website
 
-For the URL, enter the URL that you would like to use for your Symfony application,
-then select your **Subscription**, **Create a new Resource Group** (which is a
-collection of resources that share the same lifecycle, permissions and policies).
-Pick ClearDB as a **Database Provider**. Create a new **App Service plan/Location**
-you will be prompted to set up your app service plan with a name, a region and a pricing tier.
-Then create a new **Database**, you will be prompted to set up your MySQL database storage with a
-database name and a region. The MySQL database storage is provided by Microsoft
-in partnership with ClearDB. Choose the same region you selected for App Service plan.
+For the URL, enter the URL that you would like to use for your Symfony
+application, then select your **Subscription**, **Create a new Resource Group**
+(which is a collection of resources that share the same lifecycle, permissions
+and policies). Pick ClearDB as a **Database Provider**. Create a new **App
+Service plan/Location** you will be prompted to set up your app service plan
+with a name, a region and a pricing tier. Then create a new **Database**, you
+will be prompted to set up your MySQL database storage with a database name and
+a region. The MySQL database storage is provided by Microsoft in partnership
+with ClearDB. Choose the same region you selected for App Service plan.
 
 Click Create to continue.
 
-Once you created the web site, select **All resources** in the left menu and choose the website you just created.
+Once you created the web site, select **All resources** in the left menu and
+choose the website you just created.
 
 Step 2: Where Is your Source Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, select **Deployment options** under **APP DEPLOYMENT**, select **Choose Source** and choose
-**Local Git repository** to configure your Azure Website credentials. If you choose a different source
-like GitHub or Bitbucket you can ignore the next step.
+Now, select **Deployment options** under **APP DEPLOYMENT**, select **Choose
+Source** and choose **Local Git repository** to configure your Azure Website
+credentials. If you choose a different source like GitHub or Bitbucket you can
+ignore the next step.
 
 .. image:: /_images/deployment/azure-website/step-03.png
    :alt: Setup a local Git repository
 
-Once you selected **Local Git repository**, click **Setup connection** you will be prompted
-to create a username and a secure password: these will become essential identifiers
-to connect to the FTP server and also to push your application code to the Git repository.
+Once you selected **Local Git repository**, click **Setup connection** you will
+be prompted to create a username and a secure password: these will become
+essential identifiers to connect to the FTP server and also to push your
+application code to the Git repository.
 
 .. image:: /_images/deployment/azure-website/step-04.png
    :alt: Configure Azure Website credentials
@@ -90,7 +94,8 @@ Even though Symfony only requires PHP 5.3.9 to run, it's always recommended
 to use the most recent PHP version whenever possible. PHP 5.3 is no longer
 supported by the PHP core team, but you can update it easily in Azure.
 
-To update your PHP version on Azure, go to the **Application settings** under **SETTINGS** and select the version you want.
+To update your PHP version on Azure, go to the **Application settings** under
+**SETTINGS** and select the version you want.
 
 .. image:: /_images/deployment/azure-website/step-07.png
    :alt: Enabling the most recent PHP runtime from Azure Website Control Panel
@@ -147,13 +152,16 @@ Website repository.
 Enabling the PHP intl Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**The** ``intl`` **extension is now enabled by default. The following steps are no longer necessary.** You can check if the ``intl`` extension is enabled in the :phpfunction:`phpinfo` page.
+**The** ``intl`` **extension is now enabled by default. The following steps are
+no longer necessary.** You can check if the ``intl`` extension is enabled in the
+:phpfunction:`phpinfo` page.
 
 However if the ``intl`` extension is not enabled you can follow these steps.
 
-This is the tricky part of the guide! To enable the ``intl`` extension, there is no need to upload
-any DLL files as the ``php_intl.dll`` file already exists on Azure. In fact,
-this file just needs to be moved into the custom website extension directory.
+This is the tricky part of the guide! To enable the ``intl`` extension, there is
+no need to upload any DLL files as the ``php_intl.dll`` file already exists on
+Azure. In fact, this file just needs to be moved into the custom website
+extension directory.
 
 To get the ``php_intl.dll`` file under your ``site/wwwroot`` directory, simply
 access the online **Kudu** tool by browsing to the following URL:
@@ -321,8 +329,9 @@ credentials, CSRF token protection, etc. These parameters come from the
    :alt: Configuring Symfony global parameters
 
 The most important thing in this article is to correctly set up your database
-settings. You can get your MySQL database settings in the **Application settings** page. Simply click on the
-**Show connection string values** link to make them appear.
+settings. You can get your MySQL database settings in the **Application
+settings** page. Simply click on the **Show connection string values** link to
+make them appear.
 
 .. image:: /_images/deployment/azure-website/step-16.png
    :alt: MySQL database settings
