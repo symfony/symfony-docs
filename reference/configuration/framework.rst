@@ -945,6 +945,8 @@ collection each time it generates an asset's path:
             ),
         ));
 
+.. _reference-framework-assets-packages:
+
 packages
 ........
 
