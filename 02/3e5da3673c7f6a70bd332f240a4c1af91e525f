@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-19T07:50:50Z
+
+@andreybolonin I'm afraid that we can't use the short array notation because it was decided to keep using the traditional notation, like Symfony does in its source code.
+
+---------------------------------------------------------------------------
+
+by andreybolonin at 2016-10-19T08:28:17Z
+
+> I'm afraid that we can't use the short array notation because it was decided to keep using the traditional notation, like Symfony does in its source code.
+
+Ok, and what about use Response class constants instead of '404' and etc?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-19T08:30:01Z
+
+Personally I like the response constants a lot. Let's ask other doc maintainers (@xabbuh and @wouterj) if they agree too.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-19T18:05:26Z
+
+I am fine with using the constants for HTTP status codes. I guess that's more readable when you're not too familiar with all the possible codes.
