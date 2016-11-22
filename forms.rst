@@ -659,11 +659,12 @@ the choice is ultimately up to you.
     following to your form type class::
 
         use Symfony\Component\OptionsResolver\OptionsResolver;
+        use AppBundle\Entity\Task;
 
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 
