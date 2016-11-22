@@ -1,0 +1,63 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-30T12:45:56Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-30T17:40:30Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-30T17:41:53Z
+
+A missing one in security/api_key_authentication.rst:
+
+```
+This will provide a method ``onAuthenticationFailure`` which
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-30T17:42:47Z
+
+Another missing one in best_practices/security.rst:
+
+```
+matches the value returned by the ``getAuthorEmail`` method
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-30T17:43:56Z
+
+Another one in bundles/extension.rst:
+
+```
+your load method looks like
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-30T17:45:04Z
+
+Another one in components/config/definition.rst:
+
+```
+The ``canBeDisabled`` method looks
+```
+
+I won't add more comments here ... but you get the idea that there are a lot of other cases 😁
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2016-09-30T20:41:40Z
+
+Well, regular expressions rock!
+
+@javiereguiluz Let me know if I missed something... ;)
