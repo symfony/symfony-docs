@@ -301,7 +301,7 @@ The syntax of YAML contents can be validated through the CLI using the
 
 First, install the Console component:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/console
 
@@ -322,7 +322,7 @@ Create a console application with ``lint:yaml`` as its only command::
 
 Then, execute the script for validating contents:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # validates a single file
     $ php lint.php path/to/file.yml
@@ -336,7 +336,7 @@ Then, execute the script for validating contents:
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php lint.php path/to/file.yml --format json
 
