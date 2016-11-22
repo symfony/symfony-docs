@@ -119,7 +119,7 @@ be called when ``app.user_repository`` is instantiated.
 
 .. caution::
 
-    The ``scope``, ``abstract`` and ``tags`` attributes are *not* inherited from
+    The ``shared``, ``abstract`` and ``tags`` attributes are *not* inherited from
     parent services.
 
 .. tip::

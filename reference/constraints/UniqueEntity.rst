@@ -12,6 +12,7 @@ using an email address that already exists in the system.
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
+|                | - `entityClass`_                                                                    |
 |                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
 |                | - `payload`_                                                                        |
@@ -132,7 +133,18 @@ message
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed when this constraint fails.
+The message that's displayed when this constraint fails. This message is always
+mapped to the first field causing the violation, even when using multiple fields
+in the constraint.
+
+.. versionadded:: 3.1
+    The ability to include the invalid value into the message was introduced
+    in Symfony 3.1.
+
+Messages can include the ``{{ value }}`` placeholder to display a string
+representation of the invalid entity. If the entity doesn't define the
+``__toString()`` method, the following generic value will be used: *"Object of
+class __CLASS__ identified by <comma separated IDs>"*
 
 em
 ~~
@@ -152,6 +164,20 @@ repositoryMethod
 The name of the repository method to use for making the query to determine
 the uniqueness. If it's left blank, the ``findBy`` method will be used.
 This method should return a countable result.
+
+entityClass
+~~~~~~~~~~~
+
+.. versionadded:: 3.2
+    The ``entityClass`` option was introduced in Symfony 3.2.
+
+**type**: ``string``
+
+By default, the query performed to ensure the uniqueness uses the repository of
+the current class instance. However, in some cases, such as when using Doctrine
+inheritance mapping, you need to execute the query in a different repository.
+Use this option to define the fully-qualified class name (FQCN) of the Doctrine
+entity associated with the repository you want to use.
 
 errorPath
 ~~~~~~~~~

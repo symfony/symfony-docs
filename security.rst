@@ -507,14 +507,12 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /security/_ircmaxwell_password-compat.rst.inc
-
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, since 2.7 you can use the built-in command:
+For hardcoded users, you can use the built-in command:
 
 .. code-block:: terminal
 
-    $ php app/console security:encode-password
+    $ php bin/console security:encode-password
 
 It will give you something like this:
 
@@ -841,15 +839,6 @@ You can easily deny access from inside a controller::
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
-    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
-    in the example above).
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 In both cases, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
@@ -884,7 +873,7 @@ Access Control in Templates
 ...........................
 
 If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+the built-in ``is_granted()`` helper function:
 
 .. configuration-block::
 
@@ -899,20 +888,6 @@ the built-in helper function:
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
-
-If you use this function and you are *not* behind a firewall, an exception will
-be thrown. Again, it's almost always a good idea to have a main firewall that
-covers all URLs (as shown before in this chapter).
-
-.. caution::
-
-    Be careful with this in your base layout or on your error pages! Because of
-    some internal Symfony details, to avoid broken error pages in the ``prod``
-    environment, wrap calls in these templates with a check for ``app.user``:
-
-    .. code-block:: html+twig
-
-        {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
 .......................
@@ -1016,21 +991,17 @@ shown above.
 Retrieving the User Object
 --------------------------
 
-.. versionadded:: 2.6
-     The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
-     to Symfony 2.6, you had to use the ``getToken()`` method of the ``security.context`` service.
-
 After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
 look like::
 
-    public function indexAction()
+    use Symfony\Component\Security\Core\User\UserInterface;
+
+    public function indexAction(UserInterface $user)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-
-        $user = $this->getUser();
 
         // the above is a shortcut for this
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -1040,6 +1011,12 @@ look like::
 
     The user will be an object and the class of that object will depend on
     your :ref:`user provider <security-user-providers>`.
+
+.. versionadded:: 3.2
+    The functionality to get the user via the method signature was introduced in
+    Symfony 3.2. You can still retrieve it by calling ``$this->getUser()`` if you
+    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+    class.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
@@ -1061,7 +1038,14 @@ It's important to check if the user is authenticated first. If they're not,
 ``$user`` will either be ``null`` or the string ``anon.``. Wait, what? Yes,
 this is a quirk. If you're not logged in, the user is technically the string
 ``anon.``, though the ``getUser()`` controller shortcut converts this to
-``null`` for convenience.
+``null`` for convenience. When type-hinting the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+and being logged-in is optional, you can allow a null value for the argument::
+
+    public function indexAction(UserInterface $user = null)
+    {
+        // $user is null when not logged-in or anon.
+    }
 
 The point is this: always check to see if the user is logged in before using
 the User object, and use the ``isGranted`` method (or
@@ -1292,7 +1276,9 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
+    security/ldap
     security/entity_provider
+    security/guard_authentication
     security/remember_me
     security/impersonating_user
     security/form_login
@@ -1305,8 +1291,10 @@ Authentication (Identifying/Logging in the User)
     security/csrf_in_login_form
     security/named_encoders
     security/multiple_user_providers
+    security/multiple_guard_authenticators
     security/firewall_restriction
     security/host_restriction
+    security/user_checkers
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

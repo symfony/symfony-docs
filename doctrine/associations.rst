@@ -14,7 +14,7 @@ the class for you.
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:generate:entity --no-interaction \
+    $ php bin/console doctrine:generate:entity --no-interaction \
         --entity="AppBundle:Category" \
         --fields="name:string(255)"
 
@@ -193,7 +193,7 @@ classes, tell Doctrine to generate the missing getter and setter methods for you
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:generate:entities AppBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Product``
 and ``Category``, with a natural many-to-one relationship. The ``Product``
@@ -224,7 +224,7 @@ table, the new ``product.category_id`` column, and the new foreign key:
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 Saving Related Entities
 -----------------------

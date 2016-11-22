@@ -4,6 +4,89 @@
 How to Use Assetic for Asset Management
 =======================================
 
+Installing and Enabling Assetic
+-------------------------------
+
+Starting from Symfony 2.8, Assetic is no longer included by default in the
+Symfony Standard Edition. Before using any of its features, install the
+AsseticBundle executing this console command in your project:
+
+.. code-block:: bash
+
+    $ composer require symfony/assetic-bundle
+
+Then, enable the bundle in the ``AppKernel.php`` file of your Symfony application::
+
+    // app/AppKernel.php
+
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+                new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            );
+
+            // ...
+        }
+    }
+
+Finally, add the following minimal configuration to enable Assetic support in
+your application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            debug:          '%kernel.debug%'
+            use_controller: '%kernel.debug%'
+            filters:
+                cssrewrite: ~
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config debug="%kernel.debug%" use-controller="%kernel.debug%">
+                <assetic:filters cssrewrite="null" />
+            </assetic:config>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'debug' => '%kernel.debug%',
+            'use_controller' => '%kernel.debug%',
+            'filters' => array(
+                'cssrewrite' => null,
+            ),
+            // ...
+        ));
+
+        // ...
+
+Introducing Assetic
+-------------------
+
 Assetic combines two major ideas: :ref:`assets <assetic-assets>` and
 :ref:`filters <assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
@@ -515,7 +598,7 @@ each time you deploy), you should run the following command:
 
 .. code-block:: terminal
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 This will physically generate and write each file that you need (e.g. ``/js/abcd123.js``).
 If you update any of your assets, you'll need to run this again to regenerate
@@ -567,7 +650,7 @@ need to dump them manually. To do so, run the following command:
 
 .. code-block:: terminal
 
-    $ php app/console assetic:dump
+    $ php bin/console assetic:dump
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
@@ -576,7 +659,7 @@ assets will be regenerated automatically *as they change*:
 
 .. code-block:: terminal
 
-    $ php app/console assetic:watch
+    $ php bin/console assetic:watch
 
 The ``assetic:watch`` command was introduced in AsseticBundle 2.4. In prior
 versions, you had to use the ``--watch`` option of the ``assetic:dump``

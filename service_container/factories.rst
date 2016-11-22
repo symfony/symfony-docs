@@ -12,11 +12,6 @@ For this situation, you can use a factory to create the object and tell
 the service container to call a method on the factory rather than directly
 instantiating the class.
 
-.. versionadded:: 2.6
-    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
-    method was introduced in Symfony 2.6. Refer to older versions for the
-    syntax for factories prior to 2.6.
-
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object::
 

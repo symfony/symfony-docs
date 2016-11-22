@@ -50,6 +50,25 @@ the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
 
+.. versionadded:: 3.1
+    Support for streaming the output of a process was introduced in
+    Symfony 3.1.
+
+You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
+foreach construct to get the output while it is generated. By default, the loop waits
+for new output before going to the next iteration::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
+    foreach ($process as $type => $data) {
+        if ($process::OUT === $type) {
+            echo "\nRead from stdout: ".$data;
+        } else { // $process::ERR === $type
+            echo "\nRead from stderr: ".$data;
+        }
+    }
+
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
 if the process couldn't be executed successfully (i.e. the process exited
@@ -123,6 +142,17 @@ are done doing other stuff::
     The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
     which means that your code will halt at this line until the external
     process is completed.
+    
+.. note::
+    If a `Response` is sent **before** what `Process` is running had a chance to complete, 
+    the server process will be killed (depending on your OS). It means that your task
+    will be stopped right away.
+    Running an asynchronous process is not the same than running a processing surviving yourselves.
+    
+    If you want your process to survive the request/response cycle, you could take
+    advantage of the `kernel.terminate` event, and run your command **synchronuously** 
+    inside this event. Be aware that `kernel.terminate` is called only if you run `PHP-FPM`.
+    
 
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
 a callback that is called repeatedly whilst the process is still running, passing
@@ -139,11 +169,52 @@ in the output and its type::
         }
     });
 
+Streaming to the Standard Input of a Process
+--------------------------------------------
+
+.. versionadded:: 3.1
+    Support for streaming the input of a process was introduced in
+    Symfony 3.1.
+
+Before a process is started, you can specify its standard input using either the
+:method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument
+of the constructor. The provided input can be a string, a stream resource or a
+Traversable object::
+
+    $process = new Process('cat');
+    $process->setInput('foobar');
+    $process->run();
+
+When this input is fully written to the subprocess standard input, the corresponding
+pipe is closed.
+
+In order to write to a subprocess standard input while it is running, the component
+provides the :class:`Symfony\\Component\\Process\\InputStream` class::
+
+    $input = new InputStream();
+    $input->write('foo');
+
+    $process = new Process('cat');
+    $process->setInput($input);
+    $process->start();
+
+    // ... read process output or do other things
+
+    $input->write('bar');
+    $input->close();
+
+    $process->wait();
+
+    // will echo: foobar
+    echo $process->getOutput();
+
+The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
+stream resources or Traversable objects as argument. As shown in the above example,
+you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
+method when you are done writing to the standard input of the subprocess.
+
 Stopping a Process
 ------------------
-
-.. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
@@ -180,10 +251,6 @@ To make your code work better on all platforms, you might want to use the
 
     $builder = new ProcessBuilder(array('ls', '-lsa'));
     $builder->getProcess()->run();
-
-.. versionadded:: 2.3
-    The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
-    method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
@@ -260,9 +327,6 @@ exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 Process Signals
 ---------------
 
-.. versionadded:: 2.3
-    The ``signal`` method was introduced in Symfony 2.3.
-
 When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
@@ -285,9 +349,6 @@ When running a program asynchronously, you can send it POSIX signals with the
 
 Process Pid
 -----------
-
-.. versionadded:: 2.3
-    The ``getPid`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method.
@@ -326,9 +387,15 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     You can not enable or disable the output while the process is running.
 
     If you disable the output, you cannot access ``getOutput``,
-    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
-    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
-    methods or use ``setIdleTimeout``.
+    ``getIncrementalOutput``, ``getErrorOutput``, ``getIncrementalErrorOutput`` or
+    ``setIdleTimeout``.
+
+    However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
+    methods to handle process output in a streaming fashion.
+
+    .. versionadded:: 3.1
+        The ability to pass a callback to these methods when output is disabled
+        was added in Symfony 3.1.
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992

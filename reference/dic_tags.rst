@@ -24,6 +24,7 @@ Tag Name                                  Usage
 `assetic.templating.twig`_                Remove this service if Twig templating is disabled
 `auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
+`controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
 `doctrine.event_subscriber`_              Add a Doctrine event subscriber
@@ -231,9 +232,6 @@ The tagged service will be removed from the container if
 auto_alias
 ----------
 
-.. versionadded:: 2.7
-    The ``auto_alias`` tag was introduced in Symfony 2.7.
-
 **Purpose**: Define aliases based on the value of container parameters
 
 Consider the following configuration that defines three different but related
@@ -352,6 +350,19 @@ console.command
 
 For details on registering your own commands in the service container, read
 :doc:`/console/commands_as_services`.
+
+controller.argument_value_resolver
+----------------------------------
+
+.. versionadded:: 3.1
+    The ``controller.argument_value_resolver`` tag was introduced in Symfony 3.1.
+
+**Purpose**: Register a value resolver for controller arguments such as ``Request``
+
+Value resolvers implement the
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
+and are used to resolve argument values for controllers as described here:
+:doc:`/controller/argument_value_resolver`.
 
 data_collector
 --------------
@@ -706,9 +717,9 @@ channel when injecting the logger in a service.
 
 .. tip::
 
-    If you use MonologBundle 2.4 or higher, you can configure custom channels
-    in the configuration and retrieve the corresponding logger service from
-    the service container directly (see :ref:`monolog-channels-config`).
+    You can also configure custom channels in the configuration and retrieve
+    the corresponding logger service from the service container directly (see
+    :ref:`monolog-channels-config`).
 
 .. _dic_tags-monolog-processor:
 
@@ -884,10 +895,6 @@ For more information, see :doc:`/routing/custom_route_loader`.
 routing.expression_language_provider
 ------------------------------------
 
-.. versionadded:: 2.6
-    The ``routing.expression_language_provider`` tag was introduced in Symfony
-    2.6.
-
 **Purpose**: Register a provider for expression language functions in routing
 
 This tag is used to automatically register
@@ -897,10 +904,6 @@ functions to the routing expression language.
 
 security.expression_language_provider
 -------------------------------------
-
-.. versionadded:: 2.6
-    The ``security.expression_language_provider`` tag was introduced in Symfony
-    2.6.
 
 **Purpose**: Register a provider for expression language functions in security
 

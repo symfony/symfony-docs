@@ -7,25 +7,27 @@ How to Work with Compiler Passes in Bundles
 
 Compiler passes give you an opportunity to manipulate other service
 definitions that have been registered with the service container. You
-can read about how to create them in the components section ":doc:`/components/dependency_injection/compilation`".
-To register a compiler pass from a bundle you need to add it to the build
-method of the bundle definition class::
+can read about how to create them in the components section
+":ref:`components-di-compiler-pass`".
 
-    // src/Acme/MailerBundle/AcmeMailerBundle.php
-    namespace Acme\MailerBundle;
+When using :ref:`separate compiler passes <components-di-separate-compiler-passes>`,
+you need to register them in the ``build()`` method of the bundle class (this
+is not needed when implementing the ``process()`` method in the extension)::
+
+    // src/AppBundle/AppBundle.php
+    namespace AppBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use AppBundle\DependencyInjection\Compiler\CustomPass;
 
-    use Acme\MailerBundle\DependencyInjection\Compiler\CustomCompilerPass;
-
-    class AcmeMailerBundle extends Bundle
+    class AppBundle extends Bundle
     {
         public function build(ContainerBuilder $container)
         {
             parent::build($container);
 
-            $container->addCompilerPass(new CustomCompilerPass());
+            $container->addCompilerPass(new CustomPass());
         }
     }
 

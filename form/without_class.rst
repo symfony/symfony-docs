@@ -19,10 +19,10 @@ an array of the submitted data. This is actually really easy::
     {
         $defaultData = array('message' => 'Type your message here');
         $form = $this->createFormBuilder($defaultData)
-            ->add('name', 'text')
-            ->add('email', 'email')
-            ->add('message', 'textarea')
-            ->add('send', 'submit')
+            ->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('message', TextareaType::class)
+            ->add('send', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
@@ -61,7 +61,7 @@ an array.
     it's been transformed by the Form component.
 
 Adding Validation
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The only missing piece is validation. Usually, when you call ``$form->isValid()``,
 the object is validated by reading the constraints that you applied to that
@@ -83,12 +83,13 @@ but here's a short example:
 
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     $builder
-       ->add('firstName', 'text', array(
+       ->add('firstName', TextType::class, array(
            'constraints' => new Length(array('min' => 3)),
        ))
-       ->add('lastName', 'text', array(
+       ->add('lastName', TextType::class, array(
            'constraints' => array(
                new NotBlank(),
                new Length(array('min' => 3)),

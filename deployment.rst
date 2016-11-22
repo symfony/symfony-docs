@@ -118,7 +118,7 @@ Check if your server meets the requirements by running:
 
 .. code-block:: terminal
 
-    $ php app/check.php
+    $ php bin/symfony_requirements
 
 B) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,7 +157,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
 .. code-block:: terminal
 
-    $ php app/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,7 +166,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
 .. code-block:: terminal
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 F) Other Things!
 ~~~~~~~~~~~~~~~~

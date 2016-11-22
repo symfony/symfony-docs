@@ -23,9 +23,6 @@ in the following way from a controller::
 
     $user->setPassword($encoded);
 
-.. versionadded:: 2.6
-    The ``security.password_encoder`` service was introduced in Symfony 2.6.
-
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
 key in ``app/config/security.yml``.

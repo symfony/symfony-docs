@@ -1,9 +1,6 @@
 IdenticalTo
 ===========
 
-.. versionadded:: 2.3
-    The ``IdenticalTo`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is identical to another value, defined in the options.
 To force that a value is *not* identical, see
 :doc:`/reference/constraints/NotIdenticalTo`.

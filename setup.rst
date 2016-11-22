@@ -7,6 +7,11 @@ Installing & Setting up the Symfony Framework
 This article explains how to install Symfony in different ways and how to solve
 the most common issues that may appear during the installation process.
 
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
 Creating Symfony Applications
 -----------------------------
 
@@ -43,6 +48,8 @@ executable that needs to be installed on your system only once:
         # ... then, execute the command as
         c:\> cd projects
         c:\projects\> php symfony
+
+.. _installation-creating-the-app:
 
 Once the Symfony Installer is installed, create your first Symfony application
 with the ``new`` command:
@@ -115,7 +122,7 @@ the ``create-project`` command:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.7.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "2.8.*"
 
 .. tip::
 
@@ -133,7 +140,7 @@ a matter of browsing to the project directory and executing this command:
 .. code-block:: terminal
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -201,7 +208,7 @@ complexity of your project):
 
     .. code-block:: terminal
 
-        $ php app/console security:check
+        $ php bin/console security:check
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
@@ -281,6 +288,7 @@ Go Deeper with Setup
     setup/composer
     setup/*
 
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard

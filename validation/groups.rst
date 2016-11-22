@@ -174,11 +174,7 @@ the class name or the string ``Default``.
 To tell the validator to use a specific group, pass one or more group names
 as the third argument to the ``validate()`` method::
 
-    // If you're using the new 2.5 validation API (you probably are!)
     $errors = $validator->validate($author, null, array('registration'));
-
-    // If you're using the old 2.4 validation API, pass the group names as the second argument
-    // $errors = $validator->validate($author, array('registration'));
 
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.

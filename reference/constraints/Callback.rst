@@ -31,6 +31,9 @@ can do anything, including creating and assigning validation errors.
 Configuration
 -------------
 
+.. versionadded:: 3.1
+    The ``$payload`` parameter was introduced in Symfony 3.1.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
@@ -40,15 +43,13 @@ Configuration
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Context\ExecutionContextInterface;
-        // if you're using the older 2.4 validation API, you'll need this instead
-        // use Symfony\Component\Validator\ExecutionContextInterface;
 
         class Author
         {
             /**
              * @Assert\Callback
              */
-            public function validate(ExecutionContextInterface $context)
+            public function validate(ExecutionContextInterface $context, $payload)
             {
                 // ...
             }
@@ -99,33 +100,22 @@ field those errors should be attributed::
 
     // ...
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
-    // if you're using the older 2.4 validation API, you'll need this instead
-    // use Symfony\Component\Validator\ExecutionContextInterface;
 
     class Author
     {
         // ...
         private $firstName;
 
-        public function validate(ExecutionContextInterface $context)
+        public function validate(ExecutionContextInterface $context, $payload)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array(/* ... */);
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                // If you're using the new 2.5 validation API (you probably are!)
                 $context->buildViolation('This name sounds totally fake!')
                     ->atPath('firstName')
                     ->addViolation();
-
-                // If you're using the old 2.4 validation API
-                /*
-                $context->addViolationAt(
-                    'firstName',
-                    'This name sounds totally fake!'
-                );
-                */
             }
         }
     }
@@ -136,26 +126,17 @@ Static Callbacks
 You can also use the constraint with static methods. Since static methods don't
 have access to the object instance, they receive the object as the first argument::
 
-    public static function validate($object, ExecutionContextInterface $context)
+    public static function validate($object, ExecutionContextInterface $context, $payload)
     {
         // somehow you have an array of "fake names"
         $fakeNames = array(/* ... */);
 
         // check if the name is actually a fake name
         if (in_array($object->getFirstName(), $fakeNames)) {
-            // If you're using the new 2.5 validation API (you probably are!)
             $context->buildViolation('This name sounds totally fake!')
                 ->atPath('firstName')
                 ->addViolation()
             ;
-
-            // If you're using the old 2.4 validation API
-            /*
-            $context->addViolationAt(
-                'firstName',
-                'This name sounds totally fake!'
-            );
-            */
         }
     }
 
@@ -170,12 +151,10 @@ Suppose your validation function is ``Vendor\Package\Validator::validate()``::
     namespace Vendor\Package;
 
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
-    // if you're using the older 2.4 validation API, you'll need this instead
-    // use Symfony\Component\Validator\ExecutionContextInterface;
 
     class Validator
     {
-        public static function validate($object, ExecutionContextInterface $context)
+        public static function validate($object, ExecutionContextInterface $context, $payload)
         {
             // ...
         }
@@ -256,8 +235,6 @@ constructor of the Callback constraint::
     namespace AppBundle\Entity;
 
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
-    // if you're using the older 2.4 validation API, you'll need this instead
-    // use Symfony\Component\Validator\ExecutionContextInterface;
 
     use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -266,7 +243,7 @@ constructor of the Callback constraint::
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $callback = function ($object, ExecutionContextInterface $context) {
+            $callback = function ($object, ExecutionContextInterface $context, $payload) {
                 // ...
             };
 

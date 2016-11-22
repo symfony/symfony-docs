@@ -180,10 +180,6 @@ and ``redirect()`` methods::
         return $this->redirect('http://symfony.com/doc');
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this.
-
 For more information, see the :doc:`Routing chapter </routing>`.
 
 .. tip::
@@ -254,10 +250,7 @@ console command:
 
 .. code-block:: terminal
 
-    $ php app/console debug:container
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
+    $ php bin/console debug:container
 
 For more information, see the :doc:`/service_container` chapter.
 
@@ -269,10 +262,6 @@ For more information, see the :doc:`/service_container` chapter.
     method::
 
         $from = $this->getParameter('app.mailer.from');
-
-    .. versionadded:: 2.7
-        The ``Controller::getParameter()`` method was introduced in Symfony
-        2.7. Use ``$this->container->getParameter()`` in versions prior to 2.7.
 
 .. index::
    single: Controller; Managing errors
@@ -502,15 +491,11 @@ headers and content that's sent back to the client::
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
-    // JsonResponse is a sub-class of Response
-    $response = new JsonResponse(array('name' => $name));
-    // set a header!
-    $response->headers->set('X-Rate-Limit', 10);
+    // create a CSS-response with a 200 status code
+    $response = new Response('<style> ... </style>');
+    $response->headers->set('Content-Type', 'text/css');
 
 There are special classes that make certain kinds of responses easier:
-
-* For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
-  See :ref:`component-http-foundation-json-response`.
 
 * For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
   See :ref:`component-http-foundation-serving-files`.
@@ -524,6 +509,63 @@ There are special classes that make certain kinds of responses easier:
     Now that you know the basics you can continue your research on Symfony
     ``Request`` and ``Response`` object in the
     :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+
+JSON Helper
+~~~~~~~~~~~
+
+.. versionadded:: 3.1
+    The ``json()`` helper was introduced in Symfony 3.1.
+
+To return JSON from a controller, use the ``json()`` helper method on the base controller.
+This returns a special ``JsonResponse`` object that encodes the data automatically::
+
+    // ...
+    public function indexAction()
+    {
+        // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+        return $this->json(array('username' => 'jane.doe'));
+
+        // the shortcut defines three optional arguments
+        // return $this->json($data, $status = 200, $headers = array(), $context = array());
+    }
+
+If the :doc:`serializer service </serializer>` is enabled in your
+application, contents passed to ``json()`` are encoded with it. Otherwise,
+the :phpfunction:`json_encode` function is used.
+
+File helper
+~~~~~~~~~~~
+
+.. versionadded:: 3.2
+    The ``file()`` helper was introduced in Symfony 3.2.
+
+You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+helper to serve a file from inside a controller::
+
+    public function fileAction()
+    {
+        // send the file contents and force the browser to download it
+        return $this->file('/path/to/some_file.pdf');
+    }
+
+The ``file()`` helper provides some arguments to configure its behavior::
+
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    public function fileAction()
+    {
+        // load the file from the filesystem
+        $file = new File('/path/to/some_file.pdf');
+
+        return $this->file($file);
+
+        // rename the downloaded file
+        return $this->file($file, 'custom_name.pdf');
+
+        // display the file contents in the browser instead of downloading it
+        return $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+    }
 
 Final Thoughts
 --------------

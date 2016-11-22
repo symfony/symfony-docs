@@ -49,9 +49,11 @@ which are basically nodes that you can traverse easily::
         var_dump($domElement->nodeName);
     }
 
-Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
+Specialized :class:`Symfony\\Component\\DomCrawler\\Link`,
+:class:`Symfony\\Component\\DomCrawler\\Image` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
-interacting with html links and forms as you traverse through the HTML tree.
+interacting with html links, images and forms as you traverse through the HTML
+tree.
 
 .. note::
 
@@ -129,9 +131,6 @@ aliases both with :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath`
 
 and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
 
-    use Symfony\Component\CssSelector\CssSelector;
-
-    CssSelector::disableHtmlExtension();
     $crawler = $crawler->filter('default|entry media|group yt|aspectRatio');
 
 .. note::
@@ -149,12 +148,6 @@ Namespaces can be explicitly registered with the
 
     $crawler->registerNamespace('m', 'http://search.yahoo.com/mrss/');
     $crawler = $crawler->filterXPath('//m:group//yt:aspectRatio');
-
-.. caution::
-
-    To query XML with a CSS selector, the HTML extension needs to be disabled with
-    :method:`CssSelector::disableHtmlExtension <Symfony\\Component\\CssSelector\\CssSelector::disableHtmlExtension>`
-    to avoid converting the selector to lowercase.
 
 Node Traversing
 ~~~~~~~~~~~~~~~
@@ -190,10 +183,6 @@ Get all the child or parent nodes::
 Accessing Node Values
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The :method:`Symfony\\Component\\DomCrawler\\Crawler::nodeName`
-    method was introduced in Symfony 2.6.
-
 Access the node name (HTML tag name) of the first node of the current selection (eg. "p" or "div")::
 
     // will return the node name (HTML tag name) of the first child element under <body>
@@ -226,11 +215,6 @@ Call an anonymous function on each node of the list::
     $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
-
-.. versionadded:: 2.3
-    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
-    are passed a ``Crawler`` as the first argument. Previously, that argument
-    was a :phpclass:`DOMNode`.
 
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
@@ -298,13 +282,70 @@ and :phpclass:`DOMNode` objects:
 
         $html = $crawler->html();
 
-    The ``html`` method is new in Symfony 2.3.
+Expression Evaluation
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded::
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
+    introduced in Symfony 3.2.
+
+The ``evaluate()`` method evaluates the given XPath expression. The return
+value depends on the XPath expression. If the expression evaluates to a scalar
+value (e.g. HTML attributes), an array of results will be returned. If the
+expression evaluates to a DOM document, a new ``Crawler`` instance will be
+returned.
+
+This behavior is best illustrated with examples::
+
+    use Symfony\Component\DomCrawler\Crawler;
+
+    $html = '<html>
+    <body>
+        <span id="article-100" class="article">Article 1</span>
+        <span id="article-101" class="article">Article 2</span>
+        <span id="article-102" class="article">Article 3</span>
+    </body>
+    </html>';
+
+    $crawler = new Crawler();
+    $crawler->addHtmlContent($html);
+
+    $crawler->filterXPath('//span[contains(@id, "article-")]')->evaluate('substring-after(@id, "-")');
+    /* array:3 [
+         0 => "100"
+         1 => "101"
+         2 => "102"
+       ]
+     */
+
+    $crawler->evaluate('substring-after(//span[contains(@id, "article-")]/@id, "-")');
+    /* array:1 [
+         0 => "100"
+       ]
+     */
+
+    $crawler->filterXPath('//span[@class="article"]')->evaluate('count(@id)');
+    /* array:3 [
+         0 => 1.0
+         1 => 1.0
+         2 => 1.0
+       ]
+     */
+
+    $crawler->evaluate('count(//span[@class="article"])');
+    /* array:1 [
+         0 => 3.0
+       ]
+     */
+
+    $crawler->evaluate('//span[1]');
+    // A Symfony\Component\DomCrawler\Crawler instance
 
 Links
 ~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
-the ``selectLink`` method on an existing crawler. This returns a Crawler
+the ``selectLink`` method on an existing crawler. This returns a ``Crawler``
 instance with just the selected link(s). Calling ``link()`` gives you a special
 :class:`Symfony\\Component\\DomCrawler\\Link` object::
 
@@ -327,6 +368,23 @@ methods to get more information about the selected link itself::
     link with ``href="#foo"``, this would return the full URI of the current
     page suffixed with ``#foo``. The return from ``getUri()`` is always a full
     URI that you can act on.
+
+Images
+~~~~~~
+
+To find an image by its ``alt`` attribute, use the ``selectImage`` method on an
+existing crawler. This returns a ``Crawler`` instance with just the selected
+image(s). Calling ``image()`` gives you a special
+:class:`Symfony\\Component\\DomCrawler\\Image` object::
+
+    $imagesCrawler = $crawler->selectImage('Kitten');
+    $image = $imagesCrawler->image();
+
+    // or do this all at once
+    $image = $crawler->selectImage('Kitten')->image();
+
+The :class:`Symfony\\Component\\DomCrawler\\Image` object has the same
+``getUri()`` method as :class:`Symfony\\Component\\DomCrawler\\Link`.
 
 Forms
 ~~~~~

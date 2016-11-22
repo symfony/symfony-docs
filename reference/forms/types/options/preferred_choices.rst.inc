@@ -7,31 +7,32 @@ This option allows you to move certain choices to the top of your list with a vi
 separator between them and the rest of the options. If you have a form of languages,
 you can list the most popular on top, like Bork Bork and Pirate::
 
-    $builder->add('language', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('language', ChoiceType::class, array(
         'choices' => array(
             'English' => 'en',
             'Spanish' => 'es',
             'Bork'   => 'muppets',
             'Pirate' => 'arr'
         ),
-        'choices_as_values' => true,
         'preferred_choices' => array('muppets', 'arr')
     ));
-
-.. versionadded:: 2.7
-    Setting a callable or propery path was introduced in Symfony 2.7.
 
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
 
-    $builder->add('publishAt', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('publishAt', ChoiceType::class, array(
         'choices' => array(
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month')
         ),
-        'choices_as_values' => true,
         'preferred_choices' => function ($val, $key) {
             // prefer options within 3 days
             return $val <= new \DateTime('+3 days');

@@ -40,7 +40,6 @@ the ``registerBundles()`` method of the ``AppKernel`` class::
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
         );
@@ -107,6 +106,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     {
         $bundles = array(
             // ...
+
             // register your bundle
             new Acme\TestBundle\AcmeTestBundle(),
         );
@@ -122,7 +122,7 @@ generating a basic bundle skeleton:
 
 .. code-block:: terminal
 
-    $ php app/console generate:bundle --namespace=Acme/TestBundle
+    $ php bin/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony's command-line

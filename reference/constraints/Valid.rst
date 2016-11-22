@@ -9,7 +9,6 @@ an object and all sub-objects associated with it.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
-|                | - `deep`_ (deprecated as of 2.5)                                    |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
@@ -267,20 +266,5 @@ traverse
 If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is
 set to ``true``.
-
-deep
-~~~~
-
-.. caution::
-
-    The ``deep`` option was deprecated in Symfony 2.5 and will be removed
-    in Symfony 3.0. When traversing arrays, nested arrays are always traversed.
-    When traversing nested objects, their traversal strategy is used.
-
-**type**: ``boolean`` **default**: ``false``
-
-If this constraint is applied to a property that holds an array of objects,
-then each object in that array will be validated recursively if this option
-is set to ``true``.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

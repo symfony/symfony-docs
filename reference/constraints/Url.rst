@@ -229,9 +229,6 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 checkDNS
 ~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``checkDNS`` option was introduced in Symfony 2.7.
-
 **type**: ``boolean`` **default**: ``false``
 
 By default, this constraint just validates the syntax of the given URL. If you
@@ -305,9 +302,6 @@ of the ``ANY`` DNS record corresponding to the host associated with the given UR
 
 dnsMessage
 ~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``dnsMessage`` option was introduced in Symfony 2.7.
 
 **type**: ``string`` **default**: ``The host could not be resolved.``
 

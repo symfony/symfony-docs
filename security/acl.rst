@@ -96,7 +96,7 @@ Fortunately, there is a task for this. Simply run the following command:
 
 .. code-block:: terminal
 
-    $ php app/console init:acl
+    $ php bin/console init:acl
 
 Getting Started
 ---------------

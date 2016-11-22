@@ -256,19 +256,6 @@ Name                    ``FormEvents`` Constant        Event's Data
 ``form.post_bind``      ``FormEvents::POST_SUBMIT``    View data
 ======================  =============================  ===============
 
-.. versionadded:: 2.3
-    Before Symfony 2.3, ``FormEvents::PRE_SUBMIT``, ``FormEvents::SUBMIT``
-    and ``FormEvents::POST_SUBMIT`` were called ``FormEvents::PRE_BIND``,
-    ``FormEvents::BIND`` and ``FormEvents::POST_BIND``.
-
-.. caution::
-
-    The ``FormEvents::PRE_BIND``, ``FormEvents::BIND`` and
-    ``FormEvents::POST_BIND`` constants will be removed in version 3.0 of
-    Symfony.
-    The event names still keep their original values, so make sure you use the
-    ``FormEvents`` constants in your code for forward compatibility.
-
 Event Listeners
 ~~~~~~~~~~~~~~~
 
@@ -280,10 +267,13 @@ Creating and binding an event listener to the form is very easy::
 
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     $form = $formFactory->createBuilder()
-        ->add('username', 'text')
-        ->add('show_email', 'checkbox')
+        ->add('username', TextType::class)
+        ->add('show_email', CheckboxType::class)
         ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $user = $event->getData();
             $form = $event->getForm();
@@ -296,7 +286,7 @@ Creating and binding an event listener to the form is very easy::
             // If the data was submitted previously, the additional value that is
             // included in the request variables needs to be removed.
             if (true === $user['show_email']) {
-                $form->add('email', 'email');
+                $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
                 $event->setData($user);
@@ -312,14 +302,18 @@ callback for better readability::
     // src/AppBundle/Form/SubscriptionType.php
     namespace AppBundle\Form;
 
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\FormEvents;
+
     // ...
     class SubscriptionType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('username', 'text')
-                ->add('show_email', 'checkbox')
+                ->add('username', TextType::class)
+                ->add('show_email', CheckboxType::class)
                 ->addEventListener(
                     FormEvents::PRE_SET_DATA,
                     array($this, 'onPreSetData')
@@ -350,6 +344,7 @@ Event subscribers have different uses:
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
     class AddEmailFieldListener implements EventSubscriberInterface
     {
@@ -369,7 +364,7 @@ Event subscribers have different uses:
             // Check whether the user from the initial data has chosen to
             // display his email or not.
             if (true === $user->isShowEmail()) {
-                $form->add('email', 'email');
+                $form->add('email', EmailType::class);
             }
         }
 
@@ -386,7 +381,7 @@ Event subscribers have different uses:
             // If the data was submitted previously, the additional value that
             // is included in the request variables needs to be removed.
             if (true === $user['show_email']) {
-                $form->add('email', 'email');
+                $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
                 $event->setData($user);
@@ -396,12 +391,15 @@ Event subscribers have different uses:
 
 To register the event subscriber, use the ``addEventSubscriber()`` method::
 
-    use AppBundle\Form\EventListener\AddEmailFieldListener;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+        use AppBundle\Form\EventListener\AddEmailFieldListener;
+
     // ...
 
     $form = $formFactory->createBuilder()
-        ->add('username', 'text')
-        ->add('show_email', 'checkbox')
+        ->add('username', TextType::class)
+        ->add('show_email', CheckboxType::class)
         ->addEventSubscriber(new AddEmailFieldListener())
         ->getForm();
 

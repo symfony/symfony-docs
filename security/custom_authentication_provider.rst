@@ -10,6 +10,7 @@ How to Create a custom Authentication Provider
     you through that process. But depending on your needs, you may be able
     to solve your problem in a simpler manner, or via a community bundle:
 
+    * :doc:`/security/guard_authentication`
     * :doc:`/security/custom_password_authenticator`
     * :doc:`/security/api_key_authentication`
     * To authenticate via OAuth using a third-party service such as Google, Facebook
@@ -207,23 +208,23 @@ the ``PasswordDigest`` header value matches with the user's password.
     // src/AppBundle/Security/Authentication/Provider/WsseProvider.php
     namespace AppBundle\Security\Authentication\Provider;
 
+    use Psr\Cache\CacheItemPoolInterface;
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use AppBundle\Security\Authentication\Token\WsseUserToken;
-    use Symfony\Component\Security\Core\Util\StringUtils;
 
     class WsseProvider implements AuthenticationProviderInterface
     {
         private $userProvider;
-        private $cacheDir;
+        private $cachePool;
 
-        public function __construct(UserProviderInterface $userProvider, $cacheDir)
+        public function __construct(UserProviderInterface $userProvider, CacheItemPoolInterface $cachePool)
         {
             $this->userProvider = $userProvider;
-            $this->cacheDir     = $cacheDir;
+            $this->cachePool = $cachePool;
         }
 
         public function authenticate(TokenInterface $token)
@@ -258,24 +259,23 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
-            // Validate that the nonce is *not* used in the last 5 minutes
-            // if it has, this could be a replay attack
-            if (
-                file_exists($this->cacheDir.'/'.md5($nonce))
-                && file_get_contents($this->cacheDir.'/'.md5($nonce)) + 300 > time()
-            ) {
+            // Try to fetch the cache item from pool
+            $cacheItem = $this->cachePool->getItem(md5($nonce));
+            
+            // Validate that the nonce is *not* in cache
+            // if it is, this could be a replay attack
+            if ($cacheItem->isHit()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
-            // If cache directory does not exist we create it
-            if (!is_dir($this->cacheDir)) {
-                mkdir($this->cacheDir, 0777, true);
-            }
-            file_put_contents($this->cacheDir.'/'.md5($nonce), time());
+            
+            // Store the item in cache for 5 minutes
+            $cacheItem->set(null)->expiresAfter(300);
+            $this->cachePool->save($cacheItem);
 
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
 
-            return StringUtils::equals($expected, $digest);
+            return hash_equals($expected, $digest);
         }
 
         public function supports(TokenInterface $token)
@@ -294,11 +294,10 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. note::
 
-    The comparison of the expected and the provided digests uses a constant
-    time comparison provided by the
-    :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
-    method of the ``StringUtils`` class. It is used to mitigate possible
-    `timing attacks`_.
+    While the :phpfunction:`hash_equals` function was introduced in PHP 5.6,
+    you are safe to use it with any PHP version in your Symfony application. In
+    PHP versions prior to 5.6, `Symfony Polyfill`_ (which is included in
+    Symfony) will define the function for you.
 
 The Factory
 -----------
@@ -412,7 +411,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                 class: AppBundle\Security\Authentication\Provider\WsseProvider
                 arguments:
                     - '' # User Provider
-                    - '%kernel.cache_dir%/security/nonces'
+                    - '@cache.app'
                 public: false
 
             wsse.security.authentication.listener:
@@ -434,7 +433,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                     public="false"
                 >
                     <argument /> <!-- User Provider -->
-                    <argument>%kernel.cache_dir%/security/nonces</argument>
+                    <argument type="service" id="cache.app"></argument>
                 </service>
 
                 <service id="wsse.security.authentication.listener"
@@ -457,7 +456,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             'AppBundle\Security\Authentication\Provider\WsseProvider',
             array(
                 '', // User Provider
-                '%kernel.cache_dir%/security/nonces',
+                new Reference('cache.app'),
             )
         );
         $definition->setPublic(false);
@@ -677,3 +676,4 @@ in the factory and consumed or passed to the other classes in the container.
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce
 .. _`timing attacks`: https://en.wikipedia.org/wiki/Timing_attack
+.. _`Symfony Polyfill`: https://github.com/symfony/polyfill

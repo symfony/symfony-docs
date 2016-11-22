@@ -35,18 +35,16 @@ number of units, and advance the progress as the command executes::
     // ensure that the progress bar is at 100%
     $progress->finish();
 
+.. tip::
+
+    You can also regress the progress bar (i.e. step backwards) by calling
+    ``$progress->advance()`` with a negative value. For example, if you call
+    ``$progress->advance(-2)`` then it will regress the progress bar 2 steps.
+
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
-
-.. versionadded:: 2.6
-    The ``setProgress()`` method was called ``setCurrent()`` prior to Symfony 2.6.
-
-.. caution::
-
-    Prior to version 2.6, the progress bar only works if your platform
-    supports ANSI codes; on other platforms, no output is generated.
 
 .. tip::
 
@@ -56,9 +54,6 @@ you can also set the current progress by calling the
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
     accordingly. By default, when using a ``max``, the redraw frequency
     is set to *10%* of your ``max``.
-
-    .. versionadded:: 2.6
-        The ``setRedrawFrequency()`` method was introduced in Symfony 2.6.
 
 If you don't know the number of steps in advance, just omit the steps argument
 when creating the :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
@@ -306,9 +301,6 @@ that displays the number of remaining steps::
             return $bar->getMaxSteps() - $bar->getProgress();
         }
     );
-
-.. versionadded:: 2.6
-    The ``getProgress()`` method was called ``getStep()`` prior to Symfony 2.6.
 
 Custom Messages
 ~~~~~~~~~~~~~~~

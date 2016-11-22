@@ -14,8 +14,8 @@ Another way would be to create a token yourself and store it in a session.
 While doing this, you have to make sure that an appropriate cookie is sent
 with a request. The following example demonstrates this technique::
 
-    // src/AppBundle/Tests/Controller/DefaultControllerTest.php
-    namespace Appbundle\Tests\Controller;
+    // tests/AppBundle/Controller/DefaultControllerTest.php
+    namespace Tests\Appbundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\BrowserKit\Cookie;

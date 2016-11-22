@@ -378,7 +378,11 @@ In case you want to use the same translation catalogue outside your application
 (e.g. use translation on the client side), it's possible to fetch raw translation
 messages. Just specify the required locale::
 
-    $messages = $translator->getMessages('fr_FR');
+    $catalogue = $translator->getCatalogue('fr_FR');
+    $messages = $catalogue->all();
+    while ($catalogue = $catalogue->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalogue->all(), $messages);
+    }
 
 The ``$messages`` variable will have the following structure::
 

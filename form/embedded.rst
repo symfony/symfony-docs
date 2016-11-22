@@ -86,11 +86,6 @@ create a form class so that a ``Category`` object can be modified by the user::
                 'data_class' => 'AppBundle\Entity\Category',
             ));
         }
-
-        public function getName()
-        {
-            return 'category';
-        }
     }
 
 The end goal is to allow the ``Category`` of a ``Task`` to be modified right
@@ -105,7 +100,7 @@ class::
     {
         // ...
 
-        $builder->add('category', new CategoryType());
+        $builder->add('category', CategoryType::class);
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
@@ -152,4 +147,4 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the :doc:`/form/form_collections` article and the
-:doc:`collection </reference/forms/types/collection>` field type reference.
+:doc:`CollectionType </reference/forms/types/collection>` reference.

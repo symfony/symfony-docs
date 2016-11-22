@@ -15,8 +15,14 @@ recommended structure is as follows:
 
 ``app/``
     The application configuration, templates and translations.
+``bin/``
+    Executable files (e.g. ``bin/console``).
 ``src/``
     The project's PHP code.
+``tests/``
+    Automatic tests (e.g. Unit tests).
+``var/``
+    Generated files (cache, logs, etc.).
 ``vendor/``
     The third-party dependencies.
 ``web/``
@@ -31,7 +37,7 @@ file that handles all requests to your application) lives, such as the
 production controller shown here::
 
     // web/app.php
-    require_once __DIR__.'/../app/bootstrap.php.cache';
+    require_once __DIR__.'/../var/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -261,7 +267,7 @@ Symfony applications can contain several configuration files defined in
 several formats (YAML, XML, PHP, etc.). Instead of parsing and combining
 all those files for each request, Symfony uses its own cache system. In
 fact, the application configuration is only parsed for the very first request
-and then compiled down to plain PHP code stored in the ``app/cache/``
+and then compiled down to plain PHP code stored in the ``var/cache/``
 directory.
 
 In the development environment, Symfony is smart enough to update the cache
@@ -272,16 +278,16 @@ the ``prod`` environment:
 
 .. code-block:: terminal
 
-    $ php app/console cache:clear --env=prod
+    $ php bin/console cache:clear --env=prod
 
 When developing a web application, things can go wrong in many ways. The
-log files in the ``app/logs/`` directory tell you everything about the requests
+log files in the ``var/logs/`` directory tell you everything about the requests
 and help you fix the problem quickly.
 
 Using the Command Line Interface
 --------------------------------
 
-Each application comes with a command line interface tool (``app/console``)
+Each application comes with a command line interface tool (``bin/console``)
 that helps you maintain your application. It provides commands that boost
 your productivity by automating tedious and repetitive tasks.
 
@@ -289,13 +295,13 @@ Run it without any arguments to learn more about its capabilities:
 
 .. code-block:: terminal
 
-    $ php app/console
+    $ php bin/console
 
 The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: terminal
 
-    $ php app/console debug:router --help
+    $ php bin/console debug:router --help
 
 Final Thoughts
 --------------

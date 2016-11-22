@@ -20,6 +20,11 @@ simple two-step process:
 
 .. seealso::
 
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
+.. seealso::
+
     Symfony *embraces* the HTTP Request-Response lifecycle. To find out more,
     see :doc:`/introduction/http_fundamentals`.
 
@@ -103,8 +108,8 @@ First, make sure that ``LuckyController`` extends Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     // --> add this new use statement
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -117,8 +122,8 @@ Now, use the handy ``render()`` function to render a template. Pass it our ``num
 variable so we can render that::
 
     // src/AppBundle/Controller/LuckyController.php
-    // ...
 
+    // ...
     class LuckyController extends Controller
     {
         /**
@@ -169,6 +174,17 @@ project:
 else). As you keep reading, you'll learn what can be done inside each of these.
 
 So what about the other directories in the project?
+
+``bin/``
+    The famous ``bin/console`` file lives here (and other, less important
+    executable files).
+
+``tests/``
+    The automated tests (e.g. Unit tests) for your application live here.
+
+``var/``
+    This is where automatically-created files are stored, like cache files
+    (``var/cache/``), logs (``var/logs/``) and sessions (``var/sessions/``).
 
 ``vendor/``
     Third-party (i.e. "vendor") libraries live here! These are downloaded via the `Composer`_
@@ -252,3 +268,4 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Composer`: https://getcomposer.org
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page

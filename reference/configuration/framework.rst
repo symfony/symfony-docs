@@ -31,7 +31,6 @@ Configuration
     * :ref:`enabled <reference-form-enabled>`
 * `csrf_protection`_
     * :ref:`enabled <reference-csrf_protection-enabled>`
-    * `field_name`_ (deprecated as of 2.4)
 * `esi`_
     * :ref:`enabled <reference-esi-enabled>`
 * `fragments`_
@@ -43,9 +42,6 @@ Configuration
     * `only_exceptions`_
     * `only_master_requests`_
     * `dsn`_
-    * `username`_
-    * `password`_
-    * `lifetime`_
     * `matcher`_
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
@@ -86,6 +82,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
+    * :ref:`paths <reference-translator-paths>`
 * `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
@@ -95,7 +92,6 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
-    * `api`_
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -104,6 +100,10 @@ Configuration
     * :ref:`enabled <reference-serializer-enabled>`
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+    * :ref:`name_converter <reference-serializer-name_converter>`
+* `php_errors`_
+    * `log`_
+    * `throw`_
 
 secret
 ~~~~~~
@@ -134,9 +134,6 @@ out all the application users.
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ``http_method_override`` option was introduced in Symfony 2.3.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -178,10 +175,6 @@ trusted_proxies
 Configures the IP addresses that should be trusted as proxies. For more
 details, see :doc:`/request/load_balancer_reverse_proxy`.
 
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist
-    whole subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -215,24 +208,25 @@ ide
 
 **type**: ``string`` **default**: ``null``
 
-If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
-of the file paths in an exception message into a link, which will open that
-file in your IDE.
+Symfony can turn file paths seen in dumps and exception messages into links
+that will open in your preferred text editor or IDE.
 
-Symfony contains preconfigured URLs for some popular IDEs, you can set them
-using the following keys:
+Since every developer uses a different IDE, the recommended way to enable this
+feature is to configure it on a system level. This can be done by setting the
+``xdebug.file_link_format`` option in your ``php.ini`` configuration file.
 
-* ``textmate``
-* ``macvim``
-* ``emacs``
-* ``sublime``
+.. tip::
 
-.. versionadded:: 2.3.14
-    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
+    Setting the ``xdebug.file_link_format`` ini option works even if the Xdebug
+    extension is not enabled.
 
-You can also specify a custom URL string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if
-you use PHPstorm on the Mac OS platform, you will do something like:
+Alternatively, you can use this ``ide`` configuration key.
+
+In both cases, the expected configuration value is a URL template that contains an
+``%f`` where the file path is expected and ``%l`` for the line number. When using
+the ``ide`` configuration key, percentages signs (``%``) must be escaped by
+doubling them. For example, if you use PHPstorm on the Mac OS platform, you will
+do something like:
 
 .. configuration-block::
 
@@ -264,16 +258,28 @@ you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. tip::
 
+    When running your app in a container or in a virtual machine, you can tell
+    Symfony to map files from the guest to the host by changing their prefix.
+    This map should be specified at the end of the URL template, using ``&`` and
+    ``>`` as guest-to-host separators::
+
+        // /path/to/guest/.../file will be opened
+        // as /path/to/host/.../file on the host
+        // and /foo/.../file as /bar/.../file also
+        'myide://%f:%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
+
+    .. versionadded:: 3.2
+        Guest to host mappings were introduced in Symfony 3.2.
+
+.. tip::
+
+    Symfony contains preconfigured URLs for some popular IDEs, you can set them
+    using the following values: ``textmate``, ``macvim``, ``emacs`` or ``sublime``.
+
+.. tip::
+
     If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
     be able to use this.
-
-Of course, since every developer uses a different IDE, it's better to set
-this on a system level. This can be done by setting the ``xdebug.file_link_format``
-in the ``php.ini`` configuration to the URL string.
-
-If you don't use Xdebug, another way is to set this URL string in the
-``SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT`` environment variable.
-If any of these configurations values are set, the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -427,18 +433,6 @@ If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
-field_name
-..........
-
-.. caution::
-
-    The ``framework.csrf_protection.field_name`` setting is deprecated as
-    of Symfony 2.4, use ``framework.form.csrf_protection.field_name`` instead.
-
-**type**: ``string`` **default**: ``"_token"``
-
-The name of the hidden field used to render the :doc:`CSRF token </form/csrf_protection>`.
-
 esi
 ~~~
 
@@ -541,12 +535,6 @@ and ``test`` environments.
 collect
 .......
 
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
-
 **type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled.
@@ -584,28 +572,6 @@ The DSN where to store the profiling information.
 
     See :doc:`/profiler/storage` for more information about the
     profiler storage.
-
-username
-........
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the username for the profiling storage.
-
-password
-........
-
-**type**: ``string`` **default**: ``''``
-
-When needed, the password for the profiling storage.
-
-lifetime
-........
-
-**type**: ``integer`` **default**: ``86400``
-
-The lifetime of the profiling storage in seconds. The data will be deleted
-when the lifetime is expired.
 
 matcher
 .......
@@ -772,7 +738,7 @@ This determines whether cookies should only be sent over secure connections.
 cookie_httponly
 ...............
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 This determines whether cookies should only be accessible through the HTTP
 protocol. This means that the cookie won't be accessible by scripting
@@ -1157,7 +1123,7 @@ resources
 
 A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
-:ref:`the form chapter <forms-theming-twig>`.
+:ref:`the form article <forms-theming-twig>`.
 
 Assume you have custom global form themes in
 ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
@@ -1274,12 +1240,6 @@ fallbacks
 
 **type**: ``string|array`` **default**: ``array('en')``
 
-.. versionadded:: 2.3.25
-    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
-    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
-    language defined as a string. Please note that you can still use the
-    old ``fallback`` option if you want define only one fallback.
-
 This option is used when the translation key for the current locale wasn't
 found.
 
@@ -1292,15 +1252,22 @@ found.
 logging
 .......
 
-.. versionadded:: 2.6
-    The ``logging`` option was introduced in Symfony 2.6.
-
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
 When ``true``, a log entry is made whenever the translator cannot find a translation
 for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
+
+.. _reference-translator-paths:
+
+paths
+.....
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows to define an array of paths where the component will look
+for translation files.
 
 property_access
 ~~~~~~~~~~~~~~~
@@ -1348,6 +1315,9 @@ cache
 The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
+Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
+cache provide from the Doctrine project.
+
 .. _reference-validation-enable_annotations:
 
 enable_annotations
@@ -1373,30 +1343,6 @@ strict_email
 If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
-
-api
-...
-
-**type**: ``string``
-
-Starting with Symfony 2.5, the Validator component introduced a new validation
-API. The ``api`` option is used to switch between the different implementations:
-
-``2.5``
-    Use the validation API introduced in Symfony 2.5.
-
-``2.5-bc`` or ``auto``
-    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
-    Symfony will use an API implementation that is compatible with both the
-    legacy ``2.4`` implementation and the ``2.5`` implementation.
-
-.. note::
-
-    The support for the native 2.4 API has been dropped since Symfony 2.7.
-
-To capture these logs in the ``prod`` environment, configure a
-:doc:`channel handler </logging/channels_handlers>` in ``config_prod.yml`` for
-the ``translation`` channel and set its ``level`` to ``debug``.
 
 annotations
 ~~~~~~~~~~~
@@ -1477,6 +1423,50 @@ If this option is enabled, serialization groups can be defined using annotations
 
     For more information, see :ref:`serializer-using-serialization-groups-annotations`.
 
+.. _reference-serializer-name_converter:
+
+name_converter
+..............
+
+**type**: ``string``
+
+.. versionadded:: 2.8
+    The ``name_converter`` option was introduced in Symfony 2.8.
+
+The name converter to use.
+The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
+name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
+value.
+
+.. seealso::
+
+    For more information, see
+    :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
+
+php_errors
+~~~~~~~~~~
+
+log
+...
+
+.. versionadded:: 3.2
+    The ``log`` option was introduced in Symfony 3.2.
+
+**type**: ``boolean`` **default**: ``false``
+
+Use the application logger instead of the PHP logger for logging PHP errors.
+
+throw
+.....
+
+.. versionadded:: 3.2
+    The ``throw`` option was introduced in Symfony 3.2.
+
+**type**: ``boolean`` **default**: ``%kernel.debug%``
+
+Throw PHP errors as ``\ErrorException`` instances. The parameter
+``debug.error_handler.throw_at`` controls the threshold.
+
 Full Default Configuration
 --------------------------
 
@@ -1494,7 +1484,6 @@ Full Default Configuration
 
             csrf_protection:
                 enabled:              false
-                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
 
             # form configuration
             form:
@@ -1519,9 +1508,6 @@ Full Default Configuration
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
-                username:
-                password:
-                lifetime:             86400
                 matcher:
                     ip:                   ~
 
@@ -1600,6 +1586,7 @@ Full Default Configuration
                 enabled:              false
                 fallbacks:            [en]
                 logging:              "%kernel.debug%"
+                paths:                []
 
             # validation configuration
             validation:
@@ -1613,6 +1600,11 @@ Full Default Configuration
                 cache:                file
                 file_cache_dir:       '%kernel.cache_dir%/annotations'
                 debug:                '%kernel.debug%'
+
+            # PHP errors handling configuration
+            php_errors:
+                log:                  false
+                throw:                '%kernel.debug%'
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

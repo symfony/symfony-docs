@@ -119,7 +119,7 @@ dump of all available configuration options by running:
 
 .. code-block:: terminal
 
-    $ php app/console config:dump-reference twig
+    $ php bin/console config:dump-reference twig
 
 .. index::
    single: Environments; Introduction

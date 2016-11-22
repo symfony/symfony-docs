@@ -99,10 +99,6 @@ Exclude directories from matching with the
 
     $finder->in(__DIR__)->exclude('ruby');
 
-.. versionadded:: 2.3
-   The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
-   method was introduced in Symfony 2.3.
-
 It's also possible to ignore directories that you don't have permission to read::
 
     $finder->ignoreUnreadableDirs()->in(__DIR__);

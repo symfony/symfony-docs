@@ -4,6 +4,8 @@
 How to Apply an Assetic Filter to a specific File Extension
 ===========================================================
 
+.. include:: /assetic/_standard_edition_warning.rst.inc
+
 Assetic filters can be applied to individual files, groups of files or even,
 as you'll see here, files that have a specific extension. To show you how
 to handle each option, suppose that you want to use Assetic's CoffeeScript

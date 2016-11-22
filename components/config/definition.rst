@@ -446,10 +446,6 @@ and in XML:
     <!-- entries-per-page: This value is only used for the search results page. -->
     <config entries-per-page="25" />
 
-.. versionadded:: 2.6
-    Since Symfony 2.6, the info will also be added to the exception message
-    when an invalid type is given.
-
 Optional Sections
 -----------------
 
@@ -740,6 +736,7 @@ the following ways:
 - ``ifTrue()``
 - ``ifString()``
 - ``ifNull()``
+- ``ifEmpty()`` (since Symfony 3.2)
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``

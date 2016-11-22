@@ -4,20 +4,20 @@
 How to Create a Custom Form Password Authenticator
 ==================================================
 
+.. tip::
+
+    Check out :doc:`/security/guard_authentication` for a simpler and more
+    flexible way to accomplish custom authentication tasks like this.
+
 Imagine you want to allow access to your website only between 2pm and 4pm
-UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
-and provider. In this entry, you'll learn how to do this for a login form
-(i.e. where your user submits their username and password).
-Before Symfony 2.6, you had to use the password encoder to authenticate the user password.
+UTC. In this entry, you'll learn how to do this for a login form (i.e. where
+your user submits their username and password).
 
 The Password Authenticator
 --------------------------
 
-.. versionadded:: 2.6
-    The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
-
 First, create a new class that implements
-:class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
@@ -25,13 +25,13 @@ the user::
     namespace Acme\HelloBundle\Security;
 
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-    use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Http\Authentication\SimpleFormAuthenticatorInterface;
 
     class TimeAuthenticator implements SimpleFormAuthenticatorInterface
     {
@@ -47,7 +47,9 @@ the user::
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
             } catch (UsernameNotFoundException $e) {
-                throw new AuthenticationException('Invalid username or password');
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
+                throw new CustomUserMessageAuthenticationException('Invalid username or password');
             }
 
             $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
@@ -55,7 +57,9 @@ the user::
             if ($passwordValid) {
                 $currentHour = date('G');
                 if ($currentHour < 14 || $currentHour > 16) {
-                    throw new AuthenticationException(
+                    // CAUTION: this message will be returned to the client
+                    // (so don't put any un-trusted messages / error strings here)
+                    throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
                         100
                     );
@@ -69,7 +73,9 @@ the user::
                 );
             }
 
-            throw new AuthenticationException('Invalid username or password');
+            // CAUTION: this message will be returned to the client
+            // (so don't put any un-trusted messages / error strings here)
+            throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
 
         public function supportsToken(TokenInterface $token, $providerKey)

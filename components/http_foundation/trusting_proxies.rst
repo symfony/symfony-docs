@@ -19,10 +19,6 @@ Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
 your proxy.
 
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
-    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
-
 .. code-block:: php
 
     use Symfony\Component\HttpFoundation\Request;

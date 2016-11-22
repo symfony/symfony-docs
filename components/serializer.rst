@@ -177,10 +177,6 @@ This is a common need when working with an ORM.
 Attributes Groups
 -----------------
 
-.. versionadded:: 2.7
-    The support of serialization and deserialization groups was introduced
-    in Symfony 2.7.
-
 Sometimes, you want to serialize different sets of attributes from your
 entities. Groups are a handy way to achieve this need.
 
@@ -319,14 +315,6 @@ Ignoring Attributes
     Using attribute groups instead of the :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
     method is considered best practice.
 
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
-    method was introduced in Symfony 2.3.
-
-.. versionadded:: 2.7
-    Prior to Symfony 2.7, attributes were only ignored while serializing. Since Symfony
-    2.7, they are ignored when deserializing too.
-
 As an option, there's a way to ignore attributes from the origin object. To remove
 those attributes use the
 :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
@@ -343,12 +331,10 @@ method on the normalizer definition::
     $serializer = new Serializer(array($normalizer), array($encoder));
     $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsman":false}
 
+.. _component-serializer-converting-property-names-when-serializing-and-deserializing:
+
 Converting Property Names when Serializing and Deserializing
 ------------------------------------------------------------
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface`
-    interface was introduced in Symfony 2.7.
 
 Sometimes serialized attributes must be named differently than properties
 or getter/setter methods of PHP classes.
@@ -414,10 +400,6 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
 CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
-    interface was introduced in Symfony 2.7.
 
 In many formats, it's common to use underscores to separate words (also known
 as snake_case). However, PSR-1 specifies that the preferred style for PHP
@@ -528,20 +510,38 @@ There are several types of normalizers available:
 
     Objects are normalized to a map of property names to property values.
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
-    class was introduced in Symfony 2.6.
+:class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
+    This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    class was introduced in Symfony 2.7.
+    It will call the :phpmethod:`JsonSerializable::jsonSerialize` method and
+    then further normalize the result. This means that nested
+    :phpclass:`JsonSerializable` classes will also be normalized.
+
+    This normalizer is particularly helpful when you want to gradually migrate
+    from an existing codebase using simple :phpfunction:`json_encode` to the Symfony
+    Serializer by allowing you to mix which normalizers are used for which classes.
+
+    Unlike with :phpfunction:`json_encode` circular references can be handled.
+
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
+    This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
+    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
+    By default it uses the RFC3339_ format.
+
+    .. versionadded:: 3.2
+        Support for specifying datetime format during denormalization was
+        introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
+
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
+    This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
+    string (``data:...``) such that files can be embedded into serialized data.
+
+.. versionadded:: 3.1
+    The ``JsonSerializableNormalizer``, ``DateTimeNormalizer`` and
+    ``DataUriNormalizer`` normalizers were added in Symfony 3.1
 
 Handling Circular References
 ----------------------------
-
-.. versionadded:: 2.6
-    Handling of circular references was introduced in Symfony 2.6. In previous
-    versions of Symfony, circular references led to infinite loops.
 
 Circular references are common when dealing with entity relations::
 
@@ -631,6 +631,50 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
+Handling Arrays
+---------------
+
+The Serializer component is capable of handling arrays of objects as well.
+Serializing arrays works just like serializing a single object::
+
+    use Acme\Person;
+
+    $person1 = new Person();
+    $person1->setName('foo');
+    $person1->setAge(99);
+    $person1->setSportsman(false);
+
+    $person2 = new Person();
+    $person2->setName('bar');
+    $person2->setAge(33);
+    $person2->setSportsman(true);
+
+    $persons = array($person1, $person2);
+    $data = $serializer->serialize($persons, 'json');
+
+    // $data contains [{"name":"foo","age":99,"sportsman":false},{"name":"bar","age":33,"sportsman":true}]
+
+If you want to deserialize such a structure, you need to add the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+to the set of normalizers. By appending ``[]`` to the type parameter of the
+:method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
+you indicate that you're expecting an array instead of a single object.
+
+.. code-block:: php
+
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $serializer = new Serializer(
+        array(new GetSetMethodNormalizer(), new ArrayDenormalizer()),
+        array(new JsonEncoder())
+    );
+
+    $data = ...; // The serialized data from the previous example
+    $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
+
 Learn more
 ----------
 
@@ -647,3 +691,4 @@ Learn more
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
+.. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8

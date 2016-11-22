@@ -15,10 +15,6 @@ and encoders by reading the :doc:`Serializer Component </components/serializer>`
 Activating the Serializer
 -------------------------
 
-.. versionadded:: 2.3
-    The Serializer has always existed in Symfony, but prior to Symfony 2.3,
-    you needed to build the ``serializer`` service yourself.
-
 The ``serializer`` service is not available by default. To turn it on, activate
 it in your configuration:
 
@@ -35,10 +31,22 @@ it in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer enabled="true" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+            <framework:config>
+                <!-- ... -->
+                <framework:serializer enabled="true" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -73,11 +81,6 @@ you need it or it can be used in a controller like the following::
 
 Adding Normalizers and Encoders
 -------------------------------
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    is enabled by default in Symfony 2.7. In prior versions, you needed to load
-    your own normalizer.
 
 Once enabled, the ``serializer`` service will be available in the container
 and will be loaded with two :ref:`encoders <component-serializer-encoders>`
@@ -130,9 +133,6 @@ Here is an example on how to load the
 
 Using Serialization Groups Annotations
 --------------------------------------
-
-.. versionadded:: 2.7
-    Support for serialization groups was introduced in Symfony 2.7.
 
 Enable :ref:`serialization groups annotation <component-serializer-attributes-groups>`
 with the following configuration:
@@ -188,10 +188,6 @@ stored in one of the following locations:
 Enabling the Metadata Cache
 ---------------------------
 
-.. versionadded:: 2.7
-    Serializer metadata and the ability to cache them were introduced in
-    Symfony 2.7.
-
 Metadata used by the Serializer component such as groups can be cached to
 enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
 interface can be used.
@@ -223,6 +219,48 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
             // ...
             'serializer' => array(
                 'cache' => 'serializer.mapping.cache.apc',
+            ),
+        ));
+
+Enabling a Name Converter
+-------------------------
+
+.. versionadded:: 2.8
+    The ``name_converter`` option was introduced in Symfony 2.8.
+
+The use of a :ref:`name converter <component-serializer-converting-property-names-when-serializing-and-deserializing>`
+service can be defined in the configuration using the :ref:`name_converter <reference-serializer-name_converter>`
+option.
+
+The built-in :ref:`CamelCase to snake_case name converter <using-camelized-method-names-for-underscored-attributes>`
+can be enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
+value:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            serializer:
+                name_converter: 'serializer.name_converter.camel_case_to_snake_case'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <!-- ... -->
+            <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'serializer' => array(
+                'name_converter' => 'serializer.name_converter.camel_case_to_snake_case,
             ),
         ));
 

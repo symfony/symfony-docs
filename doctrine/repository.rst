@@ -59,7 +59,7 @@ and setter methods:
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:generate:entities AppBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
 .. tip::
 

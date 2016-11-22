@@ -77,7 +77,7 @@ This is the built-in Symfony listener related to this event:
 ==============================================================================  ========
 Listener Class Name                                                             Priority
 ==============================================================================  ========
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\RequestDataCollector`    0
+:class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`  0
 ==============================================================================  ========
 
 ``kernel.view``

@@ -1,8 +1,8 @@
 Setting up or Fixing File Permissions
 =====================================
 
-One important Symfony requirement is that the ``app/cache`` and ``app/logs``
-directories must be writable both by the web server and the command line user.
+One important Symfony requirement is that the ``var`` directory must be
+writable both by the web server and the command line user.
 
 On Linux and macOS systems, if your web server user is different from your
 command line user, you need to configure permissions properly to avoid issues.
@@ -31,12 +31,12 @@ needed permissions:
 
 .. code-block:: terminal
 
-    $ rm -rf app/cache/*
-    $ rm -rf app/logs/*
+    $ rm -rf var/cache/*
+    $ rm -rf var/logs/*
 
     $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-    $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-    $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+    $ sudo chmod -R +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
+    $ sudo chmod -R +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
 
 3. Using ACL on a System that Supports ``setfacl`` (Linux/BSD)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,8 +50,8 @@ following script to determine your web server user and grant the needed permissi
 
     $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
     # if this doesn't work, try adding `-n` option
-    $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-    $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+    $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+    $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
 .. note::
 
@@ -64,7 +64,7 @@ following script to determine your web server user and grant the needed permissi
 If none of the previous methods work for you, change the umask so that the
 cache and log directories are group-writable or world-writable (depending
 if the web server user and the command line user are in the same group or not).
-To achieve this, put the following line at the beginning of the ``app/console``,
+To achieve this, put the following line at the beginning of the ``bin/console``,
 ``web/app.php`` and ``web/app_dev.php`` files::
 
     umask(0002); // This will let the permissions be 0775

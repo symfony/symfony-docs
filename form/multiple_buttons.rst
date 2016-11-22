@@ -4,18 +4,15 @@
 How to Submit a Form with Multiple Buttons
 ==========================================
 
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
-
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
 To do this, add a second button with the caption "Save and add" to your form::
 
     $form = $this->createFormBuilder($task)
-        ->add('task', 'text')
-        ->add('dueDate', 'date')
-        ->add('save', 'submit', array('label' => 'Create Task'))
-        ->add('saveAndAdd', 'submit', array('label' => 'Save and Add'))
+        ->add('task', TextType::class)
+        ->add('dueDate', DateType::class)
+        ->add('save', SubmitType::class, array('label' => 'Create Task'))
+        ->add('saveAndAdd', SubmitType::class, array('label' => 'Save and Add'))
         ->getForm();
 
 In your controller, use the button's

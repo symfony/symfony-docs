@@ -114,15 +114,12 @@ To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr AcmeDemoBundle
 
 You will get this output:
 
 .. image:: /_images/translation/debug_1.png
     :align: center
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``translation:debug``.
 
 It shows you a table with the result when translating the message in the ``fr``
 locale and the result when the fallback locale ``en`` would be used. On top
@@ -167,7 +164,7 @@ domain:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation en AcmeDemoBundle --domain=messages
+    $ php bin/console debug:translation en AcmeDemoBundle --domain=messages
 
 When bundles have a lot of messages, it is useful to display only the unused
 or only the missing messages, by using the ``--only-unused`` or ``--only-missing``
@@ -175,5 +172,5 @@ switches:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation en AcmeDemoBundle --only-unused
-    $ php app/console debug:translation en AcmeDemoBundle --only-missing
+    $ php bin/console debug:translation en AcmeDemoBundle --only-unused
+    $ php bin/console debug:translation en AcmeDemoBundle --only-missing

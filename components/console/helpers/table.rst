@@ -66,6 +66,49 @@ You can add a table separator anywhere in the output by passing an instance of
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
 
+.. versionadded:: 3.1
+    The ``setColumnWidths()`` and ``setColumnWidth()`` methods were introduced
+    in Symfony 3.1.
+
+By default the width of the columns is calculated automatically based on their
+contents. Use the :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`
+method to set the column widths explicitly::
+
+    // ...
+    $table->setColumnWidths(array(10, 0, 30));
+    $table->render();
+
+In this example, the first column width will be ``10``, the last column width
+will be ``30`` and the second column width will be calculated automatically
+because of the ``0`` value. The output of this command will be:
+
+.. code-block:: text
+
+    +---------------+--------------------------+--------------------------------+
+    | ISBN          | Title                    | Author                         |
+    +---------------+--------------------------+--------------------------------+
+    | 99921-58-10-7 | Divine Comedy            | Dante Alighieri                |
+    | 9971-5-0210-0 | A Tale of Two Cities     | Charles Dickens                |
+    +---------------+--------------------------+--------------------------------+
+    | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien               |
+    | 80-902734-1-6 | And Then There Were None | Agatha Christie                |
+    +---------------+--------------------------+--------------------------------+
+
+Note that the defined column widths are always considered as the minimum column
+widths. If the contents don't fit, the given column width is increased up to the
+longest content length. That's why in the previous example the first column has
+a ``13`` character length although the user defined ``10`` as its width.
+
+You can also set the width individually for each column with the
+:method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidth` method.
+Its first argument is the column index (starting from ``0``) and the second
+argument is the column width::
+
+    // ...
+    $table->setColumnWidth(0, 10);
+    $table->setColumnWidth(2, 30);
+    $table->render();
+
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 
@@ -146,9 +189,6 @@ Here is a full list of things you can customize:
 
 Spanning Multiple Columns and Rows
 ----------------------------------
-
-.. versionadded:: 2.7
-    Spanning multiple columns and rows was introduced in Symfony 2.7.
 
 To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
 

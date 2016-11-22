@@ -18,6 +18,7 @@ Form Types Reference
    types/percent
    types/search
    types/url
+   types/range
 
    types/choice
    types/entity
@@ -28,6 +29,7 @@ Form Types Reference
    types/currency
 
    types/date
+   types/dateinterval
    types/datetime
    types/time
    types/birthday
@@ -48,7 +50,7 @@ Form Types Reference
    types/form
 
 A form is composed of *fields*, each of which are built with the help of
-a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony comes
+a field *type* (e.g. ``TextType``, ``ChoiceType``, etc). Symfony comes
 standard with a large list of field types that can be used in your application.
 
 Supported Field Types

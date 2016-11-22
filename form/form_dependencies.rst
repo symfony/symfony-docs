@@ -31,12 +31,13 @@ Now that you've done this, you *must* pass an ``entity_manager`` option when you
 create your form::
 
     // src/AppBundle/Controller/DefaultController.php
-    // ...
+    use AppBundle\Form\TaskType;
 
+    // ...
     public function newAction()
     {
         $task = ...;
-        $form = $this->createForm(new TaskType(), $task, array(
+        $form = $this->createForm(TaskType::class, $task, array(
             'entity_manager' => $this->get('doctrine.orm.entity_manager')
         ));
 
@@ -102,7 +103,7 @@ Next, register this as a service and tag it with ``form.type``:
                 class: AppBundle\Form\TaskType
                 arguments: ['@doctrine.orm.entity_manager']
                 tags:
-                    - { name: form.type, alias: app_task }
+                    - { name: form.type }
 
     .. code-block:: xml
 
@@ -115,7 +116,7 @@ Next, register this as a service and tag it with ``form.type``:
             <services>
                 <service id="app.form.type.task" class="AppBundle\Form\TaskType">
                     <argument type="service" id="doctrine.orm.entity_manager"/>
-                    <tag name="form.type" alias="app_task" />
+                    <tag name="form.type" />
                 </service>
             </services>
         </container>
@@ -129,37 +130,10 @@ Next, register this as a service and tag it with ``form.type``:
                 'AppBundle\Form\TaskType'
             )
             ->addArgument('@doctrine.orm.entity_manager')
-            ->addTag('form.type', array(
-                'alias' => 'app_task',
-            ))
+            ->addTag('form.type')
         ;
 
-That's it! Use the ``alias`` key from the tag to reference your form::
-
-    // src/AppBundle/Controller/DefaultController.php
-    // ...
-
-    public function newAction()
-    {
-        $task = ...;
-        $form = $this->createForm('app_task', $task);
-
-        // ...
-    }
-
-Or, use the from within another form::
-
-    // src/AppBundle/Form/Type/ListType.php
-    // ...
-
-    class ListType extends AbstractType
-    {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            // ...
-
-            $builder->add('someTask', 'app_task');
-        }
-    }
+That's it! Your controller - where you create the form - doesn't need to change
+at all: Symfony is smart enough to load the ``TaskType`` from the container.
 
 Read :ref:`form-field-service` for more information.
