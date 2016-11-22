@@ -142,6 +142,17 @@ are done doing other stuff::
     The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
     which means that your code will halt at this line until the external
     process is completed.
+    
+.. note::
+    If a `Response` is sent **before** what `Process` is running had a chance to complete, 
+    the server process will be killed (depending on your OS). It means that your task
+    will be stopped right away.
+    Running an asynchronous process is not the same than running a processing surviving yourselves.
+    
+    If you want your process to survive the request/response cycle, you could take
+    advantage of the `kernel.terminate` event, and run your command **synchronuously** 
+    inside this event. Be aware that `kernel.terminate` is called only if you run `PHP-FPM`.
+    
 
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
 a callback that is called repeatedly whilst the process is still running, passing
