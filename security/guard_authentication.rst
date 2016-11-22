@@ -55,7 +55,7 @@ property they use to access their account via the API::
 
         public function getRoles()
         {
-            return ['ROLE_USER'];
+            return array('ROLE_USER');
         }
 
         public function getPassword()
@@ -155,6 +155,7 @@ This requires you to implement six methods::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -213,7 +214,7 @@ This requires you to implement six methods::
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
             );
 
-            return new JsonResponse($data, 403);
+            return new JsonResponse($data, Response::HTTP_FORBIDDEN);
         }
 
         /**
@@ -226,7 +227,7 @@ This requires you to implement six methods::
                 'message' => 'Authentication Required'
             );
 
-            return new JsonResponse($data, 401);
+            return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
 
         public function supportsRememberMe()
