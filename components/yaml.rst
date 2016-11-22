@@ -307,8 +307,6 @@ First, install the Console component:
 
 Create a console application with ``lint:yaml`` as its only command::
 
-.. code-block:: php
-
     // lint.php
 
     use Symfony\Component\Console\Application;
