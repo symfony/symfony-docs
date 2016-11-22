@@ -90,7 +90,7 @@ but it is more common if you put these definitions in a configuration file
 the extension!
 
 For instance, assume you have a file called ``services.xml`` in the
-``Resources/config`` directory of your bundle, your load method looks like::
+``Resources/config`` directory of your bundle, your ``load()`` method looks like::
 
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\Config\FileLocator;

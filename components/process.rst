@@ -143,7 +143,7 @@ Stopping a Process
 ------------------
 
 .. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
+    The ``signal`` parameter of the ``stop()`` method was introduced in Symfony 2.3.
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
@@ -261,7 +261,7 @@ Process Signals
 ---------------
 
 .. versionadded:: 2.3
-    The ``signal`` method was introduced in Symfony 2.3.
+    The ``signal()`` method was introduced in Symfony 2.3.
 
 When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
@@ -287,7 +287,7 @@ Process Pid
 -----------
 
 .. versionadded:: 2.3
-    The ``getPid`` method was introduced in Symfony 2.3.
+    The ``getPid()`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method.
@@ -325,10 +325,10 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
     You can not enable or disable the output while the process is running.
 
-    If you disable the output, you cannot access ``getOutput``,
-    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
-    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
-    methods or use ``setIdleTimeout``.
+    If you disable the output, you cannot access ``getOutput()``,
+    ``getIncrementalOutput()``, ``getErrorOutput()`` or ``getIncrementalErrorOutput()``.
+    Moreover, you could not pass a callback to the ``start()``, ``run()`` or ``mustRun()``
+    methods or use ``setIdleTimeout()``.
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992

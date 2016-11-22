@@ -250,7 +250,7 @@ notReadableMessage
 
 **type**: ``string`` **default**: ``The file is not readable.``
 
-The message displayed if the file exists, but the PHP ``is_readable`` function
+The message displayed if the file exists, but the PHP ``is_readable()`` function
 fails when passed the path to the file.
 
 uploadIniSizeErrorMessage

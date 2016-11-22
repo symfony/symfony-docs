@@ -13,7 +13,7 @@ Form Rendering Basics
 ---------------------
 
 Recall that the label, error and HTML widget of a form field can easily
-be rendered by using the ``form_row`` Twig function or the ``row`` PHP helper
+be rendered by using the ``form_row()`` Twig function or the ``row`` PHP helper
 method:
 
 .. configuration-block::
@@ -371,7 +371,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the theme via the ``setTheme`` helper method::
+tell Symfony to use the theme via the ``setTheme()`` helper method::
 
     <?php $view['form']->setTheme($form, array(':form')); ?>
 
@@ -381,7 +381,7 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
 
-If you want to apply a theme to a specific child form, pass it to the ``setTheme``
+If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
 method:
 
 .. code-block:: php
@@ -799,7 +799,7 @@ Customizing Error Output
 
 There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered
-when you use the ``form_errors`` helper:
+when you use the ``form_errors()`` helper:
 
 .. configuration-block::
 
@@ -923,7 +923,7 @@ Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you can manage it, the easiest way to render a form field is via the
-``form_row`` function, which renders the label, errors and HTML widget of
+``form_row()`` function, which renders the label, errors and HTML widget of
 a field. To customize the markup used for rendering *all* form field rows,
 override the ``form_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:

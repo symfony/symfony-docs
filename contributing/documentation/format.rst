@@ -178,7 +178,7 @@ Symfony, you should precede your description of the change with a
 .. code-block:: rst
 
     .. versionadded:: 2.7
-        The ``askHiddenResponse`` method was introduced in Symfony 2.7.
+        The ``askHiddenResponse()`` method was introduced in Symfony 2.7.
 
     You can also ask a question and hide the response. This is particularly [...]
 

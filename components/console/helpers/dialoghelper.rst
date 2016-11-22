@@ -177,8 +177,8 @@ Let the User Choose from a List of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have a predefined set of answers the user can choose from, you
-could use the ``ask`` method described above or, to make sure the user
-provided a correct answer, the ``askAndValidate`` method. Both have
+could use the ``ask()`` method described above or, to make sure the user
+provided a correct answer, the ``askAndValidate()`` method. Both have
 the disadvantage that you need to handle incorrect values yourself.
 
 Instead, you can use the

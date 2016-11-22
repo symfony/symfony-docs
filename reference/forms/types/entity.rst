@@ -104,7 +104,7 @@ If you already have the exact collection of entities that you want to include
 in the choice element, just pass them via the ``choices`` key.
 
 For example, if you have a ``$group`` variable (passed into your form perhaps
-as a form option) and ``getUsers`` returns a collection of ``User`` entities,
+as a form option) and ``getUsers()`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
 
     $builder->add('users', 'entity', array(

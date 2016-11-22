@@ -226,7 +226,7 @@ creating unnecessarily deep structures::
 
     // renders app/Resources/views/lottery/lucky/number.html.twig
     return $this->render('lottery/lucky/number.html.twig', array(
-        'name' => $name
+        'name' => $name,
     ));
 
 The Symfony templating system and Twig are explained more in the
@@ -405,7 +405,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
                 'notice',
                 'Your changes were saved!'
             );
-            // $this->addFlash is equivalent to $request->getSession()->getFlashBag()->add
+            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
 
             return $this->redirectToRoute(...);
         }
@@ -543,7 +543,7 @@ final ``Response`` object that will be returned to the user.
 To make life easier, you'll probably extend the base ``Controller`` class because
 this gives two things:
 
-A) Shortcut methods (like ``render()`` and ``redirectToRoute``);
+A) Shortcut methods (like ``render()`` and ``redirectToRoute()``);
 
 B) Access to *all* of the useful objects (services) in the system via the
    :ref:`get() <controller-accessing-services>` method.

@@ -29,7 +29,7 @@ directory structure is:
 Override the ``cache`` Directory
 --------------------------------
 
-You can change the default cache directory by overriding the ``getCacheDir`` method
+You can change the default cache directory by overriding the ``getCacheDir()`` method
 in the ``AppKernel`` class of your application::
 
     // app/AppKernel.php
@@ -62,7 +62,7 @@ Override the ``logs`` Directory
 -------------------------------
 
 Overriding the ``logs`` directory is the same as overriding the ``cache``
-directory. The only difference is that you need to override the ``getLogDir``
+directory. The only difference is that you need to override the ``getLogDir()``
 method::
 
     // app/AppKernel.php

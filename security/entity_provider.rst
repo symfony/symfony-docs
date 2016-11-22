@@ -550,7 +550,7 @@ the user will be logged out for security reasons.
 
 Even though this all happens automatically, there are a few important side-effects.
 
-First, the :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
+First, the :phpclass:`Serializable` interface and its ``serialize()`` and ``unserialize()``
 methods have been added to allow the ``User`` class to be serialized
 to the session. This may or may not be needed depending on your setup,
 but it's probably a good idea. In theory, only the ``id`` needs to be serialized,

@@ -640,7 +640,7 @@ route. With this information, any URL can easily be generated::
 Generating URLs with Query Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``generate`` method takes an array of wildcard values to generate the URI.
+The ``generate()`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
     $this->get('router')->generate('blog', array(

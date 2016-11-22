@@ -54,14 +54,14 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     The location of this file is not important - the ``Form\Type`` directory
     is just a convention.
 
-Here, the return value of the ``getParent`` function indicates that you're
+Here, the return value of the ``getParent()`` function indicates that you're
 extending the ``choice`` field type. This means that, by default, you inherit
 all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
 
 ``buildForm()``
-    Each field type has a ``buildForm`` method, which is where
+    Each field type has a ``buildForm()`` method, which is where
     you configure and build any field(s). Notice that this is the same method
     you use to setup *your* forms, and it works the same here.
 
@@ -154,7 +154,7 @@ link for details), create a ``gender_widget`` block to handle this:
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
-    be ``gender_widget``, according to the value returned by ``getName``.
+    be ``gender_widget``, according to the value returned by ``getName()``.
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
@@ -298,7 +298,7 @@ example, suppose that you're storing the gender parameters in configuration:
 
 To use the parameter, define your custom field type as a service, injecting
 the ``genders`` parameter value as the first argument to its to-be-created
-``__construct`` function:
+``__construct()`` function:
 
 .. configuration-block::
 
@@ -342,7 +342,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
     for details.
 
 Be sure that the ``alias`` attribute of the tag corresponds with the value
-returned by the ``getName`` method defined earlier. You'll see the importance
+returned by the ``getName()`` method defined earlier. You'll see the importance
 of this in a moment when you use the custom field type. But first, add a ``__construct``
 method to ``GenderType``, which receives the gender configuration::
 

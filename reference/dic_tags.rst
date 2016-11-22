@@ -506,7 +506,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
         }
     }
 
-The ``isOptional`` method should return true if it's possible to use the
+The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
 are always executed by default (you can change this by using the
 ``--no-optional-warmers`` option when executing the command).
@@ -760,7 +760,7 @@ You can add a processor globally:
 
 .. tip::
 
-    If your service is not a callable (using ``__invoke``) you can add the
+    If your service is not a callable (using ``__invoke()``) you can add the
     ``method`` attribute in the tag to use a specific method.
 
 You can add also a processor for a specific handler by using the ``handler``
@@ -930,7 +930,7 @@ security.voter
 
 **Purpose**: To add a custom voter to Symfony's authorization logic
 
-When you call ``isGranted`` on Symfony's authorization checker, a system of "voters"
+When you call ``isGranted()`` on Symfony's authorization checker, a system of "voters"
 is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
@@ -1094,7 +1094,7 @@ you need on that file in order to load your translations.
 If you're loading translations from a database, you'll still need a resource
 file, but it might either be blank or contain a little bit of information
 about loading those resources from the database. The file is key to trigger
-the ``load`` method on your custom loader.
+the ``load()`` method on your custom loader.
 
 translation.extractor
 ---------------------

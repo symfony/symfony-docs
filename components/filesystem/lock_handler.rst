@@ -54,7 +54,7 @@ second argument of the constructor.
 
 The :method:`Symfony\\Component\\Filesystem\\LockHandler::lock` method tries to
 acquire the lock. If the lock is acquired, the method returns ``true``,
-``false`` otherwise. If the ``lock`` method is called several times on the same
+``false`` otherwise. If the ``lock()`` method is called several times on the same
 instance it will always return ``true`` if the lock was acquired on the first
 call.
 

@@ -147,10 +147,10 @@ not need to be used.
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``findBy``
+**type**: ``string`` **default**: ``findBy()``
 
 The name of the repository method to use for making the query to determine
-the uniqueness. If it's left blank, the ``findBy`` method will be used.
+the uniqueness. If it's left blank, the ``findBy()`` method will be used.
 This method should return a countable result.
 
 errorPath
