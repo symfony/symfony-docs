@@ -120,6 +120,11 @@ With some validation added, your class may look something like this::
             $this->plainPassword = $password;
         }
 
+        public function getPassword()
+        {
+            return $this->password;
+        }
+
         public function setPassword($password)
         {
             $this->password = $password;
@@ -180,8 +185,8 @@ Next, create the form for the ``User`` entity::
                     'type' => 'password',
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
-                )
-            );
+                ))
+            ;
         }
 
         public function configureOptions(OptionsResolver $resolver)
