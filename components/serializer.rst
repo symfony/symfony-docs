@@ -630,8 +630,9 @@ having unique identifiers::
 Handling Serialization Depth
 ----------------------------
 
-The Serializer component is able to detect and limit the serialization depth. It is especially useful when
-serializing large trees. Assume the following data structure::
+The Serializer component is able to detect and limit the serialization depth.
+It is especially useful when serializing large trees. Assume the following data
+structure::
 
     namespace Acme;
 
@@ -656,8 +657,8 @@ serializing large trees. Assume the following data structure::
     $level3->foo = 'level3';
     $level2->child = $level3;
 
-The serializer can be configured to set a maximum depth for a given property. Here, we set it to 2 for the ``$child``
-property:
+The serializer can be configured to set a maximum depth for a given property.
+Here, we set it to 2 for the ``$child`` property:
 
 .. configuration-block::
 
@@ -698,12 +699,15 @@ property:
                 </attribute>
         </serializer>
 
-The metadata loader corresponding to the chosen format must be configured in order to use this feature.
-It is done automatically when using the Symfony Standard Edition. When using the standalone component, refer
-to :ref:`the groups documentation <component-serializer-attributes-groups>` to learn how to do that.
+The metadata loader corresponding to the chosen format must be configured in
+order to use this feature. It is done automatically when using the Symfony
+Standard Edition. When using the standalone component, refer to
+:ref:`the groups documentation <component-serializer-attributes-groups>` to
+learn how to do that.
 
-The check is only done if the `enable_max_depth` key of the serializer context is set to ``true``. In the following
-example, the third level is not serialized because it is deeper than the configured maximum depth (2)::
+The check is only done if the ``enable_max_depth`` key of the serializer context
+is set to ``true``. In the following example, the third level is not serialized
+because it is deeper than the configured maximum depth of 2::
 
     $result = $serializer->normalize($level1, null, array('enable_max_depth' => true));
     /*
