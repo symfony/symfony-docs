@@ -466,6 +466,10 @@ a slash. URLs matching this route might look like:
     Symfony provides you with a way to do this by leveraging service container
     parameters. Read more about this in ":doc:`/routing/service_container_parameters`".
 
+.. caution::
+
+    A route placeholder name cannot start with a digit and cannot be longer than 32 characters.
+
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
