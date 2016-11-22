@@ -186,6 +186,13 @@ and ``redirect()`` methods::
 
 For more information, see the :doc:`Routing chapter </routing>`.
 
+.. caution::
+
+    The ``redirect()`` method does not check its destination in any way. If you 
+    redirect to some URL provided by the end-users, your application may be open 
+    to the `unvalidated redirects security vulnerability`_.
+
+
 .. tip::
 
     The ``redirectToRoute()`` method is simply a shortcut that creates a
@@ -563,3 +570,5 @@ Learn more about Controllers
     :glob:
 
     controller/*
+
+.. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect
