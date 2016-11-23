@@ -66,8 +66,8 @@ to get information about the messages sent on the previous request::
 Troubleshooting
 ---------------
 
-Problem: The mail collector returns `null`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Problem: The collector object is `null`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The email collector is only available when the profiler is enabled and collects
 information, as explained in :doc:`/testing/profiling`.
