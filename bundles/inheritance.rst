@@ -10,7 +10,7 @@ in one of your own bundles. Symfony gives you a very convenient way to override
 things like controllers, templates, and other files in a bundle's
 ``Resources/`` directory.
 
-For example, suppose that you have installed `FOSUserBundle`_ but you want to
+For example, suppose that you have installed `FOSUserBundle`_, but you want to
 override its base ``layout.html.twig`` template, as well as one of its
 controllers.
 
