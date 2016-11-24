@@ -91,7 +91,7 @@ Listeners receive a
 .. tip::
 
     This event is also dispatched when an exception is thrown by the command.
-    It is then dispatched just before the ``ConsoleEvents::EXCEPTION`` event.
+    It is then dispatched just after the ``ConsoleEvents::EXCEPTION`` event.
     The exit code received in this case is the exception code.
 
 The ``ConsoleEvents::EXCEPTION`` Event
