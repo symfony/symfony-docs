@@ -520,10 +520,10 @@ You can also include UTF-8 strings as routing requirements:
 
 .. note::
 
-    In Symfony 3.2 there is no need to set the ``utf8`` option explicitly. As
-    soon as Symfony finds a UTF-8 character in the route path or requirements,
-    it will turn the UTF-8 support automatically. However, this behaviour is
-    deprecated and setting the option will be required in Symfony 4.0.
+    In Symfony 3.2, there is no need to explicitly set the ``utf8`` option.
+    As soon as Symfony finds a UTF-8 character in the route path or requirements,
+    it will automatically turn on the UTF-8 support. However, this behavior
+    is deprecated and setting the option will be required in Symfony 4.0.
 
 Learn more
 ----------
@@ -536,7 +536,6 @@ Learn more
     /routing/*
     /controller
     /controller/*
-    /configuration/apache_router
 
 .. _Packagist: https://packagist.org/packages/symfony/routing
 .. _PCRE Unicode properties: http://php.net/manual/en/regexp.reference.unicode.php

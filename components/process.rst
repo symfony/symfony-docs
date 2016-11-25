@@ -133,6 +133,23 @@ are done doing other stuff::
 
     // ... do other things
 
+    $process->wait();
+
+    // ... do things after the process has finished
+
+.. note::
+
+    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
+    which means that your code will halt at this line until the external
+    process is completed.
+
+:method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
+a callback that is called repeatedly whilst the process is still running, passing
+in the output and its type::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
     $process->wait(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
@@ -140,12 +157,6 @@ are done doing other stuff::
             echo 'OUT > '.$buffer;
         }
     });
-
-.. note::
-
-    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
-    which means that your code will halt at this line until the external
-    process is completed.
 
 Streaming to the Standard Input of a Process
 --------------------------------------------

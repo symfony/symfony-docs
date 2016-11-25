@@ -171,7 +171,7 @@ In your controller, you'll create a new form from the ``TaskType``::
 
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
@@ -732,5 +732,13 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
 
+.. sidebar:: Form collection jQuery plugin
+
+    The jQuery plugin  `symfony-collection`_ helps with ``collection`` form elements,
+    by providing the JavaScript functionality needed to add, edit and delete
+    elements of the collection. More advanced functionality like moving or duplicating
+    an element in the collection and customizing the buttons is also possible.
+
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
+.. _`symfony-collection`: https://github.com/ninsuo/symfony-collection

@@ -9,8 +9,8 @@ have related classes that share some of the same dependencies. For example,
 you may have multiple repository classes which need the
 ``doctrine.entity_manager`` service and an optional ``logger`` service::
 
-    // src/AppBundle/Doctrine/BaseDoctrineRepository.php
-    namespace AppBundle\Doctrine;
+    // src/AppBundle/Repository/BaseDoctrineRepository.php
+    namespace AppBundle\Repository;
 
     // ...
     abstract class BaseDoctrineRepository
@@ -48,12 +48,12 @@ duplicated service definitions:
                     - [setLogger, ['@logger']]
 
             app.user_repository:
-                class:  AppBundle\Doctrine\DoctrineUserRepository
+                class:  AppBundle\Repository\DoctrineUserRepository
                 # extend the app.base_doctrine_repository service
                 parent: app.base_doctrine_repository
 
             app.post_repository:
-                class:  AppBundle\Doctrine\DoctrinePostRepository
+                class:  AppBundle\Repository\DoctrinePostRepository
                 parent: app.base_doctrine_repository
 
             # ...
@@ -77,12 +77,12 @@ duplicated service definitions:
 
                 <!-- extends the app.base_doctrine_repository service -->
                 <service id="app.user_repository"
-                    class="AppBundle\Doctrine\DoctrineUserRepository"
+                    class="AppBundle\Repository\DoctrineUserRepository"
                     parent="app.base_doctrine_repository"
                 />
 
                 <service id="app.post_repository"
-                    class="AppBundle\Doctrine\DoctrineUserRepository"
+                    class="AppBundle\Repository\DoctrineUserRepository"
                     parent="app.base_doctrine_repository"
                 />
 
@@ -103,11 +103,11 @@ duplicated service definitions:
 
         // extend the app.base_doctrine_repository service
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Doctrine\DoctrineUserRepository');
+        $definition->setClass('AppBundle\Repository\DoctrineUserRepository');
         $container->setDefinition('app.user_repository', $definition);
 
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Doctrine\DoctrinePostRepository');
+        $definition->setClass('AppBundle\Repository\DoctrinePostRepository');
         $container->setDefinition('app.post_repository', $definition);
 
         // ...
@@ -144,7 +144,7 @@ in the child class:
             # ...
 
             app.user_repository:
-                class:  AppBundle\Doctrine\DoctrineUserRepository
+                class:  AppBundle\Repository\DoctrineUserRepository
                 parent: app.base_doctrine_repository
 
                 # overrides the public setting of the parent service
@@ -155,7 +155,7 @@ in the child class:
                 arguments: ['@app.username_checker']
 
             app.post_repository:
-                class:  AppBundle\Doctrine\DoctrinePostRepository
+                class:  AppBundle\Repository\DoctrinePostRepository
                 parent: app.base_doctrine_repository
 
                 # overrides the first argument (using the special index_N key)
@@ -174,7 +174,7 @@ in the child class:
 
                 <!-- overrides the public setting of the parent service -->
                 <service id="app.user_repository"
-                    class="AppBundle\Doctrine\DoctrineUserRepository"
+                    class="AppBundle\Repository\DoctrineUserRepository"
                     parent="app.base_doctrine_repository"
                     public="false"
                 >
@@ -184,7 +184,7 @@ in the child class:
                 </service>
 
                 <service id="app.post_repository"
-                    class="AppBundle\Doctrine\DoctrineUserRepository"
+                    class="AppBundle\Repository\DoctrineUserRepository"
                     parent="app.base_doctrine_repository"
                 >
                     <!-- overrides the first argument (using the index attribute) -->
@@ -202,7 +202,7 @@ in the child class:
         // ...
 
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Doctrine\DoctrineUserRepository');
+        $definition->setClass('AppBundle\Repository\DoctrineUserRepository');
         // overrides the public setting of the parent service
         $definition->setPublic(false);
         // appends the '@app.username_checker' argument to the parent argument list
@@ -210,7 +210,7 @@ in the child class:
         $container->setDefinition('app.user_repository', $definition);
 
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Doctrine\DoctrinePostRepository');
+        $definition->setClass('AppBundle\Repository\DoctrinePostRepository');
         // overrides the first argument
         $definition->replaceArgument(0, new Reference('doctrine.custom_entity_manager'));
         $container->setDefinition('app.post_repository', $definition);

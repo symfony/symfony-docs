@@ -29,6 +29,7 @@ Form Types Reference
    types/currency
 
    types/date
+   types/dateinterval
    types/datetime
    types/time
    types/birthday

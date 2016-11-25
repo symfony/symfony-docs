@@ -13,7 +13,7 @@ In the Cache component they are represented by the
 Cache Item Keys and Values
 --------------------------
 
-The **key** of a cache item is a UTF-8 encoded string which acts as its
+The **key** of a cache item is a plain string which acts as its
 identifier, so it must be unique for each cache pool. You can freely choose the
 keys, but they should only contain letters (A-Z, a-z), numbers (0-9) and the
 ``_`` and ``.`` symbols. Other common symbols (such as ``{``, ``}``, ``(``,

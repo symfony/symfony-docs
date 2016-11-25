@@ -6,7 +6,7 @@
 The Cache Component
 ===================
 
-    The Cache component provides a strict `PSR-6`_ implementation for adding
+    The Cache component provides an extended `PSR-6`_ implementation for adding
     cache to your applications. It is designed to have a low overhead and it
     ships with ready to use adapters for the most common caching backends.
 
@@ -42,7 +42,7 @@ meaning of some key concepts:
 Basic Usage
 -----------
 
-This component is a strict implementation of `PSR-6`_, which means that the API
+This component is an implementation of `PSR-6`_, which means that its basic API
 is the same as defined in the standard. Before starting to cache information,
 create the cache pool using any of the built-in adapters. For example, to create
 a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`::
@@ -51,7 +51,7 @@ a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter
 
     $cache = new FilesystemAdapter();
 
-Now you can create, retrieve, updated and delete items using this cache pool::
+Now you can create, retrieve, update and delete items using this cache pool::
 
     // create a new item by trying to get it from the cache
     $numProducts = $cache->getItem('stats.num_products');

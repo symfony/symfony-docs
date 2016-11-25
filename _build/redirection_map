@@ -2,6 +2,7 @@
 /cookbook/index /index
 /book/stable_api /contributing/code/bc
 /book/internals /reference/events
+/configuration/apache_router /routing
 /cookbook/console/sending_emails /cookbook/console/request_context
 /cookbook/deployment-tools /cookbook/deployment/tools
 /cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
@@ -95,7 +96,7 @@
 /cookbook/cache/form_csrf_caching /http_cache/form_csrf_caching
 /cookbook/cache/varnish /http_cache/varnish
 /cookbook/composer /setup/composer
-/cookbook/configuration/apache_router /configuration/apache_router
+/cookbook/configuration/apache_router /routing
 /cookbook/configuration/configuration_organization /configuration/configuration_organization
 /cookbook/configuration/environments /configuration/environments
 /cookbook/configuration/external_parameters /configuration/external_parameters
@@ -330,3 +331,4 @@
 /components/yaml/index /components/yaml
 /deployment/tools /deployment
 /install/bundles /setup/bundles
+/form /forms

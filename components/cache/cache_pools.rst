@@ -3,6 +3,7 @@
    single: APC Cache, APCu Cache
    single: Doctrine Cache
    single: Redis Cache
+   single: PDO Cache, Doctrine DBAL Cache
 
 Cache Pools
 ===========
@@ -41,7 +42,7 @@ Filesystem Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 This adapter is useful when you want to improve the application performance but
-can't install tools like APC or Redis in the server. This adapter stores the
+can't install tools like APCu or Redis in the server. This adapter stores the
 contents as regular files in a set of directories on the local file system::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -83,7 +84,7 @@ degrade performance significantly::
 Redis Cache Adapter
 ~~~~~~~~~~~~~~~~~~~
 
-This adapter stores the contents in the memory of the server. Unlike the APCu
+This adapter stores the contents in the memory of a Redis server. Unlike the APCu
 adapter, it's not limited to the shared memory of the current server, so you can
 store contents in a cluster of servers if needed.
 
@@ -100,6 +101,36 @@ the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or ``\Predis`` classes::
         // in seconds; applied to cache items that don't define their own lifetime
         // 0 means to store the cache items indefinitely (i.e. until the Redis memory is deleted)
         $defaultLifetime = 0
+    );
+
+The :method:`Symfony\\Component\\Cache\\Adapter\\RedisAdapter::createConnection`
+helper allows creating a connection to a Redis server using a DSN configuration::
+
+    $redisConnection = RedisAdapter::createConnection('redis://localhost');
+
+See the method's docblock for more options.
+
+PDO & Doctrine DBAL Cache Adapter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.2
+    The PDO & Doctrine DBAL adapter was introduced in Symfony 3.2.
+
+This adapter stores the cached items a SQL database accessed through a PDO or a
+Doctrine DBAL connection::
+
+    use Symfony\Component\Cache\Adapter\PdoAdapter;
+
+    $cache = new PdoAdapter(
+        // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+        $databaseConnectionOrDSN,
+        // the string prefixed to the keys of the items stored in this cache
+        $namespace = '',
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the database is cleared)
+        $defaultLifetime = 0,
+        // an array of options for configuring the database connection
+        $options = array()
     );
 
 Chain Cache Adapter
@@ -140,9 +171,6 @@ that external cache and save them in the Symfony cache of your application::
 
 The adapter accepts two additional optional arguments: the namespace (``''`` by
 default) and the default lifetime (``0`` by default).
-
-Another use case for this adapter is to get statistics and metrics about the
-cache hits (``getHits()``) and misses (``getMisses()``).
 
 Doctrine Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~

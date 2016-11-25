@@ -555,7 +555,7 @@ your application. Assume that you have a sport meetup creation controller::
             $meetup = new SportMeetup();
             $form = $this->createForm(SportMeetupType::class, $meetup);
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // ... save the meetup, redirect etc.
             }
 

@@ -96,7 +96,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
                 ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, array('label' => 'Create Task'))
+                ->add('save', SubmitType::class, array('label' => 'Create Post'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
@@ -474,7 +474,7 @@ the documentation for each type.
     :ref:`disable HTML5 validation <forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
 
-        ->add('dueDate', 'date', array(
+        ->add('dueDate', DateType::class, array(
             'widget' => 'single_text',
             'required' => false
         ))

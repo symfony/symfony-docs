@@ -19,7 +19,7 @@ isn't always possible for highly dynamic sites, or is it? With
 on only *fragments* of your site.
 
 The Symfony cache system is different because it relies on the simplicity
-and power of the HTTP cache as defined in the `HTTP specification`_. Instead of
+and power of the HTTP cache as defined in `RFC 7234 - Caching`_. Instead of
 reinventing a caching methodology, Symfony embraces the standard that defines
 basic communication on the Web. Once you understand the fundamental HTTP
 validation and expiration caching models, you'll be ready to master the Symfony
@@ -193,9 +193,8 @@ These four headers are used to help cache your responses via *two* different mod
 
     All of the HTTP headers you'll read about are *not* invented by Symfony! They're
     part of an HTTP specification that's used by sites all over the web. To dig deeper
-    into HTTP Caching, check out the original `RFC 2616`_ document, or these two
-    other pieces: `P4 - Conditional Requests`_ and `P6 -
-    Caching: Browser and intermediary caches`_.
+    into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and 
+    `RFC 7232 - Conditional Requests`_.
 
     As a web developer, you are strongly urged to read the specification. Its
     clarity and power - even more than fifteen years after its creation - is
@@ -364,9 +363,7 @@ Learn more
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy
-.. _`RFC 2616`: http://tools.ietf.org/html/rfc2616
 .. _`HTTP Bis`: http://tools.ietf.org/wg/httpbis/
-.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional
-.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache
+.. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
+.. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
-.. _`HTTP specification`: http://www.w3.org/Protocols/rfc2616/rfc2616.html

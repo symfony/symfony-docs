@@ -492,8 +492,8 @@ There are several types of normalizers available:
     the "get"/"set"/"has"/"remove" prefix and converted to lower case) to property
     values.
 
-    The ``ObjectNormalizer`` is the most powerful normalizer. It is a configured
-    by default when using the Symfony Standard Edition with the serializer enabled.
+    The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
+    default when using the Symfony Standard Edition with the serializer enabled.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
     This normalizer reads the content of the class by calling the "getters"
@@ -527,6 +527,10 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
+
+    .. versionadded:: 3.2
+        Support for specifying datetime format during denormalization was
+        introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
@@ -671,11 +675,6 @@ you indicate that you're expecting an array instead of a single object.
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
-.. seealso::
-
-    A popular alternative to the Symfony Serializer Component is the third-party
-    library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
-
 Learn more
 ----------
 
@@ -684,6 +683,11 @@ Learn more
     :glob:
 
     /serializer
+
+.. seealso::
+
+    A popular alternative to the Symfony Serializer Component is the third-party
+    library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer

@@ -282,6 +282,65 @@ and :phpclass:`DOMNode` objects:
 
         $html = $crawler->html();
 
+Expression Evaluation
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded::
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
+    introduced in Symfony 3.2.
+
+The ``evaluate()`` method evaluates the given XPath expression. The return
+value depends on the XPath expression. If the expression evaluates to a scalar
+value (e.g. HTML attributes), an array of results will be returned. If the
+expression evaluates to a DOM document, a new ``Crawler`` instance will be
+returned.
+
+This behavior is best illustrated with examples::
+
+    use Symfony\Component\DomCrawler\Crawler;
+
+    $html = '<html>
+    <body>
+        <span id="article-100" class="article">Article 1</span>
+        <span id="article-101" class="article">Article 2</span>
+        <span id="article-102" class="article">Article 3</span>
+    </body>
+    </html>';
+
+    $crawler = new Crawler();
+    $crawler->addHtmlContent($html);
+
+    $crawler->filterXPath('//span[contains(@id, "article-")]')->evaluate('substring-after(@id, "-")');
+    /* array:3 [
+         0 => "100"
+         1 => "101"
+         2 => "102"
+       ]
+     */
+
+    $crawler->evaluate('substring-after(//span[contains(@id, "article-")]/@id, "-")');
+    /* array:1 [
+         0 => "100"
+       ]
+     */
+
+    $crawler->filterXPath('//span[@class="article"]')->evaluate('count(@id)');
+    /* array:3 [
+         0 => 1.0
+         1 => 1.0
+         2 => 1.0
+       ]
+     */
+
+    $crawler->evaluate('count(//span[@class="article"])');
+    /* array:1 [
+         0 => 3.0
+       ]
+     */
+
+    $crawler->evaluate('//span[1]');
+    // A Symfony\Component\DomCrawler\Crawler instance
+
 Links
 ~~~~~
 
@@ -440,7 +499,7 @@ directly::
     $crawler = $client->request('GET', 'https://github.com/login');
 
     // select the form and fill in some values
-    $form = $crawler->selectButton('Log in')->form();
+    $form = $crawler->selectButton('Sign in')->form();
     $form['login'] = 'symfonyfan';
     $form['password'] = 'anypass';
 

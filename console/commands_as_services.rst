@@ -11,7 +11,7 @@ Symfony will even inject the container.
 While making life easier, this has some limitations:
 
 * Your command must live in the ``Command`` directory;
-* There's no way to conditionally register your service based on the environment
+* There's no way to conditionally register your command based on the environment
   or availability of some dependencies;
 * You can't access the container in the ``configure()`` method (because
   ``setContainer`` hasn't been called yet);
@@ -30,7 +30,7 @@ with ``console.command``:
             app.command.my_command:
                 class: AppBundle\Command\MyCommand
                 tags:
-                    -  { name: console.command }
+                    - { name: console.command }
 
     .. code-block:: xml
 
@@ -137,7 +137,7 @@ inject the ``command.default_name`` parameter:
                 class: AppBundle\Command\MyCommand
                 arguments: ["%command.default_name%"]
                 tags:
-                    -  { name: console.command }
+                    - { name: console.command }
 
     .. code-block:: xml
 
