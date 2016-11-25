@@ -46,8 +46,7 @@ characters long::
         }
     }
     
-Validation of arrays is possible using the `Collection` constraint::
-
+Validation of arrays is possible using the ``Collection`` constraint::
 
     use Symfony\Component\Validator\Validation;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -67,7 +66,6 @@ Validation of arrays is possible using the `Collection` constraint::
     ));
 
     $violations = $validator->validateValue($input, $constraint);
-
 
 Again, the validator returns the list of violations.
 
