@@ -14,14 +14,15 @@ Start with an easy controller action that sends an email::
 
     public function sendEmailAction($name)
     {
-        $message = \Swift_Message::newInstance()
+        $mailer = $this->get('mailer');
+        $message = $mailer->createMessage()
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody('You should see me from the profiler!')
         ;
 
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }

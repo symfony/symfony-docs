@@ -38,11 +38,11 @@ In this case, the SOAP service will allow the client to call a method called
 
         public function hello($name)
         {
-
-            $message = \Swift_Message::newInstance()
-                                    ->setTo('me@example.com')
-                                    ->setSubject('Hello Service')
-                                    ->setBody($name . ' says hi!');
+            $message = $this->mailer->createMessage()
+                ->setTo('me@example.com')
+                ->setSubject('Hello Service')
+                ->setBody($name . ' says hi!')
+            ;
 
             $this->mailer->send($message);
 
