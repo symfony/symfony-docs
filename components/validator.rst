@@ -45,6 +45,31 @@ characters long::
             echo $violation->getMessage().'<br>';
         }
     }
+    
+Validation of arrays is possible using the `Collection` constraint::
+
+
+    use Symfony\Component\Validator\Validation;
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    $validator = Validation::createValidator();
+
+    $constraint = new Assert\Collection(array(
+        'name' => new Assert\Collection(array(
+          'first_name' => new Assert\Length(array('min' => 101)),
+          'last_name' => new Assert\Length(array('min' => 1)),
+        )),
+        'email' => new Assert\Email(),
+        'simple' => new Assert\Length(array('min' => 102)),
+        'gender' => new Assert\Choice(array(3, 4)),
+        'file' => new Assert\File(),
+        'password' => new Assert\Length(array('min' => 60)),
+    ));
+
+    $violations = $validator->validateValue($input, $constraint);
+
+
+Again, the validator returns the list of violations.
 
 Retrieving a Validator Instance
 -------------------------------
