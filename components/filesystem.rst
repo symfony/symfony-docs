@@ -73,13 +73,28 @@ presence of all files or directories and returns ``false`` if a file is missing:
     // this directory exists, return true
     $fs->exists('/tmp/photos');
 
-    // rabbit.jpg exists, bottle.png does not exists, return false
+    // rabbit.jpg exists, bottle.png does not exist, return false
     $fs->exists(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
 
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
+
+isDir
+~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::isDir` checks for the
+presence of directories and returns ``false`` if the directory is not found::
+
+    // this directory exists, return true
+    $fs->isDir('/var/www');
+
+    // /var/www exists, /var/www/tmp does not exist, return false
+    $fs->isDir(array('/var/www', '/var/www/tmp'));
+
+.. note::
+    You can pass an array or any :phpclass:`Traversable` object as the argument.
 
 copy
 ~~~~
