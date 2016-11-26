@@ -165,6 +165,7 @@ Next, create the form for the ``User`` entity::
     // src/AppBundle/Form/UserType.php
     namespace AppBundle\Form;
 
+    use AppBundle\Entity\User;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -191,7 +192,7 @@ Next, create the form for the ``User`` entity::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\User',
+                'data_class' => User::class,
             ));
         }
     }
@@ -287,9 +288,11 @@ encoder in the security configuration:
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Entity\User;
+
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'AppBundle\Entity\User' => 'bcrypt',
+                User::class => 'bcrypt',
             ),
         ));
 

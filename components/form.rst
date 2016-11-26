@@ -660,7 +660,7 @@ option when building each field:
             ->add('dueDate', DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
-                    new Type('\DateTime'),
+                    new Type(\DateTime::class),
                 )
             ))
             ->getForm();
@@ -679,7 +679,7 @@ option when building each field:
             ->add('dueDate', DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
-                    new Type('\DateTime'),
+                    new Type(\DateTime::class),
                 )
             ))
             ->getForm();

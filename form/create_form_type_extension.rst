@@ -117,12 +117,15 @@ tag:
 
     .. code-block:: php
 
+        use AppBundle\Form\Extension\ImageTypeExtension;
+        use Symfony\Component\Form\Extension\Core\Type\FileType;
+
         $container
-            ->register(
-                'app.image_type_extension',
-                'AppBundle\Form\Extension\ImageTypeExtension'
-            )
-            ->addTag('form.type_extension', array('extended_type' => 'Symfony\Component\Form\Extension\Core\Type\FileType'));
+            ->register('app.image_type_extension', ImageTypeExtension::class)
+            ->addTag('form.type_extension', array(
+                'extended_type' => FileType::class
+            ))
+        ;
 
 .. versionadded:: 2.8
     The ``extended_type`` option is new in Symfony 2.8. Before, the option was

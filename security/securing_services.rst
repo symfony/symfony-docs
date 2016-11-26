@@ -95,11 +95,12 @@ Then in your service configuration, you can inject the service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
+            NewsletterManager::class,
             array(new Reference('security.authorization_checker'))
         ));
 
@@ -178,11 +179,12 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
+            NewsletterManager::class,
             // ...
         ));
         $definition->addTag('security.secure_service');

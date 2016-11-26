@@ -74,6 +74,8 @@ We are now ready to write our first test::
 
     use Simplex\Framework;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+    use Symfony\Component\Routing;
     use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
     class FrameworkTest extends \PHPUnit_Framework_TestCase
@@ -89,7 +91,7 @@ We are now ready to write our first test::
 
         private function getFrameworkForException($exception)
         {
-            $matcher = $this->createMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
+            $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
             $matcher
                 ->expects($this->once())
                 ->method('match')
@@ -98,9 +100,9 @@ We are now ready to write our first test::
             $matcher
                 ->expects($this->once())
                 ->method('getContext')
-                ->will($this->returnValue($this->createMock('Symfony\Component\Routing\RequestContext')))
+                ->will($this->returnValue($this->createMock(Routing\RequestContext::class)))
             ;
-            $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+            $resolver = $this->createMock(ControllerResolverInterface::class);
 
             return new Framework($matcher, $resolver);
         }
@@ -141,10 +143,11 @@ Response::
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+    // ...
 
     public function testControllerResponse()
     {
-        $matcher = $this->createMock('Symfony\Component\Routing\Matcher\UrlMatcherInterface');
+        $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
         $matcher
             ->expects($this->once())
             ->method('match')
@@ -159,7 +162,7 @@ Response::
         $matcher
             ->expects($this->once())
             ->method('getContext')
-            ->will($this->returnValue($this->createMock('Symfony\Component\Routing\RequestContext')))
+            ->will($this->returnValue($this->createMock(Routing\RequestContext::class)))
         ;
         $resolver = new ControllerResolver();
 

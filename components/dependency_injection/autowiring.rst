@@ -76,10 +76,11 @@ service is marked as autowired:
 
     .. code-block:: php
 
+        use Acme\TwitterClient;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition = new Definition('Acme\TwitterClient');
+        $definition = new Definition(TwitterClient::class);
         $definition->setAutowired(true);
 
         $container->setDefinition('twitter_client', $definition);
@@ -150,9 +151,8 @@ modifying the class depending of them.
 
 To follow this best practice, constructor arguments must be typehinted with interfaces
 and not concrete classes. It allows to replace easily the current implementation
-if necessary. It also allows to use other transformers.
-
-Let's introduce a ``TransformerInterface``::
+if necessary. It also allows to use other transformers. You can create a
+``TransformerInterface`` containing just one method (``transform()``)::
 
     namespace Acme;
 
@@ -164,18 +164,15 @@ Let's introduce a ``TransformerInterface``::
 Then edit ``Rot13Transformer`` to make it implementing the new interface::
 
     // ...
-
     class Rot13Transformer implements TransformerInterface
-
-    // ...
-
+    {
+        // ...
+    }
 
 And update ``TwitterClient`` to depend of this new interface::
 
     class TwitterClient
     {
-        // ...
-
         public function __construct(TransformerInterface $transformer)
         {
              // ...
@@ -215,12 +212,13 @@ subsystem isn't able to find itself the interface implementation to register:
 
     .. code-block:: php
 
+        use Acme\TwitterClient;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
         $container->register('rot13_transformer', 'Acme\Rot13Transformer');
 
-        $clientDefinition = new Definition('Acme\TwitterClient');
+        $clientDefinition = new Definition(TwitterClient::class);
         $clientDefinition->setAutowired(true);
         $container->setDefinition('twitter_client', $clientDefinition);
 
@@ -353,23 +351,27 @@ and a Twitter client using it:
 
     .. code-block:: php
 
+        use Acme\Rot13Transformer;
+        use Acme\TransformerInterface;
+        use Acme\TwitterClient;
+        use Acme\UppercaseTransformer;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $rot13Definition = new Definition('Acme\Rot13Transformer');
-        $rot13Definition->setAutowiringTypes(array('Acme\TransformerInterface'));
+        $rot13Definition = new Definition(Rot13Transformer::class);
+        $rot13Definition->setAutowiringTypes(array(TransformerInterface::class));
         $container->setDefinition('rot13_transformer', $rot13Definition);
 
-        $clientDefinition = new Definition('Acme\TwitterClient');
+        $clientDefinition = new Definition(TwitterClient::class);
         $clientDefinition->setAutowired(true);
         $container->setDefinition('twitter_client', $clientDefinition);
 
-        $uppercaseDefinition = new Definition('Acme\UppercaseTransformer');
+        $uppercaseDefinition = new Definition(UppercaseTransformer::class);
         $uppercaseDefinition->setAutowired(true);
         $container->setDefinition('uppercase_transformer', $uppercaseDefinition);
 
-        $uppercaseClientDefinition = new Definition('Acme\TwitterClient', array(
+        $uppercaseClientDefinition = new Definition(TwitterClient::class, array(
             new Reference('uppercase_transformer'),
         ));
         $container->setDefinition('uppercase_twitter_client', $uppercaseClientDefinition);

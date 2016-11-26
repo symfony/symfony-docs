@@ -166,13 +166,10 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Routing\ExtraLoader;
 
         $container
-            ->setDefinition(
-                'app.routing_loader',
-                new Definition('AppBundle\Routing\ExtraLoader')
-            )
+            ->register('app.routing_loader', ExtraLoader::class)
             ->addTag('routing.loader')
         ;
 

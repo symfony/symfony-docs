@@ -404,7 +404,7 @@ object.
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
                 $metadata->addPropertyConstraint(
                     'dueDate',
-                    new Type('\DateTime')
+                    new Type(\DateTime::class)
                 );
             }
         }
@@ -658,12 +658,14 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
+        use AppBundle\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 
+        // ...
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 

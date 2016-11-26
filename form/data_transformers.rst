@@ -26,6 +26,7 @@ Suppose you have a Task form with a tags ``text`` type::
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Task;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -41,7 +42,7 @@ Suppose you have a Task form with a tags ``text`` type::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 
@@ -122,6 +123,7 @@ Start by setting up the text field like normal::
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Task;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -139,7 +141,7 @@ Start by setting up the text field like normal::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task'
+                'data_class' => Task::class,
             ));
         }
 
@@ -452,18 +454,18 @@ it's recognized as a custom field type:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Form\IssueSelectorType;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...
 
         $container
             ->setDefinition('app.type.issue_selector', new Definition(
-                    'AppBundle\Form\IssueSelectorType'
-                ),
+                IssueSelectorType::class,
                 array(
                     new Reference('doctrine.orm.entity_manager'),
                 )
-            )
+            ))
             ->addTag('form.type')
         ;
 

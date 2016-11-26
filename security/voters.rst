@@ -248,9 +248,9 @@ and tag it with ``security.voter``:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Security\PostVoter;
 
-        $container->register('app.post_voter', 'AppBundle\Security\PostVoter')
+        $container->register('app.post_voter', PostVoter::class)
             ->setPublic(false)
             ->addTag('security.voter')
         ;
@@ -342,10 +342,11 @@ service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\PostVoter;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.post_voter', 'AppBundle\Security\PostVoter')
+        $container->register('app.post_voter', PostVoter::class)
             ->addArgument(new Reference('security.access.decision_manager'))
             ->setPublic(false)
             ->addTag('security.voter')

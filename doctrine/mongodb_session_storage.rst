@@ -78,6 +78,7 @@ need to change/add some parameters in the main configuration file:
 
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
         $container->loadFromExtension('framework', array(
             'session' => array(
@@ -88,15 +89,18 @@ need to change/add some parameters in the main configuration file:
             ),
         ));
 
-        $container->setDefinition('mongo_client', new Definition('MongoClient', array(
-            // if using a username and password
-            array('mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017'),
-            // if not using a username and password
-            array('mongodb://%mongodb_host%:27017'),
-        )));
+        $container->setDefinition('mongo_client', new Definition(
+            \MongoClient::class,
+            array(
+                // if using a username and password
+                array('mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017'),
+                // if not using a username and password
+                array('mongodb://%mongodb_host%:27017'),
+            )
+        ));
 
         $container->setDefinition('session.handler.mongo', new Definition(
-            'Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler',
+            MongoDbSessionHandler::class,
             array(new Reference('mongo_client'), '%mongo.session.options%')
         ));
 

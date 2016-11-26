@@ -59,7 +59,7 @@ definition:
         # app/config/services.yml
         services:
             ldap:
-                class: 'Symfony\Component\Ldap\LdapClient'
+                class: Symfony\Component\Ldap\LdapClient
                 arguments:
                     - my-server   # host
                     - 389         # port
@@ -89,17 +89,18 @@ definition:
     .. code-block:: php
 
         // app/config/services.php
-        $container
-            ->register('ldap', 'Symfony\Component\Ldap\LdapClient')
-            ->addArgument('my-server')
-            ->addArgument(389)
-            ->addArgument(3)
-            ->addArgument(false)
-            ->addArgument(true);
+        use Symfony\Component\Ldap\LdapClient;
+        use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->register('newsletter_manager', 'NewsletterManager')
-            ->addMethodCall('setMailer', array(new Reference('mailer')));
+            ->setDefinition('ldap', new Definition(LdapClient::class, array(
+                'my-server',
+                389,
+                3,
+                false,
+                true,
+
+            ));
 
 Fetching Users Using the LDAP User Provider
 -------------------------------------------
@@ -124,6 +125,7 @@ use the ``ldap`` user provider.
                         search_password: password
                         default_roles: ROLE_USER
                         uid_key: uid
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->

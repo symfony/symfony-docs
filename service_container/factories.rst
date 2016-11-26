@@ -77,18 +77,20 @@ configure the service container to use the
 
     .. code-block:: php
 
+        use AppBundle\Email\NewsletterManager;
+        use AppBundle\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Definition;
         // ...
 
-        $definition = new Definition('AppBundle\Email\NewsletterManager');
+        $definition = new Definition(NewsletterManager::class);
         // call a static method
-        $definition->setFactory(array('AppBundle\Email\NewsletterManager', 'create'));
+        $definition->setFactory(array(NewsletterManager::class, 'create'));
 
         $container->setDefinition('app.newsletter_manager', $definition);
 
-        $container->register('app.newsletter_manager_factory', 'AppBundle\Email\NewsletterManagerFactory');
+        $container->register('app.newsletter_manager_factory', NewsletterManagerFactory::class);
 
-        $newsletterManager = new Definition('AppBundle\Email\NewsletterManager');
+        $newsletterManager = new Definition(NewsletterManager::class);
 
         // call a method on the specified service
         $newsletterManager->setFactory(array(
@@ -144,11 +146,12 @@ method in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: php
 
+        use AppBundle\Email\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $newsletterManager = new Definition('AppBundle\Email\NewsletterManager', array(
+        $newsletterManager = new Definition(NewsletterManager::class, array(
             new Reference('templating')
         ));
         $newsletterManager->setFactory(array(
