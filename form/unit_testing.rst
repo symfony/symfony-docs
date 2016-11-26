@@ -128,7 +128,6 @@ before creating the parent form using the ``PreloadedExtension`` class::
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
-    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Form\PreloadedExtension;
 
@@ -174,19 +173,21 @@ allows you to return a list of extensions to register::
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
-    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Validator\ConstraintViolationList;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     class TestedTypeTest extends TypeTestCase
     {
         protected function getExtensions()
         {
-            $validator = $this->createMock('\Symfony\Component\Validator\Validator\ValidatorInterface');
-            $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
+            $validator = $this->createMock(ValidatorInterface::class);
+            $validator
+                ->method('validate')
+                ->will($this->returnValue(new ConstraintViolationList()));
 
             return array(
                 new ValidatorExtension($validator),
@@ -206,7 +207,6 @@ a good opportunity to use them::
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
-    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase

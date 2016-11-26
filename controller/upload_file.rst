@@ -54,6 +54,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
     // src/AppBundle/Form/ProductType.php
     namespace AppBundle\Form;
 
+    use AppBundle\Entity\Product;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -72,7 +73,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Product',
+                'data_class' => Product::class,
             ));
         }
 
@@ -280,11 +281,12 @@ Then, define a service for this class:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\FileUploader;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
         $container->setDefinition('app.brochure_uploader', new Definition(
-            'AppBundle\FileUploader',
+            FileUploader::class,
             array('%brochures_directory%')
         ));
 
@@ -407,11 +409,13 @@ Now, register this class as a Doctrine listener:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\BrochureUploaderListener;
+        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $definition = new Definition(
-            'AppBundle\EventListener\BrochureUploaderListener',
+            BrochureUploaderListener::class,
             array(new Reference('brochures_directory'))
         );
         $definition->addTag('doctrine.event_listener', array(

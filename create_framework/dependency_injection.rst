@@ -94,29 +94,33 @@ Create a new file to host the dependency injection container configuration::
     // example.com/src/container.php
     use Symfony\Component\DependencyInjection;
     use Symfony\Component\DependencyInjection\Reference;
+    use Symfony\Component\HttpKernel;
+    use Symfony\Component\Routing;
+    use Symfony\Component\EventDispatcher;
+    use Simplex\Framework;
 
     $sc = new DependencyInjection\ContainerBuilder();
-    $sc->register('context', 'Symfony\Component\Routing\RequestContext');
-    $sc->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
+    $sc->register('context', Routing\RequestContext::class);
+    $sc->register('matcher', Routing\Matcher\UrlMatcher::class)
         ->setArguments(array($routes, new Reference('context')))
     ;
-    $sc->register('resolver', 'Symfony\Component\HttpKernel\Controller\ControllerResolver');
+    $sc->register('resolver', HttpKernel\Controller\ControllerResolver::class);
 
-    $sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
+    $sc->register('listener.router', HttpKernel\EventListener\RouterListener::class)
         ->setArguments(array(new Reference('matcher')))
     ;
-    $sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener')
+    $sc->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(array('UTF-8'))
     ;
-    $sc->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\ExceptionListener')
-        ->setArguments(array('Calendar\\Controller\\ErrorController::exceptionAction'))
+    $sc->register('listener.exception', HttpKernel\EventListener\ExceptionListener::class)
+        ->setArguments(array('Calendar\Controller\ErrorController::exceptionAction'))
     ;
-    $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
+    $sc->register('dispatcher', EventDispatcher\EventDispatcher::class)
         ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
         ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
         ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ;
-    $sc->register('framework', 'Simplex\Framework')
+    $sc->register('framework', Framework::class)
         ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
     ;
 
@@ -176,7 +180,10 @@ framework code should be the previous simple version::
 
 Now, here is how you can register a custom listener in the front controller::
 
-    $sc->register('listener.string_response', 'Simplex\StringResponseListener');
+    // ...
+    use Simplex\StringResponseListener;
+
+    $sc->register('listener.string_response', StringResposeListener::class);
     $sc->getDefinition('dispatcher')
         ->addMethodCall('addSubscriber', array(new Reference('listener.string_response')))
     ;
@@ -192,7 +199,8 @@ mode or not::
 These parameters can be used when defining object definitions. Let's make the
 charset configurable::
 
-    $sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener')
+    // ...
+    $sc->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(array('%charset%'))
     ;
 
@@ -204,7 +212,8 @@ object::
 Instead of relying on the convention that the routes are defined by the
 ``$routes`` variables, let's use a parameter again::
 
-    $sc->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
+    // ...
+    $sc->register('matcher', Routing\Matcher\UrlMatcher::class)
         ->setArguments(array('%routes%', new Reference('context')))
     ;
 

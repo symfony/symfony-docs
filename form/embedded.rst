@@ -69,6 +69,7 @@ create a form class so that a ``Category`` object can be modified by the user::
     // src/AppBundle/Form/CategoryType.php
     namespace AppBundle\Form;
 
+    use AppBundle\Entity\Category;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -83,7 +84,7 @@ create a form class so that a ``Category`` object can be modified by the user::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Category',
+                'data_class' => Category::class,
             ));
         }
 

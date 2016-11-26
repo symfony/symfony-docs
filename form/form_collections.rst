@@ -87,6 +87,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
     // src/AppBundle/Form/Type/TagType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Tag;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -101,7 +102,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Tag',
+                'data_class' => Tag::class,
             ));
         }
 
@@ -121,6 +122,7 @@ Notice that you embed a collection of ``TagType`` forms using the
     // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Task;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -137,7 +139,7 @@ Notice that you embed a collection of ``TagType`` forms using the
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 

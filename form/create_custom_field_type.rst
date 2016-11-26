@@ -324,11 +324,12 @@ the ``genders`` parameter value as the first argument to its to-be-created
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
+        use AppBundle\Form\Type\GenderType;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
             ->setDefinition('app.form.type.gender', new Definition(
-                'AppBundle\Form\Type\GenderType',
+                GenderType::class,
                 array('%genders%')
             ))
             ->addTag('form.type', array(

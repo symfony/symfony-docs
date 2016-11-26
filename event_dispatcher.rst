@@ -102,8 +102,10 @@ using a special "tag":
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\ExceptionListener;
+
         $container
-            ->register('app.exception_listener', 'AppBundle\EventListener\ExceptionListener')
+            ->register('app.exception_listener', ExceptionListener::class)
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
 
@@ -208,11 +210,10 @@ Now, you just need to register the class as a service and add the
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventSubscriber\ExceptionSubscriber;
+
         $container
-            ->register(
-                'app.exception_subscriber',
-                'AppBundle\EventSubscriber\ExceptionSubscriber'
-            )
+            ->register('app.exception_subscriber', ExceptionSubscriber::class)
             ->addTag('kernel.event_subscriber')
         ;
 

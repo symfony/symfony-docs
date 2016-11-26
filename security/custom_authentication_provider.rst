@@ -450,26 +450,22 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\Authentication\Provider\WsseProvider;
+        use AppBundle\Security\Firewall\WsseListener;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            'AppBundle\Security\Authentication\Provider\WsseProvider',
-            array(
-                '', // User Provider
-                '%kernel.cache_dir%/security/nonces',
-            )
-        );
+        $definition = new Definition(WsseProvider::class, array(
+            '', // User Provider
+            '%kernel.cache_dir%/security/nonces',
+        ));
         $definition->setPublic(false);
         $container->setDefinition('wsse.security.authentication.provider', $definition)
 
-        $definition = new Definition(
-            'AppBundle\Security\Firewall\WsseListener',
-            array(
-                new Reference('security.token_storage'),
-                new Reference('security.authentication.manager'),
-            )
-        );
+        $definition = new Definition(WsseListener::class, array(
+            new Reference('security.token_storage'),
+            new Reference('security.authentication.manager'),
+        ));
         $definition->setPublic(false);
         $container->setDefinition('wsse.security.authentication.listener', $definition);
 

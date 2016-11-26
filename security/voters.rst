@@ -160,7 +160,7 @@ and tag it with ``security.voter``:
         # app/config/services.yml
         services:
             security.access.post_voter:
-                class:      AppBundle\Security\Authorization\Voter\PostVoter
+                class:      AppBundle\Security\PostVoter
                 public:     false
                 tags:
                     - { name: security.voter }
@@ -176,7 +176,7 @@ and tag it with ``security.voter``:
 
             <services>
                 <service id="security.access.post_voter"
-                    class="AppBundle\Security\Authorization\Voter\PostVoter"
+                    class="AppBundle\Security\PostVoter"
                     public="false"
                 >
 
@@ -188,15 +188,12 @@ and tag it with ``security.voter``:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Security\PostVoter;
 
-        $definition = new Definition('AppBundle\Security\Authorization\Voter\PostVoter');
-        $definition
+        $container->register('app.post_voter', PostVoter::class)
             ->setPublic(false)
             ->addTag('security.voter')
         ;
-
-        $container->setDefinition('security.access.post_voter', $definition);
 
 How to Use the Voter in a Controller
 ------------------------------------

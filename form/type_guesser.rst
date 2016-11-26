@@ -209,7 +209,9 @@ creating a service and tagging it as ``form.type_guesser``:
     .. code-block:: php
 
         // app/config/services.php
-        $container->register('AppBundle\Form\TypeGuesser\PHPDocTypeGuesser')
+        use AppBundle\Form\TypeGuesser\PHPDocTypeGuesser;
+
+        $container->register('app.phpdoc_type_guesser', PHPDocTypeGuesser::class)
             ->addTag('form.type_guesser')
         ;
 

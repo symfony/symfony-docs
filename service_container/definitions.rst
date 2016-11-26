@@ -32,11 +32,11 @@ There are some helpful methods for working with the service definitions::
     $definition = $container->findDefinition('app.user_config_manager');
 
     // add a new "app.number_generator" definitions
-    $definition = new Definition('AppBundle\NumberGenerator');
+    $definition = new Definition(\AppBundle\NumberGenerator::class);
     $container->setDefinition('app.number_generator', $definition);
 
     // shortcut for the previous method
-    $container->register('app.number_generator', 'AppBundle\NumberGenerator');
+    $container->register('app.number_generator', \AppBundle\NumberGenerator::class);
 
 Working with a Definition
 -------------------------
@@ -54,12 +54,14 @@ Class
 The first optional argument of the ``Definition`` class is the fully qualified
 class name of the object returned when the service is fetched from the container::
 
+    use AppBundle\Config\UserConfigManager;
+    use AppBundle\Config\CustomConfigManager;
     use Symfony\Component\DependencyInjection\Definition;
 
-    $definition = new Definition('AppBundle\Config\UserConfigManager');
+    $definition = new Definition(UserConfigManager::class);
 
     // override the class
-    $definition->setClass('AppBundle\Config\CustomConfigManager');
+    $definition->setClass(CustomConfigManager::class);
 
     // get the class configured for this definition
     $class = $definition->getClass();
@@ -71,9 +73,10 @@ The second optional argument of the ``Definition`` class is an array with the
 arguments passed to the constructor of the object returned when the service is
 fetched from the container::
 
+    use AppBundle\Config\DoctrineConfigManager;
     use Symfony\Component\DependencyInjection\Definition;
 
-    $definition = new Definition('AppBundle\Config\DoctrineConfigManager', array(
+    $definition = new Definition(DoctrineConfigManager::class, array(
         new Reference('doctrine'), // a reference to another service
         '%app.config_table_name%'  // will be resolved to the value of a container parameter
     ));
