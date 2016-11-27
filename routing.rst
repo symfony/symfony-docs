@@ -707,6 +707,7 @@ a default value (i.e. ``$slug = null``)::
     {
         // ..
     }
+
 ..
 
     Some mandatory parameters are missing ("slug") to generate a URL for route
