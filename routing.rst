@@ -686,16 +686,28 @@ Here are some common errors you might see while working with routing:
     Controller "AppBundle\Controller\BlogController::showAction()" requires that you
     provide a value for the "$slug" argument.
 
-This happens when your controller method has an argument (e.g. ``$slug``)::
+This happens when your controller method has an argument (e.g. ``$slug``),
+but your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``)::
 
+    /**
+     * @Route("/blog/show", name="blog_show")
+     */
     public function showAction($slug)
     {
         // ..
     }
 
-But your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``).
 Add a ``{slug}`` to your route path: ``/blog/show/{slug}`` or give the argument
-a default value (i.e. ``$slug = null``).
+a default value (i.e. ``$slug = null``)::
+
+    /**
+     * @Route("/blog/show/{slug}", name="blog_show")
+     */
+    public function showAction($slug = null)
+    {
+        // ..
+    }
+..
 
     Some mandatory parameters are missing ("slug") to generate a URL for route
     "blog_show".
