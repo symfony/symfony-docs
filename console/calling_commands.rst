@@ -10,6 +10,9 @@ generating Doctrine2 proxies, dumping Assetic assets, ...).
 
 Calling a command from another one is straightforward::
 
+    use Symfony\Component\Console\Input\ArrayInput
+    // ...
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $command = $this->getApplication()->find('demo:greet');
