@@ -84,6 +84,7 @@ The following configuration attributes are available:
   * ``type`` (how to queue the messages, ``file`` or ``memory`` is supported, see :doc:`/email/spool`)
   * ``path`` (where to store the messages)
 * ``delivery_address`` (an email address where to send ALL emails)
+* ``delivery_addresses`` (an array of email addresses where to send ALL emails)
 * ``disable_delivery`` (set to true to disable delivery completely)
 
 Sending Emails

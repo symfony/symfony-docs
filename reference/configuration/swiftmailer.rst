@@ -158,14 +158,21 @@ that all emails sent during development go to a single account.
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 
+delivery_addresses
+~~~~~~~~~~~~~~~~
+
+**type**: ``array``
+
+If set, all email messages will be sent to this list of addresses, using the same logic as ``delivery_address``.
+
 delivery_whitelist
 ~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
-Used in combination with ``delivery_address``. If set, emails matching any
+Used in combination with ``delivery_address`` or ``delivery_addresses``. If set, emails matching any
 of these patterns will be delivered like normal, as well as being sent to
-``delivery_address``. For details, see the
+``delivery_address`` or ``delivery_addresses``. For details, see the
 :ref:`How to Work with Emails during Development <sending-to-a-specified-address-but-with-exceptions>`
 article.
 
@@ -208,6 +215,7 @@ Full Default Configuration
                 threshold:            99
                 sleep:                0
             delivery_address:     ~
+            delivery_addresses:   []
             disable_delivery:     ~
             logging:              '%kernel.debug%'
 
@@ -230,6 +238,7 @@ Full Default Configuration
                 auth_mode=""
                 sender_address=""
                 delivery_address=""
+                delivery_addresses=""
                 disable_delivery=""
                 logging="%kernel.debug%"
                 >
