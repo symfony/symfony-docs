@@ -134,5 +134,5 @@ these (see ":doc:`/components/http_foundation/trusting_proxies`").
 
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
-.. _`security groups`: http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-elb-security-groups.html
+.. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
