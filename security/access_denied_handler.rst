@@ -67,11 +67,36 @@ generally return a custom response).
 
 Then, register the service for the access denied handler:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/services.yml
-    services:
-        app.security.access_denied_handler:
-            class: AppBundle\Security\AccessDeniedHandler
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.security.access_denied_handler:
+                class: AppBundle\Security\AccessDeniedHandler
+
+    .. code-block:: xml
+
+	<!-- app/config/services.xml -->
+	<?xml version="1.0" encoding="UTF-8" ?>
+	<container xmlns="http://symfony.com/schema/dic/services"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://symfony.com/schema/dic/services
+		http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+	    <services>
+		<service id="app.security.access_denied_handler"
+                    class="AppBundle\Security\AccessDeniedHandler" />
+	    </services>
+	</container>
+
+    .. code-block:: php
+
+	// app/config/services.php
+	$container->register(
+            'app.security.access_denied_handler',
+	    'AppBundle\Security\AccessDeniedHandler'
+	);
 
 That's it! Any ``AccessDeniedException`` thrown by the ``foo`` firewall will now be handled by your service.
