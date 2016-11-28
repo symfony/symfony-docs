@@ -145,25 +145,22 @@ sleep
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of seconds
 to sleep for during a transport restart.
 
-delivery_address
-~~~~~~~~~~~~~~~~
-
-**type**: ``string``
-
-If set, all email messages will be sent to this address instead of being
-sent to their actual recipients. This is often useful when developing. For
-example, by setting this in the ``config_dev.yml`` file, you can guarantee
-that all emails sent during development go to a single account.
-
-This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
-on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
-
 delivery_addresses
 ~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
-If set, all email messages will be sent to this list of addresses, using the same logic as ``delivery_address``.
+.. note::
+
+    In previous versions, this option was called ``delivery_address``
+
+If set, all email messages will be sent to these addresses instead of being
+sent to their actual recipients. This is often useful when developing. For
+example, by setting this in the ``config_dev.yml`` file, you can guarantee
+that all emails sent during development go to one or more some specific accounts.
+
+This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
+on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 
 delivery_whitelist
 ~~~~~~~~~~~~~~~~~~
