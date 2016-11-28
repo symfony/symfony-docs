@@ -159,7 +159,7 @@ This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 
 delivery_addresses
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
