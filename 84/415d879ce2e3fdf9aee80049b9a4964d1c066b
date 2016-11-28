@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-22T19:29:32Z
+
+👍
+
+A simple grep gives a lot more cases that we can fix: https://gist.github.com/wouterj/ff66784866817e0d6aedafeaa29ffa8a But that doesn't have to be done in this PR imo
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-22T20:31:53Z
+
+@javiereguiluz Do you want to update the other places too?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-23T07:57:39Z
+
+@xabbuh I agree with @wouterj and I prefer to do that in a separate PR. Thanks!
