@@ -23,8 +23,8 @@ Basic Setup
 
 First, create a simple Doctrine entity class to work with::
 
-    // src/Acme/DemoBundle/Entity/Document.php
-    namespace Acme\DemoBundle\Entity;
+    // src/AppBundle/Entity/Document.php
+    namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -154,8 +154,8 @@ rules::
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\Document:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Document:
             properties:
                 file:
                     - File:
@@ -163,8 +163,8 @@ rules::
 
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Entity/Document.php
-        namespace Acme\DemoBundle\Entity;
+        // src/AppBundle/Entity/Document.php
+        namespace AppBundle\Entity;
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -181,8 +181,8 @@ rules::
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.yml -->
-        <class name="Acme\DemoBundle\Entity\Document">
+        <!-- src/AppBundle/Resources/config/validation.yml -->
+        <class name="AppBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">
                     <option name="maxSize">6000000</option>
@@ -192,7 +192,7 @@ rules::
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Entity/Document.php
+        // src/AppBundle/Entity/Document.php
         namespace Acme\DemoBundle\Entity;
 
         // ...
@@ -220,7 +220,7 @@ rules::
 The following controller shows you how to handle the entire process::
 
     // ...
-    use Acme\DemoBundle\Entity\Document;
+    use AppBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Symfony\Component\HttpFoundation\Request;
     // ...
@@ -404,7 +404,8 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
+            $file = $this->getAbsolutePath();
+            if ($file) {
                 unlink($file);
             }
         }

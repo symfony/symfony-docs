@@ -49,7 +49,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
                         <?php echo $row['title'] ?>
                     </a>
                 </li>
-                <?php endwhile; ?>
+                <?php endwhile ?>
             </ul>
         </body>
     </html>
@@ -121,12 +121,12 @@ is primarily an HTML file that uses a template-like PHP syntax:
                         <?php echo $post['title'] ?>
                     </a>
                 </li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         </body>
     </html>
 
-By convention, the file that contains all of the application logic - ``index.php`` -
+By convention, the file that contains all the application logic - ``index.php`` -
 is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
@@ -238,14 +238,14 @@ the layout:
                     <?php echo $post['title'] ?>
                 </a>
             </li>
-            <?php endforeach; ?>
+            <?php endforeach ?>
         </ul>
     <?php $content = ob_get_clean() ?>
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that allows for the reuse of the
-layout. Unfortunately, to accomplish this, you're forced to use a few ugly
+You now have a setup that will allow you to reuse the layout.
+Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
 uses a Templating component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
@@ -367,7 +367,7 @@ on the requested URI:
     require_once 'controllers.php';
 
     // route the request internally
-    $uri = $_SERVER['REQUEST_URI'];
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     if ('/index.php' == $uri) {
         list_action();
     } elseif ('/index.php/show' == $uri && isset($_GET['id'])) {
@@ -435,7 +435,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.4.*"
+            "symfony/symfony": "2.5.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -447,7 +447,7 @@ into a vendor/ directory:
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    $ composer install
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as
@@ -483,9 +483,6 @@ the HTTP response being returned. Use them to improve the blog:
 
     // echo the headers and send the response
     $response->send();
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,
@@ -550,8 +547,8 @@ from scratch, you could at least use Symfony's standalone `Routing`_ and
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
 
-    // src/Acme/BlogBundle/Controller/BlogController.php
-    namespace Acme\BlogBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -564,17 +561,14 @@ them for you. Here's the same sample application, now built in Symfony::
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render(
-                'AcmeBlogBundle:Blog:list.html.php',
-                array('posts' => $posts)
-            );
+            return $this->render('Blog/list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
         {
             $post = $this->get('doctrine')
                 ->getManager()
-                ->getRepository('AcmeBlogBundle:Post')
+                ->getRepository('AppBundle:Post')
                 ->find($id);
 
             if (!$post) {
@@ -582,22 +576,19 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render(
-                'AcmeBlogBundle:Blog:show.html.php',
-                array('post' => $post)
-            );
+            return $this->render('Blog/show.html.php', array('post' => $post));
         }
     }
 
-The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
-to retrieve objects from the database and the Templating component to
-render a template and return a ``Response`` object. The list template is
-now quite a bit simpler:
+The two controllers are still lightweight. Each uses the
+:doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
+database and the Templating component to render a template and return a
+``Response`` object. The list template is now quite a bit simpler:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php -->
-    <?php $view->extend('::layout.html.php') ?>
+    <!-- app/Resources/views/Blog/list.html.php -->
+    <?php $view->extend('layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
 
@@ -612,7 +603,7 @@ now quite a bit simpler:
                 <?php echo $post->getTitle() ?>
             </a>
         </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
     </ul>
 
 The layout is nearly identical:
@@ -647,11 +638,11 @@ A routing configuration map provides this information in a readable format:
     # app/config/routing.yml
     blog_list:
         path:     /blog
-        defaults: { _controller: AcmeBlogBundle:Blog:list }
+        defaults: { _controller: AppBundle:Blog:list }
 
     blog_show:
         path:     /blog/show/{id}
-        defaults: { _controller: AcmeBlogBundle:Blog:show }
+        defaults: { _controller: AppBundle:Blog:show }
 
 Now that Symfony is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
@@ -719,8 +710,8 @@ for example, the list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
-    {% extends "::layout.html.twig" %}
+    {# app/Resources/views/Blog/list.html.twig #}
+    {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}
 

@@ -99,7 +99,7 @@ node definition. Node type are available for:
 
 * scalar
 * boolean
-* integer (new in 2.2)
+* integer
 * float
 * enum
 * array
@@ -110,9 +110,6 @@ and are created with ``node($name, $type)`` or their associated shortcut
 
 Numeric Node Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The numeric (float and integer) nodes were introduced in Symfony 2.2.
 
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
@@ -293,12 +290,12 @@ method.
 
 The info will be printed as a comment when dumping the configuration tree.
 
+.. versionadded:: 2.6
+    Since Symfony 2.6, the info will also be added to the exception message
+    when an invalid type is given.
+
 Optional Sections
 -----------------
-
-.. versionadded:: 2.2
-    The ``canBeEnabled`` and ``canBeDisabled`` methods were introduced in
-    Symfony 2.2.
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut
@@ -503,7 +500,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function($v) { return array('name'=> $v); })
+                    ->then(function ($v) { return array('name' => $v); })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()
@@ -573,8 +570,8 @@ Otherwise the result is a clean array of configuration values::
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(__DIR__.'/src/Matthias/config/config.yml');
-    $config2 = Yaml::parse(__DIR__.'/src/Matthias/config/config_extra.yml');
+    $config1 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config.yml'));
+    $config2 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml'));
 
     $configs = array($config1, $config2);
 

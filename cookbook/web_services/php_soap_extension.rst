@@ -59,7 +59,7 @@ a ``HelloService`` object properly:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             hello_service:
                 class: Acme\SoapBundle\Services\HelloService
@@ -67,7 +67,7 @@ a ``HelloService`` object properly:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="hello_service" class="Acme\SoapBundle\Services\HelloService">
                 <argument type="service" id="mailer"/>
@@ -76,7 +76,7 @@ a ``HelloService`` object properly:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         $container
             ->register('hello_service', 'Acme\SoapBundle\Services\HelloService')
             ->addArgument(new Reference('mailer'));
@@ -190,7 +190,7 @@ An example WSDL is below.
         </service>
     </definitions>
 
-.. _`PHP SOAP`:          http://php.net/manual/en/book.soap.php
-.. _`NuSOAP`:            http://sourceforge.net/projects/nusoap
-.. _`output buffering`:  http://php.net/manual/en/book.outcontrol.php
-.. _`Zend SOAP`:         http://framework.zend.com/manual/en/zend.soap.server.html
+.. _`PHP SOAP`: http://php.net/manual/en/book.soap.php
+.. _`NuSOAP`: http://sourceforge.net/projects/nusoap
+.. _`output buffering`: http://php.net/manual/en/book.outcontrol.php
+.. _`Zend SOAP`: http://framework.zend.com/manual/en/zend.soap.server.html

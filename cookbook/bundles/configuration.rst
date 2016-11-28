@@ -129,7 +129,7 @@ First things first, you have to create an extension class as explained in
 
 Whenever a user includes the ``acme_social`` key (which is the DI alias) in a
 configuration file, the configuration under it is added to an array of
-configurations and passed to the ``load()`` method of your extension (Symfony2
+configurations and passed to the ``load()`` method of your extension (Symfony
 automatically converts XML and YAML to an array).
 
 For the configuration example in the previous section, the array passed to your
@@ -384,7 +384,8 @@ Assume the XSD file is called ``hello-1.0.xsd``, the schema location will be
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"
-        xsi:schemaLocation="http://acme_company.com/schema/dic/hello http://acme_company.com/schema/dic/hello/hello-1.0.xsd">
+        xsi:schemaLocation="http://acme_company.com/schema/dic/hello
+            http://acme_company.com/schema/dic/hello/hello-1.0.xsd">
 
         <acme-hello:config>
             <!-- ... -->

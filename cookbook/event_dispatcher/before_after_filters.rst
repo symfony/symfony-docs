@@ -9,7 +9,7 @@ executed just before or just after your controller actions acting as filters
 or hooks.
 
 In symfony1, this was achieved with the preExecute and postExecute methods.
-Most major frameworks have similar methods but there is no such thing in Symfony2.
+Most major frameworks have similar methods but there is no such thing in Symfony.
 The good news is that there is a much better way to interfere with the
 Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
 
@@ -74,7 +74,7 @@ controller that matches the request needs token validation.
 A clean and easy way is to create an empty interface and make the controllers
 implement it::
 
-    namespace Acme\DemoBundle\Controller;
+    namespace AppBundle\Controller;
 
     interface TokenAuthenticatedController
     {
@@ -83,9 +83,9 @@ implement it::
 
 A controller that implements this interface simply looks like this::
 
-    namespace Acme\DemoBundle\Controller;
+    namespace AppBundle\Controller;
 
-    use Acme\DemoBundle\Controller\TokenAuthenticatedController;
+    use AppBundle\Controller\TokenAuthenticatedController;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class FooController extends Controller implements TokenAuthenticatedController
@@ -104,10 +104,10 @@ Next, you'll need to create an event listener, which will hold the logic
 that you want executed before your controllers. If you're not familiar with
 event listeners, you can learn more about them at :doc:`/cookbook/service_container/event_listener`::
 
-    // src/Acme/DemoBundle/EventListener/TokenListener.php
-    namespace Acme\DemoBundle\EventListener;
+    // src/AppBundle/EventListener/TokenListener.php
+    namespace AppBundle\EventListener;
 
-    use Acme\DemoBundle\Controller\TokenAuthenticatedController;
+    use AppBundle\Controller\TokenAuthenticatedController;
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -125,7 +125,8 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
             $controller = $event->getController();
 
             /*
-             * $controller passed can be either a class or a Closure. This is not usual in Symfony but it may happen.
+             * $controller passed can be either a class or a Closure.
+             * This is not usual in Symfony but it may happen.
              * If it is a class, it comes in array format
              */
             if (!is_array($controller)) {
@@ -152,33 +153,33 @@ your listener to be called just before any controller is executed.
 
     .. code-block:: yaml
 
-        # app/config/config.yml (or inside your services.yml)
+        # app/config/services.yml
         services:
-            demo.tokens.action_listener:
-                class: Acme\DemoBundle\EventListener\TokenListener
+            app.tokens.action_listener:
+                class: AappBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml (or inside your services.xml) -->
-        <service id="demo.tokens.action_listener" class="Acme\DemoBundle\EventListener\TokenListener">
+        <!-- app/config/services.xml -->
+        <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
             <argument>%tokens%</argument>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
 
     .. code-block:: php
 
-        // app/config/config.php (or inside your services.php)
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition('Acme\DemoBundle\EventListener\TokenListener', array('%tokens%'));
+        $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
             'event'  => 'kernel.controller',
             'method' => 'onKernelController'
         ));
-        $container->setDefinition('demo.tokens.action_listener', $listener);
+        $container->setDefinition('app.tokens.action_listener', $listener);
 
 With this configuration, your ``TokenListener`` ``onKernelController`` method
 will be executed on each request. If the controller that is about to be executed
@@ -189,7 +190,7 @@ want.
 After Filters with the ``kernel.response`` Event
 ------------------------------------------------
 
-In addition to having a "hook" that's executed before your controller, you
+In addition to having a "hook" that's executed *before* your controller, you
 can also add a hook that's executed *after* your controller. For this example,
 imagine that you want to add a sha1 hash (with a salt using that token) to
 all responses that have passed this token authentication.
@@ -247,10 +248,10 @@ event:
 
     .. code-block:: yaml
 
-        # app/config/config.yml (or inside your services.yml)
+        # app/config/services.yml
         services:
-            demo.tokens.action_listener:
-                class: Acme\DemoBundle\EventListener\TokenListener
+            app.tokens.action_listener:
+                class: AppBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
@@ -258,8 +259,8 @@ event:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml (or inside your services.xml) -->
-        <service id="demo.tokens.action_listener" class="Acme\DemoBundle\EventListener\TokenListener">
+        <!-- app/config/services.xml -->
+        <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
             <argument>%tokens%</argument>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
             <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
@@ -267,10 +268,10 @@ event:
 
     .. code-block:: php
 
-        // app/config/config.php (or inside your services.php)
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition('Acme\DemoBundle\EventListener\TokenListener', array('%tokens%'));
+        $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
             'event'  => 'kernel.controller',
             'method' => 'onKernelController'
@@ -279,7 +280,7 @@ event:
             'event'  => 'kernel.response',
             'method' => 'onKernelResponse'
         ));
-        $container->setDefinition('demo.tokens.action_listener', $listener);
+        $container->setDefinition('app.tokens.action_listener', $listener);
 
 That's it! The ``TokenListener`` is now notified before every controller is
 executed (``onKernelController``) and after every controller returns a response

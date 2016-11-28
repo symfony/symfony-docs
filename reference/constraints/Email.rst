@@ -7,7 +7,8 @@ cast to a string before being validated.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
+| Options        | - `strict`_                                                         |
+|                | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
 |                | - `checkHost`_                                                      |
 +----------------+---------------------------------------------------------------------+
@@ -89,6 +90,18 @@ Basic Usage
 Options
 -------
 
+.. versionadded:: 2.5
+    The ``strict`` option was introduced in Symfony 2.5.
+
+strict
+~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+When false, the email will be validated against a simple regular expression.
+If true, then the `egulias/email-validator`_ library is required to perform 
+an RFC compliant validation.
+
 message
 ~~~~~~~
 
@@ -112,3 +125,5 @@ checkHost
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX *or* the A *or* the AAAA record of the host
 of the given email.
+
+.. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator

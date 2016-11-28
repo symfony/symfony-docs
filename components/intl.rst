@@ -22,8 +22,8 @@ Installation
 
 You can install the component in two different ways:
 
-* Using the official Git repository (https://github.com/symfony/Intl);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
+* Using the official Git repository (https://github.com/symfony/Intl).
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
@@ -85,13 +85,13 @@ code::
       the server.
 
     For example, consider that your development machines ship ICU 4.8 and the server
-    ICU 4.2. When you run ``php composer.phar update`` on the development machine, version
+    ICU 4.2. When you run ``composer update`` on the development machine, version
     1.2.* of the Icu component will be installed. But after deploying the
-    application, ``php composer.phar install`` will fail with the following error:
+    application, ``composer install`` will fail with the following error:
 
     .. code-block:: bash
 
-        $ php composer.phar install
+        $ composer install
         Loading composer repositories with package information
         Installing dependencies from lock file
         Your requirements could not be resolved to an installable set of packages.
@@ -104,8 +104,8 @@ code::
     The error tells you that the requested version of the Icu component, version
     1.2, is not compatible with PHP's ICU version 4.2.
 
-    One solution to this problem is to run ``php composer.phar update`` instead of
-    ``php composer.phar install``. It is highly recommended **not** to do this. The
+    One solution to this problem is to run ``composer update`` instead of
+    ``composer install``. It is highly recommended **not** to do this. The
     ``update`` command will install the latest versions of each Composer dependency
     to your production server and potentially break the application.
 
@@ -130,7 +130,7 @@ code::
     * "1.0.*" if the server does not have the intl extension installed;
     * "1.1.*" if the server is compiled with ICU 4.2 or lower.
 
-    Finally, run ``php composer.phar update symfony/icu`` on your development machine, test
+    Finally, run ``composer update symfony/icu`` on your development machine, test
     extensively and deploy again. The installation of the dependencies will now
     succeed.
 

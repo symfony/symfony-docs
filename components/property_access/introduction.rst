@@ -8,10 +8,6 @@ The PropertyAccess Component
     The PropertyAccess component provides function to read and write from/to an
     object or array using a simple string notation.
 
-.. versionadded:: 2.2
-    The PropertyAccess component was introduced in Symfony 2.2. Previously,
-    the ``PropertyPath`` class was located in the Form component.
-
 Installation
 ------------
 
@@ -179,6 +175,8 @@ The ``getValue`` method can also use the magic ``__get`` method::
 
     echo $accessor->getValue($person, 'Wouter'); // array(...)
 
+.. _components-property-access-magic-call:
+
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -209,7 +207,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
@@ -305,13 +303,46 @@ see `Enable other Features`_.
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
     $accessor->setValue($person, 'wouter', array(...));
 
     echo $person->getWouter(); // array(...)
+
+Checking Property Paths
+-----------------------
+
+.. versionadded:: 2.5
+    The
+    :method:`PropertyAccessor::isReadable <Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
+    and
+    :method:`PropertyAccessor::isWritable <Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
+    methods were introduced in Symfony 2.5.
+
+When you want to check whether
+:method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
+can safely be called without actually calling that method, you can use
+:method:`PropertyAccessor::isReadable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
+instead::
+
+    $person = new Person();
+
+    if ($accessor->isReadable($person, 'firstName')) {
+        // ...
+    }
+
+The same is possible for :method:`PropertyAccessor::setValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue>`:
+Call the
+:method:`PropertyAccessor::isWritable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
+method to find out whether a property path can be updated::
+
+    $person = new Person();
+
+    if ($accessor->isWritable($person, 'firstName')) {
+        // ...
+    }
 
 Mixing Objects and Arrays
 -------------------------
@@ -363,7 +394,7 @@ configured to enable extra features. To do that you could use the
     $accessorBuilder->disableMagicCall();
 
     // Check if magic __call handling is enabled
-    $accessorBuilder->isMagicCallEnabled() // true or false
+    $accessorBuilder->isMagicCallEnabled(); // true or false
 
     // At the end get the configured property accessor
     $accessor = $accessorBuilder->getPropertyAccessor();
@@ -376,7 +407,7 @@ configured to enable extra features. To do that you could use the
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
     // ...
-    $accessor = new PropertyAccessor(true) // this enables handling of magic __call
+    $accessor = new PropertyAccessor(true); // this enables handling of magic __call
 
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access

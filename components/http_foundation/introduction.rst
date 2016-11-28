@@ -90,47 +90,47 @@ instance (or a sub-class of), which is a data holder class:
 All :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instances have
 methods to retrieve and update its data:
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`: Returns
-  the parameters;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`
+    Returns the parameters.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::keys`: Returns
-  the parameter keys;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::keys`
+    Returns the parameter keys.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::replace`:
-  Replaces the current parameters by a new set;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::replace`
+    Replaces the current parameters by a new set.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::add`: Adds
-  parameters;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::add`
+    Adds parameters.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`: Returns a
-  parameter by name;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`
+    Returns a parameter by name.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::set`: Sets a
-  parameter by name;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::set`
+    Sets a parameter by name.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`: Returns
-  ``true`` if the parameter is defined;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`
+    Returns ``true`` if the parameter is defined.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`: Removes
-  a parameter.
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`
+    Removes a parameter.
 
 The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
 has some methods to filter the input values:
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`: Returns
-  the alphabetic characters of the parameter value;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`
+    Returns the alphabetic characters of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`: Returns
-  the alphabetic characters and digits of the parameter value;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
+    Returns the alphabetic characters and digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`: Returns
-  the digits of the parameter value;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
+    Returns the digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`: Returns the
-  parameter value converted to integer;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
+    Returns the parameter value converted to integer;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`: Filters the
-  parameter by using the PHP :phpfunction:`filter_var` function.
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
+    Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
 All getters takes up to three arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
@@ -241,24 +241,20 @@ Accessing `Accept-*` Headers Data
 You can easily access basic data extracted from ``Accept-*`` headers
 by using the following methods:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`:
-  returns the list of accepted content types ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
+    Returns the list of accepted content types ordered by descending quality.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`:
-  returns the list of accepted languages ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`
+    Returns the list of accepted languages ordered by descending quality.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  returns the list of accepted charsets ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`
+    Returns the list of accepted charsets ordered by descending quality.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`:
-  returns the list of accepted charsets ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
+    Returns the list of accepted encodings ordered by descending quality.
 
   .. versionadded:: 2.4
       The ``getEncodings()`` method was introduced in Symfony 2.4.
-
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class was
-    introduced in Symfony 2.2.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
@@ -287,10 +283,6 @@ for more information about them.
 
 Overriding the Request
 ~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.4
-    The :method:`Symfony\\Component\\HttpFoundation\\Request::setFactory`
-    method was introduced in Symfony 2.4.
 
 The ``Request`` class should not be overridden as it is a data object that
 represents an HTTP message. But when moving from a legacy system, adding
@@ -339,10 +331,7 @@ code, and an array of HTTP headers::
         array('content-type' => 'text/html')
     );
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
-These information can also be manipulated after the Response object creation::
+This information can also be manipulated after the Response object creation::
 
     $response->setContent('Hello World');
 
@@ -445,6 +434,8 @@ To redirect the client to another URL, you can use the
 
     $response = new RedirectResponse('http://example.com/');
 
+.. _streaming-response:
+
 Streaming a Response
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -494,10 +485,6 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
-    class was introduced in Symfony 2.2.
-
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
@@ -522,6 +509,13 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
         'filename.txt'
     );
+
+.. versionadded:: 2.6
+    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
+
+It is possible to delete the file after the request is sent with the 
+:method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
+Please note that this will not work when the ``X-Sendfile`` header is set.
 
 .. _component-http-foundation-json-response:
 

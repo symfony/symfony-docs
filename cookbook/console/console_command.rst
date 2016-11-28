@@ -14,11 +14,11 @@ Automatically Registering Commands
 To make the console commands available automatically with Symfony, create a
 ``Command`` directory inside your bundle and create a PHP file suffixed with
 ``Command.php`` for each command that you want to provide. For example, if you
-want to extend the AcmeDemoBundle to greet you from the command line, create
+want to extend the AppBundle to greet you from the command line, create
 ``GreetCommand.php`` and add the following to it::
 
-    // src/Acme/DemoBundle/Command/GreetCommand.php
-    namespace Acme\DemoBundle\Command;
+    // src/AppBundle/Command/GreetCommand.php
+    namespace AppBundle\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputArgument;
@@ -33,8 +33,17 @@ want to extend the AcmeDemoBundle to greet you from the command line, create
             $this
                 ->setName('demo:greet')
                 ->setDescription('Greet someone')
-                ->addArgument('name', InputArgument::OPTIONAL, 'Who do you want to greet?')
-                ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
+                ->addArgument(
+                    'name',
+                    InputArgument::OPTIONAL,
+                    'Who do you want to greet?'
+                )
+                ->addOption(
+                    'yell',
+                    null,
+                    InputOption::VALUE_NONE,
+                    'If set, the task will yell in uppercase letters'
+                )
             ;
         }
 
@@ -59,7 +68,7 @@ This command will now automatically be available to run:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien
+    $ php app/console demo:greet Fabien
 
 .. _cookbook-console-dic:
 
@@ -87,7 +96,7 @@ service container. In other words, you have access to any configured service::
         // ...
     }
 
-However, due to the `container scopes </cookbook/service_container/scopes>`_ this
+However, due to the :doc:`container scopes </cookbook/service_container/scopes>` this
 code doesn't work for some services. For instance, if you try to get the ``request``
 service or any other service related to it, you'll get the following error:
 
@@ -103,7 +112,9 @@ translate some contents using a console command::
         $name = $input->getArgument('name');
         $translator = $this->getContainer()->get('translator');
         if ($name) {
-            $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
+            $output->writeln(
+                $translator->trans('Hello %name%!', array('%name%' => $name))
+            );
         } else {
             $output->writeln($translator->trans('Hello!'));
         }
@@ -137,7 +148,9 @@ before translating contents::
         $translator->setLocale($locale);
 
         if ($name) {
-            $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
+            $output->writeln(
+                $translator->trans('Hello %name%!', array('%name%' => $name))
+            );
         } else {
             $output->writeln($translator->trans('Hello!'));
         }
@@ -156,7 +169,7 @@ instead of
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Acme\DemoBundle\Command\GreetCommand;
+    use AppBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
@@ -181,11 +194,6 @@ instead of
         }
     }
 
-.. versionadded:: 2.4
-    Since Symfony 2.4, the ``CommandTester`` automatically detects the name of
-    the command to execute. Prior to Symfony 2.4, you need to pass it via the
-    ``command`` key.
-
 .. note::
 
     In the specific case above, the ``name`` parameter and the ``--yell`` option
@@ -194,14 +202,14 @@ instead of
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
-:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`::
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-    use Acme\DemoBundle\Command\GreetCommand;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+    use AppBundle\Command\GreetCommand;
 
-    class ListCommandTest extends WebTestCase
+    class ListCommandTest extends KernelTestCase
     {
         public function testExecute()
         {
@@ -225,3 +233,13 @@ you can extend your test from
             // ...
         }
     }
+
+.. versionadded:: 2.5
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` was
+    extracted from :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`
+    in Symfony 2.5. ``WebTestCase`` inherits from ``KernelTestCase``. The
+    ``WebTestCase`` creates an instance of
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Client` via ``createClient()``,
+    while ``KernelTestCase`` creates an instance of
+    :class:`Symfony\\Component\\HttpKernel\\KernelInterface` via
+    ``createKernel()``.

@@ -20,9 +20,11 @@ form type.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `maxSize`_                                                        |
+|                | - `binaryFormat`_                                                   |
 |                | - `mimeTypes`_                                                      |
 |                | - `maxSizeMessage`_                                                 |
 |                | - `mimeTypesMessage`_                                               |
+|                | - `disallowEmptyMessage`_                                           |
 |                | - `notFoundMessage`_                                                |
 |                | - `notReadableMessage`_                                             |
 |                | - `uploadIniSizeErrorMessage`_                                      |
@@ -153,19 +155,46 @@ Options
 maxSize
 ~~~~~~~
 
+.. versionadded:: 2.6
+    The suffixes ``Ki`` and ``Mi`` were introduced in Symfony 2.6.
+
 **type**: ``mixed``
 
 If set, the size of the underlying file must be below this file size in order
 to be valid. The size of the file can be given in one of the following formats:
 
-* **bytes**: To specify the ``maxSize`` in bytes, pass a value that is entirely
-  numeric (e.g. ``4096``);
++--------+-----------+-----------------+------+
+| Suffix | Unit Name |      value      | e.g. |
++========+===========+=================+======+
+|        | byte      |          1 byte | 4096 |
++--------+-----------+-----------------+------+
+| k      | kilobyte  |     1,000 bytes | 200k |
++--------+-----------+-----------------+------+
+| M      | megabyte  | 1,000,000 bytes |   2M |
++--------+-----------+-----------------+------+
+| Ki     | kibibyte  |     1,024 bytes | 32Ki |
++--------+-----------+-----------------+------+
+| Mi     | mebibyte  | 1,048,576 bytes |  8Mi |
++--------+-----------+-----------------+------+
 
-* **kilobytes**: To specify the ``maxSize`` in kilobytes, pass a number and
-  suffix it with a lowercase "k" (e.g. ``200k``);
+For more information about the difference between binary and SI prefixes,
+see `Wikipedia: Binary prefix`_.
 
-* **megabytes**: To specify the ``maxSize`` in megabytes, pass a number and
-  suffix it with a capital "M" (e.g. ``4M``).
+binaryFormat
+~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``binaryFormat`` option was introduced in Symfony 2.6.
+
+**type**: ``boolean`` **default**: ``null``
+
+When ``true``, the sizes will be displayed in messages with binary-prefixed
+units (KiB, MiB). When ``false``, the sizes will be displayed with SI-prefixed
+units (kB, MB). When ``null``, then the binaryFormat will be guessed from
+the value defined in the ``maxSize`` option.
+
+For more information about the difference between binary and SI prefixes,
+see `Wikipedia: Binary prefix`_.
 
 mimeTypes
 ~~~~~~~~~
@@ -192,6 +221,18 @@ mimeTypesMessage
 
 The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
+
+disallowEmptyMessage
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``disallowEmptyMessage`` option was introduced in Symfony 2.6. Prior to 2.6,
+    if the user uploaded an empty file, no validation error occurred.
+
+**type**: ``string`` **default**: ``An empty file is not allowed.``
+
+This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
+this message is displayed.
 
 notFoundMessage
 ~~~~~~~~~~~~~~~
@@ -237,3 +278,4 @@ to disk.
 
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
+.. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix

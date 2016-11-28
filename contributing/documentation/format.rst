@@ -92,7 +92,7 @@ The previous reST snippet renders as follow:
 The current list of supported formats are the following:
 
 ===================  ======================================
-Markup format        Use it to display
+Markup Format        Use It to Display
 ===================  ======================================
 ``html``             HTML
 ``xml``              XML
@@ -209,7 +209,6 @@ submitting your documentation, follow these steps:
 
 * Install Sphinx_;
 * Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
-* (Optionally) Install the bundle docs and CMF docs: ``$ bash install.sh``;
 * Run ``make html`` and view the generated HTML in the ``build/`` directory.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html

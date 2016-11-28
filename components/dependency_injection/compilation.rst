@@ -277,10 +277,6 @@ but also load a secondary one only if a certain parameter is set::
 Prepending Configuration Passed to the Extension
 ------------------------------------------------
 
-.. versionadded:: 2.2
-    The ability to prepend the configuration of a bundle was introduced in
-    Symfony 2.2.
-
 An Extension can prepend the configuration of any Bundle before the ``load()``
 method is called by implementing :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
 

@@ -49,22 +49,21 @@ You can now render a PHP template instead of a Twig one simply by using the
 ``.php`` extension in the template name instead of ``.twig``. The controller
 below renders the ``index.html.php`` template::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
+    // src/AppBundle/Controller/HelloController.php
 
     // ...
     public function indexAction($name)
     {
         return $this->render(
-            'AcmeHelloBundle:Hello:index.html.php',
+            'AppBundle:Hello:index.html.php',
             array('name' => $name)
         );
     }
 
-You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
-shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template::
+You can also use the `@Template`_ shortcut to render the default
+``AppBundle:Hello:index.html.php`` template::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-
+    // src/AppBundle/Controller/HelloController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
@@ -89,19 +88,19 @@ shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template
             // ...
 
             // namespaced templates will no longer work in controllers
-            $this->render('@Acme/Default/index.html.twig');
+            $this->render('@App/Default/index.html.twig');
 
             // you must use the traditional template notation
-            $this->render('AcmeBundle:Default:index.html.twig');
+            $this->render('AppBundle:Default:index.html.twig');
         }
 
     .. code-block:: jinja
 
         {# inside a Twig template, namespaced templates work as expected #}
-        {{ include('@Acme/Default/index.html.twig') }}
+        {{ include('@App/Default/index.html.twig') }}
 
         {# traditional template notation will also work #}
-        {{ include('AcmeBundle:Default:index.html.twig') }}
+        {{ include('AppBundle:Default:index.html.twig') }}
 
 
 .. index::
@@ -120,12 +119,12 @@ the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
+    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('AppBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
 
-The ``AcmeHelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
+The ``AppBundle::layout.html.php`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
@@ -134,7 +133,7 @@ Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/layout.html.php -->
+    <!-- src/AppBundle/Resources/views/layout.html.php -->
     <?php $view->extend('::base.html.php') ?>
 
     <h1>Hello Application</h1>
@@ -182,8 +181,8 @@ decorating the template. In the ``index.html.php`` template, define a
 
 .. code-block:: html+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
+    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('AppBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
@@ -224,17 +223,17 @@ Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/Hello/hello.html.php -->
+    <!-- src/AppBundle/Resources/views/Hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
+    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('AppBundle::layout.html.php') ?>
 
-    <?php echo $view->render('AcmeHelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
+    <?php echo $view->render('AppBundle:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -254,18 +253,18 @@ If you create a ``fancy`` action, and want to include it into the
 
 .. code-block:: html+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
+    <!-- src/AppBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render(
-        new \Symfony\Component\HttpKernel\Controller\ControllerReference('AcmeHelloBundle:Hello:fancy', array(
+        new \Symfony\Component\HttpKernel\Controller\ControllerReference('AppBundle:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ))
     ) ?>
 
-Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
+Here, the ``AppBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
+    // src/AppBundle/Controller/HelloController.php
 
     class HelloController extends Controller
     {
@@ -274,7 +273,7 @@ Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action 
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeHelloBundle:Hello:fancy.html.php', array(
+            return $this->render('AppBundle:Hello:fancy.html.php', array(
                 'name'   => $name,
                 'object' => $object
             ));
@@ -318,10 +317,10 @@ pattern:
 
 .. code-block:: yaml
 
-    # src/Acme/HelloBundle/Resources/config/routing.yml
+    # src/AppBundle/Resources/config/routing.yml
     hello: # The route name
         path:     /hello/{name}
-        defaults: { _controller: AcmeHelloBundle:Hello:index }
+        defaults: { _controller: AppBundle:Hello:index }
 
 Using Assets: Images, JavaScripts and Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -368,3 +367,5 @@ within an HTML context. The second argument lets you change the context. For
 instance, to output something in a JavaScript script, use the ``js`` context::
 
     <?php echo $view->escape($var, 'js') ?>
+
+.. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view`

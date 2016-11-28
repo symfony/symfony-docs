@@ -60,7 +60,7 @@ command line, and might become part of your deploy process:
 
 .. code-block:: bash
 
-    $ php composer.phar dump-autoload --optimize
+    $ composer dump-autoload --optimize
 
 Internally, this builds the big class map array in ``vendor/composer/autoload_classmap.php``.
 
@@ -128,8 +128,7 @@ Note that there are two disadvantages when using a bootstrap file:
 * when debugging, one will need to place break points inside the bootstrap file.
 
 If you're using the Symfony Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the ``php composer.phar install``
-command.
+rebuilt after updating the vendor libraries via the ``composer install`` command.
 
 Bootstrap Files and Byte Code Caches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

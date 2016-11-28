@@ -7,27 +7,149 @@ How to Use Varnish to Speed up my Website
 Because Symfony's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
-cached content quickly and including support for :ref:`Edge Side Includes <edge-side-includes>`.
+cached content fast and including support for :ref:`Edge Side Includes <edge-side-includes>`.
 
-Trusting Reverse Proxies
-------------------------
+.. index::
+    single: Varnish; configuration
+
+Make Symfony Trust the Reverse Proxy
+------------------------------------
 
 For ESI to work correctly and for the :ref:`X-FORWARDED <varnish-x-forwarded-headers>`
 headers to be used, you need to configure Varnish as a
 :doc:`trusted proxy </cookbook/request/load_balancer_reverse_proxy>`.
 
-.. index::
-    single: Varnish; configuration
+.. _varnish-x-forwarded-headers:
 
-Configuration
--------------
+Routing and X-FORWARDED Headers
+-------------------------------
 
-As seen previously, Symfony is smart enough to detect whether it talks to a
-reverse proxy that understands ESI or not. It works out of the box when you
-use the Symfony reverse proxy, but you need a special configuration to make
-it work with Varnish. Thankfully, Symfony relies on yet another standard
-written by Akamai (`Edge Architecture`_), so the configuration tips in this
-chapter can be useful even if you don't use Symfony.
+To ensure that the Symfony Router generates URLs correctly with Varnish,
+a ``X-Forwarded-Port`` header must be present for Symfony to use the
+correct port number.
+
+This port depends on your setup. Lets say that external connections come in
+on the default HTTP port 80. For HTTPS connections, there is another proxy
+(as Varnish does not do HTTPS itself) on the default HTTPS port 443 that
+handles the SSL termination and forwards the requests as HTTP requests to
+Varnish with a ``X-Forwarded-Proto`` header. In this case, you need to add
+the following configuration snippet:
+
+.. code-block:: varnish4
+
+    sub vcl_recv {
+        if (req.http.X-Forwarded-Proto == "https" ) {
+            set req.http.X-Forwarded-Port = "443";
+        } else {
+            set req.http.X-Forwarded-Port = "80";
+        }
+    }
+
+.. note::
+
+    Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
+    in the Symfony configuration so that Varnish is seen as a trusted proxy
+    and the ``X-Forwarded-*`` headers are used.
+
+    Varnish automatically forwards the IP as ``X-Forwarded-For`` and leaves
+    the ``X-Forwarded-Proto`` header in the request. If you do not configure
+    Varnish as trusted proxy, Symfony will see all requests as coming through
+    insecure HTTP connections from the Varnish host instead of the real client.
+
+If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
+the port where the PHP application is running when generating absolute URLs,
+e.g. ``http://example.com:8080/my/path``.
+
+Cookies and Caching
+-------------------
+
+By default, a sane caching proxy does not cache anything when a request is sent
+with :ref:`cookies or a basic authentication header<http-cache-introduction>`.
+This is because the content of the page is supposed to depend on the cookie
+value or authentication header.
+
+If you know for sure that the backend never uses sessions or basic
+authentication, have varnish remove the corresponding header from requests to
+prevent clients from bypassing the cache. In practice, you will need sessions
+at least for some parts of the site, e.g. when using forms with
+:ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to only
+start a session when actually needed, and clear the session when it is no
+longer needed. Alternatively, you can look into :doc:`../cache/form_csrf_caching`.
+
+.. todo link "only start a session when actually needed" to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
+
+Cookies created in Javascript and used only in the frontend, e.g. when using
+Google analytics are nonetheless sent to the server. These cookies are not
+relevant for the backend and should not affect the caching decision. Configure
+your Varnish cache to `clean the cookies header`_. You want to keep the
+session cookie, if there is one, and get rid of all other cookies so that pages
+are cached if there is no active session. Unless you changed the default
+configuration of PHP, your session cookie has the name PHPSESSID:
+
+.. code-block:: varnish4
+
+    sub vcl_recv {
+        // Remove all cookies except the session ID.
+        if (req.http.Cookie) {
+            set req.http.Cookie = ";" + req.http.Cookie;
+            set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+            set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+            if (req.http.Cookie == "") {
+                // If there are no more cookies, remove the header to get page cached.
+                remove req.http.Cookie;
+            }
+        }
+    }
+
+.. tip::
+
+    If content is not different for every user, but depends on the roles of a
+    user, a solution is to separate the cache per group. This pattern is
+    implemented and explained by the FOSHttpCacheBundle_ under the name
+    `User Context`_.
+
+Ensure Consistent Caching Behaviour
+-----------------------------------
+
+Varnish uses the cache headers sent by your application to determine how
+to cache content. However, versions prior to Varnish 4 did not respect
+``Cache-Control: no-cache``, ``no-store`` and ``private``. To ensure
+consistent behavior, use the following configuration if you are still
+using Varnish 3:
+
+.. configuration-block::
+
+    .. code-block:: varnish3
+
+        sub vcl_fetch {
+            /* By default, Varnish3 ignores Cache-Control: no-cache and private
+               https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control
+             */
+            if (beresp.http.Cache-Control ~ "private" ||
+                beresp.http.Cache-Control ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "no-store"
+            ) {
+                return (hit_for_pass);
+            }
+        }
+
+.. tip::
+
+    You can see the default behavior of Varnish in the form of a VCL file:
+    `default.vcl`_ for Varnish 3, `builtin.vcl`_ for Varnish 4.
+
+Enable Edge Side Includes (ESI)
+-------------------------------
+
+As explained in the :ref:`Edge Side Includes section<edge-side-includes>`,
+Symfony detects whether it talks to a reverse proxy that understands ESI or
+not. When you use the Symfony reverse proxy, you don't need to do anything.
+But to make Varnish instead of Symfony resolve the ESI tags, you need some
+configuration in Varnish. Symfony uses the ``Surrogate-Capability`` header
+from the `Edge Architecture`_ described by Akamai.
 
 .. note::
 
@@ -38,7 +160,7 @@ First, configure Varnish so that it advertises its ESI support by adding a
 ``Surrogate-Capability`` header to requests forwarded to the backend
 application:
 
-.. code-block:: text
+.. code-block:: varnish4
 
     sub vcl_recv {
         // Add a Surrogate-Capability header to announce ESI support.
@@ -54,36 +176,33 @@ Then, optimize Varnish so that it only parses the Response contents when there
 is at least one ESI tag by checking the ``Surrogate-Control`` header that
 Symfony adds automatically:
 
-.. code-block:: text
+.. configuration-block::
 
-    sub vcl_fetch {
-        /*
-        Check for ESI acknowledgement
-        and remove Surrogate-Control header
-        */
-        if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
-            unset beresp.http.Surrogate-Control;
+    .. code-block:: varnish4
 
-            // For Varnish >= 3.0
-            set beresp.do_esi = true;
-            // For Varnish < 3.0
-            // esi;
+        sub vcl_backend_response {
+            // Check for ESI acknowledgement and remove Surrogate-Control header
+            if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+                unset beresp.http.Surrogate-Control;
+                set beresp.do_esi = true;
+            }
         }
-        /* By default Varnish ignores Cache-Control: nocache
-        (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control),
-        so in order avoid caching it has to be done explicitly */
-        if (beresp.http.Pragma ~ "no-cache" ||
-             beresp.http.Cache-Control ~ "no-cache" ||
-             beresp.http.Cache-Control ~ "private") {
-            return (hit_for_pass);
+
+    .. code-block:: varnish3
+
+        sub vcl_fetch {
+            // Check for ESI acknowledgement and remove Surrogate-Control header
+            if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+                unset beresp.http.Surrogate-Control;
+                set beresp.do_esi = true;
+            }
         }
-    }
 
-.. caution::
+.. tip::
 
-    Compression with ESI was not supported in Varnish until version 3.0
-    (read `GZIP and Varnish`_). If you're not using Varnish 3.0, put a web
-    server in front of Varnish to perform the compression.
+    If you followed the advice about ensuring a consistent caching
+    behavior, those vcl functions already exist. Just append the code
+    to the end of the function, they won't interfere with each other.
 
 .. index::
     single: Varnish; Invalidation
@@ -102,143 +221,16 @@ proxy before it has expired, it adds complexity to your caching setup.
     invalidation by helping you to organize your caching and
     invalidation setup.
 
-Varnish can be configured to accept a special HTTP ``PURGE`` method
-that will invalidate the cache for a given resource:
-
-.. code-block:: text
-
-    /*
-     Connect to the backend server
-     on the local machine on port 8080
-     */
-    backend default {
-        .host = "127.0.0.1";
-        .port = "8080";
-    }
-
-    sub vcl_recv {
-        /*
-        Varnish default behavior doesn't support PURGE.
-        Match the PURGE request and immediately do a cache lookup,
-        otherwise Varnish will directly pipe the request to the backend
-        and bypass the cache
-        */
-        if (req.request == "PURGE") {
-            return(lookup);
-        }
-    }
-
-    sub vcl_hit {
-        // Match PURGE request
-        if (req.request == "PURGE") {
-            // Force object expiration for Varnish < 3.0
-            set obj.ttl = 0s;
-            // Do an actual purge for Varnish >= 3.0
-            // purge;
-            error 200 "Purged";
-        }
-    }
-
-    sub vcl_miss {
-        /*
-        Match the PURGE request and
-        indicate the request wasn't stored in cache.
-        */
-        if (req.request == "PURGE") {
-            error 404 "Not purged";
-        }
-    }
-
-.. caution::
-
-    You must protect the ``PURGE`` HTTP method somehow to avoid random people
-    purging your cached data. You can do this by setting up an access list:
-
-    .. code-block:: text
-
-        /*
-         Connect to the backend server
-         on the local machine on port 8080
-         */
-        backend default {
-            .host = "127.0.0.1";
-            .port = "8080";
-        }
-
-        // ACL's can contain IP's, subnets and hostnames
-        acl purge {
-            "localhost";
-            "192.168.55.0"/24;
-        }
-
-        sub vcl_recv {
-            // Match PURGE request to avoid cache bypassing
-            if (req.request == "PURGE") {
-                // Match client IP to the ACL
-                if (!client.ip ~ purge) {
-                    // Deny access
-                    error 405 "Not allowed.";
-                }
-                // Perform a cache lookup
-                return(lookup);
-            }
-        }
-
-        sub vcl_hit {
-            // Match PURGE request
-            if (req.request == "PURGE") {
-                // Force object expiration for Varnish < 3.0
-                set obj.ttl = 0s;
-                // Do an actual purge for Varnish >= 3.0
-                // purge;
-                error 200 "Purged";
-            }
-        }
-
-        sub vcl_miss {
-            // Match PURGE request
-            if (req.request == "PURGE") {
-                // Indicate that the object isn't stored in cache
-                error 404 "Not purged";
-            }
-        }
-
-.. _varnish-x-forwarded-headers:
-
-Routing and X-FORWARDED Headers
--------------------------------
-
-To ensure that the Symfony Router generates URLs correctly with Varnish,
-proper ```X-Forwarded``` headers must be added so that Symfony is aware of
-the original port number of the request. Exactly how this is done depends
-on your setup. As a simple example, Varnish and your web server are on the
-same machine and that Varnish is listening on one port (e.g. 80) and Apache
-on another (e.g. 8080). In this situation, Varnish should add the ``X-Forwarded-Port``
-header so that the Symfony application knows that the original port number
-is 80 and not 8080.
-
-If this header weren't set properly, Symfony may append ``8080`` when generating
-absolute URLs:
-
-.. code-block:: text
-
-    sub vcl_recv {
-        if (req.http.X-Forwarded-Proto == "https" ) {
-            set req.http.X-Forwarded-Port = "443";
-        } else {
-            set req.http.X-Forwarded-Port = "80";
-        }
-    }
-
-.. note::
-
-    Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
-    in the Symfony configuration so that Varnish is seen as a trusted proxy
-    and the ``X-Forwarded-`` headers are used.
+    The documentation of the `FOSHttpCacheBundle`_ explains how to configure
+    Varnish and other reverse proxies for cache invalidation.
 
 .. _`Varnish`: https://www.varnish-cache.org
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
+.. _`Clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`default.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/default.vcl?rev=3.0
+.. _`builtin.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/builtin.vcl?rev=4.0
+.. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html

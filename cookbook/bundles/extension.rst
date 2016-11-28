@@ -23,8 +23,9 @@ following conventions:
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
 
 * The name is equal to the bundle name with the ``Bundle`` suffix replaced by
-  ``Extension`` (e.g. the Extension class of ``AcmeHelloBundle`` would be
-  called ``AcmeHelloExtension``).
+  ``Extension`` (e.g. the Extension class of the AppBundle would be called
+  ``AppExtension`` and the one for AcmeHelloBundle would be called
+  ``AcmeHelloExtension``).
 
 The Extension class should implement the
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`,
@@ -84,7 +85,7 @@ container, to ensure all services and parameters are also added to the actual
 container.
 
 In the ``load()`` method, you can use PHP code to register service definitions,
-but it is more common if you put the these definitions in a configuration file
+but it is more common if you put these definitions in a configuration file
 (using the Yaml, XML or PHP format). Luckily, you can use the file loaders in
 the extension!
 

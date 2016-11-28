@@ -23,7 +23,7 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an ``AcmeUserBundle`` bundle with a ``User`` entity that has an
+Suppose you have an AcmeUserBundle bundle with a ``User`` entity that has an
 ``email`` field. You can use the ``UniqueEntity`` constraint to guarantee that
 the ``email`` field remains unique between all of the constraints in your user
 table:

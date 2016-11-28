@@ -84,7 +84,7 @@ to show a link to exit impersonation:
             >
                 Exit impersonation
             </a>
-        <?php endif; ?>
+        <?php endif ?>
 
 Of course, this feature needs to be made available to a small group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``

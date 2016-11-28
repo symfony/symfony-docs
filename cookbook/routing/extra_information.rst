@@ -17,7 +17,7 @@ arguments to your controller:
         blog:
             path:      /blog/{page}
             defaults:
-                _controller: AcmeBlogBundle:Blog:index
+                _controller: AppBundle:Blog:index
                 page:        1
                 title:       "Hello world!"
 
@@ -31,7 +31,7 @@ arguments to your controller:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AcmeBlogBundle:Blog:index</default>
+                <default key="_controller">AppBundle:Blog:index</default>
                 <default key="page">1</default>
                 <default key="title">Hello world!</default>
             </route>
@@ -45,7 +45,7 @@ arguments to your controller:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:index',
+            '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
             'title'       => 'Hello world!',
         )));

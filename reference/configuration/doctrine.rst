@@ -5,7 +5,7 @@
 DoctrineBundle Configuration ("doctrine")
 =========================================
 
-Full default configuration
+Full Default Configuration
 --------------------------
 
 .. configuration-block::
@@ -26,9 +26,6 @@ Full default configuration
                 #schema_filter:        ^sf2_
 
                 connections:
-                    default:
-                        dbname:               database
-
                     # A collection of different named connections (e.g. default, conn2, etc)
                     default:
                         dbname:               ~
@@ -62,6 +59,8 @@ Full default configuration
                         MultipleActiveResultSets:  ~
                         driver:               pdo_mysql
                         platform_service:     ~
+
+                        # when true, queries are logged to a "doctrine" monolog channel
                         logging:              "%kernel.debug%"
                         profiling:            "%kernel.debug%"
                         driver_class:         ~
@@ -180,8 +179,10 @@ Full default configuration
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:dbal default-connection="default">
@@ -209,16 +210,44 @@ Full default configuration
                     <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
                 </doctrine:dbal>
 
-                <doctrine:orm default-entity-manager="default" auto-generate-proxy-classes="false" proxy-namespace="Proxies" proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies">
-                    <doctrine:entity-manager name="default" query-cache-driver="array" result-cache-driver="array" connection="conn1" class-metadata-factory-name="Doctrine\ORM\Mapping\ClassMetadataFactory">
-                        <doctrine:metadata-cache-driver type="memcache" host="localhost" port="11211" instance-class="Memcache" class="Doctrine\Common\Cache\MemcacheCache" />
+                <doctrine:orm
+                    default-entity-manager="default"
+                    auto-generate-proxy-classes="false"
+                    proxy-namespace="Proxies"
+                    proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies"
+                >
+                    <doctrine:entity-manager
+                        name="default"
+                        query-cache-driver="array"
+                        result-cache-driver="array"
+                        connection="conn1"
+                        class-metadata-factory-name="Doctrine\ORM\Mapping\ClassMetadataFactory"
+                    >
+                        <doctrine:metadata-cache-driver
+                            type="memcache"
+                            host="localhost"
+                            port="11211"
+                            instance-class="Memcache"
+                            class="Doctrine\Common\Cache\MemcacheCache"
+                        />
+
                         <doctrine:mapping name="AcmeHelloBundle" />
+
                         <doctrine:dql>
-                            <doctrine:string-function name="test_string">Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
-                            <doctrine:numeric-function name="test_numeric">Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
-                            <doctrine:datetime-function name="test_datetime">Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                            <doctrine:string-function name="test_string">
+                                Acme\HelloBundle\DQL\StringFunction
+                            </doctrine:string-function>
+
+                            <doctrine:numeric-function name="test_numeric">
+                                Acme\HelloBundle\DQL\NumericFunction
+                            </doctrine:numeric-function>
+
+                            <doctrine:datetime-function name="test_datetime">
+                                Acme\HelloBundle\DQL\DatetimeFunction
+                            </doctrine:datetime-function>
                         </doctrine:dql>
                     </doctrine:entity-manager>
+
                     <doctrine:entity-manager name="em2" connection="conn2" metadata-cache-driver="apc">
                         <doctrine:mapping
                             name="DoctrineExtensions"
@@ -235,8 +264,8 @@ Full default configuration
 Configuration Overview
 ----------------------
 
-This following configuration example shows all the configuration defaults that
-the ORM resolves to:
+This following configuration example shows all the configuration defaults
+that the ORM resolves to:
 
 .. code-block:: yaml
 
@@ -258,8 +287,8 @@ certain classes, but those are for very advanced use-cases only.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values "array", "apc", "memcache", "memcached",
-"xcache" or "service".
+For the caching drivers you can specify the values "array", "apc", "memcache",
+"memcached", "xcache" or "service".
 
 The following example shows an overview of the caching configurations:
 
@@ -282,34 +311,48 @@ Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Explicit definition of all the mapped entities is the only necessary
-configuration for the ORM and there are several configuration options that you
-can control. The following configuration options exist for a mapping:
+configuration for the ORM and there are several configuration options that
+you can control. The following configuration options exist for a mapping:
 
-* ``type`` One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``.
-  This specifies which type of metadata type your mapping uses.
+type
+....
 
-* ``dir`` Path to the mapping or entity files (depending on the driver). If
-  this path is relative it is assumed to be relative to the bundle root. This
-  only works if the name of your mapping is a bundle name. If you want to use
-  this option to specify absolute paths you should prefix the path with the
-  kernel parameters that exist in the DIC (for example %kernel.root_dir%).
+One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This specifies
+which type of metadata type your mapping uses.
 
-* ``prefix`` A common namespace prefix that all entities of this mapping
-  share. This prefix should never conflict with prefixes of other defined
-  mappings otherwise some of your entities cannot be found by Doctrine. This
-  option defaults to the bundle namespace + ``Entity``, for example for an
-  application bundle called ``AcmeHelloBundle`` prefix would be
-  ``Acme\HelloBundle\Entity``.
+dir
+...
 
-* ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
-  shorter names to be used in DQL queries or for Repository access. When using
-  a bundle the alias defaults to the bundle name.
+Path to the mapping or entity files (depending on the driver). If this path
+is relative it is assumed to be relative to the bundle root. This only works
+if the name of your mapping is a bundle name. If you want to use this option
+to specify absolute paths you should prefix the path with the kernel parameters
+that exist in the DIC (for example ``%kernel.root_dir%``).
 
-* ``is_bundle`` This option is a derived value from ``dir`` and by default is
-  set to true if dir is relative proved by a ``file_exists()`` check that
-  returns false. It is false if the existence check returns true. In this case
-  an absolute path was specified and the metadata files are most likely in a
-  directory outside of a bundle.
+prefix
+......
+
+A common namespace prefix that all entities of this mapping share. This prefix
+should never conflict with prefixes of other defined mappings otherwise some
+of your entities cannot be found by Doctrine. This option defaults to the
+bundle namespace + ``Entity``, for example for an application bundle called
+AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
+
+alias
+.....
+
+Doctrine offers a way to alias entity namespaces to simpler, shorter names
+to be used in DQL queries or for Repository access. When using a bundle the
+alias defaults to the bundle name.
+
+is_bundle
+.........
+
+This option is a derived value from ``dir`` and by default is set to ``true``
+if dir is relative proved by a ``file_exists()`` check that returns ``false``.
+It is ``false`` if the existence check returns ``true``. In this case an
+absolute path was specified and the metadata files are most likely in a directory
+outside of a bundle.
 
 .. index::
     single: Configuration; Doctrine DBAL
@@ -363,8 +406,11 @@ The following block shows all possible configuration keys:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
+        >
 
             <doctrine:config>
                 <doctrine:dbal

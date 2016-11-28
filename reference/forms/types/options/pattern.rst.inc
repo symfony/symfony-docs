@@ -1,6 +1,12 @@
 pattern
 ~~~~~~~
 
+.. caution::
+
+    The ``pattern`` option was deprecated in Symfony 2.5 and will be removed
+    in Symfony 3.0. Use the ``attr`` option instead by setting it to an array
+    with a ``pattern`` key.
+
 **type**: ``string`` **default**: ``null``
 
 This adds an HTML5 ``pattern`` attribute to restrict the field input by a

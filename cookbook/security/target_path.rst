@@ -25,29 +25,29 @@ configuration file. This can be done from your main configuration file (in
 
         .. code-block:: yaml
 
-            # src/Acme/HelloBundle/Resources/config/services.yml
+            # app/config/services.yml
             parameters:
                 # ...
-                security.exception_listener.class: Acme\HelloBundle\Security\Firewall\ExceptionListener
+                security.exception_listener.class: AppBundle\Security\Firewall\ExceptionListener
 
         .. code-block:: xml
 
-            <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+            <!-- app/config/services.xml -->
             <parameters>
                 <!-- ... -->
-                <parameter key="security.exception_listener.class">Acme\HelloBundle\Security\Firewall\ExceptionListener</parameter>
+                <parameter key="security.exception_listener.class">AppBundle\Security\Firewall\ExceptionListener</parameter>
             </parameters>
 
         .. code-block:: php
 
-            // src/Acme/HelloBundle/Resources/config/services.php
+            // app/config/services.php
             // ...
-            $container->setParameter('security.exception_listener.class', 'Acme\HelloBundle\Security\Firewall\ExceptionListener');
+            $container->setParameter('security.exception_listener.class', 'AppBundle\Security\Firewall\ExceptionListener');
 
 Next, create your own ``ExceptionListener``::
 
-    // src/Acme/HelloBundle/Security/Firewall/ExceptionListener.php
-    namespace Acme\HelloBundle\Security\Firewall;
+    // src/AppBundle/Security/Firewall/ExceptionListener.php
+    namespace AppBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Http\Firewall\ExceptionListener as BaseExceptionListener;
@@ -67,4 +67,4 @@ Next, create your own ``ExceptionListener``::
         }
     }
 
-Add as much or few logic here as required for your scenario!
+Add as much or as little logic here as required for your scenario!

@@ -14,8 +14,8 @@ Creating the Constraint Class
 
 First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
-    // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumeric.php
-    namespace Acme\DemoBundle\Validator\Constraints;
+    // src/AppBundle/Validator/Constraints/ContainsAlphanumeric.php
+    namespace AppBundle\Validator\Constraints;
 
     use Symfony\Component\Validator\Constraint;
 
@@ -54,8 +54,8 @@ when actually performing the validation.
 
 The validator class is also simple, and only has one required method ``validate()``::
 
-    // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
-    namespace Acme\DemoBundle\Validator\Constraints;
+    // src/AppBundle/Validator/Constraints/ContainsAlphanumericValidator.php
+    namespace AppBundle\Validator\Constraints;
 
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
@@ -65,22 +65,33 @@ The validator class is also simple, and only has one required method ``validate(
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
+                // If you're using the new 2.5 validation API (you probably are!)
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
+
+                // If you're using the old 2.4 validation API
+                /*
                 $this->context->addViolation(
                     $constraint->message,
                     array('%string%' => $value)
                 );
+                */
             }
         }
     }
 
-.. note::
+Inside ``validate``, you don't need to return a value. Instead, you add violations
+to the validator's ``context`` property and a value will be considered valid
+if it causes no violations. The ``buildViolation`` method takes the error
+message as its argument and returns an instance of
+:class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
+The ``addViolation`` method call finally adds the violation to the context.
 
-    The ``validate`` method does not return a value; instead, it adds violations
-    to the validator's ``context`` property with an ``addViolation`` method
-    call if there are validation failures. Therefore, a value could be considered
-    as being valid if it causes no violations to be added to the context.
-    The first parameter of the ``addViolation`` call is the error message to
-    use for that violation.
+.. versionadded:: 2.5
+    The ``buildViolation`` method was added in Symfony 2.5. For usage examples
+    with older Symfony versions, see the corresponding versions of this documentation
+    page.
 
 Using the new Validator
 -----------------------
@@ -91,18 +102,18 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\AcmeEntity:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\AcmeEntity:
             properties:
                 name:
                     - NotBlank: ~
-                    - Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
+                    - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Entity/AcmeEntity.php
+        // src/AppBundle/Entity/AcmeEntity.php
         use Symfony\Component\Validator\Constraints as Assert;
-        use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
+        use AppBundle\Validator\Constraints as AcmeAssert;
 
         class AcmeEntity
         {
@@ -119,26 +130,26 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\DemoBundle\Entity\AcmeEntity">
+            <class name="AppBundle\Entity\AcmeEntity">
                 <property name="name">
                     <constraint name="NotBlank" />
-                    <constraint name="Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric" />
+                    <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
                 </property>
             </class>
         </constraint-mapping>
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Entity/AcmeEntity.php
+        // src/AppBundle/Entity/AcmeEntity.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric;
+        use AppBundle\Validator\Constraints\ContainsAlphanumeric;
 
         class AcmeEntity
         {
@@ -167,6 +178,7 @@ tag and an ``alias`` attribute:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
             validator.unique.your_validator_name:
                 class: Fully\Qualified\Validator\Class\Name
@@ -175,6 +187,7 @@ tag and an ``alias`` attribute:
 
     .. code-block:: xml
 
+        <!-- app/config/services.xml -->
         <service id="validator.unique.your_validator_name" class="Fully\Qualified\Validator\Class\Name">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <tag name="validator.constraint_validator" alias="alias_name" />
@@ -182,6 +195,7 @@ tag and an ``alias`` attribute:
 
     .. code-block:: php
 
+        // app/config/services.php
         $container
             ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'));
@@ -219,12 +233,20 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
+                // If you're using the new 2.5 validation API (you probably are!)
+                $this->context->buildViolation($constraint->message)
+                    ->atPath('foo')
+                    ->addViolation();
+
+                // If you're using the old 2.4 validation API
+                /*
                 $this->context->addViolationAt(
                     'foo',
                     $constraint->message,
                     array(),
                     null
                 );
+                */
             }
         }
     }
@@ -236,10 +258,10 @@ not to the property:
 
     .. code-block:: yaml
 
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\AcmeEntity:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\AcmeEntity:
             constraints:
-                - Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
+                - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: php-annotations
 
@@ -253,7 +275,7 @@ not to the property:
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\DemoBundle\Entity\AcmeEntity">
-            <constraint name="Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric" />
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <class name="AppBundle\Entity\AcmeEntity">
+            <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
         </class>

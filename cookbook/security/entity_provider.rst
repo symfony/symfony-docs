@@ -37,10 +37,10 @@ retrieve users from a database with custom conditions.
 The Data Model
 --------------
 
-For the purpose of this cookbook, the ``AcmeUserBundle`` bundle contains a
-``User`` entity class with the following fields: ``id``, ``username``,
-``password``, ``email`` and ``isActive``. The ``isActive`` field tells whether
-or not the user account is active.
+For the purpose of this cookbook, the AcmeUserBundle bundle contains a ``User``
+entity class with the following fields: ``id``, ``username``, ``password``,
+``email`` and ``isActive``. The ``isActive`` field tells whether or not the
+user account is active.
 
 To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the
@@ -447,11 +447,11 @@ The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
 interface adds four extra methods to validate the account status:
 
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonExpired`
-  checks whether the user's account has expired,
+  checks whether the user's account has expired;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonLocked`
-   checks whether the user is locked,
+  checks whether the user is locked;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isCredentialsNonExpired`
-  checks whether the user's credentials (password) has expired,
+  checks whether the user's credentials (password) has expired;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isEnabled`
   checks whether the user is enabled.
 
@@ -877,7 +877,3 @@ then instead of these properties being checked, your ``isEqualTo`` method
 is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
-    and the ``EquatableInterface`` was introduced in its place.

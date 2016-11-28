@@ -259,7 +259,7 @@ For example::
     $inGroup = $language->evaluate(
         'user.group in ["human_resources", "marketing"]',
         array(
-            'user' => $user
+            'user' => $user,
         )
     );
 

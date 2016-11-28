@@ -181,7 +181,7 @@ which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
-The other option is to specifically checking if a session has expired after the
+The other option is specifically check if a session has expired after the
 session is started. The session can be destroyed as required. This method of
 processing can allow the expiry of sessions to be integrated into the user
 experience, for example, by displaying a message.
@@ -239,7 +239,7 @@ Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
 
 A Save Handler Proxy is basically a wrapper around a Save Handler that was
-introduced to support seamlessly the migration from PHP 5.3 to PHP 5.4+. It
+introduced to seamlessly support the migration from PHP 5.3 to PHP 5.4+. It
 further creates an extension point from where custom logic can be added that
 works independently of which handler is being wrapped inside.
 

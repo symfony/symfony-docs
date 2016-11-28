@@ -176,22 +176,15 @@ Now you make the user provider available as a service:
     .. code-block:: yaml
 
         # src/Acme/WebserviceUserBundle/Resources/config/services.yml
-        parameters:
-            webservice_user_provider.class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
-
         services:
             webservice_user_provider:
-                class: "%webservice_user_provider.class%"
+                class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
 
     .. code-block:: xml
 
         <!-- src/Acme/WebserviceUserBundle/Resources/config/services.xml -->
-        <parameters>
-            <parameter key="webservice_user_provider.class">Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider</parameter>
-        </parameters>
-
         <services>
-            <service id="webservice_user_provider" class="%webservice_user_provider.class%"></service>
+            <service id="webservice_user_provider" class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider" />
         </services>
 
     .. code-block:: php
@@ -199,9 +192,10 @@ Now you make the user provider available as a service:
         // src/Acme/WebserviceUserBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('webservice_user_provider.class', 'Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider');
-
-        $container->setDefinition('webservice_user_provider', new Definition('%webservice_user_provider.class%');
+        $container->setDefinition(
+            'webservice_user_provider',
+            new Definition('Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider')
+        );
 
 .. tip::
 

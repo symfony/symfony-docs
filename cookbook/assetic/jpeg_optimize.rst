@@ -57,7 +57,7 @@ It can now be used from a template:
 
     .. code-block:: html+jinja
 
-        {% image '@AcmeFooBundle/Resources/public/images/example.jpg'
+        {% image '@AppBundle/Resources/public/images/example.jpg'
             filter='jpegoptim' output='/images/example.jpg' %}
             <img src="{{ asset_url }}" alt="Example"/>
         {% endimage %}
@@ -65,11 +65,11 @@ It can now be used from a template:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->image(
-            array('@AcmeFooBundle/Resources/public/images/example.jpg'),
+            array('@AppBundle/Resources/public/images/example.jpg'),
             array('jpegoptim')
         ) as $url): ?>
             <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Removing all EXIF Data
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -204,7 +204,7 @@ The Twig template can now be changed to the following:
 
 .. code-block:: html+jinja
 
-    <img src="{{ jpegoptim('@AcmeFooBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
+    <img src="{{ jpegoptim('@AppBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
 
 You can specify the output directory in the config in the following way:
 

@@ -99,8 +99,8 @@ Creating an ACL and Adding an ACE
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Controller/BlogController.php
-    namespace Acme\DemoBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -129,8 +129,8 @@ Creating an ACL and Adding an ACE
                 $acl = $aclProvider->createAcl($objectIdentity);
 
                 // retrieving the security identity of the currently logged-in user
-                $securityContext = $this->get('security.context');
-                $user = $securityContext->getToken()->getUser();
+                $tokenStorage = $this->get('security.token_storage');
+                $user = $tokenStorage->getToken()->getUser();
                 $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
                 // grant owner access
@@ -167,7 +167,7 @@ Checking Access
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Controller/BlogController.php
+    // src/AppBundle/Controller/BlogController.php
 
     // ...
 
@@ -177,10 +177,10 @@ Checking Access
 
         public function editCommentAction(Comment $comment)
         {
-            $securityContext = $this->get('security.context');
+            $authorizationChecker = $this->get('security.authorization_checker');
 
             // check for edit access
-            if (false === $securityContext->isGranted('EDIT', $comment)) {
+            if (false === $authorizationChecker->isGranted('EDIT', $comment)) {
                 throw new AccessDeniedException();
             }
 

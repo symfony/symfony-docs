@@ -226,7 +226,7 @@ zero tags when first created).
             <ul class="tags">
                 <?php foreach($form['tags'] as $tag): ?>
                     <li><?php echo $view['form']->row($tag['name']) ?></li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         <?php echo $view['form']->end($form) ?>
 
@@ -463,9 +463,9 @@ we talk about next!).
 
 .. caution::
 
-    If no ``addTag`` **and** ``removeTag`` method is found, the form will
-    still use ``setTag`` even if ``by_reference`` is ``false``. You'll learn
-    more about the ``removeTag`` method later in this article.
+    You have to create **both** ``addTag`` and ``removeTag`` methods,
+    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``.
+    You'll learn more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
@@ -681,7 +681,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
 
             if (!$task) {
-                throw $this->createNotFoundException('No task found for is '.$id);
+                throw $this->createNotFoundException('No task found for id '.$id);
             }
 
             $originalTags = new ArrayCollection();

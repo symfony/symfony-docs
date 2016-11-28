@@ -59,18 +59,18 @@ templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee' filter='coffee' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/example.coffee'),
+            array('@AppBundle/Resources/public/js/example.coffee'),
             array('coffee')
         ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+            <script src="<?php echo $view->escape($url) ?>"></script>
+        <?php endforeach ?>
 
 This is all that's needed to compile this CoffeeScript file and serve it
 as the compiled JavaScript.
@@ -84,23 +84,23 @@ You can also combine multiple CoffeeScript files into a single output file:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-                       '@AcmeFooBundle/Resources/public/js/another.coffee'
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                       '@AppBundle/Resources/public/js/another.coffee'
             filter='coffee' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
             array(
-                '@AcmeFooBundle/Resources/public/js/example.coffee',
-                '@AcmeFooBundle/Resources/public/js/another.coffee',
+                '@AppBundle/Resources/public/js/example.coffee',
+                '@AppBundle/Resources/public/js/another.coffee',
             ),
             array('coffee')
         ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+            <script src="<?php echo $view->escape($url) ?>"></script>
+        <?php endforeach ?>
 
 Both the files will now be served up as a single file compiled into regular
 JavaScript.
@@ -118,7 +118,7 @@ adding the JavaScript files to the files to be combined as above will not
 work as the regular JavaScript files will not survive the CoffeeScript compilation.
 
 This problem can be avoided by using the ``apply_to`` option in the config,
-which allows you to specify that a filter should always be applied to particular
+which allows you to specify which filter should always be applied to particular
 file extensions. In this case you can specify that the ``coffee`` filter is
 applied to all ``.coffee`` files:
 
@@ -170,20 +170,20 @@ being run through the CoffeeScript filter):
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-                       '@AcmeFooBundle/Resources/public/js/another.coffee'
-                       '@AcmeFooBundle/Resources/public/js/regular.js' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                       '@AppBundle/Resources/public/js/another.coffee'
+                       '@AppBundle/Resources/public/js/regular.js' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
             array(
-                '@AcmeFooBundle/Resources/public/js/example.coffee',
-                '@AcmeFooBundle/Resources/public/js/another.coffee',
-                '@AcmeFooBundle/Resources/public/js/regular.js',
+                '@AppBundle/Resources/public/js/example.coffee',
+                '@AppBundle/Resources/public/js/another.coffee',
+                '@AppBundle/Resources/public/js/regular.js',
             )
         ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+            <script src="<?php echo $view->escape($url) ?>"></script>
+        <?php endforeach ?>

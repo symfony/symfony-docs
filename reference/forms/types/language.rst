@@ -8,8 +8,8 @@ The ``language`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of languages. As an added bonus, the language names
 are displayed in the language of the user.
 
-The "value" for each language is the *Unicode language identifier*
-(e.g. ``fr`` or ``zh-Hant``).
+The "value" for each language is the *Unicode language identifier* used in
+the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
 
 .. note::
 
@@ -28,7 +28,7 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
 | options     |                                                                        |
-|             | - `empty_value`_                                                       |
+|             | - `placeholder`_                                                       |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `expanded`_                                                          |
@@ -67,7 +67,7 @@ Inherited Options
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -106,3 +106,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. _`International Components for Unicode`: http://site.icu-project.org

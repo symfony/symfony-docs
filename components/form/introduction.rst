@@ -78,6 +78,12 @@ Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHa
 object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 ``$_GET``) based on the HTTP method configured on the form (POST is default).
 
+.. seealso::
+
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+
 .. sidebar:: Integration with the HttpFoundation Component
 
     If you use the HttpFoundation component, then you should add the
@@ -137,7 +143,7 @@ and validated when binding the form.
 
 .. tip::
 
-    If you're not using the HttpFoundation component, load use
+    If you're not using the HttpFoundation component, you can use
     :class:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\DefaultCsrfProvider`
     instead, which relies on PHP's native session handling::
 
@@ -167,7 +173,7 @@ line to your ``composer.json`` file:
     }
 
 The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
-that help you render each the HTML widget, label and error for each field
+that help you render the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
@@ -180,17 +186,17 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // this file comes with TwigBridge
     $defaultFormTheme = 'form_div_layout.html.twig';
 
-    $vendorDir = realpath(__DIR__ . '/../vendor');
+    $vendorDir = realpath(__DIR__.'/../vendor');
     // the path to TwigBridge so Twig can locate the
     // form_div_layout.html.twig file
     $vendorTwigBridgeDir =
-        $vendorDir . '/symfony/twig-bridge/Symfony/Bridge/Twig';
+        $vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig';
     // the path to your other templates
-    $viewsDir = realpath(__DIR__ . '/../views');
+    $viewsDir = realpath(__DIR__.'/../views');
 
     $twig = new Twig_Environment(new Twig_Loader_Filesystem(array(
         $viewsDir,
-        $vendorTwigBridgeDir . '/Resources/views/Form',
+        $vendorTwigBridgeDir.'/Resources/views/Form',
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
@@ -309,10 +315,10 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\Validation;
 
-    $vendorDir = realpath(__DIR__ . '/../vendor');
-    $vendorFormDir = $vendorDir . '/symfony/form/Symfony/Component/Form';
+    $vendorDir = realpath(__DIR__.'/../vendor');
+    $vendorFormDir = $vendorDir.'/symfony/form/Symfony/Component/Form';
     $vendorValidatorDir =
-        $vendorDir . '/symfony/validator/Symfony/Component/Validator';
+        $vendorDir.'/symfony/validator/Symfony/Component/Validator';
 
     // create the validator - details will vary
     $validator = Validation::createValidator();
@@ -320,13 +326,13 @@ Your integration with the Validation component will look something like this::
     // there are built-in translations for the core error messages
     $translator->addResource(
         'xlf',
-        $vendorFormDir . '/Resources/translations/validators.en.xlf',
+        $vendorFormDir.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
     $translator->addResource(
         'xlf',
-        $vendorValidatorDir . '/Resources/translations/validators.en.xlf',
+        $vendorValidatorDir.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
@@ -489,6 +495,43 @@ as this is, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
 to do that in the ":ref:`form-rendering-template`" section.
 
+Changing a Form's Method and Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ability to configure the form method and action was introduced in
+    Symfony 2.3.
+
+By default, a form is submitted to the same URI that rendered the form with
+an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
+and :ref:`form-option-method` options (the ``method`` option is also used
+by ``handleRequest()`` to determine whether a form has been submitted):
+
+.. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $formBuilder = $formFactory->createBuilder('form', null, array(
+            'action' => '/search',
+            'method' => 'GET',
+        ));
+
+        // ...
+
+    .. code-block:: php-symfony
+
+        // ...
+
+        public function searchAction()
+        {
+            $formBuilder = $this->createFormBuilder('form', null, array(
+                'action' => '/search',
+                'method' => 'GET',
+            ));
+
+            // ...
+        }
+
 .. _component-form-intro-handling-submission:
 
 Handling Form Submissions
@@ -616,6 +659,51 @@ and the errors will display next to the fields on error.
 
     For a list of all of the built-in validation constraints, see
     :doc:`/reference/constraints`.
+
+Accessing Form Errors
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.5
+    Before Symfony 2.5, ``getErrors()`` returned an array of ``FormError``
+    objects. The return value was changed to ``FormErrorIterator`` in Symfony
+    2.5.
+
+.. versionadded:: 2.5
+    The ``$deep`` and ``$flatten`` arguments were introduced in Symfony 2.5.
+
+You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
+method to access the list of errors. It returns a
+:class:`Symfony\\Component\\Form\\FormErrorIterator` instance::
+
+    $form = ...;
+
+    // ...
+
+    // a FormErrorIterator instance, but only errors attached to this
+    // form level (e.g. "global errors)
+    $errors = $form->getErrors();
+
+    // a FormErrorIterator instance, but only errors attached to the
+    // "firstName" field
+    $errors = $form['firstName']->getErrors();
+
+    // a FormErrorIterator instance in a flattened structure
+    // use getOrigin() to determine the form causing the error
+    $errors = $form->getErrors(true);
+
+    // a FormErrorIterator instance representing the form tree structure
+    $errors = $form->getErrors(true, false);
+
+.. tip::
+
+    In older Symfony versions, ``getErrors()`` returned an array. To use the
+    errors the same way in Symfony 2.5 or newer, you have to pass them to
+    PHP's :phpfunction:`iterator_to_array` function::
+
+        $errorsAsArray = iterator_to_array($form->getErrors());
+
+    This is useful, for example, if you want to use PHP's ``array_`` function
+    on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org

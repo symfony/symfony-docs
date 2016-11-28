@@ -4,7 +4,7 @@
     single: ClassLoader; Cache
     single: ClassLoader; XcacheClassLoader
     single: XCache; XcacheClassLoader
-    
+
 Cache a Class Loader
 ====================
 
@@ -30,16 +30,16 @@ ApcClassLoader
 ``findFile()`` method using `APC`_::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/ApcClassLoader.php';
-    
+
     // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
-    
+
     // sha1(__FILE__) generates an APC namespace prefix
     $cachedLoader = new ApcClassLoader(sha1(__FILE__), $loader);
-    
+
     // register the cached class loader
     $cachedLoader->register();
-    
+
     // deactivate the original, non-cached loader if it was registered previously
     $loader->unregister();
 
@@ -50,16 +50,16 @@ XcacheClassLoader
 it is straightforward::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/XcacheClassLoader.php';
-    
+
     // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
-    
+
     // sha1(__FILE__) generates an XCache namespace prefix
     $cachedLoader = new XcacheClassLoader(sha1(__FILE__), $loader);
-    
+
     // register the cached class loader
     $cachedLoader->register();
-    
+
     // deactivate the original, non-cached loader if it was registered previously
     $loader->unregister();
 

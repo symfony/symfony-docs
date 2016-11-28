@@ -72,29 +72,26 @@ Defining Routes
 
 A full route definition can contain up to seven parts:
 
-1. The URL path route. This is matched against the URL passed to the `RequestContext`,
+#. The URL path route. This is matched against the URL passed to the `RequestContext`,
    and can contain named wildcard placeholders (e.g. ``{placeholders}``)
    to match dynamic parts in the URL.
 
-2. An array of default values. This contains an array of arbitrary values
+#. An array of default values. This contains an array of arbitrary values
    that will be returned when the request matches the route.
 
-3. An array of requirements. These define constraints for the values of the
+#. An array of requirements. These define constraints for the values of the
    placeholders as regular expressions.
 
-4. An array of options. These contain internal settings for the route and
+#. An array of options. These contain internal settings for the route and
    are the least commonly needed.
 
-5. A host. This is matched against the host of the request. See
+#. A host. This is matched against the host of the request. See
    :doc:`/components/routing/hostname_pattern` for more details.
 
-6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
+#. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
 
-7. An array of methods. These enforce a certain HTTP request method (``HEAD``,
+#. An array of methods. These enforce a certain HTTP request method (``HEAD``,
    ``GET``, ``POST``, ...).
-
-.. versionadded:: 2.2
-    Host matching support was introduced in Symfony 2.2
 
 Take the following route, which combines several of these ideas::
 
@@ -160,7 +157,6 @@ host to all routes of a subtree using methods provided by the
     $subCollection->setSchemes(array('https'));
 
     $rootCollection->addCollection($subCollection);
-
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -288,7 +284,7 @@ calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\Ro
 
     use Symfony\Component\Routing\Loader\ClosureLoader;
 
-    $closure = function() {
+    $closure = function () {
         return new RouteCollection();
     };
 
@@ -307,7 +303,7 @@ out here.
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Routing\\Router` class is a all-in-one package
+The :class:`Symfony\\Component\\Routing\\Router` class is an all-in-one package
 to quickly use the Routing component. The constructor expects a loader instance,
 a path to the main route definition and some other settings::
 

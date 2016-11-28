@@ -4,6 +4,7 @@
 
   * :doc:`/components/class_loader/introduction`
   * :doc:`/components/class_loader/class_loader`
+  * :doc:`/components/class_loader/psr4_class_loader`
   * :doc:`/components/class_loader/map_class_loader`
   * :doc:`/components/class_loader/cache_class_loader`
   * :doc:`/components/class_loader/debug_class_loader`
@@ -21,7 +22,10 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/changing_default_command`
+  * :doc:`/components/console/console_arguments`
   * :doc:`/components/console/events`
+  * :doc:`/components/console/logger`
   * :doc:`/components/console/helpers/index`
 
 * **CssSelector**
@@ -67,9 +71,10 @@
   * :doc:`/components/expression_language/extending`
   * :doc:`/components/expression_language/caching`
 
-* **Filesystem**
+* :doc:`/components/filesystem/index`
 
-  * :doc:`/components/filesystem`
+  * :doc:`/components/filesystem/introduction`
+  * :doc:`/components/filesystem/lock_handler`
 
 * **Finder**
 
@@ -121,6 +126,7 @@
   * :doc:`/components/security/firewall`
   * :doc:`/components/security/authentication`
   * :doc:`/components/security/authorization`
+  * :doc:`/components/security/secure_tools`
 
 * **Serializer**
 
@@ -139,6 +145,11 @@
   * :doc:`/components/translation/introduction`
   * :doc:`/components/translation/usage`
   * :doc:`/components/translation/custom_formats`
+
+* :doc:`/components/var_dumper/index`
+
+  * :doc:`/components/var_dumper/introduction`
+  * :doc:`/components/var_dumper/advanced`
 
 * :doc:`/components/yaml/index`
 

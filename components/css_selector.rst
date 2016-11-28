@@ -76,7 +76,7 @@ web-browser.
 
 * link-state selectors: ``:link``, ``:visited``, ``:target``
 * selectors based on user action: ``:hover``, ``:focus``, ``:active``
-* UI-state selectors: ``:invalid``, ``:indeterminate`` (however, ``:enabled``, 
+* UI-state selectors: ``:invalid``, ``:indeterminate`` (however, ``:enabled``,
   ``:disabled``, ``:checked`` and ``:unchecked`` are available)
 
 Pseudo-elements (``:before``, ``:after``, ``:first-line``,

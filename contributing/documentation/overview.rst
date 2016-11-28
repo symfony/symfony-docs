@@ -68,7 +68,7 @@ memorable name for the new branch:
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
 even remove any content, but make sure that you comply with the
-doc:`/contributing/documentation/standards`.
+:doc:`/contributing/documentation/standards`.
 
 **Step 6.** **Push** the changes to your forked repository:
 
@@ -93,6 +93,8 @@ the **base branch** should be the ``2.3``, which is the branch that you selected
 to base your changes on. The **compare repository** should be your forked copy
 of ``symfony-docs`` and the **compare branch** should be ``improve_install_chapter``,
 which is the name of the branch you created and where you made your changes.
+
+.. _pull-request-format:
 
 **Step 8.** The last step is to prepare the **description** of the pull request.
 To ensure that your work is reviewed quickly, please add the following table
@@ -168,7 +170,7 @@ Now you can **sync your fork** by executing the following command:
     $ git merge upstream/2.3
 
 This command will update the ``2.3`` branch, which is the one you used to
-create the new branch for your changes. If have used another base branch,
+create the new branch for your changes. If you have used another base branch,
 e.g. ``master``, replace the ``2.3`` with the appropriate branch name.
 
 Great! Now you can proceed by following the same steps explained in the previous

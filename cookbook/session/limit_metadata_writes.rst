@@ -4,9 +4,6 @@
 Limit Session Metadata Writes
 =============================
 
-.. versionadded:: 2.4
-    The ability to limit session metadata writes was introduced in Symfony 2.4.
-
 The default behavior of PHP session is to persist the session regardless of
 whether the session data has changed or not. In Symfony, each time the session
 is accessed, metadata is recorded (session created/last used) which can be used

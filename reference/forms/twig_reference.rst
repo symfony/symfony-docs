@@ -316,9 +316,6 @@ object:
 .. versionadded:: 2.3
     The ``method`` and ``action`` variables were introduced in Symfony 2.3.
 
-.. versionadded:: 2.4
-    The ``submitted`` variable was introduced in Symfony 2.4.
-
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
 +========================+=====================================================================================+
@@ -350,9 +347,11 @@ object:
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
 |                        | validation. Additionally, a ``required`` class is added to the label.               |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element.                                 |
+| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element. (deprecated as of 2.5, to be    |
+|                        | removed in 3.0, use ``attr["maxlength"]`` instead)                                  |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``pattern``            | Adds a ``pattern`` HTML attribute to the element.                                   |
+| ``pattern``            | Adds a ``pattern`` HTML attribute to the element. (deprecated as of 2.5, to be      |
+|                        | removed in 3.0, use ``attr["pattern"]`` instead)                                    |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``label``              | The string label that will be rendered.                                             |
 +------------------------+-------------------------------------------------------------------------------------+

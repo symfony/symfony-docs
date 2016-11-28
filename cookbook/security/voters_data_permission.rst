@@ -25,8 +25,8 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-security context (i.e. the ``security.context`` service). Each one decides
-if the current user should have access to some resource.
+authorization checker (i.e. the ``security.authorization_checker`` service). Each 
+one decides if the current user should have access to some resource.
 
 Ultimately, Symfony uses one of three different approaches on what to do
 with the feedback from all voters: affirmative, consensus and unanimous.
@@ -54,10 +54,12 @@ Creating the custom Voter
 -------------------------
 
 The goal is to create a voter that checks if a user has access to view or
-edit a particular object. Here's an example implementation::
+edit a particular object. Here's an example implementation:
 
-    // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
-    namespace Acme\DemoBundle\Security\Authorization\Voter;
+.. code-block:: php
+
+    // src/AppBundle/Security/Authorization/Voter/PostVoter.php
+    namespace AppBundle\Security\Authorization\Voter;
 
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -78,13 +80,13 @@ edit a particular object. Here's an example implementation::
 
         public function supportsClass($class)
         {
-            $supportedClass = 'Acme\DemoBundle\Entity\Post';
+            $supportedClass = 'AppBundle\Entity\Post';
 
             return $supportedClass === $class || is_subclass_of($class, $supportedClass);
         }
 
         /**
-         * @var \Acme\DemoBundle\Entity\Post $post
+         * @var \AppBundle\Entity\Post $post
          */
         public function vote(TokenInterface $token, $post, array $attributes)
         {
@@ -96,7 +98,7 @@ edit a particular object. Here's an example implementation::
             // check if the voter is used correct, only allow one attribute
             // this isn't a requirement, it's just one easy way for you to
             // design your voter
-            if(1 !== count($attributes)) {
+            if (1 !== count($attributes)) {
                 throw new \InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
@@ -153,24 +155,24 @@ and tag it with ``security.voter``:
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         services:
             security.access.post_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter\PostVoter
+                class:      AppBundle\Security\Authorization\Voter\PostVoter
                 public:     false
                 tags:
                    - { name: security.voter }
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
                 <service id="security.access.post_document_voter"
-                    class="Acme\DemoBundle\Security\Authorization\Voter\PostVoter"
+                    class="AppBundle\Security\Authorization\Voter\PostVoter"
                     public="false">
                     <tag name="security.voter" />
                 </service>
@@ -179,11 +181,11 @@ and tag it with ``security.voter``:
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         $container
             ->register(
                     'security.access.post_document_voter',
-                    'Acme\DemoBundle\Security\Authorization\Voter\PostVoter'
+                    'AppBundle\Security\Authorization\Voter\PostVoter'
             )
             ->addTag('security.voter')
         ;
@@ -192,12 +194,12 @@ How to Use the Voter in a Controller
 ------------------------------------
 
 The registered voter will then always be asked as soon as the method ``isGranted()``
-from the security context is called.
+from the authorization checker is called.
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Controller/PostController.php
-    namespace Acme\DemoBundle\Controller;
+    // src/AppBundle/Controller/PostController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
@@ -211,12 +213,16 @@ from the security context is called.
             $post = ...;
 
             // keep in mind, this will call all registered security voters
-            if (false === $this->get('security.context')->isGranted('view', $post)) {
+            if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
             }
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
     }
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 It's that easy!

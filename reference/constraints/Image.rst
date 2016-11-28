@@ -8,11 +8,6 @@ automatically setup to work for image files specifically.
 Additionally it has options so you can validate against the width and height
 of the image.
 
-.. versionadded:: 2.4
-    As of Symfony 2.4, you can also validate against the image aspect ratio
-    (defined as ``width / height``) and selectively allow square, landscape
-    and portrait image orientations.
-
 See the :doc:`File </reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
 

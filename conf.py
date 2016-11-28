@@ -22,6 +22,7 @@ sys.path.append(os.path.abspath('_exts'))
 
 # adding PhpLexer
 from sphinx.highlighting import lexers
+from pygments.lexers.compiled import CLexer
 from pygments.lexers.web import PhpLexer
 
 # -- General configuration -----------------------------------------------------
@@ -32,7 +33,7 @@ from pygments.lexers.web import PhpLexer
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-    'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
+    'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -100,6 +101,13 @@ lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
+lexers['varnish3'] = CLexer()
+lexers['varnish4'] = CLexer()
+
+config_block = {
+    'varnish3': 'Varnish 3',
+    'varnish4': 'Varnish 4'
+}
 
 # use PHP as the primary domain
 primary_domain = 'php'
@@ -264,3 +272,4 @@ texinfo_documents = [
 
 # Use PHP syntax highlighting in code examples by default
 highlight_language='php'
+

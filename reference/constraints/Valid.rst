@@ -9,9 +9,9 @@ object and all sub-objects associated with it.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
-|                | - `message`_                                                        |
+|                | - `deep`_                                                           |
 +----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
 +----------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
@@ -267,9 +267,11 @@ If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is set
 to ``true``.
 
-message
-~~~~~~~
+deep
+~~~~
 
-**type**: ``string`` **default**: ``This value should be true.``
+**type**: ``boolean`` **default**: ``false``
 
-This is the message that will be shown if the value is false.
+If this constraint is applied to a property that holds an array of objects,
+then each object in that array will be validated recursively if this option is set
+to ``true``.

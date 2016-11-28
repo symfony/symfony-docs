@@ -45,6 +45,13 @@ Security Identities
 This is analog to the object identity, but represents a user, or a role in
 your application. Each role, or user has its own security identity.
 
+.. versionadded:: 2.5
+    For users, the security identity is based on the username. This means that,
+    if for any reason, a user's username was to change, you must ensure its
+    security identity is updated too. The
+    :method:`MutableAclProvider::updateUserSecurityIdentity() <Symfony\\Component\\Security\\Acl\\Dbal\\MutableAclProvider::updateUserSecurityIdentity>`
+    method is there to handle the update, it was introduced in Symfony 2.5.
+
 Database Table Structure
 ------------------------
 
@@ -65,6 +72,8 @@ tables are ordered from least rows to most rows in a typical application:
 - *acl_entries*: This table contains all ACEs. This is typically the table
   with the most rows. It can contain tens of millions without significantly
   impacting performance.
+
+.. _cookbook-security-acl-field_scope:
 
 Scope of Access Control Entries
 -------------------------------

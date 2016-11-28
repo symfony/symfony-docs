@@ -82,7 +82,7 @@ yourself by referencing common configuration bits.
 Using the Symfony YAML Component
 --------------------------------
 
-The Symfony2 Yaml component is very simple and consists of two main classes:
+The Symfony Yaml component is very simple and consists of two main classes:
 one parses YAML strings (:class:`Symfony\\Component\\Yaml\\Parser`), and the
 other dumps a PHP array to a YAML string
 (:class:`Symfony\\Component\\Yaml\\Dumper`).
@@ -143,6 +143,8 @@ error if something goes wrong by adding the filename to the message.
     Because it is currently possible to pass a filename to this method, you
     must validate the input first. Passing a filename is deprecated in
     Symfony 2.2, and will be removed in Symfony 3.0.
+
+.. _components-yaml-dump:
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~

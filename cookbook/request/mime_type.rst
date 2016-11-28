@@ -15,81 +15,107 @@ object. Internally, Symfony contains a map of the most common formats (e.g.
 easily be added. This document will show how you can add the ``jsonp`` format
 and corresponding MIME type.
 
-Create a ``kernel.request`` Listener
--------------------------------------
+.. versionadded:: 2.5
+    The possibility to configure request formats was introduced in Symfony 2.5.
 
-The key to defining a new MIME type is to create a class that will "listen" to
-the ``kernel.request`` event dispatched by the Symfony kernel. The
-``kernel.request`` event is dispatched early in Symfony's request handling
-process and allows you to modify the request object.
-
-Create the following class, replacing the path with a path to a bundle in your
-project::
-
-    // src/Acme/DemoBundle/RequestListener.php
-    namespace Acme\DemoBundle;
-
-    use Symfony\Component\HttpKernel\HttpKernelInterface;
-    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-
-    class RequestListener
-    {
-        public function onKernelRequest(GetResponseEvent $event)
-        {
-            $event->getRequest()->setFormat('jsonp', 'application/javascript');
-        }
-    }
-
-Registering your Listener
+Configure your New Format
 -------------------------
 
-As with any other listener, you need to add it in one of your configuration
-files and register it as a listener by adding the ``kernel.event_listener`` tag:
+The FrameworkBundle registers a subscriber that will add formats to incoming requests.
+
+All you have to do is to configure the ``jsonp`` format:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/config.yml
-        services:
-            acme.demobundle.listener.request:
-                class: Acme\DemoBundle\RequestListener
-                tags:
-                    - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+        framework:
+            request:
+                formats:
+                    jsonp: 'application/javascript'
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
+
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <service id="acme.demobundle.listener.request"
-                    class="Acme\DemoBundle\RequestListener">
-                    <tag name="kernel.event_listener"
-                        event="kernel.request"
-                        method="onKernelRequest"
-                    />
-                </service>
-            </services>
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:request>
+                    <framework:format name="jsonp">
+                        <framework:mime-type>application/javascript</framework:mime-type>
+                    </framework:format>
+                </framework:request>
+            </framework:config>
         </container>
 
     .. code-block:: php
 
-        # app/config/config.php
-        $definition = new Definition('Acme\DemoBundle\RequestListener');
-        $definition->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.request',
-            'method' => 'onKernelRequest',
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'request' => array(
+                'formats' => array(
+                    'jsonp' => 'application/javascript',
+                ),
+            ),
         ));
-        $container->setDefinition('acme.demobundle.listener.request', $definition);
-
-At this point, the ``acme.demobundle.listener.request`` service has been
-configured and will be notified when the Symfony kernel dispatches the
-``kernel.request`` event.
 
 .. tip::
 
-    You can also register the listener in a configuration extension class (see
-    :ref:`service-container-extension-configuration` for more information).
+    You can also associate multiple mime types to a format, but please note that
+    the preferred one must be the first as it will be used as the content type:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                request:
+                    formats:
+                        csv: ['text/csv', 'text/plain']
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
+                <framework:config>
+                    <framework:request>
+                        <framework:format name="csv">
+                            <framework:mime-type>text/csv</framework:mime-type>
+                            <framework:mime-type>text/plain</framework:mime-type>
+                        </framework:format>
+                    </framework:request>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'request' => array(
+                    'formats' => array(
+                        'jsonp' => array(
+                            'text/csv',
+                            'text/plain',
+                        ),
+                    ),
+                ),
+            ));

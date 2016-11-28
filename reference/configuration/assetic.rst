@@ -4,8 +4,8 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
-Full default Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Full Default Configuration
+--------------------------
 
 .. configuration-block::
 
@@ -48,6 +48,12 @@ Full default Configuration
 
                 # An array of named filters (e.g. some_filter, some_other_filter)
                 some_filter:                 []
+            workers:
+                # see https://github.com/symfony/AsseticBundle/pull/119
+                # Cache can also be busted via the framework.templating.assets_version
+                # setting - see the "framework" configuration section
+                cache_busting:
+                    enabled:              false
             twig:
                 functions:
                     # An array of named functions (e.g. some_function, some_other_function)

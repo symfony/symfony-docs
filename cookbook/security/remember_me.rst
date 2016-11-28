@@ -61,7 +61,7 @@ remember me functionality, as it will not always be appropriate. The usual
 way of doing this is to add a checkbox to the login form. By giving the checkbox
 the name ``_remember_me``, the cookie will automatically be set when the checkbox
 is checked and the user successfully logs in. So, your specific login form
-might ultimately looks like this:
+might ultimately look like this:
 
 .. configuration-block::
 
@@ -90,7 +90,7 @@ might ultimately looks like this:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
@@ -162,7 +162,7 @@ In the following example, the action is only allowed if the user has the
 
     public function editAction()
     {
-        if (false === $this->get('security.context')->isGranted(
+        if (false === $this->get('security.authorization_checker')->isGranted(
             'IS_AUTHENTICATED_FULLY'
            )) {
             throw new AccessDeniedException();
@@ -171,20 +171,28 @@ In the following example, the action is only allowed if the user has the
         // ...
     }
 
-You can also choose to install and use the optional JMSSecurityExtraBundle_,
-which can secure your controller using annotations:
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+
+If your application is based on the Symfony Standard Edition, you can also secure
+your controller using annotations:
 
 .. code-block:: php
 
-    use JMS\SecurityExtraBundle\Annotation\Secure;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Secure(roles="IS_AUTHENTICATED_FULLY")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function editAction($name)
     {
         // ...
     }
+
+.. versionadded:: 2.4
+    The ``@Security`` annotation was introduced in SensioFrameworkExtraBundle 3.0,
+    which can only be used with Symfony 2.4 or later.
 
 .. tip::
 
@@ -208,5 +216,3 @@ which can secure your controller using annotations:
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.
-
-.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle

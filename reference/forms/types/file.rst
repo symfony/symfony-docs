@@ -9,6 +9,8 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
+| Options     | - `multiple`_                                                       |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                       |
 | options     | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
@@ -78,6 +80,19 @@ before using it directly.
 Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example of
 how to manage a file upload associated with a Doctrine entity.
 
+Field Options
+-------------
+
+multiple
+~~~~~~~~
+
+.. versionadded:: 2.5
+    The ``multiple`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+When set to true, the user will be able to upload multiple files at the same time.
+
 Inherited Options
 -----------------
 
@@ -110,8 +125,8 @@ The default value is ``null``.
 Form Variables
 --------------
 
-======== ========== ===============================================================================
-Variable Type       Usage
-======== ========== ===============================================================================
-type     ``string`` The type variable is set to ``file``, in order to render as a file input field.
-======== ========== ===============================================================================
+========  ==========  ===============================================================================
+Variable  Type        Usage
+========  ==========  ===============================================================================
+type      ``string``  The type variable is set to ``file``, in order to render as a file input field.
+========  ==========  ===============================================================================

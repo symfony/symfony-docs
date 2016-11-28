@@ -93,7 +93,7 @@ Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you begin, you'll need to create a *bundle*. In Symfony, a :term:`bundle`
-is like a plugin, except that all of the code in your application will live
+is like a plugin, except that all the code in your application will live
 inside a bundle.
 
 A bundle is nothing more than a directory that houses everything related
@@ -101,14 +101,14 @@ to a specific feature, including PHP classes, configuration, and even stylesheet
 and JavaScript files (see :ref:`page-creation-bundles`).
 
 Depending on the way you installed Symfony, you may already have a bundle called
-``AcmeDemoBundle``. Browse the ``src/`` directory of your project and check
+AcmeDemoBundle. Browse the ``src/`` directory of your project and check
 if there is a ``DemoBundle/`` directory inside an ``Acme/`` directory. If those
 directories already exist, skip the rest of this section and go directly to
 create the route.
 
-To create a bundle called ``AcmeDemoBundle`` (a play bundle that you'll
+To create a bundle called AcmeDemoBundle (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
-instructions (use all of the default options):
+instructions (use all the default options):
 
 .. code-block:: bash
 
@@ -122,7 +122,7 @@ the bundle is registered with the kernel::
     public function registerBundles()
     {
         $bundles = array(
-            ...,
+            // ...
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
         // ...
@@ -140,8 +140,8 @@ By default, the routing configuration file in a Symfony application is
 located at ``app/config/routing.yml``. Like all configuration in Symfony,
 you can also choose to use XML or PHP out of the box to configure routes.
 
-If you look at the main routing file, you'll see that Symfony already added
-an entry when you generated the ``AcmeDemoBundle``:
+If you look at the main routing file, you'll see that Symfony already added an
+entry when you generated the AcmeDemoBundle:
 
 .. configuration-block::
 
@@ -181,9 +181,10 @@ an entry when you generated the ``AcmeDemoBundle``:
 
 This entry is pretty basic: it tells Symfony to load routing configuration
 from the ``Resources/config/routing.yml`` (``routing.xml`` or ``routing.php``
-in the XML and PHP code example respectively) file that lives inside the ``AcmeDemoBundle``.
-This means that you place routing configuration directly in ``app/config/routing.yml``
-or organize your routes throughout your application, and import them from here.
+in the XML and PHP code example respectively) file that lives inside the
+AcmeDemoBundle. This means that you place routing configuration directly in
+``app/config/routing.yml`` or organize your routes throughout your application,
+and import them from here.
 
 .. note::
 
@@ -255,7 +256,7 @@ that controller.
 The controller - ``AcmeDemoBundle:Random:index`` is the *logical* name of
 the controller, and it maps to the ``indexAction`` method of a PHP class
 called ``Acme\DemoBundle\Controller\RandomController``. Start by creating this
-file inside your ``AcmeDemoBundle``::
+file inside your AcmeDemoBundle::
 
     // src/Acme/DemoBundle/Controller/RandomController.php
     namespace Acme\DemoBundle\Controller;
@@ -282,7 +283,9 @@ route is matched::
     {
         public function indexAction($limit)
         {
-            return new Response('<html><body>Number: '.rand(1, $limit).'</body></html>');
+            return new Response(
+                '<html><body>Number: '.rand(1, $limit).'</body></html>'
+            );
         }
     }
 
@@ -327,7 +330,7 @@ An optional, but common, third step in the process is to create a template.
 Optional Step 3: Create the Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Templates allow you to move all of the presentation (e.g. HTML code) into
+Templates allow you to move all the presentation code (e.g. HTML) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, render a template instead:
 
@@ -386,7 +389,7 @@ location using the following convention.
 
     **/path/to/BundleName**/Resources/views/**ControllerName**/**TemplateName**
 
-In this case, ``AcmeDemoBundle`` is the bundle name, ``Random`` is the
+In this case, AcmeDemoBundle is the bundle name, ``Random`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -420,7 +423,7 @@ Step through the Twig template line-by-line:
 
 The parent template, ``::base.html.twig``, is missing both the **BundleName**
 and **ControllerName** portions of its name (hence the double colon (``::``)
-at the beginning). This means that the template lives outside of the bundles
+at the beginning). This means that the template lives outside of the bundle
 and in the ``app`` directory:
 
 .. configuration-block::
@@ -451,7 +454,8 @@ and in the ``app`` directory:
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <title><?php $view['slots']->output('title', 'Welcome!') ?></title>
                 <?php $view['slots']->output('stylesheets') ?>
-                <link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
+                <link rel="shortcut icon"
+                    href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
             </head>
             <body>
                 <?php $view['slots']->output('_content') ?>
@@ -488,13 +492,23 @@ you'll know where to find and put different types of files and why.
 Though entirely flexible, by default, each Symfony :term:`application` has
 the same basic and recommended directory structure:
 
-* ``app/``: This directory contains the application configuration;
+``app/``
+    This directory contains the application configuration.
 
-* ``src/``: All the project PHP code is stored under this directory;
+``src/``
+    All the project PHP code is stored under this directory.
 
-* ``vendor/``: Any vendor libraries are placed here by convention;
+``vendor/``
+    Any vendor libraries are placed here by convention.
 
-* ``web/``: This is the web root directory and contains any publicly accessible files;
+``web/``
+    This is the web root directory and contains any publicly accessible files.
+
+.. seealso::
+
+    You can easily override the default directory structure. See
+    :doc:`/cookbook/configuration/override_dir_structure` for more
+    information.
 
 .. _the-web-directory:
 
@@ -554,11 +568,13 @@ needs to know about your application. You don't even need to worry about
 these methods when starting - Symfony fills them in for you with sensible
 defaults.
 
-* ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (see :ref:`page-creation-bundles`);
+``registerBundles()``
+    Returns an array of all bundles needed to run the application (see
+    :ref:`page-creation-bundles`).
 
-* ``registerContainerConfiguration()``: Loads the main application configuration
-  resource file (see the `Application Configuration`_ section).
+``registerContainerConfiguration()``
+    Loads the main application configuration resource file (see the
+    `Application Configuration`_ section).
 
 In day-to-day development, you'll mostly use the ``app/`` directory to modify
 configuration and routing files in the ``app/config/`` directory (see
@@ -595,7 +611,7 @@ You'll learn more about each of these directories in later chapters.
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Put simply, the ``src/`` directory contains all of the actual code (PHP code,
+Put simply, the ``src/`` directory contains all the actual code (PHP code,
 templates, configuration files, stylesheets, etc) that drives *your* application.
 When developing, the vast majority of your work will be done inside one or
 more bundles that you create in this directory.
@@ -621,7 +637,7 @@ in your application and to optimize them the way you want.
    to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
-a single feature. You might create a ``BlogBundle``, a ``ForumBundle`` or
+a single feature. You might create a BlogBundle, a ForumBundle or
 a bundle for user management (many of these exist already as open source
 bundles). Each directory contains everything related to that feature, including
 PHP files, templates, stylesheets, JavaScripts, tests and anything else.
@@ -670,13 +686,13 @@ The Symfony Standard Edition comes with a handy task that creates a fully-functi
 bundle for you. Of course, creating a bundle by hand is pretty easy as well.
 
 To show you how simple the bundle system is, create a new bundle called
-``AcmeTestBundle`` and enable it.
+AcmeTestBundle and enable it.
 
 .. tip::
 
     The ``Acme`` portion is just a dummy name that should be replaced by
-    some "vendor" name that represents you or your organization (e.g. ``ABCTestBundle``
-    for some company named ``ABC``).
+    some "vendor" name that represents you or your organization (e.g.
+    ABCTestBundle for some company named ``ABC``).
 
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
@@ -692,9 +708,10 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions <bundles-naming-conventions>`.
-   You could also choose to shorten the name of the bundle to simply ``TestBundle``
-   by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
+   The name AcmeTestBundle follows the standard
+   :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
+   also choose to shorten the name of the bundle to simply TestBundle by naming
+   this class TestBundle (and naming the file ``TestBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
@@ -706,8 +723,8 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     public function registerBundles()
     {
         $bundles = array(
-            ...,
-            // register your bundles
+            // ...
+            // register your bundle
             new Acme\TestBundle\AcmeTestBundle(),
         );
         // ...
@@ -715,8 +732,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
         return $bundles;
     }
 
-And while it doesn't do anything yet, ``AcmeTestBundle`` is now ready to
-be used.
+And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
 
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton:
@@ -740,26 +756,30 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony bundles. Take a look at ``AcmeDemoBundle``, as it contains
-some of the most common elements of a bundle:
+between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
+of the most common elements of a bundle:
 
-* ``Controller/`` contains the controllers of the bundle (e.g. ``RandomController.php``);
+``Controller/``
+    Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
-* ``DependencyInjection/`` holds certain dependency injection extension classes,
-  which may import service configuration, register compiler passes or more
-  (this directory is not necessary);
+``DependencyInjection/``
+    Holds certain dependency injection extension classes, which may import service
+    configuration, register compiler passes or more (this directory is not
+    necessary).
 
-* ``Resources/config/`` houses configuration, including routing configuration
-  (e.g. ``routing.yml``);
+``Resources/config/``
+    Houses configuration, including routing configuration (e.g. ``routing.yml``).
 
-* ``Resources/views/`` holds templates organized by controller name (e.g.
-  ``Hello/index.html.twig``);
+``Resources/views/``
+    Holds templates organized by controller name (e.g. ``Hello/index.html.twig``).
 
-* ``Resources/public/`` contains web assets (images, stylesheets, etc) and is
-  copied or symbolically linked into the project ``web/`` directory via
-  the ``assets:install`` console command;
+``Resources/public/``
+    Contains web assets (images, stylesheets, etc) and is copied or symbolically
+    linked into the project ``web/`` directory via the ``assets:install`` console
+    command.
 
-* ``Tests/`` holds all tests for the bundle.
+``Tests/``
+    Holds all tests for the bundle.
 
 A bundle can be as small or large as the feature it implements. It contains
 only the files you need and nothing else.
@@ -772,7 +792,7 @@ bundle.
 Application Configuration
 -------------------------
 
-An application consists of a collection of bundles representing all of the
+An application consists of a collection of bundles representing all the
 features and capabilities of your application. Each bundle can be customized
 via configuration files written in YAML, XML or PHP. By default, the main
 configuration file lives in the ``app/config/`` directory and is called
@@ -808,9 +828,12 @@ format you prefer:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <imports>
                 <import resource="parameters.yml" />
@@ -897,9 +920,8 @@ The extension alias (configuration key) can also be used:
 
 .. note::
 
-    See the cookbook article:
-    :doc:`How to expose a Semantic Configuration for a Bundle </cookbook/bundles/extension>`
-    for information on adding configuration for your own bundle.
+    See the cookbook article: :doc:`/cookbook/bundles/extension` for
+    information on adding configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction
@@ -1002,8 +1024,10 @@ the configuration file for the ``dev`` environment.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="config.xml" />
@@ -1023,7 +1047,7 @@ the configuration file for the ``dev`` environment.
         $loader->import('config.php');
 
         $container->loadFromExtension('framework', array(
-            'router'   => array(
+            'router' => array(
                 'resource' => '%kernel.root_dir%/config/routing_dev.php',
             ),
             'profiler' => array('only-exceptions' => false),

@@ -28,17 +28,14 @@ manually. For example, imagine a library with the following directory structure:
 
 These files contain the following classes:
 
-=========================== ================
-File                        Class name
-=========================== ================
-``library/bar/baz/Boo.php`` ``Acme\Bar\Baz``
---------------------------- ----------------
-``library/bar/Foo.php``     ``Acme\Bar``
---------------------------- ----------------
-``library/foo/bar/Foo.php`` ``Acme\Foo\Bar``
---------------------------- ----------------
-``library/foo/Bar.php``     ``Acme\Foo``
-=========================== ================
+===========================  ================
+File                         Class Name
+===========================  ================
+``library/bar/baz/Boo.php``  ``Acme\Bar\Baz``
+``library/bar/Foo.php``      ``Acme\Bar``
+``library/foo/bar/Foo.php``  ``Acme\Foo\Bar``
+``library/foo/Bar.php``      ``Acme\Foo``
+===========================  ================
 
 To make your life easier, the ClassLoader component comes with a
 :class:`Symfony\\Component\\ClassLoader\\ClassMapGenerator` class that makes
@@ -48,7 +45,7 @@ Generating a Class Map
 ----------------------
 
 To generate the class map, simply pass the root directory of your class files
-to the :method:`Symfony\\Component\\ClassLoader\\ClassMapGenerator::createMap``
+to the :method:`Symfony\\Component\\ClassLoader\\ClassMapGenerator::createMap`
 method::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
@@ -118,7 +115,10 @@ the same as in the example above)::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
 
-    ClassMapGenerator::dump(array(__DIR__.'/library/bar', __DIR__.'/library/foo'), __DIR__.'/class_map.php');
+    ClassMapGenerator::dump(
+        array(__DIR__.'/library/bar', __DIR__.'/library/foo'),
+        __DIR__.'/class_map.php'
+    );
 
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4

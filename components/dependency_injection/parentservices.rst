@@ -52,11 +52,6 @@ The service config for these classes would look something like this:
 
     .. code-block:: yaml
 
-        parameters:
-            # ...
-            newsletter_manager.class: NewsletterManager
-            greeting_card_manager.class: GreetingCardManager
-
         services:
             my_mailer:
                 # ...
@@ -65,13 +60,13 @@ The service config for these classes would look something like this:
                 # ...
 
             newsletter_manager:
-                class: "%newsletter_manager.class%"
+                class: NewsletterManager
                 calls:
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             greeting_card_manager:
-                class: "%greeting_card_manager.class%"
+                class: "GreetingCardManager"
                 calls:
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]
@@ -83,12 +78,6 @@ The service config for these classes would look something like this:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <!-- ... -->
-                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-                <parameter key="greeting_card_manager.class">GreetingCardManager</parameter>
-            </parameters>
-
             <services>
                 <service id="my_mailer">
                     <!-- ... -->
@@ -98,7 +87,7 @@ The service config for these classes would look something like this:
                     <!-- ... -->
                 </service>
 
-                <service id="newsletter_manager" class="%newsletter_manager.class%">
+                <service id="newsletter_manager" class="NewsletterManager">
                     <call method="setMailer">
                         <argument type="service" id="my_mailer" />
                     </call>
@@ -107,7 +96,7 @@ The service config for these classes would look something like this:
                     </call>
                 </service>
 
-                <service id="greeting_card_manager" class="%greeting_card_manager.class%">
+                <service id="greeting_card_manager" class="GreetingCardManager">
                     <call method="setMailer">
                         <argument type="service" id="my_mailer" />
                     </call>
@@ -124,14 +113,11 @@ The service config for these classes would look something like this:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
-        $container->setParameter('greeting_card_manager.class', 'GreetingCardManager');
-
         $container->register('my_mailer', ...);
         $container->register('my_email_formatter', ...);
 
         $container
-            ->register('newsletter_manager', '%newsletter_manager.class%')
+            ->register('newsletter_manager', 'NewsletterManager')
             ->addMethodCall('setMailer', array(
                 new Reference('my_mailer'),
             ))
@@ -141,7 +127,7 @@ The service config for these classes would look something like this:
         ;
 
         $container
-            ->register('greeting_card_manager', '%greeting_card_manager.class%')
+            ->register('greeting_card_manager', 'GreetingCardManager')
             ->addMethodCall('setMailer', array(
                 new Reference('my_mailer'),
             ))
@@ -208,11 +194,11 @@ a parent for a service.
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             newsletter_manager:
-                class:  "%newsletter_manager.class%"
+                class:  "NewsletterManager"
                 parent: mail_manager
 
             greeting_card_manager:
-                class:  "%greeting_card_manager.class%"
+                class:  "GreetingCardManager"
                 parent: mail_manager
 
     .. code-block:: xml
@@ -237,12 +223,12 @@ a parent for a service.
 
                 <service
                     id="newsletter_manager"
-                    class="%newsletter_manager.class%"
+                    class="NewsletterManager"
                     parent="mail_manager" />
 
                 <service
                     id="greeting_card_manager"
-                    class="%greeting_card_manager.class%"
+                    class="GreetingCardManager"
                     parent="mail_manager" />
             </services>
         </container>
@@ -267,11 +253,11 @@ a parent for a service.
         $container->setDefinition('mail_manager', $mailManager);
 
         $newsletterManager = new DefinitionDecorator('mail_manager');
-        $newsletterManager->setClass('%newsletter_manager.class%');
+        $newsletterManager->setClass('NewsletterManager');
         $container->setDefinition('newsletter_manager', $newsletterManager);
 
         $greetingCardManager = new DefinitionDecorator('mail_manager');
-        $greetingCardManager->setClass('%greeting_card_manager.class%');
+        $greetingCardManager->setClass('GreetingCardManager');
         $container->setDefinition('greeting_card_manager', $greetingCardManager);
 
 In this context, having a ``parent`` service implies that the arguments and
@@ -336,13 +322,13 @@ to the ``NewsletterManager`` class, the config would look like this:
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             newsletter_manager:
-                class:  "%newsletter_manager.class%"
+                class:  "NewsletterManager"
                 parent: mail_manager
                 calls:
                     - [setMailer, ["@my_alternative_mailer"]]
 
             greeting_card_manager:
-                class:  "%greeting_card_manager.class%"
+                class:  "GreetingCardManager"
                 parent: mail_manager
 
     .. code-block:: xml
@@ -371,7 +357,7 @@ to the ``NewsletterManager`` class, the config would look like this:
 
                 <service
                     id="newsletter_manager"
-                    class="%newsletter_manager.class%"
+                    class="NewsletterManager"
                     parent="mail_manager">
 
                     <call method="setMailer">
@@ -381,7 +367,7 @@ to the ``NewsletterManager`` class, the config would look like this:
 
                 <service
                     id="greeting_card_manager"
-                    class="%greeting_card_manager.class%"
+                    class="GreetingCardManager"
                     parent="mail_manager" />
             </services>
         </container>
@@ -408,7 +394,7 @@ to the ``NewsletterManager`` class, the config would look like this:
         $container->setDefinition('mail_manager', $mailManager);
 
         $newsletterManager = new DefinitionDecorator('mail_manager');
-        $newsletterManager->setClass('%newsletter_manager.class%');
+        $newsletterManager->setClass('NewsletterManager');
             ->addMethodCall('setMailer', array(
                 new Reference('my_alternative_mailer'),
             ))
@@ -416,7 +402,7 @@ to the ``NewsletterManager`` class, the config would look like this:
         $container->setDefinition('newsletter_manager', $newsletterManager);
 
         $greetingCardManager = new DefinitionDecorator('mail_manager');
-        $greetingCardManager->setClass('%greeting_card_manager.class%');
+        $greetingCardManager->setClass('GreetingCardManager');
         $container->setDefinition('greeting_card_manager', $greetingCardManager);
 
 The ``GreetingCardManager`` will receive the same dependencies as before,

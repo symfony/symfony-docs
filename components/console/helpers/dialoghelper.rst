@@ -4,6 +4,13 @@
 Dialog Helper
 =============
 
+.. caution::
+
+    The Dialog Helper was deprecated in Symfony 2.5 and will be removed in
+    Symfony 3.0. You should now use the
+    :doc:`Question Helper </components/console/helpers/questionhelper>` instead,
+    which is simpler to use.
+
 The :class:`Symfony\\Component\\Console\\Helper\\DialogHelper` provides
 functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
@@ -54,13 +61,10 @@ if you want to know a bundle name, you can add this to your command::
 The user will be asked "Please enter the name of the bundle". They can type
 some name which will be returned by the
 :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::ask` method.
-If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
+If they leave it empty, the default value (AcmeDemoBundle here) is returned.
 
 Autocompletion
 ~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    Autocompletion for questions was introduced in Symfony 2.2.
 
 You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
@@ -76,9 +80,6 @@ will be autocompleted as the user types::
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The ``askHiddenResponse`` method was introduced in Symfony 2.2.
 
 You can also ask a question and hide the response. This is particularly
 convenient for passwords::
@@ -149,9 +150,6 @@ be able to proceed if their input is valid.
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.2
-    The ``askHiddenResponseAndValidate`` method was introduced in Symfony 2.2.
-
 You can also ask and validate a hidden response::
 
     $dialog = $this->getHelper('dialog');
@@ -177,10 +175,6 @@ some reason, pass true as the fifth argument.
 
 Let the User Choose from a List of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select` method
-    was introduced in Symfony 2.2.
 
 If you have a predefined set of answers the user can choose from, you
 could use the ``ask`` method described above or, to make sure the user
@@ -236,7 +230,7 @@ this set the seventh argument to ``true``::
         true // enable multiselect
     );
 
-    $selectedColors = array_map(function($c) use ($colors) {
+    $selectedColors = array_map(function ($c) use ($colors) {
         return $colors[$c];
     }, $selected);
 
@@ -253,18 +247,23 @@ Testing a Command which Expects Input
 If you want to write a unit test for a command which expects some kind of input
 from the command line, you need to overwrite the HelperSet used by the command::
 
+    use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Helper\DialogHelper;
     use Symfony\Component\Console\Helper\HelperSet;
+    use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
     public function testExecute()
     {
         // ...
+        $application = new Application();
+        $application->add(new MyCommand());
+        $command = $application->find('my:command:name');
         $commandTester = new CommandTester($command);
 
         $dialog = $command->getHelper('dialog');
         $dialog->setInputStream($this->getInputStream("Test\n"));
-        // Equals to a user inputing "Test" and hitting ENTER
+        // Equals to a user inputting "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
         $commandTester->execute(array('command' => $command->getName()));
@@ -285,3 +284,8 @@ By setting the input stream of the ``DialogHelper``, you imitate what the
 console would do internally with all user input through the cli. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
+
+.. seealso::
+
+    You find more information about testing commands in the console component
+    docs about :ref:`testing console commands <component-console-testing-commands>`.

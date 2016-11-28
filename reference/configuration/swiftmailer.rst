@@ -130,7 +130,7 @@ antiflood
 threshold
 .........
 
-**type**: ``string`` **default**: ``99``
+**type**: ``integer`` **default**: ``99``
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of emails
 to send before restarting the transport.
@@ -138,7 +138,7 @@ to send before restarting the transport.
 sleep
 .....
 
-**type**: ``string`` **default**: ``0``
+**type**: ``integer`` **default**: ``0``
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of seconds
 to sleep for during a transport restart.

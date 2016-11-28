@@ -1,5 +1,9 @@
-empty_value
+placeholder
 ~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    ``empty_value``, which is available prior to 2.6.
 
 .. versionadded:: 2.3
     Since Symfony 2.3, empty values are also supported if the ``expanded``
@@ -14,16 +18,16 @@ will appear at the top of a select widget. This option only applies if the
 * Add an empty value with "Choose an option" as the text::
 
     $builder->add('states', 'choice', array(
-        'empty_value' => 'Choose an option',
+        'placeholder' => 'Choose an option',
     ));
 
 * Guarantee that no "empty" value option is displayed::
 
     $builder->add('states', 'choice', array(
-        'empty_value' => false,
+        'placeholder' => false,
     ));
 
-If you leave the ``empty_value`` option unset, then a blank (with no text)
+If you leave the ``placeholder`` option unset, then a blank (with no text)
 option will automatically be added if and only if the ``required`` option
 is false::
 

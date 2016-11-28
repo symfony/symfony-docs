@@ -4,14 +4,15 @@
 Progress Helper
 ===============
 
-.. versionadded:: 2.2
-    The ``progress`` helper was introduced in Symfony 2.2.
-
 .. versionadded:: 2.3
     The ``setCurrent`` method was introduced in Symfony 2.3.
 
-.. versionadded:: 2.4
-    The ``clear`` method was introduced in Symfony 2.4.
+.. caution::
+
+    The Progress Helper was deprecated in Symfony 2.5 and will be removed in
+    Symfony 3.0. You should now use the
+    :doc:`Progress Bar </components/console/helpers/progressbar>` instead which
+    is more powerful.
 
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
@@ -28,7 +29,7 @@ pass it a total number of units, and advance the progress as your command execut
     while ($i++ < 50) {
         // ... do some work
 
-        // advance the progress bar 1 unit
+        // advances the progress bar 1 unit
         $progress->advance();
     }
 
@@ -82,7 +83,7 @@ To see other available options, check the API documentation for
 
         $progress->start($output, 50000);
 
-        // update every 100 iterations
+        // updates every 100 iterations
         $progress->setRedrawFrequency(100);
 
         $i = 0;

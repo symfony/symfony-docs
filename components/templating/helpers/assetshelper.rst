@@ -47,6 +47,23 @@ You can also specify a URL to use in the second parameter of the constructor::
 
 Now URLs are rendered like ``http://cdn.example.com/images/logo.png``.
 
+.. versionadded:: 2.5
+    Absolute URLs for assets were introduced in Symfony 2.5.
+
+You can also use the third argument of the helper to force an absolute URL:
+
+.. code-block:: html+php
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>">
+   <!-- renders as:
+   <img src="http://yourwebsite.com/foo/bar/images/logo.png">
+   -->
+
+.. note::
+
+    If you already set a URL in the constructor, using the third argument of
+    ``getUrl`` will not affect the generated URL.
+
 Versioning
 ----------
 
@@ -63,6 +80,19 @@ is used in :phpfunction:`sprintf`. The first argument is the path and the
 second is the version. For instance, ``%s?v=%s`` will be rendered as
 ``/images/logo.png?v=328rad75``.
 
+.. versionadded:: 2.5
+    On-demand versioned URLs for assets were introduced in Symfony 2.5.
+
+You can also generate a versioned URL on an asset-by-asset basis using the
+fourth argument of the helper:
+
+.. code-block:: html+php
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>">
+   <!-- renders as:
+   <img src="/images/logo.png?v=3.0">
+   -->
+
 Multiple Packages
 -----------------
 
@@ -75,7 +105,7 @@ Asset path generation is handled internally by packages. The component provides
 You can also use multiple packages::
 
     use Symfony\Component\Templating\Asset\PathPackage;
-    
+
     // ...
     $templateEngine->set(new AssetsHelper());
 
@@ -104,4 +134,4 @@ Custom Packages
 ---------------
 
 You can create your own package by extending
-:class:`Symfony\\Component\\Templating\\Package\\Package`.
+:class:`Symfony\\Component\\Templating\\Asset\\Package`.

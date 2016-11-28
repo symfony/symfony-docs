@@ -12,7 +12,7 @@ The EventDispatcher Component
 Introduction
 ------------
 
-Objected Oriented code has gone a long way to ensuring code extensibility. By
+Object Oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
 behaviors. But if they want to share the changes with other developers who have
@@ -134,7 +134,7 @@ Connecting Listeners
 
 To take advantage of an existing event, you need to connect a listener to the
 dispatcher so that it can be notified when the event is dispatched. A call to
-the dispatcher ``addListener()`` method associates any valid PHP callable to
+the dispatcher's ``addListener()`` method associates any valid PHP callable to
 an event::
 
     $listener = new AcmeListener();
@@ -158,7 +158,7 @@ The ``addListener()`` method takes up to three arguments:
     A `PHP callable`_ is a PHP variable that can be used by the
     ``call_user_func()`` function and returns ``true`` when passed to the
     ``is_callable()`` function. It can be a ``\Closure`` instance, an object
-    implementing an __invoke method (which is what closures are in fact),
+    implementing an ``__invoke`` method (which is what closures are in fact),
     a string representing a function, or an array representing an object
     method or a class method.
 
@@ -489,10 +489,6 @@ which returns a boolean value::
 EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    Since Symfony 2.4, the current event name and the ``EventDispatcher``
-    itself are passed to the listeners as additional arguments.
-
 The ``EventDispatcher`` always passes the dispatched event, the event's name
 and a reference to itself to the listeners. This can be used in some advanced
 usages of the ``EventDispatcher`` like dispatching other events in listeners,
@@ -591,7 +587,7 @@ Dispatcher Shortcuts
 
 The :method:`EventDispatcher::dispatch <Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
 method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
-object. This allows for various shortcuts. For example if one does not need
+object. This allows for various shortcuts. For example, if one does not need
 a custom event object, one can simply rely on a plain
 :class:`Symfony\\Component\\EventDispatcher\\Event` object. You do not even need
 to pass this to the dispatcher as it will create one by default unless you
@@ -626,22 +622,21 @@ and so on...
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the ``EventDispatcher`` already knows the name of the event when dispatching
-it, the event name is also injected into the
-:class:`Symfony\\Component\\EventDispatcher\\Event` objects, making it available
-to event listeners via the :method:`Symfony\\Component\\EventDispatcher\\Event::getName`
-method.
+.. versionadded:: 2.4
+    Before Symfony 2.4, the event name and the event dispatcher had to be
+    requested from the ``Event`` instance. These methods are now deprecated.
 
-The event name, (as with any other data in a custom event object) can be used as
-part of the listener's processing logic::
+The ``EventDispatcher`` instance, as well as the name of the event that is
+dispatched, are passed as arguments to the listener::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
     class Foo
     {
-        public function myEventListener(Event $event)
+        public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            echo $event->getName();
+            echo $eventName;
         }
     }
 

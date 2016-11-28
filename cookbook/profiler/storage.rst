@@ -15,11 +15,11 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
 
         # app/config/config.yml
         framework:
-        profiler:
-            dsn:      "mysql:host=localhost;dbname=%database_name%"
-            username: "%database_user%"
-            password: "%database_password%"
-            lifetime: 3600
+            profiler:
+                dsn:      "mysql:host=localhost;dbname=%database_name%"
+                username: "%database_user%"
+                password: "%database_password%"
+                lifetime: 3600
 
     .. code-block:: xml
 

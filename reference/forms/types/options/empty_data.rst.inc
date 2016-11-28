@@ -23,7 +23,7 @@ selected, you can do it like this:
             'f' => 'Female'
         ),
         'required'    => false,
-        'empty_value' => 'Choose your gender',
+        'placeholder' => 'Choose your gender',
         'empty_data'  => null
     ));
 

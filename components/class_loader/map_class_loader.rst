@@ -1,6 +1,6 @@
 .. index::
     single: ClassLoader; MapClassLoader
-    
+
 MapClassLoader
 ==============
 
@@ -26,14 +26,14 @@ Using it is as easy as passing your mapping to its constructor when creating
 an instance of the ``MapClassLoader`` class::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/MapClassLoader';
-    
+
     $mapping = array(
         'Foo' => '/path/to/Foo',
         'Bar' => '/path/to/Bar',
     );
-    
+
     $loader = new MapClassLoader($mapping);
-    
+
     $loader->register();
 
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/

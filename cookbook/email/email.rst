@@ -7,30 +7,25 @@ How to Send an Email
 Sending emails is a classic task for any web application and one that has
 special complications and potential pitfalls. Instead of recreating the wheel,
 one solution to send emails is to use the SwiftmailerBundle, which leverages
-the power of the `Swift Mailer`_ library.
-
-.. note::
-
-    Don't forget to enable the bundle in your kernel before using it::
-
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-
-                new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            );
-
-            // ...
-        }
+the power of the `Swift Mailer`_ library. This bundle comes with the Symfony
+Standard Edition.
 
 .. _swift-mailer-configuration:
 
 Configuration
 -------------
 
-Before using Swift Mailer, be sure to include its configuration. The only
-mandatory configuration parameter is ``transport``:
+To use Swift Mailer, you'll need to configure it for your mail server.
+
+.. tip::
+
+    Instead of setting up/using your own mail server, you may want to use
+    a hosted mail provider such as `Mandrill`_, `SendGrid`_, `Amazon SES`_
+    or others. These give you an SMTP server, username and password (sometimes
+    called keys) that can be used with the Swift Mailer configuration.
+
+In a standard Symfony installation, some ``swiftmailer`` configuration is
+already included:
 
 .. configuration-block::
 
@@ -38,12 +33,10 @@ mandatory configuration parameter is ``transport``:
 
         # app/config/config.yml
         swiftmailer:
-            transport:  smtp
-            encryption: ssl
-            auth_mode:  login
-            host:       smtp.gmail.com
-            username:   your_username
-            password:   your_password
+            transport: "%mailer_transport%"
+            host:      "%mailer_host%"
+            username:  "%mailer_user%"
+            password:  "%mailer_password%"
 
     .. code-block:: xml
 
@@ -55,27 +48,24 @@ mandatory configuration parameter is ``transport``:
         -->
 
         <swiftmailer:config
-            transport="smtp"
-            encryption="ssl"
-            auth-mode="login"
-            host="smtp.gmail.com"
-            username="your_username"
-            password="your_password" />
+            transport="%mailer_transport%"
+            host="%mailer_host%"
+            username="%mailer_user%"
+            password="%mailer_password%" />
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-            'transport'  => "smtp",
-            'encryption' => "ssl",
-            'auth_mode'  => "login",
-            'host'       => "smtp.gmail.com",
-            'username'   => "your_username",
-            'password'   => "your_password",
+            'transport'  => "%mailer_transport%",
+            'host'       => "%mailer_host%",
+            'username'   => "%mailer_user%",
+            'password'   => "%mailer_password%",
         ));
 
-The majority of the Swift Mailer configuration deals with how the messages
-themselves should be delivered.
+These values (e.g. ``%mailer_transport%``), are reading from the parameters
+that are set in the :ref:`parameters.yml <config-parameters.yml>` file. You
+can modify the values in that file, or set the values directly here.
 
 The following configuration attributes are available:
 
@@ -103,18 +93,31 @@ an email is pretty straightforward::
 
     public function indexAction($name)
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
+        $mailer = $this->get('mailer');
+        $message = $mailer->createMessage()
+            ->setSubject('You have Completed Registration!')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(
                 $this->renderView(
-                    'HelloBundle:Hello:email.txt.twig',
+                    // app/Resources/views/Emails/registration.html.twig
+                    'Emails/registration.html.twig',
                     array('name' => $name)
-                )
+                ),
+                'text/html'
             )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
         ;
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }
@@ -137,3 +140,6 @@ of `Creating Messages`_ in great detail in its documentation.
 
 .. _`Swift Mailer`: http://swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages.html
+.. _`Mandrill`: https://mandrill.com/
+.. _`SendGrid`: https://sendgrid.com/
+.. _`Amazon SES`: http://aws.amazon.com/ses/

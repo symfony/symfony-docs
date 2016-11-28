@@ -15,6 +15,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
+|             | - `delete_empty`_                                                           |
 |             | - `options`_                                                                |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
@@ -101,7 +102,7 @@ A much more flexible method would look like this:
                 <?php echo $view['form']->errors($emailField) ?>
                 <?php echo $view['form']->widget($emailField) ?>
             </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
         </ul>
 
 In both cases, no input fields would render unless your ``emails`` data array
@@ -179,7 +180,9 @@ you need is the JavaScript:
             var emailCount = '{{ form.emails|length }}';
 
             jQuery(document).ready(function() {
-                jQuery('#add-another-email').click(function() {
+                jQuery('#add-another-email').click(function(e) {
+                    e.preventDefault();
+
                     var emailList = jQuery('#email-fields-list');
 
                     // grab the prototype template
@@ -192,9 +195,7 @@ you need is the JavaScript:
 
                     // create a new list element and add it to the list
                     var newLi = jQuery('<li></li>').html(newWidget);
-                    newLi.appendTo(jQuery('#email-fields-list'));
-
-                    return false;
+                    newLi.appendTo(emailList);
                 });
             })
         </script>
@@ -254,6 +255,19 @@ For more information, see :ref:`cookbook-form-collections-remove`.
     to delete it or at least remove its foreign key reference to the main object.
     None of this is handled automatically. For more information, see
     :ref:`cookbook-form-collections-remove`.
+
+delete_empty
+~~~~~~~~~~~~
+
+.. versionadded:: 2.5
+    The ``delete_empty`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you want to explicitly remove entirely empty collection entries from your
+form you have to set this option to true. However, existing collection entries
+will only be deleted if you have the allow_delete_ option enabled. Otherwise
+the empty values will be kept.
 
 options
 ~~~~~~~
@@ -376,9 +390,9 @@ error_bubbling
 Field Variables
 ---------------
 
-============ =========== ========================================
-Variable     Type        Usage
-============ =========== ========================================
-allow_add    ``Boolean`` The value of the `allow_add`_ option.
-allow_delete ``Boolean`` The value of the `allow_delete`_ option.
-============ =========== ========================================
+============  ===========  ========================================
+Variable      Type         Usage
+============  ===========  ========================================
+allow_add     ``Boolean``  The value of the `allow_add`_ option.
+allow_delete  ``Boolean``  The value of the `allow_delete`_ option.
+============  ===========  ========================================

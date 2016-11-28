@@ -1,12 +1,12 @@
 .. index::
    pair: Doctrine; DBAL
 
-How to Use Doctrine's DBAL Layer
-================================
+How to Use Doctrine DBAL
+========================
 
 .. note::
 
-    This article is about Doctrine DBAL's layer. Typically, you'll work with
+    This article is about the Doctrine DBAL. Typically, you'll work with
     the higher level Doctrine ORM layer, which simply uses the DBAL behind
     the scenes to actually communicate with the database. To read more about
     the Doctrine ORM, see ":doc:`/book/doctrine`".
@@ -93,8 +93,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         doctrine:
             dbal:
                 types:
-                    custom_first:  Acme\HelloBundle\Type\CustomFirst
-                    custom_second: Acme\HelloBundle\Type\CustomSecond
+                    custom_first:  AppBundle\Type\CustomFirst
+                    custom_second: AppBundle\Type\CustomSecond
 
     .. code-block:: xml
 
@@ -107,8 +107,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom_first" class="Acme\HelloBundle\Type\CustomFirst" />
-                    <doctrine:type name="custom_second" class="Acme\HelloBundle\Type\CustomSecond" />
+                    <doctrine:type name="custom_first" class="AppBundle\Type\CustomFirst" />
+                    <doctrine:type name="custom_second" class="AppBundle\Type\CustomSecond" />
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -119,8 +119,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'types' => array(
-                    'custom_first'  => 'Acme\HelloBundle\Type\CustomFirst',
-                    'custom_second' => 'Acme\HelloBundle\Type\CustomSecond',
+                    'custom_first'  => 'AppBundle\Type\CustomFirst',
+                    'custom_second' => 'AppBundle\Type\CustomSecond',
                 ),
             ),
         ));
@@ -166,7 +166,7 @@ mapping type:
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-               mapping_types' => array(
+               'mapping_types' => array(
                   'enum'  => 'string',
                ),
             ),

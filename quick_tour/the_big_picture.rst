@@ -1,75 +1,103 @@
 The Big Picture
 ===============
 
-Start using Symfony in 10 minutes! This chapter will walk you through some of
-the most important concepts behind Symfony and explain how you can get started
-quickly by showing you a simple project in action.
+Start using Symfony in 10 minutes! This chapter will walk you through the most
+important concepts behind Symfony and explain how you can get started quickly
+by showing you a simple project in action.
 
 If you've used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications.
+
+The only technical requisite to follow this tutorial is to have **PHP 5.4 or higher
+installed on your computer**. If you use a packaged PHP solution such as WAMP,
+XAMP or MAMP, check out that they are using PHP 5.4 or a more recent version.
+You can also execute the following command in your terminal or command console
+to display the installed PHP version:
+
+.. code-block:: bash
+
+    $ php --version
 
 .. _installing-symfony2:
 
 Installing Symfony
 ------------------
 
-First, check that the PHP version installed on your computer meets the Symfony
-requirements: 5.3.3 or higher. Then, open a console and execute the following
-command to install the latest version of Symfony in the ``myproject/``
-directory:
+In the past, Symfony had to be installed manually for each new project. Now you
+can use the **Symfony Installer**, which has to be installed the very first time
+you use Symfony on a computer.
+
+On **Linux** and **Mac OS X** systems, execute the following console commands:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition myproject/ '~2.3'
+    $ curl -LsS http://symfony.com/installer > symfony.phar
+    $ sudo mv symfony.phar /usr/local/bin/symfony
+    $ chmod a+x /usr/local/bin/symfony
 
 .. note::
 
-    `Composer`_ is the package manager used by modern PHP applications and the
-    only recommended way to install Symfony. To install Composer on your
-    Linux or Mac system, execute the following commands:
+    If your system doesn't have cURL installed, execute the following
+    commands instead:
 
     .. code-block:: bash
 
-        $ curl -sS https://getcomposer.org/installer | php
-        $ sudo mv composer.phar /usr/local/bin/composer
+        $ php -r "readfile('http://symfony.com/installer');" > symfony.phar
+        $ sudo mv symfony.phar /usr/local/bin/symfony
+        $ chmod a+x /usr/local/bin/symfony
 
-    To install Composer on a Windows system, download the `executable installer`_.
+After installing the Symfony installer, you'll have to open a new console window
+to be able to execute the new ``symfony`` command:
 
-Beware that the first time you install Symfony, it may take a few minutes to
-download all its components. At the end of the installation process, the
-installer will ask you to provide some configuration options for the Symfony
-project. For this first project you can safely ignore this configuration by
-pressing the ``<Enter>`` key repeatedly.
+.. code-block:: bash
+
+    $ symfony
+
+On **Windows** systems, execute the following console command:
+
+.. code-block:: bash
+
+    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
+
+This command downloads a file called ``symfony.phar`` which contains the Symfony
+installer. Save or move that file to the directory where you create the Symfony
+projects and then, execute the Symfony installer right away with this command:
+
+.. code-block:: bash
+
+    c:\> php symfony.phar
+
+Creating Your First Symfony Project
+-----------------------------------
+
+Once the Symfony Installer is set up, use the ``new`` command to create new
+Symfony projects. Let's create a new project called ``myproject``:
+
+.. code-block:: bash
+
+    # Linux and Mac OS X
+    $ symfony new myproject
+
+    # Windows
+    c:\> php symfony.phar new myproject
+
+This command downloads the latest Symfony stable version and creates an empty
+project in the ``myproject/`` directory so you can start developing your
+application right away.
 
 .. _running-symfony2:
 
 Running Symfony
 ---------------
 
-Before running Symfony for the first time, execute the following command to
-make sure that your system meets all the technical requirements:
+This tutorial leverages the internal web server provided by PHP to run Symfony
+applications. Therefore, running a Symfony application is a matter of browsing
+the project directory and executing this command:
 
 .. code-block:: bash
 
     $ cd myproject/
-    $ php app/check.php
-
-Fix any error reported by the command and then use the PHP built-in web server
-to run Symfony:
-
-.. code-block:: bash
-
     $ php app/console server:run
-
-.. seealso::
-
-    Read more about the internal server :doc:`in the cookbook </cookbook/web_server/built_in>`.
-
-If you get the error `There are no commands defined in the "server" namespace.`,
-then you are probably using PHP 5.3. That's ok! But the built-in web server is
-only available for PHP 5.4.0 or higher. If you have an older version of PHP or
-if you prefer a traditional web server such as Apache or Nginx, read the
-:doc:`/cookbook/configuration/web_server_configuration` article.
 
 Open your browser and access the ``http://localhost:8000`` URL to see the
 Welcome page of Symfony:
@@ -78,235 +106,171 @@ Welcome page of Symfony:
    :align: center
    :alt:   Symfony Welcome Page
 
-Understanding the Fundamentals
-------------------------------
-
-One of the main goals of a framework is to keep your code organized and to allow
-your application to evolve easily over time by avoiding the mixing of database
-calls, HTML tags and business logic in the same script. To achieve this goal
-with Symfony, you'll first need to learn a few fundamental concepts and terms.
-
-Symfony comes with some sample code that you can use to learn more about its
-main concepts. Go to the following URL to be greeted by Symfony (replace
-*Fabien* with your first name):
-
-.. code-block:: text
-
-    http://localhost:8000/app_dev.php/demo/hello/Fabien
-
-.. image:: /images/quick_tour/hello_fabien.png
-   :align: center
+Congratulations! Your first Symfony project is up and running!
 
 .. note::
 
-    Instead of the greeting page, you may see a blank page or an error page.
+    Instead of the welcome page, you may see a blank page or an error page.
     This is caused by a directory permission misconfiguration. There are several
     possible solutions depending on your operating system. All of them are
     explained in the :ref:`Setting up Permissions <book-installation-permissions>`
     section of the official book.
 
-What's going on here? Have a look at each part of the URL:
+When you are finished working on your Symfony application, you can stop the
+server with the ``server:stop`` command:
 
-* ``app_dev.php``: This is a :term:`front controller`. It is the unique entry
-  point of the application and it responds to all user requests;
+.. code-block:: bash
 
-* ``/demo/hello/Fabien``: This is the *virtual path* to the resource the user
-  wants to access.
+    $ php app/console server:stop
 
-Your responsibility as a developer is to write the code that maps the user's
-*request* (``/demo/hello/Fabien``) to the *resource* associated with it
-(the ``Hello Fabien!`` HTML page).
+.. tip::
+
+    If you prefer a traditional web server such as Apache or Nginx, read the
+    :doc:`/cookbook/configuration/web_server_configuration` article.
+
+Understanding the Fundamentals
+------------------------------
+
+One of the main goals of a framework is to keep your code organized and to allow
+your application to evolve easily over time by avoiding the mixing of database
+calls, HTML tags and other PHP code in the same script. To achieve this goal
+with Symfony, you'll first need to learn a few fundamental concepts.
+
+When developing a Symfony application, your responsibility as a developer is to
+write the code that maps the user's *request* (e.g. ``http://localhost:8000/``)
+to the *resource* associated with it (the ``Welcome to Symfony!`` HTML page).
+
+The code to execute is defined in **actions** and **controllers**. The mapping
+between user's requests and that code is defined via the **routing** configuration.
+And the contents displayed in the browser are usually rendered using **templates**.
+
+When you browsed ``http://localhost:8000/`` earlier, Symfony executed the
+controller defined in the ``src/AppBundle/Controller/DefaultController.php``
+file and rendered the ``app/Resources/views/default/index.html.twig`` template.
+In the following sections you'll learn in detail the inner workings of Symfony
+controllers, routes and templates.
+
+Actions and Controllers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Open the ``src/AppBundle/Controller/DefaultController.php`` file and you'll see
+the following code (for now, don't look at the ``@Route`` configuration because
+that will be explained in the next section)::
+
+    namespace AppBundle\Controller;
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class DefaultController extends Controller
+    {
+        /**
+         * @Route("/", name="homepage")
+         */
+        public function indexAction()
+        {
+            return $this->render('default/index.html.twig');
+        }
+    }
+
+In Symfony applications, **controllers** are usually PHP classes whose names are
+suffixed with the ``Controller`` word. In this example, the controller is called
+``Default`` and the PHP class is called ``DefaultController``.
+
+The methods defined in a controller are called **actions**, they are usually
+associated with one URL of the application and their names are suffixed with
+``Action``. In this example, the ``Default`` controller has only one action
+called ``index`` and defined in the ``indexAction`` method.
+
+Actions are usually very short - around 10-15 lines of code - because they just
+call other parts of the application to get or generate the needed information and
+then they render a template to show the results to the user.
+
+In this example, the ``index`` action is practically empty because it doesn't
+need to call any other method. The action just renders a template with the
+*Welcome to Symfony!* content.
 
 Routing
 ~~~~~~~
 
-Symfony routes the request to the code that handles it by matching the
-requested URL (i.e. the virtual path) against some configured paths. The demo
-paths are defined in the ``app/config/routing_dev.yml`` configuration file:
+Symfony routes each request to the action that handles it by matching the
+requested URL against the paths configured by the application. Open again the
+``src/AppBundle/Controller/DefaultController.php`` file and take a look at the
+three lines of code above the ``indexAction`` method:
 
-.. code-block:: yaml
+.. code-block:: php
 
-    # app/config/routing_dev.yml
-    # ...
+    // src/AppBundle/Controller/DefaultController.php
+    namespace AppBundle\Controller;
 
-    # AcmeDemoBundle routes (to be removed)
-    _acme_demo:
-        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
-
-This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
-
-.. code-block:: yaml
-
-    # src/Acme/DemoBundle/Resources/config/routing.yml
-    _welcome:
-        path:     /
-        defaults: { _controller: AcmeDemoBundle:Welcome:index }
-
-    _demo:
-        resource: "@AcmeDemoBundle/Controller/DemoController.php"
-        type:     annotation
-        prefix:   /demo
-
-    # ...
-
-The first three lines (after the comment) define the code that is executed
-when the user requests the "``/``" resource (i.e. the welcome page you saw
-earlier). When requested, the ``AcmeDemoBundle:Welcome:index`` controller
-will be executed. In the next section, you'll learn exactly what that means.
-
-.. tip::
-
-    In addition to YAML files, routes can be configured in XML or PHP files
-    and can even be embedded in PHP annotations. This flexibility is one of the
-    main features of Symfony, a framework that never imposes a particular
-    configuration format on you.
-
-Controllers
-~~~~~~~~~~~
-
-A controller is a PHP function or method that handles incoming *requests* and
-returns *responses* (often HTML code). Instead of using the PHP global variables
-and functions (like ``$_GET`` or ``header()``) to manage these HTTP messages,
-Symfony uses objects: :ref:`Request <component-http-foundation-request>`
-and :ref:`Response <component-http-foundation-response>`. The simplest possible
-controller might create the response by hand, based on the request::
-
-    use Symfony\Component\HttpFoundation\Response;
-
-    $name = $request->get('name');
-
-    return new Response('Hello '.$name);
-
-Symfony chooses the controller based on the ``_controller`` value from the
-routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
-controller *logical name*, and it references the ``indexAction`` method from
-the ``Acme\DemoBundle\Controller\WelcomeController`` class::
-
-    // src/Acme/DemoBundle/Controller/WelcomeController.php
-    namespace Acme\DemoBundle\Controller;
-
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class WelcomeController extends Controller
+    class DefaultController extends Controller
     {
+        /**
+         * @Route("/", name="homepage")
+         */
         public function indexAction()
         {
-            return $this->render('AcmeDemoBundle:Welcome:index.html.twig');
+            return $this->render('default/index.html.twig');
         }
     }
+
+These three lines define the routing configuration via the ``@Route()`` annotation.
+A **PHP annotation** is a convenient way to configure a method without having to
+write regular PHP code. Beware that annotation blocks start with ``/**``, whereas
+regular PHP comments start with ``/*``.
+
+The first value of ``@Route()`` defines the URL that will trigger the execution
+of the action. As you don't have to add the host of your application to the URL
+(e.g. ```http://example.com``), these URLs are always relative and they are usually
+called *paths*. In this case, the ``/`` path refers to the application homepage.
+The second value of ``@Route()`` (e.g. ``name="homepage"``) is optional and sets
+the name of this route. For now this name is not needed, but later it'll be useful
+for linking pages.
+
+Considering all this, the ``@Route("/", name="homepage")`` annotation creates a
+new route called ``homepage`` which makes Symfony execute the ``index`` action
+of the ``Default`` controller when the user browses the ``/`` path of the application.
 
 .. tip::
 
-    You could have used the full class and method name -
-    ``Acme\DemoBundle\Controller\WelcomeController::indexAction`` - for the
-    ``_controller`` value. But using the logical name is shorter and allows
-    for more flexibility.
-
-The ``WelcomeController`` class extends the built-in ``Controller`` class,
-which provides useful shortcut methods, like the
-:ref:`render()<controller-rendering-templates>` method that loads and renders
-a template (``AcmeDemoBundle:Welcome:index.html.twig``). The returned value
-is a ``Response`` object populated with the rendered content. So, if the need
-arises, the ``Response`` can be tweaked before it is sent to the browser::
-
-    public function indexAction()
-    {
-        $response = $this->render('AcmeDemoBundle:Welcome:index.txt.twig');
-        $response->headers->set('Content-Type', 'text/plain');
-
-        return $response;
-    }
-
-No matter how you do it, the end goal of your controller is always to return
-the ``Response`` object that should be delivered back to the user. This ``Response``
-object can be populated with HTML code, represent a client redirect, or even
-return the contents of a JPG image with a ``Content-Type`` header of ``image/jpg``.
-
-The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
-*logical name* and it references the ``Resources/views/Welcome/index.html.twig``
-file inside the AcmeDemoBundle (located at ``src/Acme/DemoBundle``).
-The `Bundles`_ section below will explain why this is useful.
-
-Now, take a look at the routing configuration again and find the ``_demo``
-key:
-
-.. code-block:: yaml
-
-    # src/Acme/DemoBundle/Resources/config/routing.yml
-    # ...
-    _demo:
-        resource: "@AcmeDemoBundle/Controller/DemoController.php"
-        type:     annotation
-        prefix:   /demo
-
-The *logical name* of the file containing the ``_demo`` routes is
-``@AcmeDemoBundle/Controller/DemoController.php`` and refers
-to the ``src/Acme/DemoBundle/Controller/DemoController.php`` file. In this
-file, routes are defined as annotations on action methods::
-
-    // src/Acme/DemoBundle/Controller/DemoController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-    class DemoController extends Controller
-    {
-        /**
-         * @Route("/hello/{name}", name="_demo_hello")
-         * @Template()
-         */
-        public function helloAction($name)
-        {
-            return array('name' => $name);
-        }
-
-        // ...
-    }
-
-The ``@Route()`` annotation creates a new route matching the ``/hello/{name}``
-path to the ``helloAction()`` method. Any string enclosed in curly brackets,
-like ``{name}``, is considered a variable that can be directly retrieved as a
-method argument with the same name.
-
-If you take a closer look at the controller code, you can see that instead of
-rendering a template and returning a ``Response`` object like before, it
-just returns an array of parameters. The ``@Template()`` annotation tells
-Symfony to render the template for you, passing to it each variable of the
-returned array. The name of the template that's rendered follows the name
-of the controller. So, in this example, the ``AcmeDemoBundle:Demo:hello.html.twig``
-template is rendered (located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
+    In addition to PHP annotations, routes can be configured in YAML, XML or
+    PHP files, as explained in :doc:`the Routing chapter of the Symfony book </book/routing>`.
+    This flexibility is one of the main features of Symfony, a framework that
+    never imposes a particular configuration format on you.
 
 Templates
 ~~~~~~~~~
 
-The controller renders the ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``
-template (or ``AcmeDemoBundle:Demo:hello.html.twig`` if you use the logical name):
+The only content of the ``index`` action is this PHP instruction:
 
-.. code-block:: jinja
+.. code-block:: php
 
-    {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
+    return $this->render('default/index.html.twig');
 
-    {% block title "Hello " ~ name %}
+The ``$this->render()`` method is a convenient shortcut to render a template.
+Symfony provides some useful shortcuts to any controller extending from the
+``Controller`` class.
 
-    {% block content %}
-        <h1>Hello {{ name }}!</h1>
+By default, application templates are stored in the ``app/Resources/views/``
+directory. Therefore, the ``default/index.html.twig`` template corresponds to the
+``app/Resources/views/default/index.html.twig``. Open that file and you'll see
+the following code:
+
+.. code-block:: html+jinja
+
+    {# app/Resources/views/default/index.html.twig #}
+    {% extends 'base.html.twig' %}
+
+    {% block body %}
+        <h1>Welcome to Symfony!</h1>
     {% endblock %}
 
-By default, Symfony uses `Twig`_ as its template engine but you can also use
-traditional PHP templates if you choose. The
-:doc:`second part of this tutorial</quick_tour/the_view>` will introduce how
-templates work in Symfony.
-
-Bundles
-~~~~~~~
-
-You might have wondered why the :term:`Bundle` word is used in many names you
-have seen so far. All the code you write for your application is organized in
-bundles. In Symfony speak, a bundle is a structured set of files (PHP files,
-stylesheets, JavaScripts, images, ...) that implements a single feature (a
-blog, a forum, ...) and which can be easily shared with other developers. As
-of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
-more about bundles in the :doc:`last part of this tutorial</quick_tour/the_architecture>`.
+This template is created with `Twig`_, a new template engine created for modern
+PHP applications. The :doc:`second part of this tutorial </quick_tour/the_view>`
+will introduce how templates work in Symfony.
 
 .. _quick-tour-big-picture-environments:
 
@@ -328,9 +292,13 @@ the request, the query parameters, security details, and database queries:
 .. image:: /images/quick_tour/profiler.png
    :align: center
 
-Of course, it would be unwise to have this tool enabled when you deploy your
-application, so by default, the profiler is not enabled in the ``prod``
-environment.
+This tool provides so much internal information about your application that you
+may be worried about your visitors accessing sensible information. Symfony is
+aware of this issue and for that reason, it won't display this bar when your
+application is running in the production server.
+
+How does Symfony know  whether your application is running locally or on a
+production server? Keep reading to discover the concept of **execution environments**.
 
 .. _quick-tour-big-picture-environments-intro:
 
@@ -341,6 +309,22 @@ An :term:`Environment` represents a group of configurations that's used to run
 your application. Symfony defines two environments by default: ``dev``
 (suited for when developing the application locally) and ``prod`` (optimized
 for when executing the application on production).
+
+When you visit the ``http://localhost:8000`` URL in your browser, you're executing
+your Symfony application in the ``dev`` environment. To visit your application
+in the ``prod`` environment, visit the ``http://localhost:8000/app.php`` URL instead.
+If you prefer to always show the ``dev`` environment in the URL, you can visit
+``http://localhost:8000/app_dev.php`` URL.
+
+The main difference between environments is that ``dev`` is optimized to provide
+lots of information to the developer, which means worse application performance.
+Meanwhile, ``prod`` is optimized to get the best performance, which means that
+debug information is disabled, as well as the Web Debug Toolbar.
+
+The other difference between environments is the configuration options used to
+execute the application. When you access the ``dev`` environment, Symfony loads
+the ``app/config/config_dev.yml`` configuration file. When you access the ``prod``
+environment, Symfony loads ``app/config/config_prod.yml`` file.
 
 Typically, the environments share a large amount of configuration options. For
 that reason, you put your common configuration in ``config.yml`` and override
@@ -356,29 +340,9 @@ the specific configuration file for each environment where necessary:
         toolbar: true
         intercept_redirects: false
 
-In this example, the ``dev`` environment loads the ``config_dev.yml`` configuration
-file, which itself imports the common ``config.yml`` file and then modifies it
-by enabling the web debug toolbar.
-
-When you visit the ``app_dev.php`` file in your browser, you're executing
-your Symfony application in the ``dev`` environment. To visit your application
-in the ``prod`` environment, visit the ``app.php`` file instead.
-
-The demo routes in our application are only available in the ``dev`` environment.
-Therefore, if you try to access the ``http://localhost/app.php/demo/hello/Fabien``
-URL, you'll get a 404 error.
-
-.. tip::
-
-    If instead of using PHP's built-in webserver, you use Apache with
-    ``mod_rewrite`` enabled and take advantage of the ``.htaccess`` file
-    Symfony provides in ``web/``, you can even omit the ``app.php`` part of the
-    URL. The default ``.htaccess`` points all requests to the ``app.php`` front
-    controller:
-
-    .. code-block:: text
-
-        http://localhost/demo/hello/Fabien
+In this example, the ``config_dev.yml`` configuration file imports the common
+``config.yml`` file and then overrides any existing web debug toolbar configuration
+with its own options.
 
 For more details on environments, see
 ":ref:`Environments & Front Controllers <page-creation-environments>`" article.
@@ -390,8 +354,8 @@ Congratulations! You've had your first taste of Symfony code. That wasn't so
 hard, was it? There's a lot more to explore, but you should already see how
 Symfony makes it really easy to implement web sites better and faster. If you
 are eager to learn more about Symfony, dive into the next section:
-":doc:`The View<the_view>`".
+":doc:`The View <the_view>`".
 
-.. _Composer:             https://getcomposer.org/
+.. _Composer: https://getcomposer.org/
 .. _executable installer: http://getcomposer.org/download
-.. _Twig:                 http://twig.sensiolabs.org/
+.. _Twig: http://twig.sensiolabs.org/

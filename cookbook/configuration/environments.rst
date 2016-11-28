@@ -107,9 +107,7 @@ activated by modifying the default value in the ``dev`` configuration file:
             <import resource="config.xml" />
         </imports>
 
-        <webprofiler:config
-            toolbar="true"
-            ... />
+        <webprofiler:config toolbar="true" />
 
     .. code-block:: php
 
@@ -212,6 +210,39 @@ environment by using this code and changing the environment string.
     mode. You'll need to enable that in your front controller by calling
     :method:`Symfony\\Component\\Debug\\Debug::enable`.
 
+Selecting the Environment for Console Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, Symfony commands are executed in the ``dev`` environment and with the
+debug mode enabled. Use the ``--env`` and ``--no-debug`` options to modify this
+behavior:
+
+.. code-block:: bash
+
+    # 'dev' environment and debug enabled
+    $ php app/console command_name
+
+    # 'prod' environment (debug is always disabled for 'prod')
+    $ php app/console command_name --env=prod
+
+    # 'test' environment and debug disabled
+    $ php app/console command_name --env=test --no-debug
+
+In addition to the ``--env`` and ``--debug`` options, the behavior of Symfony
+commands can also be controlled with environment variables. The Symfony console
+application checks the existence and value of these environment variables before
+executing any command:
+
+``SYMFONY_ENV``
+    Sets the execution environment of the command to the value of this variable
+    (``dev``, ``prod``, ``test``, etc.);
+``SYMFONY_DEBUG``
+    If ``0``, debug mode is disabled. Otherwise, debug mode is enabled.
+
+These environment variables are very useful for production servers because they
+allow you to ensure that commands always run in the ``prod`` environment without
+having to add any command option.
+
 .. index::
    single: Environments; Creating a new environment
 
@@ -276,7 +307,7 @@ should also create a front controller for it. Copy the ``web/app.php`` file
 to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``::
 
     // web/app_benchmark.php
-
+    // ...
 
     // change just this line
     $kernel = new AppKernel('benchmark', false);

@@ -8,12 +8,13 @@ Imagine you want to allow access to your website only between 2pm and 4pm
 UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
 and provider. In this entry, you'll learn how to do this for a login form
 (i.e. where your user submits their username and password).
+Before Symfony 2.6, you had to use the password encoder to authenticate the user password.
 
 The Password Authenticator
 --------------------------
 
-.. versionadded:: 2.4
-    The ``SimpleFormAuthenticatorInterface`` interface was introduced in Symfony 2.4.
+.. versionadded:: 2.6
+    The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
 
 First, create a new class that implements
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
@@ -27,18 +28,18 @@ the user::
     use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-    use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+    use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
 
     class TimeAuthenticator implements SimpleFormAuthenticatorInterface
     {
-        private $encoderFactory;
+        private $encoder;
 
-        public function __construct(EncoderFactoryInterface $encoderFactory)
+        public function __construct(UserPasswordEncoderInterface $encoder)
         {
-            $this->encoderFactory = $encoderFactory;
+            $this->encoder = $encoder;
         }
 
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
@@ -49,12 +50,7 @@ the user::
                 throw new AuthenticationException('Invalid username or password');
             }
 
-            $encoder = $this->encoderFactory->getEncoder($user);
-            $passwordValid = $encoder->isPasswordValid(
-                $user->getPassword(),
-                $token->getCredentials(),
-                $user->getSalt()
-            );
+            $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
             if ($passwordValid) {
                 $currentHour = date('G');
@@ -127,17 +123,12 @@ Ultimately, your job is to return a *new* token object that is "authenticated"
 (i.e. it has at least 1 role set on it) and which has the ``User`` object
 inside of it.
 
-Inside this method, an encoder is needed to check the password's validity::
+Inside this method, the password encoder is needed to check the password's validity::
 
-        $encoder = $this->encoderFactory->getEncoder($user);
-        $passwordValid = $encoder->isPasswordValid(
-            $user->getPassword(),
-            $token->getCredentials(),
-            $user->getSalt()
-        );
+        $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
-This is a service that is already available in Symfony and the password algorithm
-is configured in the security configuration (e.g. ``security.yml``) under
+This is a service that is already available in Symfony and it uses the password algorithm
+that is configured in the security configuration (e.g. ``security.yml``) under
 the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthenticator``.
 
 .. _cookbook-security-password-authenticator-config:
@@ -157,7 +148,7 @@ Now, configure your ``TimeAuthenticator`` as a service:
 
             time_authenticator:
                 class:     Acme\HelloBundle\Security\TimeAuthenticator
-                arguments: ["@security.encoder_factory"]
+                arguments: ["@security.password_encoder"]
 
     .. code-block:: xml
 
@@ -173,7 +164,7 @@ Now, configure your ``TimeAuthenticator`` as a service:
                 <service id="time_authenticator"
                     class="Acme\HelloBundle\Security\TimeAuthenticator"
                 >
-                    <argument type="service" id="security.encoder_factory" />
+                    <argument type="service" id="security.password_encoder" />
                 </service>
             </services>
         </container>
@@ -188,7 +179,7 @@ Now, configure your ``TimeAuthenticator`` as a service:
 
         $container->setDefinition('time_authenticator', new Definition(
             'Acme\HelloBundle\Security\TimeAuthenticator',
-            array(new Reference('security.encoder_factory'))
+            array(new Reference('security.password_encoder'))
         ));
 
 Then, activate it in the ``firewalls`` section of the security configuration
