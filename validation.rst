@@ -639,9 +639,9 @@ Now, create the ``isPasswordLegal()`` method and include the logic you need::
 .. note::
 
     The keen-eyed among you will have noticed that the prefix of the getter
-    ("get", "is" or "has") is omitted in the mapping. This allows you to move
-    the constraint to a property with the same name later (or vice versa)
-    without changing your validation logic.
+    ("get", "is" or "has") is omitted in the mappings for the YAML, XML and PHP
+    formats. This allows you to move the constraint to a property with the same
+    name later (or vice versa) without changing your validation logic.
 
 .. _validation-class-target:
 
