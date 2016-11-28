@@ -66,14 +66,14 @@ to get information about the messages sent on the previous request::
 Troubleshooting
 ---------------
 
-Problem: The collector object is ``null``
+Problem: The Collector Object Is ``null``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The email collector is only available when the profiler is enabled and collects
 information, as explained in :doc:`/testing/profiling`.
 
-Problem: The collector doesn't contain the email
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Problem: The Collector Doesn't Contain the E-Mail
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a redirection is performed after sending the email (for example when you send
 an email after a form is processed and before redirecting to another page), make
