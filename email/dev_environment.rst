@@ -54,7 +54,7 @@ If you'd also like to disable deliver in the ``dev`` environment, simply
 add this same configuration to the ``config_dev.yml`` file.
 
 Sending to a Specified Address(es)
-------------------------------
+----------------------------------
 
 You can also choose to have all email sent to a specific address or a list of addresses, instead
 of the address actually specified when sending the message. This can be done
