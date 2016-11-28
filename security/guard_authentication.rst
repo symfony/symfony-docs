@@ -165,17 +165,14 @@ This requires you to implement six methods::
     {
         /**
          * Called on every request. Return whatever credentials you want to
-         * be passed to getUser().  Returning null will cause this authenticator
+         * be passed to getUser(). Returning null will cause this authenticator
          * to be skipped.
          */
         public function getCredentials(Request $request)
         {
             if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
                 // No token?
-                // Throwing an exception will cause authentication
-                //   to fail and prevent other authenticators from
-                //   attempting to authenticate.
-                throw new AuthenticationException('No token provided.');
+                $token = null;
             }
 
             // What you return here will be passed to getUser() as $credentials
