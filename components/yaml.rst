@@ -296,7 +296,7 @@ flag::
 Parsing PHP Constants
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default the YAML parser treats the PHP constants included in the contents as
+By default, the YAML parser treats the PHP constants included in the contents as
 regular strings. Use the ``PARSE_CONSTANT`` flag and the special ``!php/const:``
 syntax to parse them as proper PHP constants::
 
