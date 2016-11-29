@@ -208,25 +208,21 @@ ide
 
 **type**: ``string`` **default**: ``null``
 
-Symfony can turn file paths seen in dumps and exception messages into links
-that will open in your preferred text editor or IDE.
+Symfony turns file paths seen in variable dumps and exception messages into
+links that open those files right inside your browser. If you prefer, you can
+open those files in your favorite IDE or text editor.
 
-Since every developer uses a different IDE, the recommended way to enable this
-feature is to configure it on a system level. This can be done by setting the
-``xdebug.file_link_format`` option in your ``php.ini`` configuration file.
+Set this option to any of these values preconfigured for the most popular editors:
+``phpstorm`` (requires `PhpStormProtocol`_), ``sublime``, ``textmate``,
+``macvim`` and ``emacs``.
 
-.. tip::
+If you use another editor, the expected configuration value is a URL template
+that contains an ``%f`` placeholder where the file path is expected and ``%l``
+placeholder for the line number (percentages signs (``%``) must be escaped by
+doubling them to prevent Symfony from interpreting them as container parameters).
 
-    Setting the ``xdebug.file_link_format`` ini option works even if the Xdebug
-    extension is not enabled.
-
-Alternatively, you can use this ``ide`` configuration key.
-
-In both cases, the expected configuration value is a URL template that contains an
-``%f`` where the file path is expected and ``%l`` for the line number. When using
-the ``ide`` configuration key, percentages signs (``%``) must be escaped by
-doubling them. For example, if you use PHPstorm on the Mac OS platform, you will
-do something like:
+For example, if you use PHPstorm on the Mac OS platform, you can use this
+configuration:
 
 .. configuration-block::
 
@@ -256,6 +252,17 @@ do something like:
             'ide' => 'phpstorm://open?file=%%f&line=%%l',
         ));
 
+Since every developer uses a different IDE, the recommended way to enable this
+feature is to configure it on a system level. This can be done by setting the
+``xdebug.file_link_format`` option in your ``php.ini`` configuration file. The
+format to use is the same as for the ``framework.ide`` option, but without the
+need to escape the percent signs (``%``) by doubling them.
+
+.. tip::
+
+    Setting the ``xdebug.file_link_format`` ini option works even if the Xdebug
+    extension is not enabled.
+
 .. tip::
 
     When running your app in a container or in a virtual machine, you can tell
@@ -270,12 +277,6 @@ do something like:
 
     .. versionadded:: 3.2
         Guest to host mappings were introduced in Symfony 3.2.
-
-.. tip::
-
-    Symfony contains preconfigured URLs for some popular IDEs, you can set them
-    using the following values: ``phpstorm`` (requires `PhpStormProtocol`_),
-    ``sublime``, ``textmate``, ``macvim`` or ``emacs``.
 
 .. _reference-framework-test:
 
