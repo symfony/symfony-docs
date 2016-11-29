@@ -78,7 +78,9 @@ via the ``delivery_addresses`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:config delivery-addresses="dev@example.com" />
+            <swiftmailer:config>
+                <swiftmailer:delivery-address>dev@example.com</swiftmailer:delivery-address>
+            </swiftmailer:config>
         </container>
 
     .. code-block:: php
@@ -158,11 +160,12 @@ by adding the ``delivery_whitelist`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:config delivery-addresses="dev@example.com">
+            <swiftmailer:config>
                 <!-- all email addresses matching these regexes will be delivered
                      like normal, as well as being sent to dev@example.com -->
                 <swiftmailer:delivery-whitelist-pattern>/@specialdomain\.com$/</swiftmailer:delivery-whitelist-pattern>
                 <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain\.com$/</swiftmailer:delivery-whitelist-pattern>
+                <swiftmailer:delivery-address>dev@example.com</swiftmailer:delivery-address>
             </swiftmailer:config>
         </container>
 
