@@ -203,6 +203,25 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
+Numeric literals
+................
+
+Long numeric literals, being integer, float or hexadecimal, are known for their
+poor readability in code and configuration files. That's why YAML files allow to
+add underscores to improve their readability:
+
+.. code-block:: yaml
+
+    parameters:
+        credit_card_number: 1234_5678_9012_3456
+        long_number: 10_000_000_000
+        pi: 3.14159_26535_89793
+        hex_words: 0x_CAFE_F00D
+
+During the parsing of the YAML contents, all the ``_`` characters are removed
+from the numeric literal contents, so there is not a limit in the number of
+underscores you can include or the way you group contents.
+
 Advanced Usage: Flags
 ---------------------
 
