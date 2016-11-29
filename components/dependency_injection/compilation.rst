@@ -423,6 +423,22 @@ been run, use::
         PassConfig::TYPE_AFTER_REMOVING
     );
 
+.. versionadded:: 3.2
+    The option to prioritize compiler passes was added in Symfony 3.2.
+
+You can also control the order in which compiler passes are run for each
+compilation phase. Use the optional third argument of ``addCompilerPass()`` to
+set the priority (the higher the number, the earlier it's executed)::
+
+    // ...
+    // FirstPass is executed after SecondPass because its priority is lower
+    $container->addCompilerPass(
+        new FirstPass(), PassConfig::TYPE_AFTER_REMOVING, 10
+    );
+    $container->addCompilerPass(
+        new SecondPass(), PassConfig::TYPE_AFTER_REMOVING, 30
+    );
+
 .. _components-dependency-injection-dumping:
 
 Dumping the Configuration for Performance
