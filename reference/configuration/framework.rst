@@ -20,7 +20,7 @@ configured under the ``framework`` key in your application configuration.
 
     When using XML, you must use the ``http://symfony.com/schema/dic/symfony``
     namespace and the related XSD schema is available at:
-   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
+    ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
 
 Configuration
 -------------
