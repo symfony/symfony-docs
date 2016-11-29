@@ -218,7 +218,7 @@ Set this option to any of these values preconfigured for the most popular editor
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
-placeholder for the line number (percentages signs (``%``) must be escaped by
+placeholder for the line number (percentage signs (``%``) must be escaped by
 doubling them to prevent Symfony from interpreting them as container parameters).
 
 For example, if you use PHPstorm on the Mac OS platform, you can use this
