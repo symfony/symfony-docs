@@ -53,6 +53,8 @@ will not be sent when you run tests, but will continue to be sent in the
 If you'd also like to disable deliver in the ``dev`` environment, simply
 add this same configuration to the ``config_dev.yml`` file.
 
+.. _sending-to-a-specified-address:
+
 Sending to a Specified Address(es)
 ----------------------------------
 
