@@ -1,21 +1,26 @@
 .. index::
     single: Configuration reference; Framework
 
-FrameworkBundle Configuration ("framework")
-===========================================
+FrameworkBundle Configuration
+=============================
 
-The FrameworkBundle contains most of the "base" framework functionality
-and can be configured under the ``framework`` key in your application
-configuration. When using XML, you must use the
-``http://symfony.com/schema/dic/symfony`` namespace.
+The FrameworkBundle includes the main framework configuration, from sessions and
+translations to forms, validation, routing and more. All these options are
+configured under the ``framework`` key in your application configuration.
 
-This includes settings related to sessions, translation, forms, validation,
-routing and more.
+.. code-block:: terminal
 
-.. tip::
+    # displays the default config values defined by Symfony
+    $ ./bin/console config:dump-reference framework
 
-   The XSD schema is available at
-   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``.
+    # displays the actual config values used by your application
+    $ ./bin/console debug:config framework
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/symfony``
+    namespace and the related XSD schema is available at:
+   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
 
 Configuration
 -------------
@@ -1476,143 +1481,6 @@ If this option is enabled, serialization groups can be defined using annotations
 .. seealso::
 
     For more information, see :ref:`serializer-using-serialization-groups-annotations`.
-
-Full Default Configuration
---------------------------
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        framework:
-            secret:               ~
-            http_method_override: true
-            trusted_proxies:      []
-            ide:                  ~
-            test:                 ~
-            default_locale:       en
-
-            csrf_protection:
-                enabled:              false
-                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
-
-            # form configuration
-            form:
-                enabled:              false
-                csrf_protection:
-                    enabled:          true
-                    field_name:       ~
-
-            # esi configuration
-            esi:
-                enabled:              false
-
-            # fragments configuration
-            fragments:
-                enabled:              false
-                path:                 /_fragment
-
-            # profiler configuration
-            profiler:
-                enabled:              false
-                collect:              true
-                only_exceptions:      false
-                only_master_requests: false
-                dsn:                  file:%kernel.cache_dir%/profiler
-                username:
-                password:
-                lifetime:             86400
-                matcher:
-                    ip:                   ~
-
-                    # use the urldecoded format
-                    path:                 ~ # Example: ^/path to resource/
-                    service:              ~
-
-            # router configuration
-            router:
-                resource:             ~ # Required
-                type:                 ~
-                http_port:            80
-                https_port:           443
-
-                # * set to true to throw an exception when a parameter does not
-                #   match the requirements
-                # * set to false to disable exceptions when a parameter does not
-                #   match the requirements (and return null instead)
-                # * set to null to disable parameter checks against requirements
-                #
-                # 'true' is the preferred configuration in development mode, while
-                # 'false' or 'null' might be preferred in production
-                strict_requirements:  true
-
-            # session configuration
-            session:
-                storage_id:           session.storage.native
-                handler_id:           session.handler.native_file
-                name:                 ~
-                cookie_lifetime:      ~
-                cookie_path:          ~
-                cookie_domain:        ~
-                cookie_secure:        ~
-                cookie_httponly:      ~
-                gc_divisor:           ~
-                gc_probability:       ~
-                gc_maxlifetime:       ~
-                save_path:            '%kernel.cache_dir%/sessions'
-
-            # serializer configuration
-            serializer:
-               enabled: false
-
-            # assets configuration
-            assets:
-                base_path:          ~
-                base_urls:          []
-                version:            ~
-                version_format:     '%%s?%%s'
-                packages:
-
-                    # Prototype
-                    name:
-                        base_path:            ~
-                        base_urls:            []
-                        version:              ~
-                        version_format:       '%%s?%%s'
-
-            # templating configuration
-            templating:
-                hinclude_default_template:  ~
-                form:
-                    resources:
-
-                        # Default:
-                        - FrameworkBundle:Form
-                cache:                ~
-                engines:              # Required
-
-                    # Example:
-                    - twig
-                loaders:              []
-
-            # translator configuration
-            translator:
-                enabled:              false
-                fallbacks:            [en]
-                logging:              "%kernel.debug%"
-
-            # validation configuration
-            validation:
-                enabled:              false
-                cache:                ~
-                enable_annotations:   false
-                translation_domain:   validators
-
-            # annotation configuration
-            annotations:
-                cache:                file
-                file_cache_dir:       '%kernel.cache_dir%/annotations'
-                debug:                '%kernel.debug%'
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
