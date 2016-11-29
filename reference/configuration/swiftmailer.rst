@@ -211,7 +211,6 @@ Full Default Configuration
             antiflood:
                 threshold:            99
                 sleep:                0
-            delivery_address:     ~
             delivery_addresses:   []
             disable_delivery:     ~
             logging:              '%kernel.debug%'
@@ -234,8 +233,6 @@ Full Default Configuration
                 encryption=""
                 auth_mode=""
                 sender_address=""
-                delivery_address=""
-                delivery_addresses=""
                 disable_delivery=""
                 logging="%kernel.debug%"
                 >
