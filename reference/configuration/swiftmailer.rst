@@ -154,7 +154,7 @@ delivery_addresses
 
 .. note::
 
-    In previous versions, this option was called ``delivery_address``
+    In previous versions, this option was called ``delivery_address``.
 
 If set, all email messages will be sent to these addresses instead of being
 sent to their actual recipients. This is often useful when developing. For
