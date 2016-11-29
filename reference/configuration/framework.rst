@@ -104,7 +104,7 @@ Configuration
 * `php_errors`_
     * `log`_
     * `throw`_
-* `cache`_
+* `cache <reference-cache>`_
     * `prefix_seed`_
 
 secret
@@ -1477,7 +1477,8 @@ prefix_seed
 **type**: ``string`` **default**: ``null``
 
 If defined, this value is used as part of the "namespace" generated for the
-cache item keys. It's useful to prevent naming collisions when deploying
+cache item keys. A common practice is to use the unique name of the application
+(e.g. ``symfony.com``) because that prevents naming collisions when deploying
 multiple applications into the same path (on different servers) that share the
 same cache backend.
 
