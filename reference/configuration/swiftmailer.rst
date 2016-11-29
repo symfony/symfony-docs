@@ -32,7 +32,7 @@ Configuration
 * `antiflood`_
     * `threshold`_
     * `sleep`_
-* `delivery_address`_
+* `delivery_addresses`_
 * `delivery_whitelist`_
 * `disable_delivery`_
 * `logging`_
@@ -144,6 +144,8 @@ sleep
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of seconds
 to sleep for during a transport restart.
+
+.. _delivery-address:
 
 delivery_addresses
 ~~~~~~~~~~~~~~~~~~
