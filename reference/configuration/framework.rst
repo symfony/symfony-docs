@@ -104,6 +104,8 @@ Configuration
 * `php_errors`_
     * `log`_
     * `throw`_
+* `cache <reference-cache>`_
+    * `prefix_seed`_
 
 secret
 ~~~~~~
@@ -1463,6 +1465,27 @@ throw
 Throw PHP errors as ``\ErrorException`` instances. The parameter
 ``debug.error_handler.throw_at`` controls the threshold.
 
+cache
+~~~~~
+
+prefix_seed
+...........
+
+.. versionadded:: 3.2
+    The ``prefix_seed`` option was introduced in Symfony 3.2.
+
+**type**: ``string`` **default**: ``null``
+
+If defined, this value is used as part of the "namespace" generated for the
+cache item keys. A common practice is to use the unique name of the application
+(e.g. ``symfony.com``) because that prevents naming collisions when deploying
+multiple applications into the same path (on different servers) that share the
+same cache backend.
+
+It's also useful when using `blue/green deployment`_ strategies and more
+generally, when you need to abstract out the actual deployment directory (for
+example, when warming caches offline).
+
 Full Default Configuration
 --------------------------
 
@@ -1607,3 +1630,4 @@ Full Default Configuration
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
+.. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
