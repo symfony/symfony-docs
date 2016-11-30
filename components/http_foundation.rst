@@ -547,13 +547,19 @@ class, which can make this even easier::
 
     use Symfony\Component\HttpFoundation\JsonResponse;
 
-    $response = new JsonResponse();
-    $response->setData(array(
-        'data' => 123
-    ));
+    // if you know the data to send when creating the response
+    $response = new JsonResponse(array('data' => 123));
 
-This encodes your array of data to JSON and sets the ``Content-Type`` header
-to ``application/json``.
+    // if you don't know the data to send when creating the response
+    $response = new JsonResponse();
+    // ...
+    $response->setData(array('data' => 123));
+
+    // if the data to send is already encoded in JSON
+    $response = JsonResponse::fromJsonString('{ "data": 123 }');
+
+The ``JsonResponse`` class sets the ``Content-Type`` header to
+``application/json`` and encodes your data to JSON when needed.
 
 .. caution::
 
