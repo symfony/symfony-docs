@@ -278,4 +278,13 @@ when all items are successfully deleted)::
     // ...
     $cacheIsEmpty = $cache->clear();
 
+.. tip::
+
+    If the Cache component is used inside a Symfony application, you can remove
+    all the items of a given cache pool with the following command:
+
+    .. code-block:: terminal
+
+        $ ./bin/console cache:pool:clear <cache-pool-name>
+
 .. _`Doctrine Cache`: https://github.com/doctrine/cache
