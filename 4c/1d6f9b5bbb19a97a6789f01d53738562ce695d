@@ -1,0 +1,309 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-14T11:10:28Z
+
+First a more cosmetic issue: Please add a line break after the first word that crosses the 72th character. It seems like your lines are now longer than this.
+
+> Is there any more features I should cover?
+
+I don't know the component, but the docs you've written now are lacking some important details:
+- What are all these arguments passed to `new Transaction()`?
+- What is the `MarkingScore` and what are `ScalarMarkingScore`? (and what other marking scores are available?)
+- There seems to be a `Registry` to be able to use multiple workflows for different classes, let's also document this.
+
+> Do you like my blog post project?
+
+It looks fine to me. However, maybe @lyrixx has some other opinion, as it seems like your concept of the Workflow component (as state machine) differs from his view.
+
+---
+
+At last, if you have some time, please restructure the workflow component docs in a little different way:
+1. Only document how to initialize the `Workflow` and `Registry` class (and all other standalone specific things) in the components docs.
+2. Move the _usage_ docs to a new `/workflow` directory in the root. This will document framework usage (so the configuration and by using the `workflow` service). We decided that component users are smart enough to transform framework-usage into component-usage.
+3. Create `/workflow.rst` in the root, containing:
+
+   ``` rst
+   Workflow
+   --------
+
+   .. toctree::
+      :maxdepth: 1
+      :glob:
+
+      workflow/*
+   ```
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-14T11:18:17Z
+
+Oh, and completely forgot to say a big thanks for starting this! Would be great to have this component documented before the release!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-08-14T13:56:36Z
+
+Thank you for the feedback. Really appreciate that. I will update this PR accordingly. Expect an update tonight or within the next coming days.
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-08-14T14:10:48Z
+
+@Nyholm last comment (I will probably be crushed for that), but I think we can't escape the explanation about what is a state machine, and how this component differs from a state machine.
+
+I was pretty sure the component creator have explained it somewhere :) else we will have a lot of (legitimate) questions about "why not a finite state machine ?" , "why workflow and not a state machine?" etc ...
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-08-14T14:13:39Z
+
+I think you are correct. I do also want to research if one can consider a state machine as a special case of a workflow.
+Anyhow we should definitely have a section where we explain both state machines and workflows and how/why you can/cant use the workflow component with a state machine.
+
+---------------------------------------------------------------------------
+
+by unkind at 2016-08-14T18:11:36Z
+
+It would be nice to describe the purpose of the component more.
+
+By now, I fail to understand the component intent: OK, it can be useful for dumping graphs. But I'm pretty sure it should not be used to describe "primary" domain logic to handle these transitions in the domain model. Model should take care of its internal state by itself:
+
+``` php
+namespace Acme\BlogPosting;
+
+final class BlogPost
+{
+    public function publish() {
+        if ($this->status->equals(PostStatus::published())) {
+            return;
+        }
+
+        Assertion::true($this->status->equals(PostStatus::waitingForReview()));
+
+        $this->apply(new BlogPostWasPublished($this->id));
+    }
+
+    private function whenBlogPostWasPublished(BlogPostWasPublished $event) {
+        $this->status = PostStatus::published();
+    }
+}
+```
+
+Not sure why somebody would replace explicit model invariants with generic Symfony's component.
+
+It's OK to handle "secondary" domain logic though (_reflection_ of a domain model), e.g. if you want to hide some senseless transitions from UI. But it has nothing to do with domain model.
+
+---------------------------------------------------------------------------
+
+by unkind at 2016-08-14T18:41:32Z
+
+And just to be clear, [example](https://github.com/lyrixx/SFLive-Paris2016-Workflow/blob/master/src/AppBundle/Entity/Article.php) from author of the component looks like a strong anti-pattern for me. Anaemic domain model with implicit `marking` property coupled with a framework. What could possibly go wrong?
+
+I don't want to look offensive, but I hope it wouldn't be proclaimed as something like "best practice for your business logic". Because it's not.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-14T18:59:32Z
+
+> Anaemic domain model with implicit marking property coupled with a framework.
+
+Nothing about this property couples it to the framework...
+
+---------------------------------------------------------------------------
+
+by unkind at 2016-08-14T19:09:24Z
+
+> Nothing about this property couples it to the framework...
+
+I'm sorry, but I'm not sure I understand you correctly. Coupling with a framework is not the main issue here, but anaemia & vagueness is.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-14T19:11:56Z
+
+You can name this property anything you want, so that removes the vagueness? (I got your first point, but the model still is as anaemic as you want afaics)
+
+---------------------------------------------------------------------------
+
+by unkind at 2016-08-14T19:39:47Z
+
+> You can name this property anything you want, so that removes the vagueness?
+
+No, it doesn't. Still, it is either array or `Marking` instance. It is something that you can't really explain from domain perspective. It hides domain concepts like "article status" and probably something else. It encourages to replace statuses and flags of the model with vague array.
+
+Further, the component raises vague events like `Symfony\Component\Workflow\Event\Event` and `Symfony\Component\Workflow\Event\TransitionEvent`. I wonder how it can be better than explicit `BlogPostWasPublished`, `BlogPostWasReviewed`, etc.
+
+> I got your first point, but the model still is as anaemic as you want afaics
+
+The thing is the component breaks encapsulation of the model (at least, given examples do). The component wants to control transitions of the `BlogPost` by changing its properties directly. `BlogPost` should take care of itself.
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2016-08-14T20:25:02Z
+
+@unkind you may be interested by this study about Petri net and workflow management => https://wwwis.win.tue.nl/~wvdaalst/publications/p53.pdf
+
+Let's focus on docs for now :)
+
+---------------------------------------------------------------------------
+
+by unkind at 2016-08-14T20:40:57Z
+
+> @unkind you may be interested by this study about Petri net and workflow management => https://wwwis.win.tue.nl/~wvdaalst/publications/p53.pdf
+
+How does it conflict with my observations?
+
+> Let's focus on docs for now
+
+I won't say anything unless docs would provide wrong examples based on procedural approaches instead of object-oriented ones.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-08-16T09:56:23Z
+
+Massive thank you for the feedback. I've updated the PR accordingly.
+
+I've splited up the docs into multiple parts. One for the component, one for "usage" and one for dumping. What this what you had in mind @wouterj?
+
+That is great @unkind that you challenging this. I appreciate that. Though, Im not the author of the component Im happy if we discuss what the documentation and the examples in the documentations should say and not say (just as you have done so far). There are clearly right and wrong ways of using any component.
+
+I do agree with you that models should manage their own state. But when your models grows that could be a lot of messy code. Also, the workflows may have dependencies outside of the model. Say that you not should be allowed to publish when "[external event(boss is in the office?)]" is happening. Then it is a good thing to move this code outside of the model.
+
+I will continue this PR by filling in the placeholders (twig and state machines)
+
+---------------------------------------------------------------------------
+
+by unkind at 2016-08-16T10:20:21Z
+
+> But when your models grows that could be a lot of messy code.
+
+It probably means that existing domain model doesn't satisfy new requirements anymore. It's time to move from old model to the new one with new aggregate roots, bounded contexts, domain services, etc.
+
+By the way, I noticed that it was already discussed in original pull request: symfony/symfony#11882
+
+> What do you think (instead of using an external dependency inside the domain)
+> to enrich the model moving the Domain Entity with explicit states with explicit methods,
+> is so easy to implement using value objects, and there's a lot papers about it.
+
+However, this point was ignored.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-08-16T12:46:58Z
+
+> However, this point was ignored.
+
+I answered here: https://github.com/symfony/symfony-docs/pull/6871#discussion_r74926102
+
+Open an issue with this and I'll happy to try to make a fix.
+
+---------------------------------------------------------------------------
+
+by patrick-mcdougle at 2016-09-20T00:39:21Z
+
+Whether addressed in this PR or another one, we also need this file updated: configuration/framework.rst to add all the options for configuring one of these workflows in the framework.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-08T16:19:54Z
+
+Thank you @javiereguiluz for the feedback. Much appreciated.
+
+I have some more paragraphs that I want to add. Then there is a matter of structure.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-08T18:24:20Z
+
+Im happy with the work now. I have nothing more to add as far as I can see now.
+
+I would like to have some feedback on the structure. Is the separation between pages good? Too much/little overlap?
+
+And of course, I would be happy with feedback on language and content.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-09T13:20:35Z
+
+Incredible quick reaction, thanks a lot @Nyholm!
+
+👍
+status: reviewed
+
+(btw, the `/workflow` article now needs to be added to the topic toctree of `/index.rst`)
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-09T13:23:54Z
+
+Thank you all for reviewing it.
+
+I'll make another PR when/if the DefinitionBuilder get merged. https://github.com/symfony/symfony/pull/20451
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-09T13:28:38Z
+
+I added `workflow` to `/index.rst` and removed the reasoning about _why workflows_ from the usage page as you suggested.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2016-11-09T13:43:20Z
+
+This [PR](https://github.com/symfony/symfony/pull/20462) could change a very little bit this doc.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-09T13:48:15Z
+
+> This PR could change a very little bit this doc.
+
+Great PR. Im happy to create a second doc PR when/if https://github.com/symfony/symfony/pull/20462 gets merged.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-09T15:28:19Z
+
+FYI: https://github.com/Nyholm/symfony-docs/pull/1
+
+Should we include it now or later? I do not want to add more stuff to this PR since in has `status: reviewed`
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-09T16:11:15Z
+
+If that's all, let's just include the changes here.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-09T16:11:59Z
+
+And also include the changes of https://github.com/symfony/symfony/pull/20462
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-09T16:19:59Z
+
+> And also include the changes of symfony/symfony#20462
+
+Okey, will do
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-09T16:26:33Z
+
+There you go. The docs does reflect the code in master
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2016-11-11T15:43:20Z
+
+Thank you Christian
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-11T16:54:56Z
+
+👍
+
+Great! Thank you for your patience, Tobias!
