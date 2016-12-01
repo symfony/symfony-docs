@@ -188,7 +188,7 @@ You can configure the service configurator using the ``configurator`` option:
 
 .. note::
 
-    The traditional configurators syntax in YAML files used an array to define
+    The traditional configurator syntax in YAML files used an array to define
     the service id and the method name:
 
     .. code-block:: yaml
