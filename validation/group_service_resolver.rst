@@ -3,7 +3,7 @@ How to Dynamically Configure Validation Groups
 
 Sometimes you need advanced logic to determine the validation groups. If they
 can't be determined by a simple callback, you can use a service. Create a
-service that implements ``__invoke`` which accepts a ``FormInterface`` as a
+service that implements ``__invoke()`` which accepts a ``FormInterface`` as a
 parameter.
 
 .. code-block:: php

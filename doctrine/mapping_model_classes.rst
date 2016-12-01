@@ -90,7 +90,7 @@ be adapted for your case::
         }
     }
 
-Note the :phpfunction:`class_exists` check. This is crucial, as you do not want your
+Note the :phpfunction:`class_exists()` check. This is crucial, as you do not want your
 bundle to have a hard dependency on all Doctrine bundles but let the user
 decide which to use.
 

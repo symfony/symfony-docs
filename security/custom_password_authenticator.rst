@@ -125,7 +125,7 @@ Whatever token object you create here will be passed to you later in ``authentic
 3) authenticateToken
 ~~~~~~~~~~~~~~~~~~~~
 
-If ``supportsToken`` returns ``true``, Symfony will now call ``authenticateToken()``.
+If ``supportsToken()`` returns ``true``, Symfony will now call ``authenticateToken()``.
 Your job here is to check that the token is allowed to log in by first
 getting the ``User`` object via the user provider and then, by checking the password
 and the current time.

@@ -285,13 +285,13 @@ and :phpclass:`DOMNode` objects:
 
         $html = $crawler->html();
 
-    The ``html`` method is new in Symfony 2.3.
+    The ``html()`` method is new in Symfony 2.3.
 
 Links
 ~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
-the ``selectLink`` method on an existing crawler. This returns a Crawler
+the ``selectLink()`` method on an existing crawler. This returns a Crawler
 instance with just the selected link(s). Calling ``link()`` gives you a special
 :class:`Symfony\\Component\\DomCrawler\\Link` object::
 

@@ -255,7 +255,7 @@ great, your user can't actually add any new tags yet.
     once (e.g ``form_widget(form)``). To fix this you can set this directive
     to a higher value (either via a ``php.ini`` file or via :phpfunction:`ini_set`,
     for example in ``app/autoload.php``) or render each form field by hand
-    using ``form_row``.
+    using ``form_row()``.
 
 .. _form-collections-new-prototype:
 
@@ -319,7 +319,7 @@ new "tag" forms. To render it, make the following change to your template:
 
     The ``form.tags.vars.prototype`` is a form element that looks and feels just
     like the individual ``form_widget(tag)`` elements inside your ``for`` loop.
-    This means that you can call ``form_widget``, ``form_row`` or ``form_label``
+    This means that you can call ``form_widget()``, ``form_row()`` or ``form_label()``
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
 
@@ -341,7 +341,7 @@ somewhere on your page.
 Add a ``script`` tag somewhere on your page so you can start writing some JavaScript.
 
 First, add a link to the bottom of the "tags" list via JavaScript. Second,
-bind to the "click" event of that link so you can add a new tag form (``addTagForm``
+bind to the "click" event of that link so you can add a new tag form (``addTagForm()``
 will be show next):
 
 .. code-block:: javascript
@@ -372,7 +372,7 @@ will be show next):
         });
     });
 
-The ``addTagForm`` function's job will be to use the ``data-prototype`` attribute
+The ``addTagForm()`` function's job will be to use the ``data-prototype`` attribute
 to dynamically add a new form when this link is clicked. The ``data-prototype``
 HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
 and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
@@ -458,7 +458,7 @@ Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false`
     }
 
 With these two changes, when the form is submitted, each new ``Tag`` object
-is added to the ``Task`` class by calling the ``addTag`` method. Before this
+is added to the ``Task`` class by calling the ``addTag()`` method. Before this
 change, they were added internally by the form by calling ``$task->getTags()->add($tag)``.
 That was just fine, but forcing the use of the "adder" method makes handling
 these new ``Tag`` objects easier (especially if you're using Doctrine, which
@@ -466,9 +466,9 @@ you will learn about next!).
 
 .. caution::
 
-    You have to create **both** ``addTag`` and ``removeTag`` methods,
-    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``.
-    You'll learn more about the ``removeTag`` method later in this article.
+    You have to create **both** ``addTag()`` and ``removeTag()`` methods,
+    otherwise the form will still use ``setTag()`` even if ``by_reference`` is ``false``.
+    You'll learn more about the ``removeTag()`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
@@ -549,7 +549,7 @@ you will learn about next!).
             $this->tags->add($tag);
         }
 
-    Inside ``Tag``, just make sure you have an ``addTask`` method::
+    Inside ``Tag``, just make sure you have an ``addTask()`` method::
 
         // src/AppBundle/Entity/Tag.php
 
@@ -562,7 +562,7 @@ you will learn about next!).
         }
 
     If you have a one-to-many relationship, then the workaround is similar,
-    except that you can simply call ``setTask`` from inside ``addTag``.
+    except that you can simply call ``setTask()`` from inside ``addTag()``.
 
 .. _form-collections-remove:
 
@@ -587,7 +587,7 @@ Start by adding the ``allow_delete`` option in the form Type::
         ));
     }
 
-Now, you need to put some code into the ``removeTag`` method of ``Task``::
+Now, you need to put some code into the ``removeTag()`` method of ``Task``::
 
     // src/AppBundle/Entity/Task.php
 
@@ -632,7 +632,7 @@ First, add a "delete this tag" link to each tag form:
         addTagFormDeleteLink($newFormLi);
     }
 
-The ``addTagFormDeleteLink`` function will look something like this:
+The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
@@ -650,7 +650,7 @@ The ``addTagFormDeleteLink`` function will look something like this:
     }
 
 When a tag form is removed from the DOM and submitted, the removed ``Tag`` object
-will not be included in the collection passed to ``setTags``. Depending on
+will not be included in the collection passed to ``setTags()``. Depending on
 your persistence layer, this may or may not be enough to actually remove
 the relationship between the removed ``Tag`` and ``Task`` object.
 
@@ -670,7 +670,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     you'll need to do more work for the removed tags to persist correctly.
 
     In this case, you can modify the controller to remove the relationship
-    on the removed tag. This assumes that you have some ``editAction`` which
+    on the removed tag. This assumes that you have some ``editAction()`` which
     is handling the "update" of your Task::
 
         // src/AppBundle/Controller/TaskController.php

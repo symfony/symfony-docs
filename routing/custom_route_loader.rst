@@ -120,7 +120,7 @@ you do. The resource name itself is not actually used in the example::
     }
 
 Make sure the controller you specify really exists. In this case you
-have to create an ``extraAction`` method in the ``ExtraController``
+have to create an ``extraAction()`` method in the ``ExtraController``
 of the ``AppBundle``::
 
     // src/AppBundle/Controller/ExtraController.php

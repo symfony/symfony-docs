@@ -134,7 +134,7 @@ A) Changing the Scope of your Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Changing the scope of a service should be done in its definition. This example
-assumes that the ``Mailer`` class has a ``__construct`` function whose first
+assumes that the ``Mailer`` class has a ``__construct()`` function whose first
 argument is the ``ClientConfiguration`` object:
 
 .. configuration-block::

@@ -166,7 +166,7 @@ Symfony's base controller::
         }
     }
 
-If you look at the source code for the ``render`` function in Symfony's
+If you look at the source code for the ``render()`` function in Symfony's
 `base Controller class`_, you'll see that this method actually uses the
 ``templating`` service::
 
@@ -339,7 +339,7 @@ controller:
 
 .. tip::
 
-    ``getRequest`` has been deprecated. Instead, have an argument to your
+    ``getRequest()`` has been deprecated. Instead, have an argument to your
     controller action method called ``Request $request``. The order of the
     parameters is not important, but the typehint must be provided.
 

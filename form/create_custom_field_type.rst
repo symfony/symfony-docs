@@ -54,14 +54,14 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     In 2.8, the ``getName()`` method was removed. Now, fields are always referred
     to by their fully-qualified class name.
 
-Here, the return value of the ``getParent`` function indicates that you're
+Here, the return value of the ``getParent()`` function indicates that you're
 extending the ``ChoiceType`` field. This means that, by default, you inherit
 all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
 
 ``buildForm()``
-    Each field type has a ``buildForm`` method, which is where
+    Each field type has a ``buildForm()`` method, which is where
     you configure and build any field(s). Notice that this is the same method
     you use to setup *your* forms, and it works the same here.
 
@@ -305,7 +305,7 @@ example, suppose that you're storing the gender parameters in configuration:
 
 To use the parameter, define your custom field type as a service, injecting
 the ``genders`` parameter value as the first argument to its to-be-created
-``__construct`` function:
+``__construct()`` function:
 
 .. configuration-block::
 

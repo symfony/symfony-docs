@@ -70,7 +70,7 @@ You can also use multi dimensional arrays::
 Reading from Objects
 --------------------
 
-The ``getValue`` method is a very robust method, and you can see all of its
+The ``getValue()`` method is a very robust method, and you can see all of its
 features when working with objects.
 
 Accessing public Properties
@@ -100,10 +100,10 @@ To read from properties, use the "dot" notation::
 Using Getters
 ~~~~~~~~~~~~~
 
-The ``getValue`` method also supports reading using getters. The method will
+The ``getValue()`` method also supports reading using getters. The method will
 be created using common naming conventions for getters. It camelizes the
 property name (``first_name`` becomes ``FirstName``) and prefixes it with
-``get``. So the actual method becomes ``getFirstName``::
+``get``. So the actual method becomes ``getFirstName()``::
 
     // ...
     class Person
@@ -158,7 +158,7 @@ This will produce: ``He is an author``
 Magic ``__get()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``getValue`` method can also use the magic ``__get`` method::
+The ``getValue()`` method can also use the magic ``__get()`` method::
 
     // ...
     class Person
@@ -182,7 +182,7 @@ The ``getValue`` method can also use the magic ``__get`` method::
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At last, ``getValue`` can use the magic ``__call`` method, but you need to
+At last, ``getValue()`` can use the magic ``__call()`` method, but you need to
 enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
 
     // ...
@@ -220,7 +220,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 
 .. caution::
 
-    The ``__call`` feature is disabled by default, you can enable it by calling
+    The ``__call()`` feature is disabled by default, you can enable it by calling
     :method:`PropertyAccessorBuilder::enableMagicCall<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall>`
     see `Enable other Features`_.
 
@@ -244,8 +244,8 @@ method::
 Writing to Objects
 ------------------
 
-The ``setValue`` method has the same features as the ``getValue`` method. You
-can use setters, the magic ``__set`` method or properties to set values::
+The ``setValue()`` method has the same features as the ``getValue()`` method. You
+can use setters, the magic ``__set()`` method or properties to set values::
 
     // ...
     class Person
@@ -277,7 +277,7 @@ can use setters, the magic ``__set`` method or properties to set values::
     var_dump($person->getLastName()); // 'de Jong'
     var_dump($person->children); // array(Person());
 
-You can also use ``__call`` to set values but you need to enable the feature,
+You can also use ``__call()`` to set values but you need to enable the feature,
 see `Enable other Features`_.
 
 .. code-block:: php

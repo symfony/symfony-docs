@@ -26,10 +26,6 @@ Start with an easy controller action that sends an email::
         return $this->render(...);
     }
 
-.. note::
-
-    Don't forget to enable the profiler as explained in :doc:`/testing/profiling`.
-
 In your functional test, use the ``swiftmailer`` collector on the profiler
 to get information about the messages sent on the previous request::
 
@@ -66,5 +62,23 @@ to get information about the messages sent on the previous request::
             );
         }
     }
+
+Troubleshooting
+---------------
+
+Problem: The Collector Object Is ``null``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The email collector is only available when the profiler is enabled and collects
+information, as explained in :doc:`/testing/profiling`.
+
+Problem: The Collector Doesn't Contain the E-Mail
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a redirection is performed after sending the email (for example when you send
+an email after a form is processed and before redirecting to another page), make
+sure that the test client doesn't follow the redirects, as explained in
+:doc:`/testing`. Otherwise, the collector will contain the information of the
+redirected page and the email won't be accessible.
 
 .. _`Swift Mailer`: http://swiftmailer.org/

@@ -284,12 +284,12 @@ your controller using annotations:
     * Once the user has entered their username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
-      any page in the account section, including the ``editAction`` controller.
+      any page in the account section, including the ``editAction()`` controller.
 
     * If the user's session ends, when the user returns to the site, they will
       be able to access every account page - except for the edit page - without
       being forced to re-authenticate. However, when they try to access the
-      ``editAction`` controller, they will be forced to re-authenticate, since
+      ``editAction()`` controller, they will be forced to re-authenticate, since
       they are not, yet, fully authenticated.
 
 For more information on securing services or methods in this way,

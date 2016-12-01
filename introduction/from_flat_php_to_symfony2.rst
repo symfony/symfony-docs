@@ -392,7 +392,7 @@ one of the two controllers (the ``list_action()`` and ``show_action()``
 functions) is called. In reality, the front controller is beginning to look and
 act a lot like how Symfony handles and routes requests.
 
-But but careful not to confuse the terms *front controller* and *controller*. Your
+But be careful not to confuse the terms *front controller* and *controller*. Your
 app will usually have just *one* front controller, which boots your code. You will
 have *many* controller functions: one for each page.
 

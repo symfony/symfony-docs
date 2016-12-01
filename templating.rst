@@ -103,7 +103,7 @@ by default. You can even add your own *custom* filters, functions (and more) via
 a :doc:`Twig Extension </templating/twig_extension>`.
 
 Twig code will look similar to PHP code, with subtle, nice differences. The following
-example uses a standard ``for`` tag and the ``cycle`` function to print ten div tags,
+example uses a standard ``for`` tag and the ``cycle()`` function to print ten div tags,
 with alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+twig
@@ -635,7 +635,7 @@ configuration:
 
         return $collection;
 
-To link to the page, just use the ``path`` Twig function and refer to the route:
+To link to the page, just use the ``path()`` Twig function and refer to the route:
 
 .. configuration-block::
 
@@ -737,7 +737,7 @@ correctly:
 
 .. tip::
 
-    You can also generate an absolute URL by using the ``url`` function:
+    You can also generate an absolute URL by using the ``url()`` Twig function:
 
     .. configuration-block::
 
@@ -768,7 +768,7 @@ Linking to Assets
 
 Templates also commonly refer to images, JavaScript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony provides a more dynamic option via the ``asset`` Twig function:
+but Symfony provides a more dynamic option via the ``asset()`` Twig function:
 
 .. configuration-block::
 
@@ -784,15 +784,15 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
         <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" />
 
-The ``asset`` function's main purpose is to make your application more portable.
+The ``asset()`` function's main purpose is to make your application more portable.
 If your application lives at the root of your host (e.g. ``http://example.com``),
 then the rendered paths should be ``/images/logo.png``. But if your application
 lives in a subdirectory (e.g. ``http://example.com/my_app``), each asset path
 should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
-``asset`` function takes care of this by determining how your application is
+``asset()`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
-Additionally, if you use the ``asset`` function, Symfony can automatically
+Additionally, if you use the ``asset()`` function, Symfony can automatically
 append a query string to your asset, in order to guarantee that updated static
 assets won't be loaded from cache after being deployed. For example, ``/images/logo.png`` might
 look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
