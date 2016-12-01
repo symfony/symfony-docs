@@ -1483,8 +1483,8 @@ multiple applications into the same path (on different servers) that share the
 same cache backend.
 
 It's also useful when using `blue/green deployment`_ strategies and more
-generally, when you need to abstract out the actual deployment directory, for
-example when warming caches offline.
+generally, when you need to abstract out the actual deployment directory (for
+example, when warming caches offline).
 
 Full Default Configuration
 --------------------------
