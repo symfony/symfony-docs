@@ -43,7 +43,7 @@ events. These event classes would need to be created by you and should allow,
 in this example, the variables ``$foo``, ``$bar`` and ``$ret`` to be retrieved
 and set by the listeners.
 
-For example, assuming the ``FilterSendReturnValue`` has a ``setReturnValue``
+For example, assuming the ``FilterSendReturnValue`` has a ``setReturnValue()``
 method, one listener might look like this:
 
 .. code-block:: php

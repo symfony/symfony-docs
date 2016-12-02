@@ -111,7 +111,7 @@ Loading Messages with the ``ArrayLoader``
 
 Loading messages can be done by calling
 :method:`Symfony\\Component\\Translation\\Translator::addResource`. The first
-argument is the loader name (this was the first argument of the ``addLoader``
+argument is the loader name (this was the first argument of the ``addLoader()``
 method), the second is the resource and the third argument is the locale::
 
     // ...
@@ -122,7 +122,7 @@ method), the second is the resource and the third argument is the locale::
 Loading Messages with the File Loaders
 ......................................
 
-If you use one of the file loaders, you should also use the ``addResource``
+If you use one of the file loaders, you should also use the ``addResource()``
 method. The only difference is that you should put the file name to the resource
 file as the second argument, instead of an array::
 

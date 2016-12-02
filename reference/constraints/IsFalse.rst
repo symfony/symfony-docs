@@ -35,7 +35,7 @@ you want to guarantee that some ``state`` property is *not* in a dynamic
         return in_array($this->state, $this->invalidStates);
     }
 
-In this case, the underlying object is only valid if the ``isStateInvalid``
+In this case, the underlying object is only valid if the ``isStateInvalid()``
 method returns **false**:
 
 .. configuration-block::

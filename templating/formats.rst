@@ -29,7 +29,7 @@ pattern is to do the following::
         return $this->render('article/index.'.$format.'.twig');
     }
 
-The ``getRequestFormat`` on the ``Request`` object defaults to ``html``,
+The ``getRequestFormat()`` on the ``Request`` object defaults to ``html``,
 but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while

@@ -40,9 +40,9 @@ the other functions do?
     Renders the label, any errors, and the HTML form widget for the given field
     (e.g. ``dueDate``) inside, by default, a ``div`` element.
 
-The majority of the work is done by the ``form_row`` helper, which renders
+The majority of the work is done by the ``form_row()`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag by
-default. In the :doc:`/form/form_themes` section, you'll learn how the ``form_row``
+default. In the :doc:`/form/form_themes` section, you'll learn how the ``form_row()``
 output can be customized on many different levels.
 
 .. tip::
@@ -65,11 +65,11 @@ output can be customized on many different levels.
 Rendering each Field by Hand
 ----------------------------
 
-The ``form_row`` helper is great because you can very quickly render each
+The ``form_row()`` helper is great because you can very quickly render each
 field of your form (and the markup used for the "row" can be customized as
 well). But since life isn't always so simple, you can also render each field
 entirely by hand. The end-product of the following is the same as when you
-used the ``form_row`` helper:
+used the ``form_row()`` helper:
 
 .. configuration-block::
 

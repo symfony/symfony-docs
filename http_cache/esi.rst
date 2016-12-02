@@ -156,7 +156,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
             array('strategy' => 'esi'),
         ) ?>
 
-By using the ``esi`` renderer (via the ``render_esi`` Twig function), you
+By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
 tell Symfony that the action should be rendered as an ESI tag. You might be
 wondering why you would want to use a helper instead of just writing the ESI
 tag yourself. That's because using a helper makes your application work even
@@ -169,14 +169,14 @@ if there is no gateway cache installed.
     passed through ``render_esi`` also become part of the cache key so that
     you have unique caches for each combination of variables and values.
 
-When using the default ``render`` function (or setting the renderer to
+When using the default ``render()`` function (or setting the renderer to
 ``inline``), Symfony merges the included page content into the main one
 before sending the response to the client. But if you use the ``esi`` renderer
-(i.e. call ``render_esi``) *and* if Symfony detects that it's talking to a
+(i.e. call ``render_esi()``) *and* if Symfony detects that it's talking to a
 gateway cache that supports ESI, it generates an ESI include tag. But if there
 is no gateway cache or if it does not support ESI, Symfony will just merge
 the included page content within the main one as it would have done if you had
-used ``render``.
+used ``render()``.
 
 .. note::
 

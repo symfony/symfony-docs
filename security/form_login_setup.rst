@@ -138,7 +138,7 @@ configuration (``login``):
 
         return $collection;
 
-Great! Next, add the logic to ``loginAction`` that displays the login form::
+Great! Next, add the logic to ``loginAction()`` that displays the login form::
 
     // src/AppBundle/Controller/SecurityController.php
 

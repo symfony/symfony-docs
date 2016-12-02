@@ -181,7 +181,7 @@ your listener to be called just before any controller is executed.
         ));
         $container->setDefinition('app.tokens.action_listener', $listener);
 
-With this configuration, your ``TokenListener`` ``onKernelController`` method
+With this configuration, your ``TokenListener`` ``onKernelController()`` method
 will be executed on each request. If the controller that is about to be executed
 implements ``TokenAuthenticatedController``, token authentication is
 applied. This lets you have a "before" filter on any controller that you
@@ -219,7 +219,7 @@ serve as a basic flag that this request underwent token authentication::
         }
     }
 
-Now, add another method to this class - ``onKernelResponse`` - that looks
+Now, add another method to this class - ``onKernelResponse()`` - that looks
 for this flag on the request object and sets a custom header on the response
 if it's found::
 
@@ -283,8 +283,8 @@ event:
         $container->setDefinition('app.tokens.action_listener', $listener);
 
 That's it! The ``TokenListener`` is now notified before every controller is
-executed (``onKernelController``) and after every controller returns a response
-(``onKernelResponse``). By making specific controllers implement the ``TokenAuthenticatedController``
+executed (``onKernelController()``) and after every controller returns a response
+(``onKernelResponse()``). By making specific controllers implement the ``TokenAuthenticatedController``
 interface, your listener knows which controllers it should take action on.
-And by storing a value in the request's "attributes" bag, the ``onKernelResponse``
+And by storing a value in the request's "attributes" bag, the ``onKernelResponse()``
 method knows to add the extra header. Have fun!

@@ -33,7 +33,7 @@ for example, inside your controller::
     The output of the ``dump()`` function is then rendered in the web developer
     toolbar.
 
-The same mechanism can be used in Twig templates thanks to ``dump`` function:
+The same mechanism can be used in Twig templates thanks to ``dump()`` function:
 
 .. code-block:: html+twig
 

@@ -274,7 +274,7 @@ Handling Authentication Failure
 In order for your ``ApiKeyAuthenticator`` to correctly display a 401
 http status when either bad credentials or authentication fails you will
 need to implement the :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface` on your
-Authenticator. This will provide a method ``onAuthenticationFailure`` which
+Authenticator. This will provide a method ``onAuthenticationFailure()`` which
 you can use to create an error ``Response``.
 
 .. code-block:: php
