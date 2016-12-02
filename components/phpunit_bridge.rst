@@ -125,7 +125,7 @@ Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.1
-    The ability to disable the deprecation helper was introduced in Symfony
+    The ability to disable the deprecation helper was introduced in version
     3.1.
 
 Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
@@ -240,7 +240,7 @@ DNS-sensitive Tests
 -------------------
 
 .. versionadded:: 3.1
-    The mocks for DNS related functions were introduced in Symfony 3.1.
+    The mocks for DNS related functions were introduced in version 3.1.
 
 Tests that make network connections, for example to check the validity of a DNS
 record, can be slow to execute and unreliable due to the conditions of the
