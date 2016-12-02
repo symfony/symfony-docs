@@ -23,11 +23,11 @@ executable that needs to be installed on your system only once:
 
     # Linux and macOS systems
     $ sudo mkdir -p /usr/local/bin
-    $ sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+    $ sudo curl -LsS https://get.symfony.com/symfony.phar -o /usr/local/bin/symfony
     $ sudo chmod a+x /usr/local/bin/symfony
 
     # Windows systems
-    c:\> php -r "readfile('https://symfony.com/installer');" > symfony
+    c:\> php -r "readfile('https://get.symfony.com/symfony.phar');" > symfony
 
 .. note::
 
