@@ -1,8 +1,8 @@
 How to Generate Routing URLs in JavaScript
 ==========================================
 
-If you're in a Twig template, you can use the same ``path`` function to set JavaScript
-variables. The ``escape`` function helps escape any non-JavaScript-safe values:
+If you're in a Twig template, you can use the same ``path()`` function to set JavaScript
+variables. The ``escape()`` function helps escape any non-JavaScript-safe values:
 
 .. configuration-block::
 

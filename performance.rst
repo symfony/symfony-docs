@@ -52,7 +52,7 @@ automatically find any new classes that you've placed in the registered
 directories.
 
 Unfortunately, this comes at a cost, as the loader iterates over all configured
-namespaces to find a particular file, making ``file_exists`` calls until it
+namespaces to find a particular file, making ``file_exists()`` calls until it
 finally finds the file it's looking for.
 
 The simplest solution is to tell Composer to build a "class map" (i.e. a
@@ -71,23 +71,21 @@ Caching the Autoloader with APC
 Another solution is to cache the location of each class after it's located
 the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
 that does exactly this. To use it, just adapt your front controller file.
-If you're using the Standard Distribution, this code should already be available
-as comments in this file::
+If you're using the Standard Distribution, make the following changes::
 
     // app.php
-
     // ...
+    
+    use Symfony\Component\ClassLoader\ApcClassLoader;
+
     $loader = require __DIR__.'/../app/autoload.php';
-    include_once __DIR__.'/../var/bootstrap.php.cache';
-    // Enable APC for autoloading to improve performance.
-    // You should change the ApcClassLoader first argument to a unique prefix
-    // in order to prevent cache key conflicts with other applications
-    // also using APC.
-    /*
-    $apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
-    $loader->unregister();
-    $apcLoader->register(true);
-    */
+    include_once __DIR__.'/../app/bootstrap.php.cache';
+
+    // Use APC for autoloading to improve performance
+    // Change 'sf2' by the prefix you want in order
+    // to prevent key conflict with another application
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
 
     // ...
 

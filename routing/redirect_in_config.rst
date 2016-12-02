@@ -156,5 +156,5 @@ action:
 .. caution::
 
     Because you are redirecting to a route instead of a path, the required
-    option is called ``route`` in the ``redirect`` action, instead of ``path``
-    in the ``urlRedirect`` action.
+    option is called ``route`` in the ``redirect()`` action, instead of ``path``
+    in the ``urlRedirect()`` action.

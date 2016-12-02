@@ -287,7 +287,7 @@ the ``PasswordDigest`` header value matches with the user's password.
 .. note::
 
     The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface`
-    requires an ``authenticate`` method on the user token, and a ``supports``
+    requires an ``authenticate()`` method on the user token, and a ``supports()``
     method, which tells the authentication manager whether or not to use this
     provider for the given token. In the case of multiple providers, the
     authentication manager will then move to the next provider in the list.
@@ -355,19 +355,19 @@ create a class which implements
 The :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`
 requires the following methods:
 
-``create``
+``create()``
     Method which adds the listener and authentication provider
     to the DI container for the appropriate security context.
 
-``getPosition``
+``getPosition()``
     Returns when the provider should be called. This can be one of ``pre_auth``,
     ``form``, ``http`` or ``remember_me``.
 
-``getKey``
+``getKey()``
     Method which defines the configuration key used to reference
     the provider in the firewall configuration.
 
-``addConfiguration``
+``addConfiguration()``
     Method which is used to define the configuration
     options underneath the configuration key in your security configuration.
     Setting configuration options are explained later in this chapter.
@@ -567,7 +567,7 @@ by default, is 5 minutes. Make this configurable, so different firewalls
 can have different timeout lengths.
 
 You will first need to edit ``WsseFactory`` and define the new option in
-the ``addConfiguration`` method.
+the ``addConfiguration()`` method.
 
 .. code-block:: php
 
@@ -584,7 +584,7 @@ the ``addConfiguration`` method.
         }
     }
 
-Now, in the ``create`` method of the factory, the ``$config`` argument will
+Now, in the ``create()`` method of the factory, the ``$config`` argument will
 contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
 in order to put it to use.

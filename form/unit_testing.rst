@@ -69,7 +69,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 So, what does it test? Here comes a detailed explanation.
 
 First you verify if the ``FormType`` compiles. This includes basic class
-inheritance, the ``buildForm`` function and options resolution. This should
+inheritance, the ``buildForm()`` function and options resolution. This should
 be the first test you write::
 
     $form = $this->factory->create(TestedType::class);

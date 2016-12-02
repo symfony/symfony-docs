@@ -466,6 +466,10 @@ a slash. URLs matching this route might look like:
     Symfony provides you with a way to do this by leveraging service container
     parameters. Read more about this in ":doc:`/routing/service_container_parameters`".
 
+.. caution::
+
+    A route placeholder name cannot start with a digit and cannot be longer than 32 characters.
+
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -643,7 +647,7 @@ route. With this information, any URL can easily be generated::
 Generating URLs with Query Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``generate`` method takes an array of wildcard values to generate the URI.
+The ``generate()`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
     $this->get('router')->generate('blog', array(

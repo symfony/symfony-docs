@@ -183,7 +183,7 @@ Process for Reaching Authorization Decisions
 --------------------------------------------
 
 The ACL class provides two methods for determining whether a security identity
-has the required bitmasks, ``isGranted`` and ``isFieldGranted``. When the ACL
+has the required bitmasks, ``isGranted()`` and ``isFieldGranted()``. When the ACL
 receives an authorization request through one of these methods, it delegates
 this request to an implementation of
 :class:`Symfony\\Component\\Security\\Acl\\Domain\\PermissionGrantingStrategy`.

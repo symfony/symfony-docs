@@ -73,7 +73,7 @@ Including Templates
 
 The best way to share a snippet of template code is to create a template that
 can then be included by other templates. As the ``$view`` variable is an
-instance of ``PhpEngine``, you can use the ``render`` method (which was used
+instance of ``PhpEngine``, you can use the ``render()`` method (which was used
 to render the template originally) inside the template to render another template::
 
     <?php $names = array('Fabien', ...) ?>

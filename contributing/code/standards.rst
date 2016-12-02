@@ -159,8 +159,8 @@ Structure
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
-  The exceptions to this rule are the class constructor and the ``setUp`` and
-  ``tearDown`` methods of PHPUnit tests, which must always be the first methods
+  The exceptions to this rule are the class constructor and the ``setUp()`` and
+  ``tearDown()`` methods of PHPUnit tests, which must always be the first methods
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no

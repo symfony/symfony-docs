@@ -7,7 +7,7 @@ Deploying to Microsoft Azure Website Cloud
 This step by step article describes how to deploy a small Symfony web
 application to the Microsoft Azure Website cloud platform. It will explain how
 to set up a new Azure website including configuring the right PHP version and
-global environment variables. The document also shows how to you can leverage
+global environment variables. The document also shows how you can leverage
 Git and Composer to deploy your Symfony application to the cloud.
 
 Setting up the Azure Website
@@ -15,8 +15,9 @@ Setting up the Azure Website
 
 To set up a new Microsoft Azure Website, first `sign up with Azure`_ or sign in
 with your credentials. Once you're connected to your `Azure Portal`_ interface,
-scroll down to the bottom and select the **New** panel. On this panel, click
-**Web Site** and choose **Custom Create**:
+select the **New** panel. On this panel, use the search bar, search for
+**Web App + MySQL** and choose **Web App + MySQL** by **Microsoft** and
+click **Create**:
 
 .. image:: /_images/deployment/azure-website/step-01.png
    :alt: Create a new custom Azure Website
@@ -29,58 +30,51 @@ Here, you will be prompted to fill in some basic information.
 .. image:: /_images/deployment/azure-website/step-02.png
    :alt: Setup the Azure Website
 
-For the URL, enter the URL that you would like to use for your Symfony application,
-then pick **Create new web hosting plan** in the region you want. By default, a
-*free 20 MB SQL database* is selected in the database dropdown list. In this
-tutorial, the Symfony app will connect to a MySQL database. Pick the
-**Create a new MySQL database** option in the dropdown list. You can keep
-the **DefaultConnection** string name. Finally, check the box
-**Publish from source control** to enable a Git repository and go to the
-next step.
+For the URL, enter the URL that you would like to use for your Symfony
+application, then select your **Subscription**, **Create a new Resource Group**
+(which is a collection of resources that share the same lifecycle, permissions
+and policies). Pick ClearDB as a **Database Provider**. Create a new **App
+Service plan/Location** you will be prompted to set up your app service plan
+with a name, a region and a pricing tier. Then create a new **Database**, you
+will be prompted to set up your MySQL database storage with a database name and
+a region. The MySQL database storage is provided by Microsoft in partnership
+with ClearDB. Choose the same region you selected for App Service plan.
 
-Step 2: New MySQL Database
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Click Create to continue.
 
-On this step, you will be prompted to set up your MySQL database storage with a
-database name and a region. The MySQL database storage is provided by Microsoft
-in partnership with ClearDB. Choose the same region you selected for the hosting
-plan configuration in the previous step.
+Once you created the web site, select **All resources** in the left menu and
+choose the website you just created.
+
+Step 2: Where Is your Source Code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now, select **Deployment options** under **APP DEPLOYMENT**, select **Choose
+Source** and choose **Local Git repository** to configure your Azure Website
+credentials. If you choose a different source like GitHub or Bitbucket you can
+ignore the next step.
 
 .. image:: /_images/deployment/azure-website/step-03.png
-   :alt: Setup the MySQL database
-
-Agree to the terms and conditions and click on the right arrow to continue.
-
-Step 3: Where Is your Source Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Now, on the third step, select a **Local Git repository** item and click
-on the right arrow to configure your Azure Website credentials.
-
-.. image:: /_images/deployment/azure-website/step-04.png
    :alt: Setup a local Git repository
 
-Step 4: New Username and Password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Once you selected **Local Git repository**, click **Setup connection** you will
+be prompted to create a username and a secure password: these will become
+essential identifiers to connect to the FTP server and also to push your
+application code to the Git repository.
 
-Great! You're now on the final step. Create a username and a secure password:
-these will become essential identifiers to connect to the FTP server and
-also to push your application code to the Git repository.
-
-.. image:: /_images/deployment/azure-website/step-05.png
+.. image:: /_images/deployment/azure-website/step-04.png
    :alt: Configure Azure Website credentials
 
 Congratulations! Your Azure Website is now up and running. You can check
 it by browsing to the Website url you configured in the first step. You should
 see the following display in your web browser:
 
-.. image:: /_images/deployment/azure-website/step-06.png
+.. image:: /_images/deployment/azure-website/step-05.png
    :alt: Azure Website is running
 
 The Microsoft Azure portal also provides a complete control panel for the Azure
 Website.
 
-.. image:: /_images/deployment/azure-website/step-07.png
+.. image:: /_images/deployment/azure-website/step-06.png
    :alt: Azure Website Control Panel
 
 Your Azure Website is ready! But to run a Symfony site, you need to configure
@@ -100,10 +94,10 @@ Even though Symfony only requires PHP 5.5.9 to run, it's always recommended
 to use the most recent PHP version whenever possible. Earlier versions are no longer
 supported by the PHP core team, but you can update it easily in Azure.
 
-To update your PHP version on Azure, go to the **Configure** tab of the control
-panel and select the version you want.
+To update your PHP version on Azure, go to the **Application settings** under
+**SETTINGS** and select the version you want.
 
-.. image:: /_images/deployment/azure-website/step-08.png
+.. image:: /_images/deployment/azure-website/step-07.png
    :alt: Enabling the most recent PHP runtime from Azure Website Control Panel
 
 Click the **Save** button in the bottom bar to save your changes and restart
@@ -117,10 +111,10 @@ the web server.
     is no need to install and set up APC.
 
     The following screenshot shows the output of a :phpfunction:`phpinfo` script
-    run from an Azure Website to verify that PHP 5.5 is running with
+    run from an Azure Website to verify that PHP 7.0 is running with
     OPCache enabled.
 
-    .. image:: /_images/deployment/azure-website/step-09.png
+    .. image:: /_images/deployment/azure-website/step-08.png
        :alt: OPCache Configuration
 
 Tweaking php.ini Configuration Settings
@@ -158,17 +152,16 @@ Website repository.
 Enabling the PHP intl Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the tricky part of the guide! At the time of writing this article,
-Microsoft Azure Website provided the ``intl`` extension, but it's not enabled
-by default. To enable the ``intl`` extension, there is no need to upload
-any DLL files as the ``php_intl.dll`` file already exists on Azure. In fact,
-this file just needs to be moved into the custom website extension directory.
+**The** ``intl`` **extension is now enabled by default. The following steps are
+no longer necessary.** You can check if the ``intl`` extension is enabled in the
+:phpfunction:`phpinfo` page.
 
-.. note::
+However if the ``intl`` extension is not enabled you can follow these steps.
 
-    The Microsoft Azure team is currently working on enabling the ``intl`` PHP
-    extension by default. In the near future, the following steps will no
-    longer be necessary.
+This is the tricky part of the guide! To enable the ``intl`` extension, there is
+no need to upload any DLL files as the ``php_intl.dll`` file already exists on
+Azure. In fact, this file just needs to be moved into the custom website
+extension directory.
 
 To get the ``php_intl.dll`` file under your ``site/wwwroot`` directory, simply
 access the online **Kudu** tool by browsing to the following URL:
@@ -182,7 +175,7 @@ explorer, a command line prompt, a log stream and a configuration settings summa
 page. Of course, this section can only be accessed if you're logged in to
 your main Azure Website account.
 
-.. image:: /_images/deployment/azure-website/step-10.png
+.. image:: /_images/deployment/azure-website/step-09.png
    :alt: The Kudu Panel
 
 From the Kudu front page, click on the **Debug Console** navigation item in the
@@ -201,18 +194,18 @@ new directory must be created under the main directory ``site/wwwroot``.
 
 The whole process and output should look like this:
 
-.. image:: /_images/deployment/azure-website/step-11.png
+.. image:: /_images/deployment/azure-website/step-10.png
    :alt: Executing commands in the online Kudu Console prompt
 
 To complete the activation of the ``php_intl.dll`` extension, you must tell
 Azure Website to load it from the newly created ``ext`` directory. This can be
 done by registering a global ``PHP_EXTENSIONS`` environment variable from
-the **Configure** tab of the main Azure Website Control panel.
+the **Application settings** page of the main Azure Website control panel.
 
 In the **app settings** section, register the ``PHP_EXTENSIONS`` environment
 variable with the value ``ext\php_intl.dll`` as shown in the screenshot below:
 
-.. image:: /_images/deployment/azure-website/step-12.png
+.. image:: /_images/deployment/azure-website/step-11.png
    :alt: Registering custom PHP extensions
 
 Hit "save" to confirm your changes and restart the web server. The PHP ``Intl``
@@ -220,7 +213,7 @@ extension should now be available in your web server environment. The following
 screenshot of a :phpfunction:`phpinfo` page verifies the ``intl`` extension is
 properly enabled:
 
-.. image:: /_images/deployment/azure-website/step-13.png
+.. image:: /_images/deployment/azure-website/step-12.png
    :alt: Intl extension is enabled
 
 Great! The PHP environment setup is now complete. Next, you'll learn how
@@ -242,10 +235,10 @@ following command in your terminal:
     Get your Git from the `git-scm.com`_ website and follow the instructions
     to install and configure it on your local machine.
 
-In the Azure Website Control panel, browse the **Deployment** tab to get the
+In the Azure Website Control panel, browse the **Overview** tab to get the
 Git repository URL where you should push your code:
 
-.. image:: /_images/deployment/azure-website/step-14.png
+.. image:: /_images/deployment/azure-website/step-13.png
    :alt: Git deployment panel
 
 Now, you'll want to connect your local Symfony application with this remote
@@ -296,7 +289,7 @@ Git repository.
 The deployment with Git should produce an output similar to the screenshot
 below:
 
-.. image:: /_images/deployment/azure-website/step-15.png
+.. image:: /_images/deployment/azure-website/step-14.png
    :alt: Deploying files to the Git Azure Website repository
 
 The code of the Symfony application has now been deployed to the Azure Website
@@ -316,7 +309,7 @@ of the Kudu application and execute the following commands in it:
 
     $ cd site\wwwroot
     $ curl -sS https://getcomposer.org/installer | php
-    $ php -d extension=php_intl.dll composer.phar install
+    $ php composer.phar install
 
 The ``curl`` command retrieves and downloads the Composer command line tool and
 installs it at the root of the ``site/wwwroot`` directory. Then, running
@@ -326,28 +319,21 @@ libraries.
 This may take a while depending on the number of third-party dependencies
 you've configured in your ``composer.json`` file.
 
-.. note::
-
-    The ``-d`` switch allows you to quickly override/add any ``php.ini`` settings.
-    In this command, we are forcing PHP to use the ``intl`` extension, because
-    it is not enabled by default in Azure Website at the moment. Soon, this
-    ``-d`` option will no longer be needed since Microsoft will enable the
-    ``intl`` extension by default.
 
 At the end of the ``composer install`` command, you will be prompted to fill in
 the values of some Symfony settings like database credentials, locale, mailer
 credentials, CSRF token protection, etc. These parameters come from the
 ``app/config/parameters.yml.dist`` file.
 
-.. image:: /_images/deployment/azure-website/step-16.png
+.. image:: /_images/deployment/azure-website/step-15.png
    :alt: Configuring Symfony global parameters
 
 The most important thing in this article is to correctly set up your database
-settings. You can get your MySQL database settings on the right sidebar of the
-**Azure Website Dashboard** panel. Simply click on the
-**View Connection Strings** link to make them appear in a pop-in.
+settings. You can get your MySQL database settings in the **Application
+settings** page. Simply click on the **Show connection string values** link to
+make them appear.
 
-.. image:: /_images/deployment/azure-website/step-17.png
+.. image:: /_images/deployment/azure-website/step-16.png
    :alt: MySQL database settings
 
 The displayed MySQL database settings should be something similar to the code
@@ -376,9 +362,6 @@ string for the ``secret`` variable. For the mailer configuration, Azure Website
 doesn't provide a built-in mailer service. You should consider configuring
 the host-name and credentials of some other third-party mailing service if
 your application needs to send emails.
-
-.. image:: /_images/deployment/azure-website/step-18.png
-   :alt: Configuring Symfony
 
 Your Symfony application is now configured and should be almost operational. The
 final step is to build the database schema. This can easily be done with the
@@ -421,8 +404,6 @@ application, configure it with the following content:
 
 .. code-block:: xml
 
-    <!-- web.config -->
-    <?xml version="1.0" encoding="UTF-8"?>
     <configuration>
       <system.webServer>
         <rewrite>
@@ -472,7 +453,7 @@ to implement. And as a bonus, Microsoft is continuing to reduce the number
 of steps needed so that deployment becomes even easier.
 
 .. _`sign up with Azure`: https://signup.live.com/signup.aspx
-.. _`Azure Portal`: https://manage.windowsazure.com
+.. _`Azure Portal`: https://portal.azure.com
 .. _`PHP MSDN documentation`: http://blogs.msdn.com/b/silverlining/archive/2012/07/10/configuring-php-in-windows-azure-websites-with-user-ini-files.aspx
 .. _`git-scm.com`: http://git-scm.com/download
 .. _`SymfonyAzureEdition`: https://github.com/beberlei/symfony-azure-edition/

@@ -375,9 +375,9 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
     You can not enable or disable the output while the process is running.
 
-    If you disable the output, you cannot access ``getOutput``,
-    ``getIncrementalOutput``, ``getErrorOutput``, ``getIncrementalErrorOutput`` or
-    ``setIdleTimeout``.
+    If you disable the output, you cannot access ``getOutput()``,
+    ``getIncrementalOutput()``, ``getErrorOutput()``, ``getIncrementalErrorOutput()`` or
+    ``setIdleTimeout()``.
 
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.

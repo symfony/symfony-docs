@@ -111,7 +111,7 @@ If your valid choice list is simple, you can pass them in directly via the
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint(
-                    'gender',
+                    'city',
                      new Assert\Choice(array('New York', 'Berlin', 'Tokyo'))
                  );
 

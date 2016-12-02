@@ -152,7 +152,7 @@ The ``addListener()`` method takes up to three arguments:
     A `PHP callable`_ is a PHP variable that can be used by the
     ``call_user_func()`` function and returns ``true`` when passed to the
     ``is_callable()`` function. It can be a ``\Closure`` instance, an object
-    implementing an ``__invoke`` method (which is what closures are in fact),
+    implementing an ``__invoke()`` method (which is what closures are in fact),
     a string representing a function or an array representing an object
     method or a class method.
 

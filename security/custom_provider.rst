@@ -330,7 +330,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
     then you'll need to do a bit more work so that Symfony properly encodes
     the password. That is beyond the scope of this entry, but would include
     sub-classing ``MessageDigestPasswordEncoder`` and overriding the
-    ``mergePasswordAndSalt`` method.
+    ``mergePasswordAndSalt()`` method.
 
     Additionally, you can configure the details of the algorithm used to hash
     passwords. In this example, the application sets explicitly the cost of

@@ -177,7 +177,7 @@ it *also* loads other configuration files via its ``imports`` key:
 
         // ...
 
-The ``imports`` key works a lot like the PHP ``include`` function: the contents of
+The ``imports`` key works a lot like the PHP ``include()`` function: the contents of
 ``parameters.yml``, ``security.yml`` and ``services.yml`` are read and loaded. You
 can also load XML files or PHP files.
 
