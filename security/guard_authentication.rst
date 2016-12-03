@@ -420,8 +420,8 @@ Each authenticator needs the following methods:
     
 **createAuthenticatedToken(UserInterface $user, string $providerKey)**
     If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
-    instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`,
-    you have to implement this method. This method will be called
+    class instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
+    class, you have to implement this method. This method will be called
     after a successful authentication to create and return the token
     for the user, who was supplied as the first argument.
 
