@@ -183,7 +183,9 @@ them from re-implementing the logic required to walk through a
 
 The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
 length and nesting depth of the output. These options can be overriden by
-providing a third parameter when calling ``dump``::
+providing a third parameter when calling 
+:method:`dump(Data $data) <Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface::dump>`
+::
 
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
@@ -197,11 +199,12 @@ providing a third parameter when calling ``dump``::
 
     // Limit nesting to 1 level and string length to 160 characters (default)
 
-The output format of a dumper can be fine tuned by the two flags ``DUMP_STRING_LENGTH``
-and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap in the third constructor argument.
-They can also be set via environment variables when using ``assertDumpEquals`` of the 
-:class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` during unit testing. 
-The flags can be configured in ``phpunit.xml.dist``.
+The output format of a dumper can be fine tuned by the two flags 
+``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
+in the third constructor argument. They can also be set via environment 
+variables when using
+:method:`assertDumpEquals($dump, $data, $message) <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals>`
+during unit testing. The flags can be configured in ``phpunit.xml.dist``.
 
 * If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
   next to its content.
@@ -250,7 +253,8 @@ The flags can be configured in ``phpunit.xml.dist``.
     //   0 => "test"
     // ]
 
-* If you would like to use both options, then you can just combine them by using a the logical OR operator ``|``.
+* If you would like to use both options, then you can just 
+  combine them by using a the logical OR operator ``|``.
 
 ::
 
