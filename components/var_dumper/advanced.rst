@@ -97,12 +97,7 @@ Dumpers
 
 A dumper is responsible for outputting a string representation of a PHP variable,
 using a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object as input.
-The destination and the formatting of this output vary with dumpers and are 
-influenced by two environment variables: 
-
-* If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
-  next to its content. 
-* If ``DUMP_LIGHT_ARRAY`` is set, then arrays are not displayed completely.
+The destination and the formatting of this output vary with dumpers. 
 
 This component comes with an :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper`
 for HTML output and a :class:`Symfony\\Component\\VarDumper\\Dumper\\CliDumper`
@@ -201,6 +196,74 @@ providing a third parameter when calling ``dump``::
     ));
 
     // Limit nesting to 1 level and string length to 160 characters (default)
+
+The output format of a dumper can be fine tuned by the two flags ``DUMP_STRING_LENGTH``
+and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap in the third constructor argument.
+They can also be set via environment variables when using ``assertDumpEquals`` of the 
+:class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` during unit testing. 
+The flags can be configured in :file:`phpunit.xml.dist`.
+
+* If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
+  next to its content.
+
+::
+
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+    $var = array('test');
+    $dumper = new CliDumper();
+    echo $dumper->dump($var, true);
+
+    // array:1 [
+    //   0 => "test"
+    // ]
+
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH);
+    echo $dumper->dump($var, true);
+
+    // (added string length before the string)
+    // array:1 [
+    //   0 => (4) "test"
+    // ]
+
+* If ``DUMP_LIGHT_ARRAY`` is set, then arrays are dumped in a shortened format.
+
+::
+
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+    $var = array('test');
+    $dumper = new CliDumper();
+    echo $dumper->dump($var, true);
+
+    // array:1 [
+    //   0 => "test"
+    // ]
+
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_LIGHT_ARRAY);
+    echo $dumper->dump($var, true);
+
+    // (no more array:1 prefix)
+    // [
+    //   0 => "test"
+    // ]
+
+* If you would like to use both options, then you can just combine them by using a the logical OR operator ``|``.
+
+::
+
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+    $var = array('test');
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH | AbstractDumper::DUMP_LIGHT_ARRAY);
+    echo $dumper->dump($var, true);
+
+    // [
+    //   0 => (4) "test"
+    // ]
 
 Casters
 -------
