@@ -97,7 +97,12 @@ Dumpers
 
 A dumper is responsible for outputting a string representation of a PHP variable,
 using a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object as input.
-The destination and the formatting of this output vary with dumpers.
+The destination and the formatting of this output vary with dumpers and are 
+influenced by two environment variables: 
+If ``DUMP_STRING_LENGTH`` is set, then
+the length of a string is displayed next to its content. 
+If ``DUMP_LIGHT_ARRAY`` is set, 
+then arrays are not displayed completely.
 
 This component comes with an :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper`
 for HTML output and a :class:`Symfony\\Component\\VarDumper\\Dumper\\CliDumper`
@@ -180,6 +185,21 @@ method. They also typically implement the
 :class:`Symfony\\Component\\VarDumper\\Cloner\\DumperInterface` that frees
 them from re-implementing the logic required to walk through a
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object's internal structure.
+
+The HTMLDumper limits string length and nesting depth of the output. 
+These options can be overriden by providing a third parameter when calling ``dump``::
+
+    use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+
+    $output = fopen('php://memory', 'r+b');
+
+    $dumper = new HtmlDumper();
+    $dumper->dump($var, $output, array(
+        'maxDepth' => 1,
+        'maxStringLength' => 160
+    ));
+
+    // Limit nesting to 1 level and string length to 160 characters (default)
 
 Casters
 -------
