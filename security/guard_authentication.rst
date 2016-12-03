@@ -412,11 +412,18 @@ Each authenticator needs the following methods:
     :class:`Symfony\\Component\\HttpFoundation\\Response` object that helps
     the user authenticate (e.g. a 401 response that says "token is missing!").
 
-**supportsRememberMe**
+**supportsRememberMe()**
     If you want to support "remember me" functionality, return true from this method.
     You will still need to active ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
+    
+**createAuthenticatedToken(UserInterface $user, string $providerKey)**
+    If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
+    Method instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`,
+    you have to implement this method. This method will be called
+    after a successful authentication to create and return the token
+    for the user, which was supplied as the first argument.
 
 .. _guard-customize-error:
 
@@ -552,7 +559,7 @@ Frequently Asked Questions
                 ),
             ));
 
-**Can I use this with ``form_login``?**
+**Can I use this with form_login?**
     Yes! ``form_login`` is *one* way to authenticate a user, so you could use
     it *and* then add one or more authenticators. Using a guard authenticator doesn't
     collide with other ways to authenticate.
