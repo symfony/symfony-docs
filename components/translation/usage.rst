@@ -392,3 +392,4 @@ The ``$messages`` variable will have the following structure::
             'Value is too long' => 'Valeur est trop long',
         ),
     );
+
