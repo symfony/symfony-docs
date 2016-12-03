@@ -184,6 +184,19 @@ The ``choice_loader`` can be used to only partially load the choices in cases wh
 a fully-loaded list is not necessary. This is only needed in advanced cases and
 would replace the ``choices`` option.
 
+You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader` 
+if you want to take advantage of lazy loading::
+
+    use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('constants', ChoiceType::class, array(
+        'choice_loader' => new CallbackChoiceLoader(function() {
+            return StaticClass::getConstants();
+        },
+    ));
+
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
