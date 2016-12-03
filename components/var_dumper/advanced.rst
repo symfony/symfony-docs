@@ -201,7 +201,7 @@ The output format of a dumper can be fine tuned by the two flags ``DUMP_STRING_L
 and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap in the third constructor argument.
 They can also be set via environment variables when using ``assertDumpEquals`` of the 
 :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` during unit testing. 
-The flags can be configured in :file:`phpunit.xml.dist`.
+The flags can be configured in ``phpunit.xml.dist``.
 
 * If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
   next to its content.
