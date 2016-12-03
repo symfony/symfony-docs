@@ -197,6 +197,14 @@ if you want to take advantage of lazy loading::
         },
     ));
 
+This will cause the call of ``StaticClass::getConstants()`` to not happen if the request is redirected
+and if there is no pre set or submitted data. Otherwise the choice options would need to be resolved thus
+triggering the callback.
+
+.. versionadded:: 3.2
+    The ability to use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader` 
+    has been introduced in Symfony 3.2
+
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
