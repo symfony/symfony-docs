@@ -100,8 +100,8 @@ using a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object as input.
 The destination and the formatting of this output vary with dumpers and are 
 influenced by two environment variables: 
 
-- If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed next to its content. 
-- If ``DUMP_LIGHT_ARRAY`` is set, then arrays are not displayed completely.
+* If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed next to its content. 
+* If ``DUMP_LIGHT_ARRAY`` is set, then arrays are not displayed completely.
 
 This component comes with an :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper`
 for HTML output and a :class:`Symfony\\Component\\VarDumper\\Dumper\\CliDumper`
