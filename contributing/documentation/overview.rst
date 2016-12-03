@@ -280,7 +280,8 @@ purposes following these steps:
    .. code-block:: terminal
 
        # Linux and macOS
-       $ ./_build/make html
+       $ cd _build/
+       $ make html
 
        # Windows
        $ _build\make html
