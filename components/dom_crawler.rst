@@ -285,7 +285,7 @@ and :phpclass:`DOMNode` objects:
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded::
+.. versionadded:: 3.2
     The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
     introduced in Symfony 3.2.
 
