@@ -175,8 +175,20 @@ Moving Sensitive Options Outside of Symfony Entirely
 
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
-through environment variables. Learn how to do it in the following article:
-:doc:`/configuration/external_parameters`.
+through environment variables:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    doctrine:
+        dbal:
+            # ...
+            password: "%env(DB_PASSWORD)%"
+
+.. versionadded:: 3.2
+   Support for runtime environment variables via the ``%env(...)%`` syntax was
+   added in Symfony 3.2. Prior to version 3.2, you needed to use the
+   :doc:`special SYMFONY__ variables </configuration/external_parameters>`.
 
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
