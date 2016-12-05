@@ -139,7 +139,7 @@ username and password and authenticating the user.
 
 And that's it! When you submit a ``POST`` request to the ``/login`` URL with
 the following JSON document as body, the security system will automatically
-check the user's credentials and either authenticate the user or throw an error::
+check the user's credentials and either authenticate the user or throw an error:
 
 .. code-block:: json
 
