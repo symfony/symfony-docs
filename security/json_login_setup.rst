@@ -1,13 +1,6 @@
 How to Build a JSON Authentication Endpoint
 ===========================================
 
-.. tip::
-
-    If you are storing users in some sort of a database, then you should consider
-    using `FOSUserBundle`_, which helps you build your ``User`` object and gives
-    you many routes and controllers for common tasks like login, registration and
-    forgot password.
-
 In this entry, you'll build a JSON endpoint to log in your users. Of course, when the
 user logs in, you can load your users from anywhere - like the database.
 See :ref:`security-user-providers` for details.
