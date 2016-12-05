@@ -5,7 +5,7 @@ In this entry, you'll build a JSON endpoint to log in your users. Of course, whe
 user logs in, you can load your users from anywhere - like the database.
 See :ref:`security-user-providers` for details.
 
-First, enable form login under your firewall:
+First, enable the JSON login under your firewall:
 
 .. configuration-block::
 
@@ -19,7 +19,7 @@ First, enable form login under your firewall:
                 main:
                     anonymous: ~
                     json_login:
-                        check_path: login
+                        check_path: /login
 
     .. code-block:: xml
 
@@ -34,7 +34,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="main">
                     <anonymous />
-                    <json-login check-path="login" />
+                    <json-login check-path="/login" />
                 </firewall>
             </config>
         </srv:container>
@@ -47,7 +47,7 @@ First, enable form login under your firewall:
                 'main' => array(
                     'anonymous'  => null,
                     'json_login' => array(
-                        'check_path' => 'login',
+                        'check_path' => '/login',
                     ),
                 ),
             ),
@@ -55,22 +55,12 @@ First, enable form login under your firewall:
 
 .. tip::
 
-    The ``check_path`` can also be route names (but cannot have mandatory wildcards - e.g.
+    The ``check_path`` can also be a route name (but cannot have mandatory wildcards - e.g.
     ``/login/{foo}`` where ``foo`` has no default value).
 
-Create a new ``SecurityController`` inside a bundle::
-
-    // src/AppBundle/Controller/SecurityController.php
-    namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class SecurityController extends Controller
-    {
-    }
-
-Next, configure the route that you earlier used under your ``json_login``
-configuration (``login``):
+Now, when a request is made to the ``/login`` URL, the security system initiates
+the authentication process. You just need to define anywhere in your application
+an empty controller associated with that URL::
 
 .. configuration-block::
 
@@ -126,20 +116,10 @@ configuration (``login``):
 
         return $collection;
 
-Great!
-
-Don't let this controller confuse you. As you'll see in a moment, when the
-user submits the form, the security system automatically handles the form
-submission for you. If the user submits an invalid username or password,
-this controller reads the form submission error from the security system,
-so that it can be displayed back to the user.
-
-In other words the security system itself takes care of checking the submitted
-username and password and authenticating the user.
-
-And that's it! When you submit a ``POST`` request to the ``/login`` URL with
-the following JSON document as body, the security system will automatically
-check the user's credentials and either authenticate the user or throw an error:
+Don't let this empty controller confuse you. When you submit a ``POST`` request
+to the ``/login`` URL with the following JSON document as body, the security
+system automatically handles it and takes care of checking the submitted
+username and password and authenticating the user or throwing an error:
 
 .. code-block:: json
 
@@ -218,5 +198,3 @@ The security configuration should be:
                 ),
             ),
         ));
-
-.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
