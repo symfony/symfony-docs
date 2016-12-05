@@ -144,7 +144,7 @@ check the user's credentials and either authenticate the user or throw an error:
 .. code-block:: json
 
     {
-        "login": "dunglas",
+        "username": "dunglas",
         "password": "MyPassword"
     }
 
