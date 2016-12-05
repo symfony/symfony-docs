@@ -60,7 +60,7 @@ First, enable the JSON login under your firewall:
 
 Now, when a request is made to the ``/login`` URL, the security system initiates
 the authentication process. You just need to define anywhere in your application
-an empty controller associated with that URL::
+an empty controller associated with that URL:
 
 .. configuration-block::
 
