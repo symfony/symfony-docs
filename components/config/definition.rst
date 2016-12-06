@@ -149,6 +149,38 @@ values::
 
 This will restrict the ``gender`` option to be either ``male`` or ``female``.
 
+DateTime Nodes
+~~~~~~~~~~~~~~
+
+DateTime nodes provide a way to get a ``\DateTime`` instance normalized
+from configuration::
+
+    $rootNode
+        ->children()
+            ->datetimeNode('datetime')
+                ->format('d/m/Y')
+                ->timezone('Europe/Paris')
+            ->end()
+        ->end()
+    ;
+
+Such nodes accept both an integer (a timestamp) or a string as value.
+If the provided value is a string, it should be interpretable by ``strtotime``
+or match the format provided using the ``format()`` method.
+
+DateTime Node Options
+~~~~~~~~~~~~~~~~~~~~~
+
+You can optionally provide the following options:
+
+``format()``
+    If provided and the node value is a string, the node will try to parse the
+    datetime according to given format.
+
+``timezone()``
+    If provided and the node value is a string, the node will set the
+    ``\DateTime`` instance timezone using this value.
+
 Array Nodes
 ~~~~~~~~~~~
 
