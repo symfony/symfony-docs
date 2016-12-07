@@ -4,7 +4,7 @@
 Console Commands
 ================
 
-The Symfony framework provide lots of commands through the ``bin/console`` script
+The Symfony framework provides lots of commands through the ``bin/console`` script
 (e.g. the well-known ``bin/console cache:clear`` command). These commands are
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
