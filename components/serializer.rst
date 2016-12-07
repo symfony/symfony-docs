@@ -674,6 +674,62 @@ you indicate that you're expecting an array instead of a single object.
 
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
+	
+The ``XmlEncoder``
+-----------------------
+
+This encoder transforms arrays into XML and vice versa.
+
+For example, take an object normalized as following::
+
+    array('foo' => array(1, 2), 'bar' => true);
+
+The ``XmlEncoder`` will encode this object like that::
+
+    <?xml version="1.0"?>
+    <response>
+        <foo>1</foo>
+        <foo>2</foo>
+        <bar>1</bar>
+    </response>
+
+Be aware that this encoder will consider keys beginning with ``@`` as attributes::
+
+    $encoder = new XmlEncoder();
+    $encoder->encode(array('foo' => array('@bar' => 'value')));
+    // will return:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value" />
+    // </response>
+	
+Context
+~~~~~~~~~~~~~~~
+
+The context param is an array of additional options for the XmlEncoder.
+It must be defined in the call of XmlEncoder encode() method :
+
+	$xmlEncoder->encode($array, 'xml', $context);
+
+**Available params :**
+	
+``xml_format_output``
+If setted to true, format the output XML with line break and indentation
+
+``xml_version``
+Change the XML version attribute
+
+``xml_encoding``
+Change the XML encoding attribute
+
+``xml_standalone``
+Add standalone attribute in XML output 
+
+``remove_empty_tags``
+If setted to true, remove all empty tags in the XML output
+
+``xml_root_node_name``
+Change the root node name (default : response)
 
 Learn more
 ----------
