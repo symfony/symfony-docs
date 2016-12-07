@@ -707,14 +707,15 @@ Context
 ~~~~~~~~~~~~~~~
 
 The context param is an array of additional options for the XmlEncoder.
-It must be defined in the call of XmlEncoder encode() method :
+
+It must be defined while calling the XmlEncoder encode() method :
 
 	$xmlEncoder->encode($array, 'xml', $context);
 
 **Available params :**
 	
 ``xml_format_output``
-If setted to true, format the output XML with line break and indentation
+If set to true, format the output XML with line break and indentation
 
 ``xml_version``
 Change the XML version attribute
@@ -725,11 +726,11 @@ Change the XML encoding attribute
 ``xml_standalone``
 Add standalone attribute in XML output 
 
-``remove_empty_tags``
-If setted to true, remove all empty tags in the XML output
-
 ``xml_root_node_name``
 Change the root node name (default : response)
+
+``remove_empty_tags``
+If set to true, remove all empty tags in the XML output
 
 Learn more
 ----------
