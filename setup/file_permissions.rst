@@ -54,7 +54,9 @@ following script to determine your web server user and grant the needed permissi
     $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
 .. note::
-
+    The first setfacl deals with setting permissions on the currently exisitng files and folders,
+    while the second line results in setting permissions for future files and folders.
+    Both of these setfacl commands assign permissions for the system user and the apache user
     setfacl isn't available on NFS mount points. However, storing cache and logs
     over NFS is strongly discouraged for performance reasons.
 
