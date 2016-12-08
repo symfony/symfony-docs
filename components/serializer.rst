@@ -708,7 +708,7 @@ Context
 ~~~~~~~
 
 The XmlEncoder ``encode()`` method defines a third optional parameter called
-``context`` to define soem configuration options for the XmlEncoder::
+``context`` to define some configuration options for the XmlEncoder::
 
     $xmlEncoder->encode($array, 'xml', $context);
 
