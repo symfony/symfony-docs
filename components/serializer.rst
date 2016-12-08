@@ -862,11 +862,14 @@ The ``XmlEncoder``
 
 This encoder transforms arrays into XML and vice versa.
 
-For example, take an object normalized as following::
+This encoder transforms arrays into XML and vice versa. For example, take an
+object normalized as following::
 
     array('foo' => array(1, 2), 'bar' => true);
 
-The ``XmlEncoder`` will encode this object like that::
+The ``XmlEncoder`` encodes this object as follows:
+
+.. code-block:: xml
 
     <?xml version="1.0"?>
     <response>
@@ -875,7 +878,7 @@ The ``XmlEncoder`` will encode this object like that::
         <bar>1</bar>
     </response>
 
-Be aware that this encoder will consider keys beginning with ``@`` as attributes::
+The array keys beginning with ``@`` are considered XML attributes::
 
     $encoder = new XmlEncoder();
     $encoder->encode(array('foo' => array('@bar' => 'value')));
@@ -894,7 +897,7 @@ It must be defined while calling the XmlEncoder encode() method::
 
     $xmlEncoder->encode($array, 'xml', $context);
 
-**Available params :**
+**Available params:**
 
 ``xml_format_output``
     If set to true, format the output XML with line break and indentation
@@ -909,7 +912,7 @@ It must be defined while calling the XmlEncoder encode() method::
     Add standalone attribute in XML output
 
 ``xml_root_node_name``
-    Change the root node name (default : response)
+    Change the root node name (default: response)
 
 ``remove_empty_tags``
     If set to true, remove all empty tags in the XML output
@@ -981,6 +984,36 @@ When a ``PropertyTypeExtractor`` is available, the normalizer will also check th
 matches the type of the property (even for primitive types). For instance, if a ``string`` is provided, but
 the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\Exception\\UnexpectedValueException`
 will be thrown.
+=======
+
+Context
+~~~~~~~
+
+The XmlEncoder ``encode()`` method defines a third optional parameter called
+``context`` to define soem configuration options for the XmlEncoder::
+
+    $xmlEncoder->encode($array, 'xml', $context);
+
+These are the options available:
+
+``xml_format_output``
+    If set to true, format the output XML with line breaks and indentation.
+
+``xml_version``
+    Change the XML version attribute.
+
+``xml_encoding``
+    Change the XML encoding attribute.
+
+``xml_standalone``
+    Add standalone attribute in XML output .
+
+``xml_root_node_name``
+    Change the root node name (default: ``response``).
+
+``remove_empty_tags``
+    If set to true, remove all empty tags in the XML output.
+>>>>>>> Minor syntax issues and some rewordings
 
 Learn more
 ----------
