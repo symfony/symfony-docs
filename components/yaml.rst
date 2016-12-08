@@ -203,7 +203,7 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
-Numeric literals
+Numeric Literals
 ................
 
 Long numeric literals, being integer, float or hexadecimal, are known for their
