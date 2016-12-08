@@ -676,15 +676,16 @@ you indicate that you're expecting an array instead of a single object.
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 	
 The ``XmlEncoder``
------------------------
+------------------
 
-This encoder transforms arrays into XML and vice versa.
-
-For example, take an object normalized as following::
+This encoder transforms arrays into XML and vice versa. For example, take an
+object normalized as following::
 
     array('foo' => array(1, 2), 'bar' => true);
 
-The ``XmlEncoder`` will encode this object like that::
+The ``XmlEncoder`` encodes this object as follows:
+
+.. code-block:: xml
 
     <?xml version="1.0"?>
     <response>
@@ -693,7 +694,7 @@ The ``XmlEncoder`` will encode this object like that::
         <bar>1</bar>
     </response>
 
-Be aware that this encoder will consider keys beginning with ``@`` as attributes::
+The array keys beginning with ``@`` are considered XML attributes::
 
     $encoder = new XmlEncoder();
     $encoder->encode(array('foo' => array('@bar' => 'value')));
@@ -704,33 +705,32 @@ Be aware that this encoder will consider keys beginning with ``@`` as attributes
     // </response>
 	
 Context
-~~~~~~~~~~~~~~~
+~~~~~~~
 
-The context param is an array of additional options for the XmlEncoder.
+The XmlEncoder ``encode()`` method defines a third optional parameter called
+``context`` to define soem configuration options for the XmlEncoder::
 
-It must be defined while calling the XmlEncoder encode() method :
+    $xmlEncoder->encode($array, 'xml', $context);
 
-	$xmlEncoder->encode($array, 'xml', $context);
-
-**Available params :**
+These are the options available:
 	
 ``xml_format_output``
-If set to true, format the output XML with line break and indentation
+    If set to true, format the output XML with line breaks and indentation.
 
 ``xml_version``
-Change the XML version attribute
+    Change the XML version attribute.
 
 ``xml_encoding``
-Change the XML encoding attribute
+    Change the XML encoding attribute.
 
 ``xml_standalone``
-Add standalone attribute in XML output 
+    Add standalone attribute in XML output .
 
 ``xml_root_node_name``
-Change the root node name (default : response)
+    Change the root node name (default: ``response``).
 
 ``remove_empty_tags``
-If set to true, remove all empty tags in the XML output
+    If set to true, remove all empty tags in the XML output.
 
 Learn more
 ----------
