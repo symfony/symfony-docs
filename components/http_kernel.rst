@@ -220,7 +220,7 @@ and is one of the constructor arguments to ``HttpKernel``.
    :align: center
 
 Your job is to create a class that implements the interface and fill in its
-two methods: ``getController`` and ``getArguments``. In fact, one default
+two methods: ``getController()`` and ``getArguments()``. In fact, one default
 implementation already exists, which you can use directly or learn from:
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`.
 This implementation is explained more in the sidebar below::
@@ -247,7 +247,7 @@ This implementation is explained more in the sidebar below::
     uses the :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface`
     instead.
 
-Internally, the ``HttpKernel::handle`` method first calls
+Internally, the ``HttpKernel::handle()`` method first calls
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getController`
 on the controller resolver. This method is passed the ``Request`` and is responsible
 for somehow determining and returning a PHP callable (the controller) based
@@ -282,7 +282,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
        constructor arguments.
 
     c) If the controller implements :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`,
-       ``setContainer`` is called on the controller object and the container
+       ``setContainer()`` is called on the controller object and the container
        is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony Framework.
 
@@ -296,7 +296,7 @@ the controller is executed.
 
 :ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
-After the controller callable has been determined, ``HttpKernel::handle``
+After the controller callable has been determined, ``HttpKernel::handle()``
 dispatches the ``kernel.controller`` event. Listeners to this event might initialize
 some part of the system that needs to be initialized after certain things
 have been determined (e.g. the controller, routing information) but before
@@ -328,7 +328,7 @@ on the event object that's passed to listeners on this event.
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, ``HttpKernel::handle`` calls
+Next, ``HttpKernel::handle()`` calls
 :method:`ArgumentResolverInterface::getArguments() <Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface::getArguments>`.
 Remember that the controller returned in ``getController()`` is a callable.
 The purpose of ``getArguments()`` is to return the array of arguments that
@@ -377,7 +377,7 @@ of arguments that should be passed when executing that callable.
 5) Calling the Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The next step is simple! ``HttpKernel::handle`` executes the controller.
+The next step is simple! ``HttpKernel::handle()`` executes the controller.
 
 .. image:: /_images/components/http_kernel/08-call-controller.png
    :align: center
@@ -498,7 +498,7 @@ been streamed to the user
 :ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
 The final event of the HttpKernel process is ``kernel.terminate`` and is unique
-because it occurs *after* the ``HttpKernel::handle`` method, and after the
+because it occurs *after* the ``HttpKernel::handle()`` method, and after the
 response is sent to the user. Recall from above, then the code that uses
 the kernel, ends like this::
 
@@ -543,8 +543,8 @@ Handling Exceptions: the ``kernel.exception`` Event
 
 :ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
-If an exception is thrown at any point inside ``HttpKernel::handle``, another
-event - ``kernel.exception`` is thrown. Internally, the body of the ``handle``
+If an exception is thrown at any point inside ``HttpKernel::handle()``, another
+event - ``kernel.exception`` is thrown. Internally, the body of the ``handle()``
 function is wrapped in a try-catch block. When any exception is thrown, the
 ``kernel.exception`` event is dispatched so that your system can somehow respond
 to the exception.
@@ -588,11 +588,11 @@ below for more details).
 
     2) If the original exception implements
        :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
-       then ``getStatusCode`` and ``getHeaders`` are called on the exception
+       then ``getStatusCode()`` and ``getHeaders()`` are called on the exception
        and used to populate the headers and status code of the ``FlattenException``
        object. The idea is that these are used in the next step when creating
        the final response. If you want to set custom HTTP headers, you can always
-       use the ``setHeaders`` method on exceptions derived from the
+       use the ``setHeaders()`` method on exceptions derived from the
        :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` class.
 
     3) A controller is executed and passed the flattened exception. The exact
@@ -613,7 +613,7 @@ Creating an Event Listener
 --------------------------
 
 As you've seen, you can create and attach event listeners to any of the events
-dispatched during the ``HttpKernel::handle`` cycle. Typically a listener is a PHP
+dispatched during the ``HttpKernel::handle()`` cycle. Typically a listener is a PHP
 class with a method that's executed, but it can be anything. For more information
 on creating and attaching event listeners, see :doc:`/components/event_dispatcher`.
 
@@ -694,7 +694,7 @@ else that can be used to create a working example::
 Sub Requests
 ------------
 
-In addition to the "main" request that's sent into ``HttpKernel::handle``,
+In addition to the "main" request that's sent into ``HttpKernel::handle()``,
 you can also send so-called "sub request". A sub request looks and acts like
 any other request, but typically serves to render just one small portion of
 a page instead of a full page. You'll most commonly make sub-requests from
@@ -704,7 +704,7 @@ your controller).
 .. image:: /_images/components/http_kernel/sub-request.png
    :align: center
 
-To execute a sub request, use ``HttpKernel::handle``, but change the second
+To execute a sub request, use ``HttpKernel::handle()``, but change the second
 argument as follows::
 
     use Symfony\Component\HttpFoundation\Request;

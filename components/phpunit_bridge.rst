@@ -80,9 +80,9 @@ There are four ways to mark a test as legacy:
 
 * Make its class name start with the ``Legacy`` prefix;
 
-* Make its method name start with ``testLegacy`` instead of ``test``;
+* Make its method name start with ``testLegacy*()`` instead of ``test*()``;
 
-* Make its data provider start with ``provideLegacy`` or ``getLegacy``.
+* Make its data provider start with ``provideLegacy*()`` or ``getLegacy*()``.
 
 Configuration
 -------------

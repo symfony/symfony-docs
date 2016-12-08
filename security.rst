@@ -1048,7 +1048,7 @@ and being logged-in is optional, you can allow a null value for the argument::
     }
 
 The point is this: always check to see if the user is logged in before using
-the User object, and use the ``isGranted`` method (or
+the User object, and use the ``isGranted()`` method (or
 :ref:`access_control <security-authorization-access-control>`) to do this::
 
     // yay! Use this to see if the user is logged in
@@ -1308,6 +1308,7 @@ Authorization (Denying Access)
     security/force_https
     security/securing_services
     security/access_control
+    security/access_denied_handler
 
 Other Security Related Topics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

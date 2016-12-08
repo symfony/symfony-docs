@@ -5,7 +5,7 @@ error_mapping
 
 This option allows you to modify the target of a validation error.
 
-Imagine you have a custom method named ``matchingCityAndZipCode`` that validates
+Imagine you have a custom method named ``matchingCityAndZipCode()`` that validates
 whether the city and zip code match. Unfortunately, there is no "matchingCityAndZipCode"
 field in your form, so all that Symfony can do is display the error on top
 of the form.

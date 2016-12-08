@@ -357,7 +357,6 @@ of your commands to change their appearance::
     use AppBundle\Console\CustomStyle;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
-    use Symfony\Component\Console\Style\SymfonyStyle;
 
     class GreetCommand extends ContainerAwareCommand
     {

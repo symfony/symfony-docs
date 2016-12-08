@@ -255,7 +255,7 @@ your controller::
 
 .. caution::
 
-    Be aware that the ``createView()`` method should be called *after* ``handleRequest``
+    Be aware that the ``createView()`` method should be called *after* ``handleRequest()``
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
 
@@ -633,18 +633,19 @@ the choice is ultimately up to you.
 
     Every form needs to know the name of the class that holds the underlying
     data (e.g. ``AppBundle\Entity\Task``). Usually, this is just guessed
-    based off of the object passed to the second argument to ``createForm``
+    based off of the object passed to the second argument to ``createForm()``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
         use Symfony\Component\OptionsResolver\OptionsResolver;
+        use AppBundle\Entity\Task;
 
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 

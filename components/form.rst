@@ -366,7 +366,7 @@ Creating a simple Form
     If you're using the Symfony Framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
-    method, which is a shortcut to fetch the form factory and call ``createBuilder``
+    method, which is a shortcut to fetch the form factory and call ``createBuilder()``
     on it.
 
 Creating a form is done via a :class:`Symfony\\Component\\Form\\FormBuilder`
@@ -419,8 +419,8 @@ is created from the form factory.
             }
         }
 
-As you can see, creating a form is like writing a recipe: you call ``add``
-for each new field you want to create. The first argument to ``add`` is the
+As you can see, creating a form is like writing a recipe: you call ``add()``
+for each new field you want to create. The first argument to ``add()`` is the
 name of your field, and the second is the fully qualified class name. The Form
 component comes with a lot of :doc:`built-in types </reference/forms/types>`.
 

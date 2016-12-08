@@ -230,7 +230,7 @@ Logical Controller Names
 
 For controllers, you need to reference actions using the format
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AppBundle:Default:index`` maps to the ``indexAction`` method from the
+``AppBundle:Default:index`` maps to the ``indexAction()`` method from the
 ``AppBundle\Controller\DefaultController`` class.
 
 Extending Bundles
