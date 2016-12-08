@@ -56,8 +56,8 @@ the second argument of the constructor.
 
     Another way to configure the directory where the locks are created is to
     define a special environment variable, because PHP will use that value to
-    override the default temporary directory. In Unix-based systems, define the
-    ``TMPDIR`` variable. In Windows systems, define any of these variables:
+    override the default temporary directory. On Unix-based systems, define the
+    ``TMPDIR`` variable. On Windows systems, define any of these variables:
     ``TMP``, ``TEMP`` or ``USERPROFILE`` (they are checked in this order). This
     technique is useful for example when deploying a third-party Symfony
     application whose code can't be modified.
