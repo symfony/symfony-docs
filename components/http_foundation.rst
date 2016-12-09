@@ -558,6 +558,9 @@ class, which can make this even easier::
     // if the data to send is already encoded in JSON
     $response = JsonResponse::fromJsonString('{ "data": 123 }');
 
+.. versionadded:: 3.2
+    The ``JsonResponse::fromJsonString()`` method was added in Symfony 3.3.
+
 The ``JsonResponse`` class sets the ``Content-Type`` header to
 ``application/json`` and encodes your data to JSON when needed.
 
