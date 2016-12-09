@@ -25,8 +25,8 @@ the most widely used byte code cache is `APC`_.
 Using a byte code cache really has no downside, and Symfony has been architected
 to perform really well in this type of environment.
 
-Further Optimizations
-~~~~~~~~~~~~~~~~~~~~~
+Monitoring Source File Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most byte code caches monitor the source files for changes. This ensures that if
 the source of a file changes, the byte code is recompiled automatically.
@@ -43,6 +43,18 @@ the updates you've made in the application won't be seen.
 For the same reasons, the byte code cache must also be cleared when deploying
 the application (for example by calling ``apc_clear_cache()`` PHP function when
 using APC and ``opcache_reset()`` when using OPCache).
+
+Optimizing all the Files Used by Symfony
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, PHP's OPcache saves up to 2,000 files in the byte code cache. This
+number is too low for the typical Symfony applications, so you should set a
+higher limit with the `opcache.max_accelerated_files`_ configuration option:
+
+.. code-block:: ini
+
+    ; php.ini
+    opcache.max_accelerated_files = 20000
 
 .. index::
    single: Performance; Autoloader
@@ -180,6 +192,7 @@ Learn more
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: http://php.net/manual/en/book.opcache.php
+.. _`opcache.max_accelerated_files`: http://php.net/manual/en/opcache.configuration.php#ini.opcache.max-accelerated-files
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`autoload.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
 .. _`bootstrap file`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php
