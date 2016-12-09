@@ -1016,7 +1016,7 @@ Each package can configure the following options:
 * :ref:`base_urls <reference-assets-base-urls>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
-* :ref:`version_strategy <reference-assets-version-strategy>`
+* :ref:`version_strategy <reference-framework-assets-version_strategy>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
