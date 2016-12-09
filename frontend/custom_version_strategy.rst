@@ -10,7 +10,7 @@ How to Use a Custom Version Strategy for Assets
 Asset versioning is a technique that improves the performance of web
 applications by adding a version identifier to the URL of the static assets
 (CSS, JavaScript, images, etc.) When the content of the asset changes, its
-identifier is also modified to force the browser download it again instead of
+identifier is also modified to force the browser to download it again instead of
 reusing the cached asset.
 
 Symfony supports asset versioning thanks to the
@@ -103,16 +103,14 @@ version string::
 
         private function loadManifest(array $options)
         {
-            $hashes = json_decode(file_get_contents($this->manifestPath), true);
-
-            return $hashes;
+            return json_decode(file_get_contents($this->manifestPath), true);
         }
     }
 
 Register the Strategy Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After creating the strategy PHP class, register it as a Symfony service
+After creating the strategy PHP class, register it as a Symfony service.
 
 .. configuration-block::
 
@@ -186,7 +184,7 @@ the :ref:`version_strategy <reference-framework-assets-version_strategy>` option
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets version_strategy="app.assets.versioning.gulp_buster" />
+                <framework:assets version-strategy="app.assets.versioning.gulp_buster" />
             </framework:config>
         </container>
 

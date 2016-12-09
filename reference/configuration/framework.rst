@@ -1142,7 +1142,7 @@ version_strategy
 
 **type**: ``string`` **default**: null
 
-The service id of the :doc:`asset version strategy </frontend/custom_version:strategy>`
+The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
 applied to the assets.
 
 templating
