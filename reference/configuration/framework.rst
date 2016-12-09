@@ -209,20 +209,15 @@ ide
 **type**: ``string`` **default**: ``null``
 
 Symfony turns file paths seen in variable dumps and exception messages into
-links that open those files right inside your browser. If you prefer, you can
-open those files in your favorite IDE or text editor.
-
-Set this option to any of these values preconfigured for the most popular editors:
-``phpstorm`` (requires `PhpStormProtocol`_), ``sublime``, ``textmate``,
-``macvim`` and ``emacs``.
+links that open those files right inside your browser. If you prefer to open
+those files in your favorite IDE or text editor, set this option to any of the
+following values: ``phpstorm`` (requires `PhpStormProtocol`_), ``sublime``,
+``textmate``, ``macvim`` and ``emacs``.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
 placeholder for the line number (percentage signs (``%``) must be escaped by
 doubling them to prevent Symfony from interpreting them as container parameters).
-
-For example, if you use PHPstorm on the Mac OS platform, you can use this
-configuration:
 
 .. configuration-block::
 
@@ -257,6 +252,11 @@ feature is to configure it on a system level. This can be done by setting the
 ``xdebug.file_link_format`` option in your ``php.ini`` configuration file. The
 format to use is the same as for the ``framework.ide`` option, but without the
 need to escape the percent signs (``%``) by doubling them.
+
+.. note::
+
+    If both ``framework.ide`` and ``xdebug.file_link_format`` are defined,
+    Symfony uses the value of the ``framework.ide`` option.
 
 .. tip::
 
