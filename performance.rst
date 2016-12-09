@@ -42,7 +42,14 @@ the updates you've made in the application won't be seen.
 
 For the same reasons, the byte code cache must also be cleared when deploying
 the application (for example by calling ``apc_clear_cache()`` PHP function when
-using APC and ``opcache_reset()`` when using OPCache).
+using APC and ``opcache_reset()`` when using OPcache).
+
+.. note::
+
+    In PHP, the CLI and the web processes don't share the same OPcache. This
+    means that you cannot clear the web server OPcache by executing some command
+    in your terminal. You either need to restart the web server or call to the
+    ``apc_clear_cache()`` and ``opcache_reset()`` functions via the web server.
 
 Optimizing all the Files Used by Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
