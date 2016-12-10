@@ -292,7 +292,7 @@ method is called by implementing
     {
         // ...
 
-        public function prepend()
+        public function prepend(ContainerBuilder $container)
         {
             // ...
 
