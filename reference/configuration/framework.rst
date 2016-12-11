@@ -102,6 +102,20 @@ Configuration
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
+* :ref:`cache <reference-cache>`
+    * :ref:`app <reference-cache-app>`
+    * `system`_
+    * `directory`_
+    * `default_doctrine_provider`_
+    * `default_psr6_provider`_
+    * `default_redis_provider`_
+    * `pools`_
+        * :ref:`name <reference-cache-pools-name>`
+            * `adapter`_
+            * `public`_
+            * `default_lifetime`_
+            * `provider`_
+            * `clearer`_
 
 secret
 ~~~~~~
@@ -673,6 +687,8 @@ installation.
 
     You can see an example of the usage of this in
     :doc:`/doctrine/pdo_session_storage`.
+
+.. _name:
 
 name
 ....
@@ -1446,6 +1462,119 @@ value.
     For more information, see
     :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
 
+.. _reference-cache:
+
+cache
+~~~~~
+
+.. _reference-cache-app:
+
+app
+...
+
+**type**: ``string`` **default**: ``cache.adapter.filesystem``
+
+The cache adapter behind the ``cache.app`` service.
+
+.. note::
+
+    The framework bundle ships with multiple adapters : apcu, doctrine, system, filesystem, psr6, redis.
+
+system
+......
+
+**type**: ``string`` **default**: ``cache.adapter.system``
+
+The cache adapter behind the ``cache.system`` service.
+
+directory
+.........
+
+**type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
+
+The path to the cache directory used by services inheriting from the ``cache.adapter.filesystem`` adapter
+(including ``cache.app``).
+
+default_doctrine_provider
+.........................
+
+**type**: ``string``
+
+The service name to use as your default doctrine provider.
+
+default_psr6_provider
+.....................
+
+**type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
+
+The service name to use as your default psr6 provider.
+
+default_redis_provider
+......................
+
+**type**: ``string`` **default**: ``redis://localhost``
+
+The dsn to use by the redis provider.
+
+pools
+.....
+
+**type**: ``array``
+
+A list of cache pools to be created by the framework extension.
+
+.. _reference-cache-pools-name:
+
+name
+""""
+
+**type**: ``prototype``
+
+Name of the pool you want to create.
+
+.. note::
+
+    Your pool name must differ from ``cache.app`` or ``cache.system``.
+
+adapter
+#######
+
+**type**: ``string`` **default**: ``cache.app``
+
+A cache adapter.
+
+public
+######
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether your service should be public or not.
+
+default_lifetime
+################
+
+**type**: ``integer``
+
+Default lifetime of your cache items.
+
+provider
+########
+
+**type**: ``string``
+
+The service name to use as provider when the specified adapter needs one.
+
+clearer
+#######
+
+**type**: ``string``
+
+The cache clearer used to clear your PSR-6 cache.
+
+.. seealso::
+
+    For more information, see :class:`Symfony\\Component\\HttpKernel\\CacheClearer\\Psr6CacheClearer`
+
 Full Default Configuration
 --------------------------
 
@@ -1579,6 +1708,23 @@ Full Default Configuration
                 cache:                file
                 file_cache_dir:       '%kernel.cache_dir%/annotations'
                 debug:                '%kernel.debug%'
+
+            # cache configuration
+            cache:
+                app: cache.app
+                system: cache.system
+                directory: '%kernel.cache_dir%/pools'
+                default_doctrine_provider: ~
+                default_psr6_provider: ~
+                default_redis_provider: 'redis://localhost'
+                pools:
+                    # Prototype
+                    name:
+                        adapter: cache.app
+                        public: false
+                        default_lifetime: ~
+                        provider: ~
+                        clearer: ~
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
