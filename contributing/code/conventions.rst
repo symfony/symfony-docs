@@ -92,7 +92,7 @@ A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
 relevant classes, methods, properties, ...::
 
     /**
-     * @deprecated Deprecated since version 2.8, to be removed in 3.0. Use XXX instead.
+     * @deprecated since version 2.8, to be removed in 3.0. Use XXX instead.
      */
 
 The deprecation message should indicate the version when the class/method was
@@ -111,3 +111,21 @@ ready to cope with them (by adding a custom error handler like the one used by
 the Web Debug Toolbar or by the PHPUnit bridge).
 
 .. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
+
+When deprecating a whole class the error should be placed between namespace and
+use declarations, like in this example from `ArrayParserCache`_::
+
+    namespace Symfony\Component\ExpressionLanguage\ParserCache;
+
+    @trigger_error('The '.__NAMESPACE__.'\ArrayParserCache class is deprecated since version 3.2 and will be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.', E_USER_DEPRECATED);
+
+    use Symfony\Component\ExpressionLanguage\ParsedExpression;
+
+    /**
+     * @author Adrien Brault <adrien.brault@gmail.com>
+     *
+     * @deprecated ArrayParserCache class is deprecated since version 3.2 and will be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.
+     */
+    class ArrayParserCache implements ParserCacheInterface
+
+.. _`ArrayParserCache`: https://github.com/symfony/symfony/blob/3.2/src/Symfony/Component/ExpressionLanguage/ParserCache/ArrayParserCache.php
