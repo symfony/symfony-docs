@@ -158,31 +158,31 @@ Below is the configuration for the pull request state machine.
                   ),
                   'transitions' => array(
                     'start'=> array(
-                      'form' => 'start',
+                      'from' => 'start',
                       'to' => 'travis',
                     ),
                     'update'=> array(
-                      'form' => array('coding','travis','review'),
+                      'from' => array('coding','travis','review'),
                       'to' => 'travis',
                     ),
                     'wait_for_reivew'=> array(
-                      'form' => 'travis',
+                      'from' => 'travis',
                       'to' => 'review',
                     ),
                     'request_change'=> array(
-                      'form' => 'review',
+                      'from' => 'review',
                       'to' => 'coding',
                     ),
                     'accept'=> array(
-                      'form' => 'review',
+                      'from' => 'review',
                       'to' => 'merged',
                     ),
                     'reject'=> array(
-                      'form' => 'review',
+                      'from' => 'review',
                       'to' => 'closed',
                     ),
                     'reopen'=> array(
-                      'form' => 'start',
+                      'from' => 'start',
                       'to' => 'review',
                     ),
                   ),

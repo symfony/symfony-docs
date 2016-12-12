@@ -117,15 +117,15 @@ like this:
                           ),
                           'transitions' => array(
                             'to_review'=> array(
-                              'form' => 'draft',
+                              'from' => 'draft',
                               'to' => 'review',
                             ),
                             'publish'=> array(
-                              'form' => 'review',
+                              'from' => 'review',
                               'to' => 'published',
                             ),
                             'reject'=> array(
-                              'form' => 'review',
+                              'from' => 'review',
                               'to' => 'rejected',
                             ),
                           ),
