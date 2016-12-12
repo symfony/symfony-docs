@@ -73,7 +73,7 @@ in case a specific other bundle is not registered::
                         // acme_something and acme_other
                         //
                         // note that if the user manually configured
-                        // use_acme_goodbye to true in the app/config/config.yml
+                        // use_acme_goodbye to true in app/config/config.yml
                         // then the setting would in the end be true and not false
                         $container->prependExtensionConfig($name, $config);
                         break;
