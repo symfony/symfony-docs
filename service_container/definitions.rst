@@ -29,7 +29,7 @@ There are some helpful methods for working with the service definitions::
     // get the "app.user_config_manager" definition
     $definition = $container->getDefinition('app.user_config_manager');
     // get the definition with the "app.user_config_manager" ID or alias
-    $definition = $container->findDefinition($serviceId);
+    $definition = $container->findDefinition('app.user_config_manager');
 
     // add a new "app.number_generator" definitions
     $definition = new Definition('AppBundle\NumberGenerator');

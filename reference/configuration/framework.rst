@@ -72,6 +72,7 @@ Configuration
     * `version_strategy`_
     * `version`_
     * `version_format`_
+    * `version_strategy`_
 * `templating`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
@@ -910,6 +911,8 @@ collection each time it generates an asset's path:
             ),
         ));
 
+.. _reference-framework-assets-packages:
+
 packages
 ........
 
@@ -979,6 +982,7 @@ Each package can configure the following options:
 * :ref:`version_strategy <reference-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
+* :ref:`version_strategy <reference-framework-assets-version_strategy>`
 
 .. _reference-templating-version-strategy:
 .. _reference-assets-version-strategy:
@@ -1076,6 +1080,7 @@ option.
     ``version``. This makes it easier to increment the cache on each
     deployment.
 
+.. _reference-framework-assets-version-format:
 .. _reference-templating-version-format:
 .. _reference-assets-version-format:
 
@@ -1115,6 +1120,16 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     appropriate version path as part of your deployment process and forgot
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
+
+.. _reference-framework-assets-version_strategy:
+
+version_strategy
+................
+
+**type**: ``string`` **default**: null
+
+The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
+applied to the assets.
 
 templating
 ~~~~~~~~~~

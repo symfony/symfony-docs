@@ -715,8 +715,8 @@ add the values to the raw data array::
     $values = $form->getPhpValues();
 
     // Add fields to the raw values.
-    $values['task']['tag'][0]['name'] = 'foo';
-    $values['task']['tag'][1]['name'] = 'bar';
+    $values['task']['tags'][0]['name'] = 'foo';
+    $values['task']['tags'][1]['name'] = 'bar';
 
     // Submit the form with the existing and new values.
     $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values,
