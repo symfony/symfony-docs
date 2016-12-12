@@ -204,7 +204,7 @@ The XML version of the config would then look like this:
         xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
         <acme_demo:config>
-            <acme_demo:foo>fooValue</acme_hello:foo>
+            <acme_demo:foo>fooValue</acme_demo:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
     </container>
