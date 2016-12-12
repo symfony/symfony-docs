@@ -4,7 +4,7 @@
 Console Commands
 ================
 
-The Symfony framework provide lots of commands through the ``app/console`` script
+The Symfony framework provides lots of commands through the ``app/console`` script
 (e.g. the well-known ``app/console cache:clear`` command). These commands are
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
@@ -176,7 +176,7 @@ instead::
         }
     }
 
-Now, once you created the required services and logic, the command will execute
+Now, once you have created the required services and logic, the command will execute
 the ``create()`` method of the ``app.user_manager`` service and the user will
 be created.
 

@@ -53,12 +53,14 @@ will not be sent when you run tests, but will continue to be sent in the
 If you'd also like to disable deliver in the ``dev`` environment, simply
 add this same configuration to the ``config_dev.yml`` file.
 
-Sending to a Specified Address
-------------------------------
+.. _sending-to-a-specified-address:
 
-You can also choose to have all email sent to a specific address, instead
+Sending to a Specified Address(es)
+----------------------------------
+
+You can also choose to have all email sent to a specific address or a list of addresses, instead
 of the address actually specified when sending the message. This can be done
-via the ``delivery_address`` option:
+via the ``delivery_addresses`` option:
 
 .. configuration-block::
 
@@ -66,7 +68,7 @@ via the ``delivery_address`` option:
 
         # app/config/config_dev.yml
         swiftmailer:
-            delivery_address: 'dev@example.com'
+            delivery_addresses: ['dev@example.com']
 
     .. code-block:: xml
 
@@ -78,14 +80,16 @@ via the ``delivery_address`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:config delivery-address="dev@example.com" />
+            <swiftmailer:config>
+                <swiftmailer:delivery-address>dev@example.com</swiftmailer:delivery-address>
+            </swiftmailer:config>
         </container>
 
     .. code-block:: php
 
         // app/config/config_dev.php
         $container->loadFromExtension('swiftmailer', array(
-            'delivery_address'  => "dev@example.com",
+            'delivery_addresses' => array("dev@example.com"),
         ));
 
 Now, suppose you're sending an email to ``recipient@example.com``.
@@ -139,7 +143,7 @@ by adding the ``delivery_whitelist`` option:
 
         # app/config/config_dev.yml
         swiftmailer:
-            delivery_address: dev@example.com
+            delivery_addresses: ['dev@example.com']
             delivery_whitelist:
                # all email addresses matching these regexes will be delivered
                # like normal, as well as being sent to dev@example.com
@@ -158,11 +162,12 @@ by adding the ``delivery_whitelist`` option:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:config delivery-address="dev@example.com">
+            <swiftmailer:config>
                 <!-- all email addresses matching these regexes will be delivered
                      like normal, as well as being sent to dev@example.com -->
                 <swiftmailer:delivery-whitelist-pattern>/@specialdomain\.com$/</swiftmailer:delivery-whitelist-pattern>
                 <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain\.com$/</swiftmailer:delivery-whitelist-pattern>
+                <swiftmailer:delivery-address>dev@example.com</swiftmailer:delivery-address>
             </swiftmailer:config>
         </container>
 
@@ -170,7 +175,7 @@ by adding the ``delivery_whitelist`` option:
 
         // app/config/config_dev.php
         $container->loadFromExtension('swiftmailer', array(
-            'delivery_address'  => "dev@example.com",
+            'delivery_addresses'  => array("dev@example.com"),
             'delivery_whitelist' => array(
                 // all email addresses matching these regexes will be delivered
                 // like normal, as well as being sent to dev@example.com

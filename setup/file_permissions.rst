@@ -55,8 +55,13 @@ following script to determine your web server user and grant the needed permissi
 
 .. note::
 
-    setfacl isn't available on NFS mount points. However, storing cache and logs
-    over NFS is strongly discouraged for performance reasons.
+    The first ``setfacl`` command sets permissions on the existing files and
+    folders, while the second one sets permissions for future files and folders.
+    Both of these commands assign permissions for the system user and the Apache 
+    user.
+
+    ``setfacl`` isn't available on NFS mount points. However, storing cache and
+    logs over NFS is strongly discouraged for performance reasons.
 
 4. Without Using ACL
 ~~~~~~~~~~~~~~~~~~~~

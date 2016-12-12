@@ -149,7 +149,7 @@ Twig Template Caching
 
 Twig is fast because each template is compiled to a native PHP class and cached.
 But don't worry: this happens automatically and doesn't require *you* to do anything.
-And while you're developing, Twig is smart enough to re-compile you templates after
+And while you're developing, Twig is smart enough to re-compile your templates after
 you make any changes. That means Twig is fast in production, but easy to use while
 developing.
 
