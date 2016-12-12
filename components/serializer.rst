@@ -562,7 +562,7 @@ All these encoders are enabled by default when using the Symfony Standard Editio
 with the serializer enabled.
 
 .. versionadded:: 3.2
-    The ``YamlEncoder`` and ``CsvEncoder`` encoders were added in Symfony 3.2
+    The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
 
 Handling Circular References
 ----------------------------
