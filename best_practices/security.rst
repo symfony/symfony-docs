@@ -216,7 +216,7 @@ Checking Permissions without @Security
 
 The above example with ``@Security`` only works because we're using the
 :ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
-access to the a ``post`` variable. If you don't use this, or have some other
+access to the ``post`` variable. If you don't use this, or have some other
 more advanced use-case, you can always do the same security check in PHP:
 
 .. code-block:: php
