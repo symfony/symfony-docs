@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by Jean85 at 2016-12-05T08:44:34Z
+
+I completly agree!
+I've applied those changes, and I also noticed that I missed one of the other `versionadded`. Fixed.
+
+Also: should this stuff be backported to the 3.2 branch? Or to an older one?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-08T19:44:06Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-12T19:59:25Z
+
+Thank you @Jean85.
