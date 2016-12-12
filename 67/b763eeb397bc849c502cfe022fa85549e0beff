@@ -1,0 +1,95 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-22T08:29:23Z
+
+@jverdeyen thanks for documenting this missing option. Looking at the code of Swiftmailer, we can see the following:
+
+```
+The swiftmailer.delivery_address configuration key is deprecated since version 2.3.10
+and will be removed in 3.0. Use the swiftmailer.delivery_addresses configuration key
+instead (or remove the empty setting).
+```
+
+So I guess we should also do the following:
+
+* Remove the description of the `delivery_address` option in 3.* docs
+* Add a warning message in 3.* docs telling that `_addresses` was previously called `_address`
+* Remove in the Symfony code this `_address` option
+
+---------------------------------------------------------------------------
+
+by jverdeyen at 2016-11-24T08:14:51Z
+
+Updated!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-24T08:30:52Z
+
+I was going to create a new issue in the Symfony repo to mention the `delivery_address` deprecation ... but then I remembered that SwiftMailerBundle is one of the "built-in" bundles that is not really built-in ... so the 2.3.10 and 3.0 versions mentioned by the deprecation refer to SwiftMailerBundle versions and not Symfony versions.
+
+If that's correct, my previous comment was completely wrong and we should revert the b34d046 commit. I'm really sorry.
+
+---------------------------------------------------------------------------
+
+by jverdeyen at 2016-11-24T08:33:50Z
+
+So both `delivery_address` and `delivery_addresses` are valid in 3.* ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-24T08:36:07Z
+
+@jverdeyen yes, because even the master branch in the Symfony Standard edition requires this:
+
+```json
+"symfony/swiftmailer-bundle": "^2.3",
+```
+
+See https://github.com/symfony/symfony-standard/blob/master/composer.json#L19
+
+---------------------------------------------------------------------------
+
+by jverdeyen at 2016-11-28T15:34:15Z
+
+@javiereguiluz Updated!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-28T15:36:57Z
+
+👍
+
+@jverdeyen thanks for completing this and sorry for having given you wrong directions in my previous comments.
+
+---------------------------------------------------------------------------
+
+by jverdeyen at 2016-11-28T15:38:21Z
+
+@javiereguiluz No problem!
+
+---------------------------------------------------------------------------
+
+by stof at 2016-11-28T16:02:08Z
+
+@javiereguiluz but the policy was to avoid documenting deprecated features though, so the doc should describe only the new way IMO
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-28T16:21:21Z
+
+@jverdeyen I've updated your pull request to remove any mention to the deprecated `delivery_address` option. I did this myself because I don't want to make you waste more time on this :)
+
+I have a question for XML config experts (@xabbug, @wouterj)  How can I define the `delivery_addresses` config as an array in XML? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-29T09:25:30Z
+
+@javiereguiluz You wil define several `delivery-address` element nodes (see https://github.com/symfony/swiftmailer-bundle/blob/master/Resources/config/schema/swiftmailer-1.0.xsd#L17)
+
+---------------------------------------------------------------------------
+
+by jverdeyen at 2016-12-09T13:05:24Z
+
+Any update?
