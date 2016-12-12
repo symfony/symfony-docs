@@ -20,3 +20,7 @@ Using the ``DebugClassLoader`` is as easy as calling its static
     use Symfony\Component\Debug\DebugClassLoader;
 
     DebugClassLoader::enable();
+
+.. versionadded:: 2.5
+    Since Symfony 2.5, ``DebugClassLoader`` also checks case mismatches between
+    loaded class, declared class and source file names.
