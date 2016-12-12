@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-11-21T12:14:03Z
+
+We should mention that this doesn't apply to Windows.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-11-21T12:16:37Z
+
+From [msdn](https://msdn.microsoft.com/fr-fr/library/windows/desktop/aa364992(v=vs.85).aspx) for Windows, this var is called `TMP`, `TEMP` or `USERPROFILE` (in this order).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-21T12:26:19Z
+
+According to the PHP 7 source code, the variables checked on Windows are ` TMP` and `TEMP` (in this order). I can't see `USERPROFILE`  See http://lxr.php.net/xref/PHP-7.0/main/php_open_temporary_file.c#199
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-11-21T12:35:33Z
+
+I'd better trust MSDN than a comment... especially since the code is calling `GetTempPath`.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-09T05:53:45Z
+
+:+1:
+
+Status: Reviewed
