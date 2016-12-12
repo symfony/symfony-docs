@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-18T11:00:04Z
+
+@wouterj I don't like the idea of showing the `composer` command because I don't want to duplicate this kind of installation instructions. But if others agree with you, I'll do the changes. Meanwhile I did the other changes that you suggested. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-21T19:05:07Z
+
+To me this sounds fine. Someone not using the Standard Edition (which has the SensioDistributionBundle enabled by default) will probably have no problem in finding out how to install a package using Composer.
+
+Status: Reviewed
