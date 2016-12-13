@@ -299,12 +299,11 @@ Custom Messages
 ~~~~~~~~~~~~~~~
 
 If you want to show some fixed text or generic message, you can define custom
-placeholders to be displayed with the progress bar, after defining them in a 
-custom format.
+placeholders in a custom format to be displayed with the progress bar, and use
+them afterwards.
 
 By default, the ``setMessage()`` method implies ``message`` as the name of the
-placeholder, but if you need more than one, you have just to just define your 
-own::
+placeholder, but if you need more than one, you have just to define your own::
 
     $progressBar = new ProgressBar($output, 100);
     $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message% %filename%');
