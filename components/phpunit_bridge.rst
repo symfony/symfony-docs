@@ -240,8 +240,8 @@ DNS-sensitive Tests
 -------------------
 
 .. versionadded:: 3.1
-    The ability to disable the deprecation helper was introduced in the 3.1 
-    version of this component.
+    The mocks for DNS related functions were introduced in the 3.1 version
+    of this component.
 
 Tests that make network connections, for example to check the validity of a DNS
 record, can be slow to execute and unreliable due to the conditions of the
@@ -356,8 +356,8 @@ Modified PHPUnit script
 -----------------------
 
 .. versionadded:: 3.2
-    The ability to disable the deprecation helper was introduced in the 3.2 
-    version of this component.
+    The modified PHPUnit script script was introduced in the 3.2 version of 
+    this component.
 
 This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
