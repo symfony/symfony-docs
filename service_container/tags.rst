@@ -16,8 +16,8 @@ to be used for a specific purpose. Take the following example:
 
         # app/config/services.yml
         services:
-            foo.twig.extension:
-                class: AppBundle\Extension\FooExtension
+            app.twig_extension:
+                class: AppBundle\Twig\AppExtension
                 public: false
                 tags:
                     - { name: twig.extension }
@@ -33,8 +33,8 @@ to be used for a specific purpose. Take the following example:
 
             <services>
                 <service
-                    id="foo.twig.extension"
-                    class="AppBundle\Extension\FooExtension"
+                    id="app.twig_extension"
+                    class="AppBundle\Twig\AppExtension"
                     public="false">
 
                     <tag name="twig.extension" />
@@ -45,16 +45,17 @@ to be used for a specific purpose. Take the following example:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Twig\AppExtension;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition('AppBundle\Extension\FooExtension');
+        $definition = new Definition(AppExtension::class);
         $definition->setPublic(false);
         $definition->addTag('twig.extension');
-        $container->setDefinition('foo.twig.extension', $definition);
+        $container->setDefinition('app.twig_extension', $definition);
 
 The ``twig.extension`` tag is a special tag that the TwigBundle uses
 during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``foo.twig.extension`` service should be registered
+the bundle knows that the ``app.twig_extension`` service should be registered
 as a Twig extension with Twig. In other words, Twig finds all services tagged
 with ``twig.extension`` and automatically registers them as extensions.
 
@@ -128,7 +129,9 @@ Then, define the chain as a service:
 
     .. code-block:: php
 
-        $container->register('app.mailer_transport_chain', 'AppBundle\Mail\TransportChain');
+        use AppBundle\Mail\TransportChain;
+
+        $container->register('app.mailer_transport_chain', TransportChain::class);
 
 Define Services with a Custom Tag
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

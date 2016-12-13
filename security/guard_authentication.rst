@@ -262,10 +262,11 @@ To finish this, register the class as a service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\TokenAuthenticator;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.token_authenticator', new Definition('AppBundle\Security\TokenAuthenticator'));
+        $container->register('app.token_authenticator', TokenAuthenticator::class);
 
 Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
 

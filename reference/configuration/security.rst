@@ -539,10 +539,12 @@ Using the BCrypt Password Encoder
     .. code-block:: php
 
         // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => array(
+                User::class => array(
                     'algorithm' => 'bcrypt',
                     'cost'      => 15,
                 ),

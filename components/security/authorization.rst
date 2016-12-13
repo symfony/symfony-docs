@@ -119,9 +119,11 @@ on a "remember-me" cookie, or even authenticated anonymously?
 .. code-block:: php
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
+    use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+    use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
-    $anonymousClass = 'Symfony\Component\Security\Core\Authentication\Token\AnonymousToken';
-    $rememberMeClass = 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken';
+    $anonymousClass = AnonymousToken::class;
+    $rememberMeClass = RememberMeToken::Class;
 
     $trustResolver = new AuthenticationTrustResolver($anonymousClass, $rememberMeClass);
 

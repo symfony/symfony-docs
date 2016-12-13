@@ -122,6 +122,7 @@ make sure the ``FormRegistry`` uses the created instance::
     // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
     namespace AppBundle\Tests\Form\Type;
 
+    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\PreloadedExtension;
     // ...
 
@@ -132,7 +133,7 @@ make sure the ``FormRegistry`` uses the created instance::
         protected function setUp()
         {
             // mock any dependencies
-            $this->entityManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
+            $this->entityManager = $this->createMock(ObjectManager::class);
 
             parent::setUp();
         }
@@ -176,6 +177,7 @@ allows you to return a list of extensions to register::
     // ...
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\ConstraintViolationList;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -183,9 +185,7 @@ allows you to return a list of extensions to register::
 
         protected function getExtensions()
         {
-            $this->validator = $this->createMock(
-                'Symfony\Component\Validator\Validator\ValidatorInterface'
-            );
+            $this->validator = $this->createMock(ValidatorInterface::class);
             $this->validator
                 ->method('validate')
                 ->will($this->returnValue(new ConstraintViolationList()));

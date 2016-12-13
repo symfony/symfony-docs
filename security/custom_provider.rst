@@ -123,6 +123,7 @@ Here's an example of how this might look::
     // src/AppBundle/Security/User/WebserviceUserProvider.php
     namespace AppBundle\Security\User;
 
+    use AppBundle\Security\User\WebserviceUser;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -162,7 +163,7 @@ Here's an example of how this might look::
 
         public function supportsClass($class)
         {
-            return $class === 'AppBundle\Security\User\WebserviceUser';
+            return WebserviceUser::class === $class;
         }
     }
 
@@ -199,12 +200,10 @@ Now you make the user provider available as a service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\User\WebserviceUserProvider;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition(
-            'app.webservice_user_provider',
-            new Definition('AppBundle\Security\User\WebserviceUserProvider')
-        );
+        $container->register('app.webservice_user_provider', WebserviceUserProvider::class);
 
 .. tip::
 
@@ -302,11 +301,13 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Security\User\WebserviceUser;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'encoders' => array(
-                'AppBundle\Security\User\WebserviceUser' => 'bcrypt',
+                WebserviceUser::class => 'bcrypt',
             ),
             // ...
         ));
@@ -371,11 +372,13 @@ is compared to the hashed password returned by your ``getPassword()`` method.
         .. code-block:: php
 
             // app/config/security.php
+            use AppBundle\Security\User\WebserviceUser;
+
             $container->loadFromExtension('security', array(
                 // ...
 
                 'encoders' => array(
-                    'AppBundle\Security\User\WebserviceUser' => array(
+                    WebserviceUser::class => array(
                         'algorithm' => 'bcrypt',
                         'cost' => 12,
                     ),

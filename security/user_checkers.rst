@@ -91,7 +91,9 @@ other service:
     .. code-block:: php
 
         // app/config/services.php
-        $container->register('app.user_checker', 'AppBundle\Security\UserChecker');
+        use AppBundle\Security\UserChecker;
+
+        $container->register('app.user_checker', UserChecker::class);
 
 All that's left to do is add the checker to the desired firewall where the value
 is the service id of your user checker:

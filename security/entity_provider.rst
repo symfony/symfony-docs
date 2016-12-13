@@ -255,9 +255,11 @@ the username and then check the password (more on passwords in a moment):
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Entity\User;
+
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'AppBundle\Entity\User' => array(
+                User::class => array(
                     'algorithm' => 'bcrypt',
                 ),
             ),

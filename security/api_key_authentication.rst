@@ -211,7 +211,7 @@ The ``$userProvider`` might look something like this::
 
         public function supportsClass($class)
         {
-            return 'Symfony\Component\Security\Core\User\User' === $class;
+            return User::class === $class;
         }
     }
 
@@ -245,10 +245,11 @@ Now register your user provider as a service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\ApiKeyUserProvider;
 
         // ...
         $container
-            ->register('api_key_user_provider', 'AppBundle\Security\ApiKeyUserProvider');
+            ->register('api_key_user_provider', ApiKeyUserProvider::class);
 
 .. note::
 
@@ -355,12 +356,13 @@ First, register it as a service.
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Security\ApiKeyAuthenticator;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
 
-        $definition = new Definition('AppBundle\Security\ApiKeyAuthenticator');
+        $definition = new Definition(ApiKeyAuthenticator::class);
         $definition->setPublic(false);
         $container->setDefinition('apikey_authenticator', $definition);
 
@@ -744,17 +746,15 @@ service:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Security\ApiKeyAuthenticator;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
 
-        $definition = new Definition(
-            'AppBundle\Security\ApiKeyAuthenticator',
-            array(
-                new Reference('security.http_utils')
-            )
-        );
+        $definition = new Definition(ApiKeyAuthenticator::class, array(
+            new Reference('security.http_utils')
+        ));
         $definition->setPublic(false);
         $container->setDefinition('apikey_authenticator', $definition);
 

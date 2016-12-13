@@ -50,11 +50,12 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
-            'AppBundle\Mailer',
+            Mailer::class,
             array(new Expression('service("mailer_configuration").getMailerMethod()'))
         ));
 
@@ -97,11 +98,12 @@ via a ``container`` variable. Here's another example:
 
     .. code-block:: php
 
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
-            'AppBundle\Mailer',
+            Mailer::class,
             array(new Expression(
                 "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
             ))
