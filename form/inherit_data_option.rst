@@ -131,24 +131,30 @@ access the properties of the ``Customer`` instance instead. Easy, eh?
 Finally, make this work by adding the location form to your two original forms::
 
     // src/AppBundle/Form/Type/CompanyType.php
+    use AppBundle\Entity\Company;
+    // ...
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
         $builder->add('foo', new LocationType(), array(
-            'data_class' => 'AppBundle\Entity\Company'
+            'data_class' => Company::class,
         ));
     }
 
 .. code-block:: php
 
     // src/AppBundle/Form/Type/CustomerType.php
+    use AppBundle\Entity\Customer;
+    // ...
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
         $builder->add('bar', new LocationType(), array(
-            'data_class' => 'AppBundle\Entity\Customer'
+            'data_class' => Customer::class,
         ));
     }
 

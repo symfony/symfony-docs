@@ -51,8 +51,9 @@ easily. Your formatter must implement
     .. code-block:: php
 
         // app/config/config.php
-        $container
-            ->register('my_formatter', 'Monolog\Formatter\JsonFormatter');
+        use Monolog\Formatter\JsonFormatter;
+
+        $container->register('my_formatter', JsonFormatter::class);
 
         $container->loadFromExtension('monolog', array(
             'handlers' => array(

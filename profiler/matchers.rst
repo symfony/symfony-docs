@@ -133,11 +133,12 @@ won't use it directly:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Profiler\SuperAdminMatcher;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'AppBundle\Profiler\SuperAdminMatcher',
+            SuperAdminMatcher::class,
             array(new Reference('security.authorization_checker'))
         );
         $definition->setPublic(false);

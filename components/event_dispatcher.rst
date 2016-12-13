@@ -201,6 +201,7 @@ determine which instance is passed.
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
@@ -208,12 +209,12 @@ determine which instance is passed.
 
         // register the event dispatcher service
         $containerBuilder->setDefinition('event_dispatcher', new Definition(
-            'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher',
+            ContainerAwareEventDispatcher::class,
             array(new Reference('service_container'))
         ));
 
         // register your event listener service
-        $listener = new Definition('AcmeListener');
+        $listener = new Definition(\AcmeListener::class);
         $listener->addTag('kernel.event_listener', array(
             'event' => 'foo.action',
             'method' => 'onFooAction',
@@ -221,7 +222,7 @@ determine which instance is passed.
         $containerBuilder->setDefinition('listener_service_id', $listener);
 
         // register an event subscriber
-        $subscriber = new Definition('AcmeSubscriber');
+        $subscriber = new Definition(\AcmeSubscriber::class);
         $subscriber->addTag('kernel.event_subscriber');
         $containerBuilder->setDefinition('subscriber_service_id', $subscriber);
 

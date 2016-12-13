@@ -69,9 +69,10 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
     .. code-block:: php
 
+        use AppBundle\Twig\AppExtension;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition('AppBundle\Twig\AppExtension');
+        $definition = new Definition(AppExtension::class);
         $definition->setLazy(true);
 
         $container->setDefinition('app.twig_extension', $definition);

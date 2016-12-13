@@ -38,6 +38,7 @@ if the service does not exist:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -45,7 +46,7 @@ if the service does not exist:
         $container->setDefinition('app.mailer', ...);
 
         $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
+            NewsletterManager::class,
             array(
                 new Reference(
                     'app.mailer',
@@ -104,20 +105,21 @@ call if the service exists and remove the method call if it does not:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        $container->setDefinition('app.mailer', ...);
+        $container->register('app.mailer', ...);
 
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager'
-        ))->addMethodCall('setMailer', array(
-            new Reference(
-                'my_mailer',
-                ContainerInterface::IGNORE_ON_INVALID_REFERENCE
-            ),
-        ));
+        $container
+            ->register('app.newsletter_manager', NewsletterManager::class)
+            ->addMethodCall('setMailer', array(
+                new Reference(
+                    'my_mailer',
+                    ContainerInterface::IGNORE_ON_INVALID_REFERENCE
+                ),
+            ))
+        ;
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
 is optional. Of course, the ``NewsletterManager`` must also be rewritten by

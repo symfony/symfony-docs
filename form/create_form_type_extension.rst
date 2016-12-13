@@ -116,12 +116,12 @@ tag:
 
     .. code-block:: php
 
+        use AppBundle\Form\Extension\ImageTypeExtension;
+
         $container
-            ->register(
-                'app.image_type_extension',
-                'AppBundle\Form\Extension\ImageTypeExtension'
-            )
+            ->register('app.image_type_extension', ImageTypeExtension::class)
             ->addTag('form.type_extension', array('alias' => 'file'));
+        ;
 
 The ``alias`` key of the tag is the type of field that this extension should
 be applied to. In your case, as you want to extend the ``file`` field type,

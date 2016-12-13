@@ -198,12 +198,13 @@ straightforward. Parameters make defining services more organized and flexible:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
 
         $container->setDefinition('app.mailer', new Definition(
-            'AppBundle\Mailer',
+            Mailer::class,
             array('%app.mailer.transport%')
         ));
 
@@ -348,13 +349,14 @@ the service container gives you a much more appealing option:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('app.mailer', ...);
 
         $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
+            NewsletterManager::class,
             array(new Reference('app.mailer'))
         ));
 
@@ -436,16 +438,17 @@ Injecting the dependency by the setter method just needs a change of syntax:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('app.mailer', ...);
 
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager'
-        ))->addMethodCall('setMailer', array(
+        $definition = new Definition(NewsletterManager::class)
+        $definition->addMethodCall('setMailer', array(
             new Reference('app.mailer'),
         ));
+        $container->setDefinition('app.newsletter_manager', $definition);
 
 .. note::
 

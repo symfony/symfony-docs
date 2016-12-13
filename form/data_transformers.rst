@@ -26,6 +26,7 @@ Suppose you have a Task form with a tags ``text`` type::
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Task;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,7 +41,7 @@ Suppose you have a Task form with a tags ``text`` type::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 
@@ -118,6 +119,8 @@ Start by setting up the text field like normal::
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Task;
+
     // ...
     class TaskType extends AbstractType
     {
@@ -132,7 +135,7 @@ Start by setting up the text field like normal::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task'
+                'data_class' => Task::class,
             ));
         }
 
@@ -404,21 +407,19 @@ it's recognized as a custom field type:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Form\IssueSelectorType;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...
 
         $container
             ->setDefinition('app.type.issue_selector', new Definition(
-                    'AppBundle\Form\IssueSelectorType'
-                ),
+                IssueSelectorType::class,
                 array(
                     new Reference('doctrine.orm.entity_manager'),
                 )
-            )
-            ->addTag('form.type', array(
-                'alias' => 'issue_selector',
             ))
+            ->addTag('form.type')
         ;
 
 Now, whenever you need to use your special ``issue_selector`` field type,

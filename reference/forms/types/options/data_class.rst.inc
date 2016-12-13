@@ -8,6 +8,9 @@ form, so you can use it for any form field type which requires an object.
 
 .. code-block:: php
 
+    use AppBundle\Entity\Media;
+    // ...
+
     $builder->add('media', 'sonata_media_type', array(
-        'data_class' => 'Acme\DemoBundle\Entity\Media',
+        'data_class' => Media::class,
     ));

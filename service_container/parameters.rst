@@ -77,11 +77,12 @@ and hidden with the service definition:
 
     .. code-block:: php
 
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
-        $container->register('app.mailer', 'AppBundle\Mailer')
+        $container->register('app.mailer', Mailer::class)
             ->addArgument('%mailer.transport%');
 
 .. caution::

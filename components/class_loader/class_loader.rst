@@ -59,10 +59,10 @@ looked for in a location list to ease the vendoring of a sub-set of classes
 for large projects::
 
     $loader->addPrefixes(array(
-        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/common/lib',
-        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine/migrations/lib',
-        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/dbal/lib',
-        'Doctrine'                   => __DIR__.'/vendor/doctrine/orm/lib',
+        'Doctrine\Common'          => __DIR__.'/vendor/doctrine/common/lib',
+        'Doctrine\DBAL\Migrations' => __DIR__.'/vendor/doctrine/migrations/lib',
+        'Doctrine\DBAL'            => __DIR__.'/vendor/doctrine/dbal/lib',
+        'Doctrine'                 => __DIR__.'/vendor/doctrine/orm/lib',
     ));
 
 In this example, if you try to use a class in the ``Doctrine\Common`` namespace

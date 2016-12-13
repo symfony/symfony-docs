@@ -114,18 +114,15 @@ using a processor.
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\SessionRequestProcessor;
+        use Monolog\Formatter\LineFormatter;
+
         $container
-            ->register(
-                'monolog.formatter.session_request',
-                'Monolog\Formatter\LineFormatter'
-            )
+            ->register('monolog.formatter.session_request', LineFormatter::class)
             ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n');
 
         $container
-            ->register(
-                'monolog.processor.session_request',
-                'AppBundle\SessionRequestProcessor'
-            )
+            ->register('monolog.processor.session_request', SessionRequestProcessor::class)
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord'));
 
@@ -189,10 +186,12 @@ the ``monolog.processor`` tag:
     .. code-block:: php
 
         // app/config/config.php
+
+        // ...
         $container
             ->register(
                 'monolog.processor.session_request',
-                'AppBundle\SessionRequestProcessor'
+                SessionRequestProcessor::class
             )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'handler' => 'main'));
@@ -240,10 +239,9 @@ the ``monolog.processor`` tag:
     .. code-block:: php
 
         // app/config/config.php
+
+        // ...
         $container
-            ->register(
-                'monolog.processor.session_request',
-                'AppBundle\SessionRequestProcessor'
-            )
+            ->register('monolog.processor.session_request', SessionRequestProcessor::class)
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));

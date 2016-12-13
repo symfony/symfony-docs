@@ -45,6 +45,7 @@ example, the implementing class for the ``original-service-id`` is changed to
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
     namespace Acme\DemoBundle\DependencyInjection\Compiler;
 
+    use Acme\DemoBundle\YourService;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -53,7 +54,7 @@ example, the implementing class for the ``original-service-id`` is changed to
         public function process(ContainerBuilder $container)
         {
             $definition = $container->getDefinition('original-service-id');
-            $definition->setClass('Acme\DemoBundle\YourService');
+            $definition->setClass(YourService::class);
         }
     }
 

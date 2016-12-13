@@ -317,10 +317,11 @@ In that case, you might want to override one or both of the ``showAction()`` and
         .. code-block:: php
 
             // app/config/services.php
+            use AppBundle\Controller\CustomExceptionController;
             use Symfony\Component\DependencyInjection\Reference;
             use Symfony\Component\DependencyInjection\Definition;
 
-            $definition = new Definition('AppBundle\Controller\CustomExceptionController', array(
+            $definition = new Definition(CustomExceptionController::class, array(
                 new Reference('twig'),
                 '%kernel.debug%'
             ));

@@ -137,14 +137,17 @@ Your bundles can also add their own classes into this file thanks to the
 ``addClassesToCompile()`` method. Define the classes to compile as an array of
 their fully qualified class names::
 
+    use AppBundle\Manager\UserManager;
+    use AppBundle\Utils\Slugger;
+
     // ...
     public function load(array $configs, ContainerBuilder $container)
     {
         // ...
 
         $this->addClassesToCompile(array(
-            'AppBundle\\Manager\\UserManager',
-            'AppBundle\\Utils\\Slugger',
+            UserManager::class,
+            Slugger::class,
             // ...
         ));
     }
