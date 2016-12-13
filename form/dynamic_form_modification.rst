@@ -270,7 +270,6 @@ and fill in the listener logic::
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
     // ...
 
     class FriendMessageFormType extends AbstractType

@@ -122,8 +122,10 @@ make sure the ``FormRegistry`` uses the created instance::
     // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
     namespace AppBundle\Tests\Form\Type;
 
+    use AppBundle\Form\Type\TestedType;
     use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\PreloadedExtension;
+    use Symfony\Component\Form\Test\TypeTestCase;
     // ...
 
     class TestedTypeTest extends TypeTestCase
@@ -175,6 +177,7 @@ allows you to return a list of extensions to register::
     namespace AppBundle\Tests\Form\Type;
 
     // ...
+    use AppBundle\Form\Type\TestedType;
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\ConstraintViolationList;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -208,7 +211,6 @@ a good opportunity to use them::
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
-    use AppBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
