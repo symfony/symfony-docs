@@ -49,7 +49,7 @@ Below is the configuration for the pull request state machine.
                         update:
                             from: [coding, travis, review]
                             to: travis
-                        wait_for_reivew:
+                        wait_for_review:
                             from: travis
                             to: review
                         request_change:
