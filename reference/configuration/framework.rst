@@ -94,6 +94,7 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
+    * `allow_empty_file`_
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -1378,6 +1379,14 @@ strict_email
 If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
+
+allow_empty_file
+................
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is enabled, empty file can be be uploaded.
+It can be useful if you don't need real file, like on a test suite where you don't need to check the content of the uploaded file.
 
 annotations
 ~~~~~~~~~~~

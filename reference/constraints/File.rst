@@ -22,6 +22,7 @@ form field.
 | Options        | - `maxSize`_                                                        |
 |                | - `binaryFormat`_                                                   |
 |                | - `mimeTypes`_                                                      |
+|                | - `allowEmpty`_                                                     |
 |                | - `maxSizeMessage`_                                                 |
 |                | - `mimeTypesMessage`_                                               |
 |                | - `disallowEmptyMessage`_                                           |
@@ -202,6 +203,15 @@ is equal to the given mime type (if a string) or exists in the collection
 of given mime types (if an array).
 
 You can find a list of existing mime types on the `IANA website`_.
+
+allowEmpty
+~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``null``
+
+When ``true``, it allow to upload empty file.
+When ``null`` the ``allow_empty_file`` option of framework configuration is used.
+
 
 maxSizeMessage
 ~~~~~~~~~~~~~~
