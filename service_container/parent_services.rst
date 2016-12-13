@@ -94,8 +94,8 @@ duplicated service definitions:
 
         use AppBundle\Repository\DoctrineUserRepository;
         use AppBundle\Repository\DoctrinePostRepository;
+        use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
         // as no class is configured, the parent service MUST be abstract
         $container->register('app.base_doctrine_repository')
@@ -104,12 +104,13 @@ duplicated service definitions:
         ;
 
         // extend the app.base_doctrine_repository service
-        $definition = new DefinitionDecorator('app.base_doctrine_repository');
+        $definition = new ChildDefinition('app.base_doctrine_repository');
         $definition->setClass(DoctrineUserRepository::class);
         $container->setDefinition('app.user_repository', $definition);
 
-        $definition = new DefinitionDecorator('app.base_doctrine_repository');
+        $definition = new ChildDefinition('app.base_doctrine_repository');
         $definition->setClass(DoctrinePostRepository::class);
+
         $container->setDefinition('app.post_repository', $definition);
 
         // ...
@@ -201,11 +202,11 @@ in the child class:
 
         use AppBundle\Repository\DoctrineUserRepository;
         use AppBundle\Repository\DoctrinePostRepository;
+        use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         // ...
 
-        $definition = new DefinitionDecorator('app.base_doctrine_repository');
+        $definition = new ChildDefinition('app.base_doctrine_repository');
         $definition->setClass(DoctrineUserRepository::class);
         // overrides the public setting of the parent service
         $definition->setPublic(false);
@@ -213,7 +214,7 @@ in the child class:
         $definition->addArgument(new Reference('app.username_checker'));
         $container->setDefinition('app.user_repository', $definition);
 
-        $definition = new DefinitionDecorator('app.base_doctrine_repository');
+        $definition = new ChildDefinition('app.base_doctrine_repository');
         $definition->setClass(DoctrinePostRepository::class);
         // overrides the first argument
         $definition->replaceArgument(0, new Reference('doctrine.custom_entity_manager'));
