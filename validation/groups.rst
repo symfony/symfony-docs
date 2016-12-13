@@ -166,11 +166,11 @@ the class name or the string ``Default``.
     object that's actually the one being validated.
 
     If you have inheritance (e.g. ``User extends BaseUser``) and you validate
-    with the class name of the subclass (i.e. ``User``), then all constraints
-    in the ``User`` and ``BaseUser`` will be validated. However, if you
-    validate using the base class (i.e. ``BaseUser``), then only the default
-    constraints in the ``BaseUser`` class will be validated.
-
+    with the class name of the subclass (i.e. ``User``), then only constraints
+    in the ``User`` will be validated. To validate the parent constraints as 
+    well you need to provide multiple groups (i.e ``User`` and ``BaseUser``) or
+    ``Default``.
+    
 To tell the validator to use a specific group, pass one or more group names
 as the third argument to the ``validate()`` method::
 
