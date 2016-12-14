@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2016-08-28T16:07:16Z
+
+status: needs work
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-09-18T20:54:54Z
+
+Status: Reviewed
+
+Just needs a few minor changes.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-09-19T18:57:39Z
+
+Comments addressed, thanks for the review.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-01T11:51:56Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-10-16T16:02:40Z
+
+status: needs work
+
+ping @nicolas-grekas
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2016-10-21T07:15:53Z
+
+comments addressed
+Status: needs review
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-09T12:26:35Z
+
+👍
+status: reviewed
+
+Note to merger: Please fix the `conf.py` configuration to suppor the new configuration block formats.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-19T16:38:26Z
+
+ping @javiereguiluz @weaverryan @xabbuh please review & vote
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-08T20:27:32Z
+
+👍
