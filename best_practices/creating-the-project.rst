@@ -128,16 +128,17 @@ that follows these best practices:
 
     blog/
     ├─ app/
-    │  ├─ config/
-    │  └─ Resources/
-    ├─ bin/
-    │  └─ console
-    ├─ src/
-    ├─ var/
+    │  ├─ console
     │  ├─ cache/
-    │  └─ logs/
+    │  ├─ config/
+    │  ├─ logs/
+    │  └─ Resources/
+    ├─ src/
+    │  └─ AppBundle/
     ├─ vendor/
     └─ web/
+       ├─ app.php
+       └─ app_dev.php
 
 .. tip::
 
@@ -155,6 +156,26 @@ If your project or infrastructure requires some changes to the default directory
 structure of Symfony, you can
 :doc:`override the location of the main directories </cookbook/configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
+
+In addition, Symfony3 uses a slightly different directory structure:
+
+.. code-block:: text
+
+    blog-symfony3/
+    ├─ app/
+    │  ├─ config/
+    │  └─ Resources/
+    ├─ bin/
+    │  └─ console
+    ├─ src/
+    ├─ var/
+    │  ├─ cache/
+    │  └─ logs/
+    ├─ vendor/
+    └─ web/
+
+The changes are pretty superficial, but for now, we recommend that you use
+the Symfony directory structure.
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: http://php.net/manual/en/intro.phar.php
