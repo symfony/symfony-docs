@@ -415,6 +415,12 @@ than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browser's behavior and returns the ``action``
 attribute followed by a query string of all of the form's values.
 
+.. versionadded:: 3.3
+    Starting from Symfony 3.3, the optional ``formaction`` and ``formmethod``
+    button attributes are supported. The ``getUri()`` and ``getMethod()``
+    methods take into account those attributes to always return the right action
+    and method depending on the button used to get the form.
+
 You can virtually set and get values on the form::
 
     // set values on the form internally
