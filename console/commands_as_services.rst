@@ -52,11 +52,10 @@ with ``console.command``:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Command\MyCommand;
+
         $container
-            ->register(
-                'app.command.my_command',
-                'AppBundle\Command\MyCommand'
-            )
+            ->register('app.command.my_command', MyCommand::class)
             ->addTag('console.command')
         ;
 
@@ -164,13 +163,12 @@ inject the ``command.default_name`` parameter:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Command\MyCommand;
+
         $container->setParameter('command.default_name', 'Javier');
 
         $container
-            ->register(
-                'app.command.my_command',
-                'AppBundle\Command\MyCommand',
-            )
+            ->register('app.command.my_command', MyCommand::class)
             ->setArguments(array('%command.default_name%'))
             ->addTag('console.command')
         ;

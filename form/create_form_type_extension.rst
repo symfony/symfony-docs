@@ -117,12 +117,15 @@ tag:
 
     .. code-block:: php
 
+        use AppBundle\Form\Extension\ImageTypeExtension;
+        use Symfony\Component\Form\Extension\Core\Type\FileType;
+
         $container
-            ->register(
-                'app.image_type_extension',
-                'AppBundle\Form\Extension\ImageTypeExtension'
-            )
-            ->addTag('form.type_extension', array('extended_type' => 'Symfony\Component\Form\Extension\Core\Type\FileType'));
+            ->register('app.image_type_extension', ImageTypeExtension::class)
+            ->addTag('form.type_extension', array(
+                'extended_type' => FileType::class
+            ))
+        ;
 
 The ``extended_type`` key of the tag is the type of field that this extension should
 be applied to. In your case, as you want to extend the ``Symfony\Component\Form\Extension\Core\Type\FileType``

@@ -140,11 +140,14 @@ about the replacement:
     .. code-block:: php
 
         // app/config/config.php
+        use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
+        use AppBundle\Entity\Customer;
+
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
                 // ...
                 'resolve_target_entities' => array(
-                    'Acme\InvoiceBundle\Model\InvoiceSubjectInterface' => 'AppBundle\Entity\Customer',
+                    InvoiceSubjectInterface::class => Customer::class,
                 ),
             ),
         ));

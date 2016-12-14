@@ -106,11 +106,12 @@ First configure a listener for console exception events in the service container
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\ConsoleExceptionListener;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definitionConsoleExceptionListener = new Definition(
-            'AppBundle\EventListener\ConsoleExceptionListener',
+            ConsoleExceptionListener::class,
             array(new Reference('logger'))
         );
         $definitionConsoleExceptionListener->addTag(
@@ -203,11 +204,12 @@ First configure a listener for console terminate events in the service container
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\ErrorLoggerListener;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definitionErrorLoggerListener = new Definition(
-            'AppBundle\EventListener\ErrorLoggerListener',
+            ErrorLoggerListener::class,
             array(new Reference('logger'))
         );
         $definitionErrorLoggerListener->addTag(

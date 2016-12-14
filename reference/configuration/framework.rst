@@ -910,6 +910,8 @@ collection each time it generates an asset's path:
             ),
         ));
 
+.. _reference-framework-assets-packages:
+
 packages
 ........
 
@@ -979,22 +981,6 @@ Each package can configure the following options:
 * :ref:`version_strategy <reference-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
-
-.. _reference-templating-version-strategy:
-.. _reference-assets-version-strategy:
-
-version_strategy
-................
-
-**type**: ``string`` **default**: ``null``
-
-This specifies the id of the service to use as the version strategy for
-all rendered asset paths. Version strategies must implement
-:class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategyInterface`.
-
-.. note::
-
-    This parameter cannot be set at the same time as ``version``.
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -1115,6 +1101,21 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     appropriate version path as part of your deployment process and forgot
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
+
+.. _reference-assets-version-strategy:
+.. _reference-templating-version-strategy:
+
+version_strategy
+................
+
+**type**: ``string`` **default**: ``null``
+
+The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
+applied to the assets.
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version``.
 
 templating
 ~~~~~~~~~~

@@ -120,14 +120,12 @@ Here is an example on how to load the
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        $definition = new Definition(
-            'Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer'
-        ));
-        $definition->setPublic(false);
-        $definition->addTag('serializer.normalizer');
-        $container->setDefinition('get_set_method_normalizer', $definition);
+        $container->register('get_set_method_normalizer', GetSetMethodNormalizer::class)
+            ->setPublic(false);
+            ->addTag('serializer.normalizer')
+        ;
 
 .. _serializer-using-serialization-groups-annotations:
 

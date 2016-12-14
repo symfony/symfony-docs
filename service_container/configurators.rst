@@ -169,19 +169,23 @@ You can configure the service configurator using the ``configurator`` option:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Mail\EmailConfigurator;
+        use AppBundle\Mail\EmailFormatterManager;
+        use AppBundle\Mail\GreetingCardManager;
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('app.email_formatter_manager', 'AppBundle\Mail\EmailFormatterManager');
-        $container->register('app.email_configurator', 'AppBundle\Mail\EmailConfigurator');
+        $container->register('app.email_formatter_manager', EmailFormatterManager::class);
+        $container->register('app.email_configurator', EmailConfigurator::class);
 
-        $container->register('app.newsletter_manager', 'AppBundle\Mail\NewsletterManager')
+        $container->register('app.newsletter_manager', NewsletterManager::class)
             ->addArgument(new Reference('mailer'))
             ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
         ;
 
-        $container->register('app.greeting_card_manager', 'AppBundle\Mail\GreetingCardManager');
+        $container->register('app.greeting_card_manager', GreetingCardManager::class);
             ->addArgument(new Reference('mailer'))
             ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
         ;

@@ -83,8 +83,10 @@ Configuring the service container is easy:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Newsletter\NewsletterManager;
+
         $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
+            NewsletterManager::class,
             array(
                 new Reference('mailer'),
                 new Reference('templating'),

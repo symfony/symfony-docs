@@ -119,8 +119,10 @@ To enable a data collector, define it as a regular service and tag it as
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\DataCollector\RequestCollector;
+
         $container
-            ->register('app.request_collector', 'AppBundle\DataCollector\RequestCollector')
+            ->register('app.request_collector', RequestCollector::class)
             ->setPublic(false)
             ->addTag('data_collector')
         ;
@@ -284,8 +286,10 @@ the ``data_collector`` tag in your service configuration:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\DataCollector\RequestCollector;
+
         $container
-            ->register('app.request_collector', 'AppBundle\DataCollector\RequestCollector')
+            ->register('app.request_collector', RequestCollector::class)
             ->setPublic(false)
             ->addTag('data_collector', array(
                 'template' => 'data_collector/template.html.twig',
@@ -322,8 +326,10 @@ want your collector to be displayed before them, use a higher value:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\DataCollector\RequestCollector;
+
         $container
-            ->register('app.request_collector', 'AppBundle\DataCollector\RequestCollector')
+            ->register('app.request_collector', RequestCollector::class)
             ->addTag('data_collector', array(
                 'template' => '...',
                 'id'       => '...',

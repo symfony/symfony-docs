@@ -41,8 +41,10 @@ configuration file. This can be done from your main configuration file (in
         .. code-block:: php
 
             // app/config/services.php
+            use AppBundle\Security\Firewall\ExceptionListener;
+
             // ...
-            $container->setParameter('security.exception_listener.class', 'AppBundle\Security\Firewall\ExceptionListener');
+            $container->setParameter('security.exception_listener.class', ExceptionListener::class);
 
 Next, create your own ``ExceptionListener``::
 
