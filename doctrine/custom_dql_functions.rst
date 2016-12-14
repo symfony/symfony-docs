@@ -51,19 +51,24 @@ In Symfony, you can register your custom DQL functions as follows:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\DQL\StringFunction;
+        use AppBundle\DQL\SecondStringFunction;
+        use AppBundle\DQL\NumericFunction;
+        use AppBundle\DQL\DatetimeFunction;
+
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
                 // ...
                 'dql' => array(
                     'string_functions' => array(
-                        'test_string'   => 'AppBundle\DQL\StringFunction',
-                        'second_string' => 'AppBundle\DQL\SecondStringFunction',
+                        'test_string'   => StringFunction::class,
+                        'second_string' => SecondStringFunction::class,
                     ),
                     'numeric_functions' => array(
-                        'test_numeric' => 'AppBundle\DQL\NumericFunction',
+                        'test_numeric' => NumericFunction::class,
                     ),
                     'datetime_functions' => array(
-                        'test_datetime' => 'AppBundle\DQL\DatetimeFunction',
+                        'test_datetime' => DatetimeFunction::class,
                     ),
                 ),
             ),
@@ -121,6 +126,8 @@ In Symfony, you can register your custom DQL functions as follows:
         .. code-block:: php
 
             // app/config/config.php
+            use AppBundle\DQL\DatetimeFunction;
+
             $container->loadFromExtension('doctrine', array(
                 'doctrine' => array(
                     'orm' => array(
@@ -130,7 +137,7 @@ In Symfony, you can register your custom DQL functions as follows:
                                 // place your functions here
                                 'dql' => array(
                                     'datetime_functions' => array(
-                                        'test_datetime' => 'AppBundle\DQL\DatetimeFunction',
+                                        'test_datetime' => DatetimeFunction::class,
                                     ),
                                 ),
                             ),

@@ -133,6 +133,8 @@ Deserializing an Object
 You'll now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
+    use Acme\Person;
+
     $data = <<<EOF
     <person>
         <name>foo</name>
@@ -141,7 +143,7 @@ of the ``Person`` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data, 'Acme\Person', 'xml');
+    $person = $serializer->deserialize($data, Person::class, 'xml');
 
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
@@ -155,7 +157,8 @@ Deserializing in an Existing Object
 
 The serializer can also be used to update an existing object::
 
-    $person = new Acme\Person();
+    // ...
+    $person = new Person();
     $person->setName('bar');
     $person->setAge(99);
     $person->setSportsman(true);
@@ -167,7 +170,7 @@ The serializer can also be used to update an existing object::
     </person>
     EOF;
 
-    $serializer->deserialize($data, 'Acme\Person', 'xml', array('object_to_populate' => $person));
+    $serializer->deserialize($data, Person::class, 'xml', array('object_to_populate' => $person));
     // $person = Acme\Person(name: 'foo', age: '69', sportsman: true)
 
 This is a common need when working with an ORM.

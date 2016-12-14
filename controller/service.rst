@@ -79,11 +79,9 @@ Then you can define it as a service as follows:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Controller\HelloController;
 
-        $container->setDefinition('app.hello_controller', new Definition(
-            'AppBundle\Controller\HelloController'
-        ));
+        $container->register('app.hello_controller', HelloController::class);
 
 Referring to the Service
 ------------------------
@@ -227,11 +225,12 @@ argument:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Controller\HelloController;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('app.hello_controller', new Definition(
-            'AppBundle\Controller\HelloController',
+            HelloController::class,
             array(new Reference('templating'))
         ));
 

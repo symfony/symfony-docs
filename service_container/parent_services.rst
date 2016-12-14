@@ -92,6 +92,8 @@ duplicated service definitions:
 
     .. code-block:: php
 
+        use AppBundle\Repository\DoctrineUserRepository;
+        use AppBundle\Repository\DoctrinePostRepository;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
@@ -103,11 +105,11 @@ duplicated service definitions:
 
         // extend the app.base_doctrine_repository service
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Repository\DoctrineUserRepository');
+        $definition->setClass(DoctrineUserRepository::class);
         $container->setDefinition('app.user_repository', $definition);
 
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Repository\DoctrinePostRepository');
+        $definition->setClass(DoctrinePostRepository::class);
         $container->setDefinition('app.post_repository', $definition);
 
         // ...
@@ -197,12 +199,14 @@ in the child class:
 
     .. code-block:: php
 
+        use AppBundle\Repository\DoctrineUserRepository;
+        use AppBundle\Repository\DoctrinePostRepository;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\DefinitionDecorator;
         // ...
 
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Repository\DoctrineUserRepository');
+        $definition->setClass(DoctrineUserRepository::class);
         // overrides the public setting of the parent service
         $definition->setPublic(false);
         // appends the '@app.username_checker' argument to the parent argument list
@@ -210,7 +214,7 @@ in the child class:
         $container->setDefinition('app.user_repository', $definition);
 
         $definition = new DefinitionDecorator('app.base_doctrine_repository');
-        $definition->setClass('AppBundle\Repository\DoctrinePostRepository');
+        $definition->setClass(DoctrinePostRepository::class);
         // overrides the first argument
         $definition->replaceArgument(0, new Reference('doctrine.custom_entity_manager'));
         $container->setDefinition('app.post_repository', $definition);

@@ -166,7 +166,7 @@ tag so that the validation system knows about it:
 
         # app/config/services.yml
         services:
-            validator.contains_alphanumeric:
+            app.contains_alphanumeric_validator:
                 class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
                 tags:
                     - { name: validator.constraint_validator }
@@ -174,7 +174,7 @@ tag so that the validation system knows about it:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="validator.contains_alphanumeric" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
+        <service id="app.contains_alphanumeric_validator" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <tag name="validator.constraint_validator" />
         </service>
@@ -182,8 +182,10 @@ tag so that the validation system knows about it:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Validator\Constraints\ContainsAlphanumericValidator;
+
         $container
-            ->register('validator.contains_alphanumeric', 'AppBundle\Validator\Constraints\ContainsAlphanumericValidator')
+            ->register('app.contains_alphanumeric_validator', ContainsAlphanumericValidator::class)
             ->addTag('validator.constraint_validator');
 
 Now, when Symfony looks for the ``ContainsAlphanumericValidator`` validator, it will

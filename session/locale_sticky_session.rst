@@ -83,11 +83,12 @@ Then register the listener:
 
     .. code-block:: php
 
+        use AppBundle\EventListener\LocaleListener;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
             ->setDefinition('app.locale_listener', new Definition(
-                'AppBundle\EventListener\LocaleListener',
+                LocaleListener::class,
                 array('%kernel.default_locale%')
             ))
             ->addTag('kernel.event_subscriber')
@@ -199,8 +200,10 @@ Then register the listener:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\UserLocaleListener;
+
         $container
-            ->register('app.user_locale_listener', 'AppBundle\EventListener\UserLocaleListener')
+            ->register('app.user_locale_listener', UserLocaleListener::class)
             ->addArgument('session')
             ->addTag(
                 'kernel.event_listener',

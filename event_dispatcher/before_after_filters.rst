@@ -172,9 +172,10 @@ your listener to be called just before any controller is executed.
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\TokenListener;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
+        $listener = new Definition(TokenListener::class, array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
             'event'  => 'kernel.controller',
             'method' => 'onKernelController'
@@ -269,9 +270,10 @@ event:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\TokenListener;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
+        $listener = new Definition(TokenListener::class, array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
             'event'  => 'kernel.controller',
             'method' => 'onKernelController'

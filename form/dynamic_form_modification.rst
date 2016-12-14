@@ -38,6 +38,7 @@ a bare form class looks like::
     // src/AppBundle/Form/Type/ProductType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Entity\Product;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -53,7 +54,7 @@ a bare form class looks like::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Product'
+                'data_class' => Product::class,
             ));
         }
     }
@@ -263,12 +264,12 @@ and fill in the listener logic::
 
     // src/AppBundle/FormType/FriendMessageFormType.php
 
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use AppBundle\Entity\User;
     use Doctrine\ORM\EntityRepository;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     // ...
 
     class FriendMessageFormType extends AbstractType
@@ -301,8 +302,8 @@ and fill in the listener logic::
                     $form = $event->getForm();
 
                     $formOptions = array(
-                        'class' => 'AppBundle\Entity\User',
-                        'property' => 'fullName',
+                        'class'         => User::class,
+                        'property'      => 'fullName',
                         'query_builder' => function (EntityRepository $er) use ($user) {
                             // build a custom query
                             // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
@@ -359,12 +360,12 @@ you need to register it as a service and tag it with :ref:`form.type <dic-tags-f
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Form\Type\FriendMessageFormType;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            'AppBundle\Form\Type\FriendMessageFormType',
-            array(new Reference('security.token_storage'))
-        );
+        $definition = new Definition(FriendMessageFormType::class, array(
+            new Reference('security.token_storage')
+        ));
         $definition->addTag('form.type');
 
         $container->setDefinition('app.form.friend_message', $definition);
