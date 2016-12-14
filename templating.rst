@@ -6,74 +6,77 @@ Creating and Using Templates
 
 As you know, the :doc:`controller </controller>` is responsible for
 handling each request that comes into a Symfony application. In reality,
-the controller delegates most of the heavy work to other places so that
-code can be tested and reused. When a controller needs to generate HTML,
-CSS or any other content, it hands the work off to the templating engine.
+the controller delegates most of the heavy work to other places. When
+a controller needs to generate HTML, it hands the work off to the
+*templating* engine.
+
 In this chapter, you'll learn how to write powerful templates that can be
 used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
 
-.. note::
+Rendering a Template
+--------------------
 
-    How to render templates is covered in the
-    :ref:`controller <controller-rendering-templates>` article.
+Typically, you'll render a template from inside if your controller::
 
-.. index::
-   single: Templating; What is a template?
+    // src/AppBundle/Controller/LuckyController.php
 
-Templates
----------
+    public function numberAction()
+    {
+        $number = mt_rand(0, 10);
 
-A template is simply a text file that can generate any text-based format
-(HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
-template - a text file parsed by PHP that contains a mix of text and PHP code:
+        // renders app/Resources/views/lucky/number.html.twig
+        return $this->render('lucky/number.html.twig', array(
+            // pass a variable called randomNumber into the template
+            'randomNumber' => $number,
+            'people' => array('Javier', 'Christian, 'Wouter')
+        ))
+    }
 
-.. code-block:: html+php
-
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Welcome to Symfony!</title>
-        </head>
-        <body>
-            <h1><?php echo $page_title ?></h1>
-
-            <ul id="navigation">
-                <?php foreach ($navigation as $item): ?>
-                    <li>
-                        <a href="<?php echo $item->getHref() ?>">
-                            <?php echo $item->getCaption() ?>
-                        </a>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-        </body>
-    </html>
-
-.. index:: Twig; Introduction
-
-But Symfony packages an even more powerful templating language called `Twig`_.
-Twig allows you to write concise, readable templates that are more friendly
-to web designers and, in several ways, more powerful than PHP templates:
+This template passes two variables - ``randomNumber`` and ``people`` into your
+template. A very simple template, might look like this:
 
 .. code-block:: html+twig
 
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Welcome to Symfony!</title>
-        </head>
-        <body>
-            <h1>{{ page_title }}</h1>
+    {# app/Resources/views/lucky/number.html.twig #}
 
-            <ul id="navigation">
-                {% for item in navigation %}
-                    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
-                {% endfor %}
-            </ul>
-        </body>
-    </html>
+    <h1>Your lucky number: {{ randomNumber }}</h1>
+
+    <h3>Nice People:</h3>
+    <ul>
+        {% for person in people %}
+            <li>
+                {{ person }}
+            </li>
+        {% endfor %}
+    </ul>
+
+Of course, this is only the beginning! Keep reading to learn more about
+`Twig`_, the templating engine used by Symfony!
+
+.. note::
+
+    For more details on rendering templates, see the
+    :ref:`controller <controller-rendering-templates>` article.
+
+Twig Templates
+--------------
+
+Symfony packages an powerful templating language called `Twig`_. With Twig, you can
+write concise, readable templates that are friendly to web designers and more powerful
+than traditional PHP templates:
+
+.. code-block:: html+twig
+
+    {# this is an example Twig template #}
+    <h1>{{ page_title }}</h1>
+
+    <ul id="navigation">
+        {% for item in navigation %}
+            <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+        {% endfor %}
+    </ul>
 
 Twig defines three types of special syntax:
 
@@ -170,7 +173,8 @@ defined as **blocks** (think "PHP class with base methods"). A child template
 can extend the base layout and override any of its blocks (think "PHP subclass
 that overrides certain methods of its parent class").
 
-First, build a base layout file:
+A new Symfony project already comes with a base layout file to get you started.
+Check it out:
 
 .. configuration-block::
 
@@ -180,22 +184,14 @@ First, build a base layout file:
         <!DOCTYPE html>
         <html>
             <head>
-                <meta charset="UTF-8">
-                <title>{% block title %}Test Application{% endblock %}</title>
+                <meta charset="UTF-8" />
+                <title>{% block title %}Welcome!{% endblock %}</title>
+                {% block stylesheets %}{% endblock %}
+                <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
             </head>
             <body>
-                <div id="sidebar">
-                    {% block sidebar %}
-                        <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/blog">Blog</a></li>
-                        </ul>
-                    {% endblock %}
-                </div>
-
-                <div id="content">
-                    {% block body %}{% endblock %}
-                </div>
+                {% block body %}{% endblock %}
+                {% block javascripts %}{% endblock %}
             </body>
         </html>
 
@@ -205,38 +201,24 @@ First, build a base layout file:
         <!DOCTYPE html>
         <html>
             <head>
-                <meta charset="UTF-8">
-                <title><?php $view['slots']->output('title', 'Test Application') ?></title>
+                <meta charset="UTF-8" />
+                <title><?php $view['slots']->output('title', 'Welcome!') ?></title>
+                <?php $view['slots']->output('stylesheets') ?>
+                <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
             </head>
             <body>
-                <div id="sidebar">
-                    <?php if ($view['slots']->has('sidebar')): ?>
-                        <?php $view['slots']->output('sidebar') ?>
-                    <?php else: ?>
-                        <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/blog">Blog</a></li>
-                        </ul>
-                    <?php endif ?>
-                </div>
-
-                <div id="content">
-                    <?php $view['slots']->output('body') ?>
-                </div>
+                <?php $view['slots']->output('body') ?>
+                <?php $view['slots']->output('javascripts') ?>
             </body>
         </html>
 
-.. note::
+This template defines a really basic HTML skeleton, which you should improve and
+customize for your project. It also defines four **blocks**, identified with
+``{% block %}`` (``title``, ``stylesheets``, ``body`` & ``javascripts``).
 
-    Though the discussion about template inheritance will be in terms of Twig,
-    the philosophy is the same between Twig and PHP templates.
-
-This template defines the base HTML skeleton document of a simple two-column
-page. In this example, three ``{% block %}`` areas are defined (``title``,
-``sidebar`` and ``body``). Each block may be overridden by a child template
-or left with its default implementation. This template could also be rendered
-directly. In that case the ``title``, ``sidebar`` and ``body`` blocks would
-simply retain the default values used in this template.
+These are important: the content in each can be overridden by a child template, or
+left with its default content. Suppose you're rendering a ``lucky/number.html.twig``
+template from your controller. Now, you can tell it to *extend* the base layout:
 
 A child template might look like this:
 
@@ -244,16 +226,13 @@ A child template might look like this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/blog/index.html.twig #}
+        {# app/Resources/views/lucky/number.html.html.twig #}
         {% extends 'base.html.twig' %}
 
-        {% block title %}My cool blog posts{% endblock %}
+        {% block title %}A lucky number for you!{% endblock %}
 
         {% block body %}
-            {% for entry in blog_entries %}
-                <h2>{{ entry.title }}</h2>
-                <p>{{ entry.body }}</p>
-            {% endfor %}
+            <h1>Your lucky number: {{ randomNumber }}</h1>
         {% endblock %}
 
     .. code-block:: html+php
@@ -261,59 +240,35 @@ A child template might look like this:
         <!-- app/Resources/views/blog/index.html.php -->
         <?php $view->extend('base.html.php') ?>
 
-        <?php $view['slots']->set('title', 'My cool blog posts') ?>
+        <?php $view['slots']->set('title', 'A lucky number for you!') ?>
 
         <?php $view['slots']->start('body') ?>
-            <?php foreach ($blog_entries as $entry): ?>
-                <h2><?php echo $entry->getTitle() ?></h2>
-                <p><?php echo $entry->getBody() ?></p>
-            <?php endforeach ?>
+            <h1><?php echo $randomNumber ?></h1>
         <?php $view['slots']->stop() ?>
-
-.. note::
-
-   The parent template is identified by a special string syntax
-   (``base.html.twig``). This path is relative to the ``app/Resources/views``
-   directory of the project. You could also use the logical name equivalent:
-   ``::base.html.twig``. This naming convention is explained fully in
-   :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
 the layout and defines several blocks. The child template is then rendered,
 at which point the ``title`` and ``body`` blocks of the parent are replaced
-by those from the child. Depending on the value of ``blog_entries``, the
+by those from the child. Depending on the value of ``randomNumber``, the
 output might look like this:
 
 .. code-block:: html
 
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>My cool blog posts</title>
-        </head>
-        <body>
-            <div id="sidebar">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/blog">Blog</a></li>
-                </ul>
-            </div>
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="UTF-8" />
+                <title>A lucky number for you!</title>
+                <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+            </head>
+            <body>
+                <h1>Your lucky number: 42</h1>
+            </body>
+        </html>
 
-            <div id="content">
-                <h2>My first post</h2>
-                <p>The body of the first post.</p>
-
-                <h2>Another post</h2>
-                <p>The body of the second post.</p>
-            </div>
-        </body>
-    </html>
-
-Notice that since the child template didn't define a ``sidebar`` block, the
-value from the parent template is used instead. Content within a ``{% block %}``
-tag in a parent template is always used by default.
+Notice that since the child template didn't define a ``stylesheets`` block, the
+value from the parent template is used instead (which is empty in this example).
 
 .. tip::
 
@@ -362,8 +317,8 @@ Template Naming and Locations
 By default, templates can live in two different locations:
 
 ``app/Resources/views/``
-    The application's ``views`` directory can contain application-wide base templates
-    (i.e. your application's layouts and templates of the application bundle) as
+    The application's ``views`` directory contains application-wide templates
+    (i.e. your app's layouts and templates of the application bundle) as
     well as templates that override third party bundle templates
     (see :doc:`/templating/overriding`).
 
@@ -384,42 +339,20 @@ to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*If* you need to refer to a template that lives in a bundle, Symfony uses a **bundle**:**directory**:**filename**
-string syntax. This allows for several types of templates, each which lives in a
-specific location:
+*If* you need to refer to a template that lives in a bundle, Symfony uses a
+``@bundle/Directory/filename.html.twig``. For example, suppose you have a bundle
+called ``AcmeBlogBundle``, then:
 
-* ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
-  template for a specific page. The three parts of the string, each separated
-  by a colon (``:``), mean the following:
-
-  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the AcmeBlogBundle
-    (e.g. ``src/Acme/BlogBundle``);
-
-  * ``Blog``: (*directory*) indicates that the template lives inside the
-    ``Blog`` subdirectory of ``Resources/views``;
-
-  * ``index.html.twig``: (*filename*) the actual name of the file is
-    ``index.html.twig``.
-
-  Assuming that the AcmeBlogBundle lives at ``src/Acme/BlogBundle``, the
-  final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
-
-* ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
-  that's specific to the AcmeBlogBundle. Since the middle, "directory", portion
-  is missing (e.g. ``Blog``), the template lives at
-  ``Resources/views/layout.html.twig`` inside AcmeBlogBundle. Yes, there are 2
-  colons in the middle of the string when the "controller" subdirectory part is
-  missing.
+* ``@AcmeBlog/Blog/index.html.twig``
+  Assuming that AcmeBlogBundle lives at ``src/Acme/BlogBundle``, the
+  final path to the file would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
+  Notice that ``@AcmeBlog`` does **not contain the word Bundle** at the end - this
+  should be left off.
 
 In the :doc:`/templating/overriding` section, you'll find out how each
-template living inside the AcmeBlogBundle, for example, can be overridden
+template living inside the AcmeBlogBundle, for example, could be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
-directory. This gives the power to override templates from any vendor bundle.
-
-.. tip::
-
-    Hopefully the template naming syntax looks familiar - it's similar to
-    the naming convention used to refer to :ref:`controller-string-syntax`.
+directory. This gives you the power to override templates from any vendor bundle.
 
 Template Suffix
 ~~~~~~~~~~~~~~~
@@ -578,7 +511,7 @@ the routing configuration. Later, if you want to modify the URL of a particular
 page, all you'll need to do is change the routing configuration: the templates
 will automatically generate the new URL.
 
-First, link to the "welcome" page, which is accessible via the following routing
+Suppose you have a "welcome" page, which is accessible via the following routing
 configuration:
 
 .. configuration-block::
@@ -821,10 +754,10 @@ advantage of Symfony's template inheritance.
     more interesting things with those assets. For more information on
     using Assetic see :doc:`/assetic/asset_management`.
 
-Start by adding two blocks to your base template that will hold your assets:
-one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
-just above the closing ``body`` tag. These blocks will contain all of the
-stylesheets and JavaScripts that you'll need throughout your site:
+Your ``base.html.twig`` base template already holds two blocks - ``stylesheets`` inside
+the ``head`` tag and another called ``javascripts`` just above the closing ``body``
+tag that are meant to hold your stylesheets and JavaScripts. Suppose first that
+you want include ``main.css`` and ``main.js`` files on every page on your site:
 
 .. configuration-block::
 
@@ -868,7 +801,7 @@ stylesheets and JavaScripts that you'll need throughout your site:
             </body>
         </html>
 
-That's easy enough! But what if you need to include an extra stylesheet or
+That's easy enough! But what if you need to include an *extra* stylesheet or
 JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
