@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2016-12-07T16:22:30Z
+
+@javiereguiluz Hello. I was playing with the serializer and I did not find the doc on symfony.com. You added your :+1: 15 days ago. I think we can merge this one to be able to deploy this new documentation? (It's available since symfony 3.1 ...)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-07T16:25:25Z
+
+@lyrixx you are so right!! But before merging PRs in Symfony Docs, we need two 👍 from maintainers. So we need that @weaverryan or @xabbuh or @wouterj vote on this too. Thanks!
+
+---------------------------------------------------------------------------
+
+by digilist at 2016-12-12T11:42:48Z
+
+I have a question regarding the max depth. I am not sure if this is desired behavior or a bug. If its the former, we should document this. If its the latter, we should fix the bug (I think it's a bug, but I wanted to ask you before opening an issue).
+
+Consider some code that extends your example code with more levels (4, 5, etc.). By keeping a max depth of 2, the result is the following:
+
+        'foo' => 'level1',
+        'child' =>
+            array (
+                'foo' => 'level2',
+                'child' =>
+                    array (
+                        'child' =>
+                            array (
+                                'child' =>
+                                    array (
+                                        'child' =>
+                                            array (
+                                                'child' => NULL,
+                                            ),
+                                    ),
+                            ),
+                    ),
+            ),
+    )
+
+As you can see, it considers all child nodes and does not stop after the configured max depths. Only the data of the objects in deeper levels is excluded (attribute foo).
