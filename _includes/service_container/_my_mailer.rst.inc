@@ -27,9 +27,10 @@
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setDefinition('app.mailer', new Definition(
-            'AppBundle\Mailer',
+            Mailer::class,
             array('sendmail')
         ));

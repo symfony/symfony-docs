@@ -77,8 +77,10 @@ a ``HelloService`` object properly:
     .. code-block:: php
 
         // app/config/services.php
+        use Acme\SoapBundle\Services\HelloService;
+
         $container
-            ->register('hello_service', 'Acme\SoapBundle\Services\HelloService')
+            ->register('hello_service', HelloService::class)
             ->addArgument(new Reference('mailer'));
 
 Below is an example of a controller that is capable of handling a SOAP

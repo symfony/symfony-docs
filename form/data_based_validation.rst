@@ -8,6 +8,7 @@ If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
 to an array callback::
 
+    use AppBundle\Entity\Client;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
@@ -15,7 +16,7 @@ to an array callback::
     {
         $resolver->setDefaults(array(
             'validation_groups' => array(
-                'AppBundle\Entity\Client',
+                Client::class,
                 'determineValidationGroups',
             ),
         ));

@@ -66,12 +66,13 @@ service container configuration:
 
     .. code-block:: php
 
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Mail\NewsletterManager',
+            NewsletterManager::class,
             array(new Reference('mailer'))
         ));
 
@@ -150,11 +151,12 @@ that accepts the dependency::
 
     .. code-block:: php
 
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('app.newsletter_manager', 'AppBundle\Mail\NewsletterManager')
+        $container->register('app.newsletter_manager', NewsletterManager::class)
             ->addMethodCall('setMailer', array(new Reference('mailer')))
         ;
 
@@ -220,11 +222,12 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: php
 
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('newsletter_manager', 'AppBundle\Mail\NewsletterManager')
+        $container->register('newsletter_manager', NewsletterManager::class)
             ->setProperty('mailer', new Reference('mailer'))
         ;
 

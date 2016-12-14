@@ -75,12 +75,13 @@ service files:
     .. code-block:: php
 
         // app/config/services/mailer.php
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
 
         $container->setDefinition('app.mailer', new Definition(
-            'AppBundle\Mailer',
+            Mailer::class,
             array('%app.mailer.transport%')
         ));
 

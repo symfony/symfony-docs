@@ -63,8 +63,8 @@ it's easy to pass a mock object within a test::
     // tests/AppBundle/Salary/SalaryCalculatorTest.php
     namespace Tests\AppBundle\Salary;
 
-    use AppBundle\Salary\SalaryCalculator;
     use AppBundle\Entity\Employee;
+    use AppBundle\Salary\SalaryCalculator;
     use Doctrine\ORM\EntityRepository;
     use Doctrine\Common\Persistence\ObjectManager;
 

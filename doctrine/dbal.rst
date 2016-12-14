@@ -121,11 +121,14 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Type\CustomFirst;
+        use AppBundle\Type\CustomSecond;
+
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'types' => array(
-                    'custom_first'  => 'AppBundle\Type\CustomFirst',
-                    'custom_second' => 'AppBundle\Type\CustomSecond',
+                    'custom_first'  => CustomFirst::class,
+                    'custom_second' => CustomSecond::class,
                 ),
             ),
         ));

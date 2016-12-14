@@ -21,8 +21,8 @@ First, create a new class that implements
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
-    // src/Acme/HelloBundle/Security/TimeAuthenticator.php
-    namespace Acme\HelloBundle\Security;
+    // src/AppBundle/Security/TimeAuthenticator.php
+    namespace AppBundle\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -153,7 +153,7 @@ Now, configure your ``TimeAuthenticator`` as a service:
             # ...
 
             time_authenticator:
-                class:     Acme\HelloBundle\Security\TimeAuthenticator
+                class:     AppBundle\Security\TimeAuthenticator
                 arguments: ["@security.password_encoder"]
 
     .. code-block:: xml
@@ -168,7 +168,7 @@ Now, configure your ``TimeAuthenticator`` as a service:
                 <!-- ... -->
 
                 <service id="time_authenticator"
-                    class="Acme\HelloBundle\Security\TimeAuthenticator"
+                    class="AppBundle\Security\TimeAuthenticator"
                 >
                     <argument type="service" id="security.password_encoder" />
                 </service>
@@ -178,13 +178,14 @@ Now, configure your ``TimeAuthenticator`` as a service:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Security\TimeAuthenticator;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         
         // ...
 
         $container->setDefinition('time_authenticator', new Definition(
-            'Acme\HelloBundle\Security\TimeAuthenticator',
+            TimeAuthenticator::class,
             array(new Reference('security.password_encoder'))
         ));
 

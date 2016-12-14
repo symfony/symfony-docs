@@ -262,10 +262,11 @@ To finish this, register the class as a service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\TokenAuthenticator;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.token_authenticator', new Definition('AppBundle\Security\TokenAuthenticator'));
+        $container->register('app.token_authenticator', TokenAuthenticator::class);
 
 Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
 
@@ -412,11 +413,18 @@ Each authenticator needs the following methods:
     :class:`Symfony\\Component\\HttpFoundation\\Response` object that helps
     the user authenticate (e.g. a 401 response that says "token is missing!").
 
-**supportsRememberMe**
+**supportsRememberMe()**
     If you want to support "remember me" functionality, return true from this method.
     You will still need to active ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
+    
+**createAuthenticatedToken(UserInterface $user, string $providerKey)**
+    If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
+    instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
+    class, you have to implement this method. It will be called
+    after a successful authentication to create and return the token
+    for the user, who was supplied as the first argument.
 
 .. _guard-customize-error:
 
@@ -552,7 +560,7 @@ Frequently Asked Questions
                 ),
             ));
 
-**Can I use this with ``form_login``?**
+**Can I use this with form_login?**
     Yes! ``form_login`` is *one* way to authenticate a user, so you could use
     it *and* then add one or more authenticators. Using a guard authenticator doesn't
     collide with other ways to authenticate.

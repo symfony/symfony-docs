@@ -40,11 +40,14 @@ the original service is lost:
 
     .. code-block:: php
 
-        $container->register('app.mailer', 'AppBundle\Mailer');
+        use AppBundle\Mailer;
+        use AppBundle\DecoratingMailer;
+
+        $container->register('app.mailer', Mailer::class);
 
         // this replaces the old app.mailer definition with the new one, the
         // old definition is lost
-        $container->register('app.mailer', 'AppBundle\DecoratingMailer');
+        $container->register('app.mailer', DecoratingMailer::class);
 
 Most of the time, that's exactly what you want to do. But sometimes,
 you might want to decorate the old one instead. In this case, the
@@ -88,10 +91,11 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
 
     .. code-block:: php
 
+        use AppBundle\DecoratingMailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('app.decorating_mailer', 'AppBundle\DecoratingMailer')
+        $container->register('app.decorating_mailer', DecoratingMailer::class)
             ->setDecoratedService('app.mailer')
             ->addArgument(new Reference('app.decorating_mailer.inner'))
             ->setPublic(false)
@@ -152,9 +156,10 @@ convention, the old ``app.mailer`` service is renamed to
 
         .. code-block:: php
 
+            use AppBundle\DecoratingMailer;
             use Symfony\Component\DependencyInjection\Reference;
 
-            $container->register('app.decorating_mailer', 'AppBundle\DecoratingMailer')
+            $container->register('app.decorating_mailer', DecoratingMailer::class)
                 ->setDecoratedService('foo', 'app.decorating_mailer.wooz')
                 ->addArgument(new Reference('app.decorating_mailer.wooz'))
                 // ...
