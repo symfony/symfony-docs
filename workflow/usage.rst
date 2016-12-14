@@ -140,7 +140,7 @@ like this:
         // This property is used by the marking store
         public $currentPlace;
         public $title;
-        public $content
+        public $content;
     }
 
 .. note::
