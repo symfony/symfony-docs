@@ -59,8 +59,8 @@ First, enable the JSON login under your firewall:
     ``/login/{foo}`` where ``foo`` has no default value).
 
 Now, when a request is made to the ``/login`` URL, the security system initiates
-the authentication process. You just need to define anywhere in your application
-an empty controller associated with that URL:
+the authentication process. You just need to configure a route matching this
+path:
 
 .. configuration-block::
 
@@ -103,7 +103,7 @@ an empty controller associated with that URL:
             </route>
         </routes>
 
-    ..  code-block:: php
+    .. code-block:: php
 
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
@@ -117,9 +117,10 @@ an empty controller associated with that URL:
         return $collection;
 
 Don't let this empty controller confuse you. When you submit a ``POST`` request
-to the ``/login`` URL with the following JSON document as body, the security
-system automatically handles it and takes care of checking the submitted
-username and password and authenticating the user or throwing an error:
+to the ``/login`` URL with the following JSON document as the body, the security
+system intercepts the requests. It takes care of authenticating the user with
+the submitted username and password or triggers an error in case the authentication
+process fails:
 
 .. code-block:: json
 
@@ -129,10 +130,9 @@ username and password and authenticating the user or throwing an error:
     }
 
 If the JSON document has a different structure, you can specify the path to
-access to the user and password properties using the ``username_path`` and
-``password_path`` keys (they default respectively to ``username`` and ``password``).
-
-For example, if the JSON document has the following structure:
+access the ``username`` and ``password`` properties using the ``username_path``
+and ``password_path`` keys (they default respectively to ``username`` and
+``password``). For example, if the JSON document has the following structure:
 
 .. code-block:: json
 
