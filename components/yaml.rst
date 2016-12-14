@@ -206,6 +206,10 @@ changed using the third argument as follows::
 Numeric Literals
 ................
 
+versionadded:: 3.2
+    Support for parsing integers grouped by underscores was introduced in
+    Symfony 3.2.
+
 Long numeric literals, being integer, float or hexadecimal, are known for their
 poor readability in code and configuration files. That's why YAML files allow to
 add underscores to improve their readability:
