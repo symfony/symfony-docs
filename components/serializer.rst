@@ -658,6 +658,101 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
+Handling Serialization Depth
+----------------------------
+
+The Serializer component is able to detect and limit the serialization depth.
+It is especially useful when serializing large trees. Assume the following data
+structure::
+
+    namespace Acme;
+
+    class MyObj
+    {
+        public $foo;
+
+        /**
+         * @var self
+         */
+        public $child;
+    }
+
+    $level1 = new MyObj();
+    $level1->foo = 'level1';
+
+    $level2 = new MyObj();
+    $level2->foo = 'level2';
+    $level1->child = $level2;
+
+    $level3 = new MyObj();
+    $level3->foo = 'level3';
+    $level2->child = $level3;
+
+The serializer can be configured to set a maximum depth for a given property.
+Here, we set it to 2 for the ``$child`` property:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
+
+        namespace Acme;
+
+        class MyObj
+        {
+            /**
+             * @MaxDepth(2)
+             */
+            public $foo;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        Acme\MyObj:
+            attributes:
+                foo:
+                    max_depth: 2
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="Acme\MyObj">
+                <attribute name="foo">
+                    <max-depth>2</max-depth>
+                </attribute>
+        </serializer>
+
+The metadata loader corresponding to the chosen format must be configured in
+order to use this feature. It is done automatically when using the Symfony
+Standard Edition. When using the standalone component, refer to
+:ref:`the groups documentation <component-serializer-attributes-groups>` to
+learn how to do that.
+
+The check is only done if the ``enable_max_depth`` key of the serializer context
+is set to ``true``. In the following example, the third level is not serialized
+because it is deeper than the configured maximum depth of 2::
+
+    $result = $serializer->normalize($level1, null, array('enable_max_depth' => true));
+    /*
+    $result = array(
+        'foo' => 'level1',
+        'child' => array(
+                'foo' => 'level2',
+                'child' => array(
+                        'child' => null,
+                    ),
+            ),
+    );
+    */
+
 Handling Arrays
 ---------------
 
