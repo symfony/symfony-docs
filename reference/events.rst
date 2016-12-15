@@ -241,10 +241,8 @@ and set a new ``Exception`` object, or do nothing::
 
 .. note::
 
-    As Symfony ensures that the Response status code is set to the most
-    appropriate one depending on the exception, setting the status on the
-    response won't work. If you want to overwrite the status code (which you
-    should not without a good reason), set the ``X-Status-Code`` header::
+    If you want to overwrite the status code (which you should not without a good reason),
+     set the ``X-Status-Code`` header::
 
         $response = new Response(
             'Error',
@@ -253,6 +251,20 @@ and set a new ``Exception`` object, or do nothing::
                 'X-Status-Code' => 200 // this status code will actually be sent to the client
             )
         );
+
+    This indeed will skip all checks that Symfony processes on setting response status code.
+    First check that Symfony does is fitting response status code.
+    Symfony leaves set status code as it is if it belongs to one of group:
+
+    :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`
+
+    :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError`
+
+    :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect`
+
+    If status code is different then Symfony checks instance of raised Exception if it is
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface` then its headers including status code are passed to response.
+    Otherwise status code 500 is set to response.
 
 .. seealso::
 
