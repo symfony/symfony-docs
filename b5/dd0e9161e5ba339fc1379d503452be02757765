@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2016-08-03T20:01:54Z
+
+@javiereguiluz very nice article, thank!
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-08-03T22:57:31Z
+
+I wonder if we shouldn't explain more the differences between kernel environments & using multiple kernels ? Because I know it can be confusing, especially for newcomers.
+
+Especially [as you state](https://github.com/symfony/symfony-docs/pull/6840/files#diff-aecf10d36dd9f38f4588ceb8475d41ccR14):
+
+> This is useful to execute the same application using a different configuration
+
+But multiple kernels are not meant to execute the very same application with a different configuration. That's pretty much what kernel environments are for.
+
+Different kernels are meant to execute different parts of a whole that can eventually be called "the application". It is true it doesn't often share much configuration, but what is important is that it's not the same part of the application at all. And thus, won't share the same components/bundles usage, nor sometimes some part of the business code, and above all not the same infrastructure stuff.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-08-04T07:44:32Z
+
+@ogizanagi I completely agree with you. I've refactored the "use cases" section. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-10-04T11:04:30Z
+
+Lately I've been playing with multi-kernel apps, so I've just added a section which may be important: running commands using different kernels. I think this is ready for the final review. Thanks!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2016-10-25T16:01:25Z
+
+This is really solid! 👍 from me if the changes are made.
+
+Status: Needs Work
