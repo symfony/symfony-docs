@@ -243,17 +243,20 @@ and set a new ``Exception`` object, or do nothing::
 
     As Symfony ensures that the Response status code is set to the most
     appropriate one depending on the exception, setting the status on the
-    response won't work. If you want to overwrite the status code (which you
-    should not without a good reason), set the ``X-Status-Code`` header::
+    response alone won't work. If you want to overwrite the status code
+    (which you should not without a good reason), call
+    ``GetResponseForExceptionEvent::allowSuccessfulResponse()`` and
+    then set the status code on the response as normal. The kernel will
+    now use your status code when sending the response to the client::
 
-        $response = new Response(
-            'Error',
-            404, // this status code will be ignored
-            array(
-                'X-Status-Code' => 200 // this status code will actually be sent to the client
-            )
-        );
+        $event->allowSuccessfulResponse();
+        $response = new Response('No Content', 204);
+        $event->setResponse($response);
 
+    The status code sent to the client in the above example will be 204.
+    If we were to omit the call to ``$event->allowSuccessfulResponse()``
+    then the kernel would set an appropriate status code based on the type
+    of exception thrown.
 .. seealso::
 
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
