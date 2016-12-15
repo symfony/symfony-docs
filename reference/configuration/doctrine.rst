@@ -203,7 +203,7 @@ Full Default Configuration
                         password="secret"
                         driver="pdo_mysql"
                         driver-class="MyNamespace\MyDriverImpl"
-                        path="%kernel.root_dir%/app/data/data.sqlite"
+                        path="%kernel.root_dir%/data/data.sqlite"
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
                         wrapper-class="MyDoctrineDbalConnectionWrapper"
