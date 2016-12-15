@@ -108,6 +108,9 @@ they don't collide with the files from ``AppKernel``::
 In order for the autoloader to find your new ``ApiKernel``, make sure you add it
 to your ``composer.json`` autoload section:
 
+
+.. code-block:: json
+
     {
         "...": "..."
 
