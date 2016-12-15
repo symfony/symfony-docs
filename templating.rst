@@ -18,29 +18,27 @@ code.
 Rendering a Template
 --------------------
 
-Typically, you'll render a template from inside if your controller::
+Typically, you'll render a template from inside of your controller::
 
     // src/AppBundle/Controller/LuckyController.php
-
     public function numberAction()
     {
         $number = mt_rand(0, 10);
 
         // renders app/Resources/views/lucky/number.html.twig
         return $this->render('lucky/number.html.twig', array(
-            // pass a variable called randomNumber into the template
+            // pass two variables into your template
             'randomNumber' => $number,
             'people' => array('Javier', 'Christian, 'Wouter')
         ))
     }
 
 This template passes two variables - ``randomNumber`` and ``people`` into your
-template. A very simple template, might look like this:
+template. A very simple template might look like this:
 
 .. code-block:: html+twig
 
     {# app/Resources/views/lucky/number.html.twig #}
-
     <h1>Your lucky number: {{ randomNumber }}</h1>
 
     <h3>Nice People:</h3>
@@ -63,7 +61,7 @@ Of course, this is only the beginning! Keep reading to learn more about
 Twig Templates
 --------------
 
-Symfony packages an powerful templating language called `Twig`_. With Twig, you can
+Symfony packages a powerful templating language called `Twig`_. With Twig, you can
 write concise, readable templates that are friendly to web designers and more powerful
 than traditional PHP templates:
 
@@ -212,7 +210,7 @@ Check it out:
             </body>
         </html>
 
-This template defines a really basic HTML skeleton, which you should improve and
+This template defines a basic HTML skeleton, which you should improve and
 customize for your project. It also defines four **blocks**, identified with
 ``{% block %}`` (``title``, ``stylesheets``, ``body`` & ``javascripts``).
 
@@ -756,8 +754,8 @@ advantage of Symfony's template inheritance.
 
 Your ``base.html.twig`` base template already holds two blocks - ``stylesheets`` inside
 the ``head`` tag and another called ``javascripts`` just above the closing ``body``
-tag that are meant to hold your stylesheets and JavaScripts. Suppose first that
-you want include ``main.css`` and ``main.js`` files on every page on your site:
+tag - that are meant to hold your stylesheets and JavaScripts. Suppose first that
+you want to include ``main.css`` and ``main.js`` files on every page on your site:
 
 .. configuration-block::
 
