@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-15T07:11:40Z
+
+:+1:
+
+Can you also create another PR for Symfony 2.7 where this points to `%kernel.root_dir%/data/data.sqlite`?
+
+---------------------------------------------------------------------------
+
+by chalasr at 2016-12-15T08:35:11Z
+
+@xabbuh See #7267
