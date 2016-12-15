@@ -61,6 +61,12 @@ class instead of the usual ``AppKernel`` class::
     $kernel = new ApiKernel('dev', true);
     // ...
 
+.. tip::
+
+    Another approach is to keep the existing front controller (e.g. ``app.php`` and
+    ``app_dev.php``), but add an ``if`` statement to load the different kernel based
+    on the URL (e.g. if the URL starts with ``/api``, use the ``ApiKernel``).
+
 Step 2) Create the new Kernel Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -98,6 +104,20 @@ they don't collide with the files from ``AppKernel``::
             $loader->load($this->getRootDir().'/config/api/config_'.$this->getEnvironment().'.yml');
         }
     }
+
+In order for the autoloader to find your new ``ApiKernel``, make sure you add it
+to your ``composer.json`` autoload section:
+
+    {
+        "...": "..."
+
+        "autoload": {
+            "psr-4": { "": "src/" },
+            "classmap": [ "app/AppKernel.php", "app/AppCache.php", "app/ApiKernel.php" ]
+        }
+    }
+
+Then, run ``composer install`` to dump your new autoload config.
 
 Step 3) Define the Kernel Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
