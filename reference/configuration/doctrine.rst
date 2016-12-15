@@ -203,7 +203,7 @@ Full Default Configuration
                         password="secret"
                         driver="pdo_mysql"
                         driver-class="MyNamespace\MyDriverImpl"
-                        path="%kernel.data_dir%/data.sqlite"
+                        path="%kernel.root_dir%/app/data/data.sqlite"
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
                         wrapper-class="MyDoctrineDbalConnectionWrapper"
@@ -395,7 +395,7 @@ The following block shows all possible configuration keys:
                 # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 '%kernel.data_dir%/data.sqlite'
+                path:                 '%kernel.root_dir%/data/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
@@ -431,7 +431,7 @@ The following block shows all possible configuration keys:
                     password="secret"
                     driver="pdo_mysql"
                     driver-class="MyNamespace\MyDriverImpl"
-                    path="%kernel.data_dir%/data.sqlite"
+                    path="%kernel.root_dir%/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
                     wrapper-class="MyDoctrineDbalConnectionWrapper"
