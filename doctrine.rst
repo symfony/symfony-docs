@@ -555,6 +555,12 @@ Take a look at the previous example in more detail:
     ``Product`` objects and then subsequently call ``flush()``, Doctrine will
     execute 100 ``INSERT`` queries using a single prepared statement object.
 
+.. note::
+
+    If the ``flush()`` call fails, a ``Doctrine\ORM\ORMException`` exception
+    is thrown, which you can catch by wrapping the ``flush()`` method in a
+    ``try...catch`` block.
+
 Whether creating or updating objects, the workflow is always the same. In
 the next section, you'll see how Doctrine is smart enough to automatically
 issue an ``UPDATE`` query if the entity already exists in the database.
