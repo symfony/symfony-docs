@@ -600,6 +600,11 @@ Take a look at the previous example in more detail:
     ``Product`` objects and then subsequently call ``flush()``, Doctrine will
     execute 100 ``INSERT`` queries using a single prepared statement object.
 
+.. note::
+
+    If the ``flush()`` call fails, a ``Doctrine\ORM\ORMException`` exception
+    is thrown. See `Transactions and Concurrency`_.
+
 Whether creating or updating objects, the workflow is always the same. In
 the next section, you'll see how Doctrine is smart enough to automatically
 issue an ``UPDATE`` query if the entity already exists in the database.
@@ -916,3 +921,4 @@ Learn more
 .. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html
+.. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
