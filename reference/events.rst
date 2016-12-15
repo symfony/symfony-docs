@@ -241,8 +241,8 @@ and set a new ``Exception`` object, or do nothing::
 
 .. note::
 
-    If you want to overwrite the status code (which you should not without a good reason),
-     set the ``X-Status-Code`` header::
+    If you want to overwrite the status code (which you should do not without a good
+    reason), set the ``X-Status-Code`` header::
 
         $response = new Response(
             'Error',
@@ -252,19 +252,20 @@ and set a new ``Exception`` object, or do nothing::
             )
         );
 
-    This indeed will skip all checks that Symfony processes on setting response status code.
-    First check that Symfony does is fitting response status code.
-    Symfony leaves set status code as it is if it belongs to one of group:
+    If you do **not** set the ``X-Status-Code`` header, then Symfony uses the following
+    logic to determine the status code:
 
-    :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`
+    * If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
+      :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
+      :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
+      then the status code on your ``Response`` object is used;
 
-    :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError`
+    * If the original exception implements
+      :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
+      then ``getStatusCode()`` is called on the exception and used (the headers
+      from ``getHeaders()`` are also added);
 
-    :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect`
-
-    If status code is different then Symfony checks instance of raised Exception if it is
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface` then its headers including status code are passed to response.
-    Otherwise status code 500 is set to response.
+    * If both of the above aren't true, then a 500 status code is used.
 
 .. seealso::
 
