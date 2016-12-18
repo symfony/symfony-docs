@@ -64,9 +64,6 @@ higher limit with the `opcache.max_accelerated_files`_ configuration option:
     ; php.ini
     opcache.max_accelerated_files = 20000
 
-.. index::
-   single: Performance; Autoloader
-
 Configure the PHP realpath Cache
 --------------------------------
 
@@ -85,6 +82,9 @@ value too using the ``realpath_cache_ttl`` option:
     ; php.ini
     realpath_cache_size=4096K
     realpath_cache_ttl=600
+
+.. index::
+   single: Performance; Autoloader
 
 Use Composer's Class Map Functionality
 --------------------------------------
@@ -105,7 +105,7 @@ in ``vendor/composer/autoload_classmap.php``.
 The class map can be generated from the command line, and might become part of
 your deploy process:
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ composer dump-autoload --optimize --no-dev --classmap-authoritative
 
