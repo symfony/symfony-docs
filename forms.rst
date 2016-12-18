@@ -542,11 +542,11 @@ the guessed field.
 .. index::
    single: Forms; Field type guessing
 
-Field Type Options Guessing
+Field Attributes Guessing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to guessing the "type" for a field, Symfony can also try to guess
-the correct values of a number of field options.
+the correct values of a number of field attributes.
 
 .. tip::
 
