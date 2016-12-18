@@ -48,14 +48,15 @@ using APC and ``opcache_reset()`` when using OPcache).
 
     In PHP, the CLI and the web processes don't share the same OPcache. This
     means that you cannot clear the web server OPcache by executing some command
-    in your terminal. You either need to restart the web server or call to the
-    ``apc_clear_cache()`` and ``opcache_reset()`` functions via the web server.
+    in your terminal. You either need to restart the web server or call the
+    ``apc_clear_cache()`` or ``opcache_reset()`` functions via the web server
+    (i.e. by having these in a script that you execute over the web).
 
 Optimizing all the Files Used by Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, PHP's OPcache saves up to 2,000 files in the byte code cache. This
-number is too low for the typical Symfony applications, so you should set a
+number is too low for the typical Symfony application, so you should set a
 higher limit with the `opcache.max_accelerated_files`_ configuration option:
 
 .. code-block:: ini
@@ -68,7 +69,7 @@ Configure the PHP realpath Cache
 
 PHP uses an internal cache to store the result of mapping file paths to their
 real and absolute file system paths. This increases the performance for
-applications like Symfony that open many PHP files, specially on Windows
+applications like Symfony that open many PHP files, especially on Windows
 systems.
 
 By default PHP sets a ``realpath_cache_size`` of ``16K`` which is too low for
