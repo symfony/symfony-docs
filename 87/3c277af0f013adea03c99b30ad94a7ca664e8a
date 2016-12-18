@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-09-21T19:20:39Z
+
+I think we should add a tip that you need to clear the Opcache when you deploy application (we do something similar in the Composer autoloader section).
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-09-29T14:59:23Z
+
+@xabbuh I made the requested changes.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-14T09:24:17Z
+
+@javiereguiluz So should we now update here to reflect the deprecations made in symfony/symfony#20777?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-14T09:26:20Z
+
+@xabbuh to be honest I'd like this to be merged .... because I want to make a lot of changes in it. I'll add the apcu thing to the list of future changes. Thanks!
