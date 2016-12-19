@@ -308,14 +308,14 @@ option of your handler to ``rotating_file``:
             ),
         ));
 
-Injecting a Logger into a Service
-----------------------------------
+Using a Logger inside a Service
+-------------------------------
 
-To use a logger in your own service, inject it using Dependency Injection
-with ``@logger``. If you want to use a pre-configured logger which uses a
-specific channel (``app`` by default), use the ``monolog.logger`` tag with the
-``channel`` property. Look at the :ref:`Dependency Injection reference
-<dic_tags-monolog>` for more information and an example.
+To use a logger in your own services, add the ``@logger`` service as an argument
+of those services. If you want to use a pre-configured logger which uses a
+specific channel (``app`` by default), use the ``monolog.logger`` tag  with the
+``channel`` property as explained in the
+:ref:`Dependency Injection reference <dic_tags-monolog>`.
 
 Adding extra Data to each Log (e.g. a unique request token)
 -----------------------------------------------------------
