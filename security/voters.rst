@@ -102,8 +102,8 @@ decides this using whatever logic you want.
 
     The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions are both
     just shortcuts of the ``Controller`` class to call ``isGranted()`` on
-    the ``security.authorization_checker`` service.
-
+    the ``security.authorization_checker`` service. ``denyAccessUnlessGranted()`` will throw an ``AccessDeniedException``, whereas ``isGranted()`` will return a boolean.
+    
 Creating the custom Voter
 -------------------------
 
