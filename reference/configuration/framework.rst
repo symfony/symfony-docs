@@ -1474,47 +1474,48 @@ app
 
 **type**: ``string`` **default**: ``cache.adapter.filesystem``
 
-The cache adapter behind the ``cache.app`` service.
+The cache adapter used by the ``cache.app`` service.
 
 .. note::
 
-    The framework bundle ships with multiple adapters : apcu, doctrine, system, filesystem, psr6, redis.
+    The framework bundle ships with multiple adapters: apcu, doctrine, system,
+    filesystem, psr6, and redis.
 
 system
 ......
 
 **type**: ``string`` **default**: ``cache.adapter.system``
 
-The cache adapter behind the ``cache.system`` service.
+The cache adapter used by the ``cache.system`` service.
 
 directory
 .........
 
 **type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
 
-The path to the cache directory used by services inheriting from the ``cache.adapter.filesystem`` adapter
-(including ``cache.app``).
+The path to the cache directory used by services inheriting from the
+``cache.adapter.filesystem`` adapter (including ``cache.app``).
 
 default_doctrine_provider
 .........................
 
 **type**: ``string``
 
-The service name to use as your default doctrine provider.
+The service name to use as your default Doctrine provider.
 
 default_psr6_provider
 .....................
 
 **type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
 
-The service name to use as your default psr6 provider.
+The service name to use as your default PSR-6 provider.
 
 default_redis_provider
 ......................
 
 **type**: ``string`` **default**: ``redis://localhost``
 
-The dsn to use by the redis provider.
+The dsn to use by the Redis provider.
 
 pools
 .....
@@ -1555,7 +1556,7 @@ default_lifetime
 
 **type**: ``integer``
 
-Default lifetime of your cache items.
+Default lifetime of your cache items in seconds.
 
 provider
 ########
