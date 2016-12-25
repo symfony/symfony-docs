@@ -102,7 +102,7 @@ the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('age', new Assert\NotEqualTo('Mary'));
+                $metadata->addPropertyConstraint('firstName', new Assert\NotEqualTo('Mary'));
 
                 $metadata->addPropertyConstraint('age', new Assert\NotEqualTo(array(
                     'value' => 15,
