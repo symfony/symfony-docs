@@ -164,12 +164,15 @@ service configuration. Your method receives a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` object,
 which has methods to get information about the event and the exception.
 
-Logging non-0 Exit Statuses
+.. _logging-non-0-exit-statuses:
+
+Logging Error Exit Statuses
 ---------------------------
 
 The logging capabilities of the console can be further extended by logging
-non-0 exit statuses. This way you will know if a command had any errors, even
-if no exceptions were thrown.
+commands that return error exit statuses, which are any number different than
+zero. This way you will know if a command had any errors, even if no exceptions
+were thrown.
 
 First configure a listener for console terminate events in the service container:
 

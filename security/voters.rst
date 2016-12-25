@@ -98,8 +98,10 @@ decides this using whatever logic you want.
 
     The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions are both
     just shortcuts of the ``Controller`` class to call ``isGranted()`` on
-    the ``security.authorization_checker`` service.
-
+    the ``security.authorization_checker`` service. The main difference is that
+    when access is not granted, ``denyAccessUnlessGranted()`` throws an
+    ``AccessDeniedException``, whereas ``isGranted()`` returns ``false``.
+    
 Creating the custom Voter
 -------------------------
 
