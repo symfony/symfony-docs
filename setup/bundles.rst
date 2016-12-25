@@ -151,7 +151,7 @@ following recommended configuration as the starting point of your own configurat
             - php: 5.6
               env: SYMFONY_VERSION='3.1.*'
             - php: 5.6
-              env: DEPENDENCES='dev' SYMFONY_VERSION='3.2.*@dev'
+              env: DEPENDENCIES='dev' SYMFONY_VERSION='3.2.*@dev'
 
     before_install:
         - composer self-update
