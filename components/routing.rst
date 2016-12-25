@@ -35,7 +35,7 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $route = new Route('/foo', array('controller' => 'MyController'));
+    $route = new Route('/foo', array('_controller' => 'MyController'));
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
@@ -44,7 +44,7 @@ your autoloader to load the Routing component::
     $matcher = new UrlMatcher($routes, $context);
 
     $parameters = $matcher->match('/foo');
-    // array('controller' => 'MyController', '_route' => 'route_name')
+    // array('_controller' => 'MyController', '_route' => 'route_name')
 
 .. note::
 
@@ -102,7 +102,7 @@ Take the following route, which combines several of these ideas::
 
    $route = new Route(
        '/archive/{month}', // path
-       array('controller' => 'showArchive'), // default values
+       array('_controller' => 'showArchive'), // default values
        array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
        array(), // options
        '{subdomain}.example.com', // host
@@ -114,7 +114,7 @@ Take the following route, which combines several of these ideas::
 
    $parameters = $matcher->match('/archive/2012-01');
    // array(
-   //     'controller' => 'showArchive',
+   //     '_controller' => 'showArchive',
    //     'month' => '2012-01',
    //     'subdomain' => 'www',
    //     '_route' => ...
@@ -279,7 +279,7 @@ have to provide the name of a PHP file which returns a :class:`Symfony\\Componen
     $collection = new RouteCollection();
     $collection->add(
         'route_name',
-        new Route('/foo', array('controller' => 'ExampleController'))
+        new Route('/foo', array('_controller' => 'ExampleController'))
     );
     // ...
 
