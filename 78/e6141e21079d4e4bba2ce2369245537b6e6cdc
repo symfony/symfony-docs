@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by sawmurai at 2016-12-09T14:06:55Z
+
+Makes sense to me. If VARBINARY is only used to prevent collation issues (which can be avoided with proper setup aswell) we should keep it consistent and use VARCHAR.
