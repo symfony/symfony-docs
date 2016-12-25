@@ -382,6 +382,15 @@ see the :ref:`doctrine-field-types` section.
         class Product
         // ...
 
+.. tip::
+
+    After creating your entities you should validate the mappings with the
+    following command::
+
+    .. code-block:: terminal
+
+        $ php bin/console doctrine:schema:validate
+
 .. _doctrine-generating-getters-and-setters:
 
 Generating Getters and Setters
