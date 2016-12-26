@@ -211,11 +211,6 @@ Now you make the user provider available as a service:
     dependencies or configuration options or other services. Add these as
     arguments in the service definition.
 
-.. note::
-
-    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
-    for details.
-
 Modify ``security.yml``
 -----------------------
 
