@@ -45,8 +45,8 @@ Restricting Access and Checking Permissions
 **Authorization** is the process followed by Symfony to decide if the user can
 perform a certain action.
 
-* :doc:`Checking Permissions with Firewalls (access_control) <...>`
-* :doc:`Checking Permissions with Custom Business Logic (voters) <...>`
+* :doc:`Restricting Access with Firewalls (access_control) <...>`
+* :doc:`Restricting Access with Custom Business Logic (voters) <...>`
 * :doc:`Checking Permissions in Services, Controllers and Templates <...>`
 * :doc:`Custom Authorization Mechanisms <...>`
 
