@@ -430,7 +430,7 @@ see the :ref:`doctrine-field-types` section.
 .. tip::
 
     After creating your entities you should validate the mappings with the
-    following command::
+    following command:
 
     .. code-block:: terminal
 
