@@ -79,8 +79,9 @@ If you need to create a kernel-aware application, you can use
   $application->setDefaultCommand($command->getName(), true);
   $application->run();
 
-an instance of ``Symfony\Bundle\FrameworkBundle\Console\Application`` will automatically
-load all default commands. If you want to change this behaviour, you can pass ``false``
-as the second argument when creating the object:
+.. note::
+  An instance of ``Symfony\Bundle\FrameworkBundle\Console\Application`` will automatically
+  load all default commands. If you want to change this behaviour, you can pass ``false``
+  as the second argument when creating the object:
 
-  $application = new Application($kernel, false);
+    ``$application = new Application($kernel, false);``
