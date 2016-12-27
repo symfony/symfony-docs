@@ -21,22 +21,22 @@ Managing Users
 --------------
 
 * :doc:`Creating Users in a Config File <...>`
-* :doc:`Creating Users in a Database <...>`
-* :doc:`Custom User Creation <...>`
+* :doc:`Creating Users in a Database <security/entity_provider>`
+* :doc:`Custom User Creation <security/custom_provider>`
 * :doc:`Assigning Permissions to Users <...>`
 * :doc:`Hashing and Checking Passwords <...>`
-* :doc:`Impersonating Users <...>`
+* :doc:`Impersonating Users <security/impersonating_user>`
 
 Authenticating Users
 --------------------
 
 **Authentication** is the process followed by the users to log in the application.
 
-* :doc:`Authenticating Users with a Login Form <...>`
+* :doc:`Authenticating Users with a Login Form <security/form_login_setup>`
 * :doc:`Authenticating Users with HTTP Requests <...>`
-* :doc:`Authenticating Users with LDAP <...>`
-* :doc:`Authenticating Users with JSON <...>`
-* :doc:`Custom Authentication Mechanisms (WSEE, SAML) <...>`
+* :doc:`Authenticating Users with LDAP <security/ldap>`
+* :doc:`Authenticating Users with JSON <security/json_login_setup>`
+* :doc:`Custom Authentication Mechanisms (WSEE, SAML) <security/guard_authentication>`
 * :doc:`Logging Out <...>`
 
 Restricting Access and Checking Permissions
@@ -45,8 +45,8 @@ Restricting Access and Checking Permissions
 **Authorization** is the process followed by Symfony to decide if the user can
 perform a certain action.
 
-* :doc:`Restricting Access with Firewalls (access_control) <...>`
-* :doc:`Restricting Access with Custom Business Logic (voters) <...>`
+* :doc:`Restricting Access with Firewalls (access_control) <security/access_control>`
+* :doc:`Restricting Access with Custom Business Logic (voters) <security/voters>`
 * :doc:`Checking Permissions in Services, Controllers and Templates <...>`
 * :doc:`Custom Authorization Mechanisms <...>`
 
