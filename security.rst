@@ -56,3 +56,4 @@ Other Security Articles
 * :doc:`Checking Permissions with ACLs (Access Control Lists) <security/acl>`
 * :doc:`Forcing HTTPS or HTTP for Different URLs <security/force_https>`
 * :doc:`Check your Application for Known Security Vulnerabilities <security/security_checker>`
+* :doc:`The Symfony Component Internals <...>`
