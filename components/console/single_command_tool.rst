@@ -84,4 +84,4 @@ If you need to create a kernel-aware application, you can use
   load all default commands. If you want to change this behaviour, you can pass ``false``
   as the second argument when creating the object::
 
-    ``$application = new Application($kernel, false);``
+    $application = new Application($kernel, false);
