@@ -211,10 +211,3 @@ It's possible to have a different user checker per firewall.
                 ),
             ),
         ));
-
-.. note::
-
-    Internally, Symfony aliases the user checkers by prefixing
-    ``security.user_checker.`` to the firewall name. In the previous example,
-    the ``app.user_checker`` checker of the ``secured_area`` firewall is aliased
-    as ``security.user_checker.secured_area``.
