@@ -5,6 +5,8 @@
    single: Redis Cache
    single: PDO Cache, Doctrine DBAL Cache
 
+.. _component-cache-cache-pools:
+
 Cache Pools
 ===========
 

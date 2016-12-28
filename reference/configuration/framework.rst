@@ -1591,6 +1591,12 @@ app
 
 The cache adapter used by the ``cache.app`` service.
 
+.. tip::
+
+    It might be tough to understand at the beginning, so to avoid confusion remember that all pools perform the
+    same actions but on different medium given the adapter they are based on. Internally, a pool wraps the definition
+    of an adapter.
+
 .. note::
 
     The framework bundle ships with multiple adapters: apcu, doctrine, system,
@@ -1639,6 +1645,10 @@ pools
 
 A list of cache pools to be created by the framework extension.
 
+.. seealso::
+
+    For more information about how pools works, see :ref:`cache pools <component-cache-cache-pools>`.
+
 .. _reference-cache-pools-name:
 
 name
@@ -1657,7 +1667,11 @@ adapter
 
 **type**: ``string`` **default**: ``cache.app``
 
-A cache adapter.
+The name of the adapter to use. You could also use your own implementation.
+
+.. note::
+
+    Your service MUST implement the :class:`Psr\\Cache\\CacheItemPoolInterface` interface.
 
 public
 ######
@@ -1689,7 +1703,7 @@ The cache clearer used to clear your PSR-6 cache.
 
 .. seealso::
 
-    For more information, see :class:`Symfony\\Component\\HttpKernel\\CacheClearer\\Psr6CacheClearer`
+    For more information, see :class:`Symfony\\Component\\HttpKernel\\CacheClearer\\Psr6CacheClearer`.
 
 prefix_seed
 ...........
