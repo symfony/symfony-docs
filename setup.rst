@@ -131,8 +131,10 @@ the ``create-project`` command:
     command to display a detailed output of everything that Composer is doing.
 
 .. _php-version-constraints:
+
 Php version constraints
 -----------------------
+
 If you base your project on a specific Symfony version (e.g. Symfony 2.8), maybe
 you have to meet some constraints regarding your php version (e.g. php 5.4.16) or other libraries on your
 production server. Remember to add such constraints in your ``composer.json`` file located
@@ -217,7 +219,7 @@ app depends on a number of third-party libraries stored in the ``vendor/`` direc
 and managed by Composer.
 
 Updating those libraries frequently is a good practice to prevent bugs and
-security vulnerabilities. Execute the ``update`` Composer command (:ref:`take a look at this <php-version-constraints>` before) to update them
+security vulnerabilities. Execute the ``update`` Composer command (take a look at :ref:`php-version-constraints` before) to update them
 all at once (this can take up to several minutes to complete depending on the
 complexity of your project):
 
