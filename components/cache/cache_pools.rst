@@ -4,6 +4,8 @@
    single: Doctrine Cache
    single: Redis Cache
 
+.. _component-cache-cache-pools:
+
 Cache Pools
 ===========
 
