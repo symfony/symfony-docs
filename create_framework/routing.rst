@@ -56,7 +56,7 @@ Instead of an array for the URL map, the Routing component relies on a
 
     $routes = new RouteCollection();
 
-Let's add a route that describe the ``/hello/SOMETHING`` URL and add another
+Let's add a route that describes the ``/hello/SOMETHING`` URL and add another
 one for the simple ``/bye`` one::
 
     use Symfony\Component\Routing\Route;
