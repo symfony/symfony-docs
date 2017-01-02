@@ -641,7 +641,6 @@ the choice is ultimately up to you.
 
         use AppBundle\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
-        use AppBundle\Entity\Task;
 
         // ...
         public function configureOptions(OptionsResolver $resolver)
