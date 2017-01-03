@@ -32,17 +32,21 @@ Below is the configuration for the pull request state machine.
         framework:
             workflows:
                 pull_request:
-                   type: 'state_machine'
-                   supports:
+                    type: 'state_machine'
+                    supports:
                         - AppBundle\Entity\PullRequest
-                   places:
+                    marking_store:
+                        type: 'single_state'
+                        arguments:
+                            - 'currentPlace'
+                    places:
                         - start
                         - coding
                         - travis
                         - review
                         - merged
                         - closed
-                   transitions:
+                    transitions:
                         submit:
                             from: start
                             to: travis
