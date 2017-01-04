@@ -103,8 +103,11 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
-* November 23, 2015: `CVE-2015-8125: Potential Remote Timing Attack Vulnerability in Security Remember-Me Service <http://symfony.com/blog/cve-2015-8125-potential-remote-timing-attack-vulnerability-in-security-remember-me-service>`_ (2.3.35, 2.6.12 and 2.7.7)
-* November 23, 2015: `CVE-2015-8124: Session Fixation in the "Remember Me" Login Feature <http://symfony.com/blog/cve-2015-8124-session-fixation-in-the-remember-me-login-feature>`_ (2.3.35, 2.6.12 and 2.7.7)
+* May 9, 2016: `CVE-2016-2403: Unauthorized access on a misconfigured Ldap server when using an empty password <http://symfony.com/blog/cve-2016-2403-unauthorized-access-on-a-misconfigured-ldap-server-when-using-an-empty-password>`_ (2.8.0-2.8.5, 3.0.0-3.0.5)
+* May 9, 2016: `CVE-2016-4423: Large username storage in session <https://symfony.com/blog/cve-2016-4423-large-username-storage-in-session>`_ (2.3.0-2.3.40, 2.7.0-2.7.12, 2.8.0-2.8.5, 3.0.0-3.0.5)
+* January 18, 2016: `CVE-2016-1902: SecureRandom's fallback not secure when OpenSSL fails <https://symfony.com/blog/cve-2016-1902-securerandom-s-fallback-not-secure-when-openssl-fails>`_ (2.3.0-2.3.36, 2.6.0-2.6.12, 2.7.0-2.7.8)
+* November 23, 2015: `CVE-2015-8125: Potential Remote Timing Attack Vulnerability in Security Remember-Me Service <https://symfony.com/blog/cve-2015-8125-potential-remote-timing-attack-vulnerability-in-security-remember-me-service>`_ (2.3.35, 2.6.12 and 2.7.7)
+* November 23, 2015: `CVE-2015-8124: Session Fixation in the "Remember Me" Login Feature <https://symfony.com/blog/cve-2015-8124-session-fixation-in-the-remember-me-login-feature>`_ (2.3.35, 2.6.12 and 2.7.7)
 * May 26, 2015: `CVE-2015-4050: ESI unauthorized access <https://symfony.com/blog/cve-2015-4050-esi-unauthorized-access>`_ (Symfony 2.3.29, 2.5.12 and 2.6.8)
 * April 1, 2015: `CVE-2015-2309: Unsafe methods in the Request class <https://symfony.com/blog/cve-2015-2309-unsafe-methods-in-the-request-class>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
 * April 1, 2015: `CVE-2015-2308: Esi Code Injection <https://symfony.com/blog/cve-2015-2308-esi-code-injection>`_ (Symfony 2.3.27, 2.5.11 and 2.6.6)
