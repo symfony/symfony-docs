@@ -148,6 +148,12 @@ like this:
     The marking store type could be "multiple_state" or "single_state".
     A single state marking store does not support a model being on multiple places
     at the same time.
+    
+.. tip::
+
+    You can skip ``arguments`` in configuration if your properties, used 
+    by the marking store, have argument "marking". As this is default value. 
+    For ``type`` default one is "single_state".
 
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions that are allowed on a blog post. ::
