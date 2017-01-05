@@ -54,7 +54,8 @@ Using Source Control
 If you're using source control (e.g. Git or SVN), you can simplify by having
 your live installation also be a copy of your repository. When you're ready
 to upgrade it is as simple as fetching the latest updates from your source
-control system.
+control system. A common approach for this in Git is, to tag your release and
+check out the Git tag on deployment (see `Git Tagging`_).
 
 This makes updating your files *easier*, but you still need to worry about
 manually taking other steps (see `Common Post-Deployment Tasks`_).
@@ -206,6 +207,7 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
+.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
