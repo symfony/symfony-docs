@@ -3,9 +3,9 @@ Symfony Core Team
 
 The **Symfony Core** team is the group of developers that determine the
 direction and evolution of the Symfony project. Their votes rule if the
-features proposed by the community are approved or rejected.
+features and patches proposed by the community are approved or rejected.
 
-All the Symfony Core members are longtime contributors with a solid technical
+All the Symfony Core members are long-time contributors with a solid technical
 expertise and they have demonstrated a strong commitment to drive the project
 forward.
 
