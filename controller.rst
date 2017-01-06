@@ -348,18 +348,17 @@ Symfony provides a nice session object that you can use to store information
 about the user between requests. By default, Symfony stores the attributes in a
 cookie by using native PHP sessions.
 
-To retrieve the session, call
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getSession`
-method on the ``Request`` object. This method returns a
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` with easy
-methods for storing and fetching things from the session::
 
-    use Symfony\Component\HttpFoundation\Request;
+.. versionadded:: 3.3
+    The ability to request a ``Session`` in actions was introduced in Symfony 3.3.
 
-    public function indexAction(Request $request)
+To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
+type-hint to your argument and Symfony will provide you with a session::
+
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
+    public function indexAction(SessionInterface $session)
     {
-        $session = $request->getSession();
-
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
@@ -371,6 +370,11 @@ methods for storing and fetching things from the session::
     }
 
 Stored attributes remain in the session for the remainder of that user's session.
+
+.. tip::
+
+    Every ``SessionInterface`` implementation is supported. If you have your
+    own implementation, type-hint this in the arguments instead.
 
 .. index::
    single: Session; Flash messages
