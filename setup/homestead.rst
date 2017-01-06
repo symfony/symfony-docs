@@ -54,11 +54,21 @@ configuration:
 
 The ``type`` option tells Homestead to use the Symfony nginx configuration.
 
+Also specify the database you defined in your parameters.yml, as the vagrant-user has access to this database.
+
+.. code-block:: yaml
+    # ...
+    databases:
+        - your_database # as defined in parameters.yml
+
 At last, edit the hosts file on your local machine to map ``symfony-demo.dev``
 to ``192.168.10.10`` (which is the IP used by Homestead)::
 
     # /etc/hosts (unix) or C:\Windows\System32\drivers\etc\hosts (Windows)
     192.168.10.10 symfony-demo.dev
+
+Your standard app_dev.php does not grant access for the default homestead ip-address 168.192.10.10, so add it to your file in
+app_dev.php. For some reason, the ip-address for a http-request is 168.192.10.1, so add this one as well.
 
 Now, navigate to ``http://symfony-demo.dev`` in your web browser and enjoy
 developing your Symfony application!
