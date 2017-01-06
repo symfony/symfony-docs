@@ -686,7 +686,8 @@ the choice is ultimately up to you.
         {
             $builder
                 ->add('task')
-                ->add('dueDate', null, array('mapped' => false))
+                ->add('dueDate')
+                ->add('agreeTerms', 'checkbox', array('mapped' => false))
                 ->add('save', 'submit')
             ;
         }
@@ -696,11 +697,11 @@ the choice is ultimately up to you.
 
     The field data can be accessed in a controller with::
 
-        $form->get('dueDate')->getData();
+        $form->get('agreeTerms')->getData();
 
     In addition, the data of an unmapped field can also be modified directly::
 
-        $form->get('dueDate')->setData(new \DateTime());
+        $form->get('agreeTerms')->setData(true);
 
 Final Thoughts
 --------------
