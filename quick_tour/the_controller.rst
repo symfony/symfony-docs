@@ -299,12 +299,10 @@ in a cookie by using native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
-    public function indexAction(Request $request)
+    public function indexAction(Session $session)
     {
-        $session = $request->getSession();
-
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
@@ -319,7 +317,7 @@ You can also store "flash messages" that will auto-delete after the next
 request. They are useful when you need to set a success message before
 redirecting the user to another page (which will then show the message)::
 
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         // ...
 
