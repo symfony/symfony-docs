@@ -27,7 +27,7 @@ pattern is to do the following::
   .. code-block:: php-annotations
   
       /**
-       * @Route("{_format}", name="contact_list", defaults={"_format": "html"}, requirements={"_format": "html|xml|pdf"})
+       * @Route("/{_format}", name="contact_list", defaults={"_format": "html"}, requirements={"_format": "html|xml|pdf"})
        *
        * @param Request $request       
        *
