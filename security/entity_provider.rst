@@ -169,6 +169,12 @@ forces the class to have the five following methods:
 
 To learn more about each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
+.. caution::
+
+    Do not actually implement ``eraseCredentials`` when you load your users directly
+    from Doctrine, as changes will be flushed when a user tries to login. As example,
+    setting ``password`` to ``null`` will be flushed with every login attempt.
+
 What do the serialize and unserialize Methods do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
