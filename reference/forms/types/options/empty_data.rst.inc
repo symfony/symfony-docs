@@ -25,7 +25,9 @@ selected, you can do it like this::
             'f' => 'Female'
         ),
         'required'    => false,
-        'placeholder' => 'Choose your gender',
+        'attr'        => array(
+            'placeholder' => 'Choose your gender',
+         ),
         'empty_data'  => null
     ));
 
