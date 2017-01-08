@@ -74,7 +74,7 @@ in the **Unsilenced** section of the deprecation report.
 Mark Tests as Legacy
 --------------------
 
-Add the ``@group legacy`` annotation to a test class or methodto mark it
+Add the ``@group legacy`` annotation to a test class or method to mark it
 as legacy.
 
 Configuration
