@@ -151,9 +151,9 @@ like this:
     
 .. tip::
 
-    You can skip ``arguments`` in configuration if your properties, used 
-    by the marking store, have argument "marking". As this is default value. 
-    For ``type`` default one is "single_state".
+    Workflow configuration ``type`` and ``arguments`` in ``marking_store`` section 
+    are optional. You can skip one or both when you use default values. Default value
+    for ``type`` is "single_state". Default value for ``arguments`` is "marking".
 
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions that are allowed on a blog post. ::
