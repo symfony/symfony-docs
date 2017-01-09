@@ -197,7 +197,7 @@ tag and an ``alias`` attribute:
             ->register('app.contains_alphanumeric_validator', ContainsAlphanumericValidator::class)
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'));
 
-Your constraint class should now use this alias to reference the appropriate validator:
+Your constraint class should now use this alias to reference the appropriate validator::
 
     public function validatedBy()
     {
