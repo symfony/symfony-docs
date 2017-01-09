@@ -56,6 +56,7 @@ The following example illustrates how to prepend
 a configuration setting in multiple bundles as well as disable a flag in multiple bundles
 in case a specific other bundle is not registered::
 
+    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     public function prepend(ContainerBuilder $container)
     {
         // get all bundles
@@ -69,8 +70,10 @@ in case a specific other bundle is not registered::
                     case 'acme_something':
                     case 'acme_other':
                         // set use_acme_goodbye to false in the config of
-                        // acme_something and acme_other note that if the user manually
-                        // configured use_acme_goodbye to true in the app/config/config.yml
+                        // acme_something and acme_other
+                        //
+                        // note that if the user manually configured
+                        // use_acme_goodbye to true in app/config/config.yml
                         // then the setting would in the end be true and not false
                         $container->prependExtensionConfig($name, $config);
                         break;

@@ -57,6 +57,8 @@ a new provider that chains the two together:
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Entity\User;
+
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'chain_provider' => array(
@@ -73,7 +75,7 @@ a new provider that chains the two together:
                 ),
                 'user_db' => array(
                     'entity' => array(
-                        'class' => 'AppBundle\Entity\User',
+                        'class'    => User::class,
                         'property' => 'username',
                     ),
                 ),

@@ -32,7 +32,7 @@ Configuration
 * `antiflood`_
     * `threshold`_
     * `sleep`_
-* `delivery_address`_
+* `delivery_addresses`_
 * `delivery_whitelist`_
 * `disable_delivery`_
 * `logging`_
@@ -145,15 +145,21 @@ sleep
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of seconds
 to sleep for during a transport restart.
 
-delivery_address
-~~~~~~~~~~~~~~~~
+.. _delivery-address:
 
-**type**: ``string``
+delivery_addresses
+~~~~~~~~~~~~~~~~~~
 
-If set, all email messages will be sent to this address instead of being
+**type**: ``array``
+
+.. note::
+
+    In previous versions, this option was called ``delivery_address``.
+
+If set, all email messages will be sent to these addresses instead of being
 sent to their actual recipients. This is often useful when developing. For
 example, by setting this in the ``config_dev.yml`` file, you can guarantee
-that all emails sent during development go to a single account.
+that all emails sent during development go to one or more some specific accounts.
 
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
@@ -163,9 +169,9 @@ delivery_whitelist
 
 **type**: ``array``
 
-Used in combination with ``delivery_address``. If set, emails matching any
+Used in combination with ``delivery_address`` or ``delivery_addresses``. If set, emails matching any
 of these patterns will be delivered like normal, as well as being sent to
-``delivery_address``. For details, see the
+``delivery_address`` or ``delivery_addresses``. For details, see the
 :ref:`How to Work with Emails during Development <sending-to-a-specified-address-but-with-exceptions>`
 article.
 
@@ -207,7 +213,7 @@ Full Default Configuration
             antiflood:
                 threshold:            99
                 sleep:                0
-            delivery_address:     ~
+            delivery_addresses:   []
             disable_delivery:     ~
             logging:              '%kernel.debug%'
 
@@ -229,7 +235,6 @@ Full Default Configuration
                 encryption=""
                 auth_mode=""
                 sender_address=""
-                delivery_address=""
                 disable_delivery=""
                 logging="%kernel.debug%"
                 >

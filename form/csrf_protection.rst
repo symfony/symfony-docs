@@ -30,6 +30,8 @@ that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
 
+    // ...
+    use AppBundle\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
@@ -39,7 +41,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class'      => 'AppBundle\Entity\Task',
+                'data_class'      => Task::class,
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token

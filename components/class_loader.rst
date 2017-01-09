@@ -52,7 +52,15 @@ Learn More
     :maxdepth: 1
 
     class_loader/class_loader
-    class_loader/*
+    class_loader/class_map_generator.rst
+    class_loader/debug_class_loader.rst
+    class_loader/map_class_loader.rst
+    class_loader/psr4_class_loader.rst
+
+.. toctree::
+    :hidden:
+
+    class_loader/cache_class_loader
 
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/
 .. _PSR-4: http://www.php-fig.org/psr/psr-4/

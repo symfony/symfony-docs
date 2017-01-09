@@ -19,7 +19,7 @@ Imagine you want to serialize and deserialize Yaml. For that you'll have to
 create your own encoder that uses the
 :doc:`Yaml Component </components/yaml>`::
 
-    namespace AppBundle\Encoder;
+    namespace AppBundle\Serializer;
 
     use Symfony\Component\Serializer\Encoder\DecoderInterface;
     use Symfony\Component\Serializer\Encoder\EncoderInterface;
@@ -61,8 +61,8 @@ to inject your custom encoder into the Serializer.
 
         # app/config/services.yml
         services:
-            app.encoder.yaml:
-                class: AppBundle\Encoder\YamlEncoder
+            app.yaml_encoder:
+                class: AppBundle\Serializer\YamlEncoder
                 tags:
                     - { name: serializer.encoder }
 
@@ -75,7 +75,7 @@ to inject your custom encoder into the Serializer.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.encoder.yaml" class="AppBundle\Encoder\YamlEncoder">
+                <service id="app.yaml_encoder" class="AppBundle\Serializer\YamlEncoder">
                     <tag name="serializer.encoder" />
                 </service>
             </services>
@@ -84,11 +84,10 @@ to inject your custom encoder into the Serializer.
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Serializer\YamlEncoder;
+
         $container
-            ->register(
-                'app.encoder.yaml',
-                'AppBundle\Encoder\YamlEncoder'
-            )
+            ->register('app.yaml_encoder', YamlEncoder::class)
             ->addTag('serializer.encoder')
         ;
 

@@ -47,7 +47,7 @@ configure the service container to use the
             app.newsletter_manager:
                 class:   AppBundle\Email\NewsletterManager
                 # call a method on the specified service
-                factory: ['@app.newsletter_manager_factory', createNewsletterManager]
+                factory: 'app.newsletter_manager_factory:createNewsletterManager'
 
     .. code-block:: xml
 
@@ -77,18 +77,20 @@ configure the service container to use the
 
     .. code-block:: php
 
+        use AppBundle\Email\NewsletterManager;
+        use AppBundle\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Definition;
         // ...
 
-        $definition = new Definition('AppBundle\Email\NewsletterManager');
+        $definition = new Definition(NewsletterManager::class);
         // call a static method
-        $definition->setFactory(array('AppBundle\Email\NewsletterManager', 'create'));
+        $definition->setFactory(array(NewsletterManager::class, 'create'));
 
         $container->setDefinition('app.newsletter_manager', $definition);
 
-        $container->register('app.newsletter_manager_factory', 'AppBundle\Email\NewsletterManagerFactory');
+        $container->register('app.newsletter_manager_factory', NewsletterManagerFactory::class);
 
-        $newsletterManager = new Definition('AppBundle\Email\NewsletterManager');
+        $newsletterManager = new Definition(NewsletterManager::class);
 
         // call a method on the specified service
         $newsletterManager->setFactory(array(
@@ -106,6 +108,19 @@ configure the service container to use the
     the configured class name may be used by compiler passes and therefore
     should be set to a sensible value.
 
+.. note::
+
+    The traditional configuration syntax in YAML files used an array to define
+    the factory service and the method name:
+
+    .. code-block:: yaml
+
+        app.newsletter_manager:
+            # new syntax
+            factory: 'app.newsletter_manager_factory:createNewsletterManager'
+            # old syntax
+            factory: ['@app.newsletter_manager_factory', createNewsletterManager]
+
 Passing Arguments to the Factory Method
 ---------------------------------------
 
@@ -122,7 +137,7 @@ method in the previous example takes the ``templating`` service as an argument:
 
             app.newsletter_manager:
                 class:     AppBundle\Email\NewsletterManager
-                factory:   ['@newsletter_manager_factory', createNewsletterManager]
+                factory:   'newsletter_manager_factory:createNewsletterManager'
                 arguments: ['@templating']
 
     .. code-block:: xml
@@ -144,11 +159,12 @@ method in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: php
 
+        use AppBundle\Email\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $newsletterManager = new Definition('AppBundle\Email\NewsletterManager', array(
+        $newsletterManager = new Definition(NewsletterManager::class, array(
             new Reference('templating')
         ));
         $newsletterManager->setFactory(array(

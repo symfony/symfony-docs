@@ -98,8 +98,10 @@ decides this using whatever logic you want.
 
     The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions are both
     just shortcuts of the ``Controller`` class to call ``isGranted()`` on
-    the ``security.authorization_checker`` service.
-
+    the ``security.authorization_checker`` service. The main difference is that
+    when access is not granted, ``denyAccessUnlessGranted()`` throws an
+    ``AccessDeniedException``, whereas ``isGranted()`` returns ``false``.
+    
 Creating the custom Voter
 -------------------------
 
@@ -244,9 +246,9 @@ and tag it with ``security.voter``:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Security\PostVoter;
 
-        $container->register('app.post_voter', 'AppBundle\Security\PostVoter')
+        $container->register('app.post_voter', PostVoter::class)
             ->setPublic(false)
             ->addTag('security.voter')
         ;
@@ -332,10 +334,11 @@ service:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\PostVoter;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.post_voter', 'AppBundle\Security\PostVoter')
+        $container->register('app.post_voter', PostVoter::class)
             ->addArgument(new Reference('security.access.decision_manager'))
             ->setPublic(false)
             ->addTag('security.voter')

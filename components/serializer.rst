@@ -133,6 +133,8 @@ Deserializing an Object
 You'll now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
+    use Acme\Person;
+
     $data = <<<EOF
     <person>
         <name>foo</name>
@@ -141,7 +143,7 @@ of the ``Person`` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data, 'Acme\Person', 'xml');
+    $person = $serializer->deserialize($data, Person::class, 'xml');
 
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
@@ -155,7 +157,8 @@ Deserializing in an Existing Object
 
 The serializer can also be used to update an existing object::
 
-    $person = new Acme\Person();
+    // ...
+    $person = new Person();
     $person->setName('bar');
     $person->setAge(99);
     $person->setSportsman(true);
@@ -167,7 +170,7 @@ The serializer can also be used to update an existing object::
     </person>
     EOF;
 
-    $serializer->deserialize($data, 'Acme\Person', 'xml', array('object_to_populate' => $person));
+    $serializer->deserialize($data, Person::class, 'xml', array('object_to_populate' => $person));
     // $person = Acme\Person(name: 'foo', age: '69', sportsman: true)
 
 This is a common need when working with an ORM.
@@ -540,6 +543,30 @@ There are several types of normalizers available:
     The ``JsonSerializableNormalizer``, ``DateTimeNormalizer`` and
     ``DataUriNormalizer`` normalizers were added in Symfony 3.1
 
+Encoders
+--------
+
+The Serializer component supports many formats out of the box:
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
+    This class encodes and decodes data in JSON_.
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
+    This class encodes and decodes data in XML_.
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`
+    This encoder encodes and decodes data in YAML_. This encoder requires the
+    :doc:`Yaml Component </components/yaml>`.
+
+:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
+    This encoder encodes and decodes data in CSV_.
+
+All these encoders are enabled by default when using the Symfony Standard Edition
+with the serializer enabled.
+
+.. versionadded:: 3.2
+    The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
+
 Handling Circular References
 ----------------------------
 
@@ -631,6 +658,101 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
+Handling Serialization Depth
+----------------------------
+
+The Serializer component is able to detect and limit the serialization depth.
+It is especially useful when serializing large trees. Assume the following data
+structure::
+
+    namespace Acme;
+
+    class MyObj
+    {
+        public $foo;
+
+        /**
+         * @var self
+         */
+        public $child;
+    }
+
+    $level1 = new MyObj();
+    $level1->foo = 'level1';
+
+    $level2 = new MyObj();
+    $level2->foo = 'level2';
+    $level1->child = $level2;
+
+    $level3 = new MyObj();
+    $level3->foo = 'level3';
+    $level2->child = $level3;
+
+The serializer can be configured to set a maximum depth for a given property.
+Here, we set it to 2 for the ``$child`` property:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
+
+        namespace Acme;
+
+        class MyObj
+        {
+            /**
+             * @MaxDepth(2)
+             */
+            public $foo;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        Acme\MyObj:
+            attributes:
+                foo:
+                    max_depth: 2
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="Acme\MyObj">
+                <attribute name="foo">
+                    <max-depth>2</max-depth>
+                </attribute>
+        </serializer>
+
+The metadata loader corresponding to the chosen format must be configured in
+order to use this feature. It is done automatically when using the Symfony
+Standard Edition. When using the standalone component, refer to
+:ref:`the groups documentation <component-serializer-attributes-groups>` to
+learn how to do that.
+
+The check is only done if the ``enable_max_depth`` key of the serializer context
+is set to ``true``. In the following example, the third level is not serialized
+because it is deeper than the configured maximum depth of 2::
+
+    $result = $serializer->normalize($level1, null, array('enable_max_depth' => true));
+    /*
+    $result = array(
+        'foo' => 'level1',
+        'child' => array(
+                'foo' => 'level2',
+                'child' => array(
+                        'child' => null,
+                    ),
+            ),
+    );
+    */
+
 Handling Arrays
 ---------------
 
@@ -692,3 +814,7 @@ Learn more
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
+.. _JSON: http://www.json.org/
+.. _XML: https://www.w3.org/XML/
+.. _YAML: http://yaml.org/
+.. _CSV: https://tools.ietf.org/html/rfc4180

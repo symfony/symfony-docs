@@ -51,18 +51,17 @@ To use it, you just need to change some parameters in the main configuration fil
     .. code-block:: php
 
         // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
 
+        // ...
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
             'session' => array(
-                // ...,
+                // ...
                 'handler_id' => 'session.handler.pdo',
             ),
         ));
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
+        $storageDefinition = new Definition(PdoSessionHandler::class, array(
             'mysql:dbname=mydatabase',
             array('db_username' => 'myuser', 'db_password' => 'mypassword')
         ));
@@ -108,9 +107,10 @@ a second array argument to ``PdoSessionHandler``:
         // app/config/config.php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
         // ...
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
+        $storageDefinition = new Definition(PdoSessionHandler::class, array(
             'mysql:dbname=mydatabase',
             array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
         ));
@@ -169,7 +169,8 @@ of your project's data, you can use the connection settings from the
 
     .. code-block:: php
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
+        // ...
+        $storageDefinition = new Definition(PdoSessionHandler::class, array(
             'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
             array('db_username' => '%database_user%', 'db_password' => '%database_password%')
         ));
@@ -189,7 +190,7 @@ MySQL
 .. code-block:: sql
 
     CREATE TABLE `sessions` (
-        `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY,
+        `sess_id` VARCHAR(128) NOT NULL PRIMARY KEY,
         `sess_data` BLOB NOT NULL,
         `sess_time` INTEGER UNSIGNED NOT NULL,
         `sess_lifetime` MEDIUMINT NOT NULL

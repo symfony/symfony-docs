@@ -105,6 +105,8 @@ Configuration
 * `php_errors`_
     * `log`_
     * `throw`_
+* `cache <reference-cache>`_
+    * `prefix_seed`_
 
 secret
 ~~~~~~
@@ -908,6 +910,8 @@ collection each time it generates an asset's path:
             ),
         ));
 
+.. _reference-framework-assets-packages:
+
 packages
 ........
 
@@ -977,22 +981,6 @@ Each package can configure the following options:
 * :ref:`version_strategy <reference-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
-
-.. _reference-templating-version-strategy:
-.. _reference-assets-version-strategy:
-
-version_strategy
-................
-
-**type**: ``string`` **default**: ``null``
-
-This specifies the id of the service to use as the version strategy for
-all rendered asset paths. Version strategies must implement
-:class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategyInterface`.
-
-.. note::
-
-    This parameter cannot be set at the same time as ``version``.
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -1113,6 +1101,21 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     appropriate version path as part of your deployment process and forgot
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
+
+.. _reference-assets-version-strategy:
+.. _reference-templating-version-strategy:
+
+version_strategy
+................
+
+**type**: ``string`` **default**: ``null``
+
+The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
+applied to the assets.
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version``.
 
 templating
 ~~~~~~~~~~
@@ -1485,6 +1488,27 @@ throw
 Throw PHP errors as ``\ErrorException`` instances. The parameter
 ``debug.error_handler.throw_at`` controls the threshold.
 
+cache
+~~~~~
+
+prefix_seed
+...........
+
+.. versionadded:: 3.2
+    The ``prefix_seed`` option was introduced in Symfony 3.2.
+
+**type**: ``string`` **default**: ``null``
+
+If defined, this value is used as part of the "namespace" generated for the
+cache item keys. A common practice is to use the unique name of the application
+(e.g. ``symfony.com``) because that prevents naming collisions when deploying
+multiple applications into the same path (on different servers) that share the
+same cache backend.
+
+It's also useful when using `blue/green deployment`_ strategies and more
+generally, when you need to abstract out the actual deployment directory (for
+example, when warming caches offline).
+
 Full Default Configuration
 --------------------------
 
@@ -1629,3 +1653,4 @@ Full Default Configuration
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
+.. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html

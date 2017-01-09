@@ -204,7 +204,7 @@ The XML version of the config would then look like this:
         xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
         <acme_demo:config>
-            <acme_demo:foo>fooValue</acme_hello:foo>
+            <acme_demo:foo>fooValue</acme_demo:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
     </container>
@@ -292,7 +292,7 @@ method is called by implementing
     {
         // ...
 
-        public function prepend()
+        public function prepend(ContainerBuilder $container)
         {
             // ...
 
@@ -421,6 +421,23 @@ been run, use::
     $container->addCompilerPass(
         new CustomPass(),
         PassConfig::TYPE_AFTER_REMOVING
+    );
+
+.. versionadded:: 3.2
+    The option to prioritize compiler passes was added in Symfony 3.2.
+
+You can also control the order in which compiler passes are run for each
+compilation phase. Use the optional third argument of ``addCompilerPass()`` to
+set the priority as an integer number. The default priority is ``0`` and the higher
+its value, the earlier it's executed::
+
+    // ...
+    // FirstPass is executed after SecondPass because its priority is lower
+    $container->addCompilerPass(
+        new FirstPass(), PassConfig::TYPE_AFTER_REMOVING, 10
+    );
+    $container->addCompilerPass(
+        new SecondPass(), PassConfig::TYPE_AFTER_REMOVING, 30
     );
 
 .. _components-dependency-injection-dumping:

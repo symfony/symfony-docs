@@ -315,9 +315,9 @@ create a class which implements
     // src/AppBundle/DependencyInjection/Security/Factory/WsseFactory.php
     namespace AppBundle\DependencyInjection\Security\Factory;
 
+    use Symfony\Component\DependencyInjection\ChildDefinition;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
-    use Symfony\Component\DependencyInjection\DefinitionDecorator;
     use Symfony\Component\Config\Definition\Builder\NodeDefinition;
     use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 
@@ -327,12 +327,12 @@ create a class which implements
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
-                ->setDefinition($providerId, new DefinitionDecorator('wsse.security.authentication.provider'))
+                ->setDefinition($providerId, new ChildDefinition('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
             ;
 
             $listenerId = 'security.authentication.listener.wsse.'.$id;
-            $listener = $container->setDefinition($listenerId, new DefinitionDecorator('wsse.security.authentication.listener'));
+            $listener = $container->setDefinition($listenerId, new ChildDefinition('wsse.security.authentication.listener'));
 
             return array($providerId, $listenerId, $defaultEntryPoint);
         }
@@ -449,26 +449,22 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Security\Authentication\Provider\WsseProvider;
+        use AppBundle\Security\Firewall\WsseListener;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            'AppBundle\Security\Authentication\Provider\WsseProvider',
-            array(
-                '', // User Provider
-                new Reference('cache.app'),
-            )
-        );
+        $definition = new Definition(WsseProvider::class, array(
+            '', // User Provider
+            new Reference('cache.app'),
+        ));
         $definition->setPublic(false);
         $container->setDefinition('wsse.security.authentication.provider', $definition)
 
-        $definition = new Definition(
-            'AppBundle\Security\Firewall\WsseListener',
-            array(
-                new Reference('security.token_storage'),
-                new Reference('security.authentication.manager'),
-            )
-        );
+        $definition = new Definition(WsseListener::class, array(
+            new Reference('security.token_storage'),
+            new Reference('security.authentication.manager'),
+        ));
         $definition->setPublic(false);
         $container->setDefinition('wsse.security.authentication.listener', $definition);
 
@@ -598,7 +594,7 @@ in order to put it to use.
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
                 ->setDefinition($providerId,
-                  new DefinitionDecorator('wsse.security.authentication.provider'))
+                  new ChildDefinition('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
                 ->replaceArgument(2, $config['lifetime']);
             // ...

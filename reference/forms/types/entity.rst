@@ -203,6 +203,14 @@ passed the ``EntityRepository`` of the entity as the only argument and should
 return a ``QueryBuilder``. Returning ``null`` in the Closure will result in
 loading all entities.
 
+.. caution::
+
+    The entity used in the ``FROM`` clause of the `query_builder`_ option
+    will always be validated against the class which you have specified with
+    the form's `class`_ option. If you return another entity instead of the
+    one used in your ``FROM`` clause (for instance if you return an entity
+    from a joined table), it will break validation.
+    
 Overridden Options
 ------------------
 

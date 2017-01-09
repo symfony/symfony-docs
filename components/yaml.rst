@@ -203,6 +203,29 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
+Numeric Literals
+................
+
+versionadded:: 3.2
+    Support for parsing integers grouped by underscores was introduced in
+    Symfony 3.2.
+
+Long numeric literals, being integer, float or hexadecimal, are known for their
+poor readability in code and configuration files. That's why YAML files allow to
+add underscores to improve their readability:
+
+.. code-block:: yaml
+
+    parameters:
+        credit_card_number: 1234_5678_9012_3456
+        long_number: 10_000_000_000
+        pi: 3.14159_26535_89793
+        hex_words: 0x_CAFE_F00D
+
+During the parsing of the YAML contents, all the ``_`` characters are removed
+from the numeric literal contents, so there is not a limit in the number of
+underscores you can include or the way you group contents.
+
 Advanced Usage: Flags
 ---------------------
 
@@ -292,6 +315,17 @@ flag::
     //       Multiple
     //       Line
     //       String
+
+Parsing PHP Constants
+~~~~~~~~~~~~~~~~~~~~~
+
+By default, the YAML parser treats the PHP constants included in the contents as
+regular strings. Use the ``PARSE_CONSTANT`` flag and the special ``!php/const:``
+syntax to parse them as proper PHP constants::
+
+    $yaml = '{ foo: PHP_INT_SIZE, bar: !php/const:PHP_INT_SIZE }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = array('foo' => 'PHP_INT_SIZE', 'bar' => 8);
 
 Syntax Validation
 ~~~~~~~~~~~~~~~~~

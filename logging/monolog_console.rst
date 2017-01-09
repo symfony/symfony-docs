@@ -176,8 +176,10 @@ information):
     .. code-block:: php
 
         // app/config/services.php
+        use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
+
         $container
-            ->register('my_formatter', 'Symfony\Bridge\Monolog\Formatter\ConsoleFormatter')
+            ->register('my_formatter', ConsoleFormatter::class)
             ->addArgument('[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n')
         ;
 

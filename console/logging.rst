@@ -106,11 +106,12 @@ First configure a listener for console exception events in the service container
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\ConsoleExceptionListener;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definitionConsoleExceptionListener = new Definition(
-            'AppBundle\EventListener\ConsoleExceptionListener',
+            ConsoleExceptionListener::class,
             array(new Reference('logger'))
         );
         $definitionConsoleExceptionListener->addTag(
@@ -163,12 +164,15 @@ service configuration. Your method receives a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` object,
 which has methods to get information about the event and the exception.
 
-Logging non-0 Exit Statuses
+.. _logging-non-0-exit-statuses:
+
+Logging Error Exit Statuses
 ---------------------------
 
 The logging capabilities of the console can be further extended by logging
-non-0 exit statuses. This way you will know if a command had any errors, even
-if no exceptions were thrown.
+commands that return error exit statuses, which are any number different than
+zero. This way you will know if a command had any errors, even if no exceptions
+were thrown.
 
 First configure a listener for console terminate events in the service container:
 
@@ -203,11 +207,12 @@ First configure a listener for console terminate events in the service container
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\ErrorLoggerListener;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definitionErrorLoggerListener = new Definition(
-            'AppBundle\EventListener\ErrorLoggerListener',
+            ErrorLoggerListener::class,
             array(new Reference('logger'))
         );
         $definitionErrorLoggerListener->addTag(

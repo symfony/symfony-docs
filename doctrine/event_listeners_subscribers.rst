@@ -81,6 +81,9 @@ managers that use this connection.
 
     .. code-block:: php
 
+        use AppBundle\EventListener\SearchIndexer;
+        use AppBundle\EventListener\SearchIndexer2;
+        use AppBundle\EventListener\SearchIndexerSubscriber;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->loadFromExtension('doctrine', array(
@@ -96,24 +99,18 @@ managers that use this connection.
         ));
 
         $container
-            ->setDefinition(
-                'my.listener',
-                new Definition('AppBundle\EventListener\SearchIndexer')
-            )
+            ->register('my.listener', SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
         ;
         $container
-            ->setDefinition(
-                'my.listener2',
-                new Definition('AppBundle\EventListener\SearchIndexer2')
-            )
-            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'connection' => 'default'))
+            ->register('my.listener2', SearchIndexer2::class)
+            ->addTag('doctrine.event_listener', array(
+                'event' => 'postPersist',
+                'connection' => 'default'
+            ))
         ;
         $container
-            ->setDefinition(
-                'my.subscriber',
-                new Definition('AppBundle\EventListener\SearchIndexerSubscriber')
-            )
+            ->register('my.subscriber', SearchIndexerSubscriber::class)
             ->addTag('doctrine.event_subscriber', array('connection' => 'default'))
         ;
 

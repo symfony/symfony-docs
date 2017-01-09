@@ -24,6 +24,7 @@ be adapted for your case::
     use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
     use Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass;
     use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
+    use Symfony\Cmf\RoutingBundle\Model;
 
     class CmfRoutingBundle extends Bundle
     {
@@ -34,50 +35,46 @@ be adapted for your case::
 
             $modelDir = realpath(__DIR__.'/Resources/config/doctrine/model');
             $mappings = array(
-                $modelDir => 'Symfony\Cmf\RoutingBundle\Model',
+                $modelDir => Model::class,
             );
 
-            $ormCompilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
-            if (class_exists($ormCompilerClass)) {
+            if (class_exists(DoctrineOrmMappingsPass::class)) {
                 $container->addCompilerPass(
                     DoctrineOrmMappingsPass::createXmlMappingDriver(
                         $mappings,
                         array('cmf_routing.model_manager_name'),
                         'cmf_routing.backend_type_orm',
-                        array('CmfRoutingBundle' => 'Symfony\Cmf\RoutingBundle\Model')
+                        array('CmfRoutingBundle' => Model::class)
                 ));
             }
 
-            $mongoCompilerClass = 'Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass';
-            if (class_exists($mongoCompilerClass)) {
+            if (class_exists(DoctrieMongoDBMappingsPass::class)) {
                 $container->addCompilerPass(
                     DoctrineMongoDBMappingsPass::createXmlMappingDriver(
                         $mappings,
                         array('cmf_routing.model_manager_name'),
                         'cmf_routing.backend_type_mongodb',
-                        array('CmfRoutingBundle' => 'Symfony\Cmf\RoutingBundle\Model')
+                        array('CmfRoutingBundle' => Model::class)
                 ));
             }
 
-            $couchCompilerClass = 'Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass';
-            if (class_exists($couchCompilerClass)) {
+            if (class_exists(DoctrineCouchDBMappingsPass::class)) {
                 $container->addCompilerPass(
                     DoctrineCouchDBMappingsPass::createXmlMappingDriver(
                         $mappings,
                         array('cmf_routing.model_manager_name'),
                         'cmf_routing.backend_type_couchdb',
-                        array('CmfRoutingBundle' => 'Symfony\Cmf\RoutingBundle\Model')
+                        array('CmfRoutingBundle' => Model::class)
                 ));
             }
 
-            $phpcrCompilerClass = 'Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass';
-            if (class_exists($phpcrCompilerClass)) {
+            if (class_exists(DoctrinePhpcrMappingsPass::class)) {
                 $container->addCompilerPass(
                     DoctrinePhpcrMappingsPass::createXmlMappingDriver(
                         $mappings,
                         array('cmf_routing.model_manager_name'),
                         'cmf_routing.backend_type_phpcr',
-                        array('CmfRoutingBundle' => 'Symfony\Cmf\RoutingBundle\Model')
+                        array('CmfRoutingBundle' => Model::class)
                 ));
             }
         }
@@ -118,15 +115,22 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
     ``DoctrineOrmMappingsPass`` and adapted to use the ``DefaultFileLocator``
     instead of the ``SymfonyFileLocator``::
 
+        use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
+        use Doctrine\ORM\Mapping\Driver\XmlDriver;
+        use AppBundle\Model;
+
+        // ...
         private function buildMappingCompilerPass()
         {
-            $arguments = array(array(realpath(__DIR__ . '/Resources/config/doctrine-base')), '.orm.xml');
-            $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator', $arguments);
-            $driver = new Definition('Doctrine\ORM\Mapping\Driver\XmlDriver', array($locator));
+            $locator = new Definition(DefaultFileLocator::class, array(
+                array(realpath(__DIR__ . '/Resources/config/doctrine-base')),
+                '.orm.xml'
+            ));
+            $driver = new Definition(XmlDriver::class, array($locator));
 
             return new DoctrineOrmMappingsPass(
                 $driver,
-                array('Full\Namespace'),
+                array(Model::class),
                 array('your_bundle.manager_name'),
                 'your_bundle.orm_enabled'
             );

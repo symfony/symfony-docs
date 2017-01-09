@@ -124,12 +124,15 @@ Next, register this as a service and tag it with ``form.type``:
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
+        use AppBundle\Form\TaskType;
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
         $container
-            ->register(
-                'app.form.type.task',
-                'AppBundle\Form\TaskType'
-            )
-            ->addArgument('@doctrine.orm.entity_manager')
+            ->setDefinition('app.form.type.task', new Definition(
+                TaskType::class,
+                array(new Reference('doctrine.orm.entity_manager'))
+            ))
             ->addTag('form.type')
         ;
 

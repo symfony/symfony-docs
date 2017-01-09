@@ -49,9 +49,10 @@ public (i.e. private):
 
     .. code-block:: php
 
+        use Example\Foo;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition('Example\Foo');
+        $definition = new Definition(Foo::class);
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
@@ -103,7 +104,7 @@ services.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.phpmailer" class="AppBundle\PhpMailer" />
+                <service id="app.phpmailer" class="AppBundle\Mail\PhpMailer" />
 
                 <service id="app.mailer" alias="app.phpmailer" />
             </services>
@@ -111,9 +112,10 @@ services.
 
     .. code-block:: php
 
+        use AppBundle\Mail\PhpMailer;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('app.phpmailer', new Definition('AppBundle\PhpMailer'));
+        $container->setDefinition('app.phpmailer', new Definition(PhpMailer::class));
 
         $containerBuilder->setAlias('app.mailer', 'app.phpmailer');
 

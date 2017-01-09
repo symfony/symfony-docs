@@ -138,7 +138,7 @@ Don't forget to update the ``example.com/src/app.php`` file accordingly::
 
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
         'year' => null,
-        '_controller' => 'Calendar\\Controller\\LeapYearController::indexAction',
+        '_controller' => 'Calendar\Controller\LeapYearController::indexAction',
     )));
 
 To sum up, here is the new file layout:

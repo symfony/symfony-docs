@@ -220,9 +220,14 @@ the sticky locale:
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\EventListener\SwitchUserListener;
+
         $container
-            ->register('app.switch_user_listener', 'AppBundle\EventListener\SwitchUserListener')
-            ->addTag('kernel.event_listener', array('event' => 'security.switch_user', 'method' => 'onSwitchUser'))
+            ->register('app.switch_user_listener', SwitchUserListener::class)
+            ->addTag('kernel.event_listener', array(
+                'event' => 'security.switch_user',
+                'method' => 'onSwitchUser'
+            ))
         ;
 
 .. caution::

@@ -22,7 +22,7 @@ the ACL system comes in.
 
 Imagine you are designing a blog system where your users can comment on your
 posts. Now, you want a user to be able to edit their own comments, but not those
-of other users; besides, you yourself want to be able to edit all comments. In
+of other users; besides, you want to be able to edit all comments. In
 this scenario, ``Comment`` would be the domain object that you want to
 restrict access to. You could take several approaches to accomplish this using
 Symfony, two basic approaches are (non-exhaustive):

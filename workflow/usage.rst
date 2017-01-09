@@ -117,15 +117,15 @@ like this:
                           ),
                           'transitions' => array(
                             'to_review'=> array(
-                              'form' => 'draft',
+                              'from' => 'draft',
                               'to' => 'review',
                             ),
                             'publish'=> array(
-                              'form' => 'review',
+                              'from' => 'review',
                               'to' => 'published',
                             ),
                             'reject'=> array(
-                              'form' => 'review',
+                              'from' => 'review',
                               'to' => 'rejected',
                             ),
                           ),
@@ -140,7 +140,7 @@ like this:
         // This property is used by the marking store
         public $currentPlace;
         public $title;
-        public $content
+        public $content;
     }
 
 .. note::

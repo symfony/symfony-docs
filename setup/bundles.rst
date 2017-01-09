@@ -151,7 +151,7 @@ following recommended configuration as the starting point of your own configurat
             - php: 5.6
               env: SYMFONY_VERSION='3.1.*'
             - php: 5.6
-              env: DEPENDENCES='dev' SYMFONY_VERSION='3.2.*@dev'
+              env: DEPENDENCIES='dev' SYMFONY_VERSION='3.2.*@dev'
 
     before_install:
         - composer self-update
@@ -183,7 +183,9 @@ Instead of checking the Symfony Kernel version, check the version of the specifi
 component. For example, the OptionsResolver API changed in its 2.6 version by
 adding a ``setDefined()`` method. The recommended check in this case would be::
 
-    if (!method_exists('Symfony\Component\OptionsResolver\OptionsResolver', 'setDefined')) {
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    if (!method_exists(OptionsResolver::class, 'setDefined')) {
         // code for the old OptionsResolver API
     } else {
         // code for the new OptionsResolver API
