@@ -518,6 +518,20 @@ It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
+.. versionadded:: 3.3
+    The ``Stream`` class has been introduced in Symfony 3.3.
+
+If the size of the served file is unknown (e.g. because it's being generated on the fly,
+or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
+instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
+handling, switching to chunked encoding instead::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+    use Symfony\Component\HttpFoundation\File\Stream;
+
+    $stream  = new Stream('path/to/stream');
+    $response = new BinaryFileResponse($stream);
+
 .. note::
 
     If you *just* created the file during this same request, the file *may* be sent
