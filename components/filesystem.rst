@@ -283,6 +283,17 @@ complete new file (but never a partially-written file)::
 
 The ``file.txt`` file contains ``Hello World`` now.
 
+appendToFile
+~~~~~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
+contents at the end of some file::
+
+    $fs->appendToFile('logs.txt', 'Email sent to user@example.com');
+
+If either the file or its containing directory don't exist, this method creates
+them before appending the contents.
+
 Error Handling
 --------------
 
