@@ -165,3 +165,4 @@ class SensioStyle(Style):
 
 def setup(app):
     app.set_translator('html', SensioHTMLTranslator)
+    app.set_translator('epub', SensioHTMLTranslator)
