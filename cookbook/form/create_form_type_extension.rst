@@ -128,6 +128,9 @@ The ``alias`` key of the tag is the type of field that this extension should
 be applied to. In your case, as you want to extend the ``file`` field type,
 you will use ``file`` as an alias.
 
+If you want to apply the extension to all field types, you can specify ``form``
+as alias and value returned by ``getExtendedType()``.
+
 Adding the extension Business Logic
 -----------------------------------
 
