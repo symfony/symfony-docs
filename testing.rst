@@ -464,7 +464,7 @@ Injection Container::
     $container = $client->getContainer();
 
 For a list of services available in your application, use the ``debug:container``
-console task.
+command.
 
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``container:debug``.
