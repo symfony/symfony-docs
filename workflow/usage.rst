@@ -151,9 +151,9 @@ like this:
     
 .. tip::
 
-    Workflow configuration ``type`` and ``arguments`` in ``marking_store`` section 
-    are optional. You can skip one or both when you use default values. Default value
-    for ``type`` is "single_state". Default value for ``arguments`` is "marking".
+    The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
+    attributes of the ``marking_store`` option are optional. If omitted, their default values
+    will be used.
 
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions that are allowed on a blog post. ::
