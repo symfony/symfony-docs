@@ -367,7 +367,7 @@ too many options per the `max`_ option.
 strict
 ~~~~~~
 
-**type**: ``boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``false``
 
 The validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array`
