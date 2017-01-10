@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-10-22T07:29:24Z
+
+In symfony/symfony#20266 we renamed the attribute from `$private` to `$hidden` and inversed its meaning. We need to reflect that here.
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-09T12:19:25Z
+
+ping
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-19T16:46:36Z
+
+Updated the PR, please review
