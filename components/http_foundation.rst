@@ -519,7 +519,7 @@ It is possible to delete the file after the request is sent with the
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
 .. versionadded:: 3.3
-    The ``Stream`` class has been introduced in Symfony 3.3.
+    The ``Stream`` class was introduced in Symfony 3.3.
 
 If the size of the served file is unknown (e.g. because it's being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
