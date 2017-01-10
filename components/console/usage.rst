@@ -16,6 +16,8 @@ built-in options as well as a couple of built-in commands for the Console compon
         <?php
         // application.php
 
+        require __DIR__.'/vendor/autoload.php';
+
         use Symfony\Component\Console\Application;
 
         $application = new Application();
