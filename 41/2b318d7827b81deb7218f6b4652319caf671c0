@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-27T10:18:38Z
+
+I agree that the new explanation is more clear than the existing one. However, I wonder if we need it at all. Is this information really necessary?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-27T10:21:07Z
+
+@xabbuh I think I agree. I don't understand why Symfony does this and I don't know why a developer should know this. But I've never used a user checker, so I could be missing something important.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-27T10:29:26Z
+
+@javiereguiluz It's useful to simplify some internal code of the SecurityBundle, but I don't think that's anything we need to document. At least, I would not add the note here as it may lead to more confusion than necessary. If we wanted to document this, I would vote for creating a dedicated article that explains how to hook into the SecurityBundle.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-27T10:33:06Z
+
+@xabbuh I've removed it :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-27T10:33:54Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-27T10:34:25Z
+
+@javiereguiluz Was it intended to target the `2.8` branch instead of `2.7`?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-27T10:36:10Z
+
+It was intended because at the beginning of the article one can read:
+
+```
+.. versionadded:: 2.8
+    The ability to configure a custom user checker per firewall was introduced
+    in Symfony 2.8.
+```
