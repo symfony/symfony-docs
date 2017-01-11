@@ -140,7 +140,7 @@ a matter of browsing to the project directory and executing this command:
 .. code-block:: terminal
 
     $ cd my_project_name/
-    $ php bin/console server:run
+    $ php app/console server:run
 
 Then, open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
