@@ -207,8 +207,3 @@ It's possible to have a different user checker per firewall.
                 ),
             ),
         ));
-
-.. note::
-
-    Internally the user checkers are aliased per firewall. For ``secured_area``
-    the alias ``security.user_checker.secured_area`` would point to ``app.user_checker``.
