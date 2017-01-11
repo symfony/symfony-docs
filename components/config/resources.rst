@@ -87,8 +87,16 @@ the resource::
     $loaderResolver = new LoaderResolver(array(new YamlUserLoader($locator)));
     $delegatingLoader = new DelegatingLoader($loaderResolver);
 
-    $delegatingLoader->load(__DIR__.'/users.yml');
-    /*
-    The YamlUserLoader will be used to load this resource,
+    // YamlUserLoader is used to load this resource because it supports
+    // files with the '.yml' extension
     since it supports files with a "yml" extension
-    */
+    $delegatingLoader->load(__DIR__.'/users.yml');
+
+.. tip::
+
+    If your application uses unconventional file extensions (for example, your
+    YAML files have a ``.res`` extension) you can pass the file type as the
+    second optional parameter of the ``load()`` method::
+
+      // ...
+      $delegatingLoader->load(__DIR__.'/users.res', 'yml');
