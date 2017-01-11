@@ -18,7 +18,7 @@ the class for you.
         --entity="AppBundle:Category" \
         --fields="name:string(255)"
 
-This task generates the ``Category`` entity for you, with an ``id`` field,
+This command generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
 
 Relationship Mapping Metadata

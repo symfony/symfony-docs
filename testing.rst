@@ -464,7 +464,7 @@ Injection Container::
     $container = $client->getContainer();
 
 For a list of services available in your application, use the ``debug:container``
-console task.
+command.
 
 .. tip::
 
