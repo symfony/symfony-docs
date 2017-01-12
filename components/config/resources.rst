@@ -89,5 +89,4 @@ the resource::
 
     // YamlUserLoader is used to load this resource because it supports
     // files with the '.yml' extension
-    since it supports files with a "yml" extension
     $delegatingLoader->load(__DIR__.'/users.yml');
