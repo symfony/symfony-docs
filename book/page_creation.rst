@@ -36,6 +36,7 @@ Suppose you want to create a page - ``/lucky/number`` - that generates a
 lucky (well, random) number and prints it. To do that, create a class and
 a method inside of it that will be executed when someone goes to ``/lucky/number``::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
@@ -91,6 +92,7 @@ or the status code.
 Suppose you want to create a JSON endpoint that returns the lucky number.
 Just add a second method to ``LuckyController``::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
@@ -121,6 +123,7 @@ Try this out in your browser:
 
 You can even shorten this with the handy :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
@@ -157,6 +160,7 @@ at the end:
 
     .. code-block:: php-annotations
 
+        <?php
         // src/AppBundle/Controller/LuckyController.php
         // ...
 
@@ -211,6 +215,7 @@ Because of the ``{count}`` "placeholder", the URL to the page is *different*:
 it now works for URLs matching ``/lucky/number/*`` - for example ``/lucky/number/5``.
 The best part is that you can access this value and use it in your controller::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
@@ -263,6 +268,7 @@ So far, ``LuckyController`` doesn't extend any base class. The easiest way
 to use Twig - or many other tools in Symfony - is to extend Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
@@ -285,6 +291,7 @@ Twig templates, another that can log messages and many more.
 
 To render a Twig template, use a service called ``templating``::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
@@ -318,6 +325,7 @@ and this has a ``render()`` method.
 But this can get even easier! By extending the ``Controller`` class, you
 also get a lot of shortcut methods, like ``render()``::
 
+    <?php
     // src/AppBundle/Controller/LuckyController.php
     // ...
 
