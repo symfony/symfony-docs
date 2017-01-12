@@ -91,12 +91,3 @@ the resource::
     // files with the '.yml' extension
     since it supports files with a "yml" extension
     $delegatingLoader->load(__DIR__.'/users.yml');
-
-.. tip::
-
-    If your application uses unconventional file extensions (for example, your
-    YAML files have a ``.res`` extension) you can pass the file type as the
-    second optional parameter of the ``load()`` method::
-
-      // ...
-      $delegatingLoader->load(__DIR__.'/users.res', 'yml');
