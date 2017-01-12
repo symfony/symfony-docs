@@ -222,8 +222,8 @@ Loading a YAML config file::
     XML files have a ``.config`` extension) you can pass the file type as the
     second optional parameter of the ``load()`` method::
 
-      // ...
-      $loader->load('services.config', 'xml');
+        // ...
+        $loader->load('services.config', 'xml');
 
 If you *do* want to use PHP to create the services then you can move this
 into a separate config file and load it in a similar way::
