@@ -11,7 +11,7 @@ If you're integrating the Symfony full-stack Framework into a legacy application
 that starts the session with ``session_start()``, you may still be able to
 use Symfony's session management by using the PHP Bridge session.
 
-If the application has it's own PHP save handler, you can specify null
+If the application has its own PHP save handler, you can specify null
 for the ``handler_id``:
 
 .. configuration-block::
