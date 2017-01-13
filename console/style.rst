@@ -373,3 +373,31 @@ of your commands to change their appearance::
             // ...
         }
     }
+
+Writing to the error output
+---------------------------
+
+If you rely on the output of a command (e.g. by redirecting it to a file for later reuse),
+you may want to get only the relevant information outputted by the command, excluding progress
+bars, notes, warnings and other error messages which have, most of the time, no value for reuse.
+
+For excluding irrelevant messages from the output, you need to make your command write them to the error
+output. Fortunately, the :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` provides a convenient
+method to easily switch between both outputs:
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::getErrorStyle`.
+This method returns a new ``SymfonyStyle`` instance which makes use of the error output:
+
+    $io = new SymfonyStyle($input, $output);
+
+    // Write to the output
+    $io->write('Reusable information');
+
+    // Write to the error output
+    $io->getErrorStyle()->warning('Irrelevant warning');
+
+.. note::
+
+    If you created the original ``SymfonyStyle`` instance with an ``OutputInterface`` object that is
+    not an instance of :class:`Symfony\\Component\\Console\\Output\\ConsoleOutputInterface`, using
+    ``getErrorStyle()`` will return an instance which makes use of the normal output instead of
+    the error one, as if you did not called the method.
