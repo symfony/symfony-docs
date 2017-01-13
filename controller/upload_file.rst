@@ -442,10 +442,17 @@ controller.
             public function postLoad(LifecycleEventArgs $args)
             {
                 $entity = $args->getEntity();
+                
+                // Only for tests purpose and proper object validation
+                if (!$entity instanceof ObjectWanted) {
+                  return;
+                }
 
-                $fileName = $entity->getBrochure();
-
-                $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                if ($entity->getBrochure()) {
+                  $fileName = $entity->getBrochure();
+                  
+                  $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                }
             }
         }
 
