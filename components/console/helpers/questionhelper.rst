@@ -299,7 +299,7 @@ You can also use a validator with a hidden question::
         $question = new Question('Please enter your password');
         $question->setValidator(function ($value) {
             if (trim($value) == '') {
-                throw new \Exception('The password can not be empty');
+                throw new \Exception('The password cannot be empty');
             }
 
             return $value;

@@ -207,7 +207,7 @@ interface and have an event method for each event it subscribes to::
 
 .. tip::
 
-    Doctrine event subscribers can not return a flexible array of methods to
+    Doctrine event subscribers cannot return a flexible array of methods to
     call for the events like the :ref:`Symfony event subscriber <event_dispatcher-using-event-subscribers>`
     can. Doctrine event subscribers must return a simple array of the event
     names they subscribe to. Doctrine will then expect methods on the subscriber

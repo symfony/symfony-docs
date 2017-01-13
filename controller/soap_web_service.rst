@@ -8,7 +8,7 @@ How to Create a SOAP Web Service in a Symfony Controller
 
 Setting up a controller to act as a SOAP server is simple with a couple
 tools. You must, of course, have the `PHP SOAP`_ extension installed.
-As the PHP SOAP extension can not currently generate a WSDL, you must either
+As the PHP SOAP extension cannot currently generate a WSDL, you must either
 create one from scratch or use a 3rd party generator.
 
 .. note::
