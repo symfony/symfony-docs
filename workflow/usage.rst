@@ -156,7 +156,7 @@ like this:
     will be used.
 
 With this workflow named ``blog_publishing``, you can get help to decide
-what actions are allowed on a blog post. ::
+what actions are allowed on a blog post::
 
     $post = new \AppBundle\Entity\BlogPost();
 
