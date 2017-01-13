@@ -91,7 +91,7 @@ of your application may just break it by e.g. sending HTTP headers or
 corrupting your view, the bundle configures the ``dump()`` function so that
 variables are dumped in the web debug toolbar.
 
-But if the toolbar can not be displayed because you e.g. called ``die``/``exit``
+But if the toolbar cannot be displayed because you e.g. called ``die``/``exit``
 or a fatal error occurred, then dumps are written on the regular output.
 
 In a Twig template, two constructs are available for dumping a variable.

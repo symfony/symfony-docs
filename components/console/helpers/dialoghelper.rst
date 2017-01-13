@@ -156,7 +156,7 @@ You can also ask and validate a hidden response::
 
     $validator = function ($value) {
         if ('' === trim($value)) {
-            throw new \Exception('The password can not be empty');
+            throw new \Exception('The password cannot be empty');
         }
 
         return $value;
