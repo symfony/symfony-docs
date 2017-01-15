@@ -6,7 +6,7 @@
 How to Register Event Listeners and Subscribers
 ===============================================
 
-Doctrine packages a rich event system that fires events when almost anything
+Doctrine packages have a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
 :doc:`services </service_container>` and tell Doctrine to notify those
 objects whenever a certain action (e.g. ``prePersist()``) happens within Doctrine.
