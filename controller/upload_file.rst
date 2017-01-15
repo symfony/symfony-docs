@@ -443,8 +443,7 @@ controller.
             {
                 $entity = $args->getEntity();
                 
-                // Only for tests purpose and proper object validation
-                if (!$entity instanceof ObjectWanted) {
+                if (!$entity instanceof Product) {
                   return;
                 }
 
