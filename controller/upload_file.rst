@@ -444,13 +444,13 @@ controller.
                 $entity = $args->getEntity();
                 
                 if (!$entity instanceof Product) {
-                  return;
+                    return;
                 }
 
                 if ($entity->getBrochure()) {
-                  $fileName = $entity->getBrochure();
+                    $fileName = $entity->getBrochure();
                   
-                  $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                    $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
                 }
             }
         }
