@@ -98,7 +98,7 @@ infinitely.
 
 To fill this gap, the remote ``Stores`` provide an expirable mechanism: The lock
 is acquired for a defined amount of time (named TTL for Time To Live).
-When the timeout occured, the lock is automatically released even if the locker
+When the timeout occurred, the lock is automatically released even if the locker
 don't call the ``release()`` method.
 
 That's why, when you create a lock on an expirable ``Store``. You have to choose
@@ -126,13 +126,13 @@ the ``resource`` will stay lock till the timeout.
 .. tip::
 
     To avoid letting the Lock in a locking state, try to always release an
-    expirable lock by wraping the job in a try/catch block for instance.
+    expirable lock by wrapping the job in a try/catch block for instance.
 
 When you have to work on a really long task, you should not set the TTL to
 overlap the duration of this task. Instead, the Lock Component expose a
 :method:`Symfony\\Component\\Lock\\LockInterface::refresh` method in order to
 put off the TTL of the Lock. Thereby you can choose a small initial TTL, and
-regulary refresh the lock
+regularly refresh the lock
 
 .. code-block:: php
 
@@ -145,7 +145,7 @@ regulary refresh the lock
     $lock->acquire();
     try {
         while (!$finished) {
-            // perfom a small part of the job.
+            // perform a small part of the job.
 
             $lock->refresh();
             // resource is locked for 30 more seconds.
@@ -186,10 +186,8 @@ FlockStore
 ~~~~~~~~~~
 
 The FlockStore use the fileSystem on the local computer to lock and store the
-``resource``.
-It does not supports expiration, but the lock is automaticaly released when the
-PHP process is terminated.
-
+``resource``. It does not supports expiration, but the lock is automatically
+released when the PHP process is terminated.
 
 .. code-block:: php
 
@@ -206,7 +204,6 @@ file will be created.
     We suggest to use local file, or to use a Store dedicated to remote usage
     like Redis or Memcached.
 
-
 .. _Packagist: https://packagist.org/packages/symfony/lock
 
 .. _lock-store-memcached:
@@ -220,7 +217,6 @@ The MemcachedStore stores state of ``resource`` in a Memcached server. This
 .. note::
 
     Memcached does not supports TTL lower than 1 seconds.
-
 
 It requires to have installed Memcached and have created a connection that
 implements the ``\Memcached`` classes::
@@ -263,7 +259,6 @@ SemaphoreStore
 
 The SemaphoreStore uses the PHP semaphore function to lock a ``resources``.
 
-
 .. code-block:: php
 
     use Symfony\Component\Lock\Store\SemaphoreStore;
@@ -276,14 +271,14 @@ CombinedStore
 ~~~~~~~~~~~~~
 
 The CombinedStore synchronize several ``Stores`` together. When it's used to
-acquired a Lock, it forward the call to the managed ``Stores``, and regarding the
-result, uses a quorum to decide whether or not the lock is acquired.
+acquired a Lock, it forwards the call to the managed ``Stores``, and regarding
+the result, uses a quorum to decide whether or not the lock is acquired.
 
 .. note::
 
-    This ``Store`` is usefull for High availability application. You can provide
+    This ``Store`` is useful for High availability application. You can provide
     several Redis Server, and use theses server to manage the Lock. A
-    MajorityQuorum is enougth to safely acquire a lock while it allow some Redis
+    MajorityQuorum is enough to safely acquire a lock while it allow some Redis
     server failure.
 
 .. code-block:: php
@@ -293,7 +288,7 @@ result, uses a quorum to decide whether or not the lock is acquired.
     use Symfony\Component\Lock\Store\RedisStore;
 
     $stores = [];
-    foreach (['server1', 'server2', 'server3'] as $server) {
+    foreach (array('server1', 'server2', 'server3') as $server) {
         $redis= new \Redis();
         $redis->connect($server);
 
@@ -302,12 +297,10 @@ result, uses a quorum to decide whether or not the lock is acquired.
 
     $store = new CombinedStore($stores, new MajorityQuorum());
 
-
 .. tip::
 
     You can use the CombinedStore with the UnanimousQuorum to implement chained
     ``Stores``. It'll allow you to acquire easy local locks before asking for a
     remote lock
-
 
 .. _Packagist: https://packagist.org/packages/symfony/lock
