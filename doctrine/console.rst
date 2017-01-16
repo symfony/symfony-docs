@@ -16,13 +16,13 @@ command:
 A list of available commands will print out. You can find out more information
 about any of these commands (or any Symfony command) by running the ``help``
 command. For example, to get details about the ``doctrine:database:create``
-task, run:
+command, run:
 
 .. code-block:: terminal
 
     $ php bin/console help doctrine:database:create
 
-Some notable or interesting tasks include:
+Some notable or interesting commands include:
 
 * ``doctrine:ensure-production-settings`` - checks to see if the current
   environment is configured efficiently for production. This should always

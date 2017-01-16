@@ -134,7 +134,7 @@ Next, use this in the command to print the message multiple times::
         $output->writeln($text);
     }
 
-Now, when you run the task, you can optionally specify a ``--iterations``
+Now, when you run the command, you can optionally specify a ``--iterations``
 flag:
 
 .. code-block:: terminal

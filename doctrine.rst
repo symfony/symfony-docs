@@ -518,7 +518,7 @@ in your application. To do this, run:
     your entities) with how it *actually* looks, and executes the SQL statements
     needed to *update* the database schema to where it should be. In other
     words, if you add a new property with mapping metadata to ``Product``
-    and run this task, it will execute the "ALTER TABLE" statement needed
+    and run this command, it will execute the "ALTER TABLE" statement needed
     to add that new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via

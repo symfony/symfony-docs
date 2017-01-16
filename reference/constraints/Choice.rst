@@ -369,8 +369,13 @@ strict
 
 **type**: ``boolean`` **default**: ``false``
 
-If true, the validator will also check the type of the input value. Specifically,
+The validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array`
 method when checking to see if a value is in the valid choices array.
+
+.. caution::
+
+    Setting the strict option of the Choice Constraint to ``false`` has been
+    deprecated as of Symfony 3.2 and the option will be changed to ``true`` as of 4.0.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
