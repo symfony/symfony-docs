@@ -22,7 +22,7 @@ answer.
 Consider the real-world example where you want to provide a plugin system
 for your project. A plugin should be able to add methods, or do something
 before or after a method is executed, without interfering with other plugins.
-This is not an easy problem to solve with single inheritance, and even if 
+This is not an easy problem to solve with single inheritance, and even if
 multiple inheritance was possible with PHP, it comes with its own drawbacks.
 
 The Symfony EventDispatcher component implements the `Mediator`_ pattern
@@ -188,6 +188,11 @@ information. You can check the documentation or implementation of each event to
 determine which instance is passed.
 
 .. sidebar:: Registering Event Listeners in the Service Container
+
+    versionadded:: 3.3
+        The ``ContainerAwareEventDispatcher`` class has been deprecated in
+        Symfony 3.3 and it will be removed in Symfony 4.0. Use ``EventDispatcher``
+        with closure-proxy injection instead.
 
     When you are using the
     :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher`
@@ -441,7 +446,7 @@ EventDispatcher Aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``EventDispatcher`` always passes the dispatched event, the event's
-name and a reference to itself to the listeners. This can lead to some advanced 
+name and a reference to itself to the listeners. This can lead to some advanced
 applications of the ``EventDispatcher`` including dispatching other events inside
 listeners, chaining events or even lazy loading listeners into the dispatcher object.
 
