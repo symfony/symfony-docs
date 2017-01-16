@@ -175,6 +175,7 @@ current progress of the bar. Here is a list of the built-in placeholders:
 * ``remaining``: The remaining time to complete the task (not available if no max is defined);
 * ``estimated``: The estimated time to complete the task (not available if no max is defined);
 * ``memory``: The current memory usage;
+* ``message``: used to display arbitrary messages in the progress bar (as explained later).
 
 For instance, here is how you could set the format to be the same as the
 ``debug`` one::
@@ -298,18 +299,19 @@ that displays the number of remaining steps::
 Custom Messages
 ~~~~~~~~~~~~~~~
 
-If you want to show some fixed text or generic message, you can define custom
-placeholders in a custom format to be displayed with the progress bar, and use
-them afterwards.
-
-By default, the ``setMessage()`` method implies ``message`` as the name of the
-placeholder, but if you need more than one, you have just to define your own::
+Progress bars define a placeholder called ``message`` to display arbitrary
+messages. However, none of the built-in formats include that placeholder, so
+before displaying these messages, you must define your own custom format::
 
     $progressBar = new ProgressBar($output, 100);
-    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message% %filename%');
+    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message%');
     $progressBar->setFormat('custom');
-    $progressBar->setMessage('Start');
 
+Now, use the ``setMessage()`` method to set the value of the ``%message%``
+placeholder before displaying the progress bar:
+
+    // ...
+    $progressBar->setMessage('Start');
     $progressBar->start();
     // 0/100 -- Start
 
@@ -317,13 +319,21 @@ placeholder, but if you need more than one, you have just to define your own::
     $progressBar->setMessage('Task is in progress...');
     // 1/100 -- Task is in progress...
 
-    while ($file = array_pop($files)) {
-        $bar->setMessage($filename, 'filename');
-        $bar->advance();
-        // 2/100 -- Task is in progress... $filename
-    }
+Messages can be combined with custom placeholders too. In this example, the
+progress bar uses the ``%message%`` and ``%filename%`` placeholders::
 
-    $bar->setMessage('Task is finished');
-    $bar->setMessage('', 'filename');
-    $bar->finish();
-    // 100/100 -- Task is finished
+    $progressBar = new ProgressBar($output, 100);
+    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message% (%filename%)');
+    $progressBar->setFormat('custom');
+
+The ``setMessage()`` method accepts a second optional argument to set the value
+of the custom placeholders::
+
+    // ...
+    // $files = array('client-001/invoices.xml', '...');
+    foreach ($files as $filename) {
+        $progressBar->setMessage('Importing invoices...');
+        $progressBar->setMessage($filename, 'filename');
+        $progressBar->advance();
+        // 2/100 -- Importing invoices... (client-001/invoices.xml)
+    }
