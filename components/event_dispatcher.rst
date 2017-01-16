@@ -189,7 +189,7 @@ determine which instance is passed.
 
 .. sidebar:: Registering Event Listeners in the Service Container
 
-    versionadded:: 3.3
+    .. versionadded:: 3.3
         The ``ContainerAwareEventDispatcher`` class has been deprecated in
         Symfony 3.3 and it will be removed in Symfony 4.0. Use ``EventDispatcher``
         with closure-proxy injection instead.
