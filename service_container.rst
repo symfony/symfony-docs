@@ -463,6 +463,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
             # traditional syntax
             app.newsletter_manager:
