@@ -148,7 +148,7 @@ like this:
     The marking store type could be "multiple_state" or "single_state".
     A single state marking store does not support a model being on multiple places
     at the same time.
-    
+
 .. tip::
 
     The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
@@ -248,3 +248,8 @@ The links below will only be displayed when the action is allowed:
     {% else %}
         No actions available.
     {% endfor %}
+
+    {# Check if the object is in some specific place #}
+    {% if workflow_has_marked_place(post, 'to_review') %}
+        <p>This post is ready for review.</p>
+    {% endif %}
