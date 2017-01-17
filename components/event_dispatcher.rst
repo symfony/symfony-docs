@@ -189,10 +189,10 @@ determine which instance is passed.
 
 .. sidebar:: Registering Event Listeners and Subscribers in the Service Container
 
-    Registering service definitions and tagging them with the ``kernel.event_listener``
-    and ``kernel.event_subscriber`` tags is not enough to enable the event listeners
-    and event subscribers. You must also register the ``RegisterListenersPass()``
-    compiler pass in the container builder::
+    Registering service definitions and tagging them with the
+    ``kernel.event_listener`` and ``kernel.event_subscriber`` tags is not enough
+    to enable the event listeners and event subscribers. You must also register
+    in the container builder a compiler pass called ``RegisterListenersPass()``::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Definition;
