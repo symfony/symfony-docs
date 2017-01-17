@@ -284,7 +284,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                 main:
                     anonymous: ~
                     logout: ~
-
+                    provider: your_db_provider
                     guard:
                         authenticators:
                             - app.token_authenticator
