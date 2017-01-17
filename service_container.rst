@@ -154,7 +154,7 @@ later how you can configure a service that has multiple instances in the
     ``get()`` method to locate and retrieve the ``app.mailer`` service from
     the service container.
 
-.. note::
+.. caution::
 
     Service identifiers are case-insensitive (``app.mailer`` and ``APP.Mailer``
     for example refer to the same service). This behavior was deprecated in
