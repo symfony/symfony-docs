@@ -10,6 +10,12 @@ The ClassLoader Component
 Usage
 -----
 
+.. caution::
+
+    If your application uses Composer's class loading mechanism and PHP 7 caching
+    features, there's no need to use this component to load classes. That's why
+    this component may be deprecated anytime soon.
+
 Whenever you reference a class that has not been required or included yet,
 PHP uses the `autoloading mechanism`_ to delegate the loading of a file
 defining the class. Symfony provides three autoloaders, which are able to
