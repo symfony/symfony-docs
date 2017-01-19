@@ -1490,6 +1490,7 @@ Throw PHP errors as ``\ErrorException`` instances. The parameter
 ``debug.error_handler.throw_at`` controls the threshold.
 
 .. _reference-cache:
+
 cache
 ~~~~~
 
