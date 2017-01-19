@@ -5,16 +5,23 @@
 Array Cache Adapter
 ===================
 
-This adapter is only useful for testing purposes because contents are stored in
-memory and not persisted in any way. Besides, some features explained later are
-not available, such as the deferred saves::
+Generally, this adapter is useful for testing purposes, as its contents are stored in memory
+and not persisted outside the running PHP process in any way. It can also be useful while
+warming up caches, due to the :method:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter::getValues`
+method.
+
+This adapter can be passed a default cache lifetime as its first parameter, and a boolean that
+toggles serialization as its second parameter::
 
     use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
     $cache = new ArrayAdapter(
-        // in seconds; applied to cache items that don't define their own lifetime
-        // 0 means to store the cache items indefinitely (i.e. until the current PHP process finishes)
+
+        // the default lifetime (in seconds) for cache items that do not define their
+        // own lifetime, with a value 0 causing items to be stored indefinitely (i.e.
+        // until the current PHP process finishes)
         $defaultLifetime = 0,
+
         // if ``true``, the values saved in the cache are serialized before storing them
         $storeSerialized = true
     );

@@ -5,15 +5,32 @@
 Proxy Cache Adapter
 ===================
 
-This adapter is useful to integrate in your application cache pools not created
-with the Symfony Cache component. As long as those cache pools implement the
-``CacheItemPoolInterface`` interface, this adapter allows you to get items from
-that external cache and save them in the Symfony cache of your application::
+This adapter wraps a `PSR-6`_ compliant `cache item pool interface`_. It is used to integrate
+your application's cache item pool implementation with the Symfony :ref:`Cache Component <cache-component>`
+by consuming any implementation of ``Psr\Cache\CacheItemPoolInterface``.
 
+This adapter expects a ``Psr\Cache\CacheItemPoolInterface`` instance as its first parameter,
+and optionally a namespace and default cache lifetime as its second and third parameters::
+
+    use Psr\Cache\CacheItemPoolInterface;
     use Symfony\Component\Cache\Adapter\ProxyAdapter;
 
-    // ... create $nonSymfonyCache somehow
-    $cache = new ProxyAdapter($nonSymfonyCache);
+    $psr6CachePool = \\ create your own cache pool instance that implements the PSR-6
+                     \\ interface `CacheItemPoolInterface`
 
-The adapter accepts two additional optional arguments: the namespace (``''`` by
-default) and the default lifetime (``0`` by default).
+    $cache = new ProxyAdapter(
+
+        // a cache pool instance
+        CacheItemPoolInterface $psr6CachePool,
+
+        // a string prefixed to the keys of the items stored in this cache
+        $namespace = '',
+
+        // the default lifetime (in seconds) for cache items that do not define their
+        // own lifetime, with a value 0 causing items to be stored indefinitely (i.e.
+        // until the cache is cleared)
+        $defaultLifetime = 0
+    );
+
+.. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
+.. _`cache item pool interface`: http://www.php-fig.org/psr/psr-6/#cacheitempoolinterface

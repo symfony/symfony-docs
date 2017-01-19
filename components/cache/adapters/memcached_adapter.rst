@@ -2,6 +2,8 @@
     single: Cache Pool
     single: Memcached Cache
 
+.. _memcached-adapter:
+
 Memcached Cache Adapter
 =======================
 
@@ -10,15 +12,17 @@ Memcached Cache Adapter
     The Memcached adapter was introduced in Symfony 3.3.
 
 This adapter stores the values in-memory using one (or more) `Memcached server`_
-instances. Unlike the ACPu adapter, and similarly to the Redis adapter, it is
-not limited to the current server's shared memory; you can store contents
-independent of your PHP environment. The ability to utilize a cluster of servers
-to provide redundancy and/or fail-over is also available.
+instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
+:ref:`Redis adapter <redis-adapter>`, it is not limited to the current server's
+shared memory; you can store contents independent of your PHP environment.
+The ability to utilize a cluster of servers to provide redundancy and/or fail-over
+is also available.
 
 .. caution::
 
-    The `Memcached PHP extension`_ as well as a `Memcached server`_ must be
-    installed, active, and running to use this adapter.
+    **Requirements:** The `Memcached PHP extension`_ as well as a `Memcached server`_
+    must be installed, active, and running to use this adapter. Version ``2.2`` or
+    greater of the `Memcached PHP extension`_ is required for this adapter.
 
 This adapter expects a `Memcached`_ instance to be passed as the first
 parameter. A namespace and default cache lifetime can optionally be passed as
@@ -71,7 +75,7 @@ The DSN must include a IP/host (and an optional port) or a socket path, an
 optional username and password (for SASL authentication; it requires that the
 memcached extension was compiled with ``--enable-memcached-sasl``) and an
 optional weight (for prioritizing servers in a cluster; its value is an integer
-between ``0`` and ``100`` which defaults to ``XX``; a higher value means more
+between ``0`` and ``100`` which defaults to ``null``; a higher value means more
 priority).
 
 Below are common examples of valid DSNs showing a combination of available values::
@@ -201,7 +205,7 @@ Available Options
     expense of more write traffic.
 
 ``recv_timeout`` (type: ``int``, default: ``0``)
-    Specifies he amount of time (in microseconds) before timing out during an outgoing socket (read) operation.
+    Specifies the amount of time (in microseconds) before timing out during an outgoing socket (read) operation.
     When the ``no_block`` option isn't enabled, this will allow you to still have timeouts on the reading of data.
 
     Valid option values include ``0`` or *any positive integer*.
@@ -275,7 +279,7 @@ Available Options
     are valid and fit within the design of the protocol being used.
 
 .. tip::
-    Reference the `Memcached extension`_'s `predefined constants`_ documentation
+    Reference the `Memcached`_ extension's `predefined constants`_ documentation
     for additional information about the available options.
 
 .. _`Transmission Control Protocol (TCP)`: https://en.wikipedia.org/wiki/Transmission_Control_Protocol
