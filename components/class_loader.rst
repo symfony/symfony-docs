@@ -10,7 +10,7 @@ The ClassLoader Component
 .. caution::
 
     The ClassLoader component was deprecated in Symfony 3.3 and it will be
-    removed in 4.0. Alternatively, use the Composer's class loading mechanism.
+    removed in 4.0. Alternatively, use Composer's class loading mechanism.
 
 Usage
 -----
