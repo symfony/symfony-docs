@@ -447,9 +447,7 @@ controller.
                     return;
                 }
 
-                if ($entity->getBrochure()) {
-                    $fileName = $entity->getBrochure();
-                  
+                if ($fileName = $entity->getBrochure()) {
                     $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
                 }
             }
