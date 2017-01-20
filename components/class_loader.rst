@@ -7,14 +7,13 @@ The ClassLoader Component
     The ClassLoader component provides tools to autoload your classes and
     cache their locations for performance.
 
-Usage
------
-
 .. caution::
 
-    If your application uses Composer's class loading mechanism and PHP 7 caching
-    features, there's no need to use this component to load classes. That's why
-    this component may be deprecated anytime soon.
+    The ClassLoader component was deprecated in Symfony 3.3 and it will be
+    removed in 4.0. Alternatively, use the Composer's class loading mechanism.
+
+Usage
+-----
 
 Whenever you reference a class that has not been required or included yet,
 PHP uses the `autoloading mechanism`_ to delegate the loading of a file
