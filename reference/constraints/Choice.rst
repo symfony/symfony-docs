@@ -10,6 +10,7 @@ an array of items is one of those valid choices.
 +----------------+----------------------------------------------------------------------+
 | Options        | - `choices`_                                                         |
 |                | - `callback`_                                                        |
+|                | - `enum`_                                                            |
 |                | - `multiple`_                                                        |
 |                | - `min`_                                                             |
 |                | - `max`_                                                             |
@@ -279,6 +280,92 @@ you can pass the class name and the method as an array.
             }
         }
 
+Supplying the Choices with a enum class
+---------------------------------------
+
+You can also use a class constants as source for your options. This is useful
+if you are emulating enum structure via class constants.
+
+.. code-block:: php
+
+    // src/AppBundle/Enum/Gender.php
+    namespace AppBundle\Enum;
+
+    final class Gender
+    {
+        const MALE = 'male';
+        const FEMALE = 'female';
+        const OTHER = 'other';
+
+        private function __construct()
+        {
+            /* noop */
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Entity/Author.php
+        namespace AppBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Choice(enum = "\\AppBundle\\Enum\\Gender")
+             */
+            protected $gender;
+        }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
+            properties:
+                gender:
+                    - Choice: { enum: '\\AppBundle\\Enum\\Gender' }
+
+    .. code-block:: xml
+
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="AppBundle\Entity\Author">
+                <property name="gender">
+                    <constraint name="Choice">
+                        <option name="enum">\AppBundle\Enum\Gender</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/AppBundle/EntityAuthor.php
+        namespace AppBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            protected $gender;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
+                    'enum' => '\\AppBundle\\Enum\\Gender',
+                )));
+            }
+        }
+
+
 Available Options
 -----------------
 
@@ -287,7 +374,7 @@ choices
 
 **type**: ``array`` [:ref:`default option <validation-default-option>`]
 
-A required option (unless `callback`_ is specified) - this is the array
+A required option (unless `callback`_ or `enum`_ is specified) - this is the array
 of options that should be considered in the valid set. The input value
 will be matched against this array.
 
@@ -299,6 +386,15 @@ callback
 This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
 `Supplying the Choices with a Callback Function`_ for details on its usage.
+
+enum
+~~~~
+
+**type**: ``string|object``
+
+This is a class/object that emulates enumerator structure whose constants
+can be used instead of the `choices`_ option to provide the choices array. See
+`Supplying the Choices with a enum class`_ for details on its usage.
 
 multiple
 ~~~~~~~~
