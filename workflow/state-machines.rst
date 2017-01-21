@@ -32,7 +32,7 @@ Below is the configuration for the pull request state machine.
         framework:
             workflows:
                 pull_request:
-                    type: 'state_machine'
+                    type: 'single_state'
                     supports:
                         - AppBundle\Entity\PullRequest
                     places:
