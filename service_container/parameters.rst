@@ -253,6 +253,15 @@ key and define the type as ``constant``.
         imports:
             - { resource: parameters.xml }
 
+It's also possible to use PHP constants in YAML files using expression language.
+To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
+
+.. code-block:: yaml
+
+    parameters:
+    global.constant.value: "@=constant('GLOBAL_CONSTANT')"
+    my_class.constant.value: "@=constant('My_Class::CONSTANT_NAME')"
+
 PHP Keywords in XML
 -------------------
 
