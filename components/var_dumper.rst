@@ -107,6 +107,9 @@ option. Read more about this and other options in
 
 .. tip::
 
+    .. versionadded:: 3.3
+        The local search box was introduced in Symfony 3.3.
+
     If the dumped contents are complex, consider using the local search box to
     look for specific variables or values. First, click anywhere on the dumped
     contents and then press ``Ctrl. + F`` or ``Cmd. + F`` to make the local
