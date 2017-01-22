@@ -35,6 +35,9 @@ its id:
 By default, the arguments of the services are not included in the output. Add the
 ``--show-arguments`` option to show them:
 
+.. versionadded:: 3.3
+   The ``--show-arguments`` option was introduced in Symfony 3.3.
+
 .. code-block:: terminal
 
     $ php bin/console debug:container app.mailer --show-arguments
