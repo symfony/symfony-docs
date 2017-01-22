@@ -27,6 +27,7 @@ or an array (see `input`_).
 |                      | - `seconds`_                                                                     |
 |                      | - `weeks`_                                                                       |
 |                      | - `input`_                                                                       |
+|                      | - `labels`_                                                                      |
 |                      | - `placeholder`_                                                                 |
 |                      | - `widget`_                                                                      |
 |                      | - `with_days`_                                                                   |
@@ -127,6 +128,26 @@ your underlying object. Valid values are:
 
 The value that comes back from the form will also be normalized back into
 this format.
+
+labels
+~~~~~~
+
+.. versionadded:: 3.3
+   The ``labels`` option was introduced in Symfony 3.3.
+
+**type**: ``array`` **default**: (see below)
+
+The labels displayed for each of the elements of this type. The default values are::
+
+  'labels' => array(
+      'invert' => 'form.trans.invert',
+      'years' => 'form.trans.years',
+      'months' => 'form.trans.months',
+      'days' => 'form.trans.days',
+      'hours' => 'form.trans.hours',
+      'minutes' => 'form.trans.minutes',
+      'seconds' => 'form.trans.seconds',
+  )
 
 minutes
 ~~~~~~~
