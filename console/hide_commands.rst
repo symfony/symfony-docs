@@ -33,4 +33,4 @@ in command listings, so end-users are not aware of their existence.
 
 .. note::
 
-    Hidden commands are still available using JSON or XML descriptor.
+    Hidden commands are still available using the JSON or XML descriptor.
