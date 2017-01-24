@@ -287,7 +287,8 @@ appendToFile
 ~~~~~~~~~~~~
 
 .. versionadded:: 3.3
-    The :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` method was introduced in Symfony 3.3.
+    The :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile`
+    method was introduced in Symfony 3.3.
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
 contents at the end of some file::
