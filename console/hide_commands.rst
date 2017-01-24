@@ -30,3 +30,7 @@ In those cases, you can define the command as **hidden** by setting the
 
 Hidden commands behave the same as normal commands but they are no longer displayed
 in command listings, so end-users are not aware of their existence.
+
+.. note::
+
+    Hidden commands are still available using JSON or XML descriptor.
