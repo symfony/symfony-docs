@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-19T10:08:27Z
+
+In their readme file, they still link to bowerphp.org. Maybe we should open an issue in their issue tracker first to check if there as an error on their end.
+
+---------------------------------------------------------------------------
+
+by behram at 2017-01-19T12:25:01Z
+
+related bowerphp link;
+ - https://github.com/Bee-Lab/bowerphp/issues/155
+i think local host configuration is weak solution. basicly we can use github repository.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-19T13:18:05Z
+
+👍 then
+
+Status: Reviewed
