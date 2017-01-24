@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-11T18:48:40Z
+
+@javiereguiluz Using a `.env` file to define env vars in projects is a "standard" used by many frameworks. You don't need to use it of course as we have other mechanisms in Symfony, but this component allows Symfony projects to be more similar with projects written with other frameworks and languages.
+
+Regarding the integration with Symfony, it's going to be part of the whole new "bootstrap" experience I'm working on. More on that later.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-12T15:12:43Z
+
+Comments addressed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-12T17:28:32Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-12T18:17:49Z
+
+This one is ready and the related PR on Symfony has been merged now.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-01-12T18:36:38Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-14T17:07:14Z
+
+@javiereguiluz The only entry-point should be `load` for most developers. `load` is just a shortcut to `parse` then `populate`, but using those last 2 directly should be very rare. So, I don't think we need to "document" them here (phpdocs are enough IMHO).
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-21T17:12:30Z
+
+Anything blocking the merge (besides time :))?
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2017-01-23T08:23:17Z
+
+> Regarding the integration with Symfony, it's going to be part of the whole new "bootstrap" experience I'm working on. More on that later.
+
+I hope it'll bring Symfony closer to [The Twelve-Factor App](https://12factor.net/) (esp. https://12factor.net/config), which will be good news for Docker users. Currently the parameters.yml situation is a bit of a pain (probably improved since dynamic `env` parameters)...
