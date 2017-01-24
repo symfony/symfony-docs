@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-16T16:50:42Z
+
+I've reworded some contents and added more examples. Ready for a new review. Thanks!
+
+---------------------------------------------------------------------------
+
+by Jean85 at 2017-01-16T17:52:10Z
+
+LGTM! :+1:
+What about the failing build on platform.sh?
