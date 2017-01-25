@@ -1,3 +1,5 @@
 /_build/doctrees
 /_build/html
+/.venv/
+/.idea/
 *.pyc
