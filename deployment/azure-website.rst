@@ -452,7 +452,7 @@ and executed on a Microsoft IIS web server. The process is simple and easy
 to implement. And as a bonus, Microsoft is continuing to reduce the number
 of steps needed so that deployment becomes even easier.
 
-.. _`sign up with Azure`: https://signup.live.com/signup.aspx
+.. _`sign up with Azure`: https://azure.microsoft.com/free/
 .. _`Azure Portal`: https://portal.azure.com
 .. _`PHP MSDN documentation`: http://blogs.msdn.com/b/silverlining/archive/2012/07/10/configuring-php-in-windows-azure-websites-with-user-ini-files.aspx
 .. _`git-scm.com`: http://git-scm.com/download
