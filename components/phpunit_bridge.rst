@@ -320,7 +320,7 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
             <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
                 <arguments>
                     <array>
-                        <element><string>Symfony\Component\HttpFoundation</string></element>
+                        <element key="time-sensitive"><string>Symfony\Component\HttpFoundation</string></element>
                     </array>
                 </arguments>
             </listener>
