@@ -137,16 +137,18 @@ labels
 
 **type**: ``array`` **default**: (see below)
 
-The labels displayed for each of the elements of this type. The default values are::
+The labels displayed for each of the elements of this type. The default values
+are ``null``, so they display the "humanized version" of the child names (``Invert``,
+``Years``, etc.)::
 
   'labels' => array(
-      'invert' => 'form.trans.invert',
-      'years' => 'form.trans.years',
-      'months' => 'form.trans.months',
-      'days' => 'form.trans.days',
-      'hours' => 'form.trans.hours',
-      'minutes' => 'form.trans.minutes',
-      'seconds' => 'form.trans.seconds',
+      'invert' => null,
+      'years' => null,
+      'months' => null,
+      'days' => null,
+      'hours' => null,
+      'minutes' => null,
+      'seconds' => null,
   )
 
 minutes
