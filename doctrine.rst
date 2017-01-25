@@ -434,7 +434,7 @@ see the :ref:`doctrine-field-types` section.
 
     .. code-block:: terminal
 
-        $ php app/console doctrine:schema:validate
+        $ php bin/console doctrine:schema:validate
 
 .. _doctrine-generating-getters-and-setters:
 
