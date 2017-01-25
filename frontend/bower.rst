@@ -143,7 +143,7 @@ enough to ensure only bringing in compatible versions.
 
 .. _Bower: http://bower.io
 .. _`Node.js`: https://nodejs.org
-.. _BowerPHP: http://bowerphp.org/
+.. _BowerPHP: https://github.com/Bee-Lab/bowerphp
 .. _`Bower documentation`: http://bower.io/
 .. _Bootstrap: http://getbootstrap.com/
 .. _Gulp: http://gulpjs.com/

@@ -156,7 +156,7 @@ like this:
     will be used.
 
 With this workflow named ``blog_publishing``, you can get help to decide
-what actions that are allowed on a blog post. ::
+what actions are allowed on a blog post::
 
     $post = new \AppBundle\Entity\BlogPost();
 
@@ -195,7 +195,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var Acme\BlogPost $post */
+            /** @var \AppBundle\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
@@ -242,7 +242,7 @@ The links below will only be displayed when the action is allowed:
         <a href="...">Reject article</a>
     {% endif %}
 
-    {# Or loop through the enabled transistions #}
+    {# Or loop through the enabled transitions #}
     {% for transition in workflow_transitions(post) %}
         <a href="...">{{ transition.name }}</a>
     {% else %}

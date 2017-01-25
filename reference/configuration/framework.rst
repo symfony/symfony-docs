@@ -105,7 +105,7 @@ Configuration
 * `php_errors`_
     * `log`_
     * `throw`_
-* `cache <reference-cache>`_
+* :ref:`cache <reference-cache>`
     * `prefix_seed`_
 
 secret
@@ -1488,6 +1488,8 @@ throw
 
 Throw PHP errors as ``\ErrorException`` instances. The parameter
 ``debug.error_handler.throw_at`` controls the threshold.
+
+.. _reference-cache:
 
 cache
 ~~~~~

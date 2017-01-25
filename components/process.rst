@@ -373,7 +373,7 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
 .. caution::
 
-    You can not enable or disable the output while the process is running.
+    You cannot enable or disable the output while the process is running.
 
     If you disable the output, you cannot access ``getOutput()``,
     ``getIncrementalOutput()``, ``getErrorOutput()``, ``getIncrementalErrorOutput()`` or
