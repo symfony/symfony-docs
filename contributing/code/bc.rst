@@ -32,6 +32,14 @@ The second section, "Working on Symfony Code", is targeted at Symfony
 contributors. This section lists detailed rules that every contributor needs to
 follow to ensure smooth upgrades for our users.
 
+.. warning::
+
+    Code marked with the ``@experimental`` or the ``@internal`` tags is
+    excluded from our Backward Compatibility promise.
+
+    Also note that backward compatibility breaks are tolerated if they are
+    required to fix a security issue.
+
 Using Symfony Code
 ------------------
 
