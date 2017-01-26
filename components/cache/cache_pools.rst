@@ -5,8 +5,8 @@
    single: Redis Cache
    single: PDO Cache, Doctrine DBAL Cache
 
-Cache Pools
-===========
+Cache Pools and Supported Adapters
+==================================
 
 Cache Pools are the logical repositories of cache items. They perform all the
 common operations on items, such as saving them or looking for them. Cache pools
@@ -88,8 +88,9 @@ This adapter stores the contents in the memory of a Redis server. Unlike the APC
 adapter, it's not limited to the shared memory of the current server, so you can
 store contents in a cluster of servers if needed.
 
-It requires to have installed Redis and have created a connection that implements
-the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or ``\Predis`` classes::
+Before you start, make sure you have Redis running and have created a connection
+that implements the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or ``\Predis``
+classes::
 
     use Symfony\Component\Cache\Adapter\RedisAdapter;
 
@@ -107,6 +108,48 @@ The :method:`Symfony\\Component\\Cache\\Adapter\\RedisAdapter::createConnection`
 helper allows creating a connection to a Redis server using a DSN configuration::
 
     $redisConnection = RedisAdapter::createConnection('redis://localhost');
+
+    $cache = new RedisAdapter($redisConnection);
+
+See the method's docblock for more options.
+
+Memcached Cache Adapter
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This adapter stores the contents into a set of `Memcached`_ servers.
+
+Before you start, make sure you have Memcached running and have created a
+:phpclass:`Memcached` object::
+
+    use Symfony\Component\Cache\Adapter\MemcachedAdapter;
+
+    $cache = new MemcachedAdapter(
+        // the object that stores a valid connection to your Memcached servers
+        \Memcached $client,
+        // the string prefixed to the keys of the items stored in this cache
+        $namespace = '',
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the Memcached memory is deleted)
+        $defaultLifetime = 0
+    );
+
+The :method:`Symfony\\Component\\Cache\\Adapter\\Memcached::createConnection`
+helper allows creating a connection to a pool of Memcached server using a DSN configuration::
+
+    $memcachedClient = MemcachedAdapter::createConnection(
+        'memcached://user:pass@localhost?weight=33',
+
+        // options, including username, password and Memcached::OPT_* options
+        array('persistent_id' => '_products_cache')
+    );
+
+    // alternate syntax: array notations for the servers
+    $memcachedClient = MemcachedAdapter::createConnection(array(
+        array('192.168.1.100', 11211, 33),
+        array('192.168.1.101', 11211, 33)
+    ));
+
+    $cache = new MemcachedAdapter($memcachedClient);
 
 See the method's docblock for more options.
 
@@ -155,6 +198,25 @@ the ``ChainAdapter`` ensures that the fetched item is saved in all the adapters
 where it was missing. Since it's not possible to know the expiry date and time
 of a cache item, the second optional argument of ``ChainAdapter`` is the default
 lifetime applied to those cache items (by default it's ``0``).
+
+Traceable Adapter
+~~~~~~~~~~~~~~~~~
+
+This adapter wraps another adapter, and allows you to read a report of all of the
+"calls" made to the adapter, including how long actions took, cache hits, misses
+and more::
+
+    use Symfony\Component\Cache\Adapter\TraceableAdapter;
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $fileCache = new FilesystemAdapter();
+
+    $cache = new TraceableAdapter($fileCache);
+    
+    // work with the $cache adapter like normal
+
+    // returns an array of TraceableAdapterEvent describing the calls
+    $events = $cache->getCalls();
 
 Proxy Cache Adapter
 ~~~~~~~~~~~~~~~~~~~
@@ -279,3 +341,4 @@ when all items are successfully deleted)::
     $cacheIsEmpty = $cache->clear();
 
 .. _`Doctrine Cache`: https://github.com/doctrine/cache
+.. _`Memcached`: http://php.net/manual/en/book.memcached.php
