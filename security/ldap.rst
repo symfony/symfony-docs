@@ -273,26 +273,24 @@ For example, if your users have DN strings in the form
 query_string
 ............
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
-This (optional) key enables the user provider to search for a user and
-then use the DN found for the bind process. This is useful in environments
-with multiple LDAP user providers with a different ``base_dn``. As value
-a valid search string for should be used, e.g. ``uid="{username}"``. The
-placeholder value will be replaced by the actual username.
+This (optional) key makes the user provider search for a user and then use the
+found DN for the bind process. This is useful when using multiple LDAP user
+providers with different ``base_dn``. The value of this option must be a valid
+search string (e.g. ``uid="{username}"``). The placeholder value will be
+replaced by the actual username.
 
-When this key is used, ``dn_string`` has to be adjusted accordingly and
-should reflect a common denominator as base DN.
+When this option is used, ``dn_string`` has to be updated accordingly. Following
+the previous example, if your users have the following two DN:
+``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``, then
+``dn_string`` should be ``dc=example,dc=com``. If the ``query_string`` option is
+``uid="{username}"``, then the authentication provider can authenticate users
+from both DN.
 
-Extending the previous example: If Your users have two different DN in the
-form of ``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``,
-then ``dn_string`` should be ``dc=example,dc=com``. In conjunction with
-``uid="{username}"`` as ``query_string`` the authentication provider can
-authenticate user from both DN.
-
-Please bear in mind, that the usernames themselves have to be unique
-across both DN, as the authentication provider won't determine the
-correct user for the bind process if more than one are found.
+Bear in mind that usernames must be unique across both DN, as the authentication
+provider won't be able to select the correct user for the bind process if more
+than one is found.
 
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``.
