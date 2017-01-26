@@ -270,6 +270,30 @@ For example, if your users have DN strings in the form
 ``uid=einstein,dc=example,dc=com``, then the ``dn_string`` will be
 ``uid={username},dc=example,dc=com``.
 
+query_string
+............
+
+**type**: ``string``
+
+This (optional) key enables the user provider to search for a user and
+then use the DN found for the bind process. This is useful in environments
+with multiple LDAP user providers with a different ``base_dn``. As value
+a valid search string for should be used, e.g. ``uid="{username}"``. The
+placeholder value will be replaced by the actual username.
+
+When this key is used, ``dn_string`` has to be adjusted accordingly and
+should reflect a common denominator as base DN.
+
+Extending the previous example: If Your users have two different DN in the
+form of ``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``,
+then ``dn_string`` should be ``dc=example,dc=com``. In conjunction with
+``uid="{username}"`` as ``query_string`` the authentication provider can
+authenticate user from both DN.
+
+Please bear in mind, that the usernames themselves have to be unique
+across both DN, as the authentication provider won't determine the
+correct user for the bind process if more than one are found.
+
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``.
 
