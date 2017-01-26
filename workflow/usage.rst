@@ -184,7 +184,7 @@ the Symfony standard edition, this is already done for you.
 When a workflow subject's state is updated, the component dispatches several events that
 enable you to alter the component's behaviour:
 
-* ``workflow.[workflow name].guard.[transition name]``: dispatched before applying a transition.
+* ``workflow.[workflow name].guard.[transition name]``: used to conditionally block a transition.
 * ``workflow.[workflow name].leave.[state name]``: a subject leaves a state.
 * ``workflow.[workflow name].transition.[transition name]``: a transition is being applied.
 * ``workflow.[workflow name].enter.[state name]``: a subject enters a state.
