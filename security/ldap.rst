@@ -246,7 +246,7 @@ Authenticating against an LDAP server can be done using either the form
 login or the HTTP Basic authentication providers.
 
 They are configured exactly as their non-LDAP counterparts, with the
-addition of two configuration keys:
+addition of two configuration keys and one optional key:
 
 service
 .......
@@ -294,6 +294,19 @@ than one is found.
 
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``.
+
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This optional key defines the form of the query used in order to search the
+DN of the user, from the username. The ``{username}`` string is replaced by
+the actual username of the person trying to authenticate.
+
+This setting is only necessary if the users DN cannot be derived statically
+using the `dn_string` config option.
+
 
 Configuration example for form login
 ....................................
@@ -402,6 +415,67 @@ Configuration example for HTTP Basic
                     'stateless' => true,
                 ),
             ),
+        );
+
+Configuration example for form login and query_string
+.....................................................
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    form_login_ldap:
+                        login_path: login
+                        check_path: login_check
+                        # ...
+                        service: ldap
+                        dn_string: 'dc=example,dc=com'
+                        query_string: '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <form-login-ldap
+                            login-path="login"
+                            check-path="login_check"
+                            service="ldap"
+                            dn-string="dc=example,dc=com"
+                            query-string="(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))" />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'main' => array(
+                    'form_login_ldap' => array(
+                        'login_path' => 'login',
+                        'check_path' => 'login_check',
+                        'service' => 'ldap',
+                        'dn_string' => 'dc=example,dc=com',
+                        'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
+                        // ...
+                    ),
+                ),
+            )
         );
 
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
