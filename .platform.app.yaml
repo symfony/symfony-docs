@@ -56,5 +56,5 @@ hooks:
       # Platform.sh currently sets PIP_USER=1.
       export PIP_USER=
       pip install pip==9.0.1 wheel==0.29.0
-      pip install -r /app/.platform/requirements.txt
+      pip install -r .platform/requirements.txt
       make -C _build html
