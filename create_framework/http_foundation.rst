@@ -125,7 +125,7 @@ containing the new requirement:
 
     {
         "require": {
-            "symfony/http-foundation": "^3.0"
+            "symfony/http-foundation": "^3.2"
         }
     }
 
