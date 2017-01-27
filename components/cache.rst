@@ -44,6 +44,87 @@ Both methods support the *same* cache adapters and will give you very similar pe
     The component also contains adapters to convert between PSR-6 and PSR-16 caches.
     See :doc:`/components/cache/psr_psr16_adapters`.
 
+.. _cache-component-psr16-caching:
+
+Simple Caching (PSR-16)
+-----------------------
+
+This part of the component is an implementation of `PSR-16`_, which means that its
+basic API is the same as defined in the standard. First, create a cache object from
+one of the built-in cache classes. For example, to create a filesystem-based cache,
+instantiate :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`::
+
+    use Symfony\Component\Cache\Simple\FilesystemCache;
+
+    $cache = new FilesystemCache();
+
+Now you can create, retrieve, update and delete items using this object::
+
+    // save a new item in the cache
+    $cache->set('stats.num_products', 4711);
+
+    // or set it with a custom ttl
+    // $cache->set('stats.num_products', 4711, 3600);
+
+    // retrieve the cache item
+    if (!$cache->has('stats.num_products')) {
+        // ... item does not exists in the cache
+    }
+
+    // retrieve the value stored by the item
+    $numProducts = $cache->get('stats.num_products');
+
+    // or specify a default value, if the key doesn't exist
+    // $numProducts = $cache->get('stats.num_products', 100);
+
+    // remove the cache key
+    $cache->deleteItem('stats.num_products');
+    
+    // clear *all* cache keys
+    $cache->clear();
+
+You can also work with multiple items at once::
+
+    $cache->setMultiple(array(
+        'stats.num_products' => 4711,
+        'stats.num_users' => 1356,
+    ));
+
+    $stats = $cache->getMultiple(array(
+        'stats.num_products',
+        'stats.num_users',
+    ));
+
+    $cache->deleteMultiple(array(
+        'stats.num_products',
+        'stats.num_users',
+    ));
+
+Available Simple Cache (PSR-16) Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following cache adapters are available:
+
+.. tip::
+
+    To find out more about each of these classes, you can read the
+    :doc:`PSR-6 Cache Pool </components/cache/cache_pools>` page. These "Simple"
+    (PSR-16) cache classes aren't identical to the PSR-6 Adapters on that page, but
+    each share constructor arguments and use-cases.
+
+* :class:`Symfony\\Component\\Cache\\Simple\\ApcuCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\ArrayCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\ChainCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\DoctrineCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\MemcachedCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\NullCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\PdoCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\PhpArrayCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\PhpFilesCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\RedisCache`
+* :class:`Symfony\\Component\\Cache\\Simple\\TraceableCache`
+
 .. _cache-component-psr6-caching:
 
 More Advanced Caching (PSR-6)
@@ -106,87 +187,6 @@ Advanced Usage (PSR-6)
     :maxdepth: 1
 
     cache/*
-
-.. _cache-component-psr16-caching:
-
-Simple Caching (PSR-16)
------------------------
-
-This part of the component is an implementation of `PSR-16`_, which means that its
-basic API is the same as defined in the standard. First, create a cache object from
-one of the built-in cache clases. For example, to create a filesystem-based cache,
-instantiate :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`::
-
-    use Symfony\Component\Cache\Simple\FilesystemCache;
-
-    $cache = new FilesystemCache();
-
-Now you can create, retrieve, update and delete items using this object::
-
-    // save a new item in the cache
-    $cache->set('stats.num_products', 4711);
-
-    // or set it with a custom ttl
-    // $cache->set('stats.num_products', 4711, 3600);
-
-    // retrieve the cache item
-    if (!$cache->has('stats.num_products')) {
-        // ... item does not exists in the cache
-    }
-
-    // retrieve the value stored by the item
-    $numProducts = $cache->get('stats.num_products');
-
-    // or specify a default value, if the key doesn't exist
-    // $numProducts = $cache->get('stats.num_products', 100);
-
-    // remove the cache key
-    $cache->deleteItem('stats.num_products');
-    
-    // clear *all* cache keys
-    $cache->clear();
-
-You can also work with multiple items at once::
-
-    $cache->setMultiple([
-        'stats.num_products' => 4711,
-        'stats.num_users' => 1356,
-    ]);
-
-    $stats = $cache->getMultiple([
-        'stats.num_products',
-        'stats.num_users',
-    ]);
-
-    $cache->deleteMultiple([
-        'stats.num_products',
-        'stats.num_users',
-    ]);
-
-Available Simple Cache (PSR-16) Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The following cache adapters are available:
-
-.. tip::
-
-    To find out more about each of these classes, you can read th
-    :doc:`PSR-6 Cache Pool </components/cache/cache_pools>` page. These "Simple"
-    (PSR-16) cache classes aren't identical to the PSR-6 Adapters on that page, but
-    each share constructor arguments and use-cases.
-
-* :class:`Symfony\\Component\\Cache\\Simple\\ApcuCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\ArrayCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\ChainCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\DoctrineCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\MemcachedCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\NullCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\PdoCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\PhpArrayCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\PhpFilesCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\RedisCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\TraceableCache`
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
 .. _`PSR-16`: http://www.php-fig.org/psr/psr-16/

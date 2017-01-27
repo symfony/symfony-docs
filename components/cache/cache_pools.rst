@@ -5,8 +5,8 @@
    single: Redis Cache
    single: PDO Cache, Doctrine DBAL Cache
 
-Cache Pools & Supported Adapters
-================================
+Cache Pools and Supported Adapters
+==================================
 
 Cache Pools are the logical repositories of cache items. They perform all the
 common operations on items, such as saving them or looking for them. Cache pools
@@ -140,12 +140,12 @@ helper allows creating a connection to a pool of Memcached server using a DSN co
         'memcached://user:pass@localhost?weight=33',
 
         // options, including username, password and Memcached::OPT_* options
-        ['persistent_id' => '_products_cache']
+        array('persistent_id' => '_products_cache')
     );
-    $memcachedClient = MemcachedAdapter::createConnection([
+    $memcachedClient = MemcachedAdapter::createConnection(array(
         array('192.168.1.100', 11211, 33),
         array('192.168.1.101', 11211, 33)
-    ]);
+    ));
 
     $cache = new MemcachedAdapter($memcachedClient);
 
@@ -209,7 +209,7 @@ and more::
 
     $fileCache = new FilesystemAdapter();
 
-    $cache = new TraceableAdapter(array($fileCache));
+    $cache = new TraceableAdapter($fileCache);
     
     // work with the $cache adapter like normal
 
