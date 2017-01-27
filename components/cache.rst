@@ -39,6 +39,11 @@ This component includes *two* different approaches to caching:
 
 Both methods support the *same* cache adapters and will give you very similar performance.
 
+.. tip::
+
+    The component also contains adapters to convert between PSR-6 and PSR-16 caches.
+    See :doc:`/components/cache/psr_psr16_adapters`.
+
 .. _cache-component-psr6-caching:
 
 More Advanced Caching (PSR-6)
