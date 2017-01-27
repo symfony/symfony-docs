@@ -46,10 +46,15 @@ disk: 512
 # Build time dependencies.
 dependencies:
   python:
-    sphinx: "1.3.6"
+    virtualenv: 15.1.0
 
 # The hooks that will be performed when the package is deployed.
 hooks:
     build: |
-      pip install git+https://github.com/fabpot/sphinx-php.git
+      virtualenv .virtualenv
+      . .virtualenv/bin/activate
+      # Platform.sh currently sets PIP_USER=1.
+      export PIP_USER=
+      pip install pip==9.0.1 wheel==0.29.0
+      pip install -r requirements.txt
       make -C _build html
