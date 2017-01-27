@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-22T22:01:14Z
+
+Amazing! @damz thanks so much for looking into this. Now I'm sure I would have never fixed it 😅
+
+---------------------------------------------------------------------------
+
+by damz at 2017-01-22T22:06:02Z
+
+You can pick either this one or #7403, and it is purely a "pick your poison" question:
+
+ * This one you will have to update the pinned dependencies from time to time, but the build is repeatable;
+ * #7403 you don't have to update the dependencies (you get updated versions automatically), but that might make the build randomly fail.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T09:59:06Z
+
+We've finally decided to go for this version, so we'll close #7403 and we'll merge this soon. @damz thanks for your great help solving this issue!
