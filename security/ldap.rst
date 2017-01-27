@@ -295,19 +295,6 @@ than one is found.
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``.
 
-query_string
-............
-
-**type**: ``string`` **default**: ``null``
-
-This optional key defines the form of the query used in order to search the
-DN of the user, from the username. The ``{username}`` string is replaced by
-the actual username of the person trying to authenticate.
-
-This setting is only necessary if the users DN cannot be derived statically
-using the `dn_string` config option.
-
-
 Configuration example for form login
 ....................................
 
@@ -323,8 +310,6 @@ Configuration example for form login
                 main:
                     # ...
                     form_login_ldap:
-                        login_path: login
-                        check_path: login_check
                         # ...
                         service: ldap
                         dn_string: 'uid={username},dc=example,dc=com'
@@ -342,8 +327,6 @@ Configuration example for form login
             <config>
                 <firewall name="main">
                     <form-login-ldap
-                            login-path="login"
-                            check-path="login_check"
                             service="ldap"
                             dn-string="uid={username},dc=example,dc=com" />
                 </firewall>
@@ -356,8 +339,6 @@ Configuration example for form login
             'firewalls' => array(
                 'main' => array(
                     'form_login_ldap' => array(
-                        'login_path' => 'login',
-                        'check_path' => 'login_check',
                         'service' => 'ldap',
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
@@ -432,8 +413,6 @@ Configuration example for form login and query_string
                 main:
                     # ...
                     form_login_ldap:
-                        login_path: login
-                        check_path: login_check
                         # ...
                         service: ldap
                         dn_string: 'dc=example,dc=com'
@@ -452,23 +431,20 @@ Configuration example for form login and query_string
             <config>
                 <firewall name="main">
                     <form-login-ldap
-                            login-path="login"
-                            check-path="login_check"
                             service="ldap"
                             dn-string="dc=example,dc=com"
-                            query-string="(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))" />
+                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))" />
                 </firewall>
             </config>
         </srv:container>
 
     .. code-block:: php
 
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
                     'form_login_ldap' => array(
-                        'login_path' => 'login',
-                        'check_path' => 'login_check',
                         'service' => 'ldap',
                         'dn_string' => 'dc=example,dc=com',
                         'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
