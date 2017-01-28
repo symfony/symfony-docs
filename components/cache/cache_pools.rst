@@ -62,7 +62,7 @@ Php Files Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 This adapter is very similar to the Filesystem adapter, except that the saving creates
-a ``.php`` file, which is included on fetch (allowing the file to me saved in OpCache)::
+a ``.php`` file, which is included on fetch (allowing the file to be saved in OPcache)::
 
     use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 
@@ -212,12 +212,12 @@ Php Array Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 This adapter is a highly performant way to cache static data (e.g. application configuration)
-that is optimized and preloaded into OpCache memory storage::
+that is optimized and preloaded into OPcache memory storage::
 
     use Symfony\Component\Cache\Adapter\PhpArrayAdapter;
     use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 
-    // somehow, decide it's time to warmup the cache!
+    // somehow, decide it's time to warm up the cache!
     if ($needsWarmup) {
         // some static values
         $values = array(
