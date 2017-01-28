@@ -6,7 +6,7 @@ sudo: false
 cache:
   directories: [$HOME/.cache/pip]
 
-install: pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
+install: pip install -q -r --upgrade requirements.txt
 
 script: sphinx-build -nW -c _build/ -b html -d _build/doctrees . _build/html
 

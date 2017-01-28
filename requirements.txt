@@ -10,5 +10,5 @@ requests==2.12.5
 six==1.10.0
 snowballstemmer==1.2.1
 Sphinx==1.5.2
-git+https://github.com/fabpot/sphinx-php.git@7312eccce9465640752e51373a480da700e02345#egg_name=sphinx-php
-
+git+https://github.com/fabpot/sphinx-php.git@master#egg_name=sphinx-php
+sphinxcontrib-phpdomain==0.2.1
