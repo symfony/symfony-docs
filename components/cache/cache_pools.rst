@@ -58,6 +58,25 @@ contents as regular files in a set of directories on the local file system::
         $directory = null
     );
 
+Php Files Cache Adapter
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This adapter is very similar to the Filesystem adapter, except that the saving creates
+a ``.php`` file, which is included on fetch (allowing the file to be saved in OPcache)::
+
+    use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
+
+    $cache = new PhpFilesAdapter(
+        // the subdirectory of the main cache directory where cache items are stored
+        $namespace = '',
+        // in seconds; applied to cache items that don't define their own lifetime
+        // 0 means to store the cache items indefinitely (i.e. until the files are deleted)
+        $defaultLifetime = 0,
+        // the main cache directory (the application needs read-write permissions on it)
+        // if none is specified, a directory is created inside the system temporary directory
+        $directory = null
+    );
+
 APCu Cache Adapter
 ~~~~~~~~~~~~~~~~~~
 
@@ -188,6 +207,41 @@ application as if they were Symfony Cache adapters::
 This adapter also defines two optional arguments called  ``namespace`` (default:
 ``''``) and ``defaultLifetime`` (default: ``0``) and adapts them to make them
 work in the underlying Doctrine cache.
+
+Php Array Cache Adapter
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This adapter is a highly performant way to cache static data (e.g. application configuration)
+that is optimized and preloaded into OPcache memory storage::
+
+    use Symfony\Component\Cache\Adapter\PhpArrayAdapter;
+    use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
+
+    // somehow, decide it's time to warm up the cache!
+    if ($needsWarmup) {
+        // some static values
+        $values = array(
+            'stats.num_products' => 4711,
+            'stats.num_users' => 1356,
+        );
+
+        $cache = new PhpArrayAdapter(
+            // single file where values are cached
+            __DIR__ . '/somefile.cache',
+            // a backup adapter, if you set values after warmup
+            new FilesystemAdapter()
+        );
+        $cache->warmUp($values);
+    }
+
+    // ... then, use the cache!
+    $cacheItem = $cache->getItem('stats.num_users');
+    echo $cacheItem->get();
+
+.. note::
+
+    This adapter requires PHP 7.x and should be used with the php.ini setting
+    ``opcache.enable`` on.
 
 Looking for Cache Items
 -----------------------
