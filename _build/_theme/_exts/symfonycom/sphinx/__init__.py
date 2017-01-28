@@ -26,12 +26,10 @@ class SensioHTMLTranslator(HTMLTranslator):
         self.highlightlinenothreshold = 0
 
     def visit_literal(self, node):
-        self.body.append(self.starttag(node, 'tt', '', CLASS='docutils literal'))
         self.body.append('<code>')
 
     def depart_literal(self, node):
         self.body.append('</code>')
-        self.body.append('</tt>')
 
     def visit_admonition(self, node, name=''):
         self.body.append(self.starttag(node, 'div', CLASS=('admonition-wrapper')))
