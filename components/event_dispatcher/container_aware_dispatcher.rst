@@ -99,3 +99,4 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
             // ...
         }
     }
+
