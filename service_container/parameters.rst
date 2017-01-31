@@ -226,6 +226,7 @@ key and define the type as ``constant``.
 .. configuration-block::
 
     .. code-block:: yaml
+
         parameters:
             global.constant.value: !php/const:GLOBAL_CONSTANT
             my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
