@@ -26,7 +26,7 @@ Step 2: Select Cloud Provider
 
 Now select your favorite Cloud provider. You can select any one from the five providers to install symfony.
 
-.. image:: /_images/deployment/cloudways/select-Provider.png
+.. image:: /_images/deployment/cloudways/select-provider.png
    :alt: Select cloud Provider
 
 Step 3: Select Server Size & Location
