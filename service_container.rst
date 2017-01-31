@@ -458,8 +458,8 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
 .. tip::
 
-    The YAML configuration files support an expanded syntax which may be useful
-    when the YAML contents are long and complex:
+    The YAML configuration format supports an expanded syntax which may be
+    useful when the YAML contents are long and complex:
 
     .. code-block:: yaml
 
