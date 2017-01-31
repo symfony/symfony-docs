@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2017-01-22T19:21:53Z
+
+New keyboard shortcuts were added in https://github.com/symfony/symfony/pull/21238 in order to navigate between found occurrences, replicating browsers behavior.
+Should we document that too? 😃
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2017-01-24T21:23:51Z
+
+👍 Thanks :)
+
+Status: Reviewed
