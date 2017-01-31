@@ -502,8 +502,10 @@ Frequently Asked Questions
                         logout: ~
 
                         guard:
+                            entry_point: app.form_login_authenticator
                             authenticators:
                                 - app.token_authenticator
+                                - app.form_login_authenticator
 
                         # if you want, disable storing the user in the session
                         # stateless: true
@@ -529,8 +531,9 @@ Frequently Asked Questions
                     >
                         <logout />
 
-                        <guard>
+                        <guard entry-point="app.form_login_authenticator">
                             <authenticator>app.token_authenticator</authenticator>
+                            <authenticator>app.form_login_authenticator</authenticator>
                         </guard>
 
                         <!-- ... -->
@@ -551,8 +554,10 @@ Frequently Asked Questions
                         'anonymous'      => true,
                         'logout'         => true,
                         'guard'          => array(
+                            'entry_point'     => 'app.form_login_authenticator',
                             'authenticators'  => array(
-                                'app.token_authenticator'
+                                'app.token_authenticator',
+                                'app.form_login_authenticator',
                             ),
                         ),
                         // ...
