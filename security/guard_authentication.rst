@@ -531,7 +531,7 @@ Frequently Asked Questions
                     >
                         <logout />
 
-                        <guard entry-point="app.form_login_authenticator"
+                        <guard entry-point="app.form_login_authenticator">
                             <authenticator>app.token_authenticator</authenticator>
                             <authenticator>app.form_login_authenticator</authenticator>
                         </guard>
