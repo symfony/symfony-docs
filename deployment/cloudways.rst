@@ -126,13 +126,8 @@ This is how the Symfony Welcome page should look like:
 
 Finally Your Symfony Project is ready for development. 
 
-sign up with Cloudways: [https://platform.cloudways.com/signup/]
-Cloudways Support: [https://support.cloudways.com]
-git-scm.com: [http://git-scm.com/download]
+sign up with Cloudways: https://platform.cloudways.com/signup/
+Cloudways Support: https://support.cloudways.com
+git-scm.com: http://git-scm.com/download
 
-
-
-[https://platform.cloudways.com/signup/]: https://platform.cloudways.com/signup/
-[https://support.cloudways.com]: https://support.cloudways.com
-[http://git-scm.com/download]: http://git-scm.com/download
 
