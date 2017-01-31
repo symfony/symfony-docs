@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by hvt at 2017-01-18T09:51:11Z
+
+Fixed everything mentioned.
+
+Shall I squash everything into one commit?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-18T10:40:00Z
+
+@hvt If you want to, you can do that. Otherwise, we'll do that while merging your PR. :)
+
+---------------------------------------------------------------------------
+
+by hvt at 2017-01-18T10:45:13Z
+
+Done :].
