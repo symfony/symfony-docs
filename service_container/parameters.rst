@@ -248,15 +248,6 @@ key and define the type as ``constant``.
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
-.. tip::
-
-    If you're using YAML, you can :doc:`import an XML file </service_container/import>`
-    to take advantage of this functionality:
-
-    .. code-block:: yaml
-
-        imports:
-            - { resource: parameters.xml }
 
 PHP Keywords in XML
 -------------------
