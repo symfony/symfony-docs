@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-16T09:15:10Z
+
+Instead of documenting the deprecation I would update the example to show code that will be working with Symfony 4.0 too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-16T09:21:26Z
+
+@xabbuh you mean the example in `components/event_dispatcher.rst`?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-16T09:33:19Z
+
+Yes, maybe move it to its own article and then also add a link in the existing chapter to it.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-16T09:51:25Z
+
+I wonder ... why not remove that example entirely?  It doesn't explain nothing special ... just how to define services with tags, right?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-16T09:58:05Z
+
+Fine for me too. I am just afraid that users with older Symfony versions might be confused (sure, in an ideal world they wouldn't read the 3.2 docs, but you know what's going on).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-16T10:15:39Z
+
+I've checked other articles and I have a question.
+
+In `service_container/tags.rst` we say that if you add this code, the Twig extension will be automatically registered:
+
+```php
+$definition = new Definition(AppExtension::class);
+$definition->setPublic(false);
+$definition->addTag('twig.extension');
+$container->setDefinition('app.twig_extension', $definition);
+```
+
+But that's not true, right? You need to add some special compiler pass to manage the `twig.extension` tag.
+
+That's why the example in `event_dispatcher.rst` mentions the `RegisterListenersPass()`.
+
+---
+
+So I propose the following:
+
+* Remove the `event_dispatcher.rst` example entirely
+* Improve `service_container/tags.rst` to better explain what you must do to enable the service tags
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-16T21:25:40Z
+
+Well, `service_container/tags.rst` addresses users of the full-stack framework so we can safely assume that the compiler pass is registered. The `event_dispatcher.rst` however is located in the components section where we cannot make this assumption.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-17T12:08:43Z
+
+👍
+
+Status: Reviewed
