@@ -154,6 +154,12 @@ later how you can configure a service that has multiple instances in the
     ``get()`` method to locate and retrieve the ``app.mailer`` service from
     the service container.
 
+.. caution::
+
+    Service identifiers are case-insensitive (``app.mailer`` and ``APP.Mailer``
+    for example refer to the same service). This behavior was deprecated in
+    Symfony 3.3 and it will no longer work in Symfony 4.0.
+
 .. _service-container-parameters:
 
 Service Parameters
