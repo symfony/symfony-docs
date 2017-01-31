@@ -83,7 +83,8 @@ Step 6: Symfony Installation
 
 Now in your **public_html** directory, run the following command to install Symfony 3 on your server:
 
-`composer create-project symfony/framework-standard-edition your_project_name "3.1.*"`
+```ssh
+composer create-project symfony/framework-standard-edition your_project_name "3.1.*"```
 
 This command will create a symfony project in public_html. You can also install any version of the symfony
 just by replacing version number.
@@ -125,7 +126,13 @@ This is how the Symfony Welcome page should look like:
 
 Finally Your Symfony Project is ready for development. 
 
-.. _`sign up with Cloudways`: https://platform.cloudways.com/signup/
-.. _`Cloudways Support`: https://support.cloudways.com
-.. _`git-scm.com`: http://git-scm.com/download
+sign up with Cloudways: [https://platform.cloudways.com/signup/]
+Cloudways Support: [https://support.cloudways.com]
+git-scm.com: [http://git-scm.com/download]
+
+
+
+[https://platform.cloudways.com/signup/]: https://platform.cloudways.com/signup/
+[https://support.cloudways.com]: https://support.cloudways.com
+[http://git-scm.com/download]: http://git-scm.com/download
 
