@@ -188,8 +188,8 @@ For more information, see the :doc:`Routing chapter </routing>`.
 
 .. caution::
 
-    The ``redirect()`` method does not check its destination in any way. If you 
-    redirect to some URL provided by the end-users, your application may be open 
+    The ``redirect()`` method does not check its destination in any way. If you
+    redirect to some URL provided by the end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
 
@@ -425,19 +425,41 @@ read any flash messages from the session:
     .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
+
+        {# you can read and display just one flash message type... #}
         {% for flash_message in app.session.flashBag.get('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
             </div>
         {% endfor %}
 
+        {# ...or you can read and display every flash message that exists #}
+        {% for type, flash_messages in app.session.flashBag.all %}
+            {% for flash_message in flash_messages %}
+                <div class="flash-{{ type }}">
+                    {{ flash_message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
     .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
+
+        // you can read and display just one flash message type...
         <?php foreach ($view['session']->getFlash('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo "<div class='flash-error'>$message</div>" ?>
+                <?php echo $message ?>
             </div>
+        <?php endforeach ?>
+
+        // ...or you can read and display every flash message that exists
+        <?php foreach ($view['session']->getFlashes() as $type => $flash_messages): ?>
+            <?php foreach ($flash_messages as $flash_message): ?>
+                <div class="flash-<?php echo $type ?>">
+                    <?php echo $message ?>
+                </div>
+            <?php endforeach ?>
         <?php endforeach ?>
 
 .. note::
