@@ -133,7 +133,7 @@ labels
 ~~~~~~
 
 .. versionadded:: 3.3
-   The ``labels`` option was introduced in Symfony 3.3.
+    The ``labels`` option was introduced in Symfony 3.3.
 
 **type**: ``array`` **default**: (see below)
 
@@ -141,15 +141,15 @@ The labels displayed for each of the elements of this type. The default values
 are ``null``, so they display the "humanized version" of the child names (``Invert``,
 ``Years``, etc.)::
 
-  'labels' => array(
-      'invert' => null,
-      'years' => null,
-      'months' => null,
-      'days' => null,
-      'hours' => null,
-      'minutes' => null,
-      'seconds' => null,
-  )
+    'labels' => array(
+        'invert' => null,
+        'years' => null,
+        'months' => null,
+        'days' => null,
+        'hours' => null,
+        'minutes' => null,
+        'seconds' => null,
+    )
 
 minutes
 ~~~~~~~
