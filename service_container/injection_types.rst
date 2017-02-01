@@ -182,8 +182,13 @@ The disadvantages of setter injection are:
 Getter Injection
 ----------------
 
-    .. versionadded:: 3.3
-        Getter Injection was introduced in Symfony 3.3.
+.. versionadded:: 3.3
+    Getter Injection was introduced in Symfony 3.3.
+
+.. caution::
+
+    This feature is marked as **experimental**. The next Symfony versions could
+    change its behavior or even remove this feature entirely.
 
 Another possible injection point into a class is by overriding a getter method
 to make it return the dependency::
