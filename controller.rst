@@ -433,7 +433,7 @@ read any flash messages from the session:
             </div>
         {% endfor %}
 
-        {# ...or you can read and display every flash message that exists #}
+        {# ...or you can read and display every flash message available #}
         {% for type, flash_messages in app.session.flashes %}
             {% for flash_message in flash_messages %}
                 <div class="flash-{{ type }}">
@@ -453,7 +453,7 @@ read any flash messages from the session:
             </div>
         <?php endforeach ?>
 
-        // ...or you can read and display every flash message that exists
+        // ...or you can read and display every flash message available
         <?php foreach ($view['session']->getFlashes() as $type => $flash_messages): ?>
             <?php foreach ($flash_messages as $flash_message): ?>
                 <div class="flash-<?php echo $type ?>">
