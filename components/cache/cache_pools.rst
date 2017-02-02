@@ -142,6 +142,8 @@ helper allows creating a connection to a pool of Memcached server using a DSN co
         // options, including username, password and Memcached::OPT_* options
         array('persistent_id' => '_products_cache')
     );
+
+    // alternate syntax: array notations for the servers
     $memcachedClient = MemcachedAdapter::createConnection(array(
         array('192.168.1.100', 11211, 33),
         array('192.168.1.101', 11211, 33)
