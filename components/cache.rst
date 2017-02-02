@@ -32,7 +32,7 @@ This component includes *two* different approaches to caching:
 
 :ref:`PSR-6 Caching <cache-component-psr6-caching>`:
      A fully-featured cache system, which includes cache "pools", more advanced
-     cache "items", and :ref:`cache tagging for invalidation <TODO>`.
+     cache "items", and :ref:`cache tagging for invalidation <cache-component-tags>`.
 
 :ref:`PSR-16 Simple Caching <cache-component-psr16-caching>`:
     A simple way to store, fetch and remove items from a cache.
