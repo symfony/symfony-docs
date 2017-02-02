@@ -140,7 +140,7 @@ Deploying From Github
 
 You can also deploy Symfony application from github. copy the HTTP URL of the repository,
 
-.. image:: /_images/deployment/cloudways/symfony-home.png
+.. image:: /_images/deployment/cloudways/http_url.png
    :alt: symfony homepage
 
 Open SSH terminal on cloudways Using Master Credentials as shown in Step 5. Move to your project folder,
