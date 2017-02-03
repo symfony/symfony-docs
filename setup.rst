@@ -28,6 +28,9 @@ executable that needs to be installed on your system only once:
 
     # Windows systems
     c:\> php -r "readfile('https://symfony.com/installer');" > symfony
+    
+    # Windows 10 and xampp (whit the "PATH" environment variable defined in "c:\xampp\php'
+    c:\> php.exe -r "readfile('https://symfony.com/installer');" > symfony
 
 .. note::
 
@@ -48,6 +51,9 @@ executable that needs to be installed on your system only once:
         # ... then, execute the command as
         c:\> cd projects
         c:\projects\> php symfony
+        # in windows 10 with xampp...
+        c:\> cd projects
+        c:\projects\> php.exe symfony
 
 .. _installation-creating-the-app:
 
@@ -57,6 +63,9 @@ with the ``new`` command:
 .. code-block:: terminal
 
     $ symfony new my_project_name
+    
+    # in windows 10 with xampp...
+    $ php.exe symfony new my_project_name
 
 This command creates a new directory called ``my_project_name/`` that contains
 an empty project based on the most recent stable Symfony version available. In
@@ -68,6 +77,19 @@ to meet those requirements.
 
     If the installer doesn't work for you or doesn't output anything, make sure
     that the PHP `Phar extension`_ is installed and enabled on your computer.
+    In windows 10 with xampp, if you have un error like
+    
+    cURL error 60: SSL certificate problem: unable to get local issuer certificate.
+    
+    In that case follow this link:
+
+    http://curl.haxx.se/ca/cacert.pem
+
+    Copy the entire page and save it in a: "cacert.pem"
+
+    Then in your php.ini file insert or edit the following line:
+
+     curl.cainfo = "[pathtothisfile]\cacert.pem"
 
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
