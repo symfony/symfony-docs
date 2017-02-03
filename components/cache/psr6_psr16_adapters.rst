@@ -6,8 +6,8 @@
 Adapters For Interoperability between PSR-6 and PSR-16 Cache
 ============================================================
 
-Sometimes, you may have a Cache object that implements the :ref:`PSR-16 <>`
-standard, but need to pass it to an object that expects a :ref:`PSR-6 <>`
+Sometimes, you may have a Cache object that implements the :ref:`PSR-16 <cache-component-psr16-caching>`
+standard, but need to pass it to an object that expects a :ref:`PSR-6 <cache-component-psr6-caching>`
 cache adapter. Or, you might have the opposite situation. The cache component contains
 two classes for bidirectional interoperability between PSR-6 and PSR-16 caches.
 
