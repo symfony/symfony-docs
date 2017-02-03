@@ -462,6 +462,29 @@ Injecting the dependency by the setter method just needs a change of syntax:
     and "setter injection". The Symfony service container also supports
     "property injection".
 
+.. tip::
+
+    The YAML configuration format supports an expanded syntax which may be
+    useful when the YAML contents are long and complex:
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # traditional syntax
+            app.newsletter_manager:
+                class: AppBundle\Newsletter\NewsletterManager
+                calls:
+                    - [setMailer, ['@app.mailer']]
+
+            # expanded syntax
+            app.newsletter_manager:
+                class: AppBundle\Newsletter\NewsletterManager
+                calls:
+                    - method: setMailer
+                      arguments:
+                          - '@app.mailer'
+
 Learn more
 ----------
 

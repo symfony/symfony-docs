@@ -100,7 +100,7 @@ version string::
             return $versionized;
         }
 
-        private function loadManifest(array $options)
+        private function loadManifest()
         {
             return json_decode(file_get_contents($this->manifestPath), true);
         }

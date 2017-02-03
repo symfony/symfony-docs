@@ -219,12 +219,18 @@ for all parameters that are arrays.
 Constants as Parameters
 -----------------------
 
-The XML and PHP formats also have support for setting PHP constants as parameters.
+Setting PHP constants as parameters is also supported.
 To take advantage of this feature, map the name of your constant to a parameter
 key and define the type as ``constant``.
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        parameters:
+            global.constant.value: !php/const:GLOBAL_CONSTANT
+            my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
+        
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -243,15 +249,6 @@ key and define the type as ``constant``.
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
-.. tip::
-
-    If you're using YAML, you can :doc:`import an XML file </service_container/import>`
-    to take advantage of this functionality:
-
-    .. code-block:: yaml
-
-        imports:
-            - { resource: parameters.xml }
 
 PHP Keywords in XML
 -------------------
