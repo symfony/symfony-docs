@@ -135,22 +135,25 @@ This is how the Symfony Welcome page should look like:
 
 Finally your Symfony project is ready for development. 
 
-Deploying From Github 
+Deploying From GitHub 
 ======================
 
-You can also deploy Symfony applications from GitHub.Copy the HTTP URL of the repository,
+You can also deploy Symfony applications from GitHub. First, copy the HTTP URL
+of the repository:
 
 .. image:: /_images/deployment/cloudways/http_url.png
    :alt: symfony homepage
 
-Open the SSH terminal on Cloudways Using Master Credentials as shown in Step 5. Move to your project folder
-and run the clone command,
+Then, open the SSH terminal on Cloudways using Master Credentials as shown in
+Step 5. Move to your project folder and run the clone command:
 
 .. code-block:: terminal
-`cd application/{your app folder}/public_html`
-`git clone https://github.com/username/your-repository.git`
 
-After a successfull deployment change your database credentials in **parameters.yml**.You can find your db credentials
-in **Access details** as stated in step 7.
+    $ cd application/{your app folder}/public_html
+    $ git clone https://github.com/username/your-repository.git
+
+After a successful deployment, change your database credentials in
+**parameters.yml**. You can find your database credentials in **Access details**
+as stated in step 7.
 
 .. _`Sign up`: https://platform.cloudways.com/signup
