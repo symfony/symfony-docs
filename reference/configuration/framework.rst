@@ -93,6 +93,8 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
+    * `mapping`_
+        * :ref:`paths <reference-validation-mapping-paths>`
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -1366,6 +1368,19 @@ If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
 
+mapping
+.......
+
+.. _reference-validation-mapping-paths:
+
+paths
+"""""
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows to define an array of paths with files or directories where
+the component will look for additional validation files.
+
 annotations
 ~~~~~~~~~~~
 
@@ -1639,6 +1654,8 @@ Full Default Configuration
                 cache:                ~
                 enable_annotations:   false
                 translation_domain:   validators
+                mapping:
+                    paths:            []
 
             # annotation configuration
             annotations:
