@@ -17,14 +17,19 @@ the actual host may be stored in an ``X-Forwarded-Host`` header.
 
 Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
-your proxy.
+your proxy as follows:
 
 .. code-block:: php
 
     use Symfony\Component\HttpFoundation\Request;
 
-    // only trust proxy headers coming from this IP addresses
+    // put this code as early as possible in your application (e.g. in your
+    // front controller) to only trust proxy headers coming from these IP addresses
     Request::setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
+
+.. versionadded:: 2.3
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
+    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 You should also make sure that your proxy filters unauthorized use of these
 headers, e.g. if a proxy natively uses the ``X-Forwarded-For`` header, it
