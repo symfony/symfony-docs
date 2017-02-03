@@ -8,7 +8,7 @@ Cloudways is a managed hosting provider for PHP based applications. This step by
 step article describes how to install Symfony on Cloudways servers and how to
 deploy Symfony applications using Git and SSH.
 
-Step 1: Prepare your server and application
+Step 1: Prepare your Server and Application
 -------------------------------------------
 
 `Sign up`_ or login to your **Cloudways account** and create a new server by
@@ -18,7 +18,7 @@ your application, server and project accordingly.
 .. image:: /_images/deployment/cloudways/select-application.png
    :alt: Select PHP Stack in Drop down
 
-Step 2: Select Cloud Provider
+Step 2: Select a Cloud Provider
 -----------------------------
 
 Now select your favorite cloud provider. You can select any one from the five
@@ -58,7 +58,7 @@ requires to define a valid timezone for PHP. Under **Server Management**, go to
 .. image:: /_images/deployment/cloudways/server-management.png
    :alt: server management tab
 
-In **Basic** tab you can see **PHP Timezone.** Change the server timezone to the
+In the **Basic** tab you can see **PHP Timezone.** Change the server timezone to the
 appropriate value according to your location.
 
 .. image:: /_images/deployment/cloudways/server-timezone-1.png
@@ -67,7 +67,7 @@ appropriate value according to your location.
 Step 5: SSH Terminal
 --------------------
 
-After changing server timezone, in **Server Management** click on **Launch SSH
+After changing the server timezone, in **Server Management** click on **Launch SSH
 Terminal** under  **Master Credentials** where you can find your login
 credentials for SSH Terminal.
 
@@ -79,7 +79,7 @@ Login to SSH with your Master Credentials.
 .. image:: /_images/deployment/cloudways/symfony-7.png
    :alt: login to SSH
 
-Since the application folder contains a ``index.php`` fie by default, remove it
+Since the application folder contains an ``index.php`` file by default, remove it
 from your ``public_html/`` directory executing the ``rm -Rf *`` command.
 
 Step 6: Symfony Installation
@@ -126,7 +126,7 @@ detail** and copy your Application URL.
    :alt: database information
 
 Open your favorite web browser and access to the "Symfony Welcome page" using
-the following URL: http://your_application_url/your_project_directory/web
+the following URL: http://your_staging_url/web
 
 This is how the Symfony Welcome page should look like:
 
@@ -138,21 +138,19 @@ Finally your Symfony project is ready for development.
 Deploying From Github 
 ======================
 
-You can also deploy Symfony application from github. copy the HTTP URL of the repository,
+You can also deploy Symfony applications from GitHub.Copy the HTTP URL of the repository,
 
 .. image:: /_images/deployment/cloudways/http_url.png
    :alt: symfony homepage
 
-Open SSH terminal on cloudways Using Master Credentials as shown in Step 5. Move to your project folder,
+Open the SSH terminal on Cloudways Using Master Credentials as shown in Step 5. Move to your project folder
+and run the clone command,
+
+.. code-block:: terminal
 `cd application/{your app folder}/public_html`
-
-Run the clone command here:
-
 `git clone https://github.com/username/your-repository.git`
 
-After successfull deployment change your database credentials in **parameters.yml**. you can find your db credentials
+After a successfull deployment change your database credentials in **parameters.yml**.You can find your db credentials
 in **Access details** as stated in step 7.
 
-
 .. _`Sign up`: https://platform.cloudways.com/signup
-
