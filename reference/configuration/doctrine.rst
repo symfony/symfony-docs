@@ -297,8 +297,9 @@ certain classes, but those are for very advanced use-cases only.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values ``array``, ``apc``, ``memcache``,
-``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache`` or ``service``.
+For the caching drivers you can specify the values ``array``, ``apc``, ``apcu``,
+``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache``
+or ``service``.
 
 The following example shows an overview of the caching configurations:
 
