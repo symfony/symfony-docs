@@ -20,13 +20,16 @@ It comes with the following features:
 
 * Provides a ``ClockMock`` helper class for time-sensitive tests.
 
+* Provides a modified version of phpunit that does not embed ``symfony/yaml`` nor
+  ``prophecy`` to prevent any conflicts with these dependencies.
+
 Installation
 ------------
 
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>`
-  (``symfony/phpunit-bridge`` on `Packagist`_); as a dev dependency;
+  (``symfony/phpunit-bridge`` on `Packagist`_); as a ``dev`` dependency;
 
 * Use the official Git repository (https://github.com/symfony/phpunit-bridge).
 
@@ -326,6 +329,35 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
             </listener>
         </listeners>
     </phpunit>
+
+Modified PHPUnit script
+-----------------------
+
+.. versionadded:: 3.2
+    The modified PHPUnit script script was introduced in Symfony 3.2.
+
+This bridge provides a modified version of PHPUnit that you can call by using
+its ``bin/simple-phpunit`` command. It has the following features:
+
+* Does not embed ``symfony/yaml`` nor ``prophecy`` to prevent any conflicts with
+  these dependencies;
+* Uses PHPUnit 4.8 when run with PHP <=5.5 and PHPUnit 5.1 when run with PHP >=5.6;
+* Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
+  env var is defined: the env var should specify a file name that will be used for
+  storing skipped tests on a first run, and replay them on the second run;
+* Parallelizes test suites execution when given a directory as argument, scanning
+  this directory for ``phpunit.xml.dist`` files up to ``SYMFONY_PHPUNIT_MAX_DEPTH``
+  levels (specified as an env var, defaults to ``3``);
+
+The script writes the modified PHPUnit it builds in a directory that can be
+configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
+the ``simple-phpunit`` if it is not provided.
+
+If you have installed the bridge through Composer, you can run it by calling e.g.:
+
+.. code-block:: bash
+
+    $ vendor/bin/simple-phpunit
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener

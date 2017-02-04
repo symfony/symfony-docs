@@ -511,6 +511,12 @@ There are special classes that make certain kinds of responses easier:
   :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
+.. seealso::
+
+    Now that you know the basics you can continue your research on Symfony
+    ``Request`` and ``Response`` object in the
+    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+
 JSON Helper
 ~~~~~~~~~~~
 
@@ -534,11 +540,39 @@ If the :doc:`serializer service </serializer>` is enabled in your
 application, contents passed to ``json()`` are encoded with it. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
-.. seealso::
+File helper
+~~~~~~~~~~~
 
-    Now that you know the basics you can continue your research on Symfony
-    ``Request`` and ``Response`` object in the
-    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+.. versionadded:: 3.2
+    The ``file()`` helper was introduced in Symfony 3.2.
+
+You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+helper to serve a file from inside a controller::
+
+    public function fileAction()
+    {
+        // send the file contents and force the browser to download it
+        return $this->file('/path/to/some_file.pdf');
+    }
+
+The ``file()`` helper provides some arguments to configure its behavior::
+
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    public function fileAction()
+    {
+        // load the file from the filesystem
+        $file = new File('/path/to/some_file.pdf');
+
+        return $this->file($file);
+
+        // rename the downloaded file
+        return $this->file($file, 'custom_name.pdf');
+
+        // display the file contents in the browser instead of downloading it
+        return $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+    }
 
 Final Thoughts
 --------------

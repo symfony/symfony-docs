@@ -310,7 +310,7 @@ Testing a Command that Expects Input
 ------------------------------------
 
 If you want to write a unit test for a command which expects some kind of input
-from the command line, you need to set the helper input stream::
+from the command line, you need to set the inputs that the command expects::
 
     use Symfony\Component\Console\Helper\QuestionHelper;
     use Symfony\Component\Console\Helper\HelperSet;
@@ -322,26 +322,30 @@ from the command line, you need to set the helper input stream::
         // ...
         $commandTester = new CommandTester($command);
 
-        $helper = $command->getHelper('question');
-        $helper->setInputStream($this->getInputStream("Test\n"));
         // Equals to a user inputting "Test" and hitting ENTER
-        // If you need to enter a confirmation, "yes\n" will work
+        $commandTester->setInputs(array('Test'));
+
+        // Equals to a user inputting "This", "That" and hitting ENTER
+        // This can be used for answering two separated questions for instance
+        $commandTester->setInputs(array('This', 'That'));
+
+        // For simulating a positive answer to a confirmation question, adding an
+        // additional input saying "yes" will work
+        $commandTester->setInputs(array('yes'));
 
         $commandTester->execute(array('command' => $command->getName()));
 
         // $this->assertRegExp('/.../', $commandTester->getDisplay());
     }
 
-    protected function getInputStream($input)
-    {
-        $stream = fopen('php://memory', 'r+', false);
-        fputs($stream, $input);
-        rewind($stream);
+By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
+you imitate what the console would do internally with all user input through the CLI.
+This method takes an array as only argument with, for each input that the command expects,
+a string representing what the user would have typed.
+This way you can test any user interaction (even complex ones) by passing the appropriate inputs.
 
-        return $stream;
-    }
+.. note::
 
-By setting the input stream of the ``QuestionHelper``, you imitate what the
-console would do internally with all user input through the CLI. This way
-you can test any user interaction (even complex ones) by passing an appropriate
-input stream.
+    The :class:`Symfony\\Component\\Console\\Tester\\CommandTester` automatically
+    simulates a user hitting ``ENTER`` after each input, no need for passing
+    an additional input.
