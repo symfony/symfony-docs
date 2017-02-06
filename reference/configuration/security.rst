@@ -318,10 +318,37 @@ request to the ``check_path`` URL.
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* ``always_use_default_target_path`` (type: ``boolean``, default: ``false``)
-* ``default_target_path`` (type: ``string``, default: ``/``)
-* ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
-* ``use_referer`` (type: ``boolean``, default: ``false``)
+always_use_default_target_path
+..............................
+
+**type**: ``boolean`` **default** ``false``
+
+If ``true``, users are always redirected to the default target path regardless
+of the previous URL that was stored in the session.
+
+default_target_path
+....................
+
+**type**: ``string``, **default**: ``/``
+
+The page users are redirect to when there is no previous page stored in the
+session (for example when the users access directly to the login page).
+
+target_path_parameter
+.....................
+
+**type**: ``string``, **default**: ``_target_path``
+
+When using a login form, if you include an HTML element to set the target path,
+this option lets you change the name of the HTML element itself.
+
+use_referer
+...........
+
+**type**: ``boolean``, **default**: ``false``
+
+If ``true``, the user is redirected to the value stored in the ``HTTP_REFERER``
+header when no previous URL was stored in the session.
 
 .. _reference-security-pbkdf2:
 
