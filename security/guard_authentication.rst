@@ -251,6 +251,7 @@ To finish this, register the class as a service:
         services:
             app.token_authenticator:
                 class: AppBundle\Security\TokenAuthenticator
+                arguments: ['@doctrine.orm.entity_manager']
 
     .. code-block:: xml
 
