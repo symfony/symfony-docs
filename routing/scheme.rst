@@ -11,7 +11,8 @@ the URI scheme via schemes:
 .. configuration-block::
 
     .. code-block:: yaml
-
+    
+        # app/config/routing.yml
         secure:
             path:     /secure
             defaults: { _controller: AppBundle:Main:secure }
@@ -19,6 +20,7 @@ the URI scheme via schemes:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -32,6 +34,7 @@ the URI scheme via schemes:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
