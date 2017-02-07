@@ -121,6 +121,24 @@ also set the value ``"weak"`` which will make the bridge ignore any deprecation
 notices. This is useful to projects that must use deprecated interfaces for
 backward compatibility reasons.
 
+When you maintain a library, having the test suite fail as soon as a dependency
+introduces a new deprecation is not desirable, because it shifts the burden of
+fixing that deprecation to any contributor that happens to submit a pull
+request shortly after a new vendor release is made with that deprecation. To
+mitigate this, you can either use tighter requirements, in the hope that
+dependencies will not introduce deprecations in a patch version, or even commit
+the Composer lock file, which would create another class of issues. Libraries
+will often use ``SYMFONY_DEPRECATIONS_HELPER=weak`` because of this. This has
+the drawback of allowing contributions that introduce deprecations but:
+
+* forget to fix the deprecated calls if there are any;
+* forget to mark appropriate tests with the ``@group legacy`` annotations.
+
+By using the ``"weak_vendors"`` value, deprecations that are triggered outside
+the ``vendors`` directory will make the test suite fail, while deprecations
+triggered from a library inside it will not, giving you the best of both
+worlds.
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
