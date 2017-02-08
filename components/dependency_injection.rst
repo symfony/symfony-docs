@@ -57,8 +57,8 @@ so this is passed into the constructor:
     {
         private $transport;
 
--       public function __construct()
-+       public function __construct($transport)
+    -   public function __construct()
+    +   public function __construct($transport)
         {
             $this->transport = $transport;
         }
@@ -75,7 +75,7 @@ Then you can set the choice of transport in the container:
     $container = new ContainerBuilder();
     $container
         ->register('mailer', 'Mailer')
-+       ->addArgument('sendmail');
+    +   ->addArgument('sendmail');
 
 This class is now much more flexible as you have separated the choice of
 transport out of the implementation and into the container.
@@ -90,10 +90,10 @@ the ``Mailer`` service's constructor argument:
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
-+   $container->setParameter('mailer.transport', 'sendmail');
+    +$container->setParameter('mailer.transport', 'sendmail');
     $container
         ->register('mailer', 'Mailer')
-+       ->addArgument('%mailer.transport%');
+    +   ->addArgument('%mailer.transport%');
 
 Now that the ``mailer`` service is in the container you can inject it as
 a dependency of other classes. If you have a ``NewsletterManager`` class
