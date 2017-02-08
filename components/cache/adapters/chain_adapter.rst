@@ -25,12 +25,12 @@ maximum cache lifetime as its second parameter::
 
 .. note::
 
-    When an item is not found in the first adapters but is found in the next ones, this
+    When an item is not found in the first adapter but is found in the next ones, this
     adapter ensures that the fetched item is saved in all the adapters where it was
     previously missing.
 
-The following shows how to create a chain adapter instance using the fastest and slowest
-storage engines, :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter` and
+The following example shows how to create a chain adapter instance using the fastest and
+slowest storage engines, :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter` and
 :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`, respectfully::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;

@@ -10,7 +10,7 @@ APCu Cache Adapter
 This adapter is a high-performance, shared memory cache. It can increase the
 application performance very significantly because the cache contents are
 stored in the shared memory of your server, a component that is much faster than
-others, such as the file system.
+others, such as the filesystem.
 
 .. caution::
 
@@ -46,7 +46,7 @@ parameter::
 
 .. tip::
 
-    Note that this adapters CRUD operations are specific to the PHP SAPI it is running
+    Note that this adapter's CRUD operations are specific to the PHP SAPI it is running
     under. This means adding a cache item using the CLI will not result in the item
     appearing under FPM. Likewise, deletion of an item using CGI will not result in the
     item being deleted under the CLI.
