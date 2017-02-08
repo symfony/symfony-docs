@@ -49,13 +49,16 @@ You can register this in the container as a service::
 
 An improvement to the class to make it more flexible would be to allow
 the container to set the ``transport`` used. If you change the class
-so this is passed into the constructor::
+so this is passed into the constructor:
+
+.. code-block:: diff
 
     class Mailer
     {
         private $transport;
 
-        public function __construct($transport)
+-       public function __construct()
++       public function __construct($transport)
         {
             $this->transport = $transport;
         }
@@ -63,14 +66,16 @@ so this is passed into the constructor::
         // ...
     }
 
-Then you can set the choice of transport in the container::
+Then you can set the choice of transport in the container:
+
+.. code-block:: diff
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
     $container
         ->register('mailer', 'Mailer')
-        ->addArgument('sendmail');
++       ->addArgument('sendmail');
 
 This class is now much more flexible as you have separated the choice of
 transport out of the implementation and into the container.
@@ -78,15 +83,17 @@ transport out of the implementation and into the container.
 Which mail transport you have chosen may be something other services need
 to know about. You can avoid having to change it in multiple places by making
 it a parameter in the container and then referring to this parameter for
-the ``Mailer`` service's constructor argument::
+the ``Mailer`` service's constructor argument:
+
+.. code-block:: diff
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
-    $container->setParameter('mailer.transport', 'sendmail');
++   $container->setParameter('mailer.transport', 'sendmail');
     $container
         ->register('mailer', 'Mailer')
-        ->addArgument('%mailer.transport%');
++       ->addArgument('%mailer.transport%');
 
 Now that the ``mailer`` service is in the container you can inject it as
 a dependency of other classes. If you have a ``NewsletterManager`` class
