@@ -53,7 +53,7 @@ so this is passed into the constructor:
 
 .. code-block:: diff
 
-    @@ -2,7 +2,7 @@ class Mailer
+    class Mailer
     {
         private $transport;
 
