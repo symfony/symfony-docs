@@ -21,9 +21,9 @@ Full Default Configuration
                     some_custom_type:
                         class:                Acme\HelloBundle\MyCustomType
                         commented:            true
-                # If enabled all tables not prefixed with sf2_ will be ignored by the schema
-                # tool. This is for custom tables which should not be altered automatically.
-                #schema_filter:        ~^sf2_~
+                # If defined, all the tables whose names match this regular expression are ignored
+                # by the schema tool (in this example, any table name starting with `wp_`)
+                #schema_filter:               "/^wp_/"
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
