@@ -23,7 +23,7 @@ Full Default Configuration
                         commented:            true
                 # If enabled all tables not prefixed with sf2_ will be ignored by the schema
                 # tool. This is for custom tables which should not be altered automatically.
-                #schema_filter:        ^sf2_
+                #schema_filter:        ~^sf2_~
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
