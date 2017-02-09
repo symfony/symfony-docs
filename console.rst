@@ -57,7 +57,7 @@ method. Then you can optionally define a help message and the
 
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp("This command allows you to create users...")
+            ->setHelp('This command allows you to create users...')
         ;
     }
 
