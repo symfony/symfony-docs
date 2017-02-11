@@ -218,7 +218,7 @@ Service Naming Conventions
 
 * The DI alias of the bundle is the first group (e.g. ``fos_user``);
 
-* Use lowercase letters for service and parameter names;
+* Use lowercase letters for service and parameter names (only one exception - %env(VARIABLE_NAME)% syntax in parameters);
 
 * A group name uses the underscore notation.
 
