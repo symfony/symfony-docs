@@ -150,9 +150,10 @@ of Symfony to the next one.
 Whenever keeping backward compatibility is not possible, the feature, the
 enhancement or the bug fix will be scheduled for the next major version.
 
-However, features marked with the ``@experimental`` tag are **not** part of the
-backward compatibility promise and their APIs can change from one minor version
-to the next. The changelog must explain the changes and how to upgrade.
+However, :doc:`Experimental Features </contributing/code/experimental>` are
+**not** part of the backward compatibility promise and their APIs can change
+from one minor version to the next. The changelog must explain the changes and
+how to upgrade.
 
 Deprecations
 ------------

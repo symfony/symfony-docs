@@ -34,8 +34,9 @@ follow to ensure smooth upgrades for our users.
 
 .. warning::
 
-    Code marked with the ``@experimental`` or the ``@internal`` tags is
-    excluded from our Backward Compatibility promise.
+    :doc:`Experimental Features </contributing/code/experimental>` and code
+    marked with the ``@internal`` tags are excluded from our Backward
+    Compatibility promise.
 
     Also note that backward compatibility breaks are tolerated if they are
     required to fix a security issue.
