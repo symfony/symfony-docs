@@ -5,8 +5,8 @@ Upgrading a Minor Version (e.g. 2.5.3 to 2.6.1)
 ===============================================
 
 If you're upgrading a minor version (where the middle number changes), then
-you should *not* encounter significant backwards compatibility changes. For
-details, see the :doc:`Symfony backwards compatibility promise </contributing/code/bc>`.
+you should *not* encounter significant backward compatibility changes. For
+details, see the :doc:`Symfony backward compatibility promise </contributing/code/bc>`.
 
 However, some backwards-compatibility breaks *are* possible and you'll learn in
 a second how to prepare for them.
