@@ -203,7 +203,7 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Fabric`: http://www.fabfile.org/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
-.. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
+.. _`bundles that add deployment features`: https://github.com/search?utf8=✓&q=topic%3Asymfony-bundle+topic%3Adeploy&type=Repositories&ref=searchresults
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/

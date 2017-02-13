@@ -751,7 +751,7 @@ the blog from flat PHP to Symfony has improved life:
 
 And perhaps best of all, by using Symfony, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony community**!
-A good selection of Symfony community tools can be found on `KnpBundles.com`_.
+A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org
@@ -760,5 +760,5 @@ A good selection of Symfony community tools can be found on `KnpBundles.com`_.
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Varnish`: https://www.varnish-cache.org/
-.. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
+.. _`Symfony community tools`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
