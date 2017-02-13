@@ -151,6 +151,9 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
             {% endfor %}
         </ul>
 
+    Another compelling reason for using Twig is that Symfony will drop the
+    built-in support for PHP templates in future versions.
+
 .. index::
    pair: Twig; Cache
 
