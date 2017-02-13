@@ -69,7 +69,7 @@ To see a simple implementation, generate the ETag as the md5 of the content::
         public function homepageAction(Request $request)
         {
             $response = $this->render('static/homepage.html.twig');
-            $response->setETag(md5($response->getContent()));
+            $response->setEtag(md5($response->getContent()));
             $response->setPublic(); // make sure the response is public/cacheable
             $response->isNotModified($request);
 
