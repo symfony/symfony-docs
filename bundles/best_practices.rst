@@ -134,6 +134,13 @@ Unit and Functional Tests        ``Tests/``                     No
 [1] See :doc:`/doctrine/mapping_model_classes` for how to handle the
 mapping with a compiler pass.
 
+.. tip::
+
+    Because of the bundle overriding mechanism, you should never try to access to
+    bundle's files using PHP's utilities (e.g. ``__DIR__.'/AppBundle/Resources/...'``)
+    Instead, use the ``locateResource()`` method provided by Symfony and explained
+    in :ref:`Locating Bundle's Resources <locating-bundle-resources>` article.
+
 Classes
 -------
 

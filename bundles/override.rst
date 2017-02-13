@@ -39,7 +39,7 @@ Services & Configuration
 
 If you want to modify service definitions of another bundle, you can use a compiler
 pass to change the class of the service or to modify method calls. In the following
-example, the implementing class for the ``original-service-id`` is changed to 
+example, the implementing class for the ``original-service-id`` is changed to
 ``Acme\DemoBundle\YourService``::
 
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
@@ -162,4 +162,43 @@ can override the translations from any translation file, as long as it is in
 
     Finally, translations located in ``app/Resources/translations`` will override
     all the other translations since those files are always loaded last.
+
+.. _locating-bundle-resources:
+
+Locating Bundle's Resources
+---------------------------
+
+This article shows how to override any bundle resource using the ``app/Resources/``
+directory of your application. This means that you cannot rely on ``__DIR__``
+or ``__FILE__`` constants to locate bundle's resources::
+
+    // src/AppBundle/Manager/NewsletterManager.php
+    // ..
+
+    class NewsletterManager {
+        // ...
+
+        public function send()
+        {
+            // this won't return the correct file path if it has been overridden by the app
+            $config = json_decode(file_get_contents(__DIR__.'/Resources/config/mailer.json'));
+            // ...
+        }
+    }
+
+That's why the ``KernelInterface`` implemented by Symfony application kernels
+define a ``locateResource()`` method that returns the absolute file path for a
+given resource, taking into account all the bundle overridding features::
+
+    public function send()
+    {
+        // get somehow the 'kernel' service provided by Symfony (for example, injecting
+        // it via the Service Container). Inside a Controller: $this->get('kernel')
+        $kernel = ...
+
+        $configPath = $kernel->locateResource('@AppBundle/Resources/config/mailer.json');
+        $config = json_decode(file_get_contents($configPath));
+        // ...
+    }
+
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
