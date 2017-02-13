@@ -330,9 +330,9 @@ Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
 
 The most time-consuming task when translating an application is to extract all
-the original contents added to the templates and to keep all the translation
-files in sync. Symfony includes a command called ``translation:update`` that
-helps you in these tasks.
+the template contents to be translated and to keep all the translation files in
+sync. Symfony includes a command called ``translation:update`` that helps you in
+these tasks.
 
 The "safe mode" of this command uses the ``--dump-messages`` option to output
 in the command console the strings to be translated:
@@ -342,7 +342,7 @@ in the command console the strings to be translated:
     # shows the strings to be translated into French for app/Resources/ templates
     $ ./app/console translation:update --dump-messages fr
 
-    # shows the strings to be translated into English for the AppBundle
+    # shows the strings to be translated into English for the AppBundle templates
     $ ./app/console translation:update --dump-messages en AppBundle
 
 The "advanced mode" of this command uses the ``--force`` option to actually
@@ -352,10 +352,11 @@ update the contents of the translation files to add the missing strings:
 
     # updates the French translation file to add the missing strings
     # found on app/Resources/ templates
-    $ ./app/console translation:update --dump-messages fr
+    $ ./app/console translation:update --force fr
 
-    # updates the English translation file to add the missing strings found on AppBundle
-    $ ./app/console translation:update --dump-messages en AppBundle
+    # updates the English translation file to add the missing strings
+    # found on AppBundle templates
+    $ ./app/console translation:update --force en AppBundle
 
 .. tip::
 
