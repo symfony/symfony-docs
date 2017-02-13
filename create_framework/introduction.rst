@@ -120,6 +120,6 @@ Otherwise, you can always use your own server (Apache, Nginx, etc.).
 In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
 introduce the HttpFoundation Component and see what it brings us.
 
-.. _`Symfony`: http://symfony.com/
+.. _`Symfony`: https://symfony.com/
 .. _`Silex`: http://silex.sensiolabs.org/
 .. _`Composer`: http://packagist.org/about-composer

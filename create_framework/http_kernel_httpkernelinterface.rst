@@ -203,6 +203,6 @@ With the addition of a single interface, our framework can now benefit from
 the many features built into the HttpKernel component; HTTP caching being just
 one of them but an important one as it can make your applications fly!
 
-.. _`HTTP caching`: http://symfony.com/doc/current/http_cache.html
+.. _`HTTP caching`: https://symfony.com/doc/current/http_cache.html
 .. _`ESI`: https://en.wikipedia.org/wiki/Edge_Side_Includes
 .. _`Varnish`: https://www.varnish-cache.org/
