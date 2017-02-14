@@ -28,11 +28,10 @@ the guides.
 Bundle Name
 -----------
 
-A bundle name is also a PHP namespace. The namespace must follow the `PSR-0`_
-or `PSR-4`_ interoperability standards for PHP namespaces and class names.
-The name starts with the vendor name, followed by zero or more category 
-segments/names, and it ends with the namespace short name which must end 
-with ``Bundle``.
+A bundle is also a PHP namespace. The namespace must follow the `PSR-0`_ or
+`PSR-4`_ interoperability standards for PHP namespaces and class names: it starts
+with a vendor segment, followed by zero or more category segments, and it ends
+with the namespace short name, which must end with ``Bundle``.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
