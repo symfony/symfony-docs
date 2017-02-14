@@ -69,7 +69,7 @@ to meet those requirements.
 
         cURL error 60: SSL certificate problem: unable to get local issuer certificate.
 
-    Solve this issue as follows:
+    You can solve this issue as follows:
 
     #. Download a file with the updated list of certificates from
        https://curl.haxx.se/ca/cacert.pem
