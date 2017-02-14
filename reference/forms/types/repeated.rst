@@ -187,12 +187,14 @@ The two underlying fields' values will be compared by this callable. The callabl
 
 When this option has a null value, it uses internally a callable comparable to:
 
-    $builder->add('password', RepeatedType::class, array(
+```
+    $builder->add('password', RepeatedType::class, array(
         'compare'  => function ($value1, $value2) {
             return $value1 === $value2;
         },
-    ));
-
+    ));
+```
+    
 Overridden Options
 ------------------
 
