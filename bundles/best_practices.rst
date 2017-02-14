@@ -412,8 +412,7 @@ The ``composer.json`` file should include at least the following metadata:
     Use the ``symfony-bundle`` value.
 
 ``license``
-    ``MIT`` is the preferred license for Symfony bundles, but you can use any
-    license.
+    a string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
 
 ``autoload``
     This information is used by Symfony to load the classes of the bundle. The
@@ -498,3 +497,4 @@ Learn more
 .. _`Semantic Versioning Standard`: http://semver.org/
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
+.. _`valid license identifier`: https://spdx.org/licenses/
