@@ -72,15 +72,7 @@ associations. Learn more about this feature and its limitations in
 Forms
 -----
 
-Form types are referred to by their fully-qualified class name::
-
-    $builder->add('name', CustomType::class);
-
-This means that you cannot override this by creating a sub-class of ``CustomType``
-and registering it as a service and tagging it with ``form.type`` (you *could*
-do this in an earlier version).
-
-Instead, you should use a "form type extension" to modify the existing form type.
+Existing form types can be modified defining "form type extensions".
 For more information, see :doc:`/form/create_form_type_extension`.
 
 .. _override-validation:
