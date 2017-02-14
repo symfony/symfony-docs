@@ -37,7 +37,7 @@ meaning of some key concepts:
 **Adapter**
     It implements the actual caching mechanism to store the information in the
     filesystem, in a database, etc. The component provides several ready to use
-    adapters for common caching backends (Redis, APCu, Doctrine, Filesystem, PDO)
+    adapters for common caching backends (Redis, APCu, Doctrine, PDO, etc.)
 
 Basic Usage
 -----------
@@ -70,14 +70,6 @@ Now you can create, retrieve, update and delete items using this cache pool::
 
     // remove the cache item
     $cache->deleteItem('stats.num_products');
-    
-Or you can use redis-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter\\RedisAdapter`::
-
-    use Symfony\Component\Cache\Adapter\RedisAdapter;
-
-    $connection = RedisAdapter::createConnection('redis://127.0.0.1:6379/0');
-    $cache = new RedisAdapter($connection);
-
 
 Advanced Usage
 --------------
