@@ -235,16 +235,15 @@ more advanced use-case, you can always do the same security check in PHP:
 
         if (!$post->isAuthor($this->getUser())) {
             $this->denyAccessUnlessGranted('edit', $post);
-
-	    // or without the shortcut:
-	    //
-	    // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-	    // ...
-	    //
-	    // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
-	    //    throw $this->createAccessDeniedException();
-	    // }
         }
+        // equivalent code without using the "denyAccessUnlessGranted()" shortcut:
+        //
+        // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // ...
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
 
         // ...
     }

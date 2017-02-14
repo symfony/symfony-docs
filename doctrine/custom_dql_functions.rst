@@ -82,18 +82,18 @@ In Symfony, you can register your custom DQL functions as follows:
 
     .. configuration-block::
 
-	.. code-block:: yaml
+        .. code-block:: yaml
 
-	    # app/config/config.yml
-	    doctrine:
-		orm:
-		    # ...
-		    entity_managers:
-			example_manager:
-			    # Place your functions here
-			    dql:
-				datetime_functions:
-				    test_datetime: AppBundle\DQL\DatetimeFunction
+            # app/config/config.yml
+            doctrine:
+                orm:
+                    # ...
+                    entity_managers:
+                        example_manager:
+                            # Place your functions here
+                            dql:
+                                datetime_functions:
+                                    test_datetime: AppBundle\DQL\DatetimeFunction
 
         .. code-block:: xml
 
