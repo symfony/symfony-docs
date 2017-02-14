@@ -453,6 +453,10 @@ controller.
             {
                 $entity = $args->getEntity();
 
+                if (!$entity instanceof Product) {
+                    return;
+                }
+
                 $fileName = $entity->getBrochure();
 
                 $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
