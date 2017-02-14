@@ -185,15 +185,13 @@ compare
 
 The two underlying fields' values will be compared by this callable. The callable receives two values to compare, and should return a boolean: true if the fields are considered equal, false otherwise.
 
-When this option has a null value, it uses internally a callable comparable to:
+When this option has a null value, it uses internally a callable comparable to::
 
-```
     $builder->add('password', RepeatedType::class, array(
         'compare'  => function ($value1, $value2) {
             return $value1 === $value2;
         },
     ));
-```
     
 Overridden Options
 ------------------
