@@ -29,15 +29,20 @@ it in your configuration:
         # app/config/config.yml
         framework:
             # ...
-            serializer:
-                enabled: true
+            serializer: { enable_annotations: true }
+            # Alternatively, if you don't want to use annotations
+            #serializer: { enabled: true }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
             <!-- ... -->
+            <framework:serializer enable-annotations="true" />
+            <!--
+            Alternatively, if you don't want to use annotations
             <framework:serializer enabled="true" />
+            -->
         </framework:config>
 
     .. code-block:: php
@@ -46,6 +51,8 @@ it in your configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
+                'enable_annotations' => true,
+                // Alternatively, if you don't want to use annotations
                 'enabled' => true,
             ),
         ));
