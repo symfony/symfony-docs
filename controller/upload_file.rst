@@ -232,7 +232,7 @@ logic to a separate service::
 
         public function __construct($targetDir)
         {
-            $this->targetDir = $targetDir;
+            $this->setTargetDir($targetDir);
         }
 
         public function upload(UploadedFile $file)
@@ -242,6 +242,16 @@ logic to a separate service::
             $file->move($this->targetDir, $fileName);
 
             return $fileName;
+        }
+
+        public function getTargetDir()
+        {
+            return $this->targetDir;
+        }
+
+        public function setTargetDir($targetDir = '')
+        {
+            $this->targetDir = $targetDir;
         }
     }
 
@@ -445,7 +455,7 @@ controller.
 
                 $fileName = $entity->getBrochure();
 
-                $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
             }
         }
 
