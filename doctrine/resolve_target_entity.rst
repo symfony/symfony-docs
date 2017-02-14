@@ -21,8 +21,8 @@ without making them hard dependencies.
 Background
 ----------
 
-Suppose you have an `InvoiceBundle` which provides invoicing functionality
-and a `CustomerBundle` that contains customer management tools. You want
+Suppose you have an ``InvoiceBundle`` which provides invoicing functionality
+and a ``CustomerBundle`` that contains customer management tools. You want
 to keep these separated, because they can be used in other systems without
 each other, but for your application you want to use them together.
 
