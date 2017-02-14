@@ -118,8 +118,8 @@ simply as a boolean flag without a value (e.g.  ``--yell``).
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::
 
-    use Symfony\Component\Console\Input\InputOption;
     // ...
+    use Symfony\Component\Console\Input\InputOption;
 
     $this
         // ...
