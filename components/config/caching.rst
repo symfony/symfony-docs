@@ -38,8 +38,8 @@ should be regenerated::
         $resources = array();
 
         foreach ($yamlUserFiles as $yamlUserFile) {
-            // see the next article "Loading resources" to
-            // see where $delegatingLoader comes from
+            // see the article "Loading resources" to
+            // know where $delegatingLoader comes from
             $delegatingLoader->load($yamlUserFile);
             $resources[] = new FileResource($yamlUserFile);
         }
