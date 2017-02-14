@@ -290,7 +290,7 @@ encoder in the security configuration:
                 <encoder class="AppBundle\Entity\User">bcrypt</encoder>
             </config>
         </srv:container>
-        
+
     .. code-block:: php
 
         // app/config/security.php
@@ -302,9 +302,8 @@ encoder in the security configuration:
             ),
         ));
 
-In this case the recommended ``bcrypt`` algorithm is used. To learn more
-about how to encode the users password have a look into the
-:ref:`security chapter <security-encoding-user-password>`.
+In this case the recommended ``bcrypt`` algorithm is used. If needed, check out
+the :ref:`user password encoding <security-encoding-user-password>` article.
 
 .. note::
 

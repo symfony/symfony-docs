@@ -5,13 +5,13 @@ Security
 ========
 
 Symfony's security system is incredibly powerful, but it can also be confusing
-to set up. In this chapter, you'll learn how to set up your application's security
+to set up. In this article, you'll learn how to set up your application's security
 step-by-step, from configuring your firewall and how you load users to denying
 access and fetching the User object. Depending on what you need, sometimes
 the initial setup can be tough. But once it's done, Symfony's security system
 is both flexible and (hopefully) fun to work with.
 
-Since there's a lot to talk about, this chapter is organized into a few big
+Since there's a lot to talk about, this article is organized into a few big
 sections:
 
 #. Initial ``security.yml`` setup (*authentication*);
@@ -902,7 +902,7 @@ the built-in helper function:
 
 If you use this function and you are *not* behind a firewall, an exception will
 be thrown. Again, it's almost always a good idea to have a main firewall that
-covers all URLs (as shown before in this chapter).
+covers all URLs (as shown before in this article).
 
 .. caution::
 

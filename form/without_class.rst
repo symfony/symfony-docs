@@ -6,7 +6,7 @@ How to Use a Form without a Data Class
 
 In most cases, a form is tied to an object, and the fields of the form get
 and store their data on the properties of that object. This is exactly what
-you've seen so far in this chapter with the `Task` class.
+you've seen so far in this article with the `Task` class.
 
 But sometimes, you may just want to use a form without a class, and get back
 an array of the submitted data. This is actually really easy::
@@ -76,7 +76,7 @@ simple array of your submitted data, how can you add constraints to the data of
 your form?
 
 The answer is to setup the constraints yourself, and attach them to the individual
-fields. The overall approach is covered a bit more in the :doc:`validation chapter </validation/raw_values>`,
+fields. The overall approach is covered a bit more in :doc:`this validation article </validation/raw_values>`,
 but here's a short example:
 
 .. code-block:: php

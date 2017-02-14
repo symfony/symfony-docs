@@ -4,7 +4,7 @@
 How to Use advanced ACL Concepts
 ================================
 
-The aim of this chapter is to give a more in-depth view of the ACL system, and
+The aim of this article is to give a more in-depth view of the ACL system, and
 also explain some of the design decisions behind it.
 
 Design Concepts
@@ -83,7 +83,7 @@ Access control entries can have different scopes in which they apply. In
 Symfony, there are basically two different scopes:
 
 - Class-Scope: These entries apply to all objects with the same class.
-- Object-Scope: This was the scope solely used in the previous chapter, and
+- Object-Scope: This was the scope solely used in the previous article, and
   it only applies to one specific object.
 
 Sometimes, you will find the need to apply an ACE only to a specific field of

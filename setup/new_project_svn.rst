@@ -48,7 +48,7 @@ Initial Project Setup
 
 To get started, you'll need to download Symfony and get the basic Subversion setup.
 First, download and get your Symfony project running by following the
-:doc:`Installation </setup>` chapter.
+:doc:`Installation </setup>` article.
 
 Once you have your new project directory and things are working, follow along
 with these steps:
@@ -105,7 +105,7 @@ At this point, you have a fully-functional Symfony project stored in your
 Subversion repository. The development can start with commits in the Subversion
 repository.
 
-You can continue to follow along with the :doc:`/page_creation` chapter
+You can continue to follow along with the :doc:`/page_creation` article
 to learn more about how to configure and develop inside your application.
 
 .. tip::
