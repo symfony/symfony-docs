@@ -49,8 +49,8 @@ Here are some valid bundle namespaces and class names:
 ==========================  ==================
 Namespace                   Bundle Class Name
 ==========================  ==================
-``Acme\Bundle\BlogBundle``  ``AcmeBlogBundle``
-``Acme\BlogBundle``         ``AcmeBlogBundle``
+``Acme\Bundle\BlogBundle``  AcmeBlogBundle
+``Acme\BlogBundle``         AcmeBlogBundle
 ==========================  ==================
 
 By convention, the ``getName()`` method of the bundle class should return the
@@ -59,8 +59,7 @@ class name.
 .. note::
 
     If you share your bundle publicly, you must use the bundle class name as
-    the name of the repository (``AcmeBlogBundle`` and not ``BlogBundle``
-    for instance).
+    the name of the repository (AcmeBlogBundle and not BlogBundle for instance).
 
 .. note::
 
@@ -69,14 +68,14 @@ class name.
     :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
 Each bundle has an alias, which is the lower-cased short version of the bundle
-name using underscores (``acme_blog`` for ``AcmeBlogBundle``). This alias
+name using underscores (``acme_blog`` for AcmeBlogBundle). This alias
 is used to enforce uniqueness within a project and for defining bundle's
 configuration options (see below for some usage examples).
 
 Directory Structure
 -------------------
 
-The basic directory structure of an ``AcmeBlogBundle`` must read as follows:
+The basic directory structure of an AcmeBlogBundle must read as follows:
 
 .. code-block:: text
 
@@ -395,8 +394,8 @@ The ``composer.json`` file should include at least the following metadata:
     Consists of the vendor and the short bundle name. If you are releasing the
     bundle on your own instead of on behalf of a company, use your personal name
     (e.g. ``johnsmith/blog-bundle``). Exclude the vendor name from the bundle
-    short name and separate each word with an hyphen. For example: ``AcmeBlogBundle``
-    is transformed into ``blog-bundle`` and ``AcmeSocialConnectBundle`` is
+    short name and separate each word with an hyphen. For example: AcmeBlogBundle
+    is transformed into ``blog-bundle`` and AcmeSocialConnectBundle is
     transformed into ``social-connect-bundle``.
 
 ``description``
