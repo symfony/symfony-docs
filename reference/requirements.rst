@@ -57,5 +57,5 @@ you need to have the PDO driver installed for the database server you want
 to use.
 
 .. _`Requirements section of the README`: https://github.com/symfony/symfony/blob/2.7/README.md#requirements
-.. _`JSON extension`: http://php.net/manual/book.json.php
-.. _`ctype extension`: http://php.net/manual/book.ctype.php
+.. _`JSON extension`: https://php.net/manual/book.json.php
+.. _`ctype extension`: https://php.net/manual/book.ctype.php
