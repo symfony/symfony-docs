@@ -188,7 +188,7 @@ into the client constructor::
     $cookieJar = new Cookie('flavor', 'chocolate', strtotime('+1 day'));
 
     // create a client and set the cookies
-    $client = new Client(array(), array(), $cookieJar);
+    $client = new Client(array(), null, $cookieJar);
     // ...
 
 History
