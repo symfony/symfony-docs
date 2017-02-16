@@ -22,7 +22,7 @@ status:
 * **Pull Requests**: Pull requests contain code that fixes a bug or implements
   new functionality. Reviews of pull requests ensure that they are implemented
   properly, are covered by test cases, don't introduce new bugs and maintain
-  backwards compatibility.
+  backward compatibility.
 
 Note that **anyone who has some basic familiarity with Symfony and PHP can
 review bug reports and pull requests**. You don't need to be an expert to help.
@@ -140,12 +140,12 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    * Does the PR contain automated tests? Do those tests cover all relevant
      edge cases?
    * Does the PR contain sufficient comments to easily understand its code?
-   * Does the code break backwards compatibility? If yes, does the PR header say
+   * Does the code break backward compatibility? If yes, does the PR header say
      so?
    * Does the PR contain deprecations? If yes, does the PR header say so? Does
      the code contain ``trigger_error()`` statements for all deprecated
      features?
-   * Are all deprecations and backwards compatibility breaks documented in the
+   * Are all deprecations and backward compatibility breaks documented in the
      latest UPGRADE-X.X.md file? Do those explanations contain "Before"/"After"
      examples with clear upgrade instructions?
 

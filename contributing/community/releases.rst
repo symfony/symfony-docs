@@ -140,10 +140,10 @@ Version  Feature Freeze  Release  End of Maintenance        End of Life
 .. [2] Symfony 2.8 is the last version of the Symfony 2.x branch.
 .. [3] Symfony 3.0 is the first version to use the new release process based on five minor releases.
 
-Backwards Compatibility
------------------------
+Backward Compatibility
+----------------------
 
-Our :doc:`Backwards Compatibility Promise </contributing/code/bc>` is very
+Our :doc:`Backward Compatibility Promise </contributing/code/bc>` is very
 strict and allows developers to upgrade with confidence from one minor version
 of Symfony to the next one.
 

@@ -1,11 +1,11 @@
-Our Backwards Compatibility Promise
-===================================
+Our Backward Compatibility Promise
+==================================
 
 Ensuring smooth upgrades of your projects is our first priority. That's why
-we promise you backwards compatibility (BC) for all minor Symfony releases.
+we promise you backward compatibility (BC) for all minor Symfony releases.
 You probably recognize this strategy as `Semantic Versioning`_. In short,
 Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
-allowed to break backwards compatibility. Minor releases (such as 2.5, 2.6 etc.)
+allowed to break backward compatibility. Minor releases (such as 2.5, 2.6 etc.)
 may introduce new features, but must do so without breaking the existing API of
 that release branch (2.x in the previous example).
 
@@ -14,7 +14,7 @@ that release branch (2.x in the previous example).
     This promise was introduced with Symfony 2.3 and does not apply to previous
     versions of Symfony.
 
-However, backwards compatibility comes in many different flavors. In fact, almost
+However, backward compatibility comes in many different flavors. In fact, almost
 every change that we make to the framework can potentially break an application.
 For example, if we add a new method to a class, this will break an application
 which extended this class and added the same method, but with a different
@@ -54,10 +54,10 @@ sticks to these rules.
 If you implement an interface, we promise that we won't ever break your code.
 
 The following table explains in detail which use cases are covered by our
-backwards compatibility promise:
+backward compatibility promise:
 
 +-----------------------------------------------+-----------------------------+
-| Use Case                                      | Backwards Compatibility     |
+| Use Case                                      | Backward Compatibility      |
 +===============================================+=============================+
 | **If you...**                                 | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
@@ -88,10 +88,10 @@ public methods and properties.
     not be accessed by your own code.
 
 To be on the safe side, check the following table to know which use cases are
-covered by our backwards compatibility promise:
+covered by our backward compatibility promise:
 
 +-----------------------------------------------+-----------------------------+
-| Use Case                                      | Backwards Compatibility     |
+| Use Case                                      | Backward Compatibility      |
 +===============================================+=============================+
 | **If you...**                                 | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
