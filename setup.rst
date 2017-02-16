@@ -76,13 +76,13 @@ to meet those requirements.
     #. Move the downloaded ``cacert.pem`` file to some safe location in your system
     #. Update your ``php.ini`` file and configure the path to that file:
 
-    .. code-block:: ini
+       .. code-block:: ini
 
-        ; Linux and macOS systems
-        curl.cainfo = "/path/to/cacert.pem"
+           ; Linux and macOS systems
+           curl.cainfo = "/path/to/cacert.pem"
 
-        ; Windows systems
-        curl.cainfo = "C:\path\to\cacert.pem"
+           ; Windows systems
+           curl.cainfo = "C:\path\to\cacert.pem"
 
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
