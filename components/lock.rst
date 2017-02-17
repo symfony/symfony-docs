@@ -124,8 +124,6 @@ In case of long-running tasks, it's better to start with a not too long TTL and
 then use the :method:`Symfony\\Component\\Lock\\LockInterface::refresh` method
 to reset the TTL to its original value::
 
-.. code-block:: php
-
     // ...
     $lock = $factory->createLock('charts-generation', 30);
 
