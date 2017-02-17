@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-26T20:35:09Z
+
+http://symfony.com/blog/experimental-features for more information about this change.
+
+---------------------------------------------------------------------------
+
+by kherge at 2017-01-26T22:13:48Z
+
+Why not place experimental features in a separate repository?
+
+Once they're finalized, they can then be merged into the main repository with commit history intact.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-01-26T22:18:21Z
+
+@kherge Because most people would't use them. Experimental features need feedback, and having them in core helps a lot.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2017-02-12T18:55:29Z
+
+I've created a new document on experimental features to add some more details.
