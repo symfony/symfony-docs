@@ -5,9 +5,8 @@
 The Lock Component
 ==================
 
-    The Lock Component provides a mechanism to guarantee an exclusive access
-    into a critical section. The component ships with ready to use stores for
-    the most common backends.
+    The Lock Component creates and manages `locks`_, a mechanism to provide
+    exclusive access to a shared resource.
 
 .. versionadded:: 3.3
     The Lock component was introduced in Symfony 3.3.
@@ -25,55 +24,55 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-In order to centralize state of locks, you first need to create a ``Store``.
-Then, you can use the :class:`Symfony\\Component\\Lock\\Factory` to create a
-Lock for your ``resource``.
+Locks are used to guarantee exclusive access to some shared resource. In
+Symfony applications, you can use locks for example to ensure that a command is
+not executed more than once at the same time (on the same or different servers).
 
-The :method:`Symfony\\Component\\Lock\\LockInterface::acquire` method tries to
-acquire the lock. If the lock can not be acquired, the method returns ``false``.
-You can safely call the ``acquire()`` method several times, even if you already
-acquired it.
-
-.. code-block:: php
+In order to manage the state of locks, you first need to create a ``Store``
+and then use the :class:`Symfony\\Component\\Lock\\Factory` class to actually
+create the lock for some resource::
 
     use Symfony\Component\Lock\Factory;
     use Symfony\Component\Lock\Store\SemaphoreStore;
 
     $store = new SemaphoreStore();
     $factory = new Factory($store);
-    $lock = $factory->createLock('invoice-pdf-generation');
+
+Then, call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
+method to try to acquire the lock. Its first argument is an arbitrary string
+that represents the locked resource::
+
+    // ...
+    $lock = $factory->createLock('pdf-invoice-generation');
 
     if ($lock->acquire()) {
-        // the resource "invoice-pdf-generation" is locked.
-
+        // The resource "pdf-invoice-generation" is locked.
         // You can compute and generate invoice safely here.
 
         $lock->release();
     }
 
-The first argument of ``createLock`` is a string representation of the
-``resource`` to lock.
+If the lock can not be acquired, the method returns ``false``. You can safely
+call the ``acquire()`` method repeatedly, even if you already acquired it.
 
 .. note::
 
-    In opposition to some other implementations, the Lock Component
-    distinguishes locks instances, even when they are created from the same
-    ``resource``.
-    If you want to share a lock in several services. You have to share the
-    instance of Lock returned by the ``Factory::createLock`` method.
+    Unlike other implementations, the Lock Component distinguishes locks
+    instances even when they are created for the same resource. If you want to
+    share a lock in several services, share the ``Lock`` instance returned by
+    the ``Factory::createLock`` method.
 
 Blocking Locks
 --------------
 
-You can pass an optional blocking argument as the first argument to the
-:method:`Symfony\\Component\\Lock\\LockInterface::acquire` method, which
-defaults to ``false``. If this is set to ``true``, your PHP code will wait
-infinitely until the lock is released by another process.
+By default, when a lock cannot be acquired, the ``acquire`` method returns
+``false`` immediately. In case you want to wait (indefinitely) until the lock
+can be created, pass ``false`` as the argument of the ``acquire()`` method. This
+is called a **blocking lock** because the execution of your application stops
+until the lock is acquired.
 
-Some ``Store`` (but not all) natively supports this feature. When they don't,
-you can decorate it with the ``RetryTillSaveStore``.
-
-.. code-block:: php
+Some of the built-in ``Store`` classes support this feature. When they don't,
+you can decorate them with the ``RetryTillSaveStore`` class::
 
     use Symfony\Component\Lock\Factory;
     use Symfony\Component\Lock\Store\RedisStore;
@@ -81,69 +80,53 @@ you can decorate it with the ``RetryTillSaveStore``.
 
     $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
     $store = new RetryTillSaveStore($store);
-
     $factory = new Factory($store);
 
     $lock = $factory->createLock('notification-flush');
-
     $lock->acquire(true);
 
 Expiring Locks
 --------------
 
-Working with a remote ``Store`` is hard. There is no way for the remote
-``Store`` to know if the locker process is still alive.
-Due to bugs, fatal errors or segmentation fault, we can't guarantee that the
-``release()`` method will be called, which would cause a ``resource`` to be locked
-infinitely.
+Locks created remotely are difficult to manage because there is no way for the
+remote ``Store`` to know if the locker process is still alive. Due to bugs,
+fatal errors or segmentation faults, we can't guarantee that the ``release()``
+method will be called, which would cause the resource to be locked infinitely.
 
-To fill this gap, the remote ``Store`` provide an expiration mechanism: The
-lock is acquired for a defined amount of time (named TTL for Time To Live).
-When the timeout occurs, the lock is automatically released even if the locker
-don't call the ``release()`` method.
+The best solution in those cases is to create **expiring locks**, which are
+released automatically after some amount of time has passed (called TTL for
+*Time To Live*). This time, in seconds, is configured as the second argument of
+the ``createLock()`` method. If needed, these locks can also be released early
+with the ``release()`` method.
 
-That's why, when you create a lock on an expiring ``Store``, you have to choose
-carefully the correct TTL. When too low, you take the risk to "loose" the lock
-(and someone else acquire it) whereas you don't finish your task.
-When too high and the process crash before you call the ``release()`` method,
-the ``resource`` will stay lock till the timeout.
+The trickiest part when working with expiring locks is choosing the right TTL.
+If it's too short, other processes could acquire the lock before finishing your
+work; it it's too long and the process crashes before calling the ``release()``
+method, the resource will stay locked until the timeout::
 
-.. code-block:: php
-
-    use Symfony\Component\Lock\Factory;
-    use Symfony\Component\Lock\Store\RedisStore;
-
-    $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
-
-    $factory = new Factory($store);
+    // ...
+    // create a expiring lock that lasts 30 seconds
     $lock = $factory->createLock('charts-generation', 30);
 
     $lock->acquire();
     try {
-        // perfom a job during less than 30 seconds
+        // perform a job during less than 30 seconds
     } finally {
         $lock->release();
     }
 
 .. tip::
 
-    To avoid letting the Lock in a locking state, try to always release an
-    expiring lock by wrapping the job in a try/catch block for instance.
+    To avoid letting the lock in a locking state, it's recommended to wrap the
+    job in a try/catch/finally block to always try to release the expiring lock.
 
-When you have to work on a really long task, you should not set the TTL to
-overlap the duration of this task. Instead, the Lock Component exposes a
-:method:`Symfony\\Component\\Lock\\LockInterface::refresh` method in order to
-put off the TTL of the Lock. Thereby you can choose a small initial TTL, and
-regularly refresh the lock.
+In case of long-running tasks, it's better to start with a not too long TTL and
+then use the :method:`Symfony\\Component\\Lock\\LockInterface::refresh` method
+to reset the TTL to its original value::
 
 .. code-block:: php
 
-    use Symfony\Component\Lock\Factory;
-    use Symfony\Component\Lock\Store\RedisStore;
-
-    $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
-
-    $factory = new Factory($store);
+    // ...
     $lock = $factory->createLock('charts-generation', 30);
 
     $lock->acquire();
@@ -151,8 +134,8 @@ regularly refresh the lock.
         while (!$finished) {
             // perform a small part of the job.
 
+            // renew the lock for 30 more seconds.
             $lock->refresh();
-            // resource is locked for 30 more seconds.
         }
     } finally {
         $lock->release();
@@ -161,71 +144,48 @@ regularly refresh the lock.
 Available Stores
 ----------------
 
-``Stores`` are classes that implement :class:`Symfony\\Component\\Lock\\StoreInterface`.
-This component provides several adapters ready to use in your applications.
+Locks are created and managed in ``Stores``, which are classes that implement
+:class:`Symfony\\Component\\Lock\\StoreInterface`. The component includes the
+following built-in store types:
 
-Here is a small summary of available ``Stores`` and their capabilities.
 
-+----------------------------------------------+--------+----------+----------+
-| Store                                        | Scope  | Blocking | Expiring |
-+==============================================+========+==========+==========+
-| :ref:`FlockStore <lock-store-flock>`         | local  | yes      | no       |
-+----------------------------------------------+--------+----------+----------+
-| :ref:`MemcachedStore <lock-store-memcached>` | remote | no       | yes      |
-+----------------------------------------------+--------+----------+----------+
-| :ref:`RedisStore <lock-store-redis>`         | remote | no       | yes      |
-+----------------------------------------------+--------+----------+----------+
-| :ref:`SemaphoreStore <lock-store-semaphore>` | local  | yes      | no       |
-+----------------------------------------------+--------+----------+----------+
-
-.. tip::
-
-    Calling the :method:`Symfony\\Component\\Lock\\LockInterface::refresh`
-    method on a Lock created from a non expiring ``Store`` like
-    :ref:`FlockStore <lock-store-flock>` will do nothing.
+============================================  ======  ========  ========
+Store                                         Scope   Blocking  Expiring
+============================================  ======  ========  ========
+:ref:`FlockStore <lock-store-flock>`          local   yes       no
+:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
+:ref:`RedisStore <lock-store-redis>`          remote  no        yes
+:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
+============================================  ======  ========  ========
 
 .. _lock-store-flock:
 
 FlockStore
 ~~~~~~~~~~
 
-The FlockStore uses the fileSystem on the local computer to lock and store the
-``resource``. It does not support expiration, but the lock is automatically
-released when the PHP process is terminated.
-
-.. code-block:: php
+The FlockStore uses the file system on the local computer to create the locks.
+It does not support expiration, but the lock is automatically released when the
+PHP process is terminated::
 
     use Symfony\Component\Lock\Store\FlockStore;
 
+    // the argument is the path of the directory where the locks are created
     $store = new FlockStore(sys_get_temp_dir());
-
-The first argument of the constructor is the path to the directory where the
-file will be created.
 
 .. caution::
 
-    Beware, some filesystems (like some version of NFS) do not support locking.
-    We suggest to use local file, or to use a Store dedicated to remote usage
-    like Redis or Memcached.
-
-.. _Packagist: https://packagist.org/packages/symfony/lock
+    Beware that some file systems (such as some types of NFS) do not support
+    locking. In those cases, it's better to use a local file or a remote store
+    based on Redis or Memcached.
 
 .. _lock-store-memcached:
 
 MemcachedStore
 ~~~~~~~~~~~~~~
 
-The MemcachedStore stores state of ``resource`` in a Memcached server. This
-``Store`` does not support blocking, and expects a TLL to avoid infinity locks.
-
-.. note::
-
-    Memcached does not support TTL lower than 1 second.
-
-It requires to have installed Memcached and have created a connection that
-implements the ``\Memcached`` class.
-
-.. code-block:: php
+The MemcachedStore saves locks on a Memcached server, so first you must create
+a Memcached connection implements the ``\Memcached`` class. This store does not
+support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\MemcachedStore;
 
@@ -234,20 +194,19 @@ implements the ``\Memcached`` class.
 
     $store = new MemcachedStore($memcached);
 
+.. note::
+
+    Memcached does not support TTL lower than 1 second.
+
 .. _lock-store-redis:
 
 RedisStore
 ~~~~~~~~~~
 
-The RedisStore uses an instance of Redis to store the state of the ``resource``.
-This ``Store`` does not support blocking, and expect a TLL to avoid infinity
-locks.
-
-It requires to have installed Redis and have created a connection that
-implements the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or ``\Predis``
-classes
-
-.. code-block:: php
+The RedisStore saves locks on a Redis server, so first you must create a Redis
+connection implements the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or
+``\Predis`` classes. This store does not support blocking, and expects a TTL to
+avoid stalled locks::
 
     use Symfony\Component\Lock\Store\RedisStore;
 
@@ -261,9 +220,7 @@ classes
 SemaphoreStore
 ~~~~~~~~~~~~~~
 
-The SemaphoreStore uses the PHP semaphore functions to lock a ``resources``.
-
-.. code-block:: php
+The SemaphoreStore uses the `PHP semaphore functions`_ to create the locks::
 
     use Symfony\Component\Lock\Store\SemaphoreStore;
 
@@ -274,18 +231,11 @@ The SemaphoreStore uses the PHP semaphore functions to lock a ``resources``.
 CombinedStore
 ~~~~~~~~~~~~~
 
-The CombinedStore synchronize several ``Stores`` together. When it's used to
-acquired a Lock, it forwards the call to the managed ``Stores``, and regarding
-the result, uses a quorum to decide whether or not the lock is acquired.
-
-.. note::
-
-    This ``Store`` is useful for High availability application. You can provide
-    several Redis Server, and use theses server to manage the Lock. A
-    MajorityQuorum is enough to safely acquire a lock while it allow some Redis
-    server failure.
-
-.. code-block:: php
+The CombinedStore is designed for High Availability applications because it
+manages several stores in sync (for example, several Redis servers). When a lock
+is being acquired, it forwards the call to all the managed stores, and it
+collects their responses. If a simple majority of stores have acquired the lock,
+then the lock is considered as acquired; otherwise is not acquired::
 
     use Symfony\Component\Lock\Quorum\MajorityQuorum;
     use Symfony\Component\Lock\Store\CombinedStore;
@@ -301,10 +251,9 @@ the result, uses a quorum to decide whether or not the lock is acquired.
 
     $store = new CombinedStore($stores, new MajorityQuorum());
 
-.. tip::
+Instead of the simple majority strategy (``MajorityQuorum``) you can use the
+``UnanimousQuorum`` to require the lock to be acquired in all the stores.
 
-    You can use the CombinedStore with the UnanimousQuorum to implement chained
-    ``Stores``. It'll allow you to acquire easy local locks before asking for a
-    remote lock
-
+.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
+.. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
