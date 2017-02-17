@@ -15,7 +15,7 @@ be marked as **experimental** and their classes and methods must be marked with
 the ``@experimental`` tag.
 
 A feature can be marked as being experimental for only one minor version, and
-can never be introduced in a :ref:`LTS version <releases-lts>`. The core team
+can never be introduced in an :ref:`LTS version <releases-lts>`. The core team
 can decide to extend the experimental period for another minor version on a
 case by case basis.
 
