@@ -18,11 +18,15 @@ a mailer. It is also possible to configure several mailers (see
 Configuration
 -------------
 
+* `url`_
 * `transport`_
 * `username`_
 * `password`_
 * `host`_
 * `port`_
+* `timeout`_
+* `source_ip`_
+* `local_domain`_
 * `encryption`_
 * `auth_mode`_
 * `spool`_
@@ -36,6 +40,15 @@ Configuration
 * `delivery_whitelist`_
 * `disable_delivery`_
 * `logging`_
+
+url
+~~~
+
+**type**: ``string``
+
+The URL to configure swift mailer.
+
+Example: ``smtp://user:pass@host:port/?timeout=60&encryption=ssl&auth_mode=login&...``
 
 transport
 ~~~~~~~~~
@@ -78,6 +91,27 @@ port
 
 The port when using ``smtp`` as the transport. This defaults to 465 if encryption
 is ``ssl`` and 25 otherwise.
+
+timeout
+~~~~~~~
+
+**type**: ``integer``
+
+The timeout when using ``smtp`` as the transport
+
+source_ip
+~~~~~~~~~
+
+**type**: ``string``
+
+The source IP when using ``smtp`` as the transport
+
+local_domain
+~~~~~~~~~~~~
+
+**type**: ``string``
+
+The domain name to use in HELO command.
 
 encryption
 ~~~~~~~~~~
@@ -190,6 +224,14 @@ logging
 
 If true, Symfony's data collector will be activated for Swift Mailer and
 the information will be available in the profiler.
+
+.. tip::
+
+    The following configuration options are compatible with ``%env()%`` parameters:
+    ``url``, ``transport``, ``username``, ``password``, ``host``,
+    ``port``, ``timeout``, ``source_ip``, ``local_domain``,
+    ``encryption``, ``auth_mode``.
+    For details, see the :doc:`/configuration/external_parameters` article.
 
 Full Default Configuration
 --------------------------
