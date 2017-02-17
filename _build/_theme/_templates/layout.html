@@ -7,10 +7,10 @@
 
 {% block extrahead %}
 {# add JS to support tabs #}
-<script src="http://symfony.com/js/v5/all.js?v=4"></script>
+<script src="http://symfony.com/js/v5/all.js?v=4" type="text/javascript"></script>
 
 {# pygment's styles are still loaded, undo some unwanted styles #}
-<style>
+<style type="text/css">
 .highlight .k, .highlight .gh, .highlight .gp,
 .highlight .gu, .highlight .kc, .highlight .kd,
 .highlight .kn, .highlight .kr, .highlight .nc,
@@ -33,57 +33,58 @@
 {% endblock %}
 
 {% block header %}
-{# ugly way, now we have 2 body tags, but styles rely on these classes #}
-<body class="{{ pagename|get_type }} {% if isIndex %}doc_index{% else %}doc_article{% endif %} doc">
+<div class="{{ pagename|get_type }} {% if isIndex %}doc_index{% else %}doc_article{% endif %} doc">
 {% endblock %}
 
 {% block content %}
-<div class="container"><div id="page-content">
-    <div class="row">
-        {%- if render_sidebar %}
-        <div id="sidebar" class="col-sm-3">
-            <div id="sidebar-content">
-                <div id="demo-warning">
-                    <h4>Pull request build</h4>
-                    <p>Each pull request of the Symfony Documentation is automatically deployed and hosted on <a href="https://platform.sh">Platform.sh</a>.<br>
-                    View this page on <a href="https://symfony.com/doc/current/{{ pagename }}">symfony.com</a>.</p>
+<div class="container">
+    <div id="page-content">
+        <div class="row">
+            {%- if render_sidebar %}
+            <div id="sidebar" class="col-sm-3">
+                <div id="sidebar-content">
+                    <div id="demo-warning">
+                        <h4>Pull request build</h4>
+                        <p>Each pull request of the Symfony Documentation is automatically deployed and hosted on <a href="https://platform.sh">Platform.sh</a>.<br>
+                        View this page on <a href="https://symfony.com/doc/current/{{ pagename }}">symfony.com</a>.</p>
+                    </div>
+                    
+                    {%- include "globaltoc.html" %}
+
+                    {% if not isIndex %}
+                        {%- include "localtoc.html" %}
+                    {% endif %}
                 </div>
-                
-                {%- include "globaltoc.html" %}
+            </div>
+            {%- endif %}
 
-                {% if not isIndex %}
-                    {%- include "localtoc.html" %}
+            <div id="main" class="col-sm-9">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    {% for parent in parents %}
+                    <li><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
+                    {% endfor %}
+                    <li class="active">{{ title }}</li>
+                </ol>
+
+                <h1 class="content_title">{{ title }}</h1>
+
+                <div class="page">
+                {% block body %}{% endblock %}
+                </div>
+
+                {% if prev and next %}
+                <div class="navigation">
+                    <a href="{{ prev.link|e }}">« {{ prev.title|striptags|e }}</a>
+                    <span class="separator">|</span>
+                    <a href="{{ next.link|e }}">{{ next.title|striptags|e }} »</a>
+                </div>
                 {% endif %}
-            </div>
-        </div>
-        {%- endif %}
-
-        <div id="main" class="col-sm-9">
-            <ol class=breadcrumb>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Documentation</a></li>
-                {% for parent in parents %}
-                <li><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
-                {% endfor %}
-                <li class=active>{{ title }}</li>
-            </ol>
-
-            <h1 class="content_title">{{ title }}</h1>
-
-            <div class=page>
-            {% block body %}{% endblock %}
-            </div>
-
-            {% if prev and next %}
-            <div class=navigation>
-                <a href="{{ prev.link|e }}">« {{ prev.title|striptags|e }}</a>
-                <span class=separator>|</span>
-                <a href="{{ next.link|e }}">{{ next.title|striptags|e }} »</a>
-            </div>
-            {% endif %}
-            
-            <div id="license">
-                <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Unported <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License</a>.</p>
+                
+                <div id="license">
+                    <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Unported <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License</a>.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -95,4 +96,4 @@
 {% block relbar2 %}{% endblock %}
 
 {# remove "generated by sphinx" footer #}
-{% block footer %}{% endblock %}
+{% block footer %}</div>{% endblock %}
