@@ -235,7 +235,7 @@ is being acquired, it forwards the call to all the managed stores, and it
 collects their responses. If a simple majority of stores have acquired the lock,
 then the lock is considered as acquired; otherwise is not acquired::
 
-    use Symfony\Component\Lock\Quorum\MajorityQuorum;
+    use Symfony\Component\Lock\Quorum\ConsensusStrategy;
     use Symfony\Component\Lock\Store\CombinedStore;
     use Symfony\Component\Lock\Store\RedisStore;
 
@@ -247,10 +247,10 @@ then the lock is considered as acquired; otherwise is not acquired::
         $stores[] = new RedisStore($redis);
     }
 
-    $store = new CombinedStore($stores, new MajorityQuorum());
+    $store = new CombinedStore($stores, new ConsensusStrategy());
 
-Instead of the simple majority strategy (``MajorityQuorum``) you can use the
-``UnanimousQuorum`` to require the lock to be acquired in all the stores.
+Instead of the simple majority strategy (``ConsensusStrategy``) you can use the
+``UnanimousStrategy`` to require the lock to be acquired in all the stores.
 
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
