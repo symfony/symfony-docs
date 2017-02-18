@@ -25,7 +25,7 @@ to it::
             $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher));
+            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, new RequestStack()));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
             parent::__construct($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
