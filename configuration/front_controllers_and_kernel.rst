@@ -144,7 +144,7 @@ This method is responsible for loading the application's
 configuration from the right *environment*.
 
 Environments have been covered extensively
-:doc:`in the previous chapter </configuration/environments>`,
+:doc:`in the previous article </configuration/environments>`,
 and you probably remember that the Symfony Standard Edition comes with three
 of them - ``dev``, ``prod`` and ``test``.
 

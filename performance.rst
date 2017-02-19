@@ -5,7 +5,7 @@ Performance
 ===========
 
 Symfony is fast, right out of the box. Of course, if you really need speed,
-there are many ways that you can make Symfony even faster. In this chapter,
+there are many ways that you can make Symfony even faster. In this article,
 you'll explore some of the ways to make your Symfony application even faster.
 
 .. index::

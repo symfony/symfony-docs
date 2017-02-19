@@ -7,7 +7,7 @@ service that you would like to register as a listener to one of Symfony's
 core events, you can flag it with the ``kernel.event_listener`` tag.
 
 You can learn a little bit more about "tags" by reading the ":doc:`/service_container/tags`"
-section of the Service Container chapter.
+article.
 
 Below is information about all of the tags available inside Symfony. There
 may also be tags in other bundles you use that aren't listed here.

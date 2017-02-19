@@ -126,9 +126,9 @@ memorable name for the new branch (if you are fixing a reported issue, use
 
 .. code-block:: terminal
 
-    $ git checkout -b improve_install_chapter upstream/2.7
+    $ git checkout -b improve_install_article upstream/2.7
 
-In this example, the name of the branch is ``improve_install_chapter`` and the
+In this example, the name of the branch is ``improve_install_article`` and the
 ``upstream/2.7`` value tells Git to create this branch based on the ``2.7``
 branch of the ``upstream`` remote, which is the original Symfony Docs repository.
 
@@ -151,10 +151,10 @@ even remove any content and do your best to comply with the
 
 .. code-block:: terminal
 
-    $ git push origin improve_install_chapter
+    $ git push origin improve_install_article
 
 The ``origin`` value is the name of the Git remote that corresponds to your
-forked repository and ``improve_install_chapter`` is the name of the branch you
+forked repository and ``improve_install_article`` is the name of the branch you
 created previously.
 
 **Step 7.** Everything is now ready to initiate a **pull request**. Go to your
@@ -171,7 +171,7 @@ changes should be applied:
 In this example, the **base fork** should be ``symfony/symfony-docs`` and
 the **base** branch should be the ``2.7``, which is the branch that you selected
 to base your changes on. The **head fork** should be your forked copy
-of ``symfony-docs`` and the **compare** branch should be ``improve_install_chapter``,
+of ``symfony-docs`` and the **compare** branch should be ``improve_install_article``,
 which is the name of the branch you created and where you made your changes.
 
 .. _pull-request-format:
@@ -192,7 +192,7 @@ changes and push the new changes:
 .. code-block:: terminal
 
     $ cd projects/symfony-docs/
-    $ git checkout improve_install_chapter
+    $ git checkout improve_install_article
 
     # ... do your changes
 

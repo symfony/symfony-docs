@@ -95,7 +95,7 @@ specific bundle (i.e. ``FrameworkBundle`` and ``TwigBundle``).
 
 .. sidebar:: Configuration Formats
 
-    Throughout the chapters, all configuration examples will be shown in
+    Throughout the documentation, all configuration examples will be shown in
     three formats (YAML, XML and PHP). YAML is used by default, but you can
     choose whatever you like best. There is no performance difference:
 

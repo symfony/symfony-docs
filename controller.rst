@@ -184,12 +184,12 @@ and ``redirect()`` methods::
     The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
     could use ``redirect()`` and ``generateUrl()`` together for this.
 
-For more information, see the :doc:`Routing chapter </routing>`.
+For more information, see the :doc:`Routing article </routing>`.
 
 .. caution::
 
-    The ``redirect()`` method does not check its destination in any way. If you 
-    redirect to some URL provided by the end-users, your application may be open 
+    The ``redirect()`` method does not check its destination in any way. If you
+    redirect to some URL provided by the end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
 
@@ -230,7 +230,7 @@ creating unnecessarily deep structures::
     ));
 
 The Symfony templating system and Twig are explained more in the
-:doc:`Creating and Using Templates chapter </templating>`.
+:doc:`Creating and Using Templates article </templating>`.
 
 .. index::
    single: Controller; Accessing services
@@ -266,7 +266,7 @@ console command:
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``container:debug``.
 
-For more information, see the :doc:`/service_container` chapter.
+For more information, see the :doc:`/service_container` article.
 
 .. tip::
 
@@ -548,7 +548,7 @@ A) Shortcut methods (like ``render()`` and ``redirectToRoute()``);
 B) Access to *all* of the useful objects (services) in the system via the
    :ref:`get() <controller-accessing-services>` method.
 
-In other chapters, you'll learn how to use specific services from inside your controller
+In other articles, you'll learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
 handle caching and more.
 

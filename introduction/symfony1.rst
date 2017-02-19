@@ -10,7 +10,7 @@ at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
 routing, controllers and templates all remain.
 
-This chapter walks through the differences between symfony1 and Symfony2.
+This article walks through the differences between symfony1 and Symfony2.
 As you'll see, many tasks are tackled in a slightly different way. You'll
 come to appreciate these minor differences as they promote stable, predictable,
 testable and decoupled code in your Symfony2 applications.
@@ -359,7 +359,7 @@ You can now access this from a controller, for example::
 
 In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
-the chapter titled ":doc:`/service_container`".
+the article titled ":doc:`/service_container`".
 
 .. _`Composer`: https://getcomposer.org
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
