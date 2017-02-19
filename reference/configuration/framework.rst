@@ -228,7 +228,7 @@ doubling them to prevent Symfony from interpreting them as container parameters)
 
         # app/config/config.yml
         framework:
-            ide: 'phpstorm://open?file=%%f&line=%%l'
+            ide: 'phpstorm://open?url=file://%%f&line=%%l'
 
     .. code-block:: xml
 
@@ -240,14 +240,14 @@ doubling them to prevent Symfony from interpreting them as container parameters)
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
+            <framework:config ide="phpstorm://open?url=file://%%f&line=%%l" />
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'ide' => 'phpstorm://open?file=%%f&line=%%l',
+            'ide' => 'phpstorm://open?url=file://%%f&line=%%l',
         ));
 
 Since every developer uses a different IDE, the recommended way to enable this
