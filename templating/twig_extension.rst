@@ -58,8 +58,8 @@ As an example you'll create a price filter to format a given number into price::
 
 .. tip::
 
-    Along with custom filters, you can also add custom functions and register
-    global variables.
+    Along with custom filters, you can also add custom `functions`_ and register
+    `global variables`_.
 
 Register an Extension as a Service
 ----------------------------------
