@@ -22,7 +22,7 @@ will be resolved at runtime (once per request), so that dumped containers can be
 reconfigured dynamically even after being compiled.
 
 For example, if you want to use the value of the ``DATABASE_HOST`` environment
-variable in you service container configuration, you can reference it using
+variable in your service container configuration, you can reference it using
 ``%env(DATABASE_HOST)%`` in your configuration files:
 
 .. configuration-block::
