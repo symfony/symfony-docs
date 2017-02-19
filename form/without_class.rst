@@ -6,7 +6,7 @@ How to Use a Form without a Data Class
 
 In most cases, a form is tied to an object, and the fields of the form get
 and store their data on the properties of that object. This is exactly what
-you've seen so far in this article with the `Task` class.
+you've seen so far in this article with the ``Task`` class.
 
 But sometimes, you may just want to use a form without a class, and get back
 an array of the submitted data. This is actually really easy::
