@@ -46,7 +46,7 @@ url
 
 **type**: ``string``
 
-The URL to configure swift mailer.
+The entire SwiftMailer configuration using a DSN-like URL format.
 
 Example: ``smtp://user:pass@host:port/?timeout=60&encryption=ssl&auth_mode=login&...``
 
@@ -97,21 +97,21 @@ timeout
 
 **type**: ``integer``
 
-The timeout when using ``smtp`` as the transport
+The timeout in seconds when using ``smtp`` as the transport.
 
 source_ip
 ~~~~~~~~~
 
 **type**: ``string``
 
-The source IP when using ``smtp`` as the transport
+The source IP address when using ``smtp`` as the transport.
 
 local_domain
 ~~~~~~~~~~~~
 
 **type**: ``string``
 
-The domain name to use in HELO command.
+The domain name to use in ``HELO`` command.
 
 encryption
 ~~~~~~~~~~
