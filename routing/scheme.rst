@@ -11,7 +11,7 @@ the URI scheme via schemes:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # app/config/routing.yml
         secure:
             path:     /secure
