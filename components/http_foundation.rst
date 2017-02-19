@@ -241,8 +241,8 @@ the
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
-Accessing `Accept-*` Headers Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Accessing ``Accept-*`` Headers Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can easily access basic data extracted from ``Accept-*`` headers
 by using the following methods:
