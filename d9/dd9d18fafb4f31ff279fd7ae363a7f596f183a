@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-15T17:42:54Z
+
+> Should this inconsistency (`setEtag` vs `setETag`) be reported to Symfony?
+
+@javiereguiluz IMO yes
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-15T18:28:15Z
+
+@xabbuh done in https://github.com/sensiolabs/SensioFrameworkExtraBundle/issues/461
