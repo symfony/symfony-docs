@@ -98,7 +98,7 @@ the ``Mailer`` class makes a mistake?
 .. code-block:: php
 
     $mailer = new Mailer(array(
-        'usernme' => 'johndoe',  // usernAme misspelled 
+        'usernme' => 'johndoe',  // usernAme misspelled
     ));
 
 No error will be shown. In the best case, the bug will appear during testing,
@@ -403,7 +403,7 @@ is thrown::
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
-    
+
     // ...
     $resolver->setAllowedValues('transport', function ($value) {
         // return true or false
@@ -732,4 +732,4 @@ options in your code.
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
 .. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md#260
-.. _`read the Symfony 2.5 documentation`: http://symfony.com/doc/2.5/components/options_resolver.html
+.. _`read the Symfony 2.5 documentation`: https://symfony.com/doc/2.5/components/options_resolver.html
