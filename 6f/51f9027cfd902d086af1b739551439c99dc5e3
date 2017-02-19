@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by KatharinaSt at 2017-02-15T16:43:36Z
+
+My pleasure. :-)
+
+@javiereguiluz I noticed it afterwards: Is it true that I should have created my pull request on branch 2.7 (oldest maintained) rather than on 3.2?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-15T16:46:29Z
+
+**Note to mergers**: this must be merged in **2.7**
+
+---
+
+@KatharinaSt yes, you are right! Typos are fixed in *"the oldest branch that contains the error and it's still maintained"*. so this should go to 2.7 ... but we can change this while merging. Thanks!
+
+---------------------------------------------------------------------------
+
+by KatharinaSt at 2017-02-15T16:54:59Z
+
+@javiereguiluz Thanks for your reply! I'll try to remember next time!
