@@ -12,7 +12,7 @@ your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
 into many objects that handle each task.
 
-This chapter is about a special PHP object in Symfony that helps
+This article is about a special PHP object in Symfony that helps
 you instantiate, organize and retrieve the many objects of your application.
 This object, called a service container, will allow you to standardize and
 centralize the way objects are constructed in your application. The container
@@ -23,14 +23,14 @@ in Symfony. In large part, the service container is the biggest contributor
 to the speed and extensibility of Symfony.
 
 Finally, configuring and using the service container is easy. By the end
-of this chapter, you'll be comfortable creating your own objects via the
+of this article, you'll be comfortable creating your own objects via the
 container and customizing objects from any third-party bundle. You'll begin
 writing code that is more reusable, testable and decoupled, simply because
 the service container makes writing good code so easy.
 
 .. tip::
 
-    If you want to know a lot more after reading this chapter, check out
+    If you want to know a lot more after reading this article, check out
     the :doc:`DependencyInjection component documentation </components/dependency_injection>`.
 
 .. index::

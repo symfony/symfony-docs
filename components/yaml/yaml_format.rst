@@ -8,7 +8,7 @@ According to the official `YAML`_ website, YAML is "a human friendly data
 serialization standard for all programming languages".
 
 Even if the YAML format can describe complex nested data structure, this
-chapter only describes the minimum set of features needed to use YAML as a
+article only describes the minimum set of features needed to use YAML as a
 configuration file format.
 
 YAML is a simple language that describes data. As PHP, it has a syntax for

@@ -13,7 +13,7 @@ which are like simple conditional statements.
 
     Take a look at the
     :doc:`authorization </components/security/authorization>`
-    chapter for an even deeper understanding on voters.
+    article for an even deeper understanding on voters.
 
 How Symfony Uses Voters
 -----------------------

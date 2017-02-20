@@ -1,13 +1,13 @@
 {% extends '!layout.html' %}
 
-{% set css_files = ['http://symfony.com/css/compiled/v5/all.css?v=4'] %}
+{% set css_files = ['https://symfony.com/css/compiled/v5/all.css?v=4'] %}
 {# make sure the Sphinx stylesheet isn't loaded #}
 {% set style = '' %}
 {% set isIndex = pagename is index %}
 
 {% block extrahead %}
 {# add JS to support tabs #}
-<script src="http://symfony.com/js/v5/all.js?v=4"></script>
+<script src="https://symfony.com/js/v5/all.js?v=4"></script>
 
 {# pygment's styles are still loaded, undo some unwanted styles #}
 <style>
@@ -48,7 +48,7 @@
                     <p>Each pull request of the Symfony Documentation is automatically deployed and hosted on <a href="https://platform.sh">Platform.sh</a>.<br>
                     View this page on <a href="https://symfony.com/doc/current/{{ pagename }}">symfony.com</a>.</p>
                 </div>
-                
+
                 {%- include "globaltoc.html" %}
 
                 {% if not isIndex %}
@@ -81,7 +81,7 @@
                 <a href="{{ next.link|e }}">{{ next.title|striptags|e }} »</a>
             </div>
             {% endif %}
-            
+
             <div id="license">
                 <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Unported <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License</a>.</p>
             </div>

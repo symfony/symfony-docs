@@ -12,7 +12,7 @@ The PHPUnit Testing Framework
 -----------------------------
 
 Symfony integrates with an independent library - called PHPUnit - to give
-you a rich testing framework. This chapter won't cover PHPUnit itself, but
+you a rich testing framework. This article won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
 .. note::

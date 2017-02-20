@@ -10,7 +10,7 @@ Great news! While you're learning Symfony, you're *also* learning the fundamenta
 of the *web*. Symfony is closely modeled after the HTTP Request-Response flow: that
 *fundamental* paradigm that's behind almost *all* communication on the web.
 
-In this chapter, you'll walk through the HTTP fundamentals and find out how these
+In this article, you'll walk through the HTTP fundamentals and find out how these
 are applied throughout Symfony.
 
 Requests and Responses in HTTP

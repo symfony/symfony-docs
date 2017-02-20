@@ -5,7 +5,7 @@
 How to Secure any Service or Method in your Application
 =======================================================
 
-In the security chapter, you can see how to
+In the security article, you can see how to
 :ref:`secure a controller <security-securing-controller>` by requesting
 the ``security.authorization_checker`` service from the Service Container and
 checking the current user's role::

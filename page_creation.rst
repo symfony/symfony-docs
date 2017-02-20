@@ -37,7 +37,7 @@ Creating a Page: Route and Controller
 .. tip::
 
     Before continuing, make sure you've read the :doc:`Setup </setup>`
-    chapter and can access your new Symfony app in the browser.
+    article and can access your new Symfony app in the browser.
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
 random) number and prints it. To do that, create a "Controller class" and a
@@ -154,7 +154,7 @@ to get your *new* lucky number!
 
     http://localhost:8000/lucky/number
 
-In the :doc:`/templating` chapter, you'll learn all about Twig: how to loop, render
+In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
 other templates and leverage its powerful layout inheritance system.
 
 Checking out the Project Structure
@@ -230,7 +230,7 @@ That exists!
 
 You can control how your bundles behave via the ``app/config/config.yml`` file.
 That file - and other details like environments & parameters - are discussed in
-the :doc:`/configuration` chapter.
+the :doc:`/configuration` article.
 
 What's Next?
 ------------
@@ -238,7 +238,7 @@ What's Next?
 Congrats! You're already starting to master Symfony and learn a whole new
 way of building beautiful, functional, fast and maintainable apps.
 
-Ok, time to finish mastering the fundamentals by reading these chapters:
+Ok, time to finish mastering the fundamentals by reading these articles:
 
 * :doc:`/routing`
 * :doc:`/controller`
