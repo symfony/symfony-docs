@@ -55,7 +55,7 @@ be adapted for your case::
                 ));
             }
 
-            if (class_exists(DoctrieMongoDBMappingsPass::class)) {
+            if (class_exists(DoctrineMongoDBMappingsPass::class)) {
                 $container->addCompilerPass(
                     DoctrineMongoDBMappingsPass::createXmlMappingDriver(
                         $mappings,

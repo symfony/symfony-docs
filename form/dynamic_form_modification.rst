@@ -62,7 +62,7 @@ a bare form class looks like::
 .. note::
 
     If this particular section of code isn't already familiar to you, you
-    probably need to take a step back and first review the :doc:`Forms chapter </forms>`
+    probably need to take a step back and first review the :doc:`Forms article </forms>`
     before proceeding.
 
 Assume for a moment that this form utilizes an imaginary "Product" class

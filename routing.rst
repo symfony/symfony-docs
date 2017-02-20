@@ -14,7 +14,7 @@ hunt down and update to make the change? If you're using Symfony's router,
 the change is simple.
 
 The Symfony router lets you define creative URLs that you map to different
-areas of your application. By the end of this chapter, you'll be able to:
+areas of your application. By the end of this article, you'll be able to:
 
 * Create complex routes that map to controllers
 * Generate URLs inside templates and controllers
@@ -652,7 +652,7 @@ But if you pass extra ones, they will be added to the URI as a query string::
 Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To generate URLs inside Twig, see the templating chapter: :ref:`templating-pages`.
+To generate URLs inside Twig, see the templating article: :ref:`templating-pages`.
 If you also need to generate URLs in JavaScript, see :doc:`/routing/generate_url_javascript`.
 
 .. index::

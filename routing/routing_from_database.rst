@@ -38,4 +38,4 @@ loader, e.g. for another database type or a REST API or anything else.
 The DynamicRouter is explained in the `Symfony CMF documentation`_.
 
 .. _FrameworkExtraBundle: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`Symfony CMF documentation`: http://symfony.com/doc/master/cmf/book/routing.html
+.. _`Symfony CMF documentation`: https://symfony.com/doc/master/cmf/book/routing.html

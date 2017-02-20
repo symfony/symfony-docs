@@ -16,9 +16,9 @@ How to Create a custom Authentication Provider
     * To authenticate via OAuth using a third-party service such as Google, Facebook
       or Twitter, try using the `HWIOAuthBundle`_ community bundle.
 
-If you have read the chapter on :doc:`/security`, you understand the
+If you have read the article on :doc:`/security`, you understand the
 distinction Symfony makes between authentication and authorization in the
-implementation of security. This chapter discusses the core classes involved
+implementation of security. This article discusses the core classes involved
 in the authentication process, and how to implement a custom authentication
 provider. Because authentication and authorization are separate concepts,
 this extension will be user-provider agnostic, and will function with your
@@ -28,7 +28,7 @@ wherever else you choose to store them.
 Meet WSSE
 ---------
 
-The following chapter demonstrates how to create a custom authentication
+The following article demonstrates how to create a custom authentication
 provider for WSSE authentication. The security protocol for WSSE provides
 several security benefits:
 
@@ -49,7 +49,7 @@ password digest.
 .. note::
 
     WSSE also supports application key validation, which is useful for web
-    services, but is outside the scope of this chapter.
+    services, but is outside the scope of this article.
 
 The Token
 ---------
@@ -375,7 +375,7 @@ requires the following methods:
 ``addConfiguration()``
     Method which is used to define the configuration
     options underneath the configuration key in your security configuration.
-    Setting configuration options are explained later in this chapter.
+    Setting configuration options are explained later in this article.
 
 .. note::
 

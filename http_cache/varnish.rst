@@ -102,7 +102,7 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
                 set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
                 set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
                 set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-    
+
                 if (req.http.Cookie == "") {
                     // If there are no more cookies, remove the header to get page cached.
                     unset req.http.Cookie;
@@ -120,7 +120,7 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
                 set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
                 set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
                 set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-    
+
                 if (req.http.Cookie == "") {
                     // If there are no more cookies, remove the header to get page cached.
                     remove req.http.Cookie;
@@ -168,7 +168,7 @@ using Varnish 3:
 Enable Edge Side Includes (ESI)
 -------------------------------
 
-As explained in the :doc:`Edge Side Includes chapter </http_cache/esi>`, Symfony
+As explained in the :doc:`Edge Side Includes article </http_cache/esi>`, Symfony
 detects whether it talks to a reverse proxy that understands ESI or not. When
 you use the Symfony reverse proxy, you don't need to do anything. But to make
 Varnish instead of Symfony resolve the ESI tags, you need some configuration

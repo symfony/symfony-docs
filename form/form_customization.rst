@@ -802,7 +802,7 @@ Customizing Error Output
    The Form component only handles *how* the validation errors are rendered,
    and not the actual validation error messages. The error messages themselves
    are determined by the validation constraints you apply to your objects.
-   For more information, see the chapter on :doc:`validation </validation>`.
+   For more information, see the article on :doc:`validation </validation>`.
 
 There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered

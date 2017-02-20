@@ -64,6 +64,28 @@ to meet those requirements.
     If the installer doesn't work for you or doesn't output anything, make sure
     that the PHP `Phar extension`_ is installed and enabled on your computer.
 
+.. note::
+
+    If the SSL certificates are not properly installed in your system, you
+    may get this error:
+
+        cURL error 60: SSL certificate problem: unable to get local issuer certificate.
+
+    You can solve this issue as follows:
+
+    #. Download a file with the updated list of certificates from
+       https://curl.haxx.se/ca/cacert.pem
+    #. Move the downloaded ``cacert.pem`` file to some safe location in your system
+    #. Update your ``php.ini`` file and configure the path to that file:
+
+       .. code-block:: ini
+
+           ; Linux and macOS systems
+           curl.cainfo = "/path/to/cacert.pem"
+
+           ; Windows systems
+           curl.cainfo = "C:\path\to\cacert.pem"
+
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
