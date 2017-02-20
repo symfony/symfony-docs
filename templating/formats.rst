@@ -33,8 +33,8 @@ The ``getRequestFormat()`` on the ``Request`` object defaults to ``html``,
 but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
-``/contact.xml`` sets the format to ``xml``. For more information, see the
-:ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
+``/contact.xml`` sets the format to ``xml``. For more information, see this
+:ref:`Advanced Routing Example <advanced-routing-example>`.
 
 To create links that include the format parameter, include a ``_format``
 key in the parameter hash:

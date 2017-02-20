@@ -344,7 +344,7 @@ item in the cache immediately (it returns ``true`` if the item was saved or
 ``false`` if some error occurred)::
 
     // ...
-    $userFriends = $cache->get('user_'.$userId.'_friends');
+    $userFriends = $cache->getItem('user_'.$userId.'_friends');
     $userFriends->set($user->getFriends());
     $isSaved = $cache->save($userFriends);
 

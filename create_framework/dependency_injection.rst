@@ -20,15 +20,16 @@ to it::
         {
             $context = new Routing\RequestContext();
             $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
+            $requestStack = new RequestStack();
 
             $controllerResolver = new HttpKernel\Controller\ControllerResolver();
             $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher));
+            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-            parent::__construct($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
+            parent::__construct($dispatcher, $controllerResolver, $requestStack, $argumentResolver);
         }
     }
 
