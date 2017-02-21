@@ -90,6 +90,17 @@ register.
         }
     }
 
+.. tip::
+
+    You can create an expression expression from a PHP function with the
+    :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
+
+        ExpressionFunction::fromPhp('strtoupper');
+
+    It allows namespaced PHP function where second parameter must be set to name expression::
+
+        ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
+
 You can register providers using
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::registerProvider`
 or by using the second argument of the constructor::
