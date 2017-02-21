@@ -101,6 +101,9 @@ register.
 
         ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
 
+    .. versionadded:: 3.3
+        The ``ExpressionFunction::fromPhp()`` method was introduced in Symfony 3.3.
+
 You can register providers using
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::registerProvider`
 or by using the second argument of the constructor::
