@@ -97,7 +97,7 @@ register.
 
         ExpressionFunction::fromPhp('strtoupper');
 
-    It allows namespaced PHP function where second parameter must be defined to name expression::
+    It allows namespaced PHP function where the second parameter must be defined to name expression::
 
         ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
 
