@@ -92,12 +92,12 @@ register.
 
 .. tip::
 
-    You can create an expression expression from a PHP function with the
+    You can create an expression function from a PHP function with the
     :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
 
         ExpressionFunction::fromPhp('strtoupper');
 
-    It allows namespaced PHP function where second parameter must be set to name expression::
+    It allows namespaced PHP function where second parameter must be defined to name expression::
 
         ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
 
