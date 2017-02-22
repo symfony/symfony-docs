@@ -251,9 +251,10 @@ key and define the type as ``constant``.
 
 .. caution::
 
-    It's also possible to use PHP constants in YAML files using expression language.
-    You must have :doc:`/components/expression_language` installed.
-    To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
+    YAML files can refer to PHP constants via the ``@=constant('CONSTANT_NAME')``
+    syntax, which is provided by the
+    :doc:`Expression Language component /components/expression_language`. See
+    :doc:`/components/expression_language/syntax` to learn more about its syntax.
 
 .. tip::
 
@@ -267,7 +268,7 @@ key and define the type as ``constant``.
 
 .. note::
 
-    In Symfony 3.2 YAML support PHP constants.
+    In Symfony 3.2, YAML supports PHP constants via the ``!php/const:CONSTANT_NAME`` syntax.
 
 PHP Keywords in XML
 -------------------
