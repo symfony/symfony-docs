@@ -1093,13 +1093,9 @@ version_strategy
 
 **type**: ``string`` **default**: ``null``
 
-The service id of the asset version strategy applied to the assets. In addition
-to your own :doc:`custom asset version strategies </frontend/custom_version_strategy>`,
-Symfony defines two services for its :ref:`built-in strategies <component-assets-versioning>`:
-``assets.empty_version_strategy`` and ``assets.static_version_strategy``.
-
-The ``assets.empty_version_strategy`` is useful to override the global asset
-versioning strategy inside an asset package:
+The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
+applied to the assets. This option can be set globally for all assets and
+individually for each asset package:
 
 .. configuration-block::
 
@@ -1108,12 +1104,15 @@ versioning strategy inside an asset package:
         # app/config/config.yml
        framework:
             assets:
-                # this strategy is applied to every asset (including packages) ...
+                # this strategy is applied to every asset (including packages)
                 version_strategy: 'app.asset.my_versioning_strategy'
                 packages:
                     foo_package:
-                        # ... except if a package explicitly uses the empty strategy
-                        version_strategy: 'assets.empty_version_strategy'
+                        # this makes the assets of this package to not be versioned
+                        version: ~
+                    bar_package:
+                        # this package doesn't use the global versioning strategy
+                        version_strategy: 'app.asset.another_version_strategy'
 
     .. code-block:: xml
 
@@ -1129,7 +1128,10 @@ versioning strategy inside an asset package:
                 <framework:assets version_strategy="app.asset.my_versioning_strategy">
                     <framework:package
                         name="foo_package"
-                        version-strategy="assets.empty_version_strategy" />
+                        version="null" />
+                    <framework:package
+                        name="bar_package"
+                        version-strategy="app.asset.another_version_strategy" />
                 </framework:assets>
             </framework:config>
         </container>
@@ -1143,7 +1145,11 @@ versioning strategy inside an asset package:
                 'packages' => array(
                     'foo_package' => array(
                         // ...
-                        'version_strategy' => 'assets.empty_version_strategy',
+                        'version' => null,
+                    ),
+                    'bar_package' => array(
+                        // ...
+                        'version_strategy' => 'app.asset.another_version_strategy',
                     ),
                 ),
             ),
