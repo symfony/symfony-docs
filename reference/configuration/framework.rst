@@ -1093,8 +1093,61 @@ version_strategy
 
 **type**: ``string`` **default**: ``null``
 
-The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
-applied to the assets.
+The service id of the asset version strategy applied to the assets. In addition
+to your own :doc:`custom asset version strategies </frontend/custom_version_strategy>`,
+Symfony defines two services for its :ref:`built-in strategies <component-assets-versioning>`:
+``assets.empty_version_strategy`` and ``assets.static_version_strategy``.
+
+The ``assets.empty_version_strategy`` is useful to override the global asset
+versioning strategy inside an asset package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this strategy is applied to every asset (including packages) ...
+                version_strategy: 'app.asset.my_versioning_strategy'
+                packages:
+                    foo_package:
+                        # ... except if a package explicitly uses the empty strategy
+                        version_strategy: 'assets.empty_version_strategy'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets version_strategy="app.asset.my_versioning_strategy">
+                    <framework:package
+                        name="foo_package"
+                        version-strategy="assets.empty_version_strategy" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                'version_strategy' => 'app.asset.my_versioning_strategy',
+                'packages' => array(
+                    'foo_package' => array(
+                        // ...
+                        'version_strategy' => 'assets.empty_version_strategy',
+                    ),
+                ),
+            ),
+        ));
 
 .. note::
 
