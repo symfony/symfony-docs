@@ -49,13 +49,15 @@ As an example you'll create a price filter to format a given number into price::
 
             return $price;
         }
-
-        public function getName()
-        {
-            return 'app_extension';
-        }
     }
 
+.. note::
+ 
+    Prior to Twig 1.26, your extension had to provide an additional `getName` method that 
+    returned the extension's internal name. When your extension needs to be compatible
+    with Twig versions before 1.26, include this method which is omitted in the example 
+    above.
+    
 .. tip::
 
     Along with custom filters, you can also add custom `functions`_ and register
