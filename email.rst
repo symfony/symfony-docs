@@ -86,6 +86,11 @@ The following configuration attributes are available:
 * ``delivery_addresses`` (an array of email addresses where to send ALL emails)
 * ``disable_delivery`` (set to true to disable delivery completely)
 
+.. caution::
+
+    Starting from Swift Mailer 5.4.5, ``mail`` transport is deprecated. It will be removed 
+    in version 6. Consider using other transport as ``smtp``, ``sendmail`` or ``gmail``.
+
 Sending Emails
 --------------
 
