@@ -222,6 +222,36 @@ could easily enable logging::
     $subscriber = new AuditTrailListener($logger);
     $dispatcher->addSubscriber($subscriber);
 
+Available events
+----------------
+
+1. General events
+
+The following events are dispatched for all workflows:
+
+* ``workflow.guard``: occurs before a transition is started. Allows you to prevent it by calling ``$event->setBlocked(true);`` like shown above.
+* ``workflow.leave``: occurs when an object leaves it's current state.
+* ``workflow.transition``: occurs when the transition to the new state is launched.
+* ``workflow.enter``: occurs when the new state is just defined on the object.
+
+2. Workflow-specific events
+
+All the events are also triggered for each workflow specifically. This allows you to react only for the events of a specific workflow.
+
+* ``workflow.<workflow_name>.guard``
+* ``workflow.<workflow_name>.leave``
+* ``workflow.<workflow_name>.transition``
+* ``workflow.<workflow_name>.enter``
+
+3. Transition- or state-specific events
+
+You can even listen to only specific transitions or states for a specific workflow:
+
+* ``workflow.<workflow_name>.guard.<transition_name>``
+* ``workflow.<workflow_name>.leave.<state_name>``
+* ``workflow.<workflow_name>.transition.<transition_name>``
+* ``workflow.<workflow_name>.enter.<state_name>``
+
 Usage in Twig
 -------------
 
