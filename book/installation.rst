@@ -112,6 +112,17 @@ pass ``lts`` as the second argument of the ``new`` command:
     # Windows
     c:\projects\> php symfony new my_project_name lts
 
+If you want your project to be based on the latest Symfony LTS version, pass
+``lts`` as the second argument of the ``new`` command:
+
+.. code-block:: bash
+
+    # Linux, Mac OS X
+    $ symfony new my_project_name lts
+
+    # Windows
+    c:\projects\> php symfony.phar new my_project_name lts
+
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
 to use for your projects.
