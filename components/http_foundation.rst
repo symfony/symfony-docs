@@ -420,12 +420,12 @@ conditional value specified in the client Request, use the
 :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
 method::
 
-    if ($response->isNotModified($request)) {
+    if (!$response->isNotModified($request)) {
         $response->send();
     }
 
 If the Response is not modified, it sets the status code to 304 and removes the
-actual response content.
+actual response content. If the response *is* modified, the response should be sent.
 
 .. _redirect-response:
 
