@@ -214,14 +214,14 @@ ide
 Symfony turns file paths seen in variable dumps and exception messages into
 links that open those files right inside your browser. If you prefer to open
 those files in your favorite IDE or text editor, set this option to any of the
-following values: ``phpstorm``, ``phpstorm-core``, ``sublime``,
+following values: ``phpstorm``, ``phpstorm-protocol``, ``sublime``,
 ``textmate``, ``macvim`` and ``emacs``.
 
 .. note::
 
-    The ``phpstorm`` option requires `PhpStormProtocol`_ for Windows,
-    or `phpstorm-url-handler`_ for Linux.  PhpStorm for the Mac provides
-    built-in support for the ``phpstorm-core`` option.
+    PhpStorm for the Mac provides built-in support for the ``phpstorm`` option.
+    The ``phpstorm-protocol`` option requires `PhpStormProtocol`_ for Windows,
+    or `phpstorm-url-handler`_ for Linux.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
