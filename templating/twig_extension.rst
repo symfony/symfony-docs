@@ -51,11 +51,12 @@ As an example you'll create a price filter to format a given number into price::
         }
     }
 
-.. note::
+.. note::.. note::
  
-    Prior to Twig 1.26, your extension had to provide an additional ``getName`` method that 
-    returned the extension's internal name. When your extension needs to be compatible
-    with Twig versions before 1.26, include this method which is omitted in the example 
+    Prior to Twig 1.26, your extension had to define an additional ``getName()``
+    method that returned a string with the extension's internal name (e.g.
+    ``app.my_extension``). When your extension needs to be compatible with Twig
+    versions before 1.26, include this method which is omitted in the example 
     above.
     
 .. tip::
