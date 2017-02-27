@@ -232,7 +232,7 @@ logic to a separate service::
 
         public function __construct($targetDir)
         {
-            $this->setTargetDir($targetDir);
+            $this->targetDir = $targetDir;
         }
 
         public function upload(UploadedFile $file)
@@ -247,11 +247,6 @@ logic to a separate service::
         public function getTargetDir()
         {
             return $this->targetDir;
-        }
-
-        public function setTargetDir($targetDir = '')
-        {
-            $this->targetDir = $targetDir;
         }
     }
 
