@@ -92,7 +92,7 @@ register.
 
 .. tip::
 
-    You can create an expression function from a PHP function with the
+    To create an expression function from a PHP function with the
     :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
 
         ExpressionFunction::fromPhp('strtoupper');
