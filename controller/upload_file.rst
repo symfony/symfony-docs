@@ -442,10 +442,14 @@ controller.
             public function postLoad(LifecycleEventArgs $args)
             {
                 $entity = $args->getEntity();
+                
+                if (!$entity instanceof Product) {
+                    return;
+                }
 
-                $fileName = $entity->getBrochure();
-
-                $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                if ($fileName = $entity->getBrochure()) {
+                    $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                }
             }
         }
 
