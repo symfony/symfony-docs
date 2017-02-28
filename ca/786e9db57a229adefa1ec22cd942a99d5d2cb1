@@ -1,0 +1,92 @@
+---------------------------------------------------------------------------
+
+by 20uf at 2017-01-30T09:14:19Z
+
+All right!
+
+I would say to answer that, that it's subtle and that your best be explicit.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-30T09:16:13Z
+
+The drawback is that we would have to make this change on every branch (in theory, we would then also have to change the constraint to `^3.1` on the `3.1` branch). I am not sure if we really want to do that.
+
+---------------------------------------------------------------------------
+
+by 20uf at 2017-01-30T09:35:57Z
+
+In this case would not it be more judicious to leave only composer command:
+
+`composer require symfony/http-foundation`
+
+There is no such notion of composer.json on other docs, eg:
+
+- http://symfony.com/doc/current/components/event_dispatcher.html#installation
+- http://symfony.com/doc/current/components/console.html
+- ...
+
+---------------------------------------------------------------------------
+
+by 20uf at 2017-02-05T13:13:29Z
+
+Hello @xabbuh @javiereguiluz.
+
+A solution for this PR? What do we do?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-06T10:44:35Z
+
+I agree with the last comment. We could remove the `composer.json` contents example entirely.
+
+## Before
+
+```rst
+To use this component, add it as a dependency of the project:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-foundation
+
+Running this command will also automatically download the Symfony
+HttpFoundation component and install it under the ``vendor/`` directory.
+A ``composer.json`` and a ``composer.lock`` file will be generated as well,
+containing the new requirement:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "symfony/http-foundation": "^3.0"
+        }
+    }
+
+The code block shows the content of the ``composer.json`` file (the actual
+version may vary).
+```
+
+## After
+
+```rst
+To use this component, add it as a dependency of the project:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-foundation
+
+Running this command will also automatically download the Symfony
+HttpFoundation component and install it under the ``vendor/`` directory.
+A ``composer.json`` and a ``composer.lock`` file will be generated as well,
+containing the new requirement.
+```
+
+---------------------------------------------------------------------------
+
+by 20uf at 2017-02-13T19:41:37Z
+
+Hello @xabbuh @javiereguiluz.
+
+Are the latest changes right for you? We are ISO with other documentation.
+
+Regards
