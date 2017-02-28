@@ -246,7 +246,7 @@ Authenticating against an LDAP server can be done using either the form
 login or the HTTP Basic authentication providers.
 
 They are configured exactly as their non-LDAP counterparts, with the
-addition of two configuration keys:
+addition of two configuration keys and one optional key:
 
 service
 .......
@@ -270,6 +270,28 @@ For example, if your users have DN strings in the form
 ``uid=einstein,dc=example,dc=com``, then the ``dn_string`` will be
 ``uid={username},dc=example,dc=com``.
 
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This (optional) key makes the user provider search for a user and then use the
+found DN for the bind process. This is useful when using multiple LDAP user
+providers with different ``base_dn``. The value of this option must be a valid
+search string (e.g. ``uid="{username}"``). The placeholder value will be
+replaced by the actual username.
+
+When this option is used, ``dn_string`` has to be updated accordingly. Following
+the previous example, if your users have the following two DN:
+``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``, then
+``dn_string`` should be ``dc=example,dc=com``. If the ``query_string`` option is
+``uid="{username}"``, then the authentication provider can authenticate users
+from both DN.
+
+Bear in mind that usernames must be unique across both DN, as the authentication
+provider won't be able to select the correct user for the bind process if more
+than one is found.
+
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``.
 
@@ -288,8 +310,6 @@ Configuration example for form login
                 main:
                     # ...
                     form_login_ldap:
-                        login_path: login
-                        check_path: login_check
                         # ...
                         service: ldap
                         dn_string: 'uid={username},dc=example,dc=com'
@@ -307,8 +327,6 @@ Configuration example for form login
             <config>
                 <firewall name="main">
                     <form-login-ldap
-                            login-path="login"
-                            check-path="login_check"
                             service="ldap"
                             dn-string="uid={username},dc=example,dc=com" />
                 </firewall>
@@ -321,8 +339,6 @@ Configuration example for form login
             'firewalls' => array(
                 'main' => array(
                     'form_login_ldap' => array(
-                        'login_path' => 'login',
-                        'check_path' => 'login_check',
                         'service' => 'ldap',
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
@@ -380,6 +396,62 @@ Configuration example for HTTP Basic
                     'stateless' => true,
                 ),
             ),
+        );
+
+Configuration example for form login and query_string
+.....................................................
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    form_login_ldap:
+                        # ...
+                        service: ldap
+                        dn_string: 'dc=example,dc=com'
+                        query_string: '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <form-login-ldap
+                            service="ldap"
+                            dn-string="dc=example,dc=com"
+                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))" />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'main' => array(
+                    'form_login_ldap' => array(
+                        'service' => 'ldap',
+                        'dn_string' => 'dc=example,dc=com',
+                        'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
+                        // ...
+                    ),
+                ),
+            )
         );
 
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
