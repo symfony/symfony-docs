@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-31T11:48:33Z
+
+The build on Platform.sh failed. The logs are very long ... but at the end we can find this:
+
+```
+Creating environment 6qmocelev2lwe-pr-7432-tgtexey.
+E: Error building the project (we believe it's our fault): Traceback (most recent call last):
+     File "/usr/lib/python2.7/dist-packages/gevent_jsonrpc/__init__.py", line 202, in _reader
+       obj["id"], obj["method"], obj["params"]
+     File "/usr/lib/python2.7/dist-packages/gevent_jsonrpc/__init__.py", line 316, in _execute_method
+       return obj(**parameters)
+     File "/usr/lib/python2.7/dist-packages/platform_foundation/container/apis/cluster.py", line 52, in create
+       cluster.create_as_copy(services, cluster_definition.parent)
+     File "/usr/lib/python2.7/dist-packages/protean/proxy.py", line 50, in __call__
+       raise ProcessingError(**result["error"])
+   ProcessingError: ProcessingError: Exception: Failed to start Container(/root/.hosts/i-8352f4c0/.containers/6qmocelev2lwe-pr-7432-tgtexey--symfonydocs): container died during startup.
+
+     File "/usr/lib/python2.7/dist-packages/protean/zookeeper/__init__.py", line 634, in _process_method_call_inner
+         result = method.__func__(self._object, *args, **kwargs)
+
+       File "/usr/lib/python2.7/dist-packages/platform_foundation/container/__init__.py", line 292, in start
+         raise Exception("Failed to start %s: container died during startup." % self)
+
+     File "/usr/lib/python2.7/dist-packages/protean/zookeeper/__init__.py", line 634, in _process_method_call_inner
+         result = method.__func__(self._object, *args, **kwargs)
+
+       File "/usr/lib/python2.7/dist-packages/platform_foundation/infrastructure/cluster/__init__.py", line 73, in create_as_copy
+         return self.update(services, parent=parent_cluster, create_from_parent=True)
+
+       File "/usr/lib/python2.7/dist-packages/protean/object.py", line 179, in __call__
+         result = self._method.__func__(self._obj, *args, **kwargs)
+
+       File "/usr/lib/python2.7/dist-packages/platform_foundation/infrastructure/cluster/__init__.py", line 190, in update
+         return self._update(self.services, operations, parent)
+
+       File "/usr/lib/python2.7/dist-packages/platform_foundation/infrastructure/cluster/__init__.py", line 476, in _update
+         p.execute()
+
+       File "/usr/lib/python2.7/dist-packages/protean/parallel.py", line 65, in execute
+         self._result = self._execute()
+
+       File "/usr/lib/python2.7/dist-packages/protean/parallel.py", line 143, in _do_one
+         result = func(*args, **kwargs)
+
+       File "/usr/lib/python2.7/dist-packages/platform_foundation/infrastructure/cluster/__init__.py", line 582, in _execute_service_operation
+         service.start()
+
+       File "/usr/lib/python2.7/dist-packages/protean/object.py", line 179, in __call__
+         result = self._method.__func__(self._obj, *args, **kwargs)
+
+       File "/usr/lib/python2.7/dist-packages/platform_foundation/infrastructure/service/__init__.py", line 462, in start
+         container.start(self.definition.configuration, self.definition.application)
+
+       File "/usr/lib/python2.7/dist-packages/protean/proxy.py", line 50, in __call__
+         raise ProcessingError(**result["error"])
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-31T21:45:46Z
+
+@javiereguiluz Can you try to trigger a new run of the platform.sh build by rebasing or by making another small change?
