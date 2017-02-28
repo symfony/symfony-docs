@@ -230,7 +230,7 @@ key and define the type as ``constant``.
         parameters:
             global.constant.value: !php/const:GLOBAL_CONSTANT
             my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
-        
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -248,7 +248,6 @@ key and define the type as ``constant``.
 
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
-
 
 PHP Keywords in XML
 -------------------
