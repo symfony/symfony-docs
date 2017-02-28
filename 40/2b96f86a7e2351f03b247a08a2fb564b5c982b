@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by Guikingone at 2017-01-15T08:42:21Z
+
+Hi @xabbuh,
+
+Just make the correction with a new commit, should be better, for the verification, my bad, i don't look at the entity checked before.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-15T08:54:19Z
+
+@Guikingone Thanks for the fast reaction. If you could do one minor change, this one looks ready for me to be merged: Can you please update the code to always use four spaces for indentation?
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2017-01-15T08:57:22Z
+
+@xabbuh Done, sorry for the bad identation.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-15T08:58:32Z
+
+👍  Thanks for this nice fix!
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2017-01-20T14:25:27Z
+
+@HeahDude Should be better :)
