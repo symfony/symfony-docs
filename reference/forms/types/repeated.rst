@@ -12,13 +12,13 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | input ``text`` field by default, but see `type`_ option                |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `first_name`_                                                        |
+| Options     | - `compare`_                                                           |
+|             | - `first_name`_                                                        |
 |             | - `first_options`_                                                     |
 |             | - `options`_                                                           |
 |             | - `second_name`_                                                       |
 |             | - `second_options`_                                                    |
 |             | - `type`_                                                              |
-|             | - `compare`_                                                           |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `error_bubbling`_                                                    |
 | options     |                                                                        |
@@ -115,6 +115,15 @@ be displayed when the two fields do not match each other.
 Field Options
 -------------
 
+compare
+~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+The callable receives two values to compare, and should return a boolean: true if the fields are considered equal, false otherwise. The callable also receives the currently compared key as a third value.
+
+By default a strict comparison is done. This option can be used to compare a password_hash with password_verify against the second field.
+    
 first_name
 ~~~~~~~~~~
 
@@ -177,21 +186,6 @@ type
 
 The two underlying fields will be of this field type. For example, passing
 ``PasswordType::class`` will render two password fields.
-
-compare
-~~~~~~~
-
-**compare**: ``callable`` **default**: ``null``
-
-The two underlying fields' values will be compared by this callable. The callable receives two values to compare, and should return a boolean: true if the fields are considered equal, false otherwise.
-
-When this option has a null value, it uses internally a callable comparable to::
-
-    $builder->add('password', RepeatedType::class, array(
-        'compare'  => function ($value1, $value2) {
-            return $value1 === $value2;
-        },
-    ));
     
 Overridden Options
 ------------------
