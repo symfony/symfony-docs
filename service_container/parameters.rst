@@ -225,6 +225,12 @@ key and define the type as ``constant``.
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        parameters:
+            global.constant.value: "@=constant('GLOBAL_CONSTANT')"
+            my_class.constant.value: "@=constant('My_Class::CONSTANT_NAME')"
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -243,6 +249,13 @@ key and define the type as ``constant``.
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
+.. caution::
+
+    YAML files can refer to PHP constants via the ``@=constant('CONSTANT_NAME')``
+    syntax, which is provided by the
+    :doc:`Expression Language component </components/expression_language>`. See
+    :doc:`/components/expression_language/syntax` to learn more about its syntax.
+
 .. tip::
 
     If you're using YAML, you can :doc:`import an XML file </service_container/import>`
@@ -252,6 +265,10 @@ key and define the type as ``constant``.
 
         imports:
             - { resource: parameters.xml }
+
+.. note::
+
+    In Symfony 3.2, YAML supports PHP constants via the ``!php/const:CONSTANT_NAME`` syntax.
 
 PHP Keywords in XML
 -------------------
