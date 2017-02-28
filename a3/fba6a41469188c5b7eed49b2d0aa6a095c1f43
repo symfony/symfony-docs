@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-22T09:13:54Z
+
+The example was wrong as we passed the flags as the second argument to dump while they in fact have to be the fourth argument. The added arguments are just the default values of the `$inline` and `$indent` parameters.
