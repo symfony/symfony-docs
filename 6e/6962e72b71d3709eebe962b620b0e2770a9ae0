@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by nietonfir at 2017-01-26T22:17:51Z
+
+Maybe merge with #7414 ?
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2017-01-26T22:20:14Z
+
+ah doh .. didn't see this PR :-/
+
+lets wait for feedback.
+
+for example I am not sure if it made sense adding another example or not like I did.
+
+---------------------------------------------------------------------------
+
+by nietonfir at 2017-01-26T22:57:58Z
+
+No problem. ;-)
+Your example looks fine to me.
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2017-01-27T09:50:12Z
+
+integrated https://github.com/symfony/symfony-docs/issues/7414
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2017-01-28T22:50:12Z
+
+the relevant code branch was merged
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2017-02-03T12:06:41Z
+
+@xabbuh ok .. all comments should be addressed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-03T12:24:54Z
+
+👍
+
+Status: Reviewed
