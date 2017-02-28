@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-22T14:58:59Z
+
+**Note to mergers**: to be merged only in 2.7 and 2.8; not in 3.x branches.
+
+---------------------------------------------------------------------------
+
+by 20uf at 2017-02-23T16:05:59Z
+
+ @javiereguiluz,
+
+We have an error on [build](https://travis-ci.org/symfony/symfony-docs/builds/204224673):
+``` shell
+...
+writing output... [100%] validation/translations
+Warning, treated as error:
+/home/travis/build/symfony/symfony-docs/service_container/parameters.rst:254: WARNING: unknown document: Expression Language component /components/expression_language
+```
+
+What I do not reproduce locally
+
+``` shell
+cd _build && make html
+...
+writing output... [100%] service_container/parameters
+generating indices... genindex
+writing additional pages... search
+copying static files... done
+copying extra files... done
+dumping search index in English (code: en) ... done
+dumping object inventory... done
+build succeeded.
+```
+
+An idea ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-23T16:15:02Z
+
+@20uf yes! I made a mistake when writing the link to the document. See that the `:doc:` syntax is different when you want to customize the label of the link. Hopefully it's fixed now!
+
+---------------------------------------------------------------------------
+
+by 20uf at 2017-02-23T16:25:37Z
+
+Thank  you  @javiereguiluz
