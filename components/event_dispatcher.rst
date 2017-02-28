@@ -135,7 +135,7 @@ A call to the dispatcher's ``addListener()`` method associates any valid
 PHP callable to an event::
 
     $listener = new AcmeListener();
-    $dispatcher->addListener('acme.action', array($listener, 'onFooAction'));
+    $dispatcher->addListener('foo.action', array($listener, 'onFooAction'));
 
 The ``addListener()`` method takes up to three arguments:
 
