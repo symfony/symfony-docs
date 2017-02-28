@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-21T17:04:47Z
+
+Please also add a `versionadded` directive:
+
+```rst
+.. versionadded:: 3.3
+    The ``ExpressionFunction::fromPhp()`` method was introduced in Symfony 3.3.
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-21T17:58:32Z
+
+:+1:
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by maidmaid at 2017-02-21T18:08:18Z
+
+Result:
+
+![screenshot from 2017-02-21 19-06-31](https://cloud.githubusercontent.com/assets/4578773/23177934/eefb862c-f868-11e6-82f5-4cd8a1a90d6a.png)
+
+[link to temp doc](http://pr-7517-wxuwdhq-6qmocelev2lwe.eu.platform.sh/components/expression_language/extending.html#using-expression-providers)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-22T09:15:27Z
+
+@maidmaid This should work. The template used to render the preview is not exactly the same as the one used on symfony.com (we don't update it every time small changes are made to the website).
+
+---------------------------------------------------------------------------
+
+by maidmaid at 2017-02-22T09:41:52Z
+
+Cool, thank you for your reviews :)
