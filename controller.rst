@@ -427,14 +427,14 @@ read any flash messages from the session:
         {# app/Resources/views/base.html.twig #}
 
         {# you can read and display just one flash message type... #}
-        {% for flash_message in app.session.flash('notice') %}
+        {% for flash_message in app.session.flashBag.get('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
             </div>
         {% endfor %}
 
         {# ...or you can read and display every flash message available #}
-        {% for type, flash_messages in app.session.flashes %}
+        {% for type, flash_messages in app.session.flashBag.all %}
             {% for flash_message in flash_messages %}
                 <div class="flash-{{ type }}">
                     {{ flash_message }}
