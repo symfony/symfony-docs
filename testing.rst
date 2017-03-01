@@ -71,8 +71,9 @@ of your bundle::
     namespace AppBundle\Tests\Util;
 
     use AppBundle\Util\Calculator;
+    use PHPUnit\Framework\TestCase;
 
-    class CalculatorTest extends \PHPUnit_Framework_TestCase
+    class CalculatorTest extends TestCase
     {
         public function testAdd()
         {
