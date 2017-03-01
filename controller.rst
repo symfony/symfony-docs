@@ -439,7 +439,7 @@ read any flash messages from the session:
                 <div class="flash-{{ type }}">
                     {{ flash_message }}
                 </div>
-            {% endif %}
+            {% endfor %}
         {% endfor %}
 
     .. code-block:: html+php
