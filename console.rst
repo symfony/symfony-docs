@@ -50,14 +50,14 @@ method. Then you can optionally define a help message and the
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('app:create-users')
+            ->setName('app:create-user')
 
             // the short description shown while running "php bin/console list"
-            ->setDescription('Creates new users.')
+            ->setDescription('Creates a new user.')
 
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('This command allows you to create users...')
+            ->setHelp('This command allows you to create a user...')
         ;
     }
 
@@ -68,7 +68,7 @@ After configuring the command, you can execute it in the terminal:
 
 .. code-block:: terminal
 
-    $ php bin/console app:create-users
+    $ php bin/console app:create-user
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
