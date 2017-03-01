@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-14T19:19:09Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-01-15T11:50:42Z
+
+I just added a commit that (I think) improves this situation, I think we should look at it before merging this. See https://github.com/symfony/symfony/pull/21228#issuecomment-272689414.
+I was afraid that changing this behavior would give a lot of drawbacks, I'm sorry about that.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-15T12:25:15Z
+
+I'm putting this PR on hold because the genius @chalasr has managed to solve this issue. See https://github.com/symfony/symfony/pull/21228
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-03-01T08:33:15Z
+
+@javiereguiluz fixed on master only due to the potential too much important impact, this stays correct for older branches.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-01T09:54:44Z
+
+@chalasr Thanks!
+
+**Note to mergers**: merge in all branches EXCEPT master.
