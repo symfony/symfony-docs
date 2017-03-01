@@ -427,13 +427,15 @@ read any flash messages from the session:
         {% endfor %}
 
         {# ...or you can read and display every flash message available #}
-        {% for type, flash_messages in app.session.flashes %}
-            {% for flash_message in flash_messages %}
-                <div class="flash-{{ type }}">
-                    {{ flash_message }}
-                </div>
-            {% endif %}
-        {% endfor %}
+        {% if app.session.flashBag.keys %}
+            {% for type, flash_messages in app.session.flashBag.all %}
+                {% for flash_message in flash_messages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
 
     .. code-block:: html+php
 
