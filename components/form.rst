@@ -444,14 +444,29 @@ builder:
 
     .. code-block:: php-symfony
 
-        $defaults = array(
-            'dueDate' => new \DateTime('tomorrow'),
-        );
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
 
-        $form = $this->createFormBuilder($defaults)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
-            ->getForm();
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        class DefaultController extends Controller
+        {
+            public function newAction(Request $request)
+            {
+                $defaults = array(
+                    'dueDate' => new \DateTime('tomorrow'),
+                );
+
+                $form = $this->createFormBuilder($defaults)
+                    ->add('task', 'text')
+                    ->add('dueDate', 'date')
+                    ->getForm();
+
+                // ...
+            }
+        }
 
 .. tip::
 
@@ -511,16 +526,23 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-symfony
 
-        // ...
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
 
-        public function searchAction()
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+        class DefaultController extends Controller
         {
-            $formBuilder = $this->createFormBuilder(null, array(
-                'action' => '/search',
-                'method' => 'GET',
-            ));
+            public function searchAction()
+            {
+                $formBuilder = $this->createFormBuilder(null, array(
+                    'action' => '/search',
+                    'method' => 'GET',
+                ));
 
-            // ...
+                // ...
+            }
         }
 
 .. _component-form-intro-handling-submission:
@@ -562,26 +584,34 @@ method:
 
     .. code-block:: php-symfony
 
-        // ...
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
 
-        public function newAction(Request $request)
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        class DefaultController extends Controller
         {
-            $form = $this->createFormBuilder()
-                ->add('task', 'text')
-                ->add('dueDate', 'date')
-                ->getForm();
+            public function newAction(Request $request)
+            {
+                $form = $this->createFormBuilder()
+                    ->add('task', 'text')
+                    ->add('dueDate', 'date')
+                    ->getForm();
 
-            $form->handleRequest($request);
+                $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $data = $form->getData();
 
-                // ... perform some action, such as saving the data to the database
+                    // ... perform some action, such as saving the data to the database
 
-                return $this->redirectToRoute('task_success');
+                    return $this->redirectToRoute('task_success');
+                }
+
+                // ...
             }
-
-            // ...
         }
 
 This defines a common form "workflow", which contains 3 different possibilities:
@@ -628,20 +658,31 @@ option when building each field:
 
     .. code-block:: php-symfony
 
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
 
-        $form = $this->createFormBuilder()
-            ->add('task', 'text', array(
-                'constraints' => new NotBlank(),
-            ))
-            ->add('dueDate', 'date', array(
-                'constraints' => array(
-                    new NotBlank(),
-                    new Type(\DateTime::class),
-                )
-            ))
-            ->getForm();
+        class DefaultController extends Controller
+        {
+            public function newAction(Request $request)
+            {
+                $form = $this->createFormBuilder()
+                    ->add('task', 'text', array(
+                        'constraints' => new NotBlank(),
+                    ))
+                    ->add('dueDate', 'date', array(
+                        'constraints' => array(
+                            new NotBlank(),
+                            new Type(\DateTime::class),
+                        )
+                    ))
+                    ->getForm();
+                // ...
+            }
+        }
 
 When the form is bound, these validation constraints will be applied automatically
 and the errors will display next to the fields on error.
