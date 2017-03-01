@@ -276,7 +276,7 @@ flag::
 Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
 
     $data = new \stdClass(); // by default objects are invalid.
-    Yaml::dump($data, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
+    Yaml::dump($data, 2, 4, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
 
     echo $yaml; // { foo: bar }
 

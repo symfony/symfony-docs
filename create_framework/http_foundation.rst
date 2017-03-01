@@ -119,18 +119,7 @@ To use this component, add it as a dependency of the project:
 Running this command will also automatically download the Symfony
 HttpFoundation component and install it under the ``vendor/`` directory.
 A ``composer.json`` and a ``composer.lock`` file will be generated as well,
-containing the new requirement:
-
-.. code-block:: json
-
-    {
-        "require": {
-            "symfony/http-foundation": "^3.0"
-        }
-    }
-
-The code block shows the content of the ``composer.json`` file (the actual
-version may vary).
+containing the new requirement.
 
 .. sidebar:: Class Autoloading
 
