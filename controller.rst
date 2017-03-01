@@ -180,10 +180,6 @@ and ``redirect()`` methods::
         return $this->redirect('http://symfony.com/doc');
     }
 
-.. versionadded:: 2.6
-    The ``redirectToRoute()`` method was introduced in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this.
-
 For more information, see the :doc:`Routing article </routing>`.
 
 .. caution::
