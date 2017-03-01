@@ -214,8 +214,7 @@ ide
 Symfony turns file paths seen in variable dumps and exception messages into
 links that open those files right inside your browser. If you prefer to open
 those files in your favorite IDE or text editor, set this option to any of the
-following values: ``phpstorm``, ``sublime``,
-``textmate``, ``macvim`` and ``emacs``.
+following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim`` and ``emacs``.
 
 .. note::
 
