@@ -418,19 +418,41 @@ read any flash messages from the session:
     .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
-        {% for flash_message in app.session.flashBag.get('notice') %}
+
+        {# you can read and display just one flash message type... #}
+        {% for flash_message in app.session.flash('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
             </div>
         {% endfor %}
 
+        {# ...or you can read and display every flash message available #}
+        {% for type, flash_messages in app.session.flashes %}
+            {% for flash_message in flash_messages %}
+                <div class="flash-{{ type }}">
+                    {{ flash_message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
     .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
+
+        // you can read and display just one flash message type...
         <?php foreach ($view['session']->getFlash('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo "<div class='flash-error'>$message</div>" ?>
+                <?php echo $message ?>
             </div>
+        <?php endforeach ?>
+
+        // ...or you can read and display every flash message available
+        <?php foreach ($view['session']->getFlashes() as $type => $flash_messages): ?>
+            <?php foreach ($flash_messages as $flash_message): ?>
+                <div class="flash-<?php echo $type ?>">
+                    <?php echo $message ?>
+                </div>
+            <?php endforeach ?>
         <?php endforeach ?>
 
 .. note::

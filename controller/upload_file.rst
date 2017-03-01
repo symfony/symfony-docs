@@ -243,6 +243,11 @@ logic to a separate service::
 
             return $fileName;
         }
+
+        public function getTargetDir()
+        {
+            return $this->targetDir;
+        }
     }
 
 Then, define a service for this class:
@@ -443,9 +448,13 @@ controller.
             {
                 $entity = $args->getEntity();
 
-                $fileName = $entity->getBrochure();
+                if (!$entity instanceof Product) {
+                    return;
+                }
 
-                $entity->setBrochure(new File($this->targetPath.'/'.$fileName));
+                if ($fileName = $entity->getBrochure()) {
+                    $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
+                }
             }
         }
 
