@@ -124,7 +124,9 @@ This will provide you with two new assertions:
 
 Example::
 
-    class ExampleTest extends \PHPUnit_Framework_TestCase
+    use PHPUnit\Framework\TestCase;
+
+    class ExampleTest extends TestCase
     {
         use \Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
