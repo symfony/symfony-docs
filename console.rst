@@ -258,7 +258,7 @@ console::
 
     When using the Console component in a standalone project, use
     :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
-    and extend the normal ``\PHPUnit_Framework_TestCase``.
+    and extend the normal ``\PHPUnit\Framework\TestCase``.
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from

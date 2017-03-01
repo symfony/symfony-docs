@@ -63,8 +63,9 @@ it's easy to pass a mock object within a test::
     use AppBundle\Salary\SalaryCalculator;
     use Doctrine\ORM\EntityRepository;
     use Doctrine\Common\Persistence\ObjectManager;
+    use PHPUnit\Framework\TestCase;
 
-    class SalaryCalculatorTest extends \PHPUnit_Framework_TestCase
+    class SalaryCalculatorTest extends TestCase
     {
         public function testCalculateTotalSalary()
         {
