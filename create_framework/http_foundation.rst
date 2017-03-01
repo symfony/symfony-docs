@@ -58,7 +58,9 @@ snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
 
     // framework/test.php
-    class IndexTest extends \PHPUnit_Framework_TestCase
+    use PHPUnit\Framework\TestCase;
+
+    class IndexTest extends TestCase
     {
         public function testHello()
         {
