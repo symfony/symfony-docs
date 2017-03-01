@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-01T09:58:21Z
+
+I'm sorry but I can't see why this change is needed. In the original article it was called `acme.foo.action`? I can't find it.
+
+---------------------------------------------------------------------------
+
+by matthieu88160 at 2017-03-01T10:06:58Z
+
+In the current version the article is not consistent regarding the name of the event between the first one and the last one used in the "Connecting Listeners" section.
+
+First called `acme.action` it is renamed to `foo.action` into and after the comment.
+
+About renaming it to `acme.foo.action`, take a look in the comments of the commit #7547 where @HeahDude offer to use a pattern as __"{vendor}.{context}.{action}"__.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-01T10:20:19Z
+
+@matthieu88160 now I see it!! I don't know why I didn't see it before 🙈 !!  Thanks for fixing this.
+
+---------------------------------------------------------------------------
+
+by matthieu88160 at 2017-03-01T10:29:46Z
+
+You'r welcome
