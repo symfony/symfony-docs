@@ -1467,9 +1467,6 @@ name_converter
 
 **type**: ``string``
 
-.. versionadded:: 2.8
-    The ``name_converter`` option was introduced in Symfony 2.8.
-
 The name converter to use.
 The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
 name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``

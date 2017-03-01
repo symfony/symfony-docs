@@ -135,7 +135,7 @@ A call to the dispatcher's ``addListener()`` method associates any valid
 PHP callable to an event::
 
     $listener = new AcmeListener();
-    $dispatcher->addListener('acme.action', array($listener, 'onFooAction'));
+    $dispatcher->addListener('acme.foo.action', array($listener, 'onFooAction'));
 
 The ``addListener()`` method takes up to three arguments:
 
@@ -161,12 +161,12 @@ The ``addListener()`` method takes up to three arguments:
 
         use Symfony\Component\EventDispatcher\Event;
 
-        $dispatcher->addListener('foo.action', function (Event $event) {
-            // will be executed when the foo.action event is dispatched
+        $dispatcher->addListener('acme.foo.action', function (Event $event) {
+            // will be executed when the acme.foo.action event is dispatched
         });
 
 Once a listener is registered with the dispatcher, it waits until the event
-is notified. In the above example, when the ``foo.action`` event is dispatched,
+is notified. In the above example, when the ``acme.foo.action`` event is dispatched,
 the dispatcher calls the ``AcmeListener::onFooAction()`` method and passes
 the ``Event`` object as the single argument::
 
@@ -211,7 +211,7 @@ determine which instance is passed.
         // register an event listener
         $listener = new Definition(\AcmeListener::class);
         $listener->addTag('kernel.event_listener', array(
-            'event' => 'foo.action',
+            'event' => 'acme.foo.action',
             'method' => 'onFooAction',
         ));
         $containerBuilder->setDefinition('listener_service_id', $listener);

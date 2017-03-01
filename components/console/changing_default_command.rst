@@ -28,7 +28,7 @@ name to the ``setDefaultCommand()`` method::
         }
     }
 
-Executing the application and changing the default Command::
+Executing the application and changing the default command::
 
     // application.php
 
@@ -53,9 +53,10 @@ This will print the following to the command line:
 
     Hello World
 
-.. tip::
+.. caution::
 
-    This feature has a limitation: you cannot use it with any Command arguments.
+    This feature has a limitation: you cannot pass any argument or option to
+    the default command because they are ignored.
 
 Learn More!
 -----------

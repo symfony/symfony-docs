@@ -206,7 +206,7 @@ changed using the third argument as follows::
 Numeric Literals
 ................
 
-versionadded:: 3.2
+.. versionadded:: 3.2
     Support for parsing integers grouped by underscores was introduced in
     Symfony 3.2.
 
