@@ -103,6 +103,4 @@ but here's a short example:
     ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
 
-.. code-block:: php
-
-    new NotBlank(array('groups' => array('create', 'update')))
+        new NotBlank(array('groups' => array('create', 'update')))
