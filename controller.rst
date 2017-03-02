@@ -376,6 +376,18 @@ Stored attributes remain in the session for the remainder of that user's session
     Every ``SessionInterface`` implementation is supported. If you have your
     own implementation, type-hint this in the arguments instead.
 
+As a developer, you might prefer not to extend the ``Controller``. To use the
+flash message functionality, you can request the flash bag from the
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Session`::
+
+    use Symfony\Component\HttpFoundation\Session\Session;
+
+    public function indexAction(Session $session)
+    {
+        // getFlashBag is not available in the SessionInterface and requires the Session
+        $flashBag = $session->getFlashBag();
+    }
+
 .. index::
    single: Session; Flash messages
 
