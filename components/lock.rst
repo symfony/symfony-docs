@@ -38,8 +38,8 @@ create the lock for some resource::
     $store = new SemaphoreStore();
     $factory = new Factory($store);
 
-Then, call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
-method to try to acquire the lock. Its first argument is an arbitrary string
+Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
+method will try to acquire the lock. Its first argument is an arbitrary string
 that represents the locked resource::
 
     // ...
@@ -52,27 +52,27 @@ that represents the locked resource::
         $lock->release();
     }
 
-If the lock can not be acquired, the method returns ``false``. You can safely
-call the ``acquire()`` method repeatedly, even if you already acquired it.
+If the lock can not be acquired, the method returns ``false``. The ``acquire()``
+method can be safely called repeatedly, even if the lock is already acquired.
 
 .. note::
 
     Unlike other implementations, the Lock Component distinguishes locks
-    instances even when they are created for the same resource. If you want to
-    share a lock in several services, share the ``Lock`` instance returned by
-    the ``Factory::createLock`` method.
+    instances even when they are created for the same resource. If a lock has
+    to be used by several services, they should share the same ``Lock`` instance
+    returned by the ``Factory::createLock`` method.
 
 Blocking Locks
 --------------
 
 By default, when a lock cannot be acquired, the ``acquire`` method returns
-``false`` immediately. In case you want to wait (indefinitely) until the lock
-can be created, pass ``false`` as the argument of the ``acquire()`` method. This
+``false`` immediately. To wait (indefinitely) until the lock
+can be created, pass ``true`` as the argument of the ``acquire()`` method. This
 is called a **blocking lock** because the execution of your application stops
 until the lock is acquired.
 
 Some of the built-in ``Store`` classes support this feature. When they don't,
-you can decorate them with the ``RetryTillSaveStore`` class::
+they can be decorated with the ``RetryTillSaveStore`` class::
 
     use Symfony\Component\Lock\Factory;
     use Symfony\Component\Lock\Store\RedisStore;
@@ -90,7 +90,7 @@ Expiring Locks
 
 Locks created remotely are difficult to manage because there is no way for the
 remote ``Store`` to know if the locker process is still alive. Due to bugs,
-fatal errors or segmentation faults, we can't guarantee that the ``release()``
+fatal errors or segmentation faults, it cannot be guaranteed that ``release()``
 method will be called, which would cause the resource to be locked infinitely.
 
 The best solution in those cases is to create **expiring locks**, which are
@@ -100,12 +100,12 @@ the ``createLock()`` method. If needed, these locks can also be released early
 with the ``release()`` method.
 
 The trickiest part when working with expiring locks is choosing the right TTL.
-If it's too short, other processes could acquire the lock before finishing your
-work; it it's too long and the process crashes before calling the ``release()``
+If it's too short, other processes could acquire the lock before finishing the
+job; it it's too long and the process crashes before calling the ``release()``
 method, the resource will stay locked until the timeout::
 
     // ...
-    // create a expiring lock that lasts 30 seconds
+    // create an expiring lock that lasts 30 seconds
     $lock = $factory->createLock('charts-generation', 30);
 
     $lock->acquire();
@@ -173,16 +173,16 @@ PHP process is terminated::
 .. caution::
 
     Beware that some file systems (such as some types of NFS) do not support
-    locking. In those cases, it's better to use a local file or a remote store
-    based on Redis or Memcached.
+    locking. In those cases, it's better to use a directory on a local disk
+    drive or a remote store based on Redis or Memcached.
 
 .. _lock-store-memcached:
 
 MemcachedStore
 ~~~~~~~~~~~~~~
 
-The MemcachedStore saves locks on a Memcached server, so first you must create
-a Memcached connection implements the ``\Memcached`` class. This store does not
+The MemcachedStore saves locks on a Memcached server, it requires a Memcached
+connection implementing the ``\Memcached`` class. This store does not
 support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\MemcachedStore;
@@ -201,8 +201,8 @@ support blocking, and expects a TTL to avoid stalled locks::
 RedisStore
 ~~~~~~~~~~
 
-The RedisStore saves locks on a Redis server, so first you must create a Redis
-connection implements the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or
+The RedisStore saves locks on a Redis server, it requires a Redis connection
+implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or
 ``\Predis`` classes. This store does not support blocking, and expects a TTL to
 avoid stalled locks::
 
@@ -233,7 +233,7 @@ The CombinedStore is designed for High Availability applications because it
 manages several stores in sync (for example, several Redis servers). When a lock
 is being acquired, it forwards the call to all the managed stores, and it
 collects their responses. If a simple majority of stores have acquired the lock,
-then the lock is considered as acquired; otherwise is not acquired::
+then the lock is considered as acquired; otherwise as not acquired::
 
     use Symfony\Component\Lock\Quorum\ConsensusStrategy;
     use Symfony\Component\Lock\Store\CombinedStore;
@@ -249,8 +249,9 @@ then the lock is considered as acquired; otherwise is not acquired::
 
     $store = new CombinedStore($stores, new ConsensusStrategy());
 
-Instead of the simple majority strategy (``ConsensusStrategy``) you can use the
-``UnanimousStrategy`` to require the lock to be acquired in all the stores.
+Instead of the simple majority strategy (``ConsensusStrategy``) an
+``UnanimousStrategy`` can be used to require the lock to be acquired in all
+he stores.
 
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
