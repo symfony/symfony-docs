@@ -34,7 +34,7 @@ will give you:
 .. image:: /_images/reference/form/choice-example2.png
    :align: center
 
-If your choice values are objects, then ``choice_label`` can also be a
+If your choice values are objects, then ``choice_label`` can either be a callable or a
 :ref:`property path <reference-form-option-property-path>`. Imagine you have some
 ``Status`` class with a ``getDisplayName()`` method::
 
@@ -49,6 +49,20 @@ If your choice values are objects, then ``choice_label`` can also be a
         ),
         'choice_label' => 'displayName',
     ));
+The callable version receives the object as the first parameter:
+   use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
 
+    $builder->add('attending', ChoiceType::class, array(
+        'choices' => array(
+            new Status(Status::YES),
+            new Status(Status::NO),
+            new Status(Status::MAYBE),
+        ),
+        'choice_label' => function($status, $key, $index) {
+            /** @var Status $status */
+            return $status->getDisplayName;
+        },
+    ));
 If set to ``false``, all the tag labels will be discarded for radio or checkbox
 inputs. You can also return ``false`` from the callable to discard certain labels.
