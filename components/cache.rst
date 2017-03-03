@@ -37,7 +37,7 @@ meaning of some key concepts:
 **Adapter**
     It implements the actual caching mechanism to store the information in the
     filesystem, in a database, etc. The component provides several ready to use
-    adapters for common caching backends (Redis, APCu, etc.)
+    adapters for common caching backends (Redis, APCu, Doctrine, PDO, etc.)
 
 Basic Usage
 -----------
