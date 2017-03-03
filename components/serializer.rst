@@ -152,6 +152,26 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
+By default, additional attributes that are not mapped to the denormalized object will be ignored
+by the Serializer component. Set the ``allow_extra_attributes`` key of the deserialization context to ``false``
+to let the serializer throw an exception when additional attributes are passed.
+
+This will throw an :class:`Symfony\\Component\\Serializer\\Exception\\ExtraAttributesException` exception,
+because city is not an attribute of the ``Person`` class::
+
+    $data = <<<EOF
+    <person>
+        <name>foo</name>
+        <age>99</age>
+        <city>Paris</city>
+    </person>
+    EOF;
+
+    $person = $serializer->deserialize($data, 'Acme\Person', 'xml', array(
+        'allow_extra_attributes' => false,
+    ));
+
+
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
