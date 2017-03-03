@@ -88,8 +88,9 @@ The following configuration attributes are available:
 
 .. caution::
 
-    Starting from Swift Mailer 5.4.5, ``mail`` transport is deprecated. It will be removed 
-    in version 6. Consider using other transport as ``smtp``, ``sendmail`` or ``gmail``.
+    Starting from SwiftMailer 5.4.5, the ``mail`` transport is deprecated
+    and will be removed in version 6. Consider using another transport like
+    ``smtp``, ``sendmail`` or ``gmail``.
 
 Sending Emails
 --------------
