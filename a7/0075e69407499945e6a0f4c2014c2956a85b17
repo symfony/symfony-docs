@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-02T10:13:43Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-03-02T14:01:21Z
+
+@HeahDude it should be 3.1, this functionality was already removed in 3.0 thus makes no sense to keep it in 3.1 but remove it in 3.2 (or am I missing something?)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-02T14:02:59Z
+
+@iltar 3.1 reached end-of-maintenance by the end of January. That's the time we stopped merging PRs into the `3.1` branch in the docs too.
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-03-02T14:24:20Z
+
+Ah okay, I thought it lasted until July, according to the checker. Missed the part where this is only security atm.
+> Symfony 3.1 is a stable release whose support will end in July 2017
