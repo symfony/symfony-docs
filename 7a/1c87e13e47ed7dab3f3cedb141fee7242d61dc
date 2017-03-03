@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-02T10:09:49Z
+
+@javiereguiluz Does that mean it's worthless (or could even hurt us) when using subdirectories inside the `images` directory?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-02T10:14:45Z
+
+@xabbuh I'm afraid so :(
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-02T10:30:02Z
+
+In this case, I suggest that we do not use subdirectories at all which would allow us to detect conflicts ourselves earlier. What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-03T14:11:15Z
+
+I'd recommend to finish this PR first and then we can discuss about the best strategy for the naming of images. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-02T08:01:15Z
+
+Please, let's merge this to fix the image problem. Thanks!
