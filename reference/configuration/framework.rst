@@ -219,8 +219,7 @@ following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim`` and ``emac
 .. note::
 
     The ``phpstorm`` option is supported natively by PhpStorm on MacOS,
-    Windows requires `PhpStormProtocol`_,
-    and Linux requires `phpstorm-url-handler`_.
+    Windows requires `PhpStormProtocol`_ and Linux requires `phpstorm-url-handler`_.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
