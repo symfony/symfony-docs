@@ -184,6 +184,10 @@ The ``choice_loader`` can be used to only partially load the choices in cases wh
 a fully-loaded list is not necessary. This is only needed in advanced cases and
 would replace the ``choices`` option.
 
+.. versionadded:: 3.2
+    The :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
+    was introduced in Symfony 3.2.
+
 You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader` 
 if you want to take advantage of lazy loading::
 
@@ -200,10 +204,6 @@ if you want to take advantage of lazy loading::
 This will cause the call of ``StaticClass::getConstants()`` to not happen if the
 request is redirected and if there is no pre set or submitted data. Otherwise
 the choice options would need to be resolved thus triggering the callback.
-
-.. versionadded:: 3.2
-    The ability to use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader` 
-    was introduced in Symfony 3.2
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
