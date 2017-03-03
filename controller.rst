@@ -447,14 +447,14 @@ read any flash messages from the session:
         <!-- app/Resources/views/base.html.php -->
 
         // you can read and display just one flash message type...
-        <?php foreach ($view['session']->getFlash('notice') as $message): ?>
+        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
             <div class="flash-notice">
                 <?php echo $message ?>
             </div>
         <?php endforeach ?>
 
         // ...or you can read and display every flash message available
-        <?php foreach ($view['session']->getFlashes() as $type => $flash_messages): ?>
+        <?php foreach ($view['session']->getFlashBag()->all() as $type => $flash_messages): ?>
             <?php foreach ($flash_messages as $flash_message): ?>
                 <div class="flash-<?php echo $type ?>">
                     <?php echo $message ?>
