@@ -216,8 +216,12 @@ ide
 Symfony turns file paths seen in variable dumps and exception messages into
 links that open those files right inside your browser. If you prefer to open
 those files in your favorite IDE or text editor, set this option to any of the
-following values: ``phpstorm`` (requires `PhpStormProtocol`_), ``sublime``,
-``textmate``, ``macvim`` and ``emacs``.
+following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim`` and ``emacs``.
+
+.. note::
+
+    The ``phpstorm`` option is supported natively by PhpStorm on MacOS,
+    Windows requires `PhpStormProtocol`_ and Linux requires `phpstorm-url-handler`_.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
@@ -230,7 +234,7 @@ doubling them to prevent Symfony from interpreting them as container parameters)
 
         # app/config/config.yml
         framework:
-            ide: 'phpstorm://open?file=%%f&line=%%l'
+            ide: 'myide://open?url=file://%%f&line=%%l'
 
     .. code-block:: xml
 
@@ -242,14 +246,14 @@ doubling them to prevent Symfony from interpreting them as container parameters)
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
+            <framework:config ide="myide://open?url=file://%%f&line=%%l" />
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'ide' => 'phpstorm://open?file=%%f&line=%%l',
+            'ide' => 'myide://open?url=file://%%f&line=%%l',
         ));
 
 Since every developer uses a different IDE, the recommended way to enable this
@@ -1670,4 +1674,5 @@ Full Default Configuration
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
+.. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html

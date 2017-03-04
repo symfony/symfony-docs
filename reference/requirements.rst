@@ -22,8 +22,8 @@ Required
 --------
 
 * PHP needs to be a minimum version of PHP 5.5.9
-* JSON needs to be enabled
-* ctype needs to be enabled
+* `JSON extension`_ needs to be enabled
+* `ctype extension`_ needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
 
 Optional
@@ -50,3 +50,6 @@ Doctrine
 If you want to use Doctrine, you will need to have PDO installed. Additionally,
 you need to have the PDO driver installed for the database server you want
 to use.
+
+.. _`JSON extension`: https://php.net/manual/book.json.php
+.. _`ctype extension`: https://php.net/manual/book.ctype.php

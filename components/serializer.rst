@@ -821,6 +821,74 @@ you indicate that you're expecting an array instead of a single object.
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
+Recursive Denormalization and Type Safety
+-----------------------------------------
+
+The Serializer Component can use the :doc:`PropertyInfo Component </components/property_info>` to denormalize
+complex types (objects). The type of the class' property will be guessed using the provided
+extractor and used to recursively denormalize the inner data.
+
+When using the Symfony Standard Edition, all normalizers are automatically configured to use the registered extractors.
+When using the component standalone, an implementation of :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`,
+(usually an instance of :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`) must be passed as the 4th
+parameter of the ``ObjectNormalizer``::
+
+    use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    namespace Acme;
+
+    class ObjectOuter
+    {
+        private $inner;
+        private $date;
+
+        public function getInner()
+        {
+            return $this->inner;
+        }
+
+        public function setInner(ObjectInner $inner)
+        {
+            $this->inner = $inner;
+        }
+
+        public function setDate(\DateTimeInterface $date)
+        {
+            $this->date = $date;
+        }
+
+        public function getDate()
+        {
+            return $this->date;
+        }
+    }
+
+    class ObjectInner
+    {
+        public $foo;
+        public $bar;
+    }
+
+    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor()); //
+    $serializer = new Serializer(array(new DateTimeNormalizer(), $normalizer));
+
+    $obj = $serializer->denormalize(
+        array('inner' => array('foo' => 'foo', 'bar' => 'bar'), 'date' => '1988/01/21'),
+         'Acme\ObjectOuter'
+    );
+
+    dump($obj->getInner()->foo); // 'foo'
+    dump($obj->getInner()->bar); // 'bar'
+    dump($obj->getDate()->format('Y-m-d')); // '1988-01-21'
+
+When a ``PropertyTypeExtractor`` is available, the normalizer will also check that the data to denormalize
+matches the type of the property (even for primitive types). For instance, if a ``string`` is provided, but
+the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\Exception\\UnexpectedValueException`
+will be thrown.
+
 Learn more
 ----------
 
