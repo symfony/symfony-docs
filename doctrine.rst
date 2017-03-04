@@ -707,19 +707,17 @@ to easily fetch objects based on multiple conditions::
 
 .. tip::
 
-    When you render any page, you can see how many queries were made in the
-    bottom right corner of the web debug toolbar.
+    When rendering a page requires to make some database calls, the web debug
+    toolbar at the bottom of the page displays the number of queries and the
+    time it took to execute them:
 
-    .. image:: /_images/doctrine/web_debug_toolbar.png
+    .. image:: /_images/doctrine/doctrine_web_debug_toolbar.png
        :align: center
-       :scale: 50
-       :width: 350
+       :class: with-browser
 
-    If you click the icon, the profiler will open, showing you the exact
-    queries that were made.
-
-    The icon will turn yellow if there were more than 50 queries on the
-    page. This could indicate that something is not correct.
+    If the number of database queries is too high, the icon will turn yellow to
+    indicate that something may not be correct. Click on the icon to open the
+    Symfony Profiler and see the exact queries that were executed.
 
 Updating an Object
 ~~~~~~~~~~~~~~~~~~
