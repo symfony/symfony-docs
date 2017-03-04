@@ -22,8 +22,8 @@ Required
 --------
 
 * PHP needs to be a minimum version of PHP 5.3.9
-* JSON needs to be enabled
-* ctype needs to be enabled
+* `JSON extension`_ needs to be enabled
+* `ctype extension`_ needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
 
 .. caution::
@@ -57,3 +57,5 @@ you need to have the PDO driver installed for the database server you want
 to use.
 
 .. _`Requirements section of the README`: https://github.com/symfony/symfony/blob/2.8/README.md#requirements
+.. _`JSON extension`: https://php.net/manual/book.json.php
+.. _`ctype extension`: https://php.net/manual/book.ctype.php
