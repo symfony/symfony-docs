@@ -31,7 +31,7 @@ Notice that ``setAuthor()`` is not called. The author is modified by reference.
 If you set ``by_reference`` to false, submitting looks like this::
 
     $article->setTitle('...');
-    $author = $article->getAuthor();
+    $author = clone $article->getAuthor();
     $author->setName('...');
     $author->setEmail('...');
     $article->setAuthor($author);
