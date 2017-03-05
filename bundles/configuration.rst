@@ -88,7 +88,7 @@ bundle configuration would look like:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
            <acme-social:config>
-               <twitter client-id="123" client-secret="your_secret" />
+               <acme-social:twitter client-id="123" client-secret="your_secret" />
            </acme-social:config>
 
            <!-- ... -->
