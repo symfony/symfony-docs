@@ -4,7 +4,7 @@
 Formatter Helper
 ================
 
-The Formatter helpers provides functions to format the output with colors.
+The Formatter helper provides functions to format the output with colors.
 You can do more advanced things with this helper than you can in
 :doc:`/console/coloring`.
 
