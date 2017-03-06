@@ -157,12 +157,31 @@ before creating the parent form using the ``PreloadedExtension`` class::
     be getting errors that are not related to the form you are currently
     testing but to its children.
 
+Forms Using Validation
+------------------------------------
+
+If your forms uses the ``invalid_message`` or ``constraints`` option for validation, you need to
+register the validation extension which provides this options.
+Luckily Symfony provides a custom test class which does this for you.
+In order to have this option registered, your test needs to extend from the
+:class:`Symfony\\Component\\Form\\Tests\\Extension\\Validator\\Type\\TypeTestCase`
+class::
+
+    // tests/AppBundle/Form/Type/TestedTypeTests.php
+    namespace Tests\AppBundle\Form\Type;
+
+    use Symfony\Component\Form\Tests\Extension\Validator\Type\TypeTestCase;
+
+    class TestedTypeTest extends TypeTestCase
+    {
+        // ...
+    }
+
 Adding Custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions </form/create_form_type_extension>`. One of the
-cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
+:doc:`form extensions </form/create_form_type_extension>`.
 The ``TypeTestCase`` only loads the core form extension, which means an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
 will be raised if you try to test a class that depends on other extensions.
@@ -173,36 +192,31 @@ allows you to return a list of extensions to register::
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
-    use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Form\Form;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\Test\TypeTestCase;
-    use Symfony\Component\Validator\ConstraintViolationList;
     use Symfony\Component\Validator\Mapping\ClassMetadata;
-    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     class TestedTypeTest extends TypeTestCase
     {
         protected function getExtensions()
         {
-            $validator = $this->createMock(ValidatorInterface::class);
             // use getMock() on PHPUnit 5.3 or below
             // $validator = $this->getMock(ValidatorInterface::class);
             $validator
-                ->method('validate')
-                ->will($this->returnValue(new ConstraintViolationList()));
-            $validator
                 ->method('getMetadataFor')
                 ->will($this->returnValue(new ClassMetadata(Form::class)));
-
             return array(
-                new ValidatorExtension($validator),
+                new MyFormExtension(),
             );
         }
 
         // ... your tests
     }
+
+It is also possible to load custom form types, form type extensions or type guessers using the
+``getTypedExtensions``, ``getTypes`` and ``getTypeGuessers`` methods.
 
 Testing against Different Sets of Data
 --------------------------------------
