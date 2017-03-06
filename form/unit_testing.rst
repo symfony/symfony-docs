@@ -158,7 +158,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
     testing but to its children.
 
 Forms Using Validation
-------------------------------------
+----------------------
 
 If your forms uses the ``invalid_message`` or ``constraints`` option for validation, you need to
 register the validation extension which provides this options.
