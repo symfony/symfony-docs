@@ -190,6 +190,18 @@ inside the current node. According to the prototype definition in the example
 above, it is possible to have multiple connection arrays (containing a ``driver``,
 ``host``, etc.).
 
+.. versionadded:: 3.3
+    The ``castToArray()`` helper was added in Symfony 3.3.
+
+Sometimes, to improve the user experience of your application or bundle, you may
+allow to use a simple string or numeric value where an array value is required.
+Use the ``castToArray()`` helper to turn those variables into arrays::
+
+    ->arrayNode('hosts')
+        ->beforeNormalization()->castToArray()->end()
+        // ...
+    ->end()
+
 Array Node Options
 ~~~~~~~~~~~~~~~~~~
 
@@ -750,8 +762,7 @@ A validation rule also requires a "then" part:
 - ``thenUnset()``
 
 Usually, "then" is a closure. Its return value will be used as a new value
-for the node, instead
-of the node's original value.
+for the node, instead of the node's original value.
 
 Processing Configuration Values
 -------------------------------
