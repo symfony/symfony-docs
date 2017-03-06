@@ -6,7 +6,7 @@ Forms
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
 a web developer. Symfony integrates a Form component that makes dealing with
-forms easy. In this chapter, you'll build a complex form from the ground up,
+forms easy. In this article, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
 .. note::
@@ -59,7 +59,7 @@ going to need to build a form. But before you begin, first focus on the generic
 This class is a "plain-old-PHP-object" because, so far, it has nothing
 to do with Symfony or any other library. It's quite simply a normal PHP object
 that directly solves a problem inside *your* application (i.e. the need to
-represent a task in your application). Of course, by the end of this chapter,
+represent a task in your application). Of course, by the end of this article,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
 its data, and persist it to the database.
 
@@ -394,7 +394,7 @@ That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
 Validation is a very powerful feature of Symfony and has its own
-:doc:`dedicated chapter </validation>`.
+:doc:`dedicated article </validation>`.
 
 .. _forms-html5-validation-disable:
 

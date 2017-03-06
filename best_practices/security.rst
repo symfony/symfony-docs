@@ -235,16 +235,15 @@ more advanced use-case, you can always do the same security check in PHP:
 
         if (!$post->isAuthor($this->getUser())) {
             $this->denyAccessUnlessGranted('edit', $post);
-
-	    // or without the shortcut:
-	    //
-	    // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-	    // ...
-	    //
-	    // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
-	    //    throw $this->createAccessDeniedException();
-	    // }
         }
+        // equivalent code without using the "denyAccessUnlessGranted()" shortcut:
+        //
+        // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // ...
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
 
         // ...
     }
@@ -398,6 +397,6 @@ If your company uses a user login method not supported by Symfony, you can
 develop :doc:`your own user provider </security/custom_provider>` and
 :doc:`your own authentication provider </security/custom_authentication_provider>`.
 
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`@Security annotation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

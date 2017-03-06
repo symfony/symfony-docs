@@ -83,7 +83,7 @@ bundle configuration would look like:
         <?xml version="1.0" ?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:acme-social="http://example.org/dic/schema/acme_social"
+            xmlns:acme-social="http://example.org/schema/dic/acme_social"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
@@ -325,7 +325,7 @@ configuration of a specific bundle. The namespace is returned from the
 :method:`Extension::getNamespace() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getNamespace>`
 method. By convention, the namespace is a URL (it doesn't have to be a valid
 URL nor does it need to exists). By default, the namespace for a bundle is
-``http://example.org/dic/schema/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
+``http://example.org/schema/dic/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
 the extension. You might want to change this to a more professional URL::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php

@@ -12,7 +12,7 @@ your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
 into many objects that handle each task.
 
-This chapter is about a special PHP object in Symfony that helps
+This article is about a special PHP object in Symfony that helps
 you instantiate, organize and retrieve the many objects of your application.
 This object, called a service container, will allow you to standardize and
 centralize the way objects are constructed in your application. The container
@@ -23,14 +23,14 @@ in Symfony. In large part, the service container is the biggest contributor
 to the speed and extensibility of Symfony.
 
 Finally, configuring and using the service container is easy. By the end
-of this chapter, you'll be comfortable creating your own objects via the
+of this article, you'll be comfortable creating your own objects via the
 container and customizing objects from any third-party bundle. You'll begin
 writing code that is more reusable, testable and decoupled, simply because
 the service container makes writing good code so easy.
 
 .. tip::
 
-    If you want to know a lot more after reading this chapter, check out
+    If you want to know a lot more after reading this article, check out
     the :doc:`DependencyInjection component documentation </components/dependency_injection>`.
 
 .. index::
@@ -153,6 +153,12 @@ later how you can configure a service that has multiple instances in the
     gives you access to the service container itself. You can then use the
     ``get()`` method to locate and retrieve the ``app.mailer`` service from
     the service container.
+
+.. caution::
+
+    Service identifiers are case-insensitive (``app.mailer`` and ``APP.Mailer``
+    for example refer to the same service). This behavior was deprecated in
+    Symfony 3.3 and it will no longer work in Symfony 4.0.
 
 .. _service-container-parameters:
 
@@ -455,6 +461,29 @@ Injecting the dependency by the setter method just needs a change of syntax:
     The approaches presented in this section are called "constructor injection"
     and "setter injection". The Symfony service container also supports
     "property injection".
+
+.. tip::
+
+    The YAML configuration format supports an expanded syntax which may be
+    useful when the YAML contents are long and complex:
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # traditional syntax
+            app.newsletter_manager:
+                class: AppBundle\Newsletter\NewsletterManager
+                calls:
+                    - [setMailer, ['@app.mailer']]
+
+            # expanded syntax
+            app.newsletter_manager:
+                class: AppBundle\Newsletter\NewsletterManager
+                calls:
+                    - method: setMailer
+                      arguments:
+                          - '@app.mailer'
 
 Learn more
 ----------

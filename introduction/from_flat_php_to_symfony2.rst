@@ -10,11 +10,11 @@ Symfony versus Flat PHP
 
 If you've never used a PHP framework, aren't familiar with the
 `Model-View-Controller`_ (MVC) philosophy, or just wonder what all the *hype*
-is around Symfony, this chapter is for you. Instead of *telling* you that
+is around Symfony, this article is for you. Instead of *telling* you that
 Symfony allows you to develop faster and better software than with flat PHP,
 you'll see for yourself.
 
-In this chapter, you'll write a simple application in flat PHP, and then
+In this article, you'll write a simple application in flat PHP, and then
 refactor it to be more organized. You'll travel through time, seeing the
 decisions behind why web development has evolved over the past several years
 to where it is now.
@@ -25,7 +25,7 @@ let you take back control of your code.
 A Simple Blog in Flat PHP
 -------------------------
 
-In this chapter, you'll build the token blog application using only flat PHP.
+In this article, you'll build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
 persisted to the database. Writing in flat PHP is quick and dirty:
 
@@ -717,14 +717,14 @@ And rewriting ``layout.html.php`` template in Twig would look like this:
 
 Twig is well-supported in Symfony. And while PHP templates will always
 be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter </templating>`.
+be discussed. For more information, see the :doc:`templating article </templating>`.
 
 Where Symfony Delivers
 ----------------------
 
-In the upcoming chapters, you'll learn more about how each piece of Symfony
-works and how you can organize your project. For now, celebrate at how migrating
-the blog from flat PHP to Symfony has improved life:
+In the rest of documentation articles, you'll learn more about how each piece of
+Symfony works and how you can organize your project. For now, celebrate at how
+migrating the blog from flat PHP to Symfony has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
@@ -746,7 +746,7 @@ the blog from flat PHP to Symfony has improved life:
 
 * Symfony's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony's internal HTTP cache** or
-  more powerful tools such as `Varnish`_. This is covered in a later chapter
+  more powerful tools such as `Varnish`_. This is covered in another article
   all about :doc:`caching </http_cache>`.
 
 And perhaps best of all, by using Symfony, you now have access to a whole

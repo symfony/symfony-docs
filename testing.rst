@@ -12,7 +12,7 @@ The PHPUnit Testing Framework
 -----------------------------
 
 Symfony integrates with an independent library - called PHPUnit - to give
-you a rich testing framework. This chapter won't cover PHPUnit itself, but
+you a rich testing framework. This article won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
 .. note::
@@ -69,8 +69,9 @@ of your application::
     namespace Tests\AppBundle\Util;
 
     use AppBundle\Util\Calculator;
+    use PHPUnit\Framework\TestCase;
 
-    class CalculatorTest extends \PHPUnit_Framework_TestCase
+    class CalculatorTest extends TestCase
     {
         public function testAdd()
         {

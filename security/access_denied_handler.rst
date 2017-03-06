@@ -40,7 +40,7 @@ Each firewall context can define its own custom access denied handler:
         ));
 
 
-Your handler must implement the 
+Your handler must implement the
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` that implements the logic to
 execute when access is denied to the current user (send a mail, log a message, or
@@ -78,25 +78,26 @@ Then, register the service for the access denied handler:
 
     .. code-block:: xml
 
-	<!-- app/config/services.xml -->
-	<?xml version="1.0" encoding="UTF-8" ?>
-	<container xmlns="http://symfony.com/schema/dic/services"
-	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	    xsi:schemaLocation="http://symfony.com/schema/dic/services
-		http://symfony.com/schema/dic/services/services-1.0.xsd">
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-	    <services>
-		<service id="app.security.access_denied_handler"
-                    class="AppBundle\Security\AccessDeniedHandler" />
-	    </services>
-	</container>
+            <services>
+                <service id="app.security.access_denied_handler"
+                        class="AppBundle\Security\AccessDeniedHandler" />
+            </services>
+        </container>
 
     .. code-block:: php
 
-	// app/config/services.php
-	$container->register(
+        // app/config/services.php
+        $container->register(
             'app.security.access_denied_handler',
-	    'AppBundle\Security\AccessDeniedHandler'
-	);
+            'AppBundle\Security\AccessDeniedHandler'
+        );
 
-That's it! Any ``AccessDeniedException`` thrown by the ``foo`` firewall will now be handled by your service.
+That's it! Any ``AccessDeniedException`` thrown by the ``foo`` firewall will now
+be handled by your service.

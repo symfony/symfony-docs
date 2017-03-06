@@ -142,9 +142,10 @@ Each part will be explained in the next section.
                     http_basic:
                         provider: some_key_from_above
                     http_basic_ldap:
-                        provider:  some_key_from_above
-                        service:   ldap
-                        dn_string: '{username}'
+                        provider:     some_key_from_above
+                        service:      ldap
+                        dn_string:    '{username}'
+                        query_string: ~
                     http_digest:
                         provider: some_key_from_above
                     guard:
@@ -237,8 +238,9 @@ Each part will be explained in the next section.
                         # new in Symfony 2.3
                         require_previous_session: true
 
-                        service:   ~
-                        dn_string: '{username}'
+                        service:      ~
+                        dn_string:    '{username}'
+                        query_string: ~
 
                     remember_me:
                         token_provider: name
@@ -384,10 +386,37 @@ request to the ``check_path`` URL.
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* ``always_use_default_target_path`` (type: ``boolean``, default: ``false``)
-* ``default_target_path`` (type: ``string``, default: ``/``)
-* ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
-* ``use_referer`` (type: ``boolean``, default: ``false``)
+always_use_default_target_path
+..............................
+
+**type**: ``boolean`` **default**: ``false``
+
+If ``true``, users are always redirected to the default target path regardless
+of the previous URL that was stored in the session.
+
+default_target_path
+....................
+
+**type**: ``string`` **default**: ``/``
+
+The page users are redirected to when there is no previous page stored in the
+session (for example, when the users browse the login page directly).
+
+target_path_parameter
+.....................
+
+**type**: ``string`` **default**: ``_target_path``
+
+When using a login form, if you include an HTML element to set the target path,
+this option lets you change the name of the HTML element itself.
+
+use_referer
+...........
+
+**type**: ``boolean`` **default**: ``false``
+
+If ``true``, the user is redirected to the value stored in the ``HTTP_REFERER``
+header when no previous URL was stored in the session.
 
 .. _reference-security-pbkdf2:
 
@@ -445,6 +474,17 @@ This is the string which will be used as the bind DN. The ``{username}``
 placeholder will be replaced with the user-provided value (his login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
+
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This is the string which will be used to query for the DN. The ``{username}``
+placeholder will be replaced with the user-provided value (their login).
+Depending on your LDAP server's configuration, you will need to override
+this value. This setting is only necessary if the user's DN cannot be derived
+statically using the ``dn_string`` config option.
 
 User provider
 ~~~~~~~~~~~~~

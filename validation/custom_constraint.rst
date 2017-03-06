@@ -193,9 +193,9 @@ load this service from the container.
 
 .. note::
 
-    In earlier versions of Symfony, the tag required an ``alias`` key (usually set
-    to the class name). This is still allowed your constraint's ``validateBy()``
-    method can return this alias (instead of a class name).
+    In earlier versions of Symfony, the tag required an ``alias`` key (usually
+    set to the class name). This ``alias`` is now optional, but if you define
+    it, your constraint's ``validatedBy()`` method must return the same value.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

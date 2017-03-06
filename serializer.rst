@@ -223,9 +223,6 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 Enabling a Name Converter
 -------------------------
 
-.. versionadded:: 2.8
-    The ``name_converter`` option was introduced in Symfony 2.8.
-
 The use of a :ref:`name converter <component-serializer-converting-property-names-when-serializing-and-deserializing>`
 service can be defined in the configuration using the :ref:`name_converter <reference-serializer-name_converter>`
 option.

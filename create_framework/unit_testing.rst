@@ -75,6 +75,7 @@ We are now ready to write our first test::
     // example.com/tests/Simplex/Tests/FrameworkTest.php
     namespace Simplex\Tests;
 
+    use PHPUnit\Framework\TestCase;
     use Simplex\Framework;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -82,7 +83,7 @@ We are now ready to write our first test::
     use Symfony\Component\Routing;
     use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
-    class FrameworkTest extends \PHPUnit_Framework_TestCase
+    class FrameworkTest extends TestCase
     {
         public function testNotFoundHandling()
         {
