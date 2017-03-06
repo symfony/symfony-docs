@@ -229,11 +229,10 @@ Available events
 
 The following events are dispatched for all workflows:
 
-* ``workflow.guard``: occurs just before starting a transition. It allows you to
-  prevent the transition by calling ``$event->setBlocked(true);`` as shown above.
-* ``workflow.leave``: occurs just after an object has left it's current state.
-* ``workflow.transition``: occurs just before starting to transition to the new state.
-* ``workflow.enter``: occurs just after the object has entered into the new state.
+* ``workflow.guard``: occurs just before a transition is started and when testing which transitions are available. It allows you to define that the transition is not allowed by calling ``$event->setBlocked(true);`` as shown above.
+* ``workflow.leave``: carries the marking with the initial places, occurs just after an object has left it's current state.
+* ``workflow.transition``: carries the marking with the current places, occurs just before starting to transition to the new state.
+* ``workflow.enter``: carries the marking with the new places, occurs just after the object has entered into the new state.
 
 2. Workflow-specific events
 
