@@ -53,7 +53,7 @@ it in your configuration:
             'serializer' => array(
                 'enable_annotations' => true,
                 // Alternatively, if you don't want to use annotations
-                'enabled' => true,
+                //'enabled' => true,
             ),
         ));
 
