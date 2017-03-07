@@ -274,10 +274,11 @@ has one file in it::
 
 Template files should live in the ``Resources/views`` directory of whatever directory
 your *kernel* lives in. Since ``AppKernel`` lives in ``app/``, this template lives
-at ``app/Resources/views/micro/random.html.twig``.
+at ``app/Resources/views/micro/random.html.twig``:
 
 .. code-block:: html+twig
 
+    <!-- app/Resources/views/micro/random.html.twig -->
     <!DOCTYPE html>
     <html>
         <head>
