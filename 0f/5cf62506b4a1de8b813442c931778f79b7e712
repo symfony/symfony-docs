@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T11:57:39Z
+
+As expected, this failed:
+
+```
+Executing build hook...
+    Could not open requirements file: [Errno 2] No such file or directory: './platform/requirements.txt'
+    make: sphinx-build: Command not found
+    make: *** [html] Error 127
+    New python executable in /app/.virtualenv/bin/python
+    Installing setuptools, pip, wheel...done.
+    Requirement already satisfied: pip==9.0.1 in ./.virtualenv/lib/python2.7/site-packages
+    Requirement already satisfied: wheel==0.29.0 in ./.virtualenv/lib/python2.7/site-packages
+    make: Entering directory `/app/_build'
+    sphinx-build -b html -c . -d ./doctrees   ../ ./html
+    make: Leaving directory `/app/_build'
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T12:02:59Z
+
+No luck with the updated file path:
+
+```
+ Executing build hook...
+    Could not open requirements file: [Errno 2] No such file or directory: '/app/.platform/requirements.txt'
+    make: sphinx-build: Command not found
+    make: *** [html] Error 127
+```
+
+Any other idea or should we close this?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T12:33:39Z
+
+Another fail in the last attempt:
+
+```
+Could not open requirements file: [Errno 2] No such file or directory: '../.platform/requirements.txt'
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T13:49:49Z
+
+Another fail:
+
+```
+Could not open requirements file: [Errno 2] No such file or directory: './.platform/requirements.txt'
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T13:51:03Z
+
+@damz do you know if it's possible to more the `requirements.txt` file to the `.platform/` directory and reference it in the `.platform.app.yaml` file. We've tried all kinds of file paths but none worked. Thanks!
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-01-27T15:03:49Z
+
+@javiereguiluz You can just use what I'd done in #7402
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-27T15:13:00Z
+
+... and it worked 🎉  @robfrawley thanks! You saved us!
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-01-27T15:16:06Z
+
+I still feel strongly that both Travis and Platform build using the same procedure (short of the special Travis flags): https://github.com/symfony/symfony-docs/pull/7402/files#diff-354f30a63fb0907d4ad57269548329e3R9 :-)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-12T11:55:19Z
+
+Can we merge this? It's a minor change but it will help us remove this internal file. Thanks!
