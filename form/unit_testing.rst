@@ -163,8 +163,7 @@ Forms Using Validation
 If your form uses the ``invalid_message`` or ``constraints`` option for validation, you need to
 register the validation extension which provides these options.
 Luckily Symfony provides a base test class which takes care of it, just extend
-``Symfony\Component\Form\Tests\Extension\Validator\Type\TypeTestCase``
-class::
+``Symfony\Component\Form\Tests\Extension\Validator\Type\TypeTestCase``::
 
     // tests/AppBundle/Form/Type/TestedTypeTest.php
     namespace Tests\AppBundle\Form\Type;
