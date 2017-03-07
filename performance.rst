@@ -209,5 +209,7 @@ Learn more
 .. _`OPcache`: http://php.net/manual/en/book.opcache.php
 .. _`opcache.max_accelerated_files`: http://php.net/manual/en/opcache.configuration.php#ini.opcache.max-accelerated-files
 .. _`APC`: http://php.net/manual/en/book.apc.php
+.. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
+.. _`APCu PHP functions`: http://php.net/manual/en/ref.apcu.php
 .. _`autoload.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
 .. _`bootstrap file`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php
