@@ -140,7 +140,7 @@ password was valid::
         )
     );
 
-    // for some extra checks: is account enabled, locked, expired, etc.?
+    // for some extra checks: is account enabled, locked, expired, etc.
     $userChecker = new UserChecker();
 
     // an array of password encoders (see below)

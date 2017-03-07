@@ -231,7 +231,7 @@ behavior:
     # 'test' environment and debug disabled
     $ php bin/console command_name --env=test --no-debug
 
-In addition to the ``--env`` and ``--debug`` options, the behavior of Symfony
+In addition to the ``--env`` and ``--no-debug`` options, the behavior of Symfony
 commands can also be controlled with environment variables. The Symfony console
 application checks the existence and value of these environment variables before
 executing any command:

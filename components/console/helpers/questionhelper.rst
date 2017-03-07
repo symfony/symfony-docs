@@ -338,6 +338,9 @@ from the command line, you need to set the inputs that the command expects::
         // $this->assertRegExp('/.../', $commandTester->getDisplay());
     }
 
+.. versionadded:: 3.2
+    The ``CommandTester::setInputs()`` method was introduced in Symfony 3.2.
+
 By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
 you imitate what the console would do internally with all user input through the CLI.
 This method takes an array as only argument with, for each input that the command expects,
