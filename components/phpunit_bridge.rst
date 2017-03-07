@@ -37,7 +37,7 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-Once the component installed, it automatically registers a
+Once the component is installed, it automatically registers a
 `PHPUnit event listener`_ which in turn registers a `PHP error handler`_
 called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`. After
 running your PHPUnit tests, you will get a report similar to this one:
