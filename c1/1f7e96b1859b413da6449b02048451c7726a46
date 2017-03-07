@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by snoek09 at 2017-03-07T17:17:52Z
+
+Status: reviewed.
+
+Thanks @yceruto for checking and fixing this for Windows users :+1:
+Also related to https://github.com/symfony/symfony-docs/pull/7216.
