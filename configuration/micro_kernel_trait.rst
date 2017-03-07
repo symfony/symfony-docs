@@ -88,7 +88,7 @@ That's it! To test it, you can start the built-in web server:
 
 Then see the JSON response in your browser:
 
-> http://localhost:8000/random/10
+    http://localhost:8000/random/10
 
 The Methods of a "Micro" Kernel
 -------------------------------
@@ -318,6 +318,17 @@ this:
     |  └─ index.php
     ├─ composer.json
     └─ composer.lock
+
+As before you can use PHP built-in server:
+
+.. code-block:: bash
+
+    cd web/
+    $ php -S localhost:8000
+
+Then see webpage in browser:
+
+    http://localhost:8000/random/10
 
 Hey, that looks a lot like a *traditional* Symfony application! You're right: the
 ``MicroKernelTrait`` *is* still Symfony: but you can control your structure and
