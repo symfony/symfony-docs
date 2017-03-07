@@ -143,7 +143,7 @@ between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
 of the most common elements of a bundle:
 
 ``Controller/``
-    Contains the controllers of the bundle (e.g. ``RandomController.php``).
+    Contains the controllers of the bundle (e.g. ``HelloController.php``).
 
 ``DependencyInjection/``
     Holds certain Dependency Injection Extension classes, which may import service
