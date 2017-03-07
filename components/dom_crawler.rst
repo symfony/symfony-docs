@@ -81,7 +81,7 @@ This allows you to use jQuery-like selectors to traverse::
 
     $crawler = $crawler->filter('body > p');
 
-Anonymous function can be used to filter with more complex criteria::
+An anonymous function can be used to filter with more complex criteria::
 
     use Symfony\Component\DomCrawler\Crawler;
     // ...
