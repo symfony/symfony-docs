@@ -22,7 +22,14 @@ There are a number of `byte code caches`_ available, some of which are open
 source. As of PHP 5.5, PHP comes with `OPcache`_ built-in. For older versions,
 the most widely used byte code cache is `APC`_.
 
-Using a byte code cache really has no downside, and Symfony has been architected
+.. tip::
+
+    If your server still uses the legacy APC PHP extension, install the
+    `APCu Polyfill component`_ in your application to enable compatibility with
+    `APCu PHP functions`_ and unlock support for advanced Symfony features, such
+    as the APCu Cache adapter.
+
+Using a byte code cache really has no downside, and Symfony has been designed
 to perform really well in this type of environment.
 
 Monitoring Source File Changes
