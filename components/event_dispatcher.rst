@@ -182,7 +182,7 @@ the ``Event`` object as the single argument::
         }
     }
 
-The ``$event`` argument is the event class instance that was passed when dispatching the
+The ``$event`` argument is the event object that was passed when dispatching the
 event. In many cases, a special event subclass is passed with extra
 information. You can check the documentation or implementation of each event to
 determine which instance is passed.
