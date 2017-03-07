@@ -79,7 +79,7 @@ For example, suppose you have a simple PHP class that delivers email messages.
 Without a service container, you must manually create the object whenever
 you need it::
 
-    use AppBundle\Mailer;
+    use AppBundle\Mailer\Mailer;
 
     $mailer = new Mailer('sendmail');
     $mailer->send('ryan@example.com', ...);
@@ -116,7 +116,7 @@ be specified in YAML, XML or PHP:
     ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
     for ``prod``).
 
-An instance of the ``AppBundle\Mailer`` class is now available via the service
+An instance of the ``AppBundle\Mailer\Mailer`` class is now available via the service
 container. The container is available in any traditional Symfony controller
 where you can access the services of the container via the ``get()`` shortcut
 method::
@@ -172,7 +172,7 @@ straightforward. Parameters make defining services more organized and flexible:
 
         services:
             app.mailer:
-                class:        AppBundle\Mailer
+                class:        AppBundle\Mailer\Mailer
                 arguments:    ['%app.mailer.transport%']
 
     .. code-block:: xml
@@ -189,7 +189,7 @@ straightforward. Parameters make defining services more organized and flexible:
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="app.mailer" class="AppBundle\Mailer\Mailer">
                     <argument>%app.mailer.transport%</argument>
                 </service>
             </services>
@@ -198,7 +198,7 @@ straightforward. Parameters make defining services more organized and flexible:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Mailer;
+        use AppBundle\Mailer\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
@@ -279,7 +279,7 @@ something like this::
     // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;
 
-    use AppBundle\Mailer;
+    use AppBundle\Mailer\Mailer;
 
     class NewsletterManager
     {
@@ -383,7 +383,7 @@ constructor. The class would look like this::
 
     namespace AppBundle\Newsletter;
 
-    use AppBundle\Mailer;
+    use AppBundle\Mailer\Mailer;
 
     class NewsletterManager
     {

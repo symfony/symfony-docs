@@ -54,7 +54,7 @@ and hidden with the service definition:
 
         services:
             app.mailer:
-                class:     AppBundle\Mailer
+                class:     AppBundle\Mailer\Mailer
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
@@ -69,7 +69,7 @@ and hidden with the service definition:
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="app.mailer" class="AppBundle\Mailer\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -77,7 +77,7 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
+        use AppBundle\Mailer\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter('mailer.transport', 'sendmail');
