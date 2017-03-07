@@ -52,7 +52,33 @@ the original service is lost:
 Most of the time, that's exactly what you want to do. But sometimes,
 you might want to decorate the old one instead. In this case, the
 old service should be kept around to be able to reference it in the
-new one. This configuration replaces ``app.mailer`` with a new one, but keeps
+new one.
+
+Suppose you want to process the text parts to send behind the ``app.mailer``, you will create a mailer decorator::
+
+    // AppBundle/DecoratingMailer.php
+    namespace AppBundle\DecoratingMailer;
+    
+    use AppBundle\Mailer;
+    
+    class DecoratingMailer
+    {
+        protected $decoratedMailer;
+    
+        public function __construct(Mailer $decoratedMailer)
+        {
+            $this->decoratedMailer = $decoratedMailer;
+        }
+        
+        public function send($message, [...])
+        {
+            // process text parts
+            
+            $this->decoratedMailer->send($message, [...]);
+        }
+    }
+
+This configuration replaces ``app.mailer`` with a new one, but keeps
 a reference of the old one  as ``app.decorating_mailer.inner``:
 
 .. configuration-block::
