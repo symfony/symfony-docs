@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by atailouloute at 2017-03-07T11:09:34Z
+
+@javiereguiluz, yes object is better, should I merge the 2 commits on my branch ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-07T11:16:58Z
+
+There's no need to merge/squash/etc. because we the doc maintainers use a tool that does all that automatically!
+
+---------------------------------------------------------------------------
+
+by atailouloute at 2017-03-07T11:18:37Z
+
+Great! Thank you
