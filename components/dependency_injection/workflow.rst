@@ -4,8 +4,7 @@
 Container Building Workflow
 ===========================
 
-In the preceding pages of this section, there has been little to say about
-where the various files and classes should be located. This is because this
+The location of the files and classes related to the Dependency Injection
 depends on the application, library or framework in which you want to use
 the container. Looking at how the container is configured and built in the
 Symfony full-stack Framework will help you see how this all fits together,
