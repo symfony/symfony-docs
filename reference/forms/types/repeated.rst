@@ -120,9 +120,9 @@ compare
 
 **type**: ``callable`` **default**: ``null``
 
-The callable receives two values to compare, and should return a boolean: true if the fields are considered equal, false otherwise. The callable also receives the currently compared key as a third value.
+The callable receives two values to compare, and should return a boolean: ``true`` if the fields are considered equal, ``false`` otherwise. The callable also receives the currently compared key as a third value.
 
-By default a strict comparison is done. This option can be used to compare a password_hash with password_verify against the second field.
+By default a strict comparison is done. This option can be used to compare a ``password_hash`` with ``password_verify`` against the second field.
     
 first_name
 ~~~~~~~~~~
