@@ -279,12 +279,8 @@ purposes following these steps:
 
    .. code-block:: terminal
 
-       # Linux and macOS
        $ cd _build/
        $ make html
-
-       # Windows
-       $ _build\make html
 
 The generated documentation is available in the ``_build/html`` directory.
 
