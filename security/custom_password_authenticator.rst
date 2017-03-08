@@ -57,7 +57,7 @@ the user::
                 if ($currentHour < 14 || $currentHour > 16) {
                     throw new AuthenticationException(
                         'You can only log in between 2 and 4!',
-                        412
+                        412 // HTTP 412 Precondition Failed
                     );
                 }
 
