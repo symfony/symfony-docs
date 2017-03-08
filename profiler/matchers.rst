@@ -128,6 +128,7 @@ won't use it directly:
             <service id="app.profiler.matcher.super_admin"
                 class="AppBundle\Profiler\SuperAdminMatcher" public="false">
                 <argument type="service" id="security.authorization_checker" />
+            </service>
         </services>
 
     .. code-block:: php
