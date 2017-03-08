@@ -61,7 +61,7 @@ the user::
                     // (so don't put any un-trusted messages / error strings here)
                     throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
-                        100
+                        412
                     );
                 }
 
