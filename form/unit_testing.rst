@@ -196,6 +196,12 @@ allows you to return a list of extensions to register::
         // ... your tests
     }
 
+It is also possible to load custom form types, form type extensions or type guessers using the
+``getTypedExtensions``, ``getTypes`` and ``getTypeGuessers`` methods.
+
+.. versionadded:: 3.3
+    The ``getTypedExtensions``, ``getTypes`` and ``getTypeGuessers`` were introduced in Symfony 3.3.
+
 Testing against Different Sets of Data
 --------------------------------------
 
