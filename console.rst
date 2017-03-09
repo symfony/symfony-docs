@@ -237,7 +237,7 @@ console::
                 // pass arguments to the helper
                 'username' => 'Wouter',
 
-                // prefix the key with a double slash when passing options,
+                // prefix the key with a double dash when passing options,
                 // e.g: '--some-option' => 'option_value',
             ));
 
