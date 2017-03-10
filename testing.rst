@@ -262,7 +262,7 @@ document::
                 'Content-Type',
                 'application/json'
             ),
-            'the "Content-Type" header is "application/json"' // optional message shown on failure
+            'the "Content-Type" header is not "application/json"' // optional message shown on failure
         );
 
         // Assert that the response content contains a string
@@ -280,10 +280,10 @@ document::
             $client->getResponse()->getStatusCode()
         );
 
-        // Assert that the response is a redirect to /demo/contact
+        // Assert that the response redirects to /demo/contact
         $this->assertTrue(
             $client->getResponse()->isRedirect('/demo/contact'),
-            'response is a redirect to /demo/contact'
+            'response does not redirect to /demo/contact' // optional message on failure
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
