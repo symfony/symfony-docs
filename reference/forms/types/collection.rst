@@ -26,6 +26,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `by_reference`_                                                           |
 |             | - `empty_data`_                                                             |
 |             | - `mapped`_                                                                 |
+|             | - `cascade_validation`_                                                     |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                   |
 +-------------+-----------------------------------------------------------------------------+
@@ -360,3 +361,5 @@ error_bubbling
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+
+.. include:: /reference/forms/type/options/cascade_validation.rst.inc
