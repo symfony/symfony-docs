@@ -181,7 +181,7 @@ Symfony's classes:
 Type of Change                                      Change Allowed
 ==================================================  ==============
 Remove entirely                                     No
-Make final                                          No
+Make final                                          No [6]_
 Make abstract                                       No
 Change name or namespace                            No
 Change parent class                                 Yes [4]_
@@ -194,8 +194,8 @@ Reduce visibility                                   No
 Move to parent class                                Yes
 **Protected Properties**
 Add protected property                              Yes
-Remove protected property                           No
-Reduce visibility                                   No
+Remove protected property                           No [7]_
+Reduce visibility                                   No [7]_
 Move to parent class                                Yes
 **Private Properties**
 Add private property                                Yes
@@ -204,7 +204,7 @@ Remove private property                             Yes
 Add constructor without mandatory arguments         Yes [1]_
 Remove constructor                                  No
 Reduce visibility of a public constructor           No
-Reduce visibility of a protected constructor        No
+Reduce visibility of a protected constructor        No [7]_
 Move to parent class                                Yes
 **Public Methods**
 Add public method                                   Yes
@@ -212,30 +212,30 @@ Remove public method                                No
 Change name                                         No
 Reduce visibility                                   No
 Move to parent class                                Yes
-Add argument without a default value                No
-Add argument with a default value                   No
+Add argument without a default value                No [7]_
+Add argument with a default value                   No [7]_
 Remove argument                                     Yes [3]_
-Add default value to an argument                    No
-Remove default value of an argument                 No
-Add type hint to an argument                        No
-Remove type hint of an argument                     No
-Change argument type                                No
-Change return type                                  No
+Add default value to an argument                    No [7]_
+Remove default value of an argument                 No [7]_
+Add type hint to an argument                        No [7]_
+Remove type hint of an argument                     No [7]_
+Change argument type                                No [7]_
+Change return type                                  No [7]_
 **Protected Methods**
 Add protected method                                Yes
-Remove protected method                             No
-Change name                                         No
-Reduce visibility                                   No
+Remove protected method                             No [7]_
+Change name                                         No [7]_
+Reduce visibility                                   No [7]_
 Move to parent class                                Yes
-Add argument without a default value                No
-Add argument with a default value                   No
+Add argument without a default value                No [7]_
+Add argument with a default value                   No [7]_
 Remove argument                                     Yes [3]_
-Add default value to an argument                    No
-Remove default value of an argument                 No
-Add type hint to an argument                        No
-Remove type hint of an argument                     No
-Change argument type                                No
-Change return type                                  No
+Add default value to an argument                    No [7]_
+Remove default value of an argument                 No [7]_
+Add type hint to an argument                        No [7]_
+Remove type hint of an argument                     No [7]_
+Change argument type                                No [7]_
+Change return type                                  No [7]_
 **Private Methods**
 Add private method                                  Yes
 Remove private method                               Yes
@@ -250,7 +250,7 @@ Remove type hint of an argument                     Yes
 Change argument type                                Yes
 Change return type                                  Yes
 **Static Methods**
-Turn non static into static                         No
+Turn non static into static                         No [7]_
 Turn static into non static                         No
 **Constants**
 Add constant                                        Yes
@@ -276,6 +276,10 @@ Change value of a constant                          Yes [1]_ [5]_
        constants can't change the value without introducing a BC break.
        Additionally, if a constant will likely be used in objects that are
        serialized, the value of a constant should not be changed.
+
+.. [6] Allowed using the ``@final`` annotation.
+
+.. [7] Allowed if the class/method is final.
 
 .. _Semantic Versioning: http://semver.org/
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
