@@ -40,7 +40,7 @@ To use it, you just need to change some parameters in the main configuration fil
 
         <services>
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                <argument>mysql:dbname=mydatabase</agruement>
+                <argument>mysql:dbname=mydatabase</argument>
                 <argument type="collection">
                     <argument key="db_username">myuser</argument>
                     <argument key="db_password">mypassword</argument>
@@ -93,7 +93,7 @@ a second array argument to ``PdoSessionHandler``:
         <!-- app/config/config.xml -->
         <services>
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                <argument>mysql:dbname=mydatabase</agruement>
+                <argument>mysql:dbname=mydatabase</argument>
                 <argument type="collection">
                     <argument key="db_table">sessions</argument>
                     <argument key="db_username">myuser</argument>
@@ -245,6 +245,6 @@ Microsoft SQL Server
     If the application stores large amounts of session data, this problem can
     be solved by increasing the column size (use ``BLOB`` or even ``MEDIUMBLOB``).
     When using MySQL as the database engine, you can also enable the `strict SQL mode`_
-    to get noticed when such an error happens.
+    to be notified when such an error happens.
 
 .. _`strict SQL mode`: https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html

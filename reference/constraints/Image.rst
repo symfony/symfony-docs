@@ -181,7 +181,7 @@ following code:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author
+        AppBundle\Entity\Author:
             properties:
                 headshot:
                     - Image:
@@ -316,9 +316,6 @@ If this option is false, the image cannot be portrait oriented.
 detectCorrupted
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.1
-     The ``detectCorrupted`` option was introduced in Symfony 3.1.
-
 **type**: ``boolean`` **default**: ``false``
 
 If this option is true, the image contents are validated to ensure that the
@@ -408,9 +405,6 @@ The error message if the image is portrait oriented and you set `allowPortrait`_
 
 corruptedMessage
 ~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.1
-     The ``corruptedMessage`` option was introduced in Symfony 3.1.
 
 **type**: ``string`` **default**: ``The image file is corrupted.``
 

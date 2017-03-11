@@ -13,13 +13,14 @@ Full Default Configuration
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         assetic:
             debug:                '%kernel.debug%'
             use_controller:
                 enabled:              '%kernel.debug%'
                 profiler:             false
             read_from:            '%assetic.read_from%'
-            write_to:             '%kernel.root_dir%/../web'
+            write_to:             '%kernel.project_dir%/web'
             java:                 /usr/bin/java
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby
@@ -63,6 +64,7 @@ Full Default Configuration
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:assetic="http://symfony.com/schema/dic/assetic"
@@ -76,7 +78,7 @@ Full Default Configuration
                 debug="%kernel.debug%"
                 use-controller="%kernel.debug%"
                 read-from="%assetic.read_from%"
-                write-to="%kernel.root_dir%/../web"
+                write-to="%kernel.project_dir%/web"
                 java="/usr/bin/java"
                 node="/usr/bin/node"
                 sass="/usr/bin/sass">

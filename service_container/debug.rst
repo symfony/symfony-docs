@@ -31,3 +31,9 @@ its id:
 .. code-block:: terminal
 
     $ php bin/console debug:container app.mailer
+
+    # to show the service arguments:
+    $ php bin/console debug:container app.mailer --show-arguments
+
+.. versionadded:: 3.3
+   The ``--show-arguments`` option was introduced in Symfony 3.3.

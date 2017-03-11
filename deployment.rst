@@ -153,11 +153,12 @@ as you normally do:
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you clear (and warm-up) your Symfony cache:
+Make sure you clear and warm-up your Symfony cache:
 
 .. code-block:: terminal
 
-    $ php bin/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug --no-warmup
+    $ php bin/console cache:warmup --env=prod
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,7 +204,7 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Fabric`: http://www.fabfile.org/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
-.. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
+.. _`bundles that add deployment features`: https://github.com/search?utf8=✓&q=topic%3Asymfony-bundle+topic%3Adeploy&type=Repositories&ref=searchresults
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/

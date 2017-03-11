@@ -104,6 +104,7 @@ Configuration
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
+    * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
 * `php_errors`_
     * `log`_
     * `throw`_
@@ -340,7 +341,7 @@ the configuration of your web server. One simple solution to avoid these
 attacks is to whitelist the hosts that your Symfony application can respond
 to. That's the purpose of this ``trusted_hosts`` option. If the incoming
 request's hostname doesn't match one in this list, the application won't
-respond and the user will receive a 500 response.
+respond and the user will receive a 400 response.
 
 .. configuration-block::
 
@@ -361,10 +362,10 @@ respond and the user will receive a 500 response.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <trusted-host>example.com</trusted-host>
-                <trusted-host>example.org</trusted-host>
+                <framework:trusted-host>example.com</framework:trusted-host>
+                <framework:trusted-host>example.org</framework:trusted-host>
                 <!-- ... -->
-            </framework>
+            </framework:config>
         </container>
 
     .. code-block:: php
@@ -374,14 +375,14 @@ respond and the user will receive a 500 response.
             'trusted_hosts' => array('example.com', 'example.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``.*\.?example.com$``),
+Hosts can also be configured using regular expressions (e.g.  ``^(.+\.)?example.com$``),
 which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('.*\.?example.com$', '.*\.?example.org$'));
+    Request::setTrustedHosts(array('^(.+\.)?example.com$', '^(.+\.)?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
@@ -476,7 +477,7 @@ You can also set ``esi`` to ``true`` to enable it:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <esi />
+                <framework:esi />
             </framework:config>
         </container>
 
@@ -855,7 +856,7 @@ This option allows you to define a base path to be used for assets:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets base_path="/images" />
+                <framework:assets base-path="/images" />
             </framework:config>
         </container>
 
@@ -1118,7 +1119,79 @@ version_strategy
 **type**: ``string`` **default**: ``null``
 
 The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
-applied to the assets.
+applied to the assets. This option can be set globally for all assets and
+individually for each asset package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this strategy is applied to every asset (including packages)
+                version_strategy: 'app.asset.my_versioning_strategy'
+                packages:
+                    foo_package:
+                        # this package removes any versioning (its assets won't be versioned)
+                        version: ~
+                    bar_package:
+                        # this package uses its own strategy (the default strategy is ignored)
+                        version_strategy: 'app.asset.another_version_strategy'
+                    baz_package:
+                        # this package inherits the default strategy
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets version-strategy="app.asset.my_versioning_strategy">
+                    <!-- this package removes any versioning (its assets won't be versioned) -->
+                    <framework:package
+                        name="foo_package"
+                        version="null" />
+                    <!-- this package uses its own strategy (the default strategy is ignored) -->
+                    <framework:package
+                        name="bar_package"
+                        version-strategy="app.asset.another_version_strategy" />
+                    <!-- this package inherits the default strategy -->
+                    <framework:package
+                        name="baz_package"
+                        base_path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                'version_strategy' => 'app.asset.my_versioning_strategy',
+                'packages' => array(
+                    'foo_package' => array(
+                        // this package removes any versioning (its assets won't be versioned)
+                        'version' => null,
+                    ),
+                    'bar_package' => array(
+                        // this package uses its own strategy (the default strategy is ignored)
+                        'version_strategy' => 'app.asset.another_version_strategy',
+                    ),
+                    'baz_package' => array(
+                        // this package inherits the default strategy
+                        'base_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
 
 .. note::
 
@@ -1481,6 +1554,22 @@ value.
     For more information, see
     :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
 
+.. _reference-serializer-circular_reference_handler:
+
+circular_reference_handler
+..........................
+
+**type** ``string``
+
+The service id that is used as the circular reference handler of the default
+serializer. The service has to implement the magic ``__invoke($object)``
+method.
+
+.. seealso::
+
+    For more information, see
+    :ref:`component-serializer-handling-circular-references`.
+
 php_errors
 ~~~~~~~~~~
 
@@ -1610,7 +1699,10 @@ Full Default Configuration
 
             # serializer configuration
             serializer:
-               enabled: false
+               enabled:                   false
+               cache:                      ~
+               name_converter:             ~
+               circular_reference_handler: ~
 
             # assets configuration
             assets:

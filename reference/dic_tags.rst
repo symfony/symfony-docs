@@ -351,6 +351,11 @@ wrapping their names with ``%`` characters).
     sense most of the times to prevent accessing those services directly instead
     of using the generic service alias.
 
+.. note::
+
+    You need to manually add the ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
+    compiler pass to the container for this feature to work.
+
 console.command
 ---------------
 
@@ -361,9 +366,6 @@ For details on registering your own commands in the service container, read
 
 controller.argument_value_resolver
 ----------------------------------
-
-.. versionadded:: 3.1
-    The ``controller.argument_value_resolver`` tag was introduced in Symfony 3.1.
 
 **Purpose**: Register a value resolver for controller arguments such as ``Request``
 
@@ -502,6 +504,12 @@ process
 Cache warming occurs whenever you run the ``cache:warmup`` or ``cache:clear``
 command (unless you pass ``--no-warmup`` to ``cache:clear``). It is also run
 when handling the request, if it wasn't done by one of the commands yet.
+
+.. versionadded:: 3.3
+    Starting from Symfony 3.3, the warm-up part of the ``cache:clear`` command
+    is deprecated. You must always pass the ``--no-warmup`` option to
+    ``cache:clear`` and use ``cache:warmup`` instead to warm-up the cache.
+
 The purpose is to initialize any cache that will be needed by the application
 and prevent the first user from any significant "cache hit" where the cache
 is generated dynamically.
@@ -1437,7 +1445,7 @@ If you do need to use this tag, just make a new class that implements the
 :class:`Symfony\\Component\\Validator\\ObjectInitializerInterface` interface.
 Then, tag it with the ``validator.initializer`` tag (it has no options).
 
-For an example, see the ``EntityInitializer`` class inside the Doctrine
+For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension

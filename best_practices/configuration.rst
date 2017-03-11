@@ -153,6 +153,31 @@ whereas they cannot access the container parameters:
 The only notable disadvantage of using constants for this kind of configuration
 values is that you cannot redefine them easily in your tests.
 
+Parameter Naming
+----------------
+
+.. best-practice::
+
+    The name of your configuration parameters should be as short as possible and
+    should include a common prefix for the entire application.
+
+Using ``app.`` as the prefix of your parameters is a common practice to avoid
+collisions with Symfony and third-party bundles/libraries parameters. Then, use
+just one or two words to describe the purpose of the parameter:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    parameters:
+        # don't do this: 'dir' is too generic and it doesn't convey any meaning
+        app.dir: '...'
+        # do this: short but easy to understand names
+        app.contents_dir: '...'
+        # it's OK to use dots, underscores, dashes or nothing, but always
+        # be consistent and use the same format for all the parameters
+        app.dir.contents: '...'
+        app.contents-dir: '...'
+
 Semantic Configuration: Don't Do It
 -----------------------------------
 

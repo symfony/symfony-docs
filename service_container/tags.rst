@@ -19,8 +19,7 @@ to be used for a specific purpose. Take the following example:
             app.twig_extension:
                 class: AppBundle\Twig\AppExtension
                 public: false
-                tags:
-                    - { name: twig.extension }
+                tags: [twig.extension]
 
     .. code-block:: xml
 
@@ -148,13 +147,11 @@ For example, you may add the following transports as services:
             app.smtp_transport:
                 class: \Swift_SmtpTransport
                 arguments: ['%mailer_host%']
-                tags:
-                    - { name: app.mail_transport }
+                tags: [app.mail_transport]
 
             app.sendmail_transport:
                 class: \Swift_SendmailTransport
-                tags:
-                    - { name: app.mail_transport }
+                tags: [app.mail_transport]
 
     .. code-block:: xml
 
@@ -340,6 +337,31 @@ To answer this, change the service declaration:
         $definitionSendmail = new Definition('\Swift_SendmailTransport');
         $definitionSendmail->addTag('app.mail_transport', array('alias' => 'bar'));
         $container->setDefinition('app.sendmail_transport', $definitionSendmail);
+
+.. tip::
+
+    In YAML format, you may provide the tag as a simple string as long as
+    you don't need to specify additional attributes. The following definitions
+    are equivalent.
+
+    .. code-block:: yaml
+
+        services:
+
+            # Compact syntax
+            app.sendmail_transport:
+                class: \Swift_SendmailTransport
+                tags: [app.mail_transport]
+
+            # Verbose syntax
+            app.sendmail_transport:
+                class: \Swift_SendmailTransport
+                tags:
+                    - { name: app.mail_transport }
+
+    versionadded:: 3.3
+        Support for the compact tag notation in the YAML format was introduced
+        in Symfony 3.3.
 
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::

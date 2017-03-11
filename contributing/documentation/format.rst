@@ -195,8 +195,8 @@ Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony versions that have
 reached end-of-maintenance will be removed. For example, if Symfony 2.5 were
-released today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
-tags would be removed from the new ``2.5`` branch.
+released today, and 2.2 had recently reached its end-of-maintenance, the 2.2
+``versionadded`` tags would be removed from the new ``2.5`` branch.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/

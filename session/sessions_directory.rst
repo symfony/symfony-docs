@@ -109,7 +109,7 @@ session directory to ``app/sessions``:
         framework:
             session:
                 handler_id: session.handler.native_file
-                save_path: '%kernel.root_dir%/sessions'
+                save_path: '%kernel.project_dir%/app/sessions'
 
     .. code-block:: xml
 
@@ -125,7 +125,7 @@ session directory to ``app/sessions``:
         >
             <framework:config>
                 <framework:session handler-id="session.handler.native_file"
-                    save-path="%kernel.root_dir%/sessions"
+                    save-path="%kernel.project_dir%/app/sessions"
                 />
             </framework:config>
         </container>
@@ -136,7 +136,7 @@ session directory to ``app/sessions``:
         $container->loadFromExtension('framework', array(
             'session' => array(
                 'handler_id' => 'session.handler.native_file',
-                'save_path'  => '%kernel.root_dir%/sessions',
+                'save_path'  => '%kernel.project_dir%/app/sessions',
             ),
         ));
 

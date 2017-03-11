@@ -1,9 +1,6 @@
 How to Disable Microseconds Precision (for a Performance Boost)
 ===============================================================
 
-.. versionadded:: 2.11
-    The ``use_microseconds`` option was introduced in MonologBundle 2.11.
-
 Setting the parameter ``use_microseconds`` to ``false`` forces the logger to reduce
 the precision in the ``datetime`` field of the log messages from microsecond to second,
 avoiding a call to the ``microtime(true)`` function and the subsequent parsing.
@@ -35,7 +32,7 @@ log generation. This is recommended for systems that generate a large number of 
                 http://symfony.com/schema/dic/monolog
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <monolog:config use_microseconds="false">
+            <monolog:config use-microseconds="false">
                 <monolog:handler
                     name="applog"
                     type="stream"

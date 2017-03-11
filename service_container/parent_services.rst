@@ -68,7 +68,7 @@ duplicated service definitions:
             <services>
                 <!-- as no class is configured, the parent service MUST be abstract -->
                 <service id="app.base_doctrine_repository" abstract="true"> 
-                    <argument type="service" id="doctrine.entity_manager">
+                    <argument type="service" id="doctrine.entity_manager" />
 
                     <call method="setLogger">
                         <argument type="service" id="logger" />

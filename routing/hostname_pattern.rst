@@ -193,7 +193,8 @@ instance, if you want to match both ``m.example.com`` and
             <?xml version="1.0" encoding="UTF-8" ?>
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    http://symfony.com/schema/routing/routing-1.0.xsd">
 
                 <route id="mobile_homepage" path="/" host="m.{domain}">
                     <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
@@ -251,17 +252,16 @@ You can also set the host option on imported routes:
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="@AcmeHelloBundle/Resources/config/routing.xml" host="hello.example.com" />
         </routes>
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
-
-        $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"), '', array(), array(), array(), 'hello.example.com');
+        $collection = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
+        $collection->setHost('hello.example.com');
 
         return $collection;
 

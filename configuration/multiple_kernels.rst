@@ -101,7 +101,7 @@ they don't collide with the files from ``AppKernel``::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load($this->getRootDir().'/config/api/config_'.$this->getEnvironment().'.yml');
+            $loader->load($this->getProjectDir().'/app/config/api/config_'.$this->getEnvironment().'.yml');
         }
     }
 
@@ -176,7 +176,7 @@ In order to solve this issue, add the following configuration to your kernel:
     twig:
         paths:
             # allows to use app/Resources/views/ templates in the ApiKernel
-            "%kernel.root_dir%/../app/Resources/views": ~
+            "%kernel.project_dir%/app/Resources/views": ~
 
 Adding more Kernels to the Application
 --------------------------------------

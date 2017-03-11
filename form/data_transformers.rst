@@ -36,7 +36,7 @@ Suppose you have a Task form with a tags ``text`` type::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('tags', TextType::class)
+            $builder->add('tags', TextType::class);
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -334,10 +334,15 @@ Define the form type as a service in your configuration files.
             )
             ->addTag('form.type')
         ;
+
 .. tip::
 
     For more information about defining form types as services, read
     :doc:`register your form type as a service </form/form_dependencies>`.
+
+.. versionadded:: 3.3
+    Prior to Symfony 3.3, you needed to define form type services as ``public``.
+    Starting from Symfony 3.3, you can also define them as ``private``.
 
 Now, you can easily use your ``TaskType``::
 

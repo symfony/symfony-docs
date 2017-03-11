@@ -25,8 +25,9 @@ it in your configuration:
         # app/config/config.yml
         framework:
             # ...
-            serializer:
-                enabled: true
+            serializer: { enable_annotations: true }
+            # Alternatively, if you don't want to use annotations
+            #serializer: { enabled: true }
 
     .. code-block:: xml
 
@@ -44,7 +45,11 @@ it in your configuration:
                 http://symfony.com/schema/dic/twig/twig-1.0.xsd">
             <framework:config>
                 <!-- ... -->
-                <framework:serializer enabled="true" />
+		<framework:serializer enable-annotations="true" />
+		<!--
+		Alternatively, if you don't want to use annotations
+		<framework:serializer enabled="true" />
+		-->
             </framework:config>
         </container>
 
@@ -54,7 +59,9 @@ it in your configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
-                'enabled' => true,
+                'enable_annotations' => true,
+                // Alternatively, if you don't want to use annotations
+                //'enabled' => true,
             ),
         ));
 
@@ -123,7 +130,7 @@ Here is an example on how to load the
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
         $container->register('get_set_method_normalizer', GetSetMethodNormalizer::class)
-            ->setPublic(false);
+            ->setPublic(false)
             ->addTag('serializer.normalizer')
         ;
 

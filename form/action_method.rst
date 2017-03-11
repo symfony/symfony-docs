@@ -9,15 +9,59 @@ URL under which the form was rendered. Sometimes you want to change these
 parameters. You can do so in a few different ways.
 
 If you use the :class:`Symfony\\Component\\Form\\FormBuilder` to build your
-form, you can use ``setAction()`` and ``setMethod()``::
+form, you can use ``setAction()`` and ``setMethod()``:
 
-    $form = $this->createFormBuilder($task)
-        ->setAction($this->generateUrl('target_route'))
-        ->setMethod('GET')
-        ->add('task', TextType::class)
-        ->add('dueDate', DateType::class)
-        ->add('save', SubmitType::class)
-        ->getForm();
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // AppBundle/Controller/DefaultController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+        class DefaultController extends Controller
+        {
+            public function newAction()
+            {
+                $form = $this->createFormBuilder($task)
+                    ->setAction($this->generateUrl('target_route'))
+                    ->setMethod('GET')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
+                    ->add('save', SubmitType::class)
+                    ->getForm();
+
+                // ...
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Forms;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+        // ...
+
+        $formFactoryBuilder = Forms::createFormFactoryBuilder();
+
+        // Form factory builder configuration ...
+
+        $formFactory = $formFactoryBuilder->getFormFactory();
+
+        $form = $formFactory->createBuilder(FormType::class, $task)
+            ->setAction($this->generateUrl('target_route'))
+            ->setMethod('GET')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class)
+            ->getForm();
 
 .. note::
 
@@ -25,15 +69,48 @@ form, you can use ``setAction()`` and ``setMethod()``::
     that points to the controller that processes the form.
 
 When using a form type class, you can pass the action and method as form
-options::
+options:
 
-    use AppBundle\Form\TaskType;
-    // ...
+.. configuration-block::
 
-    $form = $this->createForm(TaskType::class, $task, array(
-        'action' => $this->generateUrl('target_route'),
-        'method' => 'GET',
-    ));
+    .. code-block:: php-symfony
+
+        // AppBundle/Controller/DefaultController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use AppBundle\Form\TaskType;
+
+        class DefaultController extends Controller
+        {
+            public function newAction()
+            {
+                // ...
+
+                $form = $this->createForm(TaskType::class, $task, array(
+                    'action' => $this->generateUrl('target_route'),
+                    'method' => 'GET',
+                ));
+
+                // ...
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Forms;
+        use AppBundle\Form\TaskType;
+
+        $formFactoryBuilder = Forms::createFormFactoryBuilder();
+
+        // Form factory builder configuration ...
+
+        $formFactory = $formFactoryBuilder->getFormFactory();
+
+        $form = $formFactory->create(TaskType::class, $task, array(
+            'action' => $this->generateUrl('target_route'),
+            'method' => 'GET',
+        ));
 
 Finally, you can override the action and method in the template by passing them
 to the ``form()`` or the ``form_start()`` helper functions:
@@ -47,7 +124,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/newAction.html.php -->
+        <!-- app/Resources/views/default/new.html.php -->
         <?php echo $view['form']->start($form, array(
             // The path() method was introduced in Symfony 2.8. Prior to 2.8,
             // you had to use generate().
