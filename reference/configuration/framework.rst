@@ -476,7 +476,7 @@ You can also set ``esi`` to ``true`` to enable it:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <esi />
+                <framework:esi />
             </framework:config>
         </container>
 
