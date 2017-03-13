@@ -126,22 +126,23 @@ are done doing other stuff::
 
 .. note::
 
-    If a ``Response`` is sent **before** what ``Process`` is running had a chance to complete,
-    the server process will be killed (depending on your OS). It means that your task
-    will be stopped right away. Running an asynchronous process is not the same than running
-    a processing surviving yourselves.
+    If a ``Response`` is sent **before** a child process had a chance to complete,
+    the server process will be killed (depending on your OS). It means that
+    your task will be stopped right away. Running an asynchronous process
+    is not the same as running a process that survives it parent process.
 
-    If you want your process to survive the request/response cycle, you could take
-    advantage of the ``kernel.terminate`` event, and run your command **synchronuously**
-    inside this event. Be aware that ``kernel.terminate`` is called only if you run ``PHP-FPM``.
+    If you want your process to survive the request/response cycle, you can
+    take advantage of the ``kernel.terminate`` event, and run your command
+    **synchronously** inside this event. Be aware that ``kernel.terminate``
+    is called only if you use PHP-FPM.
 
 .. caution::
 
-    Beware also that if you do that, the said php process won't available to serve
-    any new request until the subprocess is finished, which means you can block your
-    FPM pool quickly if you're not careful enough.
-    That's why it generally way better to not do any fancy thing even after the request is sent
-    but prefer using a job queue.
+    Beware also that if you do that, the said PHP-FPM process will not be
+    available to serve any new request until the subprocess is finished. This
+    means you can quickly block your FPM pool if you're not careful enough.
+    That is why it's generally way better not to do any fancy things even
+    after the request is sent, but to use a job queue instead.
 
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
 a callback that is called repeatedly whilst the process is still running, passing
