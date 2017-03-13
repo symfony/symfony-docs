@@ -124,6 +124,25 @@ are done doing other stuff::
     which means that your code will halt at this line until the external
     process is completed.
 
+.. note::
+
+    If a ``Response`` is sent **before** what ``Process`` is running had a chance to complete,
+    the server process will be killed (depending on your OS). It means that your task
+    will be stopped right away. Running an asynchronous process is not the same than running
+    a processing surviving yourselves.
+
+    If you want your process to survive the request/response cycle, you could take
+    advantage of the ``kernel.terminate`` event, and run your command **synchronuously**
+    inside this event. Be aware that ``kernel.terminate`` is called only if you run ``PHP-FPM``.
+
+.. caution::
+
+    Beware also that if you do that, the said php process won't available to serve
+    any new request until the subprocess is finished, which means you can block your
+    FPM pool quickly if you're not careful enough.
+    That's why it generally way better to not do any fancy thing even after the request is sent
+    but prefer using a job queue.
+
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
 a callback that is called repeatedly whilst the process is still running, passing
 in the output and its type::
