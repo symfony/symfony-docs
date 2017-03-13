@@ -101,7 +101,7 @@ timeout
 **type**: ``integer``
 
 .. versionadded:: 2.4.2
-    The ``url`` option was added in SwiftMailerBundle 2.4.2.
+    The ``timeout`` option was added in SwiftMailerBundle 2.4.2.
 
 The timeout in seconds when using ``smtp`` as the transport.
 
@@ -111,7 +111,7 @@ source_ip
 **type**: ``string``
 
 .. versionadded:: 2.4.2
-    The ``url`` option was added in SwiftMailerBundle 2.4.2.
+    The ``source_ip`` option was added in SwiftMailerBundle 2.4.2.
 
 The source IP address when using ``smtp`` as the transport.
 
@@ -121,7 +121,7 @@ local_domain
 **type**: ``string``
 
 .. versionadded:: 2.4.2
-    The ``url`` option was added in SwiftMailerBundle 2.4.2.
+    The ``local_domain`` option was added in SwiftMailerBundle 2.4.2.
 
 The domain name to use in ``HELO`` command.
 
