@@ -143,7 +143,7 @@ between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
 of the most common elements of a bundle:
 
 ``Controller/``
-    Contains the controllers of the bundle (e.g. ``HelloController.php``).
+    Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
 ``DependencyInjection/``
     Holds certain Dependency Injection Extension classes, which may import service
@@ -154,7 +154,7 @@ of the most common elements of a bundle:
     Houses configuration, including routing configuration (e.g. ``routing.yml``).
 
 ``Resources/views/``
-    Holds templates organized by controller name (e.g. ``Hello/index.html.twig``).
+    Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
 
 ``Resources/public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
