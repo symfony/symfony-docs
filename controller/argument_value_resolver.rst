@@ -4,9 +4,6 @@
 Extending Action Argument Resolving
 ===================================
 
-.. versionadded:: 3.1
-    The ``ArgumentResolver`` and value resolvers were introduced in Symfony 3.1.
-
 In the :doc:`controller guide </controller>`, you've learned that you can get the
 :class:`Symfony\\Component\\HttpFoundation\\Request` object via an argument in
 your controller. This argument has to be type-hinted by the ``Request`` class

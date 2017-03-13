@@ -367,9 +367,6 @@ For details on registering your own commands in the service container, read
 controller.argument_value_resolver
 ----------------------------------
 
-.. versionadded:: 3.1
-    The ``controller.argument_value_resolver`` tag was introduced in Symfony 3.1.
-
 **Purpose**: Register a value resolver for controller arguments such as ``Request``
 
 Value resolvers implement the

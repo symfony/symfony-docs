@@ -13,9 +13,6 @@ The Cache Component
     It is designed to have a low overhead and it ships with ready to use adapters
     for the most common caching backends.
 
-.. versionadded:: 3.1
-    The Cache component was introduced in Symfony 3.1.
-
 .. versionadded:: 3.3
     The PSR-16 "Simple Cache" implementation was introduced in Symfony 3.3.
 

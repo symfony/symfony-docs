@@ -84,9 +84,6 @@ format
 
 **type**: ``string`` **default**: ``Y-m-d H:i:s``
 
-.. versionadded:: 3.1
-    The ``format`` option was introduced in Symfony 3.1.
-
 This option allows to validate a custom date format. See
 :phpmethod:`DateTime::createFromFormat` for formatting options.
 

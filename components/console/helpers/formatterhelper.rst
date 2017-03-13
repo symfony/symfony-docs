@@ -67,9 +67,6 @@ your own. See :doc:`/console/coloring`.
 Print Truncated Messages
 ------------------------
 
-.. versionadded:: 3.1
-    The ``truncate`` method was introduced in Symfony 3.1.
-
 Sometimes you want to print a message truncated to an explicit character length.
 This is possible with the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::truncate` method.

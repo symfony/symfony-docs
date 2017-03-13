@@ -4,9 +4,6 @@
 How to Use a Custom Version Strategy for Assets
 ===============================================
 
-.. versionadded:: 3.1
-    Support for custom version strategies was introduced in Symfony 3.1.
-
 Asset versioning is a technique that improves the performance of web
 applications by adding a version identifier to the URL of the static assets
 (CSS, JavaScript, images, etc.) When the content of the asset changes, its
