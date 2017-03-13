@@ -19,7 +19,7 @@ your code faster.
     from having a look at the `Twig Bridge`_  which contains most of
     the extensions provided by the Symfony Framework.
 
-    We also have :doc:`a short article </reference/using_twig_extension_repository>`
+    We also have :doc:`a short article </templating/twig_extension_repository>`
     on how to use extensions from the `Twig official extension repository`_.
 
 Create the Extension Class
