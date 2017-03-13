@@ -168,7 +168,7 @@ invokes the service container extension inside the FrameworkBundle:
                 <framework:form />
 
                 <!-- ... -->
-            </framework>
+            </framework:config>
         </container>
 
     .. code-block:: php
