@@ -280,7 +280,20 @@ has one file in it::
 
 Template files should live in the ``Resources/views`` directory of whatever directory
 your *kernel* lives in. Since ``AppKernel`` lives in ``app/``, this template lives
-at ``app/Resources/views/micro/random.html.twig``.
+at ``app/Resources/views/micro/random.html.twig``:
+
+.. code-block:: html+twig
+
+    <!-- app/Resources/views/micro/random.html.twig -->
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Random action</title>
+        </head>
+        <body>
+            <p>{{ number }}</p>
+        </body>
+    </html>
 
 Finally, you need a front controller to boot and run the application. Create a
 ``web/index.php``::
@@ -309,7 +322,6 @@ this:
     │  ├─ config/
     │  └─ Resources
     |     └─ views
-    |        ├─ base.html.twig
     |        └─ micro
     |           └─ random.html.twig
     ├─ src/

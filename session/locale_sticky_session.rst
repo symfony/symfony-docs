@@ -201,13 +201,14 @@ Then register the listener:
 
         // app/config/services.php
         use AppBundle\EventListener\UserLocaleListener;
+        use Symfony\Component\DependencyInjection\Reference;
 
         $container
             ->register('app.user_locale_listener', UserLocaleListener::class)
-            ->addArgument('session')
+            ->addArgument(new Reference('session'))
             ->addTag(
                 'kernel.event_listener',
-                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin'
+                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin')
             );
 
 .. caution::

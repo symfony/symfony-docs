@@ -167,6 +167,13 @@ use the ``ldap`` user provider.
             ),
         );
 
+.. caution::
+
+    The Security component escapes provided input data when the LDAP user
+    provider is used. However, the LDAP component itself does not provide
+    any escaping yet. Thus, it's your responsibility to prevent LDAP injection
+    attacks when using the component directly.
+
 The ``ldap`` user provider supports many different configuration options:
 
 service
