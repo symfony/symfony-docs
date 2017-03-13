@@ -760,4 +760,4 @@ Those bundles can have other Twig extensions:
   to the Twig core. You can read more in `the official Twig Extensions documentation`_.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
-.. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html
+.. _`the official Twig Extensions documentation`: http://twig-extensions.readthedocs.io/

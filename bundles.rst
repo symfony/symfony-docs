@@ -153,7 +153,7 @@ of the most common elements of a bundle:
     Houses configuration, including routing configuration (e.g. ``routing.yml``).
 
 ``Resources/views/``
-    Holds templates organized by controller name (e.g. ``Hello/index.html.twig``).
+    Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
 
 ``Resources/public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
@@ -180,4 +180,4 @@ Learn more
 
     bundles/*
 
-_`third-party bundles`: http://knpbundles.com
+_`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories

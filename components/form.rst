@@ -463,19 +463,29 @@ builder:
 
     .. code-block:: php-symfony
 
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-        // ...
+        class DefaultController extends Controller
+        {
+            public function newAction(Request $request)
+            {
+                $defaults = array(
+                    'dueDate' => new \DateTime('tomorrow'),
+                );
 
-        $defaults = array(
-            'dueDate' => new \DateTime('tomorrow'),
-        );
+                $form = $this->createFormBuilder($defaults)
+		    ->add('task', TextType::class)
+		    ->add('dueDate', DateType::class)
+                    ->getForm();
 
-        $form = $this->createFormBuilder($defaults)
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->getForm();
+                // ...
+            }
+        }
 
 .. tip::
 
@@ -539,18 +549,23 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-symfony
 
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-        // ...
-
-        public function searchAction()
+        class DefaultController extends Controller
         {
-            $formBuilder = $this->createFormBuilder(null, array(
-                'action' => '/search',
-                'method' => 'GET',
-            ));
+            public function searchAction()
+            {
+                $formBuilder = $this->createFormBuilder(null, array(
+                    'action' => '/search',
+                    'method' => 'GET',
+                ));
 
-            // ...
+                // ...
+            }
         }
 
 .. _component-form-intro-handling-submission:
@@ -567,8 +582,8 @@ method:
 
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         // ...
 
@@ -596,29 +611,34 @@ method:
 
     .. code-block:: php-symfony
 
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        // ...
-
-        public function newAction(Request $request)
+        class DefaultController extends Controller
         {
-            $form = $this->createFormBuilder()
-                ->add('task', TextType::class)
-                ->add('dueDate', DateType::class)
-                ->getForm();
+            public function newAction(Request $request)
+            {
+                $form = $this->createFormBuilder()
+		    ->add('task', TextType::class)
+		    ->add('dueDate', DateType::class)
+                    ->getForm();
 
-            $form->handleRequest($request);
+                $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $data = $form->getData();
 
-                // ... perform some action, such as saving the data to the database
+                    // ... perform some action, such as saving the data to the database
 
-                return $this->redirectToRoute('task_success');
+                    return $this->redirectToRoute('task_success');
+                }
+
+                // ...
             }
-
-            // ...
         }
 
 This defines a common form "workflow", which contains 3 different possibilities:
@@ -667,22 +687,33 @@ option when building each field:
 
     .. code-block:: php-symfony
 
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+        namespace Acme\TaskBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        $form = $this->createFormBuilder()
-            ->add('task', TextType::class, array(
-                'constraints' => new NotBlank(),
-            ))
-            ->add('dueDate', DateType::class, array(
-                'constraints' => array(
-                    new NotBlank(),
-                    new Type(\DateTime::class),
-                )
-            ))
-            ->getForm();
+        class DefaultController extends Controller
+        {
+            public function newAction(Request $request)
+            {
+                $form = $this->createFormBuilder()
+		    ->add('task', TextType::class, array(
+                        'constraints' => new NotBlank(),
+                    ))
+		    ->add('dueDate', DateType::class, array(
+                        'constraints' => array(
+                            new NotBlank(),
+                            new Type(\DateTime::class),
+                        )
+                    ))
+                    ->getForm();
+                // ...
+            }
+        }
 
 When the form is bound, these validation constraints will be applied automatically
 and the errors will display next to the fields on error.

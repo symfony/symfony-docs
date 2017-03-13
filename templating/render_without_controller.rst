@@ -45,8 +45,8 @@ can do this without creating a controller:
 
         $collection = new RouteCollection();
         $collection->add('acme_privacy', new Route('/privacy', array(
-            '_controller'  => 'FrameworkBundle:Template:template',
-            'template'     => 'static/privacy.html.twig',
+            '_controller' => 'FrameworkBundle:Template:template',
+            'template'    => 'static/privacy.html.twig',
         )));
 
         return $collection;
@@ -123,10 +123,10 @@ other variables in your route, you can control exactly how your page is cached:
 
         $collection = new RouteCollection();
         $collection->add('acme_privacy', new Route('/privacy', array(
-            '_controller'  => 'FrameworkBundle:Template:template',
-            'template'     => 'static/privacy.html.twig',
-            'maxAge'       => 86400,
-            'sharedAge' => 86400,
+            '_controller' => 'FrameworkBundle:Template:template',
+            'template'    => 'static/privacy.html.twig',
+            'maxAge'      => 86400,
+            'sharedAge'   => 86400,
         )));
 
         return $collection;

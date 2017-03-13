@@ -351,10 +351,10 @@ respond and the user will receive a 500 response.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <trusted-host>example.com</trusted-host>
-                <trusted-host>example.org</trusted-host>
+                <framework:trusted-host>example.com</framework:trusted-host>
+                <framework:trusted-host>example.org</framework:trusted-host>
                 <!-- ... -->
-            </framework>
+            </framework:config>
         </container>
 
     .. code-block:: php
@@ -478,7 +478,7 @@ You can also set ``esi`` to ``true`` to enable it:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <esi />
+                <framework:esi />
             </framework:config>
         </container>
 

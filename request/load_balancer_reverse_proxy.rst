@@ -47,7 +47,7 @@ and which reverse proxy IP addresses will be doing this type of thing:
 
             <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
                 <!-- ... -->
-            </framework>
+            </framework:config>
         </container>
 
     .. code-block:: php
