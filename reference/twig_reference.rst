@@ -20,7 +20,7 @@ extra features.
 
     Technically, most of the extensions live in the `Twig Bridge`_. That code
     might give you some ideas when you need to write your own Twig extension
-    as described in :doc:`/templating/twig_extension.rst`.
+    as described in :doc:`/templating/twig_extension`.
     
 .. note::
 
