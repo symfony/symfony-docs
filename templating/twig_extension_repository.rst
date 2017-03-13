@@ -1,12 +1,12 @@
 .. index::
    single: Using the Twig Extensions Repository
 
-How to Use the Twig Extension Repository
+How to Use the Twig Extensions Repository
 ========================================
 
 The `Twig official extension repository`_ contains (as of writing) some
 helpful Twig extensions that are not part of the Twig core. They add
-useful functions for internationalization, working with Arrays and
+useful functions for internationalization, working with arrays and
 dates. To learn more about these extensions, have a look at their
 `documentation`_.
 
@@ -40,7 +40,7 @@ Then, define the extension class as a service and tag it with the
 
         # app/config/services.yml
         services:
-            twig_extension.intl:
+            twig_extensions.intl:
                 class: Twig_Extensions_Extension_Intl
                 tags:
                     - { name: twig.extension }
@@ -55,7 +55,7 @@ Then, define the extension class as a service and tag it with the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="twig_extension.intl"
+                <service id="twig_extensions.intl"
                     class="Twig_Extensions_Extension_Intl">
                     <tag name="twig.extension" />
                 </service>
@@ -68,7 +68,7 @@ Then, define the extension class as a service and tag it with the
         use \Twig_Extensions_Extension_Intl;
 
         $container
-            ->register('twig_extension.intl', Twig_Extensions_Extension_Intl::class)
+            ->register('twig_extensions.intl', Twig_Extensions_Extension_Intl::class)
             ->addTag('twig.extension');
 
 And that's it! For example, you should now be able to use the
@@ -84,10 +84,9 @@ Learning further
 
 In the :doc:`reference section </reference/twig_reference>`, you can
 find all the extra Twig functions, filters, tags and tests that are
-added by the Symfony Framework.
+already added by the Symfony Framework.
 
-When that does not meet your particular needs, we also have
-documentation on :doc:`how to write your own Twig extension </templating/twig_extension>`.
+We also have documentation on :doc:`how to write your own Twig extension </templating/twig_extension>`.
 
 .. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
 .. _`documentation`: http://twig-extensions.readthedocs.io/
