@@ -274,7 +274,15 @@ configuration file - you can call the
     be anything that would normally be supported by the routing configuration
     loader (YAML, XML, PHP, annotation, etc.).
 
+.. note::
+
+    For more advanced uses, check out the `ChainRouter`_ provided by the Symfony
+    CMF project. This router allows applications to use two or more routers
+    combined, for example to keep using the default Symfony routing system when
+    writing a custom router.
+
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
 .. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
 .. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle
 .. _`SonataAdminBundle`: https://github.com/sonata-project/SonataAdminBundle
+.. _`ChainRouter`: https://symfony.com/doc/current/cmf/components/routing/chain.html

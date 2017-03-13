@@ -26,8 +26,7 @@ the bundle on the `Packagist.org`_ site.
 
 .. tip::
 
-    Looking for bundles? Try searching at `KnpBundles.com`_: the unofficial
-    archive of Symfony Bundles.
+    Looking for bundles? Try searching for `symfony-bundle topic on GitHub`_.
 
 2) Install the Bundle via Composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,5 +156,5 @@ what to do next. Have fun!
 .. _their documentation: https://getcomposer.org/doc/00-intro.md
 .. _Packagist.org:       https://packagist.org
 .. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _KnpBundles.com:      http://knpbundles.com/
 .. _`composer require`:  https://getcomposer.org/doc/03-cli.md#require
+.. _`symfony-bundle topic on GitHub`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
