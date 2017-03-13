@@ -129,7 +129,7 @@ are done doing other stuff::
     If a ``Response`` is sent **before** a child process had a chance to complete,
     the server process will be killed (depending on your OS). It means that
     your task will be stopped right away. Running an asynchronous process
-    is not the same as running a process that survives it parent process.
+    is not the same as running a process that survives its parent process.
 
     If you want your process to survive the request/response cycle, you can
     take advantage of the ``kernel.terminate`` event, and run your command
