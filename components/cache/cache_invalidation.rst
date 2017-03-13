@@ -1,6 +1,6 @@
 .. index::
-   single: Cache; Invalidation
-   single: Cache; Tags
+    single: Cache; Invalidation
+    single: Cache; Tags
 
 Cache Invalidation
 ==================
