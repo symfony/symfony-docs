@@ -93,4 +93,4 @@ servers should not send ``Expires`` dates more than one year in the future."
 
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
-.. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234#section-5.2
+.. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234#section-4.2.1
