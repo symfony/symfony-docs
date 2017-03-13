@@ -292,8 +292,8 @@ represents an HTTP message. But when moving from a legacy system, adding
 methods or changing some default behavior might help. In that case, register a
 PHP callable that is able to create an instance of your ``Request`` class::
 
+    use AppBundle\Http\SpecialRequest;
     use Symfony\Component\HttpFoundation\Request;
-    use AppBundle\Classes\SpecialRequest;
 
     Request::setFactory(function (
         array $query = array(),
@@ -304,7 +304,7 @@ PHP callable that is able to create an instance of your ``Request`` class::
         array $server = array(),
         $content = null
     ) {
-        return new SpecialRequest(
+        return SpecialRequest::create(
             $query,
             $request,
             $attributes,
