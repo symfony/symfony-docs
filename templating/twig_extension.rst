@@ -15,8 +15,12 @@ your code faster.
 
 .. tip::
 
-    Before writing your own extensions, have a look at the
-    `Twig official extension repository`_.
+    When writing your own extensions, you might want to learn
+    from having a look at the `Twig Bridge`_  which contains most of
+    the extensions provided by the Symfony Framework.
+
+    We also have :doc:`a short article </reference/using_twig_extension_repository>`
+    on how to use extensions from the `Twig official extension repository`_.
 
 Create the Extension Class
 --------------------------
@@ -131,3 +135,4 @@ For a more in-depth look into Twig Extensions, please take a look at the
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
 .. _`Twig extensions documentation legacy`: http://twig.sensiolabs.org/doc/advanced_legacy.html#creating-an-extension
+.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension
