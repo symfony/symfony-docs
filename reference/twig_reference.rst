@@ -10,11 +10,11 @@ Twig is the default template engine for Symfony. By itself, it already contains
 a lot of built-in functions, filters, tags and tests. You can learn more about
 them from the `Twig Reference`_.
 
-The Symfony Framework adds quite a few extra :ref:`functions <reference-twig-functions>`,
+The Symfony framework adds quite a few extra :ref:`functions <reference-twig-functions>`,
 :ref:`filters <reference-twig-filters>`, :ref:`tags <reference-twig-tags>`
-and :ref:`tests <reference-twig-tests>` to seamlessly integrate the various
-Symfony Components with Twig templates. The following sections describe these 
-extra features.
+and :ref:`tests <reference-twig-tests>` to seamlessly integrate the
+various Symfony components with Twig templates. The following sections
+describe these extra features.
 
 .. tip::
 
@@ -25,8 +25,8 @@ extra features.
 .. note::
 
     This reference only covers the Twig extensions provided by the Symfony 
-    Framework. You are probably using some other bundles as well, and those
-    might come with their own extensions not covered here.
+    framework. You are probably using some other bundles as well, and
+    those might come with their own extensions not covered here.
 
 .. tip::
 
@@ -740,5 +740,4 @@ The available attributes are:
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
 .. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension   
