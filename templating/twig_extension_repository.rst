@@ -40,7 +40,7 @@ Then, define the extension class as a service and tag it with the
 
         # app/config/services.yml
         services:
-            twig_extensions.intl:
+            app.twig_extensions.intl:
                 class: Twig_Extensions_Extension_Intl
                 tags:
                     - { name: twig.extension }
@@ -55,7 +55,7 @@ Then, define the extension class as a service and tag it with the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="twig_extensions.intl"
+                <service id="app.twig_extensions.intl"
                     class="Twig_Extensions_Extension_Intl">
                     <tag name="twig.extension" />
                 </service>
@@ -68,7 +68,7 @@ Then, define the extension class as a service and tag it with the
         use \Twig_Extensions_Extension_Intl;
 
         $container
-            ->register('twig_extensions.intl', Twig_Extensions_Extension_Intl::class)
+            ->register('app.twig_extensions.intl', Twig_Extensions_Extension_Intl::class)
             ->addTag('twig.extension');
 
 And that's it! For example, you should now be able to use the
