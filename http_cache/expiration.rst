@@ -88,7 +88,7 @@ servers should not send ``Expires`` dates more than one year in the future."
 .. note::
 
     Accordingly with `RFC 7234 - Caching`_, the ``Expires`` header value is
-    ignored when a ``s-max-age`` or ``max-age`` directives are defined.
+    ignored when ``s-max-age`` or ``max-age`` directives are defined.
 
 
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
