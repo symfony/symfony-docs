@@ -212,15 +212,15 @@ Remove public method                                No
 Change name                                         No
 Reduce visibility                                   No
 Move to parent class                                Yes
-Add argument without a default value                No [7]_
-Add argument with a default value                   No [7]_
+Add argument without a default value                No
+Add argument with a default value                   No [7]_ [8]_
 Remove argument                                     Yes [3]_
-Add default value to an argument                    No [7]_
-Remove default value of an argument                 No [7]_
-Add type hint to an argument                        No [7]_
-Remove type hint of an argument                     No [7]_
-Change argument type                                No [7]_
-Change return type                                  No [7]_
+Add default value to an argument                    No [7]_ [8]_
+Remove default value of an argument                 No
+Add type hint to an argument                        No
+Remove type hint of an argument                     No [7]_ [8]_
+Change argument type                                No
+Change return type                                  No
 **Protected Methods**
 Add protected method                                Yes
 Remove protected method                             No [7]_
@@ -228,12 +228,12 @@ Change name                                         No [7]_
 Reduce visibility                                   No [7]_
 Move to parent class                                Yes
 Add argument without a default value                No [7]_
-Add argument with a default value                   No [7]_
+Add argument with a default value                   No [7]_ [8]_
 Remove argument                                     Yes [3]_
-Add default value to an argument                    No [7]_
+Add default value to an argument                    No [7]_ [8]_
 Remove default value of an argument                 No [7]_
 Add type hint to an argument                        No [7]_
-Remove type hint of an argument                     No [7]_
+Remove type hint of an argument                     No [7]_ [8]_
 Change argument type                                No [7]_
 Change return type                                  No [7]_
 **Private Methods**
@@ -250,7 +250,7 @@ Remove type hint of an argument                     Yes
 Change argument type                                Yes
 Change return type                                  Yes
 **Static Methods**
-Turn non static into static                         No [7]_
+Turn non static into static                         No [7]_ [8]_
 Turn static into non static                         No
 **Constants**
 Add constant                                        Yes
@@ -279,7 +279,9 @@ Change value of a constant                          Yes [1]_ [5]_
 
 .. [6] Allowed using the ``@final`` annotation.
 
-.. [7] Allowed if the class/method is final.
+.. [7] Allowed if the class is final.
+
+.. [8] Allowed if the method is final.
 
 .. _Semantic Versioning: http://semver.org/
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
