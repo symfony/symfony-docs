@@ -2,7 +2,7 @@
    single: Using the Twig Extensions Repository
 
 How to Use the Twig Extensions Repository
-========================================
+=========================================
 
 The `Twig official extension repository`_ contains (as of writing) some
 helpful Twig extensions that are not part of the Twig core. They add
