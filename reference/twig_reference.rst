@@ -769,4 +769,4 @@ Those bundles can have other Twig extensions:
   :doc:`the Assetic Documentation </assetic/asset_management>`.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
-.. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html
+.. _`the official Twig Extensions documentation`: http://twig-extensions.readthedocs.io/
