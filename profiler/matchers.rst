@@ -45,7 +45,9 @@ configuration:
 
             <framework:config>
                 <!-- ... -->
-                <framework:profiler ip="168.0.0.1" />
+                <framework:profiler>
+                    <framework:matcher ip="168.0.0.1" />
+                </framework:profiler>    
             </framework:config>
         </container>
 
@@ -55,7 +57,9 @@ configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'ip' => '168.0.0.1',
+                'matcher' => array(
+                    'ip' => '168.0.0.1',
+                )
             ),
         ));
 
