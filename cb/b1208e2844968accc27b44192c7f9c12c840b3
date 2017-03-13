@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-02-07T22:25:37Z
+
+Code PR: https://github.com/symfony/symfony/pull/21539
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2017-02-07T22:32:35Z
+
+(but not longer ;) )
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-02-07T22:42:28Z
+
+I reworked it a bit. Reviewers, feel free to point me to parts that you feel are too verbose / superfluous.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-02-28T07:09:13Z
+
+Please remove the [WCM] tag and review this
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-02-28T09:00:20Z
+
+Glad you like it @javiereguiluz !
