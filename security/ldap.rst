@@ -169,10 +169,10 @@ use the ``ldap`` user provider.
 
 .. caution::
 
-    The Security component escapes values provided when binding against an LDAP
-    server (likewise for the user provider). However, the LDAP component does
-    not provide any other escaping, so it's your responsibility to prevent
-    the LDAP injection attacks.
+    The Security component escapes provided input data when the LDAP user
+    provider is used. However, the LDAP component itself does not provide
+    any escaping yet. Thus, it's your responsibility to prevent LDAP injection
+    attacks when using the component directly.
 
 The ``ldap`` user provider supports many different configuration options:
 
