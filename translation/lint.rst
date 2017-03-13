@@ -1,9 +1,9 @@
 .. index::
     single: Translation; Lint
-    single: Translation; Erroneous Messages
+    single: Translation; Translation File Errors
 
-How to Find Errors in Translation Messages
-==========================================
+How to Find Errors in Translation Files
+=======================================
 
 Symfony processes all the application translation files as part of the process
 that compiles the application code before executing it. If there's an error in
