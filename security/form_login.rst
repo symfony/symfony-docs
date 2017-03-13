@@ -218,108 +218,6 @@ this by setting ``use_referer`` to true (it defaults to false):
             ),
         ));
 
-Control the Redirect URL from inside the Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can also override where the user is redirected to via the form itself by
-including a hidden field with the name ``_target_path``. For example, to
-redirect to the URL defined by some ``account`` route, use the following:
-
-.. configuration-block::
-
-    .. code-block:: html+twig
-
-        {# src/AppBundle/Resources/views/Security/login.html.twig #}
-        {% if error %}
-            <div>{{ error.message }}</div>
-        {% endif %}
-
-        <form action="{{ path('login') }}" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-
-            <input type="hidden" name="_target_path" value="account" />
-
-            <input type="submit" name="login" />
-        </form>
-
-    .. code-block:: html+php
-
-        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
-        <?php if ($error): ?>
-            <div><?php echo $error->getMessage() ?></div>
-        <?php endif ?>
-
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-
-            <input type="hidden" name="_target_path" value="account" />
-
-            <input type="submit" name="login" />
-        </form>
-
-Now, the user will be redirected to the value of the hidden form field. The
-value attribute can be a relative path, absolute URL, or a route name. You
-can even change the name of the hidden form field by changing the ``target_path_parameter``
-option to another value.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            # ...
-
-            firewalls:
-                main:
-                    # ...
-                    form_login:
-                        target_path_parameter: redirect_url
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <form-login target-path-parameter="redirect_url" />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'firewalls' => array(
-                'main' => array(
-                    // ...
-                    'form_login' => array(
-                        'target_path_parameter' => 'redirect_url',
-                    ),
-                ),
-            ),
-        ));
-
 Redirecting on Login Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -376,6 +274,115 @@ back to the login form itself. You can set this to a different route (e.g.
                     'form_login' => array(
                         // ...
                         'failure_path' => 'login_failure',
+                    ),
+                ),
+            ),
+        ));
+
+Control the Redirect URL from inside the Form
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can also override where the user is redirected to via the form itself by
+including a hidden field with the name ``_target_path`` for success and
+``_failure_path`` for failure. For example, to redirect to the URL defined 
+by some ``account`` route, use the following:
+
+.. configuration-block::
+
+    .. code-block:: html+twig
+
+        {# src/AppBundle/Resources/views/Security/login.html.twig #}
+        {% if error %}
+            <div>{{ error.message }}</div>
+        {% endif %}
+
+        <form action="{{ path('login') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="hidden" name="_target_path" value="account" />
+            <input type="hidden" name="_failure_path" value="login" />
+
+            <input type="submit" name="login" />
+        </form>
+
+    .. code-block:: html+php
+
+        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
+        <?php if ($error): ?>
+            <div><?php echo $error->getMessage() ?></div>
+        <?php endif ?>
+
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="hidden" name="_target_path" value="account" />
+            <input type="hidden" name="_failure_path" value="login" />
+
+            <input type="submit" name="login" />
+        </form>
+
+Now, the user will be redirected to the value of the hidden form field. The
+value attribute can be a relative path, absolute URL, or a route name. 
+You can even change the name of the hidden form field by changing the 
+``target_path_parameter`` and ``failure_path_parameter`` options to another 
+value.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    form_login:
+                        target_path_parameter: redirect_url
+                        failure_path_parameter: redirect_url
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <form-login target-path-parameter="redirect_url" />
+                    <form-login failure-path-parameter="redirect_url" />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'firewalls' => array(
+                'main' => array(
+                    // ...
+                    'form_login' => array(
+                        'target_path_parameter' => 'redirect_url',
+                        'failure_path_parameter' => 'redirect_url',
                     ),
                 ),
             ),
