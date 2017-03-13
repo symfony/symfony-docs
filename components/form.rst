@@ -448,8 +448,6 @@ builder:
         namespace Acme\TaskBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         class DefaultController extends Controller
         {
@@ -588,8 +586,6 @@ method:
         namespace Acme\TaskBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         class DefaultController extends Controller
         {
