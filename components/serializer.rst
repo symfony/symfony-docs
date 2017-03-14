@@ -595,7 +595,8 @@ Circular references are common when dealing with entity relations::
     }
 
 To avoid infinite loops, :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-throws a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
+or :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+throw a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
 when such a case is encountered::
 
     $member = new Member();
