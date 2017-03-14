@@ -35,9 +35,9 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-If you plan to :ref:`write-assertions-about-deprecations`_ and use the regular
-PHPUnit script (not the modified PHPUnit script provided by Symfony), then you
-must register a new `test listener`_ called ``SymfonyTestsListener``:
+If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
+to register a new `test listener`_ called ``SymfonyTestsListener``:
 
 .. code-block:: xml
 
