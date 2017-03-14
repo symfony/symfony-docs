@@ -343,8 +343,8 @@ The name of the hidden fields in the login form is also configurable using the
                 main:
                     # ...
                     form_login:
-                        target_path_parameter: redirect_url
-                        failure_path_parameter: redirect_url
+                        target_path_parameter: login_success
+                        failure_path_parameter: login_fail
 
     .. code-block:: xml
 
@@ -361,8 +361,8 @@ The name of the hidden fields in the login form is also configurable using the
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login target-path-parameter="redirect_url" />
-                    <form-login failure-path-parameter="redirect_url" />
+                    <form-login target-path-parameter="login_success" />
+                    <form-login failure-path-parameter="login_fail" />
                 </firewall>
             </config>
         </srv:container>
@@ -377,8 +377,8 @@ The name of the hidden fields in the login form is also configurable using the
                 'main' => array(
                     // ...
                     'form_login' => array(
-                        'target_path_parameter' => 'redirect_url',
-                        'failure_path_parameter' => 'redirect_url',
+                        'target_path_parameter' => 'login_success',
+                        'failure_path_parameter' => 'login_fail',
                     ),
                 ),
             ),
