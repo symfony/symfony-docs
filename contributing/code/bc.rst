@@ -217,10 +217,10 @@ Add argument with a default value                   No [7]_ [8]_
 Remove argument                                     Yes [3]_
 Add default value to an argument                    No [7]_ [8]_
 Remove default value of an argument                 No
-Add type hint to an argument                        No
+Add type hint to an argument                        No [7]_ [8]_
 Remove type hint of an argument                     No [7]_ [8]_
-Change argument type                                No
-Change return type                                  No
+Change argument type                                No [7]_ [8]_
+Change return type                                  No [7]_ [8]_
 **Protected Methods**
 Add protected method                                Yes
 Remove protected method                             No [7]_
@@ -232,10 +232,10 @@ Add argument with a default value                   No [7]_ [8]_
 Remove argument                                     Yes [3]_
 Add default value to an argument                    No [7]_ [8]_
 Remove default value of an argument                 No [7]_
-Add type hint to an argument                        No [7]_
+Add type hint to an argument                        No [7]_ [8]_
 Remove type hint of an argument                     No [7]_ [8]_
-Change argument type                                No [7]_
-Change return type                                  No [7]_
+Change argument type                                No [7]_ [8]_
+Change return type                                  No [7]_ [8]_
 **Private Methods**
 Add private method                                  Yes
 Remove private method                               Yes
