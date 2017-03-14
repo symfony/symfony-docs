@@ -221,11 +221,9 @@ this by setting ``use_referer`` to true (it defaults to false):
 Redirecting on Login Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to redirecting the user after a successful login, you can also set
-the URL that the user should be redirected to after a failed login (e.g. an
-invalid username or password was submitted). By default, the user is redirected
-back to the login form itself. You can set this to a different route (e.g.
-``login_failure``) with the following config:
+After a failed login (e.g. an invalid username or password was submitted), the
+user is redirected back to the login form itself. Use the ``failure_path``
+option to define the route or URL the user is redirected to:
 
 .. configuration-block::
 
@@ -283,9 +281,8 @@ Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also override where the user is redirected to via the form itself by
-including a hidden field with the name ``_target_path`` for success and
-``_failure_path`` for failure. For example, to redirect to the URL defined 
-by some ``account`` route, use the following:
+including a hidden field with the name ``_target_path`` for successful logins
+and ``_failure_path`` for login errors:
 
 .. configuration-block::
 
@@ -331,9 +328,8 @@ by some ``account`` route, use the following:
 
 Now, the user will be redirected to the value of the hidden form field. The
 value attribute can be a relative path, absolute URL, or a route name. 
-You can even change the name of the hidden form field by changing the 
-``target_path_parameter`` and ``failure_path_parameter`` options to another 
-value.
+The name of the hidden fields in the login form is also configurable using the
+``target_path_parameter`` and ``failure_path_parameter`` options of the firewall.
 
 .. configuration-block::
 
