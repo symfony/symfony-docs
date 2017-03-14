@@ -512,7 +512,7 @@ There are several types of normalizers available:
     calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names (method name stripped of
-    the "get"/"set"/"has"/"remove" prefix and converted to lower case) to property
+    the "get"/"set"/"has"/"remove" prefix) to property
     values.
 
     The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
@@ -524,7 +524,7 @@ There are several types of normalizers available:
     the constructor and the "setters" (public methods starting with "set").
 
     Objects are normalized to a map of property names (method name stripped of
-    the "get" prefix and converted to lower case) to property values.
+    the "get" prefix) to property values.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
