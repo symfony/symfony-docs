@@ -4,17 +4,17 @@
 How to Use the Twig Extensions Repository
 =========================================
 
-The `Twig official extension repository`_ contains (as of writing) some
+The `Twig official extensions repository`_ contains some
 helpful Twig extensions that are not part of the Twig core. They add
 useful functions for internationalization, working with arrays and
 dates. To learn more about these extensions, have a look at their
 `documentation`_.
 
 This repository is meant as an extension to Twig in general. So, it
-is does *not* provide a direct means to register itself with the
-Symfony Framework (it is not a Bundle).
+does *not* provide a direct means to register itself with the
+Symfony framework (it is not a bundle).
 
-It is, however, very easy to get the extensions set-up in Symfony.
+It is, however, very easy to get the extensions set up in Symfony.
 This article will show you how to register the ``Intl`` extension from
 that repository so you can use it in your Twig templates.
 
@@ -24,8 +24,7 @@ that repository so you can use it in your Twig templates.
     except you need to choose another service id and have to use
     the right class name.
 
-First, add the Twig Extensions repository as a dependency in your
-project. Assuming you are using Composer, run
+First, install the Twig extensions using Composer.
 
 .. code-block:: terminal
 
@@ -42,6 +41,7 @@ Then, define the extension class as a service and tag it with the
         services:
             app.twig_extensions.intl:
                 class: Twig_Extensions_Extension_Intl
+                public: false
                 tags:
                     - { name: twig.extension }
 
@@ -55,7 +55,7 @@ Then, define the extension class as a service and tag it with the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.twig_extensions.intl"
+                <service id="app.twig_extensions.intl" public="false"
                     class="Twig_Extensions_Extension_Intl">
                     <tag name="twig.extension" />
                 </service>
@@ -65,15 +65,15 @@ Then, define the extension class as a service and tag it with the
     .. code-block:: php
 
         // app/config/services.php
-        use \Twig_Extensions_Extension_Intl;
 
         $container
-            ->register('app.twig_extensions.intl', Twig_Extensions_Extension_Intl::class)
+            ->register('app.twig_extensions.intl', \Twig_Extensions_Extension_Intl::class)
+            ->setPublic(false)
             ->addTag('twig.extension');
 
 And that's it! For example, you should now be able to use the
-``localizeddate`` filter to format a date according to the request's
-current locale:
+``localizeddate`` filter to format a date according to the
+current request's locale:
 
 .. code-block:: twig
 
@@ -86,7 +86,8 @@ In the :doc:`reference section </reference/twig_reference>`, you can
 find all the extra Twig functions, filters, tags and tests that are
 already added by the Symfony Framework.
 
-We also have documentation on :doc:`how to write your own Twig extension </templating/twig_extension>`.
+Also, documentation is available on :doc:`how to write your own Twig
+extension </templating/twig_extension>`.
 
 .. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
 .. _`documentation`: http://twig-extensions.readthedocs.io/

@@ -17,11 +17,11 @@ your code faster.
 
     When writing your own extensions, you might want to learn
     from having a look at the `Twig Bridge`_  which contains most of
-    the extensions provided by the Symfony Framework.
+    the extensions provided by the Symfony framework.
 
-.. tip::
+.. seealso::
 
-    We also have :doc:`a short article </templating/twig_extension_repository>`
+    Read the :doc:`dedicated article </templating/twig_extension_repository>`
     on how to use extensions from the `Twig official extension repository`_.
 
 Create the Extension Class
