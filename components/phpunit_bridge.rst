@@ -193,7 +193,6 @@ times (order matters)::
         @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
     }
 
-
 Time-sensitive Tests
 --------------------
 
