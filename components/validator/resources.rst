@@ -150,9 +150,7 @@ can slow down your application because each file needs to be parsed, validated
 and converted into a :class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata`
 instance. To solve this problem, you can cache the ``ClassMetadata`` information.
 
-The Validator component comes with an
-:class:`Symfony\\Component\\Validator\\Mapping\\Cache\\ApcCache`
-implementation. You can easily create other cachers by creating a class which
+You can easily create cachers by creating a class which
 implements :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
 .. note::
@@ -168,11 +166,10 @@ Enable the cache calling the
 method of the Validator builder::
 
     use Symfony\Component\Validator\Validation;
-    use Symfony\Component\Validator\Mapping\Cache\ApcCache;
 
     $validator = Validation::createValidatorBuilder()
         // ... add loaders
-        ->setMetadataCache(new ApcCache('some_apc_prefix'));
+        ->setMetadataCache(new SomeImplementCacheInterface());
         ->getValidator();
 
 Using a Custom MetadataFactory
