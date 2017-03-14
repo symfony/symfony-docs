@@ -161,8 +161,9 @@ In this case you can specify that the ``coffee`` filter is applied to all
                     name="coffee"
                     bin="/usr/bin/coffee"
                     node="/usr/bin/node"
-                    apply_to="\.coffee$" />
-                    <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
+                    apply-to="\.coffee$" />
+                    <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
+                </assetic:filter>
             </assetic:config>
         </container>
 
@@ -172,10 +173,10 @@ In this case you can specify that the ``coffee`` filter is applied to all
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'coffee' => array(
-                    'bin'      => '/usr/bin/coffee',
-                    'node'     => '/usr/bin/node',
+                    'bin'        => '/usr/bin/coffee',
+                    'node'       => '/usr/bin/node',
                     'node_paths' => array('/usr/lib/node_modules/'),
-                    'apply_to' => '\.coffee$',
+                    'apply_to'   => '\.coffee$',
                 ),
             ),
         ));
