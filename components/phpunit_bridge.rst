@@ -35,6 +35,28 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+
+If you are using the `Modified PHPUnit script`_ (A.K.A. Simple PHPUnit), then no further step is required. If however
+you are using the regular `PHPUnit script`_, then you need to register ``SymfonyTestsListener``
+(a `PHPUnit test listener`_):
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
+    </phpunit>
+
+.. tip:: 3.1
+    Note that this step is mandatory only if you plan to `Write Assertions about Deprecations`_.
+
 Usage
 -----
 
@@ -94,9 +116,9 @@ message, enclosed with ``/``. For example, with:
 
 .. code-block:: xml
 
-    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -172,6 +194,7 @@ times (order matters)::
         @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
         @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
     }
+
 
 Time-sensitive Tests
 --------------------
@@ -419,3 +442,5 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
+.. _`PHPUnit script`: PHPUnit_
+.. _`PHPUnit test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
