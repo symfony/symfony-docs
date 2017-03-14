@@ -35,10 +35,9 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
-
-If you are using the `Modified PHPUnit script`_ (A.K.A. Simple PHPUnit), then no further step is required. If however
-you are using the regular `PHPUnit script`_, then you need to register ``SymfonyTestsListener``
-(a `PHPUnit test listener`_):
+If you plan to :ref:`write-assertions-about-deprecations`_ and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), then you
+must register a new `test listener`_ called ``SymfonyTestsListener``:
 
 .. code-block:: xml
 
@@ -53,9 +52,6 @@ you are using the regular `PHPUnit script`_, then you need to register ``Symfony
             <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
         </listeners>
     </phpunit>
-
-.. tip:: 3.1
-    Note that this step is mandatory only if you plan to `Write Assertions about Deprecations`_.
 
 Usage
 -----
@@ -172,6 +168,8 @@ Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
 completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -442,5 +440,4 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
-.. _`PHPUnit script`: PHPUnit_
-.. _`PHPUnit test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
+.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
