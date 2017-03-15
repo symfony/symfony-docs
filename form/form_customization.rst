@@ -563,7 +563,7 @@ form is rendered.
         <framework:config>
             <framework:templating>
                 <framework:form>
-                    <resource>AppBundle:Form</resource>
+                    <framework:resource>AppBundle:Form</framework:resource>
                 </framework:form>
             </framework:templating>
             <!-- ... -->
