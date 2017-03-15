@@ -591,6 +591,8 @@ with the serializer enabled.
 .. versionadded:: 3.2
     The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
 
+.. _component-serializer-handling-circular-references:
+
 Handling Circular References
 ----------------------------
 

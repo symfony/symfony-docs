@@ -104,6 +104,7 @@ Configuration
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
+    * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
 * `php_errors`_
     * `log`_
     * `throw`_
@@ -1481,6 +1482,20 @@ value.
     For more information, see
     :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
 
+.. _reference-serializer-circular_reference_handler:
+
+circular_reference_handler
+..........................
+
+**type** ``string``
+
+The service id that is used as circular reference handler of the default serializer. The
+service has to implement the ``__invoke($object)`` method.
+
+.. seealso::
+    For more information, see
+    :ref:`component-serializer-handling-circular-references`.
+
 php_errors
 ~~~~~~~~~~
 
@@ -1610,7 +1625,10 @@ Full Default Configuration
 
             # serializer configuration
             serializer:
-               enabled: false
+               enabled:                   false
+               cache:                      ~
+               name_converter:             ~
+               circular_reference_handler: ~
 
             # assets configuration
             assets:
