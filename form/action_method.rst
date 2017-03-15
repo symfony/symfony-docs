@@ -9,7 +9,7 @@ URL under which the form was rendered. Sometimes you want to change these
 parameters. You can do so in a few different ways.
 
 If you use the :class:`Symfony\\Component\\Form\\FormBuilder` to build your
-form, you can use ``setAction()`` and ``setMethod()``::
+form, you can use ``setAction()`` and ``setMethod()``:
 
 .. configuration-block::
 
@@ -62,7 +62,7 @@ form, you can use ``setAction()`` and ``setMethod()``::
     that points to the controller that processes the form.
 
 When using a form type class, you can pass the action and method as form
-options::
+options:
 
 .. configuration-block::
 
