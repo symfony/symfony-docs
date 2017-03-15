@@ -160,8 +160,8 @@ and tag it with ``security.voter``:
         # app/config/services.yml
         services:
             security.access.post_voter:
-                class:      AppBundle\Security\PostVoter
-                public:     false
+                class:  AppBundle\Security\PostVoter
+                public: false
                 tags:
                     - { name: security.voter }
 

@@ -72,12 +72,12 @@ The route is simple:
 
         # app/config/routing.yml
         blog_list:
-            path:      /blog
-            defaults:  { _controller: AppBundle:Blog:list }
+            path:     /blog
+            defaults: { _controller: AppBundle:Blog:list }
 
         blog_show:
-            path:      /blog/{slug}
-            defaults:  { _controller: AppBundle:Blog:show }
+            path:     /blog/{slug}
+            defaults: { _controller: AppBundle:Blog:show }
 
     .. code-block:: xml
 

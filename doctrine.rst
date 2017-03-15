@@ -44,10 +44,10 @@ information. By convention, this information is usually configured in an
 
     # app/config/parameters.yml
     parameters:
-        database_host:      localhost
-        database_name:      test_project
-        database_user:      root
-        database_password:  password
+        database_host:     localhost
+        database_name:     test_project
+        database_user:     root
+        database_password: password
 
     # ...
 

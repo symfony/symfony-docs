@@ -308,8 +308,8 @@ To enable the security voter in the application, define a new service:
     services:
         # ...
         post_voter:
-            class:      AppBundle\Security\PostVoter
-            public:     false
+            class:  AppBundle\Security\PostVoter
+            public: false
             tags:
                - { name: security.voter }
 
