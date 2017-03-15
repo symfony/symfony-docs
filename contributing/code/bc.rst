@@ -279,9 +279,17 @@ Change value of a constant                          Yes [1]_ [5]_
 
 .. [6] Allowed using the ``@final`` annotation.
 
-.. [7] Allowed if the class is final.
+.. [7] Allowed if the class is final. Classes that received the ``@final``
+       annotation after their first release are considered final in their
+       next major version.
+       Changing an argument type is only possible with a parent type.
+       Changing a return type is only possible with a child type.
 
-.. [8] Allowed if the method is final.
+.. [8] Allowed if the method is final. Methods that received the ``@final``
+       annotation after their first release are considered final in their
+       next major version.
+       Changing an argument type is only possible with a parent type.
+       Changing a return type is only possible with a child type.
 
 .. _Semantic Versioning: http://semver.org/
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
