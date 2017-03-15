@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-13T13:50:06Z
+
+About the *"diff + syntax highlighting"* feature, I've only found this old article: https://blaxpirit.com/blog/1/diffs-with-syntax-highlight.html  So it looks complicated to get it done with Pygments.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-13T13:55:18Z
+
+I've opened a "feature request" in the Pygments repository about "diff + highlighting" --> https://bitbucket.org/birkenfeld/pygments-main/issues/1339/add-support-for-using-the-diff-lexer-code
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-13T14:15:12Z
+
+I like this proposal a lot, but currently it looks like this:
+
+![original](https://cloud.githubusercontent.com/assets/73419/23857988/6c901634-07ff-11e7-8922-67626c87b2a7.png)
+
+However, given that [red-green color blindness](https://en.wikipedia.org/wiki/Color_blindness) affect to 8% of people, I guess this will be confused by a mistake where we made a typo and put a `+` in the code.
+
+I propose to change this to show the `+` and `-` on the left margin:
+
+![improvement_1](https://cloud.githubusercontent.com/assets/73419/23858103/ada936be-07ff-11e7-93e5-8ef03163f911.png)
+
+Another proposal for which I'm not sure would be to display a green/red background color on the changes, to make them stand out more:
+
+![improvement_2](https://cloud.githubusercontent.com/assets/73419/23858140/c52e7434-07ff-11e7-9bad-c3705f469b84.png)
+
+---
+
+My vote would be yes to 1) and no to 2). What do others think? Thanks!
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-03-13T15:05:49Z
+
+I'm definitely 👍  for aligning left margin, and I'm also 👍 for the background color, looks more like a diff to me.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-03-13T17:29:23Z
+
+I agree with @HeahDude! I like both the left margin align and the light green background (which obviously GitHub does - that's always a good source to follow). IF possible, it would be great to make the `+` not selectable - possibly via a `:before` `content` CSS selector - it's what we use on our code blocks on KnpU (https://knpuniversity.com/screencast/javascript/window-global-vars).
+
+@javiereguiluz are you proposals possible? Or are we going to need to hack through some sphinx code to do this?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-14T09:58:06Z
+
+Luckily we can do these changes just with CSS.
+
+---
+
+Let's consider a GitHub diff as a reference:
+
+![diff-github](https://cloud.githubusercontent.com/assets/73419/23895100/edb9fd4c-08a4-11e7-9fea-3d4b942560bb.png)
+
+This is the default Pygments style:
+
+![diff-before](https://cloud.githubusercontent.com/assets/73419/23895106/f3cc997e-08a4-11e7-954a-b52d15f6b0b8.png)
+
+And this is the design that has been proposed to symfony.com private repo:
+
+![diff-after](https://cloud.githubusercontent.com/assets/73419/23895134/040ffaa6-08a5-11e7-8740-442b6d9a3ac4.png)
+
+We can't do the same as GitHub because the Pygment markup is not advanced enough to highlight the specific chars changed on each line.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-15T09:22:47Z
+
+The changes in the `diff` styles have already been merged on symfony.com ... so it's safe now to merge this. Thanks!
