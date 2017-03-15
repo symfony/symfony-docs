@@ -493,12 +493,12 @@ multiple firewalls, the "context" could actually be shared:
 
         <!-- app/config/security.xml -->
         <security:config>
-            <firewall name="somename" context="my_context">
+            <security:firewall name="somename" context="my_context">
                 <! ... ->
-            </firewall>
-            <firewall name="othername" context="my_context">
+            </security:firewall>
+            <security:firewall name="othername" context="my_context">
                 <! ... ->
-            </firewall>
+            </security:firewall>
         </security:config>
 
     .. code-block:: php
@@ -538,9 +538,9 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 
         <!-- app/config/security.xml -->
         <security:config>
-            <firewall name="somename">
-                <http-digest key="a_random_string" realm="secure-api" />
-            </firewall>
+            <security:firewall name="somename">
+                <security:http-digest key="a_random_string" realm="secure-api" />
+            </security:firewall>
         </security:config>
 
     .. code-block:: php

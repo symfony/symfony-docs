@@ -58,7 +58,7 @@ tags:
 
                 <!-- ... -->
                 <framework:config>
-                    <framework:fragments path="/_fragment" />
+                    <framework:fragment path="/_fragment" />
                 </framework:config>
             </container>
 
