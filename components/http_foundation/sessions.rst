@@ -181,6 +181,33 @@ and remember me login settings or other user based state information.
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
     This implementation allows for attributes to be stored in a structured namespace.
 
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
+has a simple API
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`
+    Sets an attribute by key.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`
+    Gets an attribute by key.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`
+    Gets all attributes as an array of key => value.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
+    Returns true if the attribute exists.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
+    Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`
+    Deletes an attribute by key.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
+    Clear the bag.
+
+Namespaced Attributes
+.....................
+
 Any plain key-value storage system is limited in the extent to which
 complex data can be stored since each key must be unique. You can achieve
 namespacing by introducing a naming convention to the keys so different parts of
@@ -211,29 +238,19 @@ structure like this using a namespace character (defaults to ``/``)::
 
 This way you can easily access a key within the stored array directly and easily.
 
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
-has a simple API
+To activate Namespaced Attributes, add this to your `services.yml`::
 
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`
-    Sets an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`
-    Gets an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`
-    Gets all attributes as an array of key => value.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
-    Returns true if the attribute exists.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
-    Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`
-    Deletes an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
-    Clear the bag.
+    # app/config/services.yml
+    
+    services:
+        session:
+            class: Symfony\Component\HttpFoundation\Session\Session
+            arguments:
+                - @session.storage
+                - @your.session.attribute_bag #service id is defined below
+                - @session.flash_bag
+        your.session.attribute_bag:
+            class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
 
 Flash Messages
 ~~~~~~~~~~~~~~
