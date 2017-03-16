@@ -308,4 +308,4 @@ file:
     `LiipImagineBundle`_ community bundle.
 
 .. _`Jpegoptim`: http://www.kokkonen.net/tjko/projects.html
-.. _`LiipImagineBundle`: http://knpbundles.com/liip/LiipImagineBundle
+.. _`LiipImagineBundle`: https://github.com/liip/LiipImagineBundle

@@ -245,6 +245,6 @@ Microsoft SQL Server
     If the application stores large amounts of session data, this problem can
     be solved by increasing the column size (use ``BLOB`` or even ``MEDIUMBLOB``).
     When using MySQL as the database engine, you can also enable the `strict SQL mode`_
-    to get noticed when such an error happens.
+    to be notified when such an error happens.
 
 .. _`strict SQL mode`: https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
