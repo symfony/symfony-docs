@@ -139,6 +139,11 @@
   * :doc:`/components/translation/usage`
   * :doc:`/components/translation/custom_formats`
 
+* :doc:`/components/validator/index`
+
+  * :doc:`/components/validator/introduction`
+  * :doc:`/components/validator/resources`
+
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`
