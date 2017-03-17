@@ -370,9 +370,7 @@ routes with UTF-8 characters:
         class DefaultController extends Controller
         {
             /**
-             *
              * @Route("/category/{name}", name="route1", options={"utf8": true})
-             *
              */
             public function categoryAction()
             {
@@ -446,15 +444,13 @@ You can also include UTF-8 strings as routing requirements:
         class DefaultController extends Controller
         {
             /**
-                *
-                * @Route(
-                *     "/category/{name}",
-                *     name="route2",
-                *     requirements={"default"="한국어"},
-                *     options={"utf8": true}
-                * )
-                *
-                */
+             * @Route(
+             *     "/category/{name}",
+             *     name="route2",
+             *     requirements={"default"="한국어"},
+             *     options={"utf8": true}
+             * )
+             */
             public function defaultAction()
             {
                 // ...
