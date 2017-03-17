@@ -287,7 +287,7 @@ option of your handler to ``rotating_file``:
                     type="rotating_file"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                    max_files="10"
+                    max-files="10"
                 />
             </monolog:config>
         </container>

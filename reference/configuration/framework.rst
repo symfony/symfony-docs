@@ -883,7 +883,7 @@ This option allows you to define a base path to be used for assets:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets base_path="/images" />
+                <framework:assets base-path="/images" />
             </framework:config>
         </container>
 

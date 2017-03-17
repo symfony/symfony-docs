@@ -242,7 +242,7 @@ that must be enabled in your configuration:
 
             <!-- ... -->
             <framework:config>
-                <framework:fragments path="/_fragment" />
+                <framework:fragment path="/_fragment" />
             </framework:config>
         </container>
 

@@ -34,6 +34,6 @@ Full Default Configuration
         <web-profiler:config
             toolbar="false"
             verbose="true"
-            intercept_redirects="false"
-            excluded_ajax_paths="^/bundles|^/_wdt"
+            intercept-redirects="false"
+            excluded-ajax-paths="^/bundles|^/_wdt"
         />
