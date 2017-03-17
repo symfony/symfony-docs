@@ -18,7 +18,7 @@ shows the bug::
     // First, run "composer require symfony/validator"
     // Then, execute this file:
     <?php
-    require_once __DIR__.'/../vendor/autoload.php';
+    require_once __DIR__.'/vendor/autoload.php';
     use Symfony\Component\Validator\Constraints;
 
     $wrongUrl = 'http://example.com/exploit.html?<script>alert(1);</script>';
