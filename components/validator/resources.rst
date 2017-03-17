@@ -148,12 +148,18 @@ Caching
 Using many loaders to load metadata from different places is convenient, but it
 can slow down your application because each file needs to be parsed, validated
 and converted into a :class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata`
-instance. To solve this problem, you can cache the ``ClassMetadata`` information.
+instance.
 
-The Validator component comes with an
-:class:`Symfony\\Component\\Validator\\Mapping\\Cache\\ApcCache`
-implementation. You can easily create other cachers by creating a class which
-implements :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+To solve this problem, call the :method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMetadataCache`
+method of the Validator builder and pass your own caching class (which must
+implement :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`)::
+
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidatorBuilder()
+        // ... add loaders
+        ->setMetadataCache(new SomeImplementCacheInterface());
+        ->getValidator();
 
 .. note::
 
@@ -162,18 +168,6 @@ implements :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface
     which will then be used the next time it is asked for metadata. However,
     the Validator still needs to merge all metadata of one class from every
     loader when it is requested.
-
-Enable the cache calling the
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMetadataCache`
-method of the Validator builder::
-
-    use Symfony\Component\Validator\Validation;
-    use Symfony\Component\Validator\Mapping\Cache\ApcCache;
-
-    $validator = Validation::createValidatorBuilder()
-        // ... add loaders
-        ->setMetadataCache(new ApcCache('some_apc_prefix'));
-        ->getValidator();
 
 Using a Custom MetadataFactory
 ------------------------------
