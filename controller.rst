@@ -542,9 +542,6 @@ There are special classes that make certain kinds of responses easier:
 JSON Helper
 ~~~~~~~~~~~
 
-.. versionadded:: 3.1
-    The ``json()`` helper was introduced in Symfony 3.1.
-
 To return JSON from a controller, use the ``json()`` helper method on the base controller.
 This returns a special ``JsonResponse`` object that encodes the data automatically::
 
