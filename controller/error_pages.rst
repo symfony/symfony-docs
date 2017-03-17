@@ -234,7 +234,7 @@ configuration option to point to it:
 
         # app/config/config.yml
         twig:
-            exception_controller:  AppBundle:Exception:showException
+            exception_controller: AppBundle:Exception:showException
 
     .. code-block:: xml
 
