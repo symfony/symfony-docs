@@ -183,7 +183,9 @@ profiler to use this service as the matcher:
 
             <framework:config>
                 <!-- ... -->
-                <framework:profiler service="app.super_admin_matcher" />
+                <framework:profiler>
+                    <framework:matcher service="app.super_admin_matcher" />
+                </framework:profiler>    
             </framework:config>
         </container>
 
@@ -193,6 +195,8 @@ profiler to use this service as the matcher:
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'service' => 'app.super_admin_matcher',
+                'matcher' => array(
+                    'service' => 'app.super_admin_matcher',
+                )
             ),
         ));
