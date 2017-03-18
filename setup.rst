@@ -101,15 +101,15 @@ optional second argument of the ``new`` command:
 
     # use the most recent version in any Symfony branch
     $ symfony new my_project_name 2.8
-    $ symfony new my_project_name 3.1
+    $ symfony new my_project_name 3.2
 
     # use a specific Symfony version
-    $ symfony new my_project_name 2.8.3
-    $ symfony new my_project_name 3.1.5
+    $ symfony new my_project_name 2.8.18
+    $ symfony new my_project_name 3.2.6
 
     # use a beta or RC version (useful for testing new Symfony versions)
-    $ symfony new my_project 2.7.0-BETA1
-    $ symfony new my_project 2.7.0-RC1
+    $ symfony new my_project 3.2.0-BETA1
+    $ symfony new my_project 3.2.0-RC2
 
     # use the most recent 'lts' version (Long Term Support version)
     $ symfony new my_project_name lts
@@ -129,6 +129,10 @@ Creating Symfony Applications with Composer
 If you still use PHP 5.3 or can't use the Symfony installer for any reason, you
 can create Symfony applications with `Composer`_, the dependency manager used by
 modern PHP applications.
+
+.. best-practice::
+
+    Use the :doc:`Symfony Installer </best_practices/creating-the-project>` to create new Symfony-based projects.
 
 If you don't have Composer installed in your computer, start by
 :doc:`installing Composer globally </setup/composer>`. Then, execute the
