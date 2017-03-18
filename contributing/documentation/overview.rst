@@ -100,7 +100,7 @@ this command:
     $ cd symfony-docs/
     $ git remote add upstream https://github.com/symfony/symfony-docs.git
 
-If things went right, you'll see the following when listing the "remotes" of
+If things went right, you'll see the following when listing the 'remotes' of
 your project:
 
 .. code-block:: terminal
