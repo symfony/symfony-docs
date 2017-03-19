@@ -428,7 +428,22 @@ persisting the encoded password alone is enough.
     All the encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
 
-    .. _reference-security-firewall-context:
+.. tip:: 
+
+    As of PHP 5.5 you can use the :phpfunction:`password_hash` function to 
+    generate encoded passwords. For example in your user entity you may wish
+    to modify your ``setPassword`` method to the following::
+
+        // ...
+
+        // Set encrypted password
+        public function setPassword($plaintext)
+        {
+            $options = array('cost' => 15);
+            $this->password = password_hash($plaintext, PASSWORD_BCRYPT, $options);
+        }    
+
+.. _reference-security-firewall-context:
 
 Firewall Context
 ----------------
