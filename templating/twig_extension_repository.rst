@@ -89,5 +89,5 @@ already added by the Symfony Framework.
 Also, documentation is available on :doc:`how to write your own Twig
 extension </templating/twig_extension>`.
 
-.. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
+.. _`Twig official extensions repository`: https://github.com/twigphp/Twig-extensions
 .. _`documentation`: http://twig-extensions.readthedocs.io/
