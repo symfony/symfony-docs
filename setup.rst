@@ -51,6 +51,10 @@ executable that needs to be installed on your system only once:
 
 .. _installation-creating-the-app:
 
+.. best-practice::
+
+    Use the :doc:`Symfony Installer </best_practices/creating-the-project>` to create new Symfony-based projects.
+
 Once the Symfony Installer is installed, create your first Symfony application
 with the ``new`` command:
 
@@ -129,10 +133,6 @@ Creating Symfony Applications with Composer
 If you still use PHP 5.3 or can't use the Symfony installer for any reason, you
 can create Symfony applications with `Composer`_, the dependency manager used by
 modern PHP applications.
-
-.. best-practice::
-
-    Use the :doc:`Symfony Installer </best_practices/creating-the-project>` to create new Symfony-based projects.
 
 If you don't have Composer installed in your computer, start by
 :doc:`installing Composer globally </setup/composer>`. Then, execute the
