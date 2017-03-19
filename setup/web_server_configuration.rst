@@ -306,7 +306,7 @@ The **minimum configuration** to get your application running under Nginx is:
             # Remove the internal directive to allow URIs like this
             internal;
         }
-        
+
         # return 404 for all other php files not matching the front controller
         # this prevents access to other php files you don't want to be accessible.
         location ~ \.php$ {
@@ -335,6 +335,12 @@ The **minimum configuration** to get your application running under Nginx is:
     After you deploy to production, make sure that you **cannot** access the ``app_dev.php``
     or ``config.php`` scripts (i.e. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
     If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
+
+.. note::
+
+    By default, Symfony applications include several ``.htaccess`` files to prevent
+    unauthorized access to the source and config directories. Those files are
+    only useful when using Apache, so you can safely remove them when using Nginx.
 
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
