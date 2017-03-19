@@ -16,8 +16,8 @@ Creating Symfony Applications
 -----------------------------
 
 Symfony provides a dedicated application called the **Symfony Installer** to ease
-the creation of Symfony applications. This installer is a PHP 5.4 compatible
-executable that needs to be installed on your system only once:
+the creation of Symfony applications. This installer is the preferred way to install Symfony
+and it needs to be installed on your system only once:
 
 .. code-block:: terminal
 
@@ -50,10 +50,6 @@ executable that needs to be installed on your system only once:
         c:\projects\> php symfony
 
 .. _installation-creating-the-app:
-
-.. best-practice::
-
-    Use the :doc:`Symfony Installer </best_practices/creating-the-project>` to create new Symfony-based projects.
 
 Once the Symfony Installer is installed, create your first Symfony application
 with the ``new`` command:
