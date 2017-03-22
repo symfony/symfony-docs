@@ -28,7 +28,7 @@ Locks are used to guarantee exclusive access to some shared resource. In
 Symfony applications, you can use locks for example to ensure that a command is
 not executed more than once at the same time (on the same or different servers).
 
-In order to manage the state of locks, you first need to create a ``Store``
+In order to manage the state of locks, a ``Store`` needs to be created first
 and then use the :class:`Symfony\\Component\\Lock\\Factory` class to actually
 create the lock for some resource::
 
@@ -235,7 +235,7 @@ is being acquired, it forwards the call to all the managed stores, and it
 collects their responses. If a simple majority of stores have acquired the lock,
 then the lock is considered as acquired; otherwise as not acquired::
 
-    use Symfony\Component\Lock\Quorum\ConsensusStrategy;
+    use Symfony\Component\Lock\Strategy\ConsensusStrategy;
     use Symfony\Component\Lock\Store\CombinedStore;
     use Symfony\Component\Lock\Store\RedisStore;
 
@@ -251,7 +251,7 @@ then the lock is considered as acquired; otherwise as not acquired::
 
 Instead of the simple majority strategy (``ConsensusStrategy``) an
 ``UnanimousStrategy`` can be used to require the lock to be acquired in all
-he stores.
+the stores.
 
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
