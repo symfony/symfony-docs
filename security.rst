@@ -257,7 +257,7 @@ user to be logged in to access this URL:
             ),
            'access_control' => array(
                // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+                array('path' => '^/admin', 'roles' => 'ROLE_ADMIN'),
             ),
         ));
 
