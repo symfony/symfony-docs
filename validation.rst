@@ -460,6 +460,23 @@ for the constraint or play it safe by always passing in an array of options
 
 .. _validator-constraint-targets:
 
+Constraint in Form Classes
+------------------
+
+When creating your own form classes, you may want to add constraint directly in the formBuilder.
+This is done by simply adding them as a parameter in your field options::
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('myField', TextType::class, ['required' => true, 'constraints' => [new Length(['min' => 3])]])
+    }
+
+Please note the *constraints* keyword will only be available if you have
+added the *ValidatorExtention* to the formBuilder::
+
+    Forms::createFormFactoryBuilder()->addExtension(new ValidatorExtension(Validation::createValidator()))->getFormFactory();
+
 Constraint Targets
 ------------------
 
