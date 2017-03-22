@@ -86,11 +86,11 @@ configuration looks like this:
             ),
             'firewalls' => array(
                 'dev' => array(
-                    'pattern'    => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security'   => false,
+                    'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
+                    'security'  => false,
                 ),
                 'default' => array(
-                    'anonymous'  => null,
+                    'anonymous' => null,
                 ),
             ),
         ));
