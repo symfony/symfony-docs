@@ -62,6 +62,13 @@ method can be safely called repeatedly, even if the lock is already acquired.
     to be used by several services, they should share the same ``Lock`` instance
     returned by the ``Factory::createLock`` method.
 
+.. tip::
+    While it's recommended to release the ``Lock`` as soon as it is no longer
+    required, the ``Lock`` will automatically be ``released`` on instance
+    destruction. In some case, it can be usefull to lock a resource across several
+    requests. To disable the automatic release behavior, set the third argument
+    of the ``createLock()`` method to ``false``.
+
 Blocking Locks
 --------------
 
