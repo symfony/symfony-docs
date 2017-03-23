@@ -234,6 +234,7 @@ own, it just needs to follow these rules:
                }
 
                // ...
+           }
        }
 
 Using Password Encoders
