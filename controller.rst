@@ -425,7 +425,7 @@ read any flash messages from the session:
         {# ...or you can read and display every flash message available #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{ label }}">
+                <div class="flash-{{ label }}">
                     {{ message }}
                 </div>
             {% endfor %}
@@ -450,6 +450,10 @@ read any flash messages from the session:
                 </div>
             <?php endforeach ?>
         <?php endforeach ?>
+
+.. versionadded:: 3.3
+    The `app.flashes()` method was introduced in Symfony 3.3. Prior to version 3.3
+    you had to use `app.session.flashBag`.
 
 .. note::
 
