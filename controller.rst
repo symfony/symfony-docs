@@ -452,8 +452,8 @@ read any flash messages from the session:
         <?php endforeach ?>
 
 .. versionadded:: 3.3
-    The `app.flashes()` method was introduced in Symfony 3.3. Prior to version 3.3
-    you had to use `app.session.flashBag`.
+    The ``app.flashes()`` method was introduced in Symfony 3.3. Prior to version 3.3
+    you had to use ``app.session.flashBag``.
 
 .. note::
 
