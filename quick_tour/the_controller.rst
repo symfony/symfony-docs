@@ -331,11 +331,15 @@ And you can display the flash message in the template like this:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashBag.get('notice') %}
+    {% for message in app.flashes('notice') %}
         <div class="flash-notice">
-            {{ flashMessage }}
+            {{ message }}
         </div>
     {% endfor %}
+
+.. versionadded:: 3.3
+    The ``app.flashes()`` method was introduced in Symfony 3.3. Prior to version 3.3
+    you had to use ``app.session.flashBag``.
 
 Final Thoughts
 --------------
