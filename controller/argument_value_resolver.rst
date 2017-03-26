@@ -40,6 +40,10 @@ Symfony ships with four value resolvers in the HttpKernel component:
 
     Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``.
     The old functionality is rewritten to the aforementioned value resolvers.
+    
+.. note::
+    If your argument is a Doctrine Entity you will need to create a 
+    :doc:`param converter </bundles/SensioFrameworkExtraBundle/annotations/converters>`
 
 Adding a Custom Value Resolver
 ------------------------------
@@ -51,12 +55,12 @@ controller::
 
     namespace AppBundle\Controller;
 
-    use AppBundle\Entity\User;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     class UserController
     {
-        public function indexAction(User $user)
+        public function indexAction(UserInterface $user)
         {
             return new Response('Hello '.$user->getUsername().'!');
         }
@@ -89,6 +93,8 @@ retrieved from the token storage::
     use AppBundle\Entity\User;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
     class UserValueResolver implements ArgumentValueResolverInterface
     {
