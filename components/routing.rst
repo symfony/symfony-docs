@@ -321,7 +321,7 @@ a path to the main route definition and some other settings::
         $resource,
         array $options = array(),
         RequestContext $context = null,
-        array $defaults = array()
+        LoggerInterface $logger = null
     );
 
 With the ``cache_dir`` option you can enable route caching (if you provide a
