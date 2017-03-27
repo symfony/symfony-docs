@@ -187,7 +187,7 @@ has a simple API
     If the attributes existed, they are replaced; if not, they are created.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`
-    Deletes an attribute by name.
+    Deletes an attribute by name and returns its value.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
     Deletes all attributes.
