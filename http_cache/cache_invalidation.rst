@@ -74,9 +74,9 @@ Here is how you can configure the Symfony reverse proxy to support the
 
             $response = new Response();
             if ($this->getStore()->purge($request->getUri())) {
-                $response->setStatusCode(200, 'Purged');
+                $response->setStatusCode(Response::HTTP_OK, 'Purged');
             } else {
-                $response->setStatusCode(404, 'Not found');
+                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not found');
             }
 
             return $response;
