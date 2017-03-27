@@ -156,7 +156,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
                 array('maxPerPage' => 5),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
-            array('strategy' => 'esi'),
+            array('strategy' => 'esi')
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
