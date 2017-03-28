@@ -128,10 +128,13 @@ this tag to register your own filters.
 
 First, you need to create a filter::
 
+    // src/AppBundle/Assetic/CustomFilter.php
+    namespace AppBundle\Assetic;
+
     use Assetic\Asset\AssetInterface;
     use Assetic\Filter\FilterInterface;
 
-    class MyFilter implements FilterInterface
+    class CustomFilter implements FilterInterface
     {
         public function filterLoad(AssetInterface $asset)
         {
