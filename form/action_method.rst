@@ -47,7 +47,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/newAction.html.php -->
+        <!-- app/Resources/views/default/new.html.php -->
         <?php echo $view['form']->start($form, array(
             'action' => $view['router']->generate('target_route'),
             'method' => 'GET',
