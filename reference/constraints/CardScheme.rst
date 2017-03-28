@@ -28,7 +28,7 @@ on an object that will contain a credit card number.
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/Transaction.php
-        namespace AppBundle\Entity\Transaction;
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -76,7 +76,7 @@ on an object that will contain a credit card number.
     .. code-block:: php
 
         // src/AppBundle/Entity/Transaction.php
-        namespace AppBundle\Entity\Transaction;
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

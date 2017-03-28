@@ -316,7 +316,7 @@ configure DoctrineBundle and other parts of Symfony:
     .. code-block:: php
 
         // app/config/config.php
-        $configuration->loadFromExtension('doctrine', array(
+        $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'driver'   => 'pdo_mysql',
                 // ...

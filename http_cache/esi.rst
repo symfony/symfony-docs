@@ -137,9 +137,10 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
     .. code-block:: html+php
 
         <!-- app/Resources/views/static/about.html.php -->
-
+        <?php
         // you can use a controller reference
         use Symfony\Component\HttpKernel\Controller\ControllerReference;
+        ?>
         <?php echo $view['actions']->render(
             new ControllerReference(
                 'AppBundle:News:latest',
@@ -148,15 +149,17 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
             array('strategy' => 'esi')
         ) ?>
 
+        <?php
         // ... or a URL
         use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
         <?php echo $view['actions']->render(
             $view['router']->generate(
                 'latest_news',
                 array('maxPerPage' => 5),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
-            array('strategy' => 'esi'),
+            array('strategy' => 'esi')
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
@@ -234,7 +237,7 @@ that must be enabled in your configuration:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/framework"
+            xmlns:framework="http://symfony.com/schema/dic/framework"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony

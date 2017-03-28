@@ -35,7 +35,7 @@ Suppose you have a Task form with a tags ``text`` type::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('tags', 'text')
+            $builder->add('tags', 'text');
         }
 
         public function configureOptions(OptionsResolver $resolver)
