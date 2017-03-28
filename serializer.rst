@@ -130,7 +130,7 @@ Here is an example on how to load the
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
         $container->register('get_set_method_normalizer', GetSetMethodNormalizer::class)
-            ->setPublic(false);
+            ->setPublic(false)
             ->addTag('serializer.normalizer')
         ;
 
