@@ -124,7 +124,7 @@ To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
 before creating the parent form using the ``PreloadedExtension`` class::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
@@ -169,7 +169,7 @@ will be raised if you try to test a class that depends on other extensions.
 The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
 allows you to return a list of extensions to register::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
@@ -203,7 +203,7 @@ Testing against Different Sets of Data
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
 a good opportunity to use them::
 
-    // src/AppBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/AppBundle/Tests/Form/Type/TestedTypeTest.php
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
