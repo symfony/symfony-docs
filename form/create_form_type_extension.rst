@@ -120,7 +120,7 @@ tag:
 
         $container
             ->register('app.image_type_extension', ImageTypeExtension::class)
-            ->addTag('form.type_extension', array('alias' => 'file'));
+            ->addTag('form.type_extension', array('alias' => 'file'))
         ;
 
 The ``alias`` key of the tag is the type of field that this extension should
