@@ -11,6 +11,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         web_profiler:
 
             # DEPRECATED, it is not useful anymore and can be removed
@@ -31,6 +32,7 @@ Full Default Configuration
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <web-profiler:config
             toolbar="false"
             verbose="true"

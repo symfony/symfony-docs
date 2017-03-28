@@ -8,6 +8,7 @@ TwigBundle Configuration ("twig")
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         twig:
             exception_controller:  twig.controller.exception:showAction
 
@@ -54,6 +55,7 @@ TwigBundle Configuration ("twig")
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -83,6 +85,7 @@ TwigBundle Configuration ("twig")
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form_div_layout.html.twig', // Default
