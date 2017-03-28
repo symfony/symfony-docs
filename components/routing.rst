@@ -206,6 +206,9 @@ to find a route that fits the given request you can also build a URL from
 a certain route::
 
     use Symfony\Component\Routing\Generator\UrlGenerator;
+    use Symfony\Component\Routing\RequestContext;
+    use Symfony\Component\Routing\Route;
+    use Symfony\Component\Routing\RouteCollection;
 
     $routes = new RouteCollection();
     $routes->add('show_post', new Route('/show/{slug}'));
