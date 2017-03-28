@@ -66,17 +66,21 @@ assetic.factory_worker
 **Purpose**: Add a factory worker
 
 A Factory worker is a class implementing ``Assetic\Factory\Worker\WorkerInterface``.
-Its ``process($asset)`` method is called for each asset after asset creation.
+Its ``process($asset, $factory)`` method is called for each asset after asset creation.
 You can modify an asset or even return a new one.
 
 In order to add a new worker, first create a class::
 
+    // src/AppBundle/Assetic/CustomWorker.php
+    namespace AppBundle\Assetic;
+
     use Assetic\Asset\AssetInterface;
+    use Assetic\Factory\AssetFactory;
     use Assetic\Factory\Worker\WorkerInterface;
 
-    class MyWorker implements WorkerInterface
+    class CustomWorker implements WorkerInterface
     {
-        public function process(AssetInterface $asset)
+        public function process(AssetInterface $asset, AssetFactory $factory)
         {
             // ... change $asset or return a new one
         }
