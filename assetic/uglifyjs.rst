@@ -168,11 +168,11 @@ can configure its location using the ``node`` key:
 
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
-            'node' => '/usr/bin/nodejs',
+            'node'      => '/usr/bin/nodejs',
             'uglifyjs2' => array(
-                    // the path to the uglifyjs executable
-                    'bin' => '/usr/local/bin/uglifyjs',
-                ),
+                // the path to the uglifyjs executable
+                'bin' => '/usr/local/bin/uglifyjs',
+            ),
         ));
 
 Minify your Assets
