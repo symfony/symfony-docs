@@ -50,10 +50,6 @@ the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
 
-.. versionadded:: 3.1
-    Support for streaming the output of a process was introduced in
-    Symfony 3.1.
-
 You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
 foreach construct to get the output while it is generated. By default, the loop waits
 for new output before going to the next iteration::
@@ -180,10 +176,6 @@ in the output and its type::
 
 Streaming to the Standard Input of a Process
 --------------------------------------------
-
-.. versionadded:: 3.1
-    Support for streaming the input of a process was introduced in
-    Symfony 3.1.
 
 Before a process is started, you can specify its standard input using either the
 :method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument
