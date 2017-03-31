@@ -232,7 +232,6 @@ following configuration:
             ),
             'twig' => array(
                 'functions' => array('jpegoptim'),
-                ),
             ),
         ));
 
@@ -294,7 +293,7 @@ file:
             'twig' => array(
                 'functions' => array(
                     'jpegoptim' => array(
-                        output => 'images/*.jpg'
+                        'output' => 'images/*.jpg'
                     ),
                 ),
             ),

@@ -42,6 +42,7 @@ for the ``handler_id``:
             'session' => array(
                 'storage_id' => 'session.storage.php_bridge',
                 'handler_id' => null,
+            ),
         ));
 
 Otherwise, if the problem is simply that you cannot avoid the application
@@ -77,6 +78,7 @@ the example below:
             'session' => array(
                 'storage_id' => 'session.storage.php_bridge',
                 'handler_id' => 'session.storage.native_file',
+            ),
         ));
 
 .. note::
