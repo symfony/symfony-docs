@@ -16,7 +16,7 @@ functionality.
 
     A custom ``ParamConverter`` can also create the object for a type-hinted class. 
     This functionality is similar to an ``ArgumentResolver``. However 
-    ``ParamConverter``s are executed first usually use request parameters to 
+    ``ParamConverter`` are executed first and usually use request parameters to 
     create the object.
 
     See :ref:`ParamConverter <https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html#creating-a-converter>`
