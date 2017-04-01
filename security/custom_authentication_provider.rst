@@ -142,9 +142,9 @@ set an authenticated token in the token storage if successful.
             $token = new WsseUserToken();
             $token->setUser($matches[1]);
 
-            $token->digest   = $matches[2];
-            $token->nonce    = $matches[3];
-            $token->created  = $matches[4];
+            $token->digest  = $matches[2];
+            $token->nonce   = $matches[3];
+            $token->created = $matches[4];
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
