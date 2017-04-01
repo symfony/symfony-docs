@@ -158,7 +158,7 @@ Make sure this file is imported into the main config file:
     .. code-block:: php
 
         // app/config/config_prod.php
-        $loader->import('config/config.php');
+        $loader->import('config.php');
         $loader->import('config_prod_secrets.php');
 
         $container->loadFromExtension('framework', array(
