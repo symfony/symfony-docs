@@ -482,7 +482,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
                 class: AppBundle\Newsletter\NewsletterManager
                 calls:
                     - method: setMailer
-                      arguments:
+                    - arguments:
                           - '@app.mailer'
 
 Learn more
