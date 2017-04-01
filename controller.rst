@@ -407,7 +407,7 @@ and then redirects. The message key (``notice`` in this example) can be anything
 you'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
-read any flash messages from the session:
+read any flash messages from the session using ``app.flashes()``:
 
 .. configuration-block::
 
@@ -416,17 +416,17 @@ read any flash messages from the session:
         {# app/Resources/views/base.html.twig #}
 
         {# you can read and display just one flash message type... #}
-        {% for flash_message in app.session.flashBag.get('notice') %}
+        {% for message in app.flashes('notice') %}
             <div class="flash-notice">
-                {{ flash_message }}
+                {{ message }}
             </div>
         {% endfor %}
 
         {# ...or you can read and display every flash message available #}
-        {% for type, flash_messages in app.session.flashBag.all %}
-            {% for flash_message in flash_messages %}
-                <div class="flash-{{ type }}">
-                    {{ flash_message }}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
                 </div>
             {% endfor %}
         {% endfor %}
@@ -450,6 +450,10 @@ read any flash messages from the session:
                 </div>
             <?php endforeach ?>
         <?php endforeach ?>
+
+.. versionadded:: 3.3
+    The ``app.flashes()`` method was introduced in Symfony 3.3. Prior to version 3.3
+    you had to use ``app.session.flashBag``.
 
 .. note::
 
