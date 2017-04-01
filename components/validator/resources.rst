@@ -172,7 +172,7 @@ method of the Validator builder::
 
     $validator = Validation::createValidatorBuilder()
         // ... add loaders
-        ->setMetadataCache(new ApcCache('some_apc_prefix'));
+        ->setMetadataCache(new ApcCache('some_apc_prefix'))
         ->getValidator();
 
 Using a Custom MetadataFactory
@@ -193,7 +193,7 @@ this custom implementation using
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->setMetadataFactory(new CustomMetadataFactory(...));
+        ->setMetadataFactory(new CustomMetadataFactory(...))
         ->getValidator();
 
 .. caution::

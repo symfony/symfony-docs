@@ -145,7 +145,7 @@ configuration:
     .. code-block:: php
 
         // app/config/config_test.php
-        $configuration->loadFromExtension('doctrine', array(
+        $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'host'     => 'localhost',
                 'dbname'   => 'testdb',

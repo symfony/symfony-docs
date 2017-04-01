@@ -77,10 +77,12 @@ First, you need to configure the connection the ACL system is supposed to use:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'acl', array(
+        $container->loadFromExtension('security', array(
             // ...
 
-            'connection' => 'default',
+            'acl' => array(
+                'connection' => 'default',
+            ),
         ));
 
 .. note::

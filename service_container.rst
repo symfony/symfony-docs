@@ -444,7 +444,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
         $container->setDefinition('app.mailer', ...);
 
-        $definition = new Definition(NewsletterManager::class)
+        $definition = new Definition(NewsletterManager::class);
         $definition->addMethodCall('setMailer', array(
             new Reference('app.mailer'),
         ));

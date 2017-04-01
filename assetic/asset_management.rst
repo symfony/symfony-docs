@@ -328,7 +328,7 @@ configuration under the ``assetic`` section. Read more in the
                     ),
                 ),
             ),
-        );
+        ));
 
 After you have defined the named assets, you can reference them in your templates
 with the ``@named_asset`` notation:

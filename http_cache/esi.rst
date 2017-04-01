@@ -137,9 +137,10 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
     .. code-block:: html+php
 
         <!-- app/Resources/views/static/about.html.php -->
-
+        <?php
         // you can use a controller reference
         use Symfony\Component\HttpKernel\Controller\ControllerReference;
+        ?>
         <?php echo $view['actions']->render(
             new ControllerReference(
                 'AppBundle:News:latest',
@@ -148,15 +149,17 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
             array('strategy' => 'esi')
         ) ?>
 
+        <?php
         // ... or a URL
         use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+        ?>
         <?php echo $view['actions']->render(
             $view['router']->generate(
                 'latest_news',
                 array('maxPerPage' => 5),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ),
-            array('strategy' => 'esi'),
+            array('strategy' => 'esi')
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you

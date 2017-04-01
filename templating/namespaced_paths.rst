@@ -68,7 +68,7 @@ directory:
         $container->loadFromExtension('twig', array(
             'paths' => array(
                 '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
-            );
+            ),
         ));
 
 .. caution::

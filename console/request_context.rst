@@ -54,7 +54,7 @@ will override the defaults.
 
     .. code-block:: php
 
-        // app/config/config_test.php
+        // app/config/parameters.php
         $container->setParameter('router.request_context.host', 'example.org');
         $container->setParameter('router.request_context.scheme', 'https');
         $container->setParameter('router.request_context.base_url', 'my/path');

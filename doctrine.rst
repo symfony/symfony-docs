@@ -95,7 +95,7 @@ information. By convention, this information is usually configured in an
         .. code-block:: php
 
             // app/config/config.php
-            $configuration->loadFromExtension('doctrine', array(
+            $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'   => 'pdo_mysql',
                     'host'     => '%database_host%',
