@@ -161,7 +161,7 @@ In this case you can specify that the ``coffee`` filter is applied to all
                     name="coffee"
                     bin="/usr/bin/coffee"
                     node="/usr/bin/node"
-                    apply-to="\.coffee$" />
+                    apply-to="\.coffee$">
                     <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
                 </assetic:filter>
             </assetic:config>

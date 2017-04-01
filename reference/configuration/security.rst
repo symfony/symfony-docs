@@ -494,10 +494,10 @@ multiple firewalls, the "context" could actually be shared:
         <!-- app/config/security.xml -->
         <security:config>
             <security:firewall name="somename" context="my_context">
-                <! ... ->
+                <!-- ... -->
             </security:firewall>
             <security:firewall name="othername" context="my_context">
-                <! ... ->
+                <!-- ... -->
             </security:firewall>
         </security:config>
 
