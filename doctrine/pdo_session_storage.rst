@@ -46,7 +46,7 @@ To use it, you just need to change some parameters in the main configuration fil
 
         <services>
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                <argument>mysql:dbname=mydatabase</agruement>
+                <argument>mysql:dbname=mydatabase</argument>
                 <argument type="collection">
                     <argument key="db_username">myuser</argument>
                     <argument key="db_password">mypassword</argument>
@@ -99,7 +99,7 @@ a second array argument to ``PdoSessionHandler``:
         <!-- app/config/config.xml -->
         <services>
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                <argument>mysql:dbname=mydatabase</agruement>
+                <argument>mysql:dbname=mydatabase</argument>
                 <argument type="collection">
                     <argument key="db_table">sessions</argument>
                     <argument key="db_username">myuser</argument>
