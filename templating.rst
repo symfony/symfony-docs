@@ -723,7 +723,7 @@ correctly:
     .. code-block:: html+php
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
-        <?php foreach ($articles in $article): ?>
+        <?php foreach ($articles as $article): ?>
             <a href="<?php echo $view['router']->generate('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
