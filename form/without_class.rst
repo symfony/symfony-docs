@@ -104,4 +104,4 @@ but here's a short example:
     
     .. code-block:: php
 
-        new NotBlank(array('groups' => array('create', 'update')))
+        new NotBlank(array('groups' => array('create', 'update')));

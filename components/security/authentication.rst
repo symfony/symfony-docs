@@ -76,6 +76,7 @@ The default authentication manager is an instance of
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationProviderManager`::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+    use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
     // instances of Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface
     $providers = array(...);
@@ -234,6 +235,7 @@ own, it just needs to follow these rules:
                }
 
                // ...
+           }
        }
 
 Using Password Encoders

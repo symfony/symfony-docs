@@ -279,7 +279,7 @@ security configuration:
         >
 
             <config>
-                <access-decision-manager strategy="unanimous">
+                <access-decision-manager strategy="unanimous" />
             </config>
         </srv:container>
 
