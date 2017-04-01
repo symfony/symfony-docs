@@ -44,9 +44,7 @@ Symfony to use the ``ApacheUrlMatcher`` instead of the default one:
         <!-- app/config/config_prod.xml -->
         <parameters>
             <parameter key="router.options.matcher.cache_class">null</parameter> <!-- disable router cache -->
-            <parameter key="router.options.matcher_class">
-                Symfony\Component\Routing\Matcher\ApacheUrlMatcher
-            </parameter>
+            <parameter key="router.options.matcher_class">Symfony\Component\Routing\Matcher\ApacheUrlMatcher</parameter>
         </parameters>
 
     .. code-block:: php
