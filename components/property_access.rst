@@ -245,9 +245,9 @@ can use setters, the magic ``__set()`` method or properties to set values::
     {
         public $firstName;
         private $lastName;
-        private $children = array();
+        public $children = array();
 
-        public function setLastName($name)
+        public function getLastName()
         {
             $this->lastName = $name;
         }
