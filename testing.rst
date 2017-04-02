@@ -730,7 +730,7 @@ add the values to the raw data array::
     $values['task']['tags'][1]['name'] = 'bar';
 
     // Submit the form with the existing and new values.
-    $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values,
+    $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
         $form->getPhpFiles());
 
     // The 2 tags have been added to the collection.
