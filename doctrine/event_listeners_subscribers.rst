@@ -169,8 +169,8 @@ interface and have an event method for each event it subscribes to::
     namespace AppBundle\EventListener;
 
     use Doctrine\Common\EventSubscriber;
-    use Doctrine\ORM\Event\LifecycleEventArgs;
-    // for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+    // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
     use AppBundle\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
