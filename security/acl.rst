@@ -21,7 +21,7 @@ the ACL system comes in.
     class will handle the logic behind the scenes, instead of the ACL system.
 
 Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit their own comments, but not those
+posts. Now, you want an user to be able to edit their own comments, but not those
 of other users; besides, you want to be able to edit all comments. In
 this scenario, ``Comment`` would be the domain object that you want to
 restrict access to. You could take several approaches to accomplish this using
