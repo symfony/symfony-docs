@@ -114,7 +114,7 @@ Each part will be explained in the next section.
                     pattern: .*
                     # restrict the firewall to a specific host
                     host: admin\.example\.com
-                     # restrict the firewall to specific http methods
+                    # restrict the firewall to specific http methods
                     methods: [GET, POST]
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
