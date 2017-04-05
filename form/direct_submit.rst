@@ -90,10 +90,10 @@ method, pass the submitted data directly to
 
 .. caution::
 
-    When the second parameter ``$clearMissing`` is ``false``, like with "PATCH"
-    method, the validation extension will only handle the submitted fields. If
-    the underlying data needs to be validated, this should be done manually,
-    i.e using the validator.
+    When the second parameter ``$clearMissing`` is ``false``, like with the
+    "PATCH" method, the validation extension will only handle the submitted
+    fields. If the underlying data needs to be validated, this should be done
+    manually, i.e using the validator.
 
 .. _form-submit-request:
 
