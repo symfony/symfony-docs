@@ -62,7 +62,8 @@ If your valid choice list is simple, you can pass them in directly via the
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                city: [New York, Berlin, Tokyo]
+                city:
+                    - Choice: [New York, Berlin, Tokyo]
                 gender:
                     - Choice:
                         choices:  [male, female]
