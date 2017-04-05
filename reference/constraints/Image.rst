@@ -274,6 +274,22 @@ maxHeight
 If set, the height of the image file must be less than or equal to this
 value in pixels.
 
+minPixels
+~~~~~~~~~
+
+**type**: ``integer``
+
+If set, the amount of pixels of the image file must be greater than or equal to this
+value.
+
+maxPixels
+~~~~~~~~~
+
+**type**: ``integer``
+
+If set, the amount of pixels of the image file must be less than or equal to this
+value.
+
 maxRatio
 ~~~~~~~~
 
@@ -362,6 +378,22 @@ minHeightMessage
 Minimum height expected is {{ min_height }}px.``
 
 The error message if the height of the image is less than `minHeight`_.
+
+maxPixelsMessage
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
+Maximum amount expected is {{ max_pixels }} pixels.``
+
+The error message if the amount of pixels of the image exceeds `maxPixels`_.
+
+minPixelsMessage
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image has to few pixels ({{ pixels }} pixels).
+Minimum amount expected is {{ min_pixels }} pixels.``
+
+The error message if the amount of pixels of the image is less than `minPixels`_.
 
 maxRatioMessage
 ~~~~~~~~~~~~~~~
