@@ -116,6 +116,9 @@ For more information on routing, see :doc:`/routing`.
 .. index::
    single: Controller; Base controller class
 
+.. _anchor-name:
+:ref:`The Base Controller Classes & Services <the-base-controller-class-services>`
+
 The Base Controller Classes & Services
 --------------------------------------
 
