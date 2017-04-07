@@ -23,7 +23,7 @@ differences and specific features of state machine in :doc:`/workflow/state-mach
 Examples
 --------
 
-The simples workflow looks like this. It contains two places and one transition.
+The simplest workflow looks like this. It contains two places and one transition.
 
 .. image:: /_images/components/workflow/simple.png
 
