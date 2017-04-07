@@ -117,7 +117,7 @@ For more information on routing, see :doc:`/routing`.
    single: Controller; Base controller class
 
 .. _anchor-name:
-:ref:`The Base Controller Classes & Services <the-base-controller-class-services>`
+   :ref:`The Base Controller Classes & Services <the-base-controller-class-services>`
 
 The Base Controller Classes & Services
 --------------------------------------
@@ -136,8 +136,9 @@ with a service object that can render Twig templates, another that can
 log messages and many more.
 
 On the other hand, the ``AbstractController`` prevents you from accessing the
-**service container**. This forces you to write a code more robust by
-forcing you to explicitly define your dependencies.
+**service container**. When you need an external dependency, this forces you to
+write a code more robust as you have to explicitly define your dependencies by
+using :doc:`the controller as a service </controller/service>`.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify
 ``LuckyController`` to extend it::
