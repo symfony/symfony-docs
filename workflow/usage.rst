@@ -236,9 +236,6 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getTransition`
     Returns the :class:`Symfony\\Component\\Workflow\\Transition` that dispatches the event
 
-:method:`Symfony\\Component\\Workflow\\Event\\Event::getWorkflowName`
-    Returns the name of the workflow that triggers the event
-
 For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`. This class has two more methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
