@@ -30,6 +30,11 @@ The
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect`
 method is responsible for storing the collected data in local properties.
 
+.. caution::
+
+    The :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect` method is only called once.
+    It is not used to "gather" data but is there to "pick up" the data that has been stored by your service. 
+
 Most of the time, it is convenient to extend
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
 populate the ``$this->data`` property (it takes care of serializing the
@@ -70,6 +75,12 @@ collects the method and accepted content types from the request::
     }
 
 The getters are added to give the template access to the collected information.
+
+.. caution::
+
+    If the data that is not directly related to the request or response, you need to make the data accessible for your DataCollector.
+    This can be achieved by injecting the service into your DataCollector.
+
 
 .. caution::
 
