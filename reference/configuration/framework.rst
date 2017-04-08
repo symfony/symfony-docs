@@ -340,7 +340,7 @@ the configuration of your web server. One simple solution to avoid these
 attacks is to whitelist the hosts that your Symfony application can respond
 to. That's the purpose of this ``trusted_hosts`` option. If the incoming
 request's hostname doesn't match one in this list, the application won't
-respond and the user will receive a 500 response.
+respond and the user will receive a 400 response.
 
 .. configuration-block::
 
