@@ -4,9 +4,6 @@
 Extending Action Argument Resolving
 ===================================
 
-.. versionadded:: 3.1
-    The ``ArgumentResolver`` and value resolvers were introduced in Symfony 3.1.
-
 In the :doc:`controller guide </controller>`, you've learned that you can get the
 :class:`Symfony\\Component\\HttpFoundation\\Request` object via an argument in
 your controller. This argument has to be type-hinted by the ``Request`` class
@@ -14,6 +11,18 @@ in order to be recognized. This is done via the
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. By
 creating and registering custom argument value resolvers, you can extend this
 functionality.
+
+.. tip::
+
+    A custom ``ParamConverter`` can also create the object for a type-hinted class. 
+    This functionality is similar to an ``ArgumentResolver``. However 
+    ``ParamConverter`` are executed first and usually use request parameters to 
+    create the object.
+
+    See :ref:`ParamConverter <https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html#creating-a-converter>`
+    for more information.
+
+
 
 Functionality Shipped with the HttpKernel
 -----------------------------------------
@@ -87,7 +96,10 @@ retrieved from the token storage::
     namespace AppBundle\ArgumentResolver;
 
     use AppBundle\Entity\User;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+    use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
+
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
     class UserValueResolver implements ArgumentValueResolverInterface

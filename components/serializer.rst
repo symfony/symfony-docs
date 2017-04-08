@@ -152,6 +152,30 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
+.. versionadded:: 3.3
+    Support for the ``allow_extra_attributes`` key in the context was introduced
+    in Symfony 3.3.
+
+By default, additional attributes that are not mapped to the denormalized
+object will be ignored by the Serializer component. Set the ``allow_extra_attributes``
+key of the deserialization context to ``false`` to let the serializer throw
+an exception when additional attributes are passed::
+
+    $data = <<<EOF
+    <person>
+        <name>foo</name>
+        <age>99</age>
+        <city>Paris</city>
+    </person>
+    EOF;
+
+    // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
+    // because "city" is not an attribute of the Person class
+    $person = $serializer->deserialize($data, 'Acme\Person', 'xml', array(
+        'allow_extra_attributes' => false,
+    ));
+
+
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -538,10 +562,6 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
-
-.. versionadded:: 3.1
-    The ``JsonSerializableNormalizer``, ``DateTimeNormalizer`` and
-    ``DataUriNormalizer`` normalizers were added in Symfony 3.1
 
 Encoders
 --------

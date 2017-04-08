@@ -132,6 +132,21 @@ The output will look like this:
         node_paths:           []
         # ...
 
+.. tip::
+
+    For complex bundles that define lots of configuration options, you can pass
+    a second optional argument to the ``config:dump-reference`` command to only
+    display a section of the entire configuration:
+
+    .. code-block:: terminal
+
+        $ bin/console config:dump-reference AsseticBundle use_controller
+
+        # Default configuration for "AsseticBundle" at path "use_controller"
+        use_controller:
+            enabled:              '%kernel.debug%'
+            profiler:             false
+
 Other Setup
 -----------
 

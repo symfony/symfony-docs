@@ -105,6 +105,18 @@ This behavior can be changed by configuring the ``dump.dump_destination``
 option. Read more about this and other options in
 :doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
+.. tip::
+
+    .. versionadded:: 3.3
+        The local search box was introduced in Symfony 3.3.
+
+    If the dumped contents are complex, consider using the local search box to
+    look for specific variables or values. First, click anywhere on the dumped
+    contents and then press :kbd:`Ctrl. + F` or :kbd:`Cmd. + F` to make the local
+    search box appear. All the common shortcuts to navigate the search results
+    are supported (:kbd:`Ctrl. + G` or :kbd:`Cmd. + G`, :kbd:`F3`, etc.) When
+    finished, press :kbd:`Esc.` to hide the box again.
+
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
 

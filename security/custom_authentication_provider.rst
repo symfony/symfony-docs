@@ -315,9 +315,9 @@ create a class which implements
     // src/AppBundle/DependencyInjection/Security/Factory/WsseFactory.php
     namespace AppBundle\DependencyInjection\Security\Factory;
 
+    use Symfony\Component\DependencyInjection\ChildDefinition;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
-    use Symfony\Component\DependencyInjection\DefinitionDecorator;
     use Symfony\Component\Config\Definition\Builder\NodeDefinition;
     use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 
@@ -327,12 +327,12 @@ create a class which implements
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
-                ->setDefinition($providerId, new DefinitionDecorator('wsse.security.authentication.provider'))
+                ->setDefinition($providerId, new ChildDefinition('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
             ;
 
             $listenerId = 'security.authentication.listener.wsse.'.$id;
-            $listener = $container->setDefinition($listenerId, new DefinitionDecorator('wsse.security.authentication.listener'));
+            $listener = $container->setDefinition($listenerId, new ChildDefinition('wsse.security.authentication.listener'));
 
             return array($providerId, $listenerId, $defaultEntryPoint);
         }
@@ -594,7 +594,7 @@ in order to put it to use.
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
                 ->setDefinition($providerId,
-                  new DefinitionDecorator('wsse.security.authentication.provider'))
+                  new ChildDefinition('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
                 ->replaceArgument(2, $config['lifetime']);
             // ...

@@ -142,9 +142,10 @@ Each part will be explained in the next section.
                     http_basic:
                         provider: some_key_from_above
                     http_basic_ldap:
-                        provider:  some_key_from_above
-                        service:   ldap
-                        dn_string: '{username}'
+                        provider:     some_key_from_above
+                        service:      ldap
+                        dn_string:    '{username}'
+                        query_string: ~
                     http_digest:
                         provider: some_key_from_above
                     guard:
@@ -237,8 +238,9 @@ Each part will be explained in the next section.
                         # new in Symfony 2.3
                         require_previous_session: true
 
-                        service:   ~
-                        dn_string: '{username}'
+                        service:      ~
+                        dn_string:    '{username}'
+                        query_string: ~
 
                     remember_me:
                         token_provider: name
@@ -472,6 +474,17 @@ This is the string which will be used as the bind DN. The ``{username}``
 placeholder will be replaced with the user-provided value (his login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
+
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This is the string which will be used to query for the DN. The ``{username}``
+placeholder will be replaced with the user-provided value (their login).
+Depending on your LDAP server's configuration, you will need to override
+this value. This setting is only necessary if the user's DN cannot be derived
+statically using the ``dn_string`` config option.
 
 User provider
 ~~~~~~~~~~~~~

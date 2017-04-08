@@ -206,7 +206,3 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
     when the option was used without a value (``command --language``) or when
     it wasn't used at all (``command``). In both cases, the value retrieved for
     the option will be ``null``.
-
-    Similarly, due to a PHP limitation, there is no way to pass an empty string
-    as the value of an option. In ``command --prefix`` and ``command --prefix=''``
-    cases, the value of the ``prefix`` option will be ``null``.
