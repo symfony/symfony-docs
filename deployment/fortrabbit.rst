@@ -122,16 +122,16 @@ Make sure this file is imported into the main config file:
     .. code-block:: yaml
 
         # app/config/config_prod.yml
-            imports:
-                - { resource: config.yml }
-                - { resource: config_prod_secrets.php }
+        imports:
+            - { resource: config.yml }
+            - { resource: config_prod_secrets.php }
 
-            # ..
-            framework:
-                session:
-                    # set handler_id to null to use default session handler from php.ini (memcached)
-                    handler_id:  ~
-            # ..
+        # ..
+        framework:
+            session:
+                # set handler_id to null to use default session handler from php.ini (memcached)
+                handler_id:  ~
+        # ..
 
     .. code-block:: xml
 

@@ -38,7 +38,7 @@ configuration:
 
         services:
 
-            // synthetic services don't specify a class
+            # synthetic services don't specify a class
             app.synthetic_service:
                 synthetic: true
 
