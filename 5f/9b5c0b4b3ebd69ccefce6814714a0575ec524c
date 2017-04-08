@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-04-05T11:27:11Z
+
+Hello @jean-pasqualini, thanks for opening that PR. Note that 3.1 is not maintained anymore and merging your PR in 3.2 will be enough since mergers will eventually merge 3.2 in master afterward.
+
+---------------------------------------------------------------------------
+
+by jean-pasqualini at 2017-04-05T12:09:52Z
+
+thanks @HeahDude, I rebased on branch 3.2.
+
+---------------------------------------------------------------------------
+
+by jean-pasqualini at 2017-04-06T08:26:43Z
+
+Where are the labels of this pr?
