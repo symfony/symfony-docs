@@ -260,13 +260,8 @@ You can also set the host option on imported routes:
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
-
-        $importedCollection = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
-        $importedCollection->setHost('hello.example.com');
-        
-        $collection = new RouteCollection();
-        $collection->addCollection($importedCollection);
+        $collection = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
+        $collection->setHost('hello.example.com');
 
         return $collection;
 
