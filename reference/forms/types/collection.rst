@@ -268,17 +268,19 @@ delete_empty
 
 **type**: ``Boolean`` **default**: ``false``
 
-.. caution::
-
-    Delete empty will only remove items when the normalized value is null.
-    If your `type`_ is a compound form type, you need to have the :ref:`required <reference-form-option-required>`
-    option set to ``false`` inside `options`_, See :ref:`empty_data <reference-form-option-empty-data>`.
-
-
 If you want to explicitly remove entirely empty collection entries from your
 form you have to set this option to true. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
+
+.. caution::
+
+    The ``delete_empty`` option will only remove items when the normalized 
+    value is null. If your `type`_ is a compound form type, you need to have
+    the ``required`` option set to false or ``empty_data`` option explicitly 
+    set to null, both these options can be set inside `options`_. To 
+    understand why this is necessary, see form 
+    :ref:`empty_data <reference-form-option-empty-data>`.
 
 options
 ~~~~~~~
