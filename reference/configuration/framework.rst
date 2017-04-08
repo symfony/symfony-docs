@@ -362,14 +362,14 @@ respond and the user will receive a 500 response.
             'trusted_hosts' => array('example.com', 'example.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``.*\.?example.com$``),
+Hosts can also be configured using regular expressions (e.g.  ``^(.+\.)?example.com$``),
 which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('.*\.?example.com$', '.*\.?example.org$'));
+    Request::setTrustedHosts(array('^(.+\.)?example.com$', '^(.+\.)?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
