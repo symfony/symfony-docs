@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-04-06T13:20:17Z
+
+@superhaggis it *looks* like a typo ... but it's not :)
+
+It's a "magic feature" of the format we use to write the docs. If you put `::` in the line before some code block, it's highlighted with the default language you configured (PHP in our case).
+
+So, this `::` magic avoids us to repeat thousands of times this -->
+
+```
+.. code-block:: php
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-04-06T13:21:14Z
+
+Of course I understood your Pull Request wrong ... not only you know the `::` trick, but you correctly fixed it. I'm really sorry 😊  🙏  🙇
