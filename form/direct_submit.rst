@@ -42,9 +42,6 @@ submissions::
 Calling Form::submit() manually
 -------------------------------
 
-.. versionadded:: 2.3
-    Before Symfony 2.3, the ``submit()`` method was known as ``bind()``.
-
 In some cases, you want better control over when exactly your form is submitted
 and what data is passed to it. Instead of using the
 :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
@@ -88,8 +85,15 @@ method, pass the submitted data directly to
 
     When submitting a form via a "PATCH" request, you may want to update only a few
     submitted fields. To achieve this, you may pass an optional second boolean
-    parameter to ``submit()``. Passing ``false`` will remove any missing fields
+    argument to ``submit()``. Passing ``false`` will remove any missing fields
     within the form object. Otherwise, the missing fields will be set to ``null``.
+
+.. caution::
+
+    When the second parameter ``$clearMissing`` is ``false``, like with the
+    "PATCH" method, the validation extension will only handle the submitted
+    fields. If the underlying data needs to be validated, this should be done
+    manually, i.e using the validator.
 
 .. _form-submit-request:
 
@@ -129,5 +133,5 @@ a convenient shortcut to the previous example::
 
 Passing the :class:`Symfony\\Component\\HttpFoundation\\Request` directly to
 :method:`Symfony\\Component\\Form\\FormInterface::submit` still works, but is
-deprecated and will be removed in Symfony 3.0. You should use the method
+deprecated and has been removed in Symfony 3.0. You should use the method
 :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` instead.
