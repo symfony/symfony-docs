@@ -275,12 +275,12 @@ the empty values will be kept.
 
 .. caution::
 
-    The ``delete_empty`` option will only remove items when the normalized 
-    value is null. If your `type`_ is a compound form type, you need to have
-    the ``required`` option set to false or ``empty_data`` option explicitly 
-    set to null, both these options can be set inside `options`_. To 
-    understand why this is necessary, see form 
-    :ref:`empty_data <reference-form-option-empty-data>`.
+    The ``delete_empty`` option only removes items when the normalized  value is
+    ``null``. If your `type`_ is a compound form type, you must either set the
+    ``required`` option to ``false`` or set the ``empty_data`` option to ``null``.
+    Both of these options can be set inside `options`_. See
+    :ref:`form's empty_data option <reference-form-option-empty-data>` to learn
+    why this is necessary.
 
 options
 ~~~~~~~
