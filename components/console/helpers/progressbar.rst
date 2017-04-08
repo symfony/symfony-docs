@@ -308,7 +308,7 @@ before displaying these messages, you must define your own custom format::
     $progressBar->setFormat('custom');
 
 Now, use the ``setMessage()`` method to set the value of the ``%message%``
-placeholder before displaying the progress bar:
+placeholder before displaying the progress bar::
 
     // ...
     $progressBar->setMessage('Start');
