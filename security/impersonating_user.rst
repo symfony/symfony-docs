@@ -98,7 +98,7 @@ to show a link to exit impersonation:
                 had to use generate(). -->
             <a href="<?php echo $view['router']->path('homepage', array(
                 '_switch_user' => '_exit',
-            ) ?>">
+            )) ?>">
                 Exit impersonation
             </a>
         <?php endif ?>

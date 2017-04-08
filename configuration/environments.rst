@@ -294,10 +294,10 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: php
 
         // app/config/config_benchmark.php
-        $loader->import('config_prod.php')
+        $loader->import('config_prod.php');
 
         $container->loadFromExtension('framework', array(
-            'profiler' => array('only-exceptions' => false),
+            'profiler' => array('only_exceptions' => false),
         ));
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc

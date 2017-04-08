@@ -184,7 +184,7 @@ accomplished with the following route configuration:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
+        // src/AppBundle/Controller/BlogApiController.php
         namespace AppBundle\Controller;
 
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

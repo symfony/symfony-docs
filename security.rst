@@ -86,11 +86,11 @@ configuration looks like this:
             ),
             'firewalls' => array(
                 'dev' => array(
-                    'pattern'    => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security'   => false,
+                    'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
+                    'security'  => false,
                 ),
                 'default' => array(
-                    'anonymous'  => null,
+                    'anonymous' => null,
                 ),
             ),
         ));
@@ -257,7 +257,7 @@ user to be logged in to access this URL:
             ),
            'access_control' => array(
                // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+                array('path' => '^/admin', 'roles' => 'ROLE_ADMIN'),
             ),
         ));
 

@@ -221,7 +221,7 @@ and tag it with ``security.voter``:
         # app/config/services.yml
         services:
             app.post_voter:
-                class: AppBundle\Security\PostVoter
+                class:  AppBundle\Security\PostVoter
                 tags:
                     - { name: security.voter }
                 # small performance boost
@@ -414,7 +414,7 @@ security configuration:
         >
 
             <config>
-                <access-decision-manager strategy="unanimous">
+                <access-decision-manager strategy="unanimous" />
             </config>
         </srv:container>
 

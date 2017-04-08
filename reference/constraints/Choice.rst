@@ -62,7 +62,8 @@ If your valid choice list is simple, you can pass them in directly via the
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                city: [New York, Berlin, Tokyo]
+                city:
+                    - Choice: [New York, Berlin, Tokyo]
                 gender:
                     - Choice:
                         choices:  [male, female]
@@ -258,7 +259,7 @@ you can pass the class name and the method as an array.
 
     .. code-block:: php
 
-        // src/AppBundle/EntityAuthor.php
+        // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;

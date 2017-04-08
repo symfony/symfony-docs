@@ -332,7 +332,7 @@ controller:
         $templating = $this->templating;
         $callback = function () use ($templating, $view, $parameters) {
             $templating->stream($view, $parameters);
-        }
+        };
 
         return new StreamedResponse($callback);
 

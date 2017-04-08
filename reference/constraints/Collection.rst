@@ -38,8 +38,8 @@ of a collection individually. Take the following example::
     class Author
     {
         protected $profileData = array(
-            'personal_email',
-            'short_bio',
+            'personal_email' => '...',
+            'short_bio' => '...',
         );
 
         public function setProfileData($key, $value)
@@ -80,8 +80,8 @@ following:
              * )
              */
              protected $profileData = array(
-                 'personal_email',
-                 'short_bio',
+                 'personal_email' => '...',
+                 'short_bio' => '...',
              );
         }
 

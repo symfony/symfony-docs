@@ -113,7 +113,7 @@ to ``true``:
                 <assetic:filter
                     name="jpegoptim"
                     bin="path/to/jpegoptim"
-                    strip_all="true" />
+                    strip-all="true" />
             </assetic:config>
         </container>
 
@@ -217,7 +217,7 @@ following configuration:
                     name="jpegoptim"
                     bin="path/to/jpegoptim" />
                 <assetic:twig>
-                    <assetic:twig_function
+                    <assetic:function
                         name="jpegoptim" />
                 </assetic:twig>
             </assetic:config>
@@ -234,7 +234,6 @@ following configuration:
             ),
             'twig' => array(
                 'functions' => array('jpegoptim'),
-                ),
             ),
         ));
 
@@ -277,7 +276,7 @@ file:
                     name="jpegoptim"
                     bin="path/to/jpegoptim" />
                 <assetic:twig>
-                    <assetic:twig_function
+                    <assetic:function
                         name="jpegoptim"
                         output="images/*.jpg" />
                 </assetic:twig>
@@ -296,7 +295,7 @@ file:
             'twig' => array(
                 'functions' => array(
                     'jpegoptim' => array(
-                        output => 'images/*.jpg'
+                        'output' => 'images/*.jpg',
                     ),
                 ),
             ),

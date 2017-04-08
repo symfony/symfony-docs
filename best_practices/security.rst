@@ -336,7 +336,7 @@ To enable the security voter in the application, define a new service:
     # app/config/services.yml
     services:
         # ...
-        post_voter:
+        app.post_voter:
             class:      AppBundle\Security\PostVoter
             arguments: ['@security.access.decision_manager']
             public:     false
