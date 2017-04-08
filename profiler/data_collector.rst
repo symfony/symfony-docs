@@ -78,7 +78,7 @@ The getters are added to give the template access to the collected information.
 
 .. caution::
 
-    If the data that is not directly related to the request or response, you need to make the data accessible for your DataCollector.
+    If the data that is not directly related to the request or response, you need to make the data accessible to your DataCollector.
     This can be achieved by injecting the service into your DataCollector.
 
 
