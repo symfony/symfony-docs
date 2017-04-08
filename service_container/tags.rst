@@ -359,6 +359,10 @@ To answer this, change the service declaration:
                 tags:
                     - { name: app.mail_transport }
 
+    versionadded:: 3.3
+        Support for the compact tag notation in the YAML format was introduced
+        in Symfony 3.3.
+
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 
