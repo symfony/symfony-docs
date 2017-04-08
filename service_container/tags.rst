@@ -340,8 +340,9 @@ To answer this, change the service declaration:
 
 .. tip::
 
-    In YAML format, you may provide the tag as a simple string as long as you don't need to specify additional
-    attributes. The following definitions are equivalent.
+    In YAML format, you may provide the tag as a simple string as long as
+    you don't need to specify additional attributes. The following definitions
+    are equivalent.
 
     .. code-block:: yaml
 
