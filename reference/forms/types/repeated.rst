@@ -12,7 +12,7 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | input ``text`` field by default, but see `type`_ option                |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `compare`_                                                           |
+| Options     | - `comparator`_                                                        |
 |             | - `first_name`_                                                        |
 |             | - `first_options`_                                                     |
 |             | - `options`_                                                           |
@@ -115,8 +115,8 @@ be displayed when the two fields do not match each other.
 Field Options
 -------------
 
-compare
-~~~~~~~
+comparator
+~~~~~~~~~~
 
 **type**: ``callable`` **default**: ``null``
 
