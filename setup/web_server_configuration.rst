@@ -339,5 +339,5 @@ The **minimum configuration** to get your application running under Nginx is:
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
 .. _`Apache documentation`: http://httpd.apache.org/docs/
-.. _`FastCgiExternalServer`: http://www.fastcgi.com/mod_fastcgi/docs/mod_fastcgi.html#FastCgiExternalServer
-.. _`Nginx documentation`: http://wiki.nginx.org/Symfony
+.. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
+.. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
