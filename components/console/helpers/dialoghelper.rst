@@ -124,7 +124,7 @@ method::
         'AcmeDemoBundle'
     );
 
-This methods has 2 new arguments, the full signature is::
+This method has 2 new arguments, the full signature is::
 
     askAndValidate(
         OutputInterface $output,
