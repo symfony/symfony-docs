@@ -423,6 +423,26 @@ has a certain value:
         ->end()
     ;
 
+Deprecated the Option
+---------------------
+
+You can depreciate an option by using the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::setDeprecated`
+method.
+
+.. code-block:: php
+
+    $rootNode
+        ->children()
+            ->integerNode('old_option')
+                ->setDeprecated()
+            ->end()
+        ->end()
+    ;
+
+If you use the Web Debug Toolbar, the deprecation notice will be showed when the
+configuration is rebuilt.
+
 Documenting the Option
 ----------------------
 
