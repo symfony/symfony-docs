@@ -28,8 +28,8 @@ Required
 
 .. caution::
 
-    Be aware that Symfony has some known limitations when using PHP 5.3.16.
-    For more information see the `Requirements section of the README`_.
+    Be aware that PHP 5.3.16 is not suitable to run Symfony,
+    because of a `major bug in the Reflection subsystem`_.
 
 Optional
 --------
@@ -59,3 +59,4 @@ to use.
 .. _`Requirements section of the README`: https://github.com/symfony/symfony/blob/2.7/README.md#requirements
 .. _`JSON extension`: https://php.net/manual/book.json.php
 .. _`ctype extension`: https://php.net/manual/book.ctype.php
+.. _`major bug in the Reflection subsystem`: https://bugs.php.net/bug.php?id=62715
