@@ -107,7 +107,7 @@ of the following:
         fastcgi_param DATABASE_USER user;
         fastcgi_param DATABASE_PASSWORD secret;
 
-    .. code-block:: terminal
+    .. code-block:: shell
 
         $ export DATABASE_USER=user
         $ export DATABASE_PASSWORD=secret
