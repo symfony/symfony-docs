@@ -13,12 +13,12 @@ the original service is lost:
 
         services:
             app.mailer:
-                class: AppBundle\Mailer
+                class: AppBundle\Mailer\Mailer
 
             # this replaces the old app.mailer definition with the new one, the
             # old definition is lost
             app.mailer:
-                class: AppBundle\DecoratingMailer
+                class: AppBundle\Mailer\DecoratingMailer
 
     .. code-block:: xml
 
@@ -29,19 +29,19 @@ the original service is lost:
         >
             <services>
 
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="app.mailer" class="AppBundle\Mailer\Mailer" />
 
                 <!-- this replaces the old app.mailer definition with the new
                      one, the old definition is lost -->
-                <service id="app.mailer" class="AppBundle\DecoratingMailer" />
+                <service id="app.mailer" class="AppBundle\Mailer\DecoratingMailer" />
 
             </service>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
-        use AppBundle\DecoratingMailer;
+        use AppBundle\Mailer\Mailer;
+        use AppBundle\Mailer\DecoratingMailer;
 
         $container->register('app.mailer', Mailer::class);
 
@@ -52,7 +52,33 @@ the original service is lost:
 Most of the time, that's exactly what you want to do. But sometimes,
 you might want to decorate the old one instead. In this case, the
 old service should be kept around to be able to reference it in the
-new one. This configuration replaces ``app.mailer`` with a new one, but keeps
+new one.
+
+Suppose you want to process the text parts to send behind the ``app.mailer``, you will create a mailer decorator::
+
+    // AppBundle/Mailer/DecoratingMailer.php
+    namespace AppBundle\Mailer;
+    
+    use AppBundle\Mailer\Mailer;
+    
+    class DecoratingMailer
+    {
+        protected $decoratedMailer;
+    
+        public function __construct(Mailer $decoratedMailer)
+        {
+            $this->decoratedMailer = $decoratedMailer;
+        }
+        
+        public function send($message, [...])
+        {
+            // process text parts
+            
+            $this->decoratedMailer->send($message, [...]);
+        }
+    }
+
+This configuration replaces ``app.mailer`` with a new one, but keeps
 a reference of the old one  as ``app.decorating_mailer.inner``:
 
 .. configuration-block::
@@ -63,7 +89,7 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
             # ...
 
             app.decorating_mailer:
-              class:     AppBundle\DecoratingMailer
+              class:     AppBundle\Mailer\DecoratingMailer
               decorates: app.mailer
               arguments: ['@app.decorating_mailer.inner']
               public:    false
@@ -79,7 +105,7 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
                 <!-- ... -->
 
                 <service id="app.decorating_mailer"
-                    class="AppBundle\DecoratingMailer"
+                    class="AppBundle\Mailer\DecoratingMailer"
                     decorates="app.mailer"
                     public="false"
                 >
@@ -91,7 +117,7 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
 
     .. code-block:: php
 
-        use AppBundle\DecoratingMailer;
+        use AppBundle\Mailer\DecoratingMailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -156,7 +182,7 @@ convention, the old ``app.mailer`` service is renamed to
 
         .. code-block:: php
 
-            use AppBundle\DecoratingMailer;
+            use AppBundle\Mailer\DecoratingMailer;
             use Symfony\Component\DependencyInjection\Reference;
 
             $container->register('app.decorating_mailer', DecoratingMailer::class)

@@ -27,7 +27,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         # app/config/config.yml
         services:
             my_mailer:
-                class:        AppBundle\Mailer
+                class:        AppBundle\Mailer\Mailer
                 arguments:    ["@=service('mailer_configuration').getMailerMethod()"]
 
     .. code-block:: xml
@@ -41,7 +41,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
             >
 
             <services>
-                <service id="my_mailer" class="AppBundle\Mailer">
+                <service id="my_mailer" class="AppBundle\Mailer\Mailer">
                     <argument type="expression">service('mailer_configuration').getMailerMethod()</argument>
                 </service>
             </services>
@@ -50,7 +50,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
     .. code-block:: php
 
         // app/config/config.php
-        use AppBundle\Mailer;
+        use AppBundle\Mailer\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\ExpressionLanguage\Expression;
 
@@ -77,7 +77,7 @@ via a ``container`` variable. Here's another example:
 
         services:
             my_mailer:
-                class:     AppBundle\Mailer
+                class:     AppBundle\Mailer\Mailer
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
@@ -90,7 +90,7 @@ via a ``container`` variable. Here's another example:
             >
 
             <services>
-                <service id="my_mailer" class="AppBundle\Mailer">
+                <service id="my_mailer" class="AppBundle\Mailer\Mailer">
                     <argument type="expression">container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
                 </service>
             </services>
@@ -98,7 +98,7 @@ via a ``container`` variable. Here's another example:
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
+        use AppBundle\Mailer\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\ExpressionLanguage\Expression;
 

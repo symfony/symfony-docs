@@ -49,7 +49,7 @@ service files:
 
         services:
             app.mailer:
-                class:        AppBundle\Mailer
+                class:        AppBundle\Mailer\Mailer
                 arguments:    ['%app.mailer.transport%']
 
     .. code-block:: xml
@@ -66,7 +66,7 @@ service files:
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="app.mailer" class="AppBundle\Mailer\Mailer">
                     <argument>%app.mailer.transport%</argument>
                 </service>
             </services>
@@ -75,7 +75,7 @@ service files:
     .. code-block:: php
 
         // app/config/services/mailer.php
-        use AppBundle\Mailer;
+        use AppBundle\Mailer\Mailer;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
