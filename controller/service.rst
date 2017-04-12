@@ -66,14 +66,14 @@ Then you can define it as a service as follows:
 
         # app/config/services.yml
         services:
-            app.hello_controller:
+            AppBundle\Controller\HelloController:
                 class: AppBundle\Controller\HelloController
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
+            <service id="AppBundle\Controller\HelloController" class="AppBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
@@ -81,21 +81,24 @@ Then you can define it as a service as follows:
         // app/config/services.php
         use AppBundle\Controller\HelloController;
 
-        $container->register('app.hello_controller', HelloController::class);
+        $container->register(HelloController::class, HelloController::class);
 
 Referring to the Service
 ------------------------
 
-To refer to a controller that's defined as a service, use the single colon (:)
-notation. For example, to forward to the ``indexAction()`` method of the service
-defined above with the id ``app.hello_controller``::
+If the fully-qualified class name (FQCN) of your controller is also the id of
+your service then you can refer to your controller using the usual notations.
+For example, to forward to the ``indexAction()`` method of the service
+defined above with the id ``AppBundle\Controller\HelloController``::
+
+    $this->forward('AppBundle:Hello:index', array('name' => $name));
+
+To refer to a controller that's defined as a service whose ID is not your
+controller fully-qualified class name (FQCN), use the single colon (:)
+notation. For example, to forward to the ``indexAction()`` method of a service
+defined with the id ``app.hello_controller``::
 
     $this->forward('app.hello_controller:indexAction', array('name' => $name));
-
-.. note::
-
-    You cannot drop the ``Action`` part of the method name when using this
-    syntax.
 
 You can also route to the service by using the same notation when defining
 the route ``_controller`` value:
@@ -123,17 +126,24 @@ the route ``_controller`` value:
             '_controller' => 'app.hello_controller:indexAction',
         )));
 
+.. note::
+
+    You cannot drop the ``Action`` part of the method name when using this
+    syntax.
+
 .. tip::
 
     You can also use annotations to configure routing using a controller
     defined as a service. Make sure you specify the service ID in the
-    ``@Route`` annotation. See the `FrameworkExtraBundle documentation`_ for
-    details.
+    ``@Route`` annotation if your service ID is not your controller
+    fully-qualified class name (FQCN). See the
+    `FrameworkExtraBundle documentation`_ for details.
 
 .. tip::
 
     If your controller implements the ``__invoke()`` method, you can simply
-    refer to the service id (``app.hello_controller``).
+    refer to the service id (``AppBundle\Controller\HelloController`` or
+    ``app.hello_controller`` for example).
 
     .. versionadded:: 2.6
         Support for ``__invoke()`` was introduced in Symfony 2.6.
@@ -212,7 +222,7 @@ argument:
 
         # app/config/services.yml
         services:
-            app.hello_controller:
+            AppBundle\Controller\HelloController:
                 class:     AppBundle\Controller\HelloController
                 arguments: ['@templating']
 
@@ -220,7 +230,7 @@ argument:
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
+            <service id="AppBundle\Controller\HelloController" class="AppBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
@@ -232,6 +242,7 @@ argument:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.hello_controller', HelloController::class)
+        $container->register(HelloController::class, HelloController::class)
             ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can
