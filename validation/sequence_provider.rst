@@ -234,10 +234,10 @@ entity and a new constraint group called ``Premium``:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme(
+                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme(array(
                     'schemes' => array('VISA'),
                     'groups'  => array('Premium'),
-                ));
+                )));
             }
         }
 

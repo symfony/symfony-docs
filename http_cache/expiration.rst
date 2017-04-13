@@ -36,7 +36,7 @@ Most of the time, you will use the ``Cache-Control`` header. Recall that the
 ``Cache-Control`` header is used to specify many different cache directives::
 
     // Sets the number of seconds after which the response
-    // should no longer be considered fresh
+    // should no longer be considered fresh by shared caches
     $response->setSharedMaxAge(600);
 
 The ``Cache-Control`` header would take on the following format (it may have

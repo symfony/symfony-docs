@@ -63,7 +63,7 @@ method returns **false**:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author
+        AppBundle\Entity\Author:
             getters:
                 stateInvalid:
                     - 'IsFalse':

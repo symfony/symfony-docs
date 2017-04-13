@@ -150,14 +150,8 @@ it *also* loads other configuration files via its ``imports`` key:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
                 <import resource="parameters.yml" />
@@ -258,13 +252,10 @@ key:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- ... -->
             <parameters>
@@ -358,7 +349,7 @@ configure DoctrineBundle and other parts of Symfony:
     .. code-block:: php
 
         // app/config/config.php
-        $configuration->loadFromExtension('doctrine', array(
+        $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'driver'   => 'pdo_mysql',
                 // ...

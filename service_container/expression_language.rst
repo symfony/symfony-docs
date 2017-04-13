@@ -27,8 +27,8 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         # app/config/config.yml
         services:
             my_mailer:
-                class:        AppBundle\Mailer
-                arguments:    ["@=service('mailer_configuration').getMailerMethod()"]
+                class:     AppBundle\Mailer
+                arguments: ["@=service('mailer_configuration').getMailerMethod()"]
 
     .. code-block:: xml
 

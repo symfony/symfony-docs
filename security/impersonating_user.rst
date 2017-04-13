@@ -96,7 +96,7 @@ to show a link to exit impersonation:
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
             <a href="<?php echo $view['router']->path('homepage', array(
                 '_switch_user' => '_exit',
-            ) ?>">
+            )) ?>">
                 Exit impersonation
             </a>
         <?php endif ?>

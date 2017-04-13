@@ -104,8 +104,8 @@ of the following:
 
     .. code-block:: nginx
 
-        fastcgi_param DATABASE_USER user
-        fastcgi_param DATABASE_PASSWORD secret
+        fastcgi_param DATABASE_USER user;
+        fastcgi_param DATABASE_PASSWORD secret;
 
     .. code-block:: terminal
 
