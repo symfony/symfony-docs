@@ -222,6 +222,30 @@ could easily enable logging::
     $subscriber = new AuditTrailListener($logger);
     $dispatcher->addSubscriber($subscriber);
 
+Event Methods
+~~~~~~~~~~~~~
+
+Each workflow event is an instance of :class:`Symfony\\Component\\Workflow\\Event\\Event`.
+This means that each event has access to the following information:
+
+:method:`Symfony\\Component\\Workflow\\Event\\Event::getMarking`
+    Returns the :class:`Symfony\\Component\\Workflow\\Marking` of the workflow.
+
+:method:`Symfony\\Component\\Worflow\\Event\\Event::getSubject`
+    Returns the object that dispatches the event.
+
+:method:`Symfony\\Component\\Workflow\\Event\\Event::getTransition`
+    Returns the :class:`Symfony\\Component\\Workflow\\Transition` that dispatches the event.
+
+For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
+This class has two more methods:
+
+:method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
+    Returns if transition is blocked.
+
+:method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::setBlocked`
+    Sets the blocked value.
+
 Usage in Twig
 -------------
 
