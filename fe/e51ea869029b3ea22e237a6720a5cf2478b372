@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-04-08T13:03:49Z
+
+Hello @jangrubenbecher, thank you for documenting this. We need to have a first step without the new feature introduced in 3.3, could you please remove the mention of `getWorkflowName()` method so we can merge the documentation of the others in 3.2?
+
+Then you'll be able to submit another PR to add this method with a `.. versionadded::` directive.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by jangrubenbecher at 2017-04-08T13:08:13Z
+
+done
