@@ -124,7 +124,7 @@ Each part will be explained in the next section.
                     pattern: .*
                     # restrict the firewall to a specific host
                     host: admin\.example\.com
-                     # restrict the firewall to specific http methods
+                    # restrict the firewall to specific HTTP methods
                     methods: [GET, POST]
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
@@ -620,12 +620,12 @@ multiple firewalls, the "context" could actually be shared:
 
         <!-- app/config/security.xml -->
         <security:config>
-            <firewall name="somename" context="my_context">
-                <! ... ->
-            </firewall>
-            <firewall name="othername" context="my_context">
-                <! ... ->
-            </firewall>
+            <security:firewall name="somename" context="my_context">
+                <!-- ... -->
+            </security:firewall>
+            <security:firewall name="othername" context="my_context">
+                <!-- ... -->
+            </security:firewall>
         </security:config>
 
     .. code-block:: php
@@ -665,9 +665,9 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
 
         <!-- app/config/security.xml -->
         <security:config>
-            <firewall name="somename">
-                <http-digest secret="%secret%" realm="secure-api" />
-            </firewall>
+            <security:firewall name="somename">
+                <security:http-digest secret="%secret%" realm="secure-api" />
+            </security:firewall>
         </security:config>
 
     .. code-block:: php

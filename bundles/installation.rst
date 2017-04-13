@@ -118,7 +118,7 @@ of the bundle's configuration:
 
 The output will look like this:
 
-.. code-block:: text
+.. code-block:: yaml
 
     assetic:
         debug:                '%kernel.debug%'

@@ -79,15 +79,17 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
 #. Once you've guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request. This is
-   done inside of your front controller::
+   done inside of your front controller:
 
-       // web/app.php
+   .. code-block:: diff
 
-       // ...
-       Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
+	  // web/app.php
 
-       $response = $kernel->handle($request);
-       // ...
+	  // ...
+	  $request = Request::createFromGlobals();
+	  + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
+
+	  // ...
 
 #. Ensure that the trusted_proxies setting in your ``app/config/config.yml``
    is not set or it will overwrite the ``setTrustedProxies()`` call above.

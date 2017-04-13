@@ -1442,7 +1442,7 @@ If you do need to use this tag, just make a new class that implements the
 :class:`Symfony\\Component\\Validator\\ObjectInitializerInterface` interface.
 Then, tag it with the ``validator.initializer`` tag (it has no options).
 
-For an example, see the ``EntityInitializer`` class inside the Doctrine
+For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension

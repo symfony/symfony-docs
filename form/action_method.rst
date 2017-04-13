@@ -47,7 +47,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/newAction.html.php -->
+        <!-- app/Resources/views/default/new.html.php -->
         <?php echo $view['form']->start($form, array(
             // The path() method was introduced in Symfony 2.8. Prior to 2.8,
             // you had to use generate().

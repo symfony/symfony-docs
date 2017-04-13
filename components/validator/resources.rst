@@ -187,7 +187,7 @@ this custom implementation using
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->setMetadataFactory(new CustomMetadataFactory(...));
+        ->setMetadataFactory(new CustomMetadataFactory(...))
         ->getValidator();
 
 .. caution::

@@ -185,7 +185,7 @@ You can configure the service configurator using the ``configurator`` option:
             ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
         ;
 
-        $container->register('app.greeting_card_manager', GreetingCardManager::class);
+        $container->register('app.greeting_card_manager', GreetingCardManager::class)
             ->addArgument(new Reference('mailer'))
             ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
         ;

@@ -153,7 +153,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
                 'latest_news',
                 array('maxPerPage' => 5)
             ),
-            array('strategy' => 'esi'),
+            array('strategy' => 'esi')
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
@@ -231,7 +231,7 @@ that must be enabled in your configuration:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/framework"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
@@ -239,7 +239,7 @@ that must be enabled in your configuration:
 
             <!-- ... -->
             <framework:config>
-                <framework:fragments path="/_fragment" />
+                <framework:fragment path="/_fragment" />
             </framework:config>
         </container>
 

@@ -233,9 +233,9 @@ Full Default Configuration
                 host="localhost"
                 port="false"
                 encryption=""
-                auth_mode=""
-                sender_address=""
-                disable_delivery=""
+                auth-mode=""
+                sender-address=""
+                disable-delivery=""
                 logging="%kernel.debug%"
                 >
                 <swiftmailer:spool

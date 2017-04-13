@@ -172,8 +172,8 @@ straightforward. Parameters make defining services more organized and flexible:
 
         services:
             app.mailer:
-                class:        AppBundle\Mailer
-                arguments:    ['%app.mailer.transport%']
+                class:     AppBundle\Mailer
+                arguments: ['%app.mailer.transport%']
 
     .. code-block:: xml
 
@@ -409,7 +409,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
                 # ...
 
             app.newsletter_manager:
-                class:     AppBundle\Newsletter\NewsletterManager
+                class: AppBundle\Newsletter\NewsletterManager
                 calls:
                     - [setMailer, ['@app.mailer']]
 
@@ -444,7 +444,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
         $container->setDefinition('app.mailer', ...);
 
-        $definition = new Definition(NewsletterManager::class)
+        $definition = new Definition(NewsletterManager::class);
         $definition->addMethodCall('setMailer', array(
             new Reference('app.mailer'),
         ));

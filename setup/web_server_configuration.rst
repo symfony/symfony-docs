@@ -310,7 +310,7 @@ The **minimum configuration** to get your application running under Nginx is:
         # return 404 for all other php files not matching the front controller
         # this prevents access to other php files you don't want to be accessible.
         location ~ \.php$ {
-          return 404;
+            return 404;
         }
 
         error_log /var/log/nginx/project_error.log;

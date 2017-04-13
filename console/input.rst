@@ -79,7 +79,7 @@ To use this, just specify as many names as you want:
 
 You can access the ``names`` argument as an array::
 
-    $names = $input->getArgument('names')
+    $names = $input->getArgument('names');
     if (count($names) > 0) {
         $text .= ' '.implode(', ', $names);
     }

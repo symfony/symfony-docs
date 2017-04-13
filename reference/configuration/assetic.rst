@@ -13,6 +13,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         assetic:
             debug:                '%kernel.debug%'
             use_controller:
@@ -63,6 +64,7 @@ Full Default Configuration
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:assetic="http://symfony.com/schema/dic/assetic"
