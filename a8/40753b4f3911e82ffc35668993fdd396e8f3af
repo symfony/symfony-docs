@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by Jean85 at 2017-02-16T15:54:31Z
+
+I think that the documentation in this part is a bit lacking. It says that you're enabling the mock in this way, but it's not explicit. It seems at a first glance that in this way your whole test will have mocked time function, when instead it's true only for function calls inside your test method, not outside.
+
+I had to use this a lot when the class that I was testing had time function calls, and I had to dive into the source code to understand that I had to do a manual registration of each class where I want to mock the time function calls.
+
+Maybe it's better to expand this issue's scope?
