@@ -1116,7 +1116,76 @@ version_strategy
 **type**: ``string`` **default**: ``null``
 
 The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
-applied to the assets.
+applied to the assets. This option can be set globally for all assets and
+individually for each asset package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this strategy is applied to every asset (including packages)
+                version_strategy: 'app.asset.my_versioning_strategy'
+                packages:
+                    foo_package:
+                        # this package removes any versioning (its assets won't be versioned)
+                        version: ~
+                    bar_package:
+                        # this package uses its own strategy (the default strategy is ignored)
+                        version_strategy: 'app.asset.another_version_strategy'
+                    baz_package:
+                        # this package inherits the default strategy
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets version_strategy="app.asset.my_versioning_strategy">
+                    <framework:package
+                        name="foo_package"
+                        version="null" />
+                    <framework:package
+                        name="bar_package"
+                        version-strategy="app.asset.another_version_strategy" />
+                    <framework:package
+                        name="baz_package"
+                        base_path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                'version_strategy' => 'app.asset.my_versioning_strategy',
+                'packages' => array(
+                    'foo_package' => array(
+                        // ...
+                        'version' => null,
+                    ),
+                    'bar_package' => array(
+                        // ...
+                        'version_strategy' => 'app.asset.another_version_strategy',
+                    ),
+                    'baz_package' => array(
+                        // ...
+                        'base_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
 
 .. note::
 
