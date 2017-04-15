@@ -56,6 +56,10 @@ directory and rename it to something else (e.g. ``foo``).
 Root Directory
 ~~~~~~~~~~~~~~
 
+.. versionadded:: 3.3
+    The ``getRootDir()`` method was deprecated in Symfony 3.3 and replaced by
+    the new ``getProjectDir()`` method.
+
 **type**: ``string`` **default**: the directory of ``AppKernel``
 
 This returns the root directory of your kernel. If you use the Symfony Standard
@@ -74,6 +78,34 @@ To change this setting, override the
         public function getRootDir()
         {
             return realpath(parent::getRootDir().'/../');
+        }
+    }
+
+Project Directory
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.3
+    The ``getProjectDir()`` method was introduced in Symfony 3.3.
+
+**type**: ``string`` **default**: the directory of the project ``composer.json``
+
+This returns the root directory of your Symfony project. It's calculated as
+the directory where the main ``composer.json`` file is stored.
+
+If for some reason the ``composer.json`` file is not stored at the root of your
+project, you can override the :method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir`
+method to return the right project directory::
+
+    // app/AppKernel.php
+
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function getProjectDir()
+        {
+            return realpath(__DIR__.'/../');
         }
     }
 
