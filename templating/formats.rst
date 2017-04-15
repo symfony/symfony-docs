@@ -81,3 +81,12 @@ format:
 .. seealso::
 
     For more information, see this :ref:`Advanced Routing Example <advanced-routing-example>`.
+
+.. tip::
+
+    When building APIs, using file name extensions often isn't the best
+    solution. The FOSRestBundle provides a request listener that uses content
+    negotiation. For more information, check out the bundle's `Request Format Listener`_
+    documentation.
+
+.. _Request Format Listener: http://symfony.com/doc/current/bundles/FOSRestBundle/3-listener-support.html#format-listener
