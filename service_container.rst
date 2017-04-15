@@ -87,8 +87,9 @@ in the container.
 
     If the container holds so many useful objects (services), does that mean those
     objects are instantiated on *every* request? No! The container is lazy: it doesn't
-    instantiate a service until (and unless) you ask for it. If during a request
-    you never use the ``validator`` service, the container will never create it.
+    instantiate a service until (and unless) you ask for it. For example, if you
+    never use the ``validator`` service during a request, the container will never
+    instantiate it.
 
 .. index::
    single: Service Container; Configuring services
@@ -183,7 +184,7 @@ When you ask for the ``app.message_generator`` service, the container constructs
 a new ``MessageGenerator`` object and returns it. If you never ask for the
 ``app.message_generator`` service during a request, it's *never* constructed, saving
 you memory and increasing the speed of your app. This also means that there's almost
-no performance hit for defining a lot of services.
+no performance overhead for defining a lot of services.
 
 As a bonus, the ``app.message_generator`` service is only created *once*: the same
 instance is returned each time you ask for it.
@@ -192,7 +193,7 @@ Injecting Services/Config into a Service
 ----------------------------------------
 
 What if you want to use the ``logger`` service from within ``MessageGenerator``?
-Your service does *not* have a ``$this->container`` property - that's a special power
+Your service does *not* have a ``$this->container`` property: that's a special power
 only controllers have.
 
 Instead, you should create a ``__construct()`` method, add a ``$logger`` argument
@@ -222,7 +223,7 @@ and set it on a ``$logger`` property::
 .. tip::
 
     The ``LoggerInterface`` type-hint in the ``__construct()`` method is optional,
-    but a good idea. You can find the right type-hint by reading the docs for the
+    but a good idea. You can find the correct type-hint by reading the docs for the
     service or by using the ``php bin/console debug:container`` console command.
 
 Next, tell the container the service has a constructor argument:
@@ -265,11 +266,14 @@ Next, tell the container the service has a constructor argument:
             array(new Reference('logger'))
         ));
 
+That's it! The container now knows to pass the ``logger`` service as an argument
+when it instantiates the ``MessageGenerator``. This is called dependency injection.
+
 The ``arguments`` key holds an array of all of the constructor arguments to the
-service (just 1 so far). The ``@`` symbol before ``@logger`` is special: it tells
+service (just 1 so far). The ``@`` symbol before ``@logger`` is important: it tells
 Symfony to pass the *service* named ``logger``.
 
-You can pass anything as arguments. For example, suppose you want to make your
+But you can pass anything as arguments. For example, suppose you want to make your
 class a bit more configurable::
 
     // src/AppBundle/Service/MessageGenerator.php
@@ -399,7 +403,7 @@ and reference it with the ``%parameter_name%`` syntax:
             array(new Reference('logger'), '%enable_generator_logging%')
         ));
 
-Actually, once you define a parameter, it can be referenced via this ``%parameter_name%``
+Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
 are defined in a :ref:`parameters.yml file <config-parameters-yml>`.
 
@@ -430,7 +434,6 @@ You can also fetch parameters directly from the container::
             url_pattern: 'http://symfony.com/?foo=%%s&amp;bar=%%d'
 
 For more info about parameters, see :doc:`/service_container/parameters`.
-
 
 Learn more
 ----------
