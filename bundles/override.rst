@@ -72,8 +72,8 @@ associations. Learn more about this feature and its limitations in
 Forms
 -----
 
-Existing form types can be modified defining "form type extensions".
-For more information, see :doc:`/form/create_form_type_extension`.
+Existing form types can be modified defining
+:doc:`form type extensions </form/create_form_type_extension>`.
 
 .. _override-validation:
 
