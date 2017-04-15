@@ -1150,13 +1150,16 @@ individually for each asset package:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets version_strategy="app.asset.my_versioning_strategy">
+                <framework:assets version-strategy="app.asset.my_versioning_strategy">
+                    <!-- this package removes any versioning (its assets won't be versioned) -->
                     <framework:package
                         name="foo_package"
                         version="null" />
+                    <!-- this package uses its own strategy (the default strategy is ignored) -->
                     <framework:package
                         name="bar_package"
                         version-strategy="app.asset.another_version_strategy" />
+                    <!-- this package inherits the default strategy -->
                     <framework:package
                         name="baz_package"
                         base_path="/images" />
@@ -1172,15 +1175,15 @@ individually for each asset package:
                 'version_strategy' => 'app.asset.my_versioning_strategy',
                 'packages' => array(
                     'foo_package' => array(
-                        // ...
+                        // this package removes any versioning (its assets won't be versioned)
                         'version' => null,
                     ),
                     'bar_package' => array(
-                        // ...
+                        // this package uses its own strategy (the default strategy is ignored)
                         'version_strategy' => 'app.asset.another_version_strategy',
                     ),
                     'baz_package' => array(
-                        // ...
+                        // this package inherits the default strategy
                         'base_path' => '/images',
                     ),
                 ),
