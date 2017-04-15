@@ -223,7 +223,12 @@ thrown)::
         $configuration = new Configuration();
 
         $config = $this->processConfiguration($configuration, $configs);
-        // ...
+        
+        // Example configuration parameter usage: Set configuration variables as 
+        // parameters in the container.
+        $container->setParameter('twitter.client_id', $config['twitter']['client_id']);
+        $container->setParameter('twitter.client_secret', $config['twitter']['client_secret']);
+
     }
 
 The ``processConfiguration()`` method uses the configuration tree you've defined
