@@ -346,7 +346,8 @@ cookie by using native PHP sessions.
 
 
 .. versionadded:: 3.3
-    The ability to request a ``Session`` in actions was introduced in Symfony 3.3.
+    The ability to request a ``Session`` instance in controllers was introduced
+    in Symfony 3.3.
 
 To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
 type-hint to your argument and Symfony will provide you with a session::
@@ -371,18 +372,6 @@ Stored attributes remain in the session for the remainder of that user's session
 
     Every ``SessionInterface`` implementation is supported. If you have your
     own implementation, type-hint this in the arguments instead.
-
-As a developer, you might prefer not to extend the ``Controller``. To use the
-flash message functionality, you can request the flash bag from the
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Session`::
-
-    use Symfony\Component\HttpFoundation\Session\Session;
-
-    public function indexAction(Session $session)
-    {
-        // getFlashBag is not available in the SessionInterface and requires the Session
-        $flashBag = $session->getFlashBag();
-    }
 
 .. index::
    single: Session; Flash messages
@@ -417,6 +406,20 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
         return $this->render(...);
     }
+
+.. tip::
+
+    As a developer, you might prefer not to extend the ``Controller``. To
+    use the flash message functionality, you can request the flash bag from
+    the :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`::
+
+        use Symfony\Component\HttpFoundation\Session\Session;
+
+        public function indexAction(Session $session)
+        {
+            // getFlashBag is not available in the SessionInterface and requires the Session
+            $flashBag = $session->getFlashBag();
+        }
 
 After processing the request, the controller sets a flash message in the session
 and then redirects. The message key (``notice`` in this example) can be anything:

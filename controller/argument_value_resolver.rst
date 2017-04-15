@@ -18,7 +18,7 @@ Functionality Shipped with the HttpKernel
 .. versionadded:: 3.3
     The ``SessionValueResolver`` was introduced in Symfony 3.3.
 
-Symfony ships with four value resolvers in the HttpKernel component:
+Symfony ships with five value resolvers in the HttpKernel component:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
