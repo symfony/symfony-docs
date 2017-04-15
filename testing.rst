@@ -283,8 +283,9 @@ document::
 
         // Assert that the response is a redirect to /demo/contact
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact'),
-            'response is a redirect to /demo/contact'
+            $client->getResponse()->isRedirect('/demo/contact')
+            // if the redirection URL was generated as an absolute URL
+            // $client->getResponse()->isRedirect('http://localhost/demo/contact')
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -720,7 +721,7 @@ add the values to the raw data array::
     $values['task']['tags'][1]['name'] = 'bar';
 
     // Submit the form with the existing and new values.
-    $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values,
+    $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
         $form->getPhpFiles());
 
     // The 2 tags have been added to the collection.

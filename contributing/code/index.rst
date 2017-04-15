@@ -5,6 +5,7 @@ Contributing Code
     :maxdepth: 2
 
     bugs
+    reproducer
     patches
     maintenance
     core_team

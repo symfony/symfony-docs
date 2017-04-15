@@ -35,6 +35,24 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
+to register a new `test listener`_ called ``SymfonyTestsListener``:
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
+    </phpunit>
+
 Usage
 -----
 
@@ -94,9 +112,9 @@ message, enclosed with ``/``. For example, with:
 
 .. code-block:: xml
 
-    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -146,6 +164,8 @@ Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
 completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -209,14 +229,25 @@ The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``,
 ``microtime()``, ``sleep()`` and ``usleep()``.
 
-To use the ``ClockMock`` class in your test, you can:
+To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
+annotation to its class or methods. This annotation only works when executing
+PHPUnit using the ``vendor/bin/simple-phpunit`` script or when registering the
+following listener in your PHPUnit configuration:
 
-* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or
-  method;
+.. code-block:: xml
 
-* Register it manually by calling ``ClockMock::register(__CLASS__)`` and
-  ``ClockMock::withClockMock(true)`` before the test and
-  ``ClockMock::withClockMock(false)`` after the test.
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <listeners>
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+.. note::
+
+    If you don't want to use the ``@group time-sensitive`` annotation, you can
+    register the ``ClockMock`` class manually by calling
+    ``ClockMock::register(__CLASS__)`` and ``ClockMock::withClockMock(true)``
+    before the test and ``ClockMock::withClockMock(false)`` after the test.
 
 As a result, the following is guaranteed to work and is no longer a transient
 test::
@@ -411,3 +442,4 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
+.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners

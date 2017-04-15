@@ -127,12 +127,12 @@ You can configure the service configurator using the ``configurator`` option:
             app.newsletter_manager:
                 class:        AppBundle\Mail\NewsletterManager
                 arguments:    ['@mailer']
-                configurator: ['@app.email_configurator', configure]
+                configurator: 'app.email_configurator:configure'
 
             app.greeting_card_manager:
                 class:        AppBundle\Mail\GreetingCardManager
                 arguments:    ['@mailer']
-                configurator: ['@app.email_configurator', configure]
+                configurator: 'app.email_configurator:configure'
 
     .. code-block:: xml
 
@@ -185,10 +185,26 @@ You can configure the service configurator using the ``configurator`` option:
             ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
         ;
 
-        $container->register('app.greeting_card_manager', GreetingCardManager::class);
+        $container->register('app.greeting_card_manager', GreetingCardManager::class)
             ->addArgument(new Reference('mailer'))
             ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
         ;
+
+
+.. versionadded:: 3.2
+    The ``service_id:method_name`` syntax for the YAML configuration format
+    was introduced in Symfony 3.2.
+
+    The traditional configurator syntax in YAML files used an array to define
+    the service id and the method name:
+
+    .. code-block:: yaml
+
+        app.newsletter_manager:
+            # new syntax
+            configurator: 'app.email_configurator:configure'
+            # old syntax
+            configurator: ['@app.email_configurator', configure]
 
 That's it! When requesting the ``app.newsletter_manager`` or
 ``app.greeting_card_manager`` service, the created instance will first be

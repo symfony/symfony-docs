@@ -224,7 +224,7 @@ zero tags when first created).
 
             <h3>Tags</h3>
             <ul class="tags">
-                <?php foreach($form['tags'] as $tag): ?>
+                <?php foreach ($form['tags'] as $tag): ?>
                     <li><?php echo $view['form']->row($tag['name']) ?></li>
                 <?php endforeach ?>
             </ul>

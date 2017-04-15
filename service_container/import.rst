@@ -49,8 +49,8 @@ service files:
 
         services:
             app.mailer:
-                class:        AppBundle\Mailer
-                arguments:    ['%app.mailer.transport%']
+                class:     AppBundle\Mailer
+                arguments: ['%app.mailer.transport%']
 
     .. code-block:: xml
 
