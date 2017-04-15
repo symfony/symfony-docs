@@ -119,7 +119,8 @@ Instead, you decide to create a new class::
             ];
 
             $index = array_rand($messages);
-
+        }
+    }
 
 Congratulations! You've just created your first service class. Next, you can *teach*
 the service container *how* to instantiate it:
