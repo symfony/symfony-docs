@@ -1489,10 +1489,12 @@ circular_reference_handler
 
 **type** ``string``
 
-The service id that is used as circular reference handler of the default serializer. The
-service has to implement the ``__invoke($object)`` method.
+The service id that is used as the circular reference handler of the default
+serializer. The service has to implement the magic ``__invoke($object)``
+method.
 
 .. seealso::
+
     For more information, see
     :ref:`component-serializer-handling-circular-references`.
 
