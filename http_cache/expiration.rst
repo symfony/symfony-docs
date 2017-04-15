@@ -87,9 +87,9 @@ servers should not send ``Expires`` dates more than one year in the future."
 
 .. note::
 
-    Accordingly with `RFC 7234 - Caching`_, the ``Expires`` header value is
-    ignored when ``s-maxage`` or ``max-age`` directives are defined.
-
+    According to `RFC 7234 - Caching`_, the ``Expires`` header value is ignored
+    when the ``s-maxage`` or ``max-age`` directive of the ``Cache-Control``
+    header is defined.
 
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
