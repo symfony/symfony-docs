@@ -55,7 +55,7 @@ something? No problem::
         }
     }
 
-``logger`` is a unique key for the logger object. What other services are available?
+``logger`` is a unique key for the ``Logger`` object. What other services are available?
 Find out by running:
 
 .. code-block:: terminal
@@ -80,7 +80,7 @@ twig                            Twig_Environment
 validator                       Symfony\Component\Validator\Validator\ValidatorInterface
 ------------------------------- -------------------------------------------------------------------
 
-Throughout the docs, you'll see how to see the many different services that live
+Throughout the docs, you'll see how to use the many different services that live
 in the container.
 
 .. sidebar:: Container: Lazy-loaded for speed
@@ -89,7 +89,6 @@ in the container.
     objects are instantiated on *every* request? No! The container is lazy: it doesn't
     instantiate a service until (and unless) you ask for it. If during a request
     you never use the ``validator`` service, the container will never create it.
-
 
 .. index::
    single: Service Container; Configuring services
