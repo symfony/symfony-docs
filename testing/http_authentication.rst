@@ -76,7 +76,7 @@ use the previous trick, but it's still possible to make tests faster. The trick
 now is to bypass the authentication process, create the *authentication token*
 yourself and store it in the session.
 
-This technique requires some knowledge of the security component internals,
+This technique requires some knowledge of the Security component internals,
 but the following example shows a complete example that you can adapt to your
 needs::
 
