@@ -21,3 +21,20 @@ class TerminalLexer(RegexLexer):
             ('(.+)$', bygroups(using(BatchLexer)), '#pop')
         ],
     }
+
+
+class NonCopyDiffLexer(RegexLexer):
+    name = 'NonCopyDiff'
+    aliases = ['non-copy-diff']
+    filenames = []
+
+    tokens = {
+        'root': [
+            ('^\+ ', Generic.DiffIndicator, 'inserted'),
+            ('^- ', Generic.DiffIndicator, 'deleted'),
+            ('^  ', Generic.DiffIndicator, 'text')
+        ],
+        'inserted': [('.+$', Generic.Inserted)],
+        'deleted': [('.+$', Generic.Deleted)],
+        'text': [('.+$', Text)]
+    }

@@ -24,7 +24,7 @@ from pygments.lexers.compiled import CLexer
 from pygments.lexers.special import TextLexer
 from pygments.lexers.text import RstLexer
 from pygments.lexers.web import PhpLexer
-from symfonycom.sphinx.lexer import TerminalLexer
+from symfonycom.sphinx.lexer import TerminalLexer, NonCopyDiffLexer
 
 # -- General configuration -----------------------------------------------------
 
@@ -110,6 +110,7 @@ lexers['rst'] = RstLexer()
 lexers['varnish3'] = CLexer()
 lexers['varnish4'] = CLexer()
 lexers['terminal'] = TerminalLexer()
+lexers['diff'] = NonCopyDiffLexer()
 
 config_block = {
     'markdown': 'Markdown',
