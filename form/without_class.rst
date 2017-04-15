@@ -106,3 +106,9 @@ but here's a short example:
     .. code-block:: php
 
         new NotBlank(array('groups' => array('create', 'update')));
+
+.. tip::
+
+    If the form is not mapped to an object, every object in your array of
+    submitted data is validated using the ``Symfony\Component\Validator\Constraints\Valid``
+    constraint, unless you :doc:`disable validation </form/disabling_validation>`.

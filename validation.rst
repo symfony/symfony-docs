@@ -206,8 +206,9 @@ Inside the template, you can output the list of errors exactly as needed:
 Configuration
 -------------
 
-The Symfony validator is enabled by default, but you must explicitly enable
-annotations if you're using the annotation method to specify your constraints:
+Before using the Symfony validator, make sure it's enabled in the main config
+file. Besides, if you plan to use annotations to configure validation, make sure
+that the ``enable_annotations`` option is ``true``:
 
 .. configuration-block::
 
@@ -448,6 +449,29 @@ a constraint shorter and quicker.
 If you're ever unsure of how to specify an option, either check the API documentation
 for the constraint or play it safe by always passing in an array of options
 (the first method shown above).
+
+Constraints in Form Classes
+---------------------------
+
+Constraints can be defined while building the form via the ``constraints`` option
+of the form fields::
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('myField', TextType::class, array(
+                'required' => true,
+                'constraints' => array(new Length(array('min' => 3)))
+            ))
+    }
+
+The ``constraints`` option is only available if the ``ValidatorExtension``
+was enabled through the form factory builder::
+
+    Forms::createFormFactoryBuilder()
+        ->addExtension(new ValidatorExtension(Validation::createValidator()))
+        ->getFormFactory()
+    ;
 
 .. index::
    single: Validation; Constraint targets
