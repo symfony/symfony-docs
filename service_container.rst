@@ -133,68 +133,61 @@ the service container *how* to instantiate it:
 
         # app/config/services.yml
         services:
-            app.message_generator:
-                class:     AppBundle\Service\MessageGenerator
-                arguments: []
+            # configures defaults for all services in this file
+            _defaults:
+                autowire: true
+                autoconfigure: true
+
+            # registers all classes in the dir(s) as services
+            AppBundle\:
+                resource: '../../src/AppBundle/{Service}'
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.message_generator" class="AppBundle\Service\MessageGenerator">
-                </service>
-            </services>
-        </container>
+        TODO
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
+        TODO
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array()
-        ));
+That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, all
+classes in the ``src/AppBundle/Service`` directory will automatically be added to
+the container. Each service's "key" is simply its class name. You can use it immediately
+inside your controller::
 
-That's it! Your service - with the unique key ``app.message_generator`` - is now
-available in the container. You can use it immediately inside your controller::
+    use AppBundle\Service\MessageGenerator;
 
     public function newAction()
     {
         // ...
 
         // the container will instantiate a new MessageGenerator()
-        $messageGenerator = $this->container->get('app.message_generator');
+        $messageGenerator = $this->container->get(MessageGenerator::class);
 
         // or use this shorter synax
-        // $messageGenerator = $this->get('app.message_generator');
+        // $messageGenerator = $this->get(MessageGenerator::class);
 
         $message = $messageGenerator->getHappyMessage();
         $this->addFlash('success', $message);
         // ...
     }
 
-When you ask for the ``app.message_generator`` service, the container constructs
+When you ask for the ``MessageGenerator::class`` service, the container constructs
 a new ``MessageGenerator`` object and returns it. If you never ask for the
-``app.message_generator`` service during a request, it's *never* constructed, saving
+``MessageGenerator::class`` service during a request, it's *never* constructed, saving
 you memory and increasing the speed of your app. This also means that there's almost
 no performance overhead for defining a lot of services.
 
-As a bonus, the ``app.message_generator`` service is only created *once*: the same
+As a bonus, the ``MessageGenerator::class`` service is only created *once*: the same
 instance is returned each time you ask for it.
 
 .. caution::
 
-    Service ids are case-insensitive (e.g. ``app.message_generator`` and ``APP.Message_Generator``
-    refer to the same service). But this was deprecated in Symfony 3.3. Starting
-    in 4.0, service ids will be case sensitive.
+    Service ids are case-insensitive (e.g. ``AppBundle\Service\MessageGenerator``
+    and ``appbundle\service\messagegenerator`` refer to the same service). But this
+    was deprecated in Symfony 3.3. Starting in 4.0, service ids will be case sensitive.
 
 Injecting Services/Config into a Service
 ----------------------------------------
@@ -227,13 +220,64 @@ and set it on a ``$logger`` property::
         }
     }
 
+That's it! The container will *automatically* know to pass the ``logger`` service
+when instantiating the ``MessageGenerator``? How does it know to do this? The key
+is the ``LoggerInterface`` type-hint in your ``__construct()`` method and the
+``autowire: true`` config in ``services.yml``. When you type-hint an argument, the
+container will automatically find the matching service. If it can't or there is any
+ambuiguity, you'll see a clear exception suggesting how to fix it.
+
+Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
+
 .. tip::
 
-    The ``LoggerInterface`` type-hint in the ``__construct()`` method is optional,
-    but a good idea. You can find the correct type-hint by reading the docs for the
-    service or by using the ``php bin/console debug:container`` console command.
+    How do you know to use ``LoggerInterface`` for the type-hint? The best way to
+    know this is by reading the docs for whatever service you're using. You can
+    also use the ``php bin/console debug:container`` console command to get a hint
+    to the class name for a service.
 
-Next, tell the container the service has a constructor argument:
+Handling Multiple Services
+--------------------------
+
+Suppose you also want to email some site administrator each time a site update is
+made. To do that, you create a new class::
+
+    // src/AppBundle/Updates/SiteUpdateManager.php
+    namespace AppBundle\Updates;
+
+    use AppBundle\Service\MessageGenerator;
+
+    class SiteUpdateManager
+    {
+        private $messageGenerator;
+        private $mailer;
+
+        public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer)
+        {
+            $this->messageGenerator = $messageGenerator;
+            $this->mailer = $mailer;
+        }
+
+        public function notifyOfSiteUpdate()
+        {
+            $happyMessage = $this->messageGenerator->getHappyMessage();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Site update just happened!')
+                ->setFrom('admin@example.com')
+                ->setTo('manager@example.com')
+                ->addPart(
+                    'Someone just updated the site. We told them: '.$happyMessage
+                );
+            $this->mailer->send($message);
+
+            return $message;
+        }
+    }
+
+This uses the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. To register
+this as a new service in the container, simply tell your configuration to load from
+the new ``Updates`` sub-directory:
 
 .. configuration-block::
 
@@ -241,75 +285,86 @@ Next, tell the container the service has a constructor argument:
 
         # app/config/services.yml
         services:
-            app.message_generator:
-                class:     AppBundle\Service\MessageGenerator
-                arguments: ['@logger']
+            # ...
+
+            # registers all classes in Services & Updates directories
+            AppBundle\:
+                resource: '../../src/AppBundle/{Service,Updates}'
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.message_generator" class="AppBundle\Service\MessageGenerator">
-                    <argument type="service" id="logger" />
-                </service>
-            </services>
-        </container>
+        TODO
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
+        TODO
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array(new Reference('logger'))
-        ));
+Now, you can use the service immediately::
 
-That's it! The container now knows to pass the ``logger`` service as an argument
-when it instantiates the ``MessageGenerator``. This is called dependency injection.
+    use AppBundle\Updates\SiteUpdateManager;
 
-The ``arguments`` key holds an array of all of the constructor arguments to the
-service (just 1 so far). The ``@`` symbol before ``@logger`` is important: it tells
-Symfony to pass the *service* named ``logger``.
+    public function newAction()
+    {
+        // ...
 
-But you can pass anything as arguments. For example, suppose you want to make your
-class a bit more configurable::
+        $siteUpdateManager = $this->container->get(SiteUpdateManager::class);
 
-    // src/AppBundle/Service/MessageGenerator.php
+        $message = $siteUpdateManager->notifyOfSiteUpdate();
+        $this->addFlash('success', $message);
+        // ...
+    }
+
+Just like before, when you ask for the ``SiteUpdateManager`` service, the container
+will automatically instantiate it for you. By reading the type-hints on the ``__construct()``
+method in that class, it takes care of passing the correct services as arguments.
+All of that is taken care of for you.
+
+Manually Wiring Arguments
+-------------------------
+
+There are a few cases when an argument to a service cannot be autowired. For example,
+suppose you want to make the admin email configurable:
+
+.. code-block:: diff
+
+    // src/AppBundle/Updates/SiteUpdateManager.php
     // ...
 
-    use Psr\Log\LoggerInterface;
-
-    class MessageGenerator
+    class SiteUpdateManager
     {
-        private $logger;
-        private $loggingEnabled;
+        // ...
+    +    private $adminEmail;
 
-        public function __construct(LoggerInterface $logger, $loggingEnabled)
+    -    public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer)
+    +    public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer, $adminEmail)
         {
-            $this->logger = $logger;
-            $this->loggingEnabled = $loggingEnabled;
+            // ...
+    +        $this->adminEmail = $adminEmail;
         }
 
-        public function getHappyMessage()
+        public function notifyOfSiteUpdate()
         {
-            if ($this->loggingEnabled) {
-                $this->logger->info('About to find a happy message!');
-            }
+            // ...
+
+            $message = \Swift_Message::newInstance()
+                // ...
+    -            ->setTo('manager@example.com')
+    +            ->setTo($this->adminEmail)
+                // ...
+            ;
             // ...
         }
     }
 
-The class now has a *second* constructor argument. No problem, just update your
-service config:
+If you make this change and refresh, you'll see an error:
+
+    Cannot autowire service "AppBundle\Updates\SiteUpdateManager": argument "$adminEmail"
+    of method "__construct()" must have a type-hint or be given a value explicitly.
+
+That makes sense! There is no way that the container knows what value you want to
+pass here. No problem! In your configuration, you can explicitly set this argument:
 
 .. configuration-block::
 
@@ -317,41 +372,29 @@ service config:
 
         # app/config/services.yml
         services:
-            app.message_generator:
-                class:     AppBundle\Service\MessageGenerator
-                arguments: ['@logger', true]
+            # ...
+
+            # same as before
+            AppBundle\:
+                resource: '../../src/AppBundle/{Service,Updates}'
+
+            # explicitly configure the service
+            AppBundle\Updates\SiteUpdateManager:
+                arguments:
+                    $adminEmail: 'manager@example.com'
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.message_generator" class="AppBundle\Service\MessageGenerator">
-                    <argument type="service" id="logger" />
-                    <argument>true</argument>
-                </service>
-            </services>
-        </container>
+        TODO
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
+        TODO
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array(new Reference('logger'), true)
-        ));
-
-You can even leverage :doc:`environments </configuration/environments>` to control
-this new value in different situations.
+Thanks to this, the container will pass ``manager@example.com`` as the third argument
+to ``__construct`` when creating the ``SiteUpdateManager`` service.
 
 .. _service-container-parameters:
 
@@ -368,47 +411,22 @@ and reference it with the ``%parameter_name%`` syntax:
 
         # app/config/services.yml
         parameters:
-            enable_generator_logging:  true
+            admin_email: manager@example.com
 
         services:
-            app.message_generator:
-                class:     AppBundle\Service\MessageGenerator
-                arguments: ['@logger', '%enable_generator_logging%']
+            # ...
+
+            AppBundle\Updates\SiteUpdateManager:
+                arguments:
+                    $adminEmail: '%admin_email%'
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <parameters>
-                    <parameter key="enable_generator_logging">true</parameter>
-                </parameters>
-
-                <service id="app.message_generator" class="AppBundle\Service\MessageGenerator">
-                    <argument type="service" id="logger" />
-                    <argument>%enable_generator_logging%</argument>
-                </service>
-            </services>
-        </container>
+        TODO
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->setParameter('enable_generator_logging', true);
-
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array(new Reference('logger'), '%enable_generator_logging%')
-        ));
+        TODO
 
 Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
@@ -420,8 +438,8 @@ You can also fetch parameters directly from the container::
     {
         // ...
 
-        $isLoggingEnabled = $this->container
-            ->getParameter('enable_generator_logging');
+        $adminEmail = $this->container
+            ->getParameter('admin_email');
         // ...
     }
 
