@@ -182,10 +182,10 @@ them from re-implementing the logic required to walk through a
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object's internal structure.
 
 The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
-length and nesting depth of the output. These options can be overriden by
-providing a third parameter when calling 
+length and nesting depth of the output to make it more readable. These options
+can be overriden by the third optional parameter of the
 :method:`dump(Data $data) <Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface::dump>`
-::
+method::
 
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
@@ -193,82 +193,81 @@ providing a third parameter when calling
 
     $dumper = new HtmlDumper();
     $dumper->dump($var, $output, array(
+        // 1 and 160 are the default values for these options
         'maxDepth' => 1,
         'maxStringLength' => 160
     ));
-
-    // Limit nesting to 1 level and string length to 160 characters (default)
 
 The output format of a dumper can be fine tuned by the two flags 
 ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
 in the third constructor argument. They can also be set via environment 
 variables when using
 :method:`assertDumpEquals($dump, $data, $message) <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals>`
-during unit testing. The flags can be configured in the PHPUnit configuration.
+during unit testing.
 
-* If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
-  next to its content.
+If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
+next to its content:
 
-    .. code-block:: php
+.. code-block:: php
 
-        use Symfony\Component\VarDumper\Dumper\AbstractDumper;
-        use Symfony\Component\VarDumper\Dumper\CliDumper;
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-        $var = array('test');
-        $dumper = new CliDumper();
-        echo $dumper->dump($var, true);
+    $var = array('test');
+    $dumper = new CliDumper();
+    echo $dumper->dump($var, true);
 
-        // array:1 [
-        //   0 => "test"
-        // ]
+    // array:1 [
+    //   0 => "test"
+    // ]
 
-        $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH);
-        echo $dumper->dump($var, true);
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH);
+    echo $dumper->dump($var, true);
 
-        // (added string length before the string)
-        // array:1 [
-        //   0 => (4) "test"
-        // ]
+    // (added string length before the string)
+    // array:1 [
+    //   0 => (4) "test"
+    // ]
 
-* If ``DUMP_LIGHT_ARRAY`` is set, then arrays are dumped in a shortened format
-  similar to PHP's short array notation.
+If ``DUMP_LIGHT_ARRAY`` is set, then arrays are dumped in a shortened format
+similar to PHP's short array notation:
 
-    .. code-block:: php
+.. code-block:: php
 
-        use Symfony\Component\VarDumper\Dumper\AbstractDumper;
-        use Symfony\Component\VarDumper\Dumper\CliDumper;
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-        $var = array('test');
-        $dumper = new CliDumper();
-        echo $dumper->dump($var, true);
+    $var = array('test');
+    $dumper = new CliDumper();
+    echo $dumper->dump($var, true);
 
-        // array:1 [
-        //   0 => "test"
-        // ]
+    // array:1 [
+    //   0 => "test"
+    // ]
 
-        $dumper = new CliDumper(null, null, AbstractDumper::DUMP_LIGHT_ARRAY);
-        echo $dumper->dump($var, true);
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_LIGHT_ARRAY);
+    echo $dumper->dump($var, true);
 
-        // (no more array:1 prefix)
-        // [
-        //   0 => "test"
-        // ]
+    // (no more array:1 prefix)
+    // [
+    //   0 => "test"
+    // ]
 
-* If you would like to use both options, then you can just 
-  combine them by using a the logical OR operator ``|``.
+If you would like to use both options, then you can just    combine them by
+using a the logical OR operator ``|``:
 
-    .. code-block:: php
+.. code-block:: php
 
-        use Symfony\Component\VarDumper\Dumper\AbstractDumper;
-        use Symfony\Component\VarDumper\Dumper\CliDumper;
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-        $var = array('test');
-        $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH | AbstractDumper::DUMP_LIGHT_ARRAY);
-        echo $dumper->dump($var, true);
+    $var = array('test');
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH | AbstractDumper::DUMP_LIGHT_ARRAY);
+    echo $dumper->dump($var, true);
 
-        // [
-        //   0 => (4) "test"
-        // ]
+    // [
+    //   0 => (4) "test"
+    // ]
 
 Casters
 -------
