@@ -15,6 +15,9 @@ functionality.
 Functionality Shipped with the HttpKernel
 -----------------------------------------
 
+.. versionadded:: 3.3
+    The ``SessionValueResolver`` was introduced in Symfony 3.3.
+
 Symfony ships with four value resolvers in the HttpKernel component:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
@@ -23,6 +26,11 @@ Symfony ships with four value resolvers in the HttpKernel component:
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
     extending ``Request``.
+
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\SessionValueResolver`
+    Injects the configured session class extending ``SessionInterface`` if
+    type-hinted with ``SessionInterface`` or a class extending
+    ``SessionInterface``.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DefaultValueResolver`
     Will set the default value of the argument if present and the argument
