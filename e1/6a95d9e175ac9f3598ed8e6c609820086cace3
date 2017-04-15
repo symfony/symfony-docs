@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-12-01T11:24:25Z
+
+I think we should then document this notation for factories too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-01T11:56:07Z
+
+@xabbuh let's do the factories change in another PR: #7208
