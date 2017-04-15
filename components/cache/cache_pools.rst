@@ -136,7 +136,7 @@ See the method's docblock for more options.
     ``:`` character (e.g. ``foo:bar`` password would be wrongly parsed as ``foo``
     login + ``bar`` password). The solution is to add a fake login to the
     connection DSN. Instead of ``'redis://foo:bar@localhost'``, use
-    ``'redis://__ignore_this__:foo:bar@localhost'``
+    ``'redis://__ignore_this__:foo:bar@localhost'``.
 
 PDO & Doctrine DBAL Cache Adapter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
