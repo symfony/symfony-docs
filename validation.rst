@@ -211,8 +211,9 @@ Inside the template, you can output the list of errors exactly as needed:
 Configuration
 -------------
 
-The Symfony validator is enabled by default, but you must explicitly enable
-annotations if you're using the annotation method to specify your constraints:
+Before using the Symfony validator, make sure it's enabled in the main config
+file. Besides, if you plan to use annotations to configure validation, make sure
+that the ``enable_annotations`` option is ``true``:
 
 .. configuration-block::
 
