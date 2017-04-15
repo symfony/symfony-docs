@@ -199,9 +199,9 @@ You can configure the service configurator using the ``configurator`` option:
             # old syntax
             configurator: ['@app.email_configurator', configure]
 
-    .. versionadded:: 3.2
-        The ``service_id:method_name`` syntax for the YAML configuration format
-        was introduced in Symfony 3.2.
+.. versionadded:: 3.2
+    The ``service_id:method_name`` syntax for the YAML configuration format
+    was introduced in Symfony 3.2.
 
 That's it! When requesting the ``app.newsletter_manager`` or
 ``app.greeting_card_manager`` service, the created instance will first be
