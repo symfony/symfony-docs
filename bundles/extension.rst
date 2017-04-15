@@ -167,7 +167,7 @@ class names::
     included in the list of classes to compile.
 
 .. versionadded:: 3.2
-   The option to add classes to compile using patterns was added in Symfony 3.2.
+   The option to add classes to compile using patterns was introduced in Symfony 3.2.
 
 The classes to compile can also be added using file path patterns::
 
