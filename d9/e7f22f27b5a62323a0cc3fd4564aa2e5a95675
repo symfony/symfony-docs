@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-08-17T20:34:01Z
+
+Even though I think that you have a point in saying that we fail to explain how to work with a processed configuration, I don't agree with the proposed solution. The reason is that exposing parameters makes them globally available in the whole application. This makes it harder to make future changes as you cannot remove parameters to maintain backwards compatibility. Instead, I suggest to show how to conditionally load services based on actual configuration values or to dynamically inject constructor/method arguments into service definitions.
