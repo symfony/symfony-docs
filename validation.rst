@@ -455,6 +455,29 @@ If you're ever unsure of how to specify an option, either check the API document
 for the constraint or play it safe by always passing in an array of options
 (the first method shown above).
 
+Constraints in Form Classes
+---------------------------
+
+Constraints can be defined while building the form via the ``constraints`` option
+of the form fields::
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('myField', TextType::class, array(
+                'required' => true,
+                'constraints' => array(new Length(array('min' => 3)))
+            ))
+    }
+
+The ``constraints`` option is only available when adding the ValidatorExtention
+to the formBuilder::
+
+    Forms::createFormFactoryBuilder()
+        ->addExtension(new ValidatorExtension(Validation::createValidator()))
+        ->getFormFactory()
+    ;
+
 .. index::
    single: Validation; Constraint targets
 
