@@ -394,5 +394,91 @@ As for other RAD features such as the FrameworkBundle controller or annotations,
 keep in mind to not use autowiring in public bundles nor in large projects with
 complex maintenance needs.
 
+Method injection
+----------------
+
+By default, the autowiring subsystem only injects dependencies in the constructor of
+the service. Constructor injection should always be preferred; however, it is sometimes
+convenient to inject dependencies through methods (usually a setter method).
+
+.. versionadded:: 3.2
+    Method autowiring was added in Symfony 3.2
+
+The ``*`` character can be used to ask the autowiring subsystem to inject dependencies
+both in the constructor and in setter methods (starting with ``set``).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            foo:
+                class:    Foo
+                autowire: '*'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Foo" autowire="*" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // ...
+        $fooDefinition = new Definition('Foo');
+        $fooDefinition->setAutowired('*');
+
+        $container->setDefinition('foo', $fooDefinition);
+
+Alternatively, the list of methods to use for dependency injection can be configured explicitly:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            foo:
+                class:    Foo
+                autowire: ['__construct', 'setFoo', 'notASetter']
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Foo">
+                    <autowire>__construct</autowire>
+                    <autowire>setFoo</autowire>
+                    <autowire>notASetter</autowire>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // ...
+        $fooDefinition = new Definition('Foo');
+        $fooDefinition->setAutowired(array('__construct', 'setFoo', 'notASetter'));
+
+        $container->setDefinition('foo', $fooDefinition);
+
+
+When listing methods to use, dependencies are not automatically injected in the constructor,
+it needs to be listed explicitly.
+
 .. _Rapid Application Development: https://en.wikipedia.org/wiki/Rapid_application_development
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
