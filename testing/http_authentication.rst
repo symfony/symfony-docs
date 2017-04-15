@@ -85,6 +85,7 @@ needs::
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\BrowserKit\Cookie;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
     class DefaultControllerTest extends WebTestCase
@@ -101,7 +102,7 @@ needs::
             $this->logIn();
             $crawler = $this->client->request('GET', '/admin');
 
-            $this->assertTrue($this->client->getResponse()->isSuccessful());
+            $this->assertSame(Response::HTTP_OK, $this->client->getResponse());
             $this->assertSame('Admin Dashboard', $crawler->filter('h1')->text());
         }
 
