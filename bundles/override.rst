@@ -39,7 +39,7 @@ Services & Configuration
 
 If you want to modify service definitions of another bundle, you can use a compiler
 pass to change the class of the service or to modify method calls. In the following
-example, the implementing class for the ``original-service-id`` is changed to 
+example, the implementing class for the ``original-service-id`` is changed to
 ``Acme\DemoBundle\YourService``::
 
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
@@ -72,16 +72,8 @@ associations. Learn more about this feature and its limitations in
 Forms
 -----
 
-Form types are referred to by their fully-qualified class name::
-
-    $builder->add('name', CustomType::class);
-
-This means that you cannot override this by creating a sub-class of ``CustomType``
-and registering it as a service and tagging it with ``form.type`` (you *could*
-do this in earlier version).
-
-Instead, you should use a "form type extension" to modify the existing form type.
-For more information, see :doc:`/form/create_form_type_extension`.
+Existing form types can be modified defining
+:doc:`form type extensions </form/create_form_type_extension>`.
 
 .. _override-validation:
 
@@ -92,7 +84,7 @@ Symfony loads all validation configuration files from every bundle and
 combines them into one validation metadata tree. This means you are able to
 add new constraints to a property, but you cannot override them.
 
-To override this, the 3rd party bundle needs to have configuration for
+To overcome this, the 3rd party bundle needs to have configuration for
 :doc:`validation groups </validation/groups>`. For instance, the FOSUserBundle
 has this configuration. To create your own validation, add the constraints
 to a new validation group:

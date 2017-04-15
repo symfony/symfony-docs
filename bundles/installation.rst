@@ -48,7 +48,7 @@ version, include it as the second argument of the `composer require`_ command:
 B) Enable the Bundle
 --------------------
 
-At this point, the bundle is installed in your Symfony project (in
+At this point, the bundle is installed in your Symfony project (e.g. 
 ``vendor/friendsofsymfony/``) and the autoloader recognizes its classes.
 The only thing you need to do now is register the bundle in ``AppKernel``::
 
