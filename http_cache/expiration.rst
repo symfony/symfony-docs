@@ -85,5 +85,12 @@ the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
 servers should not send ``Expires`` dates more than one year in the future."
 
+.. note::
+
+    Accordingly with `RFC 7234 - Caching`_, the ``Expires`` header value is
+    ignored when ``s-maxage`` or ``max-age`` directives are defined.
+
+
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
+.. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234#section-4.2.1
