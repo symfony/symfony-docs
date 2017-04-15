@@ -32,11 +32,7 @@ its id:
 
     $ php bin/console debug:container app.mailer
 
-By default, the arguments of the services are not included in the output. Add the
-``--show-arguments`` option to show them:
-
-.. code-block:: terminal
-
+    # to show the service arguments:
     $ php bin/console debug:container app.mailer --show-arguments
 
 .. versionadded:: 3.3
