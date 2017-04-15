@@ -119,6 +119,8 @@ Instead, you decide to create a new class::
             ];
 
             $index = array_rand($messages);
+
+            return $messages[$index];
         }
     }
 
