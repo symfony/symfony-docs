@@ -1108,11 +1108,14 @@ individually for each asset package:
                 version_strategy: 'app.asset.my_versioning_strategy'
                 packages:
                     foo_package:
-                        # this makes the assets of this package to not be versioned
+                        # this package removes any versioning (its assets won't be versioned)
                         version: ~
                     bar_package:
-                        # this package doesn't use the global versioning strategy
+                        # this package uses its own strategy (the default strategy is ignored)
                         version_strategy: 'app.asset.another_version_strategy'
+                    baz_package:
+                        # this package inherits the default strategy
+                        base_path: '/images'
 
     .. code-block:: xml
 
@@ -1132,6 +1135,9 @@ individually for each asset package:
                     <framework:package
                         name="bar_package"
                         version-strategy="app.asset.another_version_strategy" />
+                    <framework:package
+                        name="baz_package"
+                        base_path="/images" />
                 </framework:assets>
             </framework:config>
         </container>
@@ -1150,6 +1156,10 @@ individually for each asset package:
                     'bar_package' => array(
                         // ...
                         'version_strategy' => 'app.asset.another_version_strategy',
+                    ),
+                    'baz_package' => array(
+                        // ...
+                        'base_path' => '/images',
                     ),
                 ),
             ),
