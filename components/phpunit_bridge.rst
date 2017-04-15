@@ -215,14 +215,25 @@ The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``,
 ``microtime()``, ``sleep()`` and ``usleep()``.
 
-To use the ``ClockMock`` class in your test, you can:
+To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
+annotation to its class or methods. This annotation only works when executing
+PHPUnit using the ``vendor/bin/simple-phpunit`` script or when registering the
+following listener in your PHPUnit configuration:
 
-* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or
-  method;
+.. code-block:: xml
 
-* Register it manually by calling ``ClockMock::register(__CLASS__)`` and
-  ``ClockMock::withClockMock(true)`` before the test and
-  ``ClockMock::withClockMock(false)`` after the test.
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <listeners>
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+.. note::
+
+    If you don't want to use the ``@group time-sensitive`` annotation, you can
+    register the ``ClockMock`` class manually by calling
+    ``ClockMock::register(__CLASS__)`` and ``ClockMock::withClockMock(true)``
+    before the test and ``ClockMock::withClockMock(false)`` after the test.
 
 As a result, the following is guaranteed to work and is no longer a transient
 test::
