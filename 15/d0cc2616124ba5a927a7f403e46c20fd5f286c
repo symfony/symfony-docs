@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-19T21:03:14Z
+
+👍 makes sense given that this pattern is also used in the translations shipped with the Validator component
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-03T08:13:48Z
+
+@javiereguiluz What is your opinion here? This is a bit tricky as the Validator component uses different placeholders than what is the best practice for all other translations we document.
