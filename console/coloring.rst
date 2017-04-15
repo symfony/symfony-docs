@@ -67,11 +67,9 @@ You can also set these colors and options directly inside the tagname::
 
 .. note::
 
-    If you need to render a tag literally, you must escape it with a backslash: ``\<info>``.
-    You can use :method:`OutputFormatter::escape() <Symfony\\Component\\Console\\Formatter\\OutputFormatter::escape>`
-    to escape all tags of a given text.
-
-    If you need to render a literal backslash before a tag, replace it with ``<<``.
+    If you need to render a tag literally, escape it with a backslash: ``\<info>``
+    or use the :method:`Symfony\\Component\\Console\\Formatter\\OutputFormatter::escape`
+    method to escape all the tags included in the given string.
 
 .. _Cmder: http://cmder.net/
 .. _ConEmu: https://conemu.github.io/
