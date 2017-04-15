@@ -102,7 +102,7 @@ needs::
             $this->logIn();
             $crawler = $this->client->request('GET', '/admin');
 
-            $this->assertSame(Response::HTTP_OK, $this->client->getResponse());
+            $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
             $this->assertSame('Admin Dashboard', $crawler->filter('h1')->text());
         }
 
