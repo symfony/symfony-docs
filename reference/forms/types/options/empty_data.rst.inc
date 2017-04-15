@@ -1,7 +1,7 @@
 empty_data
 ~~~~~~~~~~
 
-**type**: ``string`` or ``array`` when the form is compound
+**type**: ``mixed``
 
 .. This file should only be included with start-after or end-before that's
    set to this placeholder value. Its purpose is to let us include only
