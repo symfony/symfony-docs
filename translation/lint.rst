@@ -26,6 +26,9 @@ translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
     $ ./bin/console lint:yaml @AppBundle
     $ ./bin/console lint:xliff @AppBundle
 
+.. versionadded:: 3.3
+    The ``lint:xliff`` command was introduced in Symfony 3.3.
+
 The linter results can be exported to JSON using the ``--format`` option:
 
 .. code-block:: terminal
