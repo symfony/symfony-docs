@@ -377,27 +377,31 @@ of your commands to change their appearance::
 Writing to the error output
 ---------------------------
 
-If you rely on the output of a command (e.g. by redirecting it to a file for later reuse),
-you may want to get only the relevant information outputted by the command, excluding progress
-bars, notes, warnings and other error messages which have, most of the time, no value for reuse.
+If you reuse the output of a command as the input of other commands or dump it
+into a file for later reuse, you probably want to exclude progress bars, notes
+and other output that provides no real value.
 
-For excluding irrelevant messages from the output, you need to make your command write them to the error
-output. Fortunately, the :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` provides a convenient
-method to easily switch between both outputs:
-:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::getErrorStyle`.
-This method returns a new ``SymfonyStyle`` instance which makes use of the error output:
+Commands can output information in two different streams: ``stdout`` (standard
+output) is the stream where the real contents should be output and ``stderr``
+(standard error) is the stream where the errors and the debugging messages
+should be output.
+
+The :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` class provides a
+convenient method called :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::getErrorStyle`
+to switch between both streams. This method returns a new ``SymfonyStyle``
+instance which makes use of the error output::
 
     $io = new SymfonyStyle($input, $output);
 
-    // Write to the output
+    // Write to the standard output
     $io->write('Reusable information');
 
     // Write to the error output
-    $io->getErrorStyle()->warning('Irrelevant warning');
+    $io->getErrorStyle()->warning('Debugging information or errors');
 
 .. note::
 
-    If you created the original ``SymfonyStyle`` instance with an ``OutputInterface`` object that is
-    not an instance of :class:`Symfony\\Component\\Console\\Output\\ConsoleOutputInterface`, using
-    ``getErrorStyle()`` will return an instance which makes use of the normal output instead of
-    the error one, as if you did not called the method.
+    If you create a ``SymfonyStyle`` instance with an ``OutputInterface`` object
+    that is not an instance of :class:`Symfony\\Component\\Console\\Output\\ConsoleOutputInterface`,
+    the ``getErrorStyle()`` method will have no effect and the returned object
+    will still output to the standard output instead of the error output.
