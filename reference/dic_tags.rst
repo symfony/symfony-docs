@@ -994,7 +994,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
 For more details, see :doc:`/serializer`.
 
-Default serializers priority can be found in : `\Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension::registerSerializerConfiguration`
+Default serializers priority can be found in: `\Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension::registerSerializerConfiguration`
 
 swiftmailer.default.plugin
 --------------------------
