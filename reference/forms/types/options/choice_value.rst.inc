@@ -14,6 +14,9 @@ configure the value that will be sent in the API request).
 This can be a callable or a property path. See `choice_label`_ for similar usage.
 If ``null`` is used, an incrementing integer is used as the name.
 
+If you are using a callable to populate ``choice_value``, you need to check
+for the case that the value of the field may be ``null``.
+
 .. caution::
 
     In Symfony 2.7, there was a small backwards-compatibility break with how the

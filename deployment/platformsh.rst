@@ -186,8 +186,8 @@ soon be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh
 .. _`Platform.sh documentation`: https://docs.platform.sh/frameworks/symfony.html
-.. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
-.. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
+.. _`Platform.sh project`: https://accounts.platform.sh/platform/buy-now
+.. _`Platform.sh configuration files`: https://docs.platform.sh/configuration/services.html
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
 .. _`available services`: https://docs.platform.sh/reference/configuration-files/#configure-services
-.. _`migrating your database and files`: https://docs.platform.sh/toolstacks/php/symfony/migrate-existing-site/
+.. _`migrating your database and files`: https://docs.platform.sh/tutorials/migrating.html
