@@ -313,7 +313,7 @@ and ``_failure_path`` for login errors:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->path('login') ?>" method="post">
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 
