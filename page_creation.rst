@@ -114,25 +114,27 @@ First, make sure that ``LuckyController`` extends Symfony's base
     }
 
 Now, use the handy ``render()`` function to render a template. Pass it our ``number``
-variable so we can render that::
+variable so we can render that:
 
-    // src/AppBundle/Controller/LuckyController.php
-    // ...
+.. code-block:: diff
 
-    class LuckyController extends Controller
-    {
-        /**
-         * @Route("/lucky/number")
-         */
-        public function numberAction()
-        {
-            $number = mt_rand(0, 100);
+      // src/AppBundle/Controller/LuckyController.php
+      // ...
 
-            return $this->render('lucky/number.html.twig', array(
-                'number' => $number,
-            ));
-        }
-    }
+      class LuckyController extends Controller
+      {
+          /**
+           * @Route("/lucky/number")
+           */
+          public function numberAction()
+          {
+    +         $number = mt_rand(0, 100);
+
+    +         return $this->render('lucky/number.html.twig', array(
+    +             'number' => $number,
+    +         ));
+          }
+      }
 
 Finally, template files should live in the ``app/Resources/views`` directory. Create
 a new ``app/Resources/views/lucky`` directory with a new ``number.html.twig`` file
