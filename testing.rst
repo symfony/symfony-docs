@@ -285,8 +285,9 @@ document::
 
         // Assert that the response is a redirect to /demo/contact
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact'),
-            'response is a redirect to /demo/contact'
+            $client->getResponse()->isRedirect('/demo/contact')
+            // if the redirection URL was generated as an absolute URL
+            // $client->getResponse()->isRedirect('http://localhost/demo/contact')
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
