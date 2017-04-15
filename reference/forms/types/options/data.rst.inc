@@ -3,22 +3,19 @@ data
 
 **type**: ``mixed`` **default**: Defaults to field of the underlying structure.
 
-When you attach a form type to a form, it becomes a field that initially maps
-the value of the corresponding property or key of the form's domain data. If
-you want to override the initial value which will be rendered in the view for
-the form or any nested field, you can set it in the data option::
+When you create a form, each field initially displays the value of the
+corresponding property of the form's domain data (e.g. if you bind an object to
+the form). If you want to override this initial value for the form or
+an individual field, you can set it in the data option::
+
 
     $builder->add('token', 'hidden', array(
         'data' => 'abcdef',
     ));
 
-    // Is the same as
-    $resolver->setDefault('data' => array('token' => 'abcdef'));
+.. caution::
 
-.. note::
-
-    The default values for form fields are taken directly from the underlying
-    data structure matching the field's name with a property of an object or a
-    key of an array. The ``data`` option overrides this default value.
-    It means that when the data passed to the form is an object you want to
-    edit, the `data` option will also override the value already set.
+    The ``data`` option *always* overrides the value taken from the domain data
+    (object) when rendering. This means the object value is also overriden when
+    the form edits an already persisted object, causing it to loose it's
+    persisted value when the form is submitted.
