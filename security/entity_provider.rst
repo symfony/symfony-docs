@@ -171,9 +171,10 @@ To learn more about each of these, see :class:`Symfony\\Component\\Security\\Cor
 
 .. caution::
 
-    Do not actually implement ``eraseCredentials`` when you load your users directly
-    from Doctrine, as changes will be flushed when a user tries to login. As example,
-    setting ``password`` to ``null`` will be flushed with every login attempt.
+    Do not actually implement ``eraseCredentials()`` when loading the users
+    directly from Doctrine, as changes will be flushed when a user tries to
+    login. For example, setting ``password`` to ``null`` will be flushed with
+    every login attempt.
 
 What do the serialize and unserialize Methods do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
