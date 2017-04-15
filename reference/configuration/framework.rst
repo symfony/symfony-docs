@@ -1589,18 +1589,15 @@ app
 
 **type**: ``string`` **default**: ``cache.adapter.filesystem``
 
-The cache adapter used by the ``cache.app`` service.
+The cache adapter used by the ``cache.app`` service. The FrameworkBundle
+ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
+``psr6`` and ``redis``.
 
 .. tip::
 
     It might be tough to understand at the beginning, so to avoid confusion remember that all pools perform the
     same actions but on different medium given the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
-
-.. note::
-
-    The framework bundle ships with multiple adapters: apcu, doctrine, system,
-    filesystem, psr6, and redis.
 
 system
 ......
@@ -1622,21 +1619,24 @@ default_doctrine_provider
 
 **type**: ``string``
 
-The service name to use as your default Doctrine provider.
+The service name to use as your default Doctrine provider. The provider is
+available as the ``cache.doctrine`` service.
 
 default_psr6_provider
 .....................
 
-**type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
+**type**: ``string``
 
-The service name to use as your default PSR-6 provider.
+The service name to use as your default PSR-6 provider. It is available as
+the ``cache.psr6`` service.
 
 default_redis_provider
 ......................
 
 **type**: ``string`` **default**: ``redis://localhost``
 
-The dsn to use by the Redis provider.
+The DSN to use by the Redis provider. The provider is available as the ``cache.redis``
+service.
 
 pools
 .....
@@ -1663,7 +1663,7 @@ Name of the pool you want to create.
     Your pool name must differ from ``cache.app`` or ``cache.system``.
 
 adapter
-#######
+"""""""
 
 **type**: ``string`` **default**: ``cache.app``
 
@@ -1674,28 +1674,28 @@ The name of the adapter to use. You could also use your own implementation.
     Your service MUST implement the :class:`Psr\\Cache\\CacheItemPoolInterface` interface.
 
 public
-######
+""""""
 
 **type**: ``boolean`` **default**: ``false``
 
 Whether your service should be public or not.
 
 default_lifetime
-################
+""""""""""""""""
 
 **type**: ``integer``
 
 Default lifetime of your cache items in seconds.
 
 provider
-########
+""""""""
 
 **type**: ``string``
 
 The service name to use as provider when the specified adapter needs one.
 
 clearer
-#######
+"""""""
 
 **type**: ``string``
 
