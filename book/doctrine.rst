@@ -651,6 +651,9 @@ to easily fetch objects based on multiple conditions::
 
     If you click the icon, the profiler will open, showing you the exact
     queries that were made.
+    
+    The icon will turn yellow if there were more than 50 queries on the
+    page, this could indicate that something is not correct.
 
     The icon will turn yellow if there were more than 50 queries on the
     page. This could indicate that something is not correct.
