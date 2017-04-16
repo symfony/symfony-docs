@@ -101,6 +101,14 @@ configuration of PHP, your session cookie has the name PHPSESSID:
                 remove req.http.Cookie;
             }
         }
+        /* By default Varnish ignores Cache-Control: nocache 
+        (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control),
+        so in order avoid caching it has to be done explicitly */
+        if (beresp.http.Pragma ~ "no-cache" ||
+             beresp.http.Cache-Control ~ "no-cache" ||
+             beresp.http.Cache-Control ~ "private") {
+            return (hit_for_pass);
+        }
     }
 
 .. tip::
