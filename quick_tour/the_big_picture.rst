@@ -106,6 +106,13 @@ Congratulations! Your first Symfony project is up and running!
     them are explained in the
     :ref:`Setting up Permissions <book-installation-permissions>` section
     of the official book.
+    
+    If the welcome page does not seem to be rendering CSS or image assets,
+    install them first:
+    
+    .. code-block:: bash
+    
+        $ php app/console assets:install
 
     If the welcome page does not seem to be rendering CSS or image assets,
     install them first:
