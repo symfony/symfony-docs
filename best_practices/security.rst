@@ -144,12 +144,21 @@ the same ``getAuthorEmail`` logic you used above:
 
     use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     // AbstractVoter class requires Symfony 2.6 or higher version
     class PostVoter extends AbstractVoter
     {
         const CREATE = 'create';
         const EDIT   = 'edit';
+
+        private $roleHierarchy;
+
+        public function __construct(RoleHierarchyInterface $roleHierarchy = null)
+        {
+            $this->roleHierarchy = $roleHierarchy;
+        }
 
         protected function getSupportedAttributes()
         {
@@ -167,12 +176,31 @@ the same ``getAuthorEmail`` logic you used above:
                 return false;
             }
 
-            if ($attribute === self::CREATE && in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            if ($attribute === self::CREATE && $this->userHasRole($user, 'ROLE_ADMIN')) {
                 return true;
             }
 
             if ($attribute === self::EDIT && $user->getEmail() === $post->getAuthorEmail()) {
                 return true;
+            }
+
+            return false;
+        }
+
+        /**
+         * Checks if the user token has the given role taking into account the
+         * entire role hierarchy if defined by the application.
+         */
+        private function userHasRole(UserInterface $user, $roleName)
+        {
+            if (null === $this->roleHierarchy) {
+                return in_array($roleName, $user->getRoles(), true);
+            }
+
+            foreach ($this->roleHierarchy->getReachableRoles($user->getRoles()) as $role) {
+                if ($roleName === $role->getRole()) {
+                    return true;
+                }
             }
 
             return false;
@@ -188,6 +216,9 @@ To enable the security voter in the application, define a new service:
         # ...
         post_voter:
             class:      AppBundle\Security\PostVoter
+            # beware that the 'security.role_hierarchy' service is only defined
+            # when the application's security config uses the role hierarchy
+            arguments:  ["@?security.role_hierarchy"]
             public:     false
             tags:
                - { name: security.voter }
