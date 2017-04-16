@@ -233,7 +233,7 @@ help with message translation of *static blocks of text*:
     {% trans %}Hello %name%{% endtrans %}
 
     {% transchoice count %}
-        {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} There are no apples|{1} There is one apple|[1,Inf] There are %count% apples
     {% endtranschoice %}
 
 The ``transchoice`` tag automatically gets the ``%count%`` variable from
