@@ -51,7 +51,10 @@ are:
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
-
+.. note::
+    You probably want to use ``${APACHE_LOG_DIR}/`` instead of ``/var/log/apache2/`` 
+    for the logging-paths, if your system supports the ``APACHE_LOG_DIR`` variable.
+    
 .. note::
 
     If your system supports the ``APACHE_LOG_DIR`` variable, you may want
