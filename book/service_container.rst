@@ -624,6 +624,9 @@ the work of instantiating the classes.
 Using the Expression Language
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.4
+    The Expression Language functionality was introduced in Symfony 2.4.
+
 The service container also supports an "expression" that allows you to inject
 very specific values into a service.
 
