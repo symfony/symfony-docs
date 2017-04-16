@@ -62,6 +62,15 @@ command:
 The output should display ``OK``. If not, you need to figure out what's going on
 and if the tests are broken because of your modifications.
 
+.. note::
+
+    phpUnit is not listed in ``composer.json`` of Symfony2 by default. You can add phpUnit
+    and install it (to ``vendor/bin/``) with the following command:
+
+    .. code-block:: bash
+
+        $ php composer.phar require phpunit/phpunit
+
 .. tip::
 
     If you want to test a single component type its path after the ``phpunit``
