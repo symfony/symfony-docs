@@ -66,3 +66,7 @@ which makes all of this quite easy::
             $this->em = null; // avoid memory leaks
         }
     }
+
+.. note::
+
+    Depending on your PHP version, you might need to call ``gc_collect_cycles()`` after closing the connection.
