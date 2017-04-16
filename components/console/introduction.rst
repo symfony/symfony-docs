@@ -255,7 +255,7 @@ and make the ``name`` argument required::
 
 You now have access to a ``last_name`` argument in your command::
 
-    if ($lastName = $input->getArgument('last_name')) {
+    if ($lastName == $input->getArgument('last_name')) {
         $text .= ' '.$lastName;
     }
 
