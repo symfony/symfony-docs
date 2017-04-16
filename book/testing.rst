@@ -29,6 +29,17 @@ command:
 
     # specify the configuration directory on the command line
     $ phpunit -c app/
+    
+.. note::
+
+    If you have the ``No tests executed!`` message, 
+    specify the "src" directory at the end of the command.
+    
+.. code-block:: bash
+
+    # specify the configuration directory on the command line
+    $ phpunit -c app/ src/
+
 
 The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
 file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
