@@ -17,14 +17,17 @@ In Symfony, you can register your custom DQL functions as follows:
         doctrine:
             orm:
                 # ...
-                dql:
-                    string_functions:
-                        test_string: Acme\HelloBundle\DQL\StringFunction
-                        second_string: Acme\HelloBundle\DQL\SecondStringFunction
-                    numeric_functions:
-                        test_numeric: Acme\HelloBundle\DQL\NumericFunction
-                    datetime_functions:
-                        test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+                entity_managers:
+                    default:
+                        # ...
+                        dql:
+                            string_functions:
+                                test_string: Acme\HelloBundle\DQL\StringFunction
+                                second_string: Acme\HelloBundle\DQL\SecondStringFunction
+                            numeric_functions:
+                                test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                            datetime_functions:
+                                test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
 
     .. code-block:: xml
 
@@ -38,12 +41,15 @@ In Symfony, you can register your custom DQL functions as follows:
             <doctrine:config>
                 <doctrine:orm>
                     <!-- ... -->
-                    <doctrine:dql>
-                        <doctrine:string-function name="test_string>Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
-                        <doctrine:string-function name="second_string>Acme\HelloBundle\DQL\SecondStringFunction</doctrine:string-function>
-                        <doctrine:numeric-function name="test_numeric>Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
-                        <doctrine:datetime-function name="test_datetime>Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
-                    </doctrine:dql>
+                    <doctrine:entity-manager name="default">
+                        <!-- ... -->
+                        <doctrine:dql>
+                            <doctrine:string-function name="test_string>Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
+                            <doctrine:string-function name="second_string>Acme\HelloBundle\DQL\SecondStringFunction</doctrine:string-function>
+                            <doctrine:numeric-function name="test_numeric>Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
+                            <doctrine:datetime-function name="test_datetime>Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                        </doctrine:dql>
+                    </doctrine:entity-manager>
                 </doctrine:orm>
             </doctrine:config>
         </container>
@@ -54,16 +60,21 @@ In Symfony, you can register your custom DQL functions as follows:
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
                 // ...
-                'dql' => array(
-                    'string_functions' => array(
-                        'test_string'   => 'Acme\HelloBundle\DQL\StringFunction',
-                        'second_string' => 'Acme\HelloBundle\DQL\SecondStringFunction',
-                    ),
-                    'numeric_functions' => array(
-                        'test_numeric' => 'Acme\HelloBundle\DQL\NumericFunction',
-                    ),
-                    'datetime_functions' => array(
-                        'test_datetime' => 'Acme\HelloBundle\DQL\DatetimeFunction',
+                'entity_managers' => array(
+                    'default' => array(
+                        // ...
+                        'dql' => array(
+                            'string_functions' => array(
+                                'test_string'   => 'Acme\HelloBundle\DQL\StringFunction',
+                                'second_string' => 'Acme\HelloBundle\DQL\SecondStringFunction',
+                            ),
+                            'numeric_functions' => array(
+                                'test_numeric' => 'Acme\HelloBundle\DQL\NumericFunction',
+                            ),
+                            'datetime_functions' => array(
+                                'test_datetime' => 'Acme\HelloBundle\DQL\DatetimeFunction',
+                            ),
+                        ),
                     ),
                 ),
             ),
