@@ -1553,7 +1553,8 @@ separated by a single underscore character (``_``). A few examples are:
 Each fragment follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
 ``date``, etc) whereas the ``part`` portion corresponds to *what* is being
-rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
+rendered (e.g. ``label``, ``widget``, ``errors``, etc). The name of your own form
+type is given by the ``getName()`` method in your Form class. By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
