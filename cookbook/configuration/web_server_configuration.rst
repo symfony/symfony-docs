@@ -83,7 +83,7 @@ and increase web server performance:
                 Options -MultiViews
                 RewriteEngine On
                 RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ app.php [QSA,L]
+                RewriteRule ^(.*)$ app_dev.php [QSA,L]
             </IfModule>
         </Directory>
 
