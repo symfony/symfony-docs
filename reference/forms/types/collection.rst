@@ -376,6 +376,14 @@ for all entries with the `entry_options`_ option will be used.
         'prototype_data' => 'New Tag Placeholder',
     ));
 
+prototype_data
+~~~~~~~~~~~~~~
+
+**type**: ``mixed`` **default**: ``null``
+
+Allows you to specify data for the prototype. Each new row added will initially
+contain the data set by this option.
+
 prototype_name
 ~~~~~~~~~~~~~~
 
