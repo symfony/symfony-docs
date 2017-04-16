@@ -211,6 +211,11 @@ structure like this using a namespace character (defaults to ``/``)::
 
 This way you can easily access a key within the stored array directly and easily.
 
+To use the structured namespacing behavior, your `parameters.yml` file should contains::
+
+    parameters:
+       session.attribute_bag.class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
 has a simple API
 
