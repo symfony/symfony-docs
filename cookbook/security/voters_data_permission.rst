@@ -209,7 +209,7 @@ from the security context is called.
         {
             // get a Post instance
             $post = ...;
-
+            
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
