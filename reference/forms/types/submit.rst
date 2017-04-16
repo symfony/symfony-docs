@@ -16,6 +16,7 @@ A submit button.
 | options              | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
 |                      | - `label_attr`_                                                      |
+|                      | - `label_format`_                                                    |
 |                      | - `translation_domain`_                                              |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
@@ -44,6 +45,8 @@ Inherited Options
 .. include:: /reference/forms/types/options/button_label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
