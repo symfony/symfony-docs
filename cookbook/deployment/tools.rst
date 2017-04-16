@@ -147,6 +147,12 @@ as you normally do:
     run ``export SYMFONY_ENV=prod`` before running this command so that
     the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
+.. caution::
+
+    If you get a "class not found" error during this step, you may need to
+    run ``export SYMFONY_ENV=prod`` before running this command so that
+    the ``post-install-cmd`` scripts run in the ``prod`` environment.
+
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
