@@ -1388,12 +1388,12 @@ Visualizing & Debugging Routes
 
 While adding and customizing routes, it's helpful to be able to visualize
 and get detailed information about your routes. A great way to see every route
-in your application is via the ``debug:router`` console command. Execute
+in your application is via the ``router:debug`` console command. Execute
 the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php app/console debug:router
+    $ php app/console router:debug
 
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``router:debug``.
