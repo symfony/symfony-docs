@@ -72,6 +72,13 @@ current PHP SAPI:
        to your ``php.ini`` file;
     #. From time to time, run ``composer global update`` to have the latest
        bug fixes.
+       
+The dump_die() Function
+-------------------
+
+When you do not want to execute any other code right after dumping a variable: 
+
+``dump_die($var);``
 
 DebugBundle and Twig Integration
 --------------------------------
