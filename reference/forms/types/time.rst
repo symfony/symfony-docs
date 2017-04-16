@@ -20,9 +20,9 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
-|                      | - `model_timezone`_                                                         |
+|                      | - `model_timezone`_  (deprecated as of 2.6)                                 |
 |                      | - `seconds`_                                                                |
-|                      | - `view_timezone`_                                                          |
+|                      | - `view_timezone`_ (deprecated as of 2.6)                                   |
 |                      | - `widget`_                                                                 |
 |                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |

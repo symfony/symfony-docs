@@ -24,9 +24,9 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `format`_                                                                 |
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
-|                      | - `model_timezone`_                                                         |
+|                      | - `model_timezone`_ (deprecated as of 2.6)                                  |
 |                      | - `months`_                                                                 |
-|                      | - `view_timezone`_                                                          |
+|                      | - `view_timezone`_  (deprecated as of 2.6)                                  |
 |                      | - `widget`_                                                                 |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+

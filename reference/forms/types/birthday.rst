@@ -28,9 +28,9 @@ option defaults to 120 years ago to the current year.
 |                      | - `placeholder`_                                                              |
 |                      | - `format`_                                                                   |
 |                      | - `input`_                                                                    |
-|                      | - `model_timezone`_                                                           |
+|                      | - `model_timezone`_ (deprecated as of 2.6)                                    |
 |                      | - `months`_                                                                   |
-|                      | - `view_timezone`_                                                            |
+|                      | - `view_timezone`_ (deprecated as of 2.6)                                     |
 |                      | - `widget`_                                                                   |
 |                      |                                                                               |
 |                      | from the :doc:`form </reference/forms/types/form>` type:                      |

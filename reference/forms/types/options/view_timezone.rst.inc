@@ -1,6 +1,12 @@
 view_timezone
 ~~~~~~~~~~~~~
 
+.. caution::
+
+    The ``view_timezone`` option has been deprecated and will be removed
+    in 3.0. If you pass `DateTime` instances as data to the form type, its
+    timezone is ignored.
+
 **type**: ``string`` **default**: system default timezone
 
 Timezone for how the data should be shown to the user (and therefore also
