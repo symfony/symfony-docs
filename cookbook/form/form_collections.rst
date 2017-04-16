@@ -299,7 +299,7 @@ new "tag" forms. To render it, make the following change to your template:
 
     .. code-block:: html+jinja
 
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
+        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
             ...
         </ul>
 
