@@ -560,7 +560,7 @@ Including this template from any other template is simple:
 
             <?php foreach ($articles as $article): ?>
                 <?php echo $view->render(
-                    'Article/article_details.html.php',
+                    '::article/article_details.html.php',
                     array('article' => $article)
                 ) ?>
             <?php endforeach ?>
