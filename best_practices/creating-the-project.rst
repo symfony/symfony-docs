@@ -115,6 +115,13 @@ Symfony documentation uses the AppBundle name.
     There is no need to prefix the AppBundle with your own vendor (e.g.
     AcmeAppBundle), because this application bundle is never going to be
     shared.
+    
+.. note::
+    
+    Another reason to create a new bundle is when you're overriding something 
+    in a vendor's bundle. For instance, if you have to override an action of 
+    the FOSUserBundle, then you should create a UserBundle that would be used 
+    only for this purpose. 
 
 .. note::
 
