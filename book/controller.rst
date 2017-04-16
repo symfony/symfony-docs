@@ -263,7 +263,7 @@ Take the following more-interesting example:
         class HelloController
         {
             /**
-             * @Route("/hello/{firstName}/{lastName}", name="hello")
+             * @Route("/hello/{firstName}/{lastName}")
              */
             public function indexAction($firstName, $lastName)
             {
