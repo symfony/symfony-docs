@@ -78,7 +78,7 @@ Next, define a new service for that class.
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # app/config/config.yml
     services:
         # keep your service names short
         app.slugger:
