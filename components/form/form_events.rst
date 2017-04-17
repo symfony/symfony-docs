@@ -185,10 +185,6 @@ View data        Same as in ``FormEvents::POST_SET_DATA``
     See all form events at a glance in the
     :ref:`Form Events Information Table <component-form-event-table>`.
 
-.. caution::
-
-    At this point, you cannot add or remove fields to the form.
-
 .. sidebar:: ``FormEvents::SUBMIT`` in the Form component
 
     The ``Symfony\Component\Form\Extension\Core\EventListener\FixUrlProtocolListener``
