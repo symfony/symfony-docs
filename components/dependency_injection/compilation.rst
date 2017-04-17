@@ -64,7 +64,7 @@ A very simple extension may just load configuration files into the container::
 
     class AcmeDemoExtension implements ExtensionInterface
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $config, ContainerBuilder $container)
         {
             $loader = new XmlFileLoader(
                 $container,
@@ -135,13 +135,13 @@ are loaded::
 The values from those sections of the config files are passed into the first
 argument of the ``load()`` method of the extension::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
-        $foo = $configs[0]['foo']; //fooValue
-        $bar = $configs[0]['bar']; //barValue
+        $foo = $config[0]['foo']; //fooValue
+        $bar = $config[0]['bar']; //barValue
     }
 
-The ``$configs`` argument is an array containing each different config file
+The ``$config`` argument is an array containing each different config file
 that was loaded into the container. You are only loading a single config
 file in the above example but it will still be within an array. The array
 will look like this::
@@ -161,11 +161,11 @@ you could access the config value this way::
     use Symfony\Component\Config\Definition\Processor;
     // ...
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processor = new Processor();
-        $config = $processor->processConfiguration($configuration, $configs);
+        $config = $processor->processConfiguration($configuration, $config);
 
         $foo = $config['foo']; //fooValue
         $bar = $config['bar']; //barValue
@@ -219,11 +219,11 @@ The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
 additional benefit of merging multiple files and validation of the configuration::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processor = new Processor();
-        $config = $processor->processConfiguration($configuration, $configs);
+        $config = $processor->processConfiguration($configuration, $config);
 
         $container->setParameter('acme_demo.FOO', $config['foo']);
 
@@ -234,11 +234,11 @@ More complex configuration requirements can be catered for in the Extension
 classes. For example, you may choose to load a main service configuration
 file but also load a secondary one only if a certain parameter is set::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processor = new Processor();
-        $config = $processor->processConfiguration($configuration, $configs);
+        $config = $processor->processConfiguration($configuration, $config);
 
         $loader = new XmlFileLoader(
             $container,
