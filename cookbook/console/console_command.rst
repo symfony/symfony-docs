@@ -40,7 +40,6 @@ want to extend the AppBundle to greet you from the command line, create
                 )
                 ->addOption(
                     'yell',
-                    null,
                     InputOption::VALUE_NONE,
                     'If set, the task will yell in uppercase letters'
                 )
