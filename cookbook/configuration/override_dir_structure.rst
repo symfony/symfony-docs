@@ -41,7 +41,7 @@ in the ``AppKernel`` class of you application::
 
         public function getCacheDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/cache';
+            return $this->rootDir.'/cache/'.$this->environment;
         }
     }
 
