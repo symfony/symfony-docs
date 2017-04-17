@@ -835,6 +835,24 @@ method to check the CSRF token::
         // CSRF token invalid! Do something, like redirect with an error.
     }
 
+Checking the Validity of a CSRF Token
+-------------------------------------
+
+Sometimes you want to use CSRF protection in an action where you don't want to use a
+Symfony form.
+
+If, for example, you're doing a DELETE action, you can use the
+:method:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\CsrfProviderInterface::isCsrfTokenValid`
+method to check the CSRF token::
+
+    $csrf = $this->container->get('form.csrf_provider');
+    $intention = 'authenticate';
+    $token = $csrf->generateCsrfToken($intention);
+
+    if (!$csrf->isCsrfTokenValid($intention, $token)) {
+        // CSRF token invalid! Do something, like redirect with an error.
+    }
+
 Final Thoughts
 --------------
 
