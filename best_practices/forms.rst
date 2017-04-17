@@ -17,6 +17,7 @@ code. This is perfectly fine if you don't need to reuse the form somewhere else.
 But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
+    // src/AppBundle/Form/Type/PostType.php
     namespace AppBundle\Form;
 
     use AppBundle\Entity\Post;
