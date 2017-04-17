@@ -743,4 +743,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
-.. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
+.. _`symfony-collection`: https://github.com/mktcode/symfony-collection
