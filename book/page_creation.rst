@@ -7,6 +7,10 @@
 Create your First Page in Symfony
 =================================
 
+CHANGE TO TEST THE NEW PULL REQUEST AUTO-DEPLOY!
+
+NEW CHANGE TO TRIGGER A REBUILD.
+
 Creating a new page - whether it's an HTML page or a JSON endpoint - is a
 simple two-step process:
 
