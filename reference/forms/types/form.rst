@@ -19,6 +19,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `error_bubbling`_                                                |
 |           | - `error_mapping`_                                                 |
 |           | - `extra_fields_message`_                                          |
+|           | - `force_submit`_                                                  |
 |           | - `inherit_data`_                                                  |
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
@@ -93,6 +94,62 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
+
+force_submit
+~~~~~~~~~~~~
+
+.. versionadded:: 3.1
+    The ``force_submit`` option was introduced in Symfony 3.1.
+
+**type**: ``bool`` **default**: ``false``
+
+By default when an array of data is built from request parameters in a
+:class:`Symfony\\Component\\Form\\RequestHandlerInterface` the name of the form
+must match a parameter key so the data can be submitted to it.
+
+This option allow request handlers to force the submission of data to a form
+when its name is not among the request parameters.
+
+.. code-block:: php
+
+    // Normal submission
+    $request->request->set('my_form' => array(
+            'name' => 'John Doe',
+            'email' => 'john@foo.com',
+        ),
+    );
+
+    $form = $formFactory->createNamedBuilder('my_form')
+                ->add('name')
+                ->add('email', EmailType::class)
+                ->getForm();
+
+    $form->handleRequest($request);
+
+    // Forced submission
+    $request->request->set('name', 'John Doe');
+    $request->request->set('email', 'john@foo.com');
+
+    $form = $formFactory->createNamedBuilder('my_form', null, array(
+                    'force_submit' => true,
+                ))
+                ->add('name')
+                ->add('email', EmailType::class)
+                ->getForm();
+
+    $form->handleRequest($request);
+
+.. note::
+
+    This option is meant to be used with root forms such as default one,
+    or custom form types.
+    If this option is true in a nested form or field, it will have no
+    effect on the submission process.
+
+.. tip::
+
+    This can be useful when using an API as you don't need to nest the data
+    in an array with the form name as key.
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
