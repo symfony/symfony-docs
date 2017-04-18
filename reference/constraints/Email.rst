@@ -7,7 +7,8 @@ cast to a string before being validated.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `strict`_                                                         |
+| Options        | - `profile`_                                                        |
+|                | - `strict`_                                                         |
 |                | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
 |                | - `checkHost`_                                                      |
@@ -91,14 +92,41 @@ Basic Usage
 Options
 -------
 
+.. versionadded:: 3.1
+    The ``profile`` option was added in Symfony 3.1
+
+profile
+~~~~~~~
+
+**type**: ``string`` **default**: ``basic``
+
+This option is used to specify exactly which type of email validation should
+be performed. It can be set to one of the following values:
+
+``basic``
+    Validation will occur against a simple regular expression.
+``html5``
+    Validation will occur against the regular expression defined in
+    the `HTML5 spec`_.
+``rfc``
+    The `egulias/email-validator`_ library will perform an RFC-compliant
+    validation in non-strict mode. If any warning messages regarding
+    unusual/deprecated email address features are raised during validation,
+    they will not prevent an otherwise-valid email from being marked as
+    invalid.
+``rfc-no-warn``
+    The `egulias/email-validator`_ library will perform an RFC-compliant
+    validation in strict mode. If any warning messages regarding
+    unusual/deprecated email address features are raised during validation,
+    the email address will be considered invalid.
+
 strict
 ~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
-When false, the email will be validated against a simple regular expression.
-If true, then the `egulias/email-validator`_ library is required to perform
-an RFC compliant validation.
+DEPRECATED. When true, the email validator will use the strict
+'rfc-no-warn' profile.
 
 message
 ~~~~~~~
@@ -127,3 +155,5 @@ of the given email.
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
+
+.. _HTML5 spec: https://www.w3.org/TR/html-markup/datatypes.html#form.data.emailaddress-def

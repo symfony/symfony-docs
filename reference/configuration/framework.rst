@@ -92,6 +92,7 @@ Configuration
     * :ref:`cache <reference-validation-cache>`
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
+    * `email_profile`_
     * `strict_email`_
     * `mapping`_
         * :ref:`paths <reference-validation-mapping-paths>`
@@ -1436,14 +1437,22 @@ translation_domain
 The translation domain that is used when translating validation constraint
 error messages.
 
+email_profile
+.............
+
+**type**: ``string`` **default**: ``basic``
+
+If this option is specified, the :doc:`/reference/constraints/Email`
+constraint validator will default to the specified email validation profile.
+See the linked page for more information.
+
 strict_email
 ............
 
 **type**: ``Boolean`` **default**: ``false``
 
-If this option is enabled, the `egulias/email-validator`_ library will be
-used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
-the validator uses a simple regular expression to validate email addresses.
+DEPRECATED. If this option is enabled, the :doc:`/reference/constraints/Email`
+constraint validator will default to the strict 'rfc-no-warn' profile.
 
 mapping
 .......
