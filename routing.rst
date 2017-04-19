@@ -686,16 +686,101 @@ Here are some common errors you might see while working with routing:
     Controller "AppBundle\Controller\BlogController::showAction()" requires that you
     provide a value for the "$slug" argument.
 
-This happens when your controller method has an argument (e.g. ``$slug``)::
+This happens when your controller method has an argument (e.g. ``$slug``),
+but your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``):
 
-    public function showAction($slug)
-    {
-        // ..
-    }
+.. configuration-block::
 
-But your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``).
+    .. code-block:: php-annotations
+
+        /**
+         * @Route("/blog/show", name="blog_show")
+         */
+        public function showAction($slug)
+        {
+            // ..
+        }
+
+    .. code-block:: yaml
+
+        blog_show:
+            path:      /blog/show
+            defaults:  { _controller: AppBundle:Blog:show }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_show" path="/blog/show">
+                <default key="_controller">AppBundle:Blog:show</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog_show', new Route('/blog/show', array(
+            '_controller' => 'AppBundle:Blog:show',
+        )));
+
+        return $collection;
+
 Add a ``{slug}`` to your route path: ``/blog/show/{slug}`` or give the argument
-a default value (i.e. ``$slug = null``).
+a default value (i.e. ``$slug = null``). You can also do both, like in this example:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        /**
+         * @Route("/blog/show/{slug}", name="blog_show")
+         */
+        public function showAction($slug = null)
+        {
+            // ..
+        }
+
+    .. code-block:: yaml
+
+        blog_show:
+            path:      /blog/show/{slug}
+            defaults:  { _controller: AppBundle:Blog:show, slug: null }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_show" path="/blog/show/{slug}">
+                <default key="_controller">AppBundle:Blog:show</default>
+                <default key="slug">null</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog_show', new Route('/blog/show/{slug}', array(
+            '_controller' => 'AppBundle:Blog:show',
+            'slug' => null,
+        )));
+
+        return $collection;
+
+..
 
     Some mandatory parameters are missing ("slug") to generate a URL for route
     "blog_show".
