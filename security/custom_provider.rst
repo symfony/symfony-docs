@@ -100,6 +100,13 @@ This is how your ``WebserviceUser`` class looks in action::
 
             return true;
         }
+
+        // it's recommended to add this method so you can later pass the
+        // user object to other methods instead of their username
+        public function __toString()
+        {
+            return $this->username;
+        }
     }
 
 If you have more information about your users - like a "first name" - then
