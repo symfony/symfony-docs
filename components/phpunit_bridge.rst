@@ -387,7 +387,7 @@ Modified PHPUnit script
 -----------------------
 
 .. versionadded:: 3.2
-    The modified PHPUnit script script was introduced in the 3.2 version of 
+    This modified PHPUnit script was introduced in the 3.2 version of 
     this component.
 
 This bridge provides a modified version of PHPUnit that you can call by using
@@ -420,8 +420,8 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
 .. tip::
 
-    Set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml`` if you need
-    ``prophecy`` but not ``symfony/yaml``.
+    If you still need to use ``prophecy`` (but not ``symfony/yaml``), 
+    then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
