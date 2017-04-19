@@ -339,6 +339,10 @@ the ``genders`` parameter value as the first argument to its to-be-created
     Make sure the services file is being imported. See :ref:`service-container-imports-directive`
     for details.
 
+.. versionadded:: 3.3
+    Prior to Symfony 3.3, you needed to define form type services as ``public``.
+    Starting from Symfony 3.3, you can also define them as ``private``.
+
 First, add a ``__construct`` method to ``GenderType``, which receives the gender
 configuration::
 
