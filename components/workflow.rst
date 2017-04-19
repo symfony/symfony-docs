@@ -57,9 +57,9 @@ these statuses are called **places**. You can define the workflow like this::
     $workflow = new Workflow($definition, $marking);
 
 .. versionadded:: 3.3
-    The fluent interface for ``DefinitionBuilder`` class was added in Smyfony 3.3.
-    Before you had to call ``addPlaces()``, ``addTransition()`` and ``build()``
-    methods separately.
+    The fluent interface for the ``DefinitionBuilder`` class was introduced in
+    Symfony 3.3. Before you had to call the ``addPlaces()``, ``addTransition()``
+    and ``build()`` methods separately.
 
 The ``Workflow`` can now help you to decide what actions are allowed
 on a blog post depending on what *place* it is in. This will keep your domain
