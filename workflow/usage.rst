@@ -249,9 +249,16 @@ This class has two more methods:
 Usage in Twig
 -------------
 
-Using your workflow in your Twig templates reduces the need of domain logic
-in the view layer. Consider this example of the control panel of the blog.
-The links below will only be displayed when the action is allowed:
+Symfony defines several Twig functions to manage workflows and reduce the need
+of domain logic in your templates:
+
+``workflow_can()``
+    Returns ``true`` if the given object can make the given transition.
+
+``workflow_transitions()``
+    Returns an array with all the transitions enabled for the given object.
+
+The following example shows these functions in action:
 
 .. code-block:: twig
 
