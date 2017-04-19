@@ -265,8 +265,8 @@ of domain logic in your templates:
     Returns ``true`` if the marking of the given object has the given state.
 
 .. versionadded:: 3.3
-    The ``workflow_marked_places()`` and ``workflow_has_marked_place()`` methods
-    were added in Symfony 3.3.
+    The ``workflow_marked_places()`` and ``workflow_has_marked_place()``
+    functions were added in Symfony 3.3.
 
 The following example shows these methods in action:
 
