@@ -11,7 +11,7 @@ quickly.
 .. tip::
 
     Due to the amount of filesystem operations in Symfony (e.g. updating cache
-    files and writing to log files), Symfony can slow down significantly. To
+    files and writing to log files), Vagrant can slow down significantly. To
     improve the speed, consider :ref:`overriding the cache and log directories <override-cache-dir>`
     to a location outside the NFS share (for instance, by using
     :phpfunction:`sys_get_temp_dir`). You can read `this blog post`_ for more
@@ -52,7 +52,16 @@ configuration:
           to: /home/vagrant/projects/symfony_demo/web
           type: symfony
 
-The ``type`` option tells Homestead to use the Symfony nginx configuration.
+The ``type`` option tells Homestead to use the Symfony nginx configuration. If
+you are using just the Symfony components, change the ``type`` to ``laravel``:
+
+.. code-block:: yaml
+
+    # ...
+    sites:
+        - map: php-application.dev
+          to: /home/vagrant/projects/php_application/web
+          type: laravel
 
 At last, edit the hosts file on your local machine to map ``symfony-demo.dev``
 to ``192.168.10.10`` (which is the IP used by Homestead)::
