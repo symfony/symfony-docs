@@ -235,7 +235,7 @@ returning the result of the ROT13 transformation uppercased::
 
     namespace Acme;
 
-    class UppercaseTransformer implements TransformerInterface
+    class UppercaseRot13Transformer implements TransformerInterface
     {
         private $transformer;
 
