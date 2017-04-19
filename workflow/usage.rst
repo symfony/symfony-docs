@@ -266,9 +266,9 @@ of domain logic in your templates:
 
 .. versionadded:: 3.3
     The ``workflow_marked_places()`` and ``workflow_has_marked_place()``
-    functions were added in Symfony 3.3.
+    functions were introduced in Symfony 3.3.
 
-The following example shows these methods in action:
+The following example shows these functions in action:
 
 .. code-block:: twig
 
