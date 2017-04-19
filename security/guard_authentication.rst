@@ -69,6 +69,13 @@ property they use to access their account via the API::
         }
 
         // more getters/setters
+
+        // it's recommended to add this method so you can later pass the
+        // user object to other methods instead of their username
+        public function __toString()
+        {
+            return $this->username;
+        }
     }
 
 .. tip::
