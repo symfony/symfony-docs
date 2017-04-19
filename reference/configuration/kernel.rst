@@ -57,8 +57,8 @@ Root Directory
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 3.3
-    The ``getRootDir()`` method was deprecated in Symfony 3.3 and replaced by
-    the new ``getProjectDir()`` method.
+    The ``getRootDir()`` method is deprecated since Symfony 3.3. Use the new
+    ``getProjectDir()`` method instead.
 
 **type**: ``string`` **default**: the directory of ``AppKernel``
 
