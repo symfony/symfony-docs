@@ -249,9 +249,26 @@ This class has two more methods:
 Usage in Twig
 -------------
 
-Using your workflow in your Twig templates reduces the need of domain logic
-in the view layer. Consider this example of the control panel of the blog.
-The links below will only be displayed when the action is allowed:
+Symfony defines several Twig functions to manage workflows and reduce the need
+of domain logic in your templates:
+
+``workflow_can()``
+    Returns ``true`` if the given object can make the given transition.
+
+``workflow_transitions()``
+    Returns an array with all the transitions enabled for the given object.
+
+``workflow_marked_places()``
+    Returns an array with the place names of the given marking.
+
+``workflow_has_marked_place()``
+    Returns ``true`` if the marking of the given object has the given state.
+
+.. versionadded:: 3.3
+    The ``workflow_marked_places()`` and ``workflow_has_marked_place()``
+    functions were introduced in Symfony 3.3.
+
+The following example shows these functions in action:
 
 .. code-block:: twig
 
@@ -276,4 +293,9 @@ The links below will only be displayed when the action is allowed:
     {# Check if the object is in some specific place #}
     {% if workflow_has_marked_place(post, 'to_review') %}
         <p>This post is ready for review.</p>
+    {% endif %}
+
+    {# Check if some place has been marked on the object #}
+    {% if 'waiting_some_approval' in workflow_marked_places(post) %}
+        <span class="label">PENDING</span>
     {% endif %}
