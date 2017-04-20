@@ -295,5 +295,7 @@ The following example shows these functions in action:
         <p>This post is ready for review.</p>
     {% endif %}
 
-    {# Get all the places related to the 'post' marking #}
-    {{ workflow_marked_places(post)|join(',') }}
+    {# Check if some place has been marked on the object #}
+    {% if 'waiting_some_approval' in workflow_marked_places(post) %}
+        <span class="label">PENDING</span>
+    {% endif %}
