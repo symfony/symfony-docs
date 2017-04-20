@@ -1,16 +1,43 @@
 <div class=submenu>
-    {% set menu = [ 
+    {% set menu_basic = [
         ('Home', 'index'),
-        ('The Components', 'components/index'),
-        ('The Best Practices', 'best_practices/index'),
-        ('The Quick Tour', 'quick_tour/index'),
         ('Reference', 'reference/index'),
-        ('Index', 'genindex'),
-        ('Contributing', 'contributing/index')
+        ('Components', 'components/index'),
     ] %}
-    
+
     <ul class="list_submenu list-unstyled">
-    {% for name, doc in menu %}
+    {% for name, doc in menu_basic %}
+        <li {% if loop.first %}class="first"{% endif %}>
+            <a href="{{ pathto(doc) }}">{{ name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% set menu_guides = [
+        ('Assetic', 'assetic'),
+        ('Bundles', 'bundles'),
+        ('Console', 'console'),
+    ] %}
+
+    <h3>Guides</h3>
+    <ul class="list_submenu list-unstyled">
+    {% for name, doc in menu_basic %}
+        <li {% if loop.first %}class="first"{% endif %}>
+            <a href="{{ pathto(doc) }}">{{ name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% set menu_extra = [
+        ('Reference', 'reference/index'),
+        ('Contributing', 'contributing/index')
+        ('Bundles', 'bundles/index'),
+        ('The Quick Tour', 'quick_tour/index'),
+    ] %}
+
+    <h3>Misc. contents</h3>
+    <ul class="list_submenu list-unstyled">
+    {% for name, doc in menu_extra %}
         <li {% if loop.first %}class="first"{% endif %}>
             <a href="{{ pathto(doc) }}">{{ name }}</a>
         </li>
