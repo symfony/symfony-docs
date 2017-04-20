@@ -257,7 +257,7 @@ document::
         );
 
         // Assert that there are exactly 4 h2 tags on the page
-        $this->assertCount(4, $crawler->filter('h2'));
+        $this->assertCount(4, $crawler->filter('h2')->count());
 
         // Assert that the "Content-Type" header is "application/json"
         $this->assertTrue(
