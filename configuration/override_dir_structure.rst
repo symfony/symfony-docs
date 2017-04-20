@@ -135,7 +135,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
             # ...
             assetic:
                 # ...
-                read_from: '%kernel.root_dir%/../../public_html'
+                read_from: '%kernel.project_dir%/../public_html'
 
         .. code-block:: xml
 
@@ -150,7 +150,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
                     http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
                 <!-- ... -->
-                <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+                <assetic:config read-from="%kernel.project_dir%/../public_html" />
             </container>
 
         .. code-block:: php
@@ -160,7 +160,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
             // ...
             $container->loadFromExtension('assetic', array(
                 // ...
-                'read_from' => '%kernel.root_dir%/../../public_html',
+                'read_from' => '%kernel.project_dir%/../public_html',
             ));
 
     Now you just need to clear the cache and dump the assets again and your

@@ -20,7 +20,7 @@ Full Default Configuration
                 enabled:              '%kernel.debug%'
                 profiler:             false
             read_from:            '%assetic.read_from%'
-            write_to:             '%kernel.root_dir%/../web'
+            write_to:             '%kernel.project_dir%/web'
             java:                 /usr/bin/java
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby
@@ -78,7 +78,7 @@ Full Default Configuration
                 debug="%kernel.debug%"
                 use-controller="%kernel.debug%"
                 read-from="%assetic.read_from%"
-                write-to="%kernel.root_dir%/../web"
+                write-to="%kernel.project_dir%/web"
                 java="/usr/bin/java"
                 node="/usr/bin/node"
                 sass="/usr/bin/sass">

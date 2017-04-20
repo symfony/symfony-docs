@@ -385,7 +385,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
             framework:
                 translator:
                     paths:
-                        - '%kernel.root_dir%/../translations'
+                        - '%kernel.project_dir%/translations'
 
         .. code-block:: xml
 
@@ -402,7 +402,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
                 <framework:config>
                     <framework:translator>
-                        <framework:path>%kernel.root_dir%/../translations</framework:path>
+                        <framework:path>%kernel.project_dir%/translations</framework:path>
                     </framework:translator>
                 </framework:config>
             </container>
@@ -413,7 +413,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
             $container->loadFromExtension('framework', array(
                 'translator' => array(
                     'paths' => array(
-                        '%kernel.root_dir%/../translations',
+                        '%kernel.project_dir%/translations',
                     ),
                 ),
             ));

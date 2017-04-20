@@ -165,7 +165,7 @@ controller to specify the directory in which the brochures should be stored:
 
     # ...
     parameters:
-        brochures_directory: '%kernel.root_dir%/../web/uploads/brochures'
+        brochures_directory: '%kernel.project_dir%/web/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 

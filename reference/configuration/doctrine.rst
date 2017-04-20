@@ -205,7 +205,7 @@ Full Default Configuration
                         password="secret"
                         driver="pdo_mysql"
                         driver-class="MyNamespace\MyDriverImpl"
-                        path="%kernel.root_dir%/../var/data/data.sqlite"
+                        path="%kernel.project_dir%/var/data/data.sqlite"
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
                         wrapper-class="MyDoctrineDbalConnectionWrapper"
@@ -264,7 +264,7 @@ Full Default Configuration
                         <doctrine:mapping
                             name="DoctrineExtensions"
                             type="xml"
-                            dir="%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/DoctrineExtensions/Entity"
+                            dir="%kernel.project_dir%/vendor/gedmo/doctrine-extensions/lib/DoctrineExtensions/Entity"
                             prefix="DoctrineExtensions\Entity"
                             alias="DExt"
                         />
@@ -340,7 +340,7 @@ Path to the mapping or entity files (depending on the driver). If this path
 is relative it is assumed to be relative to the bundle root. This only works
 if the name of your mapping is a bundle name. If you want to use this option
 to specify absolute paths you should prefix the path with the kernel parameters
-that exist in the DIC (for example ``%kernel.root_dir%``).
+that exist in the DIC (for example ``%kernel.project_dir%``).
 
 prefix
 ......
@@ -398,7 +398,7 @@ The following block shows all possible configuration keys:
                 # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 '%kernel.root_dir%/data/data.sqlite'
+                path:                 '%kernel.project_dir%ta/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
@@ -434,7 +434,7 @@ The following block shows all possible configuration keys:
                     password="secret"
                     driver="pdo_mysql"
                     driver-class="MyNamespace\MyDriverImpl"
-                    path="%kernel.root_dir%/../var/data/data.sqlite"
+                    path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
                     wrapper-class="MyDoctrineDbalConnectionWrapper"
@@ -605,7 +605,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                         # ...
                         SomeEntityNamespace:
                             type: annotation
-                            dir: '%kernel.root_dir%/../src/Entity'
+                            dir: '%kernel.project_dir%/src/Entity'
                             is_bundle: false
                             prefix: App\Entity
                             alias: App
@@ -620,7 +620,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                 <doctrine:orm>
                     <mapping name="SomeEntityNamespace"
                         type="annotation"
-                        dir="%kernel.root_dir%/../src/Entity"
+                        dir="%kernel.project_dir%/src/Entity"
                         is-bundle="false"
                         prefix="App\Entity"
                         alias="App"
@@ -637,7 +637,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                 'mappings' => array(
                     'SomeEntityNamespace' => array(
                         'type'      => 'annotation',
-                        'dir'       => '%kernel.root_dir%/../src/Entity',
+                        'dir'       => '%kernel.project_dir%/src/Entity',
                         'is_bundle' => false,
                         'prefix'    => 'App\Entity',
                         'alias'     => 'App',
