@@ -166,7 +166,7 @@ The ``addListener()`` method takes up to three arguments:
         });
 
 Once a listener is registered with the dispatcher, it waits until the event
-is notified. In the above example, when the ``foo.action`` event is dispatched,
+is notified. In the above example, when the ``acme.action`` event is dispatched,
 the dispatcher calls the ``AcmeListener::onFooAction()`` method and passes
 the ``Event`` object as the single argument::
 
