@@ -189,6 +189,13 @@ For more information, see the :doc:`Routing article </routing>`.
     to the `unvalidated redirects security vulnerability`_.
 
 
+.. caution::
+
+    The ``redirect()`` method does not check its destination in any way. If you 
+    redirect to some URL provided by the end-users, your application may be open 
+    to the `unvalidated redirects security vulnerability`_.
+
+
 .. tip::
 
     The ``redirectToRoute()`` method is simply a shortcut that creates a
