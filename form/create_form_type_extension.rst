@@ -132,7 +132,7 @@ be applied to. In your case, as you want to extend the ``Symfony\Component\Form\
 field type, you will use that as the ``extended_type``.
 
 .. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define form extension services as ``public``.
+    Prior to Symfony 3.3, you needed to define type extension services as ``public``.
     Starting from Symfony 3.3, you can also define them as ``private``.
 
 .. tip::
