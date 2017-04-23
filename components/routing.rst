@@ -194,6 +194,7 @@ Normally you can pass the values from the ``$_SERVER`` variable to populate the
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\RequestContext;
 
     $context = new RequestContext();
     $context->fromRequest(Request::createFromGlobals());
@@ -295,6 +296,7 @@ There is also the :class:`Symfony\\Component\\Routing\\Loader\\ClosureLoader`, w
 calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\RouteCollection`::
 
     use Symfony\Component\Routing\Loader\ClosureLoader;
+    use Symfony\Component\Routing\RouteCollection;
 
     $closure = function () {
         return new RouteCollection();
