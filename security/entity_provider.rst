@@ -107,7 +107,9 @@ For this entry, suppose that you already have a ``User`` entity inside an
 
         public function getRoles()
         {
-            return array('ROLE_USER');
+            // the $this->roles variable is used to test roles by the Symfony's security system
+            $this->roles = array('ROLE_USER');
+            return $this->roles;
         }
 
         public function eraseCredentials()
