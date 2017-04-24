@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by jderusse at 2017-01-15T17:11:40Z
+
+Thank you @javiereguiluz for this review.
+
+Do you think this page should be split into several sub-pages? for instance, one page for advanced usage (expiration, blocking....) and one for listing stores?
+Or there is not enought content and a single page is better?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-15T19:45:49Z
+
+@jderusse about splitting this into several pages ... we usually start with one page and split if needed later. For now the docs of this component are not too long, so I guess we can keep the single page doc for now.
+
+---------------------------------------------------------------------------
+
+by jderusse at 2017-02-17T06:54:26Z
+
+Comment addressed.
+Thank you @fabpot
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-26T17:08:44Z
+
+A note to mergers: I propose to merge this as is, so we can have the docs for the Lock component as soon as possible. The integration of Lock inside the Symfony framework is still pending, so let's not wait until that is finished (we'll do that in a separate PR).
