@@ -261,7 +261,7 @@ To translate pluralized messages, use the
 
     // ...but you can define more placeholders if needed
     $translator->transChoice(
-        'Hurry up %name%! There is one ticket left.|There are %count% tickets left.',
+        'Hurry up %name%! There is one apple left.|There are %count% apples left.',
         10,
         // no need to include %count% here; Symfony does that for you
         array('%name%' => $user->getName())
