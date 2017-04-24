@@ -112,6 +112,12 @@ Caching
 The component provides some different caching strategies, read more about them
 in :doc:`/components/expression_language/caching`.
 
+AST Dumping and Editing
+-----------------------
+
+The AST (*Abstract Syntax Tree*) of expressions can be dumped and manipulated
+as explained in :doc:`/components/expression_language/ast`.
+
 Learn More
 ----------
 
