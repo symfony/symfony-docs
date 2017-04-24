@@ -253,19 +253,29 @@ all the forms as a string separated by a pipe (``|``)::
 To translate pluralized messages, use the
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
 
+    // the %count% placeholder is assigned to the second argument...
     $translator->transChoice(
         'There is one apple|There are %count% apples',
         10
+    );
+
+    // ...but you can define more placeholders if needed
+    $translator->transChoice(
+        'Hurry up %name%! There is one ticket left.|There are %count% tickets left.',
+        10,
+        // no need to include %count% here; Symfony does that for you
+        array('%name%' => $user->getName())
     );
 
 The second argument (``10`` in this example) is the *number* of objects being
 described and is used to determine which translation to use and also to populate
 the ``%count%`` placeholder.
 
-.. note::
+.. versionadded:: 3.2
 
-    Before Symfony 3.2, the ``transChoice()`` method required a third argument
-    defining the value of each translation placeholder::
+    Before Symfony 3.2, the placeholder used to select the plural (``%count%``
+    in this example) must be included in the third optional argument of the
+    ``transChoice()`` method::
 
         $translator->transChoice(
             'There is one apple|There are %count% apples',
