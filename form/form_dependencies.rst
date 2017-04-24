@@ -136,6 +136,10 @@ Next, register this as a service and tag it with ``form.type``:
             ->addTag('form.type')
         ;
 
+.. versionadded:: 3.3
+    Prior to Symfony 3.3, you needed to define form type services as ``public``.
+    Starting from Symfony 3.3, you can also define them as ``private``.
+
 That's it! Your controller - where you create the form - doesn't need to change
 at all: Symfony is smart enough to load the ``TaskType`` from the container.
 

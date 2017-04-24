@@ -370,6 +370,10 @@ you need to register it as a service and tag it with :ref:`form.type <dic-tags-f
 
         $container->setDefinition('app.form.friend_message', $definition);
 
+.. versionadded:: 3.3
+    Prior to Symfony 3.3, you needed to define form type services as ``public``.
+    Starting from Symfony 3.3, you can also define them as ``private``.
+
 In a controller that extends the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
 class, you can simply call::
 
