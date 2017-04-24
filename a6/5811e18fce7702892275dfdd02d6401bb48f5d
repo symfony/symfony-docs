@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by iltar at 2017-04-19T10:55:44Z
+
+I'm missing a mention of `kernel.project_dir`.
+
+https://github.com/symfony/symfony/pull/22315/files#diff-50575470114d078b3ca3622ae30fba6eR581
