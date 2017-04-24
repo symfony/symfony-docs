@@ -125,7 +125,7 @@ The output will look like this:
         use_controller:
             enabled:              '%kernel.debug%'
             profiler:             false
-        read_from:            '%kernel.root_dir%/../web'
+        read_from:            '%kernel.project_dir%/web'
         write_to:             '%assetic.read_from%'
         java:                 /usr/bin/java
         node:                 /usr/local/bin/node

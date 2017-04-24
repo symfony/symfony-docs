@@ -207,7 +207,7 @@ can automatically generate an empty ``test_project`` database for you:
             doctrine:
                 dbal:
                     driver: pdo_sqlite
-                    path: '%kernel.root_dir%/sqlite.db'
+                    path: '%kernel.project_dir%/app/sqlite.db'
                     charset: UTF8
 
         .. code-block:: xml
@@ -225,7 +225,7 @@ can automatically generate an empty ``test_project`` database for you:
                 <doctrine:config>
                     <doctrine:dbal
                         driver="pdo_sqlite"
-                        path="%kernel.root_dir%/sqlite.db"
+                        path="%kernel.project_dir%/app/sqlite.db"
                         charset="UTF-8" />
                 </doctrine:config>
             </container>
@@ -236,7 +236,7 @@ can automatically generate an empty ``test_project`` database for you:
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'  => 'pdo_sqlite',
-                    'path'    => '%kernel.root_dir%/sqlite.db',
+                    'path'    => '%kernel.project_dir%/app/sqlite.db',
                     'charset' => 'UTF-8',
                 ),
             ));

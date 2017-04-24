@@ -25,7 +25,7 @@ The main configuration file is called ``config.yml``:
 
         framework:
             secret:          '%secret%'
-            router:          { resource: '%kernel.root_dir%/config/routing.yml' }
+            router:          { resource: '%kernel.project_dir%/app/config/routing.yml' }
             # ...
 
         # Twig Configuration
@@ -57,7 +57,7 @@ The main configuration file is called ``config.yml``:
             </imports>
 
             <framework:config secret="%secret%">
-                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+                <framework:router resource="%kernel.project_dir%/app/config/routing.xml" />
                 <!-- ... -->
             </framework:config>
 
@@ -77,7 +77,7 @@ The main configuration file is called ``config.yml``:
         $container->loadFromExtension('framework', array(
             'secret' => '%secret%',
             'router' => array(
-                'resource' => '%kernel.root_dir%/config/routing.php',
+                'resource' => '%kernel.project_dir%/app/config/routing.php',
             ),
             // ...
         ));

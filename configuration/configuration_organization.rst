@@ -23,7 +23,7 @@ class::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+            $loader->load($this->getProjectDir().'/app/config/config_'.$this->getEnvironment().'.yml');
         }
     }
 
@@ -99,7 +99,7 @@ method::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load($this->getRootDir().'/config/'.$this->getEnvironment().'/config.yml');
+            $loader->load($this->getProjectDir().'/app/config/'.$this->getEnvironment().'/config.yml');
         }
     }
 
@@ -196,7 +196,7 @@ make Symfony aware of the new file organization::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load($this->getRootDir().'/config/environments/'.$this->getEnvironment().'.yml');
+            $loader->load($this->getProjectDir().'/app/config/environments/'.$this->getEnvironment().'.yml');
         }
     }
 
