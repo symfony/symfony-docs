@@ -4,30 +4,44 @@
 Dumping and Manipulating the AST of Expressions
 ===============================================
 
-In computer science, `AST`_ (*Abstract Syntax Trees*) are a tree representation
-of the structure of source code written in a programming language. The
-expressions created with the ExpressionLanguage component are strings, which
-make them difficult to manipulate or inspect.
+In computer science, `AST`_ (*Abstract Syntax Trees*) is *"a tree representation
+of the structure of source code written in a programming language"*.
 
-A better approach is to dump the AST of those expressions using the ``dump()``
-method. This turns the original string expression into a set of PHP classes
-describing the operations of that expression::
+Manipulating or inspecting the expressions created with the ExpressionLanguage
+component is difficult because they are plain strings. A better approach is to
+turn those expressions into an AST, which is a set of nodes that contain PHP
+classes.
+
+Dumping the AST
+---------------
+
+Call the ``getNodes()`` method after parsing any expression to get its AST::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
-    $ast = $language->dump('1 + 2');
-    // $ast = new BinaryNode('+', new ConstantNode(1), new ConstantNode(2));
+    $ast = (new ExpressionLanguage())
+        ->parse('1 + 2')
+        ->getNodes()
+    ;
 
-    $ast = $language->dump('"a" not in ["a", "b"]');
-    // $ast = new BinaryNode('not in', new ConstantNode('a'), new ArrayNode(new ConstantNode('a'), new ConstantNode('b')));
+    // dump the AST nodes for inspection
+    var_dump($ast);
 
-    $ast = $language->dump('foo[0]');
-    // $ast = new GetAttrNode(new NameNode('foo'), new ConstantNode(0));
+    // dump the AST nodes as a string representation
+    $astAsString = $ast->dump();
 
 Manipulating the AST
 --------------------
 
-.. TODO: https://github.com/symfony/symfony/pull/19060
+The nodes of the AST can also be dumped into a PHP array of nodes to allow
+manipulating them. Call the ``toArray()`` method to turn the AST into an array::
+
+    // ...
+
+    $astAsArray = (new ExpressionLanguage())
+        ->parse('1 + 2')
+        ->getNodes()
+        ->toArray()
+    ;
 
 .. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
