@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-04-19T07:47:38Z
+
+Updated.. removed the additional tip on low-level api usage; i agree with @javiereguiluz on this.
+
+So basically we simply mention `Cookie::fromString` now :)
