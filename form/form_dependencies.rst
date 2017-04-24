@@ -75,7 +75,7 @@ Suppose you need to access the ``doctrine.orm.entity_manager`` service so that y
 can make a query. First, add this as an argument to your form class::
 
     // src/AppBundle/Form/TaskType.php
-
+    
     use Doctrine\ORM\EntityManager;
     // ...
 
