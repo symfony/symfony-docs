@@ -69,6 +69,22 @@ for new output before going to the next iteration::
         }
     }
 
+.. tip::
+
+    The Process component uses internally a PHP iterator to get the the output
+    while it is generated. That iterator is exposed via the ``getIterator()``
+    method to allow customizing its behavior::
+
+        $process = new Process('ls -lsa');
+        $process->start();
+        $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
+        foreach ($iterator as $data) {
+            echo $data."\n";
+        }
+
+    .. versionadded:: 3.2
+        The ``getIterator()`` method was introduced in Symfony 3.2.
+
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
 if the process couldn't be executed successfully (i.e. the process exited
