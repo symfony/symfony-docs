@@ -378,6 +378,12 @@ method takes an instance of
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
 
+Note you can create a 
+:class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header value using :method:`Symfony\Component\HttpFoundation\Cookie::fromString`.
+
+.. versionadded:: 3.3
+    The ``Cookie::fromString()`` method was introduced in Symfony 3.3.
+
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
