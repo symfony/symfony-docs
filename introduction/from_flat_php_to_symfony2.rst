@@ -370,7 +370,7 @@ on the requested URI::
         echo '<html><body><h1>Page Not Found</h1></body></html>';
     }
 
-For organization, both controllers (formerly ``index.php`` and ``show.php``)
+For organization, both controllers (formerly ``/index.php`` and ``/index.php/show``)
 are now PHP functions and each has been moved into a separate file named ``controllers.php``::
 
     // controllers.php
