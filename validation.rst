@@ -246,9 +246,8 @@ file:
             ),
         ));
 
-Besides, if you plan to use annotations to configure validation (as recommended
-by the official Symfony Best Practices), replace the previous configuration by
-the following:
+Besides, if you plan to use annotations to configure validation, replace the
+previous configuration by the following:
 
 .. configuration-block::
 
