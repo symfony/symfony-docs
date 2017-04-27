@@ -23,6 +23,8 @@ A button that resets all fields to their original values.
 Inherited Options
 -----------------
 
+Note theses examples come from the ButtonType documentation. If you want to use the ResetType field, you have to use ResetType::class instead of ButtonType::class to generate a reset button.
+
 .. include:: /reference/forms/types/options/button_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
