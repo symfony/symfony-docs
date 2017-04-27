@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-04-20T07:05:34Z
+
+Thinking about this help note, don't you think this is a Symfony bug? If the "context" option only works when doing some things, shouldn't Symfony check if you have done those things and warn you if you haven't?
+
+---------------------------------------------------------------------------
+
+by geoffrey-brier at 2017-04-20T07:23:25Z
+
+@javiereguiluz Not sure if it's a bug but that may be a good idea to check that.
