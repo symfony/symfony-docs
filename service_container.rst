@@ -60,7 +60,7 @@ Find out by running:
 
 .. code-block:: terminal
 
-     $ php app/console debug:container
+     $ php bin/console debug:container
 
 This is just a *small* sample of the output:
 
