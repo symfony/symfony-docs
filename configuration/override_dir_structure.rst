@@ -168,7 +168,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
 
     .. code-block:: terminal
 
-        $ php bin/console cache:clear --env=prod
+        $ php bin/console cache:clear --no-warmup --env=prod
         $ php bin/console assetic:dump --env=prod --no-debug
 
 Override the ``vendor`` Directory

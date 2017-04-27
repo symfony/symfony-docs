@@ -504,6 +504,12 @@ process
 Cache warming occurs whenever you run the ``cache:warmup`` or ``cache:clear``
 command (unless you pass ``--no-warmup`` to ``cache:clear``). It is also run
 when handling the request, if it wasn't done by one of the commands yet.
+
+.. versionadded:: 3.3
+    Starting from Symfony 3.3, the warm-up part of the ``cache:clear`` command
+    is deprecated. You must always pass the ``--no-warmup`` option to
+    ``cache:clear`` and use ``cache:warmup`` instead to warm-up the cache.
+
 The purpose is to initialize any cache that will be needed by the application
 and prevent the first user from any significant "cache hit" where the cache
 is generated dynamically.
