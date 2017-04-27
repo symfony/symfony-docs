@@ -273,7 +273,7 @@ you can extend your test from
     {
         public function testExecute()
         {
-            $kernel = $this->createKernel();
+            $kernel = static::createKernel();
             $kernel->boot();
 
             $application = new Application($kernel);
