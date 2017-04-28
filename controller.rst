@@ -159,6 +159,11 @@ controller classes. A great way to see the core functionality in
 action is to look in the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
 
+.. tip::
+    If you know what you're doing, you can alternatively extend
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. It
+    has all the same shortcuts, but does not have a ```$this->container`` property.
+
 .. index::
    single: Controller; Redirecting
 
@@ -247,10 +252,9 @@ The Symfony templating system and Twig are explained more in the
 Accessing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony comes packed with a lot of useful objects, called *services*. These
-are used for rendering templates, sending emails, querying the database and
-any other "work" you can think of. When you install a new bundle, it probably
-brings in even *more* services.
+Symfony comes packed with a lot of useful objects, called :doc:`services </service_container>`.
+These are used for rendering templates, sending emails, querying the database and
+any other "work" you can think of.
 
 When extending the base ``Controller`` class, you can access any Symfony service
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
@@ -262,6 +266,9 @@ method. Here are several common services you might need::
 
     $mailer = $this->get('mailer');
 
+    // you can also fetch parameters
+    $someParameter = $this->getParameter('some_parameter');
+
 What other services exist? To list all services, use the ``debug:container``
 console command:
 
@@ -271,14 +278,31 @@ console command:
 
 For more information, see the :doc:`/service_container` article.
 
-.. tip::
+Services as Controller Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    To get a :ref:`container configuration parameter <config-parameter-intro>`,
-    use the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getParameter`
-    method::
+You can also tell Symfony to pass your a service as a controller argument by type-hinting
+it::
 
-        $from = $this->getParameter('app.mailer.from');
+    use Psr\Log\LoggerInterface
+    // ...
+
+    /**
+     * @Route("/lucky/number/{max}")
+     */
+    public function numberAction($max, LoggerInterface $logger)
+    {
+        $logger->info('We are logging!');
+
+        // ...
+    }
+
+.. note::
+    If this isn't working, make sure your controller is registered as a service,
+    :ref:`autoconfigured <services-autoconfigure>` and extends either
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. Or,
+    you can tag it manually with ``controller.service_arguments``.
 
 .. index::
    single: Controller; Managing errors
@@ -417,20 +441,6 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
         return $this->render(...);
     }
-
-.. tip::
-
-    As a developer, you might prefer not to extend the ``Controller``. To
-    use the flash message functionality, you can request the flash bag from
-    the :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`::
-
-        use Symfony\Component\HttpFoundation\Session\Session;
-
-        public function indexAction(Session $session)
-        {
-            // getFlashBag is not available in the SessionInterface and requires the Session
-            $flashBag = $session->getFlashBag();
-        }
 
 After processing the request, the controller sets a flash message in the session
 and then redirects. The message key (``notice`` in this example) can be anything:
