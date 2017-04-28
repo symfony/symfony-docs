@@ -61,7 +61,7 @@ to do with Symfony or any other library. It's quite simply a normal PHP object
 that directly solves a problem inside *your* application (i.e. the need to
 represent a task in your application). Of course, by the end of this article,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
-its data, and persist it to the database.
+its data and persist it to the database.
 
 .. index::
    single: Forms; Create a form in a controller
@@ -111,7 +111,7 @@ from inside a controller::
 
 Creating a form requires relatively little code because Symfony form objects
 are built with a "form builder". The form builder's purpose is to allow you
-to write simple form "recipes", and have it do all the heavy-lifting of actually
+to write simple form "recipes" and have it do all the heavy-lifting of actually
 building the form.
 
 In this example, you've added two fields to your form - ``task`` and ``dueDate`` -
@@ -265,7 +265,7 @@ your controller::
     to the ``submit()`` method - a strategy which is deprecated and will be
     removed in Symfony 3.0. For details on that method, see :ref:`form-submit-request`.
 
-This controller follows a common pattern for handling forms, and has three
+This controller follows a common pattern for handling forms and has three
 possible paths:
 
 #. When initially loading the page in a browser, the form is created and
