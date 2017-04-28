@@ -522,7 +522,7 @@ automatically apply certain configuration to your services, based on your servic
 *class*. The is mostly used to *auto-tag* your services.
 
 For example, to create a Twig Extension, you need to create a class, register it
-as a service, and :doc:`tag </tags>` it with ``twig.extension``:
+as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension``:
 
 .. configuration-block::
 
