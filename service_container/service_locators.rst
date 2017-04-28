@@ -4,18 +4,15 @@
 Service Locators
 ================
 
-What is a Service Locator
--------------------------
-
-Sometimes, a service needs the ability to access other services without being sure
-that all of them will actually be used.
-
-In such cases, you may want the instantiation of these services to be lazy, that is
-not possible using explicit dependency injection since services are not all meant to
+Sometimes, a service needs access to several other services without being sure
+that all of them will actually be used. In those cases, you may want the
+instantiation of the services to be lazy. However, that's not possible using
+the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
-A real-world example being a CommandBus which maps command handlers by Command
-class names and use them to handle their respective command when it is asked for::
+A real-world example are applications that implement the `Command pattern`_
+using a CommandBus to map command handlers by Command class names and use them
+to handle their respective command when it is asked for::
 
     // ...
     class CommandBus
@@ -45,11 +42,9 @@ class names and use them to handle their respective command when it is asked for
     // ...
     $commandBus->handle(new FooCommand());
 
-Because only one command is handled at a time, other command handlers are not
-used but unnecessarily instantiated.
-
-A solution allowing to keep handlers lazily loaded could be to inject the whole
-dependency injection container::
+Considering that only one command is handled at a time, instantiating all the
+other command handlers is unnecessary. A possible solution to lazy-load the
+handlers could be to inject the whole dependency injection container::
 
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -74,20 +69,19 @@ dependency injection container::
             }
         }
 
-But injecting the container has many drawbacks including:
+However, injecting the entire container is discouraged because it gives too
+broad access to existing services and it hides the actual dependencies of the
+services.
 
-- too broad access to existing services
-- services which are actually useful are hidden
+**Service Locators** are intended to solve this problem by giving access to a
+set of predefined services while instantiating them only when actually needed.
 
-Service Locators are intended to solve this problem by giving access to a set of
-identified services while instantiating them only when really needed.
+Defining a Service Locator
+--------------------------
 
-Configuration
--------------
-
-For injecting a service locator into your service(s), you first need to register
-the service locator itself as a service using the `container.service_locator`
-tag:
+First, define a new service for the service locator. Use its ``arguments``
+option to include as many services as needed to it and add the
+``container.service_locator`` tag to turn it into a service locator:
 
 .. configuration-block::
 
@@ -138,11 +132,10 @@ tag:
 
 .. note::
 
-    The services defined in the service locator argument must be keyed.
-    Those keys become their unique identifier inside the locator.
+    The services defined in the service locator argument must include keys,
+    which later become their unique identifiers inside the locator.
 
-
-Now you can use it in your services by injecting it as needed:
+Now you can use the service locator injecting it in any other service:
 
 .. configuration-block::
 
@@ -183,13 +176,14 @@ Now you can use it in your services by injecting it as needed:
 
 .. tip::
 
-    You should create and inject the service locator as an anonymous service if
-    it is not intended to be used by multiple services
+    If the service locator is not intended to be used by multiple services, it's
+    better to create and inject it as an anonymous service.
 
 Usage
 -----
 
-Back to our CommandBus which now looks like::
+Back to the previous CommandBus example, it looks like this when using the
+service locator::
 
     // ...
     use Psr\Container\ContainerInterface;
@@ -225,3 +219,5 @@ which implements the PSR-11 ``ContainerInterface``, but it is also a callable::
     $handler = $locateHandler($commandClass);
 
     return $handler->handle($command);
+
+.. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
