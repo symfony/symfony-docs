@@ -404,4 +404,4 @@ instance which makes use of the error output::
     If you create a ``SymfonyStyle`` instance with an ``OutputInterface`` object
     that is not an instance of :class:`Symfony\\Component\\Console\\Output\\ConsoleOutputInterface`,
     the ``getErrorStyle()`` method will have no effect and the returned object
-    will still output to the standard output instead of the error output.
+    will still write to the standard output instead of the error output.
