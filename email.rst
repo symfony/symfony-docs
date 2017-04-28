@@ -100,7 +100,7 @@ The Swift Mailer library works by creating, configuring and then sending
 of the message and is accessible via the ``mailer`` service. Overall, sending
 an email is pretty straightforward::
 
-    public function indexAction($name)
+    public function indexAction($name, \Swift_Mailer $mailer)
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
@@ -125,7 +125,11 @@ an email is pretty straightforward::
             )
             */
         ;
-        $this->get('mailer')->send($message);
+
+        $mailer->send($message);
+
+        // or, you can also fetch the mailer service in this way
+        // $this->get('mailer')->send($message);
 
         return $this->render(...);
     }

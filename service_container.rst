@@ -511,6 +511,8 @@ service whose id is ``monolog.logger.request``.
     the *service* whose id is ``monolog.logger.request``, and not just the *string*
     ``monolog.logger.request``.
 
+.. _services-autoconfigure:
+
 The autoconfigure Option
 ------------------------
 
