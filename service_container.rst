@@ -6,7 +6,7 @@ Service Container
 =================
 
 Your application is *full* of useful objects: one "Mailer" object might help you
-deliver email messages while another object might help you save things to the database.
+send email messages while another object might help you save things to the database.
 Almost *everything* that your app "does" is actually done by one of these objects.
 And each time you install a new bundle, you get access to even more!
 
@@ -17,21 +17,13 @@ then you can fetch a service by using that service's id::
     $logger = $container->get('logger');
     $entityManager = $container->get('doctrine.entity_manager');
 
-The container is the *heart* of Symfony: it allows you to standardize and centralize
-the way objects are constructed. It makes your life easier, is super fast, and emphasizes
-an architecture that promotes reusable and decoupled code. It's also a big reason
-that Symfony is so fast and extensible!
-
-Finally, configuring and using the service container is easy. By the end
-of this article, you'll be comfortable creating your own objects via the
-container and customizing objects from any third-party bundle. You'll begin
-writing code that is more reusable, testable and decoupled, simply because
-the service container makes writing good code so easy.
+The container allows you to centralize the way objects are constructed. It makes
+your life easier, promotes a strong architecture and is super fast!
 
 Fetching and using Services
 ---------------------------
 
-The moment you start a Symfony app, the container *already* contains many services.
+The moment you start a Symfony app, your container *already* contains many services.
 These are like *tools*, waiting for you to take advantage of them. In your controller,
 you have access to the container via ``$this->container``. Want to :doc:`log </logging>`
 something? No problem::
@@ -86,11 +78,10 @@ in the container.
 
 .. sidebar:: Container: Lazy-loaded for speed
 
-    If the container holds so many useful objects (services), does that mean those
-    objects are instantiated on *every* request? No! The container is lazy: it doesn't
-    instantiate a service until (and unless) you ask for it. For example, if you
-    never use the ``validator`` service during a request, the container will never
-    instantiate it.
+    Wait! Are all the services (objects) instantiated on *every* request? No! The
+    container is lazy: it doesn't instantiate a service until (and unless) you ask
+    for it. For example, if you never use the ``validator`` service during a request,
+    the container will never instantiate it.
 
 .. index::
    single: Service Container; Configuring services
@@ -100,10 +91,9 @@ in the container.
 Creating/Configuring Services in the Container
 ----------------------------------------------
 
-You can also leverage the container to organize your *own* code into services. For
-example, suppose you want to show your users a random, happy message every time
-they do something. If you put this code in your controller, it can't be re-used.
-Instead, you decide to create a new class::
+You can also organize your *own* code into services. For example, suppose you need
+to show your users a random, happy message. If you put this code in your controller,
+it can't be re-used. Instead, you decide to create a new class::
 
     // src/AppBundle/Service/MessageGenerator.php
     namespace AppBundle\Service;
@@ -133,14 +123,13 @@ the service container *how* to instantiate it:
 
         # app/config/services.yml
         services:
-            # configures defaults for all services in this file
             _defaults:
                 autowire: true
                 autoconfigure: true
 
-            # registers all classes in the dir(s) as services
+            # load services from whatever directories you want (you can update this!)
             AppBundle\:
-                resource: '../../src/AppBundle/{Service}'
+                resource: '../../src/AppBundle/{Service,EventDispatcher,Twig,Form}'
 
     .. code-block:: xml
 
@@ -153,9 +142,10 @@ the service container *how* to instantiate it:
         TODO
 
 That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, all
-classes in the ``src/AppBundle/Service`` directory will automatically be added to
-the container. Each service's "key" is simply its class name. You can use it immediately
-inside your controller::
+classes in the ``src/AppBundle/Service`` directory (and a few other directories)
+will automatically be added to the container.
+
+Each service's "key" is its class name. You can use it immediately inside your controller::
 
     use AppBundle\Service\MessageGenerator;
 
@@ -175,10 +165,8 @@ inside your controller::
     }
 
 When you ask for the ``MessageGenerator::class`` service, the container constructs
-a new ``MessageGenerator`` object and returns it. If you never ask for the
-``MessageGenerator::class`` service during a request, it's *never* constructed, saving
-you memory and increasing the speed of your app. This also means that there's almost
-no performance overhead for defining a lot of services.
+a new ``MessageGenerator`` object and returns it. But if you never ask for the service,
+it's *never* constructed: saving memory and speed.
 
 As a bonus, the ``MessageGenerator::class`` service is only created *once*: the same
 instance is returned each time you ask for it.
@@ -221,25 +209,26 @@ and set it on a ``$logger`` property::
     }
 
 That's it! The container will *automatically* know to pass the ``logger`` service
-when instantiating the ``MessageGenerator``? How does it know to do this? The key
-is the ``LoggerInterface`` type-hint in your ``__construct()`` method and the
-``autowire: true`` config in ``services.yml``. When you type-hint an argument, the
-container will automatically find the matching service. If it can't or there is any
-ambuiguity, you'll see a clear exception suggesting how to fix it.
+when instantiating the ``MessageGenerator``? How does it know to do this?
+:doc:`Autowiring </service_container/autowiring>`. The key is the ``LoggerInterface``
+type-hint in your ``__construct()`` method and the ``autowire: true`` config in
+``services.yml``. When you type-hint an argument, the container will automatically
+find the matching service. If it can't or there is any ambuiguity, you'll see a clear
+exception suggesting how to fix it.
 
 Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
 
 .. tip::
 
-    How do you know to use ``LoggerInterface`` for the type-hint? The best way to
-    know this is by reading the docs for whatever service you're using. You can
-    also use the ``php bin/console debug:container`` console command to get a hint
+    How should you know to use ``LoggerInterface`` for the type-hint? The best way
+    is by reading the docs for whatever feature you're using. You can also use the
+    ``php bin/console debug:container`` console command to get a hint
     to the class name for a service.
 
 Handling Multiple Services
 --------------------------
 
-Suppose you also want to email some site administrator each time a site update is
+Suppose you also want to email a site administrator each time a site update is
 made. To do that, you create a new class::
 
     // src/AppBundle/Updates/SiteUpdateManager.php
@@ -289,7 +278,7 @@ the new ``Updates`` sub-directory:
 
             # registers all classes in Services & Updates directories
             AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates}'
+                resource: '../../src/AppBundle/{Service,Updates,EventDispatcher,Twig,Form}'
 
     .. code-block:: xml
 
@@ -316,16 +305,15 @@ Now, you can use the service immediately::
         // ...
     }
 
-Just like before, when you ask for the ``SiteUpdateManager`` service, the container
-will automatically instantiate it for you. By reading the type-hints on the ``__construct()``
-method in that class, it takes care of passing the correct services as arguments.
-All of that is taken care of for you.
+Thanks to autowiring and your type-hints in ``__construct()``, the container creates
+the ``SiteUpdateManager`` object and passes it the correct arguments. In most cases,
+this works perfectly.
 
 Manually Wiring Arguments
 -------------------------
 
-There are a few cases when an argument to a service cannot be autowired. For example,
-suppose you want to make the admin email configurable:
+But there are a few cases when an argument to a service cannot be autowired. For
+example, suppose you want to make the admin email configurable:
 
 .. code-block:: diff
 
@@ -394,7 +382,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
         TODO
 
 Thanks to this, the container will pass ``manager@example.com`` as the third argument
-to ``__construct`` when creating the ``SiteUpdateManager`` service.
+to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
+will still be autowired.
 
 .. _service-container-parameters:
 
@@ -459,6 +448,67 @@ You can also fetch parameters directly from the container::
             url_pattern: 'http://symfony.com/?foo=%%s&amp;bar=%%d'
 
 For more info about parameters, see :doc:`/service_container/parameters`.
+
+Choose a Specific Service
+-------------------------
+
+The ``MessageGenerator`` service created earlier requires a ``LoggerInterface`` argument::
+
+    // src/AppBundle/Service/MessageGenerator.php
+    // ...
+
+    use Psr\Log\LoggerInterface;
+
+    class MessageGenerator
+    {
+        private $logger;
+
+        public function __construct(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
+        }
+        // ...
+    }
+
+However, there are *multiple* services in the container that implement ``LoggerInterface``,
+such as ``logger``, ``monolog.logger.request``, ``monolog.logger.php``, etc. How
+does the container know which one to use?
+
+In these situations, the container is usually configured to automatically choose
+one of the services - ``logger`` in this case (read more about why in :ref:`service-autowiring-alias`).
+But, you can control this and pass in a different logger:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ... same code as before
+
+            # explicitly configure the service
+            AppBundle\Service\MessageGenerator:
+                arguments:
+                    $logger: '@monolog.logger.request'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        TODO
+
+    .. code-block:: php
+
+        // app/config/services.php
+        TODO
+
+This tells the container that the ``$logger`` argument to ``_construct`` should use
+service whose id is ``monolog.logger.request``.
+
+.. tip::
+
+    The ``@`` symbol is important: that's what tells the container you want to pass
+    the *service* whose id is ``monolog.logger.request``, and not just the *string*
+    ``monolog.logger.request``.
 
 Learn more
 ----------
