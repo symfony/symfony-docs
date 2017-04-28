@@ -123,6 +123,7 @@ the service container *how* to instantiate it:
 
         # app/config/services.yml
         services:
+            # default configuration for services in *this* file
             _defaults:
                 autowire: true
                 autoconfigure: true
@@ -509,6 +510,70 @@ service whose id is ``monolog.logger.request``.
     The ``@`` symbol is important: that's what tells the container you want to pass
     the *service* whose id is ``monolog.logger.request``, and not just the *string*
     ``monolog.logger.request``.
+
+The autoconfigure Option
+------------------------
+
+Above, we've set ``autoconfigure: true`` in the ``_defaults`` section so that it
+applies to all services defined in that file. With this setting, the container will
+automatically apply certain configuration to your services, based on your service's
+*class*. The is mostly used to *auto-tag* your services.
+
+For example, to create a Twig Extension, you need to create a class, register it
+as a service, and :doc:`tag </tags>` it with ``twig.extension``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            AppBundle\Twig\MyTwigExtension:
+                tags: [twig.extension]
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        TODO
+
+    .. code-block:: php
+
+        // app/config/services.php
+        TODO
+
+But, with ``autoconfigure: true``, you don't need the tag. In fact, all you need
+is this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            _defaults:
+                autowire: true
+                autoconfigure: true
+
+            # load your service from the Twig directory
+            AppBundle\:
+                resource: '../../src/AppBundle/{Service,EventDispatcher,Twig,Form}'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        TODO
+
+    .. code-block:: php
+
+        // app/config/services.php
+        TODO
+
+That's it! The container will find your class in the ``Twig/`` directory and register
+it as a service. Then ``autoconfigure`` will add the ``twig.extension`` tag *for*
+you, because your class implements ``Twig_ExtensionInterface``. And thanks to ``autowire``,
+you can even add ``__construct()`` arguments without any configuration.
 
 Learn more
 ----------
