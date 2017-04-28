@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Scheme requirement
 
-How to Force Routes to always Use HTTPS or HTTP
+How to Force Routes to Always Use HTTPS or HTTP
 ===============================================
 
 Sometimes, you want to secure some routes and be sure that they are always
