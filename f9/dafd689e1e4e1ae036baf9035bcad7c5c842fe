@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by theofidry at 2017-03-19T14:40:44Z
+
+👍  just the `public: false` which is only confusing here to me, it's not specific to auto-wiring and it's not really the topic of that section
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-04-28T14:32:09Z
+
+@GuilhemN could you please rebase this so we can merge it? Thanks!
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-04-28T14:58:57Z
+
+rebased ☺
