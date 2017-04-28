@@ -142,9 +142,9 @@ the service container *how* to instantiate it:
         // app/config/services.php
         TODO
 
-That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, all
-classes in the ``src/AppBundle/Service`` directory (and a few other directories)
-will automatically be added to the container.
+That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, a service
+will be registered for each class in the ``src/AppBundle/Service`` directory (and
+the other directories listed).
 
 Each service's "key" is its class name. You can use it immediately inside your controller::
 
@@ -210,11 +210,11 @@ and set it on a ``$logger`` property::
     }
 
 That's it! The container will *automatically* know to pass the ``logger`` service
-when instantiating the ``MessageGenerator``? How does it know to do this?
+when instantiating the ``MessageGenerator``. How does it know to do this?
 :doc:`Autowiring </service_container/autowiring>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 ``services.yml``. When you type-hint an argument, the container will automatically
-find the matching service. If it can't or there is any ambuiguity, you'll see a clear
+find the matching service. If it can't or there is any ambiguity, you'll see a clear
 exception suggesting how to fix it.
 
 Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
