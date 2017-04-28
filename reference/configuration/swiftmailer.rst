@@ -18,11 +18,15 @@ a mailer. It is also possible to configure several mailers (see
 Configuration
 -------------
 
+* `url`_
 * `transport`_
 * `username`_
 * `password`_
 * `host`_
 * `port`_
+* `timeout`_
+* `source_ip`_
+* `local_domain`_
 * `encryption`_
 * `auth_mode`_
 * `spool`_
@@ -37,6 +41,18 @@ Configuration
 * `disable_delivery`_
 * `logging`_
 
+url
+~~~
+
+**type**: ``string``
+
+.. versionadded:: 2.4.2
+    The ``url`` option was added in SwiftMailerBundle 2.4.2.
+
+The entire SwiftMailer configuration using a DSN-like URL format.
+
+Example: ``smtp://user:pass@host:port/?timeout=60&encryption=ssl&auth_mode=login&...``
+
 transport
 ~~~~~~~~~
 
@@ -46,7 +62,7 @@ The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
 * gmail (see :doc:`/email/gmail`)
-* mail
+* mail (deprecated in SwiftMailer since version 5.4.5)
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)
 
@@ -78,6 +94,36 @@ port
 
 The port when using ``smtp`` as the transport. This defaults to 465 if encryption
 is ``ssl`` and 25 otherwise.
+
+timeout
+~~~~~~~
+
+**type**: ``integer``
+
+.. versionadded:: 2.4.2
+    The ``timeout`` option was added in SwiftMailerBundle 2.4.2.
+
+The timeout in seconds when using ``smtp`` as the transport.
+
+source_ip
+~~~~~~~~~
+
+**type**: ``string``
+
+.. versionadded:: 2.4.2
+    The ``source_ip`` option was added in SwiftMailerBundle 2.4.2.
+
+The source IP address when using ``smtp`` as the transport.
+
+local_domain
+~~~~~~~~~~~~
+
+**type**: ``string``
+
+.. versionadded:: 2.4.2
+    The ``local_domain`` option was added in SwiftMailerBundle 2.4.2.
+
+The domain name to use in ``HELO`` command.
 
 encryption
 ~~~~~~~~~~
@@ -190,6 +236,13 @@ logging
 
 If true, Symfony's data collector will be activated for Swift Mailer and
 the information will be available in the profiler.
+
+.. tip::
+
+    The following options can be set via environment variables using the
+    ``%env()%`` syntax: ``url``, ``transport``, ``username``, ``password``,
+    ``host``, ``port``, ``timeout``, ``source_ip``, ``local_domain``.
+    For details, see the :doc:`/configuration/external_parameters` article.
 
 Full Default Configuration
 --------------------------
