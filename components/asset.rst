@@ -321,6 +321,75 @@ document inside a template::
     echo $packages->getUrl('/resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
 
+
+Strict protocol
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+    A new parameter, "is_strict_protocol", is available for "UrlPackage".
+
+This parameter, if set to true, make sure you will have secure or unsecure urls set, but never both.
+An example would help to get it::
+
+    use Symfony\Component\Asset\Context\RequestStackContext;
+    use Symfony\Component\Asset\Packages;
+    use Symfony\Component\Asset\UrlPackage;
+    // ...
+
+    $versionStrategy = new StaticVersionStrategy('v1');
+
+    $unsecureContext = new RequestStackContext($requestStackSecure);
+    $secureContext = new RequestStackContext($requestStackUnsecure);
+
+    $namedPackages = array(
+        'unsecure' => new UrlPackage(
+            array('http://www.example.com/', 'https://www.example.com/'),
+            $versionStrategy,
+            $unsecureContext,
+            false
+        ),
+        'unsecure-strict' => new UrlPackage(
+            array('http://www.example.com/', 'https://www.example.com/'),
+            $versionStrategy,
+            $unsecureContext,
+            true
+        ),
+        'secure' => new UrlPackage(
+            array('http://www.example.com/', 'https://www.example.com/'),
+            $versionStrategy,
+            $secureContext,
+            true
+        ),
+        'secure-strict' => new UrlPackage(
+            array('http://www.example.com/', 'https://www.example.com/'),
+            $versionStrategy,
+            $secureContext,
+            true
+        ),
+    );
+
+    $packages = new Packages($defaultPackage, $namedPackages)
+
+
+
+    echo $packages->getUrl('/logo.png', 'unsecure');
+    // result: http://wwww.example.com/logo.png?v1 or https://wwww.example.com/logo.png?v1
+    // The returned url can be both secure or unsecured
+
+    echo $packages->getUrl('/logo.png', 'unsecure-strict');
+    // result: http://wwww.example.com/logo.png?v1
+    // The returned url will be strictly unsecure
+
+    echo $packages->getUrl('/logo.png', 'secure');
+    // result: https://wwww.example.com/logo.png?v1
+
+    echo $packages->getUrl('/logo.png', 'secure-strict');
+    // result: https://wwww.example.com/logo.png?v1
+    // secure & secure-strict have exactly the same behavior
+
+This option can help control load on secure server, or help reduce cost for CDN having
+different cost for secure and unsecure connection.
+
 Learn more
 ----------
 
