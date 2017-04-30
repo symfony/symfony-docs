@@ -339,8 +339,7 @@ To enable the security voter in the application, define a new service:
             class:      AppBundle\Security\PostVoter
             arguments: ['@security.access.decision_manager']
             public:     false
-            tags:
-               - { name: security.voter }
+            tags: [security.voter]
 
 Now, you can use the voter with the ``@Security`` annotation:
 

@@ -16,8 +16,7 @@ to be used for a specific purpose. Take the following example:
 
         # app/config/services.yml
         services:
-            app.twig_extension:
-                class: AppBundle\Twig\AppExtension
+            AppBundle\Twig\AppExtension:
                 public: false
                 tags: [twig.extension]
 
@@ -31,11 +30,7 @@ to be used for a specific purpose. Take the following example:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service
-                    id="app.twig_extension"
-                    class="AppBundle\Twig\AppExtension"
-                    public="false">
-
+                <service id="AppBundle\Twig\AppExtension" public="false">
                     <tag name="twig.extension" />
                 </service>
             </services>
@@ -45,16 +40,14 @@ to be used for a specific purpose. Take the following example:
 
         // app/config/services.php
         use AppBundle\Twig\AppExtension;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition(AppExtension::class);
-        $definition->setPublic(false);
-        $definition->addTag('twig.extension');
-        $container->setDefinition('app.twig_extension', $definition);
+        $container->register(AppExtension::class)
+            ->setPublic(false)
+            ->addTag('twig.extension');
 
 The ``twig.extension`` tag is a special tag that the TwigBundle uses
 during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``app.twig_extension`` service should be registered
+the bundle knows that the ``AppExtension::class`` service should be registered
 as a Twig extension with Twig. In other words, Twig finds all services tagged
 with ``twig.extension`` and automatically registers them as extensions.
 
@@ -359,7 +352,7 @@ To answer this, change the service declaration:
                 tags:
                     - { name: app.mail_transport }
 
-    versionadded:: 3.3
+    .. versionadded:: 3.3
         Support for the compact tag notation in the YAML format was introduced
         in Symfony 3.3.
 
