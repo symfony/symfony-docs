@@ -326,10 +326,25 @@ Simple, display one type of message::
         echo '<div class="flash-error">'.$message.'</div>';
     }
 
-Compact method to process display all flashes at once::
+Compact method to process display all flashes at once:
 
-    foreach ($session->getFlashBag()->all() as $type => $messages) {
-        foreach ($messages as $message) {
-            echo '<div class="flash-'.$type.'">'.$message.'</div>';
+
+.. configuration-block::
+
+    .. code-block:: jinja
+    
+        {% for type, messages in session.flashbag.all %}        
+            {% for message in messages %}
+                <div class="flash-{{ type }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        
+        
+    .. code-block:: php
+    
+        foreach ($session->getFlashBag()->all() as $type => $messages) {
+            foreach ($messages as $message) {
+                echo '<div class="flash-'.$type.'">'.$message.'</div>';
+            }
         }
-    }
+        
