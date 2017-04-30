@@ -74,13 +74,16 @@ service is marked as autowired:
     .. code-block:: php
 
         use Acme\TwitterClient;
-        use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $definition = new Definition(TwitterClient::class);
-        $definition->setAutowired(true);
 
-        $container->setDefinition('twitter_client', $definition);
+        $container->autowire('twitter_client', TwitterClient::class);
+
+
+.. versionadded:: 3.3
+    The method ``ContainerBuilder::autowire()`` was introduced in Symfony 3.3.
+    Prior to version 3.3, you needed to use the ``Definition::setAutowired()``
+    method.
 
 The autowiring subsystem will detect the dependencies of the ``TwitterClient``
 class by parsing its constructor. For instance it will find here an instance of
@@ -210,14 +213,10 @@ subsystem isn't able to find itself the interface implementation to register:
     .. code-block:: php
 
         use Acme\TwitterClient;
-        use Symfony\Component\DependencyInjection\Definition;
 
         // ...
         $container->register('rot13_transformer', 'Acme\Rot13Transformer');
-
-        $clientDefinition = new Definition(TwitterClient::class);
-        $clientDefinition->setAutowired(true);
-        $container->setDefinition('twitter_client', $clientDefinition);
+        $container->autowire('twitter_client', TwitterClient::class);
 
 The autowiring subsystem detects that the ``rot13_transformer`` service implements
 the ``TransformerInterface`` and injects it automatically. Even when using
@@ -354,24 +353,15 @@ and a Twitter client using it:
         use Acme\TwitterClient;
         use Acme\UppercaseTransformer;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\Definition;
 
         // ...
         $container->register('rot13_transformer', Rot13Transformer::class);
         $container->setAlias(TransformerInterface::class, 'rot13_transformer')
 
-        $clientDefinition = new Definition(TwitterClient::class);
-        $clientDefinition->setAutowired(true);
-        $container->setDefinition('twitter_client', $clientDefinition);
-
-        $uppercaseDefinition = new Definition(UppercaseTransformer::class);
-        $uppercaseDefinition->setAutowired(true);
-        $container->setDefinition('uppercase_transformer', $uppercaseDefinition);
-
-        $uppercaseClientDefinition = new Definition(TwitterClient::class, array(
-            new Reference('uppercase_transformer'),
-        ));
-        $container->setDefinition('uppercase_twitter_client', $uppercaseClientDefinition);
+        $container->autowire('twitter_client', TwitterClient::class);
+        $container->autowire('uppercase_transformer', UppercaseTransformer::class);
+        $container->register('uppercase_twitter_client', TwitterClient::class)
+            ->addArgument(new Reference('uppercase_transformer'));
 
 This deserves some explanations. You now have two services implementing the
 ``TransformerInterface``. The autowiring subsystem cannot guess which one
