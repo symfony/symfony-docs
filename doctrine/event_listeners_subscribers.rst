@@ -84,7 +84,6 @@ managers that use this connection.
         use AppBundle\EventListener\SearchIndexer;
         use AppBundle\EventListener\SearchIndexer2;
         use AppBundle\EventListener\SearchIndexerSubscriber;
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(

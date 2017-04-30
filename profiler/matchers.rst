@@ -47,7 +47,7 @@ configuration:
                 <!-- ... -->
                 <framework:profiler>
                     <framework:matcher ip="168.0.0.1" />
-                </framework:profiler>    
+                </framework:profiler>
             </framework:config>
         </container>
 
@@ -139,16 +139,11 @@ won't use it directly:
 
         // app/config/services.php
         use AppBundle\Profiler\SuperAdminMatcher;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            SuperAdminMatcher::class,
-            array(new Reference('security.authorization_checker'))
-        );
-        $definition->setPublic(false);
-
-        $container->setDefinition('app.super_admin_matcher', $definition);
+        $container->register('app.super_admin_matcher', SuperAdminMatcher::class)
+            ->addArgument(new Reference('security.authorization_checker'))
+            ->setPublic(false);
 
 .. versionadded:: 2.6
     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
@@ -185,7 +180,7 @@ profiler to use this service as the matcher:
                 <!-- ... -->
                 <framework:profiler>
                     <framework:matcher service="app.super_admin_matcher" />
-                </framework:profiler>    
+                </framework:profiler>
             </framework:config>
         </container>
 
