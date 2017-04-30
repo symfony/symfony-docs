@@ -90,7 +90,7 @@ your user table:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
+        // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -136,10 +136,6 @@ message
 The message that's displayed when this constraint fails. This message is always
 mapped to the first field causing the violation, even when using multiple fields
 in the constraint.
-
-.. versionadded:: 3.1
-    The ability to include the invalid value into the message was introduced
-    in Symfony 3.1.
 
 Messages can include the ``{{ value }}`` placeholder to display a string
 representation of the invalid entity. If the entity doesn't define the

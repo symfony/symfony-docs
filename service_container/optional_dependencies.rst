@@ -76,7 +76,7 @@ call if the service exists and remove the method call if it does not:
         # app/config/services.yml
         services:
             app.newsletter_manager:
-                class:     AppBundle\Newsletter\NewsletterManager
+                class: AppBundle\Newsletter\NewsletterManager
                 calls:
                     - [setMailer, ['@?app.mailer']]
 

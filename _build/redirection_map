@@ -332,3 +332,5 @@
 /deployment/tools /deployment
 /install/bundles /setup/bundles
 /form /forms
+/testing/simulating_authentication /testing/http_authentication
+/components/dependency_injection/autowiring /service_container/autowiring

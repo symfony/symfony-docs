@@ -307,8 +307,9 @@ and a Twitter client using it:
 
         services:
             rot13_transformer:
-                class:            Acme\Rot13Transformer
-                autowiring_types: Acme\TransformerInterface
+                class: Acme\Rot13Transformer
+
+            Acme\TransformerInterface: '@rot13_transformer'
 
             twitter_client:
                 class:    Acme\TwitterClient
@@ -330,9 +331,9 @@ and a Twitter client using it:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="rot13_transformer" class="Acme\Rot13Transformer">
-                    <autowiring-type>Acme\TransformerInterface</autowiring-type>
-                </service>
+                <service id="rot13_transformer" class="Acme\Rot13Transformer" />
+
+                <service id="Acme\TransformerInterface" alias="rot13_transformer" />
 
                 <service id="twitter_client" class="Acme\TwitterClient" autowire="true" />
 
@@ -356,9 +357,8 @@ and a Twitter client using it:
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $rot13Definition = new Definition(Rot13Transformer::class);
-        $rot13Definition->setAutowiringTypes(array(TransformerInterface::class));
-        $container->setDefinition('rot13_transformer', $rot13Definition);
+        $container->register('rot13_transformer', Rot13Transformer::class);
+        $container->setAlias(TransformerInterface::class, 'rot13_transformer')
 
         $clientDefinition = new Definition(TwitterClient::class);
         $clientDefinition->setAutowired(true);
@@ -382,10 +382,14 @@ to use which leads to errors like this:
       [Symfony\Component\DependencyInjection\Exception\RuntimeException]
       Unable to autowire argument of type "Acme\TransformerInterface" for the service "twitter_client".
 
-Fortunately, the ``autowiring_types`` key is here to specify which implementation
-to use by default. This key can take a list of types if necessary.
+Fortunately, the FQCN alias is here to specify which implementation
+to use by default.
 
-Thanks to this setting, the ``rot13_transformer`` service is automatically injected
+.. versionadded:: 3.3
+    Using FQCN aliases to fix autowiring ambiguities is allowed since Symfony
+    3.3. Prior to version 3.3, you needed to use the ``autowiring_types`` key.
+
+Thanks to this alias, the ``rot13_transformer`` service is automatically injected
 as an argument of the ``uppercase_transformer`` and ``twitter_client`` services. For
 the ``uppercase_twitter_client``, a standard service definition is used to
 inject the specific ``uppercase_transformer`` service.

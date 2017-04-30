@@ -45,7 +45,9 @@ configuration:
 
             <framework:config>
                 <!-- ... -->
-                <framework:profiler ip="168.0.0.1" />
+                <framework:profiler>
+                    <framework:matcher ip="168.0.0.1" />
+                </framework:profiler>    
             </framework:config>
         </container>
 
@@ -55,7 +57,9 @@ configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'ip' => '168.0.0.1',
+                'matcher' => array(
+                    'ip' => '168.0.0.1',
+                )
             ),
         ));
 
@@ -123,6 +127,7 @@ won't use it directly:
             <service id="app.profiler.matcher.super_admin"
                 class="AppBundle\Profiler\SuperAdminMatcher" public="false">
                 <argument type="service" id="security.authorization_checker" />
+            </service>
         </services>
 
     .. code-block:: php
@@ -169,7 +174,9 @@ profiler to use this service as the matcher:
 
             <framework:config>
                 <!-- ... -->
-                <framework:profiler service="app.super_admin_matcher" />
+                <framework:profiler>
+                    <framework:matcher service="app.super_admin_matcher" />
+                </framework:profiler>    
             </framework:config>
         </container>
 
@@ -179,6 +186,8 @@ profiler to use this service as the matcher:
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'service' => 'app.super_admin_matcher',
+                'matcher' => array(
+                    'service' => 'app.super_admin_matcher',
+                )
             ),
         ));

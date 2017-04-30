@@ -44,18 +44,22 @@ these statuses are called **places**. You can define the workflow like this::
     use Symfony\Component\Workflow\Workflow;
     use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 
-    $builder = new DefinitionBuilder();
-    $builder->addPlaces(['draft', 'review', 'rejected', 'published']);
-
-    // Transitions are defined with a unique name, an origin place and a destination place
-    $builder->addTransition(new Transition('to_review', 'draft', 'review'));
-    $builder->addTransition(new Transition('publish', 'review', 'published'));
-    $builder->addTransition(new Transition('reject', 'review', 'rejected'));
-
-    $definition = $builder->build();
+    $definition = new DefinitionBuilder()
+        ->addPlaces(['draft', 'review', 'rejected', 'published'])
+        // Transitions are defined with a unique name, an origin place and a destination place
+        ->addTransition(new Transition('to_review', 'draft', 'review'))
+        ->addTransition(new Transition('publish', 'review', 'published'))
+        ->addTransition(new Transition('reject', 'review', 'rejected'))
+        ->build()
+    ;
 
     $marking = new SingleStateMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
+
+.. versionadded:: 3.3
+    The fluent interface for the ``DefinitionBuilder`` class was introduced in
+    Symfony 3.3. Before you had to call the ``addPlaces()``, ``addTransition()``
+    and ``build()`` methods separately.
 
 The ``Workflow`` can now help you to decide what actions are allowed
 on a blog post depending on what *place* it is in. This will keep your domain

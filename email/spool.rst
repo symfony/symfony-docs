@@ -111,12 +111,12 @@ In order to use the spool with files, use the following configuration:
 .. tip::
 
     If you want to store the spool somewhere with your project directory,
-    remember that you can use the ``%kernel.root_dir%`` parameter to reference
+    remember that you can use the ``%kernel.project_dir%`` parameter to reference
     the project's root:
 
     .. code-block:: yaml
 
-        path: '%kernel.root_dir%/spool'
+        path: '%kernel.project_dir%/app/spool'
 
 Now, when your app sends an email, it will not actually be sent but instead
 added to the spool. Sending the messages from the spool is done separately.

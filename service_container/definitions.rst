@@ -75,6 +75,7 @@ fetched from the container::
 
     use AppBundle\Config\DoctrineConfigManager;
     use Symfony\Component\DependencyInjection\Definition;
+    use Symfony\Component\DependencyInjection\Reference;
 
     $definition = new Definition(DoctrineConfigManager::class, array(
         new Reference('doctrine'), // a reference to another service

@@ -38,9 +38,9 @@ stylesheets:
             # java: '/usr/bin/java'
             filters:
                 yui_css:
-                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
+                    jar: '%kernel.project_dir%/app/Resources/java/yuicompressor.jar'
                 yui_js:
-                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
+                    jar: '%kernel.project_dir%/app/Resources/java/yuicompressor.jar'
 
     .. code-block:: xml
 
@@ -57,10 +57,10 @@ stylesheets:
             <assetic:config>
                 <assetic:filter
                     name="yui_css"
-                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar" />
                 <assetic:filter
                     name="yui_js"
-                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar" />
             </assetic:config>
         </container>
 
@@ -71,10 +71,10 @@ stylesheets:
             // 'java' => '/usr/bin/java',
             'filters' => array(
                 'yui_css' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                    'jar' => '%kernel.project_dir%/app/Resources/java/yuicompressor.jar',
                 ),
                 'yui_js' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                    'jar' => '%kernel.project_dir%/app/Resources/java/yuicompressor.jar',
                 ),
             ),
         ));

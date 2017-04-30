@@ -104,8 +104,8 @@ of the following:
 
     .. code-block:: nginx
 
-        fastcgi_param DATABASE_USER user
-        fastcgi_param DATABASE_PASSWORD secret
+        fastcgi_param DATABASE_USER user;
+        fastcgi_param DATABASE_PASSWORD secret;
 
     .. code-block:: terminal
 
@@ -113,6 +113,12 @@ of the following:
         $ export DATABASE_PASSWORD=secret
 
 .. tip::
+
+    .. versionadded:: 3.3
+        The support of the special ``SYMFONY__`` environment variables was
+        deprecated in Symfony 3.3 and it will be removed in 4.0. Instead of
+        using those variables, define regular environment variables and get
+        their values using the ``%env(...)%`` syntax in your config files.
 
     You can also define the default value of any existing parameters using
     special environment variables named after their corresponding parameter

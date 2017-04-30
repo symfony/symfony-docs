@@ -205,6 +205,28 @@ convenient for passwords::
     like in the example above. In this case, a ``RuntimeException``
     would be thrown.
 
+.. note::
+
+    The ``stty`` command is used to get and set properties of the command line
+    (such as getting the number of rows and columns or hiding the input text).
+    On Windows systems, this ``stty`` command may generate gibberish output and
+    mangle the input text. If that's your case, disable it with this command::
+
+        use Symfony\Component\Console\Question\ChoiceQuestion;
+
+        // ...
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            // ...
+            $helper = $this->getHelper('question');
+            $helper->disableStty();
+
+            // ...
+        }
+
+    .. versionadded:: 3.3
+        The ``QuestionHelper::disableStty()`` method was introduced in Symfony 3.3.
+
 Normalizing the Answer
 ----------------------
 

@@ -229,10 +229,6 @@ underscores you can include or the way you group contents.
 Advanced Usage: Flags
 ---------------------
 
-.. versionadded:: 3.1
-    Flags were introduced in Symfony 3.1 and replaced the earlier boolean
-    arguments.
-
 .. _objects-for-mappings:
 
 Object Parsing and Dumping

@@ -4,9 +4,6 @@
 Extending Action Argument Resolving
 ===================================
 
-.. versionadded:: 3.1
-    The ``ArgumentResolver`` and value resolvers were introduced in Symfony 3.1.
-
 In the :doc:`controller guide </controller>`, you've learned that you can get the
 :class:`Symfony\\Component\\HttpFoundation\\Request` object via an argument in
 your controller. This argument has to be type-hinted by the ``Request`` class
@@ -18,7 +15,10 @@ functionality.
 Functionality Shipped with the HttpKernel
 -----------------------------------------
 
-Symfony ships with four value resolvers in the HttpKernel component:
+.. versionadded:: 3.3
+    The ``SessionValueResolver`` was introduced in Symfony 3.3.
+
+Symfony ships with five value resolvers in the HttpKernel component:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
@@ -26,6 +26,11 @@ Symfony ships with four value resolvers in the HttpKernel component:
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
     extending ``Request``.
+
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\SessionValueResolver`
+    Injects the configured session class extending ``SessionInterface`` if
+    type-hinted with ``SessionInterface`` or a class extending
+    ``SessionInterface``.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DefaultValueResolver`
     Will set the default value of the argument if present and the argument

@@ -49,8 +49,8 @@ service files:
 
         services:
             app.mailer:
-                class:        AppBundle\Mailer
-                arguments:    ['%app.mailer.transport%']
+                class:     AppBundle\Mailer
+                arguments: ['%app.mailer.transport%']
 
     .. code-block:: xml
 
@@ -168,7 +168,7 @@ invokes the service container extension inside the FrameworkBundle:
                 <framework:form />
 
                 <!-- ... -->
-            </framework>
+            </framework:config>
         </container>
 
     .. code-block:: php

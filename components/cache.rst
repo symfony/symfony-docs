@@ -3,6 +3,8 @@
    single: Performance
    single: Components; Cache
 
+.. _`cache-component`:
+
 The Cache Component
 ===================
 
@@ -10,9 +12,6 @@ The Cache Component
     a `PSR-16`_ "Simple Cache" implementation for adding cache to your applications.
     It is designed to have a low overhead and it ships with ready to use adapters
     for the most common caching backends.
-
-.. versionadded:: 3.1
-    The Cache component was introduced in Symfony 3.1.
 
 .. versionadded:: 3.3
     The PSR-16 "Simple Cache" implementation was introduced in Symfony 3.3.

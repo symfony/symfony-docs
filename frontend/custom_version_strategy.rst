@@ -4,9 +4,6 @@
 How to Use a Custom Version Strategy for Assets
 ===============================================
 
-.. versionadded:: 3.1
-    Support for custom version strategies was introduced in Symfony 3.1.
-
 Asset versioning is a technique that improves the performance of web
 applications by adding a version identifier to the URL of the static assets
 (CSS, JavaScript, images, etc.) When the content of the asset changes, its
@@ -120,7 +117,7 @@ After creating the strategy PHP class, register it as a Symfony service.
             app.assets.versioning.gulp_buster:
                 class: AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy
                 arguments:
-                    - "%kernel.root_dir%/../busters.json"
+                    - "%kernel.project_dir%/busters.json"
                     - "%%s?version=%%s"
                 public: false
 
@@ -136,7 +133,7 @@ After creating the strategy PHP class, register it as a Symfony service.
             <services>
                 <service id="app.assets.versioning.gulp_buster"
                  class="AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy" public="false">
-                    <argument>%kernel.root_dir%/../busters.json</argument>
+                    <argument>%kernel.project_dir%/busters.json</argument>
                     <argument>%%s?version=%%s</argument>
                 </service>
             </services>
@@ -150,7 +147,7 @@ After creating the strategy PHP class, register it as a Symfony service.
         $definition = new Definition(
             'AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy',
             array(
-                '%kernel.root_dir%/../busters.json',
+                '%kernel.project_dir%/busters.json',
                 '%%s?version=%%s',
             )
         );

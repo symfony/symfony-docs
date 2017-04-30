@@ -99,7 +99,7 @@ First, configure a new ``scssphp`` Assetic filter:
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
-                <filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed" />
+                <assetic:filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed" />
                 <!-- ... -->
             </assetic:config>
         </container>
@@ -172,7 +172,7 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
-                <filter name="jsqueeze" />
+                <assetic:filter name="jsqueeze" />
                 <!-- ... -->
             </assetic:config>
         </container>

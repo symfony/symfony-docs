@@ -50,10 +50,6 @@ the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
 
-.. versionadded:: 3.1
-    Support for streaming the output of a process was introduced in
-    Symfony 3.1.
-
 You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
 foreach construct to get the output while it is generated. By default, the loop waits
 for new output before going to the next iteration::
@@ -143,6 +139,26 @@ are done doing other stuff::
     which means that your code will halt at this line until the external
     process is completed.
 
+.. note::
+
+    If a ``Response`` is sent **before** a child process had a chance to complete,
+    the server process will be killed (depending on your OS). It means that
+    your task will be stopped right away. Running an asynchronous process
+    is not the same as running a process that survives its parent process.
+
+    If you want your process to survive the request/response cycle, you can
+    take advantage of the ``kernel.terminate`` event, and run your command
+    **synchronously** inside this event. Be aware that ``kernel.terminate``
+    is called only if you use PHP-FPM.
+
+.. caution::
+
+    Beware also that if you do that, the said PHP-FPM process will not be
+    available to serve any new request until the subprocess is finished. This
+    means you can quickly block your FPM pool if you're not careful enough.
+    That is why it's generally way better not to do any fancy things even
+    after the request is sent, but to use a job queue instead.
+
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
 a callback that is called repeatedly whilst the process is still running, passing
 in the output and its type::
@@ -160,10 +176,6 @@ in the output and its type::
 
 Streaming to the Standard Input of a Process
 --------------------------------------------
-
-.. versionadded:: 3.1
-    Support for streaming the input of a process was introduced in
-    Symfony 3.1.
 
 Before a process is started, you can specify its standard input using either the
 :method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument

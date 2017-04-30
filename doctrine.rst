@@ -44,10 +44,10 @@ information. By convention, this information is usually configured in an
 
     # app/config/parameters.yml
     parameters:
-        database_host:      localhost
-        database_name:      test_project
-        database_user:      root
-        database_password:  password
+        database_host:     localhost
+        database_name:     test_project
+        database_user:     root
+        database_password: password
 
     # ...
 
@@ -95,7 +95,7 @@ information. By convention, this information is usually configured in an
         .. code-block:: php
 
             // app/config/config.php
-            $configuration->loadFromExtension('doctrine', array(
+            $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'   => 'pdo_mysql',
                     'host'     => '%database_host%',
@@ -207,7 +207,7 @@ can automatically generate an empty ``test_project`` database for you:
             doctrine:
                 dbal:
                     driver: pdo_sqlite
-                    path: '%kernel.root_dir%/sqlite.db'
+                    path: '%kernel.project_dir%/app/sqlite.db'
                     charset: UTF8
 
         .. code-block:: xml
@@ -225,7 +225,7 @@ can automatically generate an empty ``test_project`` database for you:
                 <doctrine:config>
                     <doctrine:dbal
                         driver="pdo_sqlite"
-                        path="%kernel.root_dir%/sqlite.db"
+                        path="%kernel.project_dir%/app/sqlite.db"
                         charset="UTF-8" />
                 </doctrine:config>
             </container>
@@ -236,7 +236,7 @@ can automatically generate an empty ``test_project`` database for you:
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'  => 'pdo_sqlite',
-                    'path'    => '%kernel.root_dir%/sqlite.db',
+                    'path'    => '%kernel.project_dir%/app/sqlite.db',
                     'charset' => 'UTF-8',
                 ),
             ));

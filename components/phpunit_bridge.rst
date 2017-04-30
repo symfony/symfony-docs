@@ -35,6 +35,24 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
+to register a new `test listener`_ called ``SymfonyTestsListener``:
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
+    </phpunit>
+
 Usage
 -----
 
@@ -74,15 +92,8 @@ in the **Unsilenced** section of the deprecation report.
 Mark Tests as Legacy
 --------------------
 
-There are four ways to mark a test as legacy:
-
-* (**Recommended**) Add the ``@group legacy`` annotation to its class or method;
-
-* Make its class name start with the ``Legacy`` prefix;
-
-* Make its method name start with ``testLegacy*()`` instead of ``test*()``;
-
-* Make its data provider start with ``provideLegacy*()`` or ``getLegacy*()``.
+Add the ``@group legacy`` annotation to a test class or method to mark it
+as legacy.
 
 Configuration
 -------------
@@ -94,9 +105,9 @@ message, enclosed with ``/``. For example, with:
 
 .. code-block:: xml
 
-    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -121,17 +132,33 @@ also set the value ``"weak"`` which will make the bridge ignore any deprecation
 notices. This is useful to projects that must use deprecated interfaces for
 backward compatibility reasons.
 
+When you maintain a library, having the test suite fail as soon as a dependency
+introduces a new deprecation is not desirable, because it shifts the burden of
+fixing that deprecation to any contributor that happens to submit a pull
+request shortly after a new vendor release is made with that deprecation. To
+mitigate this, you can either use tighter requirements, in the hope that
+dependencies will not introduce deprecations in a patch version, or even commit
+the Composer lock file, which would create another class of issues. Libraries
+will often use ``SYMFONY_DEPRECATIONS_HELPER=weak`` because of this. This has
+the drawback of allowing contributions that introduce deprecations but:
+
+* forget to fix the deprecated calls if there are any;
+* forget to mark appropriate tests with the ``@group legacy`` annotations.
+
+By using the ``"weak_vendors"`` value, deprecations that are triggered outside
+the ``vendors`` directory will make the test suite fail, while deprecations
+triggered from a library inside it will not, giving you the best of both
+worlds.
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.1
-    The ability to disable the deprecation helper was introduced in the 3.1 
-    version of this component.
 
 Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
 completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -195,14 +222,25 @@ The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``,
 ``microtime()``, ``sleep()`` and ``usleep()``.
 
-To use the ``ClockMock`` class in your test, you can:
+To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
+annotation to its class or methods. This annotation only works when executing
+PHPUnit using the ``vendor/bin/simple-phpunit`` script or when registering the
+following listener in your PHPUnit configuration:
 
-* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or
-  method;
+.. code-block:: xml
 
-* Register it manually by calling ``ClockMock::register(__CLASS__)`` and
-  ``ClockMock::withClockMock(true)`` before the test and
-  ``ClockMock::withClockMock(false)`` after the test.
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <listeners>
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+.. note::
+
+    If you don't want to use the ``@group time-sensitive`` annotation, you can
+    register the ``ClockMock`` class manually by calling
+    ``ClockMock::register(__CLASS__)`` and ``ClockMock::withClockMock(true)``
+    before the test and ``ClockMock::withClockMock(false)`` after the test.
 
 As a result, the following is guaranteed to work and is no longer a transient
 test::
@@ -238,10 +276,6 @@ And that's all!
 
 DNS-sensitive Tests
 -------------------
-
-.. versionadded:: 3.1
-    The mocks for DNS related functions were introduced in the 3.1 version
-    of this component.
 
 Tests that make network connections, for example to check the validity of a DNS
 record, can be slow to execute and unreliable due to the conditions of the
@@ -401,3 +435,4 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
+.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners

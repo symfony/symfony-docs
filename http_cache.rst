@@ -27,7 +27,7 @@ cache system.
 
 Since caching with HTTP isn't unique to Symfony, many articles already exist
 on the topic. If you're new to HTTP caching, Ryan Tomayko's article
-`Things Caches Do`_ is *highly* recommended . Another in-depth resource is Mark
+`Things Caches Do`_ is *highly* recommended. Another in-depth resource is Mark
 Nottingham's `Cache Tutorial`_.
 
 .. index::
@@ -53,7 +53,7 @@ Along the way, the cache will store each response that is deemed "cacheable"
 the cache sends the cached response to the client, ignoring your application
 entirely.
 
-This type of cache is known as a HTTP gateway cache and many exist such
+This type of cache is known as an HTTP gateway cache and many exist such
 as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony reverse proxy.
 
 .. tip::

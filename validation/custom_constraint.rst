@@ -24,7 +24,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
      */
     class ContainsAlphanumeric extends Constraint
     {
-        public $message = 'The string "%string%" contains an illegal character: it can only contain letters or numbers.';
+        public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
     }
 
 .. note::
@@ -66,7 +66,7 @@ The validator class is also simple, and only has one required method ``validate(
         {
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
                 $this->context->buildViolation($constraint->message)
-                    ->setParameter('%string%', $value)
+                    ->setParameter('{{ string }}', $value)
                     ->addViolation();
             }
         }

@@ -8,6 +8,7 @@ TwigBundle Configuration ("twig")
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         twig:
             exception_controller:  twig.controller.exception:showAction
 
@@ -52,10 +53,11 @@ TwigBundle Configuration ("twig")
             auto_reload:               ~
             optimizations:             ~
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': foo_bar
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -79,12 +81,13 @@ TwigBundle Configuration ("twig")
                 <twig:global key="pi">3.14</twig:global>
 
                 <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
-                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form_div_layout.html.twig', // Default
@@ -104,7 +107,7 @@ TwigBundle Configuration ("twig")
              'exception_controller' => 'AcmeFooBundle:Exception:showException',
              'optimizations'        => true,
              'paths' => array(
-                 '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+                 '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
              ),
         ));
 
@@ -266,7 +269,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': ~
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': ~
 
     .. code-block:: xml
 
@@ -279,7 +282,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
             <twig:config>
                 <!-- ... -->
-                <twig:path>%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path>%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
@@ -289,7 +292,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
-               '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => null,
+               '%kernel.project_dir%/vendor/acme/foo-bar/templates' => null,
             ),
         ));
 
@@ -309,7 +312,7 @@ for that directory:
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': 'foo_bar'
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': 'foo_bar'
 
     .. code-block:: xml
 
@@ -322,7 +325,7 @@ for that directory:
 
             <twig:config>
                 <!-- ... -->
-                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
@@ -332,7 +335,7 @@ for that directory:
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
-               '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+               '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
             ),
         ));
 
