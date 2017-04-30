@@ -52,13 +52,13 @@ As an example you'll create a price filter to format a given number into price::
     }
 
 .. note::
- 
+
     Prior to Twig 1.26, your extension had to define an additional ``getName()``
     method that returned a string with the extension's internal name (e.g.
     ``app.my_extension``). When your extension needs to be compatible with Twig
-    versions before 1.26, include this method which is omitted in the example 
+    versions before 1.26, include this method which is omitted in the example
     above.
-    
+
 .. tip::
 
     Along with custom filters, you can also add custom `functions`_ and register
@@ -78,8 +78,7 @@ Now you must let the Service Container know about your newly created Twig Extens
             app.twig_extension:
                 class: AppBundle\Twig\AppExtension
                 public: false
-                tags:
-                    - { name: twig.extension }
+                tags: [twig.extension]
 
     .. code-block:: xml
 

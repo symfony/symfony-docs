@@ -309,8 +309,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
                 class: AppBundle\Form\Type\GenderType
                 arguments:
                     - '%genders%'
-                tags:
-                    - { name: form.type }
+                tags: [form.type]
 
     .. code-block:: xml
 

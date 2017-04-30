@@ -344,8 +344,7 @@ you need to register it as a service and tag it with :ref:`form.type <dic-tags-f
             app.form.friend_message:
                 class: AppBundle\Form\Type\FriendMessageFormType
                 arguments: ['@security.token_storage']
-                tags:
-                    - { name: form.type }
+                tags: [form.type]
 
     .. code-block:: xml
 
