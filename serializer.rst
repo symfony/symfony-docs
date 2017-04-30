@@ -112,8 +112,7 @@ Here is an example on how to load the
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
                 public: false
-                tags:
-                    - { name: serializer.normalizer }
+                tags: [serializer.normalizer]
 
     .. code-block:: xml
 
@@ -178,7 +177,7 @@ to your class and choose which groups to use when serializing::
         $someObject,
         'json', array('groups' => array('group1'))
     );
-    
+
 In addition to the ``@Groups`` annotation, the Serializer component also
 supports Yaml or XML files. These files are automatically loaded when being
 stored in one of the following locations:

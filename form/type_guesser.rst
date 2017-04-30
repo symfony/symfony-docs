@@ -188,8 +188,7 @@ creating a service and tagging it as ``form.type_guesser``:
 
             app.phpdoc_type_guesser:
                 class: AppBundle\Form\TypeGuesser\PHPDocTypeGuesser
-                tags:
-                    - { name: form.type_guesser }
+                tags: [form.type_guesser]
 
     .. code-block:: xml
 

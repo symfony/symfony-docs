@@ -69,8 +69,7 @@ Then register the listener:
             app.locale_listener:
                 class: AppBundle\EventListener\LocaleListener
                 arguments: ['%kernel.default_locale%']
-                tags:
-                    - { name: kernel.event_subscriber }
+                tags: [kernel.event_subscriber]
 
     .. code-block:: xml
 

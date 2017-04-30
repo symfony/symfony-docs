@@ -75,7 +75,7 @@ Suppose you need to access the ``doctrine.orm.entity_manager`` service so that y
 can make a query. First, add this as an argument to your form class::
 
     // src/AppBundle/Form/TaskType.php
-    
+
     use Doctrine\ORM\EntityManager;
     // ...
 
@@ -102,8 +102,7 @@ Next, register this as a service and tag it with ``form.type``:
             app.form.type.task:
                 class: AppBundle\Form\TaskType
                 arguments: ['@doctrine.orm.entity_manager']
-                tags:
-                    - { name: form.type }
+                tags: [form.type]
 
     .. code-block:: xml
 
