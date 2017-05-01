@@ -34,6 +34,8 @@ useful when :doc:`a form has multiple submit buttons </form/multiple_buttons>`::
 Inherited Options
 -----------------
 
+Note some examples come from the ButtonType documentation. If you want to use the SubmitType field, you have to use SubmitType::class instead of ButtonType::class to generate a submit button.
+
 .. include:: /reference/forms/types/options/button_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
