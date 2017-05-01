@@ -66,14 +66,13 @@ Then you can define it as a service as follows:
 
         # app/config/services.yml
         services:
-            AppBundle\Controller\HelloController:
-                class: AppBundle\Controller\HelloController
+            AppBundle\Controller\HelloController: ~
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="AppBundle\Controller\HelloController" class="AppBundle\Controller\HelloController" />
+            <service id="AppBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
@@ -81,7 +80,7 @@ Then you can define it as a service as follows:
         // app/config/services.php
         use AppBundle\Controller\HelloController;
 
-        $container->register(HelloController::class, HelloController::class);
+        $container->register(HelloController::class);
 
 Referring to the Service
 ------------------------
@@ -220,14 +219,13 @@ argument:
         # app/config/services.yml
         services:
             AppBundle\Controller\HelloController:
-                class:     AppBundle\Controller\HelloController
                 arguments: ['@templating']
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="AppBundle\Controller\HelloController" class="AppBundle\Controller\HelloController">
+            <service id="AppBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
@@ -236,10 +234,9 @@ argument:
 
         // app/config/services.php
         use AppBundle\Controller\HelloController;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(HelloController::class, HelloController::class)
+        $container->register(HelloController::class)
             ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can
