@@ -168,8 +168,7 @@ tag so that the validation system knows about it:
         services:
             app.contains_alphanumeric_validator:
                 class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
-                tags:
-                    - { name: validator.constraint_validator }
+                tags: [validator.constraint_validator]
 
     .. code-block:: xml
 

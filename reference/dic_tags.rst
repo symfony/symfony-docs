@@ -93,8 +93,7 @@ And then register it as a tagged service:
         services:
             app.custom_assetic_worker:
                 class: AppBundle\Assetic\CustomWorker
-                tags:
-                    - { name: assetic.factory_worker }
+                tags: [assetic.factory_worker]
 
     .. code-block:: xml
 
@@ -469,8 +468,7 @@ Then register this class and tag it with ``kernel.cache_clearer``:
         services:
             my_cache_clearer:
                 class: AppBundle\Cache\MyClearer
-                tags:
-                    - { name: kernel.cache_clearer }
+                tags: [kernel.cache_clearer]
 
     .. code-block:: xml
 
@@ -640,8 +638,7 @@ configuration and tag it with ``kernel.event_subscriber``:
         services:
             app.custom_subscriber:
                 class: AppBundle\EventListener\CustomSubscriber
-                tags:
-                    - { name: kernel.event_subscriber }
+                tags: [kernel.event_subscriber]
 
     .. code-block:: xml
 
@@ -771,8 +768,7 @@ You can add a processor globally:
         services:
             my_service:
                 class: Monolog\Processor\IntrospectionProcessor
-                tags:
-                    - { name: monolog.processor }
+                tags: [monolog.processor]
 
     .. code-block:: xml
 
@@ -895,8 +891,7 @@ of your configuration and tag it with ``routing.loader``:
         services:
             app.custom_routing_loader:
                 class: AppBundle\Routing\CustomLoader
-                tags:
-                    - { name: routing.loader }
+                tags: [routing.loader]
 
     .. code-block:: xml
 
@@ -1297,8 +1292,7 @@ configuration and tag it with ``twig.extension``:
         services:
             app.twig_extension:
                 class: AppBundle\Twig\AppExtension
-                tags:
-                    - { name: twig.extension }
+                tags: [twig.extension]
 
     .. code-block:: xml
 
@@ -1343,8 +1337,7 @@ also have to be added as regular services:
         services:
             twig.extension.intl:
                 class: Twig_Extensions_Extension_Intl
-                tags:
-                    - { name: twig.extension }
+                tags: [twig.extension]
 
     .. code-block:: xml
 

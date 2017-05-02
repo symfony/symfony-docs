@@ -94,8 +94,7 @@ To enable a data collector, define it as a regular service and tag it as
             app.request_collector:
                 class: AppBundle\DataCollector\RequestCollector
                 public: false
-                tags:
-                    - { name: data_collector }
+                tags: [data_collector]
 
     .. code-block:: xml
 

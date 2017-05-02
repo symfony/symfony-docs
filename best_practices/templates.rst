@@ -158,8 +158,7 @@ name is irrelevant because you never use it in your own code):
             class:     AppBundle\Twig\AppExtension
             arguments: ['@app.markdown']
             public:    false
-            tags:
-                - { name: twig.extension }
+            tags: [twig.extension]
 
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/

@@ -101,7 +101,7 @@ decides this using whatever logic you want.
     the ``security.authorization_checker`` service. The main difference is that
     when access is not granted, ``denyAccessUnlessGranted()`` throws an
     ``AccessDeniedException``, whereas ``isGranted()`` returns ``false``.
-    
+
 Creating the custom Voter
 -------------------------
 
@@ -218,8 +218,7 @@ and tag it with ``security.voter``:
         services:
             app.post_voter:
                 class:  AppBundle\Security\PostVoter
-                tags:
-                    - { name: security.voter }
+                tags: [security.voter]
                 # small performance boost
                 public: false
 
@@ -307,8 +306,7 @@ service:
                 class: AppBundle\Security\PostVoter
                 arguments: ['@security.access.decision_manager']
                 public: false
-                tags:
-                    - { name: security.voter }
+                tags: [security.voter]
 
     .. code-block:: xml
 
@@ -345,7 +343,7 @@ service:
         ;
 
 That's it! Calling ``decide()`` on the ``AccessDecisionManager`` is essentially
-the same as calling ``isGranted()`` from a controller or other places 
+the same as calling ``isGranted()`` from a controller or other places
 (it's just a little lower-level, which is necessary for a voter).
 
 .. note::

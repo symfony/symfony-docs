@@ -29,8 +29,7 @@ with ``console.command``:
         services:
             app.command.my_command:
                 class: AppBundle\Command\MyCommand
-                tags:
-                    - { name: console.command }
+                tags: [console.command]
 
     .. code-block:: xml
 
@@ -89,7 +88,7 @@ store the default value in some ``%command.default_name%`` parameter::
         public function __construct($defaultName)
         {
             $this->defaultName = $defaultName;
-            
+
             parent::__construct();
         }
 
@@ -135,8 +134,7 @@ inject the ``command.default_name`` parameter:
             app.command.my_command:
                 class: AppBundle\Command\MyCommand
                 arguments: ["%command.default_name%"]
-                tags:
-                    - { name: console.command }
+                tags: [console.command]
 
     .. code-block:: xml
 

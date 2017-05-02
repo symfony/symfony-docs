@@ -157,8 +157,7 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
         services:
             newsletter_manager:
                 class: AppBundle\Newsletter\NewsletterManager
-                tags:
-                    - { name: security.secure_service }
+                tags: [security.secure_service]
 
     .. code-block:: xml
 
