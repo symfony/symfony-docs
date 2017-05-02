@@ -116,18 +116,29 @@ For more information on routing, see :doc:`/routing`.
 .. index::
    single: Controller; Base controller class
 
-The Base Controller Class & Services
-------------------------------------
+.. _anchor-name:
+   :ref:`The Base Controller Classes & Services <the-base-controller-class-services>`
 
-For convenience, Symfony comes with an optional base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
-If you extend it, this won't change anything about how your controller
-works, but you'll get access to a number of **helper methods** and the
-**service container** (see :ref:`controller-accessing-services`): an
+The Base Controller Classes & Services
+--------------------------------------
+
+For convenience, Symfony comes with two optional base
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
+classes.
+If you extend one or the other, this won't change anything about how your
+controller works, but you'll get access to a number of **helper methods**.
+
+The base ``Controller`` also allows you to access the **service container** (see :ref:`controller-accessing-services`): an
 array-like object that gives you access to every useful object in the
 system. These useful objects are called **services**, and Symfony ships
 with a service object that can render Twig templates, another that can
 log messages and many more.
+
+On the other hand, the ``AbstractController`` prevents you from accessing the
+**service container**. When you need an external dependency, this forces you to
+write a code more robust as you have to explicitly define your dependencies by
+using :doc:`the controller as a service </controller/service>`.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify
 ``LuckyController`` to extend it::
@@ -144,7 +155,7 @@ Add the ``use`` statement atop the ``Controller`` class and then modify
 
 Helper methods are just shortcuts to using core Symfony functionality
 that's available to you with or without the use of the base
-``Controller`` class. A great way to see the core functionality in
+controller classes. A great way to see the core functionality in
 action is to look in the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
 
@@ -241,10 +252,9 @@ are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of. When you install a new bundle, it probably
 brings in even *more* services.
 
-When extending the base controller class, you can access any Symfony service
+When extending the base ``Controller`` class, you can access any Symfony service
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
-method of the ``Controller`` class. Here are several common services you might
-need::
+method. Here are several common services you might need::
 
     $templating = $this->get('templating');
 
@@ -279,7 +289,8 @@ Managing Errors and 404 Pages
 
 When things are not found, you should play well with the HTTP protocol and
 return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base ``Controller`` class, do the following::
+If you're extending the base ``Controller`` or the base ``AbstractController``
+class, do the following::
 
     public function indexAction()
     {
