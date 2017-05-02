@@ -356,27 +356,6 @@ To answer this, change the service declaration:
         Support for the compact tag notation in the YAML format was introduced
         in Symfony 3.3.
 
-.. tip::
-
-    In YAML format, you may define a service with a simple array of tags as long
-    as you don't need additional attributes. The following definitions are
-    equivalent.
-
-    .. code-block:: yaml
-
-        services:
-
-            # Compact syntax
-            AppBundle\Twig\AppExtension: [twig.extension]
-
-            # Verbose syntax
-            AppBundle\Twig\AppExtension:
-                tags: [twig.extension]
-
-    .. versionadded:: 3.3
-        Support for the short syntax for service definition in the YAML format
-        was introduced in Symfony 3.3.
-
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 
