@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-03-26T15:41:54Z
+
+@GuilhemN Would you like to document the abstract controller introduced in https://github.com/symfony/symfony/pull/22157 instead? Thanks!
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-03-26T15:43:58Z
+
+@HeahDude oh that's already merged, I didn't expect it to be so quick. I'll make the changes :)
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-03-26T16:16:04Z
+
+Updated to document the `AbstractController` instead.
+
+ping @nicolas-grekas
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-03-26T18:02:18Z
+
+Closes #7705.
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-03-31T18:21:37Z
+
+Updated to document the `AbstractController` in the `controller.rst` file to not limit its use to controllers as services.
