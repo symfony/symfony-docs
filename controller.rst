@@ -149,6 +149,9 @@ and many others that you'll learn about next.
     via ``$this->get()`` or ``$this->container->get()``. This forces you to write
     more robust code to access services, but if you're not use, use ``Controller``.
 
+.. versionadded:: 3.3
+    The ``AbstractController`` class was added in Symfony 3.3.
+
 .. index::
    single: Controller; Redirecting
 
@@ -236,6 +239,10 @@ The Symfony templating system and Twig are explained more in the
 
 Fetching Services as Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.3
+    The ability to type-hint an argument in order to receive a service was added
+    in Symfony 3.3.
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and

@@ -43,6 +43,9 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
         // ...
     }
 
+.. versionadded:: 3.3
+    The ability to type-hint a service in order to receive it was added in Symfony 3.3.
+
 .. _container-debug-container:
 
 What other services are available? Find out by running:
@@ -176,6 +179,10 @@ the service container *how* to instantiate it:
 
         // app/config/services.php
         // _defaults and loading entire directories is not possible with PHP configuration
+
+.. versionadded:: 3.3
+    The ``_defaults`` key and ability to load services from a directory were added
+    in Symfony 3.3.
 
 That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, a service
 will be registered for each class in the ``src/AppBundle/Service`` directory (and
@@ -462,6 +469,11 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             ->setPublic(false)
             ->setArgument('$adminEmail', 'manager@example.com');
 
+.. versionadded:: 3.3
+    The ability to configure an argument by its name (``$adminEmail``) was added
+    in Symfony 3.3. Previously, you could configure it only by its index (``2`` in
+    this case).
+
 Thanks to this, the container will pass ``manager@example.com`` as the third argument
 to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
 will still be autowired.
@@ -640,6 +652,9 @@ service whose id is ``monolog.logger.request``.
 
 The autoconfigure Option
 ------------------------
+
+.. versionadded:: 3.3
+    The ``autoconfigure`` option was added in Symfony 3.3.
 
 Above, we've set ``autoconfigure: true`` in the ``_defaults`` section so that it
 applies to all services defined in that file. With this setting, the container will
