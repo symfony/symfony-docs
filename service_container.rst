@@ -748,6 +748,85 @@ it as a service. Then ``autoconfigure`` will add the ``twig.extension`` tag *for
 you, because your class implements ``Twig_ExtensionInterface``. And thanks to ``autowire``,
 you can even add constructor arguments without any configuration.
 
+.. _container-public:
+
+Public Versus Private Services
+------------------------------
+
+Thanks to the ``_defaults`` section in ``services.yml``, every service defined in
+this file is ``public: false`` by default:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # default configuration for services in *this* file
+            _defaults:
+                # ...
+                public: false
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- Default configuration for services in *this* file -->
+                <defaults autowire="true" autoconfigure="true" public="false" />
+            </services>
+        </container>
+
+What does this mean? When a service is **not** public, you cannot access it directly
+from the container::
+
+    use AppBundle\Service\MessageGenerator;
+
+    public function newAction(MessageGenerator $messageGenerator)
+    {
+        // type-hinting it as an argument DOES work
+    
+        // but accessing it directly from the container does NOT Work
+        $this->container->get(MessageGenerator::class);
+    }
+
+Usually, this is ok: there are better ways to access a service. But, if you *do*
+need to make your service public, just override this setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ... same code as before
+
+            # explicitly configure the service
+            AppBundle\Service\MessageGenerator:
+                public: true
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... same code as before -->
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Service\MessageGenerator" public="true"></service>
+            </services>
+        </container>
+
 Learn more
 ----------
 
