@@ -25,30 +25,27 @@ Fetching and using Services
 
 The moment you start a Symfony app, your container *already* contains many services.
 These are like *tools*, waiting for you to take advantage of them. In your controller,
-you have access to the container via ``$this->container``. Want to :doc:`log </logging>`
-something? No problem::
+you can "ask" for a service from the container by type-hinting an argument wit the
+service's class or interface name. Want to :doc:`log </logging>` something? No problem::
 
     // src/AppBundle/Controller/ProductController.php
-    namespace AppBundle\Controller;
+    // ...
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Psr\Log\LoggerInterface;
 
-    class ProductController extends Controller
+    /**
+     * @Route("/products")
+     */
+    public function listAction(LoggerInterface $logger)
     {
-        /**
-         * @Route("/products")
-         */
-        public function listAction()
-        {
-            $logger = $this->container->get('logger');
-            $logger->info('Look! I just used a service');
+        $logger->info('Look! I just used a service');
 
-            // ...
-        }
+        // ...
     }
 
-``logger`` is a unique key for the ``Logger`` object. What other services are available?
-Find out by running:
+.. _container-debug-container:
+
+What other services are available? Find out by running:
 
 .. code-block:: terminal
 
@@ -72,6 +69,30 @@ translator                      ``Symfony\Component\Translation\DataCollectorTra
 twig                            ``Twig_Environment``
 validator                       ``Symfony\Component\Validator\Validator\ValidatorInterface``
 =============================== =======================================================================
+
+You can also use the unique "Service ID" to access a service directly::
+
+    // src/AppBundle/Controller/ProductController.php
+    namespace AppBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class ProductController extends Controller
+    {
+        /**
+         * @Route("/products")
+         */
+        public function listAction()
+        {
+            $logger = $this->container->get('logger');
+            $logger->info('Look! I just used a service');
+
+            // ...
+        }
+    }
+
+:ref:`Fetching a service directly from the container <controller-access-services-directly>`
+like this only works if you extend the ``Controller`` class.
 
 Throughout the docs, you'll see how to use the many different services that live
 in the container.
@@ -127,50 +148,80 @@ the service container *how* to instantiate it:
             _defaults:
                 autowire: true
                 autoconfigure: true
+                public: false
 
-            # load services from whatever directories you want (you can update this!)
+            # loads services from whatever directories you want (you can update this!)
             AppBundle\:
                 resource: '../../src/AppBundle/{Service,EventDispatcher,Twig,Form}'
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- Default configuration for services in *this* file -->
+                <defaults autowire="true" autoconfigure="true" public="false" />
+
+                <!-- Load services from whatever directories you want (you can update this!) -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,EventDispatcher,Twig,Form}" />
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        TODO
+        // _defaults and loading entire directories is not possible with PHP configuration
 
 That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, a service
 will be registered for each class in the ``src/AppBundle/Service`` directory (and
 the other directories listed).
 
-Each service's "key" is its class name. You can use it immediately inside your controller::
+You can use it immediately inside your controller::
 
     use AppBundle\Service\MessageGenerator;
 
-    public function newAction()
+    public function newAction(MessageGenerator $messageGenerator)
     {
+        // thanks to the type-hint, the container will instantiate a
+        // new MessageGenerator and pass it to you!
         // ...
-
-        // the container will instantiate a new MessageGenerator()
-        $messageGenerator = $this->container->get(MessageGenerator::class);
-
-        // or use this shorter synax
-        // $messageGenerator = $this->get(MessageGenerator::class);
 
         $message = $messageGenerator->getHappyMessage();
         $this->addFlash('success', $message);
         // ...
     }
 
-When you ask for the ``MessageGenerator::class`` service, the container constructs
-a new ``MessageGenerator`` object and returns it. But if you never ask for the service,
+When you ask for the ``MessageGenerator`` service, the container constructs a new
+``MessageGenerator`` object and returns it. But if you never ask for the service,
 it's *never* constructed: saving memory and speed.
 
-As a bonus, the ``MessageGenerator::class`` service is only created *once*: the same
+As a bonus, the ``MessageGenerator`` service is only created *once*: the same
 instance is returned each time you ask for it.
+
+You can also fetch a service directly from the container via its "id", which will
+be its class name in this case::
+
+    use AppBundle\Service\MessageGenerator;
+    
+    // accessing services like this only works if you extend Controller
+    class ProductController extend Controller
+    {
+        public function newAction()
+        {
+            // $messageGenerator = $this->get(MessageGenerator::class);
+
+            $message = $messageGenerator->getHappyMessage();
+            $this->addFlash('success', $message);
+            // ...
+        }
+    }
+
+However, this only works if you set your service to be :ref:`public <container-public>`.
 
 .. caution::
 
@@ -181,12 +232,12 @@ instance is returned each time you ask for it.
 Injecting Services/Config into a Service
 ----------------------------------------
 
-What if you want to use the ``logger`` service from within ``MessageGenerator``?
-Your service does *not* have a ``$this->container`` property: that's a special power
-only controllers have.
+What if need to access the ``logger`` service from within ``MessageGenerator``?
+Your service does *not* have access to the container directly, so you can't fetch
+it via ``$this->container->get()``.
 
-Instead, you should create a ``__construct()`` method, add a ``$logger`` argument
-and set it on a ``$logger`` property::
+No problem! Instead, create a ``__construct()`` method with a ``$logger`` argument
+that has the ``LoggerInterface`` type-hint::
 
     // src/AppBundle/Service/MessageGenerator.php
     // ...
@@ -215,7 +266,7 @@ when instantiating the ``MessageGenerator``. How does it know to do this?
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 ``services.yml``. When you type-hint an argument, the container will automatically
 find the matching service. If it can't or there is any ambiguity, you'll see a clear
-exception suggesting how to fix it.
+exception with a helpful suggestion.
 
 Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
 
@@ -227,7 +278,7 @@ Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
     to the class name for a service.
 
 Handling Multiple Services
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you also want to email a site administrator each time a site update is
 made. To do that, you create a new class::
@@ -284,22 +335,27 @@ the new ``Updates`` sub-directory:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    .. code-block:: php
+            <services>
+                <!-- ... -->
 
-        // app/config/services.php
-        TODO
+                <!-- Registers all classes in Services & Updates directories -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,EventDispatcher,Twig,Form}" />
+            </services>
+        </container>
 
 Now, you can use the service immediately::
 
     use AppBundle\Updates\SiteUpdateManager;
 
-    public function newAction()
+    public function newAction(SiteUpdateManager $siteUpdateManager)
     {
         // ...
-
-        $siteUpdateManager = $this->container->get(SiteUpdateManager::class);
 
         $message = $siteUpdateManager->notifyOfSiteUpdate();
         $this->addFlash('success', $message);
@@ -311,7 +367,7 @@ the ``SiteUpdateManager`` object and passes it the correct arguments. In most ca
 this works perfectly.
 
 Manually Wiring Arguments
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 But there are a few cases when an argument to a service cannot be autowired. For
 example, suppose you want to make the admin email configurable:
@@ -375,12 +431,36 @@ pass here. No problem! In your configuration, you can explicitly set this argume
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- Same as before -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates}" />
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Updates\SiteUpdateManager">
+                    <argument key="$adminEmail">%admin_email%</argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        TODO
+        use AppBundle\Updates\SiteUpdateManager;
+        
+        // _defaults and importing directories does not work in PHP
+        // but registering a service explicitly does
+        $container->autowire(SiteUpdateManager::class)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+            ->setArgument('$adminEmail', 'manager@example.com');
 
 Thanks to this, the container will pass ``manager@example.com`` as the third argument
 to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
@@ -412,11 +492,33 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: xml
 
-        TODO
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="admin_email">manager@example.com</parameter>
+            </parameters>
+
+            <services>
+                <!-- ... -->
+
+                <service id="AppBundle\Updates\SiteUpdateManager">
+                    <argument key="$adminEmail">%admin_email%</argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
-        TODO
+        $container->setParameter('admin_email', 'manager@example.com');
+
+        $container->autowire(SiteUpdateManager::class)
+            // ...
+            ->setArgument('$adminEmail', '%admin_email%');
 
 Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
@@ -428,9 +530,11 @@ You can also fetch parameters directly from the container::
     {
         // ...
 
-        $adminEmail = $this->container
-            ->getParameter('admin_email');
-        // ...
+        // this ONLY works if you extend Controller
+        $adminEmail = $this->container->getParameter('admin_email');
+
+        // or a shorter way!
+        // $adminEmail = $this->getParameter('admin_email');
     }
 
 .. note::
@@ -495,14 +599,35 @@ But, you can control this and pass in a different logger:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... same code as before -->
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Service\MessageGenerator">
+                    <argument key="$logger" type="service" id="monolog.logger.request" />
+                </service>
+            </services>
+        </container>
+
 
     .. code-block:: php
 
         // app/config/services.php
-        TODO
+        use AppBundle\Service\MessageGenerator;
+        use Symfony\Component\DependencyInjection\Reference;
 
-This tells the container that the ``$logger`` argument to ``_construct`` should use
+        $container->autowire(MessageGenerator::class)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+            ->setArgument('$logger', new Reference('monolog.logger.request'));
+
+This tells the container that the ``$logger`` argument to ``__construct`` should use
 service whose id is ``monolog.logger.request``.
 
 .. tip::
@@ -538,15 +663,31 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="AppBundle\Twig\MyTwigExtension">
+                    <tag name="twig.extension" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        TODO
+        use AppBundle\Twig\MyTwigExtension;
+
+        $container->autowire(MyTwigExtension::class)
+            ->addTag('twig.extension');
 
 But, with ``autoconfigure: true``, you don't need the tag. In fact, all you need
-is this:
+to do is load your service from the ``Twig`` directory:
 
 .. configuration-block::
 
@@ -555,27 +696,42 @@ is this:
         # app/config/services.yml
         services:
             _defaults:
-                autowire: true
+                # ...
                 autoconfigure: true
 
-            # load your service from the Twig directory
+            # load your services from the Twig directory
             AppBundle\:
                 resource: '../../src/AppBundle/{Service,EventDispatcher,Twig,Form}'
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true" />
+
+                <!-- Load your services-->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,EventDispatcher,Twig,Form}" />
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        TODO
+        use AppBundle\Twig\MyTwigExtension;
+
+        $container->autowire(MyTwigExtension::class)
+            ->setAutoconfigure(true);
 
 That's it! The container will find your class in the ``Twig/`` directory and register
 it as a service. Then ``autoconfigure`` will add the ``twig.extension`` tag *for*
 you, because your class implements ``Twig_ExtensionInterface``. And thanks to ``autowire``,
-you can even add ``__construct()`` arguments without any configuration.
+you can even add constructor arguments without any configuration.
 
 Learn more
 ----------

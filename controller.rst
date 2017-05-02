@@ -116,8 +116,7 @@ For more information on routing, see :doc:`/routing`.
 .. index::
    single: Controller; Base controller class
 
-.. _anchor-name:
-   :ref:`The Base Controller Classes & Services <the-base-controller-class-services>`
+.. _the-base-controller-class-services:
 
 The Base Controller Classes & Services
 --------------------------------------
@@ -125,20 +124,7 @@ The Base Controller Classes & Services
 For convenience, Symfony comes with two optional base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
-classes.
-If you extend one or the other, this won't change anything about how your
-controller works, but you'll get access to a number of **helper methods**.
-
-The base ``Controller`` also allows you to access the **service container** (see :ref:`controller-accessing-services`): an
-array-like object that gives you access to every useful object in the
-system. These useful objects are called **services**, and Symfony ships
-with a service object that can render Twig templates, another that can
-log messages and many more.
-
-On the other hand, the ``AbstractController`` prevents you from accessing the
-**service container**. When you need an external dependency, this forces you to
-write a code more robust as you have to explicitly define your dependencies by
-using :doc:`the controller as a service </controller/service>`.
+classes. You can extend either to get access to a number of `helper methods`_.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify
 ``LuckyController`` to extend it::
@@ -153,16 +139,15 @@ Add the ``use`` statement atop the ``Controller`` class and then modify
         // ...
     }
 
-Helper methods are just shortcuts to using core Symfony functionality
-that's available to you with or without the use of the base
-controller classes. A great way to see the core functionality in
-action is to look in the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
+That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
+and many others that you'll learn about next.
 
 .. tip::
-    If you know what you're doing, you can alternatively extend
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. It
-    has all the same shortcuts, but does not have a ```$this->container`` property.
+
+    You can extend either ``Controller`` or ``AbstractController``. The difference
+    is that when you extend ``AbstractController``, you can't access services directly
+    via ``$this->get()`` or ``$this->container->get()``. This forces you to write
+    more robust code to access services, but if you're not use, use ``Controller``.
 
 .. index::
    single: Controller; Redirecting
@@ -249,14 +234,114 @@ The Symfony templating system and Twig are explained more in the
 
 .. _controller-accessing-services:
 
-Accessing other Services
-~~~~~~~~~~~~~~~~~~~~~~~~
+Fetching Services as Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony comes packed with a lot of useful objects, called :doc:`services </service_container>`.
+Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of.
 
-When extending the base ``Controller`` class, you can access any Symfony service
+If you need a service, just type-hint an argument with its class (or interface) name.
+Symfony will automatically pass you the service you need::
+
+    use Psr\Log\LoggerInterface
+    // ...
+
+    /**
+     * @Route("/lucky/number/{max}")
+     */
+    public function numberAction($max, LoggerInterface $logger)
+    {
+        $logger->info('We are logging!');
+        // ...
+    }
+
+Awesome!
+
+What other services exist? Each page of the documentation will reveal more and more
+services you can use. To list *all* services, use the ``debug:container`` console
+command:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container
+
+If need to control the *exact* value of an argument, you can override your controller's
+service config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            # explicitly configure the service
+            AppBundle\Controller\LuckyController:
+                public: true
+                tags:
+                    # add multiple tags to controller multiple args
+                    - name: controller.service_arguments
+                      action: numberAction
+                      argument: logger
+                      # pass this specific service id
+                      id: monolog.logger.doctrine
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Controller\LuckyController" public="true">
+                    <tag
+                        name="controller.service_arguments"
+                        action="numberAction"
+                        argument="logger"
+                        id="monolog.logger.doctrine"
+                    />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\Controller\LuckyController;
+        
+        $container->register(LuckyController::class)
+            ->setPublic(true)
+            ->addTag('controller.service_arguments', [
+                'action' => 'numberAction',
+                'argument' => 'logger',
+                'id' => 'monolog.logger.doctrine',
+            ])
+        ;
+
+For more information about services, see the :doc:`/service_container` article.
+
+.. note::
+    If this isn't working, make sure your controller is registered as a service,
+    :ref:`autoconfigured <services-autoconfigure>` and extends either
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. Or,
+    you can tag your service manually with ``controller.service_arguments``.
+
+.. _accessing-other-services:
+.. _controller-access-services-directly:
+
+Accessing the Container Directly
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If extending the base ``Controller`` class, you can access any Symfony service
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
 method. Here are several common services you might need::
 
@@ -269,40 +354,12 @@ method. Here are several common services you might need::
     // you can also fetch parameters
     $someParameter = $this->getParameter('some_parameter');
 
-What other services exist? To list all services, use the ``debug:container``
-console command:
+If you receive an eror like:
 
-.. code-block:: terminal
+    You have requested a non-existent service "my_service_id"
 
-    $ php bin/console debug:container
-
-For more information, see the :doc:`/service_container` article.
-
-Services as Controller Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can also tell Symfony to pass your a service as a controller argument by type-hinting
-it::
-
-    use Psr\Log\LoggerInterface
-    // ...
-
-    /**
-     * @Route("/lucky/number/{max}")
-     */
-    public function numberAction($max, LoggerInterface $logger)
-    {
-        $logger->info('We are logging!');
-
-        // ...
-    }
-
-.. note::
-    If this isn't working, make sure your controller is registered as a service,
-    :ref:`autoconfigured <services-autoconfigure>` and extends either
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. Or,
-    you can tag it manually with ``controller.service_arguments``.
+Check to make sure the service exists (use :ref:`debug:container <container-debug-container>`)
+and that it's :ref:`public <container-public>`.
 
 .. index::
    single: Controller; Managing errors
@@ -378,7 +435,6 @@ Managing the Session
 Symfony provides a nice session object that you can use to store information
 about the user between requests. By default, Symfony stores the attributes in a
 cookie by using native PHP sessions.
-
 
 .. versionadded:: 3.3
     The ability to request a ``Session`` instance in controllers was introduced
@@ -646,12 +702,7 @@ and it's a PHP function where you can do anything in order to return the
 final ``Response`` object that will be returned to the user.
 
 To make life easier, you'll probably extend the base ``Controller`` class because
-this gives two things:
-
-A) Shortcut methods (like ``render()`` and ``redirectToRoute()``);
-
-B) Access to *all* of the useful objects (services) in the system via the
-   :ref:`get() <controller-accessing-services>` method.
+this gives access to shortcut methods (like ``render()`` and ``redirectToRoute()``).
 
 In other articles, you'll learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
@@ -676,4 +727,5 @@ Learn more about Controllers
 
     controller/*
 
+.. _`helper methods`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect
