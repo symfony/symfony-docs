@@ -135,7 +135,20 @@ the service container *how* to instantiate it:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- Default configuration for services in *this* file -->
+                <defaults autowire="true" autoconfigure="true" />
+
+                <!-- Load services from whatever directories you want (you can update this!) -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,EventDispatcher,Twig,Form}" />
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -284,7 +297,19 @@ the new ``Updates`` sub-directory:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- Registers all classes in Services & Updates directories -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,EventDispatcher,Twig,Form}" />
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -375,7 +400,24 @@ pass here. No problem! In your configuration, you can explicitly set this argume
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- Same as before -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates}" />
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Updates\SiteUpdateManager">
+                    <argument key="$adminEmail">%admin_email%</argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -412,7 +454,25 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: xml
 
-        TODO
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="admin_email">manager@example.com</parameter>
+            </parameters>
+
+            <services>
+                <!-- ... -->
+
+                <service id="AppBundle\Updates\SiteUpdateManager">
+                    <argument key="$adminEmail">%admin_email%</argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -495,7 +555,21 @@ But, you can control this and pass in a different logger:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... same code as before -->
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Service\MessageGenerator">
+                    <argument key="$logger" type="service" id="monolog.logger.request" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -538,7 +612,20 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="AppBundle\Twig\MyTwigExtension">
+                    <tag name="twig.extension" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -565,7 +652,19 @@ is this:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        TODO
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true" />
+
+                <!-- Load your services-->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,EventDispatcher,Twig,Form}" />
+            </services>
+        </container>
 
     .. code-block:: php
 
