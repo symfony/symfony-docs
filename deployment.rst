@@ -80,7 +80,7 @@ specifically tailored to the requirements of Symfony.
 `Capistrano`_ with `Symfony plugin`_
     `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
     `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
-    (which works only with Capistrano 2 )
+    (which works only with Capistrano 2).
 
 `sf2debpkg`_
     Helps you build a native Debian package for your Symfony project.
@@ -181,12 +181,12 @@ setup:
 * Pushing assets to a CDN
 * ...
 
-Application Lifecycle: Continuous Integration, QA, etc
-------------------------------------------------------
+Application Lifecycle: Continuous Integration, QA, etc.
+-------------------------------------------------------
 
 While this entry covers the technical details of deploying, the full lifecycle
-of taking code from development up to production may have a lot more steps
-(think deploying to staging, QA (Quality Assurance), running tests, etc).
+of taking code from development up to production may have more steps:
+deploying to staging, QA (Quality Assurance), running tests, etc.
 
 The use of staging, testing, QA, continuous integration, database migrations
 and the capability to roll back in case of failure are all strongly advised. There

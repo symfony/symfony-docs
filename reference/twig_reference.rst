@@ -7,16 +7,32 @@ Symfony Twig Extensions
 =======================
 
 Twig is the default template engine for Symfony. By itself, it already contains
-a lot of built-in functions, filters, tags and tests (learn more about them
-from the `Twig Reference`_).
+a lot of built-in functions, filters, tags and tests. You can learn more about
+them from the `Twig Reference`_.
 
-Symfony adds custom extensions on top of Twig to integrate some components
-into the Twig templates. The following sections describe the custom
-:ref:`functions <reference-twig-functions>`, :ref:`filters <reference-twig-filters>`,
-:ref:`tags <reference-twig-tags>` and :ref:`tests <reference-twig-tests>`
-that are available when using the Symfony Core Framework.
+The Symfony framework adds quite a few extra :ref:`functions <reference-twig-functions>`,
+:ref:`filters <reference-twig-filters>`, :ref:`tags <reference-twig-tags>`
+and :ref:`tests <reference-twig-tests>` to seamlessly integrate the
+various Symfony components with Twig templates. The following sections
+describe these extra features.
 
-There may also be tags in bundles you use that aren't listed here.
+.. tip::
+
+    Technically, most of the extensions live in the `Twig Bridge`_. That code
+    might give you some ideas when you need to write your own Twig extension
+    as described in :doc:`/templating/twig_extension`.
+
+.. note::
+
+    This reference only covers the Twig extensions provided by the Symfony
+    framework. You are probably using some other bundles as well, and
+    those might come with their own extensions not covered here.
+
+.. tip::
+
+    The `Twig Extensions repository`_ contains some additional Twig extensions
+    that do not belong to the Twig core, so you might want to have a look at
+    the `Twig Extensions documentation`_.
 
 .. _reference-twig-functions:
 
@@ -727,8 +743,11 @@ Symfony Standard Edition Extensions
 The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
 Those bundles can have other Twig extensions:
 
-* **Twig Extensions** includes some interesting extensions that do not belong
-  to the Twig core. You can read more in `the official Twig Extensions documentation`_.
+* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
+  ``{% image %}`` tags. You can read more about them in
+  :doc:`the Assetic Documentation </assetic/asset_management>`.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
-.. _`the official Twig Extensions documentation`: http://twig-extensions.readthedocs.io/
+.. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
+.. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
+.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension

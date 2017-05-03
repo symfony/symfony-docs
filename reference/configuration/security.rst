@@ -644,6 +644,13 @@ multiple firewalls, the "context" could actually be shared:
             ),
         ));
 
+.. note::
+
+    The firewall context key is stored in session, so every firewall using it
+    must set its ``stateless`` option to ``false``. Otherwise, the context is
+    ignored and you won't be able to authenticate on multiple firewalls at the
+    same time.
+
 HTTP-Digest Authentication
 --------------------------
 
