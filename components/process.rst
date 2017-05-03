@@ -71,9 +71,9 @@ for new output before going to the next iteration::
 
 .. tip::
 
-    The Process component uses internally a PHP iterator to get the the output
-    while it is generated. That iterator is exposed via the ``getIterator()``
-    method to allow customizing its behavior::
+    The Process component internally uses a PHP iterator to get the output while
+    it is generated. That iterator is exposed via the ``getIterator()`` method
+    to allow customizing its behavior::
 
         $process = new Process('ls -lsa');
         $process->start();
