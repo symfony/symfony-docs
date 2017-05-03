@@ -25,40 +25,19 @@ and which reverse proxy IP addresses will be doing this type of thing:
 
 .. configuration-block::
 
-    .. code-block:: yaml
+   .. code-block:: diff
 
-        # app/config/config.yml
-        # ...
-        framework:
-            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
+	  // web/app.php
 
-    .. code-block:: xml
+	  // ...
+	  $request = Request::createFromGlobals();
+	  + Request::setTrustedProxies(['127.0.0.1', '10.0.0.0/8']);
 
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
-                <!-- ... -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
-        ));
+	  // ...
 
 In this example, you're saying that your reverse proxy (or proxies) has
 the IP address ``192.0.0.1`` or matches the range of IP addresses that use
-the CIDR notation ``10.0.0.0/8``. For more details, see the
-:ref:`framework.trusted_proxies <reference-framework-trusted-proxies>` option.
+the CIDR notation ``10.0.0.0/8``.
 
 You are also saying that you trust that the proxy does not send conflicting
 headers, e.g. sending both ``X-Forwarded-For`` and ``Forwarded`` in the same
