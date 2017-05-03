@@ -244,7 +244,7 @@ The Symfony templating system and Twig are explained more in the
 
 .. _controller-accessing-services:
 
-Accessing other Services
+Accessing Other Services
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony comes packed with a lot of useful objects, called *services*. These
