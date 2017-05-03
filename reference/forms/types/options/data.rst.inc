@@ -17,5 +17,5 @@ an individual field, you can set it in the data option::
 
     The ``data`` option *always* overrides the value taken from the domain data
     (object) when rendering. This means the object value is also overriden when
-    the form edits an already persisted object, causing it to loose it's
+    the form edits an already persisted object, causing it to lose it's
     persisted value when the form is submitted.
