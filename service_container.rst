@@ -173,7 +173,7 @@ available in the container. You can use it immediately inside your controller::
         // the container will instantiate a new MessageGenerator()
         $messageGenerator = $this->container->get('app.message_generator');
 
-        // or use this shorter synax
+        // or use this shorter syntax
         // $messageGenerator = $this->get('app.message_generator');
 
         $message = $messageGenerator->getHappyMessage();
