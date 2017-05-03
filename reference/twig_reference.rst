@@ -737,16 +737,6 @@ The available attributes are:
 * ``app.environment``
 * ``app.debug``
 
-Symfony Standard Edition Extensions
------------------------------------
-
-The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
-Those bundles can have other Twig extensions:
-
-* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
-  ``{% image %}`` tags. You can read more about them in
-  :doc:`the Assetic Documentation </assetic/asset_management>`.
-
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
 .. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
