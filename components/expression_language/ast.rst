@@ -1,21 +1,22 @@
 .. index::
     single: AST; ExpressionLanguage
+    single: AST; Abstract Syntax Tree
 
 Dumping and Manipulating the AST of Expressions
 ===============================================
 
-In computer science, `AST`_ (*Abstract Syntax Trees*) is *"a tree representation
-of the structure of source code written in a programming language"*.
-
 Manipulating or inspecting the expressions created with the ExpressionLanguage
 component is difficult because they are plain strings. A better approach is to
-turn those expressions into an AST, which is a set of nodes that contain PHP
-classes.
+turn those expressions into an AST. In computer science, `AST`_ (*Abstract
+Syntax Tree*) is *"a tree representation of the structure of source code written
+in a programming language"*. In Symfony, a ExpressionLanguage AST is a set of
+nodes that contain PHP classes representing the given expression.
 
 Dumping the AST
 ---------------
 
-Call the ``getNodes()`` method after parsing any expression to get its AST::
+Call the :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::getNodes`
+method after parsing any expression to get its AST::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
@@ -34,7 +35,8 @@ Manipulating the AST
 --------------------
 
 The nodes of the AST can also be dumped into a PHP array of nodes to allow
-manipulating them. Call the ``toArray()`` method to turn the AST into an array::
+manipulating them. Call the :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::toArray`
+method to turn the AST into an array::
 
     // ...
 
