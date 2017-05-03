@@ -39,5 +39,5 @@ these options.
 
     :doc:`Form data transformers </form/data_transformers>` will still be
     applied to the ``empty_data`` value. This means that an empty string will
-    be casted to ``null``. Use a custom data transformer if you explicitly want
+    be cast to ``null``. Use a custom data transformer if you explicitly want
     to return the empty string.
