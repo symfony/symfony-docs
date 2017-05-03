@@ -85,17 +85,15 @@ Then you can define it as a service as follows:
 Referring to the Service
 ------------------------
 
-If the fully-qualified class name (FQCN) of your controller is also the id of
-your service then you can refer to your controller using the usual notations.
-For example, to forward to the ``indexAction()`` method of the service
-defined above with the id ``AppBundle\Controller\HelloController``::
+If the service id is the fully-qualified class name (FQCN) of your controller,
+you can keep using the usual notation. For example, to forward to the
+``indexAction()`` method of the above ``AppBundle\Controller\HelloController``
+service::
 
     $this->forward('AppBundle:Hello:index', array('name' => $name));
 
-To refer to a controller that's defined as a service whose ID is not your
-controller fully-qualified class name (FQCN), use the single colon (:)
-notation. For example, to forward to the ``indexAction()`` method of a service
-defined with the id ``app.hello_controller``::
+Otherwise, use the single colon (``:``) notation. For example, to forward to the
+``indexAction()`` method of a service with the id ``app.hello_controller``::
 
     $this->forward('app.hello_controller:indexAction', array('name' => $name));
 
@@ -127,8 +125,8 @@ the route ``_controller`` value:
 
 .. note::
 
-    You cannot drop the ``Action`` part of the method name when using this
-    syntax.
+    You cannot drop the ``Action`` part of the method name when using the
+    single colon notation.
 
 .. tip::
 
