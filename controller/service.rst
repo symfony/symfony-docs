@@ -137,6 +137,64 @@ the route ``_controller`` value:
     fully-qualified class name (FQCN). See the
     `FrameworkExtraBundle documentation`_ for details.
 
+    For example, you could use annotations in the ``HelloController`` defined
+    earlier::
+
+        // src/AppBundle/Controller/HelloController.php
+        namespace AppBundle\Controller;
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class HelloController
+        {
+            /**
+             * @Route("/hello")
+             */
+            public function indexAction($name)
+            {
+                // ...
+            }
+        }
+
+    With the following routes:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/routing.yml
+            app:
+                resource: "@AppBundle/Controller/"
+                type:     annotation
+
+        .. code-block:: xml
+
+            <!-- app/config/routing.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    http://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <!-- the type is required to enable the annotation reader for this resource -->
+                <import resource="@AppBundle/Controller/" type="annotation"/>
+            </routes>
+
+        .. code-block:: php
+
+            // app/config/routing.php
+            use Symfony\Component\Routing\RouteCollection;
+
+            $collection = new RouteCollection();
+            $collection->addCollection(
+                // second argument is the type, which is required to enable
+                // the annotation reader for this resource
+                $loader->import("@AppBundle/Controller/", "annotation")
+            );
+
+            return $collection;
+
 .. tip::
 
     If your controller implements the ``__invoke()`` method, you can simply
