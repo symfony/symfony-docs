@@ -71,6 +71,8 @@ it's easy to pass a mock object within a test::
         {
             // First, mock the object to be used in the test
             $employee = $this->createMock(Employee::class);
+            // use getMock() on PHPUnit 5.3 or below
+            // $employee = $this->getMock(Employee::class);
             $employee->expects($this->once())
                 ->method('getSalary')
                 ->will($this->returnValue(1000));
