@@ -249,7 +249,7 @@ can use setters, the magic ``__set()`` method or properties to set values::
 
         public function getLastName()
         {
-            $this->lastName = $name;
+            return $this->lastName;
         }
 
         public function __set($property, $value)
