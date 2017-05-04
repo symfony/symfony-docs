@@ -79,6 +79,9 @@ path:
              */
             public function loginAction(Request $request)
             {
+              // Remember to create a route to a 'secure_location' where a user will be 
+              // redirected to after a successful login
+              return $this->redirectToRoute('secure_location');
             }
         }
 
@@ -116,11 +119,12 @@ path:
 
         return $collection;
 
-Don't let this empty controller confuse you. When you submit a ``POST`` request
-to the ``/login`` URL with the following JSON document as the body, the security
-system intercepts the requests. It takes care of authenticating the user with
-the submitted username and password or triggers an error in case the authentication
-process fails:
+When you submit a ``POST`` request to the ``/login`` URL with the 
+following JSON document as the body, the security system intercepts the requests. 
+It takes care of authenticating the user with the submitted username and password or 
+triggers an error in case the authentication process fails. It will redirect the
+user to secure location when the authentication is successful. Hence remember to create 
+this 'secure_location' destination somewhere in your system:
 
 .. code-block:: json
 
