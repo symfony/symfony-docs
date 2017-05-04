@@ -98,7 +98,7 @@ the ``Mailer`` class makes a mistake?
 .. code-block:: php
 
     $mailer = new Mailer(array(
-        'usernme' => 'johndoe',  // usernAme misspelled
+        'usernme' => 'johndoe',  // usernme misspelled (instead of username)
     ));
 
 No error will be shown. In the best case, the bug will appear during testing,
