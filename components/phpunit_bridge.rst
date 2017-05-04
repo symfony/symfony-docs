@@ -133,9 +133,10 @@ Use Case
 
 If you have this kind of time-related tests::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testSomething()
         {
@@ -188,12 +189,13 @@ following listener in your PHPUnit configuration:
 As a result, the following is guaranteed to work and is no longer a transient
 test::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
     /**
      * @group time-sensitive
      */
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testSomething()
         {
