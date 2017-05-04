@@ -111,11 +111,15 @@ services.
     .. code-block:: php
 
         use AppBundle\Mail\PhpMailer;
+        use Symfony\Component\DependencyInjection\Alias;
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setDefinition('app.phpmailer', new Definition(PhpMailer::class));
 
         $containerBuilder->setAlias('app.mailer', 'app.phpmailer');
+
+        // private aliases are created passing 'false' to Alias() second argument
+        $containerBuilder->setAlias('app.mailer', new Alias('app.phpmailer', false));
 
 This means that when using the container directly, you can access the
 ``app.phpmailer`` service by asking for the ``app.mailer`` service like this::
