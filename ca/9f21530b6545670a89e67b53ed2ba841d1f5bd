@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2017-02-09T22:59:33Z
+
+@ogizanagi Thanks, updated
+
+---------------------------------------------------------------------------
+
+by unkind at 2017-02-10T15:13:55Z
+
+@chalasr what do you think about example how to register command handlers for this command bus with tags? I think it will be a very common case for this feature.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-02-10T15:29:34Z
+
+@unkind Sounds good, though I think we try to keep sections "standalone" as possible, so maybe not a concrete example but a simple mention saying that tags can be useful in this case and a link to the corresponding doc (working with tagged services).
+// cc @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-02-10T15:32:34Z
+
+Status: needs work
+
+(the core PR has been updated, now using the new custom tags feature).
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-02-13T21:13:59Z
+
+I will add a second alternative to the first (bad) example: injecting the container.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-03-17T19:12:02Z
+
+This may have just changed due to symfony/symfony#22024
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-04-12T18:07:44Z
+
+Finally took the time to finish this. Ready to review!
