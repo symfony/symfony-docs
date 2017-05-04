@@ -153,12 +153,9 @@ argument is the ``ClientConfiguration`` object:
 
         // app/config/services.php
         use AppBundle\Mail\Mailer;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = $container->setDefinition('my_mailer', new Definition(
-            Mailer::class,
-            array(new Reference('client_configuration'),
-        )))
+        $definition = $container->register('my_mailer', Mailer::class)
+            ->addArgument(new Reference('client_configuration'))
             ->setScope('client');
 
 .. _passing-container:
@@ -225,13 +222,10 @@ The service configuration for this class would look something like this:
 
         // app/config/services.php
         use AppBundle\Mail\Mailer;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('my_mailer', new Definition(
-            Mailer::class,
-            array(new Reference('service_container'))
-        ));
+        $container->register('my_mailer', Mailer::class)
+            ->addArgument(new Reference('service_container'));
 
 .. note::
 
