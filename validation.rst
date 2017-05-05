@@ -207,8 +207,42 @@ Configuration
 -------------
 
 Before using the Symfony validator, make sure it's enabled in the main config
-file. Besides, if you plan to use annotations to configure validation, make sure
-that the ``enable_annotations`` option is ``true``:
+file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            validation: { enabled: true }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation enabled="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'validation' => array(
+                'enabled' => true,
+            ),
+        ));
+
+Besides, if you plan to use annotations to configure validation, replace the
+previous configuration by the following:
 
 .. configuration-block::
 

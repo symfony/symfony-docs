@@ -147,8 +147,7 @@ Now define a service for the ``ExtraLoader``:
         services:
             app.routing_loader:
                 class: AppBundle\Routing\ExtraLoader
-                tags:
-                    - { name: routing.loader }
+                tags: [routing.loader]
 
     .. code-block:: xml
 

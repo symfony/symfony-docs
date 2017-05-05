@@ -220,7 +220,7 @@ be its class name in this case::
     {
         public function newAction()
         {
-            // $messageGenerator = $this->get(MessageGenerator::class);
+            $messageGenerator = $this->get(MessageGenerator::class);
 
             $message = $messageGenerator->getHappyMessage();
             $this->addFlash('success', $message);

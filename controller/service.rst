@@ -66,14 +66,13 @@ Then you can define it as a service as follows:
 
         # app/config/services.yml
         services:
-            app.hello_controller:
-                class: AppBundle\Controller\HelloController
+            AppBundle\Controller\HelloController: ~
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
+            <service id="AppBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
@@ -81,21 +80,22 @@ Then you can define it as a service as follows:
         // app/config/services.php
         use AppBundle\Controller\HelloController;
 
-        $container->register('app.hello_controller', HelloController::class);
+        $container->register(HelloController::class);
 
 Referring to the Service
 ------------------------
 
-To refer to a controller that's defined as a service, use the single colon (:)
-notation. For example, to forward to the ``indexAction()`` method of the service
-defined above with the id ``app.hello_controller``::
+If the service id is the fully-qualified class name (FQCN) of your controller,
+you can keep using the usual notation. For example, to forward to the
+``indexAction()`` method of the above ``AppBundle\Controller\HelloController``
+service::
+
+    $this->forward('AppBundle:Hello:index', array('name' => $name));
+
+Otherwise, use the single colon (``:``) notation. For example, to forward to the
+``indexAction()`` method of a service with the id ``app.hello_controller``::
 
     $this->forward('app.hello_controller:indexAction', array('name' => $name));
-
-.. note::
-
-    You cannot drop the ``Action`` part of the method name when using this
-    syntax.
 
 You can also route to the service by using the same notation when defining
 the route ``_controller`` value:
@@ -123,17 +123,24 @@ the route ``_controller`` value:
             '_controller' => 'app.hello_controller:indexAction',
         )));
 
+.. note::
+
+    You cannot drop the ``Action`` part of the method name when using the
+    single colon notation.
+
 .. tip::
 
     You can also use annotations to configure routing using a controller
     defined as a service. Make sure you specify the service ID in the
-    ``@Route`` annotation. See the `FrameworkExtraBundle documentation`_ for
-    details.
+    ``@Route`` annotation if your service ID is not your controller
+    fully-qualified class name (FQCN). See the
+    `FrameworkExtraBundle documentation`_ for details.
 
 .. tip::
 
     If your controller implements the ``__invoke()`` method, you can simply
-    refer to the service id (``app.hello_controller``).
+    refer to the service id (``AppBundle\Controller\HelloController`` or
+    ``app.hello_controller`` for example).
 
 Alternatives to base Controller Methods
 ---------------------------------------
@@ -209,15 +216,14 @@ argument:
 
         # app/config/services.yml
         services:
-            app.hello_controller:
-                class:     AppBundle\Controller\HelloController
+            AppBundle\Controller\HelloController:
                 arguments: ['@templating']
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
+            <service id="AppBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
@@ -226,13 +232,10 @@ argument:
 
         // app/config/services.php
         use AppBundle\Controller\HelloController;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.hello_controller', new Definition(
-            HelloController::class,
-            array(new Reference('templating'))
-        ));
+        $container->register(HelloController::class)
+            ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can
 inject *only* the exact service(s) that you need directly into the controller.

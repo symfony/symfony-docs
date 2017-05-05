@@ -236,6 +236,7 @@ The Symfony templating system and Twig are explained more in the
    single: Controller; Accessing services
 
 .. _controller-accessing-services:
+.. _accessing-other-services:
 
 Fetching Services as Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

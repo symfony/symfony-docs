@@ -300,8 +300,7 @@ Define the form type as a service in your configuration files.
             app.form.type.task:
                 class: AppBundle\Form\Type\TaskType
                 arguments: ["@doctrine.orm.entity_manager"]
-                tags:
-                    - { name: form.type }
+                tags: [form.type]
 
     .. code-block:: xml
 
@@ -434,8 +433,7 @@ it's recognized as a custom field type:
             app.type.issue_selector:
                 class: AppBundle\Form\IssueSelectorType
                 arguments: ['@doctrine.orm.entity_manager']
-                tags:
-                    - { name: form.type }
+                tags: [form.type]
 
 
     .. code-block:: xml

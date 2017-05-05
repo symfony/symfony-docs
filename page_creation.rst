@@ -84,7 +84,7 @@ to creating a page?
    in its own section, including how to make *variable* URLs;
 
 #. *Create a controller*: The method below the route - ``numberAction()`` - is called
-   the *controller*: this is a function where *you* build the page and ultimately
+   the *controller*. This is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
 

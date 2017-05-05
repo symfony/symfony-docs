@@ -63,8 +63,7 @@ to inject your custom encoder into the Serializer.
         services:
             app.yaml_encoder:
                 class: AppBundle\Serializer\YamlEncoder
-                tags:
-                    - { name: serializer.encoder }
+                tags: [serializer.encoder]
 
     .. code-block:: xml
 
