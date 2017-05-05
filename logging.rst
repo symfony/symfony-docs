@@ -10,9 +10,13 @@ Logging a Message
 To log a message, fetch the ``logger`` service from the container in
 your controller::
 
-    public function indexAction()
+    use Psr\Log\LoggerInterface;
+
+    public function indexAction(LoggerInterface $logger)
     {
-        $logger = $this->get('logger');
+        // alternative way of getting the logger
+        // $logger = $this->get('logger');
+
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
         

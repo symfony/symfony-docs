@@ -548,6 +548,7 @@ a controller, this is pretty easy. Add the following method to the
     // ...
     use AppBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Doctrine\ORM\EntityManagerInterface;
 
     // ...
     public function createAction()
@@ -566,6 +567,12 @@ a controller, this is pretty easy. Add the following method to the
         $em->flush();
 
         return new Response('Saved new product with id '.$product->getId());
+    }
+
+    // you can also receive the $em as an argument
+    public function editAction(EntityManagerInterface $em)
+    {
+        // ...
     }
 
 .. note::

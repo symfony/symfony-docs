@@ -223,6 +223,8 @@ the ``TransformerInterface`` and injects it automatically. Even when using
 interfaces (and you should), building the service graph and refactoring the project
 is easier than with standard definitions.
 
+.. _service-autowiring-alias:
+
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
