@@ -252,17 +252,19 @@ can use setters, the magic ``__set()`` method or properties to set values::
             $this->lastName = $name;
         }
 
-        public function __set($property, $value)
+        public function getLastName()
         {
-            $this->$property = $value;
-        }
-
-        public function getLastName() {
             return $this->lastName;
         }
 
-        public function getChildren() {
+        public function getChildren()
+        {
             return $this->children;
+        }
+
+        public function __set($property, $value)
+        {
+            $this->$property = $value;
         }
     }
 
