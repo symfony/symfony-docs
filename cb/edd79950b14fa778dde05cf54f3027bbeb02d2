@@ -1,0 +1,60 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-04-27T11:19:24Z
+
+Ryan, is there anything we can do to help you finishing these important changes? Thanks!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-04-28T17:39:37Z
+
+Other than the TODOs (which I would love help with), this is done. I really mean, we should merge it and continue on the other issues, as well as updating other docs now that we have autowiring and autoconfiguration (a lot of docs can change to take advantage of these).
+
+There's one HUGE question we need to decide: do we continue to emphasize fetching services from the container by id? Or do we make a bigger change to fetch by instance.
+
+For example, when we're talking about using the logger, I have:
+
+```php
+use Psr\Log\LoggerInterface;
+
+public function indexAction(LoggerInterface $logger)
+{
+    // alternative way of getting the logger
+    // $logger = $this->get('logger');
+}
+```
+
+I show both ways :). And we should... the first time. But now, if every other place where we need the logger, which should we show? We're transitioning from a system that is all `id`-based, to one that is type-based. Eventually, we need to make the jump. Showing the type, makes using services *outside* of a controller easier.
+
+Here's an example of how I would update the Doctrine doc if we made types the first-class citizen: https://github.com/weaverryan/symfony-docs/commit/dab49f4cf7ebe9445727a941f96f4590b85905a9
+
+Thoughts? There's a big job ahead to make the docs consistent with the new "types" model and autowiring. If we can choose our philosophy for 3.3, we can run and do that.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2017-04-28T18:13:25Z
+
+I'm :+1: for fading out container injection. The new way makes the type of the deps plain explicit, yet still very easy to do. But I understand that this may not be shared by everyone (yet ;) ), so I'm not in a hurry to finish that rewrite. I'd be happy to have it finished when 3.4 is out, with a few months of experience behind us.
+
+---------------------------------------------------------------------------
+
+by theofidry at 2017-04-28T18:19:52Z
+
+cc @TomasVotruba, you may be interested in this thread.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-01T17:10:48Z
+
+It looks like we'll likely add `public: false` to the SE - https://github.com/symfony/symfony-standard#1064 (and this is definitely set in Flex). That means it's time to treat "types" as the first-class citizen, and mention ids secondarily. I'm going to finish this PR as-is. Then, hopefully several of us can work together on the rest of the docs :) - i.e. scanning them and updating things to use a more type-based approach. Again, this should be a good reference of at least what I have in mind: https://github.com/weaverryan/symfony-docs/commit/dab49f4cf7ebe9445727a941f96f4590b85905a9
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-02T11:16:43Z
+
+Ready for one more review!
+
+* versionadded added
+* updated to make type-based a first-class citizen (over ids)
