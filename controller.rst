@@ -147,7 +147,8 @@ and many others that you'll learn about next.
     You can extend either ``Controller`` or ``AbstractController``. The difference
     is that when you extend ``AbstractController``, you can't access services directly
     via ``$this->get()`` or ``$this->container->get()``. This forces you to write
-    more robust code to access services, but if you're not use, use ``Controller``.
+    more robust code to access services. But if you *do* need direct access to the
+    container, using ``Controller`` is fine.
 
 .. versionadded:: 3.3
     The ``AbstractController`` class was added in Symfony 3.3.
@@ -238,19 +239,19 @@ The Symfony templating system and Twig are explained more in the
 .. _controller-accessing-services:
 .. _accessing-other-services:
 
-Fetching Services as Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fetching Services as Controller Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.3
-    The ability to type-hint an argument in order to receive a service was added
-    in Symfony 3.3.
+    The ability to type-hint a controller argument in order to receive a service
+    was added in Symfony 3.3.
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of.
 
-If you need a service, just type-hint an argument with its class (or interface) name.
-Symfony will automatically pass you the service you need::
+If you need a service in a controller, just type-hint an argument with its class
+(or interface) name. Symfony will automatically pass you the service you need::
 
     use Psr\Log\LoggerInterface
     // ...
@@ -266,16 +267,15 @@ Symfony will automatically pass you the service you need::
 
 Awesome!
 
-What other services exist? Each page of the documentation will reveal more and more
-services you can use. To list *all* services, use the ``debug:container`` console
+What other services can you type-hint? To see them, use the ``debug:container`` console
 command:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:container
+    $ php bin/console debug:container --types
 
-If need to control the *exact* value of an argument, you can override your controller's
-service config:
+If you need control over the *exact* value of an argument, you can override your
+controller's service config:
 
 .. configuration-block::
 
@@ -334,14 +334,18 @@ service config:
             ])
         ;
 
+You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
+in your controllers.
+
 For more information about services, see the :doc:`/service_container` article.
 
 .. note::
     If this isn't working, make sure your controller is registered as a service,
-    :ref:`autoconfigured <services-autoconfigure>` and extends either
+    is :ref:`autoconfigured <services-autoconfigure>` and extends either
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. Or,
-    you can tag your service manually with ``controller.service_arguments``.
+    you can tag your service manually with ``controller.service_arguments``. All
+    of this is done for you in a fresh Symfony install.
 
 .. _accessing-other-services:
 .. _controller-access-services-directly:
@@ -349,7 +353,7 @@ For more information about services, see the :doc:`/service_container` article.
 Accessing the Container Directly
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If extending the base ``Controller`` class, you can access any Symfony service
+If you extend the base ``Controller`` class, you can access any Symfony service
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
 method. Here are several common services you might need::
 
@@ -363,6 +367,8 @@ method. Here are several common services you might need::
     $someParameter = $this->getParameter('some_parameter');
 
 If you receive an eror like:
+
+.. code-block:: text
 
     You have requested a non-existent service "my_service_id"
 

@@ -25,7 +25,7 @@ Fetching and using Services
 
 The moment you start a Symfony app, your container *already* contains many services.
 These are like *tools*, waiting for you to take advantage of them. In your controller,
-you can "ask" for a service from the container by type-hinting an argument wit the
+you can "ask" for a service from the container by type-hinting an argument with the
 service's class or interface name. Want to :doc:`log </logging>` something? No problem::
 
     // src/AppBundle/Controller/ProductController.php
@@ -155,7 +155,7 @@ the service container *how* to instantiate it:
 
             # loads services from whatever directories you want (you can update this!)
             AppBundle\:
-                resource: '../../src/AppBundle/{Service,EventDispatcher,Twig,Form}'
+                resource: '../../src/AppBundle/{Service,Command,Form,EventSubscriber,Twig,Security}'
 
     .. code-block:: xml
 
@@ -171,7 +171,7 @@ the service container *how* to instantiate it:
                 <defaults autowire="true" autoconfigure="true" public="false" />
 
                 <!-- Load services from whatever directories you want (you can update this!) -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,EventDispatcher,Twig,Form}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Command,Form,EventSubscriber,Twig,Security}" />
             </services>
         </container>
 
@@ -179,6 +179,12 @@ the service container *how* to instantiate it:
 
         // app/config/services.php
         // _defaults and loading entire directories is not possible with PHP configuration
+        // you need to define your servicess one-by-one
+        use AppBundle/Service/MessageGenerator;
+
+        $container->autowire(MessageGenerator::class)
+            ->setAutoconfigured(true)
+            ->setPublic(false);
 
 .. versionadded:: 3.3
     The ``_defaults`` key and ability to load services from a directory were added
@@ -228,7 +234,7 @@ be its class name in this case::
         }
     }
 
-However, this only works if you set your service to be :ref:`public <container-public>`.
+However, this only works if you make your service :ref:`public <container-public>`.
 
 .. caution::
 
@@ -236,10 +242,12 @@ However, this only works if you set your service to be :ref:`public <container-p
     and ``appbundle\service\messagegenerator`` refer to the same service). But this
     was deprecated in Symfony 3.3. Starting in 4.0, service ids will be case sensitive.
 
+.. _services-constructor-injection:
+
 Injecting Services/Config into a Service
 ----------------------------------------
 
-What if need to access the ``logger`` service from within ``MessageGenerator``?
+What if you need to access the ``logger`` service from within ``MessageGenerator``?
 Your service does *not* have access to the container directly, so you can't fetch
 it via ``$this->container->get()``.
 
@@ -272,8 +280,8 @@ when instantiating the ``MessageGenerator``. How does it know to do this?
 :doc:`Autowiring </service_container/autowiring>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 ``services.yml``. When you type-hint an argument, the container will automatically
-find the matching service. If it can't or there is any ambiguity, you'll see a clear
-exception with a helpful suggestion.
+find the matching service. If it can't, you'll see a clear exception with a helpful
+suggestion.
 
 Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
 
@@ -281,8 +289,8 @@ Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
 
     How should you know to use ``LoggerInterface`` for the type-hint? The best way
     is by reading the docs for whatever feature you're using. You can also use the
-    ``php bin/console debug:container`` console command to get a hint
-    to the class name for a service.
+    ``php bin/console debug:container --types`` console command to get a list of
+    available type-hints.
 
 Handling Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -337,7 +345,7 @@ the new ``Updates`` sub-directory:
 
             # registers all classes in Services & Updates directories
             AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates,EventDispatcher,Twig,Form}'
+                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
 
     .. code-block:: xml
 
@@ -352,7 +360,7 @@ the new ``Updates`` sub-directory:
                 <!-- ... -->
 
                 <!-- Registers all classes in Services & Updates directories -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,EventDispatcher,Twig,Form}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
             </services>
         </container>
 
@@ -370,7 +378,7 @@ Now, you can use the service immediately::
     }
 
 Thanks to autowiring and your type-hints in ``__construct()``, the container creates
-the ``SiteUpdateManager`` object and passes it the correct arguments. In most cases,
+the ``SiteUpdateManager`` object and passes it the correct argument. In most cases,
 this works perfectly.
 
 Manually Wiring Arguments
@@ -428,7 +436,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
             # same as before
             AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates}'
+                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
 
             # explicitly configure the service
             AppBundle\Updates\SiteUpdateManager:
@@ -448,7 +456,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
 
                 <!-- Explicitly configure the service -->
                 <service id="AppBundle\Updates\SiteUpdateManager">
@@ -526,6 +534,8 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: php
 
+        // app/config/services.php
+        use AppBundle\Updates\SiteUpdateManager;
         $container->setParameter('admin_email', 'manager@example.com');
 
         $container->autowire(SiteUpdateManager::class)
@@ -659,7 +669,7 @@ The autoconfigure Option
 Above, we've set ``autoconfigure: true`` in the ``_defaults`` section so that it
 applies to all services defined in that file. With this setting, the container will
 automatically apply certain configuration to your services, based on your service's
-*class*. The is mostly used to *auto-tag* your services.
+*class*. This is mostly used to *auto-tag* your services.
 
 For example, to create a Twig Extension, you need to create a class, register it
 as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension``:
@@ -702,7 +712,8 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
             ->addTag('twig.extension');
 
 But, with ``autoconfigure: true``, you don't need the tag. In fact, all you need
-to do is load your service from the ``Twig`` directory:
+to do is load your service from the ``Twig`` directory, which is already loaded
+by default in a fresh Symfony install:
 
 .. configuration-block::
 
@@ -716,7 +727,7 @@ to do is load your service from the ``Twig`` directory:
 
             # load your services from the Twig directory
             AppBundle\:
-                resource: '../../src/AppBundle/{Service,EventDispatcher,Twig,Form}'
+                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
 
     .. code-block:: xml
 
@@ -731,7 +742,7 @@ to do is load your service from the ``Twig`` directory:
                 <defaults autowire="true" autoconfigure="true" />
 
                 <!-- Load your services-->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,EventDispatcher,Twig,Form}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
             </services>
         </container>
 

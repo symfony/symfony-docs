@@ -128,7 +128,7 @@ an email is pretty straightforward::
 
         $mailer->send($message);
 
-        // or, you can also fetch the mailer service in this way
+        // or, you can also fetch the mailer service this way
         // $this->get('mailer')->send($message);
 
         return $this->render(...);
