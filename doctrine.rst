@@ -572,10 +572,10 @@ a controller, this is pretty easy. Add the following method to the
     }
 
     // you can use the registry to fetch other em's, if you have mutiple
-    public function editAction(ManagerRegistry $registry)
+    public function editAction(ManagerRegistry $doctrine)
     {
-        $em = $registry->getManager();
-        $em2 = $registry->getManager('other_connection')
+        $em = $doctrine->getManager();
+        $em2 = $doctrine->getManager('other_connection')
     }
 
 .. note::
