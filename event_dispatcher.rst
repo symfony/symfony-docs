@@ -176,46 +176,15 @@ listen to the same ``kernel.exception`` event::
         }
     }
 
-Now, you just need to register the class as a service and add the
-``kernel.event_subscriber`` tag to tell Symfony that this is an event subscriber:
+That's it! Your ``services.yml`` file should already be setup to load services from
+the ``EventSubscriber`` directory. Symfony takes care of the rest.
 
-.. configuration-block::
+.. tip::
 
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.exception_subscriber:
-                class: AppBundle\EventSubscriber\ExceptionSubscriber
-                tags:
-                    - { name: kernel.event_subscriber }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.exception_subscriber"
-                    class="AppBundle\EventSubscriber\ExceptionSubscriber">
-
-                    <tag name="kernel.event_subscriber"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\EventSubscriber\ExceptionSubscriber;
-
-        $container
-            ->register('app.exception_subscriber', ExceptionSubscriber::class)
-            ->addTag('kernel.event_subscriber')
-        ;
+    If your methods are *not* called when an exception is thrown, double-check that
+    you're :ref:`loading services <service-container-services-load-example>` from
+    the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
+    enabled. You can also manually add the ``kernel.event_subscriber`` tag.
 
 Request Events, Checking Types
 ------------------------------

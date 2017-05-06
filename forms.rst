@@ -221,7 +221,7 @@ your controller::
     // ...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function newAction(Request $request)
+    public function newAction(Request $request, EntityManagerInterface $em)
     {
         // just setup a fresh $task object (remove the dummy data)
         $task = new Task();
@@ -241,7 +241,6 @@ your controller::
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            // $em = $this->getDoctrine()->getManager();
             // $em->persist($task);
             // $em->flush();
 

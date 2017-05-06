@@ -69,20 +69,19 @@ Using the Serializer Service
 ----------------------------
 
 Once enabled, the ``serializer`` service can be injected in any service where
-you need it or it can be used in a controller like the following::
+you need it or it can be used in a controller::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Serializer\SerializerInterface;
 
     class DefaultController extends Controller
     {
-        public function indexAction()
+        public function indexAction(SerializerInterface $serializer)
         {
-            $serializer = $this->get('serializer');
-
-            // ...
+            // keep reading for usage examples
         }
     }
 
@@ -172,7 +171,6 @@ with the following configuration:
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
 
-    $serializer = $this->get('serializer');
     $json = $serializer->serialize(
         $someObject,
         'json', array('groups' => array('group1'))

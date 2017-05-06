@@ -32,25 +32,16 @@ managers that use this connection.
 
     .. code-block:: yaml
 
-        doctrine:
-            dbal:
-                default_connection: default
-                connections:
-                    default:
-                        driver: pdo_sqlite
-                        memory: true
-
         services:
-            my.listener:
-                class: AppBundle\EventListener\SearchIndexer
+            # ...
+
+            AppBundle\EventListener\SearchIndexer:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist }
-            my.listener2:
-                class: AppBundle\EventListener\SearchIndexer2
+            AppBundle\EventListener\SearchIndexer2:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, connection: default }
-            my.subscriber:
-                class: AppBundle\EventListener\SearchIndexerSubscriber
+            AppBundle\EventListener\SearchIndexerSubscriber:
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -59,21 +50,16 @@ managers that use this connection.
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-
-            <doctrine:config>
-                <doctrine:dbal default-connection="default">
-                    <doctrine:connection driver="pdo_sqlite" memory="true" />
-                </doctrine:dbal>
-            </doctrine:config>
-
             <services>
-                <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
+                <!-- ... -->
+
+                <service id="AppBundle\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
-                <service id="my.listener2" class="AppBundle\EventListener\SearchIndexer2">
+                <service id="AppBundle\EventListener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
-                <service id="my.subscriber" class="AppBundle\EventListener\SearchIndexerSubscriber">
+                <service id="AppBundle\EventListener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
@@ -85,38 +71,23 @@ managers that use this connection.
         use AppBundle\EventListener\SearchIndexer2;
         use AppBundle\EventListener\SearchIndexerSubscriber;
 
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'default_connection' => 'default',
-                'connections' => array(
-                    'default' => array(
-                        'driver' => 'pdo_sqlite',
-                        'memory' => true,
-                    ),
-                ),
-            ),
-        ));
-
-        $container
-            ->register('my.listener', SearchIndexer::class)
+        $container->autowire(SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
         ;
-        $container
-            ->register('my.listener2', SearchIndexer2::class)
+        $container->autowire(SearchIndexer2::class)
             ->addTag('doctrine.event_listener', array(
                 'event' => 'postPersist',
                 'connection' => 'default'
             ))
         ;
-        $container
-            ->register('my.subscriber', SearchIndexerSubscriber::class)
+        $container->autowire(SearchIndexerSubscriber::class)
             ->addTag('doctrine.event_subscriber', array('connection' => 'default'))
         ;
 
 Creating the Listener Class
 ---------------------------
 
-In the previous example, a service ``my.listener`` was configured as a Doctrine
+In the previous example, a ``SearchIndexer`` service was configured as a Doctrine
 listener on the event ``postPersist``. The class behind that service must have
 a ``postPersist()`` method, which will be called when the event is dispatched::
 

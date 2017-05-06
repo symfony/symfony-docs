@@ -96,9 +96,14 @@ entities, ordered alphabetically by name.
 
 You can use this new method just like the default finder methods of the repository::
 
-    $em = $this->getDoctrine()->getManager();
-    $products = $em->getRepository('AppBundle:Product')
-        ->findAllOrderedByName();
+    use Doctrine\ORM\EntityManagerInterface;
+    // ...
+
+    public function listAction(EntityManagerInterface $em)
+    {
+        $products = $em->getRepository('AppBundle:Product')
+            ->findAllOrderedByName();
+    }
 
 .. note::
 

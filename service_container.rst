@@ -141,6 +141,8 @@ it can't be re-used. Instead, you decide to create a new class::
 Congratulations! You've just created your first service class. Next, you can *teach*
 the service container *how* to instantiate it:
 
+.. _service-container-services-load-example:
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -284,6 +286,8 @@ find the matching service. If it can't, you'll see a clear exception with a help
 suggestion.
 
 Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
+
+.. _services-debug-container-types:
 
 .. tip::
 

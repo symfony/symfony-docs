@@ -183,17 +183,21 @@ When working with multiple entity managers to update your schema:
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
 
+    use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\Common\Persistence\ManagerRegistry;
+
     class UserController extends Controller
     {
-        public function indexAction()
+        public function indexAction(EntityManagerInterface $em, ManagerRegistry $doctrine)
         {
-            // All three return the "default" entity manager
-            $em = $this->get('doctrine')->getManager();
-            $em = $this->get('doctrine')->getManager('default');
+            // All 4  return the "default" entity manager
+            // $em from the EntityManagerInterface
+            $em = $doctrine->getManager();
+            $em = $doctrine->getManager('default');
             $em = $this->get('doctrine.orm.default_entity_manager');
 
             // Both of these return the "customer" entity manager
-            $customerEm = $this->get('doctrine')->getManager('customer');
+            $customerEm = $doctrine->getManager('customer');
             $customerEm = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
@@ -204,27 +208,25 @@ entity manager to persist and fetch its entities.
 
 The same applies to repository calls::
 
+    use Doctrine\Common\Persistence\ManagerRegistry;
+
     class UserController extends Controller
     {
-        public function indexAction()
+        public function indexAction(ManagerRegistry $doctrine)
         {
             // Retrieves a repository managed by the "default" em
-            $products = $this->get('doctrine')
-                ->getRepository('AcmeStoreBundle:Product')
+            $products = $doctrine->getRepository('AcmeStoreBundle:Product')
                 ->findAll()
             ;
 
             // Explicit way to deal with the "default" em
-            $products = $this->get('doctrine')
-                ->getRepository('AcmeStoreBundle:Product', 'default')
+            $products = $doctrine->getRepository('AcmeStoreBundle:Product', 'default')
                 ->findAll()
             ;
 
             // Retrieves a repository managed by the "customer" em
-            $customers = $this->get('doctrine')
-                ->getRepository('AcmeCustomerBundle:Customer', 'customer')
+            $customers = $doctrine->getRepository('AcmeCustomerBundle:Customer', 'customer')
                 ->findAll()
             ;
         }
     }
-
