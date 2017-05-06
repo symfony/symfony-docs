@@ -25,6 +25,7 @@ like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
 
 .. _security-firewalls:
+.. _firewalls-authentication:
 
 1) Initial security.yml Setup (Authentication)
 ----------------------------------------------
@@ -450,6 +451,7 @@ If you'd like to load your users via the Doctrine ORM, that's easy! See
 :doc:`/security/entity_provider` for all the details.
 
 .. _security-encoding-user-password:
+.. _encoding-the-user-s-password:
 
 C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -718,14 +718,11 @@ channel when injecting the logger in a service.
     .. code-block:: php
 
         use AppBundle\Log\CustomLogger;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(CustomLogger::class, array(
-            new Reference('logger'),
-        ));
-        $definition->addTag('monolog.logger', array('channel' => 'acme'));
-        $container->setDefinition('app.custom_logger', $definition);
+        $container->register('app.custom_logger', CustomLogger::class)
+            ->addArgument(new Reference('logger'))
+            ->addTag('monolog.logger', array('channel' => 'acme'));
 
 .. tip::
 
