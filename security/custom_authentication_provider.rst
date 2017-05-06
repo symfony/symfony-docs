@@ -261,13 +261,13 @@ the ``PasswordDigest`` header value matches with the user's password.
 
             // Try to fetch the cache item from pool
             $cacheItem = $this->cachePool->getItem(md5($nonce));
-            
+
             // Validate that the nonce is *not* in cache
             // if it is, this could be a replay attack
             if ($cacheItem->isHit()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
-            
+
             // Store the item in cache for 5 minutes
             $cacheItem->set(null)->expiresAfter(300);
             $this->cachePool->save($cacheItem);
@@ -451,22 +451,21 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         // app/config/services.php
         use AppBundle\Security\Authentication\Provider\WsseProvider;
         use AppBundle\Security\Firewall\WsseListener;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(WsseProvider::class, array(
-            '', // User Provider
-            new Reference('cache.app'),
-        ));
-        $definition->setPublic(false);
-        $container->setDefinition('wsse.security.authentication.provider', $definition)
+        $container->register('wsse.security.authentication.provider', WsseProvider::class)
+            ->setArguments(array(
+                '', // User Provider
+                new Reference('cache.app'),
+            ))
+            ->setPublic(false);
 
-        $definition = new Definition(WsseListener::class, array(
-            new Reference('security.token_storage'),
-            new Reference('security.authentication.manager'),
-        ));
-        $definition->setPublic(false);
-        $container->setDefinition('wsse.security.authentication.listener', $definition);
+        $container->register('wsse.security.authentication.listener', WsseListener::class)
+            ->setArguments(array(
+                new Reference('security.token_storage'),
+                new Reference('security.authentication.manager'),
+            ))
+            ->setPublic(false);
 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:

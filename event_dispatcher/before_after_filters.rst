@@ -173,14 +173,13 @@ your listener to be called just before any controller is executed.
 
         // app/config/services.php
         use AppBundle\EventListener\TokenListener;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition(TokenListener::class, array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
-        ));
-        $container->setDefinition('app.tokens.action_listener', $listener);
+        $container->register('app.tokens.action_listener', TokenListener::class)
+            ->addArgument('%tokens%')
+            ->addTag('kernel.event_listener', array(
+                'event'  => 'kernel.controller',
+                'method' => 'onKernelController',
+            ));
 
 With this configuration, your ``TokenListener`` ``onKernelController()`` method
 will be executed on each request. If the controller that is about to be executed
@@ -271,18 +270,17 @@ event:
 
         // app/config/services.php
         use AppBundle\EventListener\TokenListener;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition(TokenListener::class, array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
-        ));
-        $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.response',
-            'method' => 'onKernelResponse'
-        ));
-        $container->setDefinition('app.tokens.action_listener', $listener);
+        $container->register('app.tokens.action_listener', TokenListener::class)
+            ->addArgument('%tokens%')
+            ->addTag('kernel.event_listener', array(
+                'event'  => 'kernel.controller',
+                'method' => 'onKernelController',
+            ))
+            ->addTag('kernel.event_listener', array(
+                'event'  => 'kernel.response',
+                'method' => 'onKernelResponse',
+            ));
 
 That's it! The ``TokenListener`` is now notified before every controller is
 executed (``onKernelController()``) and after every controller returns a response

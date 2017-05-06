@@ -201,7 +201,6 @@ Now you make the user provider available as a service:
 
         // app/config/services.php
         use AppBundle\Security\User\WebserviceUserProvider;
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container->register('app.webservice_user_provider', WebserviceUserProvider::class);
 

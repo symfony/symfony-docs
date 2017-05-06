@@ -226,13 +226,10 @@ argument:
 
         // app/config/services.php
         use AppBundle\Controller\HelloController;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.hello_controller', new Definition(
-            HelloController::class,
-            array(new Reference('templating'))
-        ));
+        $container->register('app.hello_controller', HelloController::class)
+            ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can
 inject *only* the exact service(s) that you need directly into the controller.
