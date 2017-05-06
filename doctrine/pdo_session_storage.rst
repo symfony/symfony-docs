@@ -52,6 +52,8 @@ To use it, you just need to change some parameters in the main configuration fil
 
         // app/config/config.php
 
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
         // ...
         $container->loadFromExtension('framework', array(
             // ...
@@ -61,11 +63,11 @@ To use it, you just need to change some parameters in the main configuration fil
             ),
         ));
 
-        $storageDefinition = new Definition(PdoSessionHandler::class, array(
-            'mysql:dbname=mydatabase',
-            array('db_username' => 'myuser', 'db_password' => 'mypassword')
-        ));
-        $container->setDefinition('session.handler.pdo', $storageDefinition);
+        $container->register('session.handler.pdo', PdoSessionHandler::class)
+            ->setArguments(array(
+                'mysql:dbname=mydatabase',
+                array('db_username' => 'myuser', 'db_password' => 'mypassword'),
+            ));
 
 Configuring the Table and Column Names
 --------------------------------------
@@ -106,15 +108,14 @@ a second array argument to ``PdoSessionHandler``:
 
         // app/config/config.php
 
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
         // ...
 
-        $storageDefinition = new Definition(PdoSessionHandler::class, array(
-            'mysql:dbname=mydatabase',
-            array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
-        ));
-        $container->setDefinition('session.handler.pdo', $storageDefinition);
+        $container->register('session.handler.pdo', PdoSessionHandler::class)
+            ->setArguments(array(
+                'mysql:dbname=mydatabase',
+                array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword'),
+            ));
 
 These are parameters that you must configure:
 

@@ -156,12 +156,9 @@ the service container *how* to instantiate it:
 
         // app/config/services.php
         use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array()
-        ));
+        $container->register('app.message_generator', MessageGenerator::class)
+            ->setArguments(array());
 
 That's it! Your service - with the unique key ``app.message_generator`` - is now
 available in the container. You can use it immediately inside your controller::
@@ -259,13 +256,10 @@ Next, tell the container the service has a constructor argument:
 
         // app/config/services.php
         use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array(new Reference('logger'))
-        ));
+        $container->register('app.message_generator', MessageGenerator::class)
+            ->addArgument(new Reference('logger'));
 
 That's it! The container now knows to pass the ``logger`` service as an argument
 when it instantiates the ``MessageGenerator``. This is called dependency injection.
@@ -336,13 +330,13 @@ service config:
 
         // app/config/services.php
         use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array(new Reference('logger'), true)
-        ));
+        $container->register('app.message_generator', MessageGenerator::class)
+            ->setArguments(array(
+                new Reference('logger'),
+                true,
+            ));
 
 You can even leverage :doc:`environments </configuration/environments>` to control
 this new value in different situations.
@@ -394,15 +388,15 @@ and reference it with the ``%parameter_name%`` syntax:
 
         // app/config/services.php
         use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter('enable_generator_logging', true);
 
-        $container->setDefinition('app.message_generator', new Definition(
-            MessageGenerator::class,
-            array(new Reference('logger'), '%enable_generator_logging%')
-        ));
+        $container->register('app.message_generator', MessageGenerator::class)
+            ->setArguments(array(
+                new Reference('logger'),
+                '%enable_generator_logging%',
+            ));
 
 Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
