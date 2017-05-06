@@ -458,19 +458,12 @@ it's recognized as a custom field type:
 
         // app/config/services.php
         use AppBundle\Form\IssueSelectorType;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...
 
-        $container
-            ->setDefinition('app.type.issue_selector', new Definition(
-                IssueSelectorType::class,
-                array(
-                    new Reference('doctrine.orm.entity_manager'),
-                )
-            ))
-            ->addTag('form.type')
-        ;
+        $container->register('app.type.issue_selector', IssueSelectorType::class)
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
+            ->addTag('form.type');
 
 Now, whenever you need to use your special ``issue_selector`` field type,
 it's quite easy::

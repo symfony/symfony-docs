@@ -85,13 +85,11 @@ Configuring the service container is easy:
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
 
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            NewsletterManager::class,
-            array(
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->setArguments(array(
                 new Reference('mailer'),
                 new Reference('templating'),
-            )
-        ));
+            ));
 
 The ``app.newsletter_manager`` service now has access to the core ``mailer``
 and ``templating`` services. This is a common way to create services specific

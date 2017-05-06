@@ -39,21 +39,16 @@ if the service does not exist:
 
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        $container->setDefinition('app.mailer', ...);
+        $container->register('app.mailer', ...);
 
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            NewsletterManager::class,
-            array(
-                new Reference(
-                    'app.mailer',
-                    ContainerInterface::NULL_ON_INVALID_REFERENCE
-                )
-            )
-        ));
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference(
+                'app.mailer',
+                ContainerInterface::NULL_ON_INVALID_REFERENCE
+            ));
 
 .. note::
 

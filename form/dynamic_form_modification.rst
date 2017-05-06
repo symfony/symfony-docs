@@ -362,12 +362,9 @@ you need to register it as a service and tag it with :ref:`form.type <dic-tags-f
         use AppBundle\Form\Type\FriendMessageFormType;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(FriendMessageFormType::class, array(
-            new Reference('security.token_storage')
-        ));
-        $definition->addTag('form.type');
-
-        $container->setDefinition('app.form.friend_message', $definition);
+        $container->register('app.form.friend_message', FriendMessageFormType::class)
+            ->addArgument(new Reference('security.token_storage'))
+            ->addTag('form.type');
 
 .. versionadded:: 3.3
     Prior to Symfony 3.3, you needed to define form type services as ``public``.

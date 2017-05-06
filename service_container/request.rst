@@ -66,14 +66,12 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setDefinition('newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
-            array(new Reference('request_stack'))
-        ));
+        $container->register('newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference('request_stack'));
 
 .. tip::
 
