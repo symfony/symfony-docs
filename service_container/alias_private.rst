@@ -50,11 +50,9 @@ public (i.e. private):
     .. code-block:: php
 
         use Example\Foo;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition(Foo::class);
-        $definition->setPublic(false);
-        $container->setDefinition('foo', $definition);
+        $container->register('foo', Foo::class)
+            ->setPublic(false);
 
 What makes private services special is that, since the container knows that the
 service will never be requested from outside, it can optimize whether and how it
@@ -113,11 +111,10 @@ services.
     .. code-block:: php
 
         use AppBundle\Mail\PhpMailer;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('app.phpmailer', new Definition(PhpMailer::class));
+        $container->register('app.phpmailer', PhpMailer::class);
 
-        $containerBuilder->setAlias('app.mailer', 'app.phpmailer');
+        $container->setAlias('app.mailer', 'app.phpmailer');
 
 This means that when using the container directly, you can access the
 ``app.phpmailer`` service by asking for the ``app.mailer`` service like this::

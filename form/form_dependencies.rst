@@ -75,7 +75,7 @@ Suppose you need to access the ``doctrine.orm.entity_manager`` service so that y
 can make a query. First, add this as an argument to your form class::
 
     // src/AppBundle/Form/TaskType.php
-    
+
     use Doctrine\ORM\EntityManager;
     // ...
 
@@ -125,16 +125,11 @@ Next, register this as a service and tag it with ``form.type``:
 
         // src/AppBundle/Resources/config/services.php
         use AppBundle\Form\TaskType;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container
-            ->setDefinition('app.form.type.task', new Definition(
-                TaskType::class,
-                array(new Reference('doctrine.orm.entity_manager'))
-            ))
-            ->addTag('form.type')
-        ;
+        $container->register('app.form.type.task', TaskType::class)
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
+            ->addTag('form.type');
 
 That's it! Your controller - where you create the form - doesn't need to change
 at all: Symfony is smart enough to load the ``TaskType`` from the container.

@@ -84,15 +84,10 @@ Then register the listener:
     .. code-block:: php
 
         use AppBundle\EventListener\LocaleListener;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $container
-            ->setDefinition('app.locale_listener', new Definition(
-                LocaleListener::class,
-                array('%kernel.default_locale%')
-            ))
-            ->addTag('kernel.event_subscriber')
-        ;
+        $container->register('app.locale_listener', LocaleListener::class)
+            ->addArgument('%kernel.default_locale%')
+            ->addTag('kernel.event_subscriber');
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request. Remember, to get the user's locale, always
