@@ -124,16 +124,11 @@ Next, register this as a service and tag it with ``form.type``:
 
         // src/AppBundle/Resources/config/services.php
         use AppBundle\Form\TaskType;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container
-            ->setDefinition('app.form.type.task', new Definition(
-                TaskType::class,
-                array(new Reference('doctrine.orm.entity_manager'))
-            ))
-            ->addTag('form.type')
-        ;
+        $container->register('app.form.type.task', TaskType::class)
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
+            ->addTag('form.type');
 
 .. versionadded:: 3.3
     Prior to Symfony 3.3, you needed to define form type services as ``public``.

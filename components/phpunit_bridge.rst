@@ -190,17 +190,18 @@ Use Case
 
 If you have this kind of time-related tests::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testSomething()
         {
             $stopwatch = new Stopwatch();
 
-            $stopwatch->start();
+            $stopwatch->start('event_name');
             sleep(10);
-            $duration = $stopwatch->stop();
+            $duration = $stopwatch->stop('event_name')->getDuration();
 
             $this->assertEquals(10, $duration);
         }
@@ -245,12 +246,13 @@ following listener in your PHPUnit configuration:
 As a result, the following is guaranteed to work and is no longer a transient
 test::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
     /**
      * @group time-sensitive
      */
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testSomething()
         {
@@ -297,9 +299,10 @@ Use Case
 Consider the following example that uses the ``checkMX`` option of the ``Email``
 constraint to test the validity of the email domain::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Validator\Constraints\Email;
 
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testEmail()
         {
@@ -315,12 +318,13 @@ In order to avoid making a real network connection, add the ``@dns-sensitive``
 annotation to the class and use the ``DnsMock::withMockedHosts()`` to configure
 the data you expect to get for the given hosts::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Validator\Constraints\Email;
 
     /**
      * @group dns-sensitive
      */
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testEmails()
         {
