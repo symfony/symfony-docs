@@ -182,6 +182,63 @@ object with an ``EventDispatcher``. You can now create event listeners to
 block transitions (i.e. depending on the data in the blog post). The following
 events are dispatched:
 
+* ``workflow.leave``
+* ``workflow.[workflow name].leave``
+* ``workflow.[workflow name].leave.[transition name]``
+
+* ``workflow.transition``
+* ``workflow.[workflow name].transition``
+* ``workflow.[workflow name].transition.[transition name]``
+
+* ``workflow.enter``
+* ``workflow.[workflow name].enter``
+* ``workflow.[workflow name].enter.[transition name]``
+
+* ``workflow.announce``
+* ``workflow.[workflow name].announce``
+* ``workflow.[workflow name].announce.[transition name]``
+
+Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Workflow\Event\Event;
+    
+    class WorkflowLogger implements EventSubscriberInterface
+    {
+        public function __construct(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
+        }
+    
+        public function onLeave(Event $event)
+        {
+            $this->logger->alert(sprintf(
+                'Blog post (id: "%s") preformed transaction "%s" form "%s" to "%s"',
+                $event->getSubject()->getId(),
+                $event->getTransition()->getName(),
+                implode(', ', array_keys($event->getMarking()->getPlaces())),
+                implode(', ', $event->getTransition()->getTos())
+            ));
+        }
+    
+        public static function getSubscribedEvents()
+        {
+            return array(
+                'workflow.blog_publishing.leave' => 'onLeave',
+            );
+        }
+    }
+
+Guard events
+~~~~~~~~~~~~
+
+There is a special kind of events called "Guard events". Their event listeners 
+are invoked every time a call to ``Workflow::can``, ``orkflow::apply`` or 
+``Workflow::getEnabledTransitions`` is executed. With the guard events you may
+add custom logic to decide what transaction that are valid or not. Here is a list 
+of the guard event names. 
+
 * ``workflow.guard``
 * ``workflow.[workflow name].guard``
 * ``workflow.[workflow name].guard.[transition name]``
@@ -213,14 +270,6 @@ See example to make sure no blog post without title is moved to "review"::
         }
     }
 
-With help from the ``EventDispatcher`` and the ``AuditTrailListener`` you
-could easily enable logging::
-
-    use Symfony\Component\Workflow\EventListener\AuditTrailListener;
-
-    $logger = new AnyPsr3Logger();
-    $subscriber = new AuditTrailListener($logger);
-    $dispatcher->addSubscriber($subscriber);
 
 Event Methods
 ~~~~~~~~~~~~~
