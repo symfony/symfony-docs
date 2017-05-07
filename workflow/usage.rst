@@ -233,10 +233,10 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
 Guard events
 ~~~~~~~~~~~~
 
-There is a special kind of events called "Guard events". Their event listeners 
-are invoked every time a call to ``Workflow::can``, ``orkflow::apply`` or 
+There are a special kind of events called "Guard events". Their event listeners 
+are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or 
 ``Workflow::getEnabledTransitions`` is executed. With the guard events you may
-add custom logic to decide what transaction that are valid or not. Here is a list 
+add custom logic to decide what transitions that are valid or not. Here is a list 
 of the guard event names. 
 
 * ``workflow.guard``
