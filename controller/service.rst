@@ -234,7 +234,7 @@ argument:
         use AppBundle\Controller\HelloController;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(HelloController::class)
+        $container->register('app.hello_controller', HelloController::class)
             ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can

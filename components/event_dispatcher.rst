@@ -195,7 +195,6 @@ determine which instance is passed.
     a compiler pass called ``RegisterListenersPass()`` in the container builder::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -209,17 +208,15 @@ determine which instance is passed.
         $containerBuilder->register('event_dispatcher', EventDispatcher::class);
 
         // register an event listener
-        $listener = new Definition(\AcmeListener::class);
-        $listener->addTag('kernel.event_listener', array(
-            'event' => 'acme.foo.action',
-            'method' => 'onFooAction',
-        ));
-        $containerBuilder->setDefinition('listener_service_id', $listener);
+        $containerBuilder->register('listener_service_id', \AcmeListener::class)
+            ->addTag('kernel.event_listener', array(
+                'event' => 'acme.foo.action',
+                'method' => 'onFooAction',
+            ));
 
         // register an event subscriber
-        $subscriber = new Definition(\AcmeSubscriber::class);
-        $subscriber->addTag('kernel.event_subscriber');
-        $containerBuilder->setDefinition('subscriber_service_id', $subscriber);
+        $containerBuilder->register('subscriber_service_id', \AcmeSubscriber::class)
+            ->addTag('kernel.event_subscriber');
 
     By default, the listeners pass assumes that the event dispatcher's service
     id is ``event_dispatcher``, that event listeners are tagged with the

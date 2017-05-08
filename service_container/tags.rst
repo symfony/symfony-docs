@@ -41,7 +41,7 @@ to be used for a specific purpose. Take the following example:
         // app/config/services.php
         use AppBundle\Twig\AppExtension;
 
-        $container->register(AppExtension::class)
+        $container->register('app.twig_extension', AppExtension::class)
             ->setPublic(false)
             ->addTag('twig.extension');
 
@@ -168,15 +168,12 @@ For example, you may add the following transports as services:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        $container->register('app.smtp_transport', '\Swift_SmtpTransport')
+            ->addArgument('%mailer_host%')
+            ->addTag('app.mail_transport');
 
-        $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
-        $definitionSmtp->addTag('app.mail_transport');
-        $container->setDefinition('app.smtp_transport', $definitionSmtp);
-
-        $definitionSendmail = new Definition('\Swift_SendmailTransport');
-        $definitionSendmail->addTag('app.mail_transport');
-        $container->setDefinition('app.sendmail_transport', $definitionSendmail);
+        $container->register('app.sendmail_transport', '\Swift_SendmailTransport')
+            ->addTag('app.mail_transport');
 
 Notice that each service was given a tag named ``app.mail_transport``. This is
 the custom tag that you'll use in your compiler pass. The compiler pass is what
@@ -321,15 +318,12 @@ To answer this, change the service declaration:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        $container->register('app.smtp_transport', '\Swift_SmtpTransport')
+            ->addArgument('%mailer_host%')
+            ->addTag('app.mail_transport', array('alias' => 'foo'));
 
-        $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
-        $definitionSmtp->addTag('app.mail_transport', array('alias' => 'foo'));
-        $container->setDefinition('app.smtp_transport', $definitionSmtp);
-
-        $definitionSendmail = new Definition('\Swift_SendmailTransport');
-        $definitionSendmail->addTag('app.mail_transport', array('alias' => 'bar'));
-        $container->setDefinition('app.sendmail_transport', $definitionSendmail);
+        $container->register('app.sendmail_transport', '\Swift_SendmailTransport')
+            ->addTag('app.mail_transport', array('alias' => 'bar'));
 
 .. tip::
 

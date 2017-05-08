@@ -180,7 +180,7 @@ the service container *how* to instantiate it:
         // app/config/services.php
         // _defaults and loading entire directories is not possible with PHP configuration
         // you need to define your servicess one-by-one
-        use AppBundle/Service/MessageGenerator;
+        use AppBundle\Service\MessageGenerator;
 
         $container->autowire(MessageGenerator::class)
             ->setAutoconfigured(true)

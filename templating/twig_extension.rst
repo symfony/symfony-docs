@@ -95,7 +95,6 @@ Now you must let the Service Container know about your newly created Twig Extens
 
         // app/config/services.php
         use AppBundle\Twig\AppExtension;
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container
             ->register('app.twig_extension', AppExtension::class)

@@ -96,13 +96,10 @@ Then in your service configuration, you can inject the service:
 
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('newsletter_manager', new Definition(
-            NewsletterManager::class,
-            array(new Reference('security.authorization_checker'))
-        ));
+        $container->register('newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference('security.authorization_checker'));
 
 The injected service can then be used to perform the security check when the
 ``sendNewsletter()`` method is called::
@@ -179,15 +176,10 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            NewsletterManager::class,
-            // ...
-        ));
-        $definition->addTag('security.secure_service');
-        $container->setDefinition('newsletter_manager', $definition);
+        $container->register('newsletter_manager', NewsletterManager::class)
+            ->addTag('security.secure_service');
 
 You can then achieve the same results as above using an annotation::
 
