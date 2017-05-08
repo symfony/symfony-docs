@@ -461,7 +461,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             ))
             ->setPublic(false);
 
-        $container->setDefinition('wsse.security.authentication.listener', WsseListener::class)
+        $container->register('wsse.security.authentication.listener', WsseListener::class)
             ->setArguments(array(
                 new Reference('security.token_storage'),
                 new Reference('security.authentication.manager'),
