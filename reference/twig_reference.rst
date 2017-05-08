@@ -759,12 +759,12 @@ needed objects and values. It is an instance of
 
 The available attributes are:
 
-* ``app.user``
-* ``app.request``
-* ``app.session``
-* ``app.environment``
-* ``app.debug``
-* ``app.security`` (deprecated as of 2.6)
+* ``app.user``, a PHP object representing the current user;
+* ``app.request``, a :class:``Symfony\\Component\\HttpFoundation\\Request`` object;
+* ``app.session``, a :class:``Symfony\\Component\\HttpFoundation\\Session\\Session`` object;
+* ``app.environment``, a string with the name of the execution environment;
+* ``app.debug``, a boolean telling whether the debug mode is enabled in the app;
+* ``app.security`` (deprecated as of 2.6).
 
 .. caution::
 
