@@ -357,14 +357,12 @@ First, register it as a service.
 
         // app/config/config.php
         use AppBundle\Security\ApiKeyAuthenticator;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
 
-        $definition = new Definition(ApiKeyAuthenticator::class);
-        $definition->setPublic(false);
-        $container->setDefinition('apikey_authenticator', $definition);
+        $container->register('apikey_authenticator', ApiKeyAuthenticator::class)
+            ->setPublic(false);
 
 Now, activate it and your custom user provider (see :doc:`/security/custom_provider`)
 in the ``firewalls`` section of your security configuration
@@ -447,7 +445,7 @@ If you have defined ``access_control``, make sure to add a new entry:
         # app/config/security.yml
         security:
             # ...
-            
+
             access_control:
                 - { path: ^/api, roles: ROLE_API }
 
@@ -748,15 +746,12 @@ service:
 
         // app/config/config.php
         use AppBundle\Security\ApiKeyAuthenticator;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
 
-        $definition = new Definition(ApiKeyAuthenticator::class, array(
-            new Reference('security.http_utils')
-        ));
-        $definition->setPublic(false);
-        $container->setDefinition('apikey_authenticator', $definition);
+        $container->register('apikey_authenticator', ApiKeyAuthenticator::class)
+            ->addArgument(new Reference('security.http_utils'))
+            ->setPublic(false);
 
 That's it! Have fun!

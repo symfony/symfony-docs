@@ -296,13 +296,12 @@ In that case, you might want to override one or both of the ``showAction()`` and
             // app/config/services.php
             use AppBundle\Controller\CustomExceptionController;
             use Symfony\Component\DependencyInjection\Reference;
-            use Symfony\Component\DependencyInjection\Definition;
 
-            $definition = new Definition(CustomExceptionController::class, array(
-                new Reference('twig'),
-                '%kernel.debug%'
-            ));
-            $container->setDefinition('app.exception_controller', $definition);
+            $container->register('app.exception_controller', CustomExceptionController::class)
+                ->setArguments(array(
+                    new Reference('twig'),
+                    '%kernel.debug%',
+                ));
 
     And then configure ``twig.exception_controller`` using the controller as
     services syntax (e.g. ``app.exception_controller:showAction``).

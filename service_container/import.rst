@@ -76,14 +76,11 @@ service files:
 
         // app/config/services/mailer.php
         use AppBundle\Mailer;
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
 
-        $container->setDefinition('app.mailer', new Definition(
-            Mailer::class,
-            array('%app.mailer.transport%')
-        ));
+        $container->register('app.mailer', Mailer::class)
+            ->addArgument('%app.mailer.transport%');
 
 The definition itself hasn't changed, only its location. To make the service
 container load the definitions in this resource file, use the ``imports`` key
