@@ -232,6 +232,6 @@ order by configuring the priority of decoration, this can be any integer number
 
 The generated code will be the following::
 
-    $this->services['foo'] = new Baz(new Bar(new Foo())));
+    $this->services['foo'] = new Baz(new Bar(new Foo()));
 
 .. _decorator pattern: https://en.wikipedia.org/wiki/Decorator_pattern
