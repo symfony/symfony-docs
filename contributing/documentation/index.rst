@@ -1,11 +1,8 @@
 Contributing Documentation
 ==========================
 
-Documentation is as important as code. That's why Symfony dedicates a great
-amount of resources to document new features and to keep the rest of the
-documentation up-to-date.
-
-These short guides explain everything you need to contribute to the documentation:
+These short articles explain everything you need to contribute to the Symfony
+documentation:
 
 :doc:`The Contribution Process </contributing/documentation/overview>`
   Explains the steps to follow to contribute fixes and new contents. It's the
