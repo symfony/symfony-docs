@@ -21,7 +21,7 @@ Below is the list of required and optional requirements.
 Required
 --------
 
-* PHP needs to be a minimum version of PHP 5.5.9
+* PHP needs to be a minimum version of PHP 5.5.9 (7.0 if you are using testing)
 * `JSON extension`_ needs to be enabled
 * `ctype extension`_ needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
