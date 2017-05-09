@@ -333,3 +333,12 @@ Compact method to process display all flashes at once::
             echo '<div class="flash-'.$type.'">'.$message.'</div>';
         }
     }
+    
+Compact method to process display all flashes at once, in Twig::
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
