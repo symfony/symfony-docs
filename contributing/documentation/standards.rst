@@ -2,7 +2,7 @@ Documentation Standards
 =======================
 
 Contributions must follow these standards to match the style and tone of the
-rest of the Symfony Documentation.
+rest of the Symfony documentation.
 
 Sphinx
 ------
