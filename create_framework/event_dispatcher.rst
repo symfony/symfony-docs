@@ -139,7 +139,7 @@ the registration of a listener for the ``response`` event::
         $response->setContent($response->getContent().'GA CODE');
     });
 
-    $framework = new Simplex\Framework($dispatcher, $matcher, $resolver);
+    $framework = new Simplex\Framework($dispatcher, $matcher, $controllerResolver, $argumentResolver);
     $response = $framework->handle($request);
 
     $response->send();
