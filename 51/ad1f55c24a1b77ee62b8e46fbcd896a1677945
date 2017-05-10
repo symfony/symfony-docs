@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-05-06T07:22:13Z
+
+I'm wondering, should we assert everywhere that folders registered in the standard edition do not need to be registered again in the docs?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-10T09:50:31Z
+
+> I'm wondering, should we assert everywhere that folders registered in the standard edition do not need to be registered again in the docs?
+
+@GuilhemN Let's have that discussion on a different PR - like #7883, or another that I'll hopefully open today (this PR just doesn't have any good examples of that as far as I can see). But I'm totally wondering about that. Unless... we can get symfony/symfony-standard#1070 merged... then it won't matter (and this is one of the reasons I want that feature!)
