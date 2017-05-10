@@ -24,8 +24,8 @@ which represents the functionality that you'll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
 ``hello``, which happens to send an email::
 
-    // src/Acme/SoapBundle/Services/HelloService.php
-    namespace Acme\SoapBundle\Services;
+    // src/AppBundle/Service/HelloService.php
+    namespace AppBundle\Service;
 
     class HelloService
     {
@@ -50,10 +50,9 @@ In this case, the SOAP service will allow the client to call a method called
         }
     }
 
-Next, you can train Symfony to be able to create an instance of this class.
-Since the class sends an email, it's been designed to accept a ``Swift_Mailer``
-instance. Using the Service Container, you can configure Symfony to construct
-a ``HelloService`` object properly:
+Next, make sure that your new class is registered as a service. If you use
+:doc:`autowiring </service_container/autowiring>` (enabled by default in the Symfony
+Standard Edition), this is easy:
 
 .. configuration-block::
 
@@ -61,45 +60,62 @@ a ``HelloService`` object properly:
 
         # app/config/services.yml
         services:
-            hello_service:
-                class: Acme\SoapBundle\Services\HelloService
-                arguments: ['@mailer']
+            _defaults:
+                # ... be sure autowiring is enabled
+                autowire: true
+            # ...
+
+            # add Service/ to the list of directories to load services from
+            AppBundle\:
+                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="hello_service" class="Acme\SoapBundle\Services\HelloService">
-                <argument type="service" id="mailer"/>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... be sure autowiring is enabled -->
+                <defaults autowire="true" ... />
+                <!-- ... -->
+
+                <!-- add Service/ to the list of directories to load services from -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        use Acme\SoapBundle\Services\HelloService;
+        use AppBundle\Service\HelloService;
 
-        $container
-            ->register('hello_service', HelloService::class)
-            ->addArgument(new Reference('mailer'));
+        $container->autowire(HelloService::class)
+            ->setPublic(false);
 
 Below is an example of a controller that is capable of handling a SOAP
-request. If ``indexAction()`` is accessible via the route ``/soap``, then the
-WSDL document can be retrieved via ``/soap?wsdl``.
+request. Because ``indexAction()`` is accessible via ``/soap``, the WSDL document
+can be retrieved via ``/soap?wsdl``::
 
-.. code-block:: php
-
-    namespace Acme\SoapBundle\Controller;
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use AppBundle\Service\HelloService;
 
     class HelloServiceController extends Controller
     {
-        public function indexAction()
+        /**
+         * @Route("/soap")
+         */
+        public function indexAction(HelloService $helloService)
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
-            $server->setObject($this->get('hello_service'));
+            $server->setObject($helloService);
 
             $response = new Response();
             $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');

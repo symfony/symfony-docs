@@ -236,10 +236,11 @@ Now you can see this new code in action! Imagine you're inside a controller::
     use AppBundle\Entity\Category;
     use AppBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Doctrine\ORM\EntityManagerInterface;
 
     class DefaultController extends Controller
     {
-        public function createProductAction()
+        public function createProductAction(EntityManagerInterface $em)
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -252,7 +253,6 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relate this product to the category
             $product->setCategory($category);
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->persist($product);
             $em->flush();
@@ -276,10 +276,11 @@ When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
-    public function showAction($productId)
+    use Doctrine\ORM\EntityManagerInterface;
+
+    public function showAction($productId, EntityManagerInterface $em)
     {
-        $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+        $product = $em->getRepository('AppBundle:Product')
             ->find($productId);
 
         $categoryName = $product->getCategory()->getName();
@@ -303,10 +304,11 @@ the category (i.e. it's "lazily loaded").
 
 You can also query in the other direction::
 
-    public function showProductsAction($categoryId)
+    use Doctrine\ORM\EntityManagerInterface;
+
+    public function showProductsAction($categoryId, EntityManagerInterface $em)
     {
-        $category = $this->getDoctrine()
-            ->getRepository('AppBundle:Category')
+        $category = $em->getRepository('AppBundle:Category')
             ->find($categoryId);
 
         $products = $category->getProducts();
@@ -326,8 +328,7 @@ to the given ``Category`` object via their ``category_id`` value.
     a "proxy" object in place of the true object. Look again at the above
     example::
 
-        $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+        $product = $em->getRepository('AppBundle:Product')
             ->find($productId);
 
         $category = $product->getCategory();
@@ -366,14 +367,15 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/AppBundle/Repository/ProductRepository.php
+    use Doctrine\ORM\EntityManagerInterface;
+
     public function findOneByIdJoinedToCategory($productId)
     {
-        $query = $this->getEntityManager()
-            ->createQuery(
-                'SELECT p, c FROM AppBundle:Product p
-                JOIN p.category c
-                WHERE p.id = :id'
-            )->setParameter('id', $productId);
+        $query = $em->createQuery(
+            'SELECT p, c FROM AppBundle:Product p
+            JOIN p.category c
+            WHERE p.id = :id'
+        )->setParameter('id', $productId);
 
         try {
             return $query->getSingleResult();
@@ -385,10 +387,11 @@ following method to the ``ProductRepository`` class::
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` with just one query::
 
-    public function showAction($productId)
+    use Doctrine\ORM\EntityManagerInterface;
+
+    public function showAction($productId, EntityManagerInterface $em)
     {
-        $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+        $product = $em->getRepository('AppBundle:Product')
             ->findOneByIdJoinedToCategory($productId);
 
         $category = $product->getCategory();

@@ -48,9 +48,7 @@ to a post record thanks to a foreign key constraint.
 
 Before diving into the recipe, be sure your database connection parameters are
 correctly setup in the ``app/config/parameters.yml`` file (or wherever your
-database configuration is kept) and that you have initialized a bundle that
-will host your future entity class. In this tutorial it's assumed that an
-AcmeBlogBundle exists and is located under the ``src/Acme/BlogBundle`` folder.
+database configuration is kept).
 
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding
@@ -59,10 +57,10 @@ table fields.
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:mapping:import --force AcmeBlogBundle xml
+    $ php bin/console doctrine:mapping:import --force AppBundle xml
 
 This command line tool asks Doctrine to introspect the database and generate
-the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine``
+the XML metadata files under the ``src/AppBundle/Resources/config/doctrine``
 folder of your bundle. This generates two files: ``BlogPost.orm.xml`` and
 ``BlogComment.orm.xml``.
 
@@ -77,7 +75,7 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 
     <?xml version="1.0" encoding="utf-8"?>
     <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-      <entity name="Acme\BlogBundle\Entity\BlogPost" table="blog_post">
+      <entity name="AppBundle\Entity\BlogPost" table="blog_post">
         <id name="id" type="bigint" column="id">
           <generator strategy="IDENTITY"/>
         </id>
@@ -93,7 +91,7 @@ entity classes by executing the following two commands.
 .. code-block:: terminal
 
     $ php bin/console doctrine:mapping:convert annotation ./src
-    $ php bin/console doctrine:generate:entities AcmeBlogBundle
+    $ php bin/console doctrine:generate:entities AppBundle
 
 The first command generates entity classes with annotation mappings. But
 if you want to use YAML or XML mapping instead of annotations, you should
@@ -107,14 +105,12 @@ execute the second command only.
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 
-    // src/Acme/BlogBundle/Entity/BlogComment.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/BlogComment.php
+    namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * Acme\BlogBundle\Entity\BlogComment
-     *
      * @ORM\Table(name="blog_comment")
      * @ORM\Entity
      */

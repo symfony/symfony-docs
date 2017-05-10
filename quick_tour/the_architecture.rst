@@ -43,7 +43,6 @@ production controller shown here::
     use Symfony\Component\HttpFoundation\Request;
 
     $kernel = new AppKernel('prod', false);
-    $kernel->loadClassCache();
     $request = Request::createFromGlobals();
     $response = $kernel->handle($request);
     $response->send();

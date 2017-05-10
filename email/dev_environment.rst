@@ -96,7 +96,7 @@ Now, suppose you're sending an email to ``recipient@example.com``.
 
 .. code-block:: php
 
-    public function indexAction($name)
+    public function indexAction($name, \Swift_Mailer $mailer)
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
@@ -109,7 +109,7 @@ Now, suppose you're sending an email to ``recipient@example.com``.
                 )
             )
         ;
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }

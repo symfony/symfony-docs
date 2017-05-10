@@ -221,8 +221,8 @@ Creating an Uploader Service
 To avoid logic in controllers, making them big, you can extract the upload
 logic to a separate service::
 
-    // src/AppBundle/FileUploader.php
-    namespace AppBundle;
+    // src/AppBundle/Service/FileUploader.php
+    namespace AppBundle\Service;
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -259,47 +259,51 @@ Then, define a service for this class:
         # app/config/services.yml
         services:
             # ...
-            app.brochure_uploader:
-                class: AppBundle\FileUploader
-                arguments: ['%brochures_directory%']
+            
+            AppBundle\Service\FileUploader:
+                arguments:
+                    $targetDir: '%brochures_directory%'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <!-- ... -->
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <service id="app.brochure_uploader" class="AppBundle\FileUploader">
-                <argument>%brochures_directory%</argument>
-            </service>
+            <services>
+                <!-- ... -->
+
+                <service id="AppBundle\Service\FileUploader">
+                    <argument key="$targetDir">%brochures_directory%</argument>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\FileUploader;
+        use AppBundle\Service\FileUploader;
 
-        // ...
-        $container->register('app.brochure_uploader', FileUploader::class)
-            ->addArgument('%brochures_directory%');
+        $container->autowire(FileUploader::class)
+            ->setArgument('$targetDir', '%brochures_directory%');
 
 Now you're ready to use this service in the controller::
 
     // src/AppBundle/Controller/ProductController.php
+    use Symfony\Component\HttpFoundation\Request;
+    use AppBundle\Service\FileUploader;
 
     // ...
-    public function newAction(Request $request)
+    public function newAction(Request $request, FileUploader $fileUploader)
     {
         // ...
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $product->getBrochure();
-            $fileName = $this->get('app.brochure_uploader')->upload($file);
+            $fileName = $fileUploader->upload($file);
 
             $product->setBrochure($fileName);
 
@@ -323,7 +327,7 @@ automatically upload the file when persisting the entity::
     use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\ORM\Event\PreUpdateEventArgs;
     use AppBundle\Entity\Product;
-    use AppBundle\FileUploader;
+    use AppBundle\Service\FileUploader;
 
     class BrochureUploadListener
     {
@@ -375,10 +379,12 @@ Now, register this class as a Doctrine listener:
 
         # app/config/services.yml
         services:
+            _defaults:
+                # ... be sure autowiring is enabled
+                autowire: true
             # ...
-            app.doctrine_brochure_listener:
-                class: AppBundle\EventListener\BrochureUploadListener
-                arguments: ['@app.brochure_uploader']
+
+            AppBundle\EventListener\BrochureUploadListener:
                 tags:
                     - { name: doctrine.event_listener, event: prePersist }
                     - { name: doctrine.event_listener, event: preUpdate }
@@ -392,33 +398,44 @@ Now, register this class as a Doctrine listener:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
             http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
-            <!-- ... -->
+            <services>
+                <!-- ... be sure autowiring is enabled -->
+                <defaults autowire="true" ... />
+                <!-- ... -->
 
-            <service id="app.doctrine_brochure_listener"
-                class="AppBundle\EventListener\BrochureUploaderListener"
-            >
-                <argument type="service" id="app.brochure_uploader"/>
-
-                <tag name="doctrine.event_listener" event="prePersist"/>
-                <tag name="doctrine.event_listener" event="preUpdate"/>
-            </service>
+                <service id="AppBundle\EventListener\BrochureUploaderListener">
+                    <tag name="doctrine.event_listener" event="prePersist"/>
+                    <tag name="doctrine.event_listener" event="preUpdate"/>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\EventListener\BrochureUploaderListener;
+<<<<<<< HEAD
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $container->register('app.doctrine_brochure_listener', BrochureUploaderListener::class)
             ->addArgument(new Reference('brochures_directory'))
+=======
+
+        $container->autowire(BrochureUploaderListener::class)
+>>>>>>> 8974c4842... Going through more chapters to use types and autowiring
             ->addTag('doctrine.event_listener', array(
                 'event' => 'prePersist',
             ))
             ->addTag('doctrine.event_listener', array(
+<<<<<<< HEAD
                 'event' => 'prePersist',
             ));
+=======
+                'event' => 'preUpdate',
+            ))
+        ;
+>>>>>>> 8974c4842... Going through more chapters to use types and autowiring
 
 This listener is now automatically executed when persisting a new Product
 entity. This way, you can remove everything related to uploading from the

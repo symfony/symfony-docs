@@ -115,7 +115,6 @@ as its default value::
 
     // src/AppBundle/Controller/DefaultController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
 

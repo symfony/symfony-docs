@@ -12,7 +12,7 @@ content or any other headers, you can use :doc:`the Symfony Profiler </profiler>
 
 Start with an easy controller action that sends an email::
 
-    public function sendEmailAction($name)
+    public function sendEmailAction($name, \Swift_Mailer $mailer)
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
@@ -21,7 +21,7 @@ Start with an easy controller action that sends an email::
             ->setBody('You should see me from the profiler!')
         ;
 
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }
