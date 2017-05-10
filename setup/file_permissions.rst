@@ -2,7 +2,7 @@ Setting up or Fixing File Permissions
 =====================================
 
 One important Symfony requirement is that the ``var`` directory must be
-writable both by the web server and the command line user.
+writable both by your user, and the web server's user.
 
 On Linux and macOS systems, if your web server user is different from your
 command line user, you need to configure permissions properly to avoid issues.
