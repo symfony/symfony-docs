@@ -36,9 +36,7 @@ This interface requires four methods:
 :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern`
     Tries to guess the value of the ``pattern`` input attribute.
 
-Start by creating the class and these methods. Next, you'll learn how to fill each on.
-
-.. code-block:: php
+Start by creating the class and these methods. Next, you'll learn how to fill each in::
 
     // src/AppBundle/Form/TypeGuesser/PHPDocTypeGuesser.php
     namespace AppBundle\Form\TypeGuesser;
@@ -175,9 +173,12 @@ set.
 Registering a Type Guesser
 --------------------------
 
+If you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, you're done! Symfony already knows
+and is using your form type guesser.
 
-The last thing you need to do is registering your custom type guesser by
-creating a service and tagging it as ``form.type_guesser``:
+If you're **not** using autowire and autoconfigure, register your service manually
+and tag it with ``form.type_guesser``:
 
 .. configuration-block::
 
@@ -185,9 +186,9 @@ creating a service and tagging it as ``form.type_guesser``:
 
         # app/config/services.yml
         services:
+            # ...
 
-            app.phpdoc_type_guesser:
-                class: AppBundle\Form\TypeGuesser\PHPDocTypeGuesser
+            AppBundle\Form\TypeGuesser\PHPDocTypeGuesser:
                 tags: [form.type_guesser]
 
     .. code-block:: xml
@@ -200,7 +201,7 @@ creating a service and tagging it as ``form.type_guesser``:
         >
             <services>
 
-                <service class="AppBundle\Form\TypeGuesser\PHPDocTypeGuesser">
+                <service id="AppBundle\Form\TypeGuesser\PHPDocTypeGuesser">
                     <tag name="form.type_guesser"/>
                 </service>
 
@@ -212,7 +213,7 @@ creating a service and tagging it as ``form.type_guesser``:
         // app/config/services.php
         use AppBundle\Form\TypeGuesser\PHPDocTypeGuesser;
 
-        $container->register('app.phpdoc_type_guesser', PHPDocTypeGuesser::class)
+        $container->register(PHPDocTypeGuesser::class)
             ->addTag('form.type_guesser')
         ;
 

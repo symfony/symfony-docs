@@ -179,6 +179,8 @@ listen to the same ``kernel.exception`` event::
 That's it! Your ``services.yml`` file should already be setup to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest.
 
+.. _ref-event-subscriber-configuration:
+
 .. tip::
 
     If your methods are *not* called when an exception is thrown, double-check that

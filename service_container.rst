@@ -5,8 +5,8 @@
 Service Container
 =================
 
-Your application is *full* of useful objects: one "Mailer" object might help you
-send email messages while another object might help you save things to the database.
+Your application is *full* of useful objects: a "Mailer" object might help you
+send emails while another object might help you save things to the database.
 Almost *everything* that your app "does" is actually done by one of these objects.
 And each time you install a new bundle, you get access to even more!
 
@@ -15,7 +15,7 @@ a very special object called the **service container**. If you have the service 
 then you can fetch a service by using that service's id::
 
     $logger = $container->get('logger');
-    $entityManager = $container->get('doctrine.entity_manager');
+    $entityManager = $container->get('doctrine.orm.entity_manager');
 
 The container allows you to centralize the way objects are constructed. It makes
 your life easier, promotes a strong architecture and is super fast!
@@ -24,7 +24,7 @@ Fetching and using Services
 ---------------------------
 
 The moment you start a Symfony app, your container *already* contains many services.
-These are like *tools*, waiting for you to take advantage of them. In your controller,
+These are like *tools*: waiting for you to take advantage of them. In your controller,
 you can "ask" for a service from the container by type-hinting an argument with the
 service's class or interface name. Want to :doc:`log </logging>` something? No problem::
 
@@ -45,6 +45,8 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
 
 .. versionadded:: 3.3
     The ability to type-hint a service in order to receive it was added in Symfony 3.3.
+    See the :ref:`controller chapter <controller-service-arguments-tag>` for more
+    details.
 
 .. _container-debug-container:
 
@@ -138,65 +140,8 @@ it can't be re-used. Instead, you decide to create a new class::
         }
     }
 
-Congratulations! You've just created your first service class. Next, you can *teach*
-the service container *how* to instantiate it:
-
-.. _service-container-services-load-example:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            # default configuration for services in *this* file
-            _defaults:
-                autowire: true
-                autoconfigure: true
-                public: false
-
-            # loads services from whatever directories you want (you can update this!)
-            AppBundle\:
-                resource: '../../src/AppBundle/{Service,Command,Form,EventSubscriber,Twig,Security}'
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- Default configuration for services in *this* file -->
-                <defaults autowire="true" autoconfigure="true" public="false" />
-
-                <!-- Load services from whatever directories you want (you can update this!) -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Command,Form,EventSubscriber,Twig,Security}" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        // _defaults and loading entire directories is not possible with PHP configuration
-        // you need to define your servicess one-by-one
-        use AppBundle\Service\MessageGenerator;
-
-        $container->autowire(MessageGenerator::class)
-            ->setAutoconfigured(true)
-            ->setPublic(false);
-
-.. versionadded:: 3.3
-    The ``_defaults`` key and ability to load services from a directory were added
-    in Symfony 3.3.
-
-That's it! Thanks to the ``AppBundle\`` line and ``resource`` key below it, a service
-will be registered for each class in the ``src/AppBundle/Service`` directory (and
-the other directories listed).
-
-You can use it immediately inside your controller::
+Congratulations! You've just created your first service class! You can use it immediately
+inside your controller::
 
     use AppBundle\Service\MessageGenerator;
 
@@ -212,11 +157,77 @@ You can use it immediately inside your controller::
     }
 
 When you ask for the ``MessageGenerator`` service, the container constructs a new
-``MessageGenerator`` object and returns it. But if you never ask for the service,
-it's *never* constructed: saving memory and speed.
+``MessageGenerator`` object and returns it (see sidebar below). But if you never ask
+for the service, it's *never* constructed: saving memory and speed. As a bonus, the
+``MessageGenerator`` service is only created *once*: the same instance is returned
+each time you ask for it.
 
-As a bonus, the ``MessageGenerator`` service is only created *once*: the same
-instance is returned each time you ask for it.
+.. _service-container-services-load-example:
+
+.. sidebar:: Automatic Service Loading in services.yml
+
+    The documentation assumes you're using
+    `Symfony Standard Edition (version 3.3) services.yml`_ configuration. The most
+    important part is this:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/services.yml
+            services:
+                # default configuration for services in *this* file
+                _defaults:
+                    autowire: true
+                    autoconfigure: true
+                    public: false
+
+                # makes classes in src/AppBundle available to be used as services
+                AppBundle\:
+                    resource: '../../src/AppBundle/*'
+                    # you can exclude directories or files
+                    # but if a service is unused, it's removed anyway
+                    exclude: '../../src/AppBundle/{Entity,Repository}'
+
+        .. code-block:: xml
+
+            <!-- app/config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- Default configuration for services in *this* file -->
+                    <defaults autowire="true" autoconfigure="true" public="false" />
+
+                    <!-- Load services from whatever directories you want (you can update this!) -->
+                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/services.php
+            // _defaults and loading entire directories is not possible with PHP configuration
+            // you need to define your services one-by-one
+            use AppBundle\Service\MessageGenerator;
+
+            $container->autowire(MessageGenerator::class)
+                ->setAutoconfigured(true)
+                ->setPublic(false);
+
+    Thanks to this configuration, you can automatically use any classes from the
+    ``src/AppBundle`` directory as a service, without needing to manually configure
+    it. Later, you'll learn more about this later in :ref:`service-psr4-loader`.
+
+    If you'd prefer to manually wire your service, that's totally possible: see
+    :ref:`services-explicitly-configure-wire-services`.
+
+    .. versionadded:: 3.3
+        The ``_defaults`` key *and* ability to load services from a directory were added
+        in Symfony 3.3.
 
 You can also fetch a service directly from the container via its "id", which will
 be its class name in this case::
@@ -228,6 +239,7 @@ be its class name in this case::
     {
         public function newAction()
         {
+            // only works if your service is public
             $messageGenerator = $this->get(MessageGenerator::class);
 
             $message = $messageGenerator->getHappyMessage();
@@ -254,7 +266,8 @@ Your service does *not* have access to the container directly, so you can't fetc
 it via ``$this->container->get()``.
 
 No problem! Instead, create a ``__construct()`` method with a ``$logger`` argument
-that has the ``LoggerInterface`` type-hint::
+that has the ``LoggerInterface`` type-hint. Set this on a new ``$logger`` property
+and use it later::
 
     // src/AppBundle/Service/MessageGenerator.php
     // ...
@@ -279,22 +292,34 @@ that has the ``LoggerInterface`` type-hint::
 
 That's it! The container will *automatically* know to pass the ``logger`` service
 when instantiating the ``MessageGenerator``. How does it know to do this?
-:doc:`Autowiring </service_container/autowiring>`. The key is the ``LoggerInterface``
+:ref:`Autowiring <services-autowire>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 ``services.yml``. When you type-hint an argument, the container will automatically
 find the matching service. If it can't, you'll see a clear exception with a helpful
 suggestion.
 
-Be sure to read more about :doc:`autowiring </service_container/autowiring>`.
-
 .. _services-debug-container-types:
 
-.. tip::
+How should you know to use ``LoggerInterface`` for the type-hint? You can either
+read the docs for whatever feature you're using, or get a list of autowireable
+type-hints by running:
 
-    How should you know to use ``LoggerInterface`` for the type-hint? The best way
-    is by reading the docs for whatever feature you're using. You can also use the
-    ``php bin/console debug:container --types`` console command to get a list of
-    available type-hints.
+.. code-block:: terminal
+
+    $ php bin/console debug:container --types
+
+This is just a small subset of the output:
+
+=============================================================== =====================================
+Service ID                                                      Class name
+=============================================================== =====================================
+``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
+``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
+``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
+``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
+``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
+``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
+=============================================================== =====================================
 
 Handling Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -335,40 +360,9 @@ made. To do that, you create a new class::
         }
     }
 
-This uses the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. To register
-this as a new service in the container, simply tell your configuration to load from
-the new ``Updates`` sub-directory:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            # ...
-
-            # registers all classes in Services & Updates directories
-            AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <!-- Registers all classes in Services & Updates directories -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
-            </services>
-        </container>
-
-Now, you can use the service immediately::
+This uses the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. As long as
+you're :ref:`loading all services from src/AppBundle <service-container-services-load-example>`,
+you can use the service immediately::
 
     use AppBundle\Updates\SiteUpdateManager;
 
@@ -384,6 +378,8 @@ Now, you can use the service immediately::
 Thanks to autowiring and your type-hints in ``__construct()``, the container creates
 the ``SiteUpdateManager`` object and passes it the correct argument. In most cases,
 this works perfectly.
+
+.. _services-manually-wire-args:
 
 Manually Wiring Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -440,7 +436,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
             # same as before
             AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
+                resource: '../../src/AppBundle/*'
+                exclude: '../../src/AppBundle/{Entity,Repository}'
 
             # explicitly configure the service
             AppBundle\Updates\SiteUpdateManager:
@@ -460,11 +457,11 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
 
                 <!-- Explicitly configure the service -->
                 <service id="AppBundle\Updates\SiteUpdateManager">
-                    <argument key="$adminEmail">%admin_email%</argument>
+                    <argument key="$adminEmail">manager@example.com</argument>
                 </service>
             </services>
         </container>
@@ -484,7 +481,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 .. versionadded:: 3.3
     The ability to configure an argument by its name (``$adminEmail``) was added
     in Symfony 3.3. Previously, you could configure it only by its index (``2`` in
-    this case).
+    this case) or by using empty quotes for the other arguments.
 
 Thanks to this, the container will pass ``manager@example.com`` as the third argument
 to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
@@ -563,22 +560,9 @@ You can also fetch parameters directly from the container::
         // $adminEmail = $this->getParameter('admin_email');
     }
 
-.. note::
-
-    If you use a string that starts with ``@`` or ``%``, you need to escape it by
-    adding another ``@`` or ``%``:
-
-    .. code-block:: yaml
-
-        # app/config/parameters.yml
-        parameters:
-            # This will be parsed as string '@securepass'
-            mailer_password: '@@securepass'
-
-            # Parsed as http://symfony.com/?foo=%s&amp;bar=%d
-            url_pattern: 'http://symfony.com/?foo=%%s&amp;bar=%%d'
-
 For more info about parameters, see :doc:`/service_container/parameters`.
+
+.. _services-wire-specific-service:
 
 Choose a Specific Service
 -------------------------
@@ -662,6 +646,19 @@ service whose id is ``monolog.logger.request``.
     the *service* whose id is ``monolog.logger.request``, and not just the *string*
     ``monolog.logger.request``.
 
+.. _services-autowire:
+
+The autowire Option
+-------------------
+
+Above, the ``services.yml`` file has ``autowire: true`` in the ``_defaults`` section
+so that it applies to all services defined in that file. With this setting, you're
+able to type-hint arguments in the ``__construct()`` method of your services and
+the container will automatically pass you the correct arguments. This entire entry
+has been written around autowiring.
+
+For more details about autowiring, check out :doc:`/service_container/autowiring`.
+
 .. _services-autoconfigure:
 
 The autoconfigure Option
@@ -670,10 +667,10 @@ The autoconfigure Option
 .. versionadded:: 3.3
     The ``autoconfigure`` option was added in Symfony 3.3.
 
-Above, we've set ``autoconfigure: true`` in the ``_defaults`` section so that it
-applies to all services defined in that file. With this setting, the container will
-automatically apply certain configuration to your services, based on your service's
-*class*. This is mostly used to *auto-tag* your services.
+Above, the ``services.yml`` file has ``autoconfigure: true`` in the ``_defaults``
+section so that it applies to all services defined in that file. With this setting,
+the container will automatically apply certain configuration to your services, based
+on your service's *class*. This is mostly used to *auto-tag* your services.
 
 For example, to create a Twig Extension, you need to create a class, register it
 as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension``:
@@ -715,53 +712,15 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
         $container->autowire(MyTwigExtension::class)
             ->addTag('twig.extension');
 
-But, with ``autoconfigure: true``, you don't need the tag. In fact, all you need
-to do is load your service from the ``Twig`` directory, which is already loaded
-by default in a fresh Symfony install:
+But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're using
+the :ref:`Symfony Standard Edition services.yml config <service-container-services-load-example>`,
+you don't need to do *anything*: the service will be automatically loaded. Then,
+``autoconfigure`` will add the ``twig.extension`` tag *for* you, because your class
+implements ``Twig_ExtensionInterface``. And thanks to ``autowire``, you can even add
+constructor arguments without any configuration.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            _defaults:
-                # ...
-                autoconfigure: true
-
-            # load your services from the Twig directory
-            AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true" />
-
-                <!-- Load your services-->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Twig\MyTwigExtension;
-
-        $container->autowire(MyTwigExtension::class)
-            ->setAutoconfigure(true);
-
-That's it! The container will find your class in the ``Twig/`` directory and register
-it as a service. Then ``autoconfigure`` will add the ``twig.extension`` tag *for*
-you, because your class implements ``Twig_ExtensionInterface``. And thanks to ``autowire``,
-you can even add constructor arguments without any configuration.
+Of course, you can still :ref:`manually configure the service <services-manually-wire-args>`
+if you need to.
 
 .. _container-public:
 
@@ -842,6 +801,184 @@ need to make your service public, just override this setting:
             </services>
         </container>
 
+.. _service-psr4-loader:
+
+Importing Many Services at once with resource
+---------------------------------------------
+
+You've already seen that you can import many services at once by using the ``resource``
+key. For example, the default Symfony configuration contains this:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/services.yml
+            services:
+                # ...
+
+                # the namespace prefix for classes (must end in \)
+                AppBundle\:
+                    # accepts a glob pattern
+                    resource: '../../src/AppBundle/*'
+                    # exclude some paths
+                    exclude: '../../src/AppBundle/{Entity,Repository}'
+
+                # these were imported above, but we want to add some extra config
+                AppBundle\Controller\:
+                    resource: '../../src/AppBundle/Controller'
+                    # apply some configuration to these services
+                    public: true
+                    tags: ['controller.service_arguments']
+
+        .. code-block:: xml
+
+            <!-- app/config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- ... -->
+
+                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+
+                    <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                        <tag name="controller.service_arguments" />
+                    </prototype>
+                </services>
+            </container>
+
+This can be used to quickly make many classes available as services and apply some
+default configuration. The ``id`` of each service is its fully-qualified class name.
+You can override any service that's imported by using its id (class name) below
+(e.g. see :ref:`services-manually-wire-args`). If you override a service, none of
+the options (e.g. ``public``) are inherited from the import (but the overridden
+service *does* still inherit from ``_defaults``).
+
+.. note::
+
+    Wait, does this mean that *every* class in ``src/AppBundle`` is registered as
+    a service? Even model or entity classes? Actually, no. As long as you have
+    ``public: false`` under your ``_defaults`` key (or you can add it under the
+    specific import), all the imported services are *private*. Thanks to this, all
+    classes in ``src/AppBundle`` that are *not* explicitly used as services are
+    automatically removed from the final container. In reality, the import simply
+    means that all classes are "available to be *used* as services" without needing
+    to be manually configured.
+
+.. _services-explicitly-configure-wire-services:
+
+Explicitly Configuring Services and Arguments
+---------------------------------------------
+
+Prior to Symfony 3.3, all services and (typically) arguments were explicitly configured:
+it was not possible to :ref:`load services automatically <service-container-services-load-example>`
+and :ref:`autowiring <services-autowire>` was much less common.
+
+Both of these features are optional. And even if you use them, there may be some
+cases where you want to manually wire a service. For example, suppose that you want
+to register *2* services for the ``SiteUpdateManager`` class - each with a different
+admin email. In this case, each needs to have a unique service id:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            # this is the service's id
+            site_update_manager.superadmin:
+                class: AppBundle\Updates\SiteUpdateManager
+                # you CAN still use autowiring: we just want to show what it looks like without
+                autowire: false
+                # manually wire all arguments
+                arguments:
+                    - '@AppBundle\Service\MessageGenerator'
+                    - '@mailer'
+                    - 'superadmin@example.com'
+
+            site_update_manager.normal_users:
+                class: AppBundle\Updates\SiteUpdateManager
+                autowire: false
+                arguments:
+                    - '@AppBundle\Service\MessageGenerator'
+                    - '@mailer'
+                    - 'contact@example.com'
+
+            # Create an alias, so that - by default - if you type-hint SiteUpdateManager,
+            # the site_update_manager.superadmin will be used
+            AppBundle\Updates\SiteUpdateManager: '@site_update_manager.superadmin'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="site_update_manager.superadmin" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
+                    <argument type="service" id="AppBundle\Service\MessageGenerator" />
+                    <argument type="service" id="mailer" />
+                    <argument>superadmin@example.com</argument>
+                </service>
+
+                <service id="site_update_manager.normal_users" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
+                    <argument type="service" id="AppBundle\Service\MessageGenerator" />
+                    <argument type="service" id="mailer" />
+                    <argument>contact@example.com</argument>
+                </service>
+
+                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin">
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\Updates\SiteUpdateManager;
+        use AppBundle\Service\MessageGenerator;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register('site_update_manager.superadmin', SiteUpdateManager::class)
+            ->setAutowire(false)
+            ->setArguments(array(
+                new Reference(MessageGenerator::class),
+                new Reference('mailer'),
+                'superadmin@example.com'
+            ));
+
+        $container->register('site_update_manager.normal_users', SiteUpdateManager::class)
+            ->setAutowire(false)
+            ->setArguments(array(
+                new Reference(MessageGenerator::class),
+                new Reference('mailer'),
+                'contact@example.com'
+            ));
+
+        $container->setAlias(SiteUpdateManager::class, 'site_update_manager.superadmin')
+
+In this case, *two* services are registered: ``site_update_manager.superadmin``
+and ``site_update_manager.normal_users``. Thanks to the alias, if you type-hint
+``SiteUpdateManager`` the first (``site_update_manager.superadmin``) will be passed.
+If you want to pass the second, you'll need to :ref:`manually wire the service <services-wire-specific-service>`.
+
+.. caution::
+
+    If you do *not* create the alias and are :ref:`loading all services from src/AppBundle <service-container-services-load-example>`,
+    then *three* services have been created (the automatic service + your two services)
+    and the automatically loaded service will be passed - by defaut - when you type-hint
+    ``SiteUpdateManager``. That's why creating the alias is a good idea.
+
 Learn more
 ----------
 
@@ -852,3 +989,4 @@ Learn more
     /service_container/*
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
+.. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/master/app/config/services.yml
