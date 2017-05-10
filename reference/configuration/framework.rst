@@ -131,10 +131,11 @@ used to add more entropy to security related operations. Its value should
 be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
-In practice, Symfony uses this value for generating the
-:doc:`CSRF tokens </form/csrf_protection>`, for encrypting the cookies used
+In practice, Symfony uses this value for encrypting the cookies used
 in the :doc:`remember me functionality </security/remember_me>` and for
 creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
+Up to version 2.4, Symfony used this value for generating the
+:doc:`CSRF tokens </form/csrf_protection>`.
 
 This option becomes the service container parameter named ``kernel.secret``,
 which you can use whenever the application needs an immutable random string
