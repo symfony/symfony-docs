@@ -571,7 +571,7 @@ a controller, this is pretty easy. Add the following method to the
         return new Response('Saved new product with id '.$product->getId());
     }
 
-    // you can use the registry to fetch other em's, if you have mutiple
+    // if you have multiple entity managers, use the registry to fetch them
     public function editAction(ManagerRegistry $doctrine)
     {
         $em = $doctrine->getManager();
