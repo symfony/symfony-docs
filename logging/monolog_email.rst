@@ -28,6 +28,8 @@ it is broken down.
                     handler:      deduplicated
                 deduplicated:
                     type:    deduplication
+                    # uncomment this line for values other than 60 seconds:
+                    # time: 10
                     handler: swift
                 swift:
                     type:       swift_mailer
