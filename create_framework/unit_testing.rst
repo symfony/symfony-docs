@@ -93,6 +93,9 @@ We are now ready to write our first test::
         private function getFrameworkForException($exception)
         {
             $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
+            // use getMock() on PHPUnit 5.3 or below
+            // $matcher = $this->getMock(Routing\Matcher\UrlMatcherInterface::class);
+
             $matcher
                 ->expects($this->once())
                 ->method('match')
@@ -149,6 +152,9 @@ Response::
     public function testControllerResponse()
     {
         $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
+        // use getMock() on PHPUnit 5.3 or below
+        // $matcher = $this->getMock(Routing\Matcher\UrlMatcherInterface::class);
+
         $matcher
             ->expects($this->once())
             ->method('match')
