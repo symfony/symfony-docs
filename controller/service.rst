@@ -66,14 +66,14 @@ Then you can define it as a service as follows:
 
         # app/config/services.yml
         services:
-            app.hello_controller:
+            AppBundle\Controller\HelloController:
                 class: AppBundle\Controller\HelloController
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
+            <service id="AppBundle\Controller\HelloController" class="AppBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
@@ -81,21 +81,22 @@ Then you can define it as a service as follows:
         // app/config/services.php
         use AppBundle\Controller\HelloController;
 
-        $container->register('app.hello_controller', HelloController::class);
+        $container->register(HelloController::class, HelloController::class);
 
 Referring to the Service
 ------------------------
 
-To refer to a controller that's defined as a service, use the single colon (:)
-notation. For example, to forward to the ``indexAction()`` method of the service
-defined above with the id ``app.hello_controller``::
+If the service id is the fully-qualified class name (FQCN) of your controller,
+you can keep using the usual notation. For example, to forward to the
+``indexAction()`` method of the above ``AppBundle\Controller\HelloController``
+service::
+
+    $this->forward('AppBundle:Hello:index', array('name' => $name));
+
+Otherwise, use the single colon (``:``) notation. For example, to forward to the
+``indexAction()`` method of a service with the id ``app.hello_controller``::
 
     $this->forward('app.hello_controller:indexAction', array('name' => $name));
-
-.. note::
-
-    You cannot drop the ``Action`` part of the method name when using this
-    syntax.
 
 You can also route to the service by using the same notation when defining
 the route ``_controller`` value:
@@ -123,17 +124,82 @@ the route ``_controller`` value:
             '_controller' => 'app.hello_controller:indexAction',
         )));
 
+.. note::
+
+    You cannot drop the ``Action`` part of the method name when using this
+    syntax.
+
 .. tip::
 
     You can also use annotations to configure routing using a controller
     defined as a service. Make sure you specify the service ID in the
-    ``@Route`` annotation. See the `FrameworkExtraBundle documentation`_ for
-    details.
+    ``@Route`` annotation if your service ID is not your controller
+    fully-qualified class name (FQCN). See the
+    `FrameworkExtraBundle documentation`_ for details.
+
+    For example, you could use annotations in the ``HelloController`` defined
+    earlier::
+
+        // src/AppBundle/Controller/HelloController.php
+        namespace AppBundle\Controller;
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class HelloController
+        {
+            /**
+             * @Route("/hello")
+             */
+            public function indexAction($name)
+            {
+                // ...
+            }
+        }
+
+    With the following routes:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/routing.yml
+            app:
+                resource: "@AppBundle/Controller/"
+                type:     annotation
+
+        .. code-block:: xml
+
+            <!-- app/config/routing.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    http://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <!-- the type is required to enable the annotation reader for this resource -->
+                <import resource="@AppBundle/Controller/" type="annotation"/>
+            </routes>
+
+        .. code-block:: php
+
+            // app/config/routing.php
+            use Symfony\Component\Routing\RouteCollection;
+
+            $collection = new RouteCollection();
+            $collection->addCollection(
+                // second argument is the type, which is required to enable
+                // the annotation reader for this resource
+                $loader->import("@AppBundle/Controller/", "annotation")
+            );
+
+            return $collection;
 
 .. tip::
 
     If your controller implements the ``__invoke()`` method, you can simply
-    refer to the service id (``app.hello_controller``).
+    refer to the service id (``AppBundle\Controller\HelloController`` or
+    ``app.hello_controller`` for example).
 
     .. versionadded:: 2.6
         Support for ``__invoke()`` was introduced in Symfony 2.6.
@@ -212,7 +278,7 @@ argument:
 
         # app/config/services.yml
         services:
-            app.hello_controller:
+            AppBundle\Controller\HelloController:
                 class:     AppBundle\Controller\HelloController
                 arguments: ['@templating']
 
@@ -220,7 +286,7 @@ argument:
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
+            <service id="AppBundle\Controller\HelloController" class="AppBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
@@ -232,6 +298,7 @@ argument:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.hello_controller', HelloController::class)
+        $container->register(HelloController::class, HelloController::class)
             ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can
