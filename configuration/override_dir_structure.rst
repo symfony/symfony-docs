@@ -15,6 +15,8 @@ directory structure is:
     │  ├─ cache/
     │  ├─ config/
     │  ├─ logs/
+    │  ├─ Resources/
+    │  │  └─ views/
     │  └─ ...
     ├─ src/
     │  └─ ...
@@ -79,6 +81,22 @@ method::
     }
 
 Here you have changed the location of the directory to ``app/{environment}/logs``.
+
+.. _override-templates-dir:
+
+Override the Templates Directory
+--------------------------------
+
+If your templates are not stored in the default ``app/Resources/views/``
+directory, use the :ref:`twig.paths <config-twig-paths>` configuration option to
+define your own templates directory (or directories):
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    twig:
+        # ...
+        paths: ["%kernel.root_dir%/../templates"]
 
 .. _override-web-dir:
 
