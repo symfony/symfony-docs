@@ -17,36 +17,41 @@ the user is redirected back to a page which the browser cannot render.
 To get around this behavior, you would simply need to extend the ``ExceptionListener``
 class and override the default method named ``setTargetPath()``.
 
-First, override the ``security.exception_listener.class`` parameter in your
-configuration file. This can be done from your main configuration file (in
-``app/config``) or from a configuration file being imported from a bundle:
+First, add a ``CompilerPass`` which you will use to override the ``ExceptionListener`` class:
 
-.. configuration-block::
+    // src/AppBundle/AppBundle.php
+    namespace AppBundle;
+    
+    use AppBundle\DependencyInjection\Compiler\ExceptionListenerPass;
 
-        .. code-block:: yaml
+    class AppBundle extends Bundle
+    {   
+        public function build(ContainerBuilder $container)
+        {
+            $container->addCompilerPass(new ExceptionListenerPass());
+        }
+    }
+    
+Next, create the ``ExceptionListenerPass`` to replace the definition of you're firewall's ``ExceptionListener``:
 
-            # app/config/services.yml
-            parameters:
-                # ...
-                security.exception_listener.class: AppBundle\Security\Firewall\ExceptionListener
+    // src/AppBundle/DependencyInjection/Compiler/ExceptionListenerPass.php
+    namespace AppBundle\DependencyInjection\Compiler;
+    
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use AppBundle\Security\Firewall\ExceptionListener;
 
-        .. code-block:: xml
+    class ExceptionListenerPass implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+            // use firewall name as suffix e.g. 'secured_area'
+            $definition = $container->getDefinition('security.exception_listener.secured_area');
+            $definition->setClass('AppBundle\Security\Firewall\ExceptionListener');
+        }
+    }
 
-            <!-- app/config/services.xml -->
-            <parameters>
-                <!-- ... -->
-                <parameter key="security.exception_listener.class">AppBundle\Security\Firewall\ExceptionListener</parameter>
-            </parameters>
-
-        .. code-block:: php
-
-            // app/config/services.php
-            use AppBundle\Security\Firewall\ExceptionListener;
-
-            // ...
-            $container->setParameter('security.exception_listener.class', ExceptionListener::class);
-
-Next, create your own ``ExceptionListener``::
+Finally, create your own ``ExceptionListener``::
 
     // src/AppBundle/Security/Firewall/ExceptionListener.php
     namespace AppBundle\Security\Firewall;
