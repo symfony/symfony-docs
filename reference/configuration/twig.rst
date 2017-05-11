@@ -249,6 +249,8 @@ on. Set it to ``0`` to disable all the optimizations. You can even enable or
 disable these optimizations selectively, as explained in the Twig documentation
 about `the optimizer extension`_.
 
+.. _config-twig-paths:
+
 paths
 ~~~~~
 

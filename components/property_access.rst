@@ -259,23 +259,31 @@ can use setters, the magic ``__set()`` method or properties to set values::
             $this->lastName = $name;
         }
 
+        public function getLastName()
+        {
+            return $this->lastName;
+        }
+
+        public function getChildren()
+        {
+            return $this->children;
+        }
+
         public function __set($property, $value)
         {
             $this->$property = $value;
         }
-
-        // ...
     }
 
     $person = new Person();
 
     $accessor->setValue($person, 'firstName', 'Wouter');
-    $accessor->setValue($person, 'lastName', 'de Jong');
-    $accessor->setValue($person, 'children', array(new Person()));
+    $accessor->setValue($person, 'lastName', 'de Jong'); // setLastName is called
+    $accessor->setValue($person, 'children', array(new Person())); // __set is called
 
     var_dump($person->firstName); // 'Wouter'
     var_dump($person->getLastName()); // 'de Jong'
-    var_dump($person->children); // array(Person());
+    var_dump($person->getChildren()); // array(Person());
 
 You can also use ``__call()`` to set values but you need to enable the feature,
 see `Enable other Features`_.
