@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-03-26T14:05:32Z
+
+It seems weird to "hide" this feature as it may complicate the path to find a solution anytime some one would need it, what about an explicit warning instead?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-04-24T13:13:09Z
+
+In other cases I would agree with you, but remember that Fabien said that nobody should use this "feature" ever. It's like an internal thing to make some things work on Silex.
