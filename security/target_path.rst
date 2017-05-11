@@ -32,7 +32,8 @@ First, add a ``CompilerPass`` which you will use to override the ``ExceptionList
         }
     }
     
-Next, create the ``ExceptionListenerPass`` to replace the definition of you're firewall's ``ExceptionListener``:
+Next, create the ``ExceptionListenerPass`` to replace the definition of ``ExceptionListener``. 
+Make sure you use the name of the firewall you have configured in ``app/config``:
 
     // src/AppBundle/DependencyInjection/Compiler/ExceptionListenerPass.php
     namespace AppBundle\DependencyInjection\Compiler;
@@ -45,7 +46,7 @@ Next, create the ``ExceptionListenerPass`` to replace the definition of you're f
     {
         public function process(ContainerBuilder $container)
         {
-            // use firewall name as suffix e.g. 'secured_area'
+            // Use the name of your firewall as suffix e.g. 'secured_area'
             $definition = $container->getDefinition('security.exception_listener.secured_area');
             $definition->setClass('AppBundle\Security\Firewall\ExceptionListener');
         }
