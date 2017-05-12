@@ -23,17 +23,18 @@ Solution: trusted_proxies
 This is no problem, but you *do* need to tell Symfony what is happening
 and which reverse proxy IP addresses will be doing this type of thing:
 
-.. configuration-block::
+.. code-block:: php
 
-   .. code-block:: diff
+    // web/app.php
 
-	  // web/app.php
+    // ...
+    $request = Request::createFromGlobals();
 
-	  // ...
-	  $request = Request::createFromGlobals();
-	  + Request::setTrustedProxies(['127.0.0.1', '10.0.0.0/8']);
+    // use the setTrustedProxies() method to tell Symfony
+    // about your reverse proxy IP addresses
+    Request::setTrustedProxies(['127.0.0.1', '10.0.0.0/8']);
 
-	  // ...
+    // ...
 
 In this example, you're saying that your reverse proxy (or proxies) has
 the IP address ``192.0.0.1`` or matches the range of IP addresses that use
