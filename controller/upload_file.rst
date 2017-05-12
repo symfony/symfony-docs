@@ -259,7 +259,7 @@ Then, define a service for this class:
         # app/config/services.yml
         services:
             # ...
-            
+
             AppBundle\Service\FileUploader:
                 arguments:
                     $targetDir: '%brochures_directory%'
@@ -414,28 +414,15 @@ Now, register this class as a Doctrine listener:
 
         // app/config/services.php
         use AppBundle\EventListener\BrochureUploaderListener;
-<<<<<<< HEAD
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-        $container->register('app.doctrine_brochure_listener', BrochureUploaderListener::class)
-            ->addArgument(new Reference('brochures_directory'))
-=======
 
         $container->autowire(BrochureUploaderListener::class)
->>>>>>> 8974c4842... Going through more chapters to use types and autowiring
             ->addTag('doctrine.event_listener', array(
                 'event' => 'prePersist',
             ))
             ->addTag('doctrine.event_listener', array(
-<<<<<<< HEAD
-                'event' => 'prePersist',
-            ));
-=======
                 'event' => 'preUpdate',
             ))
         ;
->>>>>>> 8974c4842... Going through more chapters to use types and autowiring
 
 This listener is now automatically executed when persisting a new Product
 entity. This way, you can remove everything related to uploading from the
