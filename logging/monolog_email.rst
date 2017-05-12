@@ -68,7 +68,7 @@ it is broken down.
                     name="deduplicated"
                     type="deduplication"
                     handler="swift"
-                >
+                />
                 <monolog:handler
                     name="swift"
                     type="swift_mailer"
