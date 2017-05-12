@@ -17,7 +17,7 @@ the user is redirected back to a page which the browser cannot render.
 To get around this behavior, you would simply need to extend the ``ExceptionListener``
 class and override the default method named ``setTargetPath()``.
 
-First, add a ``CompilerPass`` which you will use to override the ``ExceptionListener`` class::
+First, add a compiler pass which you will use to replace the ``ExceptionListener`` class::
 
     // src/AppBundle/AppBundle.php
     namespace AppBundle;
@@ -33,7 +33,7 @@ First, add a ``CompilerPass`` which you will use to override the ``ExceptionList
     }
     
 Next, create the ``ExceptionListenerPass`` to replace the definition of ``ExceptionListener``. 
-Make sure you use the name of the firewall you have configured in ``app/config``::
+Make sure you use the name of the firewall you have configured your security configuration::
 
     // src/AppBundle/DependencyInjection/Compiler/ExceptionListenerPass.php
     namespace AppBundle\DependencyInjection\Compiler;
@@ -48,7 +48,7 @@ Make sure you use the name of the firewall you have configured in ``app/config``
         {
             // Use the name of your firewall as suffix e.g. 'secured_area'
             $definition = $container->getDefinition('security.exception_listener.secured_area');
-            $definition->setClass('AppBundle\Security\Firewall\ExceptionListener');
+            $definition->setClass(ExceptionListener::class);
         }
     }
 
