@@ -116,6 +116,12 @@ call if the service exists and remove the method call if it does not:
             ))
         ;
 
+.. note::
+
+    If the argument to the method call is a collection of arguments and any of
+    them is missing, those elements are removed but the method call is still
+    made with the remaining elements of the collection.
+
 In YAML, the special ``@?`` syntax tells the service container that the dependency
 is optional. Of course, the ``NewsletterManager`` must also be rewritten by
 adding a ``setMailer()`` method::
