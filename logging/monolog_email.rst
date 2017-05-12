@@ -66,6 +66,14 @@ it is broken down.
                     action-level="critical"
                     handler="deduplicated"
                 />
+                <!--
+                use the time attribute for values other than the default
+                of 60 seconds:
+                <monolog:handler name="deduplicated"
+                    type="deduplicated"
+                    time="10"
+                    handler="swift" />
+                -->
                 <monolog:handler
                     name="deduplicated"
                     type="deduplication"
@@ -110,6 +118,8 @@ it is broken down.
                 ),
                 'deduplicated' => array(
                     'type'    => 'deduplication',
+                    // uncomment this line for values other than 60 seconds:
+                    // 'time' => 10,
                     'handler' => 'swift',
                 ),
                 'swift' => array(
