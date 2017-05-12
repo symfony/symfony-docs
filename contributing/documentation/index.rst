@@ -24,4 +24,8 @@ documentation:
 .. toctree::
     :hidden:
 
+    format
+    license
+    overview
+    standards
     translations
