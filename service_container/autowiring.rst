@@ -86,13 +86,27 @@ autowired:
 
 The autowiring subsystem will detect the dependencies of the ``TwitterClient``
 class by parsing its constructor. For instance it will find here an instance of
-a ``Rot13Transformer`` as dependency. If an existing service definition (and only
-one – see below) is of the required type, this service will be injected. If it's
-not the case (like in this example), the subsystem is smart enough to automatically
-register a private service for the ``Rot13Transformer`` class and set it as first
-argument of the ``twitter_client`` service. Again, it can work only if there is one
-class of the given type. If there are several classes of the same type, you must
-use an explicit service definition or register a default implementation.
+a ``Rot13Transformer`` as dependency.
+
+The subsystem will first try to find a service whose id is the required type, so
+here it'll search for a service named ``AppBundle\Rot13Transformer``.
+It will be considered as the default implementation and will win over any other
+services implementing the required type.
+
+*In case this service does not exist*, the subsystem will detect the types of
+all services and check if one - and only one - implements the required type, and
+inject it if it's the case. If there are several services of the same type, an
+exception will be thrown. You'll have to use an explicit service definition or
+register a default implementation by creating a service or an alias whose id is
+the required type (as seen above).
+Note that this step is deprecated and will no longer be done in 4.0. The
+subsystem will directly pass to the third check.
+
+At last, if no service implements the required type, as it's the case here, the
+subsystem is, as long as it's a concrete class, smart enough to automatically
+register a private service for it.
+Here it'll register a private service for the ``Rot13Transformer`` class and set
+it as first argument of the ``twitter_client`` service.
 
 As you can see, the autowiring feature drastically reduces the amount of configuration
 required to define a service. No more arguments section! It also makes it easy
@@ -185,7 +199,9 @@ And update ``TwitterClient`` to depend of this new interface::
     }
 
 Finally the service definition must be updated because, obviously, the autowiring
-subsystem isn't able to find itself the interface implementation to register:
+subsystem isn't able to find itself the interface implementation to register.
+You have to indicate which service must be injected for your interface when
+using autowiring:
 
 .. configuration-block::
 
@@ -193,6 +209,10 @@ subsystem isn't able to find itself the interface implementation to register:
 
         services:
             AppBundle\Rot13Transformer: ~
+
+            # the ``AppBundle\Rot13Transformer`` service will be injected when
+            # a ``AppBundle\TransformerInterface`` type-hint is detected
+            AppBundle\TransformerInterface: '@AppBundle\Rot13Transformer'
 
             AppBundle\TwitterClient:
                 autowire: true
@@ -207,6 +227,8 @@ subsystem isn't able to find itself the interface implementation to register:
             <services>
                 <service id="AppBundle\Rot13Transformer" />
 
+                <service id="AppBundle\TransformerInterface" alias="AppBundle\Rot13Transformer" />
+
                 <service id="AppBundle\TwitterClient" autowire="true" />
             </services>
         </container>
@@ -214,25 +236,34 @@ subsystem isn't able to find itself the interface implementation to register:
     .. code-block:: php
 
         use AppBundle\Rot13Transformer;
+        use AppBundle\TransformerInterface;
         use AppBundle\TwitterClient;
 
         // ...
         $container->register(Rot13Transformer::class);
+        $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
+
         $container->autowire(TwitterClient::class);
 
-The autowiring subsystem detects that the ``AppBundle\Rot13Transformer`` service
-implements the ``TransformerInterface`` and injects it automatically. Even when
-using interfaces (and you should), building the service graph and refactoring
-the project is easier than with standard definitions.
+Thanks to the ``AppBundle\TransformerInterface`` alias, the autowiring subsystem
+knows that the ``AppBundle\Rot13Transformer`` service must be injected when
+dealing with the ``TransformerInterface`` and injects it automatically. Even
+when using interfaces (and you should), building the service graph and
+refactoring the project is easier than with standard definitions.
 
 .. _service-autowiring-alias:
 
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
-Last but not least, the autowiring feature allows to specify the default implementation
-of a given type. Let's introduce a new implementation of the ``TransformerInterface``
-returning the result of the ROT13 transformation uppercased::
+To deal with multiple implementations of the same type, the manipulation is the
+same as when dealing with an interface. You have to register a service whose id
+is your type: this will indicate to the autowiring subsystem which service to
+use by default for this type.
+So if you have several services implementing the same type, you can decide which
+one the subsystem should use. Let's introduce a new implementation of the
+``TransformerInterface`` returning the result of the ROT13 transformation
+uppercased::
 
     namespace AppBundle;
 
@@ -274,6 +305,9 @@ transformer::
          */
         public function tweetAction(Request $request, TwitterClient $twitterClient)
         {
+            // Here the client is automatically injected because it's the default
+            // implementation
+
             return $this->tweet($request, $twitterClient);
         }
 
@@ -315,6 +349,9 @@ and a Twitter client using it:
         services:
             AppBundle\Rot13Transformer: ~
 
+            # the ``AppBundle\Rot13Transformer`` service will *always* be used
+            # when ``AppBundle\TransformerInterface`` is detected by the
+            # autowiring subsystem
             AppBundle\TransformerInterface: '@AppBundle\Rot13Transformer'
 
             AppBundle\TwitterClient:
@@ -359,7 +396,7 @@ and a Twitter client using it:
 
         // ...
         $container->register(Rot13Transformer::class);
-        $container->setAlias(TransformerInterface::class, Rot13Transformer::class)
+        $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
 
         $container->autowire(TwitterClient::class);
         $container->autowire(UppercaseTransformer::class);
@@ -367,8 +404,8 @@ and a Twitter client using it:
             ->addArgument(new Reference(UppercaseTransformer::class));
 
 This deserves some explanations. You now have two services implementing the
-``TransformerInterface``. The autowiring subsystem cannot guess which one
-to use which leads to errors like this:
+``TransformerInterface``. As said earlier, the autowiring subsystem cannot guess
+which one to use which leads to errors like this:
 
 .. code-block:: text
 
