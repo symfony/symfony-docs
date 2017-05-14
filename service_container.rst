@@ -854,7 +854,9 @@ key. For example, the default Symfony configuration contains this:
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
 You can override any service that's imported by using its id (class name) below
-(e.g. see :ref:`services-manually-wire-args`).
+(e.g. see :ref:`services-manually-wire-args`). If you override a service, none of
+the options (e.g. ``public``) are inherited from the import (but the overridden
+service *does* still inherit from ``_defaults``).
 
 .. note::
 

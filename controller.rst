@@ -288,7 +288,7 @@ controller's service config:
             AppBundle\Controller\LuckyController:
                 public: true
                 tags:
-                    # add multiple tags to controller multiple args
+                    # add multiple tags to control multiple args
                     - name: controller.service_arguments
                       action: numberAction
                       argument: logger
