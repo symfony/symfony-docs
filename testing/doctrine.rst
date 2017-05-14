@@ -45,7 +45,7 @@ which makes all of this quite easy::
         public function testSearchByCategoryName()
         {
             $products = $this->em
-                ->getRepository('AppBundle:Product')
+                ->getRepository(Product::class)
                 ->searchByCategoryName('foo')
             ;
 

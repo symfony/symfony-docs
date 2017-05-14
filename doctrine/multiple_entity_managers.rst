@@ -210,19 +210,19 @@ The same applies to repository calls::
         {
             // Retrieves a repository managed by the "default" em
             $products = $this->get('doctrine')
-                ->getRepository('AcmeStoreBundle:Product')
+                ->getRepository(Product::class)
                 ->findAll()
             ;
 
             // Explicit way to deal with the "default" em
             $products = $this->get('doctrine')
-                ->getRepository('AcmeStoreBundle:Product', 'default')
+                ->getRepository(Product::class, 'default')
                 ->findAll()
             ;
 
             // Retrieves a repository managed by the "customer" em
             $customers = $this->get('doctrine')
-                ->getRepository('AcmeCustomerBundle:Customer', 'customer')
+                ->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;
         }

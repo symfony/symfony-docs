@@ -690,7 +690,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         public function editAction($id, Request $request)
         {
             $em = $this->getDoctrine()->getManager();
-            $task = $em->getRepository('AppBundle:Task')->find($id);
+            $task = $em->getRepository(Task::class)->find($id);
 
             if (!$task) {
                 throw $this->createNotFoundException('No task found for id '.$id);
