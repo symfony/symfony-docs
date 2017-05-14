@@ -634,7 +634,7 @@ on its ``id`` value::
     public function showAction($productId)
     {
         $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->find($productId);
 
         if (!$product) {
@@ -658,18 +658,18 @@ job is to help you fetch entities of a certain class. You can access the
 repository object for an entity class via::
 
     $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
+        ->getRepository(Product::class);
 
 .. note::
 
-    The ``AppBundle:Product`` string is a shortcut you can use anywhere
+    You can also use ``AppBundle:Product`` syntax. This string is a shortcut you can use anywhere
     in Doctrine instead of the full class name of the entity (i.e. ``AppBundle\Entity\Product``).
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 
 Once you have a repository object, you can access all sorts of helpful methods::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // query for a single product by its primary key (usually "id")
     $product = $repository->find($productId);
@@ -692,7 +692,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
 You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
 to easily fetch objects based on multiple conditions::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // query for a single product matching the given name and price
     $product = $repository->findOneBy(
@@ -730,7 +730,7 @@ you have a route that maps a product id to an update action in a controller::
     public function updateAction($productId)
     {
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('AppBundle:Product')->find($productId);
+        $product = $em->getRepository(Product::class)->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -776,7 +776,7 @@ Querying for Objects
 You've already seen how the repository object allows you to run basic queries
 without any work::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     $product = $repository->find($productId);
     $product = $repository->findOneByName('Keyboard');
@@ -837,7 +837,7 @@ depends on dynamic conditions, as your code soon becomes hard to read with
 DQL as you start to concatenate strings::
 
     $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
+        ->getRepository(Product::class);
 
     // createQueryBuilder() automatically selects FROM AppBundle:Product
     // and aliases it to "p"
