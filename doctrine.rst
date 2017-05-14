@@ -138,7 +138,7 @@ can automatically generate an empty ``test_project`` database for you:
 
         [mysqld]
         # Version 5.5.3 introduced "utf8mb4", which is recommended
-        collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+        collation-server     = utf8mb4_unicode_ci # Replaces utf8_unicode_ci
         character-set-server = utf8mb4            # Replaces utf8
 
     You can also change the defaults for Doctrine so that the generated SQL
