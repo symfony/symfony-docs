@@ -114,8 +114,7 @@ After creating the strategy PHP class, register it as a Symfony service.
 
         # app/config/services.yml
         services:
-            app.assets.versioning.gulp_buster:
-                class: AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy
+            AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy:
                 arguments:
                     - "%kernel.project_dir%/busters.json"
                     - "%%s?version=%%s"
@@ -131,8 +130,7 @@ After creating the strategy PHP class, register it as a Symfony service.
                 http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
             <services>
-                <service id="app.assets.versioning.gulp_buster"
-                 class="AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy" public="false">
+                <service id="AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy" public="false">
                     <argument>%kernel.project_dir%/busters.json</argument>
                     <argument>%%s?version=%%s</argument>
                 </service>
@@ -143,17 +141,15 @@ After creating the strategy PHP class, register it as a Symfony service.
 
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy;
 
-        $definition = new Definition(
-            'AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy',
-            array(
-                '%kernel.project_dir%/busters.json',
-                '%%s?version=%%s',
-            )
-        );
-        $definition->setPublic(false);
-
-        $container->setDefinition('app.assets.versioning.gulp_buster', $definition);
+        $container->autowire(GulpBusterVersionStrategy::class)
+            ->setArguments(
+                array(
+                    '%kernel.project_dir%/busters.json',
+                    '%%s?version=%%s',
+                )
+        )->setPublic(false);
 
 Finally, enable the new asset versioning for all the application assets or just
 for some :ref:`asset package <reference-framework-assets-packages>` thanks to
@@ -167,7 +163,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
         framework:
             # ...
             assets:
-                version_strategy: 'app.assets.versioning.gulp_buster'
+                version_strategy: 'AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy'
 
     .. code-block:: xml
 
@@ -180,17 +176,19 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets version-strategy="app.assets.versioning.gulp_buster" />
+                <framework:assets version-strategy="AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy" />
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy;
+
         $container->loadFromExtension('framework', array(
             // ...
             'assets' => array(
-                'version_strategy' => 'app.assets.versioning.gulp_buster',
+                'version_strategy' => GulpBusterVersionStrategy::class,
             ),
         ));
 

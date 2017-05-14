@@ -56,6 +56,8 @@ all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
 
+.. _form-type-methods-explanation:
+
 ``buildForm()``
     Each field type has a ``buildForm()`` method, which is where
     you configure and build any field(s). Notice that this is the same method
@@ -260,135 +262,40 @@ the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
 
 .. _form-field-service:
+.. _creating-your-field-type-as-a-service:
 
-Creating your Field Type as a Service
--------------------------------------
+Accessing Services and Config
+-----------------------------
 
-So far, this entry has assumed that you have a very simple custom field type.
-But if you need access to configuration, a database connection, or some other
-service, then you'll want to register your custom type as a service. For
-example, suppose that you're storing the gender parameters in configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        parameters:
-            genders:
-                m: Male
-                f: Female
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="genders" type="collection">
-                <parameter key="m">Male</parameter>
-                <parameter key="f">Female</parameter>
-            </parameter>
-        </parameters>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->setParameter('genders.m', 'Male');
-        $container->setParameter('genders.f', 'Female');
-
-To use the parameter, define your custom field type as a service, injecting
-the ``genders`` parameter value as the first argument to its to-be-created
-``__construct()`` function:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/services.yml
-        services:
-            app.form.type.gender:
-                class: AppBundle\Form\Type\GenderType
-                arguments:
-                    - '%genders%'
-                tags: [form.type]
-
-    .. code-block:: xml
-
-        <!-- src/AppBundle/Resources/config/services.xml -->
-        <service id="app.form.type.gender" class="AppBundle\Form\Type\GenderType">
-            <argument>%genders%</argument>
-            <tag name="form.type" />
-        </service>
-
-    .. code-block:: php
-
-        // src/AppBundle/Resources/config/services.php
-        use AppBundle\Form\Type\GenderType;
-
-        $container->register('app.form.type.gender', GenderType::class)
-            ->addArgument('%genders%')
-            ->addTag('form.type')
-        ;
-
-.. tip::
-
-    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
-    for details.
-
-.. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define form type services as ``public``.
-    Starting from Symfony 3.3, you can also define them as ``private``.
-
-First, add a ``__construct`` method to ``GenderType``, which receives the gender
-configuration::
+If you need to access :doc:`services </service_container>` from your form class,
+just a ``__construct()`` method like normal::
 
     // src/AppBundle/Form/Type/GenderType.php
     namespace AppBundle\Form\Type;
 
-    use Symfony\Component\OptionsResolver\OptionsResolver;
-
     // ...
+    use Doctrine\ORM\EntityManagerInterface;
 
-    // ...
     class GenderType extends AbstractType
     {
-        private $genderChoices;
+        private $em;
 
-        public function __construct(array $genderChoices)
+        public function __construct(EntityManagerInterface $em)
         {
-            $this->genderChoices = $genderChoices;
+            $this->em = $em;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            $resolver->setDefaults(array(
-                'choices' => $this->genderChoices,
-            ));
-        }
-
-        // ...
+        // use $this->em down anywhere you want ...
     }
 
-Great! The ``GenderType`` is now fueled by the configuration parameters and
-registered as a service. Because you used the ``form.type`` tag in its configuration,
-your service will be used instead of creating a *new* ``GenderType``. In other words,
-your controller *does not need to change*, it still looks like this::
+If you're using the default ``services.yml`` configuration (i.e. services from the
+``Form/`` are loaded and ``autoconfigure`` is enabled), this will already work!
+See :ref:`service-container-creating-service` for more details.
 
-    // src/AppBundle/Form/Type/AuthorType.php
-    namespace AppBundle\Form\Type;
+.. tip::
 
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\GenderType;
-
-    class AuthorType extends AbstractType
-    {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder->add('gender_code', GenderType::class, array(
-                'placeholder' => 'Choose a gender',
-            ));
-        }
-    }
+    If you're not using :ref:`autoconfigure <services-autoconfigure>`, make sure
+    to :doc:`tag </service_container/tags>` your service with ``form.type``.
 
 Have fun!
 

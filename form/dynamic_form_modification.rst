@@ -142,27 +142,6 @@ For better reusability or if there is some heavy logic in your event listener,
 you can also move the logic for creating the ``name`` field to an
 :ref:`event subscriber <event_dispatcher-using-event-subscribers>`::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
-
-    // ...
-    use AppBundle\Form\EventListener\AddNameFieldSubscriber;
-
-    class ProductType extends AbstractType
-    {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder->add('price');
-
-            $builder->addEventSubscriber(new AddNameFieldSubscriber());
-        }
-
-        // ...
-    }
-
-Now the logic for creating the ``name`` field resides in it own subscriber
-class::
-
     // src/AppBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace AppBundle\Form\EventListener;
 
@@ -191,6 +170,25 @@ class::
         }
     }
 
+Great! Now use that in your form class::
+
+    // src/AppBundle/Form/Type/ProductType.php
+    namespace AppBundle\Form\Type;
+
+    // ...
+    use AppBundle\Form\EventListener\AddNameFieldSubscriber;
+
+    class ProductType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder->add('price');
+
+            $builder->addEventSubscriber(new AddNameFieldSubscriber());
+        }
+
+        // ...
+    }
 
 .. _form-events-user-data:
 
@@ -332,46 +330,15 @@ and fill in the listener logic::
 Using the Form
 ~~~~~~~~~~~~~~
 
-Our form is now ready to use. But first, because it has a ``__construct()`` method,
-you need to register it as a service and tag it with :ref:`form.type <dic-tags-form-type>`:
+If you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, your form is ready to be used!
 
-.. configuration-block::
+.. tip::
 
-    .. code-block:: yaml
+    If you're not using autowire and autoconfigure, see :doc:`</form/form_dependencies>`
+    for how to register your form type as a service.
 
-        # app/config/config.yml
-        services:
-            app.form.friend_message:
-                class: AppBundle\Form\Type\FriendMessageFormType
-                arguments: ['@security.token_storage']
-                tags: [form.type]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <services>
-            <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                <argument type="service" id="security.token_storage" />
-                <tag name="form.type" />
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Form\Type\FriendMessageFormType;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('app.form.friend_message', FriendMessageFormType::class)
-            ->addArgument(new Reference('security.token_storage'))
-            ->addTag('form.type');
-
-.. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define form type services as ``public``.
-    Starting from Symfony 3.3, you can also define them as ``private``.
-
-In a controller that extends the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
-class, you can simply call::
+In a controller, create the form like normal::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -385,7 +352,7 @@ class, you can simply call::
         }
     }
 
-You can also easily embed the form type into another form::
+You can also  embed the form type into another form::
 
     // inside some other "form type" class
     public function buildForm(FormBuilderInterface $builder, array $options)

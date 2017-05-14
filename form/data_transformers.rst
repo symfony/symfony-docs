@@ -165,17 +165,17 @@ to and from the issue number and the ``Issue`` object::
     namespace AppBundle\Form\DataTransformer;
 
     use AppBundle\Entity\Issue;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\Form\DataTransformerInterface;
     use Symfony\Component\Form\Exception\TransformationFailedException;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        private $manager;
+        private $em;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(EntityManagerInterface $em)
         {
-            $this->manager = $manager;
+            $this->em = $em;
         }
 
         /**
@@ -207,7 +207,7 @@ to and from the issue number and the ``Issue`` object::
                 return;
             }
 
-            $issue = $this->manager
+            $issue = $this->em
                 ->getRepository('AppBundle:Issue')
                 // query for the issue with this id
                 ->find($issueNumber)
@@ -246,29 +246,25 @@ that message with the ``invalid_message`` option (see below).
 Using the Transformer
 ~~~~~~~~~~~~~~~~~~~~~
 
-Next, you need to instantiate the ``IssueToNumberTransformer`` class from inside
-``TaskType`` and add it to the ``issue`` field. But to do that, you'll need an instance
-of the entity manager (because ``IssueToNumberTransformer`` needs this).
-
-No problem! Just add a ``__construct()`` function to ``TaskType`` and force this
-to be passed in by registering ``TaskType`` as a service::
+Next, you need to use the ``IssueToNumberTransformer`` object inside if ``TaskType``
+and add it to the ``issue`` field. No problem! Just add a ``__construct()`` method
+and type-hint the new class::
 
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     // ...
     class TaskType extends AbstractType
     {
-        private $manager;
+        private $transformer;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(IssueToNumberTransformer $transformer)
         {
-            $this->manager = $manager;
+            $this->transformer = $transformer;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -283,65 +279,20 @@ to be passed in by registering ``TaskType`` as a service::
             // ...
 
             $builder->get('issue')
-                ->addModelTransformer(new IssueToNumberTransformer($this->manager));
+                ->addModelTransformer($this->transformer);
         }
 
         // ...
     }
 
-Define the form type as a service in your configuration files.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/services.yml
-        services:
-            app.form.type.task:
-                class: AppBundle\Form\Type\TaskType
-                arguments: ["@doctrine.orm.entity_manager"]
-                tags: [form.type]
-
-    .. code-block:: xml
-
-        <!-- src/AppBundle/Resources/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.form.type.task" class="AppBundle\Form\Type\TaskType">
-                    <tag name="form.type" />
-                    <argument type="service" id="doctrine.orm.entity_manager"></argument>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // src/AppBundle/Resources/config/services.php
-        use AppBundle\Form\Type\TaskType;
-
-        $definition = new Definition(TaskType::class, array(
-            new Reference('doctrine.orm.entity_manager'),
-        ));
-        $container
-            ->setDefinition(
-                'app.form.type.task',
-                $definition
-            )
-            ->addTag('form.type')
-        ;
+That's it! As long as you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, Symfony will automatically
+know to pass your ``TaskType`` an instance of the ``IssueToNumberTransformer``.
 
 .. tip::
 
     For more information about defining form types as services, read
     :doc:`register your form type as a service </form/form_dependencies>`.
-
-.. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define form type services as ``public``.
-    Starting from Symfony 3.3, you can also define them as ``private``.
 
 Now, you can easily use your ``TaskType``::
 
@@ -392,17 +343,16 @@ First, create the custom field type class::
 
     class IssueSelectorType extends AbstractType
     {
-        private $manager;
+        private $transformer;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(IssueToNumberTransformer $transformer)
         {
-            $this->manager = $manager;
+            $this->transformer = $transformer;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $transformer = new IssueToNumberTransformer($this->manager);
-            $builder->addModelTransformer($transformer);
+            $builder->addModelTransformer($this->transformer);
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -421,52 +371,8 @@ First, create the custom field type class::
 Great! This will act and render like a text field (``getParent()``), but will automatically
 have the data transformer *and* a nice default value for the ``invalid_message`` option.
 
-Next, register your type as a service and tag it with ``form.type`` so that
-it's recognized as a custom field type:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.type.issue_selector:
-                class: AppBundle\Form\IssueSelectorType
-                arguments: ['@doctrine.orm.entity_manager']
-                tags: [form.type]
-
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.type.issue_selector"
-                    class="AppBundle\Form\IssueSelectorType">
-                    <argument type="service" id="doctrine.orm.entity_manager"/>
-                    <tag name="form.type" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Form\IssueSelectorType;
-        use Symfony\Component\DependencyInjection\Reference;
-        // ...
-
-        $container->register('app.type.issue_selector', IssueSelectorType::class)
-            ->addArgument(new Reference('doctrine.orm.entity_manager'))
-            ->addTag('form.type');
-
-Now, whenever you need to use your special ``issue_selector`` field type,
-it's quite easy::
+As long as you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, you can start using the form immediately::
 
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form\Type;
@@ -487,6 +393,11 @@ it's quite easy::
 
         // ...
     }
+
+.. tip::
+
+    If you're not using ``autowire`` and ``autoconfigure``, see
+    :doc:`</form/create_custom_field_type>` for how to configure your new ``IssueSelectorType``.
 
 .. _model-and-view-transformers:
 

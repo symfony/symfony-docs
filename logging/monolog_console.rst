@@ -113,7 +113,7 @@ information):
                     verbosity_levels:
                         VERBOSITY_NORMAL: NOTICE
                     channels: my_channel
-                    formatter: my_formatter
+                    formatter: Symfony\Bridge\Monolog\Formatter\ConsoleFormatter
 
     .. code-block:: xml
 
@@ -125,7 +125,7 @@ information):
             <monolog:config>
                 <monolog:handler name="console" type="console" formatter="my_formatter">
                     <monolog:verbosity-level verbosity-normal="NOTICE" />
-                    <monolog:channel>my_channel</monolog:channel>
+                    <monolog:channel>Symfony\Bridge\Monolog\Formatter\ConsoleFormatter</monolog:channel>
                 </monolog:handler>
             </monolog:config>
         </container>
@@ -133,6 +133,8 @@ information):
     .. code-block:: php
 
         // app/config/config.php
+        use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
+
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'console' => array(
@@ -141,7 +143,7 @@ information):
                         'VERBOSITY_NORMAL' => 'NOTICE',
                     ),
                     'channels' => 'my_channel',
-                    'formatter' => 'my_formatter',
+                    'formatter' => ConsoleFormatter::class,
                 ),
             ),
         ));
@@ -152,8 +154,7 @@ information):
 
         # app/config/services.yml
         services:
-            my_formatter:
-                class: Symfony\Bridge\Monolog\Formatter\ConsoleFormatter
+            Symfony\Bridge\Monolog\Formatter\ConsoleFormatter:
                 arguments:
                     - "[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n"
 
@@ -166,7 +167,7 @@ information):
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
              <services>
-                <service id="my_formatter" class="Symfony\Bridge\Monolog\Formatter\ConsoleFormatter">
+                <service id="Symfony\Bridge\Monolog\Formatter\ConsoleFormatter">
                     <argument>[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n</argument>
                 </service>
              </services>
@@ -179,7 +180,7 @@ information):
         use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
 
         $container
-            ->register('my_formatter', ConsoleFormatter::class)
+            ->autowire(ConsoleFormatter::class)
             ->addArgument('[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n')
         ;
 

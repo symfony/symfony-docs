@@ -109,22 +109,42 @@ and hidden with the service definition:
 
 .. note::
 
-    The percent sign inside a parameter or argument, as part of the string,
-    must be escaped with another percent sign:
+    If you use a string that starts with ``@`` or  has ``%`` anywhere in it, you
+    need to escape it by adding another ``@`` or ``%``:
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
+            # app/config/parameters.yml
+            parameters:
+                # This will be parsed as string '@securepass'
+                mailer_password: '@@securepass'
+
+                # Parsed as http://symfony.com/?foo=%s&amp;bar=%d
+                url_pattern: 'http://symfony.com/?foo=%%s&amp;bar=%%d'
 
         .. code-block:: xml
 
-            <argument>http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
+            <parameters>
+                <!-- the @ symbol does NOT need to be escaped in XML -->
+                <parameter key="mailer_password">@securepass</parameter>
+
+                <!-- But % does need to be escaped -->
+                <parameter key="url_pattern">http://symfony.com/?foo=%%s&amp;bar=%%d</parameter>
+            </parameters>
 
         .. code-block:: php
 
-            ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
+            // the @ symbol does NOT need to be escaped in XML
+            $container->setParameter('mailer_password', '@securepass');
+
+            // But % does need to be escaped
+            $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
+
+    .. code-block:: yaml
+
+
 
 Getting and Setting Container Parameters in PHP
 -----------------------------------------------

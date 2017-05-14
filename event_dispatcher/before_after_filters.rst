@@ -142,7 +142,7 @@ event listeners, you can learn more about them at :doc:`/event_dispatcher`::
                 }
             }
         }
-        
+
         public static function getSubscribedEvents()
         {
             return array(

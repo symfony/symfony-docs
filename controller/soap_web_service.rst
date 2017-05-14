@@ -50,53 +50,11 @@ In this case, the SOAP service will allow the client to call a method called
         }
     }
 
-Next, make sure that your new class is registered as a service. If you use
-:doc:`autowiring </service_container/autowiring>` (enabled by default in the Symfony
-Standard Edition), this is easy:
+Next, make sure that your new class is registered as a service. If you're using
+the :ref:`default services configuration <service-container-services-load-example>`,
+you don't need to do anything!
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            _defaults:
-                # ... be sure autowiring is enabled
-                autowire: true
-            # ...
-
-            # add Service/ to the list of directories to load services from
-            AppBundle\:
-                resource: '../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}'
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true" ... />
-                <!-- ... -->
-
-                <!-- add Service/ to the list of directories to load services from -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/{Service,Updates,Command,Form,EventSubscriber,Twig,Security}" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Service\HelloService;
-
-        $container->autowire(HelloService::class)
-            ->setPublic(false);
-
-Below is an example of a controller that is capable of handling a SOAP
+Finally, below is an example of a controller that is capable of handling a SOAP
 request. Because ``indexAction()`` is accessible via ``/soap``, the WSDL document
 can be retrieved via ``/soap?wsdl``::
 
