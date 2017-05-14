@@ -736,8 +736,8 @@ The available attributes are:
 * ``app.session``, a :class:``Symfony\\Component\\HttpFoundation\\Session\\Session`` object;
 * ``app.environment``, a string with the name of the execution environment;
 * ``app.debug``, a boolean telling whether the debug mode is enabled in the app;
-* ``app.token``, (a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
-  object representing the security token)
+* ``app.token``, a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
+  object representing the security token.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
