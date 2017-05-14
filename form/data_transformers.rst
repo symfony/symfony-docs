@@ -202,7 +202,7 @@ to and from the issue number and the ``Issue`` object::
             }
 
             $issue = $this->manager
-                ->getRepository('AppBundle:Issue')
+                ->getRepository(Issue::class)
                 // query for the issue with this id
                 ->find($issueNumber)
             ;
