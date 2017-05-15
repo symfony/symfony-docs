@@ -738,7 +738,7 @@ The available attributes are:
 * ``app.debug``, a boolean telling whether the debug mode is enabled in the app;
 * ``app.token`` (a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
   object representing the security token)
-* ``app.flashes()``, return flash messages from the session
+* ``app.flashes``, returns flash messages from the session
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
