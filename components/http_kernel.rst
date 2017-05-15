@@ -592,7 +592,7 @@ each event has their own event object:
 =====================  ================================  ===================================================================================
 Name                   ``KernelEvents`` Constant         Argument passed to the listener
 =====================  ================================  ===================================================================================
-kernel.request         ``KernelEvents::REQUEST``         :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    
+kernel.request         ``KernelEvents::REQUEST``         :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 kernel.controller      ``KernelEvents::CONTROLLER``      :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 kernel.view            ``KernelEvents::VIEW``            :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 kernel.response        ``KernelEvents::RESPONSE``        :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
@@ -700,6 +700,32 @@ look like this::
 
         // ...
     }
+
+.. _http-kernel-resource-locator:
+
+Locating Resources
+------------------
+
+The HttpKernel component is responsible of the bundle mechanism used in Symfony
+applications. The key feature of the bundles is that they allow to override any
+resource used by the application (config files, templates, controllers,
+translation files, etc.)
+
+This overriding mechanism works because resources are referenced not by their
+physical path but by their logical path. For example, the ``services.xml`` file
+stored in the ``Resources/config/`` directory of a bundle called AppBundle is
+referenced as ``@AppBundle/Resources/config/services.xml``. This logical path
+will work when the application overrides that file and even if you change the
+directory of AppBundle.
+
+The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
+which can be used to transform logical paths into physical paths::
+
+    use Symfony\Component\HttpKernel\HttpKernel;
+
+    // ...
+    $kernel = new HttpKernel($dispatcher, $resolver);
+    $path = $kernel->locateResource('@AppBundle/Resources/config/services.xml');
 
 Learn more
 ----------

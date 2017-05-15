@@ -463,6 +463,17 @@ API is being used. The following code, would work for *all* users::
         }
     }
 
+Resources
+---------
+
+If the bundle references any resources (config files, templates, translation
+files, etc.), don't use physical paths (e.g. ``__DIR__/config/services.xml``)
+but logical paths (e.g. ``@AppBundle/Resources/config/services.xml``).
+
+The logical paths are required beucase of the bundle overriding mechanism that
+lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
+for more details about transforming physical paths into logical paths.
+
 Learn more
 ----------
 
