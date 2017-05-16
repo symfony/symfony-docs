@@ -335,7 +335,7 @@ If you're using :ref:`autowire <services-autowire>` and
 
 .. tip::
 
-    If you're not using autowire and autoconfigure, see :doc:`</form/form_dependencies>`
+    If you're not using autowire and autoconfigure, see :doc:`/form/form_dependencies`
     for how to register your form type as a service.
 
 In a controller, create the form like normal::
