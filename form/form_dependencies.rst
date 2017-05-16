@@ -8,9 +8,9 @@ configuration from inside of your form class. To do this, you have 2 options:
 ----------------------------
 
 The simplest way to pass services or configuration to your form is via form *options*.
-Suppose you need to access the ``doctrine.orm.entity_manager`` service so that you
-can make a query. First, allow (in fact, require) a new ``entity_manager`` option
-to be passed to your form::
+Suppose you need to access the Doctrine entity manager so that you can make a
+query. First, allow (in fact, require) a new ``entity_manager`` option to be
+passed to your form::
 
     // src/AppBundle/Form/TaskType.php
     // ...
@@ -32,13 +32,17 @@ create your form::
 
     // src/AppBundle/Controller/DefaultController.php
     use AppBundle\Form\TaskType;
+    use Doctrine\ORM\EntityManagerInterface;
 
     // ...
-    public function newAction()
+    public function newAction(EntityManagerInterface $em)
     {
+        // or fetch the em via the container
+        // $em = $this->get('doctrine')->getManager();
+
         $task = ...;
         $form = $this->createForm(TaskType::class, $task, array(
-            'entity_manager' => $this->get('doctrine.orm.entity_manager')
+            'entity_manager' => $em,
         ));
 
         // ...

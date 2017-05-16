@@ -328,18 +328,9 @@ the same ``getAuthorEmail()`` logic you used above:
         }
     }
 
-To enable the security voter in the application, define a new service:
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-        app.post_voter:
-            class:      AppBundle\Security\PostVoter
-            arguments: ['@security.access.decision_manager']
-            public:     false
-            tags: [security.voter]
+Your application will :ref:`autoconfigure <services-autoconfigure>` your security
+voter and inject a ``AccessDecisionManagerInterface`` instance in it thanks to
+:doc:`autowiring </service_container/autowiring>`.
 
 Now, you can use the voter with the ``@Security`` annotation:
 
