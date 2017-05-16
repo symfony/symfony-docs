@@ -310,16 +310,16 @@ type-hints by running:
 
 This is just a small subset of the output:
 
-=============================================================== =======================================================================
+=============================================================== =====================================
 Service ID                                                      Class name
-=============================================================== =======================================================================
+=============================================================== =====================================
 ``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
 ``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
 ``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
 ``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
 ``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
 ``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
-=============================== =======================================================================
+=============================================================== =====================================
 
 Handling Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
