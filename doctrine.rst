@@ -551,7 +551,6 @@ a controller, this is pretty easy. Add the following method to the
     use Doctrine\ORM\EntityManagerInterface;
     use Doctrine\Common\Persistence\ManagerRegistry;
 
-    // ...
     public function createAction(EntityManagerInterface $em)
     {
         // or fetch the em via the container
@@ -585,17 +584,19 @@ a controller, this is pretty easy. Add the following method to the
 
 Take a look at the previous example in more detail:
 
-* **lines 10-13** In this section, you instantiate and work with the ``$product``
+.. _doctrine-entity-manager:
+
+* **line 10** The ``EntityManagerInterface`` type-hint tells Symfony to pass you Doctrine's
+  *entity manager* object, which is the most important object in Doctrine. It's
+  responsible for saving objects to, and fetching objects from, the database.
+
+* **lines 15-18** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 15** This line fetches Doctrine's *entity manager* object, which is
-  responsible for the process of persisting objects to, and fetching objects
-  from, the database.
-
-* **line 18** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 21** When the ``flush()`` method is called, Doctrine looks through
+* **line 24** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,

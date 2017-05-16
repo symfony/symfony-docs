@@ -71,8 +71,8 @@ Alternatively, you can define your form class as a service. This is a good idea 
 you want to re-use the form in several places - registering it as a service makes
 this easier.
 
-Suppose you need to access the ``EntityManager`` service so that you
-can make a query. First, add this as an argument to your form class::
+Suppose you need to access the :ref:`EntityManager <doctrine-entity-manager>` object
+so that you can make a query. First, add this as an argument to your form class::
 
     // src/AppBundle/Form/TaskType.php
 
@@ -93,8 +93,8 @@ can make a query. First, add this as an argument to your form class::
 
 If you're using :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`, then you don't need to do *anything*
-else: Symfony will automatically know to pass the entity manager service to your
-form type.
+else: Symfony will automatically know to pass the correct ``EntityManager`` object
+to your ``__construct()`` method.
 
 If you are **not using autowire and autoconfigure**, register your form as a service
 manually and tag it with ``form.type``:

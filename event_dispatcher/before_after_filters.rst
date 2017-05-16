@@ -160,7 +160,7 @@ you want.
 
 .. tip::
 
-    If your subscriber id *not* called on each request, double-check that
+    If your subscriber is *not* called on each request, double-check that
     you're :ref:`loading services <service-container-services-load-example>` from
     the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
     enabled. You can also manually add the ``kernel.event_subscriber`` tag.

@@ -268,7 +268,7 @@ Accessing Services and Config
 -----------------------------
 
 If you need to access :doc:`services </service_container>` from your form class,
-just a ``__construct()`` method like normal::
+add a ``__construct()`` method like normal::
 
     // src/AppBundle/Form/Type/GenderType.php
     namespace AppBundle\Form\Type;

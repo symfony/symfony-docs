@@ -142,10 +142,6 @@ and hidden with the service definition:
             // But % does need to be escaped
             $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
 
-    .. code-block:: yaml
-
-
-
 Getting and Setting Container Parameters in PHP
 -----------------------------------------------
 
