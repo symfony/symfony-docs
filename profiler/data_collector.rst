@@ -82,49 +82,14 @@ The getters are added to give the template access to the collected information.
 Enabling Custom Data Collectors
 -------------------------------
 
-To enable a data collector, define it as a regular service and tag it as
-``data_collector``:
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`
+with ``autoconfigure``, then Symfony will automatically see your new data collector!
+Your ``collect()`` method should be called next time your refresh.
 
-.. configuration-block::
+.. note::
 
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.request_collector:
-                class: AppBundle\DataCollector\RequestCollector
-                public: false
-                tags: [data_collector]
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <service id="app.request_collector"
-                    class="AppBundle\DataCollector\RequestCollector"
-                    public="false"
-                >
-                    <tag name="data_collector" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\DataCollector\RequestCollector;
-
-        $container
-            ->register('app.request_collector', RequestCollector::class)
-            ->setPublic(false)
-            ->addTag('data_collector')
-        ;
+    If you're not using ``autoconfigure``, you can also :ref:`manually wire your service <services-explicitly-configure-wire-services>`
+    and :doc:`tag </service_container/tags>` it with ``data_collector``.
 
 Adding Web Profiler Templates
 -----------------------------
@@ -242,8 +207,8 @@ The ``menu`` and ``panel`` blocks are the only required blocks to define the
 contents displayed in the web profiler panel associated with this data collector.
 All blocks have access to the ``collector`` object.
 
-Finally, to enable the data collector template, add a ``template`` attribute to
-the ``data_collector`` tag in your service configuration:
+Finally, to enable the data collector template, override your service configuration
+to specify a tag that contains the template:
 
 .. configuration-block::
 
@@ -251,13 +216,15 @@ the ``data_collector`` tag in your service configuration:
 
         # app/config/services.yml
         services:
-            app.request_collector:
-                class: AppBundle\DataCollector\RequestCollector
+            AppBundle\DataCollector\RequestCollector:
                 tags:
                     -
                         name:     data_collector
                         template: 'data_collector/template.html.twig'
+                        # must match the value returned by the getName() method
                         id:       'app.request_collector'
+                        # optional priority
+                        # priority: 300
                 public: false
 
     .. code-block:: xml
@@ -270,13 +237,11 @@ the ``data_collector`` tag in your service configuration:
                 http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
             <services>
-                <service id="app.request_collector"
-                    class="AppBundle\DataCollector\RequestCollector"
-                    public="false"
-                >
+                <service id="AppBundle\DataCollector\RequestCollector" public="false">
                     <tag name="data_collector"
                         template="data_collector/template.html.twig"
                         id="app.request_collector"
+                        <!-- priority="300" -->
                     />
                 </service>
             </services>
@@ -288,50 +253,15 @@ the ``data_collector`` tag in your service configuration:
         use AppBundle\DataCollector\RequestCollector;
 
         $container
-            ->register('app.request_collector', RequestCollector::class)
+            ->autowire(RequestCollector::class)
             ->setPublic(false)
             ->addTag('data_collector', array(
                 'template' => 'data_collector/template.html.twig',
                 'id'       => 'app.request_collector',
+                // 'priority' => 300,
             ))
         ;
-
-.. caution::
-
-    The ``id`` attribute must match the value returned by the ``getName()`` method.
 
 The position of each panel in the toolbar is determined by the priority defined
 by each collector. Most built-in collectors use ``255`` as their priority. If you
-want your collector to be displayed before them, use a higher value:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.request_collector:
-                class: AppBundle\DataCollector\RequestCollector
-                tags:
-                    - { name: data_collector, template: '...', id: '...', priority: 300 }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <service id="app.request_collector" class="AppBundle\DataCollector\RequestCollector">
-            <tag name="data_collector" template="..." id="..." priority="300" />
-        </service>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\DataCollector\RequestCollector;
-
-        $container
-            ->register('app.request_collector', RequestCollector::class)
-            ->addTag('data_collector', array(
-                'template' => '...',
-                'id'       => '...',
-                'priority' => 300,
-            ))
-        ;
+want your collector to be displayed before them, use a higher value (like 300).

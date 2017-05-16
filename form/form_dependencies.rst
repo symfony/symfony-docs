@@ -71,19 +71,19 @@ Alternatively, you can define your form class as a service. This is a good idea 
 you want to re-use the form in several places - registering it as a service makes
 this easier.
 
-Suppose you need to access the ``doctrine.orm.entity_manager`` service so that you
-can make a query. First, add this as an argument to your form class::
+Suppose you need to access the :ref:`EntityManager <doctrine-entity-manager>` object
+so that you can make a query. First, add this as an argument to your form class::
 
     // src/AppBundle/Form/TaskType.php
 
-    use Doctrine\ORM\EntityManager;
+    use Doctrine\ORM\EntityManagerInterface;
     // ...
 
     class TaskType extends AbstractType
     {
         private $em;
 
-        public function __construct(EntityManager $em)
+        public function __construct(EntityManagerInterface $em)
         {
             $this->em = $em;
         }
@@ -91,7 +91,13 @@ can make a query. First, add this as an argument to your form class::
         // ...
     }
 
-Next, register this as a service and tag it with ``form.type``:
+If you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, then you don't need to do *anything*
+else: Symfony will automatically know to pass the correct ``EntityManager`` object
+to your ``__construct()`` method.
+
+If you are **not using autowire and autoconfigure**, register your form as a service
+manually and tag it with ``form.type``:
 
 .. configuration-block::
 
@@ -99,8 +105,7 @@ Next, register this as a service and tag it with ``form.type``:
 
         # src/AppBundle/Resources/config/services.yml
         services:
-            app.form.type.task:
-                class: AppBundle\Form\TaskType
+            AppBundle\Form\TaskType:
                 arguments: ['@doctrine.orm.entity_manager']
                 tags: [form.type]
 
@@ -113,7 +118,7 @@ Next, register this as a service and tag it with ``form.type``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.form.type.task" class="AppBundle\Form\TaskType">
+                <service id="AppBundle\Form\TaskType">
                     <argument type="service" id="doctrine.orm.entity_manager"/>
                     <tag name="form.type" />
                 </service>
@@ -126,7 +131,7 @@ Next, register this as a service and tag it with ``form.type``:
         use AppBundle\Form\TaskType;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.form.type.task', TaskType::class)
+        $container->register(TaskType::class)
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addTag('form.type')
         ;

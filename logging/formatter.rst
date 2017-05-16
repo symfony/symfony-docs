@@ -7,24 +7,30 @@ it. All Monolog handlers use an instance of
 easily. Your formatter must implement
 ``Monolog\Formatter\FormatterInterface``.
 
+For example, to use the built-in ``JsonFormatter``, register it as a service then
+configure your handler to use it:
+
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
-            my_formatter:
-                class: Monolog\Formatter\JsonFormatter
+            # ...
+
+            Monolog\Formatter\JsonFormatter: ~
+
+        # app/config/config_prod.yml (and/or config_dev.yml)
         monolog:
             handlers:
                 file:
                     type: stream
                     level: debug
-                    formatter: my_formatter
+                    formatter: Monolog\Formatter\JsonFormatter
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,15 +41,16 @@ easily. Your formatter must implement
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="my_formatter" class="Monolog\Formatter\JsonFormatter" />
+                <service id="Monolog\Formatter\JsonFormatter" />
             </services>
 
+            <!-- app/config/config_prod.xml (and/or config_dev.xml) -->
             <monolog:config>
                 <monolog:handler
                     name="file"
                     type="stream"
                     level="debug"
-                    formatter="my_formatter"
+                    formatter="Monolog\Formatter\JsonFormatter"
                 />
             </monolog:config>
         </container>
@@ -53,14 +60,16 @@ easily. Your formatter must implement
         // app/config/config.php
         use Monolog\Formatter\JsonFormatter;
 
-        $container->register('my_formatter', JsonFormatter::class);
+        // app/config/services.php
+        $container->register(JsonFormatter::class);
 
+        // app/config/config_prod.php (or config_dev.php)
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'file' => array(
                     'type'      => 'stream',
                     'level'     => 'debug',
-                    'formatter' => 'my_formatter',
+                    'formatter' => JsonFormatter::class',
                 ),
             ),
         ));

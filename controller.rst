@@ -288,7 +288,7 @@ controller's service config:
             AppBundle\Controller\LuckyController:
                 public: true
                 tags:
-                    # add multiple tags to controller multiple args
+                    # add multiple tags to control multiple args
                     - name: controller.service_arguments
                       action: numberAction
                       argument: logger
@@ -338,13 +338,18 @@ in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
+.. _controller-service-arguments-tag:
+
 .. note::
     If this isn't working, make sure your controller is registered as a service,
     is :ref:`autoconfigured <services-autoconfigure>` and extends either
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. Or,
-    you can tag your service manually with ``controller.service_arguments``. All
-    of this is done for you in a fresh Symfony install.
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. If
+    you use the :ref:`services.yml configuration from the Symfony Standard Edition <service-container-services-load-example>`,
+    then your controllers are already registered as services and autoconfigured.
+
+    If you're not using the default configuration, you can tag your service manually
+    with ``controller.service_arguments``.
 
 .. _accessing-other-services:
 .. _controller-access-services-directly:
