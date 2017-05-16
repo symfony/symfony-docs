@@ -139,9 +139,9 @@ class in the constructor of the Twig extension:
 
 And that's it!
 
-Your application will :ref:`autoconfigure <services-autoconfigure>` your twig
-extension and inject a ``Markdown`` instance in it thanks to
-:doc:`autowiring </service_container/autowiring>`.
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about your new service and tag it to
+be used as a Twig extension.
 
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/
