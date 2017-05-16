@@ -63,10 +63,10 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
             # ...
 
             app.decorating_mailer:
-              class:     AppBundle\DecoratingMailer
-              decorates: app.mailer
-              arguments: ['@app.decorating_mailer.inner']
-              public:    false
+                class:     AppBundle\DecoratingMailer
+                decorates: app.mailer
+                arguments: ['@app.decorating_mailer.inner']
+                public:    false
 
     .. code-block:: xml
 
@@ -130,7 +130,7 @@ convention, the old ``app.mailer`` service is renamed to
         .. code-block:: yaml
 
             services:
-                app.mailer:
+                app.decorating_mailer:
                     # ...
                     decoration_inner_name: app.decorating_mailer.wooz
                     arguments: ['@app.decorating_mailer.wooz']
@@ -146,7 +146,11 @@ convention, the old ``app.mailer`` service is renamed to
                     <!-- ... -->
 
                     <service
+                        id="app.decorating_mailer"
+                        class="AppBundle\DecoratingMailer"
+                        decorates="app.mailer"
                         decoration-inner-name="app.decorating_mailer.wooz"
+                        public="false"
                     >
                         <argument type="service" id="app.decorating_mailer.wooz" />
                     </service>
@@ -160,7 +164,7 @@ convention, the old ``app.mailer`` service is renamed to
             use Symfony\Component\DependencyInjection\Reference;
 
             $container->register('app.decorating_mailer', DecoratingMailer::class)
-                ->setDecoratedService('foo', 'app.decorating_mailer.wooz')
+                ->setDecoratedService('app.mailer', 'app.decorating_mailer.wooz')
                 ->addArgument(new Reference('app.decorating_mailer.wooz'))
                 // ...
             ;
