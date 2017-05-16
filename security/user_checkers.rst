@@ -58,38 +58,9 @@ are not met, an exception should be thrown which extends the
 Enabling the Custom User Checker
 --------------------------------
 
-All that's left to be done is creating a service definition and configuring
-this in the firewall configuration. Configuring the service is done like any
-other service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.user_checker:
-                class: AppBundle\Security\UserChecker
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.user_checker" class="AppBundle\Security\UserChecker" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\UserChecker;
-
-        $container->register('app.user_checker', UserChecker::class);
+Next, make sure your user checker is registered as a service. If you're using the
+:ref:`default services.yml configuration <service-container-services-load-example>`,
+the service is registered automatically.
 
 All that's left to do is add the checker to the desired firewall where the value
 is the service id of your user checker:
@@ -103,9 +74,9 @@ is the service id of your user checker:
         # ...
         security:
             firewalls:
-                secured_area:
+                main:
                     pattern: ^/
-                    user_checker: app.user_checker
+                    user_checker: AppBundle\Security\UserChecker
                     # ...
 
     .. code-block:: xml
@@ -120,8 +91,8 @@ is the service id of your user checker:
 
             <config>
                 <!-- ... -->
-                <firewall name="secured_area" pattern="^/">
-                    <user-checker>app.user_checker</user-checker>
+                <firewall name="main" pattern="^/">
+                    <user-checker>AppBundle\Security\UserChecker</user-checker>
                     <!-- ... -->
                 </firewall>
             </config>
@@ -132,78 +103,19 @@ is the service id of your user checker:
         // app/config/security.php
 
         // ...
+        use AppBundle\Security\UserChecker;
+
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'secured_area' => array(
+                'main' => array(
                     'pattern' => '^/',
-                    'user_checker' => 'app.user_checker',
+                    'user_checker' => UserChecker::class,
                     // ...
                 ),
             ),
         ));
 
+.. tip::
 
-Additional Configurations
--------------------------
-
-It's possible to have a different user checker per firewall.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-
-        # ...
-        security:
-            firewalls:
-                admin:
-                    pattern: ^/admin
-                    user_checker: app.admin_user_checker
-                    # ...
-                secured_area:
-                    pattern: ^/
-                    user_checker: app.user_checker
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <firewall name="admin" pattern="^/admin">
-                    <user-checker>app.admin_user_checker</user-checker>
-                    <!-- ... -->
-                </firewall>
-                <firewall name="secured_area" pattern="^/">
-                    <user-checker>app.user_checker</user-checker>
-                    <!-- ... -->
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-
-        // ...
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'admin' => array(
-                    'pattern' => '^/admin',
-                    'user_checkers' => 'app.admin_user_checker'
-                    // ...
-                ),
-                'secured_area' => array(
-                    'pattern' => '^/',
-                    'user_checker' => 'app.user_checker',
-                    // ...
-                ),
-            ),
-        ));
+    It's also possible to have a different user checker for each firewall. Use
+    the ``user_checker`` option under each firewall to choose the one you want.
