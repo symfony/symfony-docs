@@ -292,7 +292,7 @@ and use it later::
 
 That's it! The container will *automatically* know to pass the ``logger`` service
 when instantiating the ``MessageGenerator``. How does it know to do this?
-:ref:`Autowiring </services-autowire>`. The key is the ``LoggerInterface``
+:ref:`Autowiring <services-autowire>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 ``services.yml``. When you type-hint an argument, the container will automatically
 find the matching service. If it can't, you'll see a clear exception with a helpful
