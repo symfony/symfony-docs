@@ -89,7 +89,7 @@ Your ``collect()`` method should be called next time your refresh.
 .. note::
 
     If you're not using ``autoconfigure``, you can also :ref:`manually wire your service <services-explicitly-configure-wire-services>`
-    and :doc:`tag </service_container/tags` it with ``data_collector``.
+    and :doc:`tag </service_container/tags>` it with ``data_collector``.
 
 Adding Web Profiler Templates
 -----------------------------
