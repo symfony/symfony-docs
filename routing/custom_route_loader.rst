@@ -145,8 +145,9 @@ Now define a service for the ``ExtraLoader``:
 
         # app/config/services.yml
         services:
-            app.routing_loader:
-                class: AppBundle\Routing\ExtraLoader
+            # ...
+
+            AppBundle\Routing\ExtraLoader:
                 tags: [routing.loader]
 
     .. code-block:: xml
@@ -157,7 +158,9 @@ Now define a service for the ``ExtraLoader``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.routing_loader" class="AppBundle\Routing\ExtraLoader">
+                <!-- ... -->
+
+                <service id="AppBundle\Routing\ExtraLoader">
                     <tag name="routing.loader" />
                 </service>
             </services>
@@ -168,7 +171,7 @@ Now define a service for the ``ExtraLoader``:
         use AppBundle\Routing\ExtraLoader;
 
         $container
-            ->register('app.routing_loader', ExtraLoader::class)
+            ->autowire(ExtraLoader::class)
             ->addTag('routing.loader')
         ;
 
