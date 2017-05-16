@@ -397,7 +397,7 @@ As long as you're using :ref:`autowire <services-autowire>` and
 .. tip::
 
     If you're not using ``autowire`` and ``autoconfigure``, see
-    :doc:`</form/create_custom_field_type>` for how to configure your new ``IssueSelectorType``.
+    :doc:`/form/create_custom_field_type` for how to configure your new ``IssueSelectorType``.
 
 .. _model-and-view-transformers:
 
