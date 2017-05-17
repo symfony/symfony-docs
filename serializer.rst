@@ -90,9 +90,11 @@ Adding Normalizers and Encoders
 -------------------------------
 
 Once enabled, the ``serializer`` service will be available in the container
-and will be loaded with two :ref:`encoders <component-serializer-encoders>`
-(:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` and
-:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`) and the
+and will be loaded with four :ref:`encoders <component-serializer-encoders>`
+(:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`,
+:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`,
+:class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`, and
+:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`) and the
 :ref:`ObjectNormalizer normalizer <component-serializer-normalizers>`.
 
 You can load normalizers and/or encoders by tagging them as
@@ -178,7 +180,7 @@ to your class and choose which groups to use when serializing::
         $someObject,
         'json', array('groups' => array('group1'))
     );
-    
+
 In addition to the ``@Groups`` annotation, the Serializer component also
 supports Yaml or XML files. These files are automatically loaded when being
 stored in one of the following locations:
