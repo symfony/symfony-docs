@@ -14,9 +14,9 @@ Before submitting a bug:
 * Double-check the official :doc:`documentation </index>` to see if you're not misusing the
   framework;
 
-* Ask for assistance on `Stack Overflow`_ on the #symfony `IRC channel`_, or on
-  the #support channel of `the Symfony Slack`_ if you're not sure if your issue
-  is really a bug.
+* Ask for assistance on `Stack Overflow`_, on the #support channel of
+  `the Symfony Slack`_, or on the #symfony `IRC channel`_ if you're not sure if
+  your issue is really a bug.
 
 If your problem definitely looks like a bug, report it using the official bug
 `tracker`_ and follow some basic rules:
@@ -33,11 +33,11 @@ If your problem definitely looks like a bug, report it using the official bug
 * Give as much detail as possible about your environment (OS, PHP version,
   Symfony version, enabled extensions, ...);
 
-* If you want to provide a stack trace you got on an html page, be sure to
+* If you want to provide a stack trace you got on an HTML page, be sure to
   provide the plain text version, which should appear at the bottom of the
   page. *Do not* provide it as a screenshot, since search engines will not be
   able to index the text inside them. Same goes for errors encountered in a
-  terminal, do not take a screenshot, but learn how to copy/paste from it. If
+  terminal, do not take a screenshot, but copy/paste the contents. If
   the stack trace is long, consider enclosing it in a `<details> html tag`_.
   **Be wary that stack traces may contain sensitive information, and if it is
   the case, be sure to redact them prior to posting your stack trace.**
