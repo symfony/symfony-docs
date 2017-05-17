@@ -211,7 +211,7 @@ using autowiring:
             AppBundle\Rot13Transformer: ~
 
             # the ``AppBundle\Rot13Transformer`` service will be injected when
-            # a ``AppBundle\TransformerInterface`` type-hint is detected
+            # an ``AppBundle\TransformerInterface`` type-hint is detected
             AppBundle\TransformerInterface: '@AppBundle\Rot13Transformer'
 
             AppBundle\TwitterClient:
