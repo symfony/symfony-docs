@@ -38,7 +38,7 @@ If your problem definitely looks like a bug, report it using the official bug
   page. *Do not* provide it as a screenshot, since search engines will not be
   able to index the text inside them. Same goes for errors encountered in a
   terminal, do not take a screenshot, but copy/paste the contents. If
-  the stack trace is long, consider enclosing it in a `<details> html tag`_.
+  the stack trace is long, consider enclosing it in a `<details> HTML tag`_.
   **Be wary that stack traces may contain sensitive information, and if it is
   the case, be sure to redact them prior to posting your stack trace.**
 
@@ -49,4 +49,4 @@ If your problem definitely looks like a bug, report it using the official bug
 .. _the Symfony Slack: https://symfony.com/slack-invite
 .. _tracker: https://github.com/symfony/symfony/issues
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard/
-.. _<details> html tag: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+.. _<details> HTML tag: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
