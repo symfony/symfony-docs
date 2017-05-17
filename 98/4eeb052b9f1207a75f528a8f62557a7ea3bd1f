@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2017-05-12T11:20:26Z
+
+I would like to reorder this, first would make the `ExceptionListenerPass`, then register it :) Thanks @ndench
+
+---------------------------------------------------------------------------
+
+by ndench at 2017-05-12T21:02:24Z
+
+@yceruto yeah I thought about ordering it that way, it makes more sense to implement as well because you get autocompletion from your IDE, I only went this way to be consistent with how it was before. I'm happy to reorder though, if we're not worried about keeping the same order as before?
+
+Also, do you know why platformsh is failing? I get a 404 from the link.
+
+---------------------------------------------------------------------------
+
+by ndench at 2017-05-12T21:16:48Z
+
+@xabbuh I've made the changes you suggested, thanks for the review :smile:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-05-13T05:38:30Z
+
+Reordering indeed was a good move. :)
+
+---------------------------------------------------------------------------
+
+by ndench at 2017-05-13T05:54:38Z
+
+Ok I've done the reordering, it does seem more intuitive.
