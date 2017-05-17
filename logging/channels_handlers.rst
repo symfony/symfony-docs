@@ -56,8 +56,8 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/monolog
-                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
             <monolog:config>
                 <monolog:handler name="security" type="stream" path="%kernel.logs_dir%/security.log">
                     <monolog:channels>
@@ -152,8 +152,8 @@ need to tag your services:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/monolog
-                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
             <monolog:config>
                 <monolog:channel>foo</monolog:channel>
                 <monolog:channel>bar</monolog:channel>

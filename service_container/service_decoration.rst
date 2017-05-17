@@ -25,16 +25,14 @@ the original service is lost:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
+            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+            <services>
                 <service id="app.mailer" class="AppBundle\Mailer" />
 
                 <!-- this replaces the old app.mailer definition with the new
                      one, the old definition is lost -->
                 <service id="app.mailer" class="AppBundle\DecoratingMailer" />
-
             </services>
         </container>
 
@@ -73,8 +71,8 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
                 <!-- ... -->
 
@@ -140,8 +138,8 @@ convention, the old ``app.mailer`` service is renamed to
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
                 <services>
                     <!-- ... -->
 

@@ -59,15 +59,17 @@ The following configuration code shows how you can configure two entity managers
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/doctrine"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-            <config>
-                <dbal default-connection="default">
-                    <connection name="default"
+            <doctrine:config>
+                <doctrine:dbal default-connection="default">
+                    <doctrine:connection name="default"
                         driver="pdo_mysql"
                         host="%database_host%"
                         port="%database_port%"
@@ -77,7 +79,7 @@ The following configuration code shows how you can configure two entity managers
                         charset="UTF8"
                     />
 
-                    <connection name="customer"
+                    <doctrine:connection name="customer"
                         driver="pdo_mysql"
                         host="%database_host2%"
                         port="%database_port2%"
@@ -86,20 +88,20 @@ The following configuration code shows how you can configure two entity managers
                         password="%database_password2%"
                         charset="UTF8"
                     />
-                </dbal>
+                </doctrine:dbal>
 
-                <orm default-entity-manager="default">
-                    <entity-manager name="default" connection="default">
-                        <mapping name="AppBundle" />
-                        <mapping name="AcmeStoreBundle" />
-                    </entity-manager>
+                <doctrine:orm default-entity-manager="default">
+                    <doctrine:entity-manager name="default" connection="default">
+                        <doctrine:mapping name="AppBundle" />
+                        <doctrine:mapping name="AcmeStoreBundle" />
+                    </doctrine:entity-manager>
 
-                    <entity-manager name="customer" connection="customer">
-                        <mapping name="AcmeCustomerBundle" />
-                    </entity-manager>
-                </orm>
-            </config>
-        </srv:container>
+                    <doctrine:entity-manager name="customer" connection="customer">
+                        <doctrine:mapping name="AcmeCustomerBundle" />
+                    </doctrine:entity-manager>
+                </doctrine:orm>
+            </doctrine:config>
+        </container>
 
     .. code-block:: php
 
@@ -227,4 +229,3 @@ The same applies to repository calls::
             ;
         }
     }
-

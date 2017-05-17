@@ -40,8 +40,7 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
@@ -128,12 +127,19 @@ won't use it directly:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.profiler.matcher.super_admin"
-                class="AppBundle\Profiler\SuperAdminMatcher" public="false">
-                <argument type="service" id="security.authorization_checker" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.profiler.matcher.super_admin"
+                    class="AppBundle\Profiler\SuperAdminMatcher" public="false">
+                    <argument type="service" id="security.authorization_checker" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -173,8 +179,7 @@ profiler to use this service as the matcher:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->

@@ -274,13 +274,13 @@ Then, define a service for this class:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
             <service id="app.brochure_uploader" class="AppBundle\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
+
         </container>
 
     .. code-block:: php
@@ -394,8 +394,7 @@ Now, register this class as a Doctrine listener:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
             <service id="app.doctrine_brochure_listener"
@@ -406,6 +405,7 @@ Now, register this class as a Doctrine listener:
                 <tag name="doctrine.event_listener" event="prePersist"/>
                 <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>
+
         </container>
 
     .. code-block:: php
