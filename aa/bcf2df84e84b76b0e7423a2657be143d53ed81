@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by iltar at 2016-10-16T14:45:55Z
+
+In the note below it's referencing to Controller as a Service. When using Controller as a Service, you simply refer to the service id: `app.controller.foo:__invoke` would be `app.controller.foo`.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2016-10-17T09:06:20Z
+
+@iltar The note redirects to a dedicated section which already document that https://github.com/symfony/symfony-docs/blob/master/controller/service.rst#referring-to-the-service
