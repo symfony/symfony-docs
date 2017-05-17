@@ -398,7 +398,7 @@ use for translation::
 
     Starting from Symfony 3.2, the third argument of ``transChoice()`` is
     optional when the only placeholder in use is ``%count%``. In previous
-    Symfony versions you needed to define it always::
+    Symfony versions you needed to always define it::
 
         $translator->transChoice(
             '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
