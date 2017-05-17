@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-12-20T10:22:03Z
+
+Looks great!
+
+Beware that returning null from `GuardAuthenticatorInterface::getCredentials()` will try other guard authenticators before returning a response [in case of multiple guards authenticators](http://symfony.com/doc/current/security/multiple_guard_authenticators.html#multiple-authenticators-with-shared-entry-point). Thus, authentication is skipped, but only for this authenticator.
+
+---------------------------------------------------------------------------
+
+by a-ast at 2016-12-20T10:33:56Z
+
+You are right @ogizanagi, but it is always a big question: either to put all details to a picture or keep it simpler.
