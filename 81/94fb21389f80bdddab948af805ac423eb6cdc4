@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by thtroyer at 2016-10-31T00:16:56Z
+
+Thanks for the feedback.  I wasn't sure which solution would match Symfony's style better (exception vs empty variables) and had just picked one.
+
+I've adjusted the solution and comments.
+
+---------------------------------------------------------------------------
+
+by thtroyer at 2016-11-09T00:15:20Z
+
+Thanks for the feedback @ogizanagi .  It didn't occur to me that multiple authenticators could be set up, but that makes sense.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-11T08:38:29Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-11-19T14:50:13Z
+
+Status: needs work
