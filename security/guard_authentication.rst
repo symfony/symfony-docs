@@ -186,6 +186,10 @@ This requires you to implement six methods::
         {
             $apiKey = $credentials['token'];
 
+            if (null === $apiKey) {
+                return;
+            }
+
             // if null, authentication will fail
             // if a User object, checkCredentials() is called
             return $userProvider->loadUserByUsername($apiKey);
