@@ -75,6 +75,14 @@ provider available in the Security component:
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
 
+.. tip::
+
+    If you're using a :doc:`Guard Authenticator </security/guard_authentication>`,
+    you'll need to validate the CSRF token manually inside of that class. See
+    :ref:`guard-csrf-protection` for details.
+
+.. _csrf-login-template:
+
 Rendering the CSRF field
 ------------------------
 
