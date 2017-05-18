@@ -49,12 +49,19 @@ parameters key:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="tokens" type="collection">
-                <parameter key="client1">pass1</parameter>
-                <parameter key="client2">pass2</parameter>
-            </parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="tokens" type="collection">
+                    <parameter key="client1">pass1</parameter>
+                    <parameter key="client2">pass2</parameter>
+                </parameter>
+            </parameters>
+        </container>
 
     .. code-block:: php
 
@@ -164,10 +171,19 @@ your listener to be called just before any controller is executed.
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
-            <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
+                    <argument>%tokens%</argument>
+                    <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -260,11 +276,20 @@ event:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
-            <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
+                    <argument>%tokens%</argument>
+                    <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+                    <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
