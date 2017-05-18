@@ -165,14 +165,15 @@ This requires you to implement six methods::
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         /**
-         * Called on every request. Return whatever credentials you want,
-         * or null to stop authentication.
+         * Called on every request. Return whatever credentials you want to
+         * be passed to getUser(). Returning null will cause this authenticator
+         * to be skipped.
          */
         public function getCredentials(Request $request)
         {
             if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-                // no token? Return null and no other methods will be called
-                return;
+                // No token?
+                $token = null;
             }
 
             // What you return here will be passed to getUser() as $credentials
@@ -184,6 +185,10 @@ This requires you to implement six methods::
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
             $apiKey = $credentials['token'];
+
+            if (null === $apiKey) {
+                return;
+            }
 
             // if null, authentication will fail
             // if a User object, checkCredentials() is called
@@ -425,6 +430,11 @@ Each authenticator needs the following methods:
     class, you have to implement this method. It will be called
     after a successful authentication to create and return the token
     for the user, who was supplied as the first argument.
+
+The picture below shows how Symfony calls Guard Authenticator methods:
+
+.. image:: /_images/security/authentication-guard-methods.png
+   :align: center
 
 .. _guard-customize-error:
 

@@ -39,7 +39,7 @@ with ``console.command``:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd">
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.command.my_command"
@@ -47,6 +47,7 @@ with ``console.command``:
                     <tag name="console.command" />
                 </service>
             </services>
+
         </container>
 
     .. code-block:: php
@@ -89,7 +90,7 @@ store the default value in some ``%command.default_name%`` parameter::
         public function __construct($defaultName)
         {
             $this->defaultName = $defaultName;
-            
+
             parent::__construct();
         }
 
@@ -145,7 +146,7 @@ inject the ``command.default_name`` parameter:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd">
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="command.default_name">Javier</parameter>
@@ -158,6 +159,7 @@ inject the ``command.default_name`` parameter:
                     <tag name="console.command" />
                 </service>
             </services>
+
         </container>
 
     .. code-block:: php

@@ -41,7 +41,6 @@ will override the defaults.
 
         <!-- app/config/parameters.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
-
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
@@ -50,6 +49,7 @@ will override the defaults.
                 <parameter key="router.request_context.scheme">https</parameter>
                 <parameter key="router.request_context.base_url">my/path</parameter>
             </parameters>
+
         </container>
 
     .. code-block:: php

@@ -69,11 +69,22 @@ accomplished easily and transparently:
 
     .. code-block:: xml
 
-        <imports>
-            <import resource="config.xml" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="config.xml" />
+            </imports>
+
+            <!-- ... -->
+
+        </container>
 
     .. code-block:: php
 
@@ -104,11 +115,22 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
-        <imports>
-            <import resource="config.xml" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/webprofiler
+                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
 
-        <webprofiler:config toolbar="true" />
+            <imports>
+                <import resource="config.xml" />
+            </imports>
+
+            <webprofiler:config toolbar="true" />
+
+        </container>
 
     .. code-block:: php
 
@@ -201,7 +223,18 @@ this code and changing the environment string.
 
         .. code-block:: xml
 
-            <doctrine:dbal logging="%kernel.debug%" />
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/doctrine
+                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:dbal logging="%kernel.debug%" />
+
+            </container>
 
         .. code-block:: php
 
@@ -279,13 +312,24 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: xml
 
         <!-- app/config/config_benchmark.xml -->
-        <imports>
-            <import resource="config_prod.xml" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <framework:config>
-            <framework:profiler only-exceptions="false" />
-        </framework:config>
+            <imports>
+                <import resource="config_prod.xml" />
+            </imports>
+
+            <framework:config>
+                <framework:profiler only-exceptions="false" />
+            </framework:config>
+
+        </container>
 
     .. code-block:: php
 

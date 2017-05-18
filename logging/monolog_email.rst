@@ -47,11 +47,12 @@ it is broken down.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
-                <!-- 
+                <!--
                 500 errors are logged at the critical level,
                 to also log 400 level errors (but not 404's):
                 action-level="error"
@@ -68,7 +69,7 @@ it is broken down.
                     name="deduplicated"
                     type="deduplication"
                     handler="swift"
-                >
+                />
                 <monolog:handler
                     name="swift"
                     type="swift_mailer"
@@ -145,7 +146,7 @@ notifications to a manageable level, specially in critical failure scenarios.
 
 The messages are then passed to the ``swift`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
-straightforward, the to and from addresses, the formatter, the content type 
+straightforward, the to and from addresses, the formatter, the content type
 and the subject.
 
 You can combine these handlers with other handlers so that the errors still
@@ -187,8 +188,9 @@ get logged on the server as well as the emails being sent:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
                 <monolog:handler
