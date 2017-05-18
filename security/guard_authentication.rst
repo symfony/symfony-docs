@@ -241,32 +241,9 @@ Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods
 Step 2) Configure the Authenticator
 -----------------------------------
 
-To finish this, register the class as a service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.token_authenticator:
-                class: AppBundle\Security\TokenAuthenticator
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <services>
-            <service id="app.token_authenticator" class="AppBundle\Security\TokenAuthenticator" />
-        </services>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\TokenAuthenticator;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('app.token_authenticator', TokenAuthenticator::class);
+To finish this, make sure your authenticator is registered as a service. If you're
+using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that happens automatically.
 
 Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
 
@@ -287,7 +264,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
                     guard:
                         authenticators:
-                            - app.token_authenticator
+                            - AppBundle\Security\TokenAuthenticator
 
                     # if you want, disable storing the user in the session
                     # stateless: true
@@ -314,7 +291,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                     <logout />
 
                     <guard>
-                        <authenticator>app.token_authenticator</authenticator>
+                        <authenticator>AppBundle\Security\TokenAuthenticator</authenticator>
                     </guard>
 
                     <!-- ... -->
@@ -327,6 +304,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
         // app/config/security.php
 
         // ..
+        use AppBundle\Security\TokenAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -336,7 +314,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                     'logout'         => true,
                     'guard'          => array(
                         'authenticators'  => array(
-                            'app.token_authenticator'
+                            TokenAuthenticator::class
                         ),
                     ),
                     // ...
@@ -474,6 +452,58 @@ egg to return a custom message if someone tries this:
     curl -H "X-AUTH-TOKEN: ILuvAPIs" http://localhost:8000/
     # {"message":"ILuvAPIs is not a real API key: it's just a silly phrase"}
 
+Building a Login Form
+---------------------
+
+If you're building a login form, use the :class:`Symfony\\Component\\Security\\Guard\\Authenticator\\AbstractFormLoginAuthenticator`
+as your base class - it implements a few methods for you. Then, fill in the other
+methods just like with the ``TokenAuthenticator``. Outside of Guard, you are still
+responsible for creating a route, controller and template for your login form.
+
+.. _guard-csrf-protection:
+
+Adding CSRF Protection
+----------------------
+
+If you're using a Guard authenticator to build a login form and want to add CSRF
+protection, no problem!
+
+First, :ref:`add the _csrf_token to your login template <csrf-login-template>`.
+
+Then, type-hint ``CsrfTokenManagerInterface`` in your ``__construct()`` method
+(or manually configure the ``security.csrf.token_manager`` service to be passed)
+and add the following logic::
+
+    // src/AppBundle/Security/ExampleFormAuthenticator.php
+    // ...
+
+    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+    use Symfony\Component\Security\Csrf\CsrfToken;
+    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenExceptionl
+
+    class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator
+    {
+        private $csrfTokenManager;
+
+        public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+        {
+            $this->csrfTokenManager = $csrfTokenManager;
+        }
+
+        public function getCredentials(Request $request)
+        {
+            $token = $request->request->get('_csrf_token');
+            
+            if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
+                throw new InvalidCsrfTokenException('Invalid CSRF token.');
+            }
+            
+            // ... all your normal logic
+        }
+
+        // ...
+    }
+
 Frequently Asked Questions
 --------------------------
 
@@ -481,89 +511,7 @@ Frequently Asked Questions
     Yes! But when you do, you'll need choose just *one* authenticator to be your
     "entry_point". This means you'll need to choose *which* authenticator's ``start()``
     method should be called when an anonymous user tries to access a protected resource.
-    For example, suppose you have an ``app.form_login_authenticator`` that handles
-    a traditional form login. When a user accesses a protected page anonymously, you
-    want to use the ``start()`` method from the form authenticator and redirect them
-    to the login page (instead of returning a JSON response):
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/security.yml
-            security:
-                # ...
-
-                firewalls:
-                    # ...
-
-                    main:
-                        anonymous: ~
-                        logout: ~
-
-                        guard:
-                            entry_point: app.form_login_authenticator
-                            authenticators:
-                                - app.token_authenticator
-                                - app.form_login_authenticator
-
-                        # if you want, disable storing the user in the session
-                        # stateless: true
-
-                        # maybe other things, like form_login, remember_me, etc
-                        # ...
-
-        .. code-block:: xml
-
-            <!-- app/config/security.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd">
-                <config>
-                    <!-- ... -->
-
-                    <firewall name="main"
-                        pattern="^/"
-                        anonymous="true"
-                    >
-                        <logout />
-
-                        <guard entry-point="app.form_login_authenticator">
-                            <authenticator>app.token_authenticator</authenticator>
-                            <authenticator>app.form_login_authenticator</authenticator>
-                        </guard>
-
-                        <!-- ... -->
-                    </firewall>
-                </config>
-            </srv:container>
-
-        .. code-block:: php
-
-            // app/config/security.php
-
-            // ..
-
-            $container->loadFromExtension('security', array(
-                'firewalls' => array(
-                    'main'       => array(
-                        'pattern'        => '^/',
-                        'anonymous'      => true,
-                        'logout'         => true,
-                        'guard'          => array(
-                            'entry_point'     => 'app.form_login_authenticator',
-                            'authenticators'  => array(
-                                'app.token_authenticator',
-                                'app.form_login_authenticator',
-                            ),
-                        ),
-                        // ...
-                    ),
-                ),
-            ));
+    For more details, see :doc:`/security/multiple_guard_authenticators`.
 
 **Can I use this with form_login?**
     Yes! ``form_login`` is *one* way to authenticate a user, so you could use
