@@ -49,7 +49,7 @@ The providers are configured to use a default service named ``ldap``,
 but you can override this setting in the security component's
 configuration.
 
-An LDAP client can be simply configured using the built-in :phpext:`ldap` PHP
+An LDAP client can be simply configured using the built-in ``ldap`` PHP
 extension with the following service definition:
 
 .. configuration-block::
