@@ -858,6 +858,10 @@ You can override any service that's imported by using its id (class name) below
 the options (e.g. ``public``) are inherited from the import (but the overridden
 service *does* still inherit from ``_defaults``).
 
+You can also ``exclude`` certain paths. This is optional, but will slightly increase
+performance in the ``dev`` environment: excluded paths are not tracked and so modifying
+them will not cause the container to be rebuilt.
+
 .. note::
 
     Wait, does this mean that *every* class in ``src/AppBundle`` is registered as

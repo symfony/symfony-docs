@@ -52,43 +52,13 @@ Registering it in your app
 --------------------------
 
 If you use the Symfony Framework. then you probably want to register this encoder
-as a service in your app. Then, you only need to tag it with ``serializer.encoder``
-to inject your custom encoder into the Serializer.
+as a service in your app. If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that's done automatically! 
 
-.. configuration-block::
+.. tip::
 
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.yaml_encoder:
-                class: AppBundle\Serializer\YamlEncoder
-                tags: [serializer.encoder]
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.yaml_encoder" class="AppBundle\Serializer\YamlEncoder">
-                    <tag name="serializer.encoder" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Serializer\YamlEncoder;
-
-        $container
-            ->register('app.yaml_encoder', YamlEncoder::class)
-            ->addTag('serializer.encoder')
-        ;
+    If you're not using autoconfigure, make sure to register your class as a service
+    and tag it with ``serializer.encoder``.
 
 Now you'll be able to serialize and deserialize Yaml!
 

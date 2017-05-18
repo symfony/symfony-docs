@@ -335,3 +335,4 @@
 /testing/simulating_authentication /testing/http_authentication
 /components/dependency_injection/autowiring /service_container/autowiring
 /event_dispatcher/class_extension /event_dispatcher
+/security/target_path /security

@@ -141,16 +141,15 @@ configuration (``login``):
 Great! Next, add the logic to ``loginAction()`` that displays the login form::
 
     // src/AppBundle/Controller/SecurityController.php
+    use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function loginAction(Request $request)
+    public function loginAction(Request $request, AuthenticationUtils $authUtils)
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $authUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $lastUsername = $authUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $lastUsername,
