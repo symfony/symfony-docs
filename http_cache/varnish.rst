@@ -20,9 +20,9 @@ Varnish automatically forwards the IP as ``X-Forwarded-For`` and leaves the
 trusted proxy, Symfony will see all requests as coming through insecure HTTP
 connections from the Varnish host instead of the real client.
 
-Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
-in the Symfony configuration so that Varnish is seen as a trusted proxy and the
-:ref:`X-Forwarded <varnish-x-forwarded-headers>` headers are used.
+Remember to call the :method:`Symfony\\Component\\HttpFoundation\\Request::setTrustedProxies`
+method in your front controller so that Varnish is seen as a trusted proxy
+and the :ref:`X-Forwarded <varnish-x-forwarded-headers>` headers are used.
 
 Varnish, in its default configuration, sends the ``X-Forwarded-For`` header but
 does not filter out the ``Forwarded`` header. If you have access to the Varnish
