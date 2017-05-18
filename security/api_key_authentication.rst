@@ -338,12 +338,12 @@ and ``provider`` keys:
 
         $container->loadFromExtension('security', array(
             'providers' => array(
-                'api_key_user_provider'  => array(
+                'api_key_user_provider' => array(
                     'id' => ApiKeyUserProvider::class,
                 ),
             ),
             'firewalls' => array(
-                'secured_area'       => array(
+                'main' => array(
                     'pattern'        => '^/api',
                     'stateless'      => true,
                     'simple_preauth' => array(
@@ -594,7 +594,7 @@ current URL is before creating the token in ``createToken()``::
             // set the only URL where we should look for auth information
             // and only return the token if we're at that URL
             $targetUrl = '/login/check';
-            if ($request->getPathInfo() != $targetUrl)
+            if ($request->getPathInfo() !== $targetUrl)
                 return;
             }
 
