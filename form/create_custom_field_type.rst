@@ -172,9 +172,19 @@ link for details), create a ``gender_widget`` block to handle this:
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <twig:config>
-                <twig:form-theme>form/fields.html.twig</twig:form-theme>
-            </twig:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:twig="http://symfony.com/schema/dic/twig"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/twig
+                    http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+                <twig:config>
+                    <twig:form-theme>form/fields.html.twig</twig:form-theme>
+                </twig:config>
+            </container>
 
         .. code-block:: php
 
@@ -283,12 +293,19 @@ example, suppose that you're storing the gender parameters in configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="genders" type="collection">
-                <parameter key="m">Male</parameter>
-                <parameter key="f">Female</parameter>
-            </parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="genders" type="collection">
+                    <parameter key="m">Male</parameter>
+                    <parameter key="f">Female</parameter>
+                </parameter>
+            </parameters>
+        </container>
 
     .. code-block:: php
 
@@ -316,10 +333,19 @@ the ``genders`` parameter value as the first argument to its to-be-created
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/services.xml -->
-        <service id="app.form.type.gender" class="AppBundle\Form\Type\GenderType">
-            <argument>%genders%</argument>
-            <tag name="form.type" alias="app_gender" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.form.type.gender" class="AppBundle\Form\Type\GenderType">
+                    <argument>%genders%</argument>
+                    <tag name="form.type" alias="app_gender" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

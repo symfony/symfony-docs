@@ -51,11 +51,12 @@ directory:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xmlns:twig="http://symfony.com/schema/dic/twig"
-        >
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
@@ -110,10 +111,12 @@ specific template doesn't exist.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:twig="http://symfony.com/schema/dic/twig"
-        >
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/theme1</twig:path>

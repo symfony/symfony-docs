@@ -225,7 +225,7 @@ thrown)::
         $configuration = new Configuration();
 
         $config = $this->processConfiguration($configuration, $configs);
-        
+
         // you now have these 2 config keys
         // $config['twitter']['client_id'] and $config['twitter']['client_secret']
     }
@@ -424,7 +424,6 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 
     <!-- app/config/config.xml -->
     <?xml version="1.0" ?>
-
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"

@@ -117,8 +117,8 @@ To enable a data collector, define it as a regular service and tag it as
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
                 <service id="app.request_collector"
                     class="AppBundle\DataCollector\RequestCollector"
@@ -281,8 +281,8 @@ the ``data_collector`` tag in your service configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
                 <service id="app.request_collector"
                     class="AppBundle\DataCollector\RequestCollector"
@@ -332,9 +332,18 @@ want your collector to be displayed before them, use a higher value:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.request_collector" class="AppBundle\DataCollector\RequestCollector">
-            <tag name="data_collector" template="..." id="..." priority="300" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.request_collector" class="AppBundle\DataCollector\RequestCollector">
+                    <tag name="data_collector" template="..." id="..." priority="300" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
