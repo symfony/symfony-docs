@@ -49,9 +49,9 @@ configure it under your firewall:
     .. code-block:: xml
 
         <config>
-          <firewall name="main">
-            <access_denied_handler>AppBundle\Security\AccessDeniedHandler</access_denied_handler>
-          </firewall>
+            <firewall name="main">
+                <access_denied_handler>AppBundle\Security\AccessDeniedHandler</access_denied_handler>
+            </firewall>
         </config>
 
     .. code-block:: php
