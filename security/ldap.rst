@@ -108,7 +108,7 @@ extension with the following service definition:
             ->addArgument(new Reference('ext_ldap_adapter'));
 
         $container
-            ->setDefinition('ext_ldap_adapter, new Definition(Ldap::class, array(
+            ->setDefinition('ext_ldap_adapter', new Definition(Ldap::class, array(
                 'host' => 'my-server',
                 'port' => 389,
                 'encryption' => 'tls',
