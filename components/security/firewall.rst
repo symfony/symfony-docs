@@ -67,6 +67,11 @@ the user::
 
     $map->add($requestMatcher, $listeners, $exceptionListener);
 
+.. note::
+
+    Starting from Symfony 3.3, the request matchers passed to the ``FirewallMap``
+    class are "lazy loaded" to improve the application performance.
+
 The firewall map will be given to the firewall as its first argument, together
 with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`::
 
