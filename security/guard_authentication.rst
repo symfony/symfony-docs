@@ -404,6 +404,11 @@ Each authenticator needs the following methods:
     after a successful authentication to create and return the token
     for the user, who was supplied as the first argument.
 
+The picture below shows how Symfony calls Guard Authenticator methods:
+
+.. image:: /_images/security/authentication-guard-methods.png
+   :align: center
+
 .. _guard-customize-error:
 
 Customizing Error Messages
