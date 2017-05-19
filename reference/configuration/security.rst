@@ -129,6 +129,7 @@ Each part will be explained in the next section.
                         provider: some_key_from_above
                     remote_user:
                         provider: some_key_from_above
+                        user:     REMOTE_USER
                     http_basic:
                         provider: some_key_from_above
                     http_digest:
