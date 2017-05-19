@@ -142,6 +142,8 @@ Add the ``use`` statement atop the ``Controller`` class and then modify
 That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
 and many others that you'll learn about next.
 
+.. _controller-abstract-versus-controller:
+
 .. tip::
 
     You can extend either ``Controller`` or ``AbstractController``. The difference
