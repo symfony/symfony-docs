@@ -152,6 +152,8 @@ the route ``_controller`` value:
     fully-qualified class name (FQCN). See the
     `FrameworkExtraBundle documentation`_ for details.
 
+.. _controller-service-invoke:
+
 .. tip::
 
     If your controller implements the ``__invoke()`` method, you can simply
